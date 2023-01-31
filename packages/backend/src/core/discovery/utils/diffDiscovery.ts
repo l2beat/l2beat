@@ -1,7 +1,6 @@
-import { EthereumAddress } from '@l2beat/types'
+import { ContractParameters, EthereumAddress } from '@l2beat/types'
 
 import { DiscoveryContract } from '../DiscoveryConfig'
-import { ContractParameters } from '../types'
 import { diffContracts, FieldDiff } from './diffContracts'
 
 export interface DiscoveryDiff {

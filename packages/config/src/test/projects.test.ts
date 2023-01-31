@@ -21,19 +21,59 @@ describe('projects', () => {
           const contracts = project.contracts?.addresses ?? []
           for (const contract of contracts) {
             testAddress(contract.address)
-            if (
-              contract.upgradeability?.type === 'EIP1967' ||
-              contract.upgradeability?.type === 'NutBerry' ||
-              contract.upgradeability?.type === 'ZeppelinOs'
-            ) {
-              testAddress(contract.upgradeability.admin)
-              testAddress(contract.upgradeability.implementation)
-            }
-            if (contract.upgradeability?.type === 'StarkWare') {
-              testAddress(contract.upgradeability.implementation)
-              if (contract.upgradeability.callImplementation) {
-                testAddress(contract.upgradeability.callImplementation)
-              }
+            if (!contract.upgradeability?.type) return
+            switch (contract.upgradeability.type) {
+              case 'EIP1967 proxy':
+              case 'Custom':
+              case 'NutBerry':
+              case 'ZeppelinOS proxy':
+                testAddress(contract.upgradeability.implementation.toString())
+                if (contract.upgradeability.admin) {
+                  testAddress(contract.upgradeability.admin.toString())
+                }
+                break
+
+              case 'StarkWare diamond':
+              case 'resolved delegate proxy':
+              case 'call implementation proxy':
+              case 'EIP897 proxy':
+              case 'CustomWithoutAdmin':
+                testAddress(contract.upgradeability.implementation.toString())
+                break
+
+              case 'StarkWare proxy':
+                const implementation =
+                  contract.upgradeability.callImplementation ??
+                  contract.upgradeability.implementation
+                testAddress(implementation.toString())
+                break
+
+              case 'new Arbitrum proxy':
+              case 'Arbitrum proxy':
+                testAddress(contract.upgradeability.admin.toString())
+                testAddress(
+                  contract.upgradeability.adminImplementation.toString(),
+                )
+                testAddress(
+                  contract.upgradeability.userImplementation.toString(),
+                )
+                break
+
+              case 'Beacon':
+                testAddress(contract.upgradeability.beacon)
+                testAddress(contract.upgradeability.implementation)
+                testAddress(contract.upgradeability.beaconAdmin)
+                break
+
+              // Ignore types
+              case 'immutable':
+              case 'gnosis safe':
+              case 'EIP2535 diamond proxy':
+              case 'Reference':
+                break
+
+              default:
+                assertUnreachable(contract.upgradeability)
             }
           }
         }
@@ -210,3 +250,9 @@ describe('projects', () => {
     })
   })
 })
+
+function assertUnreachable(_: never): never {
+  throw new Error(
+    'There are more values to this type than handled in the switch statement.',
+  )
+}

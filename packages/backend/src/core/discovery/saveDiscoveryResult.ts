@@ -1,7 +1,7 @@
+import { ProjectParameters } from '@l2beat/types'
 import { writeFile } from 'fs/promises'
 
 import { AnalyzedData } from './analyzeItem'
-import { ProjectParameters } from './types'
 
 export async function saveDiscoveryResult(
   results: AnalyzedData[],

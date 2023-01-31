@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@l2beat/common": "*",
-    "@l2beat/backend": "*",
     "@l2beat/types": "*",
     "dotenv": "^16.0.3",
     "node-fetch": "^2.6.7",

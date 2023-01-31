@@ -1,4 +1,4 @@
-import { UpgradeabilityParameters } from '@l2beat/backend/src/core/discovery/proxies/types'
+import { UpgradeabilityParameters } from '@l2beat/types'
 import { ProjectReference } from './ProjectReference'
 import { ProjectRisk } from './ProjectRisk'
 

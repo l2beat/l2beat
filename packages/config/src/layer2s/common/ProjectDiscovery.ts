@@ -1,17 +1,18 @@
 import {
   ContractParameters,
   ProjectParameters,
-} from '@l2beat/backend/src/core/discovery/types'
-
+} from '@l2beat/types/build/Discovery'
+import path from 'path'
 export class ProjectDiscovery {
-  discovery: ProjectParameters
-
+  private readonly discovery: ProjectParameters
   constructor(project: string) {
     this.discovery = this.getDiscoveryJson(project)
   }
 
   private getDiscoveryJson(project: string): ProjectParameters {
-    const discovery = require(`@l2beat/backend/discovery/${project}/discovered.json`)
+    const discovery = require(path.resolve(
+      `../backend/discovery/${project}/discovered.json`,
+    ))
     if (!discovery) {
       throw new Error(`Discovery file for ${project} does not exist`)
     }
@@ -38,9 +39,6 @@ export class ProjectDiscovery {
     const contract = this.discovery.contracts.find(
       (contract) => contract.address.toString() === address,
     )
-    if (address === '0x081D1101855bD523bA69A9794e0217F0DB6323ff') {
-      console.log(contract)
-    }
 
     if (!contract) {
       throw new Error(`No contract of ${address} found`)

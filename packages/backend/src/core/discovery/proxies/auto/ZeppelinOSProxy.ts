@@ -1,8 +1,7 @@
-import { Bytes, EthereumAddress } from '@l2beat/types'
+import { Bytes, EthereumAddress, ProxyDetection } from '@l2beat/types'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
-import { ProxyDetection } from '../types'
 
 // keccak256('org.zeppelinos.proxy.implementation')
 const IMPLEMENTATION_SLOT = Bytes.fromHex(

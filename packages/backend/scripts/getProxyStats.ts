@@ -78,17 +78,19 @@ async function main() {
         )
       }
 
-      if (upgradeability?.type === 'ZeppelinOs') {
+      if (upgradeability?.type === 'ZeppelinOS proxy') {
         await checkZeppelinOsImplementation(
           provider,
           contract.address,
-          upgradeability.implementation,
+          upgradeability.implementation.toString(),
         )
-        await checkZeppelinOsAdmin(
-          provider,
-          contract.address,
-          upgradeability.admin,
-        )
+        if (upgradeability.admin) {
+          await checkZeppelinOsAdmin(
+            provider,
+            contract.address,
+            upgradeability.admin.toString(),
+          )
+        }
       }
 
       if (upgradeability?.type === 'NutBerry') {

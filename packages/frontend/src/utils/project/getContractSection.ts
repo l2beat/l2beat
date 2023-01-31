@@ -64,12 +64,14 @@ function makeTechnologyContract(
           address: item.upgradeability.implementation.toString(),
           isAdmin: false,
         })
-        links.push({
-          name: 'Admin',
-          href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
-          address: item.upgradeability.admin?.toString() ?? '',
-          isAdmin: true,
-        })
+        if (item.upgradeability.admin) {
+          links.push({
+            name: 'Admin',
+            href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
+            address: item.upgradeability.admin.toString(),
+            isAdmin: true,
+          })
+        }
         break
 
       case 'StarkWare diamond':

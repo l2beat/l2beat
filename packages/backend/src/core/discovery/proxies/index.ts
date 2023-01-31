@@ -1,17 +1,16 @@
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress, ManualProxyType, ProxyDetection } from '@l2beat/types'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
-import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectEip2535proxy } from './auto/Eip2535Proxy'
+import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
 import { detectResolvedDelegateProxy } from './auto/ResolvedDelegateProxy'
 import { detectStarkWareProxy } from './auto/StarkWareProxy'
 import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
-import { ManualProxyType, ProxyDetection } from './types'
 
 export async function detectProxy(
   provider: DiscoveryProvider,

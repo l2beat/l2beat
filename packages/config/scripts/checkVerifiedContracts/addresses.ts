@@ -9,6 +9,7 @@ export function getUniqueContractsForAllProjects(
   projects: (Layer2 | Bridge)[],
 ): EthereumAddress[] {
   const addresses = projects.flatMap(getUniqueContractsForProject)
+
   return withoutDuplicates(addresses)
 }
 

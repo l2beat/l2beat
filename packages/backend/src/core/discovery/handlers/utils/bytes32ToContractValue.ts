@@ -1,6 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/types'
-
-import { ContractValue } from '../../types'
+import { Bytes, ContractValue, EthereumAddress } from '@l2beat/types'
 
 export function bytes32ToContractValue(
   value: Bytes,

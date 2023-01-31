@@ -1,8 +1,7 @@
-import { EthereumAddress } from '@l2beat/types'
+import { ContractValue, EthereumAddress } from '@l2beat/types'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { ContractValue } from '../types'
 
 export interface HandlerResult {
   field: string

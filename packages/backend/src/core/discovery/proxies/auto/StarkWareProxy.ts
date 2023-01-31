@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress, Hash256 } from '@l2beat/types'
+import { Bytes, EthereumAddress, Hash256, ProxyDetection } from '@l2beat/types'
 import { BigNumber, utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -7,7 +7,6 @@ import {
   getCallResult,
   getCallResultWithRevert,
 } from '../../utils/getCallResult'
-import { ProxyDetection } from '../types'
 
 // keccak256("StarkWare2019.implemntation-slot")
 const IMPLEMENTATION_SLOT = Bytes.fromHex(
