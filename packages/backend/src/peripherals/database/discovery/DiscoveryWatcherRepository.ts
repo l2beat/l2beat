@@ -20,13 +20,13 @@ export class DiscoveryWatcherRepository extends BaseRepository {
     this.autoWrap<CheckConvention<DiscoveryWatcherRepository>>(this)
   }
 
-  async getLatest(name: string): Promise<DiscoveryWatcherRecord[]> {
+  async findLatest(name: string): Promise<DiscoveryWatcherRecord | undefined> {
     const knex = await this.knex()
     const row = await knex('discovery_watcher')
       .where('project_name', name)
       .first()
 
-    return row ? [toRecord(row)] : []
+    return row ? toRecord(row) : undefined
   }
 
   async addOrUpdate(record: DiscoveryWatcherRecord): Promise<string> {

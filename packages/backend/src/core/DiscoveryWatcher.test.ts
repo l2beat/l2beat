@@ -138,7 +138,7 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const repository = mock<DiscoveryWatcherRepository>({
-        getLatest: mockFn().resolvesTo([]),
+        findLatest: mockFn().resolvesTo(undefined),
         addOrUpdate: mockFn().resolvesTo({}),
       })
 
@@ -168,7 +168,7 @@ describe(DiscoveryWatcher.name, () => {
         [{ name: PROJECT_A, initialAddresses: [] }, BLOCK_NUMBER],
         [{ name: PROJECT_B, initialAddresses: [] }, BLOCK_NUMBER],
       ])
-      expect(repository.getLatest.calls.length).toEqual(2)
+      expect(repository.findLatest.calls.length).toEqual(2)
       expect(repository.addOrUpdate.calls.length).toEqual(2)
       //sends notification
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
@@ -188,7 +188,7 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const discoveryWatcherRepository = mock<DiscoveryWatcherRepository>({
-        getLatest: mockFn().resolvesTo([
+        findLatest: mockFn().resolvesTo([
           {
             discovery: {
               contracts: parseDiscoveryOutput(
@@ -230,9 +230,9 @@ describe(DiscoveryWatcher.name, () => {
         [PROJECT_A],
       ])
 
-      expect(discoveryWatcherRepository.getLatest).toHaveBeenCalledExactlyWith([
-        [PROJECT_A],
-      ])
+      expect(discoveryWatcherRepository.findLatest).toHaveBeenCalledExactlyWith(
+        [[PROJECT_A]],
+      )
 
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([])
     })
@@ -247,7 +247,7 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const repository = mock<DiscoveryWatcherRepository>({
-        getLatest: mockFn().resolvesTo([]),
+        findLatest: mockFn().resolvesTo(undefined),
         addOrUpdate: mockFn().resolvesTo({}),
       })
 
@@ -270,7 +270,7 @@ describe(DiscoveryWatcher.name, () => {
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
         [PROJECT_A],
       ])
-      expect(repository.getLatest.calls.length).toEqual(1)
+      expect(repository.findLatest.calls.length).toEqual(1)
     })
   })
 

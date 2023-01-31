@@ -87,12 +87,11 @@ export class DiscoveryWatcher {
     overrides?: Record<string, DiscoveryContract>,
   ): Promise<DiscoveryDiff[]> {
     const committed = await this.configReader.readDiscovery(name)
-    const databaseEntry = await this.repository.getLatest(name)
+    const databaseEntry = await this.repository.findLatest(name)
 
-    const currentContracts =
-      databaseEntry.length === 0
-        ? committed.contracts
-        : databaseEntry[0].discovery.contracts
+    const currentContracts = databaseEntry
+      ? databaseEntry.discovery.contracts
+      : committed.contracts
 
     const diff = diffDiscovery(
       currentContracts,

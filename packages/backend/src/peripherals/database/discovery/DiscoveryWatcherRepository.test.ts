@@ -21,7 +21,7 @@ describe(DiscoveryWatcherRepository.name, () => {
     await repository.deleteAll()
   })
 
-  it(DiscoveryWatcherRepository.prototype.getLatest.name, async () => {
+  it(DiscoveryWatcherRepository.prototype.findLatest.name, async () => {
     const projectName = 'project'
 
     const expected: DiscoveryWatcherRecord = {
@@ -38,9 +38,9 @@ describe(DiscoveryWatcherRepository.name, () => {
     }
 
     await repository.addOrUpdate(expected)
-    const result = await repository.getLatest(projectName)
+    const result = await repository.findLatest(projectName)
 
-    expect(result).toEqual([expected])
+    expect(result).toEqual(expected)
   })
 
   it(DiscoveryWatcherRepository.prototype.addOrUpdate.name, async () => {
@@ -60,14 +60,14 @@ describe(DiscoveryWatcherRepository.name, () => {
     }
 
     await repository.addOrUpdate(expected)
-    const added = await repository.getLatest(projectName)
+    const added = await repository.findLatest(projectName)
 
-    expect(added).toEqual([expected])
+    expect(added).toEqual(expected)
 
     expected.blockNumber = 1
     await repository.addOrUpdate(expected)
 
-    const updated = await repository.getLatest(projectName)
-    expect(updated).toEqual([expected])
+    const updated = await repository.findLatest(projectName)
+    expect(updated).toEqual(expected)
   })
 })
