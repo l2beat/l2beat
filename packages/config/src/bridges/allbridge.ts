@@ -10,7 +10,8 @@ export const allbridge: Bridge = {
     slug: 'allbridge',
     description:
       'Allbridge Core enables the transfer of value between blockchains by offering cross-chain swaps of native stablecoins using liquidity pools.\
-    It is using either own AMB or Wormhole to pass messages. This bridge contains a number of core, unverified smart contracts and it is owned by an EOA\
+    For its stableconin liquidity network it is using either own AMB or Wormhole to pass messages. Allbridge bridge is a token bridge implemented\
+    as a separate contract. Both bridges contains a number of core, unverified smart contracts and it is owned by an EOA\
     account that can drain all funds.',
     links: {
       websites: ['https://app.allbridge.io/'],
@@ -89,7 +90,7 @@ export const allbridge: Bridge = {
       {
         address: '0xA314330482f325D38A83B492EF6B006224a3bea9',
         name: 'Bridge',
-        description: 'Main liquidity network bridge contract.',
+        description: 'Main liquidity network Allbridge Core bridge contract.',
       },
       {
         address: '0xBBbD1BbB4f9b936C3604906D7592A644071dE884',
