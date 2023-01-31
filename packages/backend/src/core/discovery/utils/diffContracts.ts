@@ -74,7 +74,6 @@ export function diffContracts(
         if (r.key.includes(`values.${i}`)) {
           return false
         }
-        return true
       }
     }
     return true
