@@ -61,9 +61,7 @@ function toRecord(row: DiscoveryWatcherRow): DiscoveryWatcherRecord {
     projectName: row.project_name,
     blockNumber: row.block_number,
     timestamp: UnixTime.fromDate(row.unix_timestamp),
-    discovery: JSON.parse(
-      JSON.stringify(row.discovery_json_blob),
-    ) as ProjectParameters,
+    discovery: row.discovery_json_blob as unknown as ProjectParameters,
   }
 }
 
