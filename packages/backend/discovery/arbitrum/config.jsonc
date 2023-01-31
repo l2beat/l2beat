@@ -10,10 +10,16 @@
       "ignoreMethods": [
         // Execution reverted
         "proxiableUUID"
+      ],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
       ]
     },
     "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": {
-      "ignoreMethods": ["inboxAccs"]
+      "ignoreMethods": ["inboxAccs"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"]
     },
     "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": {
       "ignoreMethods": ["isSpent", "spent"]
@@ -22,7 +28,12 @@
       "ignoreMethods": ["challenges"]
     },
     "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
-      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"]
+      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
     },
     "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": {
       "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
