@@ -12,17 +12,22 @@ interface LogThrottlerOptions {
   readonly thresholdTimeInMs: number
   readonly throttleTimeInMs: number
 }
-
+/**
+ * @summary Aim of this class is to reduce log output by throttling.
+ *
+ * @description It allows to throttle given log for throttleTimeInMs if it was called threshold times in throttleTimeInMs
+ * by storing count of how much time it was called in recentLogs by logKey.
+ */
 export class LogThrottler {
   private readonly recentLogs: Map<string, LogInfo>
   private readonly logger: Logger
 
   constructor(
     private readonly options: LogThrottlerOptions,
-    loggerConfig: LoggerOptions,
+    loggerOptions: LoggerOptions,
   ) {
     this.recentLogs = new Map<string, LogInfo>()
-    this.logger = new Logger(loggerConfig).for(LogThrottler.name)
+    this.logger = new Logger(loggerOptions).for(LogThrottler.name)
 
     setInterval(() => this.clearCount(), options.thresholdTimeInMs)
   }
