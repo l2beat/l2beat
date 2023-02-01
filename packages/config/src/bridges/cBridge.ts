@@ -7,7 +7,7 @@ export const cBridge: Bridge = {
   type: 'bridge',
   id: ProjectId('cbridge'),
   display: {
-    name: 'cBridge',
+    name: 'cBridge (Celer)',
     slug: 'cbridge',
     description:
       'Celer cBridge offers cross-chain token bridging in two modes: Token Bridge and Liquidity Network. It leverages the "State Guardian Network" aka SGN to perform cross-chain communication.',
