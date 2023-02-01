@@ -152,4 +152,32 @@ export const multichain: Bridge = {
         'Account controlled by the MPC nodes. Can set minters for anyTokens. Can access liquidity in anyTokens.',
     },
   ],
+  milestones: [
+    {
+      name: 'Anyswap rebrands to Multichain',
+      date: '2021-12-16T00:00:00Z',
+      link: 'https://medium.com/multichainorg/anyswap-to-officially-rebrand-as-multichain-16ee7b961ffa',
+    },
+    {
+      name: 'Contracts hacked for $3M',
+      date: '2022-01-18T00:00:00Z',
+      description:
+        'Multiple critical vulnerabilities were found in the contracts.',
+      link: 'https://medium.com/multichainorg/multichain-contract-vulnerability-post-mortem-d37bfab237c8',
+    },
+    {
+      name: 'anyCall was introduced',
+      date: '2022-04-11T00:00:00Z',
+      description:
+        'This is the generic cross-chain mechanism that Multichain uses.',
+      link: 'https://medium.com/multichainorg/anycall-for-your-cross-chain-dapps-ac0ece9140e9',
+    },
+    {
+      name: 'fastMPC was introduced',
+      date: '2022-09-21T00:00:00Z',
+      description:
+        'It is an upgrade of the network that is used to check cross chain messages.',
+      link: 'https://multichainorg.medium.com/fastmpc-mainnet-goes-live-running-in-a-decentralized-way-99f9fe2956b8',
+    },
+  ],
 }

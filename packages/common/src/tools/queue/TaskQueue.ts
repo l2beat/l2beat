@@ -2,19 +2,23 @@ import { json } from '@l2beat/types'
 import assert from 'assert'
 import { setTimeout as wait } from 'timers/promises'
 
+import { wrapAndMeasure } from '../../utils/wrapAndMeasure'
 import { EventTracker } from '../EventTracker'
 import { getErrorMessage, getErrorStackTrace, Logger } from '../Logger'
 import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
+export type { TaskQueueHistogram } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
   maxDistanceMs: 3_000,
 })
 
+type Task<T> = (task: T) => Promise<void>
 /**
  * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
  */
 export class TaskQueue<T> {
+  private readonly executeTask: Task<T>
   private readonly queue: Job<T>[] = []
   private busyWorkers = 0
   private readonly workers: number
@@ -24,7 +28,7 @@ export class TaskQueue<T> {
   >
 
   constructor(
-    private readonly executeTask: (task: T) => Promise<void>,
+    executeTask: Task<T>,
     private readonly logger: Logger,
     opts?: TaskQueueOpts<T>,
   ) {
@@ -37,6 +41,10 @@ export class TaskQueue<T> {
     if (opts?.trackEvents) {
       this.eventTracker = new EventTracker()
     }
+
+    this.executeTask = opts?.metrics
+      ? wrapAndMeasure(executeTask, opts.metrics)
+      : executeTask
   }
 
   get length() {
