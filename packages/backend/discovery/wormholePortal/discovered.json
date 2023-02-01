@@ -1,6 +1,6 @@
 {
   "name": "wormholePortal",
-  "blockNumber": 16390716,
+  "blockNumber": 16534856,
   "contracts": [
     {
       "name": "BridgeImplementation",
@@ -45,7 +45,7 @@
       "values": {
         "chainId": 2,
         "evmChainId": 1,
-        "getCurrentGuardianSetIndex": 2,
+        "getCurrentGuardianSetIndex": 3,
         "getGuardianSetExpiry": 0,
         "governanceChainId": 1,
         "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
