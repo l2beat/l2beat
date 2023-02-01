@@ -45,13 +45,13 @@ export class ProjectDiscovery {
   }
   /* eslint-disable */
   getValue<T>(value: any, key: string): T {
-    const result = value[key]
+    const result = value[key] as T
 
     if (!result) {
       throw new Error(`Value of key ${key} does not exist on searched object`)
     }
 
-    return result as T
+    return result
   }
   /* eslint-enable */
 }
