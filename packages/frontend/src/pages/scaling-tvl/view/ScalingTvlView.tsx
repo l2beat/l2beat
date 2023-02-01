@@ -1,11 +1,13 @@
 import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
+import { ProjectRatingEntry } from '../../../components/rating/TooltipPopup'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
+import { RatingCell } from '../../../components/table/RatingCell'
 import {
   ColumnConfig,
   RowConfig,
@@ -19,6 +21,7 @@ import {
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
+  ratingEnabled: boolean
 }
 
 export interface ScalingTvlViewEntry {
@@ -34,9 +37,10 @@ export interface ScalingTvlViewEntry {
   marketShare: string
   purpose: string
   technology: string
+  ratingEntry?: ProjectRatingEntry
 }
 
-export function ScalingTvlView({ items }: ScalingTvlViewProps) {
+export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -91,6 +95,15 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
       ),
     },
   ]
+
+  if (ratingEnabled) {
+    const ratingColumn: ColumnConfig<ScalingTvlViewEntry> = {
+      name: 'Rating',
+      alignCenter: true,
+      getValue: (project) => <RatingCell item={project.ratingEntry} />,
+    }
+    columns.splice(3, 0, ratingColumn)
+  }
 
   const rows: RowConfig<ScalingTvlViewEntry> = {
     getProps: (entry) => ({

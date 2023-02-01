@@ -16,6 +16,7 @@ export interface Config {
     gitcoinOption: boolean
     milestones: boolean
     hiring: boolean
+    rating: boolean
   }
   backend: {
     apiUrl: string

@@ -33,6 +33,7 @@ module.exports = {
       link: 'rgb(var(--link-rgb) / <alpha-value>)',
       white: '#FAFAFA',
       gray: {
+        50: '#AEAEAE',
         100: '#EDEDED',
         200: '#DFDFDF',
         300: '#D3D3D3',
@@ -49,11 +50,13 @@ module.exports = {
       },
       black: '#1B1B1B',
       yellow: {
+        100: '#FFDD28',
         200: '#FFC107',
         300: '#FDCF44',
         500: '#E5C227',
         700: '#CB9800',
       },
+      orange: '#FF7D1F',
       purple: {
         100: '#7E41CC',
         300: '#F1D6FF',
@@ -69,6 +72,7 @@ module.exports = {
         200: '#B0FFAA',
         300: '#4EAB58',
         400: '#13E000',
+        450: '#5EFF5A',
         500: '#5BFF4D',
         600: '#11CC00',
         700: '#007408',
@@ -77,10 +81,12 @@ module.exports = {
       red: {
         100: '#FDD9D9',
         300: '#FA3A3A',
+        400: '#FF0000',
         500: '#C32806',
         600: '#C71414',
         700: '#D70000',
         900: '#441111',
+        950: '#323232',
       },
       blue: {
         300: '#CBDFF9',
