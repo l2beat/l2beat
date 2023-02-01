@@ -39,15 +39,13 @@
     },
     "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc": {
       "ignoreMethods": ["proposals", "getProposal"],
-      "ignoreInWatchMode": ["numProposals", "getCurrentTime"]
+      "ignoreInWatchMode": ["numProposals"]
     },
     "0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5": {
-      "ignoreMethods": ["bondedProposals"],
-      "ignoreInWatchMode": ["getCurrentTime"]
+      "ignoreMethods": ["bondedProposals"]
     },
     "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381": {
-      "ignoreMethods": ["rootBundles"],
-      "ignoreInWatchMode": ["getCurrentTime", "numberOfDeposits"]
+      "ignoreMethods": ["rootBundles"]
     },
     "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
       "ignoreInWatchMode": ["totalSupply"]
