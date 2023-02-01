@@ -63,6 +63,9 @@
     "0x07945fa39E58F47EFfFcff62Ca616880d8D2df66": {
       // Challenge implementation
       "ignoreDiscovery": true
+    },
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
