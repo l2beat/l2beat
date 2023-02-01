@@ -11,7 +11,7 @@ export function Banner() {
     >
       We are hiring!
       <span className="underline ml-2">Join L2BEAT</span>
-      <ArrowRightIcon className="fill-white inline-block w-3 h-3 ml-0.5" />
+      <ArrowRightIcon className="fill-white w-3 h-3 ml-0.5" />
     </a>
   )
 }
