@@ -138,7 +138,7 @@ export function Navbar(props: NavbarProps) {
               <li className="h-full">
                 <OutLink
                   className="flex items-center h-full px-2 font-medium"
-                  href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+                  href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
                 >
                   Jobs
                   <HiringBadge className="ml-1" />
