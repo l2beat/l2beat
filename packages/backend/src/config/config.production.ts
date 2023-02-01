@@ -27,8 +27,8 @@ export function getProductionConfig(cli: CliParameters): Config {
     },
     logThrottler: {
       threshold: 4,
-      thresholdTime: 5000,
-      throttleTime: 20000,
+      thresholdTimeInMs: 5000,
+      throttleTimeInMs: 20000,
     },
     clock: {
       minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),

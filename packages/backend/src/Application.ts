@@ -18,11 +18,12 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config) {
-    const logThrottler = config.logThrottler
-      ? new LogThrottler(config.logThrottler, config.logger)
-      : undefined
+    const loggerOptions = { ...config.logger, reportError }
 
-    const logger = new Logger({ ...config.logger, reportError }, logThrottler)
+    const logThrottler = config.logThrottler
+      ? new LogThrottler(config.logThrottler, loggerOptions)
+      : undefined
+    const logger = new Logger(loggerOptions, logThrottler)
 
     const database = new Database(
       config.database ? config.database.connection : undefined,
