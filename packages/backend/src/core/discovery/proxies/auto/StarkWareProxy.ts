@@ -34,9 +34,10 @@ async function getCallImplementation(
   const callImplementation = bytes32ToAddress(
     await provider.getStorage(address, CALL_IMPLEMENTATION_SLOT),
   )
-  return callImplementation !== EthereumAddress.ZERO
-    ? callImplementation
-    : undefined
+
+  if (callImplementation === EthereumAddress.ZERO) return
+
+  return callImplementation
 }
 
 // Web3.solidityKeccak(['string'], ['StarkWare.Upgradibility.Delay.Slot'])
