@@ -1,7 +1,9 @@
 import {
   ContractParameters,
+  ContractValue,
   ProjectParameters,
-} from '@l2beat/types/build/Discovery'
+} from '@l2beat/types'
+import { readFileSync } from 'fs'
 import path from 'path'
 export class ProjectDiscovery {
   private readonly discovery: ProjectParameters
@@ -10,13 +12,16 @@ export class ProjectDiscovery {
   }
 
   private getDiscoveryJson(project: string): ProjectParameters {
-    const discovery = require(path.resolve(
-      `../backend/discovery/${project}/discovered.json`,
-    ))
+    const discovery = readFileSync(
+      path.resolve(`../backend/discovery/${project}/discovered.json`),
+      { encoding: 'utf-8' },
+    )
+
     if (!discovery) {
       throw new Error(`Discovery file for ${project} does not exist`)
     }
-    return discovery as ProjectParameters
+
+    return discovery as unknown as ProjectParameters
   }
 
   getContractByName(name: string): ContractParameters {
@@ -47,15 +52,13 @@ export class ProjectDiscovery {
     return contract
   }
 
-  getValue<T>(value: any, key: string): T {
+  getValue<T>(value: Record<string, ContractValue>, key: string): T {
     const result = value[key]
 
     if (!result) {
-      throw new Error(
-        `Value of key ${String(key)} does not exist on object ${value}`,
-      )
+      throw new Error(`Value of key ${key} does not exist on searched object`)
     }
 
-    return result
+    return result as T
   }
 }

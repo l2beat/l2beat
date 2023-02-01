@@ -1,5 +1,5 @@
 import { Logger, mock } from '@l2beat/common'
-import { EthereumAddress } from '@l2beat/types'
+import { ContractParameters, EthereumAddress } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
 
@@ -9,7 +9,6 @@ import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryConfig } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
-import { ContractParameters } from './discovery/types'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { DiscoveryWatcher } from './DiscoveryWatcher'
 

@@ -60,14 +60,14 @@ function makeTechnologyContract(
       case 'ZeppelinOS proxy':
         links.push({
           name: 'Implementation (Upgradable)',
-          href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
+          href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
           address: item.upgradeability.implementation.toString(),
           isAdmin: false,
         })
         if (item.upgradeability.admin) {
           links.push({
             name: 'Admin',
-            href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
+            href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
             address: item.upgradeability.admin.toString(),
             isAdmin: true,
           })
@@ -81,13 +81,13 @@ function makeTechnologyContract(
       case 'CustomWithoutAdmin':
         links.push({
           name: 'Implementation (Upgradable)',
-          href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
+          href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
           address: item.upgradeability.implementation.toString(),
           isAdmin: false,
         })
         break
 
-      case 'StarkWare proxy':
+      case 'StarkWare proxy': {
         const delay = item.upgradeability.upgradeDelay !== 0
         const days = item.upgradeability.upgradeDelay / (60 * 60 * 24)
         const implementation =
@@ -97,11 +97,12 @@ function makeTechnologyContract(
           name: `Implementation (Upgradable${
             delay ? ` ${days} days delay` : ''
           })`,
-          href: `https://etherscan.io/address/${implementation}#code`,
+          href: `https://etherscan.io/address/${implementation.toString()}#code`,
           address: implementation.toString(),
           isAdmin: false,
         })
         break
+      }
 
       case 'Reference':
         links.push({
@@ -116,19 +117,19 @@ function makeTechnologyContract(
       case 'Arbitrum proxy':
         links.push({
           name: 'Admin',
-          href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
+          href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
           address: item.upgradeability.admin.toString(),
           isAdmin: true,
         })
         links.push({
           name: 'Admin logic (Upgradable)',
-          href: `https://etherscan.io/address/${item.upgradeability.adminImplementation}#code`,
+          href: `https://etherscan.io/address/${item.upgradeability.adminImplementation.toString()}#code`,
           address: item.upgradeability.adminImplementation.toString(),
           isAdmin: true,
         })
         links.push({
           name: 'User logic (Upgradable)',
-          href: `https://etherscan.io/address/${item.upgradeability.userImplementation}#code`,
+          href: `https://etherscan.io/address/${item.upgradeability.userImplementation.toString()}#code`,
           address: item.upgradeability.userImplementation.toString(),
           isAdmin: false,
         })

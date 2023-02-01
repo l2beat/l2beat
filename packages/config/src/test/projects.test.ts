@@ -41,12 +41,13 @@ describe('projects', () => {
                 testAddress(contract.upgradeability.implementation.toString())
                 break
 
-              case 'StarkWare proxy':
+              case 'StarkWare proxy': {
                 const implementation =
                   contract.upgradeability.callImplementation ??
                   contract.upgradeability.implementation
                 testAddress(implementation.toString())
-                break
+                return
+              }
 
               case 'new Arbitrum proxy':
               case 'Arbitrum proxy':
