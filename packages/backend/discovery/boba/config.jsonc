@@ -45,6 +45,12 @@
       "ignoreMethods": ["get"],
       "ignoreInWatchMode": ["getGlobalMetadata", "length"]
     },
+    "0x6D4528d192dB72E282265D6092F4B872f9Dff69e": {
+      "ignoreMethods": ["xDomainMessageSender"]
+    },
+    "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820": {
+      "ignoreMethods": ["xDomainMessageSender"]
+    },
     "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089": {
       "fields": {
         "OVM_Proposer": {
