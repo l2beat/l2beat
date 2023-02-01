@@ -121,8 +121,7 @@
         "getTotalElements",
         "getLastSequencerTimestampByChainId",
         "getTotalBatchesByChainId",
-        "getTotalElementsByChainId",
-        ""
+        "getTotalElementsByChainId"
       ]
     },
     "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": {
