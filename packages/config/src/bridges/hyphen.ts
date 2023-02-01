@@ -108,7 +108,7 @@ export const hyphen: Bridge = {
       {
         name: 'LiquidityPool',
         address: '0x2A5c2568b10A0E826BfA892Cf21BA7218310180b',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x2A5c2568b10A0E826BfA892Cf21BA7218310180b',
         ).upgradeability,
       },
@@ -116,7 +116,7 @@ export const hyphen: Bridge = {
         name: 'TokenManager',
         address: '0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168',
         description: 'Configures limits and other aspects of supported assets.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168',
         ).upgradeability,
       },
@@ -130,7 +130,7 @@ export const hyphen: Bridge = {
         address: '0xebaB24F13de55789eC1F3fFe99A285754e15F7b9',
         description:
           'Liquidity pool logic (not escrow - funds are sent to LiquitityPool).',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xebaB24F13de55789eC1F3fFe99A285754e15F7b9',
         ).upgradeability,
       },

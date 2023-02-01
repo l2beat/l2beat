@@ -275,7 +275,7 @@ export const metis: Layer2 = {
           'MVM CanonicalTransaction is a wrapper of Canonical Transactin Chain that implements optimistic data \
             availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls\
             to CanonicalTransactionChain.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a',
         ).upgradeability,
       },
@@ -314,7 +314,7 @@ export const metis: Layer2 = {
         address: '0x081D1101855bD523bA69A9794e0217F0DB6323ff',
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x081D1101855bD523bA69A9794e0217F0DB6323ff',
         ).upgradeability,
       },
@@ -335,7 +335,7 @@ export const metis: Layer2 = {
         description:
           'This contract imlements a voting scheme with which the majority of Verifiers can challenge malicious Sequencer.',
         address: '0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb',
         ).upgradeability,
       },
@@ -343,7 +343,7 @@ export const metis: Layer2 = {
         name: 'MVM_L2ChainManagerOnL1',
         address: '0xf3d58D1794f2634d6649a978f2dc093898FEEBc0',
         description: 'Contract that allows METIS_MANAGER to switch Sequencer.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xf3d58D1794f2634d6649a978f2dc093898FEEBc0',
         ).upgradeability,
       },
@@ -352,7 +352,7 @@ export const metis: Layer2 = {
         address: '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
         description:
           'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
         ).upgradeability,
       },

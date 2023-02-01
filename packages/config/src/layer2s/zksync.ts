@@ -172,7 +172,7 @@ export const zksync: Layer2 = {
         name: 'ZkSync',
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant is currently set to 21 days. 9/15 Security Council MSig can override the delay period and execute an emergency immediate upgrade.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
         ).upgradeability,
       },
@@ -180,7 +180,7 @@ export const zksync: Layer2 = {
         address: '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
         name: 'Verifier',
         description: 'Implements zkProof verification logic.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
         ).upgradeability,
       },
@@ -195,7 +195,7 @@ export const zksync: Layer2 = {
         name: 'Governance',
         description:
           'Keeps a list of block producers, NFT factories and whitelisted tokens.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01',
         ).upgradeability,
       },

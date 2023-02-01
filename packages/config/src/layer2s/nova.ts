@@ -202,7 +202,7 @@ export const nova: Layer2 = {
         name: 'Rollup',
         description:
           'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xFb209827c58283535b744575e11953DCC4bEAD88',
         ).upgradeability,
       },
@@ -211,7 +211,7 @@ export const nova: Layer2 = {
         name: 'SequencerInbox',
         description:
           'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
         ).upgradeability,
       },
@@ -220,7 +220,7 @@ export const nova: Layer2 = {
         name: 'Inbox',
         description:
           'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
         ).upgradeability,
       },
@@ -229,14 +229,14 @@ export const nova: Layer2 = {
         name: 'Bridge',
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd',
         ).upgradeability,
       },
       {
         address: '0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58',
         name: 'Outbox',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58',
         ).upgradeability,
       },
@@ -245,7 +245,7 @@ export const nova: Layer2 = {
         name: 'ChallengeManager',
         description:
           'Contract managing an interactive fraud challenge process.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xA59075221b50C598aED0Eae0bB9869639513af0D',
         ).upgradeability,
       },

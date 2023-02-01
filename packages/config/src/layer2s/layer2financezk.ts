@@ -99,7 +99,7 @@ export const layer2financezk: Layer2 = {
       {
         name: 'StarkExchange',
         address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
         ).upgradeability,
       },
@@ -127,7 +127,7 @@ export const layer2financezk: Layer2 = {
       {
         name: 'GpsStatementVerifier',
         address: '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
         ).upgradeability,
       },

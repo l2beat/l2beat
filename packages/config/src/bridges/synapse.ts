@@ -133,7 +133,7 @@ export const synapse: Bridge = {
         description:
           "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
         address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
         ).upgradeability,
       },

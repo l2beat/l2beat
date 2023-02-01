@@ -158,7 +158,7 @@ export const starknet: Layer2 = {
         description:
           'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
         address: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
         ).upgradeability,
       },
@@ -173,7 +173,7 @@ export const starknet: Layer2 = {
         name: 'Eth Bridge',
         description: 'Starkgate bridge for ETH.',
         address: '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
         ).upgradeability,
       },
@@ -192,7 +192,7 @@ export const starknet: Layer2 = {
         name: 'WBTC Bridge',
         description: 'Starkgate bridge for WBTC.',
         address: '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
         ).upgradeability,
       },
@@ -200,7 +200,7 @@ export const starknet: Layer2 = {
         name: 'USDC Bridge',
         description: 'Starkgate bridge for USDC.',
         address: '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
         ).upgradeability,
       },
@@ -208,7 +208,7 @@ export const starknet: Layer2 = {
         name: 'USDT Bridge',
         description: 'Starkgate bridge for USDT.',
         address: '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
         ).upgradeability,
       },

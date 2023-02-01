@@ -98,7 +98,7 @@ export const zkspace: Layer2 = {
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
             contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
             the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
         ).upgradeability,
       },
@@ -124,14 +124,14 @@ export const zkspace: Layer2 = {
         address: '0x83Cb1531Ec8447366501aE440478da245EcffB89',
         name: 'Governance',
         description: 'Keeps a list of block producers and whitelisted tokens.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x83Cb1531Ec8447366501aE440478da245EcffB89',
         ).upgradeability,
       },
       {
         address: '0xc07f850b60E0EEd49a09E455b01a869C25963735',
         name: 'PairManager',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xc07f850b60E0EEd49a09E455b01a869C25963735',
         ).upgradeability,
       },
@@ -140,7 +140,7 @@ export const zkspace: Layer2 = {
         name: 'ZKSeaNFT',
         description:
           'Contract managing deposits and withdrawals of NFTs to Layer2.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xc632347cc96A4400653E3514eA148630455295b5',
         ).upgradeability,
       },
@@ -148,7 +148,7 @@ export const zkspace: Layer2 = {
         address: '0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af',
         name: 'Verifier',
         description: 'zk-SNARK Plonk Verifier.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af',
         ).upgradeability,
       },
@@ -156,7 +156,7 @@ export const zkspace: Layer2 = {
         address: '0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81',
         name: 'VerifierExit',
         description: 'zk-SNARK Verifier for the escape hatch.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81',
         ).upgradeability,
       },

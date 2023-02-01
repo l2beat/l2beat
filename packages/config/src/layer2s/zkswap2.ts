@@ -86,7 +86,7 @@ export const zkswap2: Layer2 = {
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
               contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
               the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
         ).upgradeability,
       },
@@ -104,14 +104,14 @@ export const zkswap2: Layer2 = {
         address: '0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B',
         name: 'Governance',
         description: 'Keeps a list of block producers and whitelisted tokens.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B',
         ).upgradeability,
       },
       {
         address: '0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D',
         name: 'PairManager',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D',
         ).upgradeability,
       },
@@ -119,14 +119,14 @@ export const zkswap2: Layer2 = {
         address: '0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef',
         name: 'Verifier',
         description: 'zk-SNARK Plonk Verifier.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef',
         ).upgradeability,
       },
       {
         address: '0xb56878d21F6b101f48bb55f1AA9D3F624f04E513',
         name: 'VerifierExit',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0xb56878d21F6b101f48bb55f1AA9D3F624f04E513',
         ).upgradeability,
       },

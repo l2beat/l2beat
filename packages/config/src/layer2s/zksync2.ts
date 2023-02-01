@@ -158,7 +158,7 @@ export const zksync2: Layer2 = {
         address: '0x027C8a79075F96a8cdE315b495949e5f1D92f1D6',
         name: 'L1EthBridge',
         description: 'Standard bridge for depositing ETH to zkSync 2.0.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x027C8a79075F96a8cdE315b495949e5f1D92f1D6',
         ).upgradeability,
       },

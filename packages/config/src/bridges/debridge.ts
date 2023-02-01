@@ -106,7 +106,7 @@ export const debridge: Bridge = {
         description:
           'The main point of cross-chain interactions, this contract allows user to send message to other chain and claim funds when bridging back to Ethereum.',
         address: '0x43dE2d77BF8027e25dBD179B491e8d64f38398aA',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x43dE2d77BF8027e25dBD179B491e8d64f38398aA',
         ).upgradeability,
       },
@@ -115,7 +115,7 @@ export const debridge: Bridge = {
         description:
           'Contract responsible for checking off-chain signatures performed by the oracles, currently there are needed at least 8 confirmations.',
         address: '0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c',
         ).upgradeability,
       },

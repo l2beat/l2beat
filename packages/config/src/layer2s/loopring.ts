@@ -168,7 +168,7 @@ export const loopring: Layer2 = {
       name: 'Loopring MultiSig',
       accounts: [
         {
-          address: discovery.getContractByName('GnosisSafe').address.toString(),
+          address: discovery.getContract('GnosisSafe').address.toString(),
           type: 'MultiSig',
         },
       ],
@@ -178,10 +178,7 @@ export const loopring: Layer2 = {
     {
       name: 'MultiSig participants',
       accounts: discovery
-        .getValue<string[]>(
-          discovery.getContractByName('GnosisSafe').values,
-          'getOwners',
-        )
+        .getContractValue<string[]>('GnosisSafe', 'getOwners')
         .map((owner) => ({ address: owner, type: 'EOA' })),
       description:
         'These addresses are the participants of the 4/6 Loopring MultiSig.',
@@ -254,15 +251,14 @@ export const loopring: Layer2 = {
     addresses: [
       {
         name: 'ExchangeV3',
-        address: discovery.getContractByName('ExchangeV3').address.toString(),
+        address: discovery.getContract('ExchangeV3').address.toString(),
         description: 'Main ExchangeV3 contract.',
-        upgradeability:
-          discovery.getContractByName('ExchangeV3').upgradeability,
+        upgradeability: discovery.getContract('ExchangeV3').upgradeability,
       },
       {
         name: 'LoopringIOExchangeOwner',
         address: discovery
-          .getContractByName('LoopringIOExchangeOwner')
+          .getContract('LoopringIOExchangeOwner')
           .address.toString(),
         description:
           'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
@@ -270,7 +266,7 @@ export const loopring: Layer2 = {
       {
         name: 'DefaultDepositContract',
         address: discovery
-          .getContractByName('DefaultDepositContract')
+          .getContract('DefaultDepositContract')
           .address.toString(),
         description:
           'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
@@ -288,9 +284,7 @@ export const loopring: Layer2 = {
       },
       {
         name: 'AgentRegistry',
-        address: discovery
-          .getContractByName('AgentRegistry')
-          .address.toString(),
+        address: discovery.getContract('AgentRegistry').address.toString(),
         description:
           'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, \
           DestroyableWalletAgent and a number of LoopringAmmPool contracts.',

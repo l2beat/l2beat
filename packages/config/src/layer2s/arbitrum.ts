@@ -249,8 +249,8 @@ export const arbitrum: Layer2 = {
       name: 'Arbitrum MultiSig',
       accounts: [
         {
-          address: discovery.getValue<string>(
-            discovery.getContractByName('RollupProxy').upgradeability,
+          address: discovery.getContractUpgradeabilityParam(
+            'RollupProxy',
             'admin',
           ),
           type: 'MultiSig',
@@ -262,10 +262,8 @@ export const arbitrum: Layer2 = {
     {
       name: 'MultiSig participants',
       accounts: discovery
-        .getValue<string[]>(
-          discovery.getContractByAddress(
-            '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
-          ).values,
+        .getContractValue<string[]>(
+          '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
           'getOwners',
         )
         .map((ownerAddress) => ({
@@ -351,21 +349,20 @@ export const arbitrum: Layer2 = {
       {
         address: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
         // two contracts
-        // getContractByName('ProxyAdmin', discovery).address.toString() ??
+        // getContract('ProxyAdmin', discovery).address.toString() ??
         name: 'ProxyAdmin (1)',
         description:
           'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by a 4-of-6 multisig.',
       },
       {
-        address: discovery.getContractByName('RollupProxy').address.toString(),
+        address: discovery.getContract('RollupProxy').address.toString(),
         name: 'Rollup',
         description:
           'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-        upgradeability:
-          discovery.getContractByName('RollupProxy').upgradeability,
+        upgradeability: discovery.getContract('RollupProxy').upgradeability,
       },
       {
-        // address: getContractByName(
+        // address: getContract(
         //   'SequencerInbox',
         //   discovery,
         // ).address.toString(),
@@ -373,37 +370,31 @@ export const arbitrum: Layer2 = {
         name: 'SequencerInbox',
         description:
           'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
         ).upgradeability,
       },
       {
-        address: discovery.getContractByName('Inbox').address.toString(),
+        address: discovery.getContract('Inbox').address.toString(),
         name: 'Inbox',
         description:
           'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
-        upgradeability: discovery.getContractByName('Inbox').upgradeability,
+        upgradeability: discovery.getContract('Inbox').upgradeability,
       },
       {
         address: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
         name: 'Bridge',
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-        upgradeability: discovery.getContractByAddress(
+        upgradeability: discovery.getContract(
           '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
         ).upgradeability,
       },
       {
-        address: discovery.getValue<string>(
-          discovery.getContractByName('RollupProxy').values,
-          'outbox',
-        ),
+        address: discovery.getContractValue<string>('RollupProxy', 'outbox'),
         name: 'Outbox',
-        upgradeability: discovery.getContractByAddress(
-          discovery.getValue<string>(
-            discovery.getContractByName('RollupProxy').values,
-            'outbox',
-          ),
+        upgradeability: discovery.getContract(
+          discovery.getContractValue<string>('RollupProxy', 'outbox'),
         ).upgradeability,
       },
       {
@@ -414,23 +405,17 @@ export const arbitrum: Layer2 = {
           'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
       },
       {
-        address: discovery
-          .getContractByName('L1GatewayRouter')
-          .address.toString(),
+        address: discovery.getContract('L1GatewayRouter').address.toString(),
         name: 'L1GatewayRouter',
         description: 'Router managing token <--> gateway mapping.',
-        upgradeability:
-          discovery.getContractByName('L1GatewayRouter').upgradeability,
+        upgradeability: discovery.getContract('L1GatewayRouter').upgradeability,
       },
       {
-        address: discovery
-          .getContractByName('L1ERC20Gateway')
-          .address.toString(),
+        address: discovery.getContract('L1ERC20Gateway').address.toString(),
         name: 'L1ERC20Gateway',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-        upgradeability:
-          discovery.getContractByName('L1ERC20Gateway').upgradeability,
+        upgradeability: discovery.getContract('L1ERC20Gateway').upgradeability,
       },
       {
         address: '0xcEe284F754E854890e311e3280b767F80797180d',
