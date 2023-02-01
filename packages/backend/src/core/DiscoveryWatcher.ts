@@ -1,5 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { ProjectParameters, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
@@ -8,7 +8,6 @@ import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
-import { ProjectParameters } from './discovery/types'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 

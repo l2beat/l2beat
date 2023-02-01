@@ -1,8 +1,7 @@
 import { Logger } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { ProjectParameters, UnixTime } from '@l2beat/types'
 import { DiscoveryWatcherRow } from 'knex/types/tables'
 
-import { ProjectParameters } from '../../../core/discovery/types'
 import { Metrics } from '../../../Metrics'
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'

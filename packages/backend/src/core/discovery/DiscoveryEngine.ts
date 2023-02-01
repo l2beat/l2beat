@@ -1,4 +1,5 @@
 import { MainnetEtherscanClient } from '@l2beat/common'
+import { ProjectParameters } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { discover } from './discover'
@@ -6,7 +7,6 @@ import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { parseDiscoveryOutput } from './saveDiscoveryResult'
-import { ProjectParameters } from './types'
 
 export class DiscoveryEngine {
   constructor(
