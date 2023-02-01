@@ -2,7 +2,8 @@ import { json } from '@l2beat/types'
 import chalk from 'chalk'
 import { inspect } from 'util'
 
-import { LogThrottler, LogThrottlerOptions } from './LogThrottler'
+// eslint-disable-next-line import/no-cycle
+import { LogThrottler } from './LogThrottler'
 export enum LogLevel {
   NONE = 0,
   ERROR = 1,
@@ -14,7 +15,6 @@ export enum LogLevel {
 export interface LoggerOptions {
   logLevel: LogLevel
   service?: string
-  throttlerOptions?: LogThrottlerOptions
   format: 'pretty' | 'json'
   reportError?: (...args: unknown[]) => void
 }
@@ -22,13 +22,10 @@ export interface LoggerOptions {
 export type LoggerParameters = Record<string, json>
 
 export class Logger {
-  private readonly logThrottler: LogThrottler | undefined
-
-  constructor(private readonly options: LoggerOptions) {
-    if (options.throttlerOptions) {
-      this.logThrottler = new LogThrottler(options.throttlerOptions)
-    }
-  }
+  constructor(
+    private readonly options: LoggerOptions,
+    private readonly logThrottler?: LogThrottler,
+  ) {}
 
   static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })
   static DEBUG = new Logger({ logLevel: LogLevel.DEBUG, format: 'pretty' })
@@ -38,7 +35,7 @@ export class Logger {
   }
 
   configure(options: Partial<LoggerOptions>) {
-    return new Logger({ ...this.options, ...options })
+    return new Logger({ ...this.options, ...options }, this.logThrottler)
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types

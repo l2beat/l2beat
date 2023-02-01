@@ -1,4 +1,4 @@
-import { HttpClient, Logger } from '@l2beat/common'
+import { HttpClient, Logger, LogThrottler } from '@l2beat/common'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
@@ -18,7 +18,11 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config) {
-    const logger = new Logger({ ...config.logger, reportError })
+    const logThrottler = config.logThrottler
+      ? new LogThrottler(config.logThrottler, config.logger)
+      : undefined
+
+    const logger = new Logger({ ...config.logger, reportError }, logThrottler)
 
     const database = new Database(
       config.database ? config.database.connection : undefined,

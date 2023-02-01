@@ -1,4 +1,5 @@
-import { Logger, LogLevel } from './Logger'
+// eslint-disable-next-line import/no-cycle
+import { Logger, LoggerOptions } from './Logger'
 
 interface LogInfo {
   count: number
@@ -6,42 +7,41 @@ interface LogInfo {
   isThrottling: boolean
 }
 
-export interface LogThrottlerOptions {
+export interface LogThrottlerConfig {
   threshold: number
   thresholdTime: number
   throttleTime: number
 }
 
 export class LogThrottler {
-  private readonly DEFAULT_LOG_INFO = {
-    count: 0,
-    isThrottling: false,
-    throttleCount: 0,
-  }
-
   private readonly recentLogs: Map<string, LogInfo>
-  private readonly logger: Logger = new Logger({
-    logLevel: LogLevel.INFO,
-    format: 'pretty',
-    service: LogThrottler.name,
-  })
+  private readonly logger: Logger
 
-  constructor(private readonly options: LogThrottlerOptions) {
+  constructor(
+    private readonly config: LogThrottlerConfig,
+    loggerConfig: LoggerOptions,
+  ) {
     this.recentLogs = new Map<string, LogInfo>()
-    setInterval(() => this.clearCount(), options.thresholdTime)
+    this.logger = new Logger(loggerConfig).for(LogThrottler.name)
+
+    setInterval(() => this.clearCount(), config.thresholdTime)
   }
 
   add(logKey: string): void {
     let logInfo = this.recentLogs.get(logKey)
 
     if (!logInfo) {
-      logInfo = this.DEFAULT_LOG_INFO
+      logInfo = {
+        count: 0,
+        isThrottling: false,
+        throttleCount: 0,
+      }
       this.recentLogs.set(logKey, logInfo)
     }
 
     this.incrementCount(logInfo)
 
-    if (!logInfo.isThrottling && logInfo.count >= this.options.threshold) {
+    if (!logInfo.isThrottling && logInfo.count >= this.config.threshold) {
       this.throttle(logKey, logInfo)
     }
   }
@@ -57,13 +57,13 @@ export class LogThrottler {
       if (logInfo.throttleCount !== 0) {
         this.logger.info(
           `"${logKey}" was logged ${logInfo.throttleCount} times during last ${
-            this.options.throttleTime / 1000
+            this.config.throttleTime / 1000
           } seconds`,
         )
       }
       logInfo.isThrottling = false
       logInfo.throttleCount = 0
-    }, this.options.throttleTime)
+    }, this.config.throttleTime)
   }
 
   private incrementCount(logInfo: LogInfo): void {
