@@ -5,6 +5,7 @@ import waitForExpect from 'wait-for-expect'
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
+import { createMockTvlMetrics } from '../../test/mocks/Metrics'
 import { BALANCES, NOW, PRICES, PROJECTS } from '../../test/projects'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
@@ -48,6 +49,8 @@ describe(ReportUpdater.name, () => {
     NOW.add(1, 'hours'),
   )
 
+  const mockMetrics = createMockTvlMetrics()
+
   describe(ReportUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
       const priceUpdater = mock<PriceUpdater>({
@@ -82,6 +85,7 @@ describe(ReportUpdater.name, () => {
         mock<Clock>(),
         PROJECTS,
         Logger.SILENT,
+        mockMetrics,
       )
 
       await reportUpdater.update(NOW.add(1, 'hours'))
@@ -152,6 +156,7 @@ describe(ReportUpdater.name, () => {
         clock,
         PROJECTS,
         Logger.SILENT,
+        mockMetrics,
       )
 
       await reportUpdater.start()

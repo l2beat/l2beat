@@ -2,6 +2,7 @@ import { assert, Logger, TaskQueue } from '@l2beat/common'
 import { AssetId, EthereumAddress, Hash256, UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
+import { Metrics } from '../../Metrics'
 import {
   BalanceRecord,
   BalanceRepository,
@@ -32,12 +33,16 @@ export class BalanceUpdater {
     private readonly clock: Clock,
     private readonly projects: BalanceProject[],
     private readonly logger: Logger,
+    metrics: Metrics,
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getBalanceConfigHash(projects)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
+      {
+        metrics: metrics.forTvl(this),
+      },
     )
   }
 

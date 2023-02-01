@@ -1,0 +1,35 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "allbridge",
+  "initialAddresses": [
+    "0xA314330482f325D38A83B492EF6B006224a3bea9",
+    "0xBBbD1BbB4f9b936C3604906D7592A644071dE884"
+  ],
+  "overrides": {
+    "0xA314330482f325D38A83B492EF6B006224a3bea9": {
+      "fields": {
+        "DAI_POOL": {
+          "type": "call",
+          "method": "pools",
+          "args": [
+            "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f"
+          ]
+        },
+        "USDC_POOL": {
+          "type": "call",
+          "method": "pools",
+          "args": [
+            "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+          ]
+        },
+        "USDT_POOL": {
+          "type": "call",
+          "method": "pools",
+          "args": [
+            "0x000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7"
+          ]
+        }
+      }
+    }
+  }
+}
