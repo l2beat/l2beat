@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
-import {  RatingTooltipPopup } from './TooltipPopup'
+import { RatingTooltipPopup } from './TooltipPopup'
 
 export default {
   title: 'Components/Tooltip',
@@ -28,14 +28,12 @@ export function RatingTooltip() {
     },
     modifier: {
       score: '-',
-      items: ['Validators are behind a whitelist']
+      items: ['Validators are behind a whitelist'],
     },
     thingsToImprove: {
       improvedScore: 'A',
-      requirements: [
-        'There should be no instant upgradeability'
-      ]
-    }
+      requirements: ['There should be no instant upgradeability'],
+    },
   }
 
   return (

@@ -30,7 +30,7 @@ export function getProps(
       tvlWeeklyChange,
       tvlEndpoint,
       tvlView: getScalingTvlView(
-        config, 
+        config,
         ordering,
         tvlApiResponse,
         tvl,
