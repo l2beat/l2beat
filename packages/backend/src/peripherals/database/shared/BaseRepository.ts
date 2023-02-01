@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/common'
+import { Logger, wrapAndMeasure } from '@l2beat/common'
 import { Knex } from 'knex'
 
 import { Metrics, RepositoryHistogram } from '../../../Metrics'
@@ -201,14 +201,13 @@ export abstract class BaseRepository {
     method: T,
     log: (result: Awaited<ReturnType<T>>) => void,
   ): T {
+    const measured = wrapAndMeasure(method.bind(this), {
+      histogram: this.histogram,
+      labels: { repository: this.constructor.name, method: method.name },
+    })
     /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
     const fn = async (...args: Parameters<T>) => {
-      const start = Date.now()
-      const result: Awaited<ReturnType<T>> = await method.call(this, ...args)
-      const timeMs = Date.now() - start
-      this.histogram
-        .labels({ repository: this.constructor.name, method: method.name })
-        .observe(timeMs / 1000)
+      const result: Awaited<ReturnType<T>> = await measured(...args)
       log(result)
       return result
     }

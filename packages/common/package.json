@@ -27,5 +27,7 @@
     "node-fetch": "^2.6.7",
     "zod": "^3.20.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "prom-client": "^14.1.0"
+  }
 }
