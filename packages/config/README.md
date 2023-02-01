@@ -26,7 +26,7 @@ CONFIG_ALCHEMY_API_KEY=
 - `yarn lint` - check if the code satisfies the eslint configuration
 - `yarn test` - run tests
 - `yarn typecheck` - check if the code satisfies the typescript compiler
-- `check-verified-contracts` - verify whether source code of given address is verified on Etherscan
+- `yarn check-verified-contracts` - verify whether source code of given address is verified on Etherscan
 
 ### Tests dependencies
 

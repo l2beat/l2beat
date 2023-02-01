@@ -2,10 +2,11 @@ import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 export interface PageLinkProps {
-  large?: boolean
-  selected?: boolean
   href: string
   children: ReactNode
+  selected?: boolean
+  newTab?: boolean
+  large?: boolean
 }
 
 export function PageLink(props: PageLinkProps) {
@@ -18,6 +19,7 @@ export function PageLink(props: PageLinkProps) {
           'pt-0.5 text-pink-900 dark:text-pink-200 border-current border-b-2',
       )}
       href={props.href}
+      target={props.newTab ? '_blank' : undefined}
     >
       {props.children}
     </a>

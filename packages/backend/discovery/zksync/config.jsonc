@@ -18,7 +18,14 @@
           "slot": 19,
           "returnType": "address"
         }
-      }
+      },
+      "ignoreInWatchMode": [
+        "firstPriorityRequestId",
+        "totalBlocksCommitted",
+        "totalBlocksExecuted",
+        "totalBlocksProven",
+        "totalOpenPriorityRequests"
+      ]
     },
     "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": {
       "fields": {
@@ -41,11 +48,15 @@
         "tokenByIndex",
         "getApproved",
         "ownerOf"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
       // Dai
       "ignoreDiscovery": true
+    },
+    "0xE24f4870Ab85DE8E356C5fC56138587206c70d99": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

@@ -1,0 +1,181 @@
+{
+  "name": "allbridge",
+  "blockNumber": 16526407,
+  "contracts": [
+    {
+      "name": "Bridge",
+      "address": "0xA314330482f325D38A83B492EF6B006224a3bea9",
+      "code": "https://etherscan.deth.net/address/0xA314330482f325D38A83B492EF6B006224a3bea9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "allbridgeMessenger": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
+        "chainId": 1,
+        "DAI_POOL": "0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
+        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
+        "USDC_POOL": "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
+        "USDT_POOL": "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
+        "wormholeMessenger": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
+      "code": "https://etherscan.deth.net/address/0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
+      "code": "https://etherscan.deth.net/address/0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
+      "code": "https://etherscan.deth.net/address/0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
+      "code": "https://etherscan.deth.net/address/0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
+      "code": "https://etherscan.deth.net/address/0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "Bridge",
+      "address": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+      "code": "https://etherscan.deth.net/address/0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "BRIDGE_MANAGER": "0x77eacfcb6207f26b72edc4f15c48e5518843e7e98ccfd7e0d6c16f92ed1fef8d",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "feeCollector": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
+        "feeOracle": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
+        "STOP_MANAGER": "0x55ca0725c70a9ecebe86dd2b8b3a414983f6cb638e1a0fa17c64bbdd59b4d4c1",
+        "TOKEN_MANAGER": "0x593fb413ec9f9ad9f53f309300b515310ff474591268ca3cbe9752fd88eb76a0",
+        "unlockSigner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
+        "validator": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
+      "code": "https://etherscan.deth.net/address/0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
+      "code": "https://etherscan.deth.net/address/0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    }
+  ],
+  "eoas": [
+    "0x01a494079DCB715f622340301463cE50cd69A4D0",
+    "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
+  ],
+  "abis": {
+    "0xA314330482f325D38A83B492EF6B006224a3bea9": [
+      "constructor(uint8 _chainId, address _allbridgeMessenger, address _wormholeMessenger, address _gasOracle)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Received(address, uint256)",
+      "event TokensSent(uint256 amount, bytes32 recipient, uint8 destinationChainId, bytes32 receiveToken, uint256 nonce, uint8 messenger)",
+      "function addBridgeToken(uint8 chainId_, bytes32 tokenAddress_)",
+      "function addPool(address pool, bytes32 token)",
+      "function allbridgeMessenger() view returns (address)",
+      "function chainId() view returns (uint8)",
+      "function gasUsage(uint8) view returns (uint256)",
+      "function getMessageCost(uint8 chainId, uint8 protocol) view returns (uint256)",
+      "function getTransactionCost(uint8 chainId_) view returns (uint256)",
+      "function hasReceivedMessage(bytes32 message, uint8 protocol) view returns (bool)",
+      "function hasSentMessage(bytes32 message) view returns (bool)",
+      "function hashMessage(uint256 amount, bytes32 recipient, uint8 sourceChainId, uint8 destinationChainId, bytes32 receiveToken, uint256 nonce, uint8 messenger) pure returns (bytes32)",
+      "function otherBridgeTokens(uint8, bytes32) view returns (bool)",
+      "function otherBridges(uint8) view returns (bytes32)",
+      "function owner() view returns (address)",
+      "function pools(bytes32) view returns (address)",
+      "function processedMessages(bytes32) view returns (bool)",
+      "function receiveTokens(uint256 amount, bytes32 recipient, uint8 sourceChainId, bytes32 receiveToken, uint256 nonce, uint8 messenger)",
+      "function registerBridge(uint8 chainId_, bytes32 bridgeAddress_)",
+      "function removeBridgeToken(uint8 chainId_, bytes32 tokenAddress_)",
+      "function renounceOwnership()",
+      "function sentMessages(bytes32) view returns (bool)",
+      "function setAllbridgeMessenger(address _allbridgeMessenger)",
+      "function setGasOracle(address gasOracle_)",
+      "function setGasUsage(uint8 chainId_, uint256 gasUsage_)",
+      "function setWormholeMessenger(address _wormholeMessenger)",
+      "function swap(uint256 amount, bytes32 token, bytes32 receiveToken, address recipient)",
+      "function swapAndBridge(bytes32 token, uint256 amount, bytes32 recipient, uint8 destinationChainId, bytes32 receiveToken, uint256 nonce, uint8 messenger) payable",
+      "function transferOwnership(address newOwner)",
+      "function withdrawGasTokens(uint256 amount)",
+      "function wormholeMessenger() view returns (address)"
+    ],
+    "0xBBbD1BbB4f9b936C3604906D7592A644071dE884": [
+      "constructor(address feeCollector_, address admin_, address validator_, address feeOracle_, address unlockSigner_)",
+      "event Received(address indexed recipient, address token, uint256 amount, uint128 indexed lockId, bytes4 source)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Sent(bytes4 tokenSource, bytes32 tokenSourceAddress, address sender, bytes32 indexed recipient, uint256 amount, uint128 indexed lockId, bytes4 destination)",
+      "function BRIDGE_MANAGER() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function STOP_MANAGER() view returns (bytes32)",
+      "function TOKEN_MANAGER() view returns (bytes32)",
+      "function addToken(bytes4 tokenSource, bytes32 tokenSourceAddress, address nativeTokenAddress, uint8 tokenType)",
+      "function feeCollector() view returns (address)",
+      "function feeOracle() view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function lock(uint128 lockId, address tokenAddress, bytes32 recipient, bytes4 destination, uint256 amount)",
+      "function lockBase(uint128 lockId, address wrappedBaseTokenAddress, bytes32 recipient, bytes4 destination) payable",
+      "function removeToken(bytes4 tokenSource, bytes32 tokenSourceAddress, address newAuthority)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setFeeCollector(address _feeCollector)",
+      "function setFeeOracle(address _feeOracle)",
+      "function setTokenStatus(address tokenAddress, uint8 status)",
+      "function setUnlockSigner(address _unlockSigner)",
+      "function setValidator(address _validator)",
+      "function startBridge()",
+      "function stopBridge()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function tokenInfos(address) view returns (bytes4 tokenSource, bytes32 tokenSourceAddress, uint8 precision, uint8 tokenType, uint8 tokenStatus)",
+      "function tokenSourceMap(bytes4, bytes32) view returns (address)",
+      "function unlock(uint128 lockId, address recipient, uint256 amount, bytes4 lockSource, bytes4 tokenSource, bytes32 tokenSourceAddress, bytes signature)",
+      "function unlockSigner() view returns (address)",
+      "function validator() view returns (address)"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "aztec",
-  "blockNumber": 16154924,
+  "blockNumber": 16534856,
   "contracts": [
     {
       "name": "RollupProcessor",
@@ -116,7 +116,7 @@
       "values": {
         "convertConstant": 3155360,
         "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
-        "owner": "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
+        "owner": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
         "reimburseConstant": 678600,
         "rollupProcessor": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
         "router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",

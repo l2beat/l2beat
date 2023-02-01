@@ -33,7 +33,7 @@ export class StatusController {
     const firstHour = this.getFirstHour(from)
     const lastHour = to ? to : this.clock.getLastHour()
 
-    const pricesByToken = await this.priceRepository.getLatestByTokenBetween(
+    const pricesByToken = await this.priceRepository.findLatestByTokenBetween(
       firstHour,
       lastHour,
     )

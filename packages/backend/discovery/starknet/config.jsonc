@@ -16,7 +16,12 @@
           "tag": "STARKNET_1.0_INIT_VERIFIER_ADDRESS",
           "returnType": "address"
         }
-      }
+      },
+      "ignoreInWatchMode": [
+        "l1ToL2MessageNonce",
+        "stateBlockNumber",
+        "stateRoot"
+      ]
     },
     "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": {
       "fields": {

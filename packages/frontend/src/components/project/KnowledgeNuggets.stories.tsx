@@ -19,12 +19,6 @@ const knowledgeNuggetsExample = [
     thumbnailUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNmfsMWOpFJnj9IJ_6FHILHXGKduuZoCIpnA&usqp=CAU',
   },
-  {
-    title: 'Layer Zero contracts',
-    url: 'https://www.somelink.com',
-    thumbnailUrl:
-      'https://i0.wp.com/marketbusinessnews.com/wp-content/uploads/2022/09/Ethereum-Thumbnail-403.jpg',
-  },
 ]
 
 export function KnowledgeNuggets() {
