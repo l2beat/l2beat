@@ -1,7 +1,7 @@
 import { KnowledgeNugget } from '@l2beat/config'
 import React from 'react'
 
-import { ArrowRightIcon } from '../icons/Arrows'
+import { ArrowRightIcon } from '../icons'
 import { OutLink } from '../OutLink'
 
 export interface KnowledgeNuggetProps {
@@ -18,20 +18,15 @@ export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
         />
       </div>
       <div className="flex-col col-span-3 transition-all group-hover:translate-x-0.5">
-        <span className="font-bold text-lg leading-none">
+        <p className="font-bold text-lg leading-tight">
           {knowledgeNugget.title}
-        </span>
+        </p>
         <OutLink
-          className="text-sm underline font-bold text-purple-900 dark:text-blue-475"
+          className="text-sm underline font-bold text-link flex flex-wrap items-center gap-1"
           href={knowledgeNugget.url}
         >
-          <div className="flex flex-wrap">
-            Learn more
-            <ArrowRightIcon
-              className="fill-purple-900 dark:fill-blue-475"
-              transform="translate(4,3.2)"
-            />
-          </div>
+          Learn more
+          <ArrowRightIcon className="fill-link" />
         </OutLink>
       </div>
     </div>
