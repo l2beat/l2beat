@@ -33,7 +33,7 @@ export const cBridge: Bridge = {
       {
         address: '0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820',
         sinceTimestamp: new UnixTime(1638346811),
-        tokens: ['USDC', 'WETH', 'USDT', 'MASK', 'BUSD'],
+        tokens: ['ETH', 'USDC', 'WETH', 'USDT', 'MASK', 'BUSD', 'LYRA'],
       },
       // token bridge
       {
@@ -49,7 +49,7 @@ export const cBridge: Bridge = {
           'WBTC',
           'CELR',
           'FXS',
-          // 'WXT',
+          'WXT',
         ],
       },
     ],
