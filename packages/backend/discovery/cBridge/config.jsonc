@@ -22,7 +22,8 @@
           "removeEvent": "GovernorRemoved",
           "removeKey": "account"
         }
-      }
+      },
+      "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"]
     },
     "0xB37D31b2A74029B5951a2778F959282E2D518595": {
       "fields": {

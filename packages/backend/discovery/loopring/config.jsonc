@@ -4,7 +4,15 @@
   "initialAddresses": ["0x674bdf20A0F284D710BC40872100128e2d66Bd3f"],
   "overrides": {
     "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": {
-      "ignoreMethods": ["getBlockInfo"]
+      "ignoreMethods": ["getBlockInfo"],
+      "ignoreInWatchMode": [
+        "getBlockHeight",
+        "getMerkleRoot",
+        "getProtocolFeeValues"
+      ]
+    },
+    "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

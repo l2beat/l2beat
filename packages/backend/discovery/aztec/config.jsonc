@@ -8,6 +8,22 @@
         "getSupportedAsset",
         "getSupportedAssets",
         "supportedAssets"
+      ],
+      "ignoreInWatchMode": [
+        "dataRoot",
+        "dataSize",
+        "getEscapeHatchStatus",
+        "getTotalDeposited",
+        "getTotalFees",
+        "getTotalPendingDeposit",
+        "getTotalWithdrawn",
+        "nextRollupId",
+        "nullRoot",
+        "rootRoot",
+        "totalDeposited",
+        "totalFees",
+        "totalPendingDeposit",
+        "totalWithdrawn"
       ]
     },
     "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": {
@@ -21,6 +37,12 @@
     "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       // WETH9
       "ignoreDiscovery": true
+    },
+    "0xE298a76986336686CC3566469e3520d23D1a8aaD": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": {
+      "ignoreInWatchMode": ["txFeeBalance"]
     }
   }
 }

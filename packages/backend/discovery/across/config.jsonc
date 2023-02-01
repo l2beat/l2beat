@@ -31,7 +31,8 @@
           "method": "crossChainContracts",
           "args": [42161]
         }
-      }
+      },
+      "ignoreInWatchMode": ["rootBundleProposal"]
     },
     "0xB524735356985D2f267FA010D681f061DfF03715": {
       "ignoreInWatchMode": ["nonce"]

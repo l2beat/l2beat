@@ -114,7 +114,15 @@
           "method": "getTotalElementsByChainId",
           "args": ["{{ DEFAULT_CHAINID }}"]
         }
-      }
+      },
+      "ignoreInWatchMode": [
+        "getLastSequencerTimestamp",
+        "getTotalBatches",
+        "getTotalElements",
+        "getLastSequencerTimestampByChainId",
+        "getTotalBatchesByChainId",
+        "getTotalElementsByChainId"
+      ]
     },
     "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": {
       "ignoreMethods": ["get"],
@@ -129,7 +137,13 @@
           "method": "lengthByChainId",
           "args": ["{{ DEFAULT_CHAINID }}"]
         }
-      }
+      },
+      "ignoreInWatchMode": [
+        "getGlobalMetadata",
+        "length",
+        "getGlobalMetadataByChainId",
+        "lengthByChainId"
+      ]
     },
     "0x081D1101855bD523bA69A9794e0217F0DB6323ff": {
       "ignoreMethods": ["xDomainMessageSender"]
