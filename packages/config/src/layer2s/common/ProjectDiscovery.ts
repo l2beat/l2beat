@@ -1,5 +1,5 @@
 import { ContractParameters, ProjectParameters } from '@l2beat/types'
-import { readFileSync } from 'fs'
+import fs from 'fs'
 import path from 'path'
 export class ProjectDiscovery {
   private readonly discovery: ProjectParameters
@@ -8,12 +8,12 @@ export class ProjectDiscovery {
   }
 
   private getDiscoveryJson(project: string): ProjectParameters {
-    const file = readFileSync(
+    const discoveryFile = fs.readFileSync(
       path.resolve(`../backend/discovery/${project}/discovered.json`),
-      { encoding: 'utf-8' },
+      'utf-8',
     )
 
-    return JSON.parse(file) as ProjectParameters
+    return JSON.parse(discoveryFile) as ProjectParameters
   }
 
   getContractByName(name: string): ContractParameters {
