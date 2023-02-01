@@ -1,0 +1,75 @@
+import { Logger } from '@l2beat/common'
+import { UnixTime } from '@l2beat/types'
+import { DiscoveryWatcherRow } from 'knex/types/tables'
+
+import { ProjectParameters } from '../../../core/discovery/types'
+import { Metrics } from '../../../Metrics'
+import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
+import { Database } from '../shared/Database'
+
+export interface DiscoveryWatcherRecord {
+  projectName: string
+  blockNumber: number
+  timestamp: UnixTime
+  discovery: ProjectParameters
+}
+export class DiscoveryWatcherRepository extends BaseRepository {
+  constructor(database: Database, logger: Logger, metrics: Metrics) {
+    super(database, logger, metrics)
+
+    this.autoWrap<CheckConvention<DiscoveryWatcherRepository>>(this)
+  }
+
+  async findLatest(name: string): Promise<DiscoveryWatcherRecord | undefined> {
+    const knex = await this.knex()
+    const row = await knex('discovery_watcher')
+      .where('project_name', name)
+      .first()
+
+    return row ? toRecord(row) : undefined
+  }
+
+  async addOrUpdate(record: DiscoveryWatcherRecord): Promise<string> {
+    const knex = await this.knex()
+    const row = toRow(record)
+
+    await knex('discovery_watcher')
+      .insert(row)
+      .onConflict('project_name')
+      .merge()
+
+    return `${
+      record.projectName
+    } | block_number:  ${record.blockNumber.toString()}`
+  }
+
+  async getAll(): Promise<DiscoveryWatcherRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('discovery_watcher')
+
+    return rows.map(toRecord)
+  }
+
+  async deleteAll() {
+    const knex = await this.knex()
+    return await knex('discovery_watcher').delete()
+  }
+}
+
+function toRecord(row: DiscoveryWatcherRow): DiscoveryWatcherRecord {
+  return {
+    projectName: row.project_name,
+    blockNumber: row.block_number,
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
+    discovery: row.discovery_json_blob as unknown as ProjectParameters,
+  }
+}
+
+function toRow(record: DiscoveryWatcherRecord): DiscoveryWatcherRow {
+  return {
+    project_name: record.projectName,
+    block_number: record.blockNumber,
+    unix_timestamp: record.timestamp.toDate(),
+    discovery_json_blob: JSON.stringify(record.discovery),
+  }
+}

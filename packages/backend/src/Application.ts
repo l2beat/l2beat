@@ -23,6 +23,14 @@ export class Application {
       config.database ? config.database.connection : undefined,
       config.name,
       logger,
+      {
+        minConnectionPoolSize: config.database
+          ? config.database.connectionPoolSize.min
+          : undefined,
+        maxConnectionPoolSize: config.database
+          ? config.database.connectionPoolSize.max
+          : undefined,
+      },
     )
     const http = new HttpClient()
     const clock = new Clock(
@@ -38,7 +46,14 @@ export class Application {
       createTvlModule(config, logger, http, database, clock, metrics),
       createActivityModule(config, logger, http, database, clock, metrics),
       createDiscoveryModule(config, logger, http),
-      createDiscoveryWatcherModule(config, logger, http, clock),
+      createDiscoveryWatcherModule(
+        config,
+        logger,
+        http,
+        database,
+        clock,
+        metrics,
+      ),
     ]
 
     const apiServer =

@@ -1,10 +1,16 @@
 import { mock } from '@l2beat/common'
+import { Histogram } from 'prom-client'
 
 import { Config } from '../../config'
 import { Metrics } from '../../Metrics'
-import { createMockHistogram } from '../../test/mocks/Metrics'
 import { createTestApiServer } from '../../test/testApiServer'
 import { createMetricsRouter } from './MetricsRouter'
+
+export function createMockHistogram() {
+  return mock<Histogram>({
+    labels: () => mock<Histogram>({ observe: () => {} }),
+  })
+}
 
 describe(createMetricsRouter.name, () => {
   describe('can be configured', () => {

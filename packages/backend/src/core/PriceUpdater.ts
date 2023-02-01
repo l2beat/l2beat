@@ -1,7 +1,8 @@
 import { assert, Logger, TaskQueue } from '@l2beat/common'
-import { AssetId, UnixTime } from '@l2beat/types'
+import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
+import { Metrics } from '../Metrics'
 import { Token } from '../model'
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
@@ -21,11 +22,16 @@ export class PriceUpdater {
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly logger: Logger,
+    metrics: Metrics,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
       () => this.update(),
       this.logger.for('taskQueue'),
+
+      {
+        metrics: metrics.forTvl(this),
+      },
     )
   }
 
@@ -53,9 +59,9 @@ export class PriceUpdater {
     const boundaries = await this.priceRepository.findDataBoundaries()
 
     const results = await Promise.allSettled(
-      this.tokens.map(({ id: assetId }) => {
+      this.tokens.map(({ id: assetId, address }) => {
         const boundary = boundaries.get(assetId)
-        return this.updateToken(assetId, boundary, from, to)
+        return this.updateToken(assetId, boundary, from, to, address)
       }),
     )
     const error = results.find((x) => x.status === 'rejected')
@@ -74,22 +80,23 @@ export class PriceUpdater {
     boundary: DataBoundary | undefined,
     from: UnixTime,
     to: UnixTime,
+    address?: EthereumAddress,
   ) {
     let hours = 0
     const hourDiff = (from: UnixTime, to: UnixTime) =>
       Math.floor((to.toNumber() - from.toNumber()) / 3_600) + 1
     if (boundary === undefined) {
-      await this.fetchAndSave(assetId, from, to)
+      await this.fetchAndSave(assetId, from, to, address)
       hours += hourDiff(from, to)
     } else {
       if (from.lt(boundary.earliest)) {
         const lastUnknown = boundary.earliest.add(-1, 'hours')
-        await this.fetchAndSave(assetId, from, lastUnknown)
+        await this.fetchAndSave(assetId, from, lastUnknown, address)
         hours += hourDiff(from, lastUnknown)
       }
       if (to.gt(boundary.latest)) {
         const firstUnknown = boundary.latest.add(1, 'hours')
-        await this.fetchAndSave(assetId, firstUnknown, to)
+        await this.fetchAndSave(assetId, firstUnknown, to, address)
         hours += hourDiff(firstUnknown, to)
       }
     }
@@ -109,7 +116,12 @@ export class PriceUpdater {
     return coingeckoId
   }
 
-  async fetchAndSave(assetId: AssetId, from: UnixTime, to: UnixTime) {
+  async fetchAndSave(
+    assetId: AssetId,
+    from: UnixTime,
+    to: UnixTime,
+    address?: EthereumAddress,
+  ) {
     const coingeckoId = this.getCoingeckoId(assetId)
     const prices = await this.coingeckoQueryService.getUsdPriceHistory(
       coingeckoId,
@@ -117,6 +129,7 @@ export class PriceUpdater {
       from.add(-7, 'days'),
       to,
       'hourly',
+      address,
     )
     const priceRecords: PriceRecord[] = prices
       .filter((x) => x.timestamp.gte(from))

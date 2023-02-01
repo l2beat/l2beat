@@ -9,10 +9,17 @@ export function createMockRepoMetrics() {
   })
 }
 
-export function createMockHistogram() {
-  return mock<Histogram>({
-    labels: () => mock<Histogram>({ observe: () => {} }),
+export function createMockTvlMetrics() {
+  return mock<Metrics>({
+    forTvl: () => ({
+      labels: { updater: 'updater' },
+      histogram: createMockHistogram(),
+    }),
   })
+}
+
+export function createMockHistogram() {
+  return mock<Histogram>({ startTimer: () => () => 0 })
 }
 
 export function createMockGauge() {

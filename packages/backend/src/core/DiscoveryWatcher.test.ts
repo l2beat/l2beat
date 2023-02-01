@@ -3,12 +3,14 @@ import { EthereumAddress } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
 
+import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryConfig } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
+import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
 import { ContractParameters } from './discovery/types'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { DiscoveryWatcher } from './DiscoveryWatcher'
@@ -76,7 +78,27 @@ const DISCOVERED: AnalyzedData[] = [
   mockDiscovered(COMMITTED[1]),
 ]
 
-const expectedMessage = diffToMessages(PROJECT_A, [
+const DISCOVERED_PARSED = parseDiscoveryOutput(
+  DISCOVERED,
+  PROJECT_A,
+  BLOCK_NUMBER,
+)
+
+const [EXPECTED_MESSAGE_A] = diffToMessages(PROJECT_A, [
+  {
+    address: ADDRESS_A,
+    name: NAME_A,
+    diff: [
+      {
+        key: 'values.a',
+        before: 'true',
+        after: 'false',
+      },
+    ],
+  },
+])
+
+const [EXPECTED_MESSAGE_B] = diffToMessages(PROJECT_B, [
   {
     address: ADDRESS_A,
     name: NAME_A,
@@ -98,11 +120,9 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const configReader = mock<ConfigReader>({
-        readDiscovery: mockFn()
-          .resolvesToOnce({
-            contracts: COMMITTED,
-          })
-          .resolvesToOnce({ contracts: [] }),
+        readDiscovery: mockFn().resolvesTo({
+          contracts: COMMITTED,
+        }),
         readAllConfigs: mockFn().resolvesTo([
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
@@ -110,11 +130,16 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const discoveryEngine = mock<DiscoveryEngine>({
-        run: mockFn().resolvesToOnce(DISCOVERED).resolvesToOnce([]),
+        run: mockFn().resolvesTo(DISCOVERED_PARSED),
       })
 
       const provider = mock<providers.AlchemyProvider>({
         getBlockNumber: async () => BLOCK_NUMBER,
+      })
+
+      const repository = mock<DiscoveryWatcherRepository>({
+        findLatest: mockFn().resolvesTo(undefined),
+        addOrUpdate: mockFn().resolvesTo({}),
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
@@ -122,6 +147,7 @@ describe(DiscoveryWatcher.name, () => {
         discoveryEngine,
         discordClient,
         configReader,
+        repository,
         mock<Clock>(),
         Logger.SILENT,
       )
@@ -142,19 +168,86 @@ describe(DiscoveryWatcher.name, () => {
         [{ name: PROJECT_A, initialAddresses: [] }, BLOCK_NUMBER],
         [{ name: PROJECT_B, initialAddresses: [] }, BLOCK_NUMBER],
       ])
+      expect(repository.findLatest.calls.length).toEqual(2)
+      expect(repository.addOrUpdate.calls.length).toEqual(2)
       //sends notification
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
-        [expectedMessage[0]],
+        [EXPECTED_MESSAGE_A],
+        [EXPECTED_MESSAGE_B],
       ])
+    })
+
+    it('does not send notification about the same change', async () => {
+      const discordClient = mock<DiscordClient>({
+        sendMessage: mockFn().resolvesTo({}),
+      })
+
+      const configReader = mock<ConfigReader>({
+        readAllConfigs: mockFn().resolvesTo([mockConfig(PROJECT_A)]),
+        readDiscovery: mockFn().resolvesTo({ contracts: [] }),
+      })
+
+      const discoveryWatcherRepository = mock<DiscoveryWatcherRepository>({
+        findLatest: mockFn().resolvesTo([
+          {
+            discovery: {
+              contracts: parseDiscoveryOutput(
+                DISCOVERED,
+                PROJECT_A,
+                BLOCK_NUMBER,
+              ),
+            },
+          },
+        ]),
+        addOrUpdate: mockFn().resolvesTo({}),
+      })
+
+      const discoveryEngine = mock<DiscoveryEngine>({
+        run: mockFn().resolvesToOnce(DISCOVERED),
+      })
+
+      const provider = mock<providers.AlchemyProvider>({
+        getBlockNumber: async () => BLOCK_NUMBER,
+      })
+
+      const discoveryWatcher = new DiscoveryWatcher(
+        provider,
+        discoveryEngine,
+        discordClient,
+        configReader,
+        discoveryWatcherRepository,
+        mock<Clock>(),
+        Logger.SILENT,
+      )
+
+      await discoveryWatcher.update()
+
+      //gets block number
+      expect(provider.getBlockNumber.calls.length).toEqual(1)
+      //reads all the configs
+      expect(configReader.readAllConfigs.calls.length).toEqual(1)
+      //skip reading committed file
+      expect(configReader.readDiscovery.calls.length).toEqual(0)
+
+      expect(discoveryWatcherRepository.findLatest).toHaveBeenCalledExactlyWith(
+        [[PROJECT_A]],
+      )
+
+      expect(discordClient.sendMessage.calls.length).toEqual(0)
     })
   })
 
-  describe(DiscoveryWatcher.prototype.compareWithCommitted.name, () => {
-    it('finds changes', async () => {
+  describe(DiscoveryWatcher.prototype.findChanges.name, () => {
+    it('uses repository and local files to find changes', async () => {
       const configReader = mock<ConfigReader>({
         readDiscovery: mockFn().resolvesTo({
           contracts: COMMITTED,
         }),
+      })
+
+      const repository = mock<DiscoveryWatcherRepository>({
+        findLatest: mockFn().resolvesTo(undefined),
+        addOrUpdate: mockFn().resolvesTo({}),
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
@@ -162,15 +255,21 @@ describe(DiscoveryWatcher.name, () => {
         mock<DiscoveryEngine>(),
         mock<DiscordClient>(),
         configReader,
+        repository,
         mock<Clock>(),
         Logger.SILENT,
       )
 
-      await discoveryWatcher.compareWithCommitted(PROJECT_A, DISCOVERED, {})
+      await discoveryWatcher.findChanges(
+        PROJECT_A,
+        parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER),
+        {},
+      )
 
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
         [PROJECT_A],
       ])
+      expect(repository.findLatest.calls.length).toEqual(1)
     })
   })
 
@@ -184,6 +283,7 @@ describe(DiscoveryWatcher.name, () => {
       mock<DiscoveryEngine>(),
       discordClient,
       mock<ConfigReader>(),
+      mock<DiscoveryWatcherRepository>({}),
       mock<Clock>(),
       Logger.SILENT,
     )
