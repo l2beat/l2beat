@@ -62,13 +62,13 @@ export class LogThrottler {
       if (logInfo.throttleCount !== 0) {
         this.logger.info(
           `"${logKey}" was logged ${logInfo.throttleCount} times during last ${
-            this.options.thresholdTimeInMs / 1000
+            this.options.throttleTimeInMs / 1000
           } seconds`,
         )
       }
       logInfo.isThrottling = false
       logInfo.throttleCount = 0
-    }, this.options.thresholdTimeInMs)
+    }, this.options.throttleTimeInMs)
   }
 
   private incrementCount(logInfo: LogInfo): void {
