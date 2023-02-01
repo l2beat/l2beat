@@ -1,10 +1,8 @@
+import { RatingCategory, RatingModifier } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
 import { Badge } from '../badge/Badge'
-
-export type RatingCategory = 'A' | 'B' | 'C' | 'D' | '-'
-export type RatingModifier = '--' | '-' | '+' | '++'
 
 interface RatingBadgeProps {
   category: RatingCategory
@@ -17,7 +15,7 @@ export function RatingBadge({ category, modifier }: RatingBadgeProps) {
     <Badge
       className={cx(
         colorClassName,
-        'text-center text-lg leading-none w-10 inline-block py-0.5',
+        'inline-block w-10 py-0.5 text-center text-lg leading-none',
       )}
       oneSize
     >

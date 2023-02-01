@@ -1,26 +1,11 @@
+import { Layer2Rating } from "@l2beat/config"
 import React from "react"
 
 import { ArrowRightIcon } from "../icons"
-import { RatingBadge, RatingCategory, RatingModifier } from "./Badge"
-
-
-export interface ProjectRatingEntry {
-  category: {
-    score: RatingCategory
-    requirements: string[]
-  }
-  modifier?: {
-    score: RatingModifier
-    items: string[]
-  }
-  thingsToImprove?: {
-    improvedScore: RatingCategory
-    requirements: string[]
-  }
-}
+import { RatingBadge } from "./Badge"
 
 export interface RatingProps {
-  item?: ProjectRatingEntry
+  item?: Layer2Rating
 }
 
 export function RatingTooltipPopup({ item }: Required<RatingProps>) {

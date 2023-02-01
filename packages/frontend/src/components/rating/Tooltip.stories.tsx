@@ -1,9 +1,10 @@
+import { Layer2Rating } from '@l2beat/config'
 import React, { useEffect, useRef } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
-import { ProjectRatingEntry, RatingTooltipPopup } from './TooltipPopup'
+import {  RatingTooltipPopup } from './TooltipPopup'
 
 export default {
   title: 'Components/Tooltip',
@@ -20,7 +21,7 @@ export function RatingTooltip() {
     tooltipRef.current?.replaceWith(tooltipRef.current.cloneNode(true))
   }, [])
 
-  const item: ProjectRatingEntry = {
+  const item: Layer2Rating = {
     category: {
       score: 'B',
       requirements: ['There is an existing fraud proof system'],

@@ -1,7 +1,6 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, Layer2Rating } from '@l2beat/config'
 import React from 'react'
 
-import { ProjectRatingEntry } from '../../../components/rating/TooltipPopup'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
@@ -37,7 +36,7 @@ export interface ScalingTvlViewEntry {
   marketShare: string
   purpose: string
   technology: string
-  ratingEntry?: ProjectRatingEntry
+  ratingEntry?: Layer2Rating
 }
 
 export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
