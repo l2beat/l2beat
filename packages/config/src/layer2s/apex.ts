@@ -77,10 +77,6 @@ export const apex: Layer2 = {
           implementation: EthereumAddress(
             '0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0',
           ),
-          //StarkWare proxy requires callImplementation but it was not added before.
-          callImplementation: EthereumAddress(
-            '0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0',
-          ),
           upgradeDelay: 0,
           isFinal: false,
         },

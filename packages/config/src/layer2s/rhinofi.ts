@@ -100,10 +100,6 @@ export const rhinofi: Layer2 = {
           implementation: EthereumAddress(
             '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
           ),
-          //StarkWare proxy requires callImplementation but it was not added before.
-          callImplementation: EthereumAddress(
-            '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
-          ),
           useConstantDelay: true,
           // TODO: figure out the double proxy
           upgradeDelay: 1209600,

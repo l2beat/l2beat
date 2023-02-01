@@ -81,10 +81,6 @@ export const myria: Layer2 = {
           implementation: EthereumAddress(
             '0xe6785C3AfF4292C9d7c6b039f649672C45CAfFee',
           ),
-          //StarkWare proxy requires callImplementation but it was not added before.
-          callImplementation: EthereumAddress(
-            '0xe6785C3AfF4292C9d7c6b039f649672C45CAfFee',
-          ),
           upgradeDelay: 0,
           isFinal: false,
         },
