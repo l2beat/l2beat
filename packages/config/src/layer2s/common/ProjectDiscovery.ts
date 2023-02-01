@@ -12,16 +12,17 @@ export class ProjectDiscovery {
   }
 
   private getDiscoveryJson(project: string): ProjectParameters {
-    const discovery = readFileSync(
+    const file = readFileSync(
       path.resolve(`../backend/discovery/${project}/discovered.json`),
       { encoding: 'utf-8' },
     )
+    const discovery = JSON.parse(file) as ProjectParameters
 
     if (!discovery) {
       throw new Error(`Discovery file for ${project} does not exist`)
     }
 
-    return discovery as unknown as ProjectParameters
+    return discovery
   }
 
   getContractByName(name: string): ContractParameters {
