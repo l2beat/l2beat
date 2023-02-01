@@ -7,7 +7,7 @@ interface LogInfo {
   isThrottling: boolean
 }
 
-interface LogThrottlerOptions {
+export interface LogThrottlerOptions {
   readonly threshold: number
   readonly thresholdTimeInMs: number
   readonly throttleTimeInMs: number
