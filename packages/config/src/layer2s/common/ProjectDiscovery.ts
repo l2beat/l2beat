@@ -1,8 +1,4 @@
-import {
-  ContractParameters,
-  ContractValue,
-  ProjectParameters,
-} from '@l2beat/types'
+import { ContractParameters, ProjectParameters } from '@l2beat/types'
 import { readFileSync } from 'fs'
 import path from 'path'
 export class ProjectDiscovery {
@@ -16,13 +12,8 @@ export class ProjectDiscovery {
       path.resolve(`../backend/discovery/${project}/discovered.json`),
       { encoding: 'utf-8' },
     )
-    const discovery = JSON.parse(file) as ProjectParameters
 
-    if (!discovery) {
-      throw new Error(`Discovery file for ${project} does not exist`)
-    }
-
-    return discovery
+    return JSON.parse(file) as ProjectParameters
   }
 
   getContractByName(name: string): ContractParameters {
@@ -52,8 +43,8 @@ export class ProjectDiscovery {
 
     return contract
   }
-
-  getValue<T>(value: Record<string, ContractValue>, key: string): T {
+  /* eslint-disable */
+  getValue<T>(value: any, key: string): T {
     const result = value[key]
 
     if (!result) {
@@ -62,4 +53,5 @@ export class ProjectDiscovery {
 
     return result as T
   }
+  /* eslint-enable */
 }
