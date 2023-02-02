@@ -31,7 +31,7 @@ export class ProjectDiscovery {
   private readonly discovery: ProjectParameters
   constructor(
     private readonly projectName: string,
-    private fs: Filesystem = filesystem,
+    private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
   }

@@ -1,5 +1,6 @@
 import { mock } from '@l2beat/common'
 import { expect } from 'earljs'
+
 import {
   contractStub,
   discoveredJsonStub,
@@ -57,7 +58,7 @@ describe(ProjectDiscovery.name, () => {
         contractStub.name,
         'CHILD_BLOCK_INTERVAL',
       )
-      expect(value).toEqual(contractStub.values.CHILD_BLOCK_INTERVAL!)
+      expect(value).toEqual(contractStub.values.CHILD_BLOCK_INTERVAL)
     })
 
     it('should throw an error if given contract value does not exist', () => {
