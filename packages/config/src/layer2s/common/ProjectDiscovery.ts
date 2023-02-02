@@ -1,24 +1,41 @@
+import { assert } from '@l2beat/common'
 import {
   ContractParameters,
   ContractValue,
   ProjectParameters,
 } from '@l2beat/types'
-import { getAddress } from 'ethers/lib/utils'
+import { utils } from 'ethers'
 import fs from 'fs'
 import path from 'path'
+
 import { ProjectUpgradeability } from './../../common/ProjectContracts'
 
-type KeysOfUnion<T> = T extends T ? keyof T : never
+type AllKeys<T> = T extends T ? keyof T : never
+
+type MergedUnion<T extends object> = {
+  [K in AllKeys<T>]: PickType<T, K>
+}
+
+type PickType<T, K extends AllKeys<T>> = T extends { [k in K]?: T[K] }
+  ? T[K]
+  : undefined
+
+export type Filesystem = typeof filesystem
+const filesystem = {
+  readFileSync: (path: string) => {
+    return fs.readFileSync(path, 'utf-8')
+  },
+}
+
 export class ProjectDiscovery {
   private readonly discovery: ProjectParameters
-  constructor(project: string) {
+  constructor(project: string, private fs: Filesystem = filesystem) {
     this.discovery = this.getDiscoveryJson(project)
   }
 
   private getDiscoveryJson(project: string): ProjectParameters {
-    const discoveryFile = fs.readFileSync(
+    const discoveryFile = this.fs.readFileSync(
       path.resolve(`../backend/discovery/${project}/discovered.json`),
-      'utf-8',
     )
 
     return JSON.parse(discoveryFile) as ProjectParameters
@@ -26,11 +43,11 @@ export class ProjectDiscovery {
 
   getContract(identifier: string): ContractParameters {
     try {
-      const address = getAddress(identifier)
-      return this.getContractByAddress(address)
+      identifier = utils.getAddress(identifier)
     } catch {
       return this.getContractByName(identifier)
     }
+    return this.getContractByAddress(identifier)
   }
 
   getContractValue<T extends ContractValue>(
@@ -38,26 +55,23 @@ export class ProjectDiscovery {
     key: string,
   ): T {
     const contract = this.getContract(contractIdentifier)
-    const result = contract.values?.[key] as T
-
-    if (!result) {
-      throw new Error(`Value of key ${key} does not exist on searched object`)
-    }
+    const result = contract.values?.[key] as T | undefined
+    assert(
+      result,
+      `Value of key ${key} does not exist in ${contractIdentifier} contract`,
+    )
 
     return result
   }
 
-  getContractUpgradeabilityParam(
-    contractIdentifier: string,
-    key: KeysOfUnion<ProjectUpgradeability>,
-  ): string {
+  getContractUpgradeabilityParam<
+    K extends AllKeys<ProjectUpgradeability>,
+    T extends MergedUnion<ProjectUpgradeability>[K],
+  >(contractIdentifier: string, key: K): T {
     const contract = this.getContract(contractIdentifier)
-    //@ts-expect-error
-    const result = contract.upgradeability[key]
-
-    if (!result) {
-      throw new Error(`Upgradeability param of key ${key} does not exist`)
-    }
+    //@ts-expect-error only 'type' is allowed here, but many more are possible with our error handling
+    const result = contract.upgradeability[key] as T | undefined
+    assert(result, `Upgradeability param of key ${key} does not exist`)
 
     return result
   }
@@ -67,9 +81,7 @@ export class ProjectDiscovery {
       (contract) => contract.address.toString() === address,
     )
 
-    if (!contract) {
-      throw new Error(`No contract of ${address} address found`)
-    }
+    assert(contract, `No contract of ${address} found`)
 
     return contract
   }
@@ -78,14 +90,10 @@ export class ProjectDiscovery {
     const contracts = this.discovery.contracts.filter(
       (contract) => contract.name === name,
     )
-
-    if (contracts.length === 0) {
-      throw new Error(`No contract of ${name} name found`)
-    }
-
-    if (contracts.length > 1) {
-      throw new Error(`Found more than 1 contracts named ${name}`)
-    }
+    assert(
+      contracts.length === 1,
+      `Found more than 1 contracts or no contract of ${name} name found`,
+    )
 
     return contracts[0]
   }
