@@ -5,9 +5,7 @@ import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
-const discovery = new ProjectDiscovery(
-  '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-)
+const discovery = new ProjectDiscovery('orbit')
 
 export const orbit: Bridge = {
   type: 'bridge',
@@ -213,14 +211,20 @@ export const orbit: Bridge = {
     {
       name: 'Bridge contract Governance',
       accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
+        .getContractValue<string[]>(
+          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+          'getOwners',
+        )
         .map((owner) => ({ address: owner, type: 'EOA' })),
       description: `Participants of Bridge Governance ${discovery.getContractValue(
-        'GnosisSafe',
+        '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
         'required',
       )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      }  MultiSig.`,
+        discovery.getContractValue<string[]>(
+          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+          'getOwners',
+        ).length
+      } orbit MultiSig.`,
     },
   ],
 }

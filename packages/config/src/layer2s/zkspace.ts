@@ -113,7 +113,7 @@ export const zkspace: Layer2 = {
           'Additional contract to store implementation details of the main ZkSync contract.',
       },
       {
-        address: discovery.getContract('ZkSea').address.toString(),
+        address: discovery.getContract('ZKSea').address.toString(),
         name: 'ZkSea',
         description:
           'Additional contract to store implementation details of the main ZkSync contract.',
