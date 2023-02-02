@@ -49,8 +49,8 @@ export class LogThrottler {
     }
   }
 
-  isThrottling(logKey: string): boolean | undefined {
-    return this.recentLogs.get(logKey)?.isThrottling
+  isThrottling(logKey: string): boolean {
+    return !!this.recentLogs.get(logKey)?.isThrottling
   }
 
   private throttle(logKey: string, logInfo: LogInfo): void {
