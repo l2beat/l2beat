@@ -35,7 +35,8 @@
           "valueKey": "validatorAddress",
           "flagKey": "isActive"
         }
-      }
+      },
+      "ignoreInWatchMode": ["totalTokens"]
     },
     "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": {
       "ignoreMethods": [
