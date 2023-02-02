@@ -3,7 +3,7 @@ import React from 'react'
 
 export function YAxisLabels() {
   return (
-    <div className="absolute flex flex-col left-0 top-0 w-full h-full z-10">
+    <div className="absolute left-0 top-0 z-10 flex h-full w-full flex-col">
       <Label className="h-[20px]" />
       <Label className="flex-1" />
       <Label className="flex-1" />

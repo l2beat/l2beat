@@ -14,7 +14,7 @@ export interface DescriptionSectionProps {
 
 export function DescriptionSection(props: DescriptionSectionProps) {
   return (
-    <Section title="Description" id="description" className="md:!mt-6 !mt-0">
+    <Section title="Description" id="description" className="!mt-0 md:!mt-6">
       {props.isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."

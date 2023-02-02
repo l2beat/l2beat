@@ -28,7 +28,7 @@ function Template({ projectId }: TemplateProps) {
   const project = layer2s.find((x) => x.id === projectId)
   return (
     <div className="meta flex items-center justify-center">
-      <div className="relative w-[600px] min-w-[600px] h-[314px] min-h-[314px] shadow-2xl rounded-lg overflow-hidden">
+      <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
         <TvlMetaImage
           tvl="$1.34 B"
           sevenDayChange="+3.45%"
@@ -54,7 +54,7 @@ export const ActivityOverview: Story<TemplateProps> = () => {
   })
   return (
     <div className="meta flex items-center justify-center">
-      <div className="relative w-[600px] min-w-[600px] h-[314px] min-h-[314px] shadow-2xl rounded-lg overflow-hidden">
+      <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
         <ActivityMetaImage
           tpsDaily="15.69"
           tpsWeeklyChange="+3.45%"

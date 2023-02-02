@@ -22,7 +22,7 @@ export function ArrowDownIcon(props: SVGAttributes<SVGElement>) {
       aria-label="Arrow down icon"
       alt-text="-"
       className={cx(
-        'rotate-180 inline-block fill-red-700 dark:fill-red-300',
+        'inline-block rotate-180 fill-red-700 dark:fill-red-300',
         props.className,
       )}
     />

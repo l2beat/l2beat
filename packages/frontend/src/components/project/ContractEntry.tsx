@@ -59,7 +59,7 @@ export function ContractEntry({
       icon={icon}
       body={
         <>
-          <div className="flex gap-x-2 flex-wrap">
+          <div className="flex flex-wrap gap-x-2">
             <strong>{contract.name}</strong>{' '}
             {contract.address && (
               <EtherscanLink

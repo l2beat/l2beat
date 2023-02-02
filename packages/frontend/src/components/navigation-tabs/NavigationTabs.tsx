@@ -18,7 +18,7 @@ export interface PageSelectionProps {
 
 export function NavigationTabs({ pages }: PageSelectionProps) {
   return (
-    <nav className="md:mt-10 font-base">
+    <nav className="font-base md:mt-10">
       <DesktopTabs pages={pages} />
       <MobileTabs pages={pages} />
     </nav>
