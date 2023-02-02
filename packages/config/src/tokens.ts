@@ -1398,6 +1398,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('pstake-pstake-finance'),
+    name: 'pSTAKE Finance',
+    coingeckoId: CoingeckoId('pstake-finance'),
+    address: EthereumAddress('0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006'),
+    symbol: 'PSTAKE',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1641937945),
+    category: 'other',
+  },
+  {
     id: AssetId('tlos-p-tokens-tlos'),
     name: 'pTokens TLOS',
     coingeckoId: CoingeckoId('wrapped-telos'),

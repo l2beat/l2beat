@@ -1,10 +1,7 @@
 {
   "$schema": "../config.schema.json",
   "name": "cBridge",
-  "initialAddresses": [
-    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
-    "0xB37D31b2A74029B5951a2778F959282E2D518595"
-  ],
+  "initialAddresses": ["0x4066D196A423b2b3B8B054f4F40efB47a74E200C"],
   "overrides": {
     "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": {
       "fields": {
