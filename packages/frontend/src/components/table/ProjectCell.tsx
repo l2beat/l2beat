@@ -27,7 +27,7 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
     <>
       <a className="relative pl-7 hover:underline" href={href}>
         <img
-          className="absolute left-0 top-0 block w-[18px] h-[18px]"
+          className="absolute left-0 top-0 block h-[18px] w-[18px]"
           src={`/icons/${project.slug}.png`}
           alt={`${project.name} logo`}
         />
@@ -35,12 +35,12 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
           <div
             role="img"
             aria-label={type}
-            className="absolute -bottom-1 left-2.5 text-3xs font-bold px-0.5 rounded-sm bg-gray-800 dark:bg-gray-200 text-white dark:text-black"
+            className="absolute -bottom-1 left-2.5 rounded-sm bg-gray-800 px-0.5 text-3xs font-bold text-white dark:bg-gray-200 dark:text-black"
           >
             L2
           </div>
         )}
-        <span className="font-bold text-base md:text-lg">{project.name}</span>
+        <span className="text-base font-bold md:text-lg">{project.name}</span>
       </a>
       {project.provider === 'StarkEx' && (
         <span
@@ -68,7 +68,7 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
       )}
       {project.warning && (
         <span
-          className="Tooltip relative inline-block w-4 h-6 ml-1"
+          className="Tooltip relative ml-1 inline-block h-6 w-4"
           title={project.warning}
         >
           <ShieldIcon className="absolute top-1/2 -translate-y-1/2 fill-yellow-700 dark:fill-yellow-300" />

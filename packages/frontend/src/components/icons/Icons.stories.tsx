@@ -32,7 +32,7 @@ export default {
 
 export function ProductIcons() {
   return (
-    <div className="mx-auto max-w-lg p-4 flex justify-center gap-2">
+    <div className="mx-auto flex max-w-lg justify-center gap-2 p-4">
       <DiscordIcon />
       <GithubIcon />
       <InstagramIcon />
@@ -48,7 +48,7 @@ export function ProductIcons() {
 
 export function ProviderIcons() {
   return (
-    <div className="mx-auto max-w-lg p-4 flex justify-center gap-2">
+    <div className="mx-auto flex max-w-lg justify-center gap-2 p-4">
       <OptimismIcon />
       <StarkWareIcon />
       <ZkSyncIcon />
@@ -58,7 +58,7 @@ export function ProviderIcons() {
 
 export function SymbolIcons() {
   return (
-    <div className="mx-auto max-w-lg p-4 flex justify-center gap-2">
+    <div className="mx-auto flex max-w-lg justify-center gap-2 p-4">
       <FinanceIcon />
       <GlobeIcon />
       <InfoIcon />
@@ -75,7 +75,7 @@ export function SymbolIcons() {
 
 export function PageIcons() {
   return (
-    <div className="mx-auto max-w-lg p-4 flex justify-center gap-2">
+    <div className="mx-auto flex max-w-lg justify-center gap-2 p-4">
       <TvlIcon />
       <RiskIcon />
       <ActivityIcon />

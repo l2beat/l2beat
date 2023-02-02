@@ -18,14 +18,14 @@ export function getFooterProps(config: Config): FooterProps {
 
 export function Footer(props: FooterProps) {
   return (
-    <footer className="py-8 mt-20 border-t border-gray-200 dark:border-gray-850">
+    <footer className="mt-20 border-t border-gray-200 py-8 dark:border-gray-850">
       <div
         className={cx(
           props.narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',
-          'px-4 md:px-12 mx-auto flex flex-col gap-4 md:grid grid-cols-3',
+          'mx-auto flex grid-cols-3 flex-col gap-4 px-4 md:grid md:px-12',
         )}
       >
-        <p className="font-medium text-sm text-center md:text-left">
+        <p className="text-center text-sm font-medium md:text-left">
           Made with ❤️ by the L2BEAT research team.{' '}
           <br className="hidden lg:inline" />
           Support us by{' '}
@@ -34,10 +34,10 @@ export function Footer(props: FooterProps) {
           </a>
           .
         </p>
-        <ul className="flex gap-4 w-full justify-center">
+        <ul className="flex w-full justify-center gap-4">
           <SocialLinks {...props} />
         </ul>
-        <p className="font-medium text-sm text-center md:text-right">
+        <p className="text-center text-sm font-medium md:text-right">
           Copyright {new Date().getFullYear()} L2BEAT
         </p>
       </div>

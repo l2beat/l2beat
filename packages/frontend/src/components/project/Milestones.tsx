@@ -18,11 +18,11 @@ export function Milestones({ milestones, className }: MilestonesProps) {
 
   return (
     <div className={cx('px-4 md:px-0', className)}>
-      <p className="text-[28px] leading-[32px] font-bold">Milestones</p>
-      <div className="h-auto relative">
-        <div className="absolute left-[15.4px] h-[100%] mt-2">
-          <div className="h-[60%] w-[1.7px] dark:w-px bg-green-400 dark:bg-green-500 " />
-          <div className="h-[40%] w-[1.7px] dark:w-px bg-gradient-to-b from-green-400 dark:from-green-500" />
+      <p className="text-[28px] font-bold leading-[32px]">Milestones</p>
+      <div className="relative h-auto">
+        <div className="absolute left-[15.4px] mt-2 h-[100%]">
+          <div className="h-[60%] w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500 " />
+          <div className="h-[40%] w-[1.7px] bg-gradient-to-b from-green-400 dark:w-px dark:from-green-500" />
         </div>
         <div className="ml-10 mt-6">
           {milestones
@@ -32,20 +32,20 @@ export function Milestones({ milestones, className }: MilestonesProps) {
             .map((milestone, i) => (
               <div key={i} className="pb-7">
                 <MilestoneIcon className="absolute left-1.5" />
-                <p className="font-bold text-lg leading-none">
+                <p className="text-lg font-bold leading-none">
                   {milestone.name}
                 </p>
-                <p className="dark:text-gray-400 text-sm">
+                <p className="text-sm dark:text-gray-400">
                   {formatDate(milestone.date)}
                 </p>
                 <div className="mt-3">
                   {milestone.description && (
-                    <p className="dark:text-gray-400 text-sm leading-none">
+                    <p className="text-sm leading-none dark:text-gray-400">
                       {milestone.description}
                     </p>
                   )}
                   <OutLink
-                    className="text-sm underline font-bold text-link flex flex-wrap items-center gap-1"
+                    className="flex flex-wrap items-center gap-1 text-sm font-bold text-link underline"
                     href={milestone.link}
                   >
                     Learn more

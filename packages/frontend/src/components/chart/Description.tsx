@@ -10,7 +10,7 @@ export function Description({ hidden }: DescriptionProps) {
     <p
       data-role="chart-description"
       className={cx(
-        'col-start-1 sm:col-start-2 col-span-4 sm:col-span-2 text-center text-sm flex justify-center',
+        'col-span-4 col-start-1 flex justify-center text-center text-sm sm:col-span-2 sm:col-start-2',
         hidden && 'hidden',
       )}
     >
