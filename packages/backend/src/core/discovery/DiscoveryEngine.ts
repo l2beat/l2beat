@@ -27,6 +27,7 @@ export class DiscoveryEngine {
 
     const discovered = await discover(discoveryProvider, config, this.logger)
 
+    // TODO: test this line
     return parseDiscoveryOutput(discovered, config.name, blockNumber)
   }
 }
