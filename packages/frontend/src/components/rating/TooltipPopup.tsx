@@ -1,7 +1,6 @@
 import { Layer2Rating } from '@l2beat/config'
 import React from 'react'
 
-import { ArrowRightIcon } from '../icons'
 import { RatingBadge } from './Badge'
 
 export interface RatingProps {
@@ -62,11 +61,6 @@ export function RatingTooltipPopup({ item }: Required<RatingProps>) {
           </ul>
         </div>
       )}
-
-      <a href="#" className="font-bold text-link underline">
-        Learn more about Rating system
-        <ArrowRightIcon className="fill-link inline-block ml-1" />
-      </a>
     </div>
   )
 }
