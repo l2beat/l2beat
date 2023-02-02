@@ -1,7 +1,7 @@
 import { MainnetEtherscanClient } from '@l2beat/common'
 import { providers } from 'ethers'
 
-import { DiscoveryConfig } from '../../config/Config'
+import { DiscoveryModuleConfig } from '../../config/Config'
 import { ConfigReader } from './ConfigReader'
 import { discover } from './discover'
 import { DiscoveryLogger } from './DiscoveryLogger'
@@ -12,7 +12,7 @@ export async function runDiscovery(
   provider: providers.AlchemyProvider,
   etherscanClient: MainnetEtherscanClient,
   configReader: ConfigReader,
-  config: DiscoveryConfig,
+  config: DiscoveryModuleConfig,
 ) {
   const projectConfig = await configReader.readConfig(config.project)
 
