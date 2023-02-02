@@ -297,10 +297,16 @@ describe(DiscoveryWatcher.name, () => {
 
       const repository = mock<DiscoveryWatcherRepository>({
         findLatest: mockFn().resolvesTo({
-          ...mockCommitted(NAME_A, ADDRESS_A),
-          values: {
-            a: false,
-          },
+          discovery: {
+            contracts: [
+              {
+                ...mockCommitted(NAME_A, ADDRESS_A),
+                values: {
+                  a: false,
+                },
+              },
+            ],
+          }
         }),
         addOrUpdate: mockFn().resolvesTo({}),
       })
@@ -315,23 +321,26 @@ describe(DiscoveryWatcher.name, () => {
         Logger.SILENT,
       )
 
-      await discoveryWatcher.findChanges(
-        PROJECT_A,
-        {},
-        {},
-      )
-
       const result = await discoveryWatcher.findChanges(
         PROJECT_A,
-        parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER),
+        {
+          name: PROJECT_A,
+          blockNumber: BLOCK_NUMBER,
+          eoas: [],
+          abis: {},
+          contracts: [
+            {
+              ...mockCommitted(NAME_A, ADDRESS_A),
+              values: {
+                a: true,
+              },
+            },
+          ],
+        },
         {},
       )
 
-      const expected = diffDiscovery(
-        COMMITTED,
-        parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER).contracts,
-        {},
-      )
+      const expected: AnalyzedData[] = []
 
       expect(result).toEqual(expected)
 
