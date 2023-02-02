@@ -43,9 +43,10 @@ describe(diffContracts.name, () => {
         C: 1,
         D: [1, 2, 3, 4],
         E: 'ignoreMePlease',
+        F: 'ignoreMePlease',
       },
     }
-    const ignoreInWatchMode = ['random-key', 'E']
+    const ignoreInWatchMode = ['E', 'F']
     const result = diffContracts(committed, discovered, ignoreInWatchMode)
 
     expect(result).toEqual([
