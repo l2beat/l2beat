@@ -4,7 +4,7 @@ import {
   ContractValue,
   ProjectParameters,
 } from '@l2beat/types'
-import { getAddress } from 'ethers/lib/utils'
+import { utils } from 'ethers'
 import fs from 'fs'
 import path from 'path'
 
@@ -20,16 +20,22 @@ type PickType<T, K extends AllKeys<T>> = T extends { [k in K]?: T[K] }
   ? T[K]
   : undefined
 
+export type Filesystem = typeof filesystem
+const filesystem = {
+  readFileSync: (path: string) => {
+    return fs.readFileSync(path, 'utf-8')
+  },
+}
+
 export class ProjectDiscovery {
   private readonly discovery: ProjectParameters
-  constructor(project: string) {
+  constructor(project: string, private fs: Filesystem = filesystem) {
     this.discovery = this.getDiscoveryJson(project)
   }
 
   private getDiscoveryJson(project: string): ProjectParameters {
-    const discoveryFile = fs.readFileSync(
+    const discoveryFile = this.fs.readFileSync(
       path.resolve(`../backend/discovery/${project}/discovered.json`),
-      'utf-8',
     )
 
     return JSON.parse(discoveryFile) as ProjectParameters
@@ -37,7 +43,7 @@ export class ProjectDiscovery {
 
   getContract(identifier: string): ContractParameters {
     try {
-      const address = getAddress(identifier)
+      const address = utils.getAddress(identifier)
       return this.getContractByAddress(address)
     } catch {
       return this.getContractByName(identifier)
