@@ -28,7 +28,7 @@ export function RatingBadge({ category, modifier }: RatingBadgeProps) {
 function getColorClassName(rating: RatingCategory): string {
   switch (rating) {
     case 'A':
-      return 'bg-green-450 text-black'
+      return 'bg-green-500 text-black'
     case 'B':
       return 'bg-yellow-100 text-black'
     case 'C':
