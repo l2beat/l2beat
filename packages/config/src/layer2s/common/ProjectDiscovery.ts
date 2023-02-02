@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/common'
 import {
   ContractParameters,
   ContractValue,
@@ -48,11 +49,8 @@ export class ProjectDiscovery {
     key: string,
   ): T {
     const contract = this.getContract(contractIdentifier)
-    const result = contract.values?.[key] as T
-
-    if (!result) {
-      throw new Error(`Value of key ${key} does not exist on searched object`)
-    }
+    const result = contract.values?.[key] as T | undefined
+    assert(result, `Value of key ${key} does not exist on searched object`)
 
     return result
   }
@@ -63,11 +61,8 @@ export class ProjectDiscovery {
   >(contractIdentifier: string, key: K): T {
     const contract = this.getContract(contractIdentifier)
     //@ts-expect-error only 'type' is allowed here, but many more are possible with our error handling
-    const result = contract.upgradeability[key] as T
-
-    if (!result) {
-      throw new Error(`Upgradeability param of key ${key} does not exist`)
-    }
+    const result = contract.upgradeability[key] as T | undefined
+    assert(result, `Upgradeability param of key ${key} does not exist`)
 
     return result
   }
@@ -76,10 +71,7 @@ export class ProjectDiscovery {
     const contract = this.discovery.contracts.find(
       (contract) => contract.address.toString() === address,
     )
-
-    if (!contract) {
-      throw new Error(`No contract of ${address} found`)
-    }
+    assert(contract, `No contract of ${address} found`)
 
     return contract
   }
@@ -88,14 +80,10 @@ export class ProjectDiscovery {
     const contracts = this.discovery.contracts.filter(
       (contract) => contract.name === name,
     )
-
-    if (contracts.length === 0) {
-      throw new Error(`No contract of ${name} name found`)
-    }
-
-    if (contracts.length > 1) {
-      throw new Error(`Found more than 1 contracts named ${name}`)
-    }
+    assert(
+      contracts.length === 1,
+      `Found more than 1 contracts or no contract of ${name} name found`,
+    )
 
     return contracts[0]
   }
