@@ -1,27 +1,10 @@
-import { json } from '@l2beat/types'
 import chalk from 'chalk'
 import { inspect } from 'util'
 
-// eslint-disable-next-line import/no-cycle
+import { ILogger, LoggerOptions, LoggerParameters, LogLevel } from './ILogger'
 import { LogThrottler } from './LogThrottler'
-export enum LogLevel {
-  NONE = 0,
-  ERROR = 1,
-  WARN = 2,
-  INFO = 3,
-  DEBUG = 4,
-}
 
-export interface LoggerOptions {
-  logLevel: LogLevel
-  service?: string
-  format: 'pretty' | 'json'
-  reportError?: (...args: unknown[]) => void
-}
-
-export type LoggerParameters = Record<string, json>
-
-export class Logger {
+export class Logger implements ILogger {
   constructor(
     private readonly options: LoggerOptions,
     private readonly logThrottler?: LogThrottler,
