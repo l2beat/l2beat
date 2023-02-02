@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { Hash256, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
@@ -8,6 +8,8 @@ import {
   DiscoveryWatcherRecord,
   DiscoveryWatcherRepository,
 } from './DiscoveryWatcherRepository'
+
+const CONFIG_HASH = Hash256.random()
 
 describe(DiscoveryWatcherRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
@@ -35,6 +37,7 @@ describe(DiscoveryWatcherRepository.name, () => {
         eoas: [],
         abis: {},
       },
+      configHash: CONFIG_HASH,
     }
 
     await repository.addOrUpdate(expected)
@@ -57,6 +60,7 @@ describe(DiscoveryWatcherRepository.name, () => {
         eoas: [],
         abis: {},
       },
+      configHash: CONFIG_HASH,
     }
 
     await repository.addOrUpdate(expected)

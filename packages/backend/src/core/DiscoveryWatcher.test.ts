@@ -306,7 +306,7 @@ describe(DiscoveryWatcher.name, () => {
                 },
               },
             ],
-          }
+          },
         }),
         addOrUpdate: mockFn().resolvesTo({}),
       })

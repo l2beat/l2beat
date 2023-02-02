@@ -84,6 +84,7 @@ declare module 'knex/types/tables' {
     block_number: number
     unix_timestamp: Date
     discovery_json_blob: string
+    config_hash: string
   }
 
   interface Tables {
