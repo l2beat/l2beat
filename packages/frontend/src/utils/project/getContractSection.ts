@@ -1,3 +1,4 @@
+import { assertUnreachable } from '@l2beat/common'
 import { Bridge, CONTRACTS, Layer2, ProjectContract } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/types'
 
@@ -198,10 +199,4 @@ function makeTechnologyContract(
     description,
     links,
   }
-}
-
-function assertUnreachable(_: never): never {
-  throw new Error(
-    'There are more values to this type than handled in the switch statement.',
-  )
 }

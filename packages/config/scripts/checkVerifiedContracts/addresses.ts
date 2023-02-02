@@ -1,3 +1,4 @@
+import { assertUnreachable } from '@l2beat/common'
 import { EthereumAddress } from '@l2beat/types'
 
 import { Bridge, Layer2 } from '../../src'
@@ -72,12 +73,6 @@ function gatherAddressesFromUpgradeability(
       assertUnreachable(item)
   }
   return result.map(EthereumAddress)
-}
-
-function assertUnreachable(_: never): never {
-  throw new Error(
-    'There are more values to this type than handled in the switch statement.',
-  )
 }
 
 export function areAllProjectContractsVerified(

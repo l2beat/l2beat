@@ -1,3 +1,4 @@
+import { assertUnreachable } from '@l2beat/common'
 import { EthereumAddress, ProjectId } from '@l2beat/types'
 import { expect } from 'earljs'
 
@@ -251,9 +252,3 @@ describe('projects', () => {
     })
   })
 })
-
-function assertUnreachable(_: never): never {
-  throw new Error(
-    'There are more values to this type than handled in the switch statement.',
-  )
-}
