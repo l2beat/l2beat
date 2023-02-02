@@ -52,7 +52,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       </div>
       {props.risks.length > 0 && (
         <>
-          <p className="text-gray-860 dark:text-gray-400">
+          <p className="text-gray-850 dark:text-gray-400">
             The current deployment carries some associated risks:
           </p>
           <RiskList risks={props.risks} />

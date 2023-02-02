@@ -87,7 +87,7 @@ export function ContractEntry({
           </div>
           {contract.description && (
             <div className="mt-2">
-              <p className="text-gray-860 dark:text-gray-400">
+              <p className="text-gray-850 dark:text-gray-400">
                 {contract.description}
               </p>
             </div>
