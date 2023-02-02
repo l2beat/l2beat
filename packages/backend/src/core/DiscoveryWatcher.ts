@@ -11,6 +11,7 @@ import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { ProjectParameters } from './discovery/types'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
+import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -71,6 +72,7 @@ export class DiscoveryWatcher {
           timestamp,
           blockNumber,
           discovery,
+          configHash: getDiscoveryConfigHash(projectConfig),
         })
 
         this.logger.info('Discovery finished', { project: projectConfig.name })
