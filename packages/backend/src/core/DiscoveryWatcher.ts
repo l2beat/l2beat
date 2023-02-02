@@ -1,5 +1,5 @@
 import { Logger, TaskQueue } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { Hash256, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
@@ -59,6 +59,7 @@ export class DiscoveryWatcher {
         const diff = await this.findChanges(
           projectConfig.name,
           discovery,
+          getDiscoveryConfigHash(projectConfig),
           projectConfig.overrides,
         )
 
@@ -86,15 +87,34 @@ export class DiscoveryWatcher {
   async findChanges(
     name: string,
     discovery: ProjectParameters,
+    configHash: Hash256,
     overrides?: Record<string, DiscoveryContract>,
   ): Promise<DiscoveryDiff[]> {
     const databaseEntry = await this.repository.findLatest(name)
 
-    const currentContracts = databaseEntry
-      ? databaseEntry.discovery.contracts
-      : (await this.configReader.readDiscovery(name)).contracts
-
-    return diffDiscovery(currentContracts, discovery.contracts, overrides ?? {})
+    if (databaseEntry === undefined) {
+      const committed = await this.configReader.readDiscovery(name)
+      return diffDiscovery(
+        committed.contracts,
+        discovery.contracts,
+        overrides ?? {},
+      )
+    } else {
+      if (databaseEntry.configHash !== configHash) {
+        const committed = await this.configReader.readDiscovery(name)
+        return diffDiscovery(
+          committed.contracts,
+          discovery.contracts,
+          overrides ?? {},
+        )
+      } else {
+        return diffDiscovery(
+          databaseEntry.discovery.contracts,
+          discovery.contracts,
+          overrides ?? {},
+        )
+      }
+    }
   }
 
   async notify(messages: string[]) {

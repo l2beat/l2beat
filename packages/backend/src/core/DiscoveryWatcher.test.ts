@@ -1,5 +1,5 @@
 import { Logger, mock } from '@l2beat/common'
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress, Hash256 } from '@l2beat/types'
 import { expect, mockFn } from 'earljs'
 import { providers } from 'ethers'
 
@@ -14,6 +14,7 @@ import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
 import { ContractParameters } from './discovery/types'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
+import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
 import { DiscoveryWatcher } from './DiscoveryWatcher'
 
 const PROJECT_A = 'project-a'
@@ -189,17 +190,16 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const discoveryWatcherRepository = mock<DiscoveryWatcherRepository>({
-        findLatest: mockFn().resolvesTo([
-          {
-            discovery: {
-              contracts: parseDiscoveryOutput(
-                DISCOVERED,
-                PROJECT_A,
-                BLOCK_NUMBER,
-              ),
-            },
+        findLatest: mockFn().resolvesTo({
+          discovery: {
+            contracts: parseDiscoveryOutput(
+              DISCOVERED,
+              PROJECT_A,
+              BLOCK_NUMBER,
+            ),
           },
-        ]),
+          configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+        }),
         addOrUpdate: mockFn().resolvesTo({}),
       })
 
@@ -264,6 +264,7 @@ describe(DiscoveryWatcher.name, () => {
       const result = await discoveryWatcher.findChanges(
         PROJECT_A,
         parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER),
+        Hash256.random(),
         {},
       )
 
@@ -307,6 +308,7 @@ describe(DiscoveryWatcher.name, () => {
               },
             ],
           },
+          configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
         }),
         addOrUpdate: mockFn().resolvesTo({}),
       })
@@ -337,6 +339,7 @@ describe(DiscoveryWatcher.name, () => {
             },
           ],
         },
+        getDiscoveryConfigHash({ ...mockConfig(PROJECT_A), name: 'new-name' }),
         {},
       )
 
