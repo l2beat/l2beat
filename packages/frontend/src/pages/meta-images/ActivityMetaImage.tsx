@@ -12,7 +12,7 @@ export function ActivityMetaImage(props: ActivityMetaImageProps) {
   const name = 'Activity'
 
   return (
-    <div className={'MetaImage leading-[1.15] overview'}>
+    <div className={'MetaImage overview leading-[1.15]'}>
       <Header
         showTps
         title={name}

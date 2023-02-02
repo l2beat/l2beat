@@ -8,7 +8,7 @@ export default {
 
 export function TechnologyIncomplete() {
   return (
-    <div className="leading-normal p-4">
+    <div className="p-4 leading-normal">
       <TechnologyIncompleteComponent editLink="#" twitterLink="#" />
     </div>
   )

@@ -14,18 +14,18 @@ export interface HeaderProps {
 export function DetailsHeader(props: HeaderProps) {
   return (
     <>
-      <header className="mt-6 md:mt-15 px-4 md:px-0">
+      <header className="md:mt-15 mt-6 px-4 md:px-0">
         <h1
           className={cx(
-            'relative flex items-center justify-start gap-3 mb-4',
-            'font-bold text-3xl md:text-4xl whitespace-pre',
+            'relative mb-4 flex items-center justify-start gap-3',
+            'whitespace-pre text-3xl font-bold md:text-4xl',
             props.titleLength,
             props.titleClassName,
           )}
         >
           {props.icon && (
             <img
-              className="w-8 h-8 md:w-10 md:h-10"
+              className="h-8 w-8 md:h-10 md:w-10"
               src={props.icon}
               alt={`${props.title} logo`}
             />
@@ -51,16 +51,16 @@ interface DetailsHeaderStatsProps {
 
 function DetailsHeaderStats(props: DetailsHeaderStatsProps) {
   return (
-    <ul className="flex flex-col md:flex-row justify-between gap-2">
+    <ul className="flex flex-col justify-between gap-2 md:flex-row">
       {props.stats.map(({ title, value }) => (
         <li
           key={title}
-          className="flex md:flex-col items-center md:items-start md:gap-1 justify-between"
+          className="flex items-center justify-between md:flex-col md:items-start md:gap-1"
         >
-          <span className="text-gray-500 dark:text-gray-600 text-xs">
+          <span className="text-xs text-gray-500 dark:text-gray-600">
             {title}
           </span>
-          <span className="text-lg md:text-xl font-semibold md:font-bold">
+          <span className="text-lg font-semibold md:text-xl md:font-bold">
             {value}
           </span>
         </li>

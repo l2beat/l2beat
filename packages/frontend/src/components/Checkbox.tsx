@@ -19,8 +19,8 @@ export function Checkbox({
   return (
     <label
       className={cx(
-        'text-base font-medium bg-gray-200 dark:bg-gray-800',
-        'inline-flex items-center p-1 pr-2 gap-2 rounded-lg cursor-pointer select-none',
+        'bg-gray-200 text-base font-medium dark:bg-gray-800',
+        'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg p-1 pr-2',
         className,
       )}
     >

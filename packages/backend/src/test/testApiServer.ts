@@ -1,17 +1,11 @@
 import Router from '@koa/router'
-import { Logger, mock } from '@l2beat/common'
+import { Logger } from '@l2beat/common'
 import { agent } from 'supertest'
 
 import { ApiServer } from '../../src/api/ApiServer'
 import { Metrics } from '../Metrics'
-import { createMockHistogram } from './mocks/Metrics'
 
-export function createTestApiServer(routers: Router[], metrics?: Metrics) {
-  if (!metrics) {
-    metrics = mock<Metrics>({
-      createHistogram: createMockHistogram,
-    })
-  }
+export function createTestApiServer(routers: Router[], metrics: Metrics) {
   const callback = new ApiServer(
     0,
     Logger.SILENT,

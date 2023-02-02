@@ -1,18 +1,20 @@
 import cx from 'classnames'
 import React from 'react'
 
+import { NewItemBadge } from '../badge/NewItemBadge'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
-import { NewItemIcon } from '../icons/NewItemIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { OutLink } from '../OutLink'
 import { DarkThemeToggle } from './DarkThemeToggle'
+import { HiringBadge } from './HiringBadge'
 import { SocialLinks, SocialLinksProps } from './SocialLinks'
 
 export interface SidebarMenuProps {
   showBanner: boolean
   showActivity: boolean
   showBridges: boolean
+  showHiring: boolean
   forumLink: string
   socialLinks: SocialLinksProps
 }
@@ -23,35 +25,35 @@ export function SidebarMenu(props: SidebarMenuProps) {
       <div
         id="sidebar-menu"
         className={cx(
-          'hidden fixed left-0 bottom-0 z-50 text-base',
+          'fixed left-0 bottom-0 z-50 hidden text-base',
           props.showBanner ? 'top-8' : 'top-0',
           'w-3/4 min-w-[240px]',
-          'bg-white dark:bg-black flex flex-col',
+          'flex flex-col bg-white dark:bg-black',
         )}
       >
-        <button id="sidebar-menu-close" className="block ml-4 mt-4">
+        <button id="sidebar-menu-close" className="ml-4 mt-4 block">
           <MenuCloseIcon className="block" aria-label="Close menu" />
         </button>
-        <div className="p-4 flex-1 relative overflow-y-auto overflow-x-visible">
+        <div className="relative flex-1 overflow-y-auto overflow-x-visible p-4">
           <ul className="mt-8">
             <li>
-              <div className="uppercase text-xs mb-4 font-medium text-gray-700 dark:text-gray-300">
+              <div className="mb-4 text-xs font-medium uppercase text-gray-700 dark:text-gray-300">
                 Scaling
               </div>
               <ul className="flex flex-col gap-4">
-                <li className="font-medium flex gap-2">
-                  <TvlIcon className="w-5 h-auto" />
+                <li className="flex gap-2 font-medium">
+                  <TvlIcon className="h-auto w-5" />
                   <a href="/scaling/tvl">Total Value Locked</a>
                 </li>
-                <li className="font-medium flex gap-2">
-                  <RiskIcon className="w-5 h-auto" />
+                <li className="flex gap-2 font-medium">
+                  <RiskIcon className="h-auto w-5" />
                   <a href="/scaling/risk">Risks</a>
                 </li>
                 {props.showActivity && (
-                  <li className="font-medium flex gap-2 items-center">
-                    <ActivityIcon className="w-5 h-auto" />
+                  <li className="flex items-center gap-2 font-medium">
+                    <ActivityIcon className="h-auto w-5" />
                     <a href="/scaling/activity">Activity</a>
-                    <NewItemIcon />
+                    <NewItemBadge />
                   </li>
                 )}
               </ul>
@@ -60,27 +62,27 @@ export function SidebarMenu(props: SidebarMenuProps) {
           {props.showBridges && (
             <ul className="mt-8">
               <li>
-                <div className="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300">
-                  <span className="uppercase text-xs font-medium">Bridges</span>
-                  <NewItemIcon />
+                <div className="mb-4 flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                  <span className="text-xs font-medium uppercase">Bridges</span>
+                  <NewItemBadge />
                 </div>
                 <ul className="flex flex-col gap-4 ">
-                  <li className="font-medium flex gap-2 items-center">
-                    <TvlIcon className="w-5 h-auto" />
+                  <li className="flex items-center gap-2 font-medium">
+                    <TvlIcon className="h-auto w-5" />
                     <a href="/bridges/tvl">Total Value Locked</a>
-                    <NewItemIcon />
+                    <NewItemBadge />
                   </li>
-                  <li className="font-medium flex gap-2 items-center">
-                    <RiskIcon className="w-5 h-auto" />
+                  <li className="flex items-center gap-2 font-medium">
+                    <RiskIcon className="h-auto w-5" />
                     <a href="/bridges/risk">Risks</a>
-                    <NewItemIcon />
+                    <NewItemBadge />
                   </li>
                 </ul>
               </li>
             </ul>
           )}
           <HorizontalSeparator className="my-6" />
-          <ul className="font-medium flex flex-col gap-4">
+          <ul className="flex flex-col gap-4 font-medium">
             <li>
               <OutLink href={props.forumLink}>Forum</OutLink>
             </li>
@@ -90,12 +92,23 @@ export function SidebarMenu(props: SidebarMenuProps) {
             <li>
               <a href="/faq">FAQ</a>
             </li>
+            {props.showHiring && (
+              <li>
+                <OutLink
+                  className="flex items-center"
+                  href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+                >
+                  Jobs
+                  <HiringBadge className="ml-2" />
+                </OutLink>
+              </li>
+            )}
           </ul>
           <HorizontalSeparator className="my-6" />
-          <ul className="flex gap-4 mb-12">
+          <ul className="mb-12 flex gap-4">
             <SocialLinks {...props.socialLinks} />
           </ul>
-          <div className="flex gap-4 mb-8">
+          <div className="mb-8 flex gap-4">
             <DarkThemeToggle withText />
           </div>
         </div>
@@ -103,8 +116,8 @@ export function SidebarMenu(props: SidebarMenuProps) {
       <div
         id="sidebar-menu-shadow"
         className={cx(
-          'hidden fixed top-0 left-0 z-40',
-          'bg-black opacity-30 w-full h-full',
+          'fixed top-0 left-0 z-40 hidden',
+          'h-full w-full bg-black opacity-30',
         )}
       />
     </>

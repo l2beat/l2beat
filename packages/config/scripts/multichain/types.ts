@@ -1,46 +1,50 @@
 import * as z from 'zod'
 
+function nullish<T extends z.ZodTypeAny>(schema: T) {
+  return z.union([z.undefined(), z.null(), schema])
+}
+
 export type RouteConfig = z.infer<typeof RouteConfig>
 export const RouteConfig = z.strictObject({
   address: z.string(),
-  name: z.optional(z.string()),
-  symbol: z.optional(z.string()),
-  decimals: z.number(),
-  anytoken: z.optional(
+  name: nullish(z.string()),
+  symbol: nullish(z.string()),
+  decimals: nullish(z.number()),
+  anytoken: nullish(
     z.strictObject({
       address: z.string(),
-      name: z.optional(z.string()),
-      symbol: z.optional(z.string()),
+      name: nullish(z.string()),
+      symbol: nullish(z.string()),
       decimals: z.number(),
-      chainid: z.optional(z.string()),
-      chainId: z.optional(z.string()),
+      chainid: nullish(z.string()),
+      chainId: nullish(z.string()),
     }),
   ),
   fromanytoken: z.strictObject({
     address: z.string(),
-    name: z.optional(z.string()),
-    symbol: z.optional(z.string()),
+    name: nullish(z.string()),
+    symbol: nullish(z.string()),
     decimals: z.number(),
-    chainid: z.optional(z.string()),
-    chainId: z.optional(z.string()),
+    chainid: nullish(z.string()),
+    chainId: nullish(z.string()),
   }),
   underlying: z.union([
     z.literal(false),
     z.strictObject({
       address: z.string(),
-      name: z.optional(z.string()),
-      symbol: z.optional(z.string()),
-      decimals: z.number(),
-      chainid: z.optional(z.string()),
-      chainId: z.optional(z.string()),
+      name: nullish(z.string()),
+      symbol: nullish(z.string()),
+      decimals: nullish(z.number()),
+      chainid: nullish(z.string()),
+      chainId: nullish(z.string()),
     }),
   ]),
   type: z.string(),
   router: z.string(),
-  tokenId: z.optional(z.string()),
-  tokenid: z.optional(z.string()),
-  routerAbi: z.optional(z.string()),
-  routerABI: z.optional(z.string()),
+  tokenId: nullish(z.string()),
+  tokenid: nullish(z.string()),
+  routerAbi: nullish(z.string()),
+  routerABI: nullish(z.string()),
   isLiquidity: z.boolean(),
   isApprove: z.boolean(),
   isFromLiquidity: z.boolean(),
@@ -53,10 +57,11 @@ export const RouteConfig = z.strictObject({
   SwapFeeRatePerMillion: z.union([z.number(), z.string(), z.null()]),
   pairid: z.string(),
   DepositAddress: z.string(),
-  BaseFeePercent: z.optional(z.union([z.number(), z.string()])),
+  BaseFeePercent: nullish(z.union([z.number(), z.string()])),
   sortId: z.number(),
   tokenType: z.string(),
   chainId: z.string(),
+  anycall: nullish(z.string()),
 })
 
 export type DestinationConfig = z.infer<typeof DestinationConfig>
@@ -70,14 +75,14 @@ export const DestinationConfig = z.record(
 
 export type TokenConfig = z.infer<typeof TokenConfig>
 export const TokenConfig = z.strictObject({
-  name: z.optional(z.string()),
-  symbol: z.optional(z.string()),
+  name: nullish(z.string()),
+  symbol: nullish(z.string()),
   decimals: z.number(),
   address: z.string(),
-  price: z.optional(z.union([z.number(), z.null()])),
-  logoUrl: z.optional(z.string()),
+  price: nullish(z.union([z.number(), z.string(), z.null()])),
+  logoUrl: nullish(z.string()),
   tokenType: z.string(),
-  unit: z.optional(z.string()),
+  unit: nullish(z.string()),
   chainId: z.string(),
   destChains: DestinationConfig,
 })
