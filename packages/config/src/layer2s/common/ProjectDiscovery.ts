@@ -29,8 +29,11 @@ const filesystem = {
 
 export class ProjectDiscovery {
   private readonly discovery: ProjectParameters
-  constructor(project: string, private fs: Filesystem = filesystem) {
-    this.discovery = this.getDiscoveryJson(project)
+  constructor(
+    private readonly projectName: string,
+    private readonly fs: Filesystem = filesystem,
+  ) {
+    this.discovery = this.getDiscoveryJson(projectName)
   }
 
   private getDiscoveryJson(project: string): ProjectParameters {
@@ -58,7 +61,7 @@ export class ProjectDiscovery {
     const result = contract.values?.[key] as T | undefined
     assert(
       result,
-      `Value of key ${key} does not exist in ${contractIdentifier} contract`,
+      `Value of key ${key} does not exist in ${contractIdentifier} contract (${this.projectName})`,
     )
 
     return result
@@ -71,7 +74,10 @@ export class ProjectDiscovery {
     const contract = this.getContract(contractIdentifier)
     //@ts-expect-error only 'type' is allowed here, but many more are possible with our error handling
     const result = contract.upgradeability[key] as T | undefined
-    assert(result, `Upgradeability param of key ${key} does not exist`)
+    assert(
+      result,
+      `Upgradeability param of key ${key} does not exist in ${contract.name} contract (${this.projectName})`,
+    )
 
     return result
   }
@@ -81,7 +87,10 @@ export class ProjectDiscovery {
       (contract) => contract.address.toString() === address,
     )
 
-    assert(contract, `No contract of ${address} found`)
+    assert(
+      contract,
+      `No contract of ${address} address found (${this.projectName})`,
+    )
 
     return contract
   }
@@ -92,7 +101,7 @@ export class ProjectDiscovery {
     )
     assert(
       contracts.length === 1,
-      `Found more than 1 contracts or no contract of ${name} name found`,
+      `Found more than one contracts or no contract of ${name} name found (${this.projectName})`,
     )
 
     return contracts[0]
