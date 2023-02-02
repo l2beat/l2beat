@@ -9,7 +9,7 @@ export interface RatingProps {
 
 export function RatingTooltipPopup({ item }: Required<RatingProps>) {
   return (
-    <div className="w-88 gap-4 flex flex-col">
+    <div className="w-88 flex flex-col gap-4">
       <span className="font-bold">
         <span className="mr-2">Current score</span>
         <RatingBadge
@@ -19,10 +19,10 @@ export function RatingTooltipPopup({ item }: Required<RatingProps>) {
       </span>
       <hr className="border-gray-650" />
       <div>
-        <p className="text-gray-50 uppercase mb-2 text-[13px] leading-tight">
+        <p className="mb-2 text-[13px] uppercase leading-tight text-gray-50">
           Requirements for {item.category.score} score:
         </p>
-        <ul className="list-disc list-inside marker:ml-1">
+        <ul className="list-inside list-disc marker:ml-1">
           {item.category.requirements.map((requirement, i) => (
             <li key={i} className="before:-ml-2">
               {requirement}
@@ -33,10 +33,10 @@ export function RatingTooltipPopup({ item }: Required<RatingProps>) {
       <div>
         {item.modifier && (
           <>
-            <p className="text-gray-50 uppercase mb-2 text-[13px] leading-tight">
+            <p className="mb-2 text-[13px] uppercase leading-tight text-gray-50">
               Additional modifiers:
             </p>
-            <ul className="list-disc list-inside ">
+            <ul className="list-inside list-disc ">
               {item.modifier.items.map((modifier, i) => (
                 <li key={i} className="before:-ml-2">
                   {modifier}
@@ -48,11 +48,11 @@ export function RatingTooltipPopup({ item }: Required<RatingProps>) {
       </div>
       {item.thingsToImprove && (
         <div>
-          <p className="text-gray-50 uppercase mb-2 text-[13px] leading-tight">
+          <p className="mb-2 text-[13px] uppercase leading-tight text-gray-50">
             What needs to be fixed for score{' '}
             {item.thingsToImprove.improvedScore}:
           </p>
-          <ul className="list-disc list-inside marker:ml-1">
+          <ul className="list-inside list-disc marker:ml-1">
             {item.thingsToImprove.requirements.map((improvement, i) => (
               <li key={i} className="before:-ml-2">
                 {improvement}
