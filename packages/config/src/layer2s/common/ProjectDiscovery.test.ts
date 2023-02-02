@@ -6,11 +6,12 @@ import {
 } from '../../test/stubs/discoveredJson'
 import { Filesystem, ProjectDiscovery } from './ProjectDiscovery'
 
-describe.only(ProjectDiscovery.name, () => {
+describe(ProjectDiscovery.name, () => {
   const fsMock = mock<Filesystem>({
     readFileSync: () => JSON.stringify(discoveredJsonStub),
   })
-  const discovery = new ProjectDiscovery('does not matter', fsMock)
+  const projectName = 'ExampleProject'
+  const discovery = new ProjectDiscovery('ExampleProject', fsMock)
 
   describe(ProjectDiscovery.prototype.getContract.name, () => {
     it('should return contract for given address', () => {
@@ -19,13 +20,11 @@ describe.only(ProjectDiscovery.name, () => {
       expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
     })
 
-    it.only('should throw an error if contract with given address does not exist', () => {
+    it('should throw an error if contract with given address does not exist', () => {
       const nonExistingAddress = '0xF380166F8490F24AF32Bf47D1aA217FBA62B6575'
 
-      expect(() =>
-        discovery.getContract('0xF380166F8490F24AF32Bf47D1aA217FBA62B6575'),
-      ).toThrow(
-        'Assertion Error: No contract of 0xF380166F8490F24AF32Bf47D1aA217FBA62B6575 found',
+      expect(() => discovery.getContract(nonExistingAddress)).toThrow(
+        `Assertion Error: No contract of ${nonExistingAddress} address found (${projectName})`,
       )
     })
 
@@ -39,7 +38,7 @@ describe.only(ProjectDiscovery.name, () => {
       const name = 'randomContract'
 
       expect(() => discovery.getContract(name)).toThrow(
-        `Assertion Error: Found more than 1 contracts or no contract of ${name} name found`,
+        `Assertion Error: Found more than one contracts or no contract of ${name} name found (${projectName})`,
       )
     })
 
@@ -47,7 +46,7 @@ describe.only(ProjectDiscovery.name, () => {
       const name = 'PaymentExitGame'
 
       expect(() => discovery.getContract(name)).toThrow(
-        `Assertion Error: Found more than 1 contracts or no contract of ${name} name found`,
+        `Assertion Error: Found more than one contracts or no contract of ${name} name found (${projectName})`,
       )
     })
   })
@@ -64,7 +63,7 @@ describe.only(ProjectDiscovery.name, () => {
     it('should throw an error if given contract value does not exist', () => {
       const key = 'randomValue'
       expect(() => discovery.getContractValue(contractStub.name, key)).toThrow(
-        `Assertion Error: Value of key ${key} does not exist in ${contractStub.name} contract`,
+        `Assertion Error: Value of key ${key} does not exist in ${contractStub.name} contract (${projectName})`,
       )
     })
   })
@@ -90,7 +89,7 @@ describe.only(ProjectDiscovery.name, () => {
             key,
           ),
         ).toThrow(
-          `Assertion Error: Upgradeability param of key ${key} does not exist`,
+          `Assertion Error: Upgradeability param of key ${key} does not exist in ${contractStub.name} contract (${projectName})`,
         )
       })
     },
