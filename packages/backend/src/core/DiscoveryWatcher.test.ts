@@ -12,6 +12,7 @@ import { DiscoveryConfig } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { parseDiscoveryOutput } from './discovery/saveDiscoveryResult'
 import { ContractParameters } from './discovery/types'
+import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { DiscoveryWatcher } from './DiscoveryWatcher'
 
@@ -260,11 +261,79 @@ describe(DiscoveryWatcher.name, () => {
         Logger.SILENT,
       )
 
-      await discoveryWatcher.findChanges(
+      const result = await discoveryWatcher.findChanges(
         PROJECT_A,
         parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER),
         {},
       )
+
+      const expected = diffDiscovery(
+        COMMITTED,
+        parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER).contracts,
+        {},
+      )
+
+      expect(result).toEqual(expected)
+
+      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
+        [PROJECT_A],
+      ])
+      expect(repository.findLatest.calls.length).toEqual(1)
+    })
+
+    it('takes config hash into consideration', async () => {
+      const configReader = mock<ConfigReader>({
+        readDiscovery: mockFn().resolvesTo({
+          contracts: [
+            {
+              ...mockCommitted(NAME_A, ADDRESS_A),
+              values: {
+                a: true,
+              },
+            },
+          ],
+        }),
+      })
+
+      const repository = mock<DiscoveryWatcherRepository>({
+        findLatest: mockFn().resolvesTo({
+          ...mockCommitted(NAME_A, ADDRESS_A),
+          values: {
+            a: false,
+          },
+        }),
+        addOrUpdate: mockFn().resolvesTo({}),
+      })
+
+      const discoveryWatcher = new DiscoveryWatcher(
+        mock<providers.AlchemyProvider>(),
+        mock<DiscoveryEngine>(),
+        mock<DiscordClient>(),
+        configReader,
+        repository,
+        mock<Clock>(),
+        Logger.SILENT,
+      )
+
+      await discoveryWatcher.findChanges(
+        PROJECT_A,
+        {},
+        {},
+      )
+
+      const result = await discoveryWatcher.findChanges(
+        PROJECT_A,
+        parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER),
+        {},
+      )
+
+      const expected = diffDiscovery(
+        COMMITTED,
+        parseDiscoveryOutput(DISCOVERED, PROJECT_A, BLOCK_NUMBER).contracts,
+        {},
+      )
+
+      expect(result).toEqual(expected)
 
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
         [PROJECT_A],
