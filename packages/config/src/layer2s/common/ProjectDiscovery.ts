@@ -6,9 +6,19 @@ import {
 import { getAddress } from 'ethers/lib/utils'
 import fs from 'fs'
 import path from 'path'
+
 import { ProjectUpgradeability } from './../../common/ProjectContracts'
 
-type KeysOfUnion<T> = T extends T ? keyof T : never
+type AllKeys<T> = T extends T ? keyof T : never
+
+type MergedUnion<T extends object> = {
+  [K in AllKeys<T>]: PickType<T, K>
+}
+
+type PickType<T, K extends AllKeys<T>> = T extends { [k in K]?: T[K] }
+  ? T[K]
+  : undefined
+
 export class ProjectDiscovery {
   private readonly discovery: ProjectParameters
   constructor(project: string) {
@@ -47,13 +57,13 @@ export class ProjectDiscovery {
     return result
   }
 
-  getContractUpgradeabilityParam(
-    contractIdentifier: string,
-    key: KeysOfUnion<ProjectUpgradeability>,
-  ): string {
+  getContractUpgradeabilityParam<
+    K extends AllKeys<ProjectUpgradeability>,
+    T extends MergedUnion<ProjectUpgradeability>[K],
+  >(contractIdentifier: string, key: K): T {
     const contract = this.getContract(contractIdentifier)
-    //@ts-expect-error
-    const result = contract.upgradeability[key]
+    //@ts-expect-error only 'type' is allowed here, but many more are possible with our error handling
+    const result = contract.upgradeability[key] as T
 
     if (!result) {
       throw new Error(`Upgradeability param of key ${key} does not exist`)
