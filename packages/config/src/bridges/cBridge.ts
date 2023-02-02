@@ -181,27 +181,27 @@ export const cBridge: Bridge = {
       },
       {
         name: 'Token Bridge v2',
-        address: '0x7510792A3B1969F9307F3845CE88e39578f2bAE1 ',
+        address: '0x7510792A3B1969F9307F3845CE88e39578f2bAE1',
         description:
           'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
       },
       {
         name: 'Pegged Token Bridge v1',
-        address: '0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB  ',
+        address: '0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB',
         description:
-          'Contract minting/burning tokens when receiving a message from Token Bridge',
+          'Contract minting/burning tokens when receiving a message from Token Bridge.',
       },
       {
         name: 'Pegged Token Bridge v2',
-        address: '0x52E4f244f380f8fA51816c8a10A63105dd4De084  ',
+        address: '0x52E4f244f380f8fA51816c8a10A63105dd4De084',
         description:
-          'Contract minting/burning tokens when receiving a message from Token Bridge',
+          'Contract minting/burning tokens when receiving a message from Token Bridge.',
       },
       {
         name: 'Transfer Agent',
-        address: '0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b  ',
+        address: '0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b',
         description:
-          'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge',
+          'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',
       },
     ],
     references: [],
