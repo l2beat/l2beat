@@ -19,10 +19,14 @@ describe.only(ProjectDiscovery.name, () => {
       expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
     })
 
-    it('should throw an error if contract with given address does not exist', () => {
+    it.only('should throw an error if contract with given address does not exist', () => {
+      const nonExistingAddress = '0xF380166F8490F24AF32Bf47D1aA217FBA62B6575'
+
       expect(() =>
-        discovery.getContract('0x10A0C2674881Af5241E4d1046Da1bE118fF736fF'),
-      ).toThrow(Error)
+        discovery.getContract('0xF380166F8490F24AF32Bf47D1aA217FBA62B6575'),
+      ).toThrow(
+        'Assertion Error: No contract of 0xF380166F8490F24AF32Bf47D1aA217FBA62B6575 found',
+      )
     })
 
     it('should return contract for given name', () => {
@@ -34,13 +38,17 @@ describe.only(ProjectDiscovery.name, () => {
     it('should throw an error if contract for given name does not exist', () => {
       const name = 'randomContract'
 
-      expect(() => discovery.getContract(name)).toThrow(Error)
+      expect(() => discovery.getContract(name)).toThrow(
+        `Assertion Error: Found more than 1 contracts or no contract of ${name} name found`,
+      )
     })
 
     it('should throw an error if there is more than one contract with given name', () => {
       const name = 'PaymentExitGame'
 
-      expect(() => discovery.getContract(name)).toThrow(Error)
+      expect(() => discovery.getContract(name)).toThrow(
+        `Assertion Error: Found more than 1 contracts or no contract of ${name} name found`,
+      )
     })
   })
 
@@ -54,9 +62,10 @@ describe.only(ProjectDiscovery.name, () => {
     })
 
     it('should throw an error if given contract value does not exist', () => {
-      expect(() =>
-        discovery.getContractValue(contractStub.name, 'randomValue'),
-      ).toThrow(Error)
+      const key = 'randomValue'
+      expect(() => discovery.getContractValue(contractStub.name, key)).toThrow(
+        `Assertion Error: Value of key ${key} does not exist in ${contractStub.name} contract`,
+      )
     })
   })
 
@@ -72,13 +81,17 @@ describe.only(ProjectDiscovery.name, () => {
         expect(upgradeabilityParam).toEqual('immutable')
       })
       it('should throw an error if upgradeability param does not exist', () => {
+        const key = 'randomParam'
+
         expect(() =>
           discovery.getContractUpgradeabilityParam(
             contractStub.name,
             //@ts-expect-error key does not exist on UpgradeabilityParams type
-            'randomParam',
+            key,
           ),
-        ).toThrow(Error)
+        ).toThrow(
+          `Assertion Error: Upgradeability param of key ${key} does not exist`,
+        )
       })
     },
   )

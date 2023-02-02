@@ -43,11 +43,11 @@ export class ProjectDiscovery {
 
   getContract(identifier: string): ContractParameters {
     try {
-      const address = utils.getAddress(identifier)
-      return this.getContractByAddress(address)
+      identifier = utils.getAddress(identifier)
     } catch {
       return this.getContractByName(identifier)
     }
+    return this.getContractByAddress(identifier)
   }
 
   getContractValue<T extends ContractValue>(
@@ -56,7 +56,10 @@ export class ProjectDiscovery {
   ): T {
     const contract = this.getContract(contractIdentifier)
     const result = contract.values?.[key] as T | undefined
-    assert(result, `Value of key ${key} does not exist on searched object`)
+    assert(
+      result,
+      `Value of key ${key} does not exist in ${contractIdentifier} contract`,
+    )
 
     return result
   }
@@ -77,6 +80,7 @@ export class ProjectDiscovery {
     const contract = this.discovery.contracts.find(
       (contract) => contract.address.toString() === address,
     )
+
     assert(contract, `No contract of ${address} found`)
 
     return contract
