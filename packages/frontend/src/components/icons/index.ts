@@ -1,3 +1,4 @@
+export * from './Arrows'
 export * from './pages/ActivityIcon'
 export * from './pages/RiskIcon'
 export * from './pages/TvlIcon'

@@ -15,12 +15,12 @@ export function ChartButton(props: Props) {
   return (
     <label
       className={cx(
-        'block relative select-none cursor-pointer',
+        'relative block cursor-pointer select-none',
         props.className,
       )}
     >
       <input
-        className="peer cursor-pointer block absolute top-0 left-0 w-full h-full opacity-0"
+        className="peer absolute top-0 left-0 block h-full w-full cursor-pointer opacity-0"
         defaultChecked={props.checked}
         type="radio"
         name={props.name}
@@ -28,7 +28,7 @@ export function ChartButton(props: Props) {
         data-tvl-endpoint={props.tvlEndpoint}
         autoComplete="off"
       />
-      <span className="block relative pb-1 after:absolute after:w-full after:left-0 after:bottom-0.5 after:h-0.5 peer-checked:font-bold peer-checked:after:bg-current peer-focus-visible:outline-1 peer-focus-visible:outline-dotted outline-current">
+      <span className="relative block pb-1 outline-current after:absolute after:left-0 after:bottom-0.5 after:h-0.5 after:w-full peer-checked:font-bold peer-checked:after:bg-current peer-focus-visible:outline-dotted peer-focus-visible:outline-1">
         {props.children ?? props.value}
       </span>
     </label>

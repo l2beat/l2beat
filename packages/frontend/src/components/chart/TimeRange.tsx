@@ -4,7 +4,7 @@ export function TimeRange() {
   return (
     <p
       data-role="chart-range"
-      className="font-bold flex items-center max-w-[130px] sm:max-w-full h-8"
+      className="flex h-8 max-w-[130px] items-center font-bold sm:max-w-full"
     >
       ...
     </p>

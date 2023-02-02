@@ -43,7 +43,7 @@ const permissions: ProjectPermission[] = [
 
 export function PermissionsSection() {
   return (
-    <div className="leading-normal p-4">
+    <div className="p-4 leading-normal">
       <PermissionsSectionComponent
         permissions={permissions.map(toTechnologyContract)}
         verificationStatus={{

@@ -29,7 +29,7 @@ export function Badge({
   return (
     <span
       className={cx(
-        'px-1.5 py-px rounded font-medium',
+        'rounded px-1.5 py-px font-medium',
         oneSize ? 'text-sm' : 'text-2xs md:text-sm',
         title && 'Tooltip',
         badgeClassnames[type],

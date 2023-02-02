@@ -11,22 +11,22 @@ export interface ActivityHeaderProps {
 export function ActivityHeader(props: ActivityHeaderProps) {
   return (
     <header className="mt-4 md:mt-12">
-      <div className="flex justify-between items-baseline">
-        <h1 className="font-bold text-3xl mb-1">Activity</h1>
-        <p className="font-bold text-3xl text-right">
-          <span className="hidden md:inline text-sm md:text-2xl">
+      <div className="flex items-baseline justify-between">
+        <h1 className="mb-1 text-3xl font-bold">Activity</h1>
+        <p className="text-right text-3xl font-bold">
+          <span className="hidden text-sm md:inline md:text-2xl">
             Scaling factor:{' '}
           </span>
           {props.scalingFactor}
         </p>
       </div>
-      <div className="flex justify-between items-baseline text-xs md:text-base">
-        <p className="text-gray-500 dark:text-gray-600 hidden md:block">
+      <div className="flex items-baseline justify-between text-xs md:text-base">
+        <p className="hidden text-gray-500 dark:text-gray-600 md:block">
           Transactions per second
         </p>
         <p
           className={cx(
-            'text-gray-500 dark:text-gray-600 text-right w-full md:w-auto',
+            'w-full text-right text-gray-500 dark:text-gray-600 md:w-auto',
             'flex items-center gap-1.5',
           )}
         >
@@ -50,7 +50,7 @@ export function ActivityHeader(props: ActivityHeaderProps) {
           </span>
         </p>
       </div>
-      <HorizontalSeparator className="md:hidden mt-2" />
+      <HorizontalSeparator className="mt-2 md:hidden" />
     </header>
   )
 }
