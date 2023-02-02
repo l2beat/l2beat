@@ -216,7 +216,7 @@ export const orbit: Bridge = {
           'getOwners',
         )
         .map((owner) => ({ address: owner, type: 'EOA' })),
-      description: `Participants of Bridge Governance ${discovery.getContractValue(
+      description: `Participants of Bridge Governance ${discovery.getContractValue<number>(
         '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
         'required',
       )}/${
