@@ -31,7 +31,7 @@ export function RiskSection({ riskGroups }: RiskSectionProps) {
             {group.name}
           </h3>
           <ol
-            className="list-decimal list-inside p-1.5 text-gray-860 dark:text-gray-400"
+            className="list-decimal list-inside p-1.5 text-gray-850 dark:text-gray-400"
             start={group.start}
           >
             {group.items.map((item, i) => (
