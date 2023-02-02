@@ -16,8 +16,8 @@ describe(LogThrottler.name, () => {
   let logThrottler: LogThrottler
   let logger: Logger & {
     info: ReturnType<typeof mockFn>
-    error: ReturnType<typeof mockFn>
   }
+
   beforeEach(() => {
     time = install({})
     logger = mockLogger()
@@ -83,8 +83,6 @@ function mockLogger(): Logger & {
   error: ReturnType<typeof mockFn>
 } {
   const logger = Object.create(Logger.SILENT)
-  logger.for = () => logger
   logger.info = mockFn(() => {})
-  logger.error = mockFn(() => {})
   return logger
 }
