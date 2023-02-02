@@ -10,19 +10,19 @@ export interface KnowledgeNuggetProps {
 
 export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
   return (
-    <div className="group grid grid-cols-5 gap-3 pr-4 max-w-md rounded-md items-center transition-all hover:bg-gray-400 dark:hover:bg-gray-900 ">
-      <div className="relative col-span-2 pb-2/3 overflow-hidden rounded-md drop-shadow-md">
+    <div className="group grid max-w-md grid-cols-5 items-center gap-3 rounded-md pr-4 transition-all hover:bg-gray-400 dark:hover:bg-gray-900 ">
+      <div className="relative col-span-2 overflow-hidden rounded-md pb-2/3 drop-shadow-md">
         <img
           src={knowledgeNugget.thumbnailUrl}
           className="absolute h-full w-full object-cover transition-all group-hover:scale-105"
         />
       </div>
-      <div className="flex-col col-span-3 transition-all group-hover:translate-x-0.5">
-        <p className="font-bold text-lg leading-tight">
+      <div className="col-span-3 flex-col transition-all group-hover:translate-x-0.5">
+        <p className="text-lg font-bold leading-tight">
           {knowledgeNugget.title}
         </p>
         <OutLink
-          className="text-sm underline font-bold text-link flex flex-wrap items-center gap-1"
+          className="flex flex-wrap items-center gap-1 text-sm font-bold text-link underline"
           href={knowledgeNugget.url}
         >
           Learn more

@@ -17,15 +17,15 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
   return (
     <ul
       className={cx(
-        'hidden md:flex w-full justify-around items-center',
-        'border-gray-200 dark:border-gray-850 border-2 rounded-lg',
+        'hidden w-full items-center justify-around md:flex',
+        'rounded-lg border-2 border-gray-200 dark:border-gray-850',
       )}
     >
       {pages.map((page, i) => (
         <li
           key={i}
           className={cx(
-            'relative w-full font-bold text-lg h-16',
+            'relative h-16 w-full text-lg font-bold',
             i !== pages.length - 1 && 'border-r-2 border-r-transparent',
             i !== pages.length - 1 &&
               !page.selected &&
@@ -48,7 +48,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
           <a
             href={page.link}
             className={cx(
-              'relative w-full h-full flex justify-center items-center gap-4 z-20 rounded-md',
+              'relative z-20 flex h-full w-full items-center justify-center gap-4 rounded-md',
               !page.selected && 'opacity-50',
               page.selected && 'bg-purple-300 dark:bg-purple-800',
             )}

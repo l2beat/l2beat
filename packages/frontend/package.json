@@ -64,6 +64,7 @@
     "http-proxy-middleware": "^2.0.6",
     "postcss": "^8.4.21",
     "prettier": "^2.6.2",
+    "prettier-plugin-tailwindcss": "^0.2.2",
     "sass": "^1.52.2",
     "storybook-dark-mode": "^1.1.0",
     "storycap": "^3.1.9",

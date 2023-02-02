@@ -26,7 +26,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
     <div
       className={cx(
         'overflow-x-auto whitespace-pre text-base',
-        '-mx-4 w-[calc(100%_+_32px)] md:-mx-12 md:w-[calc(100%_+_96px)] px-4 md:px-12',
+        '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
     >
       <table className="w-full border-collapse text-left">
@@ -36,7 +36,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
               <th
                 key={i}
                 className={cx(
-                  'font-medium uppercase py-2 text-sm text-gray-700 dark:text-gray-300 whitespace-pre align-bottom',
+                  'whitespace-pre py-2 align-bottom text-sm font-medium uppercase text-gray-700 dark:text-gray-300',
                   column.alignRight && 'text-right',
                   column.alignCenter && 'text-center',
                   column.minimalWidth && 'w-0',
@@ -65,7 +65,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
               {...rows?.getProps(item, i)}
               className={cx(
                 'border-b border-b-gray-200 dark:border-b-gray-800',
-                'hover:bg-gray-100 dark:hover:bg-gray-900 hover:shadow-sm',
+                'hover:bg-gray-100 hover:shadow-sm dark:hover:bg-gray-900',
                 rows?.getProps(item, i).className,
               )}
             >

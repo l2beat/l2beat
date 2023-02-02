@@ -2,7 +2,7 @@ import React from 'react'
 
 export function BridgesMvpWarning() {
   return (
-    <p className="text-base my-4 text-center p-2 font-medium text-black bg-yellow-500 rounded-lg">
+    <p className="my-4 rounded-lg bg-yellow-500 p-2 text-center text-base font-medium text-black">
       L2BEAT Bridges is a work in progress. You might find incomplete research
       or inconsistent naming. Join our discord to suggest improvements!
     </p>

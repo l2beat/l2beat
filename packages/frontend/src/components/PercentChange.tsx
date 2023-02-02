@@ -27,7 +27,7 @@ export function PercentChange({ value, className }: Props) {
       {isLess && (
         <ArrowDownIcon className="absolute top-1/2 translate-y-[-50%]" />
       )}
-      <span className="pl-3.5 relative">{value.substring(1)}</span>
+      <span className="relative pl-3.5">{value.substring(1)}</span>
     </span>
   )
 }
