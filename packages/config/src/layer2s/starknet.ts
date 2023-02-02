@@ -157,10 +157,8 @@ export const starknet: Layer2 = {
         name: 'StarkNet Core Contract',
         description:
           'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-        address: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
-        upgradeability: discovery.getContract(
-          '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
-        ).upgradeability,
+        address: discovery.getContract('Starknet').address.toString(),
+        upgradeability: discovery.getContract('Starknet').upgradeability,
       },
       SHARP_VERIFIER_CONTRACT,
       {
@@ -172,10 +170,9 @@ export const starknet: Layer2 = {
       {
         name: 'Eth Bridge',
         description: 'Starkgate bridge for ETH.',
-        address: '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
-        upgradeability: discovery.getContract(
-          '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
-        ).upgradeability,
+        address: discovery.getContract('StarknetEthBridge').address.toString(),
+        upgradeability:
+          discovery.getContract('StarknetEthBridge').upgradeability,
       },
       {
         name: 'L1DaiGateway',

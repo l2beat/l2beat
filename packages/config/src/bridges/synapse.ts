@@ -132,10 +132,8 @@ export const synapse: Bridge = {
         name: 'SynapseBridge',
         description:
           "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
-        address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
-        upgradeability: discovery.getContract(
-          '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
-        ).upgradeability,
+        address: discovery.getContract('SynapseBridge').address.toString(),
+        upgradeability: discovery.getContract('SynapseBridge').upgradeability,
       },
       {
         name: 'Liquidity Pool',
@@ -154,29 +152,22 @@ export const synapse: Bridge = {
         "Manages the bridge parameters and can upgrade its implementation, in case of malicious upgrade user's funds can be lost. Additionally it manages Liquidity Pool with the permissions to mint new tokens.",
       accounts: [
         {
-          address: '0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55',
+          address: discovery.getContract('GnosisSafe').address.toString(),
           type: 'MultiSig',
         },
       ],
     },
     {
       name: 'Participants in Bridge Governance 2/3 MultiSig',
-      description:
-        'Can sign the transaction which will be executed by the Multisig contract.',
-      accounts: [
-        {
-          address: '0xb3DAD3C24A861b84fDF380B212662620627D4e15',
-          type: 'EOA',
-        },
-        {
-          address: '0x42980E3e602178354E065723d9652BEf79Ae3673',
-          type: 'EOA',
-        },
-        {
-          address: '0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC',
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery
+        .getContractValue<string[]>('GnosisSafe', 'getOwners')
+        .map((owner) => ({ address: owner, type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        'GnosisSafe',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+      } Bridge Governance MultiSig.`,
     },
     {
       name: 'Nodes',

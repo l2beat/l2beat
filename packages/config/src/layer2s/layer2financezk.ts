@@ -98,10 +98,8 @@ export const layer2financezk: Layer2 = {
     addresses: [
       {
         name: 'StarkExchange',
-        address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
-        upgradeability: discovery.getContract(
-          '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
-        ).upgradeability,
+        address: discovery.getContract('Proxy').address.toString(),
+        upgradeability: discovery.getContract('Proxy').upgradeability,
       },
       {
         name: 'Committee',
@@ -112,7 +110,7 @@ export const layer2financezk: Layer2 = {
         name: 'Broker',
         description:
           'Broker manages investment strategies on L1 for tokens deposited to the system. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
-        address: '0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5',
+        address: discovery.getContract('Broker').address.toString(),
       },
       {
         name: 'StrategyCompound',
@@ -126,14 +124,12 @@ export const layer2financezk: Layer2 = {
       },
       {
         name: 'GpsStatementVerifier',
-        address: '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
-        upgradeability: discovery.getContract(
-          '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
-        ).upgradeability,
+        address: discovery.getContract('CallProxy').address.toString(),
+        upgradeability: discovery.getContract('CallProxy').upgradeability,
       },
       {
         name: 'OrderRegistry',
-        address: '0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8',
+        address: discovery.getContract('OrderRegistry').address.toString(),
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

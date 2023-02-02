@@ -108,21 +108,17 @@ export const dydx: Layer2 = {
     addresses: [
       {
         name: 'StarkPerpetual',
-        address: '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
+        address: discovery.getContract('Proxy').address.toString(),
         description:
           'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-        upgradeability: discovery.getContract(
-          '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Proxy').upgradeability,
       },
       {
         name: 'GpsStatementVerifier',
-        address: '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
+        address: discovery.getContract('CallProxy').address.toString(),
         description:
           'STARK Verifier. In contrast to Sorare, ImmutableX, rhino.fi and StarkNet which use common SHARP Prover, dYdX uses seperate Prover/Verifier.',
-        upgradeability: discovery.getContract(
-          '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
-        ).upgradeability,
+        upgradeability: discovery.getContract('CallProxy').upgradeability,
       },
       {
         name: 'MemoryPageFactRegistry',

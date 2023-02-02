@@ -266,12 +266,13 @@ export const arbitrum: Layer2 = {
           '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
           'getOwners',
         )
-        .map((ownerAddress) => ({
-          address: ownerAddress,
-          type: 'EOA',
-        })),
-      description:
-        'These addresses are the participants of the 4/6 Arbitrum MultiSig.',
+        .map((owner) => ({ address: owner, type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        'GnosisSafe',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+      } Arbitrum MultiSig.`,
     },
     {
       name: 'Sequencer',
@@ -348,8 +349,7 @@ export const arbitrum: Layer2 = {
     addresses: [
       {
         address: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
-        // two contracts
-        // getContract('ProxyAdmin', discovery).address.toString() ??
+        // two contracts with name ProxyAdmin
         name: 'ProxyAdmin (1)',
         description:
           'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by a 4-of-6 multisig.',
@@ -362,10 +362,7 @@ export const arbitrum: Layer2 = {
         upgradeability: discovery.getContract('RollupProxy').upgradeability,
       },
       {
-        // address: getContract(
-        //   'SequencerInbox',
-        //   discovery,
-        // ).address.toString(),
+        // two same names
         address: '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
         name: 'SequencerInbox',
         description:

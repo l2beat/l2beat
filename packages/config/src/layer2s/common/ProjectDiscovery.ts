@@ -68,7 +68,7 @@ export class ProjectDiscovery {
     )
 
     if (!contract) {
-      throw new Error(`No contract of ${address} found`)
+      throw new Error(`No contract of ${address} address found`)
     }
 
     return contract

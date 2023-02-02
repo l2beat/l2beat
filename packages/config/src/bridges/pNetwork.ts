@@ -1,8 +1,11 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/types'
 
 import { CONTRACTS } from '../layer2s/common'
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('pNetwork')
 
 export const pNetwork: Bridge = {
   type: 'bridge',
@@ -136,13 +139,9 @@ export const pNetwork: Bridge = {
         name: 'pNetwork ERC20Vault v2',
         description:
           'pNetwork ERCVault v2 for ERC20 with special logic for handling inflation of PNT token.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a'),
-          implementation: EthereumAddress(
-            '0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b',
-          ),
-        },
+        upgradeability: discovery.getContract(
+          '0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8',
+        ).upgradeability,
       },
       {
         address: '0x9f8622b11984AfC8f0a42A394928702017c5968D',
@@ -165,15 +164,34 @@ export const pNetwork: Bridge = {
         'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group\
         of Validator nodes in a MPC network.',
       accounts: [
-        { address: '0x341aA660fD5c280F5a9501E3822bB4a98E816D1b', type: 'EOA' },
-        { address: '0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9', type: 'EOA' },
-        { address: '0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132', type: 'EOA' },
+        {
+          address: discovery.getContractValue<string>(
+            '0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8',
+            'PNETWORK',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: discovery.getContractValue<string>(
+            '0x9f8622b11984AfC8f0a42A394928702017c5968D',
+            'PNETWORK',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: discovery.getContractValue<string>(
+            '0x112334f50Cb6efcff4e35Ae51A022dBE41a48135',
+            'PNETWORK',
+          ),
+          type: 'EOA',
+        },
       ],
     },
     {
       name: 'PProxyAdmin',
       description: 'Proxy owner of ERC20Vault v2',
       accounts: [
+        //IDK if its correct
         { address: '0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a', type: 'EOA' },
       ],
     },
@@ -182,6 +200,7 @@ export const pNetwork: Bridge = {
       description: '2/4 MSig - owner of PProxyAdmin',
       accounts: [
         {
+          //Shouldn't it be GnosisSafe getOwners?
           address: '0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB',
           type: 'MultiSig',
         },

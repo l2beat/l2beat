@@ -185,7 +185,7 @@ export const metis: Layer2 = {
       name: 'Metis manager MultiSig',
       accounts: [
         {
-          address: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
+          address: discovery.getContract('GnosisSafe').address.toString(),
           type: 'MultiSig',
         },
       ],
@@ -194,34 +194,15 @@ export const metis: Layer2 = {
     },
     {
       name: 'Metis MultiSig participants',
-      accounts: [
-        {
-          address: '0x217fD54d336f710F8aee19572dBfBf0B2297ed69',
-          type: 'EOA',
-        },
-        {
-          address: '0xB383E1331dEE29864b68f7D84b0dC289F770d846',
-          type: 'EOA',
-        },
-        {
-          address: '0x7a9059F4A6e50090e4f55994d465918200AB4454',
-          type: 'EOA',
-        },
-        {
-          address: '0x02058Bb1d98D88087008F2ac1273584591380e3F',
-          type: 'EOA',
-        },
-        {
-          address: '0xB961047013F974C5b6B6F8dA4402379525316550',
-          type: 'EOA',
-        },
-        {
-          address: '0xa6D8941F935932a531A856C2e48046DA73a1098E',
-          type: 'EOA',
-        },
-      ],
-      description:
-        'These addresses are the participants of the 4/6 Metis MultiSig.',
+      accounts: discovery
+        .getContractValue<string[]>('GnosisSafe', 'getOwners')
+        .map((owner) => ({ address: owner, type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        'GnosisSafe',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+      } Metis MultiSig.`,
     },
     {
       name: 'Sequencer',
@@ -311,12 +292,13 @@ export const metis: Layer2 = {
       },
       {
         name: 'L1CrossDomainMessenger',
-        address: '0x081D1101855bD523bA69A9794e0217F0DB6323ff',
+        address: discovery
+          .getContract('L1CrossDomainMessenger')
+          .address.toString(),
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        upgradeability: discovery.getContract(
-          '0x081D1101855bD523bA69A9794e0217F0DB6323ff',
-        ).upgradeability,
+        upgradeability: discovery.getContract('L1CrossDomainMessenger')
+          .upgradeability,
       },
       {
         name: 'MVM_DiscountOracle',
@@ -349,12 +331,11 @@ export const metis: Layer2 = {
       },
       {
         name: 'L1StandardBridge',
-        address: '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
+        address: discovery.getContract('L1StandardBridge').address.toString(),
         description:
           'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
-        upgradeability: discovery.getContract(
-          '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
-        ).upgradeability,
+        upgradeability:
+          discovery.getContract('L1StandardBridge').upgradeability,
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
