@@ -21,7 +21,7 @@ export class Application {
     const loggerOptions = { ...config.logger, reportError }
 
     const logThrottler = config.logThrottler
-      ? new LogThrottler(config.logThrottler, loggerOptions)
+      ? new LogThrottler(config.logThrottler, new Logger(loggerOptions))
       : undefined
     const logger = new Logger(loggerOptions, logThrottler)
 

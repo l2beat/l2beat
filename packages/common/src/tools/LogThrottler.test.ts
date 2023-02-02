@@ -1,7 +1,7 @@
 import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect } from 'earljs'
+import { expect, mockFn } from 'earljs'
 
-import { LoggerOptions, LogLevel } from './Logger'
+import { Logger } from './Logger'
 import { LogThrottler, LogThrottlerOptions } from './LogThrottler'
 
 describe(LogThrottler.name, () => {
@@ -13,15 +13,15 @@ describe(LogThrottler.name, () => {
     thresholdTimeInMs: 5000,
     throttleTimeInMs: 10000,
   }
-  const loggerOptions: LoggerOptions = {
-    logLevel: LogLevel.INFO,
-    format: 'pretty',
-  }
   let logThrottler: LogThrottler
-
+  let logger: Logger & {
+    info: ReturnType<typeof mockFn>
+    error: ReturnType<typeof mockFn>
+  }
   beforeEach(() => {
     time = install({})
-    logThrottler = new LogThrottler(logThrottlerOptions, loggerOptions)
+    logger = mockLogger()
+    logThrottler = new LogThrottler(logThrottlerOptions, logger)
   })
 
   afterEach(() => {
@@ -48,7 +48,25 @@ describe(LogThrottler.name, () => {
     expect(logThrottler.isThrottling(logKey)).toEqual(false)
   })
 
-  it('should throttle', async () => {
+  it('should throttle and log info about throttling after throttleTime', async () => {
+    const throttleLogCalls = 2
+    for (let i = 0; i < logThrottlerOptions.threshold + throttleLogCalls; i++) {
+      logThrottler.add(logKey)
+    }
+
+    expect(logThrottler.isThrottling(logKey)).toEqual(true)
+    await time.tickAsync(logThrottlerOptions.throttleTimeInMs)
+    expect(logThrottler.isThrottling(logKey)).toEqual(false)
+    expect(logger.info).toHaveBeenCalledExactlyWith([
+      [
+        `"${logKey}" was logged ${throttleLogCalls} times during last ${
+          logThrottlerOptions.throttleTimeInMs / 1000
+        } seconds`,
+      ],
+    ])
+  })
+
+  it('should throttle and do not log if throttleCount equals 0', async () => {
     for (let i = 0; i < logThrottlerOptions.threshold; i++) {
       logThrottler.add(logKey)
     }
@@ -56,5 +74,17 @@ describe(LogThrottler.name, () => {
     expect(logThrottler.isThrottling(logKey)).toEqual(true)
     await time.tickAsync(logThrottlerOptions.throttleTimeInMs)
     expect(logThrottler.isThrottling(logKey)).toEqual(false)
+    expect(logger.info).toHaveBeenCalledExactlyWith([])
   })
 })
+
+function mockLogger(): Logger & {
+  info: ReturnType<typeof mockFn>
+  error: ReturnType<typeof mockFn>
+} {
+  const logger = Object.create(Logger.SILENT)
+  logger.for = () => logger
+  logger.info = mockFn(() => {})
+  logger.error = mockFn(() => {})
+  return logger
+}

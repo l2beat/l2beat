@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { Logger, LoggerOptions } from './Logger'
+import { Logger } from './Logger'
 
 interface LogInfo {
   count: number
@@ -20,15 +20,13 @@ export interface LogThrottlerOptions {
  */
 export class LogThrottler {
   private readonly recentLogs: Map<string, LogInfo>
-  private readonly logger: Logger
 
   constructor(
     private readonly options: LogThrottlerOptions,
-    loggerOptions: LoggerOptions,
+    private readonly logger: Logger,
   ) {
     this.recentLogs = new Map<string, LogInfo>()
-    this.logger = new Logger(loggerOptions).for(LogThrottler.name)
-
+    this.logger.for(LogThrottler.name)
     setInterval(() => this.clearCount(), options.thresholdTimeInMs)
   }
 
