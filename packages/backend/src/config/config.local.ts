@@ -35,6 +35,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'pretty',
     },
+    logThrottler: false,
     clock: {
       // TODO: This should probably be configurable
       minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
