@@ -33,6 +33,7 @@ describe(DiscoveryWatcherRepository.name, () => {
       discovery: {
         name: projectName,
         blockNumber: -1,
+        configHash: Hash256.random(),
         contracts: [],
         eoas: [],
         abis: {},
@@ -56,6 +57,7 @@ describe(DiscoveryWatcherRepository.name, () => {
       discovery: {
         name: projectName,
         blockNumber: -1,
+        configHash: Hash256.random(),
         contracts: [],
         eoas: [],
         abis: {},

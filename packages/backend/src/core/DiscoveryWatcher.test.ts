@@ -37,6 +37,7 @@ const COMMITTED: ContractParameters[] = [
 const DISCOVERY_RESULT: ProjectParameters = {
   name: PROJECT_A,
   blockNumber: BLOCK_NUMBER,
+  configHash: Hash256.random(),
   contracts: [
     {
       ...mockContract(NAME_A, ADDRESS_A),
@@ -333,6 +334,7 @@ const mockRecord: DiscoveryWatcherRecord = {
 const mockProject: ProjectParameters = {
   name: PROJECT_A,
   blockNumber: BLOCK_NUMBER,
+  configHash: Hash256.random(),
   contracts: COMMITTED,
   eoas: [],
   abis: {},
