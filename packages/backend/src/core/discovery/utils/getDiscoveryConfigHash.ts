@@ -8,31 +8,38 @@ export function getDiscoveryConfigHash(config: DiscoveryConfig): Hash256 {
 }
 
 export function getDiscoveryConfigEntries(config: DiscoveryConfig): string {
-  const sorted = sortByKey(config)
+  const sorted = deepSortByKeys(config)
   return JSON.stringify(sorted)
 }
 
-function sortByKey(not_sorted: Record<string, any>, nestLevel = 0) {
-  const maxNest = 2
-  return Object.keys(not_sorted)
+const MAX_SEMANTIC_NEST_LEVEL = 2
+
+function deepSortByKeys(object: Record<string, unknown>, nestLevel = 0) {
+  return Object.keys(object)
     .sort()
     .reduce(function (acc, key) {
-      if(typeof not_sorted[key] === 'object') {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if(not_sorted[key].length !== undefined) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-          acc[key] = not_sorted[key].sort()
+      if (typeof object[key] === 'object') {
+        // @ts-expect-error cannot determine type, generic sorting
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        if (object[key].length !== undefined) {
+          // @ts-expect-error cannot determine type, generic sorting
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+          acc[key] = object[key].sort()
         } else {
-          if(nestLevel >= maxNest) {
-            acc[key] = not_sorted[key]
-          } else {
+          if (nestLevel >= MAX_SEMANTIC_NEST_LEVEL) {
+            // @ts-expect-error cannot determine type, generic sorting
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            acc[key] = sortByKey(not_sorted[key], nestLevel + 1)
+            acc[key] = object[key]
+          } else {
+            // @ts-expect-error cannot determine type, generic sorting
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            acc[key] = deepSortByKeys(object[key], nestLevel + 1)
           }
         }
       } else {
+        // @ts-expect-error cannot determine type, generic sorting
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        acc[key] = not_sorted[key]
+        acc[key] = object[key]
       }
       return acc
     }, {})

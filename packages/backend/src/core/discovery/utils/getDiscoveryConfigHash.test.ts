@@ -6,7 +6,6 @@ import { DiscoveryConfig } from '../DiscoveryConfig'
 import {
   getDiscoveryConfigEntries,
   getDiscoveryConfigHash,
-  sortByKey,
 } from './getDiscoveryConfigHash'
 
 const ADDRESS_A = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
@@ -44,20 +43,20 @@ describe(getDiscoveryConfigHash.name, () => {
       maxAddresses: 1,
       overrides: {
         [ADDRESS_B.toString()]: {
-          ignoreInWatchMode: ['a', 'b'],
-          ignoreMethods: ['c', 'd'],
+          ignoreInWatchMode: ['b', 'a'],
+          ignoreMethods: ['d', 'c'],
           ignoreDiscovery: false,
           proxyType: 'call implementation proxy',
           fields: {
-            "B": {
-              "type": "call",
-              "method": "crossChainContracts",
-              "args": [1]
+            B: {
+              type: 'call',
+              method: 'crossChainContracts',
+              args: [1],
             },
-            "A": {
-              "type": "call",
-              "method": "crossChainContracts",
-              "args": [10]
+            A: {
+              type: 'call',
+              method: 'crossChainContracts',
+              args: [10],
             },
           },
         },
@@ -72,29 +71,34 @@ describe(getDiscoveryConfigHash.name, () => {
     }
 
     const expected = {
+      // correctly sort params (nest level = 0)
       initialAddresses: [ADDRESS_A.toString()],
       maxAddresses: 1,
       maxDepth: 1,
       name: 'a',
       overrides: {
+        // correctly sort params (nest level = 1)
         [ADDRESS_C.toString()]: {
+          // correctly sort params (nest level = 2)
           fields: {},
           ignoreDiscovery: false,
+          // sort array values
           ignoreInWatchMode: ['a', 'b'],
           ignoreMethods: ['c', 'd'],
           proxyType: 'call implementation proxy',
         },
         [ADDRESS_B.toString()]: {
           fields: {
-            "B": {
-              "type": "call",
-              "method": "crossChainContracts",
-              "args": [1]
+            // do not sort this (nest level = 3)
+            B: {
+              type: 'call',
+              method: 'crossChainContracts',
+              args: [1],
             },
-            "A": {
-              "type": "call",
-              "method": "crossChainContracts",
-              "args": [10]
+            A: {
+              type: 'call',
+              method: 'crossChainContracts',
+              args: [10],
             },
           },
           ignoreDiscovery: false,
