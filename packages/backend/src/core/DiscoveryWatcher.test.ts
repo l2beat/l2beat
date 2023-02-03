@@ -1,12 +1,14 @@
 import { Logger, mock } from '@l2beat/common'
-import { EthereumAddress, Hash256 } from '@l2beat/types'
-import { expect, mockFn } from 'earljs'
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/types'
+import { expect } from 'earljs'
 import { providers } from 'ethers'
 
-import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
+import {
+  DiscoveryWatcherRecord,
+  DiscoveryWatcherRepository,
+} from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
-import { AnalyzedData } from './discovery/analyzeItem'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryConfig } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
@@ -71,17 +73,15 @@ describe(DiscoveryWatcher.name, () => {
           contracts: COMMITTED,
         }),
 
-        readAllConfigs: mockFn().resolvesToOnce([
+        readAllConfigs: async () => [
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
-        ]),
+        ],
       })
 
       const repository = mock<DiscoveryWatcherRepository>({
-        findLatest: mockFn()
-          .resolvesToOnce(undefined)
-          .resolvesToOnce(undefined),
-        addOrUpdate: mockFn().resolvesToOnce({}).resolvesToOnce({}),
+        findLatest: async () => undefined,
+        addOrUpdate: async () => '',
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
@@ -122,16 +122,17 @@ describe(DiscoveryWatcher.name, () => {
 
     it('does not send notification about the same change', async () => {
       const configReader = mock<ConfigReader>({
-        readAllConfigs: mockFn().resolvesToOnce([mockConfig(PROJECT_A)]),
-        readDiscovery: mockFn().resolvesToOnce({ contracts: [] }),
+        readAllConfigs: async () => [mockConfig(PROJECT_A)],
+        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
       })
 
       const discoveryWatcherRepository = mock<DiscoveryWatcherRepository>({
-        findLatest: mockFn().resolvesToOnce({
+        findLatest: async () => ({
+          ...mockRecord,
           discovery: DISCOVERY_RESULT,
           configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
         }),
-        addOrUpdate: mockFn().resolvesToOnce({}),
+        addOrUpdate: async () => '',
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
@@ -164,13 +165,14 @@ describe(DiscoveryWatcher.name, () => {
   describe(DiscoveryWatcher.prototype.findChanges.name, () => {
     it('finds difference from committed file', async () => {
       const configReader = mock<ConfigReader>({
-        readDiscovery: mockFn().resolvesToOnce({
+        readDiscovery: async () => ({
+          ...mockProject,
           contracts: COMMITTED,
         }),
       })
 
       const repository = mock<DiscoveryWatcherRepository>({
-        findLatest: mockFn().resolvesToOnce(undefined),
+        findLatest: async () => undefined,
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
@@ -208,12 +210,13 @@ describe(DiscoveryWatcher.name, () => {
       const dbEntry = COMMITTED
 
       const configReader = mock<ConfigReader>({
-        readDiscovery: mockFn().resolvesToOnce({}),
+        readDiscovery: async () => ({ ...mockProject }),
       })
 
       const repository = mock<DiscoveryWatcherRepository>({
-        findLatest: mockFn().resolvesToOnce({
-          discovery: { contracts: dbEntry },
+        findLatest: async () => ({
+          ...mockRecord,
+          discovery: { ...mockProject, contracts: dbEntry },
           configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
         }),
       })
@@ -253,16 +256,16 @@ describe(DiscoveryWatcher.name, () => {
         }),
       })
 
-      const dbEntry = {
-        discovery: {
-          contracts: COMMITTED,
-        },
-        configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
-      }
-
       const repository = mock<DiscoveryWatcherRepository>({
-        findLatest: mockFn().resolvesTo(dbEntry),
-        addOrUpdate: mockFn().resolvesTo({}),
+        findLatest: async () => ({
+          ...mockRecord,
+          discovery: {
+            ...mockProject,
+            contracts: COMMITTED,
+          },
+          configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+        }),
+        addOrUpdate: async () => '',
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
@@ -319,9 +322,18 @@ describe(DiscoveryWatcher.name, () => {
   })
 })
 
-const mockProject = {
+const mockRecord: DiscoveryWatcherRecord = {
+  projectName: 'name',
+  blockNumber: 1,
+  timestamp: UnixTime.now(),
+  configHash: Hash256.random(),
+  discovery: DISCOVERY_RESULT,
+}
+
+const mockProject: ProjectParameters = {
   name: PROJECT_A,
   blockNumber: BLOCK_NUMBER,
+  contracts: COMMITTED,
   eoas: [],
   abis: {},
 }
