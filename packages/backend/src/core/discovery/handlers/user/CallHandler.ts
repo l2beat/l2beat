@@ -1,6 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
-import { FunctionFragment } from 'ethers/lib/utils'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -19,7 +18,7 @@ export const CallHandlerDefinition = z.strictObject({
 
 export class CallHandler implements Handler {
   readonly dependencies: string[] = []
-  readonly fragment: FunctionFragment
+  readonly fragment: utils.FunctionFragment
 
   constructor(
     readonly field: string,
