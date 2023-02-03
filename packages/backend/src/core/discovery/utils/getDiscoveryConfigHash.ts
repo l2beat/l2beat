@@ -8,37 +8,32 @@ export function getDiscoveryConfigHash(config: DiscoveryConfig): Hash256 {
 }
 
 export function getDiscoveryConfigEntries(config: DiscoveryConfig): string {
-  const not_sorted = config
-  console.log(not_sorted)
-
-  const sorted = Object.keys(not_sorted)
-    .sort()
-    .reduce((acc, key) => {
-      if (key === 'overrides') {
-        const not_sorted2 = not_sorted[key]
-
-        const sorted2 = Object.keys(not_sorted2)
-          .sort()
-          .reduce((acc, key) => {
-            const not_sorted3 = not_sorted2[key]
-            const sorted3 = Object.keys(not_sorted3)
-            .sort()
-            .reduce((acc, key) => ({
-                ...acc, [key]: not_sorted3[key]
-            }), {})
-
-            return {
-              ...acc,
-              [key]: sorted3,
-            }
-          }, {})
-
-        return { ...acc, [key]: sorted2 }
-      } else {
-        return { ...acc, [key]: not_sorted[key] }
-      }
-    }, {})
-
-  console.log(sorted) //{a: true, b: false}
+  const sorted = sortByKey(config)
   return JSON.stringify(sorted)
+}
+
+function sortByKey(not_sorted: Record<string, any>, nestLevel = 0) {
+  const maxNest = 2
+  return Object.keys(not_sorted)
+    .sort()
+    .reduce(function (acc, key) {
+      if(typeof not_sorted[key] === 'object') {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if(not_sorted[key].length !== undefined) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+          acc[key] = not_sorted[key].sort()
+        } else {
+          if(nestLevel >= maxNest) {
+            acc[key] = not_sorted[key]
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            acc[key] = sortByKey(not_sorted[key], nestLevel + 1)
+          }
+        }
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        acc[key] = not_sorted[key]
+      }
+      return acc
+    }, {})
 }

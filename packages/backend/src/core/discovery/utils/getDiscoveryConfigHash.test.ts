@@ -6,6 +6,7 @@ import { DiscoveryConfig } from '../DiscoveryConfig'
 import {
   getDiscoveryConfigEntries,
   getDiscoveryConfigHash,
+  sortByKey,
 } from './getDiscoveryConfigHash'
 
 const ADDRESS_A = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
@@ -30,12 +31,12 @@ describe(getDiscoveryConfigHash.name, () => {
 
     const result = getDiscoveryConfigHash(config)
 
-    const expected = hashJson(JSON.stringify(config))
+    const expected = hashJson(getDiscoveryConfigEntries(config))
 
     expect(result).toEqual(expected)
   })
 
-  it.only(getDiscoveryConfigEntries.name, () => {
+  it(getDiscoveryConfigEntries.name, () => {
     const config: DiscoveryConfig = {
       name: 'a',
       initialAddresses: [ADDRESS_A],
@@ -47,7 +48,18 @@ describe(getDiscoveryConfigHash.name, () => {
           ignoreMethods: ['c', 'd'],
           ignoreDiscovery: false,
           proxyType: 'call implementation proxy',
-          fields: {},
+          fields: {
+            "B": {
+              "type": "call",
+              "method": "crossChainContracts",
+              "args": [1]
+            },
+            "A": {
+              "type": "call",
+              "method": "crossChainContracts",
+              "args": [10]
+            },
+          },
         },
         [ADDRESS_C.toString()]: {
           ignoreInWatchMode: ['a', 'b'],
@@ -73,7 +85,18 @@ describe(getDiscoveryConfigHash.name, () => {
           proxyType: 'call implementation proxy',
         },
         [ADDRESS_B.toString()]: {
-          fields: {},
+          fields: {
+            "B": {
+              "type": "call",
+              "method": "crossChainContracts",
+              "args": [1]
+            },
+            "A": {
+              "type": "call",
+              "method": "crossChainContracts",
+              "args": [10]
+            },
+          },
           ignoreDiscovery: false,
           ignoreInWatchMode: ['a', 'b'],
           ignoreMethods: ['c', 'd'],
