@@ -1,7 +1,8 @@
 {
   "name": "polygonpos",
   "blockNumber": 16484297,
-  "contracts": [
+"configHash": "0x0660b02fd440999fe78f7c777e5dade3ff0ff403b6151dd0266340e938c7233d",
+"contracts": [
     {
       "name": "RootChainManager",
       "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",

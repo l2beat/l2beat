@@ -1,7 +1,8 @@
 {
   "name": "pNetwork",
   "blockNumber": 16440359,
-  "contracts": [
+"configHash": "0x9120d358b7473b75ff02b669693c6a9c2e090ee92598c6b542b35db6b5ec8092",
+"contracts": [
     {
       "name": "Erc20Vault",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",

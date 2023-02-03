@@ -1,7 +1,8 @@
 {
   "name": "zkswap2",
   "blockNumber": 16154924,
-  "contracts": [
+"configHash": "0x9fcb37ddd22b19fa828dedf3688d1a7208c6abf3b6d4e2c2924e79a9beee7f06",
+"contracts": [
     {
       "name": "",
       "unverified": true,

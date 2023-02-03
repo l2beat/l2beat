@@ -1,7 +1,8 @@
 {
   "name": "cBridge",
   "blockNumber": 16154924,
-  "contracts": [
+"configHash": "0xae56ecf3b30db2e456866c9104f5d582557773a48d2a7dabe6f45ecc76a1e82d",
+"contracts": [
     {
       "name": "Bridge",
       "address": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",

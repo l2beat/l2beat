@@ -1,7 +1,8 @@
 {
   "name": "synapse",
   "blockNumber": 16154924,
-  "contracts": [
+"configHash": "0xc625291662e649698be62471a827853761ebff14d821935f97c0dd97f2774e03",
+"contracts": [
     {
       "name": "SynapseBridge",
       "address": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",

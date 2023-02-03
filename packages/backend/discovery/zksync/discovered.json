@@ -1,7 +1,8 @@
 {
   "name": "zksync",
   "blockNumber": 16154924,
-  "contracts": [
+"configHash": "0x7d9847e421a09c79fe74775b4e570778a7a65a284da67236d39ec8e90a6e411a",
+"contracts": [
     {
       "name": "UpgradeGatekeeper",
       "address": "0x38A43F4330f24fe920F943409709fc9A6084C939",

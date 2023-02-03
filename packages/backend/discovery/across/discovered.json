@@ -1,6 +1,7 @@
 {
   "name": "across",
   "blockNumber": 16518232,
+  "configHash": "0xc0fa7a35e8d5bb0b156f0f443db9c81d6048f34f89df87c4301bb704dfe886c6",
   "contracts": [
     {
       "name": "HubPool",
@@ -138,9 +139,7 @@
       },
       "values": {
         "decimals": 18,
-        "getMember": [
-          "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc"
-        ],
+        "getMember": ["0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
         "totalSupply": "112637805134460837616867457",

@@ -1,7 +1,8 @@
 {
   "name": "orbit",
   "blockNumber": 16534829,
-  "contracts": [
+"configHash": "0x1f2b6b7459fa593e01e08d0f09ae71bc6f1881852db68dc99a443a12ed92a92e",
+"contracts": [
     {
       "name": "EthVaultImpl",
       "address": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",

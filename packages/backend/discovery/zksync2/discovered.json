@@ -1,7 +1,8 @@
 {
   "name": "zksync2",
   "blockNumber": 16189994,
-  "contracts": [
+"configHash": "0x0952484d453d068914efc6ba27fe71a7145822b2d880b23ab0a17ebc7c4f18b7",
+"contracts": [
     {
       "name": "DiamondProxy",
       "address": "0x324000e0c256B806548b307aF600aFFF3D000324",

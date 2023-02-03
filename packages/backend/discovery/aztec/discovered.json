@@ -1,7 +1,8 @@
 {
   "name": "aztec",
   "blockNumber": 16534856,
-  "contracts": [
+"configHash": "0x36e9c5a6d52baa56d4dcd7e01eb71d7c29e0ae4a474ab4fc4fa3d14b5f8d67fe",
+"contracts": [
     {
       "name": "RollupProcessor",
       "address": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",

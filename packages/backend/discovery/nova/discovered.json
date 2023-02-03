@@ -1,7 +1,8 @@
 {
   "name": "nova",
   "blockNumber": 16154924,
-  "contracts": [
+"configHash": "0xa4924fd6b901b37acc77335b3ae980311fcce72c7e88c1bbdccf67ee3fc3cb02",
+"contracts": [
     {
       "name": "ArbitrumProxy",
       "address": "0xFb209827c58283535b744575e11953DCC4bEAD88",

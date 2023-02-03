@@ -1,7 +1,8 @@
 {
   "name": "omg",
   "blockNumber": 16154924,
-  "contracts": [
+"configHash": "0xc216ee67b664e69f4bb739a21d4729ae845d1a16f9a9008207a9f2469d644443",
+"contracts": [
     {
       "name": "PlasmaFramework",
       "address": "0x0D4C1222f5e839a911e2053860e45F18921D72ac",
