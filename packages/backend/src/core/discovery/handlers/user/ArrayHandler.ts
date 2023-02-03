@@ -1,6 +1,5 @@
 import { EthereumAddress } from '@l2beat/types'
 import { utils } from 'ethers'
-import { FunctionFragment } from 'ethers/lib/utils'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -24,7 +23,7 @@ const DEFAULT_MAX_LENGTH = 100
 
 export class ArrayHandler implements Handler {
   readonly dependencies: string[] = []
-  readonly fragment: FunctionFragment
+  readonly fragment: utils.FunctionFragment
 
   constructor(
     readonly field: string,

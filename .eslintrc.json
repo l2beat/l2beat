@@ -46,7 +46,15 @@
     "no-only-tests/no-only-tests": "error",
     "no-restricted-imports": [
       "error",
-      { "paths": [".", "..", "../..", "../../.."] }
+      {
+        "paths": [".", "..", "../..", "../../.."],
+        "patterns": [
+          {
+            "group": ["ethers/*"],
+            "message": "Do not import from ethers submodules. For example instead of importing getAddress from ethers/lib/utils, import utils from ethers and use utils.getAddress"
+          }
+        ]
+      }
     ],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
