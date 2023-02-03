@@ -9,10 +9,25 @@ should create a new migration file that fixes the issue.
 
 import { Knex } from 'knex'
 
+import { ConfigReader } from '../../../core/discovery/ConfigReader'
+import { getDiscoveryConfigHash } from '../../../core/discovery/utils/getDiscoveryConfigHash'
+
 export async function up(knex: Knex) {
   await knex.schema.alterTable('discovery_watcher', function (table) {
-    table.string('config_hash').notNullable()
+    table.string('config_hash').notNullable().defaultTo('')
   })
+
+  const configReader = new ConfigReader()
+  const configs = await configReader.readAllConfigs()
+
+  await Promise.all(
+    configs.map((config) => {
+      const configHash = getDiscoveryConfigHash(config)
+      return knex('discovery_watcher')
+        .update({ config_hash: configHash.toString() })
+        .where('project_name', config.name)
+    }),
+  )
 }
 
 export async function down(knex: Knex) {
