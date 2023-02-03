@@ -1,8 +1,8 @@
 {
   "name": "hop",
   "blockNumber": 16154924,
-"configHash": "0xad062e310d2995fb4d66c09956c4e6c736a66c0c7457ea6b0bded1fc41a5bd48",
-"contracts": [
+  "configHash": "0xad062e310d2995fb4d66c09956c4e6c736a66c0c7457ea6b0bded1fc41a5bd48",
+  "contracts": [
     {
       "name": "L1_ERC20_Bridge",
       "address": "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",

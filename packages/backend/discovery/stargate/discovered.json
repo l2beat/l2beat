@@ -1,8 +1,8 @@
 {
   "name": "stargate",
   "blockNumber": 16470364,
-"configHash": "0xb017930e49efeba44a15d6f64b1ca3d0856446157fbfccbb57f9758348253736",
-"contracts": [
+  "configHash": "0xb017930e49efeba44a15d6f64b1ca3d0856446157fbfccbb57f9758348253736",
+  "contracts": [
     {
       "name": "Router",
       "address": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",

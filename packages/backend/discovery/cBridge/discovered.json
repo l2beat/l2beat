@@ -1,8 +1,8 @@
 {
   "name": "cBridge",
   "blockNumber": 16154924,
-"configHash": "0xae56ecf3b30db2e456866c9104f5d582557773a48d2a7dabe6f45ecc76a1e82d",
-"contracts": [
+  "configHash": "0xae56ecf3b30db2e456866c9104f5d582557773a48d2a7dabe6f45ecc76a1e82d",
+  "contracts": [
     {
       "name": "Bridge",
       "address": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
@@ -54,13 +54,7 @@
             "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
             "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
           ],
-          [
-            10000,
-            10000,
-            10000,
-            10000,
-            10000
-          ]
+          [10000, 10000, 10000, 10000, 10000]
         ],
         "MAX_ACTIVE_PERIOD": 2419200,
         "MIN_ACTIVE_PERIOD": 3600,

@@ -1,7 +1,7 @@
 {
   "name": "across",
   "blockNumber": 16541033,
-  "configHash": "0xc0fa7a35e8d5bb0b156f0f443db9c81d6048f34f89df87c4301bb704dfe886c6",
+  "configHash": "0xf56dd16747f1e0a0ba3e13101f87f3aae3413b3bb8d8eb4770c40b0ad265e4bf",
   "contracts": [
     {
       "name": "HubPool",

@@ -1,8 +1,8 @@
 {
   "name": "hyphen",
   "blockNumber": 16154924,
-"configHash": "0x738b57912272acd63c4091e45278a6e7f3cdfc9a87cfb503fac306bfe36b7b91",
-"contracts": [
+  "configHash": "0x738b57912272acd63c4091e45278a6e7f3cdfc9a87cfb503fac306bfe36b7b91",
+  "contracts": [
     {
       "name": "LiquidityPool",
       "address": "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
