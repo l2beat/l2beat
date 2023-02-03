@@ -10,6 +10,7 @@ export interface Config {
   readonly projects: Project[]
   readonly syncEnabled: boolean
   readonly logger: LoggerConfig
+  readonly logThrottler: LogThrottlerConfig | false
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig | false
@@ -24,6 +25,12 @@ export interface Config {
 export interface LoggerConfig {
   readonly logLevel: LogLevel
   readonly format: 'pretty' | 'json'
+}
+
+export interface LogThrottlerConfig {
+  readonly threshold: number
+  readonly thresholdTimeInMs: number
+  readonly throttleTimeInMs: number
 }
 
 export interface ApiConfig {

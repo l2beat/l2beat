@@ -8,7 +8,9 @@
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
-        "getProtocolFeeValues"
+        "getProtocolFeeValues",
+        "getNumAvailableForcedSlots",
+        "getConstants"
       ]
     },
     "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": {
