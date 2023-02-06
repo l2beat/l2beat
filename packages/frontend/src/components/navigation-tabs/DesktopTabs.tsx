@@ -49,7 +49,6 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
             href={page.link}
             className={cx(
               'relative z-20 flex h-full w-full items-center justify-center gap-4 rounded-md',
-              !page.selected && 'opacity-50',
               page.selected && 'bg-purple-300 dark:bg-purple-800',
             )}
           >
