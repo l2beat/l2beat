@@ -1,5 +1,5 @@
 import { Layer2TransactionApi } from '@l2beat/config'
-import { assert, HttpClient, Logger , ProjectId } from '@l2beat/shared'
+import { assert, HttpClient, Logger, ProjectId } from '@l2beat/shared'
 
 import { Config } from '../../config'
 import { createAztecConnectCounter } from '../../core/activity/counters/AztecConnectCounter'

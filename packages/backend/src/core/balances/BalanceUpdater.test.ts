@@ -1,9 +1,11 @@
 import { TokenInfo } from '@l2beat/config'
-import {   AssetId,
+import {
+  AssetId,
   Bytes,
   CoingeckoId,
   EthereumAddress,
-Logger, mock ,
+  Logger,
+  mock,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared'

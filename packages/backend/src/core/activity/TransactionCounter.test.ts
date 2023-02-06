@@ -1,4 +1,4 @@
-import { mock , ProjectId, UnixTime } from '@l2beat/shared'
+import { mock, ProjectId, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { SequenceProcessor } from '../SequenceProcessor'

@@ -2,8 +2,10 @@ import { StarkexProduct } from '@l2beat/config'
 import {
   getErrorMessage,
   HttpClient,
- json,  Logger,
-  RateLimiter } from '@l2beat/shared'
+  json,
+  Logger,
+  RateLimiter,
+} from '@l2beat/shared'
 
 import { parseStarkexApiResponse } from './parseStarkexApiResponse'
 

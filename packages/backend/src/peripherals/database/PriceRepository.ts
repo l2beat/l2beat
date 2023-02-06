@@ -1,4 +1,4 @@
-import { AssetId, Logger , UnixTime } from '@l2beat/shared'
+import { AssetId, Logger, UnixTime } from '@l2beat/shared'
 import { PriceRow } from 'knex/types/tables'
 
 import { Metrics } from '../../Metrics'

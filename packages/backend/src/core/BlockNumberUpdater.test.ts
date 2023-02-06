@@ -1,4 +1,4 @@
-import { Logger, mock , UnixTime } from '@l2beat/shared'
+import { Logger, mock, UnixTime } from '@l2beat/shared'
 import { expect, mockFn } from 'earljs'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'

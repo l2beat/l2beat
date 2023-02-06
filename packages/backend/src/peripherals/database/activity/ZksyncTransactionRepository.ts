@@ -1,4 +1,4 @@
-import { Logger , UnixTime } from '@l2beat/shared'
+import { Logger, UnixTime } from '@l2beat/shared'
 import { Knex } from 'knex'
 import { ZksyncTransactionRow } from 'knex/types/tables'
 

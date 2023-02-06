@@ -1,4 +1,4 @@
-import { Logger , UnixTime } from '@l2beat/shared'
+import { Logger, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../../test/database'

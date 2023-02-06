@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, Logger , UnixTime } from '@l2beat/shared'
+import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'

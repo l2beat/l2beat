@@ -1,7 +1,9 @@
 import { tokenList } from '@l2beat/config'
-import {   AssetId,
+import {
+  AssetId,
   EthereumAddress,
-Logger, mock ,
+  Logger,
+  mock,
   ProjectId,
   TvlApiChart,
   UnixTime,

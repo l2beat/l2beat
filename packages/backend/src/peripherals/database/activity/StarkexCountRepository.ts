@@ -1,4 +1,4 @@
-import { Logger , ProjectId, UnixTime } from '@l2beat/shared'
+import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
 import { Knex } from 'knex'
 import { StarkexTransactionCountRow } from 'knex/types/tables'
 

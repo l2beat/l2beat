@@ -1,4 +1,4 @@
-import { HttpClient, Logger , ProjectId } from '@l2beat/shared'
+import { HttpClient, Logger, ProjectId } from '@l2beat/shared'
 
 import { ActivityController } from '../../api/controllers/activity/ActivityController'
 import { createActivityRouter } from '../../api/routers/ActivityRouter'

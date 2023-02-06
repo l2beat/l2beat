@@ -1,4 +1,4 @@
-import { Logger , UnixTime } from '@l2beat/shared'
+import { Logger, UnixTime } from '@l2beat/shared'
 import { BlockNumberRow } from 'knex/types/tables'
 
 import { Metrics } from '../../Metrics'

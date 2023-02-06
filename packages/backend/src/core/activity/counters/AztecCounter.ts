@@ -1,5 +1,5 @@
 import { AztecTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger , ProjectId } from '@l2beat/shared'
+import { HttpClient, Logger, ProjectId } from '@l2beat/shared'
 import { range } from 'lodash'
 
 import { Metrics } from '../../../Metrics'

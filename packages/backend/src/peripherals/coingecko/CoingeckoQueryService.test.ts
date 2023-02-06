@@ -1,9 +1,12 @@
 import {
   CoingeckoClient,
- CoingeckoId, EthereumAddress,   getTimestamps,
+  CoingeckoId,
+  EthereumAddress,
+  getTimestamps,
   HttpClient,
   mock,
-UnixTime } from '@l2beat/shared'
+  UnixTime,
+} from '@l2beat/shared'
 import { expect, mockFn } from 'earljs'
 
 import {

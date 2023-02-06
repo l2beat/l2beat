@@ -1,4 +1,4 @@
-import { Logger , UnixTime } from '@l2beat/shared'
+import { Logger, UnixTime } from '@l2beat/shared'
 import { DiscoveryWatcherRow } from 'knex/types/tables'
 
 import { ProjectParameters } from '../../../core/discovery/types'
