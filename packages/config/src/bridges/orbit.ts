@@ -173,7 +173,10 @@ export const orbit: Bridge = {
           'Bridge contract, Proxy, Escrow, Governance. Source code of implementation is not verified on Etherscan.',
         upgradeability: {
           type: 'CustomWithoutAdmin',
-          implementation: '0x9f2E4581d47c2851EA1150AB8126b45C5939d8f5',
+          implementation: discovery.getContractUpgradeabilityParam(
+            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+            'implementation',
+          ),
         },
       },
       {
@@ -224,7 +227,7 @@ export const orbit: Bridge = {
           '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
           'getOwners',
         ).length
-      } orbit MultiSig.`,
+      } Orbit MultiSig.`,
     },
   ],
 }

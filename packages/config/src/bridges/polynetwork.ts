@@ -156,8 +156,13 @@ export const polynetwork: Bridge = {
         description: 'Escrow and proxy contract for the Bridge.',
         upgradeability: {
           type: 'Custom',
-          admin: '0x8B35064B158634458Fd53A861d68Eb84152E4106',
-          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+          admin: discovery.getContractValue<string>(
+            '0x250e76987d838a75310c34bf422ea9f1AC4Cc906',
+            'owner',
+          ),
+          implementation: discovery
+            .getContract('EthCrossChainManager')
+            .address.toString(),
         },
       },
       {
@@ -167,7 +172,9 @@ export const polynetwork: Bridge = {
         upgradeability: {
           type: 'Custom',
           admin: '0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57',
-          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+          implementation: discovery
+            .getContract('EthCrossChainManager')
+            .address.toString(),
         },
       },
       {
@@ -177,7 +184,9 @@ export const polynetwork: Bridge = {
         upgradeability: {
           type: 'Custom',
           admin: '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
-          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+          implementation: discovery
+            .getContract('EthCrossChainManager')
+            .address.toString(),
         },
       },
       {
@@ -187,7 +196,9 @@ export const polynetwork: Bridge = {
         upgradeability: {
           type: 'Custom',
           admin: '0xeF86b2c8740518548ae449c4C3892B4be0475d8c',
-          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+          implementation: discovery
+            .getContract('EthCrossChainManager')
+            .address.toString(),
         },
       },
       {

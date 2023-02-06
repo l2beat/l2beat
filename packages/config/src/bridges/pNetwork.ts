@@ -191,8 +191,10 @@ export const pNetwork: Bridge = {
       name: 'PProxyAdmin',
       description: 'Proxy owner of ERC20Vault v2',
       accounts: [
-        //IDK if its correct
-        { address: '0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a', type: 'EOA' },
+        {
+          address: discovery.getContract('PProxyAdmin').address.toString(),
+          type: 'EOA',
+        },
       ],
     },
     {
@@ -200,8 +202,7 @@ export const pNetwork: Bridge = {
       description: '2/4 MSig - owner of PProxyAdmin',
       accounts: [
         {
-          //Shouldn't it be GnosisSafe getOwners?
-          address: '0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB',
+          address: discovery.getContract('GnosisSafe').address.toString(),
           type: 'MultiSig',
         },
       ],

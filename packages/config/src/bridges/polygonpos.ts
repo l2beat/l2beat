@@ -143,11 +143,16 @@ export const polygonpos: Bridge = {
         name: 'RootChainManager',
         description:
           'Main contract to manage bridge tokens, deposits and withdrawals.',
-        //Shouldn't we get it from discovery? In discovery type = EIP897 proxy
         upgradeability: {
           type: 'Custom',
-          implementation: '0x37D26DC2890b35924b40574BAc10552794771997',
-          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
+          implementation: discovery.getContractUpgradeabilityParam(
+            'RootChainManager',
+            'implementation',
+          ),
+          admin: discovery.getContractValue<string>(
+            'RootChainManager',
+            'proxyOwner',
+          ),
         },
       },
       {
