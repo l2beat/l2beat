@@ -1,6 +1,6 @@
 {
   "name": "cBridge",
-  "blockNumber": 16534695,
+  "blockNumber": 16570813,
   "contracts": [
     {
       "name": "MessageBus",
@@ -148,7 +148,7 @@
         "type": "immutable"
       },
       "values": {
-        "addseq": 4585,
+        "addseq": 4595,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -171,8 +171,19 @@
           "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xe4cf0fd70542900857901f5704e7e67203e7fc182127ca48d3a7c2487651017d",
-        "triggerTime": 1675099141
+        "ssHash": "0xc06052199ec2c4c782181094238a1348127cc1e9bed9e2fa92250ec0289dda19",
+        "triggerTime": 1675639298
+      }
+    },
+    {
+      "name": "TransferAgent",
+      "address": "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
+      "code": "https://etherscan.deth.net/address/0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
       }
     }
   ],
@@ -512,6 +523,17 @@
       "function transferOwnership(address newOwner)",
       "function unpause()",
       "function withdraw(bytes _request, bytes[] _sigs, address[] _signers, uint256[] _powers) returns (bytes32)"
+    ],
+    "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b": [
+      "event BridgeUpdated(uint8 bridgeSendType, address bridgeAddr)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Supplement(uint8 bridgeSendType, bytes32 transferId, address sender, bytes receiver, tuple(uint8 Type, bytes Value)[] extensions)",
+      "function bridges(uint8) view returns (address)",
+      "function owner() view returns (address)",
+      "function setBridgeAddress(uint8 _bridgeSendType, address _addr)",
+      "function transfer(bytes _receiver, address _token, uint256 _amount, uint64 _dstChainId, uint64 _nonce, uint32 _maxSlippage, uint8 _bridgeSendType, tuple(uint8 Type, bytes Value)[] _extensions) returns (bytes32)",
+      "function transferNative(bytes _receiver, uint256 _amount, uint64 _dstChainId, uint64 _nonce, uint32 _maxSlippage, uint8 _bridgeSendType, tuple(uint8 Type, bytes Value)[] _extensions) payable returns (bytes32)",
+      "function transferOwnership(address newOwner)"
     ],
     "0xB37D31b2A74029B5951a2778F959282E2D518595": [
       "constructor(address _sigsVerifier)",
