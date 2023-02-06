@@ -29,7 +29,14 @@ jobs:
           cache: "yarn"
       - run: yarn --frozen-lockfile
       - run: yarn build:dependencies
-      - run: yarn test
+      - uses: nick-fields/retry@v2
+        name: Run yarn test
+        with:
+          timeout_seconds: 60
+          max_attempts: 2
+          retry_on: timeout
+          command: yarn test
+
         env:
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
           TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres

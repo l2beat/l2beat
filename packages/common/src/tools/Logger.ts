@@ -1,26 +1,14 @@
-import { json } from '@l2beat/types'
 import chalk from 'chalk'
 import { inspect } from 'util'
 
-export enum LogLevel {
-  NONE = 0,
-  ERROR = 1,
-  WARN = 2,
-  INFO = 3,
-  DEBUG = 4,
-}
+import { ILogger, LoggerOptions, LoggerParameters, LogLevel } from './ILogger'
+import { LogThrottler } from './LogThrottler'
 
-export interface LoggerOptions {
-  logLevel: LogLevel
-  service?: string
-  format: 'pretty' | 'json'
-  reportError?: (...args: unknown[]) => void
-}
-
-export type LoggerParameters = Record<string, json>
-
-export class Logger {
-  constructor(private readonly options: LoggerOptions) {}
+export class Logger implements ILogger {
+  constructor(
+    private readonly options: LoggerOptions,
+    private readonly logThrottler?: LogThrottler,
+  ) {}
 
   static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })
   static DEBUG = new Logger({ logLevel: LogLevel.DEBUG, format: 'pretty' })
@@ -30,7 +18,7 @@ export class Logger {
   }
 
   configure(options: Partial<LoggerOptions>) {
-    return new Logger({ ...this.options, ...options })
+    return new Logger({ ...this.options, ...options }, this.logThrottler)
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -83,6 +71,13 @@ export class Logger {
   }
 
   private print(level: string, parameters: LoggerParameters) {
+    const logKey = `${this.options.service ?? ''} ${
+      parameters.message?.toString() ?? ''
+    }`.trim()
+
+    this.logThrottler?.add(logKey)
+    if (this.logThrottler?.isThrottling(logKey)) return
+
     switch (this.options.format) {
       case 'json':
         return this.printJson(level, parameters)
@@ -113,11 +108,12 @@ export class Logger {
     const service = getPrettyService(this.options.service)
     let messageOut = ''
     if (typeof parameters.message === 'string') {
-      messageOut = ` ${parameters.message}`
+      messageOut = `${parameters.message}`
       delete parameters.message
     }
     const params = getPrettyParameters(parameters)
-    const str = `${time} ${levelOut}${service}${messageOut}${params}`
+    const str = `${time} ${levelOut}${service} ${messageOut}${params}`
+
     if (parameters.level === 'error') {
       console.error(str)
     } else {
