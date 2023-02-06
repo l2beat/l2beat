@@ -55,11 +55,12 @@ export class DiscoveryWatcher {
           projectConfig,
           blockNumber,
         )
+        const configHash = getDiscoveryConfigHash(projectConfig)
 
         const diff = await this.findChanges(
           projectConfig.name,
           discovery,
-          getDiscoveryConfigHash(projectConfig),
+          configHash,
           projectConfig.overrides,
         )
 
@@ -73,7 +74,7 @@ export class DiscoveryWatcher {
           timestamp,
           blockNumber,
           discovery,
-          configHash: getDiscoveryConfigHash(projectConfig),
+          configHash,
         })
 
         this.logger.info('Discovery finished', { project: projectConfig.name })
@@ -94,24 +95,20 @@ export class DiscoveryWatcher {
 
     if (databaseEntry === undefined) {
       const committed = await this.configReader.readDiscovery(name)
-      return diffDiscovery(
-        committed.contracts,
-        discovery.contracts,
-        overrides ?? {},
-      )
+      return diffDiscovery(committed.contracts, discovery.contracts, overrides)
     } else {
       if (databaseEntry.configHash !== configHash) {
         const committed = await this.configReader.readDiscovery(name)
         return diffDiscovery(
           committed.contracts,
           discovery.contracts,
-          overrides ?? {},
+          overrides,
         )
       } else {
         return diffDiscovery(
           databaseEntry.discovery.contracts,
           discovery.contracts,
-          overrides ?? {},
+          overrides,
         )
       }
     }

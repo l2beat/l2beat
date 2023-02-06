@@ -14,7 +14,7 @@ export interface DiscoveryDiff {
 export function diffDiscovery(
   committed: ContractParameters[],
   discovered: ContractParameters[],
-  overrides: Record<string, DiscoveryContract>,
+  overrides?: Record<string, DiscoveryContract>,
 ): DiscoveryDiff[] {
   const modifiedOrDeleted: DiscoveryDiff[] = []
 
@@ -30,10 +30,8 @@ export function diffDiscovery(
       })
       continue
     }
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const ignored: string[] = overrides[committedContract.address.toString()]
-      ? overrides[committedContract.address.toString()].ignoreInWatchMode ?? []
-      : []
+
+    const ignored: string[] = getIgnored(committedContract.address, overrides)
 
     const diff = diffContracts(committedContract, discoveredContract, ignored)
 
@@ -62,4 +60,20 @@ export function diffDiscovery(
   }
 
   return modifiedOrDeleted.concat(created)
+}
+
+function getIgnored(
+  address: EthereumAddress,
+  overrides?: Record<string, DiscoveryContract>,
+): string[] {
+  if (overrides === undefined) {
+    return []
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (overrides[address.toString()] === undefined) {
+    return []
+  }
+
+  return overrides[address.toString()].ignoreInWatchMode ?? []
 }
