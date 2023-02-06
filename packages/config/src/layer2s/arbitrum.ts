@@ -183,7 +183,7 @@ export const arbitrum: Layer2 = {
       references: [
         {
           text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job'
+          href: 'https://developer.offchainlabs.com/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
         },
       ],
     },
@@ -193,7 +193,7 @@ export const arbitrum: Layer2 = {
         references: [
           {
             text: 'Transaction lifecycle - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/tx-lifecycle'
+            href: 'https://developer.offchainlabs.com/tx-lifecycle',
           },
           {
             text: 'L2 to L1 Messages - Arbitrum documentation',
