@@ -1,7 +1,7 @@
+import { EthereumAddress } from '@l2beat/types'
 import chalk from 'chalk'
 import { constants, utils } from 'ethers'
-
-import { ContractValue, ProjectParameters } from '../types'
+import { ContractValue, ProjectParameters } from '../src/core/discovery/types'
 
 interface AddressDetails {
   name?: string
@@ -12,7 +12,7 @@ interface AddressDetails {
 interface Role {
   name: string
   atName: string
-  atAddress: string
+  atAddress: EthereumAddress
 }
 
 export function invertAndPrint(
@@ -32,7 +32,8 @@ export function invertAndPrint(
     let details = addresses.get(address)
     if (!details) {
       details = {
-        name: project.contracts.find((x) => x.address === address)?.name,
+        name: project.contracts.find((x) => x.address.toString() === address)
+          ?.name,
         address,
         roles: [],
       }
@@ -55,7 +56,7 @@ export function invertAndPrint(
       implementations: undefined,
     }
 
-    add(contract.address)
+    add(contract.address.toString())
     const values: Record<string, ContractValue | undefined> = {
       ...upgradeabilityValues,
       ...contract.values,
