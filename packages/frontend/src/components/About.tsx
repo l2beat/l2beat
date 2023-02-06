@@ -2,14 +2,14 @@ import React from 'react'
 
 export function About() {
   return (
-    <section className="text-base mt-8">
+    <section className="mt-8 text-base">
       <h2
         id="about"
-        className="text-2xl md:text-3xl font-bold md:leading-normal"
+        className="text-2xl font-bold md:text-3xl md:leading-normal"
       >
         <a href="#about">About L2BEAT</a>
       </h2>
-      <div className="grid md:grid-cols-2 gap-4 mt-4">
+      <div className="mt-4 grid gap-4 md:grid-cols-2">
         <div className="flex flex-col gap-4">
           <p>
             L2BEAT is an analytics and research website about Ethereum layer two

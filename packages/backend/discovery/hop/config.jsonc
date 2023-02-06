@@ -89,6 +89,9 @@
     "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
       // WBTC
       "ignoreDiscovery": true
+    },
+    "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

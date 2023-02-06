@@ -25,6 +25,11 @@ export function getProductionConfig(cli: CliParameters): Config {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'json',
     },
+    logThrottler: {
+      threshold: 4,
+      thresholdTimeInMs: 5000,
+      throttleTimeInMs: 20000,
+    },
     clock: {
       minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
       safeTimeOffsetSeconds: 60 * 60,

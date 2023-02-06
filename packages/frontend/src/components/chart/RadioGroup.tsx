@@ -16,20 +16,20 @@ export function RadioGroup(props: RadioGroupProps) {
     <div
       data-role={props.role}
       className={cx(
-        'text-base font-medium bg-gray-200 dark:bg-gray-800',
-        'inline-flex items-center p-1 gap-1 rounded-lg',
+        'bg-gray-200 text-base font-medium dark:bg-gray-800',
+        'inline-flex items-center gap-1 rounded-lg p-1',
       )}
     >
       {props.options.map((option, i) => (
         <label
           key={i}
           className={cx(
-            'block relative select-none cursor-pointer',
+            'relative block cursor-pointer select-none',
             option.className,
           )}
         >
           <input
-            className="peer cursor-pointer block absolute top-0 left-0 w-full h-full opacity-0"
+            className="peer absolute top-0 left-0 block h-full w-full cursor-pointer opacity-0"
             defaultChecked={option.checked}
             autoComplete="off"
             type="radio"
@@ -38,9 +38,9 @@ export function RadioGroup(props: RadioGroupProps) {
           />
           <span
             className={cx(
-              'block relative px-2',
-              'peer-checked:bg-white dark:peer-checked:bg-black rounded-md',
-              'peer-focus-visible:outline-2 peer-focus-visible:outline outline-current',
+              'relative block px-2',
+              'rounded-md peer-checked:bg-white dark:peer-checked:bg-black',
+              'outline-current peer-focus-visible:outline peer-focus-visible:outline-2',
             )}
           >
             {option.value}

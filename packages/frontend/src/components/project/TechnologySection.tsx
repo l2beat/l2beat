@@ -33,7 +33,7 @@ export function TechnologySection({
             <a href={`#${item.id}`}>{item.name}</a>
           </h3>
           {item.isIncomplete && <TechnologyIncompleteShort />}
-          <p className="mt-2 text-gray-860 dark:text-gray-400">
+          <p className="mt-2 text-gray-850 dark:text-gray-400">
             {item.description}
           </p>
           <RiskList risks={item.risks} />

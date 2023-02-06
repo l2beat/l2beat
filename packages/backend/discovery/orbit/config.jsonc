@@ -33,10 +33,23 @@
           "method": "function farms(address token) view returns (address)",
           "args": ["0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"]
         }
-      }
+      },
+      "ignoreInWatchMode": ["depositCount", "transactionCount"]
     },
     "0xdAC17F958D2ee523a2206206994597C13D831ec7": {
       // Tether
+      "ignoreDiscovery": true
+    },
+    "0xC355fe6E4e99C0B93577F08c4e9a599714435912": {
+      // Ether Dai Token (immutable)
+      "ignoreDiscovery": true
+    },
+    "0xdb3516D4C062180e5e947F21C9476FF24D4A0900": {
+      //DAI proxy
+      "ignoreDiscovery": true
+    },
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      //DAI
       "ignoreDiscovery": true
     }
   }

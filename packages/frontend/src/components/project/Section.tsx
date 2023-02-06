@@ -13,7 +13,7 @@ export function Section(props: Props) {
     <section className={cx(props.className, 'mt-10 md:mt-16')}>
       <h2
         id={props.id}
-        className="text-2xl md:text-4xl font-bold md:leading-normal"
+        className="text-2xl font-bold md:text-4xl md:leading-normal"
       >
         <a href={`#${props.id}`}>{props.title}</a>
       </h2>

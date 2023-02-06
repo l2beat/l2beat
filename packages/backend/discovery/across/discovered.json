@@ -1,6 +1,6 @@
 {
   "name": "across",
-  "blockNumber": 16518232,
+  "blockNumber": 16541033,
   "contracts": [
     {
       "name": "HubPool",
@@ -42,13 +42,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0xe2a8b588af94606da26da1aaa79908e70685374af7b1748d8341443cde8811f6",
-          "0x6c1f3a3b8bfa89628832a6c006cb2e628bf050659dbc4371ef6c4fc782aa776e",
+          "0x1dff127513cd83e0737b80513a1f482b87e4994344afe08d01dac9696be78cad",
+          "0x764ed708fdb467a5c10d4a35d4e581f6d52941124b70d34219a7ee99d735f209",
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           0,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          5,
-          1675069475
+          4,
+          1675339475
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -105,11 +105,12 @@
         "type": "immutable"
       },
       "values": {
+        "getCurrentTime": 1675339895,
         "getMember": [
           "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc",
           "0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5"
         ],
-        "numProposals": 186,
+        "numProposals": 189,
         "timerAddress": "0x0000000000000000000000000000000000000000"
       }
     },
@@ -123,6 +124,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+        "getCurrentTime": 1675339895,
         "governor": "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc",
         "owner": "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc",
         "timerAddress": "0x0000000000000000000000000000000000000000",
@@ -143,7 +145,7 @@
         ],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "112637805134460837616867457",
+        "totalSupply": "112647923977060371032286408",
         "totalSupplyAt": []
       }
     },
@@ -192,7 +194,9 @@
         "chainId": 1,
         "crossDomainAdmin": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "depositQuoteTimeBuffer": 3600,
+        "getCurrentTime": 1675339895,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+        "numberOfDeposits": 64528,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"

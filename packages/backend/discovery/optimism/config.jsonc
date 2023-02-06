@@ -116,19 +116,37 @@
       "ignoreMethods": ["get"]
     },
     "0xD16463EF9b0338CE3D73309028ef1714D220c024": {
-      "ignoreMethods": ["get"]
+      "ignoreMethods": ["get"],
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
     },
     "0xb0ddFf09c4019e31960de11bD845E836078E8EbE": {
-      "ignoreMethods": ["get"]
+      "ignoreMethods": ["get"],
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
     },
     "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": {
       "ignoreMethods": ["getQueueElement"]
     },
     "0x5E4e65926BA27467555EB562121fac00D24E9dD2": {
-      "ignoreMethods": ["getQueueElement"]
+      "ignoreMethods": ["getQueueElement"],
+      "ignoreInWatchMode": [
+        "getLastBlockNumber",
+        "getLastTimestamp",
+        "getNextQueueIndex",
+        "getNumPendingQueueElements",
+        "getQueueLength",
+        "getTotalBatches",
+        "getTotalElements"
+      ]
     },
     "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": {
       "ignoreMethods": ["xDomainMessageSender"]
+    },
+    "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19": {
+      "ignoreInWatchMode": [
+        "getLastSequencerTimestamp",
+        "getTotalBatches",
+        "getTotalElements"
+      ]
     }
   }
 }

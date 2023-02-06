@@ -16,7 +16,7 @@ export function PageContent({
     <div
       className={classNames(
         narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',
-        'h-full md:px-12 mx-auto leading-[1.15]',
+        'mx-auto h-full leading-[1.15] md:px-12',
         !mobileFull && 'px-4',
       )}
     >
