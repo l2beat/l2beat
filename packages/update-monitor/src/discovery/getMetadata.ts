@@ -1,5 +1,4 @@
-import { AddressAnalyzer } from '@l2beat/common'
-import { EthereumAddress } from '@l2beat/types'
+import { AddressAnalyzer, EthereumAddress } from '@l2beat/shared'
 
 import { getAbi, JsonFragment } from './getAbi'
 

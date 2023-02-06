@@ -1,5 +1,4 @@
-import { EtherscanClient, Logger, promiseAllPlus } from '@l2beat/common'
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress, EtherscanClient, Logger } from '@l2beat/shared'
 
 import { isContractVerified } from './etherscan'
 import { VerificationMap } from './output'
@@ -9,7 +8,6 @@ export async function verifyContracts(
   previouslyVerified: Set<EthereumAddress>,
   manuallyVerified: Set<EthereumAddress>,
   etherscanClient: EtherscanClient,
-  workersCount: number,
   logger: Logger,
 ): Promise<VerificationMap> {
   logger.info(`Processing ${addresses.length} addresses.`)
@@ -25,10 +23,11 @@ export async function verifyContracts(
       return [address.toString(), isVerified]
     },
   )
+  const verifications = []
+  for (const verificationPromise of verificationPromises) {
+    const verification = await verificationPromise()
+    verifications.push(verification)
+  }
 
-  const verification = await promiseAllPlus(verificationPromises, logger, {
-    maxConcurrency: workersCount,
-  })
-
-  return Object.fromEntries(verification)
+  return Object.fromEntries(verifications)
 }

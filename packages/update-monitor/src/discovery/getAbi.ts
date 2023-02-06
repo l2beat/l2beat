@@ -1,4 +1,4 @@
-import { AnalyzedAddress } from '@l2beat/common'
+import { AnalyzedAddress } from '@l2beat/shared'
 import { utils } from 'ethers'
 
 type FragmentFrom = typeof utils.Fragment.from extends (

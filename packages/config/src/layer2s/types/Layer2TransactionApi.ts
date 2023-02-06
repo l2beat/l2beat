@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/types'
+import { UnixTime } from '@l2beat/shared'
 
 export type AssessCount = (count: number, blockNumber: number) => number
 

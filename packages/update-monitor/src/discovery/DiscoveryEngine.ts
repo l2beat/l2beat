@@ -1,4 +1,4 @@
-import { AddressAnalyzer } from '@l2beat/common'
+import { AddressAnalyzer } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
 import mkdirp from 'mkdirp'

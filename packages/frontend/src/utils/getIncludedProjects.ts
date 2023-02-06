@@ -1,4 +1,4 @@
-import { ProjectId, TvlApiResponse } from '@l2beat/types'
+import { ProjectId, TvlApiResponse } from '@l2beat/shared'
 
 export function getIncludedProjects<T extends { id: ProjectId }>(
   projects: T[],

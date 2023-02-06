@@ -1,5 +1,4 @@
-import { mock } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { mock, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'

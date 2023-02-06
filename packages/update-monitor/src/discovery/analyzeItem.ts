@@ -1,4 +1,4 @@
-import { AddressAnalyzer } from '@l2beat/common'
+import { AddressAnalyzer } from '@l2beat/shared'
 import { providers, utils } from 'ethers'
 
 import { ProxyDetection } from '../common/proxies/types'

@@ -1,5 +1,4 @@
-import { EtherscanClient, Logger } from '@l2beat/common'
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress, EtherscanClient, Logger } from '@l2beat/shared'
 import { install } from '@sinonjs/fake-timers'
 import { expect } from 'earljs'
 
@@ -33,7 +32,6 @@ describe('checkVerifiedContracts:tasks', () => {
           EthereumAddress('0x5555555555555555555555555555555555555555'),
         ]),
         EthereumClientMock as unknown as EtherscanClient,
-        2,
         Logger.SILENT,
       )
 
@@ -67,7 +65,6 @@ describe('checkVerifiedContracts:tasks', () => {
         new Set(),
         new Set(),
         EthereumClientMock as unknown as EtherscanClient,
-        2,
         Logger.SILENT,
       )
       await clock.runAllAsync()

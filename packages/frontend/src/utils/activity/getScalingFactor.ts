@@ -1,4 +1,4 @@
-import { ActivityApiResponse } from '@l2beat/types'
+import { ActivityApiResponse } from '@l2beat/shared'
 
 import { getTransactionCount } from './getTransactionCount'
 

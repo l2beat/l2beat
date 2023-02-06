@@ -1,5 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { Logger, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
@@ -11,6 +10,7 @@ import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { ProjectParameters } from './discovery/types'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
+import { TaskQueue } from './queue/TaskQueue'
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>

@@ -1,5 +1,11 @@
-import { assert, Logger, TaskQueue } from '@l2beat/common'
-import { AssetId, EthereumAddress, Hash256, UnixTime } from '@l2beat/types'
+import {
+  assert,
+  AssetId,
+  EthereumAddress,
+  Hash256,
+  Logger,
+  UnixTime,
+} from '@l2beat/shared'
 import { setTimeout } from 'timers/promises'
 
 import { Metrics } from '../../Metrics'
@@ -12,6 +18,7 @@ import { BalanceCall } from '../../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
+import { TaskQueue } from '../queue/TaskQueue'
 import { BalanceProject } from './BalanceProject'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
 

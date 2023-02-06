@@ -2,7 +2,7 @@ import {
   AddressAnalyzer,
   HttpClient,
   MainnetEtherscanClient,
-} from '@l2beat/common'
+} from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { DiscoveryEngine } from '../discovery/DiscoveryEngine'

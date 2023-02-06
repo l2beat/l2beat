@@ -1,5 +1,5 @@
 import { tokenList } from '@l2beat/config'
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import {

@@ -1,5 +1,5 @@
 import { layer2s } from '@l2beat/config'
-import { ProjectId } from '@l2beat/types'
+import { ProjectId } from '@l2beat/shared'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 

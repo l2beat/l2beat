@@ -1,4 +1,4 @@
-import { AddressAnalyzer } from '@l2beat/common'
+import { AddressAnalyzer } from '@l2beat/shared'
 import { constants, providers } from 'ethers'
 
 import { AnalyzedData, analyzeItem } from './analyzeItem'

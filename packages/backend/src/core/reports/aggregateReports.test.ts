@@ -1,4 +1,4 @@
-import { AssetId, ProjectId, UnixTime } from '@l2beat/types'
+import { AssetId, ProjectId, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'
