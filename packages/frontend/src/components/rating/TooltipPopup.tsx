@@ -22,7 +22,7 @@ export function RatingTooltipPopup({ item }: Required<RatingProps>) {
         <p className="mb-2 text-[13px] uppercase leading-tight text-gray-50">
           Requirements for {item.category.score} score:
         </p>
-        <ul className="list-disc ml-4">
+        <ul className="ml-4 list-disc">
           {item.category.requirements.map((requirement, i) => (
             <li key={i}>{requirement}</li>
           ))}
@@ -34,7 +34,7 @@ export function RatingTooltipPopup({ item }: Required<RatingProps>) {
             <p className="mb-2 text-[13px] uppercase leading-tight text-gray-50">
               Additional modifiers:
             </p>
-            <ul className="list-disc ml-4">
+            <ul className="ml-4 list-disc">
               {item.modifier.items.map((modifier, i) => (
                 <li key={i}>{modifier}</li>
               ))}
@@ -48,7 +48,7 @@ export function RatingTooltipPopup({ item }: Required<RatingProps>) {
             What needs to be fixed for score{' '}
             {item.thingsToImprove.improvedScore}:
           </p>
-          <ul className="list-disc ml-4">
+          <ul className="ml-4 list-disc">
             {item.thingsToImprove.requirements.map((improvement, i) => (
               <li key={i}>{improvement}</li>
             ))}
