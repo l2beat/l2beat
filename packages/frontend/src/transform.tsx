@@ -1,15 +1,16 @@
-import { FieldProps, NodeProps } from './Nodes'
 import { ContractParameters, ContractValue, ProjectParameters } from './types'
+import { SimpleNode } from './view/utils/SimpleNode'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export function transformContracts(discovery: ProjectParameters): NodeProps[] {
+export function transformContracts(discovery: ProjectParameters): SimpleNode[] {
   return discovery.contracts
     .map((contract) => {
       const { proxyFields, implementations } = getProxyDetails(contract)
       return {
         id: contract.address,
         name: emojifyContractName(contract),
+        discovered: true,
         fields: [...proxyFields, ...mapFields(contract.values)]
           .filter(
             (x) => !x.connection || !implementations.includes(x.connection),
@@ -27,16 +28,14 @@ export function transformContracts(discovery: ProjectParameters): NodeProps[] {
       discovery.eoas.map((address) => ({
         id: address,
         name: `🧍 EOA ${address}`,
+        discovered: true,
         fields: [],
         data: 'EOA',
       })),
     )
 }
 
-export function createEmptyNodes(
-  nodes: NodeProps[],
-  discoverContract: (a: string) => Promise<void>,
-): NodeProps[] {
+export function createEmptyNodes(nodes: SimpleNode[]): SimpleNode[] {
   const unknownIds = new Set<string>()
   const knownIds = new Set(nodes.map((contract) => contract.id))
 
@@ -52,8 +51,14 @@ export function createEmptyNodes(
     id,
     name: 'Unknown',
     fields: [],
-    onDiscover: () => discoverContract(id),
+    discovered: false,
   }))
+}
+
+interface FieldProps {
+  name: string
+  value?: string
+  connection?: string
 }
 
 function mapFields(

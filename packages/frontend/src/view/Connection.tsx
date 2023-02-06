@@ -1,5 +1,3 @@
-import classNames from 'classnames'
-
 export interface ConnectionProps {
   from: {
     x: number
@@ -46,26 +44,17 @@ export function Connection({ from, to }: ConnectionProps) {
   ]
 
   return (
-    <>
-      <svg
-        viewBox={`${minX} ${minY} ${width} ${height}`}
-        fill="none"
-        className="absolute pointer-events-none"
-        style={{ left: minX, top: minY, width, height }}
-      >
-        <path
-          d={path.join(' ')}
-          strokeLinecap="round"
-          className="stroke-2 stroke-slate-400"
-        />
-      </svg>
-      <div
-        className={classNames(
-          'absolute w-[12px] h-[12px]',
-          'bg-white border-2 border-black rounded-full',
-        )}
-        style={{ left: from.x - 6, top: from.y - 6 }}
+    <svg
+      viewBox={`${minX} ${minY} ${width} ${height}`}
+      fill="none"
+      className="absolute pointer-events-none"
+      style={{ left: minX, top: minY, width, height }}
+    >
+      <path
+        d={path.join(' ')}
+        strokeLinecap="round"
+        className="stroke-2 stroke-slate-400"
       />
-    </>
+    </svg>
   )
 }

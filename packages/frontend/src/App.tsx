@@ -2,9 +2,10 @@ import classNames from 'classnames'
 import ky from 'ky'
 import { useState } from 'react'
 
-import { NodeProps, Nodes } from './Nodes'
 import { createEmptyNodes, transformContracts } from './transform'
 import { ProjectParameters } from './types'
+import { SimpleNode } from './view/utils/SimpleNode'
+import { Viewport } from './view/Viewport'
 
 export function App() {
   const [selected, setSelected] = useState<string | undefined>(undefined)
@@ -16,7 +17,7 @@ export function App() {
     setLoading((loading) => ({ ...loading, [id]: value }))
   }
 
-  const [contractNodes, setContractNodes] = useState<NodeProps[]>([])
+  const [contractNodes, setContractNodes] = useState<SimpleNode[]>([])
 
   async function showPrompt() {
     const address = window.prompt('Contract address')
@@ -28,6 +29,8 @@ export function App() {
   }
 
   async function discoverContract(address: string) {
+    console.log('DISCOVERING', address)
+
     markLoading(address, true)
     const discoveredContracts = await callDiscoverContractApi(address)
     markLoading(address, false)
@@ -36,10 +39,7 @@ export function App() {
       const allContractNodesCombined = [...newNodes, ...contractNodes].filter(
         (x, i, a) => a.findIndex((y) => y.id === x.id) === i,
       )
-      const emptyNodes = createEmptyNodes(
-        allContractNodesCombined,
-        discoverContract,
-      )
+      const emptyNodes = createEmptyNodes(allContractNodesCombined)
 
       return [...allContractNodesCombined, ...emptyNodes]
     })
@@ -75,11 +75,12 @@ export function App() {
       </div>
 
       <div className="flex justify-center items-center gap-4 p-2 w-full h-full">
-        <Nodes
+        <Viewport
           nodes={contractNodes}
-          selected={selected}
           loading={loading}
-          onSelect={setSelected}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onDiscover={discoverContract}
+          onSelectionChange={(ids) => setSelected(ids[0])}
         />
       </div>
     </div>
