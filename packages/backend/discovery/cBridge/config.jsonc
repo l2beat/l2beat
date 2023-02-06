@@ -2,8 +2,8 @@
   "$schema": "../config.schema.json",
   "name": "cBridge",
   "initialAddresses": [
-    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
-    "0xB37D31b2A74029B5951a2778F959282E2D518595"
+    "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
+    "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b"
   ],
   "overrides": {
     "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": {
@@ -44,7 +44,8 @@
       }
     },
     "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": {
-      "ignoreMethods": ["voters", "proposals"]
+      "ignoreMethods": ["voters", "proposals"],
+      "ignoreInWatchMode": ["nextProposalId"]
     },
     "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       // WETH9
