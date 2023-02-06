@@ -10,11 +10,10 @@ interface RatingBadgeProps {
 }
 
 export function RatingBadge({ category, modifier }: RatingBadgeProps) {
-  const colorClassName = getColorClassName(category)
   return (
     <Badge
       className={cx(
-        colorClassName,
+        getColorClassName(category),
         'inline-block w-10 py-0.5 text-center text-lg leading-none',
       )}
       oneSize
