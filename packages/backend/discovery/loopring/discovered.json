@@ -1,6 +1,7 @@
 {
   "name": "loopring",
   "blockNumber": 16154924,
+  "configHash": "0x26e015fdb5cadcabedc57f0c9cf419647b864cc7fd2b568fd6d2c29b1bb53008",
   "contracts": [
     {
       "name": "DefaultDepositContract",
@@ -47,13 +48,7 @@
         "getMaxAgeDepositUntilWithdrawable": 1296000,
         "getMerkleRoot": "0x0afcc8bd6dc0d26bac77ae8e9c5bdb8fb7b6af61e8b60e6a5f4943a0ce9d71b0",
         "getNumAvailableForcedSlots": 4096,
-        "getProtocolFeeValues": [
-          1670640659,
-          0,
-          0,
-          0,
-          0
-        ],
+        "getProtocolFeeValues": [1670640659, 0, 0, 0, 0],
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "isInWithdrawalMode": false,
         "isShutdown": false,

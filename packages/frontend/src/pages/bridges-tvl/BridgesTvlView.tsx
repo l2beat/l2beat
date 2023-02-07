@@ -67,18 +67,18 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       getValue: (entry) => <NumberCell>{entry.tvl}</NumberCell>,
     },
     {
-      name: 'Breakdown',
-      tooltip:
-        'Composition of the total value locked broken down by token type.',
-      getValue: (entry) => <TVLBreakdown {...entry.tvlBreakdown} />,
-    },
-    {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
       getValue: (entry) => (
         <NumberCell signed>{entry.sevenDayChange}</NumberCell>
       ),
+    },
+    {
+      name: 'Breakdown',
+      tooltip:
+        'Composition of the total value locked broken down by token type.',
+      getValue: (entry) => <TVLBreakdown {...entry.tvlBreakdown} />,
     },
     {
       name: 'Market share',

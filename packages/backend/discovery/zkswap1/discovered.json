@@ -1,6 +1,7 @@
 {
   "name": "zkswap1",
   "blockNumber": 16154924,
+  "configHash": "0x15469985a24479de2a1df62a7fbc1d26b9f74dcaed2cfde5e311641d1cbc12af",
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
@@ -83,9 +84,7 @@
         "getTarget": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
         "networkGovernor": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
         "totalTokens": 39,
-        "validators": [
-          "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"
-        ]
+        "validators": ["0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"]
       }
     },
     {

@@ -1,6 +1,7 @@
 {
   "name": "boba",
   "blockNumber": 16535463,
+  "configHash": "0x5ed26ca11304c46a9a9a2c661cbf0deded0f1e009a276db50ae40e21495ae629",
   "contracts": [
     {
       "name": "L1StandardBridge",

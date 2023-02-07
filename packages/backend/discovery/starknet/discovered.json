@@ -1,6 +1,7 @@
 {
   "name": "starknet",
   "blockNumber": 16154924,
+  "configHash": "0xf6d3a63b82e8921b0da07f3ed3406fbd6c4de8d6f0741e737331d4d8dc16f416",
   "contracts": [
     {
       "name": "Starknet",
@@ -177,9 +178,7 @@
       }
     }
   ],
-  "eoas": [
-    "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82"
-  ],
+  "eoas": ["0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82"],
   "abis": {
     "0x283751A21eafBFcD52297820D27C1f1963D9b5b4": [
       "constructor(uint256 upgradeActivationDelay)",

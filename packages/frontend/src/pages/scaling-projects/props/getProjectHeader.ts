@@ -1,6 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
 
+import { Config } from '../../../build/config'
 import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
@@ -11,6 +12,7 @@ import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(
   project: Layer2,
+  config: Config,
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): ProjectHeaderProps {
@@ -37,6 +39,7 @@ export function getProjectHeader(
         : undefined,
     purpose: project.display.purpose,
     technology: project.technology.category,
+    ratingEntry: config.features.rating && project.rating,
   }
 }
 

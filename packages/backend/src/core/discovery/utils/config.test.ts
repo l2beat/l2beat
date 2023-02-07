@@ -2,6 +2,7 @@ import { assert } from '@l2beat/common'
 import { expect } from 'earljs'
 
 import { ConfigReader } from '../ConfigReader'
+import { getDiscoveryConfigHash } from './getDiscoveryConfigHash'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
@@ -47,6 +48,19 @@ describe('discovery config.jsonc', () => {
 
         expect(values, { extraMessage }).toBeAnArrayWith(...ignore)
       }
+    }
+  })
+
+  it('committed discovery config hash matches committed config hash', async () => {
+    const configs = await configReader.readAllConfigs()
+
+    for (const config of configs) {
+      const discovery = await configReader.readDiscovery(config.name)
+
+      const configHash = getDiscoveryConfigHash(config)
+
+      const extraMessage = `${config.name} discovery config hash does not match current config hash`
+      expect(discovery.configHash, { extraMessage }).toEqual(configHash)
     }
   })
 })

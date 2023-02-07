@@ -1,6 +1,7 @@
 {
   "name": "dydx",
   "blockNumber": 16154924,
+  "configHash": "0x7f6edff4eb8f896730f7b75c2631352ac62fec4f2d7a8cb5099f0c0b8950342c",
   "contracts": [
     {
       "name": "Proxy",
