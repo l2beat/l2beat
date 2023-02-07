@@ -3,7 +3,6 @@ import { UnixTime } from '@l2beat/types'
 import { Knex } from 'knex'
 import { ZksyncTransactionRow } from 'knex/types/tables'
 
-import { Metrics } from '../../../Metrics'
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
@@ -14,8 +13,8 @@ export interface ZksyncTransactionRecord {
 }
 
 export class ZksyncTransactionRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger, metrics: Metrics) {
-    super(database, logger, metrics)
+  constructor(database: Database, logger: Logger) {
+    super(database, logger)
     this.autoWrap<CheckConvention<ZksyncTransactionRepository>>(this)
   }
 

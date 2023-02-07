@@ -47,25 +47,21 @@ export function createTvlModule(
   const blockNumberRepository = new BlockNumberRepository(
     database,
     logger,
-    metrics,
   )
-  const priceRepository = new PriceRepository(database, logger, metrics)
-  const balanceRepository = new BalanceRepository(database, logger, metrics)
-  const reportRepository = new ReportRepository(database, logger, metrics)
+  const priceRepository = new PriceRepository(database, logger)
+  const balanceRepository = new BalanceRepository(database, logger)
+  const reportRepository = new ReportRepository(database, logger)
   const aggregateReportRepository = new AggregateReportRepository(
     database,
     logger,
-    metrics,
   )
   const reportStatusRepository = new ReportStatusRepository(
     database,
     logger,
-    metrics,
   )
   const balanceStatusRepository = new BalanceStatusRepository(
     database,
     logger,
-    metrics,
   )
 
   // #endregion

@@ -52,22 +52,18 @@ export function createTransactionCounters(
   const blockRepository = new BlockTransactionCountRepository(
     database,
     logger,
-    metrics,
   )
   const starkexRepository = new StarkexTransactionCountRepository(
     database,
     logger,
-    metrics,
   )
   const sequenceProcessorRepository = new SequenceProcessorRepository(
     database,
     logger,
-    metrics,
   )
   const zksyncRepository = new ZksyncTransactionRepository(
     database,
     logger,
-    metrics,
   )
 
   // ethereum is kept separately in backend config, because it is not a layer 2 project
