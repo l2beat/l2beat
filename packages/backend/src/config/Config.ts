@@ -16,9 +16,10 @@ export interface Config {
   readonly database: DatabaseConfig | false
   readonly api: ApiConfig | false
   readonly health: HealthConfig
+  readonly invert: InversionConfig | false
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
-  readonly discovery: DiscoveryConfig | false
+  readonly discovery: DiscoveryModuleConfig | false
   readonly discoveryWatcher: DiscoveryWatcherConfig | false
 }
 
@@ -64,6 +65,11 @@ export interface HealthConfig {
   readonly commitSha: string
 }
 
+export interface InversionConfig {
+  readonly file: string
+  readonly useMermaidMarkup: boolean
+}
+
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
@@ -72,7 +78,7 @@ export interface ActivityConfig {
   readonly projects: Record<string, Layer2TransactionApi | undefined>
 }
 
-export interface DiscoveryConfig {
+export interface DiscoveryModuleConfig {
   readonly project: string
   readonly blockNumber?: number
   readonly alchemyApiKey: string

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { Hash256, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
@@ -8,6 +8,8 @@ import {
   DiscoveryWatcherRecord,
   DiscoveryWatcherRepository,
 } from './DiscoveryWatcherRepository'
+
+const CONFIG_HASH = Hash256.random()
 
 describe(DiscoveryWatcherRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
@@ -31,10 +33,12 @@ describe(DiscoveryWatcherRepository.name, () => {
       discovery: {
         name: projectName,
         blockNumber: -1,
+        configHash: Hash256.random(),
         contracts: [],
         eoas: [],
         abis: {},
       },
+      configHash: CONFIG_HASH,
     }
 
     await repository.addOrUpdate(expected)
@@ -46,28 +50,26 @@ describe(DiscoveryWatcherRepository.name, () => {
   it(DiscoveryWatcherRepository.prototype.addOrUpdate.name, async () => {
     const projectName = 'project'
 
-    const expected: DiscoveryWatcherRecord = {
+    const discovery: DiscoveryWatcherRecord = {
       projectName,
       blockNumber: -1,
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
         blockNumber: -1,
+        configHash: Hash256.random(),
         contracts: [],
         eoas: [],
         abis: {},
       },
+      configHash: CONFIG_HASH,
     }
+    await repository.addOrUpdate(discovery)
 
-    await repository.addOrUpdate(expected)
-    const added = await repository.findLatest(projectName)
+    const updated: DiscoveryWatcherRecord = { ...discovery, blockNumber: 1 }
+    await repository.addOrUpdate(updated)
+    const latest = await repository.findLatest(projectName)
 
-    expect(added).toEqual(expected)
-
-    expected.blockNumber = 1
-    await repository.addOrUpdate(expected)
-
-    const updated = await repository.findLatest(projectName)
-    expect(updated).toEqual(expected)
+    expect(latest).toEqual(updated)
   })
 })

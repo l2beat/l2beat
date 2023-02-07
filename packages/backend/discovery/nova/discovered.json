@@ -1,6 +1,7 @@
 {
   "name": "nova",
   "blockNumber": 16154924,
+  "configHash": "0xa4924fd6b901b37acc77335b3ae980311fcce72c7e88c1bbdccf67ee3fc3cb02",
   "contracts": [
     {
       "name": "ArbitrumProxy",
@@ -94,12 +95,7 @@
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
-        "maxTimeVariation": [
-          5760,
-          12,
-          86400,
-          3600
-        ],
+        "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "totalDelayedMessagesRead": 100940
       }
@@ -268,9 +264,7 @@
           "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
-        "allowedOutboxList": [
-          "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
-        ],
+        "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "delayedInboxAccs": [
           "0xfe3de3bc7a0c6148165a35812c84ed6e22346313fa6692b1a6ec4b59e3451c52",
           "0x6406730f94f285e475fd53896c60361311cdea9069755b47754983204eeb0841",
