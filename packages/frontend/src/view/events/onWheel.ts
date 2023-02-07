@@ -1,4 +1,5 @@
 import { State } from '../utils/State'
+import { IS_MACOS } from './constants'
 
 const ZOOM_SENSITIVITY = 0.02
 const MAX_ZOOM = 3
@@ -30,7 +31,7 @@ export function onWheel(
       },
     }
   } else {
-    const invert = event.shiftKey // TODO: shiftKey && !macos
+    const invert = event.shiftKey && !IS_MACOS
     return {
       ...state,
       transform: {

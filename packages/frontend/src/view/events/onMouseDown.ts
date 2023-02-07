@@ -49,7 +49,12 @@ export function onMouseDown(
         return {
           ...state,
           selectedNodeIds,
-          pressed: { ...state.pressed, leftMouseButton: true },
+          pressed: {
+            ...state.pressed,
+            leftMouseButton: true,
+            // this is needed to fix alt tab during shift dragging
+            shiftKey: event.shiftKey,
+          },
           mouseMoveAction: 'dragging',
           mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
           mouseUpAction,
