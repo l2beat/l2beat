@@ -30,7 +30,6 @@ export function createActivityModule(
   const dailyCountViewRepository = new DailyTransactionCountViewRepository(
     database,
     logger,
-    metrics,
   )
 
   const counters = createTransactionCounters(
