@@ -60,18 +60,18 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
       getValue: (project) => <NumberCell>{project.tvl}</NumberCell>,
     },
     {
-      name: 'Breakdown',
-      tooltip:
-        'Composition of the total value locked broken down by token type.',
-      getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
-    },
-    {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
       getValue: (project) => (
         <NumberCell signed>{project.sevenDayChange}</NumberCell>
       ),
+    },
+    {
+      name: 'Breakdown',
+      tooltip:
+        'Composition of the total value locked broken down by token type.',
+      getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
     },
     {
       name: 'Market share',

@@ -1,6 +1,6 @@
 {
   "name": "polynetwork",
-  "blockNumber": 16154924,
+  "blockNumber": 16570934,
   "contracts": [
     {
       "name": "PolyWrapper",
@@ -39,15 +39,18 @@
       }
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "EthCrossChainManagerProxy",
       "address": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
       "code": "https://etherscan.deth.net/address/0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "ethCrossChainManager": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C"
+        "ethCrossChainManager": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
+        "getEthCrossChainManager": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
+        "isOwner": false,
+        "owner": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
+        "paused": false
       }
     },
     {
@@ -67,12 +70,22 @@
       }
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "EthCrossChainData",
       "address": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
       "code": "https://etherscan.deth.net/address/0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
       "upgradeability": {
         "type": "immutable"
+      },
+      "values": {
+        "ConKeepersPkBytes": "0x0400000000000000143dfccb7b8a6972cde3b695d3c0c032514b0f3825144c46e1f946362547546677bfa719598385ce56f214f81f676832f6dfec4a5d0671bd27156425fcef981451b7529137d34002c4ebd81a2244f0ee7e95b2c0",
+        "CurEpochStartHeight": 1740000,
+        "EthToPolyTxHashIndex": 67292,
+        "getCurEpochConPubKeyBytes": "0x0400000000000000143dfccb7b8a6972cde3b695d3c0c032514b0f3825144c46e1f946362547546677bfa719598385ce56f214f81f676832f6dfec4a5d0671bd27156425fcef981451b7529137d34002c4ebd81a2244f0ee7e95b2c0",
+        "getCurEpochStartHeight": 1740000,
+        "getEthTxHashIndex": 67292,
+        "isOwner": false,
+        "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
+        "paused": false
       }
     },
     {
@@ -129,6 +142,7 @@
     "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
     "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E",
     "0x8B35064B158634458Fd53A861d68Eb84152E4106",
+    "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
     "0xeF86b2c8740518548ae449c4C3892B4be0475d8c"
   ],
   "abis": {
@@ -207,6 +221,23 @@
       "function transferOwnership(address newOwner)",
       "function unlock(bytes argsBs, bytes fromContractAddr, uint64 fromChainId) returns (bool)"
     ],
+    "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb": [
+      "constructor(address _ethCrossChainManagerAddr)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function getEthCrossChainManager() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause() returns (bool)",
+      "function pauseEthCrossChainManager() returns (bool)",
+      "function paused() view returns (bool)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function unpause() returns (bool)",
+      "function unpauseEthCrossChainManager() returns (bool)",
+      "function upgradeEthCrossChainManager(address _newEthCrossChainManagerAddr) returns (bool)"
+    ],
     "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54": [
       "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",
       "event BindLPToAssetEvent(address originAssetAddress, address LPTokenAddress)",
@@ -272,6 +303,34 @@
       "function speedUp(address fromAsset, bytes txHash, uint256 fee) payable",
       "function transferOwnership(address newOwner)",
       "function unpause()"
+    ],
+    "0xcF2afe102057bA5c16f899271045a0A37fCb10f2": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function ConKeepersPkBytes() view returns (bytes)",
+      "function CurEpochStartHeight() view returns (uint32)",
+      "function EthToPolyTxHashIndex() view returns (uint256)",
+      "function EthToPolyTxHashMap(uint256) view returns (bytes32)",
+      "function ExtraData(bytes32, bytes32) view returns (bytes)",
+      "function checkIfFromChainTxExist(uint64 fromChainId, bytes32 fromChainTx) view returns (bool)",
+      "function getCurEpochConPubKeyBytes() view returns (bytes)",
+      "function getCurEpochStartHeight() view returns (uint32)",
+      "function getEthTxHash(uint256 ethTxHashIndex) view returns (bytes32)",
+      "function getEthTxHashIndex() view returns (uint256)",
+      "function getExtraData(bytes32 key1, bytes32 key2) view returns (bytes)",
+      "function isOwner() view returns (bool)",
+      "function markFromChainTxExist(uint64 fromChainId, bytes32 fromChainTx) returns (bool)",
+      "function owner() view returns (address)",
+      "function pause() returns (bool)",
+      "function paused() view returns (bool)",
+      "function putCurEpochConPubKeyBytes(bytes curEpochPkBytes) returns (bool)",
+      "function putCurEpochStartHeight(uint32 curEpochStartHeight) returns (bool)",
+      "function putEthTxHash(bytes32 ethTxHash) returns (bool)",
+      "function putExtraData(bytes32 key1, bytes32 key2, bytes value) returns (bool)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function unpause() returns (bool)"
     ],
     "0xf6378141BC900020a438F3914e4C3ceA29907b27": [
       "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",

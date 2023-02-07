@@ -19,6 +19,17 @@
           "args": []
         }
       }
+    },
+    "0xcF2afe102057bA5c16f899271045a0A37fCb10f2": {
+      "ignoreInWatchMode": ["getEthTxHashIndex", "EthToPolyTxHashIndex"],
+      "ignoreMethods": [
+        "EthToPolyTxHashMap",
+        "getEthTxHash",
+        "ConKeepersPkBytes",
+        "CurEpochStartHeight",
+        "getCurEpochConPubKeyBytes",
+        "getCurEpochStartHeight"
+      ]
     }
   }
 }
