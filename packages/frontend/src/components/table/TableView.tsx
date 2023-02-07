@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { HTMLAttributes, ReactNode } from 'react'
+import { InfoIcon } from '../icons'
 
 interface Props<T> {
   items: T[]
@@ -36,16 +37,17 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
               <th
                 key={i}
                 className={cx(
-                  'whitespace-pre py-2 align-bottom text-sm font-medium uppercase text-gray-700 dark:text-gray-300',
-                  column.alignRight && 'text-right',
-                  column.alignCenter && 'text-center',
+                  'whitespace-pre py-2 text-sm font-medium uppercase text-gray-700 dark:text-gray-300',
                   column.minimalWidth && 'w-0',
                   i !== columns.length - 1 && 'pr-3 md:pr-4',
                 )}
               >
-                <span
-                  className={cx('inline-block', column.tooltip && 'Tooltip')}
-                  title={column.tooltip}
+                <div
+                  className={cx(
+                    'flex flex-row items-center gap-1.5',
+                    column.alignRight && 'justify-end',
+                    column.alignCenter && 'justify-center',
+                  )}
                 >
                   <span className={cx(column.shortName && 'hidden md:block')}>
                     {column.name}
@@ -53,7 +55,12 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                   {column.shortName && (
                     <span className="md:hidden">{column.shortName}</span>
                   )}
-                </span>
+                  {column.tooltip && (
+                    <span className="Tooltip" title={column.tooltip}>
+                      <InfoIcon />
+                    </span>
+                  )}
+                </div>
               </th>
             ))}
           </tr>
