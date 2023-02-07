@@ -15,17 +15,12 @@ export interface ProjectCellProps {
 }
 
 export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
-  const href =
-    type === 'layer2'
-      ? `/scaling/projects/${project.slug}`
-      : `/bridges/projects/${project.slug}`
-
   const providerClassName = 'Tooltip relative inline-block h-4 w-4 ml-1'
   const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4'
 
   return (
     <>
-      <a className="relative pl-7 hover:underline" href={href}>
+      <a className="relative pl-7 group-hover:underline">
         <img
           className="absolute left-0 top-0 block h-[18px] w-[18px]"
           src={`/icons/${project.slug}.png`}
