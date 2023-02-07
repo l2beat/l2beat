@@ -50,7 +50,7 @@ export class Application {
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
       createMetricsModule(config, metrics),
-      createTvlModule(config, logger, http, database, clock, metrics),
+      createTvlModule(config, logger, http, database, clock),
       createActivityModule(config, logger, http, database, clock, metrics),
       createDiscoveryModule(config, logger, http),
       createDiscoveryWatcherModule(config, logger, http, database, clock),

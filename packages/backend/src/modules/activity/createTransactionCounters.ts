@@ -48,10 +48,7 @@ export function createTransactionCounters(
   })
 
   // shared repositories
-  const blockRepository = new BlockTransactionCountRepository(
-    database,
-    logger,
-  )
+  const blockRepository = new BlockTransactionCountRepository(database, logger)
   const starkexRepository = new StarkexTransactionCountRepository(
     database,
     logger,
@@ -60,10 +57,7 @@ export function createTransactionCounters(
     database,
     logger,
   )
-  const zksyncRepository = new ZksyncTransactionRepository(
-    database,
-    logger,
-  )
+  const zksyncRepository = new ZksyncTransactionRepository(database, logger)
 
   // ethereum is kept separately in backend config, because it is not a layer 2 project
   const ethereumConfig = activityConfigProjects.ethereum

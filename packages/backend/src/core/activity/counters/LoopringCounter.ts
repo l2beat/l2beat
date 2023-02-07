@@ -46,7 +46,9 @@ export function createLoopringCounter(
           }
         })
 
-        const blocks = await promiseAllPlus(queries, logger)
+        const blocks = await promiseAllPlus(queries, logger, {
+          taskQueueId: createLoopringCounter.name,
+        })
         await blockRepository.addMany(blocks, trx)
       },
     },

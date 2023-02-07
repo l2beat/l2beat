@@ -49,7 +49,9 @@ export function createAztecCounter(
           }
         })
 
-        const blocks = await promiseAllPlus(queries, logger)
+        const blocks = await promiseAllPlus(queries, logger, {
+          taskQueueId: createAztecCounter.name,
+        })
         await blockRepository.addMany(blocks, trx)
       },
     },

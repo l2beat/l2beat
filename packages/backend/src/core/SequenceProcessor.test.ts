@@ -6,7 +6,7 @@ import { once } from 'events'
 import { Metrics } from '../Metrics'
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
 import { setupDatabaseTestSuite } from '../test/database'
-import { createMockGauge, createMockHistogram } from '../test/mocks/Metrics'
+import { createMockGauge } from '../test/mocks/Metrics'
 import {
   ALL_PROCESSED_EVENT,
   SequenceProcessor,
@@ -15,7 +15,6 @@ import {
 
 function createMockMetrics() {
   return mock<Metrics>({
-    repositoryHistogram: createMockHistogram(),
     activityLast: createMockGauge(),
     activityLatest: createMockGauge(),
     activityConfig: createMockGauge(),
@@ -25,11 +24,7 @@ function createMockMetrics() {
 describe(SequenceProcessor.name, () => {
   const { database } = setupDatabaseTestSuite()
   const mockMetrics = createMockMetrics()
-  const repository = new SequenceProcessorRepository(
-    database,
-    Logger.SILENT,
-    mockMetrics,
-  )
+  const repository = new SequenceProcessorRepository(database, Logger.SILENT)
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
 
