@@ -55,6 +55,7 @@ describe(promiseAllPlus.name, () => {
     ]
     const resultsPromise = promiseAllPlus(fns, Logger.SILENT, {
       maxConcurrency: 2,
+      taskQueueId: 'test',
     })
 
     await time.tickAsync(1000)
@@ -106,6 +107,7 @@ describe(promiseAllPlus.name, () => {
     const resultsPromise = promiseAllPlus([mock1, mock2], Logger.SILENT, {
       maxConcurrency: 1,
       maxAttempts: 1,
+      taskQueueId: 'test',
     })
     await time.runAllAsync()
 
