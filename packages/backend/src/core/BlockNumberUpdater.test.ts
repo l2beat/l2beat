@@ -6,12 +6,10 @@ import waitForExpect from 'wait-for-expect'
 
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { EtherscanClient } from '../peripherals/etherscan/EtherscanClient'
-import { createMockTvlMetrics } from '../test/mocks/Metrics'
 import { BlockNumberUpdater } from './BlockNumberUpdater'
 import { Clock } from './Clock'
 
 describe(BlockNumberUpdater.name, () => {
-  const mockMetrics = createMockTvlMetrics()
   describe(BlockNumberUpdater.prototype.start.name, () => {
     const TIME_0 = UnixTime.now().toStartOf('hour')
     const TIME_1 = TIME_0.add(1, 'hours')
@@ -45,7 +43,6 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         clock,
         Logger.SILENT,
-        mockMetrics,
       )
 
       await blockNumberUpdater.start()
@@ -73,7 +70,6 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         mock<Clock>(),
         Logger.SILENT,
-        mockMetrics,
       )
 
       await blockNumberUpdater.update(timestamp)
@@ -94,7 +90,6 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         mock<Clock>(),
         Logger.SILENT,
-        mockMetrics,
       )
 
       let result: unknown = undefined
@@ -131,7 +126,6 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         mock<Clock>(),
         Logger.SILENT,
-        mockMetrics,
       )
 
       await blockNumberUpdater.update(from)
@@ -171,7 +165,6 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         mock<Clock>(),
         Logger.SILENT,
-        mockMetrics,
       )
       await blockNumberUpdater.update(from)
       await blockNumberUpdater.update(from.add(1, 'hours'))

@@ -2,7 +2,6 @@ import { Logger, TaskQueue } from '@l2beat/common'
 import { UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
-import { Metrics } from '../Metrics'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { EtherscanClient } from '../peripherals/etherscan'
 import { Clock } from './Clock'
@@ -16,14 +15,13 @@ export class BlockNumberUpdater {
     private readonly blockNumberRepository: BlockNumberRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
-    metrics: Metrics,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metrics: metrics.forTvl(this),
+        id: BlockNumberUpdater.name,
       },
     )
   }

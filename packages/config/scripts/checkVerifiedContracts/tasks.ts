@@ -28,6 +28,7 @@ export async function verifyContracts(
 
   const verification = await promiseAllPlus(verificationPromises, logger, {
     maxConcurrency: workersCount,
+    taskQueueId: verifyContracts.name,
   })
 
   return Object.fromEntries(verification)

@@ -69,7 +69,6 @@ const repositoryHistogram = new Histogram({
   labelNames: ['repository', 'method'],
 })
 
-
 export abstract class BaseRepository {
   protected histogram: RepositoryHistogram
 

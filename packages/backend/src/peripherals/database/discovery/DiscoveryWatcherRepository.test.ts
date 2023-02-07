@@ -3,7 +3,6 @@ import { Hash256, UnixTime } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
-import { createMockRepoMetrics } from '../../../test/mocks/Metrics'
 import {
   DiscoveryWatcherRecord,
   DiscoveryWatcherRepository,
@@ -13,11 +12,7 @@ const CONFIG_HASH = Hash256.random()
 
 describe(DiscoveryWatcherRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new DiscoveryWatcherRepository(
-    database,
-    Logger.SILENT,
-    createMockRepoMetrics(),
-  )
+  const repository = new DiscoveryWatcherRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
     await repository.deleteAll()

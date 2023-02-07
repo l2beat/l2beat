@@ -10,7 +10,6 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../peripherals/database/PriceRepository'
-import { createMockTvlMetrics } from '../test/mocks/Metrics'
 import { Clock } from './Clock'
 import { PriceUpdater } from './PriceUpdater'
 
@@ -20,8 +19,6 @@ describe(PriceUpdater.name, () => {
   const HOUR_11 = UnixTime.fromDate(new Date('2021-09-07T11:00:00Z'))
   const HOUR_12 = UnixTime.fromDate(new Date('2021-09-07T12:00:00Z'))
   const HOUR_13 = UnixTime.fromDate(new Date('2021-09-07T13:00:00Z'))
-
-  const mockMetrics = createMockTvlMetrics()
 
   describe(PriceUpdater.prototype.start.name, () => {
     it('triggers update now and on every new hour', async () => {
@@ -38,7 +35,6 @@ describe(PriceUpdater.name, () => {
         clock,
         [],
         Logger.SILENT,
-        mockMetrics,
       )
       const update = mockFn<typeof priceUpdater.update>().resolvesTo(undefined)
       priceUpdater.update = update
@@ -73,7 +69,6 @@ describe(PriceUpdater.name, () => {
         clock,
         tokens,
         Logger.SILENT,
-        mockMetrics,
       )
       await priceUpdater.update()
       const result = await priceUpdater.getPricesWhenReady(HOUR_10)
@@ -101,7 +96,6 @@ describe(PriceUpdater.name, () => {
         clock,
         tokens,
         Logger.SILENT,
-        mockMetrics,
       )
 
       let result: unknown = undefined
@@ -153,7 +147,6 @@ describe(PriceUpdater.name, () => {
         clock,
         tokens,
         Logger.SILENT,
-        mockMetrics,
       )
 
       await priceUpdater.update()
@@ -213,7 +206,6 @@ describe(PriceUpdater.name, () => {
         mock<Clock>(),
         [fakeToken(TOKEN_ID, TOKEN_COINGECKO_ID)],
         Logger.SILENT,
-        mockMetrics,
       )
     })
 
@@ -333,7 +325,6 @@ describe(PriceUpdater.name, () => {
         mock<Clock>(),
         tokens,
         Logger.SILENT,
-        mockMetrics,
       )
 
       await priceUpdater.fetchAndSave(tokens[0].id, from, from.add(2, 'hours'))

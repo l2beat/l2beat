@@ -2,7 +2,6 @@ import { assert, Logger, TaskQueue } from '@l2beat/common'
 import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
 import { setTimeout } from 'timers/promises'
 
-import { Metrics } from '../Metrics'
 import { Token } from '../model'
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
@@ -22,15 +21,13 @@ export class PriceUpdater {
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly logger: Logger,
-    metrics: Metrics,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
       () => this.update(),
       this.logger.for('taskQueue'),
-
       {
-        metrics: metrics.forTvl(this),
+        id: PriceUpdater.name,
       },
     )
   }

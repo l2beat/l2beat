@@ -1,4 +1,3 @@
-import { TaskQueueHistogram } from '@l2beat/common'
 import {
   collectDefaultMetrics,
   Counter,
@@ -22,10 +21,8 @@ export class Metrics {
   readonly activityConfig: Gauge<
     'project' | 'scheduleIntervalMs' | 'batchSize' | 'uncertaintyBuffer'
   >
-  readonly tvlHistogram: TaskQueueHistogram
 
   constructor() {
-
     this.activityLast = this.createGauge({
       name: 'activity_last_synced',
       help: 'Last unit (block or day) synced by the sequence processor',
@@ -54,20 +51,6 @@ export class Metrics {
         'uncertaintyBuffer',
       ],
     })
-
-    this.tvlHistogram = this.createHistogram({
-      name: 'tvl_sync_duration_histogram',
-      help: 'Histogram showing TVL sync duration',
-      buckets: [0.25, 0.5, 1, 2.5, 5, 10, 25, 50],
-      labelNames: ['updater'],
-    })
-  }
-
-  forTvl(updater: object) {
-    return {
-      histogram: this.tvlHistogram,
-      labels: { updater: updater.constructor.name },
-    }
   }
 
   collectDefaultMetrics(): void {
