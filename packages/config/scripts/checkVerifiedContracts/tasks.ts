@@ -18,8 +18,8 @@ export async function verifyContracts(
 ): Promise<VerificationMap> {
   logger.info(`Processing ${addresses.length} addresses.`)
 
-  const verificationPromises = addresses.map(
-    async (address): Promise<[string, boolean]> => {
+  const getVerificationPromises = (addresses: EthereumAddress[]) =>
+    addresses.map(async (address): Promise<[string, boolean]> => {
       if (previouslyVerified.has(address) || manuallyVerified.has(address)) {
         return [address.toString(), true]
       }
@@ -27,13 +27,13 @@ export async function verifyContracts(
       logger.info(`Checking ${address.toString()}...`)
       const isVerified = await isContractVerified(etherscanClient, address)
       return [address.toString(), isVerified]
-    },
-  )
+    })
 
-  const batches = toBatches(verificationPromises, workersCount)
-  const verifications = (
-    await Promise.all(batches.map((batch) => Promise.all(batch)))
-  ).flat()
-
-  return Object.fromEntries(verifications)
+  const batches = toBatches(addresses, workersCount)
+  const results = []
+  for (const batch of batches) {
+    const processed = await Promise.all(getVerificationPromises(batch))
+    results.push(...processed)
+  }
+  return Object.fromEntries(results)
 }
