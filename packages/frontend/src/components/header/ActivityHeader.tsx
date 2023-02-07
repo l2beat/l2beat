@@ -41,12 +41,7 @@ export function ActivityHeader(props: ActivityHeaderProps) {
               '(L2 txs/7d + ETH txs/7d) / ETH txs/7d'
             }
           >
-            <InfoIcon
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="#737373"
-            />
+            <InfoIcon />
           </span>
         </p>
       </div>
