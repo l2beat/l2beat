@@ -1,4 +1,5 @@
 import { Hash256 } from '@l2beat/types'
+import { isArray, isObject } from 'lodash'
 
 import { hashJson } from '../../../tools/hashJson'
 import { DiscoveryConfig } from '../DiscoveryConfig'
@@ -12,34 +13,32 @@ export function getDiscoveryConfigEntries(config: DiscoveryConfig): string {
   return JSON.stringify(sorted)
 }
 
+// Inside discovery config there are fields that should not be sorted
+// e.g. entries in "fields", where we call function with params in exact order
+//  so changing the order of them should change config hash
 const MAX_SEMANTIC_NEST_LEVEL = 2
 
 function deepSortByKeys(object: Record<string, unknown>, nestLevel = 0) {
   return Object.keys(object)
     .sort()
-    .reduce(function (acc, key) {
-      if (typeof object[key] === 'object') {
-        // @ts-expect-error cannot determine type, generic sorting
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        if (object[key].length !== undefined) {
-          // @ts-expect-error cannot determine type, generic sorting
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-          acc[key] = object[key].sort()
+    .reduce(function (acc: Record<string, unknown>, key) {
+      const entry = object[key]
+
+      if (isObject(entry)) {
+        if (isArray(entry)) {
+          acc[key] = entry.sort()
         } else {
           if (nestLevel >= MAX_SEMANTIC_NEST_LEVEL) {
-            // @ts-expect-error cannot determine type, generic sorting
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            acc[key] = object[key]
+            acc[key] = entry
           } else {
-            // @ts-expect-error cannot determine type, generic sorting
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            acc[key] = deepSortByKeys(object[key], nestLevel + 1)
+            acc[key] = deepSortByKeys(
+              entry as Record<string, unknown>,
+              nestLevel + 1,
+            )
           }
         }
       } else {
-        // @ts-expect-error cannot determine type, generic sorting
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        acc[key] = object[key]
+        acc[key] = entry
       }
       return acc
     }, {})

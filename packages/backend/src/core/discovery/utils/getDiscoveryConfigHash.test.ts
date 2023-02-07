@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress, Hash256 } from '@l2beat/types'
 import { expect } from 'earljs'
 
 import { hashJson } from '../../../tools/hashJson'
@@ -30,8 +30,9 @@ describe(getDiscoveryConfigHash.name, () => {
   it('correctly generates hash for given config', () => {
     const result = getDiscoveryConfigHash(CONFIG)
 
-    const expected =
-      '0x800ad499ae413c85dbfd965e91cb0120fd62b38efd4a921995268110f9e238ed'
+    const expected = Hash256(
+      '0x800ad499ae413c85dbfd965e91cb0120fd62b38efd4a921995268110f9e238ed',
+    )
 
     expect(result).toEqual(expected)
   })
