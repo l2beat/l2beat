@@ -1,4 +1,4 @@
-import { EthereumAddress, Hash256 } from '@l2beat/types'
+import { EthereumAddress, Hash256 } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { hashJson } from '../../../tools/hashJson'
