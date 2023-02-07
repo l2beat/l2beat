@@ -14,14 +14,20 @@ import {
   VerificationMap,
 } from './output'
 import { verifyContracts } from './tasks'
+import { getEnv } from './utils'
 
 export const OUTPUT_FILEPATH = 'src/verified.json'
 
 export async function main() {
   const logger = new Logger({ logLevel: LogLevel.INFO, format: 'pretty' })
+  const envWorkersVar = 'ETHERSCAN_WORKERS'
+  const workersCount = parseInt(getEnv(envWorkersVar, '4'))
 
   console.log('Check Verified Contracts.')
   console.log('=========================')
+  console.log(
+    `${envWorkersVar}=${workersCount} (can be changed via environment variable)`,
+  )
 
   const projects = [...layer2s, ...bridges]
   const previouslyVerified = await loadPreviouslyVerifiedContracts(
@@ -34,6 +40,7 @@ export async function main() {
     previouslyVerified,
     new Set(manuallyVerified.map(EthereumAddress)),
     etherscanClient,
+    workersCount,
     logger,
   )
   const projectVerificationMap: VerificationMap = {}

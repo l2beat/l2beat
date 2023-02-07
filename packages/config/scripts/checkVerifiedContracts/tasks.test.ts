@@ -32,6 +32,7 @@ describe('checkVerifiedContracts:tasks', () => {
           EthereumAddress('0x5555555555555555555555555555555555555555'),
         ]),
         EthereumClientMock as unknown as EtherscanClient,
+        2,
         Logger.SILENT,
       )
 
@@ -65,6 +66,7 @@ describe('checkVerifiedContracts:tasks', () => {
         new Set(),
         new Set(),
         EthereumClientMock as unknown as EtherscanClient,
+        2,
         Logger.SILENT,
       )
       await clock.runAllAsync()

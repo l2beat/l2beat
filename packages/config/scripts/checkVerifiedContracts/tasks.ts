@@ -1,4 +1,9 @@
-import { EthereumAddress, EtherscanClient, Logger } from '@l2beat/shared'
+import {
+  EthereumAddress,
+  EtherscanClient,
+  Logger,
+  toBatches,
+} from '@l2beat/shared'
 
 import { isContractVerified } from './etherscan'
 import { VerificationMap } from './output'
@@ -8,6 +13,7 @@ export async function verifyContracts(
   previouslyVerified: Set<EthereumAddress>,
   manuallyVerified: Set<EthereumAddress>,
   etherscanClient: EtherscanClient,
+  workersCount: number,
   logger: Logger,
 ): Promise<VerificationMap> {
   logger.info(`Processing ${addresses.length} addresses.`)
@@ -24,6 +30,10 @@ export async function verifyContracts(
     },
   )
 
-  const verifications = await Promise.all(verificationPromises)
+  const batches = toBatches(verificationPromises, workersCount)
+  const verifications = (
+    await Promise.all(batches.map((batch) => Promise.all(batch)))
+  ).flat()
+
   return Object.fromEntries(verifications)
 }
