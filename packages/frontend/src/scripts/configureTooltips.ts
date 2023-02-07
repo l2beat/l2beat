@@ -19,8 +19,9 @@ export function configureTooltips() {
   function show(element: HTMLElement, title: string) {
     visible = true
     activeElement = element
+    tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
     const rect = activeElement.getBoundingClientRect()
-    tooltipText.innerText = title
+    tooltipText.innerHTML = title
     tooltip.style.display = 'block'
     const tooltipWidth = tooltip.getBoundingClientRect().width
     const left = clamp(
