@@ -7,10 +7,12 @@ export const cBridge: Bridge = {
   type: 'bridge',
   id: ProjectId('cbridge'),
   display: {
-    name: 'cBridge',
+    name: 'cBridge (Celer)',
     slug: 'cbridge',
     description:
-      'Celer cBridge offers cross-chain token bridging in two modes: Token Bridge and Liquidity Network. It leverages the "State Guardian Network" aka SGN to perform cross-chain communication.',
+      'Celer cBridge offers cross-chain token bridging in two modes: Token Bridge and Liquidity Network. It also offers AMB facility - ability to pass arbitrary\
+      messages across chains. It leverages the "State Guardian Network" aka SGN to perform cross-chain communication.\
+      For Liquidity Network, liquidity providers need to rely on SGN to remove their funds from the network.',
     links: {
       websites: ['https://www.celer.network/'],
       apps: ['https://cbridge.celer.network/'],
@@ -33,9 +35,9 @@ export const cBridge: Bridge = {
       {
         address: '0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820',
         sinceTimestamp: new UnixTime(1638346811),
-        tokens: ['USDC', 'WETH', 'USDT', 'MASK', 'BUSD'],
+        tokens: ['ETH', 'USDC', 'WETH', 'USDT', 'MASK', 'BUSD', 'LYRA'],
       },
-      // token bridge
+      // token bridge v1
       {
         address: '0xB37D31b2A74029B5951a2778F959282E2D518595',
         sinceTimestamp: new UnixTime(1639553135),
@@ -49,8 +51,14 @@ export const cBridge: Bridge = {
           'WBTC',
           'CELR',
           'FXS',
-          // 'WXT',
+          'WXT',
         ],
+      },
+      // token bridge v2
+      {
+        address: '0x7510792A3B1969F9307F3845CE88e39578f2bAE1',
+        sinceTimestamp: new UnixTime(1651661389),
+        tokens: ['WETH', 'PSTAKE'],
       },
     ],
   },
@@ -77,7 +85,13 @@ export const cBridge: Bridge = {
           href: 'https://cbridge-docs.celer.network/introduction/fungible-token-bridging-models',
         },
       ],
-      risks: [],
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'validators (SGN) decide to not process a withdrawal request from liquidity providers.',
+          isCritical: true,
+        },
+      ],
     },
     validation: {
       name: 'Transfers are externally verified',
@@ -148,16 +162,46 @@ export const cBridge: Bridge = {
   contracts: {
     addresses: [
       {
+        name: 'Message Bus',
+        address: '0x4066D196A423b2b3B8B054f4F40efB47a74E200C',
+        description:
+          'Contract providing cross-chain AMB facility. It connects with Liquidity Network and Token Bridges to processes certain types of messages.',
+      },
+      {
         name: 'Liquidity Network',
         address: '0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820',
         description:
           'Contract providing cross-chain swaps, allows user to deposit funds and withdraw them. Additionally user can add liquidity to this address to generate yield.',
       },
       {
-        name: 'Token Bridge',
+        name: 'Token Bridge v1',
         address: '0xB37D31b2A74029B5951a2778F959282E2D518595',
         description:
           'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
+      },
+      {
+        name: 'Token Bridge v2',
+        address: '0x7510792A3B1969F9307F3845CE88e39578f2bAE1',
+        description:
+          'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
+      },
+      {
+        name: 'Pegged Token Bridge v1',
+        address: '0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB',
+        description:
+          'Contract minting/burning tokens when receiving a message from Token Bridge.',
+      },
+      {
+        name: 'Pegged Token Bridge v2',
+        address: '0x52E4f244f380f8fA51816c8a10A63105dd4De084',
+        description:
+          'Contract minting/burning tokens when receiving a message from Token Bridge.',
+      },
+      {
+        name: 'Transfer Agent',
+        address: '0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b',
+        description:
+          'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',
       },
     ],
     references: [],

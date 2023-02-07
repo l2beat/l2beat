@@ -1,6 +1,7 @@
 {
   "name": "allbridge",
   "blockNumber": 16526407,
+  "configHash": "0x36cc338ec3c53d7422d1ce939e2c7273e5593bb4dc3e489b621250e0f116e60b",
   "contracts": [
     {
       "name": "Bridge",

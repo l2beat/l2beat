@@ -1,6 +1,7 @@
 {
   "name": "zksync",
   "blockNumber": 16154924,
+  "configHash": "0x7d9847e421a09c79fe74775b4e570778a7a65a284da67236d39ec8e90a6e411a",
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
@@ -52,9 +53,7 @@
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
         "totalTokens": 174,
-        "validators": [
-          "0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"
-        ]
+        "validators": ["0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"]
       }
     },
     {

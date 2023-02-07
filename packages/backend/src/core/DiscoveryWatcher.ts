@@ -1,4 +1,4 @@
-import { Logger, UnixTime } from '@l2beat/shared'
+import { Hash256, Logger, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
@@ -10,6 +10,7 @@ import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { ProjectParameters } from './discovery/types'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
+import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
 import { TaskQueue } from './queue/TaskQueue'
 
 export class DiscoveryWatcher {
@@ -54,10 +55,12 @@ export class DiscoveryWatcher {
           projectConfig,
           blockNumber,
         )
+        const configHash = getDiscoveryConfigHash(projectConfig)
 
         const diff = await this.findChanges(
           projectConfig.name,
           discovery,
+          configHash,
           projectConfig.overrides,
         )
 
@@ -71,6 +74,7 @@ export class DiscoveryWatcher {
           timestamp,
           blockNumber,
           discovery,
+          configHash,
         })
 
         this.logger.info('Discovery finished', { project: projectConfig.name })
@@ -84,15 +88,24 @@ export class DiscoveryWatcher {
   async findChanges(
     name: string,
     discovery: ProjectParameters,
+    configHash: Hash256,
     overrides?: Record<string, DiscoveryContract>,
   ): Promise<DiscoveryDiff[]> {
     const databaseEntry = await this.repository.findLatest(name)
 
-    const currentContracts = databaseEntry
-      ? databaseEntry.discovery.contracts
-      : (await this.configReader.readDiscovery(name)).contracts
+    if (
+      databaseEntry === undefined ||
+      databaseEntry.configHash !== configHash
+    ) {
+      const committed = await this.configReader.readDiscovery(name)
+      return diffDiscovery(committed.contracts, discovery.contracts, overrides)
+    }
 
-    return diffDiscovery(currentContracts, discovery.contracts, overrides ?? {})
+    return diffDiscovery(
+      databaseEntry.discovery.contracts,
+      discovery.contracts,
+      overrides,
+    )
   }
 
   async notify(messages: string[]) {

@@ -17,7 +17,7 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
-  readonly discovery: DiscoveryConfig | false
+  readonly discovery: DiscoveryModuleConfig | false
   readonly discoveryWatcher: DiscoveryWatcherConfig | false
 }
 
@@ -71,7 +71,7 @@ export interface ActivityConfig {
   readonly projects: Record<string, Layer2TransactionApi | undefined>
 }
 
-export interface DiscoveryConfig {
+export interface DiscoveryModuleConfig {
   readonly project: string
   readonly blockNumber?: number
   readonly alchemyApiKey: string

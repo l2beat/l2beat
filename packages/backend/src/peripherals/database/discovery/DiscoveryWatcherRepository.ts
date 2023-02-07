@@ -1,4 +1,4 @@
-import { Logger, UnixTime } from '@l2beat/shared'
+import { Hash256, Logger, UnixTime } from '@l2beat/shared'
 import { DiscoveryWatcherRow } from 'knex/types/tables'
 
 import { ProjectParameters } from '../../../core/discovery/types'
@@ -11,6 +11,7 @@ export interface DiscoveryWatcherRecord {
   blockNumber: number
   timestamp: UnixTime
   discovery: ProjectParameters
+  configHash: Hash256
 }
 export class DiscoveryWatcherRepository extends BaseRepository {
   constructor(database: Database, logger: Logger, metrics: Metrics) {
@@ -61,6 +62,7 @@ function toRecord(row: DiscoveryWatcherRow): DiscoveryWatcherRecord {
     blockNumber: row.block_number,
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     discovery: row.discovery_json_blob as unknown as ProjectParameters,
+    configHash: Hash256(row.config_hash),
   }
 }
 
@@ -70,5 +72,6 @@ function toRow(record: DiscoveryWatcherRecord): DiscoveryWatcherRow {
     block_number: record.blockNumber,
     unix_timestamp: record.timestamp.toDate(),
     discovery_json_blob: JSON.stringify(record.discovery),
+    config_hash: record.configHash.toString(),
   }
 }

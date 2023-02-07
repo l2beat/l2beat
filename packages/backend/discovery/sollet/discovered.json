@@ -1,6 +1,7 @@
 {
   "name": "sollet",
   "blockNumber": 16154924,
+  "configHash": "0x96d551544c1e36a7fda3c59b3997dcfae2911f298c854c5da14306cbc9a061df",
   "contracts": [
     {
       "name": "SplTokenSwap",
@@ -15,9 +16,7 @@
       }
     }
   ],
-  "eoas": [
-    "0x067D382e61c06Cea2815069D9D97fd3ee5df2361"
-  ],
+  "eoas": ["0x067D382e61c06Cea2815069D9D97fd3ee5df2361"],
   "abis": {
     "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a": [
       "event NonceUsed(uint256 indexed nonce, bytes signature)",

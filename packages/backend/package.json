@@ -15,6 +15,7 @@
     "start:dev": "node -r esbuild-register src server",
     "start": "node -r source-map-support/register build/index.js server",
     "discover": "node -r esbuild-register src discover",
+    "discover:all": "node -r esbuild-register scripts/discoverAll.ts",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },

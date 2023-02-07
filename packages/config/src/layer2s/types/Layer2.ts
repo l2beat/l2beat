@@ -9,6 +9,7 @@ import {
   ProjectPermission,
 } from '../../common'
 import { Layer2Event } from './Layer2Event'
+import { Layer2Rating } from './Layer2Rating'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
@@ -33,6 +34,8 @@ export interface Layer2 {
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
+  /** Rollup maturity rating data */
+  rating?: Layer2Rating
 }
 
 export interface Layer2Display {

@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react'
 type BadgeType = 'error' | 'warning' | 'brightYellow' | 'gray' | 'purple'
 
 export interface BadgeProps {
-  type: BadgeType
+  type?: BadgeType
   className?: string
   children: ReactNode
   title?: string
@@ -32,7 +32,7 @@ export function Badge({
         'rounded px-1.5 py-px font-medium',
         oneSize ? 'text-sm' : 'text-2xs md:text-sm',
         title && 'Tooltip',
-        badgeClassnames[type],
+        type && badgeClassnames[type],
         className,
       )}
       title={title}
