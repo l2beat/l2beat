@@ -13,7 +13,7 @@ export async function verifyContracts(
   logger.info(`Processing ${addresses.length} addresses.`)
 
   const verificationPromises = addresses.map(
-    (address) => async (): Promise<[string, boolean]> => {
+    async (address): Promise<[string, boolean]> => {
       if (previouslyVerified.has(address) || manuallyVerified.has(address)) {
         return [address.toString(), true]
       }
@@ -23,11 +23,7 @@ export async function verifyContracts(
       return [address.toString(), isVerified]
     },
   )
-  const verifications = []
-  for (const verificationPromise of verificationPromises) {
-    const verification = await verificationPromise()
-    verifications.push(verification)
-  }
 
+  const verifications = await Promise.all(verificationPromises)
   return Object.fromEntries(verifications)
 }
