@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress } from '@l2beat/shared'
 
 import { AnalyzedData, analyzeItem } from './analyzeItem'
 import { DiscoveryConfig } from './DiscoveryConfig'

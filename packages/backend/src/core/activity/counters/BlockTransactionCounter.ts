@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/types'
+import { ProjectId } from '@l2beat/shared'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessor } from '../../SequenceProcessor'

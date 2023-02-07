@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/types'
+import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
 import { getTvlStats } from '../../../utils/tvl/getTvlStats'

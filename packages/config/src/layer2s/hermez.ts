@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,

@@ -1,4 +1,3 @@
-import { TaskQueueHistogram } from '@l2beat/common'
 import {
   collectDefaultMetrics,
   Counter,
@@ -11,6 +10,8 @@ import {
   Summary,
   SummaryConfiguration,
 } from 'prom-client'
+
+import { TaskQueueHistogram } from './core/queue/TaskQueue'
 
 export type RepositoryHistogram = Histogram<'repository' | 'method'>
 export type ProjectGauge = Gauge<'project'>

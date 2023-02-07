@@ -6,7 +6,7 @@ import {
   TvlApiCharts,
   TvlApiToken,
   UnixTime,
-} from '@l2beat/types'
+} from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'

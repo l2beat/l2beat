@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { Logger } from '@l2beat/common'
+import { Logger } from '@l2beat/shared'
 import Koa, { Context } from 'koa'
 import conditional from 'koa-conditional-get'
 import etag from 'koa-etag'

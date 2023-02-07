@@ -1,5 +1,4 @@
-import { Logger } from '@l2beat/common'
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
