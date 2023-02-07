@@ -1,6 +1,7 @@
 {
   "name": "arbitrum",
   "blockNumber": 16448426,
+  "configHash": "0xf5af8001ed511166fc123153f9429e781cb7b544e962ebdf448ea3aafc48e29d",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -94,12 +95,7 @@
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
-        "maxTimeVariation": [
-          5760,
-          12,
-          86400,
-          3600
-        ],
+        "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "totalDelayedMessagesRead": 411190
       }
