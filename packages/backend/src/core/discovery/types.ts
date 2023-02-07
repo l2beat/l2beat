@@ -1,10 +1,11 @@
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress, Hash256 } from '@l2beat/types'
 
 import { UpgradeabilityParameters } from './proxies/types'
 
 export interface ProjectParameters {
   name: string
   blockNumber: number
+  configHash: Hash256
   contracts: ContractParameters[]
   eoas: EthereumAddress[]
   abis: Record<string, string[]>

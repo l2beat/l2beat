@@ -1,6 +1,7 @@
 {
   "name": "debridge",
   "blockNumber": 16340182,
+  "configHash": "0x4a5202ed04bfb5c8270b10c7b31327f64a587783772ec2a6c16f2c72341cbdff",
   "contracts": [
     {
       "name": "DeBridgeGate",

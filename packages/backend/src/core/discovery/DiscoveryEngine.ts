@@ -7,6 +7,7 @@ import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { parseDiscoveryOutput } from './saveDiscoveryResult'
 import { ProjectParameters } from './types'
+import { getDiscoveryConfigHash } from './utils/getDiscoveryConfigHash'
 
 export class DiscoveryEngine {
   constructor(
@@ -26,7 +27,14 @@ export class DiscoveryEngine {
     )
 
     const discovered = await discover(discoveryProvider, config, this.logger)
+    const configHash = getDiscoveryConfigHash(config)
 
-    return parseDiscoveryOutput(discovered, config.name, blockNumber)
+    // TODO: test this line
+    return parseDiscoveryOutput(
+      discovered,
+      config.name,
+      blockNumber,
+      configHash,
+    )
   }
 }

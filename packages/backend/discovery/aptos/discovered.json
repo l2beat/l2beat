@@ -1,6 +1,7 @@
 {
   "name": "aptos",
   "blockNumber": 16154924,
+  "configHash": "0xbad9d71d720c551e045ee854a7e880722d34ccbf6340a929da894b7424c398aa",
   "contracts": [
     {
       "name": "TokenBridge",
