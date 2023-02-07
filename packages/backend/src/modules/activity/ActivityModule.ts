@@ -9,7 +9,6 @@ import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTra
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
 import { TransactionCountingMonitor } from '../../core/activity/TransactionCountingMonitor'
 import { Clock } from '../../core/Clock'
-import { Metrics } from '../../Metrics'
 import { Project } from '../../model'
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { Database } from '../../peripherals/database/shared/Database'
@@ -22,7 +21,6 @@ export function createActivityModule(
   http: HttpClient,
   database: Database,
   clock: Clock,
-  metrics: Metrics,
 ): ApplicationModule | undefined {
   if (!config.activity) {
     return
@@ -39,7 +37,6 @@ export function createActivityModule(
     http,
     database,
     clock,
-    metrics,
   )
 
   const viewRefresher = new DailyTransactionCountViewRefresher(

@@ -4,7 +4,6 @@ import { ProjectId, UnixTime } from '@l2beat/types'
 import { providers } from 'ethers'
 import { range } from 'lodash'
 
-import { Metrics } from '../../../Metrics'
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
@@ -19,7 +18,6 @@ export function createRpcCounter(
   blockRepository: BlockTransactionCountRepository,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
-  metrics: Metrics,
   clock: Clock,
   transactionApi: RpcTransactionApi,
 ): TransactionCounter {
@@ -41,7 +39,6 @@ export function createRpcCounter(
   const processor = new SequenceProcessor(
     projectId.toString(),
     logger,
-    metrics,
     sequenceProcessorRepository,
     {
       batchSize,

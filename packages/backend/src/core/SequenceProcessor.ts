@@ -7,10 +7,33 @@ import {
 } from '@l2beat/common'
 import { json } from '@l2beat/types'
 import { Knex } from 'knex'
+import { Gauge } from 'prom-client'
 import { EventEmitter } from 'stream'
 
-import { Metrics } from '../Metrics'
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
+
+const activityLast = new Gauge({
+  name: 'activity_last_synced',
+  help: 'Last unit (block or day) synced by the sequence processor',
+  labelNames: ['project'],
+})
+
+const activityLatest = new Gauge({
+  name: 'activity_latest',
+  help: 'Latest existing unit to be synced to',
+  labelNames: ['project'],
+})
+
+const activityConfig = new Gauge({
+  name: 'activity_config',
+  help: 'Activity config info',
+  labelNames: [
+    'project',
+    'scheduleIntervalMs',
+    'batchSize',
+    'uncertaintyBuffer',
+  ],
+})
 
 export interface SequenceProcessorOpts {
   startFrom: number
@@ -61,7 +84,6 @@ export class SequenceProcessor extends EventEmitter {
   constructor(
     readonly id: string,
     logger: Logger,
-    private readonly metrics: Metrics,
     private readonly repository: SequenceProcessorRepository,
     private readonly opts: SequenceProcessorOpts,
   ) {
@@ -83,7 +105,7 @@ export class SequenceProcessor extends EventEmitter {
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
     this.uncertaintyBuffer = opts.uncertaintyBuffer ?? 0
-    this.metrics.activityConfig
+    activityConfig
       .labels({
         project: this.id,
         scheduleIntervalMs: this.scheduleInterval,
@@ -200,10 +222,10 @@ export class SequenceProcessor extends EventEmitter {
       },
       trx,
     )
-    this.metrics.activityLast
+    activityLast
       .labels({ project: this.id })
       .set(state.lastProcessed)
-    this.metrics.activityLatest.labels({ project: this.id }).set(state.latest)
+    activityLatest.labels({ project: this.id }).set(state.latest)
     this.state = state
   }
 }

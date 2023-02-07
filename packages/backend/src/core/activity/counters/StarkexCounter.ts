@@ -3,7 +3,6 @@ import { StarkexTransactionApi } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/types'
 import { range } from 'lodash'
 
-import { Metrics } from '../../../Metrics'
 import { StarkexTransactionCountRepository } from '../../../peripherals/database/activity/StarkexCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { StarkexClient } from '../../../peripherals/starkex'
@@ -22,7 +21,6 @@ export function createStarkexCounter(
   starkexClient: StarkexClient,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
-  metrics: Metrics,
   clock: Clock,
   options: StarkexProcessorOptions,
 ): TransactionCounter {
@@ -32,7 +30,6 @@ export function createStarkexCounter(
   const processor = new SequenceProcessor(
     projectId.toString(),
     logger,
-    metrics,
     sequenceProcessorRepository,
     {
       batchSize,

@@ -3,7 +3,6 @@ import { HttpClient, Logger, LogThrottler } from '@l2beat/common'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { Clock } from './core/Clock'
-import { Metrics } from './Metrics'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiscoveryModule } from './modules/discovery/DiscoveryModule'
@@ -44,13 +43,11 @@ export class Application {
       config.clock.safeTimeOffsetSeconds,
     )
 
-    const metrics = new Metrics()
-
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
-      createMetricsModule(config, metrics),
+      createMetricsModule(config),
       createTvlModule(config, logger, http, database, clock),
-      createActivityModule(config, logger, http, database, clock, metrics),
+      createActivityModule(config, logger, http, database, clock),
       createDiscoveryModule(config, logger, http),
       createDiscoveryWatcherModule(config, logger, http, database, clock),
     ]
@@ -60,7 +57,6 @@ export class Application {
       new ApiServer(
         config.api.port,
         logger,
-        metrics,
         modules.flatMap((x) => x?.routers ?? []),
         handleServerError,
       )
