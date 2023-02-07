@@ -1,7 +1,9 @@
 import { EthereumAddress } from '@l2beat/types'
 import chalk from 'chalk'
 import { constants, utils } from 'ethers'
-import { ContractValue, ProjectParameters } from '../src/core/discovery/types'
+import { readFile } from 'fs/promises'
+
+import { ContractValue, ProjectParameters } from '../discovery/types'
 
 interface AddressDetails {
   name?: string
@@ -15,11 +17,10 @@ interface Role {
   atAddress: EthereumAddress
 }
 
-export function invertAndPrint(
-  project: ProjectParameters,
-  useMermaidMarkup = false,
-) {
+export async function runInversion(file: string, useMermaidMarkup: boolean) {
   const addresses = new Map<string, AddressDetails>()
+  const data = await readFile(file, 'utf-8')
+  const project = JSON.parse(data) as ProjectParameters
 
   function add(address: ContractValue, role?: Role) {
     if (
