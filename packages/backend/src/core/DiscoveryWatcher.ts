@@ -93,12 +93,10 @@ export class DiscoveryWatcher {
   ): Promise<DiscoveryDiff[]> {
     const databaseEntry = await this.repository.findLatest(name)
 
-    if (databaseEntry === undefined) {
-      const committed = await this.configReader.readDiscovery(name)
-      return diffDiscovery(committed.contracts, discovery.contracts, overrides)
-    }
-
-    if (databaseEntry.configHash !== configHash) {
+    if (
+      databaseEntry === undefined ||
+      databaseEntry.configHash !== configHash
+    ) {
       const committed = await this.configReader.readDiscovery(name)
       return diffDiscovery(committed.contracts, discovery.contracts, overrides)
     }
