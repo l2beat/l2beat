@@ -1,7 +1,7 @@
 {
   "name": "cBridge",
   "blockNumber": 16570813,
-  "configHash": "0xae56ecf3b30db2e456866c9104f5d582557773a48d2a7dabe6f45ecc76a1e82d",
+  "configHash": "0x0ad3c5afd193c6253fd7ef97be44693ce93bb26d1e6866167aa56aee5ed7de4e",
   "contracts": [
     {
       "name": "MessageBus",
