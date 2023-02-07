@@ -5,7 +5,7 @@ import { ScalingLegend } from '../../../components/ScalingLegend'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
-import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
+import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import {
   ColumnConfig,
   RowConfig,
@@ -93,9 +93,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   ]
 
   const rows: RowConfig<ScalingTvlViewEntry> = {
-    getProps: (entry) => ({
-      className: getRowVerificationClassNames(entry),
-    }),
+    getProps: getScalingRowProps,
   }
 
   return (

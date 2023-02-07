@@ -28,6 +28,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
         'overflow-x-auto whitespace-pre text-base',
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
+      data-role="table"
     >
       <table className="w-full border-collapse text-left">
         <thead>
@@ -59,32 +60,34 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
           </tr>
         </thead>
         <tbody className="">
-          {items.map((item, i) => (
-            <tr
-              key={i}
-              {...rows?.getProps(item, i)}
-              className={cx(
-                'border-b border-b-gray-200 dark:border-b-gray-800',
-                'hover:bg-gray-100 hover:shadow-sm dark:hover:bg-gray-900',
-                rows?.getProps(item, i).className,
-              )}
-            >
-              {columns.map((column, j) => (
-                <td
-                  key={j}
-                  className={cx(
-                    'h-9 md:h-10',
-                    column.alignRight && 'text-right',
-                    column.alignCenter && 'text-center',
-                    column.minimalWidth && 'w-0',
-                    j !== columns.length - 1 && 'pr-3 md:pr-4',
-                  )}
-                >
-                  {column.getValue(item, i)}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {items.map((item, i) => {
+            return (
+              <tr
+                key={i}
+                {...rows?.getProps(item, i)}
+                className={cx(
+                  'group cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
+                  'hover:bg-gray-100 hover:shadow-sm dark:hover:bg-gray-900',
+                  rows?.getProps(item, i).className,
+                )}
+              >
+                {columns.map((column, j) => (
+                  <td
+                    key={j}
+                    className={cx(
+                      'h-9 md:h-10',
+                      column.alignRight && 'text-right',
+                      column.alignCenter && 'text-center',
+                      column.minimalWidth && 'w-0',
+                      j !== columns.length - 1 && 'pr-3 md:pr-4',
+                    )}
+                  >
+                    {column.getValue(item, i)}
+                  </td>
+                ))}
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
