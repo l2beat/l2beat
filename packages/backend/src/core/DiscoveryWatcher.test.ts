@@ -1,5 +1,10 @@
-import { Logger, mock } from '@l2beat/common'
-import { EthereumAddress, Hash256, UnixTime } from '@l2beat/types'
+import {
+  EthereumAddress,
+  Hash256,
+  Logger,
+  mock,
+  UnixTime,
+} from '@l2beat/shared'
 import { expect } from 'earljs'
 import { providers } from 'ethers'
 

@@ -1,4 +1,4 @@
-import { TvlApiCharts } from '@l2beat/types'
+import { TvlApiCharts } from '@l2beat/shared'
 
 import { getPercentageChange } from '../utils'
 

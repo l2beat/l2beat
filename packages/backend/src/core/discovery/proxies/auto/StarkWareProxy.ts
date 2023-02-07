@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress, Hash256 } from '@l2beat/types'
+import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared'
 import { BigNumber, utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'

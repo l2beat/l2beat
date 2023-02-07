@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress } from '@l2beat/shared'
 import { BigNumber } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'

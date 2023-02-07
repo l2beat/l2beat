@@ -1,4 +1,4 @@
-import { Hash256 } from '@l2beat/types'
+import { Hash256 } from '@l2beat/shared'
 import { writeFile } from 'fs/promises'
 
 import { AnalyzedData } from './analyzeItem'

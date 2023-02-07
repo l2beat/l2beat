@@ -1,4 +1,4 @@
-import { HttpClient, mock } from '@l2beat/common'
+import { HttpClient, mock } from '@l2beat/shared'
 import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 

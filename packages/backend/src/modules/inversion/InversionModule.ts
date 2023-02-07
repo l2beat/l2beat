@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/common'
+import { Logger } from '@l2beat/shared'
 
 import { Config } from '../../config'
 import { runInversion } from '../../core/inversion/runInversion'

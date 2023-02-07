@@ -1,5 +1,5 @@
 import { getTokenByAssetId } from '@l2beat/config'
-import { AssetId, Bytes, EthereumAddress } from '@l2beat/types'
+import { AssetId, Bytes, EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earljs'
 import { utils } from 'ethers'
 

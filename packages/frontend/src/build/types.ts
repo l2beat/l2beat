@@ -2,7 +2,7 @@ import {
   ActivityApiResponse,
   TvlApiResponse,
   VerificationStatus,
-} from '@l2beat/types'
+} from '@l2beat/shared'
 
 export interface PagesData {
   tvlApiResponse: TvlApiResponse

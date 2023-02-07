@@ -1,5 +1,5 @@
 import { Bridge } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/types'
+import { VerificationStatus } from '@l2beat/shared'
 
 import { getContractSection } from '../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'

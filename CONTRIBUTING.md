@@ -63,7 +63,7 @@ You are encouraged to provide your feedback on the data presented on L2BEAT by [
 
 The L2BEAT website repository is a monorepo consisting of many interdependent packages.
 
-1. `packages/common` - common utils used by the other packages
+1. `packages/shared` - utils and types used by the other packages
 2. `packages/config` - the shared configuration that defines what projects and tokens are tracked by the website
 3. `packages/backend` - a backend server that downloads balances from chain and exposes and API for the frontend
 4. `packages/frontend` - statically generated site which displays data fetched from the backend API
