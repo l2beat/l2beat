@@ -1,16 +1,10 @@
-import {
-  assert,
-  EventTracker,
-  Logger,
-  Retries,
-  TaskQueue,
-} from '@l2beat/common'
-import { json } from '@l2beat/types'
+import { assert, EventTracker, json, Logger, Retries } from '@l2beat/shared'
 import { Knex } from 'knex'
 import { EventEmitter } from 'stream'
 
 import { Metrics } from '../Metrics'
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
+import { TaskQueue } from './queue/TaskQueue'
 
 export interface SequenceProcessorOpts {
   startFrom: number
@@ -105,7 +99,7 @@ export class SequenceProcessor extends EventEmitter {
   async stop(): Promise<void> {
     this.logger.info('Stopping')
     clearInterval(this.refreshId)
-    await this.processQueue.waitTilEmpty()
+    await this.processQueue.waitTillEmpty()
   }
 
   hasProcessedAll(): boolean {

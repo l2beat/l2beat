@@ -1,4 +1,4 @@
-import { VerificationStatus } from '@l2beat/types'
+import { VerificationStatus } from '@l2beat/shared'
 import fs from 'fs'
 
 const PATH = '../config/src/verified.json'

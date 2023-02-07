@@ -1,4 +1,4 @@
-import { ActivityApiChartPoint } from '@l2beat/types'
+import { ActivityApiChartPoint } from '@l2beat/shared'
 
 import { formatTimestamp } from '../dates'
 

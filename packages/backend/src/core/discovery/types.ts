@@ -1,4 +1,4 @@
-import { EthereumAddress, Hash256 } from '@l2beat/types'
+import { EthereumAddress, Hash256 } from '@l2beat/shared'
 
 import { UpgradeabilityParameters } from './proxies/types'
 

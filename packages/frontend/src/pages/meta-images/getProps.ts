@@ -1,5 +1,5 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
 
 import { getTpsDaily } from '../../utils/activity/getTpsDaily'
 import { formatUSD, getPercentageChange } from '../../utils/utils'

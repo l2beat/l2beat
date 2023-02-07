@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { RISK_VIEW } from './common'
 import * as config from './multichain-config.json'

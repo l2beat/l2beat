@@ -1,5 +1,4 @@
-import { mock } from '@l2beat/common'
-import { Bytes, EthereumAddress } from '@l2beat/types'
+import { Bytes, EthereumAddress, mock } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { EthereumClient } from './EthereumClient'

@@ -1,6 +1,5 @@
-import { Logger, promiseAllPlus } from '@l2beat/common'
 import { StarkexTransactionApi } from '@l2beat/config'
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
 import { range } from 'lodash'
 
 import { Metrics } from '../../../Metrics'
@@ -8,6 +7,7 @@ import { StarkexTransactionCountRepository } from '../../../peripherals/database
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { StarkexClient } from '../../../peripherals/starkex'
 import { Clock } from '../../Clock'
+import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { TransactionCounter } from '../TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'

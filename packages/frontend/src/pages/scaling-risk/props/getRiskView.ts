@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/types'
+import { VerificationStatus } from '@l2beat/shared'
 
 import {
   ScalingRiskViewEntry,

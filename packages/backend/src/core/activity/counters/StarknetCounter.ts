@@ -1,6 +1,5 @@
-import { HttpClient, Logger, promiseAllPlus } from '@l2beat/common'
 import { StarknetTransactionApi } from '@l2beat/config'
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { HttpClient, Logger, ProjectId, UnixTime } from '@l2beat/shared'
 import { range } from 'lodash'
 
 import { Metrics } from '../../../Metrics'
@@ -8,6 +7,7 @@ import { BlockTransactionCountRepository } from '../../../peripherals/database/a
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { StarkNetClient } from '../../../peripherals/starknet/StarkNetClient'
 import { Clock } from '../../Clock'
+import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { TransactionCounter } from '../TransactionCounter'
 import { createBlockTransactionCounter } from './BlockTransactionCounter'

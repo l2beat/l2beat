@@ -1,4 +1,4 @@
-import { TvlApiResponse } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/shared'
 
 import { JsonHttpClient } from './caching/JsonHttpClient'
 

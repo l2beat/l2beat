@@ -1,5 +1,5 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
 
 import { HeaderProps } from '../../components'
 import { getTpsDaily } from '../activity/getTpsDaily'

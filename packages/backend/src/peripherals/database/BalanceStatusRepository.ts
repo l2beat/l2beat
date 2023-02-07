@@ -1,5 +1,4 @@
-import { Logger } from '@l2beat/common'
-import { Hash256, UnixTime } from '@l2beat/types'
+import { Hash256, Logger, UnixTime } from '@l2beat/shared'
 
 import { Metrics } from '../../Metrics'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'

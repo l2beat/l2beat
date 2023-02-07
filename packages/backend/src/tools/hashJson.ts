@@ -1,4 +1,4 @@
-import { Hash256, json } from '@l2beat/types'
+import { Hash256, json } from '@l2beat/shared'
 import { createHash } from 'crypto'
 
 export function hashJson(value: json) {

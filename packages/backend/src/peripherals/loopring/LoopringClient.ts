@@ -3,7 +3,7 @@ import {
   HttpClient,
   Logger,
   RateLimiter,
-} from '@l2beat/common'
+} from '@l2beat/shared'
 
 import { LoopringResponse } from './schemas'
 

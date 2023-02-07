@@ -18,8 +18,7 @@
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts"
   },
   "dependencies": {
-    "@l2beat/common": "*",
-    "@l2beat/types": "*",
+    "@l2beat/shared": "*",
     "dotenv": "^16.0.3",
     "node-fetch": "^2.6.7",
     "zod": "^3.20.2"

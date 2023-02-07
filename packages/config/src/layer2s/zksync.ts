@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,

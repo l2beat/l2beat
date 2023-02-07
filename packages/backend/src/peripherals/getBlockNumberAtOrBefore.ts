@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/types'
+import { UnixTime } from '@l2beat/shared'
 
 export async function getBlockNumberAtOrBefore(
   timestamp: UnixTime,
