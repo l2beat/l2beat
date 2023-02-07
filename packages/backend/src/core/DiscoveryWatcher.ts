@@ -96,22 +96,18 @@ export class DiscoveryWatcher {
     if (databaseEntry === undefined) {
       const committed = await this.configReader.readDiscovery(name)
       return diffDiscovery(committed.contracts, discovery.contracts, overrides)
-    } else {
-      if (databaseEntry.configHash !== configHash) {
-        const committed = await this.configReader.readDiscovery(name)
-        return diffDiscovery(
-          committed.contracts,
-          discovery.contracts,
-          overrides,
-        )
-      } else {
-        return diffDiscovery(
-          databaseEntry.discovery.contracts,
-          discovery.contracts,
-          overrides,
-        )
-      }
     }
+
+    if (databaseEntry.configHash !== configHash) {
+      const committed = await this.configReader.readDiscovery(name)
+      return diffDiscovery(committed.contracts, discovery.contracts, overrides)
+    }
+
+    return diffDiscovery(
+      databaseEntry.discovery.contracts,
+      discovery.contracts,
+      overrides,
+    )
   }
 
   async notify(messages: string[]) {
