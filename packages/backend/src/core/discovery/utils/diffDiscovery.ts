@@ -31,7 +31,7 @@ export function diffDiscovery(
       continue
     }
 
-    const ignored: string[] = getIgnored(committedContract.address, overrides)
+    const ignored = getIgnored(committedContract.address, overrides)
 
     const diff = diffContracts(committedContract, discoveredContract, ignored)
 
