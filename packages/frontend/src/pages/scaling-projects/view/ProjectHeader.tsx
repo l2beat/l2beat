@@ -56,7 +56,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
               <RatingTooltipPopup item={props.ratingEntry} />,
             )}
           >
-            <InfoIcon className="fill-gray-500 dark:fill-gray-600" />
+            <InfoIcon />
           </span>
         </div>
       ) : (
