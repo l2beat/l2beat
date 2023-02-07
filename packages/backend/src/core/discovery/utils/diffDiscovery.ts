@@ -31,7 +31,7 @@ export function diffDiscovery(
       continue
     }
 
-    const ignored: string[] = getIgnored(committedContract.address, overrides)
+    const ignored = getIgnored(committedContract.address, overrides)
 
     const diff = diffContracts(committedContract, discoveredContract, ignored)
 
@@ -64,16 +64,16 @@ export function diffDiscovery(
 
 function getIgnored(
   address: EthereumAddress,
-  overrides?: Record<string, DiscoveryContract>,
+  overrides?: Partial<Record<string, DiscoveryContract>>,
 ): string[] {
   if (overrides === undefined) {
     return []
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (overrides[address.toString()] === undefined) {
+  const override = overrides[address.toString()]
+  if (override === undefined) {
     return []
   }
 
-  return overrides[address.toString()].ignoreInWatchMode ?? []
+  return override.ignoreInWatchMode ?? []
 }
