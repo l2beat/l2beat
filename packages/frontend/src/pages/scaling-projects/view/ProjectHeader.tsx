@@ -22,8 +22,7 @@ export interface ProjectHeaderProps {
   transactionMonthlyCount?: string
   purpose: string
   technology: string
-  ratingEnabled?: boolean
-  ratingEntry?: Layer2Rating
+  ratingEntry?: false | Layer2Rating
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
@@ -41,28 +40,30 @@ export function ProjectHeader(props: ProjectHeaderProps) {
           <NoDataCell />
         ),
     },
-    ...props.ratingEnabled ? [{
-      title: 'Stage',
-      value: props.ratingEntry ? (
-        <div className="flex items-center gap-2">
-          <RatingBadge
-            category={props.ratingEntry.category.score}
-            modifier={props.ratingEntry.modifier?.score}
-            small
-          />
-          <span
-            className="Tooltip"
-            title={renderToStaticMarkup(
-              <RatingTooltipPopup item={props.ratingEntry} />,
-            )}
-          >
-            <InfoIcon />
-          </span>
-        </div>
-      ) : (
-        <NoDataCell />
-      ),
-    }] : [],
+    ...(props.ratingEntry
+      ? [
+          {
+            title: 'Stage',
+            value: (
+              <div className="flex items-center gap-2">
+                <RatingBadge
+                  category={props.ratingEntry.category.score}
+                  modifier={props.ratingEntry.modifier?.score}
+                  small
+                />
+                <span
+                  className="Tooltip"
+                  title={renderToStaticMarkup(
+                    <RatingTooltipPopup item={props.ratingEntry} />,
+                  )}
+                >
+                  <InfoIcon />
+                </span>
+              </div>
+            ),
+          },
+        ]
+      : []),
     {
       title: 'Daily TPS',
       value:
@@ -88,32 +89,6 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       value: <TechnologyCell>{props.technology}</TechnologyCell>,
     },
   ]
-
-  if (props.ratingEnabled) {
-    const ratingStat = {
-      title: 'Stage',
-      value: props.ratingEntry ? (
-        <div className="flex items-center gap-2">
-          <RatingBadge
-            category={props.ratingEntry.category.score}
-            modifier={props.ratingEntry.modifier?.score}
-            small
-          />
-          <span
-            className="Tooltip"
-            title={renderToStaticMarkup(
-              <RatingTooltipPopup item={props.ratingEntry} />,
-            )}
-          >
-            <InfoIcon className="fill-gray-500 dark:fill-gray-600" />
-          </span>
-        </div>
-      ) : (
-        <NoDataCell />
-      ),
-    }
-    stats.splice(1, 0, ratingStat)
-  }
 
   return <DetailsHeader title={props.title} icon={props.icon} stats={stats} />
 }

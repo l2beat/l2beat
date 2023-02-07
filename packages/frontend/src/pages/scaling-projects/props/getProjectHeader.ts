@@ -39,8 +39,7 @@ export function getProjectHeader(
         : undefined,
     purpose: project.display.purpose,
     technology: project.technology.category,
-    ratingEnabled: config.features.rating,
-    ratingEntry: project.rating,
+    ratingEntry: config.features.rating && project.rating,
   }
 }
 
