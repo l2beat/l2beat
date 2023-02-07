@@ -22,14 +22,21 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: "yarn"
       - run: yarn --frozen-lockfile
       - run: yarn build:dependencies
-      - run: yarn test
+      - uses: nick-fields/retry@v2
+        name: Run yarn test
+        with:
+          timeout_seconds: 60
+          max_attempts: 2
+          retry_on: timeout
+          command: yarn test
+
         env:
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
           TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
@@ -38,8 +45,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: "yarn"
@@ -50,8 +57,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: "yarn"
@@ -62,8 +69,8 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: "yarn"
@@ -73,8 +80,8 @@ jobs:
   storybook-visual-regression:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: "yarn"

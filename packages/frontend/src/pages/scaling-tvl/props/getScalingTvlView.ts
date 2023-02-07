@@ -1,6 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/types'
 
+import { Config } from '../../../build/config'
 import { getTvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
 import {
@@ -9,6 +10,7 @@ import {
 } from '../view/ScalingTvlView'
 
 export function getScalingTvlView(
+  config: Config,
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
   tvl: number,
@@ -23,6 +25,7 @@ export function getScalingTvlView(
         verificationStatus.projects[project.id.toString()],
       ),
     ),
+    ratingEnabled: config.features.rating,
   }
 }
 
@@ -52,5 +55,6 @@ function getScalingTvlViewEntry(
     marketShare: formatPercent(stats.tvl / aggregateTvl),
     purpose: project.display.purpose,
     technology: project.technology.category,
+    ratingEntry: project.rating,
   }
 }
