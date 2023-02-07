@@ -11,7 +11,6 @@ import {
   SequenceProcessorOpts,
 } from './SequenceProcessor'
 
-
 describe(SequenceProcessor.name, () => {
   const { database } = setupDatabaseTestSuite()
   const repository = new SequenceProcessorRepository(database, Logger.SILENT)

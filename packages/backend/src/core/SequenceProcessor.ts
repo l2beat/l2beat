@@ -216,9 +216,7 @@ export class SequenceProcessor extends EventEmitter {
       },
       trx,
     )
-    activityLast
-      .labels({ project: this.id })
-      .set(state.lastProcessed)
+    activityLast.labels({ project: this.id }).set(state.lastProcessed)
     activityLatest.labels({ project: this.id }).set(state.latest)
     this.state = state
   }
