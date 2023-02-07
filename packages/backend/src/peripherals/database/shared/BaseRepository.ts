@@ -2,7 +2,6 @@ import { Logger, wrapAndMeasure } from '@l2beat/shared'
 import { Knex } from 'knex'
 import { Histogram } from 'prom-client'
 
-import { RepositoryHistogram } from '../../../Metrics'
 import { Database } from './Database'
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
@@ -28,14 +27,14 @@ type DeleteKeys<T> = Keys<T, `delete${string}`>
 export type CheckConvention<T extends BaseRepository> = {
   [K in AddKeys<T>]: Match<T[K], AddMethod>
 } & {
-  [K in AddManyKeys<T>]: Match<T[K], AddManyMethod>
-} & {
-  [K in FindKeys<T>]: Match<T[K], FindMethod>
-} & {
-  [K in GetKeys<T>]: Match<T[K], GetMethod>
-} & {
-  [K in DeleteKeys<T>]: Match<T[K], DeleteMethod>
-}
+    [K in AddManyKeys<T>]: Match<T[K], AddManyMethod>
+  } & {
+    [K in FindKeys<T>]: Match<T[K], FindMethod>
+  } & {
+    [K in GetKeys<T>]: Match<T[K], GetMethod>
+  } & {
+    [K in DeleteKeys<T>]: Match<T[K], DeleteMethod>
+  }
 
 /* 
   This class requires its child classes to persist given naming convention of methods and wraps them with logger and metrics.
@@ -70,7 +69,7 @@ const repositoryHistogram = new Histogram({
 })
 
 export abstract class BaseRepository {
-  protected histogram: RepositoryHistogram
+  protected histogram: Histogram
 
   constructor(
     protected readonly database: Database,

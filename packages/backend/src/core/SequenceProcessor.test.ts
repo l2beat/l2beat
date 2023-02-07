@@ -3,27 +3,17 @@ import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, Mock, mockFn } from 'earljs'
 import { once } from 'events'
 
-import { Metrics } from '../Metrics'
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
 import { setupDatabaseTestSuite } from '../test/database'
-import { createMockGauge } from '../test/mocks/Metrics'
 import {
   ALL_PROCESSED_EVENT,
   SequenceProcessor,
   SequenceProcessorOpts,
 } from './SequenceProcessor'
 
-function createMockMetrics() {
-  return mock<Metrics>({
-    activityLast: createMockGauge(),
-    activityLatest: createMockGauge(),
-    activityConfig: createMockGauge(),
-  })
-}
 
 describe(SequenceProcessor.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockMetrics = createMockMetrics()
   const repository = new SequenceProcessorRepository(database, Logger.SILENT)
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
@@ -52,7 +42,6 @@ describe(SequenceProcessor.name, () => {
         format: 'pretty',
         reportError,
       }),
-      mockMetrics,
       repository,
       {
         startFrom,
