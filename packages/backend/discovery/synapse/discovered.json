@@ -1,6 +1,7 @@
 {
   "name": "synapse",
   "blockNumber": 16154924,
+  "configHash": "0xc625291662e649698be62471a827853761ebff14d821935f97c0dd97f2774e03",
   "contracts": [
     {
       "name": "SynapseBridge",
@@ -15,21 +16,15 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
-            ]
+            "members": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"]
           },
           "NODEGROUP_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x230A1AC45690B9Ae1176389434610B9526d2f21b"
-            ]
+            "members": ["0x230A1AC45690B9Ae1176389434610B9526d2f21b"]
           },
           "GOVERNANCE_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
-            ]
+            "members": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"]
           }
         },
         "bridgeVersion": 6,
@@ -93,15 +88,11 @@
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
-            ]
+            "members": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
-            ]
+            "members": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"]
           }
         },
         "getMinDelay": 180

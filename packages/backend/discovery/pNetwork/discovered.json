@@ -1,6 +1,7 @@
 {
   "name": "pNetwork",
   "blockNumber": 16440359,
+  "configHash": "0x9120d358b7473b75ff02b669693c6a9c2e090ee92598c6b542b35db6b5ec8092",
   "contracts": [
     {
       "name": "Erc20Vault",
@@ -74,10 +75,7 @@
         ],
         "inflationOwner": "0xEC1b464f29845ab180887a00B6b0C8c19Cb13d97",
         "inflationStartTime": 1592411070,
-        "inflationTimeSpans": [
-          31536000,
-          31536000
-        ],
+        "inflationTimeSpans": [31536000, 31536000],
         "inflationWithdrawnAmount": "28350000000000000000000000",
         "name": "pNetwork Token",
         "owner": "0x56db816b3456EDfa6edbC65F00ba45296fE136F2",
@@ -95,13 +93,7 @@
         "type": "immutable"
       },
       "values": {
-        "requiredGas": [
-          398204,
-          398205,
-          398206,
-          398207,
-          398208
-        ],
+        "requiredGas": [398204, 398205, 398206, 398207, 398208],
         "version": "1.0.0"
       },
       "errors": {

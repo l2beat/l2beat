@@ -1,6 +1,7 @@
 {
   "name": "aztec",
   "blockNumber": 16534856,
+  "configHash": "0x36e9c5a6d52baa56d4dcd7e01eb71d7c29e0ae4a474ab4fc4fa3d14b5f8d67fe",
   "contracts": [
     {
       "name": "RollupProcessor",
@@ -16,15 +17,8 @@
         "escapeBlockUpperBound": 4800,
         "ethAssetId": 0,
         "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
-        "getAssetPermitSupport": [
-          false,
-          false,
-          false
-        ],
-        "getEscapeHatchStatus": [
-          false,
-          1636
-        ],
+        "getAssetPermitSupport": [false, false, false],
+        "getEscapeHatchStatus": [false, 1636],
         "getTotalDeposited": [
           "35673935477451296404343",
           "19435785991265097315675826",
@@ -120,11 +114,7 @@
         "reimburseConstant": 678600,
         "rollupProcessor": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
         "router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        "txFeeBalance": [
-          "1501001343374203885",
-          "55870000000000000000",
-          19100
-        ],
+        "txFeeBalance": ["1501001343374203885", "55870000000000000000", 19100],
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       }
     }

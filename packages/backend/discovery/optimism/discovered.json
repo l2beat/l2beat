@@ -1,6 +1,7 @@
 {
   "name": "optimism",
   "blockNumber": 16154924,
+  "configHash": "0x6734be397d2e0c91a134311aa1e08ab2a21de6aad0b180f7f96975e002fbbaca",
   "contracts": [
     {
       "name": "Lib_AddressManager",

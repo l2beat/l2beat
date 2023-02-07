@@ -1,6 +1,7 @@
 {
   "name": "polynetwork",
   "blockNumber": 16570934,
+  "configHash": "0xae93a2566ee5c9f26a394d398160da9421faaa5e9545c6b0f6288e4f8d9ac688",
   "contracts": [
     {
       "name": "PolyWrapper",
