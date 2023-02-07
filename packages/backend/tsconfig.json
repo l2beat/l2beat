@@ -3,5 +3,5 @@
   "compilerOptions": {
     "outDir": "build"
   },
-  "exclude": ["build", "node_modules"]
+  "include": ["src"],
 }
