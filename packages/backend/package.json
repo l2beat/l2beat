@@ -16,7 +16,6 @@
     "start": "node -r source-map-support/register build/index.js server",
     "discover": "node -r esbuild-register src discover",
     "invert": "node -r esbuild-register src invert",
-    "discover:all": "node -r esbuild-register scripts/discoverAll.ts",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
