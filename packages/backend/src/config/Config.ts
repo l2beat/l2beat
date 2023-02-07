@@ -16,6 +16,7 @@ export interface Config {
   readonly database: DatabaseConfig | false
   readonly api: ApiConfig | false
   readonly health: HealthConfig
+  readonly invert: InversionConfig | false
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
   readonly discovery: DiscoveryModuleConfig | false
@@ -62,6 +63,11 @@ export interface HealthConfig {
   readonly releasedAt?: string
   readonly startedAt: string
   readonly commitSha: string
+}
+
+export interface InversionConfig {
+  readonly file: string
+  readonly useMermaidMarkup: boolean
 }
 
 export interface ActivityConfig {

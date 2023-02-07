@@ -1,5 +1,0 @@
-src/typechain
-dist/discovery
-build
-.env
-.cache

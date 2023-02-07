@@ -11,7 +11,11 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(cli: CliParameters): Config {
   dotenv()
-  if (cli.mode !== 'server' && cli.mode !== 'discover') {
+  if (
+    cli.mode !== 'server' &&
+    cli.mode !== 'discover' &&
+    cli.mode !== 'invert'
+  ) {
     throw new Error(`No local config for mode: ${cli.mode}`)
   }
 
@@ -26,6 +30,7 @@ export function getLocalConfig(cli: CliParameters): Config {
     cli.mode === 'server' && getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     !!process.env.DISCORD_TOKEN && !!process.env.DISCORD_CHANNEL_ID
+  const invertEnabled = cli.mode === 'invert'
 
   return {
     name: 'Backend/Local',
@@ -57,6 +62,10 @@ export function getLocalConfig(cli: CliParameters): Config {
     health: {
       startedAt: new Date().toISOString(),
       commitSha: getGitCommitHash(),
+    },
+    invert: invertEnabled && {
+      file: cli.file,
+      useMermaidMarkup: false,
     },
     tvl: tvlEnabled && {
       tokens: tokenList,
