@@ -7,14 +7,16 @@ import { Badge } from '../badge/Badge'
 interface RatingBadgeProps {
   category: RatingCategory
   modifier?: RatingModifier
+  small?: boolean
 }
 
-export function RatingBadge({ category, modifier }: RatingBadgeProps) {
+export function RatingBadge({ category, modifier, small }: RatingBadgeProps) {
   return (
     <Badge
       className={cx(
         getColorClassName(category),
-        'inline-block w-10 py-0.5 text-center text-lg leading-none',
+        'inline-block py-0.5 text-center text-lg leading-none',
+        small ? 'w-9' : 'w-10',
       )}
       oneSize
     >
