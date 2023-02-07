@@ -6,6 +6,7 @@ import { TaskQueue } from './queue/TaskQueue'
 export interface PromiseAllThrottledOpts {
   maxConcurrency?: number
   maxAttempts?: number // set to 1 to disable retries
+  taskQueueId: string
 }
 
 /**
@@ -50,6 +51,7 @@ export async function promiseAllPlus<T>(
       }
       return shouldRetry
     },
+    id: opts?.taskQueueId ?? 'undefined',
   })
 
   fns.forEach((_fn, i) => {

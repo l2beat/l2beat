@@ -1,5 +1,6 @@
 import { json } from '@l2beat/types'
 import assert from 'assert'
+import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
 import { wrapAndMeasure } from '../../utils/wrapAndMeasure'
@@ -7,7 +8,6 @@ import { EventTracker } from '../EventTracker'
 import { getErrorMessage, getErrorStackTrace, Logger } from '../Logger'
 import { Retries } from './Retries'
 import { Job, ShouldRetry, TaskQueueOpts } from './types'
-export type { TaskQueueHistogram } from './types'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
   maxDistanceMs: 3_000,
@@ -17,6 +17,14 @@ type Task<T> = (task: T) => Promise<void>
 /**
  * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
  */
+
+const taskQueueHistogram = new Histogram<string>({
+  name: 'task_queue_task_execution_duration_histogram',
+  help: 'Histogram showing TaskQueue sync duration',
+  buckets: [0.25, 0.5, 1, 2.5, 5, 10, 25, 50],
+  labelNames: ['id'],
+})
+
 export class TaskQueue<T> {
   private readonly executeTask: Task<T>
   private readonly queue: Job<T>[] = []
@@ -30,21 +38,24 @@ export class TaskQueue<T> {
   constructor(
     executeTask: Task<T>,
     private readonly logger: Logger,
-    opts?: TaskQueueOpts<T>,
+    opts: TaskQueueOpts<T>,
   ) {
-    this.workers = opts?.workers ?? 1
+    this.workers = opts.workers ?? 1
     assert(
       this.workers > 0 && Number.isInteger(this.workers),
       'workers needs to be a positive integer',
     )
-    this.shouldRetry = opts?.shouldRetry ?? DEFAULT_RETRY
-    if (opts?.trackEvents) {
+    this.shouldRetry = opts.shouldRetry ?? DEFAULT_RETRY
+    if (opts.trackEvents) {
       this.eventTracker = new EventTracker()
     }
 
-    this.executeTask = opts?.metrics
-      ? wrapAndMeasure(executeTask, opts.metrics)
-      : executeTask
+    this.executeTask = wrapAndMeasure(executeTask, {
+      histogram: taskQueueHistogram,
+      labels: {
+        id: opts.id,
+      },
+    })
   }
 
   get length() {

@@ -24,7 +24,7 @@ describe(TaskQueue.name, () => {
       completed.push(value)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT)
+    const queue = new TaskQueue(execute, Logger.SILENT, { id: 'test' })
 
     for (let i = 0; i < 10; i++) {
       queue.addToBack(i)
@@ -50,6 +50,7 @@ describe(TaskQueue.name, () => {
 
     const queue = new TaskQueue(execute, Logger.SILENT, {
       shouldRetry: Retries.always,
+      id: 'test',
     })
 
     for (let i = 0; i < 10; i++) {
@@ -69,7 +70,7 @@ describe(TaskQueue.name, () => {
       completed.push(value)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT)
+    const queue = new TaskQueue(execute, Logger.SILENT, { id: 'test' })
 
     for (let i = 0; i < 10; i++) {
       queue.addToFront(i)
@@ -88,7 +89,7 @@ describe(TaskQueue.name, () => {
       completed.push(value)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT)
+    const queue = new TaskQueue(execute, Logger.SILENT, { id: 'test' })
 
     for (let i = 0; i < 10; i++) {
       queue.addIfEmpty(i)
@@ -102,10 +103,13 @@ describe(TaskQueue.name, () => {
 
   it('can accept only positive integers for workers', async () => {
     expect(() => {
-      new TaskQueue(Promise.resolve, Logger.SILENT, { workers: 1.5 })
+      new TaskQueue(Promise.resolve, Logger.SILENT, {
+        workers: 1.5,
+        id: 'test',
+      })
     }).toThrow('workers needs to be a positive integer')
     expect(() => {
-      new TaskQueue(Promise.resolve, Logger.SILENT, { workers: -1 })
+      new TaskQueue(Promise.resolve, Logger.SILENT, { workers: -1, id: 'test' })
     }).toThrow('workers needs to be a positive integer')
   })
 
@@ -117,7 +121,10 @@ describe(TaskQueue.name, () => {
       completed.push(value)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT, { workers: 3 })
+    const queue = new TaskQueue(execute, Logger.SILENT, {
+      workers: 3,
+      id: 'test',
+    })
 
     queue.addToBack(1)
     queue.addToBack(3)
@@ -138,7 +145,10 @@ describe(TaskQueue.name, () => {
       completed.push(value)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT, { workers: 3 })
+    const queue = new TaskQueue(execute, Logger.SILENT, {
+      workers: 3,
+      id: 'test',
+    })
 
     queue.addToBack(1)
     queue.addToBack(3)
