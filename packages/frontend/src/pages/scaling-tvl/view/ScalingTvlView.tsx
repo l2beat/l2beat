@@ -85,7 +85,7 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
       getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
     },
     {
-      name: 'Market share',
+      name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
       getValue: (project) => <NumberCell>{project.marketShare}</NumberCell>,
