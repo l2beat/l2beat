@@ -57,8 +57,8 @@ export function Navbar(props: NavbarProps) {
         socialLinks={props.socialLinks}
       />
       {props.showBanner && <Banner />}
-      <nav className="lg:h-16 border-b h-14 border-gray-200 text-base dark:border-gray-850">
-        <div className="relative mx-auto box-border flex h-full max-w-[1780px] items-center px-4 lg:justify-between lg:px-12">
+      <div className="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16">
+        <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center px-4 lg:justify-between lg:px-12">
           <button id="sidebar-menu-open" className="block lg:hidden">
             <MenuOpenIcon className="block" aria-label="Open menu" />
           </button>
@@ -145,8 +145,8 @@ export function Navbar(props: NavbarProps) {
             <VerticalBar />
             <DarkThemeToggle />
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </>
   )
 }
