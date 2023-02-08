@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { HTMLAttributes, ReactNode } from 'react'
+
 import { InfoIcon } from '../icons'
 
 interface Props<T> {
