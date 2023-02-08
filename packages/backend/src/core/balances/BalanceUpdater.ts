@@ -46,7 +46,7 @@ export class BalanceUpdater {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        id: BalanceUpdater.name,
+        taskQueueId: BalanceUpdater.name,
       },
     )
   }

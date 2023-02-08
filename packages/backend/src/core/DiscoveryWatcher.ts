@@ -30,7 +30,7 @@ export class DiscoveryWatcher {
       () => this.update(),
       this.logger.for('taskQueue'),
       {
-        id: DiscoveryWatcher.name,
+        taskQueueId: DiscoveryWatcher.name,
       },
     )
   }

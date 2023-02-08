@@ -21,7 +21,7 @@ export class BlockNumberUpdater {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        id: BlockNumberUpdater.name,
+        taskQueueId: BlockNumberUpdater.name,
       },
     )
   }

@@ -34,7 +34,7 @@ export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
   trackEvents?: boolean
-  id: string
+  taskQueueId: string
 }
 /**
  * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
@@ -52,22 +52,22 @@ export class TaskQueue<T> {
   constructor(
     executeTask: Task<T>,
     private readonly logger: Logger,
-    opts?: TaskQueueOpts<T>,
+    opts: TaskQueueOpts<T>,
   ) {
-    this.workers = opts?.workers ?? 1
+    this.workers = opts.workers ?? 1
     assert(
       this.workers > 0 && Number.isInteger(this.workers),
       'workers needs to be a positive integer',
     )
-    this.shouldRetry = opts?.shouldRetry ?? DEFAULT_RETRY
-    if (opts?.trackEvents) {
+    this.shouldRetry = opts.shouldRetry ?? DEFAULT_RETRY
+    if (opts.trackEvents) {
       this.eventTracker = new EventTracker()
     }
 
     this.executeTask = wrapAndMeasure(executeTask, {
       histogram: taskQueueHistogram,
       labels: {
-        id: opts?.id,
+        id: opts.taskQueueId,
       },
     })
   }
@@ -186,4 +186,3 @@ export class TaskQueue<T> {
     }
   }
 }
-

@@ -1,6 +1,6 @@
 import { Layer2TransactionApi } from '@l2beat/config'
-import { Gauge } from 'prom-client'
 import { assert, HttpClient, Logger, ProjectId } from '@l2beat/shared'
+import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'
 import { createAztecConnectCounter } from '../../core/activity/counters/AztecConnectCounter'

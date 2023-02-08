@@ -50,7 +50,7 @@ export async function promiseAllPlus<T>(
       }
       return shouldRetry
     },
-    id: opts?.taskQueueId ?? 'undefined',
+    taskQueueId: opts?.taskQueueId ?? 'undefined',
   })
 
   fns.forEach((_fn, i) => {

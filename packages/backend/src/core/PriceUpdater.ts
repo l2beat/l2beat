@@ -33,7 +33,7 @@ export class PriceUpdater {
       () => this.update(),
       this.logger.for('taskQueue'),
       {
-        id: PriceUpdater.name,
+        taskQueueId: PriceUpdater.name,
       },
     )
   }
