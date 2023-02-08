@@ -260,7 +260,7 @@ export const bobanetwork: Layer2 = {
         description: 'Liquidity Pool manager for fast withdrawal facility.',
         upgradeability: {
           type: 'EIP1967',
-          admin: '0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0',
+          admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
           implementation: '0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0',
         },
       },
