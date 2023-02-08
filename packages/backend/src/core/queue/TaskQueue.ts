@@ -4,7 +4,6 @@ import {
   getErrorStackTrace,
   json,
   Logger,
-  Metrics,
   Retries,
   ShouldRetry,
   wrapAndMeasure,
@@ -23,14 +22,19 @@ interface Job<T> {
   attempts: number
   executeAt: number
 }
-type HistogramLabel = 'updater'
-export type TaskQueueHistogram = Histogram<HistogramLabel>
+
+const taskQueueHistogram = new Histogram<string>({
+  name: 'task_queue_task_execution_duration_histogram',
+  help: 'Histogram showing TaskQueue sync duration',
+  buckets: [0.25, 0.5, 1, 2.5, 5, 10, 25, 50],
+  labelNames: ['id'],
+})
 
 export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
   trackEvents?: boolean
-  metrics?: Metrics<HistogramLabel>
+  id: string
 }
 /**
  * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
@@ -60,9 +64,12 @@ export class TaskQueue<T> {
       this.eventTracker = new EventTracker()
     }
 
-    this.executeTask = opts?.metrics
-      ? wrapAndMeasure(executeTask, opts.metrics)
-      : executeTask
+    this.executeTask = wrapAndMeasure(executeTask, {
+      histogram: taskQueueHistogram,
+      labels: {
+        id: opts?.id,
+      },
+    })
   }
 
   get length() {
@@ -179,3 +186,4 @@ export class TaskQueue<T> {
     }
   }
 }
+
