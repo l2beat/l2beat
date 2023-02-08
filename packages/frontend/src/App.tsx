@@ -48,11 +48,11 @@ export function App() {
   const selectedData = contractNodes.find((x) => x.id === selected)?.data
 
   return (
-    <div className="h-full w-full grid grid-cols-[1fr,_400px] grid-rows-[64px,_1fr]">
-      <div className="flex h-full w-full justify-center items-center">
+    <div className="grid h-full w-full grid-cols-[1fr,_400px] grid-rows-[64px,_1fr]">
+      <div className="flex h-full w-full items-center justify-center">
         <button
           className={classNames(
-            'bg-blue-500 text-white font-bold py-2 px-4 rounded',
+            'rounded bg-blue-500 py-2 px-4 font-bold text-white',
             !loading.global && 'hover:bg-blue-700',
           )}
           type="button"
@@ -65,16 +65,16 @@ export function App() {
         <p className="ml-2">Contracts loaded: {contractNodes.length}</p>
       </div>
 
-      <div className="row-span-2 bg-white drop-shadow-xl p-2">
+      <div className="row-span-2 bg-white p-2 drop-shadow-xl">
         {!selected && 'Click a contract to select it.'}
         {selectedData !== undefined ? (
-          <pre className="text-sm h-full overflow-auto">
+          <pre className="h-full overflow-auto text-sm">
             <code>{JSON.stringify(selectedData, null, 2)}</code>
           </pre>
         ) : null}
       </div>
 
-      <div className="flex justify-center items-center gap-4 p-2 w-full h-full">
+      <div className="flex h-full w-full items-center justify-center gap-4 p-2">
         <Viewport
           nodes={contractNodes}
           loading={loading}

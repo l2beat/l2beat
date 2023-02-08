@@ -37,11 +37,11 @@ export function Viewport(props: ViewportProps) {
   return (
     <div
       ref={containerRef}
-      className="w-full h-full rounded-lg bg-white relative overflow-hidden"
+      className="relative h-full w-full overflow-hidden rounded-lg bg-white"
     >
       <div
         ref={viewRef}
-        className="w-full h-full bg-[url(/grid.svg)] bg-center relative select-none origin-[0_0]"
+        className="relative h-full w-full origin-[0_0] select-none bg-[url(/grid.svg)] bg-center"
         style={{ transform }}
       >
         {state.nodes.map((node) =>

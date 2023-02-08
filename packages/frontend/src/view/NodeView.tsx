@@ -26,13 +26,13 @@ export function NodeView(props: NodeViewProps) {
       }}
       className={classNames(
         'absolute rounded-md border-2 border-black bg-white',
-        props.selected && 'outline-indigo-300 outline outline-4',
+        props.selected && 'outline outline-4 outline-indigo-300',
         props.discovered ? 'bg-white' : 'bg-yellow-300',
       )}
     >
       <div
         className={classNames(
-          'w-full flex justify-between px-2 h-[28px] leading-[28px]',
+          'flex h-[28px] w-full justify-between px-2 leading-[28px]',
           props.node.fields.length > 0 && 'border-b-2 border-black',
         )}
       >
@@ -45,14 +45,14 @@ export function NodeView(props: NodeViewProps) {
       </div>
       {props.node.fields.map(({ name, connection }, i) => (
         <div className="relative" key={i}>
-          <div className="w-full truncate px-2 h-[24px] leading-[24px]">
+          <div className="h-[24px] w-full truncate px-2 leading-[24px]">
             {name}
           </div>
           {connection && (
             <div
               className={classNames(
-                'absolute w-[12px] h-[12px]',
-                'bg-white border-2 border-black rounded-full',
+                'absolute h-[12px] w-[12px]',
+                'rounded-full border-2 border-black bg-white',
               )}
               style={{
                 left: connection.from.direction === 'left' ? -7 : undefined,

@@ -47,13 +47,13 @@ export function Connection({ from, to }: ConnectionProps) {
     <svg
       viewBox={`${minX} ${minY} ${width} ${height}`}
       fill="none"
-      className="absolute pointer-events-none"
+      className="pointer-events-none absolute"
       style={{ left: minX, top: minY, width, height }}
     >
       <path
         d={path.join(' ')}
         strokeLinecap="round"
-        className="stroke-2 stroke-slate-400"
+        className="stroke-slate-400 stroke-2"
       />
     </svg>
   )
