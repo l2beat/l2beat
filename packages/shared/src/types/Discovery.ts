@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { EthereumAddress } from './EthereumAddress'
+import { Hash256 } from './Hash256'
 
 export interface ProjectParameters {
   name: string
@@ -8,6 +9,7 @@ export interface ProjectParameters {
   contracts: ContractParameters[]
   eoas: EthereumAddress[]
   abis: Record<string, string[]>
+  configHash: Hash256
 }
 
 export interface ContractParameters {

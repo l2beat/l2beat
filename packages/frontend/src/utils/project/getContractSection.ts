@@ -1,6 +1,5 @@
-import { assertUnreachable } from '@l2beat/common'
 import { Bridge, CONTRACTS, Layer2, ProjectContract } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
+import { assertUnreachable, VerificationStatus } from '@l2beat/shared'
 
 import {
   TechnologyContract,

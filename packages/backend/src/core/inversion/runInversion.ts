@@ -1,9 +1,11 @@
-import { EthereumAddress } from '@l2beat/shared'
+import {
+  ContractValue,
+  EthereumAddress,
+  ProjectParameters,
+} from '@l2beat/shared'
 import chalk from 'chalk'
 import { constants, utils } from 'ethers'
 import { readFile } from 'fs/promises'
-
-import { ContractValue, ProjectParameters } from '../discovery/types'
 
 interface AddressDetails {
   name?: string

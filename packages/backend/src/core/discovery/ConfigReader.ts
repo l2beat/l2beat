@@ -1,4 +1,4 @@
-import { ProjectParameters } from '@l2beat/types'
+import { ProjectParameters } from '@l2beat/shared'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
