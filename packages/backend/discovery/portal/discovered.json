@@ -1,7 +1,7 @@
 {
   "name": "portal",
-  "blockNumber": 16582828,
-  "configHash": "0x9cd909253f0f54a3345f53f801cf8677296f030ef6af9143b08a562bc77bc08a",
+  "blockNumber": 16583284,
+  "configHash": "0xf5b2bb66ad09a6f7aa9874bfb119446a5961a6a980efabaf01423a8114194000",
   "contracts": [
     {
       "name": "BridgeImplementation",
@@ -50,17 +50,7 @@
         "governanceChainId": 1,
         "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
         "isFork": false,
-        "messageFee": 0,
-        "quorum": [
-          1,
-          1,
-          2,
-          3,
-          3
-        ]
-      },
-      "errors": {
-        "quorum": "Too many values. Update configuration explore fully"
+        "messageFee": 0
       }
     }
   ],
