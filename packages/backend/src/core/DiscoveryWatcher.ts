@@ -97,10 +97,12 @@ export class DiscoveryWatcher {
       databaseEntry === undefined ||
       databaseEntry.configHash !== configHash
     ) {
+      this.logger.debug('Using committed file for diff', { project: name })
       const committed = await this.configReader.readDiscovery(name)
       return diffDiscovery(committed.contracts, discovery.contracts, overrides)
     }
 
+    this.logger.debug('Using database record for diff', { project: name })
     return diffDiscovery(
       databaseEntry.discovery.contracts,
       discovery.contracts,
