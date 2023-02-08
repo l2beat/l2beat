@@ -108,7 +108,10 @@ describe(TaskQueue.name, () => {
       })
     }).toThrow('workers needs to be a positive integer')
     expect(() => {
-      new TaskQueue(Promise.resolve, Logger.SILENT, { workers: -1, taskQueueId: 'test' })
+      new TaskQueue(Promise.resolve, Logger.SILENT, {
+        workers: -1,
+        taskQueueId: 'test',
+      })
     }).toThrow('workers needs to be a positive integer')
   })
 

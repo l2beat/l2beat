@@ -27,14 +27,14 @@ type DeleteKeys<T> = Keys<T, `delete${string}`>
 export type CheckConvention<T extends BaseRepository> = {
   [K in AddKeys<T>]: Match<T[K], AddMethod>
 } & {
-  [K in AddManyKeys<T>]: Match<T[K], AddManyMethod>
-} & {
-  [K in FindKeys<T>]: Match<T[K], FindMethod>
-} & {
-  [K in GetKeys<T>]: Match<T[K], GetMethod>
-} & {
-  [K in DeleteKeys<T>]: Match<T[K], DeleteMethod>
-}
+    [K in AddManyKeys<T>]: Match<T[K], AddManyMethod>
+  } & {
+    [K in FindKeys<T>]: Match<T[K], FindMethod>
+  } & {
+    [K in GetKeys<T>]: Match<T[K], GetMethod>
+  } & {
+    [K in DeleteKeys<T>]: Match<T[K], DeleteMethod>
+  }
 
 /* 
   This class requires its child classes to persist given naming convention of methods and wraps them with logger and metrics.
@@ -62,14 +62,16 @@ export type CheckConvention<T extends BaseRepository> = {
       * Arguments: any
       * Return type: count of deleted records  
 */
-const repositoryHistogram = new Histogram({
+
+type RepositoryHistogram = Histogram<'repository' | 'method'>
+const repositoryHistogram: RepositoryHistogram = new Histogram({
   name: 'repository_method_duration_seconds',
   help: 'duration histogram of repository methods',
   labelNames: ['repository', 'method'],
 })
 
 export abstract class BaseRepository {
-  protected histogram: Histogram
+  protected histogram: RepositoryHistogram
 
   constructor(
     protected readonly database: Database,
