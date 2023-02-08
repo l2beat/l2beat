@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'
+import { ScalableView } from './ScalableView'
 import { useViewportState } from './utils/useViewportState'
 
 export interface ViewportProps {
@@ -32,18 +33,12 @@ export function Viewport(props: ViewportProps) {
     }
   }, [state, props.onSelectionChange])
 
-  const transform = `translate(${state.transform.offsetX}px, ${state.transform.offsetY}px) scale(${state.transform.scale})`
-
   return (
     <div
       ref={containerRef}
       className="relative h-full w-full overflow-hidden rounded-lg bg-white"
     >
-      <div
-        ref={viewRef}
-        className="relative h-full w-full origin-[0_0] select-none bg-[url(/grid.svg)] bg-center"
-        style={{ transform }}
-      >
+      <ScalableView ref={viewRef} transform={state.transform}>
         {state.nodes.map((node) =>
           node.fields.map(
             (field, i) =>
@@ -66,7 +61,7 @@ export function Viewport(props: ViewportProps) {
             loading={!!props.loading[node.id]}
           />
         ))}
-      </div>
+      </ScalableView>
       {state.mouseSelection && (
         <div
           className="absolute border border-blue-600 bg-blue-100 bg-opacity-30"
