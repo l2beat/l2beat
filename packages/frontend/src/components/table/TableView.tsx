@@ -38,7 +38,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
               <th
                 key={i}
                 className={cx(
-                  'whitespace-pre py-2 text-sm font-medium uppercase text-gray-500 dark:text-gray-600',
+                  'whitespace-pre py-2 text-sm font-medium uppercase text-gray-700 dark:text-gray-600',
                   column.minimalWidth && 'w-0',
                   i !== columns.length - 1 && 'pr-3 md:pr-4',
                 )}
@@ -58,7 +58,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                   )}
                   {column.tooltip && (
                     <span className="Tooltip" title={column.tooltip}>
-                      <InfoIcon />
+                      <InfoIcon className="fill-gray-700 dark:fill-gray-600" />
                     </span>
                   )}
                 </div>
