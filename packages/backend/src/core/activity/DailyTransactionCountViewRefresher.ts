@@ -21,7 +21,7 @@ export class DailyTransactionCountViewRefresher {
         this.logger.info('Refresh finished')
       },
       this.logger.for('refreshQueue'),
-      { taskQueueId: DailyTransactionCountViewRefresher.name },
+      { metricsId: DailyTransactionCountViewRefresher.name },
     )
   }
 

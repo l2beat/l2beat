@@ -48,7 +48,7 @@ export function createStarkexCounter(
         })
 
         const counts = await promiseAllPlus(queries, logger, {
-          taskQueueId: createStarkexCounter.name,
+          metricsId: `StarkexBlockCounter[${projectId.toString()}]`,
         })
         await starkexRepository.addOrUpdateMany(counts, trx)
       },

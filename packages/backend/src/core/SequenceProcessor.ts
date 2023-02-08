@@ -94,7 +94,7 @@ export class SequenceProcessor extends EventEmitter {
           maxDistanceMs: 3_000,
           maxAttempts: 10,
         }),
-        taskQueueId: `${SequenceProcessor.name}[${id}]`,
+        metricsId: `${SequenceProcessor.name}[${id}]`,
       },
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR

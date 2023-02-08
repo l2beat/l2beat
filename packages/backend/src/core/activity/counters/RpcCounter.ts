@@ -63,7 +63,7 @@ export function createRpcCounter(
         })
 
         const blocks = await promiseAllPlus(queries, logger, {
-          taskQueueId: `${projectId.toString()}-${createRpcCounter.name}`,
+          metricsId: `RpcBlockCounter[${projectId.toString()}]`,
         })
         await blockRepository.addMany(blocks, trx)
       },

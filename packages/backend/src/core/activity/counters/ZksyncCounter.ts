@@ -48,7 +48,7 @@ export function createZksyncCounter(
         })
 
         const blockTransactions = await promiseAllPlus(queries, logger, {
-          taskQueueId: createZksyncCounter.name,
+          metricsId: `ZksyncBlockCounter[${projectId.toString()}]`,
         })
         await zksyncRepository.addMany(blockTransactions.flat(), trx)
       },

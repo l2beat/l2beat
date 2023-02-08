@@ -23,7 +23,7 @@ describe(TaskQueue.name, () => {
       completed.push(value)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT, { taskQueueId: 'test' })
+    const queue = new TaskQueue(execute, Logger.SILENT, { metricsId: 'test' })
 
     for (let i = 0; i < 10; i++) {
       queue.addToBack(i)
@@ -49,7 +49,7 @@ describe(TaskQueue.name, () => {
 
     const queue = new TaskQueue(execute, Logger.SILENT, {
       shouldRetry: Retries.always,
-      taskQueueId: 'test',
+      metricsId: 'test',
     })
 
     for (let i = 0; i < 10; i++) {
@@ -69,7 +69,7 @@ describe(TaskQueue.name, () => {
       completed.push(value)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT, { taskQueueId: 'test' })
+    const queue = new TaskQueue(execute, Logger.SILENT, { metricsId: 'test' })
 
     for (let i = 0; i < 10; i++) {
       queue.addToFront(i)
@@ -88,7 +88,7 @@ describe(TaskQueue.name, () => {
       completed.push(value)
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT, { taskQueueId: 'test' })
+    const queue = new TaskQueue(execute, Logger.SILENT, { metricsId: 'test' })
 
     for (let i = 0; i < 10; i++) {
       queue.addIfEmpty(i)
@@ -104,13 +104,13 @@ describe(TaskQueue.name, () => {
     expect(() => {
       new TaskQueue(Promise.resolve, Logger.SILENT, {
         workers: 1.5,
-        taskQueueId: 'test',
+        metricsId: 'test',
       })
     }).toThrow('workers needs to be a positive integer')
     expect(() => {
       new TaskQueue(Promise.resolve, Logger.SILENT, {
         workers: -1,
-        taskQueueId: 'test',
+        metricsId: 'test',
       })
     }).toThrow('workers needs to be a positive integer')
   })
@@ -125,7 +125,7 @@ describe(TaskQueue.name, () => {
 
     const queue = new TaskQueue(execute, Logger.SILENT, {
       workers: 3,
-      taskQueueId: 'test',
+      metricsId: 'test',
     })
 
     queue.addToBack(1)
@@ -149,7 +149,7 @@ describe(TaskQueue.name, () => {
 
     const queue = new TaskQueue(execute, Logger.SILENT, {
       workers: 3,
-      taskQueueId: 'test',
+      metricsId: 'test',
     })
 
     queue.addToBack(1)

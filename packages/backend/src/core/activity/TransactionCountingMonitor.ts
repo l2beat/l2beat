@@ -33,7 +33,7 @@ export class TransactionCountingMonitor {
         await this.checkIfSynced()
       },
       this.logger.for('checkQueue'),
-      { taskQueueId: TransactionCountingMonitor.name },
+      { metricsId: TransactionCountingMonitor.name },
     )
   }
 

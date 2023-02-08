@@ -34,7 +34,7 @@ export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
   trackEvents?: boolean
-  taskQueueId: string
+  metricsId: string
 }
 /**
  * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
@@ -67,7 +67,7 @@ export class TaskQueue<T> {
     this.executeTask = wrapAndMeasure(executeTask, {
       histogram: taskQueueHistogram,
       labels: {
-        id: opts.taskQueueId,
+        id: opts.metricsId,
       },
     })
   }

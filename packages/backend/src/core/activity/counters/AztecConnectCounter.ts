@@ -47,7 +47,7 @@ export function createAztecConnectCounter(
         })
 
         const blocks = await promiseAllPlus(queries, logger, {
-          taskQueueId: createAztecConnectCounter.name,
+          metricsId: `AztecConnectBlockCounter[${projectId.toString()}]`,
         })
         await blockRepository.addMany(blocks, trx)
       },

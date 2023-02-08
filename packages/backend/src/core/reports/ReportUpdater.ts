@@ -33,7 +33,7 @@ export class ReportUpdater {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        taskQueueId: ReportUpdater.name,
+        metricsId: ReportUpdater.name,
       },
     )
   }
