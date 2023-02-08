@@ -30,11 +30,6 @@ export async function verifyContracts(
     },
   )
 
-  const verification = await promiseAllPlus(verificationPromises, logger, {
-    maxConcurrency: workersCount,
-    taskQueueId: verifyContracts.name,
-  })
-
   const batches = toBatches(addresses, workersCount)
   const results = []
   for (const batch of batches) {
