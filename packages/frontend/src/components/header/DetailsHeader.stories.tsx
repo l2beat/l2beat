@@ -1,6 +1,3 @@
-import { layer2s } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared'
-import { Story } from '@storybook/react'
 import React from 'react'
 
 import { formatLargeNumber } from '../../utils'
@@ -13,12 +10,17 @@ export default {
   title: 'Components/DetailsHeader',
 }
 
-interface TemplateProps {
-  projectId: ProjectId
-}
-
-function Template({ projectId }: TemplateProps) {
-  const project = layer2s.find((x) => x.id === projectId)
+export function HeaderDetails() {
+  const project = {
+    display: {
+      purpose: 'Universal',
+      name: 'Arbitrum One',
+      slug: 'arbitrum',
+    },
+    technology: {
+      category: 'Optimistic Rollup',
+    },
+  }
 
   const stats = [
     {
@@ -37,12 +39,12 @@ function Template({ projectId }: TemplateProps) {
     },
     {
       title: 'Purpose',
-      value: project?.display.purpose,
+      value: project.display.purpose,
     },
     {
       title: 'Technology',
       value: (
-        <TechnologyCell>{project?.technology.category ?? ''}</TechnologyCell>
+        <TechnologyCell>{project.technology.category ?? ''}</TechnologyCell>
       ),
     },
   ]
@@ -56,10 +58,4 @@ function Template({ projectId }: TemplateProps) {
       />
     </PageContent>
   )
-}
-
-export const HeaderDetails: Story<TemplateProps> = Template.bind({})
-
-HeaderDetails.args = {
-  projectId: ProjectId('arbitrum'),
 }
