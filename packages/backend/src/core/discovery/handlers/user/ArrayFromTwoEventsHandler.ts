@@ -1,4 +1,4 @@
-import { ContractValue, EthereumAddress } from '@l2beat/types'
+import { ContractValue, EthereumAddress } from '@l2beat/shared'
 import { utils } from 'ethers'
 import * as z from 'zod'
 

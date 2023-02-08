@@ -12,10 +12,10 @@ export function KnowledgeNuggets({ knowledgeNuggets }: KnowledgeNuggetsProps) {
 
   return (
     <div className="px-4 md:px-0">
-      <span className="text-[28px] leading-[32.81px] font-bold">
+      <span className="text-[28px] font-bold leading-[32.81px]">
         Knowledge nuggets
       </span>
-      <div className="flex flex-col gap-3 p-4 mt-4">
+      <div className="mt-4 flex flex-col gap-3 p-4">
         {knowledgeNuggets.map((nugget) => (
           <KnowledgeNuggetItem knowledgeNugget={nugget} key={nugget.title} />
         ))}

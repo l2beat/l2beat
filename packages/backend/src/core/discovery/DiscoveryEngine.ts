@@ -1,5 +1,4 @@
-import { MainnetEtherscanClient } from '@l2beat/common'
-import { ProjectParameters } from '@l2beat/types'
+import { MainnetEtherscanClient, ProjectParameters } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { discover } from './discover'
@@ -7,6 +6,7 @@ import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { parseDiscoveryOutput } from './saveDiscoveryResult'
+import { getDiscoveryConfigHash } from './utils/getDiscoveryConfigHash'
 
 export class DiscoveryEngine {
   constructor(
@@ -26,7 +26,14 @@ export class DiscoveryEngine {
     )
 
     const discovered = await discover(discoveryProvider, config, this.logger)
+    const configHash = getDiscoveryConfigHash(config)
 
-    return parseDiscoveryOutput(discovered, config.name, blockNumber)
+    // TODO: test this line
+    return parseDiscoveryOutput(
+      discovered,
+      config.name,
+      blockNumber,
+      configHash,
+    )
   }
 }

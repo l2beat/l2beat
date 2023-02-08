@@ -11,19 +11,19 @@ export interface LinkSectionProps {
 
 export function LinkSection(props: LinkSectionProps) {
   return (
-    <section className="px-4 py-3 md:p-0 md:bg-gray-100 md:dark:bg-gray-900 md:rounded-lg md:mt-6">
-      <div className="hidden my-6 px-6 md:flex items-center">
+    <section className="px-4 py-3 md:mt-6 md:rounded-lg md:bg-gray-100 md:p-0 md:dark:bg-gray-900">
+      <div className="my-6 hidden items-center px-6 md:flex">
         <img
           src={props.icon}
           alt={`${props.name} logo`}
-          className="inline-block w-8 h-8"
+          className="inline-block h-8 w-8"
         />
-        <h2 id="links" className="inline ml-4 text-2xl font-bold">
+        <h2 id="links" className="ml-4 inline text-2xl font-bold">
           {props.name}
         </h2>
       </div>
 
-      <table className="text-left text-xs w-full table-fixed border-collapse">
+      <table className="w-full table-fixed border-collapse text-left text-xs">
         <tbody>
           <LinkSectionLinks name="Website" links={props.links.websites} />
           <LinkSectionLinks

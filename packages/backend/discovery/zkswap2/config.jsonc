@@ -53,7 +53,13 @@
           "slot": 8,
           "returnType": "address"
         }
-      }
+      },
+      "ignoreInWatchMode": [
+        "firstPendingWithdrawalIndex",
+        "totalBlocksChecked",
+        "totalBlocksCommitted",
+        "totalBlocksVerified"
+      ]
     },
     "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D": {
       "ignoreMethods": ["allPairs"]

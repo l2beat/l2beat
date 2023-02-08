@@ -1,7 +1,7 @@
-import { Logger, TaskQueue } from '@l2beat/common'
-import { json, UnixTime } from '@l2beat/types'
+import { json, Logger, UnixTime } from '@l2beat/shared'
 
 import { Clock } from '../Clock'
+import { TaskQueue } from '../queue/TaskQueue'
 import { TransactionCounter } from './TransactionCounter'
 
 interface TransactionCountingMonitorOpts {

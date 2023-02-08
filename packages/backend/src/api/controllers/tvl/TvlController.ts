@@ -1,11 +1,11 @@
-import { Logger } from '@l2beat/common'
 import {
   AssetId,
+  Logger,
   ProjectId,
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
-} from '@l2beat/types'
+} from '@l2beat/shared'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { Token } from '../../../model'

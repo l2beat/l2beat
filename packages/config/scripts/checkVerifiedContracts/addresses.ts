@@ -1,8 +1,6 @@
-import { assertUnreachable } from '@l2beat/common'
-import { EthereumAddress } from '@l2beat/types'
+import { assertUnreachable, EthereumAddress } from '@l2beat/shared'
 
-import { Bridge, Layer2 } from '../../src'
-import { ProjectUpgradeability } from '../../src/common/ProjectContracts'
+import { Bridge, Layer2, ProjectUpgradeability } from '../../src'
 import { VerificationMap } from './output'
 import { withoutDuplicates } from './utils'
 

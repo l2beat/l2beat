@@ -1,4 +1,4 @@
-import { ContractParameters, EthereumAddress } from '@l2beat/types'
+import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { DiscoveryContract } from '../DiscoveryConfig'

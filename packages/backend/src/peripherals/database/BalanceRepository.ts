@@ -1,5 +1,4 @@
-import { Logger } from '@l2beat/common'
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
+import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
 import { BalanceRow } from 'knex/types/tables'
 
 import { Metrics } from '../../Metrics'

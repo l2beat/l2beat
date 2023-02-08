@@ -1,4 +1,4 @@
-import { VerificationStatus } from '@l2beat/types'
+import { VerificationStatus } from '@l2beat/shared'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
@@ -27,16 +27,16 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.architectureImage && (
         <figure className="mt-4 mb-8 text-center">
           <img
-            className="inline align-[unset] max-w-full dark:invert"
+            className="inline max-w-full align-[unset] dark:invert"
             src={props.architectureImage}
             alt="A diagram of the smart contract architecture"
           />
-          <figcaption className="text-gray-500 dark:text-gray-600 text-xs">
+          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             A diagram of the smart contract architecture
           </figcaption>
         </figure>
       )}
-      <h3 className="font-bold md:text-md">
+      <h3 className="md:text-md font-bold">
         The system consists of the following smart contracts:
       </h3>
       <div className="mt-4 mb-4">
@@ -52,7 +52,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       </div>
       {props.risks.length > 0 && (
         <>
-          <p className="text-gray-860 dark:text-gray-400">
+          <p className="text-gray-850 dark:text-gray-400">
             The current deployment carries some associated risks:
           </p>
           <RiskList risks={props.risks} />

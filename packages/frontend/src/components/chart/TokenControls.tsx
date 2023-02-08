@@ -18,7 +18,7 @@ export function TokenControls({ tokens }: TokenControlsProps) {
   return (
     <div
       data-role="chart-token-controls"
-      className="col-span-4 flex items-baseline justify-start flex-wrap gap-x-4"
+      className="col-span-4 flex flex-wrap items-baseline justify-start gap-x-4"
     >
       <HorizontalSeparator className="mb-4 md:hidden" />
       <span>Tokens:</span>

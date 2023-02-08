@@ -1,4 +1,4 @@
-import { HttpClient, Logger } from '@l2beat/common'
+import { HttpClient, Logger, LogThrottler } from '@l2beat/shared'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
@@ -9,6 +9,7 @@ import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiscoveryModule } from './modules/discovery/DiscoveryModule'
 import { createDiscoveryWatcherModule } from './modules/discoveryWatcher/DiscoveryWatcherModule'
 import { createHealthModule } from './modules/health/HealthModule'
+import { createInversionModule } from './modules/inversion/InversionModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
 import { Database } from './peripherals/database/shared/Database'
@@ -18,7 +19,13 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config) {
-    const logger = new Logger({ ...config.logger, reportError })
+    const loggerOptions = { ...config.logger, reportError }
+
+    const logThrottler = config.logThrottler
+      ? new LogThrottler(config.logThrottler, new Logger(loggerOptions))
+      : undefined
+    const logger = new Logger(loggerOptions, logThrottler)
+
     const database = new Database(
       config.database ? config.database.connection : undefined,
       config.name,
@@ -54,6 +61,7 @@ export class Application {
         clock,
         metrics,
       ),
+      createInversionModule(config, logger),
     ]
 
     const apiServer =

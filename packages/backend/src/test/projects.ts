@@ -5,7 +5,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-} from '@l2beat/types'
+} from '@l2beat/shared'
 
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'

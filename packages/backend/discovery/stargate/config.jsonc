@@ -6,6 +6,12 @@
     "0x06D538690AF257Da524f25D0CD52fD85b1c2173E": {
       // POOL Factory contract - we ignore all token pools
       "ignoreDiscovery": true
+    },
+    "0x65bb797c2B9830d891D87288F029ed8dACc19705": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

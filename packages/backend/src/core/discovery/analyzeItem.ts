@@ -1,8 +1,4 @@
-import {
-  ContractParameters,
-  ContractValue,
-  EthereumAddress,
-} from '@l2beat/types'
+import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'

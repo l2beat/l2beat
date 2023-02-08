@@ -1,4 +1,4 @@
-import { TvlApiProject } from '@l2beat/types'
+import { TvlApiProject } from '@l2beat/shared'
 
 import { getPercentageChange } from '../utils'
 import { getTvlBreakdown } from './getTVLBreakdown'

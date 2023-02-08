@@ -16,7 +16,7 @@ export function Callout({ color, icon, body, className }: CalloutProps) {
     <div
       className={cx(
         'flex gap-3 first:mt-0',
-        'bg-opacity-20 rounded-lg',
+        'rounded-lg bg-opacity-20',
         background,
         className,
       )}

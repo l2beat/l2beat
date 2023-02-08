@@ -2,7 +2,7 @@ import { Milestone } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { ArrowRightIcon } from '../icons/Arrows'
+import { ArrowRightIcon } from '../icons'
 import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
 import { OutLink } from '../OutLink'
 
@@ -18,15 +18,11 @@ export function Milestones({ milestones, className }: MilestonesProps) {
 
   return (
     <div className={cx('px-4 md:px-0', className)}>
-      <div>
-        <span className="text-[28px] leading-[32.81px] font-bold">
-          Milestones
-        </span>
-      </div>
-      <div className="h-auto relative">
-        <div className="absolute left-[15.4px] h-[100%] mt-2">
-          <div className="h-[60%] w-[1.7px] dark:w-px bg-green-400 dark:bg-green-500 " />
-          <div className="h-[40%] w-[1.7px] dark:w-px bg-gradient-to-b from-green-400 dark:from-green-500" />
+      <p className="text-[28px] font-bold leading-[32px]">Milestones</p>
+      <div className="relative h-auto">
+        <div className="absolute left-[15.4px] mt-2 h-[100%]">
+          <div className="h-[60%] w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500 " />
+          <div className="h-[40%] w-[1.7px] bg-gradient-to-b from-green-400 dark:w-px dark:from-green-500" />
         </div>
         <div className="ml-10 mt-6">
           {milestones
@@ -36,32 +32,25 @@ export function Milestones({ milestones, className }: MilestonesProps) {
             .map((milestone, i) => (
               <div key={i} className="pb-7">
                 <MilestoneIcon className="absolute left-1.5" />
-                <div className="font-bold text-lg leading-none">
+                <p className="text-lg font-bold leading-none">
                   {milestone.name}
-                </div>
-                <div className="dark:text-gray-400 text-sm">
+                </p>
+                <p className="text-sm dark:text-gray-400">
                   {formatDate(milestone.date)}
-                </div>
+                </p>
                 <div className="mt-3">
                   {milestone.description && (
-                    <div className="dark:text-gray-400 text-sm leading-none">
+                    <p className="text-sm leading-none dark:text-gray-400">
                       {milestone.description}
-                    </div>
+                    </p>
                   )}
-                  <div>
-                    <OutLink
-                      className="text-sm underline font-bold dark:text-blue-475 text-purple-900"
-                      href={milestone.link}
-                    >
-                      <div className="flex flex-wrap">
-                        Learn more{' '}
-                        <ArrowRightIcon
-                          className="dark:fill-blue-475 fill-purple-900"
-                          transform="translate(4,3.2)"
-                        />
-                      </div>
-                    </OutLink>
-                  </div>
+                  <OutLink
+                    className="flex flex-wrap items-center gap-1 text-sm font-bold text-link underline"
+                    href={milestone.link}
+                  >
+                    Learn more
+                    <ArrowRightIcon className="fill-link" />
+                  </OutLink>
                 </div>
               </div>
             ))}

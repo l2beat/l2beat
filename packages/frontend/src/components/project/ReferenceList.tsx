@@ -16,7 +16,7 @@ export function ReferenceList({ references }: ReferenceListProps) {
     return null
   }
   return (
-    <ol className="mt-4 md:mt-6 text-xs">
+    <ol className="mt-4 text-xs md:mt-6">
       {references.map((reference, i) => (
         <li key={i}>
           <OutLink className="text-link underline" href={reference.href}>

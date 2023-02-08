@@ -1,6 +1,7 @@
 {
   "name": "layer2financeZk",
   "blockNumber": 16154924,
+  "configHash": "0x98439f03bfa6ef8a20eb11bed9dc42325d475ce804c0b06dd061b2dbfa08ef44",
   "contracts": [
     {
       "name": "Broker",
@@ -153,9 +154,7 @@
       }
     }
   ],
-  "eoas": [
-    "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
-  ],
+  "eoas": ["0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"],
   "abis": {
     "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [
       "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",

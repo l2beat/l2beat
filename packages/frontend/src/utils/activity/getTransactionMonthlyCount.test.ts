@@ -1,4 +1,4 @@
-import { ActivityApiChartPoint, UnixTime } from '@l2beat/types'
+import { ActivityApiChartPoint, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { getTransactionCount } from '../../../src/utils/activity/getTransactionCount'

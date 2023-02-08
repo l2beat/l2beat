@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { AssetId, branded, ProjectId } from '@l2beat/types'
+import { AssetId, branded, ProjectId } from '@l2beat/shared'
 import { z } from 'zod'
 
 import { TvlController } from '../controllers/tvl/TvlController'

@@ -1,5 +1,10 @@
-import { assert, Logger, TaskQueue } from '@l2beat/common'
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/types'
+import {
+  assert,
+  AssetId,
+  EthereumAddress,
+  Logger,
+  UnixTime,
+} from '@l2beat/shared'
 import { setTimeout } from 'timers/promises'
 
 import { Metrics } from '../Metrics'
@@ -11,6 +16,7 @@ import {
   PriceRepository,
 } from '../peripherals/database/PriceRepository'
 import { Clock } from './Clock'
+import { TaskQueue } from './queue/TaskQueue'
 
 export class PriceUpdater {
   private readonly knownSet = new Set<number>()

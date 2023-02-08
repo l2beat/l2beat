@@ -14,7 +14,7 @@ export function IndexCell({ entry, index }: IndexCellProps) {
   if (entry.isVerified === false) {
     return (
       <UnverifiedContractsWarning
-        className={cx('absolute top-0 -translate-y-1/2 left-[1px]')}
+        className={cx('absolute top-0 left-[1px] -translate-y-1/2')}
         tooltip="This project includes unverified contracts."
       />
     )

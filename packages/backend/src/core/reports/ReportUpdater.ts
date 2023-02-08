@@ -1,5 +1,4 @@
-import { Logger, TaskQueue } from '@l2beat/common'
-import { Hash256, UnixTime } from '@l2beat/types'
+import { Hash256, Logger, UnixTime } from '@l2beat/shared'
 
 import { Metrics } from '../../Metrics'
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
@@ -8,6 +7,7 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
+import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
 import { getReportConfigHash } from './getReportConfigHash'

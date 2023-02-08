@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress } from '@l2beat/shared'
 import { zip } from 'lodash'
 
 import { concatAbis } from './concatAbis'

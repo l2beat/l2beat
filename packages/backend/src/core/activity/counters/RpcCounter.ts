@@ -1,6 +1,5 @@
-import { assert, Logger, promiseAllPlus } from '@l2beat/common'
 import { RpcTransactionApi } from '@l2beat/config'
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { assert, Logger, ProjectId, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { range } from 'lodash'
 
@@ -9,6 +8,7 @@ import { BlockTransactionCountRepository } from '../../../peripherals/database/a
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
 import { Clock } from '../../Clock'
+import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
 import { TransactionCounter } from '../TransactionCounter'
 import { createBlockTransactionCounter } from './BlockTransactionCounter'

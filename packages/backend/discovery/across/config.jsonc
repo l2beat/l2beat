@@ -31,7 +31,8 @@
           "method": "crossChainContracts",
           "args": [42161]
         }
-      }
+      },
+      "ignoreInWatchMode": ["rootBundleProposal"]
     },
     "0xB524735356985D2f267FA010D681f061DfF03715": {
       "ignoreInWatchMode": ["nonce"]
@@ -46,7 +47,7 @@
     },
     "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381": {
       "ignoreMethods": ["rootBundles"],
-      "ignoreInWatchMode": ["getCurrentTime", "numberOfDeposits"]
+      "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"]
     },
     "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
       "ignoreInWatchMode": ["totalSupply"]

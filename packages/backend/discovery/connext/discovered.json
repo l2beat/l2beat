@@ -1,6 +1,7 @@
 {
   "name": "connext",
   "blockNumber": 16154924,
+  "configHash": "0x4184fa16a46aa45c6c80f00e426dc7c874d3949cff8b9d353c63c2e88b208638",
   "contracts": [
     {
       "name": "TransactionManager",
@@ -38,9 +39,7 @@
       }
     }
   ],
-  "eoas": [
-    "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493"
-  ],
+  "eoas": ["0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493"],
   "abis": {
     "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09": [
       "constructor(uint256 _chainId)",

@@ -1,4 +1,4 @@
-import { ActivityApiResponse, ProjectId } from '@l2beat/types'
+import { ActivityApiResponse, ProjectId } from '@l2beat/shared'
 
 import { countsToChart } from './countsToChart'
 import { DailyTransactionCount } from './types'

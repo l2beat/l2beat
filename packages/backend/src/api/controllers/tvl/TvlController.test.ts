@@ -1,12 +1,13 @@
-import { Logger, mock } from '@l2beat/common'
 import { tokenList } from '@l2beat/config'
 import {
   AssetId,
   EthereumAddress,
+  Logger,
+  mock,
   ProjectId,
   TvlApiChart,
   UnixTime,
-} from '@l2beat/types'
+} from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { ReportProject } from '../../../core/reports/ReportProject'

@@ -1,6 +1,5 @@
-import { LogLevel } from '@l2beat/common'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { UnixTime } from '@l2beat/types'
+import { LogLevel, UnixTime } from '@l2beat/shared'
 
 import { CliParameters } from '../cli/getCliParameters'
 import { bridgeToProject, layer2ToProject } from '../model'
@@ -24,6 +23,11 @@ export function getProductionConfig(cli: CliParameters): Config {
     logger: {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'json',
+    },
+    logThrottler: {
+      threshold: 4,
+      thresholdTimeInMs: 5000,
+      throttleTimeInMs: 20000,
     },
     clock: {
       minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
@@ -49,6 +53,7 @@ export function getProductionConfig(cli: CliParameters): Config {
       startedAt: new Date().toISOString(),
       commitSha: getEnv('HEROKU_SLUG_COMMIT', getGitCommitHash()),
     },
+    invert: false,
     metricsAuth: {
       user: getEnv('METRICS_AUTH_USER'),
       pass: getEnv('METRICS_AUTH_PASS'),

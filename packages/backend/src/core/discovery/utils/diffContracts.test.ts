@@ -1,4 +1,4 @@
-import { ContractParameters, EthereumAddress } from '@l2beat/types'
+import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { diffContracts } from './diffContracts'
@@ -42,9 +42,10 @@ describe(diffContracts.name, () => {
         C: 1,
         D: [1, 2, 3, 4],
         E: 'ignoreMePlease',
+        F: 'ignoreMePlease',
       },
     }
-    const ignoreInWatchMode = ['E']
+    const ignoreInWatchMode = ['E', 'F']
     const result = diffContracts(committed, discovered, ignoreInWatchMode)
 
     expect(result).toEqual([

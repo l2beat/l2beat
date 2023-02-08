@@ -1,4 +1,4 @@
-import { mock } from '@l2beat/common'
+import { mock } from '@l2beat/shared'
 import { Gauge, Histogram } from 'prom-client'
 
 import { Metrics } from '../../Metrics'

@@ -1,4 +1,4 @@
-import { CoingeckoClient, HttpClient, Logger } from '@l2beat/common'
+import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
