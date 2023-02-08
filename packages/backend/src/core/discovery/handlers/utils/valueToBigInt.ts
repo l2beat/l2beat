@@ -1,4 +1,4 @@
-import { Bytes } from '@l2beat/types'
+import { Bytes } from '@l2beat/shared'
 
 import { ContractValue } from '../../types'
 

@@ -1,0 +1,31 @@
+{
+  "name": "@l2beat/shared",
+  "version": "0.1.0",
+  "private": true,
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prebuild": "yarn clean",
+    "clean": "rm -rf build",
+    "format:fix": "prettier --write .",
+    "format": "prettier --check .",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .ts --max-warnings 0 src",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/node-fetch": "^2.6.2",
+    "chalk": "^4.1.2",
+    "ethers": "^5.7.2",
+    "mkdirp": "^1.0.4",
+    "node-fetch": "^2.6.7",
+    "zod": "^3.20.2",
+    "earljs": "^0.2.3"
+  },
+  "devDependencies": {
+    "prom-client": "^14.1.0"
+  }
+}

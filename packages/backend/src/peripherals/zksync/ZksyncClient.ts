@@ -4,8 +4,8 @@ import {
   HttpClient,
   Logger,
   RateLimiter,
-} from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+  UnixTime,
+} from '@l2beat/shared'
 
 import {
   ZksyncBlocksResultSchema,

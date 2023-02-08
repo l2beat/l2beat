@@ -1,5 +1,4 @@
-import { assert, HttpClient, RateLimiter } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { assert, HttpClient, RateLimiter, UnixTime } from '@l2beat/shared'
 
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { StarkNetGetBlockResponseBodySchema } from './schemas'

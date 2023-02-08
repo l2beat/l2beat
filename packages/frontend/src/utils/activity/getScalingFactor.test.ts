@@ -1,4 +1,4 @@
-import { ActivityApiResponse, UnixTime } from '@l2beat/types'
+import { ActivityApiResponse, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { getScalingFactor } from './getScalingFactor'

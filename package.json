@@ -15,7 +15,7 @@
     "build:backend": "wsrun -p @l2beat/backend -recsm build",
     "build:frontend": "wsrun -p @l2beat/frontend -recsm build",
     "build": "wsrun -ecsm build",
-    "build:dependencies": "wsrun -p @l2beat/{types,common,config} -recsm build",
+    "build:dependencies": "wsrun -p @l2beat/{shared,config} -recsm build",
     "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck:ci && yarn test",
     "clean": "wsrun -ecam clean",
     "fix": "yarn lint:fix && yarn format:fix",

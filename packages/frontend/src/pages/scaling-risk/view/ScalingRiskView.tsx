@@ -4,7 +4,7 @@ import React from 'react'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
-import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
+import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import { RiskCell } from '../../../components/table/RiskCell'
 import {
   ColumnConfig,
@@ -72,9 +72,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   ]
 
   const rows: RowConfig<ScalingRiskViewEntry> = {
-    getProps: (entry) => ({
-      className: getRowVerificationClassNames(entry),
-    }),
+    getProps: getScalingRowProps,
   }
 
   return (

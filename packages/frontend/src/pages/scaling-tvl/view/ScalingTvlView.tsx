@@ -5,7 +5,7 @@ import { ScalingLegend } from '../../../components/ScalingLegend'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
-import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
+import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import { RatingCell } from '../../../components/table/RatingCell'
 import {
   ColumnConfig,
@@ -67,6 +67,17 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
         <NumberCell signed>{project.sevenDayChange}</NumberCell>
       ),
     },
+    ...(ratingEnabled
+      ? [
+          {
+            name: 'Rating',
+            alignCenter: true as const,
+            getValue: (project: ScalingTvlViewEntry) => (
+              <RatingCell item={project.ratingEntry} />
+            ),
+          },
+        ]
+      : []),
     {
       name: 'Breakdown',
       tooltip:
@@ -95,19 +106,8 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
     },
   ]
 
-  if (ratingEnabled) {
-    const ratingColumn: ColumnConfig<ScalingTvlViewEntry> = {
-      name: 'Rating',
-      alignCenter: true,
-      getValue: (project) => <RatingCell item={project.ratingEntry} />,
-    }
-    columns.splice(3, 0, ratingColumn)
-  }
-
   const rows: RowConfig<ScalingTvlViewEntry> = {
-    getProps: (entry) => ({
-      className: getRowVerificationClassNames(entry),
-    }),
+    getProps: getScalingRowProps,
   }
 
   return (

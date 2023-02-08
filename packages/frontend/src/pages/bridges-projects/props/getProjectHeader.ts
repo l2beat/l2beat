@@ -1,5 +1,5 @@
 import { Bridge } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/types'
+import { TvlApiResponse } from '@l2beat/shared'
 
 import { getDestination } from '../../../utils/getDestination'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'

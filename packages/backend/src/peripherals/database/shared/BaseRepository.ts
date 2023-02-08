@@ -1,4 +1,4 @@
-import { Logger, wrapAndMeasure } from '@l2beat/common'
+import { Logger, wrapAndMeasure } from '@l2beat/shared'
 import { Knex } from 'knex'
 
 import { Metrics, RepositoryHistogram } from '../../../Metrics'

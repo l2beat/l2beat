@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/types'
+import { EthereumAddress, UnixTime } from '@l2beat/shared'
 
 export interface Layer2Event {
   name: string

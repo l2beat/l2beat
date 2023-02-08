@@ -1,4 +1,4 @@
-import { VerificationStatus } from '@l2beat/types'
+import { VerificationStatus } from '@l2beat/shared'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'

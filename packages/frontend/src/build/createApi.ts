@@ -3,7 +3,7 @@ import {
   ActivityApiResponse,
   TvlApiCharts,
   TvlApiResponse,
-} from '@l2beat/types'
+} from '@l2beat/shared'
 import fsx from 'fs-extra'
 import path from 'path'
 
