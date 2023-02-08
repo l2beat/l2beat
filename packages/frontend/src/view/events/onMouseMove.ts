@@ -1,7 +1,7 @@
 import { Box, State } from '../utils/State'
 import { updateNodePositions } from '../utils/updateNodePositions'
 import { LEFT_MOUSE_BUTTON } from './constants'
-import { getViewCoordinates } from './getViewCoordinates'
+import { toContainerCoordinates, toViewCoordinates } from './coordinates'
 
 export function onMouseMove(
   event: MouseEvent,
@@ -30,7 +30,7 @@ export function onMouseMove(
         }
       }
       case 'drag': {
-        const { x, y } = getViewCoordinates(event, container, state.transform)
+        const { x, y } = toViewCoordinates(event, container, state.transform)
 
         return updateNodePositions({
           ...state,
@@ -38,26 +38,30 @@ export function onMouseMove(
           mouseMove: { ...state.mouseMove, currentX: x, currentY: y },
         })
       }
-      case 'select': {
-        const { x, y } = getViewCoordinates(event, container, state.transform)
+      case 'select':
+      case 'select-add': {
+        const { x, y } = toViewCoordinates(event, container, state.transform)
         const mouseMove = { ...state.mouseMove, currentX: x, currentY: y }
-        const mouseSelection: Box = {
+        const selection: Box = {
           x: Math.min(mouseMove.startX, mouseMove.currentX),
           y: Math.min(mouseMove.startY, mouseMove.currentY),
           width: Math.abs(mouseMove.startX - mouseMove.currentX),
           height: Math.abs(mouseMove.startY - mouseMove.currentY),
         }
 
-        console.log(state.mouseSelection)
-
         return {
           ...state,
           selectedNodeIds: state.nodes
-            .filter((node) => intersects(node.box, mouseSelection))
+            .filter(
+              (node) =>
+                intersects(node.box, selection) ||
+                (state.mouseMoveAction === 'select-add' &&
+                  state.selectedNodeIds.includes(node.id)),
+            )
             .map((x) => x.id),
           mouseUpAction: undefined,
           mouseMove,
-          mouseSelection,
+          mouseSelection: toContainerCoordinates(selection, state.transform),
         }
       }
     }

@@ -26,7 +26,7 @@ export function NodeView(props: NodeViewProps) {
       }}
       className={classNames(
         'absolute rounded-md border-2 border-black bg-white',
-        props.selected && 'outline outline-4 outline-indigo-300',
+        props.selected && 'outline outline-2 outline-blue-400',
         props.discovered ? 'bg-white' : 'bg-yellow-300',
       )}
     >

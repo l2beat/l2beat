@@ -1,6 +1,6 @@
 import { State } from '../utils/State'
 import { LEFT_MOUSE_BUTTON, MIDDLE_MOUSE_BUTTON } from './constants'
-import { getViewCoordinates } from './getViewCoordinates'
+import { toViewCoordinates } from './coordinates'
 
 export function onMouseDown(
   event: MouseEvent,
@@ -18,7 +18,7 @@ export function onMouseDown(
       }
     }
 
-    const { x, y } = getViewCoordinates(event, container, state.transform)
+    const { x, y } = toViewCoordinates(event, container, state.transform)
 
     for (const node of reverseIter(state.nodes)) {
       if (
@@ -66,9 +66,9 @@ export function onMouseDown(
 
     return {
       ...state,
-      selectedNodeIds: [],
+      selectedNodeIds: event.shiftKey ? state.selectedNodeIds : [],
       pressed: { ...state.pressed, leftMouseButton: true },
-      mouseMoveAction: 'select',
+      mouseMoveAction: event.shiftKey ? 'select-add' : 'select',
       mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
     }
   }

@@ -14,7 +14,7 @@ export interface State {
     readonly spaceKey: boolean
   }
   readonly mouseUpAction?: DeselectOne | DeselectAllBut
-  readonly mouseMoveAction?: 'drag' | 'pan' | 'select'
+  readonly mouseMoveAction?: 'drag' | 'pan' | 'select' | 'select-add'
   readonly mouseMove: {
     readonly startX: number
     readonly startY: number
