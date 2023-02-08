@@ -11,7 +11,7 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { ProjectId } from '@l2beat/types'
+import { ProjectId } from '@l2beat/shared'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {

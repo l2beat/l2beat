@@ -1,4 +1,4 @@
-import { mock } from '@l2beat/common'
+import { mock } from '@l2beat/shared'
 import { expect, mockFn } from 'earljs'
 
 import { TwitterApiWrapper } from './TwitterApiWrapper'

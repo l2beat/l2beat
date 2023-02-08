@@ -1,4 +1,4 @@
-import { branded, EthereumAddress } from '@l2beat/types'
+import { branded, EthereumAddress } from '@l2beat/shared'
 import * as z from 'zod'
 
 import { UserHandlerDefinition } from './handlers/user'

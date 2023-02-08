@@ -1,4 +1,4 @@
-import { AssetId, ProjectId } from '@l2beat/types'
+import { AssetId, ProjectId } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { BALANCES, NOW, PRICES, PROJECTS } from '../../test/projects'

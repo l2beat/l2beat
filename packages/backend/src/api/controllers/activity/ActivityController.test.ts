@@ -1,10 +1,10 @@
-import { mock } from '@l2beat/common'
 import {
   ActivityApiChartPoint,
   ActivityApiResponse,
+  mock,
   ProjectId,
   UnixTime,
-} from '@l2beat/types'
+} from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'

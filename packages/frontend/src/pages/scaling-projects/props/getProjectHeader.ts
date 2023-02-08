@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/types'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
 import { formatLargeNumber } from '../../../utils'
