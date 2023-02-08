@@ -58,7 +58,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                   )}
                   {column.tooltip && (
                     <span className="Tooltip" title={column.tooltip}>
-                      <InfoIcon className="fill-gray-700 dark:fill-gray-600" />
+                      <InfoIcon className="fill-current" />
                     </span>
                   )}
                 </div>
