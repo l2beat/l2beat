@@ -18,5 +18,5 @@ export function IndexCell({ entry, index }: IndexCellProps) {
       />
     )
   }
-  return <span className="text-gray-500 dark:text-gray-600">{index}</span>
+  return <span className="text-gray-700 dark:text-gray-600">{index}.</span>
 }
