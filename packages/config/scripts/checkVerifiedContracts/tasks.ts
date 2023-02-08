@@ -27,8 +27,7 @@ export async function verifyContracts(
       logger.info(`Checking ${address.toString()}...`)
       const isVerified = await isContractVerified(etherscanClient, address)
       return [address.toString(), isVerified]
-    },
-  )
+    })
 
   const batches = toBatches(addresses, workersCount)
   const results = []
