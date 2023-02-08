@@ -151,12 +151,12 @@ export const arbitrum: Layer2 = {
       ],
       references: [
         {
-          text: 'Executing and Securing the Chain - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/docs/rollup_basics#executing-and-securing-the-chain',
+          text: 'How is fraud proven - Arbitrum documentation FAQ',
+          href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
         },
         {
-          text: 'RollupUserFacet.sol#L281 - Etherscan source code, onlyValidator modifier',
-          href: 'https://etherscan.io/address/0x00c51f63a2d906510cb2c802c0a30589ba75d942#code#F1#L281',
+          text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
+          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L288',
         },
       ],
     },
@@ -164,8 +164,8 @@ export const arbitrum: Layer2 = {
       ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'Submitting Transactions - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/docs/rollup_basics#submitting-transactions',
+          text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
+          href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
         },
       ],
     },
@@ -173,12 +173,8 @@ export const arbitrum: Layer2 = {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
         {
-          text: 'Validators - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#validators',
-        },
-        {
-          text: 'If the sequencer is malicious - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#if-the-sequencer-is-malicious',
+          text: 'Sequencer - Arbitrum documentation',
+          href: 'https://developer.offchainlabs.com/sequencer',
         },
       ],
     },
@@ -186,8 +182,8 @@ export const arbitrum: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
       references: [
         {
-          text: 'Submitting Transactions - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/docs/rollup_basics#submitting-transactions',
+          text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
+          href: 'https://developer.offchainlabs.com/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
         },
       ],
     },
@@ -196,12 +192,12 @@ export const arbitrum: Layer2 = {
         ...EXITS.REGULAR('optimistic', 'merkle proof'),
         references: [
           {
-            text: 'L2 to L1 Messages Lifecycle - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/l1_l2_messages#l2-to-l1-messages-lifecycle',
+            text: 'Transaction lifecycle - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/tx-lifecycle',
           },
           {
-            text: 'Rules for Confirming or Rejecting Rollup Blocks - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/inside_arbitrum#rules-for-confirming-or-rejecting-rollup-blocks',
+            text: 'L2 to L1 Messages - Arbitrum documentation',
+            href: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
           },
           {
             text: 'Mainnet for everyone - Arbitrum Blog',
