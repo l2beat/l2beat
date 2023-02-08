@@ -1,27 +1,24 @@
 import { State } from '../utils/State'
 import { LEFT_MOUSE_BUTTON, MIDDLE_MOUSE_BUTTON } from './constants'
+import { getViewCoordinates } from './getViewCoordinates'
 
 export function onMouseDown(
   event: MouseEvent,
   state: State,
   container: HTMLElement,
 ): State | undefined {
-  const rect = container.getBoundingClientRect()
-  const { offsetX, offsetY, scale } = state.transform
-
-  if (event.button === LEFT_MOUSE_BUTTON && state.mouseMoveAction === 'none') {
+  if (event.button === LEFT_MOUSE_BUTTON && !state.mouseMoveAction) {
     if (state.pressed.spaceKey) {
       const [x, y] = [event.clientX, event.clientY]
       return {
         ...state,
         pressed: { ...state.pressed, leftMouseButton: true },
-        mouseMoveAction: 'panning',
+        mouseMoveAction: 'pan',
         mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
       }
     }
 
-    const x = (event.clientX - rect.left - offsetX) / scale
-    const y = (event.clientY - rect.top - offsetY) / scale
+    const { x, y } = getViewCoordinates(event, container, state.transform)
 
     for (const node of reverseIter(state.nodes)) {
       if (
@@ -55,7 +52,7 @@ export function onMouseDown(
             // this is needed to fix alt tab during shift dragging
             shiftKey: event.shiftKey,
           },
-          mouseMoveAction: 'dragging',
+          mouseMoveAction: 'drag',
           mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
           mouseUpAction,
           selectedPositions: Object.fromEntries(
@@ -71,18 +68,16 @@ export function onMouseDown(
       ...state,
       selectedNodeIds: [],
       pressed: { ...state.pressed, leftMouseButton: true },
-      mouseMoveAction: 'none',
+      mouseMoveAction: 'select',
+      mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
     }
   }
 
-  if (
-    event.button === MIDDLE_MOUSE_BUTTON &&
-    state.mouseMoveAction === 'none'
-  ) {
+  if (event.button === MIDDLE_MOUSE_BUTTON && !state.mouseMoveAction) {
     return {
       ...state,
       pressed: { ...state.pressed, middleMouseButton: true },
-      mouseMoveAction: 'panning',
+      mouseMoveAction: 'pan',
     }
   }
 }

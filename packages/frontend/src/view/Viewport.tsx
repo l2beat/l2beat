@@ -66,6 +66,17 @@ export function Viewport(props: ViewportProps) {
             loading={!!props.loading[node.id]}
           />
         ))}
+        {state.mouseSelection && (
+          <div
+            className="absolute border border-blue-600 bg-blue-100 bg-opacity-30"
+            style={{
+              left: state.mouseSelection.x,
+              top: state.mouseSelection.y,
+              width: state.mouseSelection.width,
+              height: state.mouseSelection.height,
+            }}
+          />
+        )}
       </div>
     </div>
   )

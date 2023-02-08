@@ -1,6 +1,7 @@
-import { State } from '../utils/State'
+import { Box, State } from '../utils/State'
 import { updateNodePositions } from '../utils/updateNodePositions'
 import { LEFT_MOUSE_BUTTON } from './constants'
+import { getViewCoordinates } from './getViewCoordinates'
 
 export function onMouseMove(
   event: MouseEvent,
@@ -13,10 +14,10 @@ export function onMouseMove(
 
   if (state.pressed.leftMouseButton && event.button === LEFT_MOUSE_BUTTON) {
     switch (state.mouseMoveAction) {
-      case 'none': {
+      case undefined: {
         return { ...state, mouseUpAction: undefined }
       }
-      case 'panning': {
+      case 'pan': {
         const [x, y] = [event.clientX, event.clientY]
         return {
           ...state,
@@ -28,11 +29,8 @@ export function onMouseMove(
           mouseMove: { ...state.mouseMove, currentX: x, currentY: y },
         }
       }
-      case 'dragging': {
-        const rect = container.getBoundingClientRect()
-        const { offsetX, offsetY, scale } = state.transform
-        const x = (event.clientX - rect.left - offsetX) / scale
-        const y = (event.clientY - rect.top - offsetY) / scale
+      case 'drag': {
+        const { x, y } = getViewCoordinates(event, container, state.transform)
 
         return updateNodePositions({
           ...state,
@@ -40,6 +38,37 @@ export function onMouseMove(
           mouseMove: { ...state.mouseMove, currentX: x, currentY: y },
         })
       }
+      case 'select': {
+        const { x, y } = getViewCoordinates(event, container, state.transform)
+        const mouseMove = { ...state.mouseMove, currentX: x, currentY: y }
+        const mouseSelection: Box = {
+          x: Math.min(mouseMove.startX, mouseMove.currentX),
+          y: Math.min(mouseMove.startY, mouseMove.currentY),
+          width: Math.abs(mouseMove.startX - mouseMove.currentX),
+          height: Math.abs(mouseMove.startY - mouseMove.currentY),
+        }
+
+        console.log(state.mouseSelection)
+
+        return {
+          ...state,
+          selectedNodeIds: state.nodes
+            .filter((node) => intersects(node.box, mouseSelection))
+            .map((x) => x.id),
+          mouseUpAction: undefined,
+          mouseMove,
+          mouseSelection,
+        }
+      }
     }
   }
+}
+
+function intersects(a: Box, b: Box) {
+  return !(
+    a.x + a.width < b.x ||
+    b.x + b.width < a.x ||
+    a.y + a.height < b.y ||
+    b.y + b.height < a.y
+  )
 }

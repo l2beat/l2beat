@@ -14,13 +14,14 @@ export interface State {
     readonly spaceKey: boolean
   }
   readonly mouseUpAction?: DeselectOne | DeselectAllBut
-  readonly mouseMoveAction: 'dragging' | 'panning' | 'none'
+  readonly mouseMoveAction?: 'drag' | 'pan' | 'select'
   readonly mouseMove: {
     readonly startX: number
     readonly startY: number
     readonly currentX: number
     readonly currentY: number
   }
+  readonly mouseSelection?: Box
   readonly selectedPositions: Readonly<
     Record<string, { readonly x: number; readonly y: number }>
   >
@@ -86,12 +87,13 @@ export const INITIAL_STATE: State = {
     spaceKey: false,
   },
   mouseUpAction: undefined,
-  mouseMoveAction: 'none',
+  mouseMoveAction: undefined,
   mouseMove: {
     startX: 0,
     startY: 0,
     currentX: 0,
     currentY: 0,
   },
+  mouseSelection: undefined,
   selectedPositions: {},
 }
