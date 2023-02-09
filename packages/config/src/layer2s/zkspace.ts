@@ -6,8 +6,11 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 import { zkswap } from './zkswap'
+
+const discovery = new ProjectDiscovery('zkspace')
 
 export const zkspace: Layer2 = {
   type: 'layer2',
@@ -95,11 +98,9 @@ export const zkspace: Layer2 = {
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
             contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
             the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-          implementation: '0x467a2B91f231D930F5eeB6B982C7666E81DA8626',
-        },
+        upgradeability: discovery.getContract(
+          '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
+        ).upgradeability,
       },
       {
         address: '0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db',
@@ -123,51 +124,41 @@ export const zkspace: Layer2 = {
         address: '0x83Cb1531Ec8447366501aE440478da245EcffB89',
         name: 'Governance',
         description: 'Keeps a list of block producers and whitelisted tokens.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-          implementation: '0x6659174CdB0c445B897aEd25181f293E468941a5',
-        },
+        upgradeability: discovery.getContract(
+          '0x83Cb1531Ec8447366501aE440478da245EcffB89',
+        ).upgradeability,
       },
       {
         address: '0xc07f850b60E0EEd49a09E455b01a869C25963735',
         name: 'PairManager',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-          implementation: '0x5f3bE7846efC473552C5619b929F7d4aa640fb54',
-        },
+        upgradeability: discovery.getContract(
+          '0xc07f850b60E0EEd49a09E455b01a869C25963735',
+        ).upgradeability,
       },
       {
         address: '0xc632347cc96A4400653E3514eA148630455295b5',
         name: 'ZKSeaNFT',
         description:
           'Contract managing deposits and withdrawals of NFTs to Layer2.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-          implementation: '0xD06986022EFE62A5BC8258299e4495Bb27567BE0',
-        },
+        upgradeability: discovery.getContract(
+          '0xc632347cc96A4400653E3514eA148630455295b5',
+        ).upgradeability,
       },
       {
         address: '0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af',
         name: 'Verifier',
         description: 'zk-SNARK Plonk Verifier.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-          implementation: '0x44DedA2C824458A5DfE1e363c679dea33f1ffA39',
-        },
+        upgradeability: discovery.getContract(
+          '0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af',
+        ).upgradeability,
       },
       {
         address: '0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81',
         name: 'VerifierExit',
         description: 'zk-SNARK Verifier for the escape hatch.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
-          implementation: '0x41455808B3109AD0f79672C44D75933D3529FEaE',
-        },
+        upgradeability: discovery.getContract(
+          '0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81',
+        ).upgradeability,
       },
       {
         address: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',

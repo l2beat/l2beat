@@ -1,8 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('synapse')
 
 export const synapse: Bridge = {
   type: 'bridge',
@@ -130,11 +133,9 @@ export const synapse: Bridge = {
         description:
           "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
         address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55',
-          implementation: '0x31fe393815822edacBd81C2262467402199EFD0D',
-        },
+        upgradeability: discovery.getContract(
+          '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
+        ).upgradeability,
       },
       {
         name: 'Liquidity Pool',

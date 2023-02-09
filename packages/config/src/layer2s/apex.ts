@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -73,8 +73,10 @@ export const apex: Layer2 = {
         description:
           'Main contract of ApeX exchange. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
         upgradeability: {
-          type: 'StarkWare',
-          implementation: '0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0',
+          type: 'StarkWare proxy',
+          implementation: EthereumAddress(
+            '0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0',
+          ),
           upgradeDelay: 0,
           isFinal: false,
         },

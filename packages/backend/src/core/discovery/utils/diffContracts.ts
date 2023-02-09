@@ -1,6 +1,5 @@
+import { ContractParameters } from '@l2beat/shared'
 import { diff } from 'deep-diff'
-
-import { ContractParameters } from '../types'
 
 export interface FieldDiff {
   key?: string

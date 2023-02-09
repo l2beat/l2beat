@@ -1,4 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared'
+import {
+  ContractParameters,
+  ContractValue,
+  EthereumAddress,
+} from '@l2beat/shared'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
@@ -7,7 +11,6 @@ import { executeHandlers } from './handlers/executeHandlers'
 import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { detectProxy } from './proxies'
-import { ContractParameters, ContractValue } from './types'
 
 export interface AnalyzedData extends ContractParameters {
   meta: {

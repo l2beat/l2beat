@@ -1,8 +1,7 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared'
+import { Bytes, EthereumAddress, ProxyDetection } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
-import { ProxyDetection } from '../types'
 import { getAdmin, getImplementation } from './Eip1967Proxy'
 
 // keccak256('eip1967.proxy.implementation.secondary') - 1)

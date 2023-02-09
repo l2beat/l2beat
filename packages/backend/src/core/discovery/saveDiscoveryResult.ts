@@ -1,8 +1,7 @@
-import { Hash256 } from '@l2beat/shared'
+import { Hash256, ProjectParameters } from '@l2beat/shared'
 import { writeFile } from 'fs/promises'
 
 import { AnalyzedData } from './analyzeItem'
-import { ProjectParameters } from './types'
 
 export async function saveDiscoveryResult(
   results: AnalyzedData[],

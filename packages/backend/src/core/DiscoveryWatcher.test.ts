@@ -1,8 +1,10 @@
 import {
+  ContractParameters,
   EthereumAddress,
   Hash256,
   Logger,
   mock,
+  ProjectParameters,
   UnixTime,
 } from '@l2beat/shared'
 import { expect } from 'earljs'
@@ -17,7 +19,6 @@ import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryConfig } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
-import { ContractParameters, ProjectParameters } from './discovery/types'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'

@@ -1,8 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { DiscoveryContract } from '../DiscoveryConfig'
-import { ContractParameters } from '../types'
 import { diffDiscovery } from './diffDiscovery'
 
 describe(diffDiscovery.name, () => {

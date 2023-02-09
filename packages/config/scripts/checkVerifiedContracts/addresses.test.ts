@@ -18,6 +18,7 @@ describe('checkVerifiedContracts:addresses', () => {
       ...bridges,
       ...layer2s,
     ])
+
     for (const contract of allContracts) {
       expect(verifiedJson.contracts[contract.toString()], {
         extraMessage: `\n\nNot all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()}`,

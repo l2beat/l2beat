@@ -1,9 +1,9 @@
+import { ProjectParameters } from '@l2beat/shared'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
-import { ProjectParameters } from './types'
 
 export class ConfigReader {
   async readConfig(name: string): Promise<DiscoveryConfig> {

@@ -21,9 +21,7 @@
     "@l2beat/shared": "*",
     "dotenv": "^16.0.3",
     "node-fetch": "^2.6.7",
-    "zod": "^3.20.2"
-  },
-  "devDependencies": {
+    "zod": "^3.20.2",
     "ethers": "^5.7.2"
   }
 }

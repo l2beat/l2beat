@@ -1,5 +1,33 @@
-import { EthereumAddress } from '@l2beat/shared'
-import * as z from 'zod'
+import { z } from 'zod'
+
+import { EthereumAddress } from './EthereumAddress'
+import { Hash256 } from './Hash256'
+
+export interface ProjectParameters {
+  name: string
+  blockNumber: number
+  contracts: ContractParameters[]
+  eoas: EthereumAddress[]
+  abis: Record<string, string[]>
+  configHash: Hash256
+}
+
+export interface ContractParameters {
+  name: string
+  unverified?: true
+  address: EthereumAddress
+  code?: string
+  upgradeability: UpgradeabilityParameters
+  values?: Record<string, ContractValue>
+  errors?: Record<string, string>
+}
+
+export type ContractValue =
+  | string
+  | number
+  | boolean
+  | ContractValue[]
+  | { [key: string]: ContractValue }
 
 export interface ProxyDetection {
   upgradeability: UpgradeabilityParameters
@@ -52,9 +80,10 @@ export interface ZeppelinOSProxyUpgradeability {
 export interface StarkWareProxyUpgradeability {
   type: 'StarkWare proxy'
   implementation: EthereumAddress
-  callImplementation: EthereumAddress
+  callImplementation?: EthereumAddress
   upgradeDelay: number
   isFinal: boolean
+  useConstantDelay?: boolean
 }
 
 export interface StarkWareDiamondUpgradeability {

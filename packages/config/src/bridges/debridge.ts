@@ -1,8 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s'
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('debridge')
 
 export const debridge: Bridge = {
   type: 'bridge',
@@ -103,22 +106,18 @@ export const debridge: Bridge = {
         description:
           'The main point of cross-chain interactions, this contract allows user to send message to other chain and claim funds when bridging back to Ethereum.',
         address: '0x43dE2d77BF8027e25dBD179B491e8d64f38398aA',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0xE4427af3555CD9303D728C491364FAdFDD7494Fe',
-          implementation: '0x797161BCC625155D2302251404ccB93c2632658e',
-        },
+        upgradeability: discovery.getContract(
+          '0x43dE2d77BF8027e25dBD179B491e8d64f38398aA',
+        ).upgradeability,
       },
       {
         name: 'SignatureVerifier',
         description:
           'Contract responsible for checking off-chain signatures performed by the oracles, currently there are needed at least 8 confirmations.',
         address: '0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c',
-        upgradeability: {
-          type: 'EIP1967',
-          implementation: '0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4',
-          admin: '0xE4427af3555CD9303D728C491364FAdFDD7494Fe',
-        },
+        upgradeability: discovery.getContract(
+          '0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c',
+        ).upgradeability,
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

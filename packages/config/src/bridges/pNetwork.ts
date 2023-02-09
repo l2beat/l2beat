@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
@@ -137,9 +137,11 @@ export const pNetwork: Bridge = {
         description:
           'pNetwork ERCVault v2 for ERC20 with special logic for handling inflation of PNT token.',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a',
-          implementation: '0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a'),
+          implementation: EthereumAddress(
+            '0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b',
+          ),
         },
       },
       {

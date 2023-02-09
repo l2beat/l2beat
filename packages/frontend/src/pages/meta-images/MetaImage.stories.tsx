@@ -1,4 +1,3 @@
-import { layer2s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
@@ -9,31 +8,27 @@ import { TvlMetaImage } from './TvlMetaImage'
 
 export default {
   title: 'Other/MetaImage',
-  argTypes: {
-    projectId: {
-      control: 'select',
-      options: layer2s.map((x) => x.id),
-    },
-  },
 } as Meta
 
-interface TemplateProps {
-  projectId?: ProjectId
-}
-
-function Template({ projectId }: TemplateProps) {
+function Template() {
   useEffect(() => {
     configureCharts()
   })
-  const project = layer2s.find((x) => x.id === projectId)
+  const project = {
+    display: {
+      name: 'Arbitrum One',
+      slug: 'arbitrum',
+    },
+  }
+
   return (
     <div className="meta flex items-center justify-center">
       <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
         <TvlMetaImage
           tvl="$1.34 B"
           sevenDayChange="+3.45%"
-          name={project?.display.name}
-          icon={project?.display.slug && `/icons/${project.display.slug}.png`}
+          name={project.display.name}
+          icon={project.display.slug && `/icons/${project.display.slug}.png`}
           tvlEndpoint="/fakeTvl.json"
         />
       </div>
@@ -41,14 +36,14 @@ function Template({ projectId }: TemplateProps) {
   )
 }
 
-export const Project: Story<TemplateProps> = Template.bind({})
+export const Project: Story = Template.bind({})
 Project.args = {
   projectId: ProjectId('nova'),
 }
 
-export const TvlOverview: Story<TemplateProps> = Template.bind({})
+export const TvlOverview: Story = Template.bind({})
 
-export const ActivityOverview: Story<TemplateProps> = () => {
+export const ActivityOverview: Story = () => {
   useEffect(() => {
     configureCharts()
   })

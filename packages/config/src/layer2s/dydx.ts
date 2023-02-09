@@ -11,7 +11,10 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('dydx')
 
 export const dydx: Layer2 = {
   type: 'layer2',
@@ -108,25 +111,18 @@ export const dydx: Layer2 = {
         address: '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
         description:
           'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-        upgradeability: {
-          type: 'StarkWare',
-          implementation: '0x2C0df87E073755139101b35c0A51e065291cc2d3',
-          upgradeDelay: 0,
-          isFinal: false,
-        },
+        upgradeability: discovery.getContract(
+          '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
+        ).upgradeability,
       },
       {
         name: 'GpsStatementVerifier',
         address: '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
         description:
           'STARK Verifier. In contrast to Sorare, ImmutableX, rhino.fi and StarkNet which use common SHARP Prover, dYdX uses seperate Prover/Verifier.',
-        upgradeability: {
-          type: 'StarkWare',
-          implementation: '0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2',
-          callImplementation: '0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
-          upgradeDelay: 0,
-          isFinal: false,
-        },
+        upgradeability: discovery.getContract(
+          '0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C',
+        ).upgradeability,
       },
       {
         name: 'MemoryPageFactRegistry',

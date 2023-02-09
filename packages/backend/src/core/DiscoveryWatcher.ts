@@ -1,4 +1,4 @@
-import { Hash256, Logger, UnixTime } from '@l2beat/shared'
+import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Gauge } from 'prom-client'
 
@@ -8,7 +8,6 @@ import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
 import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
-import { ProjectParameters } from './discovery/types'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'

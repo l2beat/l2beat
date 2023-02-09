@@ -12,7 +12,10 @@ import {
   SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('layer2financeZk')
 
 export const layer2financezk: Layer2 = {
   type: 'layer2',
@@ -96,12 +99,9 @@ export const layer2financezk: Layer2 = {
       {
         name: 'StarkExchange',
         address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
-        upgradeability: {
-          type: 'StarkWare',
-          implementation: '0x4EDD62189732e9fF476ABa880b48c29432A7AC9B',
-          upgradeDelay: 0,
-          isFinal: false,
-        },
+        upgradeability: discovery.getContract(
+          '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
+        ).upgradeability,
       },
       {
         name: 'Committee',
@@ -127,13 +127,9 @@ export const layer2financezk: Layer2 = {
       {
         name: 'GpsStatementVerifier',
         address: '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
-        upgradeability: {
-          type: 'StarkWare',
-          implementation: '0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458',
-          upgradeDelay: 2419200,
-          callImplementation: '0x522B2871c3918B92c165115d862e50e440905068',
-          isFinal: true,
-        },
+        upgradeability: discovery.getContract(
+          '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
+        ).upgradeability,
       },
       {
         name: 'OrderRegistry',

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -77,8 +77,10 @@ export const myria: Layer2 = {
         name: 'StarkExchange',
         address: '0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7',
         upgradeability: {
-          type: 'StarkWare',
-          implementation: '0xe6785C3AfF4292C9d7c6b039f649672C45CAfFee',
+          type: 'StarkWare proxy',
+          implementation: EthereumAddress(
+            '0xe6785C3AfF4292C9d7c6b039f649672C45CAfFee',
+          ),
           upgradeDelay: 0,
           isFinal: false,
         },

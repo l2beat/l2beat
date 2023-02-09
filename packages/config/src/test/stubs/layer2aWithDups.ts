@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared'
+import { EthereumAddress, ProjectId } from '@l2beat/shared'
 
 import {
   DATA_AVAILABILITY,
@@ -192,9 +192,11 @@ export const layer2aWithDups: Layer2 = {
         name: 'L1CrossDomainMessenger',
         address: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
-          implementation: '0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A'),
+          implementation: EthereumAddress(
+            '0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5',
+          ),
         },
       },
       {
@@ -205,9 +207,11 @@ export const layer2aWithDups: Layer2 = {
         name: 'L1StandardBridge',
         address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
-          implementation: '0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A'),
+          implementation: EthereumAddress(
+            '0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB',
+          ),
         },
       },
       {

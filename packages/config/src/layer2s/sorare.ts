@@ -87,8 +87,10 @@ export const sorare: Layer2 = {
         name: 'StarkExchange',
         address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
         upgradeability: {
-          type: 'StarkWare',
-          implementation: '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
+          type: 'StarkWare proxy',
+          implementation: EthereumAddress(
+            '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
+          ),
           upgradeDelay: 1209600,
           isFinal: false,
         },

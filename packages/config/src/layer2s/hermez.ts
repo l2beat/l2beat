@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -183,18 +183,22 @@ export const hermez: Layer2 = {
         name: 'HermezAuctionProtocol',
         address: '0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2',
         upgradeability: {
-          type: 'EIP1967',
-          implementation: '0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6',
-          admin: '0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3',
+          type: 'EIP1967 proxy',
+          implementation: EthereumAddress(
+            '0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6',
+          ),
+          admin: EthereumAddress('0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3'),
         },
       },
       {
         name: 'Hermez',
         address: '0xA68D85dF56E733A06443306A095646317B5Fa633',
         upgradeability: {
-          type: 'EIP1967',
-          implementation: '0x6D85D79D69b7e190E671C16e8611997152bD3e95',
-          admin: '0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3',
+          type: 'EIP1967 proxy',
+          implementation: EthereumAddress(
+            '0x6D85D79D69b7e190E671C16e8611997152bD3e95',
+          ),
+          admin: EthereumAddress('0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3'),
         },
       },
       {

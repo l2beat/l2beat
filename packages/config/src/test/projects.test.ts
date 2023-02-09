@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared'
+import { assertUnreachable, EthereumAddress, ProjectId } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { bridges, getTokenBySymbol, layer2s } from '../'
@@ -21,19 +21,44 @@ describe('projects', () => {
           const contracts = project.contracts?.addresses ?? []
           for (const contract of contracts) {
             testAddress(contract.address)
-            if (
-              contract.upgradeability?.type === 'EIP1967' ||
-              contract.upgradeability?.type === 'NutBerry' ||
-              contract.upgradeability?.type === 'ZeppelinOs'
-            ) {
-              testAddress(contract.upgradeability.admin)
-              testAddress(contract.upgradeability.implementation)
-            }
-            if (contract.upgradeability?.type === 'StarkWare') {
-              testAddress(contract.upgradeability.implementation)
-              if (contract.upgradeability.callImplementation) {
-                testAddress(contract.upgradeability.callImplementation)
-              }
+            if (!contract.upgradeability?.type) return
+            switch (contract.upgradeability.type) {
+              case 'Custom':
+              case 'NutBerry':
+                testAddress(contract.upgradeability.implementation)
+                if (contract.upgradeability.admin) {
+                  testAddress(contract.upgradeability.admin)
+                }
+                break
+
+              case 'CustomWithoutAdmin':
+                testAddress(contract.upgradeability.implementation)
+                break
+
+              case 'Beacon':
+                testAddress(contract.upgradeability.beacon)
+                testAddress(contract.upgradeability.implementation)
+                testAddress(contract.upgradeability.beaconAdmin)
+                break
+
+              // Ignore types as they are already of type EthereumAddress
+              case 'EIP1967 proxy':
+              case 'ZeppelinOS proxy':
+              case 'immutable':
+              case 'gnosis safe':
+              case 'EIP2535 diamond proxy':
+              case 'StarkWare diamond':
+              case 'resolved delegate proxy':
+              case 'call implementation proxy':
+              case 'EIP897 proxy':
+              case 'StarkWare proxy':
+              case 'Arbitrum proxy':
+              case 'new Arbitrum proxy':
+              case 'Reference':
+                break
+
+              default:
+                assertUnreachable(contract.upgradeability)
             }
           }
         }
