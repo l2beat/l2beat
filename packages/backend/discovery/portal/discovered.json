@@ -1,0 +1,158 @@
+{
+  "name": "portal",
+  "blockNumber": 16583284,
+  "configHash": "0xf5b2bb66ad09a6f7aa9874bfb119446a5961a6a980efabaf01423a8114194000",
+  "contracts": [
+    {
+      "name": "BridgeImplementation",
+      "address": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+      "code": "https://etherscan.deth.net/address/0x3ee18B2214AFF97000D974cf647E7C347E8fa585,0x299b4F6066d231521d11FAE8331fb1A4fe794F58",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x299b4F6066d231521d11FAE8331fb1A4fe794F58",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "values": {
+        "chainId": 2,
+        "evmChainId": 1,
+        "finality": 1,
+        "governanceChainId": 1,
+        "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
+        "implementation": "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
+        "isFork": false,
+        "tokenImplementation": "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
+        "wormhole": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
+      "code": "https://etherscan.deth.net/address/0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "Implementation",
+      "address": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+      "code": "https://etherscan.deth.net/address/0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B,0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "values": {
+        "chainId": 2,
+        "evmChainId": 1,
+        "getCurrentGuardianSetIndex": 3,
+        "getGuardianSetExpiry": 0,
+        "governanceChainId": 1,
+        "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
+        "isFork": false,
+        "messageFee": 0
+      }
+    }
+  ],
+  "eoas": [],
+  "abis": {
+    "0x299b4F6066d231521d11FAE8331fb1A4fe794F58": [
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
+      "event Upgraded(address indexed implementation)",
+      "function WETH() view returns (address)",
+      "function _parseTransferCommon(bytes encoded) pure returns (tuple(uint8 payloadID, uint256 amount, bytes32 tokenAddress, uint16 tokenChain, bytes32 to, uint16 toChain, uint256 fee) transfer)",
+      "function attestToken(address tokenAddress, uint32 nonce) payable returns (uint64 sequence)",
+      "function bridgeContracts(uint16 chainId_) view returns (bytes32)",
+      "function chainId() view returns (uint16)",
+      "function completeTransfer(bytes encodedVm)",
+      "function completeTransferAndUnwrapETH(bytes encodedVm)",
+      "function completeTransferAndUnwrapETHWithPayload(bytes encodedVm) returns (bytes)",
+      "function completeTransferWithPayload(bytes encodedVm) returns (bytes)",
+      "function createWrapped(bytes encodedVm) returns (address token)",
+      "function encodeAssetMeta(tuple(uint8 payloadID, bytes32 tokenAddress, uint16 tokenChain, uint8 decimals, bytes32 symbol, bytes32 name) meta) pure returns (bytes encoded)",
+      "function encodeTransfer(tuple(uint8 payloadID, uint256 amount, bytes32 tokenAddress, uint16 tokenChain, bytes32 to, uint16 toChain, uint256 fee) transfer) pure returns (bytes encoded)",
+      "function encodeTransferWithPayload(tuple(uint8 payloadID, uint256 amount, bytes32 tokenAddress, uint16 tokenChain, bytes32 to, uint16 toChain, bytes32 fromAddress, bytes payload) transfer) pure returns (bytes encoded)",
+      "function evmChainId() view returns (uint256)",
+      "function finality() view returns (uint8)",
+      "function governanceActionIsConsumed(bytes32 hash) view returns (bool)",
+      "function governanceChainId() view returns (uint16)",
+      "function governanceContract() view returns (bytes32)",
+      "function implementation() view returns (address)",
+      "function initialize()",
+      "function isFork() view returns (bool)",
+      "function isInitialized(address impl) view returns (bool)",
+      "function isTransferCompleted(bytes32 hash) view returns (bool)",
+      "function isWrappedAsset(address token) view returns (bool)",
+      "function outstandingBridged(address token) view returns (uint256)",
+      "function parseAssetMeta(bytes encoded) pure returns (tuple(uint8 payloadID, bytes32 tokenAddress, uint16 tokenChain, uint8 decimals, bytes32 symbol, bytes32 name) meta)",
+      "function parsePayloadID(bytes encoded) pure returns (uint8 payloadID)",
+      "function parseRecoverChainId(bytes encodedRecoverChainId) pure returns (tuple(bytes32 module, uint8 action, uint256 evmChainId, uint16 newChainId) rci)",
+      "function parseRegisterChain(bytes encoded) pure returns (tuple(bytes32 module, uint8 action, uint16 chainId, uint16 emitterChainID, bytes32 emitterAddress) chain)",
+      "function parseTransfer(bytes encoded) pure returns (tuple(uint8 payloadID, uint256 amount, bytes32 tokenAddress, uint16 tokenChain, bytes32 to, uint16 toChain, uint256 fee) transfer)",
+      "function parseTransferWithPayload(bytes encoded) pure returns (tuple(uint8 payloadID, uint256 amount, bytes32 tokenAddress, uint16 tokenChain, bytes32 to, uint16 toChain, bytes32 fromAddress, bytes payload) transfer)",
+      "function parseUpgrade(bytes encoded) pure returns (tuple(bytes32 module, uint8 action, uint16 chainId, bytes32 newContract) chain)",
+      "function registerChain(bytes encodedVM)",
+      "function submitRecoverChainId(bytes encodedVM)",
+      "function tokenImplementation() view returns (address)",
+      "function transferTokens(address token, uint256 amount, uint16 recipientChain, bytes32 recipient, uint256 arbiterFee, uint32 nonce) payable returns (uint64 sequence)",
+      "function transferTokensWithPayload(address token, uint256 amount, uint16 recipientChain, bytes32 recipient, uint32 nonce, bytes payload) payable returns (uint64 sequence)",
+      "function updateWrapped(bytes encodedVm) returns (address token)",
+      "function upgrade(bytes encodedVM)",
+      "function wormhole() view returns (address)",
+      "function wrapAndTransferETH(uint16 recipientChain, bytes32 recipient, uint256 arbiterFee, uint32 nonce) payable returns (uint64 sequence)",
+      "function wrapAndTransferETHWithPayload(uint16 recipientChain, bytes32 recipient, uint32 nonce, bytes payload) payable returns (uint64 sequence)",
+      "function wrappedAsset(uint16 tokenChainId, bytes32 tokenAddress) view returns (address)"
+    ],
+    "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0": [
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
+      "event GuardianSetAdded(uint32 indexed index)",
+      "event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)",
+      "event Upgraded(address indexed implementation)",
+      "function chainId() view returns (uint16)",
+      "function evmChainId() view returns (uint256)",
+      "function getCurrentGuardianSetIndex() view returns (uint32)",
+      "function getGuardianSet(uint32 index) view returns (tuple(address[] keys, uint32 expirationTime))",
+      "function getGuardianSetExpiry() view returns (uint32)",
+      "function governanceActionIsConsumed(bytes32 hash) view returns (bool)",
+      "function governanceChainId() view returns (uint16)",
+      "function governanceContract() view returns (bytes32)",
+      "function initialize()",
+      "function isFork() view returns (bool)",
+      "function isInitialized(address impl) view returns (bool)",
+      "function messageFee() view returns (uint256)",
+      "function nextSequence(address emitter) view returns (uint64)",
+      "function parseAndVerifyVM(bytes encodedVM) view returns (tuple(uint8 version, uint32 timestamp, uint32 nonce, uint16 emitterChainId, bytes32 emitterAddress, uint64 sequence, uint8 consistencyLevel, bytes payload, uint32 guardianSetIndex, tuple(bytes32 r, bytes32 s, uint8 v, uint8 guardianIndex)[] signatures, bytes32 hash) vm, bool valid, string reason)",
+      "function parseContractUpgrade(bytes encodedUpgrade) pure returns (tuple(bytes32 module, uint8 action, uint16 chain, address newContract) cu)",
+      "function parseGuardianSetUpgrade(bytes encodedUpgrade) pure returns (tuple(bytes32 module, uint8 action, uint16 chain, tuple(address[] keys, uint32 expirationTime) newGuardianSet, uint32 newGuardianSetIndex) gsu)",
+      "function parseRecoverChainId(bytes encodedRecoverChainId) pure returns (tuple(bytes32 module, uint8 action, uint256 evmChainId, uint16 newChainId) rci)",
+      "function parseSetMessageFee(bytes encodedSetMessageFee) pure returns (tuple(bytes32 module, uint8 action, uint16 chain, uint256 messageFee) smf)",
+      "function parseTransferFees(bytes encodedTransferFees) pure returns (tuple(bytes32 module, uint8 action, uint16 chain, uint256 amount, bytes32 recipient) tf)",
+      "function parseVM(bytes encodedVM) pure returns (tuple(uint8 version, uint32 timestamp, uint32 nonce, uint16 emitterChainId, bytes32 emitterAddress, uint64 sequence, uint8 consistencyLevel, bytes payload, uint32 guardianSetIndex, tuple(bytes32 r, bytes32 s, uint8 v, uint8 guardianIndex)[] signatures, bytes32 hash) vm)",
+      "function publishMessage(uint32 nonce, bytes payload, uint8 consistencyLevel) payable returns (uint64 sequence)",
+      "function quorum(uint256 numGuardians) pure returns (uint256 numSignaturesRequiredForQuorum)",
+      "function submitContractUpgrade(bytes _vm)",
+      "function submitNewGuardianSet(bytes _vm)",
+      "function submitRecoverChainId(bytes _vm)",
+      "function submitSetMessageFee(bytes _vm)",
+      "function submitTransferFees(bytes _vm)",
+      "function verifySignatures(bytes32 hash, tuple(bytes32 r, bytes32 s, uint8 v, uint8 guardianIndex)[] signatures, tuple(address[] keys, uint32 expirationTime) guardianSet) pure returns (bool valid, string reason)",
+      "function verifyVM(tuple(uint8 version, uint32 timestamp, uint32 nonce, uint16 emitterChainId, bytes32 emitterAddress, uint64 sequence, uint8 consistencyLevel, bytes payload, uint32 guardianSetIndex, tuple(bytes32 r, bytes32 s, uint8 v, uint8 guardianIndex)[] signatures, bytes32 hash) vm) view returns (bool valid, string reason)"
+    ],
+    "0x3ee18B2214AFF97000D974cf647E7C347E8fa585": [
+      "constructor(address implementation, bytes initData)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": [
+      "constructor(address implementation, bytes initData)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ]
+  }
+}
