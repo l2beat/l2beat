@@ -1,15 +1,12 @@
-import { Logger } from '@l2beat/common'
-import { AssetId, UnixTime } from '@l2beat/types'
+import { AssetId, Logger, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
-import { createMockRepoMetrics } from '../../test/mocks/Metrics'
 import { PriceRecord, PriceRepository } from './PriceRepository'
 
 describe(PriceRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockMetrics = createMockRepoMetrics()
-  const repository = new PriceRepository(database, Logger.SILENT, mockMetrics)
+  const repository = new PriceRepository(database, Logger.SILENT)
 
   const START = UnixTime.now()
   const DATA = [

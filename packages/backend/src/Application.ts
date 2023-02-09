@@ -1,14 +1,14 @@
-import { HttpClient, Logger } from '@l2beat/common'
+import { HttpClient, Logger, LogThrottler } from '@l2beat/shared'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { Clock } from './core/Clock'
-import { Metrics } from './Metrics'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiscoveryModule } from './modules/discovery/DiscoveryModule'
 import { createDiscoveryWatcherModule } from './modules/discoveryWatcher/DiscoveryWatcherModule'
 import { createHealthModule } from './modules/health/HealthModule'
+import { createInversionModule } from './modules/inversion/InversionModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
 import { Database } from './peripherals/database/shared/Database'
@@ -18,7 +18,13 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config) {
-    const logger = new Logger({ ...config.logger, reportError })
+    const loggerOptions = { ...config.logger, reportError }
+
+    const logThrottler = config.logThrottler
+      ? new LogThrottler(config.logThrottler, new Logger(loggerOptions))
+      : undefined
+    const logger = new Logger(loggerOptions, logThrottler)
+
     const database = new Database(
       config.database ? config.database.connection : undefined,
       config.name,
@@ -38,22 +44,14 @@ export class Application {
       config.clock.safeTimeOffsetSeconds,
     )
 
-    const metrics = new Metrics()
-
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
-      createMetricsModule(config, metrics),
-      createTvlModule(config, logger, http, database, clock, metrics),
-      createActivityModule(config, logger, http, database, clock, metrics),
+      createMetricsModule(config),
+      createTvlModule(config, logger, http, database, clock),
+      createActivityModule(config, logger, http, database, clock),
       createDiscoveryModule(config, logger, http),
-      createDiscoveryWatcherModule(
-        config,
-        logger,
-        http,
-        database,
-        clock,
-        metrics,
-      ),
+      createDiscoveryWatcherModule(config, logger, http, database, clock),
+      createInversionModule(config, logger),
     ]
 
     const apiServer =
@@ -61,7 +59,6 @@ export class Application {
       new ApiServer(
         config.api.port,
         logger,
-        metrics,
         modules.flatMap((x) => x?.routers ?? []),
         handleServerError,
       )

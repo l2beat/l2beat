@@ -1,6 +1,5 @@
-import { LogLevel } from '@l2beat/common'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { UnixTime } from '@l2beat/types'
+import { LogLevel, UnixTime } from '@l2beat/shared'
 import { config as dotenv } from 'dotenv'
 
 import { CliParameters } from '../cli/getCliParameters'
@@ -11,7 +10,11 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(cli: CliParameters): Config {
   dotenv()
-  if (cli.mode !== 'server' && cli.mode !== 'discover') {
+  if (
+    cli.mode !== 'server' &&
+    cli.mode !== 'discover' &&
+    cli.mode !== 'invert'
+  ) {
     throw new Error(`No local config for mode: ${cli.mode}`)
   }
 
@@ -26,6 +29,7 @@ export function getLocalConfig(cli: CliParameters): Config {
     cli.mode === 'server' && getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     !!process.env.DISCORD_TOKEN && !!process.env.DISCORD_CHANNEL_ID
+  const invertEnabled = cli.mode === 'invert'
 
   return {
     name: 'Backend/Local',
@@ -35,6 +39,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'pretty',
     },
+    logThrottler: false,
     clock: {
       // TODO: This should probably be configurable
       minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
@@ -56,6 +61,10 @@ export function getLocalConfig(cli: CliParameters): Config {
     health: {
       startedAt: new Date().toISOString(),
       commitSha: getGitCommitHash(),
+    },
+    invert: invertEnabled && {
+      file: cli.file,
+      useMermaidMarkup: false,
     },
     tvl: tvlEnabled && {
       tokens: tokenList,

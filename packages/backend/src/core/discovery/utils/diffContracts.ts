@@ -1,4 +1,4 @@
-import { ContractParameters } from '@l2beat/types'
+import { ContractParameters } from '@l2beat/shared'
 import { diff } from 'deep-diff'
 
 export interface FieldDiff {
@@ -73,7 +73,6 @@ export function diffContracts(
         if (r.key.includes(`values.${i}`)) {
           return false
         }
-        return true
       }
     }
     return true

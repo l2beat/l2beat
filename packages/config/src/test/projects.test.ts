@@ -1,5 +1,4 @@
-import { assertUnreachable } from '@l2beat/common'
-import { EthereumAddress, ProjectId } from '@l2beat/types'
+import { assertUnreachable, EthereumAddress, ProjectId } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { bridges, getTokenBySymbol, layer2s } from '../'
@@ -24,41 +23,16 @@ describe('projects', () => {
             testAddress(contract.address)
             if (!contract.upgradeability?.type) return
             switch (contract.upgradeability.type) {
-              case 'EIP1967 proxy':
               case 'Custom':
               case 'NutBerry':
-              case 'ZeppelinOS proxy':
-                testAddress(contract.upgradeability.implementation.toString())
+                testAddress(contract.upgradeability.implementation)
                 if (contract.upgradeability.admin) {
-                  testAddress(contract.upgradeability.admin.toString())
+                  testAddress(contract.upgradeability.admin)
                 }
                 break
 
-              case 'StarkWare diamond':
-              case 'resolved delegate proxy':
-              case 'call implementation proxy':
-              case 'EIP897 proxy':
               case 'CustomWithoutAdmin':
-                testAddress(contract.upgradeability.implementation.toString())
-                break
-
-              case 'StarkWare proxy': {
-                const implementation =
-                  contract.upgradeability.callImplementation ??
-                  contract.upgradeability.implementation
-                testAddress(implementation.toString())
-                return
-              }
-
-              case 'new Arbitrum proxy':
-              case 'Arbitrum proxy':
-                testAddress(contract.upgradeability.admin.toString())
-                testAddress(
-                  contract.upgradeability.adminImplementation.toString(),
-                )
-                testAddress(
-                  contract.upgradeability.userImplementation.toString(),
-                )
+                testAddress(contract.upgradeability.implementation)
                 break
 
               case 'Beacon':
@@ -67,10 +41,19 @@ describe('projects', () => {
                 testAddress(contract.upgradeability.beaconAdmin)
                 break
 
-              // Ignore types
+              // Ignore types as they are already of type EthereumAddress
+              case 'EIP1967 proxy':
+              case 'ZeppelinOS proxy':
               case 'immutable':
               case 'gnosis safe':
               case 'EIP2535 diamond proxy':
+              case 'StarkWare diamond':
+              case 'resolved delegate proxy':
+              case 'call implementation proxy':
+              case 'EIP897 proxy':
+              case 'StarkWare proxy':
+              case 'Arbitrum proxy':
+              case 'new Arbitrum proxy':
               case 'Reference':
                 break
 

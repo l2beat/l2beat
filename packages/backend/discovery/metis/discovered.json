@@ -1,6 +1,7 @@
 {
   "name": "metis",
   "blockNumber": 16182327,
+  "configHash": "0x14dd8e93635f58ad5b5810765e0149d29cc7fbb4d9e8640f2cce332cebdf4993",
   "contracts": [
     {
       "name": "L1StandardBridge",

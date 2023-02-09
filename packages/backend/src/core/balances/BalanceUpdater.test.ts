@@ -1,13 +1,14 @@
-import { Logger, mock } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
   Bytes,
   CoingeckoId,
   EthereumAddress,
+  Logger,
+  mock,
   ProjectId,
   UnixTime,
-} from '@l2beat/types'
+} from '@l2beat/shared'
 import { expect, mockFn } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
@@ -17,7 +18,6 @@ import {
 } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
-import { createMockTvlMetrics } from '../../test/mocks/Metrics'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { BalanceProject } from './BalanceProject'
@@ -25,7 +25,6 @@ import { BalanceUpdater, getMissingData } from './BalanceUpdater'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
 
 describe(BalanceUpdater.name, () => {
-  const mockMetrics = createMockTvlMetrics()
   describe(BalanceUpdater.prototype.start.name, () => {
     const NOW = UnixTime.now().toStartOf('hour')
 
@@ -56,7 +55,6 @@ describe(BalanceUpdater.name, () => {
         clock,
         [],
         Logger.SILENT,
-        mockMetrics,
       )
 
       await balanceUpdater.start()
@@ -117,7 +115,6 @@ describe(BalanceUpdater.name, () => {
         mock<Clock>(),
         projects,
         Logger.SILENT,
-        mockMetrics,
       )
 
       const timestamp = new UnixTime(2000)
@@ -184,7 +181,6 @@ describe(BalanceUpdater.name, () => {
         mock<Clock>(),
         projects,
         Logger.SILENT,
-        mockMetrics,
       )
 
       const timestamp = new UnixTime(2000)
@@ -215,7 +211,6 @@ describe(BalanceUpdater.name, () => {
         mock<Clock>(),
         [],
         Logger.SILENT,
-        mockMetrics,
       )
 
       const timestamp = UnixTime.now()

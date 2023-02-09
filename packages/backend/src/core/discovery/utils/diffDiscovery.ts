@@ -1,4 +1,4 @@
-import { ContractParameters, EthereumAddress } from '@l2beat/types'
+import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 
 import { DiscoveryContract } from '../DiscoveryConfig'
 import { diffContracts, FieldDiff } from './diffContracts'
@@ -13,7 +13,7 @@ export interface DiscoveryDiff {
 export function diffDiscovery(
   committed: ContractParameters[],
   discovered: ContractParameters[],
-  overrides: Record<string, DiscoveryContract>,
+  overrides?: Record<string, DiscoveryContract>,
 ): DiscoveryDiff[] {
   const modifiedOrDeleted: DiscoveryDiff[] = []
 
@@ -29,10 +29,8 @@ export function diffDiscovery(
       })
       continue
     }
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const ignored: string[] = overrides[committedContract.address.toString()]
-      ? overrides[committedContract.address.toString()].ignoreInWatchMode ?? []
-      : []
+
+    const ignored = getIgnored(committedContract.address, overrides)
 
     const diff = diffContracts(committedContract, discoveredContract, ignored)
 
@@ -61,4 +59,20 @@ export function diffDiscovery(
   }
 
   return modifiedOrDeleted.concat(created)
+}
+
+function getIgnored(
+  address: EthereumAddress,
+  overrides?: Partial<Record<string, DiscoveryContract>>,
+): string[] {
+  if (overrides === undefined) {
+    return []
+  }
+
+  const override = overrides[address.toString()]
+  if (override === undefined) {
+    return []
+  }
+
+  return override.ignoreInWatchMode ?? []
 }

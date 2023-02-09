@@ -1,4 +1,8 @@
-import { EthereumAddress, ManualProxyType, ProxyDetection } from '@l2beat/types'
+import {
+  EthereumAddress,
+  ManualProxyType,
+  ProxyDetection,
+} from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'

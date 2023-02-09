@@ -1,4 +1,4 @@
-import * as types from '@l2beat/types'
+import * as types from '@l2beat/shared'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'

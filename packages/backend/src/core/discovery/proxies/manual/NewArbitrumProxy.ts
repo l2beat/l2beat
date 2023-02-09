@@ -1,4 +1,4 @@
-import { EthereumAddress, ProxyDetection } from '@l2beat/types'
+import { EthereumAddress, ProxyDetection } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { getCallResult } from '../../utils/getCallResult'

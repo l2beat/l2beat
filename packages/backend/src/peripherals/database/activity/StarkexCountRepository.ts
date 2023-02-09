@@ -1,9 +1,7 @@
-import { Logger } from '@l2beat/common'
-import { ProjectId, UnixTime } from '@l2beat/types'
+import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
 import { Knex } from 'knex'
 import { StarkexTransactionCountRow } from 'knex/types/tables'
 
-import { Metrics } from '../../../Metrics'
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 import { NullableDict } from '../shared/types'
@@ -15,8 +13,8 @@ export interface StarkexTransactionCountRecord {
 }
 
 export class StarkexTransactionCountRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger, metrics: Metrics) {
-    super(database, logger, metrics)
+  constructor(database: Database, logger: Logger) {
+    super(database, logger)
     this.autoWrap<CheckConvention<StarkexTransactionCountRepository>>(this)
   }
 

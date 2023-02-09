@@ -50,14 +50,14 @@ export function Chart({
         data-milestones={JSON.stringify(milestones)}
         className={cx(
           fullWidth
-            ? 'px-4 py-6 bg-gray-100 dark:bg-gray-950 md:bg-transparent md:dark:bg-transparent md:p-0'
+            ? 'bg-gray-100 px-4 py-6 dark:bg-gray-950 md:bg-transparent md:p-0 md:dark:bg-transparent'
             : 'mt-4',
           'md:mt-8',
         )}
       >
         {!metaChart && hasActivity && hasTvl && (
-          <div className="md:flex gap-5 md:items-center mb-4 md:mb-6">
-            <h2 className="hidden md:inline text-3xl font-bold">Chart</h2>
+          <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
+            <h2 className="hidden text-3xl font-bold md:inline">Chart</h2>
             <TvlActivityToggle />
           </div>
         )}
@@ -74,10 +74,10 @@ export function Chart({
           >
             <ChartLoader />
             <ChartHover />
-            <Logo className="absolute bottom-2 right-2 z-10 w-[60px] h-[25px] opacity-40" />
+            <Logo className="absolute bottom-2 right-2 z-10 h-[25px] w-[60px] opacity-40" />
             <canvas
               data-role="chart-canvas"
-              className="absolute z-20 bottom-0 left-0 block w-full h-[calc(100%_-_20px)]"
+              className="absolute bottom-0 left-0 z-20 block h-[calc(100%_-_20px)] w-full"
             />
             <YAxisLabels />
             <div
@@ -85,7 +85,7 @@ export function Chart({
               className="absolute bottom-0 w-[100%]"
             />
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             {hasActivity && (
               <EthereumActivityToggle
                 showToggle={type === 'activity'}
@@ -98,7 +98,7 @@ export function Chart({
           {hasTvl && <TokenControls tokens={tokens} />}
         </div>
       </section>
-      <HorizontalSeparator className="hidden md:block mt-4 md:mt-6" />
+      <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
     </>
   )
 }

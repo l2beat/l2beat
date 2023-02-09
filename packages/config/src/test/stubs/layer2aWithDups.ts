@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/types'
+import { EthereumAddress, ProjectId } from '@l2beat/shared'
 
 import {
   DATA_AVAILABILITY,

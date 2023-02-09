@@ -1,6 +1,5 @@
-import { LogLevel } from '@l2beat/common'
 import { Layer2TransactionApi } from '@l2beat/config'
-import { UnixTime } from '@l2beat/types'
+import { LogLevel, UnixTime } from '@l2beat/shared'
 import { Knex } from 'knex'
 
 import { Project, Token } from '../model'
@@ -10,20 +9,28 @@ export interface Config {
   readonly projects: Project[]
   readonly syncEnabled: boolean
   readonly logger: LoggerConfig
+  readonly logThrottler: LogThrottlerConfig | false
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig | false
   readonly api: ApiConfig | false
   readonly health: HealthConfig
+  readonly invert: InversionConfig | false
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
-  readonly discovery: DiscoveryConfig | false
+  readonly discovery: DiscoveryModuleConfig | false
   readonly discoveryWatcher: DiscoveryWatcherConfig | false
 }
 
 export interface LoggerConfig {
   readonly logLevel: LogLevel
   readonly format: 'pretty' | 'json'
+}
+
+export interface LogThrottlerConfig {
+  readonly threshold: number
+  readonly thresholdTimeInMs: number
+  readonly throttleTimeInMs: number
 }
 
 export interface ApiConfig {
@@ -57,6 +64,11 @@ export interface HealthConfig {
   readonly commitSha: string
 }
 
+export interface InversionConfig {
+  readonly file: string
+  readonly useMermaidMarkup: boolean
+}
+
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
@@ -65,7 +77,7 @@ export interface ActivityConfig {
   readonly projects: Record<string, Layer2TransactionApi | undefined>
 }
 
-export interface DiscoveryConfig {
+export interface DiscoveryModuleConfig {
   readonly project: string
   readonly blockNumber?: number
   readonly alchemyApiKey: string

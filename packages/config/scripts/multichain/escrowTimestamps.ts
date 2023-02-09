@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/types'
+import { EthereumAddress } from '@l2beat/shared'
 
 export const escrowTimestamps = new Map<EthereumAddress, number>([
   [EthereumAddress('0x0615Dbba33Fe61a31c7eD131BDA6655Ed76748B1'), 1644997112],

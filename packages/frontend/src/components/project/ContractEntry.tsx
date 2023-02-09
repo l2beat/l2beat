@@ -1,4 +1,4 @@
-import { VerificationStatus } from '@l2beat/types'
+import { VerificationStatus } from '@l2beat/shared'
 import cx from 'classnames'
 import React from 'react'
 
@@ -59,7 +59,7 @@ export function ContractEntry({
       icon={icon}
       body={
         <>
-          <div className="flex gap-x-2 flex-wrap">
+          <div className="flex flex-wrap gap-x-2">
             <strong>{contract.name}</strong>{' '}
             {contract.address && (
               <EtherscanLink
@@ -87,7 +87,7 @@ export function ContractEntry({
           </div>
           {contract.description && (
             <div className="mt-2">
-              <p className="text-gray-860 dark:text-gray-400">
+              <p className="text-gray-850 dark:text-gray-400">
                 {contract.description}
               </p>
             </div>

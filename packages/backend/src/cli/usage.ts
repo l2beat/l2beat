@@ -3,6 +3,7 @@ import chalk from 'chalk'
 const usage = `Usage:
     yarn start ...................................... run the server application
     yarn discover [project] ................. run discovery on a specific system
+    yarn invert [file] ............... print addresses and their functions
     yarn <start|discover> --help .......................... display this message
 `
 const colorUsage = usage

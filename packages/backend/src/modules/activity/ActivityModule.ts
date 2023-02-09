@@ -1,5 +1,4 @@
-import { HttpClient, Logger } from '@l2beat/common'
-import { ProjectId } from '@l2beat/types'
+import { HttpClient, Logger, ProjectId } from '@l2beat/shared'
 
 import { ActivityController } from '../../api/controllers/activity/ActivityController'
 import { createActivityRouter } from '../../api/routers/ActivityRouter'
@@ -9,7 +8,6 @@ import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTra
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
 import { TransactionCountingMonitor } from '../../core/activity/TransactionCountingMonitor'
 import { Clock } from '../../core/Clock'
-import { Metrics } from '../../Metrics'
 import { Project } from '../../model'
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { Database } from '../../peripherals/database/shared/Database'
@@ -22,7 +20,6 @@ export function createActivityModule(
   http: HttpClient,
   database: Database,
   clock: Clock,
-  metrics: Metrics,
 ): ApplicationModule | undefined {
   if (!config.activity) {
     return
@@ -31,7 +28,6 @@ export function createActivityModule(
   const dailyCountViewRepository = new DailyTransactionCountViewRepository(
     database,
     logger,
-    metrics,
   )
 
   const counters = createTransactionCounters(
@@ -40,7 +36,6 @@ export function createActivityModule(
     http,
     database,
     clock,
-    metrics,
   )
 
   const viewRefresher = new DailyTransactionCountViewRefresher(

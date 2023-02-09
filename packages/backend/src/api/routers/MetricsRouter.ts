@@ -1,11 +1,11 @@
 import Router from '@koa/router'
 import auth from 'basic-auth'
+import { register } from 'prom-client'
 
 import { Config } from '../../config'
 import { MetricsAuthConfig } from '../../config/Config'
-import { Metrics } from '../../Metrics'
 
-export function createMetricsRouter(config: Config, metrics: Metrics) {
+export function createMetricsRouter(config: Config) {
   const router = new Router()
 
   if (!config.metricsAuth) {
@@ -31,7 +31,7 @@ export function createMetricsRouter(config: Config, metrics: Metrics) {
       return
     }
 
-    ctx.body = await metrics.getMetrics()
+    ctx.body = await register.metrics()
   })
 
   return router

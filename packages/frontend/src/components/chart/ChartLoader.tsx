@@ -4,7 +4,7 @@ export function ChartLoader() {
   return (
     <svg
       data-role="chart-loader"
-      className="select-none relative z-20 hidden mx-auto mt-[62px] sm:mt-[85px] pointer-events-none opacity-40"
+      className="pointer-events-none relative z-20 mx-auto mt-[62px] hidden select-none opacity-40 sm:mt-[85px]"
       width="50px"
       height="50px"
       viewBox="0 0 100 100"

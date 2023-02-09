@@ -1,11 +1,12 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, Layer2Rating } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
-import { getRowVerificationClassNames } from '../../../components/table/props/getRowVerificationClassNames'
+import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
+import { RatingCell } from '../../../components/table/RatingCell'
 import {
   ColumnConfig,
   RowConfig,
@@ -19,6 +20,7 @@ import {
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
+  ratingEnabled: boolean
 }
 
 export interface ScalingTvlViewEntry {
@@ -34,9 +36,10 @@ export interface ScalingTvlViewEntry {
   marketShare: string
   purpose: string
   technology: string
+  ratingEntry?: Layer2Rating
 }
 
-export function ScalingTvlView({ items }: ScalingTvlViewProps) {
+export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -57,12 +60,6 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
       getValue: (project) => <NumberCell>{project.tvl}</NumberCell>,
     },
     {
-      name: 'Breakdown',
-      tooltip:
-        'Composition of the total value locked broken down by token type.',
-      getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
-    },
-    {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
@@ -70,8 +67,25 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
         <NumberCell signed>{project.sevenDayChange}</NumberCell>
       ),
     },
+    ...(ratingEnabled
+      ? [
+          {
+            name: 'Rating',
+            alignCenter: true as const,
+            getValue: (project: ScalingTvlViewEntry) => (
+              <RatingCell item={project.ratingEntry} />
+            ),
+          },
+        ]
+      : []),
     {
-      name: 'Market share',
+      name: 'Breakdown',
+      tooltip:
+        'Composition of the total value locked broken down by token type.',
+      getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
+    },
+    {
+      name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
       getValue: (project) => <NumberCell>{project.marketShare}</NumberCell>,
@@ -93,9 +107,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
   ]
 
   const rows: RowConfig<ScalingTvlViewEntry> = {
-    getProps: (entry) => ({
-      className: getRowVerificationClassNames(entry),
-    }),
+    getProps: getScalingRowProps,
   }
 
   return (

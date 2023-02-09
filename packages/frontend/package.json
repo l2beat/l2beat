@@ -21,13 +21,12 @@
     "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit",
     "storybook": "start-storybook -p 6006 --no-open",
-    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{types,common,config} -recsm build --module es6) && build-storybook",
+    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared,config} -recsm build --module es6) && build-storybook",
     "storybook:screenshot": "yarn storycap --serverCmd \"npx http-server ./storybook-static -p 9001\" http://localhost:9001"
   },
   "dependencies": {
-    "@l2beat/common": "*",
+    "@l2beat/shared": "*",
     "@l2beat/config": "*",
-    "@l2beat/types": "*",
     "@types/express": "^4.17.16",
     "@types/fs-extra": "^9.0.13",
     "@types/lodash": "^4.14.191",
@@ -64,6 +63,7 @@
     "http-proxy-middleware": "^2.0.6",
     "postcss": "^8.4.21",
     "prettier": "^2.6.2",
+    "prettier-plugin-tailwindcss": "^0.2.2",
     "sass": "^1.52.2",
     "storybook-dark-mode": "^1.1.0",
     "storycap": "^3.1.9",

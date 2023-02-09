@@ -1,19 +1,12 @@
-import { Logger } from '@l2beat/common'
-import { UnixTime } from '@l2beat/types'
+import { Logger, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
-import { createMockRepoMetrics } from '../../test/mocks/Metrics'
 import { BlockNumberRepository } from './BlockNumberRepository'
 
 describe(BlockNumberRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockMetrics = createMockRepoMetrics()
-  const repository = new BlockNumberRepository(
-    database,
-    Logger.SILENT,
-    mockMetrics,
-  )
+  const repository = new BlockNumberRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
     await repository.deleteAll()

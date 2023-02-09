@@ -1,9 +1,9 @@
-import { assert } from '@l2beat/common'
 import {
+  assert,
   ContractParameters,
   ContractValue,
   ProjectParameters,
-} from '@l2beat/types'
+} from '@l2beat/shared'
 import { utils } from 'ethers'
 import fs from 'fs'
 import path from 'path'
@@ -68,7 +68,7 @@ export class ProjectDiscovery {
   }
 
   getContractUpgradeabilityParam<
-    K extends AllKeys<ProjectUpgradeability>,
+    K extends keyof MergedUnion<ProjectUpgradeability>,
     T extends MergedUnion<ProjectUpgradeability>[K],
   >(contractIdentifier: string, key: K): T {
     const contract = this.getContract(contractIdentifier)

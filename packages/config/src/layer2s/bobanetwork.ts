@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -33,6 +33,7 @@ export const bobanetwork: Layer2 = {
       repositories: ['https://github.com/bobanetwork/boba'],
       socialMedia: [
         'https://boba.network/#news',
+        'https://boba.network/blog/',
         'https://www.enya.ai/company/media',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
@@ -275,6 +276,7 @@ export const bobanetwork: Layer2 = {
           'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
         address: '0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089',
       },
+      // This Proxy is a L1ChugSplashProxy with a typical EIP1967 pattern.
       {
         name: 'L1StandardBridge',
         address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
@@ -288,6 +290,7 @@ export const bobanetwork: Layer2 = {
           admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
         },
       },
+      // L1NFTBridge Proxy even though is called ResolvedDelegateProxy it does not use external lib manager
       {
         name: 'L1NFTBridge',
         address: '0xC891F466e53f40603250837282eAE4e22aD5b088',
@@ -295,7 +298,7 @@ export const bobanetwork: Layer2 = {
         upgradeability: {
           type: 'EIP1967 proxy',
           implementation: EthereumAddress(
-            '0xb8888346C0caBF99b6F9C35d028590Dee32684aE',
+            '0x8DB3B7Db8A0f77e0E21178FcaD0A53E52bfdBA82',
           ),
           admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
         },
@@ -337,6 +340,31 @@ export const bobanetwork: Layer2 = {
     },
   ],
   milestones: [
+    {
+      name: 'Boba launches L2 on BNB',
+      date: '2022-11-01T00:00:00Z',
+      link: 'https://boba.network/boba-network-bnb-chain-l2-live/',
+      description: 'Boba launches on BnB.',
+    },
+    {
+      name: 'Boba launches L2 on Avalanche',
+      date: '2022-09-21T00:00:00Z',
+      link: 'https://boba.network/an-avalanche-of-boba-is-coming/',
+      description: 'Boba launches on Avalanche.',
+    },
+    {
+      name: 'Boba launches L2 on Moonbeam and Fantom',
+      date: '2022-06-02T00:00:00Z',
+      link: 'https://boba.network/boba-network-multichain-announcement/',
+      description: 'Boba launches on Moonbeam and Fantom.',
+    },
+    {
+      name: 'Call data compression',
+      date: '2022-10-08T00:00:00Z',
+      link: 'https://boba.network/boba-call-data-compression/',
+      description:
+        'The Boba Tree From (v0.1.0) release introduces Brotli compression for call data.',
+    },
     {
       name: 'Hybrid Compute',
       date: '2022-03-18T00:00:00Z',

@@ -10,7 +10,7 @@ interface TvlStatProps {
 export function TvlStat(props: TvlStatProps) {
   return (
     <>
-      <span className="font-bold mr-2">{props.tvl}</span>
+      <span className="mr-2 font-bold">{props.tvl}</span>
       <span className="text-base">
         <PercentChange value={props.sevenDaysChange} />
       </span>

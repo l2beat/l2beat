@@ -1,6 +1,6 @@
-import { Logger, TaskQueue } from '@l2beat/common'
-import { ProjectParameters, UnixTime } from '@l2beat/types'
+import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
+import { Gauge } from 'prom-client'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
@@ -10,6 +10,13 @@ import { DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
+import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
+import { TaskQueue } from './queue/TaskQueue'
+
+const latestBlock = new Gauge({
+  name: 'discovery_watcher_last_synced',
+  help: 'Latest block number with which DiscoveryWatcher was run',
+})
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -27,6 +34,9 @@ export class DiscoveryWatcher {
     this.taskQueue = new TaskQueue(
       () => this.update(),
       this.logger.for('taskQueue'),
+      {
+        metricsId: DiscoveryWatcher.name,
+      },
     )
   }
 
@@ -53,10 +63,12 @@ export class DiscoveryWatcher {
           projectConfig,
           blockNumber,
         )
+        const configHash = getDiscoveryConfigHash(projectConfig)
 
         const diff = await this.findChanges(
           projectConfig.name,
           discovery,
+          configHash,
           projectConfig.overrides,
         )
 
@@ -70,6 +82,7 @@ export class DiscoveryWatcher {
           timestamp,
           blockNumber,
           discovery,
+          configHash,
         })
 
         this.logger.info('Discovery finished', { project: projectConfig.name })
@@ -78,20 +91,32 @@ export class DiscoveryWatcher {
       }
     }
     this.logger.info('Update finished', { blockNumber })
+    latestBlock.set(blockNumber)
   }
 
   async findChanges(
     name: string,
     discovery: ProjectParameters,
+    configHash: Hash256,
     overrides?: Record<string, DiscoveryContract>,
   ): Promise<DiscoveryDiff[]> {
     const databaseEntry = await this.repository.findLatest(name)
 
-    const currentContracts = databaseEntry
-      ? databaseEntry.discovery.contracts
-      : (await this.configReader.readDiscovery(name)).contracts
+    if (
+      databaseEntry === undefined ||
+      databaseEntry.configHash !== configHash
+    ) {
+      this.logger.debug('Using committed file for diff', { project: name })
+      const committed = await this.configReader.readDiscovery(name)
+      return diffDiscovery(committed.contracts, discovery.contracts, overrides)
+    }
 
-    return diffDiscovery(currentContracts, discovery.contracts, overrides ?? {})
+    this.logger.debug('Using database record for diff', { project: name })
+    return diffDiscovery(
+      databaseEntry.discovery.contracts,
+      discovery.contracts,
+      overrides,
+    )
   }
 
   async notify(messages: string[]) {

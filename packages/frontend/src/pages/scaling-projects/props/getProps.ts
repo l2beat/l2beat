@@ -26,6 +26,7 @@ export function getProps(
       showProjectHeader: config.features.activity,
       projectHeader: getProjectHeader(
         project,
+        config,
         tvlApiResponse,
         activityApiResponse,
       ),

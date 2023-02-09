@@ -21,9 +21,9 @@ export function TvlActivityToggle() {
     >
       <label
         className={cx(
-          'text-lg font-bold bg-purple-300 dark:bg-purple-700',
+          'bg-purple-300 text-lg font-bold dark:bg-purple-700',
           'flex items-center p-[5px] md:p-[7px]',
-          'rounded-[5px] md:rounded-[11px] cursor-pointer select-none',
+          'cursor-pointer select-none rounded-[5px] md:rounded-[11px]',
           'relative z-20',
         )}
       >
@@ -36,7 +36,7 @@ export function TvlActivityToggle() {
         />
         <div
           className={cx(
-            'flex-1 md:flex-auto py-1 md:px-6 md:py-1.5',
+            'flex-1 py-1 md:flex-auto md:px-6 md:py-1.5',
             'flex justify-center',
             'rounded md:rounded-md',
             'bg-gradient-to-r from-purple-100 to-pink-100',
@@ -51,7 +51,7 @@ export function TvlActivityToggle() {
         </div>
         <div
           className={cx(
-            'flex-1 md:flex-auto py-1 md:px-6 md:py-1.5',
+            'flex-1 py-1 md:flex-auto md:px-6 md:py-1.5',
             'flex justify-center',
             'rounded md:rounded-md',
             'peer-checked:text-white',

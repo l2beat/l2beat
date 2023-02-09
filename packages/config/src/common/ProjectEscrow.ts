@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/types'
+import { UnixTime } from '@l2beat/shared'
 
 export interface ProjectEscrow {
   /** Address of the escrow. Use etherscan to verify its correctness. */
