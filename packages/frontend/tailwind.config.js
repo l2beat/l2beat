@@ -3,18 +3,7 @@ module.exports = {
   content: ['./src/**/*.{html,ts,tsx}'],
   darkMode: 'class',
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Roboto', 'Arial', 'sans-serif'],
-      },
-      zIndex: {
-        1: '1',
-        41: '41',
-      },
-      spacing: {
-        '2/3': '66.666666%',
-      },
-    },
+    
     fontSize: {
       '3xs': ['8px', '12px'],
       '2xs': ['12px', '16px'],
@@ -103,6 +92,47 @@ module.exports = {
       md: '750px',
       lg: '1000px',
     },
+    extend: {
+      fontFamily: {
+        sans: ['Roboto', 'Arial', 'sans-serif'],
+      },
+      zIndex: {
+        1: '1',
+        41: '41',
+      },
+      spacing: {
+        '2/3': '66.666666%',
+      },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-body': theme('colors.gray.850'),
+            '--tw-prose-invert-body': theme('colors.gray.400'),
+            '--tw-prose-bullets': 'var(--tw-prose-body)',
+            '--tw-prose-invert-bullets': 'var(--tw-prose-body)',
+            '--tw-prose-counters': 'var(--tw-prose-body)',
+            '--tw-prose-invert-counters': 'var(--tw-prose-body)',
+            maxWidth: 'none',
+            fontSize: theme('fontSize.lg')[0],
+            h2: {
+              fontSize: theme('fontSize.4xl')[0],
+            },
+            h3: {
+              fontSize: theme('fontSize.2xl')[0],
+            },
+            h4: {
+              fontSize: theme('fontSize.2xl')[0],
+            },
+            ol: {
+              fontWeight: '500'
+            },
+            strong: {
+              fontWeight: '500'
+            }
+          },
+        },
+      }),
+    },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 }
