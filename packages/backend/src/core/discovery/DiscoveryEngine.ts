@@ -22,7 +22,7 @@ export class DiscoveryEngine {
     private readonly provider: providers.AlchemyProvider,
     private readonly etherscanClient: MainnetEtherscanClient,
     private readonly logger: DiscoveryLogger,
-  ) {}
+  ) { }
 
   async run(
     config: DiscoveryConfig,
@@ -34,15 +34,16 @@ export class DiscoveryEngine {
       blockNumber,
     )
 
-    const discovered = await wrapAndMeasure(
+    const wrappedDiscovery = wrapAndMeasure(
       async () => await discover(discoveryProvider, config, this.logger),
       {
         histogram: discoveryHistogram,
         labels: {
           project: config.name,
         },
-      },
-    )()
+      }
+    )
+    const discovered = await wrappedDiscovery()
 
     const configHash = getDiscoveryConfigHash(config)
 
