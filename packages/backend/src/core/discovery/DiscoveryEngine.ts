@@ -22,7 +22,7 @@ export class DiscoveryEngine {
     private readonly provider: providers.AlchemyProvider,
     private readonly etherscanClient: MainnetEtherscanClient,
     private readonly logger: DiscoveryLogger,
-  ) { }
+  ) {}
 
   async run(
     config: DiscoveryConfig,
@@ -41,7 +41,7 @@ export class DiscoveryEngine {
         labels: {
           project: config.name,
         },
-      }
+      },
     )
     const discovered = await wrappedDiscovery()
 
