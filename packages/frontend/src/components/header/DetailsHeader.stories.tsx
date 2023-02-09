@@ -43,17 +43,15 @@ export function HeaderDetails() {
     },
     {
       title: 'Technology',
-      value: (
-        <TechnologyCell>{project.technology.category ?? ''}</TechnologyCell>
-      ),
+      value: <TechnologyCell>{project.technology.category}</TechnologyCell>,
     },
   ]
 
   return (
     <PageContent>
       <DetailsHeaderComponent
-        title={project?.display.name ?? ''}
-        icon={project?.display.slug && `/icons/${project.display.slug}.png`}
+        title={project.display.name}
+        icon={`/icons/${project.display.slug}.png`}
         stats={stats}
       />
     </PageContent>

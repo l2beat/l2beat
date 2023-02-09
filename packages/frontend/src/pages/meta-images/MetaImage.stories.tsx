@@ -27,8 +27,8 @@ function Template() {
         <TvlMetaImage
           tvl="$1.34 B"
           sevenDayChange="+3.45%"
-          name={project?.display.name}
-          icon={project?.display.slug && `/icons/${project.display.slug}.png`}
+          name={project.display.name}
+          icon={project.display.slug && `/icons/${project.display.slug}.png`}
           tvlEndpoint="/fakeTvl.json"
         />
       </div>

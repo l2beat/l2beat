@@ -29,7 +29,7 @@ Production build requires (for some unknown reason) rebuilding dependencies in w
 ##### Known issues
 
 You should not import any files that depens on node related modules (e.g. fs) in stories. That will cause a lot of pain in searching why storybook is not working.
-For example you should not import layer2s from config as it imports all projects and some of them use ProjectDiscovery that uses fs. 
+For example you should not import layer2s from config as it imports all projects and some of them use ProjectDiscovery that uses fs.
 
 ## Meta images
 
