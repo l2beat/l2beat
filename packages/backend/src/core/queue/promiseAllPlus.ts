@@ -18,12 +18,12 @@ export interface PromiseAllThrottledOpts {
 export async function promiseAllPlus<T>(
   fns: (() => Promise<T>)[],
   logger: Logger,
-  opts?: PromiseAllThrottledOpts,
+  opts: PromiseAllThrottledOpts,
 ) {
   logger = logger.for(promiseAllPlus.name)
-  const maxConcurrency = opts?.maxConcurrency ?? fns.length
+  const maxConcurrency = opts.maxConcurrency ?? fns.length
   assert(maxConcurrency > 0)
-  const maxAttempts = opts?.maxAttempts ?? 10
+  const maxAttempts = opts.maxAttempts ?? 10
   assert(maxAttempts > 0)
 
   let permanentError: unknown
@@ -50,7 +50,7 @@ export async function promiseAllPlus<T>(
       }
       return shouldRetry
     },
-    metricsId: opts?.metricsId ?? 'undefined',
+    metricsId: opts.metricsId,
   })
 
   fns.forEach((_fn, i) => {
