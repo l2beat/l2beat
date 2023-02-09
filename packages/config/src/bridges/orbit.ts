@@ -1,8 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('orbit')
 
 export const orbit: Bridge = {
   type: 'bridge',
@@ -170,23 +173,38 @@ export const orbit: Bridge = {
           'Bridge contract, Proxy, Escrow, Governance. Source code of implementation is not verified on Etherscan.',
         upgradeability: {
           type: 'CustomWithoutAdmin',
-          implementation: '0x9f2E4581d47c2851EA1150AB8126b45C5939d8f5',
+          implementation: discovery.getContractUpgradeabilityParam(
+            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+            'implementation',
+          ),
         },
       },
       {
-        address: '0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9',
+        address: discovery.getContractValue<string>(
+          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+          'usdtFarm',
+        ),
         name: 'USDT Compound Farm',
       },
       {
-        address: '0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0',
+        address: discovery.getContractValue<string>(
+          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+          'daiFarm',
+        ),
         name: 'DAI Compound Farm',
       },
       {
-        address: '0x830433dE03ABedE062660CC629e1A2c714272474',
+        address: discovery.getContractValue<string>(
+          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+          'usdcFarm',
+        ),
         name: 'USDC Compound Farm',
       },
       {
-        address: '0xd910f6F23889919fAd9C8cE3171dd557cE0308Da',
+        address: discovery.getContractValue<string>(
+          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+          'wbtcFarm',
+        ),
         name: 'WBTC Compound Farm',
       },
     ],
@@ -194,19 +212,22 @@ export const orbit: Bridge = {
   },
   permissions: [
     {
-      accounts: [
-        { address: '0x8a3F117Ef3b40f1661Dedf7f28fC33E7b6fae4F8', type: 'EOA' },
-        { address: '0x67C3c784C49d9ab8757ADb71491df1A1B38FbFA8', type: 'EOA' },
-        { address: '0x34EBf4f74a881eB63F666E63ce1Ff2F287CA5a8b', type: 'EOA' },
-        { address: '0x3b6590Ff12Ba188e465395E1610D8368613054B0', type: 'EOA' },
-        { address: '0x3924Ac70075078A7713f543b72e3F8817ecEc646', type: 'EOA' },
-        { address: '0xd1176F2f576C102F6516D386De53ec7a72Cc1491', type: 'EOA' },
-        { address: '0x1c0Cd56F1c3E2cF13B9B44dBE5529104bade543E', type: 'EOA' },
-        { address: '0x6013f0B3ffE1fFdcA3Fc6A8cd705b1Af048F7437', type: 'EOA' },
-        { address: '0xa6dc28CbcB2f8060a00b4FA67F9b67775AC5a3a1', type: 'EOA' },
-      ],
       name: 'Bridge contract Governance',
-      description: 'Participants of Bridge Governance 6/9 MultiSig',
+      accounts: discovery
+        .getContractValue<string[]>(
+          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+          'getOwners',
+        )
+        .map((owner) => ({ address: owner, type: 'EOA' })),
+      description: `Participants of Bridge Governance ${discovery.getContractValue<number>(
+        '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+        'required',
+      )}/${
+        discovery.getContractValue<string[]>(
+          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+          'getOwners',
+        ).length
+      } Orbit MultiSig.`,
     },
   ],
 }

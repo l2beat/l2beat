@@ -92,76 +92,65 @@ export const zkspace: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
+        address: discovery.getContract('ZkSync').address.toString(),
         name: 'ZkSync',
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
             contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
             the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-        upgradeability: discovery.getContract(
-          '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
-        ).upgradeability,
+        upgradeability: discovery.getContract('ZkSync').upgradeability,
       },
       {
-        address: '0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db',
+        address: discovery.getContract('ZkSyncCommitBlock').address.toString(),
         name: 'ZkSyncCommitBlock',
         description:
           'Additional contract to store implementation details of the main ZkSync contract.',
       },
       {
-        address: '0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7',
+        address: discovery.getContract('ZkSyncExit').address.toString(),
         name: 'ZkSyncExit',
         description:
           'Additional contract to store implementation details of the main ZkSync contract.',
       },
       {
-        address: '0x899A605a3B7A11eA5D928958b77014e763c53426',
+        address: discovery.getContract('ZKSea').address.toString(),
         name: 'ZkSea',
         description:
           'Additional contract to store implementation details of the main ZkSync contract.',
       },
       {
-        address: '0x83Cb1531Ec8447366501aE440478da245EcffB89',
+        address: discovery.getContract('Governance').address.toString(),
         name: 'Governance',
         description: 'Keeps a list of block producers and whitelisted tokens.',
-        upgradeability: discovery.getContract(
-          '0x83Cb1531Ec8447366501aE440478da245EcffB89',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Governance').upgradeability,
       },
       {
-        address: '0xc07f850b60E0EEd49a09E455b01a869C25963735',
+        address: discovery.getContract('UniswapV2Factory').address.toString(),
         name: 'PairManager',
-        upgradeability: discovery.getContract(
-          '0xc07f850b60E0EEd49a09E455b01a869C25963735',
-        ).upgradeability,
+        upgradeability:
+          discovery.getContract('UniswapV2Factory').upgradeability,
       },
       {
-        address: '0xc632347cc96A4400653E3514eA148630455295b5',
+        address: discovery.getContract('ZKSeaNFT').address.toString(),
         name: 'ZKSeaNFT',
         description:
           'Contract managing deposits and withdrawals of NFTs to Layer2.',
-        upgradeability: discovery.getContract(
-          '0xc632347cc96A4400653E3514eA148630455295b5',
-        ).upgradeability,
+        upgradeability: discovery.getContract('ZKSeaNFT').upgradeability,
       },
       {
-        address: '0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af',
+        address: discovery.getContract('Verifier').address.toString(),
         name: 'Verifier',
         description: 'zk-SNARK Plonk Verifier.',
-        upgradeability: discovery.getContract(
-          '0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Verifier').upgradeability,
       },
       {
-        address: '0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81',
+        address: discovery.getContract('VerifierExit').address.toString(),
         name: 'VerifierExit',
         description: 'zk-SNARK Verifier for the escape hatch.',
-        upgradeability: discovery.getContract(
-          '0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81',
-        ).upgradeability,
+        upgradeability: discovery.getContract('VerifierExit').upgradeability,
       },
       {
-        address: '0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390',
+        address: discovery.getContract('UpgradeGatekeeper').address.toString(),
         name: 'UpgradeGatekeeper',
         description:
           'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
@@ -175,7 +164,10 @@ export const zkspace: Layer2 = {
       accounts: [
         {
           type: 'EOA',
-          address: '0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be',
+          address: discovery.getContractValue<string>(
+            'UpgradeGatekeeper',
+            'getMaster',
+          ),
         },
       ],
       description:
@@ -183,12 +175,9 @@ export const zkspace: Layer2 = {
     },
     {
       name: 'Active validator',
-      accounts: [
-        {
-          address: '0x5bd9404260D2B0D55081E599e4e085BE080141E2',
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery
+        .getContractValue<string[]>('Governance', 'validators')
+        .map((address) => ({ address, type: 'EOA' })),
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSpace Admin.',
     },

@@ -142,7 +142,7 @@ export const zksync2: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: '0x324000e0c256B806548b307aF600aFFF3D000324',
+        address: discovery.getContract('DiamondProxy').address.toString(),
         name: 'ZkSync Diamond Proxy',
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
@@ -150,17 +150,15 @@ export const zksync2: Layer2 = {
           It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.',
       },
       {
-        address: '0xccEF0dAF4727Cc36171dc90A7efDef87A88a70bA',
+        address: discovery.getContract('Verifier').address.toString(),
         name: 'Verifier',
         description: 'Implements zkProof verification logic.',
       },
       {
-        address: '0x027C8a79075F96a8cdE315b495949e5f1D92f1D6',
+        address: discovery.getContract('L1EthBridge').address.toString(),
         name: 'L1EthBridge',
         description: 'Standard bridge for depositing ETH to zkSync 2.0.',
-        upgradeability: discovery.getContract(
-          '0x027C8a79075F96a8cdE315b495949e5f1D92f1D6',
-        ).upgradeability,
+        upgradeability: discovery.getContract('L1EthBridge').upgradeability,
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -171,7 +169,7 @@ export const zksync2: Layer2 = {
       accounts: [
         {
           type: 'MultiSig',
-          address: '0x4e4943346848c4867F81dFb37c4cA9C5715A7828',
+          address: discovery.getContract('GnosisSafe').address.toString(),
         },
       ],
       description:
@@ -179,34 +177,15 @@ export const zksync2: Layer2 = {
     },
     {
       name: 'MultiSig participants',
-      accounts: [
-        {
-          address: '0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc',
-          type: 'EOA',
-        },
-        {
-          address: '0x474D2b82E02D9712A077574E7764dEfA182653D4',
-          type: 'EOA',
-        },
-        {
-          address: '0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607',
-          type: 'EOA',
-        },
-        {
-          address: '0x9dF8bc0918F357c766A5697E031fF5237c05747A',
-          type: 'EOA',
-        },
-        {
-          address: '0xA5F3C860441c0EeD02BF8A6472AF32B68884b0FF',
-          type: 'EOA',
-        },
-        {
-          address: '0xa265146cA40F52cfC439888D0b4291b5440e6769',
-          type: 'EOA',
-        },
-      ],
-      description:
-        'These addresses are the participants of the 3/6 zkSync 2.0 MultiSig.',
+      accounts: discovery
+        .getContractValue<string[]>('GnosisSafe', 'getOwners')
+        .map((owner) => ({ address: owner, type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        'GnosisSafe',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+      } zkSync 2.0 MultiSig.`,
     },
     {
       name: 'Active validator',

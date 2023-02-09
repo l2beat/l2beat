@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -11,7 +11,10 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('zkswap1')
 
 export const zkswap: Layer2 = {
   type: 'layer2',
@@ -141,77 +144,56 @@ export const zkswap: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: '0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad',
+        address: discovery.getContract('ZkSync').address.toString(),
         name: 'ZkSync',
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
             contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
             the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
-          implementation: EthereumAddress(
-            '0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f',
-          ),
-        },
+        upgradeability: discovery.getContract('ZkSync').upgradeability,
       },
       {
-        address: '0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157',
+        address: discovery.getContract('ZkSyncCommitBlock').address.toString(),
         name: 'ZkSyncCommitBlock',
         description:
           'Additional contract to store implementation details of the main ZkSync contract.',
       },
       {
-        address: '0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5',
+        address: discovery.getContractValue<string>(
+          'ZkSync',
+          'zkSyncExitAddress',
+        ),
         name: 'ZkSyncExit',
       },
       {
-        address: '0x02ecef526f806f06357659fFD14834fe82Ef4B04',
+        address: discovery.getContract('Governance').address.toString(),
         name: 'Governance',
         description: 'Keeps a list of block producers and whitelisted tokens.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
-          implementation: EthereumAddress(
-            '0x9d3fdf9b4782753d12f6262bf22B6322608962b8',
-          ),
-        },
+        upgradeability: discovery.getContract('Governance').upgradeability,
       },
       {
-        address: '0x661121AE41edE3f6FECDed922c59acC19A3ea9B3',
+        address: discovery.getContractValue<string>('ZkSync', 'pairManager'),
         name: 'PairManager',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
-          implementation: EthereumAddress(
-            '0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8',
-          ),
-        },
+        upgradeability: discovery.getContract(
+          discovery.getContractValue<string>('ZkSync', 'pairManager'),
+        ).upgradeability,
       },
       {
-        address: '0x27C229937745d697d28FC7853d1bFEA7331Edf56',
+        address: discovery.getContractValue<string>('ZkSync', 'verifier'),
         name: 'Verifier',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
-          implementation: EthereumAddress(
-            '0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F',
-          ),
-        },
+        upgradeability: discovery.getContract(
+          discovery.getContractValue<string>('ZkSync', 'verifier'),
+        ).upgradeability,
       },
       {
-        address: '0x961369d347EF7A6896BDD39cBE2B89e3911f521f',
+        address: discovery.getContractValue<string>('ZkSync', 'verifierExit'),
         name: 'VerifierExit',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
-          implementation: EthereumAddress(
-            '0xd12F4D8329584F36aEd67f807F42D9a02bEb9534',
-          ),
-        },
+        upgradeability: discovery.getContract(
+          discovery.getContractValue<string>('ZkSync', 'verifierExit'),
+        ).upgradeability,
       },
       {
-        address: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
+        address: discovery.getContract('UpgradeGatekeeper').address.toString(),
         name: 'UpgradeGatekeeper',
         description:
           'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
@@ -225,6 +207,7 @@ export const zkswap: Layer2 = {
       accounts: [
         {
           type: 'EOA',
+          //Governor.networkGovernor or UpgradeGatekeeper.getMaster??
           address: '0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037',
         },
       ],
@@ -233,12 +216,9 @@ export const zkswap: Layer2 = {
     },
     {
       name: 'Active validator',
-      accounts: [
-        {
-          address: '0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3',
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery
+        .getContractValue<string[]>('Governance', 'validators')
+        .map((address) => ({ address, type: 'EOA' })),
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 1.0 Admin.',
     },

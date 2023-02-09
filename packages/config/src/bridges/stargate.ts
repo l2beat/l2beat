@@ -1,7 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('stargate')
 
 export const stargate: Bridge = {
   type: 'bridge',
@@ -106,18 +109,19 @@ export const stargate: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0x8731d54E9D02c286767d56ac03e8037C07e01e98',
+        address: discovery.getContract('Router').address.toString(),
         name: 'StarGate Router',
         description:
           'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
       },
       {
-        address: '0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97',
+        address: discovery.getContract('Bridge').address.toString(),
         name: 'StarGate Bridge',
         description:
           'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
       },
       {
+        //Probably outdated
         address: '0x902F09715B6303d4173037652FA7377e5b98089E',
         name: 'LayerZero Relayer',
         upgradeability: {
@@ -140,10 +144,11 @@ export const stargate: Bridge = {
         },
       },
       {
-        address: '0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675',
+        address: discovery.getContract('Endpoint').address.toString(),
         name: 'Endpoint',
         description: 'LayerZero Ethereum Endpoint.',
       },
+      //Probably outdated
       {
         address: '0x5B19bd330A84c049b62D5B0FC2bA120217a18C1C',
         name: 'UltraLightNode',
@@ -151,7 +156,7 @@ export const stargate: Bridge = {
           'LayerZero UltraLight Node. Used by oracles to checkpoint source chain block hashes.',
       },
       {
-        address: '0x4D73AdB72bC3DD368966edD0f0b2148401A178E2',
+        address: discovery.getContract('UltraLightNodeV2').address.toString(),
         name: 'UltraLightNodeV2',
         description: 'LayerZero UltraLight Node.',
       },
@@ -186,15 +191,22 @@ export const stargate: Bridge = {
       description: 'Bridge owner, can create new pools, chainpaths, set fees.',
     },
     {
-      accounts: [
-        { address: '0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d', type: 'EOA' },
-        { address: '0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1', type: 'EOA' },
-        { address: '0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523', type: 'EOA' },
-        { address: '0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4', type: 'EOA' },
-        { address: '0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0', type: 'EOA' },
-      ],
       name: 'StarGate MultiSig Participants',
-      description: 'Participants of the 2/5 StarGate MultiSig.',
+      accounts: discovery
+        .getContractValue<string[]>(
+          '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+          'getOwners',
+        )
+        .map((owner) => ({ address: owner, type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>(
+          '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+          'getOwners',
+        ).length
+      } StarGate MultiSig.`,
     },
     {
       accounts: [
@@ -239,15 +251,22 @@ export const stargate: Bridge = {
         'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
     },
     {
-      accounts: [
-        { address: '0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327', type: 'EOA' },
-        { address: '0xe095F2590eF1Ab39601445025847Ed8E4B40D687', type: 'EOA' },
-        { address: '0xBb6633cc267951E938F9B6421E4F54aa5b2c1936', type: 'EOA' },
-        { address: '0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e', type: 'EOA' },
-        { address: '0x67FC8c432448f9a8d541C17579EF7a142378d5aD', type: 'EOA' },
-      ],
       name: 'LayerZero MultiSig Participants',
-      description: 'Participants of the 2/5 LayerZero MultiSig.',
+      accounts: discovery
+        .getContractValue<string[]>(
+          '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+          'getOwners',
+        )
+        .map((owner) => ({ address: owner, type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>(
+          '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+          'getOwners',
+        ).length
+      } LayerZero MultiSig.`,
     },
   ],
 }

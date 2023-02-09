@@ -188,65 +188,54 @@ export const nova: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
         name: 'ProxyAdmin',
+        address: discovery.getContract('ProxyAdmin').address.toString(),
         description:
           'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by a 4-of-6 multisig.',
       },
       {
-        address: '0xFb209827c58283535b744575e11953DCC4bEAD88',
+        address: discovery.getContract('ArbitrumProxy').address.toString(),
         name: 'Rollup',
         description:
           'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-        upgradeability: discovery.getContract(
-          '0xFb209827c58283535b744575e11953DCC4bEAD88',
-        ).upgradeability,
+        upgradeability: discovery.getContract('ArbitrumProxy').upgradeability,
       },
       {
-        address: '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
+        address: discovery.getContract('SequencerInbox').address.toString(),
         name: 'SequencerInbox',
         description:
           'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-        upgradeability: discovery.getContract(
-          '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
-        ).upgradeability,
+        upgradeability: discovery.getContract('SequencerInbox').upgradeability,
       },
       {
-        address: '0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
+        address: discovery.getContract('Inbox').address.toString(),
         name: 'Inbox',
         description:
           'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
-        upgradeability: discovery.getContract(
-          '0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Inbox').upgradeability,
       },
       {
-        address: '0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd',
+        address: discovery.getContract('Bridge').address.toString(),
         name: 'Bridge',
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-        upgradeability: discovery.getContract(
-          '0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Bridge').upgradeability,
       },
       {
-        address: '0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58',
+        address: discovery.getContract('Outbox').address.toString(),
         name: 'Outbox',
-        upgradeability: discovery.getContract(
-          '0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Outbox').upgradeability,
       },
       {
-        address: '0xA59075221b50C598aED0Eae0bB9869639513af0D',
+        address: discovery.getContract('ChallengeManager').address.toString(),
         name: 'ChallengeManager',
         description:
           'Contract managing an interactive fraud challenge process.',
-        upgradeability: discovery.getContract(
-          '0xA59075221b50C598aED0Eae0bB9869639513af0D',
-        ).upgradeability,
+        upgradeability:
+          discovery.getContract('ChallengeManager').upgradeability,
       },
       {
-        address: '0x7AdcA86896c4220f19B2f7f9746e7A99E57B0Fc5',
+        address: discovery.getContract('OneStepProofEntry').address.toString(),
         name: 'OneStepProofEntry',
         description:
           'Contract managing adjudication logic for EVM implementation in WASM used by the fraud proofs.',

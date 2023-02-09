@@ -180,8 +180,12 @@ export const loopring: Layer2 = {
       accounts: discovery
         .getContractValue<string[]>('GnosisSafe', 'getOwners')
         .map((owner) => ({ address: owner, type: 'EOA' })),
-      description:
-        'These addresses are the participants of the 4/6 Loopring MultiSig.',
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        'GnosisSafe',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+      } Loopring MultiSig.`,
     },
     {
       name: 'Block Submitters',

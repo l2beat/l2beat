@@ -1,8 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('polynetwork')
 
 export const polynetwork: Bridge = {
   type: 'bridge',
@@ -142,7 +145,7 @@ export const polynetwork: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0x81910675DbaF69deE0fD77570BFD07f8E436386A',
+        address: discovery.getContract('PolyWrapper').address.toString(),
         name: 'PolyWrapper',
         description:
           'Entrypoint contract for the bridge. It proxies requests to LockProxy.',
@@ -153,8 +156,13 @@ export const polynetwork: Bridge = {
         description: 'Escrow and proxy contract for the Bridge.',
         upgradeability: {
           type: 'Custom',
-          admin: '0x8B35064B158634458Fd53A861d68Eb84152E4106',
-          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+          admin: discovery.getContractValue<string>(
+            '0x250e76987d838a75310c34bf422ea9f1AC4Cc906',
+            'owner',
+          ),
+          implementation: discovery
+            .getContract('EthCrossChainManager')
+            .address.toString(),
         },
       },
       {
@@ -164,7 +172,9 @@ export const polynetwork: Bridge = {
         upgradeability: {
           type: 'Custom',
           admin: '0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57',
-          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+          implementation: discovery
+            .getContract('EthCrossChainManager')
+            .address.toString(),
         },
       },
       {
@@ -174,7 +184,9 @@ export const polynetwork: Bridge = {
         upgradeability: {
           type: 'Custom',
           admin: '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
-          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+          implementation: discovery
+            .getContract('EthCrossChainManager')
+            .address.toString(),
         },
       },
       {
@@ -184,15 +196,20 @@ export const polynetwork: Bridge = {
         upgradeability: {
           type: 'Custom',
           admin: '0xeF86b2c8740518548ae449c4C3892B4be0475d8c',
-          implementation: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+          implementation: discovery
+            .getContract('EthCrossChainManager')
+            .address.toString(),
         },
       },
       {
-        address: '0x14413419452Aaf089762A0c5e95eD2A13bBC488C',
+        address: discovery
+          .getContract('EthCrossChainManager')
+          .address.toString(),
         name: 'EthCrossChainManager',
         description:
           'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
       },
+      //DUPLICATES???
       {
         address: '0xcF2afe102057bA5c16f899271045a0A37fCb10f2',
         name: 'EthCrossChainData (Unverified source code)',
@@ -212,7 +229,7 @@ export const polynetwork: Bridge = {
     {
       accounts: [
         {
-          address: '0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57',
+          address: discovery.getContractValue<string>('PolyWrapper', 'owner'),
           type: 'EOA',
         },
       ],
@@ -223,7 +240,10 @@ export const polynetwork: Bridge = {
     {
       accounts: [
         {
-          address: '0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb',
+          address: discovery.getContractValue<string>(
+            'EthCrossChainManager',
+            'owner',
+          ),
           type: 'Contract',
         },
       ],
@@ -244,6 +264,7 @@ export const polynetwork: Bridge = {
     {
       accounts: [
         {
+          //Probably possible to extract, couldnt find from where
           address: '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
           type: 'EOA',
         },
@@ -254,7 +275,10 @@ export const polynetwork: Bridge = {
     {
       accounts: [
         {
-          address: '0xeF86b2c8740518548ae449c4C3892B4be0475d8c',
+          address: discovery.getContractValue<string>(
+            '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
+            'owner',
+          ),
           type: 'EOA',
         },
       ],
