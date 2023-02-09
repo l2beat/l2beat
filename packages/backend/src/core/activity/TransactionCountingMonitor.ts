@@ -27,10 +27,14 @@ export class TransactionCountingMonitor {
   ) {
     this.logger = logger.for(this)
     this.delayHours = opts?.syncCheckDelayHours ?? 2
-    this.checkQueue = new TaskQueue<void>(async () => {
-      this.logger.info('Sync check triggered')
-      await this.checkIfSynced()
-    }, this.logger.for('checkQueue'))
+    this.checkQueue = new TaskQueue<void>(
+      async () => {
+        this.logger.info('Sync check triggered')
+        await this.checkIfSynced()
+      },
+      this.logger.for('checkQueue'),
+      { metricsId: TransactionCountingMonitor.name },
+    )
   }
 
   start() {

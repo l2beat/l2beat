@@ -1,7 +1,7 @@
 import { Logger, wrapAndMeasure } from '@l2beat/shared'
 import { Knex } from 'knex'
+import { Histogram } from 'prom-client'
 
-import { Metrics, RepositoryHistogram } from '../../../Metrics'
 import { Database } from './Database'
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
@@ -62,16 +62,23 @@ export type CheckConvention<T extends BaseRepository> = {
       * Arguments: any
       * Return type: count of deleted records  
 */
+
+type RepositoryHistogram = Histogram<'repository' | 'method'>
+const repositoryHistogram: RepositoryHistogram = new Histogram({
+  name: 'repository_method_duration_seconds',
+  help: 'duration histogram of repository methods',
+  labelNames: ['repository', 'method'],
+})
+
 export abstract class BaseRepository {
   protected histogram: RepositoryHistogram
 
   constructor(
     protected readonly database: Database,
     protected readonly logger: Logger,
-    readonly metrics: Metrics,
   ) {
     this.logger = logger.for(this)
-    this.histogram = metrics.repositoryHistogram
+    this.histogram = repositoryHistogram
   }
 
   async runInTransaction(

@@ -81,7 +81,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       getValue: (entry) => <TVLBreakdown {...entry.tvlBreakdown} />,
     },
     {
-      name: 'Market share',
+      name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
       getValue: (entry) => (

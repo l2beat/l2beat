@@ -7,7 +7,6 @@ import { ConfigReader } from '../../core/discovery/ConfigReader'
 import { DiscoveryEngine } from '../../core/discovery/DiscoveryEngine'
 import { DiscoveryLogger } from '../../core/discovery/DiscoveryLogger'
 import { DiscoveryWatcher } from '../../core/DiscoveryWatcher'
-import { Metrics } from '../../Metrics'
 import { DiscoveryWatcherRepository } from '../../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
@@ -19,7 +18,6 @@ export function createDiscoveryWatcherModule(
   http: HttpClient,
   database: Database,
   clock: Clock,
-  metrics: Metrics,
 ): ApplicationModule | undefined {
   if (!config.discoveryWatcher) {
     return
@@ -47,7 +45,6 @@ export function createDiscoveryWatcherModule(
   const discoveryWatcherRepository = new DiscoveryWatcherRepository(
     database,
     logger,
-    metrics,
   )
 
   const discoveryLogger = DiscoveryLogger.SILENT

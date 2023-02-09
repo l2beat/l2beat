@@ -1,17 +1,16 @@
 import { Context, Middleware, Next } from 'koa'
+import { Histogram } from 'prom-client'
 
-import { Metrics } from '../../Metrics'
+const labels = ['path', 'method', 'status_code']
+const apiHistogram = new Histogram({
+  name: 'api_request_duration_seconds',
+  help:
+    'duration histogram of api http responses labeled with: ' +
+    labels.join(', '),
+  labelNames: labels,
+})
 
-export function createApiMetrics(metrics: Metrics): Middleware {
-  const labels = ['path', 'method', 'status_code']
-  const apiHistogram = metrics.createHistogram({
-    name: 'api_request_duration_seconds',
-    help:
-      'duration histogram of api http responses labeled with: ' +
-      labels.join(', '),
-    labelNames: labels,
-  })
-
+export function createApiMetrics(): Middleware {
   return async function (ctx: Context, next: Next): Promise<void> {
     const key = Symbol.for('request-received.startTime')
     // eslint-disable-next-line

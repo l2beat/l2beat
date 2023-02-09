@@ -2,7 +2,6 @@ import { AztecConnectTransactionApi } from '@l2beat/config'
 import { HttpClient, Logger, ProjectId } from '@l2beat/shared'
 import { range } from 'lodash'
 
-import { Metrics } from '../../../Metrics'
 import { AztecConnectClient } from '../../../peripherals/aztec'
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
@@ -18,7 +17,6 @@ export function createAztecConnectCounter(
   http: HttpClient,
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
-  metrics: Metrics,
   options: AztecConnectTransactionApi,
 ): TransactionCounter {
   const callsPerMinute = options.callsPerMinute ?? 60
@@ -28,7 +26,6 @@ export function createAztecConnectCounter(
   const processor = new SequenceProcessor(
     projectId.toString(),
     logger,
-    metrics,
     sequenceProcessorRepository,
     {
       batchSize,
@@ -49,7 +46,9 @@ export function createAztecConnectCounter(
           }
         })
 
-        const blocks = await promiseAllPlus(queries, logger)
+        const blocks = await promiseAllPlus(queries, logger, {
+          metricsId: 'AztecConnectBlockCounter',
+        })
         await blockRepository.addMany(blocks, trx)
       },
     },

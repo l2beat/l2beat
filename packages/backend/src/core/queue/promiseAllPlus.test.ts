@@ -30,6 +30,7 @@ describe(promiseAllPlus.name, () => {
         },
       ],
       Logger.SILENT,
+      { metricsId: 'test' },
     )
 
     await time.tickAsync(3001)
@@ -55,6 +56,7 @@ describe(promiseAllPlus.name, () => {
     ]
     const resultsPromise = promiseAllPlus(fns, Logger.SILENT, {
       maxConcurrency: 2,
+      metricsId: 'test',
     })
 
     await time.tickAsync(1000)
@@ -79,7 +81,9 @@ describe(promiseAllPlus.name, () => {
       .rejectsWithOnce(new Error())
       .resolvesToOnce(1)
 
-    const resultsPromise = promiseAllPlus([mock], Logger.SILENT)
+    const resultsPromise = promiseAllPlus([mock], Logger.SILENT, {
+      metricsId: 'test',
+    })
     await time.runAllAsync()
     const results = await resultsPromise
 
@@ -92,7 +96,9 @@ describe(promiseAllPlus.name, () => {
     const errorMessage = 'permanent error'
     const mock = mockFn().rejectsWith(new Error(errorMessage))
 
-    const resultsPromise = promiseAllPlus([mock], Logger.SILENT)
+    const resultsPromise = promiseAllPlus([mock], Logger.SILENT, {
+      metricsId: 'test',
+    })
     await time.runAllAsync()
 
     await expect(resultsPromise).toBeRejected(errorMessage)
@@ -106,6 +112,7 @@ describe(promiseAllPlus.name, () => {
     const resultsPromise = promiseAllPlus([mock1, mock2], Logger.SILENT, {
       maxConcurrency: 1,
       maxAttempts: 1,
+      metricsId: 'test',
     })
     await time.runAllAsync()
 

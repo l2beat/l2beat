@@ -20,6 +20,6 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
       entry.type !== 'bridge' && 'hidden',
     ),
     'data-combined-only': entry.type !== 'bridge' ? true : undefined,
-    ['project-link']: href,
+    href,
   }
 }
