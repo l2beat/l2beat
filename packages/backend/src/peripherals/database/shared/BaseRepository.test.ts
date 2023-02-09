@@ -2,21 +2,18 @@ import { Logger } from '@l2beat/shared'
 import { expect } from 'earljs'
 import { describe } from 'mocha'
 
-import { Metrics } from '../../../Metrics'
 import { setupDatabaseTestSuite } from '../../../test/database'
-import { createMockRepoMetrics } from '../../../test/mocks/Metrics'
 import { BaseRepository, CheckConvention } from './BaseRepository'
 import { Database } from './Database'
 
 describe(BaseRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const mockMetrics = createMockRepoMetrics()
 
   describe(BaseRepository.prototype.autoWrap.name, () => {
     it('should wrap all methods', () => {
       class DummyRepository extends BaseRepository {
-        constructor(database: Database, logger: Logger, metrics: Metrics) {
-          super(database, logger, metrics)
+        constructor(database: Database, logger: Logger) {
+          super(database, logger)
           this.autoWrap<CheckConvention<DummyRepository>>(this)
         }
 
@@ -36,11 +33,7 @@ describe(BaseRepository.name, () => {
           return 1
         }
       }
-      const dummyRepository = new DummyRepository(
-        database,
-        Logger.SILENT,
-        mockMetrics,
-      )
+      const dummyRepository = new DummyRepository(database, Logger.SILENT)
 
       expect((dummyRepository.addOne as any).wrapped).toEqual(true)
       expect((dummyRepository.getAll as any).wrapped).toEqual(true)
@@ -50,8 +43,8 @@ describe(BaseRepository.name, () => {
 
     it('should throw error', () => {
       class DummyRepository extends BaseRepository {
-        constructor(database: Database, logger: Logger, metrics: Metrics) {
-          super(database, logger, metrics)
+        constructor(database: Database, logger: Logger) {
+          super(database, logger)
           this.autoWrap<CheckConvention<DummyRepository>>(this)
         }
 
@@ -65,7 +58,7 @@ describe(BaseRepository.name, () => {
       }
 
       expect(() => {
-        new DummyRepository(database, Logger.SILENT, mockMetrics)
+        new DummyRepository(database, Logger.SILENT)
       }).toThrow(
         Error,
         'Wrong repository method naming convention: unconventionalMethodName',
@@ -74,8 +67,8 @@ describe(BaseRepository.name, () => {
 
     it('should not wrap the function if it is prefixed with _', () => {
       class DummyRepository extends BaseRepository {
-        constructor(database: Database, logger: Logger, metrics: Metrics) {
-          super(database, logger, metrics)
+        constructor(database: Database, logger: Logger) {
+          super(database, logger)
           this.autoWrap<CheckConvention<DummyRepository>>(this)
         }
 
@@ -87,11 +80,7 @@ describe(BaseRepository.name, () => {
           return [1]
         }
       }
-      const dummyRepository = new DummyRepository(
-        database,
-        Logger.SILENT,
-        mockMetrics,
-      )
+      const dummyRepository = new DummyRepository(database, Logger.SILENT)
 
       expect((dummyRepository.getAll as any).wrapped).toEqual(true)
       expect((dummyRepository._notWrappedFunction as any).wrapped).toBeFalsy()
@@ -99,8 +88,8 @@ describe(BaseRepository.name, () => {
 
     it('should not wrap the function if it is wrapped manually', () => {
       class DummyRepository extends BaseRepository {
-        constructor(database: Database, logger: Logger, metrics: Metrics) {
-          super(database, logger, metrics)
+        constructor(database: Database, logger: Logger) {
+          super(database, logger)
 
           this.refresh = this.wrapAny(this.refresh)
           this.autoWrap<CheckConvention<DummyRepository>>(this)
@@ -115,11 +104,7 @@ describe(BaseRepository.name, () => {
         }
       }
 
-      const dummyRepository = new DummyRepository(
-        database,
-        Logger.SILENT,
-        mockMetrics,
-      )
+      const dummyRepository = new DummyRepository(database, Logger.SILENT)
 
       expect((dummyRepository.getAll as any).wrapped).toEqual(true)
       expect((dummyRepository.refresh as any).wrapped).toEqual(true)
@@ -129,8 +114,8 @@ describe(BaseRepository.name, () => {
       describe('GetMethod', () => {
         it('should show error if returning wrong type', () => {
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger, metrics: Metrics) {
-              super(database, logger, metrics)
+            constructor(database: Database, logger: Logger) {
+              super(database, logger)
               // @ts-expect-error get method should return array
               this.autoWrap<CheckConvention<DummyRepository>>(this)
             }
@@ -145,8 +130,8 @@ describe(BaseRepository.name, () => {
       describe('AddMethod', () => {
         it('should show error if convention is wrong', () => {
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger, metrics: Metrics) {
-              super(database, logger, metrics)
+            constructor(database: Database, logger: Logger) {
+              super(database, logger)
               // @ts-expect-error add method should take only one argument
               this.autoWrap<CheckConvention<DummyRepository>>(this)
             }
@@ -164,8 +149,8 @@ describe(BaseRepository.name, () => {
       describe('AddManyMethod', () => {
         it('should show error if return type is wrong', () => {
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger, metrics: Metrics) {
-              super(database, logger, metrics)
+            constructor(database: Database, logger: Logger) {
+              super(database, logger)
               // @ts-expect-error addMany method should return array or number
               this.autoWrap<CheckConvention<DummyRepository>>(this)
             }
@@ -178,8 +163,8 @@ describe(BaseRepository.name, () => {
 
         it('should show error if argument is of wrong type', () => {
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger, metrics: Metrics) {
-              super(database, logger, metrics)
+            constructor(database: Database, logger: Logger) {
+              super(database, logger)
               // @ts-expect-error addMany method should take array as argument
               this.autoWrap<CheckConvention<DummyRepository>>(this)
             }
@@ -192,8 +177,8 @@ describe(BaseRepository.name, () => {
 
         it('should show error if function takes too much arguments', () => {
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger, metrics: Metrics) {
-              super(database, logger, metrics)
+            constructor(database: Database, logger: Logger) {
+              super(database, logger)
               // @ts-expect-error addMany method should take only one argument
               this.autoWrap<CheckConvention<DummyRepository>>(this)
             }
@@ -211,8 +196,8 @@ describe(BaseRepository.name, () => {
       describe('DeleteMethod', () => {
         it('should show error if return type is wrong', () => {
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger, metrics: Metrics) {
-              super(database, logger, metrics)
+            constructor(database: Database, logger: Logger) {
+              super(database, logger)
               // @ts-expect-error delete method should return number
               this.autoWrap<CheckConvention<DummyRepository>>(this)
             }

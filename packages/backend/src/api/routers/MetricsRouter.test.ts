@@ -2,7 +2,6 @@ import { mock } from '@l2beat/shared'
 import { Histogram } from 'prom-client'
 
 import { Config } from '../../config'
-import { Metrics } from '../../Metrics'
 import { createTestApiServer } from '../../test/testApiServer'
 import { createMetricsRouter } from './MetricsRouter'
 
@@ -14,11 +13,6 @@ export function createMockHistogram() {
 
 describe(createMetricsRouter.name, () => {
   describe('can be configured', () => {
-    const metrics = mock<Metrics>({
-      getMetrics: async () => 'metrics',
-      createHistogram: createMockHistogram,
-    })
-
     it('to require auth', async () => {
       const config = mock<Config>({
         metricsAuth: {
@@ -26,8 +20,8 @@ describe(createMetricsRouter.name, () => {
           pass: 'pass',
         },
       })
-      const router = createMetricsRouter(config, metrics)
-      const server = createTestApiServer([router], metrics)
+      const router = createMetricsRouter(config)
+      const server = createTestApiServer([router])
 
       await server.get('/metrics').expect(401)
       await server.get('/metrics').auth('user', 'pass').expect(200)
@@ -37,8 +31,8 @@ describe(createMetricsRouter.name, () => {
       const config = mock<Config>({
         metricsAuth: false,
       })
-      const router = createMetricsRouter(config, metrics)
-      const server = createTestApiServer([router], metrics)
+      const router = createMetricsRouter(config)
+      const server = createTestApiServer([router])
 
       await server.get('/metrics').expect(200)
     })
