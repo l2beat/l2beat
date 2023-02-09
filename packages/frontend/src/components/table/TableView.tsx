@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import React, { HTMLAttributes, ReactNode } from 'react'
+import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../icons'
 
@@ -20,7 +20,11 @@ export interface ColumnConfig<T> {
 }
 
 export interface RowConfig<T> {
-  getProps: (value: T, index: number) => HTMLAttributes<HTMLTableRowElement>
+  getProps: (
+    value: T,
+    index: number,
+  ) => HTMLAttributes<HTMLTableRowElement> &
+    Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
 export function TableView<T>({ items, columns, rows }: Props<T>) {
@@ -69,28 +73,33 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
         </thead>
         <tbody className="">
           {items.map((item, i) => {
+            const { href, className, ...rest } = rows?.getProps(item, i) ?? {}
             return (
               <tr
                 key={i}
-                {...rows?.getProps(item, i)}
+                {...rest}
                 className={cx(
                   'group cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
                   'hover:bg-gray-100 hover:shadow-sm dark:hover:bg-gray-900',
-                  rows?.getProps(item, i).className,
+                  className,
                 )}
               >
                 {columns.map((column, j) => (
                   <td
                     key={j}
-                    className={cx(
-                      'h-9 md:h-10',
-                      column.alignRight && 'text-right',
-                      column.alignCenter && 'text-center',
-                      column.minimalWidth && 'w-0',
-                      j !== columns.length - 1 && 'pr-3 md:pr-4',
-                    )}
+                    className={cx('h-9 md:h-10', column.minimalWidth && 'w-0')}
                   >
-                    {column.getValue(item, i)}
+                    <a
+                      href={href}
+                      className={cx(
+                        'flex h-full w-full items-center',
+                        column.alignRight && 'justify-end',
+                        column.alignCenter && 'justify-center',
+                        j !== columns.length - 1 && 'pr-3 md:pr-4',
+                      )}
+                    >
+                      {column.getValue(item, i)}
+                    </a>
                   </td>
                 ))}
               </tr>
