@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { Bridge } from './types'
 
@@ -22,37 +22,37 @@ export const hop: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a',
+        address: EthereumAddress('0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a'),
         sinceTimestamp: new UnixTime(1623907245),
         tokens: ['USDC'],
       },
       {
-        address: '0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1',
+        address: EthereumAddress('0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1'),
         sinceTimestamp: new UnixTime(1631654328),
         tokens: ['DAI'],
       },
       {
-        address: '0x3E4a3a4796d16c0Cd582C382691998f7c06420B6',
+        address: EthereumAddress('0x3E4a3a4796d16c0Cd582C382691998f7c06420B6'),
         sinceTimestamp: new UnixTime(1626739308),
         tokens: ['USDT'],
       },
       {
-        address: '0xb8901acB165ed027E32754E0FFe830802919727f',
+        address: EthereumAddress('0xb8901acB165ed027E32754E0FFe830802919727f'),
         sinceTimestamp: new UnixTime(1633066189),
         tokens: ['ETH'],
       },
       {
-        address: '0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2',
+        address: EthereumAddress('0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2'),
         sinceTimestamp: new UnixTime(1628225875),
         tokens: ['MATIC'],
       },
       {
-        address: '0x914f986a44AcB623A277d6Bd17368171FCbe4273',
+        address: EthereumAddress('0x914f986a44AcB623A277d6Bd17368171FCbe4273'),
         sinceTimestamp: new UnixTime(1663897247),
         tokens: ['HOP'],
       },
       {
-        address: '0x893246FACF345c99e4235E5A7bbEE7404c988b96',
+        address: EthereumAddress('0x893246FACF345c99e4235E5A7bbEE7404c988b96'),
         sinceTimestamp: new UnixTime(1664398079),
         tokens: ['SNX'],
       },
@@ -127,37 +127,37 @@ export const hop: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a',
+        address: EthereumAddress('0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a'),
         name: 'L1_ERC20_Bridge',
         description: 'USDC Bridge.',
       },
       {
-        address: '0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1',
+        address: EthereumAddress('0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1'),
         name: 'L1_ERC20_Bridge',
         description: 'DAI Bridge.',
       },
       {
-        address: '0x3E4a3a4796d16c0Cd582C382691998f7c06420B6',
+        address: EthereumAddress('0x3E4a3a4796d16c0Cd582C382691998f7c06420B6'),
         name: 'L1_ERC20_Bridge',
         description: 'USDT Bridge.',
       },
       {
-        address: '0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2',
+        address: EthereumAddress('0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2'),
         name: 'L1_ERC20_Bridge',
         description: 'MATIC Bridge.',
       },
       {
-        address: '0xb8901acB165ed027E32754E0FFe830802919727f',
+        address: EthereumAddress('0xb8901acB165ed027E32754E0FFe830802919727f'),
         name: 'L1_ETH_Bridge',
         description: 'ETH Bridge.',
       },
       {
-        address: '0x914f986a44AcB623A277d6Bd17368171FCbe4273',
+        address: EthereumAddress('0x914f986a44AcB623A277d6Bd17368171FCbe4273'),
         name: 'L1_HOP_Bridge',
         description: 'HOP Bridge.',
       },
       {
-        address: '0x893246FACF345c99e4235E5A7bbEE7404c988b96',
+        address: EthereumAddress('0x893246FACF345c99e4235E5A7bbEE7404c988b96'),
         name: 'L1_ERC20_Bridge',
         description: 'SNX Bridge.',
       },
@@ -168,7 +168,9 @@ export const hop: Bridge = {
     {
       accounts: [
         {
-          address: '0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7',
+          address: EthereumAddress(
+            '0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7',
+          ),
           type: 'Contract',
         },
       ],
@@ -178,9 +180,24 @@ export const hop: Bridge = {
     },
     {
       accounts: [
-        { address: '0x9f8d2dafE9978268aC7c67966B366d6d55e97f07', type: 'EOA' },
-        { address: '0x404c2184a4027b0092C5877BC4599099cd63E62D', type: 'EOA' },
-        { address: '0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0x9f8d2dafE9978268aC7c67966B366d6d55e97f07',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x404c2184a4027b0092C5877BC4599099cd63E62D',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'Hop MultiSig Participants',
       description: 'Participants of the 2/3 Hop MultiSig.',

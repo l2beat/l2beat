@@ -53,29 +53,29 @@ export const arbitrum: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
+        address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
         sinceTimestamp: new UnixTime(1661450734),
         tokens: ['ETH'],
       },
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
-        address: '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
+        address: EthereumAddress('0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'),
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
       },
       {
-        address: '0xcEe284F754E854890e311e3280b767F80797180d',
+        address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
         sinceTimestamp: new UnixTime(1623867835),
         tokens: '*',
       },
       {
-        address: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+        address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
         sinceTimestamp: new UnixTime(1623784100),
         tokens: '*',
       },
       {
-        address: '0xA10c7CE4b876998858b1a9E12b10092229539400',
+        address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
         sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
       },
@@ -262,7 +262,7 @@ export const arbitrum: Layer2 = {
           '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
           'getOwners',
         )
-        .map((owner) => ({ address: owner, type: 'EOA' })),
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
@@ -274,7 +274,9 @@ export const arbitrum: Layer2 = {
       name: 'Sequencer',
       accounts: [
         {
-          address: '0xa4b1E63Cb4901E327597bc35d36FE8a23e4C253f',
+          address: EthereumAddress(
+            '0xa4b1E63Cb4901E327597bc35d36FE8a23e4C253f',
+          ),
           type: 'EOA',
         },
       ],
@@ -285,55 +287,81 @@ export const arbitrum: Layer2 = {
       name: 'Validators',
       accounts: [
         {
-          address: '0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398',
+          address: EthereumAddress(
+            '0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398',
+          ),
           type: 'Contract',
         },
         {
-          address: '0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b',
+          address: EthereumAddress(
+            '0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b',
+          ),
           type: 'Contract',
         },
         {
-          address: '0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104',
+          address: EthereumAddress(
+            '0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4',
+          address: EthereumAddress(
+            '0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78',
+          address: EthereumAddress(
+            '0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78',
+          ),
           type: 'Contract',
         },
         {
-          address: '0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0',
+          address: EthereumAddress(
+            '0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0',
+          ),
           type: 'Contract',
         },
         {
-          address: '0x610Aa279989F440820e14248BD3879B148717974',
+          address: EthereumAddress(
+            '0x610Aa279989F440820e14248BD3879B148717974',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E',
+          address: EthereumAddress(
+            '0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c',
+          address: EthereumAddress(
+            '0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5',
+          address: EthereumAddress(
+            '0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5',
+          address: EthereumAddress(
+            '0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5',
+          ),
           type: 'Contract',
         },
         {
-          address: '0xAB1A39332e934300eBCc57B5f95cA90631a347FF',
+          address: EthereumAddress(
+            '0xAB1A39332e934300eBCc57B5f95cA90631a347FF',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x7CF3d537733F6Ba4183A833c9B021265716cE9d0',
+          address: EthereumAddress(
+            '0x7CF3d537733F6Ba4183A833c9B021265716cE9d0',
+          ),
           type: 'Contract',
         },
       ],
@@ -344,20 +372,20 @@ export const arbitrum: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
+        address: EthereumAddress('0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD'),
         name: 'ProxyAdmin (1)',
         description:
           'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by a 4-of-6 multisig.',
       },
       {
-        address: discovery.getContract('RollupProxy').address.toString(),
+        address: discovery.getContract('RollupProxy').address,
         name: 'Rollup',
         description:
           'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
         upgradeability: discovery.getContract('RollupProxy').upgradeability,
       },
       {
-        address: '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
         name: 'SequencerInbox',
         description:
           'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
@@ -366,14 +394,14 @@ export const arbitrum: Layer2 = {
         ).upgradeability,
       },
       {
-        address: discovery.getContract('Inbox').address.toString(),
+        address: discovery.getContract('Inbox').address,
         name: 'Inbox',
         description:
           'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
         upgradeability: discovery.getContract('Inbox').upgradeability,
       },
       {
-        address: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
+        address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
         name: 'Bridge',
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
@@ -382,33 +410,35 @@ export const arbitrum: Layer2 = {
         ).upgradeability,
       },
       {
-        address: discovery.getContractValue<string>('RollupProxy', 'outbox'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>('RollupProxy', 'outbox'),
+        ),
         name: 'Outbox',
         upgradeability: discovery.getContract(
           discovery.getContractValue<string>('RollupProxy', 'outbox'),
         ).upgradeability,
       },
       {
-        address: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
+        address: EthereumAddress('0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa'),
         name: 'ProxyAdmin (2)',
         description:
           'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
       },
       {
-        address: discovery.getContract('L1GatewayRouter').address.toString(),
+        address: discovery.getContract('L1GatewayRouter').address,
         name: 'L1GatewayRouter',
         description: 'Router managing token <--> gateway mapping.',
         upgradeability: discovery.getContract('L1GatewayRouter').upgradeability,
       },
       {
-        address: discovery.getContract('L1ERC20Gateway').address.toString(),
+        address: discovery.getContract('L1ERC20Gateway').address,
         name: 'L1ERC20Gateway',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
         upgradeability: discovery.getContract('L1ERC20Gateway').upgradeability,
       },
       {
-        address: '0xcEe284F754E854890e311e3280b767F80797180d',
+        address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
         name: 'L1CustomGateway',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
@@ -421,13 +451,13 @@ export const arbitrum: Layer2 = {
         },
       },
       {
-        address: '0xD3B5b60020504bc3489D6949d545893982BA3011',
+        address: EthereumAddress('0xD3B5b60020504bc3489D6949d545893982BA3011'),
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
       },
       {
-        address: '0xA10c7CE4b876998858b1a9E12b10092229539400',
+        address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
         name: 'L1Escrow',
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       },

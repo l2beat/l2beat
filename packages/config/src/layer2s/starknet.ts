@@ -52,27 +52,27 @@ export const starknet: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419',
+        address: EthereumAddress('0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'),
         sinceTimestamp: new UnixTime(1647857148),
         tokens: ['ETH'],
       },
       {
-        address: '0x0437465dfb5B79726e35F08559B0cBea55bb585C',
+        address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
       },
       {
-        address: '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
+        address: EthereumAddress('0x283751A21eafBFcD52297820D27C1f1963D9b5b4'),
         sinceTimestamp: new UnixTime(1657137600),
         tokens: ['WBTC'],
       },
       {
-        address: '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
+        address: EthereumAddress('0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'),
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
       },
       {
-        address: '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
+        address: EthereumAddress('0xbb3400F107804DFB482565FF1Ec8D8aE66747605'),
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
       },
@@ -157,7 +157,7 @@ export const starknet: Layer2 = {
         name: 'StarkNet Core Contract',
         description:
           'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-        address: discovery.getContract('Starknet').address.toString(),
+        address: discovery.getContract('Starknet').address,
         upgradeability: discovery.getContract('Starknet').upgradeability,
       },
       SHARP_VERIFIER_CONTRACT,
@@ -165,12 +165,12 @@ export const starknet: Layer2 = {
         name: 'MemoryPageFactRegistry',
         description:
           'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data such as StarkNet contracts state diffs.',
-        address: '0x28067505E54b7Ac2A5F860b343340Be8E73edECD',
+        address: EthereumAddress('0x28067505E54b7Ac2A5F860b343340Be8E73edECD'),
       },
       {
         name: 'Eth Bridge',
         description: 'Starkgate bridge for ETH.',
-        address: discovery.getContract('StarknetEthBridge').address.toString(),
+        address: discovery.getContract('StarknetEthBridge').address,
         upgradeability:
           discovery.getContract('StarknetEthBridge').upgradeability,
       },
@@ -178,17 +178,17 @@ export const starknet: Layer2 = {
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-        address: '0x9F96fE0633eE838D0298E8b8980E6716bE81388d',
+        address: EthereumAddress('0x9F96fE0633eE838D0298E8b8980E6716bE81388d'),
       },
       {
         name: 'L1Escrow',
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-        address: '0x0437465dfb5B79726e35F08559B0cBea55bb585C',
+        address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
       },
       {
         name: 'WBTC Bridge',
         description: 'Starkgate bridge for WBTC.',
-        address: '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
+        address: EthereumAddress('0x283751A21eafBFcD52297820D27C1f1963D9b5b4'),
         upgradeability: discovery.getContract(
           '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
         ).upgradeability,
@@ -196,7 +196,7 @@ export const starknet: Layer2 = {
       {
         name: 'USDC Bridge',
         description: 'Starkgate bridge for USDC.',
-        address: '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
+        address: EthereumAddress('0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'),
         upgradeability: discovery.getContract(
           '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
         ).upgradeability,
@@ -204,7 +204,7 @@ export const starknet: Layer2 = {
       {
         name: 'USDT Bridge',
         description: 'Starkgate bridge for USDT.',
-        address: '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
+        address: EthereumAddress('0xbb3400F107804DFB482565FF1Ec8D8aE66747605'),
         upgradeability: discovery.getContract(
           '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
         ).upgradeability,
@@ -217,7 +217,9 @@ export const starknet: Layer2 = {
       name: 'Governor',
       accounts: [
         {
-          address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          address: EthereumAddress(
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          ),
           type: 'EOA',
         },
       ],
@@ -228,7 +230,9 @@ export const starknet: Layer2 = {
       name: 'StarknetCore Governor',
       accounts: [
         {
-          address: '0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263',
+          address: EthereumAddress(
+            '0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263',
+          ),
           type: 'EOA',
         },
       ],
@@ -239,7 +243,9 @@ export const starknet: Layer2 = {
       name: 'Operator',
       accounts: [
         {
-          address: '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
+          address: EthereumAddress(
+            '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
+          ),
           type: 'EOA',
         },
       ],
@@ -250,7 +256,9 @@ export const starknet: Layer2 = {
       name: 'MakerDAO Governance',
       accounts: [
         {
-          address: '0x0a3f6849f78076aefaDf113F5BED87720274dDC0',
+          address: EthereumAddress(
+            '0x0a3f6849f78076aefaDf113F5BED87720274dDC0',
+          ),
           type: 'Contract',
         },
       ],

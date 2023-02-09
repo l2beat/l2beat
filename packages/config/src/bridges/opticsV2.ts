@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
@@ -23,7 +23,7 @@ export const opticsV2: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x4fc16De11deAc71E8b2Db539d82d93BE4b486892',
+        address: EthereumAddress('0x4fc16De11deAc71E8b2Db539d82d93BE4b486892'),
         sinceTimestamp: new UnixTime(1637963549),
         tokens: [
           'WETH',
@@ -105,61 +105,77 @@ export const opticsV2: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0xa73a3a74C7044B5411bD61E1990618A1400DA379',
+        address: EthereumAddress('0xa73a3a74C7044B5411bD61E1990618A1400DA379'),
         name: 'Home',
         description:
           'Optics Home. This contract is used to send x-chain messages, such as deposit requests. Messages are regularly signed by Attester.',
         upgradeability: {
           type: 'Beacon',
-          beacon: '0x101a39eA1143cb252fc8093847399046fc35Db89',
-          beaconAdmin: '0x4F50a7081792063693F46A6402390b9647562457',
-          implementation: '0xfc6E146384b5c65f372d5b20537F3e8727aD3723',
+          beacon: EthereumAddress('0x101a39eA1143cb252fc8093847399046fc35Db89'),
+          beaconAdmin: EthereumAddress(
+            '0x4F50a7081792063693F46A6402390b9647562457',
+          ),
+          implementation: EthereumAddress(
+            '0xfc6E146384b5c65f372d5b20537F3e8727aD3723',
+          ),
         },
       },
       {
-        address: '0x27658c5556A9a57f96E69Bbf6d3B8016f001a785',
+        address: EthereumAddress('0x27658c5556A9a57f96E69Bbf6d3B8016f001a785'),
         name: 'Replica',
         description:
           'Optics Replica. This contract is used to receive x-chain messages, such as withdrawal requests, from Relayers.',
         upgradeability: {
           type: 'Beacon',
-          beacon: '0xA734EDE8229970776e1B68085D579b6b6E97dAd4',
-          beaconAdmin: '0x4F50a7081792063693F46A6402390b9647562457',
-          implementation: '0xCBe8b8C4Fe6590BB59d1507dE7f252AF3E621E58',
+          beacon: EthereumAddress('0xA734EDE8229970776e1B68085D579b6b6E97dAd4'),
+          beaconAdmin: EthereumAddress(
+            '0x4F50a7081792063693F46A6402390b9647562457',
+          ),
+          implementation: EthereumAddress(
+            '0xCBe8b8C4Fe6590BB59d1507dE7f252AF3E621E58',
+          ),
         },
       },
       {
-        address: '0x4fc16De11deAc71E8b2Db539d82d93BE4b486892',
+        address: EthereumAddress('0x4fc16De11deAc71E8b2Db539d82d93BE4b486892'),
         name: 'BridgeRouter',
         description:
           'Optics Bridge Router. Used to send messages to Home and receive messages from Replica. When receiving messages, it routes them to XAppConnectionManager.',
         upgradeability: {
           type: 'Beacon',
-          beacon: '0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE',
-          beaconAdmin: '0x4F50a7081792063693F46A6402390b9647562457',
-          implementation: '0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738',
+          beacon: EthereumAddress('0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE'),
+          beaconAdmin: EthereumAddress(
+            '0x4F50a7081792063693F46A6402390b9647562457',
+          ),
+          implementation: EthereumAddress(
+            '0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738',
+          ),
         },
       },
       {
-        address: '0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD',
+        address: EthereumAddress('0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD'),
         name: 'XAppConnectionManager',
         description:
           'Contract managing list of connections to other chains (domains) and list of watchers.',
       },
       {
-        address: '0x4F50a7081792063693F46A6402390b9647562457',
+        address: EthereumAddress('0x4F50a7081792063693F46A6402390b9647562457'),
         name: 'UpgradeBeaconController',
         description: 'Contract managing Beacons.',
       },
       {
-        address: '0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94',
+        address: EthereumAddress('0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94'),
         name: 'GovernanceRouter',
         description: 'Optics Governance Router. Manages all Optics components.',
         upgradeability: {
           type: 'Beacon',
-          beacon: '0x4d89F34dB307015F8002F97c1d100d84e3AFb76c',
-          beaconAdmin: '0x4F50a7081792063693F46A6402390b9647562457',
-          implementation: '0xe552861e90a42ddDC66b508A18a85bCEAbFcB835',
+          beacon: EthereumAddress('0x4d89F34dB307015F8002F97c1d100d84e3AFb76c'),
+          beaconAdmin: EthereumAddress(
+            '0x4F50a7081792063693F46A6402390b9647562457',
+          ),
+          implementation: EthereumAddress(
+            '0xe552861e90a42ddDC66b508A18a85bCEAbFcB835',
+          ),
         },
       },
     ],
@@ -168,7 +184,12 @@ export const opticsV2: Bridge = {
   permissions: [
     {
       accounts: [
-        { address: '0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'XAppConnectionManager Watchers',
       description:

@@ -55,7 +55,7 @@ export const dydx: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
+        address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
         sinceTimestamp: new UnixTime(1613033682),
         tokens: ['USDC'],
       },
@@ -108,14 +108,14 @@ export const dydx: Layer2 = {
     addresses: [
       {
         name: 'StarkPerpetual',
-        address: discovery.getContract('Proxy').address.toString(),
+        address: discovery.getContract('Proxy').address,
         description:
           'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
         upgradeability: discovery.getContract('Proxy').upgradeability,
       },
       {
         name: 'GpsStatementVerifier',
-        address: discovery.getContract('CallProxy').address.toString(),
+        address: discovery.getContract('CallProxy').address,
         description:
           'STARK Verifier. In contrast to Sorare, ImmutableX, rhino.fi and StarkNet which use common SHARP Prover, dYdX uses seperate Prover/Verifier.',
         upgradeability: discovery.getContract('CallProxy').upgradeability,
@@ -124,17 +124,17 @@ export const dydx: Layer2 = {
         name: 'MemoryPageFactRegistry',
         description:
           'Contract storing CAIRO Program Output, in case of dYdX, it stores state diffs of dYdX Exchange.',
-        address: '0xEfbCcE4659db72eC6897F46783303708cf9ACef8',
+        address: EthereumAddress('0xEfbCcE4659db72eC6897F46783303708cf9ACef8'),
       },
       {
         name: 'FriStatementContract',
         description: 'Part of STARK Verifier.',
-        address: '0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1',
+        address: EthereumAddress('0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1'),
       },
       {
         name: 'MerkleStatementContract',
         description: 'Part of STARK Verifier.',
-        address: '0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830',
+        address: EthereumAddress('0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830'),
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -144,7 +144,9 @@ export const dydx: Layer2 = {
       name: 'dYdX Governance',
       accounts: [
         {
-          address: '0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2',
+          address: EthereumAddress(
+            '0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2',
+          ),
           type: 'Contract',
         },
       ],
@@ -155,7 +157,9 @@ export const dydx: Layer2 = {
       name: 'GpsStatementVerifier Governor',
       accounts: [
         {
-          address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          address: EthereumAddress(
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          ),
           type: 'EOA',
         },
       ],
@@ -166,7 +170,9 @@ export const dydx: Layer2 = {
       name: 'Operator',
       accounts: [
         {
-          address: '0x8129b737912e17212C8693B781928f5D0303390a',
+          address: EthereumAddress(
+            '0x8129b737912e17212C8693B781928f5D0303390a',
+          ),
           type: 'EOA',
         },
       ],

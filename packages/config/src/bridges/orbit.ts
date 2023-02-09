@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
@@ -38,7 +38,7 @@ export const orbit: Bridge = {
     associatedTokens: ['ORC'],
     escrows: [
       {
-        address: '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+        address: EthereumAddress('0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a'),
         sinceTimestamp: new UnixTime(1603950507),
         tokens: [
           'ETH',
@@ -52,22 +52,22 @@ export const orbit: Bridge = {
         ],
       },
       {
-        address: '0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9',
+        address: EthereumAddress('0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9'),
         sinceTimestamp: new UnixTime(1603950507),
         tokens: ['cUSDT'],
       },
       {
-        address: '0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0',
+        address: EthereumAddress('0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0'),
         sinceTimestamp: new UnixTime(1603950507),
         tokens: ['cDAI'],
       },
       {
-        address: '0x830433dE03ABedE062660CC629e1A2c714272474',
+        address: EthereumAddress('0x830433dE03ABedE062660CC629e1A2c714272474'),
         sinceTimestamp: new UnixTime(1603950507),
         tokens: ['cUSDC'],
       },
       {
-        address: '0xd910f6F23889919fAd9C8cE3171dd557cE0308Da',
+        address: EthereumAddress('0xd910f6F23889919fAd9C8cE3171dd557cE0308Da'),
         sinceTimestamp: new UnixTime(1603950507),
         tokens: ['cWBTC'],
       },
@@ -167,7 +167,7 @@ export const orbit: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+        address: EthereumAddress('0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a'),
         name: 'EthVault',
         description:
           'Bridge contract, Proxy, Escrow, Governance. Source code of implementation is not verified on Etherscan.',
@@ -180,30 +180,38 @@ export const orbit: Bridge = {
         },
       },
       {
-        address: discovery.getContractValue<string>(
-          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-          'usdtFarm',
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+            'usdtFarm',
+          ),
         ),
         name: 'USDT Compound Farm',
       },
       {
-        address: discovery.getContractValue<string>(
-          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-          'daiFarm',
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+            'daiFarm',
+          ),
         ),
         name: 'DAI Compound Farm',
       },
       {
-        address: discovery.getContractValue<string>(
-          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-          'usdcFarm',
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+            'usdcFarm',
+          ),
         ),
         name: 'USDC Compound Farm',
       },
       {
-        address: discovery.getContractValue<string>(
-          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-          'wbtcFarm',
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+            'wbtcFarm',
+          ),
         ),
         name: 'WBTC Compound Farm',
       },
@@ -218,7 +226,7 @@ export const orbit: Bridge = {
           '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
           'getOwners',
         )
-        .map((owner) => ({ address: owner, type: 'EOA' })),
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `Participants of Bridge Governance ${discovery.getContractValue<number>(
         '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
         'required',

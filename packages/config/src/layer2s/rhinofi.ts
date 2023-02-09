@@ -50,7 +50,7 @@ export const rhinofi: Layer2 = {
     associatedTokens: ['DVF'],
     escrows: [
       {
-        address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
+        address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
         sinceTimestamp: new UnixTime(1590491810),
         tokens: '*',
       },
@@ -94,7 +94,7 @@ export const rhinofi: Layer2 = {
     addresses: [
       {
         name: 'StarkExchange',
-        address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
+        address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
         upgradeability: {
           type: 'StarkWare proxy',
           implementation: EthereumAddress(
@@ -111,7 +111,7 @@ export const rhinofi: Layer2 = {
         name: 'Committee',
         description:
           'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
-        address: '0x28780349A33eEE56bb92241bAAB8095449e24306',
+        address: EthereumAddress('0x28780349A33eEE56bb92241bAAB8095449e24306'),
       },
       SHARP_VERIFIER_CONTRACT,
     ],
@@ -122,7 +122,9 @@ export const rhinofi: Layer2 = {
       name: 'Governor',
       accounts: [
         {
-          address: '0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA',
+          address: EthereumAddress(
+            '0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA',
+          ),
           type: 'EOA',
         },
       ],
@@ -133,31 +135,45 @@ export const rhinofi: Layer2 = {
       name: 'Data Availability Committee',
       accounts: [
         {
-          address: '0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4',
+          address: EthereumAddress(
+            '0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36',
+          address: EthereumAddress(
+            '0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xf872Cf881873029B8955b582c29b66347f3f1326',
+          address: EthereumAddress(
+            '0xf872Cf881873029B8955b582c29b66347f3f1326',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178',
+          address: EthereumAddress(
+            '0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E',
+          address: EthereumAddress(
+            '0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648',
+          address: EthereumAddress(
+            '0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9',
+          address: EthereumAddress(
+            '0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9',
+          ),
           type: 'EOA',
         },
       ],
@@ -168,7 +184,9 @@ export const rhinofi: Layer2 = {
       name: 'SHARP Verifier Governor',
       accounts: [
         {
-          address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          address: EthereumAddress(
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          ),
           type: 'EOA',
         },
       ],
@@ -179,7 +197,9 @@ export const rhinofi: Layer2 = {
       name: 'Operator',
       accounts: [
         {
-          address: '0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5',
+          address: EthereumAddress(
+            '0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5',
+          ),
           type: 'EOA',
         },
       ],

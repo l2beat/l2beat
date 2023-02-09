@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { RISK_VIEW } from './common'
 import * as config from './multichain-config.json'
@@ -28,7 +28,7 @@ export const multichain: Bridge = {
   },
   config: {
     escrows: config.escrows.map((escrow) => ({
-      address: escrow.address,
+      address: EthereumAddress(escrow.address),
       sinceTimestamp: new UnixTime(escrow.sinceTimestamp),
       tokens: escrow.tokens,
     })),
@@ -115,12 +115,12 @@ export const multichain: Bridge = {
     isIncomplete: true,
     addresses: [
       {
-        address: '0x6b7a87899490EcE95443e979cA9485CBE7E71522',
+        address: EthereumAddress('0x6b7a87899490EcE95443e979cA9485CBE7E71522'),
         name: 'AnyswapV4Router',
         description: 'Multichain Liquidity Network Router V4.',
       },
       {
-        address: '0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705',
+        address: EthereumAddress('0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705'),
         name: 'AnyswapV6Router',
         description: 'Multichain Liquidity Network Router V6.',
       },
@@ -131,7 +131,9 @@ export const multichain: Bridge = {
     {
       accounts: [
         {
-          address: '0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00',
+          address: EthereumAddress(
+            '0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00',
+          ),
           type: 'EOA',
         },
       ],
@@ -143,7 +145,9 @@ export const multichain: Bridge = {
     {
       accounts: [
         {
-          address: '0x2A038e100F8B85DF21e4d44121bdBfE0c288A869',
+          address: EthereumAddress(
+            '0x2A038e100F8B85DF21e4d44121bdBfE0c288A869',
+          ),
           type: 'EOA',
         },
       ],

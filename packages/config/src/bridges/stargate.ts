@@ -85,22 +85,22 @@ export const stargate: Bridge = {
     // from the pool factory: 0x06d538690af257da524f25d0cd52fd85b1c2173e. For Ether pool (SGETH) there is additional Escrow contract
     escrows: [
       {
-        address: '0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56',
+        address: EthereumAddress('0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56'),
         sinceTimestamp: new UnixTime(1647511732),
         tokens: ['USDC'],
       },
       {
-        address: '0x38EA452219524Bb87e18dE1C24D3bB59510BD783',
+        address: EthereumAddress('0x38EA452219524Bb87e18dE1C24D3bB59510BD783'),
         sinceTimestamp: new UnixTime(1647511860),
         tokens: ['USDT'],
       },
       //   {
-      //     address: '0x692953e758c3669290cb1677180c64183cEe374e',
+      //     address: EthereumAddress('0x692953e758c3669290cb1677180c64183cEe374e'),
       //     sinceTimestamp: new UnixTime(1656354769),
       //     tokens: ['USDD'],
       //   },
       {
-        address: '0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c',
+        address: EthereumAddress('0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c'),
         sinceTimestamp: new UnixTime(1656108257),
         tokens: ['ETH'],
       },
@@ -109,20 +109,20 @@ export const stargate: Bridge = {
   contracts: {
     addresses: [
       {
-        address: discovery.getContract('Router').address.toString(),
+        address: discovery.getContract('Router').address,
         name: 'StarGate Router',
         description:
           'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
       },
       {
-        address: discovery.getContract('Bridge').address.toString(),
+        address: discovery.getContract('Bridge').address,
         name: 'StarGate Bridge',
         description:
           'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
       },
       {
         //Probably outdated
-        address: '0x902F09715B6303d4173037652FA7377e5b98089E',
+        address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
         name: 'LayerZero Relayer',
         upgradeability: {
           type: 'EIP1967 proxy',
@@ -133,7 +133,7 @@ export const stargate: Bridge = {
         },
       },
       {
-        address: '0x5a54fe5234E811466D5366846283323c954310B2',
+        address: EthereumAddress('0x5a54fe5234E811466D5366846283323c954310B2'),
         name: 'LayerZero Oracle',
         upgradeability: {
           type: 'EIP1967 proxy',
@@ -144,34 +144,34 @@ export const stargate: Bridge = {
         },
       },
       {
-        address: discovery.getContract('Endpoint').address.toString(),
+        address: discovery.getContract('Endpoint').address,
         name: 'Endpoint',
         description: 'LayerZero Ethereum Endpoint.',
       },
       //Probably outdated
       {
-        address: '0x5B19bd330A84c049b62D5B0FC2bA120217a18C1C',
+        address: EthereumAddress('0x5B19bd330A84c049b62D5B0FC2bA120217a18C1C'),
         name: 'UltraLightNode',
         description:
           'LayerZero UltraLight Node. Used by oracles to checkpoint source chain block hashes.',
       },
       {
-        address: discovery.getContract('UltraLightNodeV2').address.toString(),
+        address: discovery.getContract('UltraLightNodeV2').address,
         name: 'UltraLightNodeV2',
         description: 'LayerZero UltraLight Node.',
       },
       {
-        address: '0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56',
+        address: EthereumAddress('0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56'),
         name: 'USDC Pool',
         description: 'USDC Pool.',
       },
       {
-        address: '0x38EA452219524Bb87e18dE1C24D3bB59510BD783',
+        address: EthereumAddress('0x38EA452219524Bb87e18dE1C24D3bB59510BD783'),
         name: 'USDT Pool',
         description: 'USDT Pool.',
       },
       {
-        address: '0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c',
+        address: EthereumAddress('0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c'),
         name: 'StargateEthVault',
         description: 'ETH Pool.',
       },
@@ -183,7 +183,9 @@ export const stargate: Bridge = {
     {
       accounts: [
         {
-          address: '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+          address: EthereumAddress(
+            '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+          ),
           type: 'MultiSig',
         },
       ],
@@ -197,7 +199,7 @@ export const stargate: Bridge = {
           '0x65bb797c2B9830d891D87288F029ed8dACc19705',
           'getOwners',
         )
-        .map((owner) => ({ address: owner, type: 'EOA' })),
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         '0x65bb797c2B9830d891D87288F029ed8dACc19705',
         'getThreshold',
@@ -211,7 +213,9 @@ export const stargate: Bridge = {
     {
       accounts: [
         {
-          address: '0x902F09715B6303d4173037652FA7377e5b98089E',
+          address: EthereumAddress(
+            '0x902F09715B6303d4173037652FA7377e5b98089E',
+          ),
           type: 'Contract',
         },
       ],
@@ -222,7 +226,9 @@ export const stargate: Bridge = {
     {
       accounts: [
         {
-          address: '0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5',
+          address: EthereumAddress(
+            '0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5',
+          ),
           type: 'EOA',
         },
       ],
@@ -232,7 +238,9 @@ export const stargate: Bridge = {
     {
       accounts: [
         {
-          address: '0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8',
+          address: EthereumAddress(
+            '0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8',
+          ),
           type: 'EOA',
         },
       ],
@@ -242,7 +250,9 @@ export const stargate: Bridge = {
     {
       accounts: [
         {
-          address: '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+          address: EthereumAddress(
+            '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+          ),
           type: 'MultiSig',
         },
       ],
@@ -257,7 +267,7 @@ export const stargate: Bridge = {
           '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
           'getOwners',
         )
-        .map((owner) => ({ address: owner, type: 'EOA' })),
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
         'getThreshold',

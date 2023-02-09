@@ -47,13 +47,13 @@ export const bobanetwork: Layer2 = {
     escrows: [
       {
         // Proxy__OVM_L1StandardBridge
-        address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
+        address: EthereumAddress('0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00'),
         sinceTimestamp: new UnixTime(1628793901),
         tokens: '*',
       },
       {
         // Proxy__L1LiquidityPool
-        address: '0x1A26ef6575B7BBB864d984D9255C069F6c361a14',
+        address: EthereumAddress('0x1A26ef6575B7BBB864d984D9255C069F6c361a14'),
         sinceTimestamp: new UnixTime(1628818577),
         tokens: '*',
       },
@@ -194,35 +194,35 @@ export const bobanetwork: Layer2 = {
         name: 'CanonicalTransactionChain',
         description:
           'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
-        address: '0xfBd2541e316948B259264c02f370eD088E04c3Db',
+        address: EthereumAddress('0xfBd2541e316948B259264c02f370eD088E04c3Db'),
       },
       {
         name: 'StateCommitmentChain',
         description:
           'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currenlty olny OVM_Proposer can submit new state roots.',
-        address: '0xdE7355C971A5B733fe2133753Abd7e5441d441Ec',
+        address: EthereumAddress('0xdE7355C971A5B733fe2133753Abd7e5441d441Ec'),
       },
       {
         name: 'ChainStorageContainer-CTC-batches',
-        address: '0x17148284d2da2f38c96346f1776C1BF7D7691231',
+        address: EthereumAddress('0x17148284d2da2f38c96346f1776C1BF7D7691231'),
       },
       {
         name: 'ChainStorageContainer-CTC-queue',
-        address: '0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d',
+        address: EthereumAddress('0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d'),
       },
       {
         name: 'ChainStorageContainer-SCC-batches',
-        address: '0x13992B9f327faCA11568BE18a8ad3E9747e87d93',
+        address: EthereumAddress('0x13992B9f327faCA11568BE18a8ad3E9747e87d93'),
       },
       {
         name: 'BondManager',
         description:
           "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
-        address: '0x60660e6CDEb423cf847dD11De4C473130D65b627',
+        address: EthereumAddress('0x60660e6CDEb423cf847dD11De4C473130D65b627'),
       },
       {
         name: 'L1CrossDomainMessenger',
-        address: '0x6D4528d192dB72E282265D6092F4B872f9Dff69e',
+        address: EthereumAddress('0x6D4528d192dB72E282265D6092F4B872f9Dff69e'),
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
         upgradeability: {
@@ -235,7 +235,7 @@ export const bobanetwork: Layer2 = {
       },
       {
         name: 'L1CrossDomainMessengerFast',
-        address: '0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E',
+        address: EthereumAddress('0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E'),
         description:
           'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
         upgradeability: {
@@ -250,17 +250,17 @@ export const bobanetwork: Layer2 = {
         name: 'L1MultiMessageRelayer',
         description:
           'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessenger.',
-        address: '0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B',
+        address: EthereumAddress('0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B'),
       },
       {
         name: 'L1MultiMessageRelayerFast',
         description:
           'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessengerFast.',
-        address: '0x2d6134Ac3e480fBDD263B7163d333dCA285f9622',
+        address: EthereumAddress('0x2d6134Ac3e480fBDD263B7163d333dCA285f9622'),
       },
       {
         name: 'L1LiquidityPool',
-        address: '0x1A26ef6575B7BBB864d984D9255C069F6c361a14',
+        address: EthereumAddress('0x1A26ef6575B7BBB864d984D9255C069F6c361a14'),
         description: 'Liquidity Pool manager for fast withdrawal facility.',
         upgradeability: {
           type: 'EIP1967 proxy',
@@ -274,12 +274,12 @@ export const bobanetwork: Layer2 = {
         name: 'Lib_AddressManager',
         description:
           'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
-        address: '0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089',
+        address: EthereumAddress('0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089'),
       },
       // This Proxy is a L1ChugSplashProxy with a typical EIP1967 pattern.
       {
         name: 'L1StandardBridge',
-        address: '0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00',
+        address: EthereumAddress('0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00'),
         description:
           'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
         upgradeability: {
@@ -293,7 +293,7 @@ export const bobanetwork: Layer2 = {
       // L1NFTBridge Proxy even though is called ResolvedDelegateProxy it does not use external lib manager
       {
         name: 'L1NFTBridge',
-        address: '0xC891F466e53f40603250837282eAE4e22aD5b088',
+        address: EthereumAddress('0xC891F466e53f40603250837282eAE4e22aD5b088'),
         description: 'Standard NFT bridge.',
         upgradeability: {
           type: 'EIP1967 proxy',
@@ -311,7 +311,9 @@ export const bobanetwork: Layer2 = {
       name: 'Owner',
       accounts: [
         {
-          address: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+          address: EthereumAddress(
+            '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+          ),
           type: 'EOA',
         },
       ],
@@ -322,7 +324,9 @@ export const bobanetwork: Layer2 = {
       name: 'Sequencer',
       accounts: [
         {
-          address: '0xfa46908B587f9102E81CE6C43b7B41b52881c57F',
+          address: EthereumAddress(
+            '0xfa46908B587f9102E81CE6C43b7B41b52881c57F',
+          ),
           type: 'EOA',
         },
       ],
@@ -332,7 +336,9 @@ export const bobanetwork: Layer2 = {
       name: 'State Root Proposer',
       accounts: [
         {
-          address: '0x5558c63d5bf229450995adc160c023C9F4d4bE80',
+          address: EthereumAddress(
+            '0x5558c63d5bf229450995adc160c023C9F4d4bE80',
+          ),
           type: 'EOA',
         },
       ],

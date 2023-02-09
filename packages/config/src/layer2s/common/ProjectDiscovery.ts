@@ -2,6 +2,7 @@ import {
   assert,
   ContractParameters,
   ContractValue,
+  EthereumAddress,
   ProjectParameters,
 } from '@l2beat/shared'
 import { utils } from 'ethers'
@@ -70,7 +71,7 @@ export class ProjectDiscovery {
   getContractUpgradeabilityParam<
     K extends keyof MergedUnion<ProjectUpgradeability>,
     T extends MergedUnion<ProjectUpgradeability>[K],
-  >(contractIdentifier: string, key: K): T {
+  >(contractIdentifier: string, key: K): NonNullable<T> {
     const contract = this.getContract(contractIdentifier)
     //@ts-expect-error only 'type' is allowed here, but many more are possible with our error handling
     const result = contract.upgradeability[key] as T | undefined
@@ -84,7 +85,7 @@ export class ProjectDiscovery {
 
   private getContractByAddress(address: string): ContractParameters {
     const contract = this.discovery.contracts.find(
-      (contract) => contract.address.toString() === address,
+      (contract) => contract.address === EthereumAddress(address),
     )
 
     assert(

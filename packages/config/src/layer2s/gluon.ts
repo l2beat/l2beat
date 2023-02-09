@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -43,12 +43,12 @@ export const gluon: Layer2 = {
     associatedTokens: ['L2'],
     escrows: [
       {
-        address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',
+        address: EthereumAddress('0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB'),
         sinceTimestamp: new UnixTime(1573694037),
         tokens: ['ETH', 'DAI', 'L2'],
       },
       {
-        address: '0x84e34fD82FC368F1a072075114AdC4b552a7a1F4',
+        address: EthereumAddress('0x84e34fD82FC368F1a072075114AdC4b552a7a1F4'),
         sinceTimestamp: new UnixTime(1612360715),
         tokens: ['DAI', 'USDT'],
       },
@@ -111,11 +111,11 @@ export const gluon: Layer2 = {
     addresses: [
       {
         name: 'Gluon',
-        address: '0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB',
+        address: EthereumAddress('0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB'),
       },
       {
         name: 'RegistryLogic',
-        address: '0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C',
+        address: EthereumAddress('0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C'),
         upgradeability: {
           type: 'Reference',
           base: 'Gluon',
@@ -125,7 +125,7 @@ export const gluon: Layer2 = {
       },
       {
         name: 'RegistryData',
-        address: '0x0fC25C7931679B838209c484d49Df0Cb9E633C41',
+        address: EthereumAddress('0x0fC25C7931679B838209c484d49Df0Cb9E633C41'),
         upgradeability: {
           type: 'Reference',
           base: 'RegistryLogic',
@@ -134,7 +134,7 @@ export const gluon: Layer2 = {
       },
       {
         name: 'StakeLogic',
-        address: '0x84e34fD82FC368F1a072075114AdC4b552a7a1F4',
+        address: EthereumAddress('0x84e34fD82FC368F1a072075114AdC4b552a7a1F4'),
         upgradeability: {
           type: 'Reference',
           base: 'Gluon',
@@ -144,7 +144,7 @@ export const gluon: Layer2 = {
       },
       {
         name: 'StakeData',
-        address: '0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77',
+        address: EthereumAddress('0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77'),
         upgradeability: {
           type: 'Reference',
           base: 'StakeLogic',
@@ -153,7 +153,7 @@ export const gluon: Layer2 = {
       },
       {
         name: 'SpotLogic',
-        address: '0x2D627FF93d32f5FEBb04d68409A889895B4aef2D',
+        address: EthereumAddress('0x2D627FF93d32f5FEBb04d68409A889895B4aef2D'),
         upgradeability: {
           type: 'Reference',
           base: 'Gluon',
@@ -163,7 +163,7 @@ export const gluon: Layer2 = {
       },
       {
         name: 'SpotData',
-        address: '0x0d283D685F0A741C463846176e4c8EFF90D3F9EC',
+        address: EthereumAddress('0x0d283D685F0A741C463846176e4c8EFF90D3F9EC'),
         upgradeability: {
           type: 'Reference',
           base: 'SpotLogic',
@@ -172,7 +172,7 @@ export const gluon: Layer2 = {
       },
       {
         name: 'DerivativesLogic',
-        address: '0xDfBFe895e07e5115773Cb9631CB2148114589caC',
+        address: EthereumAddress('0xDfBFe895e07e5115773Cb9631CB2148114589caC'),
         upgradeability: {
           type: 'Reference',
           base: 'Gluon',
@@ -182,7 +182,7 @@ export const gluon: Layer2 = {
       },
       {
         name: 'DerivativesData',
-        address: '0x563052914Fd973a2305763269A106a7B0B6D50Cc',
+        address: EthereumAddress('0x563052914Fd973a2305763269A106a7B0B6D50Cc'),
         upgradeability: {
           type: 'Reference',
           base: 'DerivativesLogic',
@@ -191,7 +191,7 @@ export const gluon: Layer2 = {
       },
       {
         name: 'LegacyTokensExtension',
-        address: '0xDA88EfA53c85Afa30564bb651A2E76b99a232082',
+        address: EthereumAddress('0xDA88EfA53c85Afa30564bb651A2E76b99a232082'),
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

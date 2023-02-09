@@ -42,7 +42,7 @@ export const aztec: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+        address: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
         sinceTimestamp: new UnixTime(1614799636),
         tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
       },
@@ -161,25 +161,25 @@ export const aztec: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: '0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba',
+        address: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
         description:
           'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
         name: 'RollupProcessor',
       },
       {
-        address: '0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734',
+        address: EthereumAddress('0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734'),
         description:
           'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
         name: 'AztecFeeDistributor',
       },
       {
-        address: '0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1',
+        address: EthereumAddress('0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1'),
         description:
           'Turbo Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
         name: 'TurboVerifier',
       },
       {
-        address: '0x7FaE73Be814d94318fa0756a5D73ae9cf3BA7530',
+        address: EthereumAddress('0x7FaE73Be814d94318fa0756a5D73ae9cf3BA7530'),
         description: 'Verification Keys for the Verifier.',
         name: 'VerificationKeys',
       },

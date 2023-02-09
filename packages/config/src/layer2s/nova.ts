@@ -48,17 +48,17 @@ export const nova: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd',
+        address: EthereumAddress('0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd'),
         sinceTimestamp: new UnixTime(1656073623),
         tokens: ['ETH'],
       },
       {
-        address: '0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3',
+        address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
         sinceTimestamp: new UnixTime(1659620187),
         tokens: ['DAI'],
       },
       {
-        address: '0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf',
+        address: EthereumAddress('0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf'),
         sinceTimestamp: new UnixTime(1656305583),
         tokens: '*',
       },
@@ -189,45 +189,45 @@ export const nova: Layer2 = {
     addresses: [
       {
         name: 'ProxyAdmin',
-        address: discovery.getContract('ProxyAdmin').address.toString(),
+        address: discovery.getContract('ProxyAdmin').address,
         description:
           'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by a 4-of-6 multisig.',
       },
       {
-        address: discovery.getContract('ArbitrumProxy').address.toString(),
+        address: discovery.getContract('ArbitrumProxy').address,
         name: 'Rollup',
         description:
           'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
         upgradeability: discovery.getContract('ArbitrumProxy').upgradeability,
       },
       {
-        address: discovery.getContract('SequencerInbox').address.toString(),
+        address: discovery.getContract('SequencerInbox').address,
         name: 'SequencerInbox',
         description:
           'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
         upgradeability: discovery.getContract('SequencerInbox').upgradeability,
       },
       {
-        address: discovery.getContract('Inbox').address.toString(),
+        address: discovery.getContract('Inbox').address,
         name: 'Inbox',
         description:
           'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
         upgradeability: discovery.getContract('Inbox').upgradeability,
       },
       {
-        address: discovery.getContract('Bridge').address.toString(),
+        address: discovery.getContract('Bridge').address,
         name: 'Bridge',
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
         upgradeability: discovery.getContract('Bridge').upgradeability,
       },
       {
-        address: discovery.getContract('Outbox').address.toString(),
+        address: discovery.getContract('Outbox').address,
         name: 'Outbox',
         upgradeability: discovery.getContract('Outbox').upgradeability,
       },
       {
-        address: discovery.getContract('ChallengeManager').address.toString(),
+        address: discovery.getContract('ChallengeManager').address,
         name: 'ChallengeManager',
         description:
           'Contract managing an interactive fraud challenge process.',
@@ -235,19 +235,19 @@ export const nova: Layer2 = {
           discovery.getContract('ChallengeManager').upgradeability,
       },
       {
-        address: discovery.getContract('OneStepProofEntry').address.toString(),
+        address: discovery.getContract('OneStepProofEntry').address,
         name: 'OneStepProofEntry',
         description:
           'Contract managing adjudication logic for EVM implementation in WASM used by the fraud proofs.',
       },
       {
-        address: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
+        address: EthereumAddress('0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560'),
         name: 'ProxyAdmin (2)',
         description:
           'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig.',
       },
       {
-        address: '0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48',
+        address: EthereumAddress('0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48'),
         name: 'L1GatewayRouter',
         description: 'Router managing token <--> gateway mapping.',
         upgradeability: {
@@ -259,7 +259,7 @@ export const nova: Layer2 = {
         },
       },
       {
-        address: '0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf',
+        address: EthereumAddress('0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf'),
         name: 'L1ERC20Gateway',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
@@ -272,7 +272,7 @@ export const nova: Layer2 = {
         },
       },
       {
-        address: '0x23122da8C581AA7E0d07A36Ff1f16F799650232f',
+        address: EthereumAddress('0x23122da8C581AA7E0d07A36Ff1f16F799650232f'),
         name: 'L1CustomGateway',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
@@ -285,13 +285,13 @@ export const nova: Layer2 = {
         },
       },
       {
-        address: '0x97f63339374fCe157Aa8Ee27830172d2AF76A786',
+        address: EthereumAddress('0x97f63339374fCe157Aa8Ee27830172d2AF76A786'),
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
       },
       {
-        address: '0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3',
+        address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
         name: 'L1Escrow',
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       },

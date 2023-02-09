@@ -1,3 +1,5 @@
+import { EthereumAddress } from '@l2beat/shared'
+
 export interface ProjectPermission {
   accounts: ProjectPermissionedAccount[]
   name: string
@@ -5,6 +7,6 @@ export interface ProjectPermission {
 }
 
 export interface ProjectPermissionedAccount {
-  address: string
+  address: EthereumAddress
   type: 'EOA' | 'MultiSig' | 'Contract'
 }

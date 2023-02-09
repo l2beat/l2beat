@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
@@ -59,7 +59,7 @@ export const polynetwork: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x250e76987d838a75310c34bf422ea9f1AC4Cc906',
+        address: EthereumAddress('0x250e76987d838a75310c34bf422ea9f1AC4Cc906'),
         sinceTimestamp: new UnixTime(1599099893),
         tokens: [
           'ETH',
@@ -76,7 +76,7 @@ export const polynetwork: Bridge = {
       },
       {
         // This new Escrow address has been added on 20 Oct 2022.
-        address: '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
+        address: EthereumAddress('0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868'),
         sinceTimestamp: new UnixTime(1666256303),
         tokens: ['ETH'],
       },
@@ -145,79 +145,71 @@ export const polynetwork: Bridge = {
   contracts: {
     addresses: [
       {
-        address: discovery.getContract('PolyWrapper').address.toString(),
+        address: discovery.getContract('PolyWrapper').address,
         name: 'PolyWrapper',
         description:
           'Entrypoint contract for the bridge. It proxies requests to LockProxy.',
       },
       {
-        address: '0x250e76987d838a75310c34bf422ea9f1AC4Cc906',
+        address: EthereumAddress('0x250e76987d838a75310c34bf422ea9f1AC4Cc906'),
         name: 'LockProxy 0x250e...',
         description: 'Escrow and proxy contract for the Bridge.',
         upgradeability: {
           type: 'Custom',
-          admin: discovery.getContractValue<string>(
-            '0x250e76987d838a75310c34bf422ea9f1AC4Cc906',
-            'owner',
+          admin: EthereumAddress(
+            discovery.getContractValue<string>(
+              '0x250e76987d838a75310c34bf422ea9f1AC4Cc906',
+              'owner',
+            ),
           ),
-          implementation: discovery
-            .getContract('EthCrossChainManager')
-            .address.toString(),
+          implementation: discovery.getContract('EthCrossChainManager').address,
         },
       },
       {
-        address: '0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54',
+        address: EthereumAddress('0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54'),
         name: 'LockProxyWithLP 0x7b9B...',
         description: 'Proxy contract for the Bridge.',
         upgradeability: {
           type: 'Custom',
-          admin: '0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57',
-          implementation: discovery
-            .getContract('EthCrossChainManager')
-            .address.toString(),
+          admin: EthereumAddress('0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57'),
+          implementation: discovery.getContract('EthCrossChainManager').address,
         },
       },
       {
-        address: '0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035',
+        address: EthereumAddress('0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035'),
         name: 'LockProxy 0x3Ee7...',
         description: 'Escrow and proxy contract for the Bridge.',
         upgradeability: {
           type: 'Custom',
-          admin: '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
-          implementation: discovery
-            .getContract('EthCrossChainManager')
-            .address.toString(),
+          admin: EthereumAddress('0x52D858ef5e0A768C80C38617eB8a7680f4D4d459'),
+          implementation: discovery.getContract('EthCrossChainManager').address,
         },
       },
       {
-        address: '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
+        address: EthereumAddress('0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868'),
         name: 'LockProxy 0x53D2...',
         description: 'Escrow and proxy contract for the Bridge.',
         upgradeability: {
           type: 'Custom',
-          admin: '0xeF86b2c8740518548ae449c4C3892B4be0475d8c',
-          implementation: discovery
-            .getContract('EthCrossChainManager')
-            .address.toString(),
+          admin: EthereumAddress('0xeF86b2c8740518548ae449c4C3892B4be0475d8c'),
+          implementation: discovery.getContract('EthCrossChainManager').address,
         },
       },
       {
-        address: discovery
-          .getContract('EthCrossChainManager')
-          .address.toString(),
+        address: discovery.getContract('EthCrossChainManager').address,
         name: 'EthCrossChainManager',
         description:
           'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
       },
       //DUPLICATES???
       {
-        address: '0xcF2afe102057bA5c16f899271045a0A37fCb10f2',
+        address: EthereumAddress('0xcF2afe102057bA5c16f899271045a0A37fCb10f2'),
         name: 'EthCrossChainData (Unverified source code)',
         description:
           "Contract unverified on Etherscan. Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
       },
       {
-        address: '0xcF2afe102057bA5c16f899271045a0A37fCb10f2',
+        address: EthereumAddress('0xcF2afe102057bA5c16f899271045a0A37fCb10f2'),
         name: 'EthCrossChainManagerProxy (Unverified source code)',
         description:
           'Contract unverified on Etherscan. Used to proxy requests from LockProxy to EthCrossChainManager.',
@@ -229,7 +221,9 @@ export const polynetwork: Bridge = {
     {
       accounts: [
         {
-          address: discovery.getContractValue<string>('PolyWrapper', 'owner'),
+          address: EthereumAddress(
+            discovery.getContractValue<string>('PolyWrapper', 'owner'),
+          ),
           type: 'EOA',
         },
       ],
@@ -240,9 +234,8 @@ export const polynetwork: Bridge = {
     {
       accounts: [
         {
-          address: discovery.getContractValue<string>(
-            'EthCrossChainManager',
-            'owner',
+          address: EthereumAddress(
+            discovery.getContractValue<string>('EthCrossChainManager', 'owner'),
           ),
           type: 'Contract',
         },
@@ -254,7 +247,9 @@ export const polynetwork: Bridge = {
     {
       accounts: [
         {
-          address: '0x8B35064B158634458Fd53A861d68Eb84152E4106',
+          address: EthereumAddress(
+            '0x8B35064B158634458Fd53A861d68Eb84152E4106',
+          ),
           type: 'EOA',
         },
       ],
@@ -265,7 +260,9 @@ export const polynetwork: Bridge = {
       accounts: [
         {
           //Probably possible to extract, couldnt find from where
-          address: '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
+          address: EthereumAddress(
+            '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
+          ),
           type: 'EOA',
         },
       ],
@@ -275,9 +272,11 @@ export const polynetwork: Bridge = {
     {
       accounts: [
         {
-          address: discovery.getContractValue<string>(
-            '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
-            'owner',
+          address: EthereumAddress(
+            discovery.getContractValue<string>(
+              '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
+              'owner',
+            ),
           ),
           type: 'EOA',
         },

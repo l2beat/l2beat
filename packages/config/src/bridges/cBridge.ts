@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -33,13 +33,13 @@ export const cBridge: Bridge = {
     escrows: [
       // liquidity pool
       {
-        address: '0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820',
+        address: EthereumAddress('0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820'),
         sinceTimestamp: new UnixTime(1638346811),
         tokens: ['ETH', 'USDC', 'WETH', 'USDT', 'MASK', 'BUSD', 'LYRA'],
       },
       // token bridge v1
       {
-        address: '0xB37D31b2A74029B5951a2778F959282E2D518595',
+        address: EthereumAddress('0xB37D31b2A74029B5951a2778F959282E2D518595'),
         sinceTimestamp: new UnixTime(1639553135),
         tokens: [
           'USDC',
@@ -56,7 +56,7 @@ export const cBridge: Bridge = {
       },
       // token bridge v2
       {
-        address: '0x7510792A3B1969F9307F3845CE88e39578f2bAE1',
+        address: EthereumAddress('0x7510792A3B1969F9307F3845CE88e39578f2bAE1'),
         sinceTimestamp: new UnixTime(1651661389),
         tokens: ['WETH', 'PSTAKE'],
       },
@@ -163,43 +163,43 @@ export const cBridge: Bridge = {
     addresses: [
       {
         name: 'Message Bus',
-        address: '0x4066D196A423b2b3B8B054f4F40efB47a74E200C',
+        address: EthereumAddress('0x4066D196A423b2b3B8B054f4F40efB47a74E200C'),
         description:
           'Contract providing cross-chain AMB facility. It connects with Liquidity Network and Token Bridges to processes certain types of messages.',
       },
       {
         name: 'Liquidity Network',
-        address: '0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820',
+        address: EthereumAddress('0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820'),
         description:
           'Contract providing cross-chain swaps, allows user to deposit funds and withdraw them. Additionally user can add liquidity to this address to generate yield.',
       },
       {
         name: 'Token Bridge v1',
-        address: '0xB37D31b2A74029B5951a2778F959282E2D518595',
+        address: EthereumAddress('0xB37D31b2A74029B5951a2778F959282E2D518595'),
         description:
           'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
       },
       {
         name: 'Token Bridge v2',
-        address: '0x7510792A3B1969F9307F3845CE88e39578f2bAE1',
+        address: EthereumAddress('0x7510792A3B1969F9307F3845CE88e39578f2bAE1'),
         description:
           'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
       },
       {
         name: 'Pegged Token Bridge v1',
-        address: '0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB',
+        address: EthereumAddress('0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB'),
         description:
           'Contract minting/burning tokens when receiving a message from Token Bridge.',
       },
       {
         name: 'Pegged Token Bridge v2',
-        address: '0x52E4f244f380f8fA51816c8a10A63105dd4De084',
+        address: EthereumAddress('0x52E4f244f380f8fA51816c8a10A63105dd4De084'),
         description:
           'Contract minting/burning tokens when receiving a message from Token Bridge.',
       },
       {
         name: 'Transfer Agent',
-        address: '0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b',
+        address: EthereumAddress('0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b'),
         description:
           'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',
       },
@@ -214,7 +214,9 @@ export const cBridge: Bridge = {
         'The owner of the Token Bridge and Liquidity Network is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
       accounts: [
         {
-          address: '0xF380166F8490F24AF32Bf47D1aA217FBA62B6575',
+          address: EthereumAddress(
+            '0xF380166F8490F24AF32Bf47D1aA217FBA62B6575',
+          ),
           type: 'Contract',
         },
       ],
@@ -225,23 +227,33 @@ export const cBridge: Bridge = {
         'Can vote on proposal which will be executed by the contract. Each voter holds the same voting power.',
       accounts: [
         {
-          address: '0x1b9dFC56e38b0F92448659C114e2347Bd803911c',
+          address: EthereumAddress(
+            '0x1b9dFC56e38b0F92448659C114e2347Bd803911c',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9',
+          address: EthereumAddress(
+            '0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xDfE4F07D1F36B8d559b25082460a4f6A72531de2',
+          address: EthereumAddress(
+            '0xDfE4F07D1F36B8d559b25082460a4f6A72531de2',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823',
+          address: EthereumAddress(
+            '0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2',
+          address: EthereumAddress(
+            '0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2',
+          ),
           type: 'EOA',
         },
       ],
@@ -252,19 +264,27 @@ export const cBridge: Bridge = {
         'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
       accounts: [
         {
-          address: '0x8e9174ed59eA4b81E70d0aE0DE13242e2329106c',
+          address: EthereumAddress(
+            '0x8e9174ed59eA4b81E70d0aE0DE13242e2329106c',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823',
+          address: EthereumAddress(
+            '0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9',
+          address: EthereumAddress(
+            '0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x1b9dFC56e38b0F92448659C114e2347Bd803911c',
+          address: EthereumAddress(
+            '0x1b9dFC56e38b0F92448659C114e2347Bd803911c',
+          ),
           type: 'EOA',
         },
       ],
@@ -274,27 +294,39 @@ export const cBridge: Bridge = {
       description: 'Can pause and unpause the system.',
       accounts: [
         {
-          address: '0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4',
+          address: EthereumAddress(
+            '0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2',
+          address: EthereumAddress(
+            '0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823',
+          address: EthereumAddress(
+            '0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9',
+          address: EthereumAddress(
+            '0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xDfE4F07D1F36B8d559b25082460a4f6A72531de2',
+          address: EthereumAddress(
+            '0xDfE4F07D1F36B8d559b25082460a4f6A72531de2',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x1b9dFC56e38b0F92448659C114e2347Bd803911c',
+          address: EthereumAddress(
+            '0x1b9dFC56e38b0F92448659C114e2347Bd803911c',
+          ),
           type: 'EOA',
         },
       ],

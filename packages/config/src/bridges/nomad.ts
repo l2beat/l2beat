@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
@@ -26,7 +26,7 @@ export const nomad: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3',
+        address: EthereumAddress('0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3'),
         sinceTimestamp: new UnixTime(1641899423),
         tokens: [
           'USDC',
@@ -110,72 +110,92 @@ export const nomad: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8',
+        address: EthereumAddress('0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8'),
         name: 'Home',
         description:
           'Nomad Home. This contract is used to send x-chain messages, such as deposit requests. Messages are regularly signed by Attester.',
         upgradeability: {
           type: 'Beacon',
-          beacon: '0x063e871f8DB991CEAd34B557A00B157B360084cc',
-          beaconAdmin: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          implementation: '0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C',
+          beacon: EthereumAddress('0x063e871f8DB991CEAd34B557A00B157B360084cc'),
+          beaconAdmin: EthereumAddress(
+            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
+          ),
+          implementation: EthereumAddress(
+            '0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C',
+          ),
         },
       },
       {
-        address: '0x049b51e531Fd8f90da6d92EA83dC4125002F20EF',
+        address: EthereumAddress('0x049b51e531Fd8f90da6d92EA83dC4125002F20EF'),
         name: 'Replica',
         description:
           'Nomad Replica. This contract is used to receive x-chain messages, such as withdrawal requests, from Relayers.',
         upgradeability: {
           type: 'Beacon',
-          beacon: '0x0876dFe4AcAe0e1c0a43302716483f5752298b71',
-          beaconAdmin: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          implementation: '0xb92336759618f55bd0f8313bd843604592e27bd8',
+          beacon: EthereumAddress('0x0876dFe4AcAe0e1c0a43302716483f5752298b71'),
+          beaconAdmin: EthereumAddress(
+            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
+          ),
+          implementation: EthereumAddress(
+            '0xb92336759618f55bd0f8313bd843604592e27bd8',
+          ),
         },
       },
       {
-        address: '0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3',
+        address: EthereumAddress('0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3'),
         name: 'BridgeRouter',
         description:
           'Nomad Bridge Router. Used to send messages to Home and receive messages from Replica. When receiving messages, it routes them to XAppConnectionManager.',
         upgradeability: {
           type: 'Beacon',
-          beacon: '0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00',
-          beaconAdmin: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          implementation: '0x15fdA9F60310d09FEA54E3c99d1197DfF5107248',
+          beacon: EthereumAddress('0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00'),
+          beaconAdmin: EthereumAddress(
+            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
+          ),
+          implementation: EthereumAddress(
+            '0x15fdA9F60310d09FEA54E3c99d1197DfF5107248',
+          ),
         },
       },
       {
-        address: '0xFe8874778f946Ac2990A29eba3CFd50760593B2F',
+        address: EthereumAddress('0xFe8874778f946Ac2990A29eba3CFd50760593B2F'),
         name: 'XAppConnectionManager',
         description:
           'Contract managing list of connections to other chains (domains) and list of watchers.',
       },
       {
-        address: '0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79',
+        address: EthereumAddress('0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79'),
         name: 'Token Registry',
         description: 'Nomad Token Registry.',
         upgradeability: {
           type: 'Beacon',
-          beacon: '0x4D5ff8A01ed833E11Aba43821D2881A5F2911F98',
-          beaconAdmin: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          implementation: '0xa7E4Fea3c1468D6C1A3A77e21e6e43Daed855C1b',
+          beacon: EthereumAddress('0x4D5ff8A01ed833E11Aba43821D2881A5F2911F98'),
+          beaconAdmin: EthereumAddress(
+            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
+          ),
+          implementation: EthereumAddress(
+            '0xa7E4Fea3c1468D6C1A3A77e21e6e43Daed855C1b',
+          ),
         },
       },
       {
-        address: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
+        address: EthereumAddress('0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e'),
         name: 'UpgradeBeaconController',
         description: 'Contract managing Beacons.',
       },
       {
-        address: '0x3009C99D370B780304D2098196f1EBF779a4777a',
+        address: EthereumAddress('0x3009C99D370B780304D2098196f1EBF779a4777a'),
         name: 'GovernanceRouter',
         description: 'Nomad Governance Router. Manages all Nomad components.',
         upgradeability: {
           type: 'Beacon',
-          beacon: '0x67833a48b3F509d4252ac2c19cd604556eD6c981',
-          beaconAdmin: '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
-          implementation: '0x569D80f7FC17316B4C83f072b92EF37B72819DE0',
+          beacon: EthereumAddress('0x67833a48b3F509d4252ac2c19cd604556eD6c981'),
+          beaconAdmin: EthereumAddress(
+            '0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e',
+          ),
+          implementation: EthereumAddress(
+            '0x569D80f7FC17316B4C83f072b92EF37B72819DE0',
+          ),
         },
       },
     ],
@@ -185,7 +205,9 @@ export const nomad: Bridge = {
     {
       accounts: [
         {
-          address: '0x93277b8f5939975b9E6694d5Fd2837143afBf68A',
+          address: EthereumAddress(
+            '0x93277b8f5939975b9E6694d5Fd2837143afBf68A',
+          ),
           type: 'MultiSig',
         },
       ],
@@ -195,11 +217,36 @@ export const nomad: Bridge = {
     },
     {
       accounts: [
-        { address: '0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D', type: 'EOA' },
-        { address: '0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f', type: 'EOA' },
-        { address: '0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960', type: 'EOA' },
-        { address: '0x06D8902cfae8235047DC7783875279311798c715', type: 'EOA' },
-        { address: '0x9782A3C8128f5D1BD3C9655d03181ba5b420883E', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x06D8902cfae8235047DC7783875279311798c715',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x9782A3C8128f5D1BD3C9655d03181ba5b420883E',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'XAppConnectionManager Watchers',
       description:

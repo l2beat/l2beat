@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   DATA_AVAILABILITY,
@@ -41,12 +41,12 @@ export const omgnetwork: Layer2 = {
     associatedTokens: ['OMG'],
     escrows: [
       {
-        address: '0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0',
+        address: EthereumAddress('0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0'),
         sinceTimestamp: new UnixTime(1584424507),
         tokens: ['ETH'],
       },
       {
-        address: '0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B',
+        address: EthereumAddress('0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B'),
         sinceTimestamp: new UnixTime(1584424719),
         tokens: '*',
       },
@@ -104,30 +104,30 @@ export const omgnetwork: Layer2 = {
     addresses: [
       {
         name: 'EthVault',
-        address: discovery.getContract('EthVault').address.toString(),
+        address: discovery.getContract('EthVault').address,
       },
       {
         name: 'Erc20Vault',
-        address: discovery.getContract('Erc20Vault').address.toString(),
+        address: discovery.getContract('Erc20Vault').address,
       },
       {
         name: 'ETHDepositVerifier',
-        address: '0x649f37203c365DE759c8fc8CA35beBF5448F70Be',
+        address: EthereumAddress('0x649f37203c365DE759c8fc8CA35beBF5448F70Be'),
       },
       {
         name: 'ERC20DepositVerifier',
-        address: '0xD876aeb3a443FBC03B7349AAc115E9054563CD82',
+        address: EthereumAddress('0xD876aeb3a443FBC03B7349AAc115E9054563CD82'),
       },
       {
         name: 'PlasmaFramework',
-        address: discovery.getContract('PlasmaFramework').address.toString(),
+        address: discovery.getContract('PlasmaFramework').address,
       },
       {
         name: 'PaymentExitGame',
         // PaymentExitGame uses unverified libraries https://etherscan.io/address/0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3
         description:
           'The source code of the PaymentStartStandardExit library used by this contract is not verified on Etherscan.',
-        address: discovery.getContract('PaymentExitGame').address.toString(),
+        address: discovery.getContract('PaymentExitGame').address,
       },
     ],
     risks: [],

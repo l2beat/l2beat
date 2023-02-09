@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
@@ -36,17 +36,17 @@ export const pNetwork: Bridge = {
     associatedTokens: ['PNT'],
     escrows: [
       {
-        address: '0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8', // Proxy to ERC20 Vault V2
+        address: EthereumAddress('0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8'), // Proxy to ERC20 Vault V2
         sinceTimestamp: new UnixTime(1640867581),
         tokens: ['GALA', 'PNT', 'USDT', 'USDC'], // BIST, CGG due to almost non-existant volume
       },
       {
-        address: '0x9f8622b11984AfC8f0a42A394928702017c5968D', // ERC20 Vault V1
+        address: EthereumAddress('0x9f8622b11984AfC8f0a42A394928702017c5968D'), // ERC20 Vault V1
         sinceTimestamp: new UnixTime(1626265622),
         tokens: ['UOS'],
       },
       {
-        address: '0x112334f50Cb6efcff4e35Ae51A022dBE41a48135', // ERC20 Vault V1
+        address: EthereumAddress('0x112334f50Cb6efcff4e35Ae51A022dBE41a48135'), // ERC20 Vault V1
         sinceTimestamp: new UnixTime(1620212602),
         tokens: ['WETH', 'LRC', 'BAT', 'DAI', 'ZRX', 'PNT'],
       },
@@ -135,7 +135,7 @@ export const pNetwork: Bridge = {
     isIncomplete: true,
     addresses: [
       {
-        address: '0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8',
+        address: EthereumAddress('0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8'),
         name: 'pNetwork ERC20Vault v2',
         description:
           'pNetwork ERCVault v2 for ERC20 with special logic for handling inflation of PNT token.',
@@ -144,12 +144,12 @@ export const pNetwork: Bridge = {
         ).upgradeability,
       },
       {
-        address: '0x9f8622b11984AfC8f0a42A394928702017c5968D',
+        address: EthereumAddress('0x9f8622b11984AfC8f0a42A394928702017c5968D'),
         name: 'pNetwork ERC20Vault v1',
         description: 'ERC20Vault for UOS token.',
       },
       {
-        address: '0x112334f50Cb6efcff4e35Ae51A022dBE41a48135',
+        address: EthereumAddress('0x112334f50Cb6efcff4e35Ae51A022dBE41a48135'),
         name: 'pNetwork ERC20Vault v1',
         description: 'ERC20Vault for other ERC20 tokens.',
       },
@@ -165,23 +165,29 @@ export const pNetwork: Bridge = {
         of Validator nodes in a MPC network.',
       accounts: [
         {
-          address: discovery.getContractValue<string>(
-            '0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8',
-            'PNETWORK',
+          address: EthereumAddress(
+            discovery.getContractValue<string>(
+              '0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8',
+              'PNETWORK',
+            ),
           ),
           type: 'EOA',
         },
         {
-          address: discovery.getContractValue<string>(
-            '0x9f8622b11984AfC8f0a42A394928702017c5968D',
-            'PNETWORK',
+          address: EthereumAddress(
+            discovery.getContractValue<string>(
+              '0x9f8622b11984AfC8f0a42A394928702017c5968D',
+              'PNETWORK',
+            ),
           ),
           type: 'EOA',
         },
         {
-          address: discovery.getContractValue<string>(
-            '0x112334f50Cb6efcff4e35Ae51A022dBE41a48135',
-            'PNETWORK',
+          address: EthereumAddress(
+            discovery.getContractValue<string>(
+              '0x112334f50Cb6efcff4e35Ae51A022dBE41a48135',
+              'PNETWORK',
+            ),
           ),
           type: 'EOA',
         },
@@ -192,7 +198,7 @@ export const pNetwork: Bridge = {
       description: 'Proxy owner of ERC20Vault v2',
       accounts: [
         {
-          address: discovery.getContract('PProxyAdmin').address.toString(),
+          address: discovery.getContract('PProxyAdmin').address,
           type: 'EOA',
         },
       ],
@@ -202,7 +208,7 @@ export const pNetwork: Bridge = {
       description: '2/4 MSig - owner of PProxyAdmin',
       accounts: [
         {
-          address: discovery.getContract('GnosisSafe').address.toString(),
+          address: discovery.getContract('GnosisSafe').address,
           type: 'MultiSig',
         },
       ],
