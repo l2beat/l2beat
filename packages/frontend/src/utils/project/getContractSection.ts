@@ -1,5 +1,5 @@
 import { Bridge, CONTRACTS, Layer2, ProjectContract } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
+import { assertUnreachable, VerificationStatus } from '@l2beat/shared'
 
 import {
   TechnologyContract,
@@ -52,98 +52,119 @@ function makeTechnologyContract(
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
 
-  if (
-    item.upgradeability?.type === 'EIP1967' ||
-    item.upgradeability?.type === 'Custom' ||
-    item.upgradeability?.type === 'NutBerry' ||
-    item.upgradeability?.type === 'ZeppelinOs'
-  ) {
-    links.push({
-      name: 'Implementation (Upgradable)',
-      href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
-      address: item.upgradeability.implementation,
-      isAdmin: false,
-    })
-    links.push({
-      name: 'Admin',
-      href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
-      address: item.upgradeability.admin,
-      isAdmin: true,
-    })
-  }
+  if (item.upgradeability?.type) {
+    switch (item.upgradeability.type) {
+      case 'EIP1967 proxy':
+      case 'Custom':
+      case 'NutBerry':
+      case 'ZeppelinOS proxy':
+        links.push({
+          name: 'Implementation (Upgradable)',
+          href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+          address: item.upgradeability.implementation.toString(),
+          isAdmin: false,
+        })
+        if (item.upgradeability.admin) {
+          links.push({
+            name: 'Admin',
+            href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
+            address: item.upgradeability.admin.toString(),
+            isAdmin: true,
+          })
+        }
+        break
 
-  if (item.upgradeability?.type === 'CustomWithoutAdmin') {
-    links.push({
-      name: 'Implementation (Upgradable)',
-      href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
-      address: item.upgradeability.implementation,
-      isAdmin: false,
-    })
-  }
+      case 'StarkWare diamond':
+      case 'resolved delegate proxy':
+      case 'call implementation proxy':
+      case 'EIP897 proxy':
+      case 'CustomWithoutAdmin':
+        links.push({
+          name: 'Implementation (Upgradable)',
+          href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+          address: item.upgradeability.implementation.toString(),
+          isAdmin: false,
+        })
+        break
 
-  if (item.upgradeability?.type === 'StarkWare') {
-    const delay = item.upgradeability.upgradeDelay !== 0
-    const days = item.upgradeability.upgradeDelay / (60 * 60 * 24)
-    const implementation =
-      item.upgradeability.callImplementation ??
-      item.upgradeability.implementation
-    links.push({
-      name: `Implementation (Upgradable${delay ? ` ${days} days delay` : ''})`,
-      href: `https://etherscan.io/address/${implementation}#code`,
-      address: implementation,
-      isAdmin: false,
-    })
-  }
+      case 'StarkWare proxy': {
+        const delay = item.upgradeability.upgradeDelay !== 0
+        const days = item.upgradeability.upgradeDelay / (60 * 60 * 24)
+        const implementation =
+          item.upgradeability.callImplementation ??
+          item.upgradeability.implementation
+        links.push({
+          name: `Implementation (Upgradable${
+            delay ? ` ${days} days delay` : ''
+          })`,
+          href: `https://etherscan.io/address/${implementation.toString()}#code`,
+          address: implementation.toString(),
+          isAdmin: false,
+        })
+        break
+      }
 
-  if (item.upgradeability?.type === 'Reference') {
-    links.push({
-      name: 'Code (Upgradable)',
-      href: `https://etherscan.io/address/${item.address}#code`,
-      address: item.address,
-      isAdmin: false,
-    })
-  }
+      case 'Reference':
+        links.push({
+          name: 'Code (Upgradable)',
+          href: `https://etherscan.io/address/${item.address}#code`,
+          address: item.address,
+          isAdmin: false,
+        })
+        break
 
-  if (item.upgradeability?.type === 'Arbitrum') {
-    links.push({
-      name: 'Admin',
-      href: `https://etherscan.io/address/${item.upgradeability.admin}#code`,
-      address: item.upgradeability.admin,
-      isAdmin: true,
-    })
-    links.push({
-      name: 'Admin logic (Upgradable)',
-      href: `https://etherscan.io/address/${item.upgradeability.adminImplementation}#code`,
-      address: item.upgradeability.adminImplementation,
-      isAdmin: true,
-    })
-    links.push({
-      name: 'User logic (Upgradable)',
-      href: `https://etherscan.io/address/${item.upgradeability.userImplementation}#code`,
-      address: item.upgradeability.userImplementation,
-      isAdmin: false,
-    })
-  }
+      case 'new Arbitrum proxy':
+      case 'Arbitrum proxy':
+        links.push({
+          name: 'Admin',
+          href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
+          address: item.upgradeability.admin.toString(),
+          isAdmin: true,
+        })
+        links.push({
+          name: 'Admin logic (Upgradable)',
+          href: `https://etherscan.io/address/${item.upgradeability.adminImplementation.toString()}#code`,
+          address: item.upgradeability.adminImplementation.toString(),
+          isAdmin: true,
+        })
+        links.push({
+          name: 'User logic (Upgradable)',
+          href: `https://etherscan.io/address/${item.upgradeability.userImplementation.toString()}#code`,
+          address: item.upgradeability.userImplementation.toString(),
+          isAdmin: false,
+        })
+        break
 
-  if (item.upgradeability?.type === 'Beacon') {
-    links.push({
-      name: 'Beacon',
-      href: `https://etherscan.io/address/${item.upgradeability.beacon}#code`,
-      address: item.upgradeability.beacon,
-      isAdmin: false,
-    })
-    links.push({
-      name: 'Implementation (Upgradable)',
-      href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
-      address: item.upgradeability.implementation,
-      isAdmin: false,
-    })
-    links.push({
-      name: 'Beacon Admin',
-      href: `https://etherscan.io/address/${item.upgradeability.beaconAdmin}#code`,
-      address: item.upgradeability.beaconAdmin,
-      isAdmin: true,
-    })
+      case 'Beacon':
+        links.push({
+          name: 'Beacon',
+          href: `https://etherscan.io/address/${item.upgradeability.beacon}#code`,
+          address: item.upgradeability.beacon,
+          isAdmin: false,
+        })
+        links.push({
+          name: 'Implementation (Upgradable)',
+          href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
+          address: item.upgradeability.implementation,
+          isAdmin: false,
+        })
+        links.push({
+          name: 'Beacon Admin',
+          href: `https://etherscan.io/address/${item.upgradeability.beaconAdmin}#code`,
+          address: item.upgradeability.beaconAdmin,
+          isAdmin: true,
+        })
+        break
+
+      // Ignore types
+      case 'immutable':
+      case 'gnosis safe':
+      case 'EIP2535 diamond proxy':
+        break
+
+      default:
+        assertUnreachable(item.upgradeability)
+    }
   }
 
   let description = item.description

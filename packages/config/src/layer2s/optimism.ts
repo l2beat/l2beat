@@ -10,7 +10,10 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('optimism')
 
 export const optimism: Layer2 = {
   type: 'layer2',
@@ -290,11 +293,9 @@ export const optimism: Layer2 = {
         address: '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
-          implementation: '0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5',
-        },
+        upgradeability: discovery.getContract(
+          '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
+        ).upgradeability,
       },
       {
         name: 'Lib_AddressManager',
@@ -307,11 +308,9 @@ export const optimism: Layer2 = {
         address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
         description:
           'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
-          implementation: '0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB',
-        },
+        upgradeability: discovery.getContract(
+          '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+        ).upgradeability,
       },
       {
         name: 'SynthetixBridgeToOptimism',

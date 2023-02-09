@@ -1,10 +1,9 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { ContractValue, EthereumAddress } from '@l2beat/shared'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ContractValue } from '../../types'
 import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'

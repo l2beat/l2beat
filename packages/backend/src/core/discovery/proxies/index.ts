@@ -1,4 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared'
+import {
+  EthereumAddress,
+  ManualProxyType,
+  ProxyDetection,
+} from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
@@ -11,7 +15,6 @@ import { detectStarkWareProxy } from './auto/StarkWareProxy'
 import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
-import { ManualProxyType, ProxyDetection } from './types'
 
 export async function detectProxy(
   provider: DiscoveryProvider,

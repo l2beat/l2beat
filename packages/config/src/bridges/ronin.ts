@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
@@ -127,9 +127,11 @@ export const ronin: Bridge = {
         name: 'Bridge V2 (Escrow & Mainchain Gateway)',
         description: 'Upgradeable Bridge V2 contract (MainchainGatewayV2).',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x661E14A43173191d65951fbf7285749F416cbC8C',
-          implementation: '0x71356E37e0368Bd10bFDbF41dC052fE5FA24cD05',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x661E14A43173191d65951fbf7285749F416cbC8C'),
+          implementation: EthereumAddress(
+            '0x71356E37e0368Bd10bFDbF41dC052fE5FA24cD05',
+          ),
         },
       },
       {
@@ -137,9 +139,11 @@ export const ronin: Bridge = {
         name: 'RoninValidator',
         description: 'Upgradeable Ronin Validator contract.',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x661E14A43173191d65951fbf7285749F416cbC8C',
-          implementation: '0xd5c2FB313f9536558C2f3bd6cf698E6295b3C3B1',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x661E14A43173191d65951fbf7285749F416cbC8C'),
+          implementation: EthereumAddress(
+            '0xd5c2FB313f9536558C2f3bd6cf698E6295b3C3B1',
+          ),
         },
       },
       {

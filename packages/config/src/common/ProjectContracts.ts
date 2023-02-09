@@ -1,3 +1,5 @@
+import { UpgradeabilityParameters } from '@l2beat/shared'
+
 import { ProjectReference } from './ProjectReference'
 import { ProjectRisk } from './ProjectRisk'
 
@@ -24,15 +26,12 @@ export interface ProjectContract {
 }
 
 export type ProjectUpgradeability =
-  | EIP1967Upgradeability
   | CustomUpgradeability
   | CustomUpgradeabilityWithoutAdmin
-  | StarkWareUpgradeability
-  | ZeppelinOsUpgradeability
   | NutBerryUpgradeability
   | ReferenceUpgradeability
-  | ArbitrumProxy
   | BeaconUpgradeability
+  | UpgradeabilityParameters
 
 export interface CustomUpgradeability {
   type: 'Custom'
@@ -45,36 +44,6 @@ export interface CustomUpgradeability {
 export interface CustomUpgradeabilityWithoutAdmin {
   type: 'CustomWithoutAdmin'
   /** Address of the admin */
-  implementation: string
-}
-
-export interface EIP1967Upgradeability {
-  type: 'EIP1967'
-  /** Address of the admin */
-  admin: string
-  /** Address of the implementation */
-  implementation: string
-}
-
-export interface StarkWareUpgradeability {
-  type: 'StarkWare'
-  /** Address of the implementation */
-  implementation: string
-  /** Address of the nested call proxy implementation */
-  callImplementation?: string
-  /** Call UPGRADE_ACTIVATION_DELAY() instead of getUpgradeActivationDelay() */
-  useConstantDelay?: boolean
-  /** Upgrade delay in seconds */
-  upgradeDelay: number
-  /** Are no more updates accepted? */
-  isFinal: boolean
-}
-
-export interface ZeppelinOsUpgradeability {
-  type: 'ZeppelinOs'
-  /** Address of the admin */
-  admin: string
-  /** Address of the implementation */
   implementation: string
 }
 
@@ -94,16 +63,6 @@ export interface ReferenceUpgradeability {
   method: string
   /** Arguments to the method */
   args?: (string | boolean | number)[]
-}
-
-export interface ArbitrumProxy {
-  type: 'Arbitrum'
-  /** Address of the admin */
-  admin: string
-  /** Address of the admin logic (regular) implementation */
-  adminImplementation: string
-  /** Address of the user logic (secondary) implementation */
-  userImplementation: string
 }
 
 export interface BeaconUpgradeability {

@@ -96,8 +96,10 @@ export const rhinofi: Layer2 = {
         name: 'StarkExchange',
         address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
         upgradeability: {
-          type: 'StarkWare',
-          implementation: '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
+          type: 'StarkWare proxy',
+          implementation: EthereumAddress(
+            '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
+          ),
           useConstantDelay: true,
           // TODO: figure out the double proxy
           upgradeDelay: 1209600,

@@ -1,7 +1,6 @@
-import { Hash256, Logger, UnixTime } from '@l2beat/shared'
+import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
 import { DiscoveryWatcherRow } from 'knex/types/tables'
 
-import { ProjectParameters } from '../../../core/discovery/types'
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 

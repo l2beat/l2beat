@@ -11,7 +11,10 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('loopring')
 
 export const loopring: Layer2 = {
   type: 'layer2',
@@ -165,7 +168,7 @@ export const loopring: Layer2 = {
       name: 'Loopring MultiSig',
       accounts: [
         {
-          address: '0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97',
+          address: discovery.getContract('GnosisSafe').address.toString(),
           type: 'MultiSig',
         },
       ],
@@ -174,32 +177,9 @@ export const loopring: Layer2 = {
     },
     {
       name: 'MultiSig participants',
-      accounts: [
-        {
-          address: '0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1',
-          type: 'EOA',
-        },
-        {
-          address: '0x4CBbD41a2c057cAb8db00AC60f1AB52F36870185',
-          type: 'EOA',
-        },
-        {
-          address: '0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268',
-          type: 'EOA',
-        },
-        {
-          address: '0xB89cdf808dA6Cfb39F3c2e167fFB5DDfc811C33E',
-          type: 'EOA',
-        },
-        {
-          address: '0x51b8982ebFA21Eb01B1E591b8F45a33fCA216e0D',
-          type: 'EOA',
-        },
-        {
-          address: '0x1F28F10176F89F4E9985873B84d14e75751BB3D1',
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery
+        .getContractValue<string[]>('GnosisSafe', 'getOwners')
+        .map((owner) => ({ address: owner, type: 'EOA' })),
       description:
         'These addresses are the participants of the 4/6 Loopring MultiSig.',
     },
@@ -271,43 +251,43 @@ export const loopring: Layer2 = {
     addresses: [
       {
         name: 'ExchangeV3',
-        address: '0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4',
+        address: discovery.getContract('ExchangeV3').address.toString(),
         description: 'Main ExchangeV3 contract.',
-        upgradeability: {
-          type: 'ZeppelinOs',
-          admin: '0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97',
-          implementation: '0x26d8Ba776a067C5928841985bCe342f75BAE7E82',
-        },
+        upgradeability: discovery.getContract('ExchangeV3').upgradeability,
       },
       {
-        address: '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
         name: 'LoopringIOExchangeOwner',
+        address: discovery
+          .getContract('LoopringIOExchangeOwner')
+          .address.toString(),
         description:
           'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
       },
       {
         name: 'DefaultDepositContract',
+        address: discovery
+          .getContract('DefaultDepositContract')
+          .address.toString(),
         description:
           'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
-        address: '0x674bdf20A0F284D710BC40872100128e2d66Bd3f',
       },
       {
         name: 'LoopringV3',
-        description:
-          'Contract managing LRC staking for exchanges (One Loopring contract can manage many exchanges).',
         address: '0xe56D6ccab6551932C0356E4e8d5dAF0630920C71',
+        description:
+          'Contract managinging LRC staking for exchanges (One Loopring contract can manage many exchanges).',
       },
       {
         name: 'BlockVerifier',
-        description: 'zkSNARK Verifier based on ethsnarks library.',
         address: '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+        description: 'zkSNARK Verifier based on ethsnarks library.',
       },
       {
         name: 'AgentRegistry',
+        address: discovery.getContract('AgentRegistry').address.toString(),
         description:
           'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, \
           DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
-        address: '0x39B9bf169a7e225ba037C443A40460c77438ea14',
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

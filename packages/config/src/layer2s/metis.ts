@@ -8,7 +8,10 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('metis')
 
 export const metis: Layer2 = {
   type: 'layer2',
@@ -272,11 +275,9 @@ export const metis: Layer2 = {
           'MVM CanonicalTransaction is a wrapper of Canonical Transactin Chain that implements optimistic data \
             availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls\
             to CanonicalTransactionChain.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
-          implementation: '0xC878771A4ff7466B7be8b59FB8766719AEa8d562',
-        },
+        upgradeability: discovery.getContract(
+          '0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a',
+        ).upgradeability,
       },
       {
         name: 'CanonicalTransactionChain',
@@ -313,11 +314,9 @@ export const metis: Layer2 = {
         address: '0x081D1101855bD523bA69A9794e0217F0DB6323ff',
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0xDD6FFC7D9a4Fb420b637747edc6456340d12d377',
-          implementation: '0x8bF439ef7167023F009E24b21719Ca5f768Ecb36',
-        },
+        upgradeability: discovery.getContract(
+          '0x081D1101855bD523bA69A9794e0217F0DB6323ff',
+        ).upgradeability,
       },
       {
         name: 'MVM_DiscountOracle',
@@ -336,32 +335,26 @@ export const metis: Layer2 = {
         description:
           'This contract imlements a voting scheme with which the majority of Verifiers can challenge malicious Sequencer.',
         address: '0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb',
-        upgradeability: {
-          type: 'EIP1967',
-          implementation: '0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E',
-          admin: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
-        },
+        upgradeability: discovery.getContract(
+          '0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb',
+        ).upgradeability,
       },
       {
         name: 'MVM_L2ChainManagerOnL1',
         address: '0xf3d58D1794f2634d6649a978f2dc093898FEEBc0',
         description: 'Contract that allows METIS_MANAGER to switch Sequencer.',
-        upgradeability: {
-          type: 'EIP1967',
-          implementation: '0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5',
-          admin: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
-        },
+        upgradeability: discovery.getContract(
+          '0xf3d58D1794f2634d6649a978f2dc093898FEEBc0',
+        ).upgradeability,
       },
       {
         name: 'L1StandardBridge',
         address: '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
         description:
           'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
-        upgradeability: {
-          type: 'EIP1967',
-          implementation: '0xa0cfE8Af2AB5C9232714647702DbACf862EA4798',
-          admin: '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
-        },
+        upgradeability: discovery.getContract(
+          '0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b',
+        ).upgradeability,
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

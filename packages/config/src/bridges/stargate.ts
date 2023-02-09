@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -121,18 +121,22 @@ export const stargate: Bridge = {
         address: '0x902F09715B6303d4173037652FA7377e5b98089E',
         name: 'LayerZero Relayer',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9',
-          implementation: '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9'),
+          implementation: EthereumAddress(
+            '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
+          ),
         },
       },
       {
         address: '0x5a54fe5234E811466D5366846283323c954310B2',
         name: 'LayerZero Oracle',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8',
-          implementation: '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8'),
+          implementation: EthereumAddress(
+            '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
+          ),
         },
       },
       {

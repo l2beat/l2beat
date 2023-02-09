@@ -1,4 +1,8 @@
-import { MainnetEtherscanClient, wrapAndMeasure } from '@l2beat/shared'
+import {
+  MainnetEtherscanClient,
+  ProjectParameters,
+  wrapAndMeasure,
+} from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Histogram } from 'prom-client'
 
@@ -7,7 +11,6 @@ import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { parseDiscoveryOutput } from './saveDiscoveryResult'
-import { ProjectParameters } from './types'
 import { getDiscoveryConfigHash } from './utils/getDiscoveryConfigHash'
 
 const discoveryHistogram = new Histogram({

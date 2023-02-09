@@ -226,9 +226,11 @@ export const bobanetwork: Layer2 = {
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
-          implementation: '0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
+          implementation: EthereumAddress(
+            '0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820',
+          ),
         },
       },
       {
@@ -237,9 +239,11 @@ export const bobanetwork: Layer2 = {
         description:
           'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
-          implementation: '0x4CD1948de677e6f791B463daaB807645D3460996',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
+          implementation: EthereumAddress(
+            '0x4CD1948de677e6f791B463daaB807645D3460996',
+          ),
         },
       },
       {
@@ -259,9 +263,11 @@ export const bobanetwork: Layer2 = {
         address: '0x1A26ef6575B7BBB864d984D9255C069F6c361a14',
         description: 'Liquidity Pool manager for fast withdrawal facility.',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
-          implementation: '0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
+          implementation: EthereumAddress(
+            '0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0',
+          ),
         },
       },
       {
@@ -277,9 +283,11 @@ export const bobanetwork: Layer2 = {
         description:
           'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
         upgradeability: {
-          type: 'EIP1967',
-          implementation: '0xAf41c681143Cb91f218959375f4452A604504833',
-          admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+          type: 'EIP1967 proxy',
+          implementation: EthereumAddress(
+            '0xAf41c681143Cb91f218959375f4452A604504833',
+          ),
+          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
         },
       },
       // L1NFTBridge Proxy even though is called ResolvedDelegateProxy it does not use external lib manager
@@ -288,9 +296,11 @@ export const bobanetwork: Layer2 = {
         address: '0xC891F466e53f40603250837282eAE4e22aD5b088',
         description: 'Standard NFT bridge.',
         upgradeability: {
-          type: 'EIP1967',
-          implementation: '0x8DB3B7Db8A0f77e0E21178FcaD0A53E52bfdBA82',
-          admin: '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
+          type: 'EIP1967 proxy',
+          implementation: EthereumAddress(
+            '0x8DB3B7Db8A0f77e0E21178FcaD0A53E52bfdBA82',
+          ),
+          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
         },
       },
     ],

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -148,9 +148,11 @@ export const zkswap: Layer2 = {
             contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
             the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
-          implementation: '0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
+          implementation: EthereumAddress(
+            '0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f',
+          ),
         },
       },
       {
@@ -168,36 +170,44 @@ export const zkswap: Layer2 = {
         name: 'Governance',
         description: 'Keeps a list of block producers and whitelisted tokens.',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
-          implementation: '0x9d3fdf9b4782753d12f6262bf22B6322608962b8',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
+          implementation: EthereumAddress(
+            '0x9d3fdf9b4782753d12f6262bf22B6322608962b8',
+          ),
         },
       },
       {
         address: '0x661121AE41edE3f6FECDed922c59acC19A3ea9B3',
         name: 'PairManager',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
-          implementation: '0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
+          implementation: EthereumAddress(
+            '0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8',
+          ),
         },
       },
       {
         address: '0x27C229937745d697d28FC7853d1bFEA7331Edf56',
         name: 'Verifier',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
-          implementation: '0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
+          implementation: EthereumAddress(
+            '0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F',
+          ),
         },
       },
       {
         address: '0x961369d347EF7A6896BDD39cBE2B89e3911f521f',
         name: 'VerifierExit',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0x714B2D10210f2A3a7AA614F949259C87613689aB',
-          implementation: '0xd12F4D8329584F36aEd67f807F42D9a02bEb9534',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x714B2D10210f2A3a7AA614F949259C87613689aB'),
+          implementation: EthereumAddress(
+            '0xd12F4D8329584F36aEd67f807F42D9a02bEb9534',
+          ),
         },
       },
       {

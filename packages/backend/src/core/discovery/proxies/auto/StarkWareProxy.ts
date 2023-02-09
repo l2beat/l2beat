@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared'
+import { Bytes, EthereumAddress, Hash256, ProxyDetection } from '@l2beat/shared'
 import { BigNumber, utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -7,7 +7,6 @@ import {
   getCallResult,
   getCallResultWithRevert,
 } from '../../utils/getCallResult'
-import { ProxyDetection } from '../types'
 
 // keccak256("StarkWare2019.implemntation-slot")
 const IMPLEMENTATION_SLOT = Bytes.fromHex(
@@ -32,9 +31,13 @@ async function getCallImplementation(
   provider: DiscoveryProvider,
   address: EthereumAddress,
 ) {
-  return bytes32ToAddress(
+  const callImplementation = bytes32ToAddress(
     await provider.getStorage(address, CALL_IMPLEMENTATION_SLOT),
   )
+
+  if (callImplementation === EthereumAddress.ZERO) return
+
+  return callImplementation
 }
 
 // Web3.solidityKeccak(['string'], ['StarkWare.Upgradibility.Delay.Slot'])
@@ -111,8 +114,7 @@ export async function detectStarkWareProxy(
 
   return {
     implementations: [implementation],
-    relatives:
-      callImplementation !== EthereumAddress.ZERO ? [callImplementation] : [],
+    relatives: callImplementation ? [callImplementation] : [],
     upgradeability: {
       type: 'StarkWare proxy',
       implementation,

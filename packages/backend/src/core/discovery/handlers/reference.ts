@@ -1,6 +1,6 @@
+import { ContractValue } from '@l2beat/shared'
 import * as z from 'zod'
 
-import { ContractValue } from '../types'
 import { HandlerResult } from './Handler'
 
 const REFERENCE_REGEX = /^\{\{ [a-z_][a-z\d_]* \}\}$/i

@@ -11,7 +11,10 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('zksync')
 
 export const zksync: Layer2 = {
   type: 'layer2',
@@ -169,21 +172,17 @@ export const zksync: Layer2 = {
         name: 'ZkSync',
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant is currently set to 21 days. 9/15 Security Council MSig can override the delay period and execute an emergency immediate upgrade.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-          implementation: '0x8e972b354E6933275513C355Ee14D44A832aD2d9',
-        },
+        upgradeability: discovery.getContract(
+          '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+        ).upgradeability,
       },
       {
         address: '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
         name: 'Verifier',
         description: 'Implements zkProof verification logic.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-          implementation: '0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC',
-        },
+        upgradeability: discovery.getContract(
+          '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
+        ).upgradeability,
       },
       {
         address: '0x38A43F4330f24fe920F943409709fc9A6084C939',
@@ -196,11 +195,9 @@ export const zksync: Layer2 = {
         name: 'Governance',
         description:
           'Keeps a list of block producers, NFT factories and whitelisted tokens.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x38A43F4330f24fe920F943409709fc9A6084C939',
-          implementation: '0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8',
-        },
+        upgradeability: discovery.getContract(
+          '0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01',
+        ).upgradeability,
       },
     ],
     risks: [

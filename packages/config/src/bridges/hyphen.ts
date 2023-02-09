@@ -1,8 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s'
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('hyphen')
 
 export const hyphen: Bridge = {
   type: 'bridge',
@@ -105,21 +108,17 @@ export const hyphen: Bridge = {
       {
         name: 'LiquidityPool',
         address: '0x2A5c2568b10A0E826BfA892Cf21BA7218310180b',
-        upgradeability: {
-          type: 'EIP1967',
-          implementation: '0x256415A1f9468E5405abdAfD9B76c4f24451d7E7',
-          admin: '0x13a4cC0750296bB72Eb0006febec306551A4f472',
-        },
+        upgradeability: discovery.getContract(
+          '0x2A5c2568b10A0E826BfA892Cf21BA7218310180b',
+        ).upgradeability,
       },
       {
         name: 'TokenManager',
         address: '0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168',
         description: 'Configures limits and other aspects of supported assets.',
-        upgradeability: {
-          type: 'EIP1967',
-          implementation: '0x79E559AC5b499A5676e28f0074e29763F6c2A27e',
-          admin: '0x13a4cC0750296bB72Eb0006febec306551A4f472',
-        },
+        upgradeability: discovery.getContract(
+          '0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168',
+        ).upgradeability,
       },
       {
         name: 'ExecutorManager',
@@ -131,11 +130,9 @@ export const hyphen: Bridge = {
         address: '0xebaB24F13de55789eC1F3fFe99A285754e15F7b9',
         description:
           'Liquidity pool logic (not escrow - funds are sent to LiquitityPool).',
-        upgradeability: {
-          type: 'EIP1967',
-          implementation: '0x52a592fFE0377b351c8FD99189e5333ec362d66A',
-          admin: '0x13a4cC0750296bB72Eb0006febec306551A4f472',
-        },
+        upgradeability: discovery.getContract(
+          '0xebaB24F13de55789eC1F3fFe99A285754e15F7b9',
+        ).upgradeability,
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

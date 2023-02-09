@@ -1,9 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress, ProxyDetection } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { getCallResult } from '../../utils/getCallResult'
 import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
-import { ProxyDetection } from '../types'
 
 export async function getNewArbitrumProxy(
   provider: DiscoveryProvider,

@@ -10,7 +10,10 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('zksync2')
 
 export const zksync2: Layer2 = {
   type: 'layer2',
@@ -155,11 +158,9 @@ export const zksync2: Layer2 = {
         address: '0x027C8a79075F96a8cdE315b495949e5f1D92f1D6',
         name: 'L1EthBridge',
         description: 'Standard bridge for depositing ETH to zkSync 2.0.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x4e4943346848c4867F81dFb37c4cA9C5715A7828',
-          implementation: '0xeb9F40c4Ed46D39074aBe5Cd7E6C54679E5D04ED',
-        },
+        upgradeability: discovery.getContract(
+          '0x027C8a79075F96a8cdE315b495949e5f1D92f1D6',
+        ).upgradeability,
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

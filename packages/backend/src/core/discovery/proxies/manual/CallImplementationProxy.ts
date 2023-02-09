@@ -1,8 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress, ProxyDetection } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { getCallResult } from '../../utils/getCallResult'
-import { ProxyDetection } from '../types'
 
 export async function getCallImplementationProxy(
   provider: DiscoveryProvider,

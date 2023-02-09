@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -10,7 +10,10 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('nova')
 
 export const nova: Layer2 = {
   type: 'layer2',
@@ -195,65 +198,52 @@ export const nova: Layer2 = {
         name: 'Rollup',
         description:
           'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-        upgradeability: {
-          type: 'Arbitrum',
-          admin: '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
-          adminImplementation: '0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f',
-          userImplementation: '0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff',
-        },
+        upgradeability: discovery.getContract(
+          '0xFb209827c58283535b744575e11953DCC4bEAD88',
+        ).upgradeability,
       },
       {
         address: '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
         name: 'SequencerInbox',
         description:
           'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
-          implementation: '0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9',
-        },
+        upgradeability: discovery.getContract(
+          '0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b',
+        ).upgradeability,
       },
       {
         address: '0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
         name: 'Inbox',
         description:
           'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
-          implementation: '0x1b2676D32E2f7430a564DD4560641F990dFE3D6a',
-        },
+        upgradeability: discovery.getContract(
+          '0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
+        ).upgradeability,
       },
       {
         address: '0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd',
         name: 'Bridge',
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
-          implementation: '0x1066CEcC8880948FE55e427E94F1FF221d626591',
-        },
+        upgradeability: discovery.getContract(
+          '0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd',
+        ).upgradeability,
       },
       {
         address: '0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58',
         name: 'Outbox',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
-          implementation: '0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f',
-        },
+        upgradeability: discovery.getContract(
+          '0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58',
+        ).upgradeability,
       },
       {
         address: '0xA59075221b50C598aED0Eae0bB9869639513af0D',
         name: 'ChallengeManager',
         description:
           'Contract managing an interactive fraud challenge process.',
-        upgradeability: {
-          type: 'EIP1967',
-          admin: '0x71D78dC7cCC0e037e12de1E50f5470903ce37148',
-          implementation: '0x7a18bB9DbAF1202F3fc977e42E3C360d522e4566',
-        },
+        upgradeability: discovery.getContract(
+          '0xA59075221b50C598aED0Eae0bB9869639513af0D',
+        ).upgradeability,
       },
       {
         address: '0x7AdcA86896c4220f19B2f7f9746e7A99E57B0Fc5',
@@ -272,9 +262,11 @@ export const nova: Layer2 = {
         name: 'L1GatewayRouter',
         description: 'Router managing token <--> gateway mapping.',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
-          implementation: '0x52595021fA01B3E14EC6C88953AFc8E35dFf423c',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560'),
+          implementation: EthereumAddress(
+            '0x52595021fA01B3E14EC6C88953AFc8E35dFf423c',
+          ),
         },
       },
       {
@@ -283,9 +275,11 @@ export const nova: Layer2 = {
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
-          implementation: '0xb4299A1F5f26fF6a98B7BA35572290C359fde900',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560'),
+          implementation: EthereumAddress(
+            '0xb4299A1F5f26fF6a98B7BA35572290C359fde900',
+          ),
         },
       },
       {
@@ -294,9 +288,11 @@ export const nova: Layer2 = {
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
         upgradeability: {
-          type: 'EIP1967',
-          admin: '0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560',
-          implementation: '0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45',
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560'),
+          implementation: EthereumAddress(
+            '0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45',
+          ),
         },
       },
       {

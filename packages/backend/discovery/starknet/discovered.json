@@ -10,7 +10,6 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0xE267213B0749Bb94c575F6170812c887330d9cE3",
-        "callImplementation": "0x0000000000000000000000000000000000000000",
         "upgradeDelay": 0,
         "isFinal": false
       },
@@ -22,14 +21,14 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 122395,
+        "l1ToL2MessageNonce": 156210,
         "MAX_L1_MSG_FEE": "1000000000000000000",
         "messageCancellationDelay": 432100,
         "programHash": "2661357251448680110193164131445605498057763517266605655939820145364437110617",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockNumber": 16383,
-        "stateRoot": "3453494463352870833267719617261835467473896967462114968614233192834374674830",
+        "stateBlockNumber": 19413,
+        "stateRoot": "1101247283272599143845693069752241741627975257288974581568188983885038482176",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       }
@@ -85,7 +84,6 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37",
-        "callImplementation": "0x0000000000000000000000000000000000000000",
         "upgradeDelay": 604800,
         "isFinal": false
       },
@@ -112,7 +110,6 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b",
-        "callImplementation": "0x0000000000000000000000000000000000000000",
         "upgradeDelay": 604800,
         "isFinal": false
       },
@@ -136,7 +133,6 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b",
-        "callImplementation": "0x0000000000000000000000000000000000000000",
         "upgradeDelay": 604800,
         "isFinal": false
       },
@@ -160,7 +156,6 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b",
-        "callImplementation": "0x0000000000000000000000000000000000000000",
         "upgradeDelay": 604800,
         "isFinal": false
       },
