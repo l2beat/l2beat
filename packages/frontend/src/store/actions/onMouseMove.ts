@@ -1,15 +1,16 @@
-import { Box, State } from '../utils/State'
+import { Box, State } from '../State'
+import { LEFT_MOUSE_BUTTON } from '../utils/constants'
+import { toViewCoordinates } from '../utils/coordinates'
+import { toContainerCoordinates } from '../utils/toContainerCoordinates'
 import { updateNodePositions } from '../utils/updateNodePositions'
-import { LEFT_MOUSE_BUTTON } from './constants'
-import { toContainerCoordinates, toViewCoordinates } from './coordinates'
 
 export function onMouseMove(
-  event: MouseEvent,
   state: State,
+  event: MouseEvent,
   container: HTMLElement,
-): State | undefined {
+): Partial<State> {
   if (!state.pressed.leftMouseButton && !state.pressed.middleMouseButton) {
-    return
+    return {}
   }
 
   if (state.pressed.leftMouseButton && event.button === LEFT_MOUSE_BUTTON) {
@@ -66,6 +67,8 @@ export function onMouseMove(
       }
     }
   }
+
+  return {}
 }
 
 function intersects(a: Box, b: Box) {

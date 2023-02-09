@@ -1,9 +1,9 @@
 import { SimpleNode } from '../../api/SimpleNode'
-import { NODE_SPACING, NODE_WIDTH } from './constants'
-import { Connection, Node, State } from './State'
-import { updateNodePositions } from './updateNodePositions'
+import { Connection, Node, State } from '../State'
+import { NODE_SPACING, NODE_WIDTH } from '../utils/constants'
+import { updateNodePositions } from '../utils/updateNodePositions'
 
-export function updateNodes(state: State, nodes: SimpleNode[]): State {
+export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
   const oldNodes = new Map(state.nodes.map((node) => [node.id, node]))
   const newIds = new Set(nodes.map((node) => node.id))
 

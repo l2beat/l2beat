@@ -1,7 +1,7 @@
-import { BORDER_WIDTH, FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
-import { Box, Connection, State } from './State'
+import { Box, Connection, State } from '../State'
+import { BORDER_WIDTH, FIELD_HEIGHT, HEADER_HEIGHT } from '../utils/constants'
 
-export function updateNodePositions(state: State) {
+export function updateNodePositions(state: State): State {
   let dx = state.mouseMove.currentX - state.mouseMove.startX
   let dy = state.mouseMove.currentY - state.mouseMove.startY
   if (state.pressed.shiftKey) {

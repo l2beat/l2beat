@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
-import { State } from './utils/State'
+import { State } from '../store/State'
 
 export interface ScalableViewProps {
   children: ReactNode

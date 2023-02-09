@@ -1,4 +1,4 @@
-import { Box, State } from '../utils/State'
+import { State } from '../State'
 
 export function toViewCoordinates(
   event: MouseEvent,
@@ -9,17 +9,5 @@ export function toViewCoordinates(
   return {
     x: (event.clientX - rect.left - offsetX) / scale,
     y: (event.clientY - rect.top - offsetY) / scale,
-  }
-}
-
-export function toContainerCoordinates(
-  box: Box,
-  { offsetX, offsetY, scale }: State['transform'],
-): Box {
-  return {
-    x: box.x * scale + offsetX,
-    y: box.y * scale + offsetY,
-    width: box.width * scale,
-    height: box.height * scale,
   }
 }

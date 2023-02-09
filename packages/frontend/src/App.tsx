@@ -4,14 +4,13 @@ import { useState } from 'react'
 import { discover } from './api/discover'
 import { merge } from './api/merge'
 import { SimpleNode } from './api/SimpleNode'
+import { useStore } from './store/store'
 import { Viewport } from './view/Viewport'
 
 export function App() {
   const [nodes, setNodes] = useState<SimpleNode[]>([])
-  const [selected, setSelected] = useState<string | undefined>(undefined)
-  const [loading, setLoading] = useState<Record<string, boolean | undefined>>(
-    {},
-  )
+  const [loading, setLoading] = useState<Record<string, boolean>>({})
+  const selected = useStore((state) => state.selectedNodeIds[0])
 
   function markLoading(id: string, value: boolean) {
     setLoading((loading) => ({ ...loading, [id]: value }))
@@ -70,7 +69,6 @@ export function App() {
           loading={loading}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onDiscover={discoverContract}
-          onSelectionChange={(ids) => setSelected(ids[0])}
         />
       </div>
     </div>

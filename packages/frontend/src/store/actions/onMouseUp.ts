@@ -1,7 +1,7 @@
-import { State } from '../utils/State'
-import { LEFT_MOUSE_BUTTON, MIDDLE_MOUSE_BUTTON } from './constants'
+import { State } from '../State'
+import { LEFT_MOUSE_BUTTON, MIDDLE_MOUSE_BUTTON } from '../utils/constants'
 
-export function onMouseUp(event: MouseEvent, state: State): State | undefined {
+export function onMouseUp(state: State, event: MouseEvent): Partial<State> {
   if (event.button === LEFT_MOUSE_BUTTON) {
     let selectedNodeIds = state.selectedNodeIds
     if (state.mouseUpAction?.type === 'DeselectOne') {
@@ -12,7 +12,6 @@ export function onMouseUp(event: MouseEvent, state: State): State | undefined {
     }
 
     return {
-      ...state,
       selectedNodeIds,
       selectedPositions: {},
       pressed: { ...state.pressed, leftMouseButton: false },
@@ -23,10 +22,11 @@ export function onMouseUp(event: MouseEvent, state: State): State | undefined {
 
   if (event.button === MIDDLE_MOUSE_BUTTON) {
     return {
-      ...state,
       pressed: { ...state.pressed, middleMouseButton: false },
       mouseMoveAction:
         state.mouseMoveAction === 'pan' ? undefined : state.mouseMoveAction,
     }
   }
+
+  return {}
 }

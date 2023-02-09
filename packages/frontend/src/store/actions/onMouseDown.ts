@@ -1,17 +1,17 @@
-import { State } from '../utils/State'
-import { LEFT_MOUSE_BUTTON, MIDDLE_MOUSE_BUTTON } from './constants'
-import { toViewCoordinates } from './coordinates'
+import { State } from '../State'
+import { LEFT_MOUSE_BUTTON, MIDDLE_MOUSE_BUTTON } from '../utils/constants'
+import { toViewCoordinates } from '../utils/coordinates'
+import { reverseIter } from '../utils/reverseIter'
 
 export function onMouseDown(
-  event: MouseEvent,
   state: State,
+  event: MouseEvent,
   container: HTMLElement,
-): State | undefined {
+): Partial<State> {
   if (event.button === LEFT_MOUSE_BUTTON && !state.mouseMoveAction) {
     if (state.pressed.spaceKey) {
       const [x, y] = [event.clientX, event.clientY]
       return {
-        ...state,
         pressed: { ...state.pressed, leftMouseButton: true },
         mouseMoveAction: 'pan',
         mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
@@ -44,7 +44,6 @@ export function onMouseDown(
         }
 
         return {
-          ...state,
           selectedNodeIds,
           pressed: {
             ...state.pressed,
@@ -65,7 +64,6 @@ export function onMouseDown(
     }
 
     return {
-      ...state,
       selectedNodeIds: event.shiftKey ? state.selectedNodeIds : [],
       pressed: { ...state.pressed, leftMouseButton: true },
       mouseMoveAction: event.shiftKey ? 'select-add' : 'select',
@@ -75,15 +73,10 @@ export function onMouseDown(
 
   if (event.button === MIDDLE_MOUSE_BUTTON && !state.mouseMoveAction) {
     return {
-      ...state,
       pressed: { ...state.pressed, middleMouseButton: true },
       mouseMoveAction: 'pan',
     }
   }
-}
 
-function* reverseIter<T>(array: readonly T[]) {
-  for (let i = array.length - 1; i >= 0; i--) {
-    yield array[i] as T
-  }
+  return {}
 }

@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { useCallback } from 'react'
 
-import { Node } from './utils/State'
+import { Node } from '../store/State'
 
 export interface NodeViewProps {
   node: Node

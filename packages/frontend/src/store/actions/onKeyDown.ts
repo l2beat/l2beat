@@ -1,13 +1,10 @@
-import { State } from '../utils/State'
+import { State } from '../State'
+import { SHIFT_KEY, SPACE_KEY } from '../utils/constants'
 import { updateNodePositions } from '../utils/updateNodePositions'
-import { SHIFT_KEY, SPACE_KEY } from './constants'
 
-export function onKeyDown(
-  event: KeyboardEvent,
-  state: State,
-): State | undefined {
+export function onKeyDown(state: State, event: KeyboardEvent): Partial<State> {
   if (event.key === SPACE_KEY) {
-    return { ...state, pressed: { ...state.pressed, spaceKey: true } }
+    return { pressed: { ...state.pressed, spaceKey: true } }
   }
   if (event.key === SHIFT_KEY) {
     return updateNodePositions({
@@ -15,4 +12,5 @@ export function onKeyDown(
       pressed: { ...state.pressed, shiftKey: true },
     })
   }
+  return {}
 }

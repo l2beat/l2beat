@@ -1,15 +1,18 @@
-import { State } from '../utils/State'
-import { IS_MACOS } from './constants'
-
-const ZOOM_SENSITIVITY = 0.02
-const MAX_ZOOM = 3
-const MIN_ZOOM = 0.3
+import { State } from '../State'
+import {
+  IS_MACOS,
+  MAX_ZOOM,
+  MIN_ZOOM,
+  SCROLL_LINE_HEIGHT,
+  SCROLL_PAGE_HEIGHT,
+  ZOOM_SENSITIVITY,
+} from '../utils/constants'
 
 export function onWheel(
-  event: WheelEvent,
   state: State,
+  event: WheelEvent,
   view: HTMLElement,
-): State {
+): Partial<State> {
   event.preventDefault()
   const { deltaX, deltaY } = getWheelDelta(event)
   const { offsetX, offsetY, scale } = state.transform
@@ -23,7 +26,6 @@ export function onWheel(
     const change = newScale / scale - 1
 
     return {
-      ...state,
       transform: {
         offsetX: offsetX + (rect.left - event.clientX) * change,
         offsetY: offsetY + (rect.top - event.clientY) * change,
@@ -33,7 +35,6 @@ export function onWheel(
   } else {
     const invert = event.shiftKey && !IS_MACOS
     return {
-      ...state,
       transform: {
         offsetX: offsetX - (!invert ? event.deltaX : deltaY),
         offsetY: offsetY - (!invert ? event.deltaY : deltaX),
@@ -43,19 +44,13 @@ export function onWheel(
   }
 }
 
-// facebook's defaults
-const LINE_HEIGHT = 40
-const PAGE_HEIGHT = 800
-
 function getWheelDelta(event: WheelEvent) {
   let pixelsPerUnit = 1
   if (event.deltaMode === 1) {
-    // lines scrolled
-    pixelsPerUnit = LINE_HEIGHT
+    pixelsPerUnit = SCROLL_LINE_HEIGHT
   }
   if (event.deltaMode === 2) {
-    // pages scrolled
-    pixelsPerUnit = PAGE_HEIGHT
+    pixelsPerUnit = SCROLL_PAGE_HEIGHT
   }
 
   return {

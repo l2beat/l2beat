@@ -70,30 +70,3 @@ export interface DeselectAllBut {
   readonly type: 'DeselectAllBut'
   readonly id: string
 }
-
-export const INITIAL_STATE: State = {
-  selectedNodeIds: [],
-  nodes: [],
-  selection: undefined,
-  transform: {
-    offsetX: 0,
-    offsetY: 0,
-    scale: 1,
-  },
-  pressed: {
-    leftMouseButton: false,
-    middleMouseButton: false,
-    shiftKey: false,
-    spaceKey: false,
-  },
-  mouseUpAction: undefined,
-  mouseMoveAction: undefined,
-  mouseMove: {
-    startX: 0,
-    startY: 0,
-    currentX: 0,
-    currentY: 0,
-  },
-  mouseSelection: undefined,
-  selectedPositions: {},
-}

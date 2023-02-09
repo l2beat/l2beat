@@ -1,45 +1,42 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
+import { useStore } from '../store/store'
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'
 import { ScalableView } from './ScalableView'
-import { useViewportState } from './utils/useViewportState'
+import { useViewport } from './useViewport'
 
 export interface ViewportProps {
   nodes: {
     id: string
     name: string
     discovered: boolean
-    fields: {
-      name: string
-      connection?: string
-    }[]
+    fields: { name: string; connection?: string }[]
   }[]
   onDiscover: (nodeId: string) => void
-  onSelectionChange: (selection: readonly string[]) => void
   loading: Record<string, boolean | undefined>
 }
 
 export function Viewport(props: ViewportProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const viewRef = useRef<HTMLDivElement>(null)
-  const selectionRef = useRef<readonly string[]>([])
+  const { containerRef, viewRef } = useViewport()
 
-  const state = useViewportState(props.nodes, containerRef, viewRef)
+  const updateNodes = useStore((state) => state.updateNodes)
   useEffect(() => {
-    if (selectionRef.current !== state.selectedNodeIds) {
-      selectionRef.current = state.selectedNodeIds
-      props.onSelectionChange(state.selectedNodeIds)
-    }
-  }, [state, props.onSelectionChange])
+    updateNodes(props.nodes)
+  }, [updateNodes, props.nodes])
+
+  const nodes = useStore((state) => state.nodes)
+  const selectedNodeIds = useStore((state) => state.selectedNodeIds)
+  const transform = useStore((state) => state.transform)
+  const mouseSelection = useStore((state) => state.mouseSelection)
 
   return (
     <div
       ref={containerRef}
       className="relative h-full w-full overflow-hidden rounded-lg bg-white"
     >
-      <ScalableView ref={viewRef} transform={state.transform}>
-        {state.nodes.map((node) =>
+      <ScalableView ref={viewRef} transform={transform}>
+        {nodes.map((node) =>
           node.fields.map(
             (field, i) =>
               field.connection && (
@@ -51,25 +48,25 @@ export function Viewport(props: ViewportProps) {
               ),
           ),
         )}
-        {state.nodes.map((node) => (
+        {nodes.map((node) => (
           <NodeView
             key={node.id}
             node={node}
-            selected={state.selectedNodeIds.includes(node.id)}
+            selected={selectedNodeIds.includes(node.id)}
             discovered={node.discovered}
             onDiscover={props.onDiscover}
             loading={!!props.loading[node.id]}
           />
         ))}
       </ScalableView>
-      {state.mouseSelection && (
+      {mouseSelection && (
         <div
           className="absolute border border-blue-600 bg-blue-100 bg-opacity-30"
           style={{
-            left: state.mouseSelection.x,
-            top: state.mouseSelection.y,
-            width: state.mouseSelection.width,
-            height: state.mouseSelection.height,
+            left: mouseSelection.x,
+            top: mouseSelection.y,
+            width: mouseSelection.width,
+            height: mouseSelection.height,
           }}
         />
       )}
