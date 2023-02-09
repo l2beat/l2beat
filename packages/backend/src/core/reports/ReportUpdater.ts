@@ -1,6 +1,5 @@
 import { Hash256, Logger, UnixTime } from '@l2beat/shared'
 
-import { Metrics } from '../../Metrics'
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
@@ -27,7 +26,6 @@ export class ReportUpdater {
     private readonly clock: Clock,
     private readonly projects: ReportProject[],
     private readonly logger: Logger,
-    metrics: Metrics,
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getReportConfigHash(projects)
@@ -35,7 +33,7 @@ export class ReportUpdater {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metrics: metrics.forTvl(this),
+        metricsId: ReportUpdater.name,
       },
     )
   }
