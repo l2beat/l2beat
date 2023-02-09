@@ -70,7 +70,7 @@ function getTVLBreakdownLabel(
     toLabel('Other', breakdown.other),
   ]
     .filter((x) => x !== '')
-    .join('\n')
+    .join('<br>')
 }
 
 function getTvlWarning(
