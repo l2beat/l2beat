@@ -63,7 +63,7 @@ const GENERIC_OFF_CHAIN: ProjectTechnologyChoice = {
 const ANYTRUST_OFF_CHAIN: ProjectTechnologyChoice = {
   ...GENERIC_OFF_CHAIN,
   description:
-    'Users transactions are not published on-chain, but rather sent to several well known and trusted parties, also known as committee members (DAC). New transaction batch needs a BLS signature with the required DAC quorum, for example 9/10. This signature is not verified by L1, however external Validators will skip the batch if BLS signature is not valid resulting. This will reslt in a fraud proof challenge if this batch is included in a consequitive state update. It is assumed that at least one honest DAC member that signed the batch will reveal tx data to the Validators if Sequencer decides to act maliciously and withhold the data.',
+    'Users transactions are not published on-chain, but rather sent to several well known and trusted parties, also known as committee members (DAC). Members of the DAC collectively produce a Data Availability Certificate (comprising BLS signatures from a quorum) guaranteeing that the data behind the new transaction batch will be available until the expiry period elapses (currently a minimum of two weeks). This signature is not verified by L1, however external Validators will skip the batch if BLS signature is not valid resulting. This will result in a fraud proof challenge if this batch is included in a consecutive state update. It is assumed that at least one honest DAC member that signed the batch will reveal tx data to the Validators if Sequencer decides to act maliciously and withhold the data. If the Sequencer cannot gather enough signatures from the DAC, it will "fall back to rollup" mode and by posting the full data directly to the L1 chain.',
   risks: [
     ...GENERIC_OFF_CHAIN.risks,
     {
@@ -73,8 +73,8 @@ const ANYTRUST_OFF_CHAIN: ProjectTechnologyChoice = {
   ],
   references: [
     {
-      text: 'AnyTrust Chains - Arbitrum documentation',
-      href: 'https://developer.offchainlabs.com/docs/anytrust',
+      text: 'Inside AnyTrust - Arbitrum documentation',
+      href: 'https://developer.offchainlabs.com/inside-anytrust',
     },
   ],
 }
