@@ -19,8 +19,8 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
   const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4'
 
   return (
-    <>
-      <a className="relative pl-7 group-hover:underline">
+    <div className="align-middle">
+      <span className="relative pl-7 group-hover:underline">
         <img
           className="absolute left-0 top-0 block h-[18px] w-[18px]"
           src={`/icons/${project.slug}.png`}
@@ -36,7 +36,7 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
           </div>
         )}
         <span className="text-base font-bold md:text-lg">{project.name}</span>
-      </a>
+      </span>
       {project.provider === 'StarkEx' && (
         <span
           className={providerClassName}
@@ -69,6 +69,6 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
           <ShieldIcon className="absolute top-1/2 -translate-y-1/2 fill-yellow-700 dark:fill-yellow-300" />
         </span>
       )}
-    </>
+    </div>
   )
 }
