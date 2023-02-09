@@ -9,7 +9,10 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('omg')
 
 export const omgnetwork: Layer2 = {
   type: 'layer2',
@@ -101,11 +104,11 @@ export const omgnetwork: Layer2 = {
     addresses: [
       {
         name: 'EthVault',
-        address: '0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0',
+        address: discovery.getContract('EthVault').address.toString(),
       },
       {
         name: 'Erc20Vault',
-        address: '0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B',
+        address: discovery.getContract('Erc20Vault').address.toString(),
       },
       {
         name: 'ETHDepositVerifier',
@@ -117,14 +120,14 @@ export const omgnetwork: Layer2 = {
       },
       {
         name: 'PlasmaFramework',
-        address: '0x0D4C1222f5e839a911e2053860e45F18921D72ac',
+        address: discovery.getContract('PlasmaFramework').address.toString(),
       },
       {
         name: 'PaymentExitGame',
         // PaymentExitGame uses unverified libraries https://etherscan.io/address/0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3
         description:
           'The source code of the PaymentStartStandardExit library used by this contract is not verified on Etherscan.',
-        address: '0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
+        address: discovery.getContract('PaymentExitGame').address.toString(),
       },
     ],
     risks: [],

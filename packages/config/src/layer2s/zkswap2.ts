@@ -80,57 +80,54 @@ export const zkswap2: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
         name: 'ZkSync',
+        address: discovery.getContract('ZkSync').address.toString(),
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
               contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
               the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-        upgradeability: discovery.getContract(
-          '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
-        ).upgradeability,
+        upgradeability: discovery.getContract('ZkSync').upgradeability,
       },
       {
-        address: '0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4',
         name: 'ZkSyncCommitBlock',
+        address: discovery.getContract('ZkSyncCommitBlock').address.toString(),
         description:
           'Additional contract to store implementation details of the main ZkSync contract.',
       },
       {
-        address: '0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0',
         name: 'ZkSyncExit',
+        address: discovery.getContractValue<string>(
+          'ZkSync',
+          'zkSyncExitAddress',
+        ),
       },
       {
-        address: '0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B',
+        address: discovery.getContract('Governance').address.toString(),
         name: 'Governance',
         description: 'Keeps a list of block producers and whitelisted tokens.',
-        upgradeability: discovery.getContract(
-          '0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Governance').upgradeability,
       },
       {
-        address: '0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D',
+        address: discovery.getContract('UniswapV2Factory').address.toString(),
         name: 'PairManager',
-        upgradeability: discovery.getContract(
-          '0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D',
-        ).upgradeability,
+        upgradeability:
+          discovery.getContract('UniswapV2Factory').upgradeability,
       },
       {
-        address: '0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef',
+        address: discovery.getContract('Verifier').address.toString(),
         name: 'Verifier',
         description: 'zk-SNARK Plonk Verifier.',
-        upgradeability: discovery.getContract(
-          '0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Verifier').upgradeability,
       },
       {
-        address: '0xb56878d21F6b101f48bb55f1AA9D3F624f04E513',
+        address: discovery.getContractValue<string>('ZkSync', 'verifierExit'),
         name: 'VerifierExit',
         upgradeability: discovery.getContract(
-          '0xb56878d21F6b101f48bb55f1AA9D3F624f04E513',
+          discovery.getContractValue<string>('ZkSync', 'verifierExit'),
         ).upgradeability,
       },
       {
+        //getMaster???
         address: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
         name: 'UpgradeGatekeeper',
       },
@@ -143,6 +140,7 @@ export const zkswap2: Layer2 = {
       accounts: [
         {
           type: 'EOA',
+          //networkGovernor or getMaster
           address: '0x9D7397204F32e0Ee919Ea3475630cdf131086255',
         },
       ],
@@ -151,12 +149,9 @@ export const zkswap2: Layer2 = {
     },
     {
       name: 'Active validator',
-      accounts: [
-        {
-          address: '0x38101ae98196C8BCf7dF1835Bf3983B384272ae4',
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery
+        .getContractValue<string[]>('Governance', 'validators')
+        .map((address) => ({ address, type: 'EOA' })),
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 2.0 Admin.',
     },

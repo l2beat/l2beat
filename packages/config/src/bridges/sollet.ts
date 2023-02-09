@@ -1,7 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('sollet')
 
 export const sollet: Bridge = {
   type: 'bridge',
@@ -82,7 +85,7 @@ export const sollet: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0xeae57ce9cc1984F202e15e038B964bb8bdF7229a',
+        address: discovery.getContract('SplTokenSwap').address.toString(),
         name: 'SplTokenSwap',
         description: 'Sollet Bridge Contract.',
       },
@@ -93,7 +96,7 @@ export const sollet: Bridge = {
     {
       accounts: [
         {
-          address: '0x067D382e61c06Cea2815069D9D97fd3ee5df2361',
+          address: discovery.getContractValue<string>('SplTokenSwap', 'owner'),
           type: 'EOA',
         },
       ],

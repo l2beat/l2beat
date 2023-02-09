@@ -168,36 +168,30 @@ export const zksync: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+        address: discovery.getContract('ZkSync').address.toString(),
         name: 'ZkSync',
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant is currently set to 21 days. 9/15 Security Council MSig can override the delay period and execute an emergency immediate upgrade.',
-        upgradeability: discovery.getContract(
-          '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
-        ).upgradeability,
+        upgradeability: discovery.getContract('ZkSync').upgradeability,
       },
       {
-        address: '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
+        address: discovery.getContract('Verifier').address.toString(),
         name: 'Verifier',
         description: 'Implements zkProof verification logic.',
-        upgradeability: discovery.getContract(
-          '0x5290E9582B4FB706EaDf87BB1c129e897e04d06D',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Verifier').upgradeability,
       },
       {
-        address: '0x38A43F4330f24fe920F943409709fc9A6084C939',
+        address: discovery.getContract('UpgradeGatekeeper').address.toString(),
         name: 'UpgradeGatekeeper',
         description:
           'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
       },
       {
-        address: '0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01',
+        address: discovery.getContract('Governance').address.toString(),
         name: 'Governance',
         description:
           'Keeps a list of block producers, NFT factories and whitelisted tokens.',
-        upgradeability: discovery.getContract(
-          '0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01',
-        ).upgradeability,
+        upgradeability: discovery.getContract('Governance').upgradeability,
       },
     ],
     risks: [
@@ -212,7 +206,7 @@ export const zksync: Layer2 = {
       accounts: [
         {
           type: 'MultiSig',
-          address: '0xE24f4870Ab85DE8E356C5fC56138587206c70d99',
+          address: discovery.getContract('GnosisSafe').address.toString(),
         },
       ],
       description:
@@ -220,34 +214,15 @@ export const zksync: Layer2 = {
     },
     {
       name: 'MultiSig participants',
-      accounts: [
-        {
-          address: '0xA5F3C860441c0EeD02BF8A6472AF32B68884b0FF',
-          type: 'EOA',
-        },
-        {
-          address: '0x474D2b82E02D9712A077574E7764dEfA182653D4',
-          type: 'EOA',
-        },
-        {
-          address: '0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607',
-          type: 'EOA',
-        },
-        {
-          address: '0x9dF8bc0918F357c766A5697E031fF5237c05747A',
-          type: 'EOA',
-        },
-        {
-          address: '0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc',
-          type: 'EOA',
-        },
-        {
-          address: '0xa265146cA40F52cfC439888D0b4291b5440e6769',
-          type: 'EOA',
-        },
-      ],
-      description:
-        'These addresses are the participants of the 3/6 zkSync MultiSig.',
+      accounts: discovery
+        .getContractValue<string[]>('GnosisSafe', 'getOwners')
+        .map((owner) => ({ address: owner, type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        'GnosisSafe',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+      } zkSync MultiSig.`,
     },
     {
       name: 'Security Council',
@@ -318,12 +293,9 @@ export const zksync: Layer2 = {
     },
     {
       name: 'Active validator',
-      accounts: [
-        {
-          address: '0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e',
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery
+        .getContractValue<string[]>('Governance', 'validators')
+        .map((address) => ({ address, type: 'EOA' })),
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1.',
     },
@@ -331,7 +303,10 @@ export const zksync: Layer2 = {
       name: 'Token listing beneficiary',
       accounts: [
         {
-          address: '0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027',
+          address: discovery.getContractValue<string>(
+            'TokenGovernance',
+            'treasury',
+          ),
           type: 'EOA',
         },
       ],
