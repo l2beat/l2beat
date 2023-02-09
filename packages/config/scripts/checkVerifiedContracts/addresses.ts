@@ -34,7 +34,6 @@ function gatherAddressesFromUpgradeability(
     case 'CustomWithoutAdmin':
     case 'EIP1967 proxy':
     case 'ZeppelinOS proxy':
-    case 'NutBerry':
     case 'StarkWare diamond':
     case 'resolved delegate proxy':
     case 'call implementation proxy':
