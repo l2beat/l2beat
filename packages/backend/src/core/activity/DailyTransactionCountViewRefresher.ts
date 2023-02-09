@@ -14,11 +14,15 @@ export class DailyTransactionCountViewRefresher {
     private readonly logger: Logger,
   ) {
     this.logger = logger.for(this)
-    this.refreshQueue = new TaskQueue<void>(async () => {
-      this.logger.info('Refresh started')
-      await this.viewRepository.refresh()
-      this.logger.info('Refresh finished')
-    }, this.logger.for('refreshQueue'))
+    this.refreshQueue = new TaskQueue<void>(
+      async () => {
+        this.logger.info('Refresh started')
+        await this.viewRepository.refresh()
+        this.logger.info('Refresh finished')
+      },
+      this.logger.for('refreshQueue'),
+      { metricsId: DailyTransactionCountViewRefresher.name },
+    )
   }
 
   start() {

@@ -1,5 +1,6 @@
 import { Layer2TransactionApi } from '@l2beat/config'
 import { assert, HttpClient, Logger, ProjectId } from '@l2beat/shared'
+import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'
 import { createAztecConnectCounter } from '../../core/activity/counters/AztecConnectCounter'
@@ -11,7 +12,6 @@ import { createStarknetCounter } from '../../core/activity/counters/StarknetCoun
 import { createZksyncCounter } from '../../core/activity/counters/ZksyncCounter'
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
 import { Clock } from '../../core/Clock'
-import { Metrics } from '../../Metrics'
 import { Project } from '../../model'
 import { BlockTransactionCountRepository } from '../../peripherals/database/activity/BlockTransactionCountRepository'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/activity/StarkexCountRepository'
@@ -26,7 +26,6 @@ export function createTransactionCounters(
   http: HttpClient,
   database: Database,
   clock: Clock,
-  metrics: Metrics,
 ): TransactionCounter[] {
   assert(config.activity)
   const {
@@ -48,26 +47,16 @@ export function createTransactionCounters(
   })
 
   // shared repositories
-  const blockRepository = new BlockTransactionCountRepository(
-    database,
-    logger,
-    metrics,
-  )
+  const blockRepository = new BlockTransactionCountRepository(database, logger)
   const starkexRepository = new StarkexTransactionCountRepository(
     database,
     logger,
-    metrics,
   )
   const sequenceProcessorRepository = new SequenceProcessorRepository(
     database,
     logger,
-    metrics,
   )
-  const zksyncRepository = new ZksyncTransactionRepository(
-    database,
-    logger,
-    metrics,
-  )
+  const zksyncRepository = new ZksyncTransactionRepository(database, logger)
 
   // ethereum is kept separately in backend config, because it is not a layer 2 project
   const ethereumConfig = activityConfigProjects.ethereum
@@ -87,7 +76,7 @@ export function createTransactionCounters(
     .filter(hasTransactionApi)
     .map(mergeWithActivityConfigProjects(activityConfigProjects))
     .concat([ethereum])
-    .filter(isProjectAllowed(allowedProjectIds, logger, metrics))
+    .filter(isProjectAllowed(allowedProjectIds, logger))
     .map(({ projectId, transactionApi }) => {
       switch (transactionApi.type) {
         case 'starkex':
@@ -97,7 +86,6 @@ export function createTransactionCounters(
             starkexClient,
             sequenceProcessorRepository,
             logger,
-            metrics,
             clock,
             {
               ...transactionApi,
@@ -111,7 +99,6 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
-            metrics,
             transactionApi,
           )
         case 'aztecconnect':
@@ -121,7 +108,6 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
-            metrics,
             transactionApi,
           )
         case 'starknet':
@@ -131,7 +117,6 @@ export function createTransactionCounters(
             http,
             sequenceProcessorRepository,
             logger,
-            metrics,
             clock,
             transactionApi,
           )
@@ -142,7 +127,6 @@ export function createTransactionCounters(
             zksyncRepository,
             sequenceProcessorRepository,
             logger,
-            metrics,
             transactionApi,
           )
         case 'loopring':
@@ -152,7 +136,6 @@ export function createTransactionCounters(
             blockRepository,
             sequenceProcessorRepository,
             logger,
-            metrics,
             transactionApi,
           )
         case 'rpc':
@@ -161,7 +144,6 @@ export function createTransactionCounters(
             blockRepository,
             sequenceProcessorRepository,
             logger,
-            metrics,
             clock,
             transactionApi,
           )
@@ -193,10 +175,15 @@ function mergeWithActivityConfigProjects(
   })
 }
 
+const activityIncludedInApi = new Gauge({
+  name: 'activity_included_in_api',
+  help: 'Boolean value 1 when this project is included in activity api response',
+  labelNames: ['project'],
+})
+
 function isProjectAllowed(
   allowedProjectIds: string[] | undefined,
   logger: Logger,
-  metrics: Metrics,
 ) {
   return (p: { projectId: ProjectId }) => {
     const noIdsSpecified = allowedProjectIds === undefined
@@ -205,7 +192,7 @@ function isProjectAllowed(
     if (!includedInApi) {
       logger.info(`Skipping ${p.projectId.toString()} processor`)
     }
-    metrics.activityIncludedInApi
+    activityIncludedInApi
       .labels({ project: p.projectId.toString() })
       .set(Number(includedInApi))
     return includedInApi

@@ -29,6 +29,9 @@ export class DiscoveryWatcher {
     this.taskQueue = new TaskQueue(
       () => this.update(),
       this.logger.for('taskQueue'),
+      {
+        metricsId: DiscoveryWatcher.name,
+      },
     )
   }
 
