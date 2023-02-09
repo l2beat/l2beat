@@ -1,13 +1,13 @@
 import classNames from 'classnames'
-import ky from 'ky'
 import { useState } from 'react'
 
-import { createEmptyNodes, transformContracts } from './transform'
-import { ProjectParameters } from './types'
-import { SimpleNode } from './view/utils/SimpleNode'
+import { discover } from './api/discover'
+import { merge } from './api/merge'
+import { SimpleNode } from './api/SimpleNode'
 import { Viewport } from './view/Viewport'
 
 export function App() {
+  const [nodes, setNodes] = useState<SimpleNode[]>([])
   const [selected, setSelected] = useState<string | undefined>(undefined)
   const [loading, setLoading] = useState<Record<string, boolean | undefined>>(
     {},
@@ -16,8 +16,6 @@ export function App() {
   function markLoading(id: string, value: boolean) {
     setLoading((loading) => ({ ...loading, [id]: value }))
   }
-
-  const [contractNodes, setContractNodes] = useState<SimpleNode[]>([])
 
   async function showPrompt() {
     const address = window.prompt('Contract address')
@@ -32,20 +30,12 @@ export function App() {
     console.log('DISCOVERING', address)
 
     markLoading(address, true)
-    const discoveredContracts = await callDiscoverContractApi(address)
+    const result = await discover(address)
     markLoading(address, false)
-    setContractNodes((contractNodes) => {
-      const newNodes = transformContracts(discoveredContracts)
-      const allContractNodesCombined = [...newNodes, ...contractNodes].filter(
-        (x, i, a) => a.findIndex((y) => y.id === x.id) === i,
-      )
-      const emptyNodes = createEmptyNodes(allContractNodesCombined)
-
-      return [...allContractNodesCombined, ...emptyNodes]
-    })
+    setNodes((nodes) => merge(nodes, result))
   }
 
-  const selectedData = contractNodes.find((x) => x.id === selected)?.data
+  const selectedData = nodes.find((x) => x.id === selected)?.data
 
   return (
     <div className="grid h-full w-full grid-cols-[1fr,_400px] grid-rows-[64px,_1fr]">
@@ -62,7 +52,7 @@ export function App() {
           Discover!
           {loading.global && '🔄'}
         </button>
-        <p className="ml-2">Contracts loaded: {contractNodes.length}</p>
+        <p className="ml-2">Contracts loaded: {nodes.length}</p>
       </div>
 
       <div className="row-span-2 bg-white p-2 drop-shadow-xl">
@@ -76,7 +66,7 @@ export function App() {
 
       <div className="flex h-full w-full items-center justify-center gap-4 p-2">
         <Viewport
-          nodes={contractNodes}
+          nodes={nodes}
           loading={loading}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onDiscover={discoverContract}
@@ -85,16 +75,4 @@ export function App() {
       </div>
     </div>
   )
-}
-
-async function callDiscoverContractApi(
-  address: string,
-): Promise<ProjectParameters> {
-  console.log('Loading: ', address)
-
-  const discovery: ProjectParameters = await ky
-    .get(`/api/discover/${address}?maxDepth=0`, { timeout: 9999999 })
-    .json()
-
-  return discovery
 }

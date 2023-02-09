@@ -1,5 +1,5 @@
+import { SimpleNode } from '../../api/SimpleNode'
 import { NODE_SPACING, NODE_WIDTH } from './constants'
-import { SimpleNode } from './SimpleNode'
 import { Connection, Node, State } from './State'
 import { updateNodePositions } from './updateNodePositions'
 

@@ -1,5 +1,5 @@
+import { SimpleNode } from './SimpleNode'
 import { ContractParameters, ContractValue, ProjectParameters } from './types'
-import { SimpleNode } from './view/utils/SimpleNode'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -33,26 +33,6 @@ export function transformContracts(discovery: ProjectParameters): SimpleNode[] {
         data: 'EOA',
       })),
     )
-}
-
-export function createEmptyNodes(nodes: SimpleNode[]): SimpleNode[] {
-  const unknownIds = new Set<string>()
-  const knownIds = new Set(nodes.map((contract) => contract.id))
-
-  for (const node of nodes) {
-    for (const field of node.fields) {
-      if (field.connection && !knownIds.has(field.connection)) {
-        unknownIds.add(field.connection)
-      }
-    }
-  }
-
-  return [...unknownIds].map((id) => ({
-    id,
-    name: 'Unknown',
-    fields: [],
-    discovered: false,
-  }))
 }
 
 interface FieldProps {
@@ -99,6 +79,7 @@ function isAddress(value: string): boolean {
     typeof value === 'string' && value.startsWith('0x') && value.length === 42
   )
 }
+
 function emojifyContractName(contract: ContractParameters): string {
   if (contract.name === 'GnosisSafe') {
     return '🔐 Gnosis Safe'

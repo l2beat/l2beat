@@ -1,12 +1,12 @@
 import { MutableRefObject, RefObject, useEffect, useRef, useState } from 'react'
 
+import { SimpleNode } from '../../api/SimpleNode'
 import { onKeyDown } from '../events/onKeyDown'
 import { onKeyUp } from '../events/onKeyUp'
 import { onMouseDown } from '../events/onMouseDown'
 import { onMouseMove } from '../events/onMouseMove'
 import { onMouseUp } from '../events/onMouseUp'
 import { onWheel } from '../events/onWheel'
-import { SimpleNode } from './SimpleNode'
 import { INITIAL_STATE, State } from './State'
 import { updateNodes } from './updateNodes'
 
