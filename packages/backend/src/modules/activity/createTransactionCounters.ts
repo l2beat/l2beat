@@ -20,12 +20,6 @@ import { SequenceProcessorRepository } from '../../peripherals/database/Sequence
 import { Database } from '../../peripherals/database/shared/Database'
 import { StarkexClient } from '../../peripherals/starkex'
 
-const activityIncludedInApi = new Gauge({
-  name: 'activity_included_in_api',
-  help: 'Boolean value 1 when this project is included in activity api response',
-  labelNames: ['project'],
-})
-
 export function createTransactionCounters(
   config: Config,
   logger: Logger,
@@ -180,6 +174,12 @@ function mergeWithActivityConfigProjects(
     },
   })
 }
+
+const activityIncludedInApi = new Gauge({
+  name: 'activity_included_in_api',
+  help: 'Boolean value 1 when this project is included in activity api response',
+  labelNames: ['project'],
+})
 
 function isProjectAllowed(
   allowedProjectIds: string[] | undefined,

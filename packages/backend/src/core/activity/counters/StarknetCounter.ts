@@ -54,7 +54,7 @@ export function createStarknetCounter(
         })
 
         const blocks = await promiseAllPlus(queries, logger, {
-          metricsId: `StarkNetBlockCounter[${projectId.toString()}]`,
+          metricsId: 'StarkNetBlockCounter',
         })
         await blockRepository.addMany(blocks, trx)
       },

@@ -78,7 +78,6 @@ export abstract class BaseRepository {
     protected readonly logger: Logger,
   ) {
     this.logger = logger.for(this)
-
     this.histogram = repositoryHistogram
   }
 
