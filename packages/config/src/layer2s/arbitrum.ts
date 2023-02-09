@@ -345,7 +345,6 @@ export const arbitrum: Layer2 = {
     addresses: [
       {
         address: '0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
-        // two contracts with name ProxyAdmin
         name: 'ProxyAdmin (1)',
         description:
           'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by a 4-of-6 multisig.',
@@ -358,7 +357,6 @@ export const arbitrum: Layer2 = {
         upgradeability: discovery.getContract('RollupProxy').upgradeability,
       },
       {
-        // two same names
         address: '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
         name: 'SequencerInbox',
         description:
@@ -391,7 +389,6 @@ export const arbitrum: Layer2 = {
         ).upgradeability,
       },
       {
-        // TODO: 2 contracts with name ProxyAdmin
         address: '0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
         name: 'ProxyAdmin (2)',
         description:
