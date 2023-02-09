@@ -4,7 +4,6 @@ import {
   getErrorStackTrace,
   json,
   Logger,
-  Metrics,
   Retries,
   ShouldRetry,
   wrapAndMeasure,
@@ -23,14 +22,19 @@ interface Job<T> {
   attempts: number
   executeAt: number
 }
-type HistogramLabel = 'updater'
-export type TaskQueueHistogram = Histogram<HistogramLabel>
+
+const taskQueueHistogram = new Histogram<string>({
+  name: 'task_queue_task_execution_duration_histogram',
+  help: 'Histogram showing TaskQueue sync duration',
+  buckets: [0.25, 0.5, 1, 2.5, 5, 10, 25, 50],
+  labelNames: ['id'],
+})
 
 export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
   trackEvents?: boolean
-  metrics?: Metrics<HistogramLabel>
+  metricsId: string
 }
 /**
  * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
@@ -48,21 +52,24 @@ export class TaskQueue<T> {
   constructor(
     executeTask: Task<T>,
     private readonly logger: Logger,
-    opts?: TaskQueueOpts<T>,
+    opts: TaskQueueOpts<T>,
   ) {
-    this.workers = opts?.workers ?? 1
+    this.workers = opts.workers ?? 1
     assert(
       this.workers > 0 && Number.isInteger(this.workers),
       'workers needs to be a positive integer',
     )
-    this.shouldRetry = opts?.shouldRetry ?? DEFAULT_RETRY
-    if (opts?.trackEvents) {
+    this.shouldRetry = opts.shouldRetry ?? DEFAULT_RETRY
+    if (opts.trackEvents) {
       this.eventTracker = new EventTracker()
     }
 
-    this.executeTask = opts?.metrics
-      ? wrapAndMeasure(executeTask, opts.metrics)
-      : executeTask
+    this.executeTask = wrapAndMeasure(executeTask, {
+      histogram: taskQueueHistogram,
+      labels: {
+        id: opts.metricsId,
+      },
+    })
   }
 
   get length() {

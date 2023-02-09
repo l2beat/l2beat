@@ -8,8 +8,8 @@ interface ScalingTableEntry {
 }
 
 export function getScalingRowProps(entry: ScalingTableEntry) {
-  const href = `/scaling/projects/${entry.slug}`
   const isEthereum = entry.slug === 'ethereum'
+  const href = isEthereum ? undefined : `/scaling/projects/${entry.slug}`
 
   return {
     className: isEthereum
@@ -18,6 +18,6 @@ export function getScalingRowProps(entry: ScalingTableEntry) {
           'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
         )
       : getRowVerificationClassNames(entry),
-    ['project-link']: isEthereum ? undefined : href,
+    href,
   }
 }

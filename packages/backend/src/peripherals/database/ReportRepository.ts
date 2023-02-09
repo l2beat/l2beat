@@ -2,7 +2,6 @@ import { assert, AssetId, Logger, ProjectId, UnixTime } from '@l2beat/shared'
 import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
 
-import { Metrics } from '../../Metrics'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -18,8 +17,8 @@ export interface ReportRecord {
 export const SIX_HOURS = UnixTime.HOUR * 6
 
 export class ReportRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger, metrics: Metrics) {
-    super(database, logger, metrics)
+  constructor(database: Database, logger: Logger) {
+    super(database, logger)
     this.autoWrap<CheckConvention<ReportRepository>>(this)
   }
 

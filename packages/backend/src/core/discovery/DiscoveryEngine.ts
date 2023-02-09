@@ -1,5 +1,10 @@
-import { MainnetEtherscanClient, ProjectParameters } from '@l2beat/shared'
+import {
+  MainnetEtherscanClient,
+  ProjectParameters,
+  wrapAndMeasure,
+} from '@l2beat/shared'
 import { providers } from 'ethers'
+import { Histogram } from 'prom-client'
 
 import { discover } from './discover'
 import { DiscoveryConfig } from './DiscoveryConfig'
@@ -7,6 +12,13 @@ import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { parseDiscoveryOutput } from './saveDiscoveryResult'
 import { getDiscoveryConfigHash } from './utils/getDiscoveryConfigHash'
+
+const discoveryHistogram = new Histogram({
+  name: 'discovery_duration_histogram',
+  help: 'Histogram showing discovery duration',
+  labelNames: ['project'],
+  buckets: [10, 30, 60, 120, 300],
+})
 
 export class DiscoveryEngine {
   constructor(
@@ -25,7 +37,17 @@ export class DiscoveryEngine {
       blockNumber,
     )
 
-    const discovered = await discover(discoveryProvider, config, this.logger)
+    const wrappedDiscovery = wrapAndMeasure(
+      async () => await discover(discoveryProvider, config, this.logger),
+      {
+        histogram: discoveryHistogram,
+        labels: {
+          project: config.name,
+        },
+      },
+    )
+    const discovered = await wrappedDiscovery()
+
     const configHash = getDiscoveryConfigHash(config)
 
     // TODO: test this line

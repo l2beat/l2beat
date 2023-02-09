@@ -1,7 +1,6 @@
 import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
 import { DiscoveryWatcherRow } from 'knex/types/tables'
 
-import { Metrics } from '../../../Metrics'
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
@@ -13,8 +12,8 @@ export interface DiscoveryWatcherRecord {
   configHash: Hash256
 }
 export class DiscoveryWatcherRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger, metrics: Metrics) {
-    super(database, logger, metrics)
+  constructor(database: Database, logger: Logger) {
+    super(database, logger)
 
     this.autoWrap<CheckConvention<DiscoveryWatcherRepository>>(this)
   }

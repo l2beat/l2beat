@@ -1,6 +1,5 @@
 import { Hash256, Logger, UnixTime } from '@l2beat/shared'
 
-import { Metrics } from '../../Metrics'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 
@@ -10,8 +9,8 @@ export interface BalanceStatusRecord {
 }
 
 export class BalanceStatusRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger, metrics: Metrics) {
-    super(database, logger, metrics)
+  constructor(database: Database, logger: Logger) {
+    super(database, logger)
     this.autoWrap<CheckConvention<BalanceStatusRepository>>(this)
   }
 
