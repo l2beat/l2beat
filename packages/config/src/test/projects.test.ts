@@ -24,7 +24,6 @@ describe('projects', () => {
             if (!contract.upgradeability?.type) return
             switch (contract.upgradeability.type) {
               case 'Custom':
-              case 'NutBerry':
                 testAddress(contract.upgradeability.implementation)
                 if (contract.upgradeability.admin) {
                   testAddress(contract.upgradeability.admin)

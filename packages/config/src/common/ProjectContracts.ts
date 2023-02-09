@@ -28,7 +28,6 @@ export interface ProjectContract {
 export type ProjectUpgradeability =
   | CustomUpgradeability
   | CustomUpgradeabilityWithoutAdmin
-  | NutBerryUpgradeability
   | ReferenceUpgradeability
   | BeaconUpgradeability
   | UpgradeabilityParameters
@@ -44,14 +43,6 @@ export interface CustomUpgradeability {
 export interface CustomUpgradeabilityWithoutAdmin {
   type: 'CustomWithoutAdmin'
   /** Address of the admin */
-  implementation: string
-}
-
-export interface NutBerryUpgradeability {
-  type: 'NutBerry'
-  /** Address of the admin */
-  admin: string
-  /** Address of the implementation */
   implementation: string
 }
 
