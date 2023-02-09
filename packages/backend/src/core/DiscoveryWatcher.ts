@@ -1,5 +1,6 @@
 import { Hash256, Logger, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
+import { Gauge } from 'prom-client'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
@@ -12,6 +13,11 @@ import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
 import { TaskQueue } from './queue/TaskQueue'
+
+const latestBlock = new Gauge({
+  name: 'discovery_watcher_last_synced',
+  help: 'Latest block number with which DiscoveryWatcher was run',
+})
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -86,6 +92,7 @@ export class DiscoveryWatcher {
       }
     }
     this.logger.info('Update finished', { blockNumber })
+    latestBlock.set(blockNumber)
   }
 
   async findChanges(
@@ -100,10 +107,12 @@ export class DiscoveryWatcher {
       databaseEntry === undefined ||
       databaseEntry.configHash !== configHash
     ) {
+      this.logger.debug('Using committed file for diff', { project: name })
       const committed = await this.configReader.readDiscovery(name)
       return diffDiscovery(committed.contracts, discovery.contracts, overrides)
     }
 
+    this.logger.debug('Using database record for diff', { project: name })
     return diffDiscovery(
       databaseEntry.discovery.contracts,
       discovery.contracts,
