@@ -56,7 +56,6 @@ function makeTechnologyContract(
     switch (item.upgradeability.type) {
       case 'EIP1967 proxy':
       case 'Custom':
-      case 'NutBerry':
       case 'ZeppelinOS proxy':
         links.push({
           name: 'Implementation (Upgradable)',
