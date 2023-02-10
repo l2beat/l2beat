@@ -18,6 +18,11 @@ const latestBlock = new Gauge({
   help: 'Value showing latest block number with which DiscoveryWatcher was run',
 })
 
+const changesDetected = new Gauge({
+  name: 'discovery_watcher_changes_detected',
+  help: 'Value showing the amount of changes detected by DiscoveryWatcher',
+})
+
 const syncDuration = new Gauge({
   name: 'discovery_watcher_sync_duration',
   help: 'Value showing how long does it take to sync all the projects',
@@ -68,6 +73,7 @@ export class DiscoveryWatcher {
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
+    let changesCounter = 0
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
@@ -88,6 +94,7 @@ export class DiscoveryWatcher {
         if (diff.length > 0) {
           const messages = diffToMessages(projectConfig.name, diff)
           await this.notify(messages)
+          changesCounter += diff.length
         }
 
         await this.repository.addOrUpdate({
@@ -105,6 +112,7 @@ export class DiscoveryWatcher {
     }
     this.logger.info('Update finished', { blockNumber })
     latestBlock.set(blockNumber)
+    changesDetected.set(changesCounter)
     syncDone()
     histogramDone()
   }
