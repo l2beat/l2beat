@@ -13,27 +13,6 @@ import { diffToMessages } from './discovery/utils/diffToMessages'
 import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
 import { TaskQueue } from './queue/TaskQueue'
 
-const latestBlock = new Gauge({
-  name: 'discovery_watcher_last_synced',
-  help: 'Value showing latest block number with which DiscoveryWatcher was run',
-})
-
-const changesDetected = new Gauge({
-  name: 'discovery_watcher_changes_detected',
-  help: 'Value showing the amount of changes detected by DiscoveryWatcher',
-})
-
-const syncDuration = new Gauge({
-  name: 'discovery_watcher_sync_duration',
-  help: 'Value showing how long does it take to sync all the projects',
-})
-
-const syncHistogram = new Histogram({
-  name: 'discovery_watcher_sync_duration_histogram',
-  help: 'Histogram showing DiscoveryWatcher sync duration',
-  buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
-})
-
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
 
@@ -64,8 +43,7 @@ export class DiscoveryWatcher {
   }
 
   async update() {
-    const syncDone = syncDuration.startTimer()
-    const histogramDone = syncHistogram.startTimer()
+    const metricsDone = initMetrics()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
     const timestamp = UnixTime.now()
@@ -111,10 +89,7 @@ export class DiscoveryWatcher {
       }
     }
     this.logger.info('Update finished', { blockNumber })
-    latestBlock.set(blockNumber)
-    changesDetected.set(changesCounter)
-    syncDone()
-    histogramDone()
+    metricsDone(blockNumber, changesCounter)
   }
 
   async findChanges(
@@ -157,5 +132,38 @@ export class DiscoveryWatcher {
         (e) => this.logger.error(e),
       )
     }
+  }
+}
+
+const latestBlock = new Gauge({
+  name: 'discovery_watcher_last_synced',
+  help: 'Value showing latest block number with which DiscoveryWatcher was run',
+})
+
+const changesDetected = new Gauge({
+  name: 'discovery_watcher_changes_detected',
+  help: 'Value showing the amount of changes detected by DiscoveryWatcher',
+})
+
+const syncDuration = new Gauge({
+  name: 'discovery_watcher_sync_duration',
+  help: 'Value showing how long does it take to sync all the projects',
+})
+
+const syncHistogram = new Histogram({
+  name: 'discovery_watcher_sync_duration_histogram',
+  help: 'Histogram showing DiscoveryWatcher sync duration',
+  buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
+})
+
+function initMetrics(): (blockNumber: number, changesCounter: number) => void {
+  const syncDone = syncDuration.startTimer()
+  const histogramDone = syncHistogram.startTimer()
+
+  return (blockNumber: number, changesCounter: number) => {
+    syncDone()
+    histogramDone()
+    latestBlock.set(blockNumber)
+    changesDetected.set(changesCounter)
   }
 }
