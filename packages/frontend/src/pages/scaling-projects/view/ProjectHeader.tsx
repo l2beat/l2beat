@@ -4,7 +4,6 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { InfoIcon } from '../../../components/icons'
 import { RatingBadge } from '../../../components/rating/Badge'
 import { RatingTooltipPopup } from '../../../components/rating/TooltipPopup'
 import { NoDataCell } from '../../../components/table/NoDataCell'
@@ -43,23 +42,20 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     ...(props.ratingEntry
       ? [
           {
-            title: 'Stage',
+            title: 'Rating',
             value: (
-              <div className="flex items-center gap-2">
+              <span
+                className="Tooltip"
+                title={renderToStaticMarkup(
+                  <RatingTooltipPopup item={props.ratingEntry} />,
+                )}
+              >
                 <RatingBadge
                   category={props.ratingEntry.category.score}
                   modifier={props.ratingEntry.modifier?.score}
                   small
                 />
-                <span
-                  className="Tooltip"
-                  title={renderToStaticMarkup(
-                    <RatingTooltipPopup item={props.ratingEntry} />,
-                  )}
-                >
-                  <InfoIcon />
-                </span>
-              </div>
+              </span>
             ),
           },
         ]

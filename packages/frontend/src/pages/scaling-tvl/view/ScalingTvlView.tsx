@@ -71,6 +71,7 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
       ? [
           {
             name: 'Rating',
+            tooltip: 'Rating of this Layer 2 based on its features.',
             alignCenter: true as const,
             getValue: (project: ScalingTvlViewEntry) => (
               <RatingCell item={project.ratingEntry} />
