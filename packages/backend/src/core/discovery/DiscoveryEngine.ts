@@ -1,10 +1,6 @@
-import {
-  MainnetEtherscanClient,
-  ProjectParameters,
-  wrapAndMeasure,
-} from '@l2beat/shared'
+import { MainnetEtherscanClient, ProjectParameters } from '@l2beat/shared'
 import { providers } from 'ethers'
-import { Histogram } from 'prom-client'
+import { Gauge, Histogram } from 'prom-client'
 
 import { discover } from './discover'
 import { DiscoveryConfig } from './DiscoveryConfig'
@@ -13,11 +9,17 @@ import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { parseDiscoveryOutput } from './saveDiscoveryResult'
 import { getDiscoveryConfigHash } from './utils/getDiscoveryConfigHash'
 
-const discoveryHistogram = new Histogram({
-  name: 'discovery_duration_histogram',
+const syncHistogram = new Histogram({
+  name: 'discovery_sync_duration_histogram',
   help: 'Histogram showing discovery duration',
   labelNames: ['project'],
-  buckets: [10, 30, 60, 120, 300],
+  buckets: [2, 4, 6, 8, 10, 15, 20, 30, 60, 120],
+})
+
+const syncDuration = new Gauge({
+  name: 'discovery_sync_duration',
+  help: 'Value showing how long does it take to sync all the projects',
+  labelNames: ['project'],
 })
 
 export class DiscoveryEngine {
@@ -31,24 +33,22 @@ export class DiscoveryEngine {
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<ProjectParameters> {
+    const metricLabel = { project: config.name }
+    const syncDone = syncDuration.startTimer(metricLabel)
+    const histogramDone = syncHistogram.startTimer(metricLabel)
+
     const discoveryProvider = new DiscoveryProvider(
       this.provider,
       this.etherscanClient,
       blockNumber,
     )
 
-    const wrappedDiscovery = wrapAndMeasure(
-      async () => await discover(discoveryProvider, config, this.logger),
-      {
-        histogram: discoveryHistogram,
-        labels: {
-          project: config.name,
-        },
-      },
-    )
-    const discovered = await wrappedDiscovery()
+    const discovered = await discover(discoveryProvider, config, this.logger)
 
     const configHash = getDiscoveryConfigHash(config)
+
+    histogramDone(metricLabel)
+    syncDone(metricLabel)
 
     // TODO: test this line
     return parseDiscoveryOutput(

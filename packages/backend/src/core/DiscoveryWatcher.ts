@@ -1,6 +1,6 @@
 import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
-import { Gauge } from 'prom-client'
+import { Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
@@ -15,7 +15,18 @@ import { TaskQueue } from './queue/TaskQueue'
 
 const latestBlock = new Gauge({
   name: 'discovery_watcher_last_synced',
-  help: 'Latest block number with which DiscoveryWatcher was run',
+  help: 'Value showing latest block number with which DiscoveryWatcher was run',
+})
+
+const syncDuration = new Gauge({
+  name: 'discovery_watcher_sync_duration',
+  help: 'Value showing how long does it take to sync all the projects',
+})
+
+const syncHistogram = new Histogram({
+  name: 'discovery_watcher_sync_duration_histogram',
+  help: 'Histogram showing DiscoveryWatcher sync duration',
+  buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
 })
 
 export class DiscoveryWatcher {
@@ -48,6 +59,8 @@ export class DiscoveryWatcher {
   }
 
   async update() {
+    const syncDone = syncDuration.startTimer()
+    const histogramDone = syncHistogram.startTimer()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
     const timestamp = UnixTime.now()
@@ -92,6 +105,8 @@ export class DiscoveryWatcher {
     }
     this.logger.info('Update finished', { blockNumber })
     latestBlock.set(blockNumber)
+    syncDone()
+    histogramDone()
   }
 
   async findChanges(
