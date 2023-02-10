@@ -3,7 +3,6 @@ module.exports = {
   content: ['./src/**/*.{html,ts,tsx,md}'],
   darkMode: 'class',
   theme: {
-    
     fontSize: {
       '3xs': ['8px', '12px'],
       '2xs': ['12px', '16px'],
@@ -124,11 +123,11 @@ module.exports = {
               fontSize: theme('fontSize.2xl')[0],
             },
             ol: {
-              fontWeight: '500'
+              fontWeight: '500',
             },
             strong: {
-              fontWeight: '500'
-            }
+              fontWeight: '500',
+            },
           },
         },
       }),

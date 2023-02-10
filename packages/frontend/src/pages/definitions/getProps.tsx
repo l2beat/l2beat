@@ -1,4 +1,4 @@
-import { Cheerio, Element,load } from 'cheerio'
+import { Cheerio, Element, load } from 'cheerio'
 import fsx from 'fs-extra'
 import MarkdownIt from 'markdown-it'
 import path from 'path'
@@ -62,6 +62,3 @@ function getId($el: Cheerio<Element>) {
       .replace(/^-+|-+$/g, '')
   )
 }
-
-
-

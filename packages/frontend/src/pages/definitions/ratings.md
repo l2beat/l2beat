@@ -7,6 +7,7 @@ There are currently a large number of (optimistic and ZK) rollup projects, at va
 ### Solution: A milestone-based schema
 
 A simple milestone-based schema to help us categorize rollups into three different stages, depending on how heavily they rely on their training wheels. **This is intended to achieve a few goals:**
+
 1. Make it easier for users to identify the extent to which a particular rollup depends on “trust in a specific group of humans” vs “trust in code”
 2. Help motivate rollup projects to improve on their trust models, reducing the risk that trust minimization gets deprioritized because it is “less visible” than eg. flashy UX improvements
 3. Give the ecosystem some precise milestones to coordinate around and celebrate, letting us say when “The Surge” is half-complete or fully complete, paralleling “The Merge”

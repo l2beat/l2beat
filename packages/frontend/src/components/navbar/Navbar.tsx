@@ -138,15 +138,15 @@ export function Navbar(props: NavbarProps) {
                 </PageLink>
               </li>
               {props.showDefinitions && (
-              <li className="h-full">
-                <PageLink
-                  selected={props.selectedPage === 'definitions'}
-                  href="/definitions"
-                >
-                  Definitions
-                </PageLink>
-              </li>
-            )}
+                <li className="h-full">
+                  <PageLink
+                    selected={props.selectedPage === 'definitions'}
+                    href="/definitions"
+                  >
+                    Definitions
+                  </PageLink>
+                </li>
+              )}
               {props.showHiring && (
                 <li className="h-full">
                   <OutLink
