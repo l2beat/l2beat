@@ -32,7 +32,7 @@ export class DiscoveryEngine {
 
     const configHash = getDiscoveryConfigHash(config)
 
-    metricsDone({ project: config.name })
+    metricsDone({ project: config.name }, blockNumber)
 
     // TODO: test this line
     return parseDiscoveryOutput(
@@ -44,6 +44,12 @@ export class DiscoveryEngine {
   }
 }
 
+const latestBlock = new Gauge({
+  name: 'discovery_last_synced',
+  help: 'Value showing latest block number with which DiscoveryWatcher was run',
+  labelNames: ['project'],
+})
+
 const syncHistogram = new Histogram({
   name: 'discovery_sync_duration_histogram',
   help: 'Histogram showing discovery duration',
@@ -51,18 +57,14 @@ const syncHistogram = new Histogram({
   buckets: [2, 4, 6, 8, 10, 15, 20, 30, 60, 120],
 })
 
-const syncDuration = new Gauge({
-  name: 'discovery_sync_duration',
-  help: 'Value showing how long does it take to sync all the projects',
-  labelNames: ['project'],
-})
-
-function initMetrics(): (labels: { project: string }) => void {
-  const syncDone = syncDuration.startTimer()
+function initMetrics(): (
+  labels: { project: string },
+  blockNumber: number,
+) => void {
   const histogramDone = syncHistogram.startTimer()
 
-  return (labels) => {
-    syncDone(labels)
+  return (labels, blockNumber) => {
     histogramDone(labels)
+    latestBlock.set(labels, blockNumber)
   }
 }

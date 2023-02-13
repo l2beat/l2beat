@@ -1,6 +1,6 @@
 import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
-import { Gauge, Histogram } from 'prom-client'
+import { Counter, Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
@@ -86,6 +86,7 @@ export class DiscoveryWatcher {
         this.logger.info('Discovery finished', { project: projectConfig.name })
       } catch (error) {
         this.logger.error(error)
+        errorsCount.inc()
       }
     }
     this.logger.info('Update finished', { blockNumber })
@@ -145,23 +146,21 @@ const changesDetected = new Gauge({
   help: 'Value showing the amount of changes detected by DiscoveryWatcher',
 })
 
-const syncDuration = new Gauge({
-  name: 'discovery_watcher_sync_duration',
-  help: 'Value showing how long does it take to sync all the projects',
-})
-
 const syncHistogram = new Histogram({
   name: 'discovery_watcher_sync_duration_histogram',
   help: 'Histogram showing DiscoveryWatcher sync duration',
   buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
 })
 
+const errorsCount = new Counter({
+  name: 'discovery_watcher_errors',
+  help: 'Value showing amount of errors since server start',
+})
+
 function initMetrics(): (blockNumber: number, changesCounter: number) => void {
-  const syncDone = syncDuration.startTimer()
   const histogramDone = syncHistogram.startTimer()
 
   return (blockNumber: number, changesCounter: number) => {
-    syncDone()
     histogramDone()
     latestBlock.set(blockNumber)
     changesDetected.set(changesCounter)
