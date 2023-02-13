@@ -59,7 +59,7 @@ describe('discovery config.jsonc', () => {
 
       const configHash = getDiscoveryConfigHash(config)
 
-      const extraMessage = `${config.name} discovery config hash does not match current config hash`
+      const extraMessage = `${config.name} discovery config hash does not match current config hash. Run "yarn discover ${config.name}".`
       expect(discovery.configHash, { extraMessage }).toEqual(configHash)
     }
   })
