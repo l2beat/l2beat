@@ -26,6 +26,7 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd": {
+      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
