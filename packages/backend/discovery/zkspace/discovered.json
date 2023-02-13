@@ -1,7 +1,7 @@
 {
   "name": "zkspace",
-  "blockNumber": 16618765,
-  "configHash": "0x0ac4593ee6cffb05729f8ca4fc790465086c93d82ecd4fa7bf8b73f43333d74a",
+  "blockNumber": 16618848,
+  "configHash": "0x5ec7715363bb5f739c381fb4df66f2663218a1657a6fbff15da2c655a7dbd457",
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
@@ -170,7 +170,7 @@
         "numberOfPendingWithdrawals": 0,
         "pairManager": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
         "totalBlocksChecked": 31963,
-        "totalBlocksCommitted": 31977,
+        "totalBlocksCommitted": 31978,
         "totalBlocksVerified": 31974,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
