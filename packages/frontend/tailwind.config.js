@@ -1,6 +1,6 @@
 /** @type import("tailwindcss/types").Config */
 module.exports = {
-  content: ['./src/**/*.{html,ts,tsx,md}'],
+  content: ['./src/**/*.{html,ts,tsx,md,css}'],
   darkMode: 'class',
   theme: {
     fontSize: {
@@ -102,36 +102,6 @@ module.exports = {
       spacing: {
         '2/3': '66.666666%',
       },
-      typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            '--tw-prose-body': theme('colors.gray.850'),
-            '--tw-prose-invert-body': theme('colors.gray.400'),
-            '--tw-prose-bullets': 'var(--tw-prose-body)',
-            '--tw-prose-invert-bullets': 'var(--tw-prose-body)',
-            '--tw-prose-counters': 'var(--tw-prose-body)',
-            '--tw-prose-invert-counters': 'var(--tw-prose-body)',
-            maxWidth: 'none',
-            fontSize: theme('fontSize.lg')[0],
-            h2: {
-              fontSize: theme('fontSize.4xl')[0],
-            },
-            h3: {
-              fontSize: theme('fontSize.2xl')[0],
-            },
-            h4: {
-              fontSize: theme('fontSize.2xl')[0],
-            },
-            ol: {
-              fontWeight: '500',
-            },
-            strong: {
-              fontWeight: '500',
-            },
-          },
-        },
-      }),
     },
   },
-  plugins: [require('@tailwindcss/typography')],
 }

@@ -22,6 +22,7 @@ This schema is NOT intended to imply a moral judgement that movement to maximum 
   Under construction
   </span>
 </h4>
+
 Requirements:
 
 - The project should call itself a rollup.
@@ -36,6 +37,7 @@ Requirements:
   Limited security
   </span>
 </h4>
+
 Requirements:
 
 - There must be a **running fraud proof or validity proof scheme**, which has the practical authority to accept or reject which state roots get accepted by the rollup contract.

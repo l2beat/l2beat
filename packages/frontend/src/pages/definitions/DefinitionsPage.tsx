@@ -26,7 +26,7 @@ export function DefinitionsPage(props: DefinitionsPageProps) {
         </p>
         <HorizontalSeparator className="my-12" />
         <article
-          className="prose dark:prose-invert"
+          className="definitions"
           dangerouslySetInnerHTML={{ __html: props.ratings }}
         />
       </PageContent>
