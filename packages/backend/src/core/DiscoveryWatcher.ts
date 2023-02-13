@@ -1,6 +1,6 @@
 import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
-import { Gauge } from 'prom-client'
+import { Counter, Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
@@ -12,11 +12,6 @@ import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
 import { TaskQueue } from './queue/TaskQueue'
-
-const latestBlock = new Gauge({
-  name: 'discovery_watcher_last_synced',
-  help: 'Latest block number with which DiscoveryWatcher was run',
-})
 
 export class DiscoveryWatcher {
   private readonly taskQueue: TaskQueue<void>
@@ -48,6 +43,7 @@ export class DiscoveryWatcher {
   }
 
   async update() {
+    const metricsDone = initMetrics()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
     const timestamp = UnixTime.now()
@@ -55,6 +51,7 @@ export class DiscoveryWatcher {
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
+    let changesCounter = 0
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
@@ -75,6 +72,7 @@ export class DiscoveryWatcher {
         if (diff.length > 0) {
           const messages = diffToMessages(projectConfig.name, diff)
           await this.notify(messages)
+          changesCounter += diff.length
         }
 
         await this.repository.addOrUpdate({
@@ -88,10 +86,11 @@ export class DiscoveryWatcher {
         this.logger.info('Discovery finished', { project: projectConfig.name })
       } catch (error) {
         this.logger.error(error)
+        errorsCount.inc()
       }
     }
     this.logger.info('Update finished', { blockNumber })
-    latestBlock.set(blockNumber)
+    metricsDone(blockNumber, changesCounter)
   }
 
   async findChanges(
@@ -134,5 +133,36 @@ export class DiscoveryWatcher {
         (e) => this.logger.error(e),
       )
     }
+  }
+}
+
+const latestBlock = new Gauge({
+  name: 'discovery_watcher_last_synced',
+  help: 'Value showing latest block number with which DiscoveryWatcher was run',
+})
+
+const changesDetected = new Gauge({
+  name: 'discovery_watcher_changes_detected',
+  help: 'Value showing the amount of changes detected by DiscoveryWatcher',
+})
+
+const syncHistogram = new Histogram({
+  name: 'discovery_watcher_sync_duration_histogram',
+  help: 'Histogram showing DiscoveryWatcher sync duration',
+  buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
+})
+
+const errorsCount = new Counter({
+  name: 'discovery_watcher_errors',
+  help: 'Value showing amount of errors since server start',
+})
+
+function initMetrics(): (blockNumber: number, changesCounter: number) => void {
+  const histogramDone = syncHistogram.startTimer()
+
+  return (blockNumber: number, changesCounter: number) => {
+    histogramDone()
+    latestBlock.set(blockNumber)
+    changesDetected.set(changesCounter)
   }
 }
