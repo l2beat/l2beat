@@ -37,7 +37,7 @@ export const apex: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb',
+        address: EthereumAddress('0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb'),
         sinceTimestamp: new UnixTime(1660252039),
         tokens: ['USDC'],
       },
@@ -69,7 +69,7 @@ export const apex: Layer2 = {
     addresses: [
       {
         name: 'StarkPerpetual',
-        address: '0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb',
+        address: EthereumAddress('0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb'),
         description:
           'Main contract of ApeX exchange. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
         upgradeability: {
@@ -83,7 +83,7 @@ export const apex: Layer2 = {
       },
       {
         name: 'MultiSigPool',
-        address: '0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE',
+        address: EthereumAddress('0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE'),
         description:
           'Allows deposits in different tokens and swaps them to USDC. Allows fast withdrawals after the agreement of at least 2 designated signers.',
       },
@@ -96,7 +96,9 @@ export const apex: Layer2 = {
       name: 'Governor',
       accounts: [
         {
-          address: '0x5751a83170BeA11fE7CdA5D599B04153C021f21A',
+          address: EthereumAddress(
+            '0x5751a83170BeA11fE7CdA5D599B04153C021f21A',
+          ),
           type: 'EOA',
         },
       ],
@@ -107,7 +109,9 @@ export const apex: Layer2 = {
       name: 'SHARP Verifier Governor',
       accounts: [
         {
-          address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          address: EthereumAddress(
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          ),
           type: 'EOA',
         },
       ],
@@ -118,15 +122,21 @@ export const apex: Layer2 = {
       name: 'Allowed signers',
       accounts: [
         {
-          address: '0x015155D9f7bb601FbF25084C106531c759c05379',
+          address: EthereumAddress(
+            '0x015155D9f7bb601FbF25084C106531c759c05379',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92',
+          address: EthereumAddress(
+            '0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81',
+          address: EthereumAddress(
+            '0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81',
+          ),
           type: 'EOA',
         },
       ],

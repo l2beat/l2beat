@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
@@ -24,7 +24,7 @@ export const near: Bridge = {
     associatedTokens: ['AURORA'],
     escrows: [
       {
-        address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
+        address: EthereumAddress('0x23Ddd3e3692d1861Ed57EDE224608875809e127f'),
         sinceTimestamp: new UnixTime(1615826693),
         tokens: [
           'DAI',
@@ -40,7 +40,7 @@ export const near: Bridge = {
         ],
       },
       {
-        address: '0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52',
+        address: EthereumAddress('0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52'),
         sinceTimestamp: new UnixTime(1624579200),
         tokens: ['ETH'],
       },
@@ -118,32 +118,32 @@ export const near: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0x23Ddd3e3692d1861Ed57EDE224608875809e127f',
+        address: EthereumAddress('0x23Ddd3e3692d1861Ed57EDE224608875809e127f'),
         name: 'ERC20Locker',
         description: 'Escrow contract for ERC20 tokens.',
       },
       {
-        address: '0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52',
+        address: EthereumAddress('0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52'),
         name: 'EthCustodian',
         description: 'Escrow contract for ETH tokens.',
       },
       // {
-      //   address: '0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4',
+      //   address: EthereumAddress('0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4'),
       //   name: 'NEAR token',
       //   description: 'Escrow contract for NEAR tokens.',
       // },
       {
-        address: '0x051AD3F020274910065Dcb421629cd2e6E5b46c4',
+        address: EthereumAddress('0x051AD3F020274910065Dcb421629cd2e6E5b46c4'),
         name: 'NearProver',
         description: 'Contract verifying merkle proofs, used for withdrawals.',
       },
       {
-        address: '0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873', // new near bridge
+        address: EthereumAddress('0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873'), // new near bridge
         name: 'NearBridge (new)',
         description: 'Contract storing Near state checkpoints.',
       },
       {
-        address: '0x3be7Df8dB39996a837041bb8Ee0dAdf60F767038', // old near bridge
+        address: EthereumAddress('0x3be7Df8dB39996a837041bb8Ee0dAdf60F767038'), // old near bridge
         name: 'NearBridge (old)',
         description: 'Contract storing Near state checkpoints.',
       },
@@ -154,7 +154,9 @@ export const near: Bridge = {
     {
       accounts: [
         {
-          address: '0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1',
+          address: EthereumAddress(
+            '0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1',
+          ),
           type: 'MultiSig',
         },
       ],
@@ -164,12 +166,42 @@ export const near: Bridge = {
     },
     {
       accounts: [
-        { address: '0x0c406517c7B2f86d5935fB0a78511b7498B94413', type: 'EOA' },
-        { address: '0x21458c08e9a0Df8cf18132def9fEA0620962618E', type: 'EOA' },
-        { address: '0x2B5948a65BE418a54880501cfaA0969AC3fAb40c', type: 'EOA' },
-        { address: '0x8ddFfe05453d3b50774fb3938fD85Ecd1CC5E955', type: 'EOA' },
-        { address: '0xC3E34337B6505d503DcA3e99303Ad8BE6DB05984', type: 'EOA' },
-        { address: '0xD127323856C3703f94Dc1de18985cdCa2a8bA2b5', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0x0c406517c7B2f86d5935fB0a78511b7498B94413',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x21458c08e9a0Df8cf18132def9fEA0620962618E',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x2B5948a65BE418a54880501cfaA0969AC3fAb40c',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x8ddFfe05453d3b50774fb3938fD85Ecd1CC5E955',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xC3E34337B6505d503DcA3e99303Ad8BE6DB05984',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xD127323856C3703f94Dc1de18985cdCa2a8bA2b5',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'MultiSig Participants',
       description: 'Participants of the 3/6 Aurora MultiSig.',

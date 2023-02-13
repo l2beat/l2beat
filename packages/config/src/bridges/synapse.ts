@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
@@ -32,7 +32,7 @@ export const synapse: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x2796317b0fF8538F253012862c06787Adfb8cEb6',
+        address: EthereumAddress('0x2796317b0fF8538F253012862c06787Adfb8cEb6'),
         sinceTimestamp: new UnixTime(1629082107),
         tokens: ['ETH', 'WETH', 'FRAX', 'USDT', 'USDC', 'WBTC', 'DAI', 'gOHM'],
       },
@@ -43,7 +43,7 @@ export const synapse: Bridge = {
       // from which admittedly the nodes are getting swap pool address
       // but I could not find any trace of it on chain
       {
-        address: '0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8',
+        address: EthereumAddress('0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8'),
         sinceTimestamp: new UnixTime(1629082839),
         tokens: ['USDT', 'DAI', 'USDC'],
       },
@@ -126,20 +126,20 @@ export const synapse: Bridge = {
         name: 'L1BridgeZap',
         description:
           'Entry point for deposits. Acts as a relayer between user and escrow, enabling token swap feature.',
-        address: '0x6571d6be3d8460CF5F7d6711Cd9961860029D85F',
+        address: EthereumAddress('0x6571d6be3d8460CF5F7d6711Cd9961860029D85F'),
       },
       {
         name: 'SynapseBridge',
         description:
           "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
-        address: discovery.getContract('SynapseBridge').address.toString(),
+        address: discovery.getContract('SynapseBridge').address,
         upgradeability: discovery.getContract('SynapseBridge').upgradeability,
       },
       {
         name: 'Liquidity Pool',
         description:
           'Contract utilized as Liquidity Pool, allowing users to bridge their tokens to canonical versions on Ethereum.',
-        address: '0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8',
+        address: EthereumAddress('0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8'),
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('3 minutes')],
@@ -152,7 +152,7 @@ export const synapse: Bridge = {
         "Manages the bridge parameters and can upgrade its implementation, in case of malicious upgrade user's funds can be lost. Additionally it manages Liquidity Pool with the permissions to mint new tokens.",
       accounts: [
         {
-          address: discovery.getContract('GnosisSafe').address.toString(),
+          address: discovery.getContract('GnosisSafe').address,
           type: 'MultiSig',
         },
       ],
@@ -161,7 +161,7 @@ export const synapse: Bridge = {
       name: 'Participants in Bridge Governance 2/3 MultiSig',
       accounts: discovery
         .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: owner, type: 'EOA' })),
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
@@ -174,7 +174,9 @@ export const synapse: Bridge = {
       description: 'Can withdraw funds and mint SynERC20 Wrapped tokens.',
       accounts: [
         {
-          address: '0x230A1AC45690B9Ae1176389434610B9526d2f21b',
+          address: EthereumAddress(
+            '0x230A1AC45690B9Ae1176389434610B9526d2f21b',
+          ),
           type: 'EOA',
         },
       ],

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -46,7 +46,7 @@ export const zksync2: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0x027C8a79075F96a8cdE315b495949e5f1D92f1D6',
+        address: EthereumAddress('0x027C8a79075F96a8cdE315b495949e5f1D92f1D6'),
         sinceTimestamp: new UnixTime(1666718099),
         tokens: ['ETH'],
       },
@@ -142,7 +142,7 @@ export const zksync2: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: discovery.getContract('DiamondProxy').address.toString(),
+        address: discovery.getContract('DiamondProxy').address,
         name: 'ZkSync Diamond Proxy',
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
@@ -150,12 +150,12 @@ export const zksync2: Layer2 = {
           It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.',
       },
       {
-        address: discovery.getContract('Verifier').address.toString(),
+        address: discovery.getContract('Verifier').address,
         name: 'Verifier',
         description: 'Implements zkProof verification logic.',
       },
       {
-        address: discovery.getContract('L1EthBridge').address.toString(),
+        address: discovery.getContract('L1EthBridge').address,
         name: 'L1EthBridge',
         description: 'Standard bridge for depositing ETH to zkSync 2.0.',
         upgradeability: discovery.getContract('L1EthBridge').upgradeability,
@@ -169,7 +169,7 @@ export const zksync2: Layer2 = {
       accounts: [
         {
           type: 'MultiSig',
-          address: discovery.getContract('GnosisSafe').address.toString(),
+          address: discovery.getContract('GnosisSafe').address,
         },
       ],
       description:
@@ -179,7 +179,7 @@ export const zksync2: Layer2 = {
       name: 'MultiSig participants',
       accounts: discovery
         .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: owner, type: 'EOA' })),
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
@@ -191,7 +191,9 @@ export const zksync2: Layer2 = {
       name: 'Active validator',
       accounts: [
         {
-          address: '0x112200EaA6d57120c86B8b51a8b6049d56B82211',
+          address: EthereumAddress(
+            '0x112200EaA6d57120c86B8b51a8b6049d56B82211',
+          ),
           type: 'EOA',
         },
       ],

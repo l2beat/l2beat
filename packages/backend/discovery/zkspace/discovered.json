@@ -1,7 +1,7 @@
 {
   "name": "zkspace",
-  "blockNumber": 16154924,
-  "configHash": "0xb25fc185514c5ee884449e61bc8c087efb88f57debec5117c9a9ebcd82cd3fec",
+  "blockNumber": 16618848,
+  "configHash": "0x5ec7715363bb5f739c381fb4df66f2663218a1657a6fbff15da2c655a7dbd457",
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
@@ -110,7 +110,9 @@
         "tokenLister": "0x8aA2C56dca9d59F4317c2fad632c192b18127709",
         "totalFeeTokens": 8,
         "totalUserTokens": 40,
-        "validators": ["0x5bd9404260D2B0D55081E599e4e085BE080141E2"]
+        "validators": [
+          "0x5bd9404260D2B0D55081E599e4e085BE080141E2"
+        ]
       }
     },
     {
@@ -159,17 +161,17 @@
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 381,
-        "firstPriorityRequestId": 1095,
+        "firstPendingWithdrawalIndex": 400,
+        "firstPriorityRequestId": 1153,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
         "governance": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
         "maxDepositAmount": "38685626227668133590597632",
         "numberOfPendingWithdrawals": 0,
         "pairManager": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-        "totalBlocksChecked": 30322,
-        "totalBlocksCommitted": 30530,
-        "totalBlocksVerified": 30530,
+        "totalBlocksChecked": 31963,
+        "totalBlocksCommitted": 31978,
+        "totalBlocksVerified": 31974,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 63,

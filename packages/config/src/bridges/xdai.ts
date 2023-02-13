@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { Bridge } from './types'
@@ -35,7 +35,7 @@ export const xdai: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016',
+        address: EthereumAddress('0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016'),
         sinceTimestamp: new UnixTime(1539028166),
         tokens: ['cDAI', 'DAI'],
       },
@@ -122,23 +122,27 @@ export const xdai: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016',
+        address: EthereumAddress('0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016'),
         name: 'XDaiForeignBridge',
         description: 'xDai Bridge Contract (Escrow).',
         upgradeability: {
           type: 'Custom',
-          admin: '0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6',
-          implementation: '0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473',
+          admin: EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
+          implementation: EthereumAddress(
+            '0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473',
+          ),
         },
       },
       {
-        address: '0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E',
+        address: EthereumAddress('0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E'),
         name: 'BridgeValidators',
         description: 'Validator Management Contract.',
         upgradeability: {
           type: 'Custom',
-          admin: '0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6',
-          implementation: '0x6943A218d58135793F1FE619414eD476C37ad65a',
+          admin: EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
+          implementation: EthereumAddress(
+            '0x6943A218d58135793F1FE619414eD476C37ad65a',
+          ),
         },
       },
     ],
@@ -148,7 +152,9 @@ export const xdai: Bridge = {
     {
       accounts: [
         {
-          address: '0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6',
+          address: EthereumAddress(
+            '0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6',
+          ),
           type: 'MultiSig',
         },
       ],
@@ -158,41 +164,156 @@ export const xdai: Bridge = {
     },
     {
       accounts: [
-        { address: '0xb8173f558f75EE263013fd6294177bf75279a21e', type: 'EOA' },
-        { address: '0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992', type: 'EOA' },
-        { address: '0x262d23a2d916f6CF08e0235315aA51E22d142d0b', type: 'EOA' },
-        { address: '0x86Da253817DC599059e3AD5A1F098F7b96aBf34c', type: 'EOA' },
-        { address: '0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9', type: 'EOA' },
-        { address: '0x0101016044726994aFd16f4A99f0d960090D35e7', type: 'EOA' },
-        { address: '0x0f49459e26aBB496C9B5f46b0bfd7bDEb8Ec0bdC', type: 'EOA' },
-        { address: '0x81f202D0E73894dA6966BF5AabC85d6Ce3aC91f8', type: 'EOA' },
-        { address: '0x839395e20bbB182fa440d08F850E6c7A8f6F0780', type: 'EOA' },
-        { address: '0x3615Fa045f00ae0eD60Dc0141911757c2AdC5E03', type: 'EOA' },
-        { address: '0x10DD75875a2a8a284529Ae7223B1aCE410d606bd', type: 'EOA' },
-        { address: '0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97', type: 'EOA' },
-        { address: '0xd26a3F686D43f2A62BA9eaE2ff77e9f516d945B9', type: 'EOA' },
-        { address: '0x865c2F85C9fEa1C6Ac7F53de07554D68cB92eD88', type: 'EOA' },
-        { address: '0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B', type: 'EOA' },
-        { address: '0xF96E3bb5e06DaA129B9981E1467e2DeDd6451DbE', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0xb8173f558f75EE263013fd6294177bf75279a21e',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x262d23a2d916f6CF08e0235315aA51E22d142d0b',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x86Da253817DC599059e3AD5A1F098F7b96aBf34c',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x0101016044726994aFd16f4A99f0d960090D35e7',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x0f49459e26aBB496C9B5f46b0bfd7bDEb8Ec0bdC',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x81f202D0E73894dA6966BF5AabC85d6Ce3aC91f8',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x839395e20bbB182fa440d08F850E6c7A8f6F0780',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x3615Fa045f00ae0eD60Dc0141911757c2AdC5E03',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x10DD75875a2a8a284529Ae7223B1aCE410d606bd',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xd26a3F686D43f2A62BA9eaE2ff77e9f516d945B9',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x865c2F85C9fEa1C6Ac7F53de07554D68cB92eD88',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xF96E3bb5e06DaA129B9981E1467e2DeDd6451DbE',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'Participants in Bridge Governance 7/16 MultiSig',
       description: 'Participants in Bridge Governance 7/16 MultiSig',
     },
     {
       accounts: [
-        { address: '0x97630E2aE609D4104aBdA91F3066C556403182dd', type: 'EOA' },
-        { address: '0x587C0d02B40822f15f05301d87c16f6a08AaDDde', type: 'EOA' },
-        { address: '0x1312E98995bbCc30fc63Db3cef807e20CDd33dca', type: 'EOA' },
-        { address: '0xfe24Cfb2F8872e9ed097C451dE065A9F6048915b', type: 'EOA' },
-        { address: '0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051', type: 'EOA' },
-        { address: '0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0x97630E2aE609D4104aBdA91F3066C556403182dd',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x587C0d02B40822f15f05301d87c16f6a08AaDDde',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x1312E98995bbCc30fc63Db3cef807e20CDd33dca',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xfe24Cfb2F8872e9ed097C451dE065A9F6048915b',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'Participants in BridgeValidators 4/6 MultiSig',
       description: 'Bridge Validators',
     },
     {
       accounts: [
-        { address: '0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'Interest Receiver',
       description:

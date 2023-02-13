@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
@@ -34,7 +34,7 @@ export const hyphen: Bridge = {
     associatedTokens: ['BICO'],
     escrows: [
       {
-        address: '0x2A5c2568b10A0E826BfA892Cf21BA7218310180b',
+        address: EthereumAddress('0x2A5c2568b10A0E826BfA892Cf21BA7218310180b'),
         sinceTimestamp: new UnixTime(1647128990),
         tokens: ['ETH', 'USDC', 'USDT', 'MATIC', 'BICO'],
       },
@@ -107,14 +107,14 @@ export const hyphen: Bridge = {
     addresses: [
       {
         name: 'LiquidityPool',
-        address: '0x2A5c2568b10A0E826BfA892Cf21BA7218310180b',
+        address: EthereumAddress('0x2A5c2568b10A0E826BfA892Cf21BA7218310180b'),
         upgradeability: discovery.getContract(
           '0x2A5c2568b10A0E826BfA892Cf21BA7218310180b',
         ).upgradeability,
       },
       {
         name: 'TokenManager',
-        address: '0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168',
+        address: EthereumAddress('0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168'),
         description: 'Configures limits and other aspects of supported assets.',
         upgradeability: discovery.getContract(
           '0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168',
@@ -122,12 +122,12 @@ export const hyphen: Bridge = {
       },
       {
         name: 'ExecutorManager',
-        address: '0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399',
+        address: EthereumAddress('0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399'),
         description: 'Manages a list of addresses with Executor role.',
       },
       {
         name: 'LiquidityProviders',
-        address: '0xebaB24F13de55789eC1F3fFe99A285754e15F7b9',
+        address: EthereumAddress('0xebaB24F13de55789eC1F3fFe99A285754e15F7b9'),
         description:
           'Liquidity pool logic (not escrow - funds are sent to LiquitityPool).',
         upgradeability: discovery.getContract(
@@ -144,7 +144,9 @@ export const hyphen: Bridge = {
         'EIP1967 admin of LiquidityPool, TokenManager and LiquidityProviders.',
       accounts: [
         {
-          address: '0x13a4cC0750296bB72Eb0006febec306551A4f472',
+          address: EthereumAddress(
+            '0x13a4cC0750296bB72Eb0006febec306551A4f472',
+          ),
           type: 'Contract',
         },
       ],
@@ -155,7 +157,9 @@ export const hyphen: Bridge = {
         'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
       accounts: [
         {
-          address: '0x129443cA2a9Dec2020808a2868b38dDA457eaCC7',
+          address: EthereumAddress(
+            '0x129443cA2a9Dec2020808a2868b38dDA457eaCC7',
+          ),
           type: 'EOA',
         },
       ],
@@ -166,7 +170,9 @@ export const hyphen: Bridge = {
         'Can pause contracts, change configuration and change proxy admin or update Executor list.',
       accounts: [
         {
-          address: '0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6',
+          address: EthereumAddress(
+            '0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6',
+          ),
           type: 'EOA',
         },
       ],
@@ -176,19 +182,27 @@ export const hyphen: Bridge = {
       description: 'Executor is able to release funds from LiquidityPool.',
       accounts: [
         {
-          address: '0xEEFD474e80B6CAEA43F212D964409c473684E3fe',
+          address: EthereumAddress(
+            '0xEEFD474e80B6CAEA43F212D964409c473684E3fe',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x1439eDA7f9A911b9120E9A0DAfb60eAE317F7685',
+          address: EthereumAddress(
+            '0x1439eDA7f9A911b9120E9A0DAfb60eAE317F7685',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x4Fb5dF81b644e3Bd5Ad0BA07DCE2B67559C764E0',
+          address: EthereumAddress(
+            '0x4Fb5dF81b644e3Bd5Ad0BA07DCE2B67559C764E0',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x600Be30999eB256F2BEf451b69950f7dC84aC6b1',
+          address: EthereumAddress(
+            '0x600Be30999eB256F2BEf451b69950f7dC84aC6b1',
+          ),
           type: 'EOA',
         },
       ],

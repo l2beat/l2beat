@@ -49,29 +49,29 @@ export const optimism: Layer2 = {
     escrows: [
       {
         // old snx bridge
-        address: '0x045e507925d2e05D114534D0810a1abD94aca8d6',
+        address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
         sinceTimestamp: new UnixTime(1610668212),
         tokens: ['SNX'],
       },
       {
         // current SNX bridge escrow
-        address: '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
+        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
         sinceTimestamp: new UnixTime(1620680982),
         tokens: ['SNX'],
       },
       {
         // new snx bridge
-        address: '0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068',
+        address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
         sinceTimestamp: new UnixTime(1620680934),
         tokens: ['SNX'],
       },
       {
-        address: '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
+        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
         sinceTimestamp: new UnixTime(1625675779),
         tokens: ['DAI'],
       },
       {
-        address: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+        address: EthereumAddress('0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1'),
         sinceTimestamp: new UnixTime(1624401464),
         tokens: '*',
       },
@@ -193,7 +193,7 @@ export const optimism: Layer2 = {
       name: 'Optimism MultiSig',
       accounts: [
         {
-          address: discovery.getContract('GnosisSafe').address.toString(),
+          address: discovery.getContract('GnosisSafe').address,
           type: 'MultiSig',
         },
       ],
@@ -204,7 +204,7 @@ export const optimism: Layer2 = {
       name: 'MultiSig participants',
       accounts: discovery
         .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: owner, type: 'EOA' })),
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
@@ -216,9 +216,11 @@ export const optimism: Layer2 = {
       name: 'Sequencer',
       accounts: [
         {
-          address: discovery.getContractValue<string>(
-            'Lib_AddressManager',
-            'OVM_Sequencer',
+          address: EthereumAddress(
+            discovery.getContractValue<string>(
+              'Lib_AddressManager',
+              'OVM_Sequencer',
+            ),
           ),
           type: 'EOA',
         },
@@ -229,9 +231,11 @@ export const optimism: Layer2 = {
       name: 'State Root Proposer',
       accounts: [
         {
-          address: discovery.getContractValue<string>(
-            'Lib_AddressManager',
-            'OVM_Proposer',
+          address: EthereumAddress(
+            discovery.getContractValue<string>(
+              'Lib_AddressManager',
+              'OVM_Proposer',
+            ),
           ),
           type: 'EOA',
         },
@@ -245,43 +249,38 @@ export const optimism: Layer2 = {
         name: 'CanonicalTransactionChain',
         description:
           'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
-        address: discovery
-          .getContract('CanonicalTransactionChain')
-          .address.toString(),
+        address: discovery.getContract('CanonicalTransactionChain').address,
       },
       {
         name: 'StateCommitmentChain',
         description:
           'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currenlty olny OVM_Proposer can submit new state roots.',
-        address: discovery
-          .getContract('StateCommitmentChain')
-          .address.toString(),
+        address: discovery.getContract('StateCommitmentChain').address,
       },
       {
         name: 'ChainStorageContainer-CTC-batches',
-        address: discovery.getContractValue<string>(
-          'CanonicalTransactionChain',
-          'batches',
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            'CanonicalTransactionChain',
+            'batches',
+          ),
         ),
       },
       {
         name: 'ChainStorageContainer-SCC-batches',
-        address: discovery.getContractValue<string>(
-          'StateCommitmentChain',
-          'batches',
+        address: EthereumAddress(
+          discovery.getContractValue<string>('StateCommitmentChain', 'batches'),
         ),
       },
       {
         name: 'BondManager',
         description:
           "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
-        address: discovery.getContract('BondManager').address.toString(),
+        address: discovery.getContract('BondManager').address,
       },
       {
         name: 'L1CrossDomainMessenger',
-        address: discovery
-          .getContract('L1CrossDomainMessenger')
-          .address.toString(),
+        address: discovery.getContract('L1CrossDomainMessenger').address,
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
         upgradeability: discovery.getContract('L1CrossDomainMessenger')
@@ -291,11 +290,11 @@ export const optimism: Layer2 = {
         name: 'Lib_AddressManager',
         description:
           'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
-        address: discovery.getContract('Lib_AddressManager').address.toString(),
+        address: discovery.getContract('Lib_AddressManager').address,
       },
       {
         name: 'L1StandardBridge',
-        address: discovery.getContract('L1StandardBridge').address.toString(),
+        address: discovery.getContract('L1StandardBridge').address,
         description:
           'Main entry point forgetContract users depositing ERC20 tokens and ETH that do not require custom gateway.',
         upgradeability:
@@ -305,23 +304,23 @@ export const optimism: Layer2 = {
         name: 'SynthetixBridgeToOptimism',
         description:
           'Custom SNX Gateway, main entry point for users depositing SNX to L2 where "canonical" L2 SNX token managed by Synthetix will be minted. Managed by Synthetix.',
-        address: '0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068',
+        address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
       },
       {
         name: 'SynthetixBridgeEscrow',
         description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
-        address: '0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
+        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
       },
       {
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-        address: '0x10E6593CDda8c58a1d0f14C5164B376352a55f2F',
+        address: EthereumAddress('0x10E6593CDda8c58a1d0f14C5164B376352a55f2F'),
       },
       {
         name: 'L1Escrow',
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-        address: '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
+        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

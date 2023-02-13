@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   CONTRACTS,
@@ -43,7 +43,7 @@ export const zkswap2: Layer2 = {
     associatedTokens: ['ZKS'],
     escrows: [
       {
-        address: '0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3',
+        address: EthereumAddress('0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3'),
         sinceTimestamp: new UnixTime(1626059966),
         tokens: '*',
       },
@@ -81,7 +81,7 @@ export const zkswap2: Layer2 = {
     addresses: [
       {
         name: 'ZkSync',
-        address: discovery.getContract('ZkSync').address.toString(),
+        address: discovery.getContract('ZkSync').address,
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
               contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
@@ -90,45 +90,45 @@ export const zkswap2: Layer2 = {
       },
       {
         name: 'ZkSyncCommitBlock',
-        address: discovery.getContract('ZkSyncCommitBlock').address.toString(),
+        address: discovery.getContract('ZkSyncCommitBlock').address,
         description:
           'Additional contract to store implementation details of the main ZkSync contract.',
       },
       {
         name: 'ZkSyncExit',
-        address: discovery.getContractValue<string>(
-          'ZkSync',
-          'zkSyncExitAddress',
+        address: EthereumAddress(
+          discovery.getContractValue<string>('ZkSync', 'zkSyncExitAddress'),
         ),
       },
       {
-        address: discovery.getContract('Governance').address.toString(),
+        address: discovery.getContract('Governance').address,
         name: 'Governance',
         description: 'Keeps a list of block producers and whitelisted tokens.',
         upgradeability: discovery.getContract('Governance').upgradeability,
       },
       {
-        address: discovery.getContract('UniswapV2Factory').address.toString(),
+        address: discovery.getContract('UniswapV2Factory').address,
         name: 'PairManager',
         upgradeability:
           discovery.getContract('UniswapV2Factory').upgradeability,
       },
       {
-        address: discovery.getContract('Verifier').address.toString(),
+        address: discovery.getContract('Verifier').address,
         name: 'Verifier',
         description: 'zk-SNARK Plonk Verifier.',
         upgradeability: discovery.getContract('Verifier').upgradeability,
       },
       {
-        address: discovery.getContractValue<string>('ZkSync', 'verifierExit'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>('ZkSync', 'verifierExit'),
+        ),
         name: 'VerifierExit',
         upgradeability: discovery.getContract(
           discovery.getContractValue<string>('ZkSync', 'verifierExit'),
         ).upgradeability,
       },
       {
-        //getMaster???
-        address: '0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7',
+        address: EthereumAddress('0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7'),
         name: 'UpgradeGatekeeper',
       },
     ],
@@ -140,8 +140,9 @@ export const zkswap2: Layer2 = {
       accounts: [
         {
           type: 'EOA',
-          //networkGovernor or getMaster
-          address: '0x9D7397204F32e0Ee919Ea3475630cdf131086255',
+          address: EthereumAddress(
+            '0x9D7397204F32e0Ee919Ea3475630cdf131086255',
+          ),
         },
       ],
       description:
@@ -151,7 +152,10 @@ export const zkswap2: Layer2 = {
       name: 'Active validator',
       accounts: discovery
         .getContractValue<string[]>('Governance', 'validators')
-        .map((address) => ({ address, type: 'EOA' })),
+        .map((validator) => ({
+          address: EthereumAddress(validator),
+          type: 'EOA',
+        })),
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 2.0 Admin.',
     },

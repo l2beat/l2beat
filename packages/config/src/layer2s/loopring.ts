@@ -50,7 +50,7 @@ export const loopring: Layer2 = {
     associatedTokens: ['LRC'],
     escrows: [
       {
-        address: '0x674bdf20A0F284D710BC40872100128e2d66Bd3f',
+        address: EthereumAddress('0x674bdf20A0F284D710BC40872100128e2d66Bd3f'),
         sinceTimestamp: new UnixTime(1603949642),
         tokens: '*',
       },
@@ -168,7 +168,7 @@ export const loopring: Layer2 = {
       name: 'Loopring MultiSig',
       accounts: [
         {
-          address: discovery.getContract('GnosisSafe').address.toString(),
+          address: discovery.getContract('GnosisSafe').address,
           type: 'MultiSig',
         },
       ],
@@ -179,7 +179,7 @@ export const loopring: Layer2 = {
       name: 'MultiSig participants',
       accounts: discovery
         .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: owner, type: 'EOA' })),
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
@@ -191,59 +191,87 @@ export const loopring: Layer2 = {
       name: 'Block Submitters',
       accounts: [
         {
-          address: '0xdd4b5E28fe55196B8Bf44A040f2c11f85401fdC0',
+          address: EthereumAddress(
+            '0xdd4b5E28fe55196B8Bf44A040f2c11f85401fdC0',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x7961076f6130092c1C90bd0D2C6F7f54055FA6C7',
+          address: EthereumAddress(
+            '0x7961076f6130092c1C90bd0D2C6F7f54055FA6C7',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46',
+          address: EthereumAddress(
+            '0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x4774d954D20DB98492B0487BC9F91dc401dBA3aE',
+          address: EthereumAddress(
+            '0x4774d954D20DB98492B0487BC9F91dc401dBA3aE',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095',
+          address: EthereumAddress(
+            '0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234',
+          address: EthereumAddress(
+            '0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x212e75BF264C4FB3133fA5ef6f47A34367020A1A',
+          address: EthereumAddress(
+            '0x212e75BF264C4FB3133fA5ef6f47A34367020A1A',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x238b649E62a0C383b54060b1625516b489183843',
+          address: EthereumAddress(
+            '0x238b649E62a0C383b54060b1625516b489183843',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2',
+          address: EthereumAddress(
+            '0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42',
+          address: EthereumAddress(
+            '0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc',
+          address: EthereumAddress(
+            '0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xeadb3d065f8d15cc05e92594523516aD36d1c834',
+          address: EthereumAddress(
+            '0xeadb3d065f8d15cc05e92594523516aD36d1c834',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB',
+          address: EthereumAddress(
+            '0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5',
+          address: EthereumAddress(
+            '0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5',
+          ),
           type: 'EOA',
         },
       ],
@@ -255,40 +283,36 @@ export const loopring: Layer2 = {
     addresses: [
       {
         name: 'ExchangeV3',
-        address: discovery.getContract('ExchangeV3').address.toString(),
+        address: discovery.getContract('ExchangeV3').address,
         description: 'Main ExchangeV3 contract.',
         upgradeability: discovery.getContract('ExchangeV3').upgradeability,
       },
       {
         name: 'LoopringIOExchangeOwner',
-        address: discovery
-          .getContract('LoopringIOExchangeOwner')
-          .address.toString(),
+        address: discovery.getContract('LoopringIOExchangeOwner').address,
         description:
           'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
       },
       {
         name: 'DefaultDepositContract',
-        address: discovery
-          .getContract('DefaultDepositContract')
-          .address.toString(),
+        address: discovery.getContract('DefaultDepositContract').address,
         description:
           'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
       },
       {
         name: 'LoopringV3',
-        address: '0xe56D6ccab6551932C0356E4e8d5dAF0630920C71',
+        address: EthereumAddress('0xe56D6ccab6551932C0356E4e8d5dAF0630920C71'),
         description:
           'Contract managinging LRC staking for exchanges (One Loopring contract can manage many exchanges).',
       },
       {
         name: 'BlockVerifier',
-        address: '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+        address: EthereumAddress('0x6150343E0F43A17519c0327c41eDd9eBE88D01ef'),
         description: 'zkSNARK Verifier based on ethsnarks library.',
       },
       {
         name: 'AgentRegistry',
-        address: discovery.getContract('AgentRegistry').address.toString(),
+        address: discovery.getContract('AgentRegistry').address,
         description:
           'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, \
           DestroyableWalletAgent and a number of LoopringAmmPool contracts.',

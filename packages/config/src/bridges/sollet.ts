@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
@@ -27,7 +27,7 @@ export const sollet: Bridge = {
     associatedTokens: ['SRM'],
     escrows: [
       {
-        address: '0xeae57ce9cc1984F202e15e038B964bb8bdF7229a',
+        address: EthereumAddress('0xeae57ce9cc1984F202e15e038B964bb8bdF7229a'),
         sinceTimestamp: new UnixTime(1599794859),
         tokens: ['SRM', 'ETH', 'ALEPH', 'USDT', 'USDC', 'UNI', 'KEEP', 'LINK'],
       },
@@ -85,7 +85,7 @@ export const sollet: Bridge = {
   contracts: {
     addresses: [
       {
-        address: discovery.getContract('SplTokenSwap').address.toString(),
+        address: discovery.getContract('SplTokenSwap').address,
         name: 'SplTokenSwap',
         description: 'Sollet Bridge Contract.',
       },
@@ -96,7 +96,9 @@ export const sollet: Bridge = {
     {
       accounts: [
         {
-          address: discovery.getContractValue<string>('SplTokenSwap', 'owner'),
+          address: EthereumAddress(
+            discovery.getContractValue<string>('SplTokenSwap', 'owner'),
+          ),
           type: 'EOA',
         },
       ],

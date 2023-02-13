@@ -28,7 +28,7 @@ export function layer2ToProject(layer2: Layer2): Project {
     projectId: layer2.id,
     type: 'layer2',
     escrows: layer2.config.escrows.map((escrow) => ({
-      address: EthereumAddress(escrow.address),
+      address: escrow.address,
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
         escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
@@ -43,7 +43,7 @@ export function bridgeToProject(bridge: Bridge): Project {
     projectId: bridge.id,
     type: 'bridge',
     escrows: bridge.config.escrows.map((escrow) => ({
-      address: EthereumAddress(escrow.address),
+      address: escrow.address,
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
         escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),

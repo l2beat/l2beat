@@ -45,22 +45,22 @@ export const layer2financezk: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0x82123571C8a5e0910280C066bc634c4945FFcbC8',
+        address: EthereumAddress('0x82123571C8a5e0910280C066bc634c4945FFcbC8'),
         sinceTimestamp: new UnixTime(1645130774),
         tokens: ['ETH', 'USDC', 'USDT'],
       },
       {
-        address: '0x8581cd55ff53F1F85A237fa9D60E72a79f0973b6',
+        address: EthereumAddress('0x8581cd55ff53F1F85A237fa9D60E72a79f0973b6'),
         sinceTimestamp: new UnixTime(1648621885),
         tokens: ['cETH'],
       },
       {
-        address: '0x4455E4435Cf7e6B6A4Df17bEAE1A413ef3663B90',
+        address: EthereumAddress('0x4455E4435Cf7e6B6A4Df17bEAE1A413ef3663B90'),
         sinceTimestamp: new UnixTime(1647862894),
         tokens: ['cETH'],
       },
       {
-        address: '0x3F3b821243E5664822c0babBA2B4f37bf294e7a0',
+        address: EthereumAddress('0x3F3b821243E5664822c0babBA2B4f37bf294e7a0'),
         sinceTimestamp: new UnixTime(1648621976),
         tokens: ['cUSDC'],
       },
@@ -98,38 +98,38 @@ export const layer2financezk: Layer2 = {
     addresses: [
       {
         name: 'StarkExchange',
-        address: discovery.getContract('Proxy').address.toString(),
+        address: discovery.getContract('Proxy').address,
         upgradeability: discovery.getContract('Proxy').upgradeability,
       },
       {
         name: 'Committee',
-        address: '0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9',
+        address: EthereumAddress('0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9'),
       },
       SHARP_VERIFIER_CONTRACT,
       {
         name: 'Broker',
         description:
           'Broker manages investment strategies on L1 for tokens deposited to the system. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
-        address: discovery.getContract('Broker').address.toString(),
+        address: discovery.getContract('Broker').address,
       },
       {
         name: 'StrategyCompound',
         description:
           'It is through this contract that groups of users interact with the Compound DeFi protocol.',
-        address: '0x5b000954F70B0410685193B0afd3074B744B5C97',
+        address: EthereumAddress('0x5b000954F70B0410685193B0afd3074B744B5C97'),
       },
       {
         name: 'GpsFactRegistryAdapter',
-        address: '0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE',
+        address: EthereumAddress('0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE'),
       },
       {
         name: 'GpsStatementVerifier',
-        address: discovery.getContract('CallProxy').address.toString(),
+        address: discovery.getContract('CallProxy').address,
         upgradeability: discovery.getContract('CallProxy').upgradeability,
       },
       {
         name: 'OrderRegistry',
-        address: discovery.getContract('OrderRegistry').address.toString(),
+        address: discovery.getContract('OrderRegistry').address,
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -139,7 +139,9 @@ export const layer2financezk: Layer2 = {
       name: 'Governor',
       accounts: [
         {
-          address: '0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e',
+          address: EthereumAddress(
+            '0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e',
+          ),
           type: 'EOA',
         },
       ],
@@ -156,7 +158,9 @@ export const layer2financezk: Layer2 = {
       name: 'SHARP Verifier Governor',
       accounts: [
         {
-          address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          address: EthereumAddress(
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          ),
           type: 'EOA',
         },
       ],
@@ -167,7 +171,9 @@ export const layer2financezk: Layer2 = {
       name: 'Broker Owner',
       accounts: [
         {
-          address: '0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988',
+          address: EthereumAddress(
+            '0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988',
+          ),
           type: 'EOA',
         },
       ],
@@ -178,7 +184,9 @@ export const layer2financezk: Layer2 = {
       name: 'Operator',
       accounts: [
         {
-          address: '0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5',
+          address: EthereumAddress(
+            '0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5',
+          ),
           type: 'EOA',
         },
       ],

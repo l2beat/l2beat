@@ -15,7 +15,7 @@ export function getUniqueContractsForProject(
   project: Layer2 | Bridge,
 ): EthereumAddress[] {
   const projectContracts = project.contracts?.addresses ?? []
-  const mainAddresses = projectContracts.map((c) => EthereumAddress(c.address))
+  const mainAddresses = projectContracts.map((c) => c.address)
   const upgradeabilityAddresses = projectContracts
     .map((c) => c.upgradeability)
     .filter((u): u is ProjectUpgradeability => !!u) // remove undefined
@@ -27,7 +27,7 @@ export function getUniqueContractsForProject(
 function gatherAddressesFromUpgradeability(
   item: ProjectUpgradeability,
 ): EthereumAddress[] {
-  const result: string[] = []
+  const result: EthereumAddress[] = []
 
   switch (item.type) {
     case 'Custom':
@@ -38,22 +38,22 @@ function gatherAddressesFromUpgradeability(
     case 'resolved delegate proxy':
     case 'call implementation proxy':
     case 'EIP897 proxy':
-      result.push(item.implementation.toString())
+      result.push(item.implementation)
       break
     case 'StarkWare proxy':
-      result.push(item.implementation.toString())
+      result.push(item.implementation)
       if (item.callImplementation) {
-        result.push(item.callImplementation.toString())
+        result.push(item.callImplementation)
       }
       break
     case 'Arbitrum proxy':
-      result.push(item.adminImplementation.toString())
-      result.push(item.userImplementation.toString())
+      result.push(item.adminImplementation)
+      result.push(item.userImplementation)
       break
     case 'new Arbitrum proxy':
-      result.push(item.adminImplementation.toString())
-      result.push(item.userImplementation.toString())
-      result.push(item.implementation.toString())
+      result.push(item.adminImplementation)
+      result.push(item.userImplementation)
+      result.push(item.implementation)
       break
     case 'Beacon':
       result.push(item.beacon)
@@ -69,7 +69,8 @@ function gatherAddressesFromUpgradeability(
       // This code triggers a typescript compile-time error if not all cases have been covered
       assertUnreachable(item)
   }
-  return result.map(EthereumAddress)
+
+  return result
 }
 
 export function areAllProjectContractsVerified(

@@ -19,16 +19,18 @@ export function getPermissionsSection(
 export function toTechnologyContract(
   permission: ProjectPermission,
 ): TechnologyContract {
-  const links = permission.accounts.slice(1).map((account) => ({
-    name: `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
-    address: account.address,
-    href: `https://etherscan.io/address/${account.address}#code`,
-    isAdmin: false,
-  }))
+  const links = permission.accounts.slice(1).map((account) => {
+    return {
+      name: `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
+      address: account.address.toString(),
+      href: `https://etherscan.io/address/${account.address.toString()}#code`,
+      isAdmin: false,
+    }
+  })
 
   return {
     name: permission.name,
-    address: permission.accounts[0]?.address,
+    address: permission.accounts[0]?.address.toString(),
     description: permission.description,
     links,
   }
