@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
   DATA_AVAILABILITY,
@@ -39,7 +39,7 @@ export const layer2finance: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05',
+        address: EthereumAddress('0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05'),
         sinceTimestamp: new UnixTime(1619011215),
         tokens: ['BUSD', 'DAI', 'USDC', 'USDT', 'WETH'],
       },
@@ -156,15 +156,15 @@ export const layer2finance: Layer2 = {
     addresses: [
       {
         name: 'RollupChain',
-        address: '0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05',
+        address: EthereumAddress('0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05'),
       },
       {
         name: 'TransitionDisputer',
-        address: '0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f',
+        address: EthereumAddress('0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f'),
       },
       {
         name: 'Registry',
-        address: '0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8',
+        address: EthereumAddress('0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8'),
       },
     ],
     risks: [

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
@@ -33,7 +33,7 @@ export const portal: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x3ee18B2214AFF97000D974cf647E7C347E8fa585', // Escrows to various chains
+        address: EthereumAddress('0x3ee18B2214AFF97000D974cf647E7C347E8fa585'), // Escrows to various chains
         sinceTimestamp: new UnixTime(1631535967),
         tokens: [
           'WETH',
@@ -137,21 +137,25 @@ export const portal: Bridge = {
     isIncomplete: true,
     addresses: [
       {
-        address: '0x3ee18B2214AFF97000D974cf647E7C347E8fa585',
+        address: EthereumAddress('0x3ee18B2214AFF97000D974cf647E7C347E8fa585'),
         name: 'Token Bridge',
         description: '',
         upgradeability: {
           type: 'CustomWithoutAdmin',
-          implementation: '0x299b4F6066d231521d11FAE8331fb1A4fe794F58',
+          implementation: EthereumAddress(
+            '0x299b4F6066d231521d11FAE8331fb1A4fe794F58',
+          ),
         },
       },
       {
-        address: '0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B',
+        address: EthereumAddress('0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B'),
         name: 'Wormhole',
         description: '',
         upgradeability: {
           type: 'CustomWithoutAdmin',
-          implementation: '0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0',
+          implementation: EthereumAddress(
+            '0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0',
+          ),
         },
       },
     ],

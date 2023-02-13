@@ -40,7 +40,7 @@ export const immutablex: Layer2 = {
     associatedTokens: ['IMX'],
     escrows: [
       {
-        address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
+        address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
         sinceTimestamp: new UnixTime(1615389188),
         tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
       },
@@ -84,7 +84,7 @@ export const immutablex: Layer2 = {
     addresses: [
       {
         name: 'StarkExchange',
-        address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
+        address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
         upgradeability: {
           type: 'StarkWare proxy',
           implementation: EthereumAddress(
@@ -98,7 +98,7 @@ export const immutablex: Layer2 = {
         name: 'Committee',
         description:
           'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
-        address: '0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295',
+        address: EthereumAddress('0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295'),
       },
       SHARP_VERIFIER_CONTRACT,
     ],
@@ -109,7 +109,9 @@ export const immutablex: Layer2 = {
       name: 'Governor',
       accounts: [
         {
-          address: '0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a',
+          address: EthereumAddress(
+            '0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a',
+          ),
           type: 'EOA',
         },
       ],
@@ -120,31 +122,45 @@ export const immutablex: Layer2 = {
       name: 'Data Availability Committee',
       accounts: [
         {
-          address: '0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1',
+          address: EthereumAddress(
+            '0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b',
+          address: EthereumAddress(
+            '0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x48AF849535DDFa560A0EB0FbDEf436688169B949',
+          address: EthereumAddress(
+            '0x48AF849535DDFa560A0EB0FbDEf436688169B949',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E',
+          address: EthereumAddress(
+            '0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17',
+          address: EthereumAddress(
+            '0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xB71FC111D7BA82D5955BaDdD7717f3467184FF61',
+          address: EthereumAddress(
+            '0xB71FC111D7BA82D5955BaDdD7717f3467184FF61',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xfF506616E8C53EE5e513b906AC00B5D76664C537',
+          address: EthereumAddress(
+            '0xfF506616E8C53EE5e513b906AC00B5D76664C537',
+          ),
           type: 'EOA',
         },
       ],
@@ -155,7 +171,9 @@ export const immutablex: Layer2 = {
       name: 'SHARP Verifier Governor',
       accounts: [
         {
-          address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          address: EthereumAddress(
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          ),
           type: 'EOA',
         },
       ],
@@ -166,7 +184,9 @@ export const immutablex: Layer2 = {
       name: 'Operator',
       accounts: [
         {
-          address: '0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e',
+          address: EthereumAddress(
+            '0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e',
+          ),
           type: 'EOA',
         },
       ],

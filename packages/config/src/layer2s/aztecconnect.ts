@@ -40,7 +40,7 @@ export const aztecconnect: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
+        address: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
         sinceTimestamp: new UnixTime(1654587783),
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
@@ -158,7 +158,7 @@ export const aztecconnect: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
+        address: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
         description:
           'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
         name: 'RollupProcessor',
@@ -171,24 +171,24 @@ export const aztecconnect: Layer2 = {
         },
       },
       {
-        address: '0x4cf32670a53657596E641DFCC6d40f01e4d64927',
+        address: EthereumAddress('0x4cf32670a53657596E641DFCC6d40f01e4d64927'),
         description:
           'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
         name: 'AztecFeeDistributor',
       },
       {
-        address: '0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487',
+        address: EthereumAddress('0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487'),
         description: 'Bridge Connector to various DeFi Bridges.',
         name: 'DefiBridgeProxy',
       },
       {
-        address: '0x3937f965E824Fe4e7885B8662669821966d3f293',
+        address: EthereumAddress('0x3937f965E824Fe4e7885B8662669821966d3f293'),
         description:
           'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
         name: 'StandardVerifier',
       },
       {
-        address: '0x8C3B53F450E53FF14D8C9449465F79ff40668966',
+        address: EthereumAddress('0x8C3B53F450E53FF14D8C9449465F79ff40668966'),
         description: 'Verification Keys for the Verifier.',
         name: 'VerificationKey28x32',
       },

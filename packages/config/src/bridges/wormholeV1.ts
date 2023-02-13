@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -16,7 +16,7 @@ export const wormholeV1: Bridge = {
   config: {
     escrows: [
       {
-        address: '0xf92cD566Ea4864356C5491c177A430C222d7e678', // Escrow to Solana ?
+        address: EthereumAddress('0xf92cD566Ea4864356C5491c177A430C222d7e678'), // Escrow to Solana ?
         sinceTimestamp: new UnixTime(1611084766),
         tokens: [
           //'FTT',

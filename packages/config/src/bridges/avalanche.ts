@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { Bridge } from './types'
 
@@ -25,7 +25,7 @@ export const avalanche: Bridge = {
   config: {
     escrows: [
       {
-        address: '0xE78388b4CE79068e89Bf8aA7f218eF6b9AB0e9d0', // old
+        address: EthereumAddress('0xE78388b4CE79068e89Bf8aA7f218eF6b9AB0e9d0'), // old
         sinceTimestamp: new UnixTime(1634135918),
         tokens: [
           'ETH',
@@ -47,7 +47,7 @@ export const avalanche: Bridge = {
         ],
       },
       {
-        address: '0x8EB8a3b98659Cce290402893d0123abb75E3ab28', // new
+        address: EthereumAddress('0x8EB8a3b98659Cce290402893d0123abb75E3ab28'), // new
         sinceTimestamp: new UnixTime(1657207546),
         tokens: [
           'ETH',
@@ -148,7 +148,9 @@ export const avalanche: Bridge = {
         'Off-chain Multisig 6/8 using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
       accounts: [
         {
-          address: '0x8EB8a3b98659Cce290402893d0123abb75E3ab28',
+          address: EthereumAddress(
+            '0x8EB8a3b98659Cce290402893d0123abb75E3ab28',
+          ),
           type: 'EOA',
         },
       ],

@@ -14,7 +14,7 @@ export function getContractSection(
 ): ContractsSectionProps {
   const contracts = project.contracts?.addresses.map((contract) => {
     const isUnverified =
-      verificationStatus.contracts[contract.address] === false
+      verificationStatus.contracts[contract.address.toString()] === false
     return makeTechnologyContract(contract, project, isUnverified)
   })
 
@@ -106,8 +106,8 @@ function makeTechnologyContract(
       case 'Reference':
         links.push({
           name: 'Code (Upgradable)',
-          href: `https://etherscan.io/address/${item.address}#code`,
-          address: item.address,
+          href: `https://etherscan.io/address/${item.address.toString()}#code`,
+          address: item.address.toString(),
           isAdmin: false,
         })
         break
@@ -137,20 +137,20 @@ function makeTechnologyContract(
       case 'Beacon':
         links.push({
           name: 'Beacon',
-          href: `https://etherscan.io/address/${item.upgradeability.beacon}#code`,
-          address: item.upgradeability.beacon,
+          href: `https://etherscan.io/address/${item.upgradeability.beacon.toString()}#code`,
+          address: item.upgradeability.beacon.toString(),
           isAdmin: false,
         })
         links.push({
           name: 'Implementation (Upgradable)',
-          href: `https://etherscan.io/address/${item.upgradeability.implementation}#code`,
-          address: item.upgradeability.implementation,
+          href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+          address: item.upgradeability.implementation.toString(),
           isAdmin: false,
         })
         links.push({
           name: 'Beacon Admin',
-          href: `https://etherscan.io/address/${item.upgradeability.beaconAdmin}#code`,
-          address: item.upgradeability.beaconAdmin,
+          href: `https://etherscan.io/address/${item.upgradeability.beaconAdmin.toString()}#code`,
+          address: item.upgradeability.beaconAdmin.toString(),
           isAdmin: true,
         })
         break
@@ -193,7 +193,7 @@ function makeTechnologyContract(
 
   return {
     name: item.name,
-    address: item.address,
+    address: item.address.toString(),
     description,
     links,
   }

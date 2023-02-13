@@ -1,83 +1,10 @@
-import { assertUnreachable, EthereumAddress, ProjectId } from '@l2beat/shared'
+import { EthereumAddress, ProjectId } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { bridges, getTokenBySymbol, layer2s } from '../'
-import { checkRisk, testAddress } from './helpers'
+import { checkRisk } from './helpers'
 
 describe('projects', () => {
-  describe('addresses', () => {
-    describe('every addresses is valid and formatted', () => {
-      describe('escrows', () => {
-        const escrows = [...layer2s, ...bridges].flatMap((x) =>
-          x.config.escrows.map((x) => x.address),
-        )
-        for (const address of escrows) {
-          testAddress(address)
-        }
-      })
-
-      describe('contracts', () => {
-        for (const project of [...layer2s, ...bridges]) {
-          const contracts = project.contracts?.addresses ?? []
-          for (const contract of contracts) {
-            testAddress(contract.address)
-            if (!contract.upgradeability?.type) return
-            switch (contract.upgradeability.type) {
-              case 'Custom':
-                testAddress(contract.upgradeability.implementation)
-                if (contract.upgradeability.admin) {
-                  testAddress(contract.upgradeability.admin)
-                }
-                break
-
-              case 'CustomWithoutAdmin':
-                testAddress(contract.upgradeability.implementation)
-                break
-
-              case 'Beacon':
-                testAddress(contract.upgradeability.beacon)
-                testAddress(contract.upgradeability.implementation)
-                testAddress(contract.upgradeability.beaconAdmin)
-                break
-
-              // Ignore types as they are already of type EthereumAddress
-              case 'EIP1967 proxy':
-              case 'ZeppelinOS proxy':
-              case 'immutable':
-              case 'gnosis safe':
-              case 'EIP2535 diamond proxy':
-              case 'StarkWare diamond':
-              case 'resolved delegate proxy':
-              case 'call implementation proxy':
-              case 'EIP897 proxy':
-              case 'StarkWare proxy':
-              case 'Arbitrum proxy':
-              case 'new Arbitrum proxy':
-              case 'Reference':
-                break
-
-              default:
-                assertUnreachable(contract.upgradeability)
-            }
-          }
-        }
-      })
-
-      describe('permissions', () => {
-        for (const project of [...layer2s, ...bridges]) {
-          const permissions = project.permissions ?? []
-          const permissionAddresses = permissions
-            .flatMap((permission) => permission.accounts)
-            .map((account) => account.address)
-
-          for (const address of permissionAddresses) {
-            testAddress(address)
-          }
-        }
-      })
-    })
-  })
-
   describe('every token is valid', () => {
     const symbols = [...layer2s, ...bridges]
       .flatMap((x) =>
@@ -130,9 +57,9 @@ describe('projects', () => {
 
     for (const project of [...layer2s, ...bridges]) {
       for (const { address } of project.config.escrows) {
-        it(address, () => {
-          expect(addresses.has(EthereumAddress(address))).toEqual(false)
-          addresses.add(EthereumAddress(address))
+        it(address.toString(), () => {
+          expect(addresses.has(address)).toEqual(false)
+          addresses.add(address)
         })
       }
     }

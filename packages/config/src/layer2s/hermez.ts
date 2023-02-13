@@ -44,7 +44,7 @@ export const hermez: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0xA68D85dF56E733A06443306A095646317B5Fa633',
+        address: EthereumAddress('0xA68D85dF56E733A06443306A095646317B5Fa633'),
         sinceTimestamp: new UnixTime(1616482490),
         tokens: '*',
       },
@@ -181,7 +181,7 @@ export const hermez: Layer2 = {
     addresses: [
       {
         name: 'HermezAuctionProtocol',
-        address: '0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2',
+        address: EthereumAddress('0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2'),
         upgradeability: {
           type: 'EIP1967 proxy',
           implementation: EthereumAddress(
@@ -192,7 +192,7 @@ export const hermez: Layer2 = {
       },
       {
         name: 'Hermez',
-        address: '0xA68D85dF56E733A06443306A095646317B5Fa633',
+        address: EthereumAddress('0xA68D85dF56E733A06443306A095646317B5Fa633'),
         upgradeability: {
           type: 'EIP1967 proxy',
           implementation: EthereumAddress(
@@ -203,17 +203,17 @@ export const hermez: Layer2 = {
       },
       {
         name: 'ProxyAdmin',
-        address: '0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3',
+        address: EthereumAddress('0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3'),
         description:
           'Admin of HermezAuctionProtocol and Hermez, owned by the timelock.',
       },
       {
         name: 'WithdrawalDelayer',
-        address: '0x392361427Ef5e17b69cFDd1294F31ab555c86124',
+        address: EthereumAddress('0x392361427Ef5e17b69cFDd1294F31ab555c86124'),
       },
       {
         name: 'Timelock',
-        address: '0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3',
+        address: EthereumAddress('0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3'),
         description: 'Enforces a 7 day delay on upgrades.',
       },
     ],

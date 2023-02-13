@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -35,7 +35,7 @@ export const gravity: Bridge = {
   config: {
     escrows: [
       {
-        address: '0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906',
+        address: EthereumAddress('0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906'),
         sinceTimestamp: new UnixTime(1639416372),
         tokens: ['USDC', 'WETH', 'DAI', 'USDT', 'WBTC'],
       },
@@ -83,7 +83,7 @@ export const gravity: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906',
+        address: EthereumAddress('0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906'),
         name: 'Gravity',
         description:
           'Contract holding locked assets and handling user interactions for transfers and withdrawals.',

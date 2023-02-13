@@ -1,4 +1,4 @@
-import { UpgradeabilityParameters } from '@l2beat/shared'
+import { EthereumAddress, UpgradeabilityParameters } from '@l2beat/shared'
 
 import { ProjectReference } from './ProjectReference'
 import { ProjectRisk } from './ProjectRisk'
@@ -16,7 +16,7 @@ export interface ProjectContracts {
 
 export interface ProjectContract {
   /** Address of the contract */
-  address: string
+  address: EthereumAddress
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
@@ -35,15 +35,15 @@ export type ProjectUpgradeability =
 export interface CustomUpgradeability {
   type: 'Custom'
   /** Address of the admin */
-  admin: string
+  admin: EthereumAddress
   /** Address of the implementation */
-  implementation: string
+  implementation: EthereumAddress
 }
 
 export interface CustomUpgradeabilityWithoutAdmin {
   type: 'CustomWithoutAdmin'
   /** Address of the admin */
-  implementation: string
+  implementation: EthereumAddress
 }
 
 export interface ReferenceUpgradeability {
@@ -59,9 +59,9 @@ export interface ReferenceUpgradeability {
 export interface BeaconUpgradeability {
   type: 'Beacon'
   /** Address of the beacon contract */
-  beacon: string
+  beacon: EthereumAddress
   /** Address of the admin of the beacon contract */
-  beaconAdmin: string
+  beaconAdmin: EthereumAddress
   /** Address of the implementation */
-  implementation: string
+  implementation: EthereumAddress
 }

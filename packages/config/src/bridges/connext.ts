@@ -1,4 +1,5 @@
 import * as types from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -29,7 +30,7 @@ export const connext: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09',
+        address: EthereumAddress('0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09'),
         sinceTimestamp: new types.UnixTime(1636004546),
         tokens: ['USDC', 'USDT', 'DAI', 'WBTC'],
       },
@@ -93,12 +94,12 @@ export const connext: Bridge = {
   contracts: {
     addresses: [
       {
-        address: '0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09',
+        address: EthereumAddress('0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09'),
         name: 'TransactionManager',
         description: 'Escrow and logic for cross-chain transactions.',
       },
       {
-        address: '0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a',
+        address: EthereumAddress('0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a'),
         name: 'FulfillInterpreter',
         description:
           'Contract enabling execution of arbitrary calldata on a destination chain.',
@@ -109,7 +110,12 @@ export const connext: Bridge = {
   permissions: [
     {
       accounts: [
-        { address: '0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'Owner of TransactionManager',
       description: 'Can add and remove Routers and supported assets.',

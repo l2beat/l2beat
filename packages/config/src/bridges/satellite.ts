@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { Bridge } from './types'
 
@@ -16,7 +16,7 @@ export const satellite: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x4F4495243837681061C4743b74B3eEdf548D56A5', // AxerlR Gateway
+        address: EthereumAddress('0x4F4495243837681061C4743b74B3eEdf548D56A5'), // AxerlR Gateway
         sinceTimestamp: new UnixTime(1634135918),
         tokens: [
           'USDC',

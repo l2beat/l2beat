@@ -41,7 +41,7 @@ export const sorare: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
+        address: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
         sinceTimestamp: new UnixTime(1626352527),
         tokens: ['ETH'],
       },
@@ -85,7 +85,7 @@ export const sorare: Layer2 = {
     addresses: [
       {
         name: 'StarkExchange',
-        address: '0xF5C9F957705bea56a7e806943f98F7777B995826',
+        address: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
         upgradeability: {
           type: 'StarkWare proxy',
           implementation: EthereumAddress(
@@ -97,7 +97,7 @@ export const sorare: Layer2 = {
       },
       {
         name: 'Committee',
-        address: '0x879cD57975d596004863D30c59d579ef78BBbe32',
+        address: EthereumAddress('0x879cD57975d596004863D30c59d579ef78BBbe32'),
       },
       SHARP_VERIFIER_CONTRACT,
     ],
@@ -108,7 +108,9 @@ export const sorare: Layer2 = {
       name: 'Governor',
       accounts: [
         {
-          address: '0x5918481F777dBe437De249492B90AffB4e655de4',
+          address: EthereumAddress(
+            '0x5918481F777dBe437De249492B90AffB4e655de4',
+          ),
           type: 'EOA',
         },
       ],
@@ -125,7 +127,9 @@ export const sorare: Layer2 = {
       name: 'SHARP Verifier Governor',
       accounts: [
         {
-          address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          address: EthereumAddress(
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          ),
           type: 'EOA',
         },
       ],
@@ -136,7 +140,9 @@ export const sorare: Layer2 = {
       name: 'Operator',
       accounts: [
         {
-          address: '0x63881ac44293E22F3c3183a0C4113586ABb3e653',
+          address: EthereumAddress(
+            '0x63881ac44293E22F3c3183a0C4113586ABb3e653',
+          ),
           type: 'EOA',
         },
       ],

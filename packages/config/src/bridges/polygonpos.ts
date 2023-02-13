@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
@@ -34,7 +34,7 @@ export const polygonpos: Bridge = {
   config: {
     escrows: [
       {
-        address: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
+        address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
         sinceTimestamp: new UnixTime(1598436664),
         tokens: [
           'USDC',
@@ -58,7 +58,7 @@ export const polygonpos: Bridge = {
         ],
       },
       {
-        address: '0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
+        address: EthereumAddress('0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30'),
         sinceTimestamp: new UnixTime(1598437971),
         tokens: ['ETH'],
       },
@@ -139,7 +139,7 @@ export const polygonpos: Bridge = {
     isIncomplete: true,
     addresses: [
       {
-        address: discovery.getContract('RootChainManager').address.toString(),
+        address: discovery.getContract('RootChainManager').address,
         name: 'RootChainManager',
         description:
           'Main contract to manage bridge tokens, deposits and withdrawals.',
@@ -149,53 +149,61 @@ export const polygonpos: Bridge = {
             'RootChainManager',
             'implementation',
           ),
-          admin: discovery.getContractValue<string>(
-            'RootChainManager',
-            'proxyOwner',
+          admin: EthereumAddress(
+            discovery.getContractValue<string>(
+              'RootChainManager',
+              'proxyOwner',
+            ),
           ),
         },
       },
       {
-        address: discovery.getContract('StateSender').address.toString(),
+        address: discovery.getContract('StateSender').address,
         name: 'StateSender',
         description:
           'Smart contract containing logic for syncing the state of the bridge.',
       },
       {
-        address: discovery.getContract('RootChain').address.toString(),
+        address: discovery.getContract('RootChain').address,
         name: 'RootChain',
         description:
           'Contract storing Polygon sidechain checkpoints. Note that validatity of these checkpoints is not verfied, it is assumed they are valid if signed by 2/3 of the Polygon Validators.',
         //Shouldn't we get it from discovery?
         upgradeability: {
           type: 'Custom',
-          implementation: '0x536c55cFe4892E581806e10b38dFE8083551bd03',
-          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
+          implementation: EthereumAddress(
+            '0x536c55cFe4892E581806e10b38dFE8083551bd03',
+          ),
+          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
         },
       },
       {
-        address: discovery.getContract('Timelock').address.toString(),
+        address: discovery.getContract('Timelock').address,
         name: 'Timelock',
         description: 'Contract enforcing delay on code upgrades.',
       },
       {
-        address: discovery.getContract('ERC20Predicate').address.toString(),
+        address: discovery.getContract('ERC20Predicate').address,
         name: 'ERC20Predicate',
         description: 'Escrow contract for ERC20 tokens.',
         upgradeability: {
           type: 'Custom',
-          implementation: '0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5',
-          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
+          implementation: EthereumAddress(
+            '0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5',
+          ),
+          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
         },
       },
       {
-        address: discovery.getContract('EtherPredicate').address.toString(),
+        address: discovery.getContract('EtherPredicate').address,
         name: 'EtherPredicate',
         description: 'Escrow contract for ETH.',
         upgradeability: {
           type: 'Custom',
-          implementation: '0x54006763154c764da4AF42a8c3cfc25Ea29765D5',
-          admin: '0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf',
+          implementation: EthereumAddress(
+            '0x54006763154c764da4AF42a8c3cfc25Ea29765D5',
+          ),
+          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
         },
       },
     ],
@@ -205,7 +213,7 @@ export const polygonpos: Bridge = {
     {
       accounts: [
         {
-          address: discovery.getContract('GnosisSafe').address.toString(),
+          address: discovery.getContract('GnosisSafe').address,
           type: 'MultiSig',
         },
       ],
@@ -217,7 +225,7 @@ export const polygonpos: Bridge = {
       name: 'MultiSig Participants',
       accounts: discovery
         .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: owner, type: 'EOA' })),
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',

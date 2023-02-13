@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -30,22 +30,22 @@ export const orbiter: Bridge = {
     // https://github.com/Orbiter-Finance/orbiter-sdk/blob/main/src/bridge/maker_list.mainnet.ts
     escrows: [
       {
-        address: '0x80C67432656d59144cEFf962E8fAF8926599bCF8',
+        address: EthereumAddress('0x80C67432656d59144cEFf962E8fAF8926599bCF8'),
         sinceTimestamp: new UnixTime(1649170157),
         tokens: ['ETH'],
       },
       {
-        address: '0x41d3D33156aE7c62c094AAe2995003aE63f587B3',
+        address: EthereumAddress('0x41d3D33156aE7c62c094AAe2995003aE63f587B3'),
         sinceTimestamp: new UnixTime(1635067681),
         tokens: ['USDC'],
       },
       {
-        address: '0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC',
+        address: EthereumAddress('0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC'),
         sinceTimestamp: new UnixTime(1654853887),
         tokens: ['USDT'],
       },
       {
-        address: '0x095D2918B03b2e86D68551DCF11302121fb626c9',
+        address: EthereumAddress('0x095D2918B03b2e86D68551DCF11302121fb626c9'),
         sinceTimestamp: new UnixTime(1666335431),
         tokens: ['DAI'],
       },
@@ -131,7 +131,7 @@ export const orbiter: Bridge = {
     // https://github.com/Orbiter-Finance/orbiter-sdk/blob/main/src/config/contracts.ts
     addresses: [
       {
-        address: '0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc',
+        address: EthereumAddress('0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc'),
         name: 'OBSource',
         description:
           "Proxies transfers into Makers' accounts (when using custom frontend via SDK).",
@@ -143,7 +143,9 @@ export const orbiter: Bridge = {
     {
       accounts: [
         {
-          address: '0x80C67432656d59144cEFf962E8fAF8926599bCF8',
+          address: EthereumAddress(
+            '0x80C67432656d59144cEFf962E8fAF8926599bCF8',
+          ),
           type: 'EOA',
         },
       ],
@@ -153,7 +155,9 @@ export const orbiter: Bridge = {
     {
       accounts: [
         {
-          address: '0x41d3D33156aE7c62c094AAe2995003aE63f587B3',
+          address: EthereumAddress(
+            '0x41d3D33156aE7c62c094AAe2995003aE63f587B3',
+          ),
           type: 'EOA',
         },
       ],
@@ -163,7 +167,9 @@ export const orbiter: Bridge = {
     {
       accounts: [
         {
-          address: '0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC',
+          address: EthereumAddress(
+            '0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC',
+          ),
           type: 'EOA',
         },
       ],
@@ -173,7 +179,9 @@ export const orbiter: Bridge = {
     {
       accounts: [
         {
-          address: '0x095D2918B03b2e86D68551DCF11302121fb626c9',
+          address: EthereumAddress(
+            '0x095D2918B03b2e86D68551DCF11302121fb626c9',
+          ),
           type: 'EOA',
         },
       ],

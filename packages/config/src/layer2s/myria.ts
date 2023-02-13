@@ -39,7 +39,7 @@ export const myria: Layer2 = {
   config: {
     escrows: [
       {
-        address: '0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7',
+        address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
         sinceTimestamp: new UnixTime(1659542607),
         tokens: ['ETH'],
       },
@@ -75,7 +75,7 @@ export const myria: Layer2 = {
     addresses: [
       {
         name: 'StarkExchange',
-        address: '0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7',
+        address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
         upgradeability: {
           type: 'StarkWare proxy',
           implementation: EthereumAddress(
@@ -89,7 +89,7 @@ export const myria: Layer2 = {
         name: 'Committee',
         description:
           'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
-        address: '0x1e601435E181423e7A8430813d7500012a6169cB',
+        address: EthereumAddress('0x1e601435E181423e7A8430813d7500012a6169cB'),
       },
       SHARP_VERIFIER_CONTRACT,
     ],
@@ -100,7 +100,9 @@ export const myria: Layer2 = {
       name: 'Governor',
       accounts: [
         {
-          address: '0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245',
+          address: EthereumAddress(
+            '0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245',
+          ),
           type: 'EOA',
         },
       ],
@@ -111,7 +113,9 @@ export const myria: Layer2 = {
       name: 'SHARP Verifier Governor',
       accounts: [
         {
-          address: '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          address: EthereumAddress(
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          ),
           type: 'EOA',
         },
       ],
@@ -122,7 +126,9 @@ export const myria: Layer2 = {
       name: 'Operator',
       accounts: [
         {
-          address: '0xe997ece81cb8A686206ea6042886B594Ecf6DdED',
+          address: EthereumAddress(
+            '0xe997ece81cb8A686206ea6042886B594Ecf6DdED',
+          ),
           type: 'EOA',
         },
       ],
@@ -133,23 +139,33 @@ export const myria: Layer2 = {
       name: 'Data Availability Committee',
       accounts: [
         {
-          address: '0x30cF77FC391B4Feba1AB31B01fEd442Bc759c0a8',
+          address: EthereumAddress(
+            '0x30cF77FC391B4Feba1AB31B01fEd442Bc759c0a8',
+          ),
           type: 'EOA',
         },
         {
-          address: '0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714',
+          address: EthereumAddress(
+            '0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xC7544ad893710Bd0bf780bf78dE5547706da75c5',
+          address: EthereumAddress(
+            '0xC7544ad893710Bd0bf780bf78dE5547706da75c5',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xf365CDB8C33849d3684AcFf5475E7B6F075F9F0F',
+          address: EthereumAddress(
+            '0xf365CDB8C33849d3684AcFf5475E7B6F075F9F0F',
+          ),
           type: 'EOA',
         },
         {
-          address: '0xfBA93b5f744c853648d62C1357532582f77ed394',
+          address: EthereumAddress(
+            '0xfBA93b5f744c853648d62C1357532582f77ed394',
+          ),
           type: 'EOA',
         },
       ],

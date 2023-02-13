@@ -32,12 +32,12 @@ export const ronin: Bridge = {
     associatedTokens: ['AXS'],
     escrows: [
       {
-        address: '0x1A2a1c938CE3eC39b6D47113c7955bAa9DD454F2', // old bridge
+        address: EthereumAddress('0x1A2a1c938CE3eC39b6D47113c7955bAa9DD454F2'), // old bridge
         sinceTimestamp: new UnixTime(1611575595),
         tokens: ['ETH', 'AXS', 'WETH', 'USDC', 'USDT', 'MATIC', 'LINK'],
       },
       {
-        address: '0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08', // new bridge
+        address: EthereumAddress('0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08'), // new bridge
         sinceTimestamp: new UnixTime(1655883630),
         tokens: ['ETH', 'AXS', 'WETH', 'USDC', 'SLP', 'USDT', 'MATIC', 'LINK'],
       },
@@ -123,7 +123,7 @@ export const ronin: Bridge = {
     // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: [
       {
-        address: '0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08',
+        address: EthereumAddress('0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08'),
         name: 'Bridge V2 (Escrow & Mainchain Gateway)',
         description: 'Upgradeable Bridge V2 contract (MainchainGatewayV2).',
         upgradeability: {
@@ -135,7 +135,7 @@ export const ronin: Bridge = {
         },
       },
       {
-        address: '0x9EcbB8dBfF5D32643fe308B399ceF26d384875BA',
+        address: EthereumAddress('0x9EcbB8dBfF5D32643fe308B399ceF26d384875BA'),
         name: 'RoninValidator',
         description: 'Upgradeable Ronin Validator contract.',
         upgradeability: {
@@ -147,7 +147,7 @@ export const ronin: Bridge = {
         },
       },
       {
-        address: '0x661E14A43173191d65951fbf7285749F416cbC8C',
+        address: EthereumAddress('0x661E14A43173191d65951fbf7285749F416cbC8C'),
         name: 'GovernanceAdmin',
         description: 'Admin of Bridge and Validator Upgradeable Proxies.',
       },
@@ -158,7 +158,9 @@ export const ronin: Bridge = {
     {
       accounts: [
         {
-          address: '0x2DA02aC5f19Ae362a4121718d990e655eB628D96',
+          address: EthereumAddress(
+            '0x2DA02aC5f19Ae362a4121718d990e655eB628D96',
+          ),
           type: 'MultiSig',
         },
       ],
@@ -168,19 +170,54 @@ export const ronin: Bridge = {
     },
     {
       accounts: [
-        { address: '0xE5EB222996967BE79468C28bA39D665fd96E8b30', type: 'EOA' },
-        { address: '0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0', type: 'EOA' },
-        { address: '0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0xE5EB222996967BE79468C28bA39D665fd96E8b30',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'GovernanceAdmin MultiSig Participants',
       description: 'Participants of the GovernanceAdmin 2/3 MultiSig.',
     },
     {
       accounts: [
-        { address: '0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4', type: 'EOA' },
-        { address: '0xE5EB222996967BE79468C28bA39D665fd96E8b30', type: 'EOA' },
-        { address: '0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0', type: 'EOA' },
-        { address: '0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192', type: 'EOA' },
+        {
+          address: EthereumAddress(
+            '0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xE5EB222996967BE79468C28bA39D665fd96E8b30',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192',
+          ),
+          type: 'EOA',
+        },
       ],
       name: 'Withdrawal Unlockers',
       description:
