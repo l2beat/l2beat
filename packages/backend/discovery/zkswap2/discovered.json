@@ -1,7 +1,7 @@
 {
   "name": "zkswap2",
-  "blockNumber": 16154924,
-  "configHash": "0x9fcb37ddd22b19fa828dedf3688d1a7208c6abf3b6d4e2c2924e79a9beee7f06",
+  "blockNumber": 16618858,
+  "configHash": "0x170e26639a3fa062e1552f849c15b2efe5a26f10b6b3c519eb0d44321373520a",
   "contracts": [
     {
       "name": "",
@@ -84,7 +84,9 @@
         "tokenLister": "0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E",
         "totalFeeTokens": 10,
         "totalUserTokens": 45,
-        "validators": ["0x38101ae98196C8BCf7dF1835Bf3983B384272ae4"]
+        "validators": [
+          "0x38101ae98196C8BCf7dF1835Bf3983B384272ae4"
+        ]
       }
     },
     {
@@ -133,17 +135,17 @@
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 1753,
-        "firstPriorityRequestId": 1810,
+        "firstPendingWithdrawalIndex": 1760,
+        "firstPriorityRequestId": 1811,
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0xf2c351f22b148A9fF583a0F81701471a74E7338e",
         "governance": "0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B",
         "maxDepositAmount": "39614081257132168796771975168",
         "numberOfPendingWithdrawals": 0,
         "pairManager": "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D",
-        "totalBlocksChecked": 32231,
-        "totalBlocksCommitted": 32231,
-        "totalBlocksVerified": 32231,
+        "totalBlocksChecked": 32240,
+        "totalBlocksCommitted": 32240,
+        "totalBlocksVerified": 32240,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 72,

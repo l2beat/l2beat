@@ -56,9 +56,12 @@
       },
       "ignoreInWatchMode": [
         "firstPendingWithdrawalIndex",
+        "firstPriorityRequestId",
         "totalBlocksChecked",
         "totalBlocksCommitted",
-        "totalBlocksVerified"
+        "totalBlocksVerified",
+        "totalCommittedPriorityRequests",
+        "totalOpenPriorityRequests"
       ]
     },
     "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D": {

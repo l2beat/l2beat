@@ -54,7 +54,9 @@
         "firstPriorityRequestId",
         "totalBlocksChecked",
         "totalBlocksCommitted",
-        "totalBlocksVerified"
+        "totalBlocksVerified",
+        "totalCommittedPriorityRequests",
+        "totalOpenPriorityRequests"
       ]
     },
     "0xc07f850b60E0EEd49a09E455b01a869C25963735": {
