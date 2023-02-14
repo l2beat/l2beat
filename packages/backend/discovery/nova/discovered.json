@@ -1,7 +1,7 @@
 {
   "name": "nova",
-  "blockNumber": 16154924,
-  "configHash": "0xa4924fd6b901b37acc77335b3ae980311fcce72c7e88c1bbdccf67ee3fc3cb02",
+  "blockNumber": 16621050,
+  "configHash": "0x8e71c82ba0568cbcd532a39d71fb7ed5a457ebe2266a7c24ae80be6625cd5575",
   "contracts": [
     {
       "name": "ArbitrumProxy",
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3713,
+        "firstUnresolvedNode": 5266,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 15184042,
-        "latestConfirmed": 3712,
-        "latestNodeCreated": 3862,
+        "latestConfirmed": 5265,
+        "latestNodeCreated": 5417,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -44,7 +44,7 @@
         "validatorUtils": "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
         "validatorWalletCreator": "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xd1842bfbe047322b3f3b3635b5fe62eb611557784d17ac1d2b1ce9c170af6544",
+        "wasmModuleRoot": "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -91,13 +91,18 @@
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
       "values": {
-        "batchCount": 6114,
+        "batchCount": 9247,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
-        "maxTimeVariation": [5760, 12, 86400, 3600],
+        "maxTimeVariation": [
+          5760,
+          12,
+          86400,
+          3600
+        ],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 100940
+        "totalDelayedMessagesRead": 133957
       }
     },
     {
@@ -137,15 +142,15 @@
         "domainSeparator": "0x2e30e82c06149e106d9459cde774416c518aece8b088f2bd8986744dbe6aa51d",
         "getChainId": 1,
         "getOwners": [
-          "0x0C881bF7a4f3eD40613239766BeaE766deF8CE1e",
-          "0x68aF7F698aA20A1B804833654E82D8d7b6816e12",
-          "0x80420B3216E87e4ed25489ef392901Aafc10951B",
-          "0xf7FAf474aB8c503CF1786FfE708c861b438A59c6",
-          "0xc19AC410EBA62a71c0Fd7B625A82088cb11Ce972",
-          "0xc73b82AC141ce46D8987135E57D0ead1BFB35075"
+          "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b",
+          "0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
+          "0x64379Dee676ab442B48925Ed603771f386510Ee7",
+          "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
+          "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
+          "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
         ],
         "getThreshold": 4,
-        "nonce": 100,
+        "nonce": 128,
         "VERSION": "1.3.0"
       }
     },
@@ -264,41 +269,25 @@
           "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
-        "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedInboxAccs": [
-          "0xfe3de3bc7a0c6148165a35812c84ed6e22346313fa6692b1a6ec4b59e3451c52",
-          "0x6406730f94f285e475fd53896c60361311cdea9069755b47754983204eeb0841",
-          "0x240b1b4c4079ac4551d0fee93a58bb93a8e8de9dfc9bf9a810bf7457e3af5cb1",
-          "0xf6dc88310435fb3dd06d3d48edf7a9ca97a855421a76d7ca48e0e10ab04f6934",
-          "0x19a27076d2ad45fd0ceb061c09025057bed66b990172fdafb80922adccf3ca75"
+        "allowedOutboxList": [
+          "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
         ],
-        "delayedMessageCount": 100967,
+        "delayedMessageCount": 133964,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerInboxAccs": [
-          "0xdf64e4e24b2598cf4b2af18f1e1df3abe4c4b0245508fe01af9755610c37771a",
-          "0x308742a63d3188109aca34ad93e45b686cb6c860d70684574a50d90d62031de0",
-          "0x17798c30f62629df8f08cf605b557951da26541c445fb9a2ff58033952c30bf0",
-          "0x0890ffdda2e7c00afd18b021bcb5375372728fa116f4d1f9f663abcf2b4df7f2",
-          "0x466e1a1ecc5dfc1c69ee32e6023d1be612498c29ff6c34d2a513fda57407ad6c"
-        ],
-        "sequencerMessageCount": 6114,
-        "sequencerReportedSubMessageCount": 1421612
-      },
-      "errors": {
-        "delayedInboxAccs": "Too many values. Update configuration explore fully",
-        "sequencerInboxAccs": "Too many values. Update configuration explore fully"
+        "sequencerMessageCount": 9247,
+        "sequencerReportedSubMessageCount": 2220317
       }
     }
   ],
   "eoas": [
-    "0x0C881bF7a4f3eD40613239766BeaE766deF8CE1e",
-    "0x68aF7F698aA20A1B804833654E82D8d7b6816e12",
+    "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
+    "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
+    "0x64379Dee676ab442B48925Ed603771f386510Ee7",
+    "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b",
+    "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
     "0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB",
-    "0x80420B3216E87e4ed25489ef392901Aafc10951B",
-    "0xc19AC410EBA62a71c0Fd7B625A82088cb11Ce972",
-    "0xc73b82AC141ce46D8987135E57D0ead1BFB35075",
-    "0xf7FAf474aB8c503CF1786FfE708c861b438A59c6"
+    "0xfE2bf40f2A9183774BF8E871d634A4E50255158B"
   ],
   "abis": {
     "0x1066CEcC8880948FE55e427E94F1FF221d626591": [
