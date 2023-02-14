@@ -14,7 +14,7 @@ export function getProductionConfig(cli: CliParameters): Config {
 
   const discoveryWatcherEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
-    !!process.env.DISCORD_TOKEN && !!process.env.DISCORD_CHANNEL_ID
+    !!process.env.DISCORD_TOKEN && !!process.env.DISCORD_CHANNEL_IDS
 
   return {
     name: 'Backend/Production',
@@ -92,7 +92,7 @@ export function getProductionConfig(cli: CliParameters): Config {
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),
-        channelId: getEnv('DISCORD_CHANNEL_ID'),
+        channelIds: getEnv.array('DISCORD_CHANNEL_IDS'),
       },
     },
   }

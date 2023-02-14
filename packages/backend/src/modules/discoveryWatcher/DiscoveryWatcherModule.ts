@@ -36,7 +36,7 @@ export function createDiscoveryWatcherModule(
     ? new DiscordClient(
         http,
         config.discoveryWatcher.discord.token,
-        config.discoveryWatcher.discord.channelId,
+        config.discoveryWatcher.discord.channelIds,
       )
     : undefined
 

@@ -6,6 +6,7 @@ import { DiscordClient } from './DiscordClient'
 
 const DISCORD_TOKEN = '<discord-token>'
 const CHANNEL_ID = '<channel-id>'
+const CHANNEL_ID_2 = '<channel-id-2>'
 
 describe(DiscordClient.name, () => {
   describe(DiscordClient.prototype.query.name, () => {
@@ -16,7 +17,7 @@ describe(DiscordClient.name, () => {
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
 
       await discord.query('/foo/bar')
     })
@@ -31,7 +32,7 @@ describe(DiscordClient.name, () => {
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
 
       await discord.query('')
     })
@@ -44,7 +45,7 @@ describe(DiscordClient.name, () => {
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
 
       await discord.query('', { method: 'POST', body: '' })
     })
@@ -57,7 +58,7 @@ describe(DiscordClient.name, () => {
           return new Response(error, { status: 400 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
 
       await expect(discord.query('')).toBeRejected(`Discord error: ${error}`)
     })
@@ -70,7 +71,7 @@ describe(DiscordClient.name, () => {
           return new Response(JSON.stringify(data), { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
 
       const result = await discord.query('')
 
@@ -79,16 +80,27 @@ describe(DiscordClient.name, () => {
   })
 
   describe(DiscordClient.prototype.sendMessage.name, () => {
-    it('constructs a correct url', async () => {
+    it('constructs a correct url for multiple channels', async () => {
+      let counter = 0
       const httpClient = mock<HttpClient>({
-        async fetch(url) {
-          expect(url).toEqual(
-            `https://discord.com/api/v10/channels/${CHANNEL_ID}/messages`,
-          )
+        fetch: async (url) => {
+          if (counter === 0) {
+            expect(url).toEqual(
+              `https://discord.com/api/v10/channels/${CHANNEL_ID}/messages`,
+            )
+            counter++
+          } else {
+            expect(url).toEqual(
+              `https://discord.com/api/v10/channels/${CHANNEL_ID_2}/messages`,
+            )
+          }
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [
+        CHANNEL_ID,
+        CHANNEL_ID_2,
+      ])
 
       await discord.sendMessage('')
     })
@@ -101,18 +113,61 @@ describe(DiscordClient.name, () => {
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
 
       await discord.sendMessage(message)
     })
 
     it('throws when message is too long', async () => {
       const httpClient = mock<HttpClient>({})
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, CHANNEL_ID)
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
 
       const message = 'a'.repeat(2001)
       await expect(discord.sendMessage(message)).toBeRejected(
         `Discord error: Message size exceeded (2000 characters)`,
+      )
+    })
+
+    it('returns multiple values', async () => {
+      const httpClient = mock<HttpClient>({
+        fetch: async () => {
+          return new Response(JSON.stringify({ message: 'OK' }), {
+            status: 200,
+          })
+        },
+      })
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [
+        CHANNEL_ID,
+        CHANNEL_ID_2,
+      ])
+
+      const result = await discord.sendMessage('')
+      expect(result).toEqual([{ message: 'OK' }, { message: 'OK' }])
+    })
+
+    it('throws error', async () => {
+      const error = JSON.stringify({ message: 'error', code: '0001' })
+
+      let counter = 0
+      const httpClient = mock<HttpClient>({
+        fetch: async () => {
+          if (counter === 0) {
+            counter++
+            return new Response(JSON.stringify({ message: 'OK' }), {
+              status: 200,
+            })
+          } else {
+            return new Response(error, { status: 400 })
+          }
+        },
+      })
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [
+        CHANNEL_ID,
+        CHANNEL_ID_2,
+      ])
+
+      await expect(discord.sendMessage('')).toBeRejected(
+        `Discord error: ${error}`,
       )
     })
   })

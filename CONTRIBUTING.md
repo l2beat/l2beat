@@ -41,8 +41,9 @@ If you want to add a new L2 project you can do that by opening a PR. To do this 
 2. Add a .ts file to describe your L2 project inside `packages/config/src/layer2s`. You can use the existing projects as reference.
 3. Add your project into `packages/config/src/layer2s/index.ts`. The order of the projects should be kept alphabetical.
 4. Add an 256x256 png project icon under 10KB into `packages/frontend/src/static/icons`.
-5. If your project is a fork of an already existing L2 project (like Boba Network that is on top of Optimism) or it was built using an Rollups SDK/framework (like ImmutableX that is on top of StarkEx) you can show this information by:
+5. If your project is a fork of an already existing L2 project (like Boba Network that is on top of Optimism) or it was built using a Rollups SDK/framework (like ImmutableX that is on top of StarkEx) you can show this information by:
    - In your project's .ts file find the field `technology`, add a field `provider` (if it is not already) and set the technology provider your project is based on.
+   - If the technology provider of your project is not defined in L2Beat yet, you can add it in the file `packages/config/src/layer2s/types/Layer2Technology.ts`. Find the optional property `provider`.
    - Create a simple React component to render the technology provider Icon (SVG format required) inside `packages/frontend/src/components/icons/providers`.
    - Import the Icon component created in `packages/frontend/src/components/icons/index.ts`.
    - Add an entry for the technology provider Icon component you created in `/packages/frontend/src/components/table/ProjectCell.tsx`.
