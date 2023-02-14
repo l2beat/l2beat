@@ -108,7 +108,9 @@ export function getLocalConfig(cli: CliParameters): Config {
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),
-        channelIds: getEnv('DISCORD_CHANNEL_ID').split(' '),
+        channelIds: getEnv('DISCORD_CHANNEL_ID')
+          .split(' ')
+          .filter((x) => x.length > 0),
       },
     },
   }
