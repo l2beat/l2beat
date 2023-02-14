@@ -18,13 +18,19 @@ import {
 } from './SocialLinks'
 import { VerticalBar } from './VerticalBar'
 
-export type NavbarPage = 'scaling' | 'bridges' | 'donate' | 'faq'
+export type NavbarPage =
+  | 'scaling'
+  | 'bridges'
+  | 'donate'
+  | 'faq'
+  | 'definitions'
 
 export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
   showBridges: boolean
   showHiring: boolean
+  showDefinitions: boolean
   forumLink: string
   socialLinks: SocialLinksProps
   selectedPage: NavbarPage
@@ -40,6 +46,7 @@ export function getNavbarProps(
     showHiring: config.features.hiring,
     showBridges: config.features.bridges,
     showActivity: config.features.activity,
+    showDefinitions: config.features.rating,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }
@@ -130,6 +137,16 @@ export function Navbar(props: NavbarProps) {
                   FAQ
                 </PageLink>
               </li>
+              {props.showDefinitions && (
+                <li className="h-full">
+                  <PageLink
+                    selected={props.selectedPage === 'definitions'}
+                    href="/definitions"
+                  >
+                    Definitions
+                  </PageLink>
+                </li>
+              )}
               {props.showHiring && (
                 <li className="h-full">
                   <OutLink
