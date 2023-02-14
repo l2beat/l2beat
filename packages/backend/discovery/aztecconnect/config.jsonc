@@ -9,15 +9,26 @@
           "type": "array",
           "method": "getSupportedBridge",
           "length": "{{ getSupportedBridgesLength }}",
-          "startIndex": 1
+          "startIndex": 1,
+          "ignoreRelative": true
         },
         "getSupportedAsset": {
           "type": "array",
           "method": "getSupportedAsset",
           "length": "{{ getSupportedAssetsLength }}",
-          "startIndex": 1
+          "startIndex": 1,
+          "ignoreRelative": true
         }
-      }
+      },
+      "ignoreMethods": [
+        "assetGasLimits",
+        "asyncDefiInteractionHashes",
+        "bridgeGasLimits",
+        "caps",
+        "defiInteractionHashes",
+        "ethPayments",
+        "pendingDefiInteractions"
+      ]
     }
   }
 }

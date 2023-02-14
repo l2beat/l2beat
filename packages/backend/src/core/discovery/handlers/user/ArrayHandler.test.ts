@@ -197,6 +197,7 @@ describe(ArrayHandler.name, () => {
       expect<unknown>(result).toEqual({
         field: 'owners',
         value: owners,
+        ignoreRelative: undefined,
       })
     })
 
@@ -223,6 +224,7 @@ describe(ArrayHandler.name, () => {
       expect<unknown>(result).toEqual({
         field: 'owners',
         value: owners,
+        ignoreRelative: undefined,
       })
     })
 
@@ -277,6 +279,7 @@ describe(ArrayHandler.name, () => {
       expect<unknown>(result).toEqual({
         field: 'owners',
         value: owners,
+        ignoreRelative: undefined,
       })
     })
 

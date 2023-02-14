@@ -17,6 +17,7 @@ export const ArrayHandlerDefinition = z.strictObject({
   length: z.optional(z.union([z.number().int().nonnegative(), Reference])),
   maxLength: z.optional(z.number().int().nonnegative()),
   startIndex: z.optional(z.number().int().nonnegative()),
+  ignoreRelative: z.optional(z.boolean()),
 })
 
 const DEFAULT_MAX_LENGTH = 100
@@ -83,7 +84,7 @@ export class ArrayHandler implements Handler {
         error: 'Too many values. Provide a higher maxLength value',
       }
     }
-    return { field: this.field, value }
+    return { field: this.field, value, ignoreRelative: resolved.ignoreRelative }
   }
 }
 
@@ -102,6 +103,7 @@ function resolveDependencies(
     length,
     maxLength: definition.maxLength ?? DEFAULT_MAX_LENGTH,
     startIndex: definition.startIndex ?? 0,
+    ignoreRelative: definition.ignoreRelative,
   }
 }
 
