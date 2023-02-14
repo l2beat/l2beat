@@ -12,7 +12,7 @@ export class DiscordClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly discordToken: string,
-    private readonly channelId: string,
+    private readonly channelIds: string[],
   ) {}
 
   async sendMessage(message: string) {
@@ -20,15 +20,22 @@ export class DiscordClient {
       throw new Error(`Discord error: Message size exceeded (2000 characters)`)
     }
 
-    const endpoint = `/channels/${this.channelId}/messages`
-    const body = {
-      content: message,
+    const result = []
+    for (const channelId of this.channelIds) {
+      const endpoint = `/channels/${channelId}/messages`
+      const body = {
+        content: message,
+      }
+
+      result.push(
+        await this.query(endpoint, {
+          method: 'POST',
+          body: JSON.stringify(body),
+        }),
+      )
     }
 
-    return this.query(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(body),
-    })
+    return result
   }
 
   async query(endpoint: string, options?: RequestInit) {
