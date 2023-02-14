@@ -20,22 +20,19 @@ export class DiscordClient {
       throw new Error(`Discord error: Message size exceeded (2000 characters)`)
     }
 
-    const result = []
-    for (const channelId of this.channelIds) {
-      const endpoint = `/channels/${channelId}/messages`
-      const body = {
-        content: message,
-      }
+    return await Promise.all(
+      this.channelIds.map((channelId) => {
+        const endpoint = `/channels/${channelId}/messages`
+        const body = {
+          content: message,
+        }
 
-      result.push(
-        await this.query(endpoint, {
+        return this.query(endpoint, {
           method: 'POST',
           body: JSON.stringify(body),
-        }),
-      )
-    }
-
-    return result
+        })
+      }),
+    )
   }
 
   async query(endpoint: string, options?: RequestInit) {

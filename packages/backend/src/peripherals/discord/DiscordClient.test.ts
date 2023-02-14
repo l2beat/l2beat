@@ -127,5 +127,48 @@ describe(DiscordClient.name, () => {
         `Discord error: Message size exceeded (2000 characters)`,
       )
     })
+
+    it('returns multiple values', async () => {
+      const httpClient = mock<HttpClient>({
+        fetch: async () => {
+          return new Response(JSON.stringify({ message: 'OK' }), {
+            status: 200,
+          })
+        },
+      })
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [
+        CHANNEL_ID,
+        CHANNEL_ID_2,
+      ])
+
+      const result = await discord.sendMessage('')
+      expect(result).toEqual([{ message: 'OK' }, { message: 'OK' }])
+    })
+
+    it('throws error', async () => {
+      const error = JSON.stringify({ message: 'error', code: '0001' })
+
+      let counter = 0
+      const httpClient = mock<HttpClient>({
+        fetch: async () => {
+          if (counter === 0) {
+            counter++
+            return new Response(JSON.stringify({ message: 'OK' }), {
+              status: 200,
+            })
+          } else {
+            return new Response(error, { status: 400 })
+          }
+        },
+      })
+      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [
+        CHANNEL_ID,
+        CHANNEL_ID_2,
+      ])
+
+      await expect(discord.sendMessage('')).toBeRejected(
+        `Discord error: ${error}`,
+      )
+    })
   })
 })
