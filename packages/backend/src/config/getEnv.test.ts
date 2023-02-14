@@ -67,4 +67,18 @@ describe(getEnv.name, () => {
       expect(() => getEnv.boolean('TEST_B')).toThrow()
     })
   })
+
+  describe(getEnv.array.name, () => {
+    it('returns environment variable as array', () => {
+      process.env.TEST_ARRAY = 'A B C'
+      const result = getEnv.array('TEST_ARRAY')
+      expect(result).toEqual(['A', 'B', 'C'])
+    })
+
+    it('handles additional spaces', () => {
+      process.env.TEST_ARRAY = 'A    B    C'
+      const result = getEnv.array('TEST_ARRAY')
+      expect(result).toEqual(['A', 'B', 'C'])
+    })
+  })
 })
