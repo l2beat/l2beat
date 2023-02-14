@@ -11,7 +11,7 @@ export function getProps(config: Config): Wrapped<DefinitionsPageProps> {
     props: {
       navbar: getNavbarProps(config, 'definitions'),
       title: 'Definitions',
-      ratings: getHtml(path.join(__dirname, 'ratings.md')),
+      htmlContent: getHtml(path.join(__dirname, 'ratings.md')),
       footer: getFooterProps(config),
     },
     wrapper: {

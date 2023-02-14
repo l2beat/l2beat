@@ -6,7 +6,7 @@ import { PageContent } from '../../components/PageContent'
 
 export interface DefinitionsPageProps {
   title: string
-  ratings: string
+  htmlContent: string
   footer: FooterProps
   navbar: NavbarProps
 }
@@ -27,7 +27,7 @@ export function DefinitionsPage(props: DefinitionsPageProps) {
         <HorizontalSeparator className="my-12" />
         <article
           className="definitions"
-          dangerouslySetInnerHTML={{ __html: props.ratings }}
+          dangerouslySetInnerHTML={{ __html: props.htmlContent }}
         />
       </PageContent>
       <Footer narrow {...props.footer} />
