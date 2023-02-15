@@ -33,9 +33,9 @@ export function SidebarMenu(props: SidebarMenuProps) {
         )}
       >
         <div className="mt-[11.5px] flex items-center justify-between px-4">
-        <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
-                <Logo className="h-8 w-auto" />
-              </a>
+          <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
+            <Logo className="h-8 w-auto" />
+          </a>
           <div className="flex gap-4">
             <DarkThemeToggle />
             <button id="sidebar-menu-close">
