@@ -182,4 +182,10 @@ export const myria: Layer2 = {
         'Layer 2 scaling solution powered by Starware is live on Ethereum.',
     },
   ],
+  rating: {
+    category: {
+      score: '-',
+      requirements: ['This is not a rollup'],
+    },
+  },
 }

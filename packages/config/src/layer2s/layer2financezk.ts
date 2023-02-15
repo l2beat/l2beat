@@ -194,4 +194,10 @@ export const layer2financezk: Layer2 = {
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
     },
   ],
+  rating: {
+    category: {
+      score: '-',
+      requirements: ['This is not a rollup'],
+    },
+  },
 }

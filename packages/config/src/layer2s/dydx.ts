@@ -203,4 +203,18 @@ export const dydx: Layer2 = {
         'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK.',
     },
   ],
+  rating: {
+    category: {
+      score: 'B',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    modifier: {
+      score: '-',
+      items: ['Force exit mechanism is not always viable option'],
+    },
+    thingsToImprove: {
+      improvedScore: 'A',
+      requirements: ['There should be no instant upgradeability'],
+    },
+  },
 }

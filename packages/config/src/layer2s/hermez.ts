@@ -219,4 +219,14 @@ export const hermez: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days')],
   },
+  rating: {
+    category: {
+      score: 'B',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    thingsToImprove: {
+      improvedScore: 'A',
+      requirements: ['There should be no instant upgradeability'],
+    },
+  },
 }

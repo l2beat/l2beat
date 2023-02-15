@@ -392,4 +392,14 @@ export const bobanetwork: Layer2 = {
       description: 'BOBA token launched by OMG Foundation.',
     },
   ],
+  rating: {
+    category: {
+      score: 'C',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    thingsToImprove: {
+      improvedScore: 'B',
+      requirements: ['Implement fraud proofs'],
+    },
+  },
 }

@@ -282,4 +282,18 @@ export const starknet: Layer2 = {
         'Bridge is live on mainnet, serving as gateway between Ethereum and StarkNet.',
     },
   ],
+  rating: {
+    category: {
+      score: 'C',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    modifier: {
+      score: '+',
+      items: ['']
+    },
+    thingsToImprove: {
+      improvedScore: 'B',
+      requirements: ['Implement escape hatch'],
+    },
+  },
 }

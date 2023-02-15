@@ -373,4 +373,14 @@ export const optimism: Layer2 = {
       description: 'All smart contracts allowed after prior approval.',
     },
   ],
+  rating: {
+    category: {
+      score: 'C',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    thingsToImprove: {
+      improvedScore: 'B',
+      requirements: ['Implement fraud proofs'],
+    },
+  },
 }

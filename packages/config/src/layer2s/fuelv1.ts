@@ -122,4 +122,18 @@ export const fuelv1: Layer2 = {
       description: 'First trustless Optimistic Rollup is live on Mainnet.',
     },
   ],
+  rating: {
+    category: {
+      score: 'A',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    modifier: {
+      score: '-',
+      items: ['System is not actively used'],
+    },
+    thingsToImprove: {
+      improvedScore: 'A',
+      requirements: ['More adoption'],
+    },
+  },
 }

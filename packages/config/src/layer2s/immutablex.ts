@@ -210,4 +210,10 @@ export const immutablex: Layer2 = {
         'Immutable announce IMX, the native ERC-20 utility token of Immutable X.',
     },
   ],
+  rating: {
+    category: {
+      score: '-',
+      requirements: ['This is not a rollup'],
+    },
+  },
 }

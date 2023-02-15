@@ -355,4 +355,14 @@ export const zksync: Layer2 = {
         'zkSync is live, bringing scalable payments to Ethereum using zkRollup technology.',
     },
   ],
+  rating: {
+    category: {
+      score: 'B',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    thingsToImprove: {
+      improvedScore: 'A',
+      requirements: ['There should be no instant upgradeability'],
+    },
+  },
 }

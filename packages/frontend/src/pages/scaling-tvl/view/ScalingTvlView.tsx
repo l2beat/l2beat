@@ -59,8 +59,20 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
       name: 'Risks',
       tooltip: 'Risk analysis summary.',
       alignRight: true,
-      getValue: (project) => <Circles summary={project.summary}/>,
+      getValue: (project) => <Circles summary={project.summary} />,
     },
+    ...(ratingEnabled
+      ? [
+          {
+            name: 'Rating',
+            tooltip: 'Rating of this Layer 2 based on its features.',
+            alignCenter: true as const,
+            getValue: (project: ScalingTvlViewEntry) => (
+              <RatingCell item={project.ratingEntry} />
+            ),
+          },
+        ]
+      : []),
     {
       name: 'TVL',
       tooltip: 'Total value locked in escrow contracts on Ethereum.',
@@ -75,18 +87,7 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
         <NumberCell signed>{project.sevenDayChange}</NumberCell>
       ),
     },
-    ...(ratingEnabled
-      ? [
-          {
-            name: 'Rating',
-            tooltip: 'Rating of this Layer 2 based on its features.',
-            alignCenter: true as const,
-            getValue: (project: ScalingTvlViewEntry) => (
-              <RatingCell item={project.ratingEntry} />
-            ),
-          },
-        ]
-      : []),
+
     {
       name: 'Breakdown',
       tooltip:

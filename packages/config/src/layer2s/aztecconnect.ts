@@ -204,4 +204,18 @@ export const aztecconnect: Layer2 = {
         'Aztec Connect is live on mainnet, enabling private DeFi on Ethereum.',
     },
   ],
+  rating: {
+    category: {
+      score: 'B',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    modifier: {
+      score: '--',
+      items: ['Validators are behind a whitelist'],
+    },
+    thingsToImprove: {
+      improvedScore: 'A',
+      requirements: ['There should be no instant upgradeability'],
+    },
+  },
 }

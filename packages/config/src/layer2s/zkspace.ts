@@ -202,4 +202,14 @@ export const zkspace: Layer2 = {
       description: 'Incentives program to onboard new users has started.',
     },
   ],
+  rating: {
+    category: {
+      score: 'B',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    thingsToImprove: {
+      improvedScore: 'A',
+      requirements: ['There should be no instant upgradeability'],
+    },
+  },
 }
