@@ -29,7 +29,6 @@ function Template(props: TemplateProps) {
     <Navbar
       showBanner={props.showBanner}
       forumLink="#"
-      showBridges
       showActivity
       showHiring
       showDefinitions
