@@ -13,7 +13,6 @@ import { SocialLinks, SocialLinksProps } from './SocialLinks'
 export interface SidebarMenuProps {
   showBanner: boolean
   showActivity: boolean
-  showBridges: boolean
   showHiring: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -59,28 +58,27 @@ export function SidebarMenu(props: SidebarMenuProps) {
               </ul>
             </li>
           </ul>
-          {props.showBridges && (
-            <ul className="mt-8">
-              <li>
-                <div className="mb-4 flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                  <span className="text-xs font-medium uppercase">Bridges</span>
+          <ul className="mt-8">
+            <li>
+              <div className="mb-4 flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <span className="text-xs font-medium uppercase">Bridges</span>
+                <NewItemBadge />
+              </div>
+              <ul className="flex flex-col gap-4 ">
+                <li className="flex items-center gap-2 font-medium">
+                  <TvlIcon className="h-auto w-5" />
+                  <a href="/bridges/tvl">Total Value Locked</a>
                   <NewItemBadge />
-                </div>
-                <ul className="flex flex-col gap-4 ">
-                  <li className="flex items-center gap-2 font-medium">
-                    <TvlIcon className="h-auto w-5" />
-                    <a href="/bridges/tvl">Total Value Locked</a>
-                    <NewItemBadge />
-                  </li>
-                  <li className="flex items-center gap-2 font-medium">
-                    <RiskIcon className="h-auto w-5" />
-                    <a href="/bridges/risk">Risks</a>
-                    <NewItemBadge />
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          )}
+                </li>
+                <li className="flex items-center gap-2 font-medium">
+                  <RiskIcon className="h-auto w-5" />
+                  <a href="/bridges/risk">Risks</a>
+                  <NewItemBadge />
+                </li>
+              </ul>
+            </li>
+          </ul>
+
           <HorizontalSeparator className="my-6" />
           <ul className="flex flex-col gap-4 font-medium">
             <li>
