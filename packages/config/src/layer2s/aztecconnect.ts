@@ -26,13 +26,12 @@ export const aztecconnect: Layer2 = {
       apps: ['https://zk.money'],
       documentation: ['https://developers.aztec.network/'],
       explorers: ['https://aztec-connect-prod-explorer.aztec.network/'],
-      repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
+      repositories: ['https://github.com/AztecProtocol/aztec-connect'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',
         'https://medium.com/aztec-protocol',
         'https://t.me/aztecprotocol',
         'https://discord.gg/UDtJr9u',
-        'https://plonk.cafe/',
       ],
     },
     activityDataSource: 'Explorer API',
@@ -203,5 +202,12 @@ export const aztecconnect: Layer2 = {
       description:
         'Aztec Connect is live on mainnet, enabling private DeFi on Ethereum.',
     },
+    {
+      name: 'Introducing Noir',
+      date: '2022-10-06T00:00:00Z',
+      link: 'https://medium.com/aztec-protocol/introducing-noir-the-universal-language-of-zero-knowledge-ff43f38d86d9',
+      description:
+        'Noir - programming language for zero-knowledge proofs, has been introduced.',
+    }
   ],
 }
