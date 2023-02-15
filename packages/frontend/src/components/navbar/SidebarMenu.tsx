@@ -5,6 +5,7 @@ import { NewItemBadge } from '../badge/NewItemBadge'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
+import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
@@ -24,15 +25,19 @@ export function SidebarMenu(props: SidebarMenuProps) {
       <div
         id="sidebar-menu"
         className={cx(
-          'fixed left-0 bottom-0 z-50 hidden text-base',
+          'fixed left-0 bottom-0 z-50 hidden w-full text-base',
           props.showBanner ? 'top-8' : 'top-0',
-          'w-3/4 min-w-[240px]',
+
           'flex flex-col bg-white dark:bg-black',
         )}
       >
-        <button id="sidebar-menu-close" className="ml-4 mt-4 block">
-          <MenuCloseIcon className="block" aria-label="Close menu" />
-        </button>
+        <div className="mt-[11.5px] flex items-center justify-between px-4">
+          <Logo className="h-8 w-auto" />
+          <button id="sidebar-menu-close">
+            <MenuCloseIcon className="block" aria-label="Close menu" />
+          </button>
+        </div>
+
         <div className="relative flex-1 overflow-y-auto overflow-x-visible p-4">
           <ul className="mt-8">
             <li>
