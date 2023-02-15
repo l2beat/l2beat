@@ -2,6 +2,7 @@ import { Layer2, Layer2Rating } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { Circles } from '../../../components/table/Circles'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
@@ -53,6 +54,12 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
     {
       name: 'Name',
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
+    },
+    {
+      name: 'Risks',
+      tooltip: 'Risk analysis summary.',
+      alignRight: true,
+      getValue: (project) => <Circles summary={project.summary}/>,
     },
     {
       name: 'TVL',
