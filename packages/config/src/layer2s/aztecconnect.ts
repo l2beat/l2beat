@@ -208,6 +208,25 @@ export const aztecconnect: Layer2 = {
       link: 'https://medium.com/aztec-protocol/introducing-noir-the-universal-language-of-zero-knowledge-ff43f38d86d9',
       description:
         'Noir - programming language for zero-knowledge proofs, has been introduced.',
-    }
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Explaining the Aztec Network',
+      url: 'https://medium.com/aztec-protocol/explaining-the-network-in-aztec-network-166862b3ef7d',
+      thumbnailUrl:
+        'https://miro.medium.com/max/720/1*P6r1E4yB0egVpk1sbYlzcQ.png',
+    },
+    {
+      title: 'Economics of Aztec zkRollup',
+      url: 'https://medium.com/aztec-protocol/privacy-for-pennies-scaling-aztecs-zkrollup-9f2b36615cc6',
+      thumbnailUrl:
+        'https://miro.medium.com/v2/resize:fit:1400/format:webp/1*HTS4vJVMVk3JM_VmtZJXIg.jpeg',
+    },
+    {
+      title: 'Understanding PLONK',
+      url: 'https://vitalik.ca/general/2019/09/22/plonk.html',
+      thumbnailUrl: 'https://vitalik.ca/images/icon.png',
+    },
   ],
 }
