@@ -42,6 +42,15 @@ function getScalingTvlViewEntry(
   }
   const stats = getTvlStats(apiProject, project.display.name, associatedTokens)
 
+  project.riskView.stateValidation.sentiment
+  const summary = [
+    getValue(project.riskView.stateValidation.sentiment),
+    getValue(project.riskView.dataAvailability.sentiment),
+    getValue(project.riskView.upgradeability.sentiment),
+    getValue(project.riskView.sequencerFailure.sentiment),
+    getValue(project.riskView.validatorFailure.sentiment),
+  ]
+
   return {
     name: project.display.name,
     slug: project.display.slug,
@@ -56,5 +65,17 @@ function getScalingTvlViewEntry(
     purpose: project.display.purpose,
     technology: project.technology.category,
     ratingEntry: project.rating,
+    summary
   }
 }
+
+function getValue(sentiment: undefined | "warning" | "bad") {
+  switch (sentiment) {
+    case undefined:
+      return 2
+    case "warning":
+      return 1
+    case "bad":
+      return 0
+  }
+} 

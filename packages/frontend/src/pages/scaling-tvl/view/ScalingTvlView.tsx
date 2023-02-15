@@ -36,6 +36,7 @@ export interface ScalingTvlViewEntry {
   marketShare: string
   purpose: string
   technology: string
+  summary?: number[]
   ratingEntry?: Layer2Rating
 }
 
