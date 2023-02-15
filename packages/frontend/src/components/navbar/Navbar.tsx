@@ -1,9 +1,8 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../../build/config'
 import { NewItemBadge } from '../badge/NewItemBadge'
-import { MenuOpenIcon } from '../icons/symbols/MenuOpenIcon'
+import { MenuOpenIcon } from '../icons'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
 import { Banner } from './Banner'
@@ -28,7 +27,6 @@ export type NavbarPage =
 export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
-  showBridges: boolean
   showHiring: boolean
   showDefinitions: boolean
   forumLink: string
@@ -44,7 +42,6 @@ export function getNavbarProps(
     showBanner: config.features.banner,
     forumLink: config.links.forum,
     showHiring: config.features.hiring,
-    showBridges: config.features.bridges,
     showActivity: config.features.activity,
     showDefinitions: config.features.rating,
     socialLinks: getSocialLinksProps(config),
@@ -58,7 +55,6 @@ export function Navbar(props: NavbarProps) {
       <SidebarMenu
         showBanner={props.showBanner}
         showActivity={props.showActivity}
-        showBridges={props.showBridges}
         showHiring={props.showHiring}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
@@ -70,51 +66,36 @@ export function Navbar(props: NavbarProps) {
             <MenuOpenIcon className="block" aria-label="Open menu" />
           </button>
           <ul className="flex h-full items-center">
-            <li
-              className={cx(
-                props.showBridges
-                  ? 'mx-4 lg:ml-0 lg:mr-8'
-                  : 'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
-              )}
-            >
+            <li className="mx-4 lg:ml-0 lg:mr-8">
               <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
                 <Logo className="h-8 w-auto" />
               </a>
             </li>
-            {props.showBridges && (
-              <>
-                <li className="h-full">
-                  <PageLink
-                    selected={props.selectedPage === 'scaling'}
-                    large
-                    href="/scaling/tvl"
-                  >
-                    Scaling
-                  </PageLink>
-                </li>
-                <li className="h-full">
-                  <PageLink
-                    selected={props.selectedPage === 'bridges'}
-                    large
-                    href="/bridges/tvl"
-                  >
-                    Bridges
-                    <NewItemBadge className="ml-2" />
-                  </PageLink>
-                </li>
-              </>
-            )}
+            <li className="h-full">
+              <PageLink
+                selected={props.selectedPage === 'scaling'}
+                large
+                href="/scaling/tvl"
+              >
+                Scaling
+              </PageLink>
+            </li>
+            <li className="h-full">
+              <PageLink
+                selected={props.selectedPage === 'bridges'}
+                large
+                href="/bridges/tvl"
+              >
+                Bridges
+                <NewItemBadge className="ml-2" />
+              </PageLink>
+            </li>
           </ul>
           <div className="hidden h-full items-center gap-5 lg:flex">
-            <ul
-              className={cx(
-                'flex items-center gap-4',
-                !props.showBridges && 'absolute left-4 lg:left-12',
-              )}
-            >
+            <ul className="flex items-center gap-4">
               <SocialLinks {...props.socialLinks} />
             </ul>
-            {props.showBridges && <VerticalBar />}
+            <VerticalBar />
             <ul className="flex h-full items-center gap-1.5">
               <li className="h-full">
                 <OutLink
