@@ -16,7 +16,7 @@ export function PageLink(props: PageLinkProps) {
         'flex h-full items-center font-medium',
         props.large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2',
         props.selected &&
-          'border-b-2 border-current pt-2 text-pink-900 dark:text-pink-200',
+          'border-b-2 border-current pt-0.5 text-pink-900 dark:text-pink-200',
       )}
       href={props.href}
       target={props.newTab ? '_blank' : undefined}

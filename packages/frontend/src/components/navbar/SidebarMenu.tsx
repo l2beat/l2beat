@@ -2,7 +2,6 @@ import cx from 'classnames'
 import React from 'react'
 
 import { NewItemBadge } from '../badge/NewItemBadge'
-import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
@@ -10,8 +9,10 @@ import { OutLink } from '../OutLink'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
 import { SocialLinks, SocialLinksProps } from './SocialLinks'
+import { NavbarPage } from './types'
 
 export interface SidebarMenuProps {
+  selectedPage: NavbarPage
   showBanner: boolean
   showActivity: boolean
   showHiring: boolean
@@ -32,7 +33,9 @@ export function SidebarMenu(props: SidebarMenuProps) {
         )}
       >
         <div className="mt-[11.5px] flex items-center justify-between px-4">
-          <Logo className="h-8 w-auto" />
+        <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
+                <Logo className="h-8 w-auto" />
+              </a>
           <div className="flex gap-4">
             <DarkThemeToggle />
             <button id="sidebar-menu-close">
@@ -40,10 +43,10 @@ export function SidebarMenu(props: SidebarMenuProps) {
             </button>
           </div>
         </div>
-        <div className="relative mt-2 flex-1 overflow-y-auto overflow-x-visible px-6">
-          <ul className='mt-8'>
+        <div className="relative mt-2 flex-1 overflow-y-auto overflow-x-visible">
+          <ul className="mt-8 px-6">
             <li>
-              <div className="text-s mb-4 font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
+              <div className="mb-4 text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
                 Scaling
               </div>
               <ul className="ml-4 flex flex-col gap-4">
@@ -65,10 +68,10 @@ export function SidebarMenu(props: SidebarMenuProps) {
               </ul>
             </li>
           </ul>
-          <ul className="mt-8">
+          <ul className="mt-8 px-6">
             <li>
               <div className="mb-4 flex items-center gap-2">
-                <span className="text-s font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
+                <span className="text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
                   Bridges
                 </span>
                 <NewItemBadge />
@@ -87,9 +90,8 @@ export function SidebarMenu(props: SidebarMenuProps) {
               </ul>
             </li>
           </ul>
-
-          <HorizontalSeparator className="my-6" />
-          <ul className="flex flex-col gap-4 font-medium">
+          <hr className="mt-8 mb-6 w-full border-gray-200 dark:border-gray-850" />
+          <ul className="flex flex-col gap-4 px-6 text-sm font-medium">
             <li>
               <OutLink href={props.forumLink}>Forum</OutLink>
             </li>
@@ -111,8 +113,8 @@ export function SidebarMenu(props: SidebarMenuProps) {
               </li>
             )}
           </ul>
-          <HorizontalSeparator className="my-6" />
-          <ul className="mb-12 flex gap-4">
+          <hr className="my-6 w-full border-gray-200 dark:border-gray-850" />
+          <ul className="mb-12 flex gap-4 px-6">
             <SocialLinks {...props.socialLinks} />
           </ul>
         </div>

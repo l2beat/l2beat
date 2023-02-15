@@ -15,14 +15,8 @@ import {
   SocialLinks,
   SocialLinksProps,
 } from './SocialLinks'
+import { NavbarPage } from './types'
 import { VerticalBar } from './VerticalBar'
-
-export type NavbarPage =
-  | 'scaling'
-  | 'bridges'
-  | 'donate'
-  | 'faq'
-  | 'definitions'
 
 export interface NavbarProps {
   showBanner: boolean
@@ -53,6 +47,7 @@ export function Navbar(props: NavbarProps) {
   return (
     <>
       <SidebarMenu
+        selectedPage={props.selectedPage}
         showBanner={props.showBanner}
         showActivity={props.showActivity}
         showHiring={props.showHiring}
