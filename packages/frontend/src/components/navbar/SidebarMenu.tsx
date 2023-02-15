@@ -33,29 +33,31 @@ export function SidebarMenu(props: SidebarMenuProps) {
       >
         <div className="mt-[11.5px] flex items-center justify-between px-4">
           <Logo className="h-8 w-auto" />
-          <button id="sidebar-menu-close">
-            <MenuCloseIcon className="block" aria-label="Close menu" />
-          </button>
+          <div className="flex gap-4">
+            <DarkThemeToggle />
+            <button id="sidebar-menu-close">
+              <MenuCloseIcon className="block" aria-label="Close menu" />
+            </button>
+          </div>
         </div>
-
-        <div className="relative flex-1 overflow-y-auto overflow-x-visible p-4">
-          <ul className="mt-8">
+        <div className="relative mt-2 flex-1 overflow-y-auto overflow-x-visible px-6">
+          <ul className='mt-8'>
             <li>
-              <div className="mb-4 text-xs font-medium uppercase text-gray-700 dark:text-gray-300">
+              <div className="text-s mb-4 font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
                 Scaling
               </div>
-              <ul className="flex flex-col gap-4">
+              <ul className="ml-4 flex flex-col gap-4">
                 <li className="flex gap-2 font-medium">
-                  <TvlIcon className="h-auto w-5" />
+                  <TvlIcon className="h-auto w-4" />
                   <a href="/scaling/tvl">Total Value Locked</a>
                 </li>
                 <li className="flex gap-2 font-medium">
-                  <RiskIcon className="h-auto w-5" />
+                  <RiskIcon className="h-auto w-4" />
                   <a href="/scaling/risk">Risks</a>
                 </li>
                 {props.showActivity && (
                   <li className="flex items-center gap-2 font-medium">
-                    <ActivityIcon className="h-auto w-5" />
+                    <ActivityIcon className="h-auto w-4" />
                     <a href="/scaling/activity">Activity</a>
                     <NewItemBadge />
                   </li>
@@ -65,18 +67,20 @@ export function SidebarMenu(props: SidebarMenuProps) {
           </ul>
           <ul className="mt-8">
             <li>
-              <div className="mb-4 flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                <span className="text-xs font-medium uppercase">Bridges</span>
+              <div className="mb-4 flex items-center gap-2">
+                <span className="text-s font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
+                  Bridges
+                </span>
                 <NewItemBadge />
               </div>
-              <ul className="flex flex-col gap-4 ">
+              <ul className="ml-4 flex flex-col gap-4">
                 <li className="flex items-center gap-2 font-medium">
-                  <TvlIcon className="h-auto w-5" />
+                  <TvlIcon className="h-auto w-4" />
                   <a href="/bridges/tvl">Total Value Locked</a>
                   <NewItemBadge />
                 </li>
                 <li className="flex items-center gap-2 font-medium">
-                  <RiskIcon className="h-auto w-5" />
+                  <RiskIcon className="h-auto w-4" />
                   <a href="/bridges/risk">Risks</a>
                   <NewItemBadge />
                 </li>
@@ -111,9 +115,6 @@ export function SidebarMenu(props: SidebarMenuProps) {
           <ul className="mb-12 flex gap-4">
             <SocialLinks {...props.socialLinks} />
           </ul>
-          <div className="mb-8 flex gap-4">
-            <DarkThemeToggle withText />
-          </div>
         </div>
       </div>
       <div
