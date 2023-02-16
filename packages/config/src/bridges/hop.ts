@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { NUGGETS } from '../layer2s'
 import { Bridge } from './types'
 
 export const hop: Bridge = {
@@ -201,6 +202,13 @@ export const hop: Bridge = {
       ],
       name: 'Hop MultiSig Participants',
       description: 'Participants of the 2/3 Hop MultiSig.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Hop deep dive',
+      url: 'https://li.fi/knowledge-hub/hop-a-deep-dive/',
+      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
     },
   ],
 }

@@ -213,7 +213,7 @@ export const dydx: Layer2 = {
     {
       title: 'How does escape hatch work?',
       url: 'https://twitter.com/bkiepuszewski/status/1469201939049103360?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
-    }
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+    },
   ],
 }

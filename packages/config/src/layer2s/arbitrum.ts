@@ -267,8 +267,9 @@ export const arbitrum: Layer2 = {
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
-      )}/${discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-        } Arbitrum MultiSig.`,
+      )}/${
+        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+      } Arbitrum MultiSig.`,
     },
     {
       name: 'Sequencer',
@@ -514,7 +515,7 @@ export const arbitrum: Layer2 = {
     {
       title: 'Arbitrum is down - but has it really stopped working?',
       url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
   ],
 }
