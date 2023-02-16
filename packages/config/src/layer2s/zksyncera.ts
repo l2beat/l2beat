@@ -1,4 +1,3 @@
-
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import {
