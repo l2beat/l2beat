@@ -1,18 +1,86 @@
 # Discovery documentation
 
-## Cache
+NOTE: We use a pseudo-TS syntax to simplify parameter types here:
 
-Are you tired of hitting `yarn discover <project>` and waiting for the output? We got you covered, caching is built into discovery scripts!
+- `address` - string representing contract address
+- `field` - string representing method/value name
 
-### env variable
+## Adding new project
 
-Set the proper environmental variable to prevent script from fetching the same data multiple times:
+Create a new folder in `discovery` named after the project, with `config.jsonc` inside. Then run
 
-`DISCOVERY_BLOCK_NUMBER`- overrides the block number used during local discovery
+```
+yarn discover <project_name>
+```
 
-### proposed usage
+A file `discovered.json` will appear in this folder, showing you this project's structure. Make sure to resolve all the errors by ignoring methods or adding specific field handlers.
 
-`DISCOVERY_BLOCK_NUMBER=<block_number> y discover <project>`
+**Parameters:**
+
+- `"$schema": "../config.schema.json"`
+- `name` - name of the project
+- `initialAddresses: address[]` - array of addresses that discovery will start from. Discovery will download the contract ABI, read all the available values, and walk through all the contracts found there (`maxDepth` defaults to 7). Sometimes the most central address is enough here, but in case of a more complex implementation, you will need to add more to cover all important contracts. Usually 3 addresses here is enough.
+- `overrides: Record<address, object>` - (optional) key-value object, with contracts as keys. It will allow you to ignore contracts in discovery (ex. token addresses or external contracts) or, override more complex fields and methods ([storage](#storage-handler) and [array](#array-handler) handlers).
+
+**Example:**
+
+```
+{
+  "$schema": "../config.schema.json"
+  name: "project_a",
+  initialAddresses: ["0x1234", "0x5678"],
+  overrides: {
+    "0x1234": {
+      fields: {
+        field_a: {
+          type: "storage",
+          slot: 1
+        }
+      },
+      ignoreMethods: ["method_a", "method_b"],
+      ignoreInWatchMode: ["method_c"]
+    },
+    "0xabcd": {
+      ignoreDiscovery: true
+    }
+  }
+}
+```
+
+## Overrides
+
+The most powerful feature in the discovery. It will allows:
+
+1. Adding handlers to longer arrays (`maxLength` defaults to 5).
+2. Reading values directly from storage slot (ex. for `private` variables).
+3. Skipping further discovery for selected contract. Very useful when there is for example `DAI` contract in discovery and we don't want to include all `MakerDAO` contracts in our discovery.
+
+**Parameters:**
+
+All of the parameters are optional:
+
+- `proxyType` - manual proxy override. Most of the times, discovery is smart enough to detect proxyType, useful when that's not the case
+- `ignoreDiscovery: boolean` - if set to `true`, discovery will not consider this contract as a `relative`, effectively skipping discovery of this contract
+- `ignoreMethods: field[]` - discovery will skip this method
+- `ignoreInWatchMode: field[]` - if set to `true`, the `DiscoveryWatcher` will not notify change of this value
+- `fields: Record<field, Handler>` - custom fields that represent more complex vales of the contract: ex. arrays longer than 5 and private variables
+
+**Example:**
+
+```
+{
+  "proxyType": "proxy",
+  "ignoreDiscovery": true,
+  "ignoreMethods": ["method_a", "method_b"],
+  "ignoreInWatchMode": ["method_c"],
+  "fields": {
+    "field_a": {
+      "type": "storage",
+      "slot": 1
+    }
+  }
+}
+```
 
 ## Handlers
 
@@ -20,7 +88,7 @@ Set the proper environmental variable to prevent script from fetching the same d
 
 The storage handler allows you to read values directly from storage.
 
-**Parameters**:
+**Parameters:**
 
 - `type` - always the literal: `"storage"`
 - `slot` - can be one of the following:
@@ -337,3 +405,17 @@ Same example, but the abis are explicit:
   "removeKey": "minter"
 }
 ```
+
+## Cache
+
+Are you tired of hitting `yarn discover <project>` and waiting for the output? We got you covered, caching is built into discovery scripts!
+
+### env variable
+
+Set the proper environmental variable to prevent script from fetching the same data multiple times:
+
+`DISCOVERY_BLOCK_NUMBER`- overrides the block number used during local discovery
+
+### proposed usage
+
+`DISCOVERY_BLOCK_NUMBER=<block_number> y discover <project>`
