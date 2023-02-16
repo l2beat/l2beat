@@ -24,7 +24,7 @@ function getColor(value: number) {
     case 1:
       return 'fill-yellow-500'
     case 2:
-      return 'fill-green-700'
+      return 'fill-gray-600'
     default:
       return ''
   }
