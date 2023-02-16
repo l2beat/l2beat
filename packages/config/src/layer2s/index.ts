@@ -24,8 +24,8 @@ import { Layer2 } from './types'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
-import { zksync } from './zksync'
 import { zksyncera } from './zksyncera'
+import { zksynclite } from './zksynclite'
 export * from './common'
 export * from './types'
 
@@ -54,7 +54,7 @@ export const layer2s: Layer2[] = [
   zkswap,
   zkswap2,
   zkspace,
-  zksync,
+  zksynclite,
   zksyncera,
 ]
 
