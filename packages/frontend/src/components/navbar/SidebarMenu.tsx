@@ -47,7 +47,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
           <ul className="mt-8 px-6">
             <li>
               <div className="mb-4 text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
-                Scaling
+                <a href="/scaling/tvl">Scaling</a>
               </div>
               <ul className="ml-4 flex flex-col gap-4">
                 <li className="flex gap-2 font-medium">
@@ -72,7 +72,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
             <li>
               <div className="mb-4 flex items-center gap-2">
                 <span className="text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
-                  Bridges
+                  <a href="/bridges/tvl">Bridges</a>
                 </span>
                 <NewItemBadge />
               </div>
