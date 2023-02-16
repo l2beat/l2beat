@@ -132,4 +132,10 @@ export const omgnetwork: Layer2 = {
     ],
     risks: [],
   },
+  rating: {
+    category: {
+      score: '-',
+      requirements: ['This is not a rollup'],
+    },
+  },
 }

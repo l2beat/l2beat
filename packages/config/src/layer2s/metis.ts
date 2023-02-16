@@ -200,9 +200,8 @@ export const metis: Layer2 = {
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Metis MultiSig.`,
+      )}/${discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+        } Metis MultiSig.`,
     },
     {
       name: 'Sequencer',
@@ -361,4 +360,10 @@ export const metis: Layer2 = {
       description: 'Update moving data to an off-chain committee.',
     },
   ],
+  rating: {
+    category: {
+      score: '-',
+      requirements: ['This is not a rollup'],
+    },
+  },
 }

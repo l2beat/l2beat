@@ -196,4 +196,10 @@ export const gluon: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  rating: {
+    category: {
+      score: '-',
+      requirements: ['This is not a rollup'],
+    },
+  },
 }

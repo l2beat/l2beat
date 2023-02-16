@@ -44,14 +44,6 @@ export interface ScalingTvlViewEntry {
 export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
-      name: '#',
-      minimalWidth: true,
-      alignCenter: true,
-      getValue: (entry, index) => {
-        return <IndexCell entry={entry} index={index + 1} />
-      },
-    },
-    {
       name: 'Name',
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
@@ -59,8 +51,29 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
       name: 'Risks',
       tooltip: 'Risk analysis summary.',
       alignRight: true,
-      getValue: (project) => <Circles summary={project.summary}/>,
+      getValue: (project) => <Circles summary={project.summary} />,
     },
+    ...(ratingEnabled
+      ? [
+          {
+            name: 'Rating',
+            tooltip: 'Rating of this Layer 2 based on its features.',
+            alignCenter: true as const,
+            getValue: (project: ScalingTvlViewEntry) => (
+              <RatingCell item={project.ratingEntry} />
+            ),
+          },
+        ]
+      : []),
+      {
+        name: 'Technology',
+        tooltip:
+          'Type of this Layer 2. Determines data availability and proof system used.',
+        shortName: 'Tech',
+        getValue: (project) => (
+          <TechnologyCell>{project.technology}</TechnologyCell>
+        ),
+      },
     {
       name: 'TVL',
       tooltip: 'Total value locked in escrow contracts on Ethereum.',
@@ -75,18 +88,7 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
         <NumberCell signed>{project.sevenDayChange}</NumberCell>
       ),
     },
-    ...(ratingEnabled
-      ? [
-          {
-            name: 'Rating',
-            tooltip: 'Rating of this Layer 2 based on its features.',
-            alignCenter: true as const,
-            getValue: (project: ScalingTvlViewEntry) => (
-              <RatingCell item={project.ratingEntry} />
-            ),
-          },
-        ]
-      : []),
+
     {
       name: 'Breakdown',
       tooltip:
@@ -99,20 +101,7 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
       alignRight: true,
       getValue: (project) => <NumberCell>{project.marketShare}</NumberCell>,
     },
-    {
-      name: 'Purpose',
-      tooltip: 'Functionality supported by this Layer 2.',
-      getValue: (project) => project.purpose,
-    },
-    {
-      name: 'Technology',
-      tooltip:
-        'Type of this Layer 2. Determines data availability and proof system used.',
-      shortName: 'Tech',
-      getValue: (project) => (
-        <TechnologyCell>{project.technology}</TechnologyCell>
-      ),
-    },
+    
   ]
 
   const rows: RowConfig<ScalingTvlViewEntry> = {

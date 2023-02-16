@@ -183,9 +183,8 @@ export const zksync2: Layer2 = {
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } zkSync 2.0 MultiSig.`,
+      )}/${discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+        } zkSync 2.0 MultiSig.`,
     },
     {
       name: 'Active validator',
@@ -209,4 +208,18 @@ export const zksync2: Layer2 = {
       description: 'zkSync 2.0 baby alpha is launched on mainnet.',
     },
   ],
+  rating: {
+    category: {
+      score: 'B',
+      requirements: ['There is an existing fraud proof system'],
+    },
+    modifier: {
+      score: '-',
+      items: ['Force exit mechanism is not always viable option'],
+    },
+    thingsToImprove: {
+      improvedScore: 'A',
+      requirements: ['There should be no instant upgradeability'],
+    },
+  },
 }

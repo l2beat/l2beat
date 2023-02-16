@@ -159,4 +159,10 @@ export const sorare: Layer2 = {
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
     },
   ],
+  rating: {
+    category: {
+      score: '-',
+      requirements: ['This is not a rollup'],
+    },
+  },
 }

@@ -223,4 +223,10 @@ export const rhinofi: Layer2 = {
         'DeversiFi is live, bringing first STARKex Validium for spot trading.',
     },
   ],
+  rating: {
+    category: {
+      score: '-',
+      requirements: ['This is not a rollup'],
+    },
+  },
 }

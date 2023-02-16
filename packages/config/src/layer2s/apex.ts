@@ -160,4 +160,10 @@ export const apex: Layer2 = {
         'ApeX Pro, a non-custodial decentralized exchange is now live on Mainnet.',
     },
   ],
+  rating: {
+    category: {
+      score: '-',
+      requirements: ['This is not a rollup'],
+    },
+  },
 }
