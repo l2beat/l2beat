@@ -62,8 +62,11 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                     <span className="md:hidden">{column.shortName}</span>
                   )}
                   {column.tooltip && (
-                    <span className="Tooltip" title={column.tooltip}>
-                      <InfoIcon className="fill-current" />
+                    <span
+                      className="Tooltip -translate-y-px md:translate-y-0"
+                      title={column.tooltip}
+                    >
+                      <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
                     </span>
                   )}
                 </div>
