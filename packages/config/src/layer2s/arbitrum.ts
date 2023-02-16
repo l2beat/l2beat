@@ -505,4 +505,18 @@ export const arbitrum: Layer2 = {
       requirements: ['There should be no instant upgradeability'],
     },
   },
+  knowledgeNuggets: [
+    {
+      title: 'Arbitrum update increasing decentralization',
+      url: 'https://twitter.com/bkiepuszewski/status/1594754717330309120',
+      thumbnailUrl:
+        'https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg',
+    },
+    {
+      title: 'Arbitrum is down - but has it really stopped working?',
+      url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
+      thumbnailUrl:
+        'https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg',
+    },
+  ],
 }
