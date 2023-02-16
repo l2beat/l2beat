@@ -1,15 +1,18 @@
 # Discovery documentation
 
-NOTE: We use a pseudo-TS syntax to simplify parameter types here: 
+NOTE: We use a pseudo-TS syntax to simplify parameter types here:
+
 - `address` - string representing contract address
 - `field` - string representing method/value name
 
 ## Adding new project
 
 Create a new folder in `discovery` named after the project, with `config.jsonc` inside. Then run
+
 ```
 yarn discover <project_name>
 ```
+
 A file `discovered.json` will appear in this folder, showing you this project's structure. Make sure to resolve all the errors by ignoring methods or adding specific field handlers.
 
 **Parameters:**
