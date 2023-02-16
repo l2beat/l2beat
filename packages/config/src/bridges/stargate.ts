@@ -203,12 +203,11 @@ export const stargate: Bridge = {
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         '0x65bb797c2B9830d891D87288F029ed8dACc19705',
         'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>(
-          '0x65bb797c2B9830d891D87288F029ed8dACc19705',
-          'getOwners',
-        ).length
-      } StarGate MultiSig.`,
+      )}/${discovery.getContractValue<string[]>(
+        '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+        'getOwners',
+      ).length
+        } StarGate MultiSig.`,
     },
     {
       accounts: [
@@ -271,12 +270,18 @@ export const stargate: Bridge = {
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
         'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>(
-          '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-          'getOwners',
-        ).length
-      } LayerZero MultiSig.`,
+      )}/${discovery.getContractValue<string[]>(
+        '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+        'getOwners',
+      ).length
+        } LayerZero MultiSig.`,
     },
   ],
+  knowledgeNuggets: [
+    {
+      title: 'Security models analysis: isolated vs shared',
+      url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
+      thumbnailUrl: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*7iEM_gHFZ_Ws_r8N_DP20w.jpeg'
+    }
+  ]
 }

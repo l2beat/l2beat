@@ -209,9 +209,8 @@ export const optimism: Layer2 = {
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Optimism MultiSig.`,
+      )}/${discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+        } Optimism MultiSig.`,
     },
     {
       name: 'Sequencer',
@@ -386,5 +385,10 @@ export const optimism: Layer2 = {
       thumbnailUrl:
         'https://pbs.twimg.com/profile_images/1509651344994418688/OAY8rKKk_400x400.jpg',
     },
+    {
+      title: 'Modular Rollup Theory',
+      url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
+      thumbnailUrl: NUGGETS.getYoutubeThumbnail('jnVjhp41pcc')
+    }
   ],
 }
