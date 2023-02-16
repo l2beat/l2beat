@@ -15,14 +15,8 @@ import {
   SocialLinks,
   SocialLinksProps,
 } from './SocialLinks'
+import { NavbarPage } from './types'
 import { VerticalBar } from './VerticalBar'
-
-export type NavbarPage =
-  | 'scaling'
-  | 'bridges'
-  | 'donate'
-  | 'faq'
-  | 'definitions'
 
 export interface NavbarProps {
   showBanner: boolean
@@ -53,6 +47,7 @@ export function Navbar(props: NavbarProps) {
   return (
     <>
       <SidebarMenu
+        selectedPage={props.selectedPage}
         showBanner={props.showBanner}
         showActivity={props.showActivity}
         showHiring={props.showHiring}
@@ -61,12 +56,9 @@ export function Navbar(props: NavbarProps) {
       />
       {props.showBanner && <Banner />}
       <div className="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16">
-        <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center px-4 lg:justify-between lg:px-12">
-          <button id="sidebar-menu-open" className="block lg:hidden">
-            <MenuOpenIcon className="block" aria-label="Open menu" />
-          </button>
+        <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12">
           <ul className="flex h-full items-center">
-            <li className="mx-4 lg:ml-0 lg:mr-8">
+            <li className="mr-4 lg:mr-8">
               <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
                 <Logo className="h-8 w-auto" />
               </a>
@@ -91,6 +83,9 @@ export function Navbar(props: NavbarProps) {
               </PageLink>
             </li>
           </ul>
+          <button id="sidebar-menu-open" className="block lg:hidden">
+            <MenuOpenIcon className="block" aria-label="Open menu" />
+          </button>
           <div className="hidden h-full items-center gap-5 lg:flex">
             <ul className="flex items-center gap-4">
               <SocialLinks {...props.socialLinks} />

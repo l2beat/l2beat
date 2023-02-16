@@ -3,7 +3,8 @@ import React, { useEffect } from 'react'
 
 import { configureDarkThemeToggle } from './configureDarkThemeToggle'
 import { configureSidebarMenu } from './configureSidebarMenu'
-import { Navbar, NavbarPage } from './Navbar'
+import { Navbar } from './Navbar'
+import { NavbarPage } from './types'
 
 export default {
   title: 'Components/Navbar',
