@@ -3,6 +3,7 @@
 NOTE: We use a pseudo-TS syntax to simplify parameter types here: 
 - `address` - string representing contract address
 - `field` - string representing method/value name
+
 ## Adding new project
 
 Create a new folder in `discovery` named after the project, with `config.jsonc` inside. Then run
