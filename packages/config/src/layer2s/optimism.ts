@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   MILESTONES,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -208,9 +209,8 @@ export const optimism: Layer2 = {
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Optimism MultiSig.`,
+      )}/${discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+        } Optimism MultiSig.`,
     },
     {
       name: 'Sequencer',
@@ -372,5 +372,17 @@ export const optimism: Layer2 = {
       date: '2021-08-19T00:00:00Z',
       description: 'All smart contracts allowed after prior approval.',
     },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'How Optimism compresses data',
+      url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+    },
+    {
+      title: 'How does Optimism really work?',
+      url: 'https://research.paradigm.xyz/optimism',
+      thumbnailUrl: 'https://pbs.twimg.com/profile_images/1509651344994418688/OAY8rKKk_400x400.jpg'
+    }
   ],
 }

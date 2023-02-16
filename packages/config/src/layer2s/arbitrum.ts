@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   MILESTONES,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -266,9 +267,8 @@ export const arbitrum: Layer2 = {
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Arbitrum MultiSig.`,
+      )}/${discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+        } Arbitrum MultiSig.`,
     },
     {
       name: 'Sequencer',
@@ -509,14 +509,12 @@ export const arbitrum: Layer2 = {
     {
       title: 'Arbitrum update increasing decentralization',
       url: 'https://twitter.com/bkiepuszewski/status/1594754717330309120',
-      thumbnailUrl:
-        'https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
     {
       title: 'Arbitrum is down - but has it really stopped working?',
       url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-      thumbnailUrl:
-        'https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
     },
   ],
 }
