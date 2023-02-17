@@ -31,7 +31,7 @@ export const zksyncera: Layer2 = {
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://portal.zksync.io/'],
-      documentation: ['https://v2-docs.zksync.io/dev/'],
+      documentation: ['https://era.zksync.io/docs/'],
       explorers: ['https://explorer.zksync.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
