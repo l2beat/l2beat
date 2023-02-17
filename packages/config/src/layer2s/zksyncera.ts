@@ -208,5 +208,12 @@ export const zksyncera: Layer2 = {
       date: '2022-10-28T00:00:00Z',
       description: 'zkSync 2.0 baby alpha is launched on mainnet.',
     },
+    {
+      name: 'Fair Onboarding Alpha and Rebranding',
+      link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59',
+      date: '2023-02-16T00:00:00Z',
+      description:
+        'zkSync 2.0 rebrands to zkSync Era and lets registered projects deploy on mainnet.',
+    },
   ],
 }
