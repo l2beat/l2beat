@@ -336,6 +336,12 @@ export const cBridge: Bridge = {
   knowledgeNuggets: [
     {
       title: 'cBridge deep dive',
+      url: 'https://twitter.com/bkiepuszewski/status/1437031523455229964?s=20',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
+    },
+
+    {
+      title: 'cBridge deep dive',
       url: 'https://li.fi/knowledge-hub/cbridge-a-deep-dive/',
       thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
     },

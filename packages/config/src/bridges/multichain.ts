@@ -191,5 +191,10 @@ export const multichain: Bridge = {
       url: 'https://li.fi/knowledge-hub/multichain-a-deep-dive/',
       thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
     },
+    {
+      title: 'Multichain problem with escrow',
+      url: 'https://twitter.com/bkiepuszewski/status/1572537802512044034',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
+    }
   ],
 }

@@ -206,9 +206,19 @@ export const hop: Bridge = {
   ],
   knowledgeNuggets: [
     {
-      title: 'Hop deep dive',
+      title: 'Hop protocol deep dive',
       url: 'https://li.fi/knowledge-hub/hop-a-deep-dive/',
       thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
+    },
+    {
+      title: 'How Hop protocol works?',
+      url: 'https://twitter.com/bkiepuszewski/status/1437320613358673922',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
+    },
+    {
+      title: 'How HTLC bridge works?',
+      url: 'https://twitter.com/bkiepuszewski/status/1437031523455229964',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
     },
   ],
 }

@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { NUGGETS } from '../layer2s'
 
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
@@ -282,6 +283,11 @@ export const stargate: Bridge = {
       title: 'Security models analysis: isolated vs shared',
       url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
       thumbnailUrl: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*7iEM_gHFZ_Ws_r8N_DP20w.jpeg'
+    },
+    {
+      title: 'StarGate Bridge architecture',
+      url: 'https://twitter.com/bkiepuszewski/status/1518568490147450880?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
     }
   ]
 }

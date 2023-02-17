@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
-import { CONTRACTS } from '../layer2s/common'
+import { CONTRACTS, NUGGETS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -229,9 +229,15 @@ export const polygonpos: Bridge = {
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         'GnosisSafe',
         'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Polygon MultiSig.`,
+      )}/${discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+        } Polygon MultiSig.`,
     },
   ],
+  knowledgeNuggets: [
+    {
+      title: 'Is Polygon a side-chain?',
+      url: 'https://twitter.com/bkiepuszewski/status/1380404149888675840',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
+    }
+  ]
 }
