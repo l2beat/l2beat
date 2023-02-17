@@ -354,5 +354,11 @@ export const zksynclite: Layer2 = {
       description:
         'zkSync is live, bringing scalable payments to Ethereum using zkRollup technology.',
     },
+    {
+      name: 'Rebranding',
+      link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=zkSync%201.0%20is%20now%20zkSync%20Lite',
+      date: '2023-02-16T00:00:00Z',
+      description: 'zkSync becomes zkSync Lite.',
+    },
   ],
 }
