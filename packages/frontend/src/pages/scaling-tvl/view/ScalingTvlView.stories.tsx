@@ -102,7 +102,7 @@ export function TvlView() {
             {
               name: 'zk.download',
               provider: 'zkSync',
-              slug: 'zksync',
+              slug: 'zksync-lite',
               tvl: formatLargeNumber(2_740_000_000),
               tvlBreakdown: {
                 warning: 'Some random warning',

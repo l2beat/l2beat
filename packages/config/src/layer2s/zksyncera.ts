@@ -15,16 +15,16 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync2')
 
-export const zksync2: Layer2 = {
+export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
   display: {
-    name: 'zkSync 2.0',
-    slug: 'zksync2',
+    name: 'zkSync Era',
+    slug: 'zksync-era',
     warning:
-      'Currently only whitelisted contracts can be deployed and only whitelisted users can use zkSync 2.0.',
+      'Currently only whitelisted contracts can be deployed and only whitelisted users can use zkSync Era.',
     description:
-      'zkSync 2.0 is a general-purpose zk rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
+      'zkSync Era is a general-purpose zk rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EMV features such as smart contract composability while introducing some new concept such as account abstraction.\
       It is currently deployed on mainnet and available to a whitelisted set of users/developers.',
     purpose: 'Universal',
@@ -157,7 +157,7 @@ export const zksync2: Layer2 = {
       {
         address: discovery.getContract('L1EthBridge').address,
         name: 'L1EthBridge',
-        description: 'Standard bridge for depositing ETH to zkSync 2.0.',
+        description: 'Standard bridge for depositing ETH to zkSync Era.',
         upgradeability: discovery.getContract('L1EthBridge').upgradeability,
       },
     ],
@@ -165,7 +165,7 @@ export const zksync2: Layer2 = {
   },
   permissions: [
     {
-      name: 'zkSync 2.0 MultiSig',
+      name: 'zkSync Era MultiSig',
       accounts: [
         {
           type: 'MultiSig',
@@ -173,7 +173,7 @@ export const zksync2: Layer2 = {
         },
       ],
       description:
-        'This MultiSig is the current Governor of zkSync 2.0 main contract and owner of the L1EthBridge. It can upgrade zkSync2.0, upgrade bridge, change rollup parameters with no delay.',
+        'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
     },
     {
       name: 'MultiSig participants',
@@ -185,7 +185,7 @@ export const zksync2: Layer2 = {
         'getThreshold',
       )}/${
         discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } zkSync 2.0 MultiSig.`,
+      } zkSync Era MultiSig.`,
     },
     {
       name: 'Active validator',
