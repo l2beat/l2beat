@@ -26,13 +26,12 @@ export const aztecconnect: Layer2 = {
       apps: ['https://zk.money'],
       documentation: ['https://developers.aztec.network/'],
       explorers: ['https://aztec-connect-prod-explorer.aztec.network/'],
-      repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
+      repositories: ['https://github.com/AztecProtocol/aztec-connect'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',
         'https://medium.com/aztec-protocol',
         'https://t.me/aztecprotocol',
         'https://discord.gg/UDtJr9u',
-        'https://plonk.cafe/',
       ],
     },
     activityDataSource: 'Explorer API',
@@ -202,6 +201,32 @@ export const aztecconnect: Layer2 = {
       link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
       description:
         'Aztec Connect is live on mainnet, enabling private DeFi on Ethereum.',
+    },
+    {
+      name: 'Introducing Noir',
+      date: '2022-10-06T00:00:00Z',
+      link: 'https://medium.com/aztec-protocol/introducing-noir-the-universal-language-of-zero-knowledge-ff43f38d86d9',
+      description:
+        'Noir - programming language for zero-knowledge proofs, has been introduced.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Explaining the Aztec Network',
+      url: 'https://medium.com/aztec-protocol/explaining-the-network-in-aztec-network-166862b3ef7d',
+      thumbnailUrl:
+        'https://miro.medium.com/max/720/1*P6r1E4yB0egVpk1sbYlzcQ.png',
+    },
+    {
+      title: 'Economics of Aztec zkRollup',
+      url: 'https://medium.com/aztec-protocol/privacy-for-pennies-scaling-aztecs-zkrollup-9f2b36615cc6',
+      thumbnailUrl:
+        'https://miro.medium.com/v2/resize:fit:1400/format:webp/1*HTS4vJVMVk3JM_VmtZJXIg.jpeg',
+    },
+    {
+      title: 'Understanding PLONK',
+      url: 'https://vitalik.ca/general/2019/09/22/plonk.html',
+      thumbnailUrl: 'https://vitalik.ca/images/icon.png',
     },
   ],
 }
