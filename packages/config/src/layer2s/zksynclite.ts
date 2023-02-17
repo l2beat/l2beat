@@ -358,7 +358,7 @@ export const zksynclite: Layer2 = {
       name: 'Rebranding',
       link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=zkSync%201.0%20is%20now%20zkSync%20Lite',
       date: '2023-02-16T00:00:00Z',
-      description: 'zkSync changes name to zkSync Lite.',
+      description: 'zkSync becomes zkSync Lite.',
     },
   ],
 }
