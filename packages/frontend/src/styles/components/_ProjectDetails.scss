@@ -6,7 +6,7 @@
   column-gap: 16px;
   row-gap: 3rem;
 
-  @media (min-width: 750px) {
+  @media (min-width: 1024px) {
     grid-template-columns: 1fr 400px;
     grid-template-areas: 'content side';
   }
