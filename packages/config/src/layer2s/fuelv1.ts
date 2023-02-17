@@ -37,7 +37,7 @@ export const fuelv1: Layer2 = {
       {
         address: EthereumAddress('0x6880f6Fd960D1581C2730a451A22EED1081cfD72'),
         sinceTimestamp: new UnixTime(1612414780),
-        tokens: ['DAI', 'USDC', 'USDT'],
+        tokens: ['ETH', 'DAI', 'USDC', 'USDT'],
       },
     ],
     events: [],
