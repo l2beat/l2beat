@@ -29,6 +29,7 @@ export interface ScalingTvlViewEntry {
   provider?: Layer2['technology']['provider']
   warning?: string
   isVerified?: boolean
+  isArchived?: boolean
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
@@ -63,9 +64,10 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
-      getValue: (project) => (
-        <NumberCell signed>{project.sevenDayChange}</NumberCell>
-      ),
+      getValue: (project) =>
+        !project.isArchived && (
+          <NumberCell signed>{project.sevenDayChange}</NumberCell>
+        ),
     },
     ...(ratingEnabled
       ? [
@@ -73,9 +75,8 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
             name: 'Rating',
             tooltip: 'Rating of this Layer 2 based on its features.',
             alignCenter: true as const,
-            getValue: (project: ScalingTvlViewEntry) => (
-              <RatingCell item={project.ratingEntry} />
-            ),
+            getValue: (project: ScalingTvlViewEntry) =>
+              !project.isArchived && <RatingCell item={project.ratingEntry} />,
           },
         ]
       : []),
@@ -83,13 +84,15 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
       name: 'Breakdown',
       tooltip:
         'Composition of the total value locked broken down by token type.',
-      getValue: (project) => <TVLBreakdown {...project.tvlBreakdown} />,
+      getValue: (project) =>
+        !project.isArchived && <TVLBreakdown {...project.tvlBreakdown} />,
     },
     {
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
-      getValue: (project) => <NumberCell>{project.marketShare}</NumberCell>,
+      getValue: (project) =>
+        !project.isArchived && <NumberCell>{project.marketShare}</NumberCell>,
     },
     {
       name: 'Purpose',
