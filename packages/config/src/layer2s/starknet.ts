@@ -283,7 +283,5 @@ export const starknet: Layer2 = {
         'Bridge is live on mainnet, serving as gateway between Ethereum and StarkNet.',
     },
   ],
-  knowledgeNuggets: [
-    ...NUGGETS.STARKEX_NUGGETS
-  ]
+  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
 }

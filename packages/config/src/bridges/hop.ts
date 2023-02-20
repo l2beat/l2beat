@@ -213,12 +213,12 @@ export const hop: Bridge = {
     {
       title: 'How Hop protocol works?',
       url: 'https://twitter.com/bkiepuszewski/status/1437320613358673922',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
     {
       title: 'How HTLC bridge works?',
       url: 'https://twitter.com/bkiepuszewski/status/1437031523455229964',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
   ],
 }

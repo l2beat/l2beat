@@ -210,6 +210,6 @@ export const dydx: Layer2 = {
       url: 'https://twitter.com/bkiepuszewski/status/1469201939049103360',
       thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
-    ...NUGGETS.STARKEX_NUGGETS
+    ...NUGGETS.STARKEX_NUGGETS,
   ],
 }

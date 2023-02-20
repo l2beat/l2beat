@@ -126,7 +126,8 @@ export const fuelv1: Layer2 = {
     {
       title: 'Fuel security stress test by L2BEAT team',
       url: 'https://twitter.com/krzKaczor/status/1524753284434587649',
-      thumbnailUrl: 'https://pbs.twimg.com/media/FSj_9EgVcAAXXCh?format=jpg&name=large'
-    }
-  ]
+      thumbnailUrl:
+        'https://pbs.twimg.com/media/FSj_9EgVcAAXXCh?format=jpg&name=large',
+    },
+  ],
 }
