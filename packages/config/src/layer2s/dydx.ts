@@ -207,7 +207,7 @@ export const dydx: Layer2 = {
   knowledgeNuggets: [
     {
       title: 'How does escape hatch work?',
-      url: 'https://twitter.com/bkiepuszewski/status/1469201939049103360?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
+      url: 'https://twitter.com/bkiepuszewski/status/1469201939049103360',
       thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
     ...NUGGETS.STARKEX_NUGGETS
