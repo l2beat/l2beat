@@ -15,6 +15,7 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "update-multichain": "node -r esbuild-register scripts/multichain",
+    "update-omnichain": "node -r esbuild-register scripts/omnichain",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts"
   },
   "dependencies": {
