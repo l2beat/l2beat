@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   MILESTONES,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -303,6 +304,13 @@ export const nova: Layer2 = {
       ...MILESTONES.MAINNET_OPEN,
       date: '2022-08-09T00:00:00Z',
       link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Data availability on Arbitrum Nova',
+      url: 'https://twitter.com/bkiepuszewski/status/1555180043525128200',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
   ],
 }

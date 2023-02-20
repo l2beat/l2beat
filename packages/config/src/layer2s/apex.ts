@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   SHARP_VERIFIER_CONTRACT,
@@ -160,4 +161,5 @@ export const apex: Layer2 = {
         'ApeX Pro, a non-custodial decentralized exchange is now live on Mainnet.',
     },
   ],
+  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
 }

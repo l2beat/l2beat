@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   SHARP_VERIFIER_CONTRACT,
@@ -222,4 +223,5 @@ export const rhinofi: Layer2 = {
         'DeversiFi is live, bringing first STARKex Validium for spot trading.',
     },
   ],
+  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
 }

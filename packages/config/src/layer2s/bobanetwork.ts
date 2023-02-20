@@ -6,6 +6,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -390,6 +391,13 @@ export const bobanetwork: Layer2 = {
       date: '2021-11-18T00:00:00Z',
       link: 'https://boba.network/Boba-airdrop-live/',
       description: 'BOBA token launched by OMG Foundation.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'What is Hybrid Compute?',
+      url: 'https://twitter.com/bkiepuszewski/status/1521849011594010624',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
   ],
 }
