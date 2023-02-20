@@ -16,7 +16,7 @@ const STARKEX_NUGGETS: KnowledgeNugget[] = [
   },
   {
     title: 'Understand StarkWare #2',
-    url: 'https://twitter.com/bkiepuszewski/status/1480804584926949377?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
+    url: 'https://twitter.com/bkiepuszewski/status/1480804584926949377',
     thumbnailUrl: BARTEK_TWITTER_THUMBNAIL
   },
   {
