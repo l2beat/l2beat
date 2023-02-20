@@ -10,7 +10,6 @@ export interface Config {
     forum: string
   }
   features: {
-    bridges: boolean
     activity: boolean
     banner: boolean
     gitcoinOption: boolean

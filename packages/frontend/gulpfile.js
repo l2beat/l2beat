@@ -42,7 +42,10 @@ function buildStyles() {
 }
 
 function watchStyles() {
-  return gulp.watch('src/**/*.{css,html,ts,tsx}', buildStyles)
+  return gulp.watch(
+    ['src/**/*.{css,html,ts,tsx,md}', 'tailwind.config.js'],
+    buildStyles,
+  )
 }
 
 function copyStatic() {
@@ -58,7 +61,7 @@ function buildContent() {
 }
 
 function watchContent() {
-  return gulp.watch(['src/**/*.{ts,tsx}'], buildContent)
+  return gulp.watch(['src/**/*.{ts,tsx,md}'], buildContent)
 }
 
 function generateMetaImages() {

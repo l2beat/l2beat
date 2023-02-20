@@ -1,20 +1,8 @@
 /** @type import("tailwindcss/types").Config */
 module.exports = {
-  content: ['./src/**/*.{html,ts,tsx}'],
+  content: ['./src/**/*.{html,ts,tsx,md,css}'],
   darkMode: 'class',
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Roboto', 'Arial', 'sans-serif'],
-      },
-      zIndex: {
-        1: '1',
-        41: '41',
-      },
-      spacing: {
-        '2/3': '66.666666%',
-      },
-    },
     fontSize: {
       '3xs': ['8px', '12px'],
       '2xs': ['12px', '16px'],
@@ -103,6 +91,17 @@ module.exports = {
       md: '750px',
       lg: '1000px',
     },
+    extend: {
+      fontFamily: {
+        sans: ['Roboto', 'Arial', 'sans-serif'],
+      },
+      zIndex: {
+        1: '1',
+        41: '41',
+      },
+      spacing: {
+        '2/3': '66.666666%',
+      },
+    },
   },
-  plugins: [],
 }

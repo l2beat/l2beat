@@ -20,7 +20,6 @@ export const rhinofi: Layer2 = {
   display: {
     name: 'rhino.fi',
     slug: 'rhinofi',
-    warning: 'DeversiFi has rebranded to rhino.fi on Jul 14 2022.',
     description:
       'rhino.fi (formerly DeversiFi) claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
     purpose: 'Exchange',

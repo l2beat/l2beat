@@ -4,21 +4,21 @@ import { Config } from '../../build/config'
 import { getFooterProps, getNavbarProps } from '../../components'
 import { getHtml } from '../markdown/getHtml'
 import { Wrapped } from '../Page'
-import { FaqPageProps } from './FaqPage'
+import { DefinitionsPageProps } from './DefinitionsPage'
 
-export function getProps(config: Config): Wrapped<FaqPageProps> {
+export function getProps(config: Config): Wrapped<DefinitionsPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'faq'),
-      title: 'Frequently Asked Questions',
-      content: getHtml(path.join(__dirname, 'faq.md')),
+      navbar: getNavbarProps(config, 'definitions'),
+      title: 'Definitions',
+      htmlContent: getHtml(path.join(__dirname, 'ratings.md')),
       footer: getFooterProps(config),
     },
     wrapper: {
       metadata: {
-        title: 'L2BEAT – Frequently Asked Questions',
+        title: 'L2BEAT - Definitions',
         description:
-          'Frequently Asked Questions about L2BEAT – an analytics and research website about Ethereum layer 2 scaling.',
+          'Definitions of rollup ratings used on L2BEAT. Learn more about the L2BEAT rollup ratings and how they are calculated.',
         image: 'https://l2beat.com/meta-images/overview-scaling.png',
         url: 'https://l2beat.com/faq/',
       },
