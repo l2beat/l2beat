@@ -192,7 +192,7 @@ export const multichain: Bridge = {
       thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
     },
     {
-      title: 'Multichain problem with escrow',
+      title: 'Multichain escrow problem',
       url: 'https://twitter.com/bkiepuszewski/status/1572537802512044034',
       thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL
     }
