@@ -57,7 +57,7 @@ jobs:
           cache: "yarn"
       - run: yarn --frozen-lockfile
       - run: yarn build
-      - run: yarn typecheck:ci
+      - run: yarn typecheck
 
   format:
     runs-on: ubuntu-latest

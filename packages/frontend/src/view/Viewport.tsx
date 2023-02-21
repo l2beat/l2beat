@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import { SimpleNode } from '../api/SimpleNode'
 import { useStore } from '../store/store'
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'
@@ -7,12 +8,7 @@ import { ScalableView } from './ScalableView'
 import { useViewport } from './useViewport'
 
 export interface ViewportProps {
-  nodes: {
-    id: string
-    name: string
-    discovered: boolean
-    fields: { name: string; connection?: string }[]
-  }[]
+  nodes: SimpleNode[]
   onDiscover: (nodeId: string) => void
   loading: Record<string, boolean | undefined>
 }

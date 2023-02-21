@@ -16,7 +16,7 @@
     "build:frontend": "wsrun -p @protocol-beat/frontend -recsm build",
     "build": "wsrun -ecsm build",
     "build:dependencies": "wsrun -p @protocol-beat/{types,common,config,update-monitor} -recsm build",
-    "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck:ci && yarn test",
+    "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck && yarn test",
     "clean": "wsrun -ecam clean",
     "fix": "yarn lint:fix && yarn format:fix",
     "format:fix": "wsrun -ecam format:fix",
@@ -26,7 +26,6 @@
     "lint": "wsrun -ecam lint",
     "start": "cd packages/backend && yarn start",
     "test": "wsrun -ecam test",
-    "typecheck:ci": "wsrun -ecam typecheck:ci",
     "typecheck": "wsrun -ecam typecheck"
   },
   "devDependencies": {
