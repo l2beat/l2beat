@@ -5,7 +5,7 @@ export function configureFilters() {
     document.querySelector<HTMLInputElement>('#archived-projects')
 
   const archived = Array.from(document.querySelectorAll('[data-archived]'))
-  const L2s = Array.from(document.querySelectorAll('[data-combined-only-row]'))
+  const L2s = Array.from(document.querySelectorAll('[data-layer2]'))
   const bridgesOnlyCells = Array.from(
     document.querySelectorAll('[data-bridges-only-cell]'),
   )
@@ -16,6 +16,8 @@ export function configureFilters() {
   const archivedBridges = archived.filter((x) => !L2s.includes(x))
   const archivedL2s = archived.filter((x) => L2s.includes(x))
   const activeL2s = L2s.filter((x) => !archivedL2s.includes(x))
+
+  console.log(activeL2s.length)
 
   archivedCheckbox?.addEventListener('change', () => {
     const l2sVisible = !combinedCheckbox || combinedCheckbox.checked
