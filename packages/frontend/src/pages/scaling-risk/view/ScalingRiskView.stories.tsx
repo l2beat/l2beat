@@ -62,6 +62,18 @@ export function RiskView() {
               validatorFailure: risk('short'),
               isVerified: true,
             },
+            {
+              name: 'zk.archived',
+              provider: 'StarkEx',
+              slug: 'layer2financezk',
+              stateValidation: risk('medium', 'bad'),
+              dataAvailability: risk('medium'),
+              upgradeability: risk('long'),
+              sequencerFailure: risk('long', 'warning'),
+              validatorFailure: risk('short'),
+              isArchived: true,
+              isVerified: true,
+            },
           ]}
         />
       </PageContent>

@@ -10,7 +10,6 @@ import {
 import { About } from '../../components/About'
 import { BridgesMvpWarning } from '../../components/BridgesMvpWarning'
 import { TvlHeader } from '../../components/header/TvlHeader'
-import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
 import { BridgesNavigationTabs } from '../../components/navigation-tabs/BridgesNavigationTabs'
 import { PageContent } from '../../components/PageContent'
 import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
@@ -47,7 +46,6 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
           </div>
           <BridgesMvpWarning />
           <Chart tvlEndpoint={props.tvlEndpoint} />
-          <IncludeLayer2sCheckbox className="mt-8 -mb-4" />
           <BridgesTvlView {...props.tvlView} />
           <About />
         </main>

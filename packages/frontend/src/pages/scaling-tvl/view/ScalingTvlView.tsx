@@ -29,8 +29,8 @@ export interface ScalingTvlViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
-  isVerified?: boolean
   isArchived?: boolean
+  isVerified?: boolean
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
@@ -117,7 +117,7 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <IncludeArchivedCheckbox />
+      <IncludeArchivedCheckbox className='mb-4'/>
       <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend showTokenWarnings />
     </section>

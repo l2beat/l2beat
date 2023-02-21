@@ -4,9 +4,8 @@ import { getRowVerificationClassNames } from './getRowVerificationClassNames'
 
 interface ScalingTableEntry {
   slug: string
-  isVerified?: boolean
-  // TODO: optional for now, but should be required
   isArchived?: boolean
+  isVerified?: boolean
 }
 
 export function getScalingRowProps(entry: ScalingTableEntry) {
@@ -29,6 +28,6 @@ export function getScalingRowProps(entry: ScalingTableEntry) {
       entry.isArchived && 'hidden opacity-50',
     ),
     href,
-    'data-archived': entry.isArchived ? true : undefined,
+    'data-archived': entry.isArchived,
   }
 }

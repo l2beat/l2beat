@@ -121,6 +121,29 @@ export function TvlView() {
               technology: 'Optimistic Rollup',
               isVerified: true,
             },
+            {
+              name: 'zk.archived',
+              provider: 'StarkEx',
+              slug: 'layer2financezk',
+              tvl: formatLargeNumber(2_740_000_000),
+              tvlBreakdown: {
+                warning: 'Some random warning',
+                warningSeverity: 'warning',
+                label: 'The tooltip label',
+                empty: false,
+                associated: 0.4,
+                ether: 0.2,
+                stable: 0.2,
+                other: 0.2,
+              },
+              oneDayChange: '+3.45%',
+              sevenDayChange: '-54.2%',
+              marketShare: '50.42%',
+              purpose: 'Universal',
+              technology: 'Optimistic Rollup',
+              isArchived: true,
+              isVerified: true,
+            },
           ]}
         />
       </PageContent>
