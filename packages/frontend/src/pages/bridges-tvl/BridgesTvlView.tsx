@@ -73,28 +73,31 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
-      getValue: (entry) => (
-        <NumberCell signed>{entry.sevenDayChange}</NumberCell>
-      ),
+      getValue: (entry) =>
+        !entry.isArchived && (
+          <NumberCell signed>{entry.sevenDayChange}</NumberCell>
+        ),
     },
     {
       name: 'Breakdown',
       tooltip:
         'Composition of the total value locked broken down by token type.',
-      getValue: (entry) => <TVLBreakdown {...entry.tvlBreakdown} />,
+      getValue: (entry) =>
+        !entry.isArchived && <TVLBreakdown {...entry.tvlBreakdown} />,
     },
     {
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
-      getValue: (entry) => (
-        <NumberCell>
-          <span data-bridges-only>{entry.bridgesMarketShare}</span>
-          <span data-combined-only className="hidden">
-            {entry.combinedMarketShare}
-          </span>
-        </NumberCell>
-      ),
+      getValue: (entry) =>
+        !entry.isArchived && (
+          <NumberCell>
+            <span data-bridges-only>{entry.bridgesMarketShare}</span>
+            <span data-combined-only className="hidden">
+              {entry.combinedMarketShare}
+            </span>
+          </NumberCell>
+        ),
     },
     {
       name: 'Validated by',
