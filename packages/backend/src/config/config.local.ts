@@ -28,7 +28,9 @@ export function getLocalConfig(cli: CliParameters): Config {
   const discoveryWatcherEnabled =
     cli.mode === 'server' && getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
-    !!process.env.DISCORD_TOKEN && !!process.env.DISCORD_CHANNEL_IDS
+    !!process.env.DISCORD_TOKEN &&
+    !!process.env.PUBLIC_DISCORD_CHANNEL_ID &&
+    !!process.env.INTERNAL_DISCORD_CHANNEL_ID
   const invertEnabled = cli.mode === 'invert'
 
   return {
@@ -108,7 +110,8 @@ export function getLocalConfig(cli: CliParameters): Config {
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),
-        channelIds: getEnv.array('DISCORD_CHANNEL_IDS'),
+        publicChannelId: getEnv('PUBLIC_DISCORD_CHANNEL_ID'),
+        internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
       },
     },
   }

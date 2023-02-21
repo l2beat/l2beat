@@ -12,7 +12,8 @@ export class DiscordClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly discordToken: string,
-    private readonly channelIds: string[],
+    private readonly publicChannelId: string,
+    private readonly internalChannelId: string,
   ) {}
 
   async sendMessage(message: string) {
@@ -21,7 +22,7 @@ export class DiscordClient {
     }
 
     return await Promise.all(
-      this.channelIds.map((channelId) => {
+      [this.publicChannelId, this.internalChannelId].map((channelId) => {
         const endpoint = `/channels/${channelId}/messages`
         const body = {
           content: message,

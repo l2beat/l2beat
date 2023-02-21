@@ -17,7 +17,12 @@ describe(DiscordClient.name, () => {
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
+        CHANNEL_ID,
+        CHANNEL_ID,
+      )
 
       await discord.query('/foo/bar')
     })
@@ -32,7 +37,12 @@ describe(DiscordClient.name, () => {
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
+        CHANNEL_ID,
+        CHANNEL_ID,
+      )
 
       await discord.query('')
     })
@@ -45,7 +55,12 @@ describe(DiscordClient.name, () => {
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
+        CHANNEL_ID,
+        CHANNEL_ID,
+      )
 
       await discord.query('', { method: 'POST', body: '' })
     })
@@ -58,7 +73,12 @@ describe(DiscordClient.name, () => {
           return new Response(error, { status: 400 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
+        CHANNEL_ID,
+        CHANNEL_ID,
+      )
 
       await expect(discord.query('')).toBeRejected(`Discord error: ${error}`)
     })
@@ -71,7 +91,12 @@ describe(DiscordClient.name, () => {
           return new Response(JSON.stringify(data), { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
+        CHANNEL_ID,
+        CHANNEL_ID,
+      )
 
       const result = await discord.query('')
 
@@ -97,10 +122,12 @@ describe(DiscordClient.name, () => {
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
         CHANNEL_ID,
         CHANNEL_ID_2,
-      ])
+      )
 
       await discord.sendMessage('')
     })
@@ -113,14 +140,24 @@ describe(DiscordClient.name, () => {
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
+        CHANNEL_ID,
+        CHANNEL_ID,
+      )
 
       await discord.sendMessage(message)
     })
 
     it('throws when message is too long', async () => {
       const httpClient = mock<HttpClient>({})
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [CHANNEL_ID])
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
+        CHANNEL_ID,
+        CHANNEL_ID,
+      )
 
       const message = 'a'.repeat(2001)
       await expect(discord.sendMessage(message)).toBeRejected(
@@ -136,10 +173,12 @@ describe(DiscordClient.name, () => {
           })
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
         CHANNEL_ID,
         CHANNEL_ID_2,
-      ])
+      )
 
       const result = await discord.sendMessage('')
       expect(result).toEqual([{ message: 'OK' }, { message: 'OK' }])
@@ -161,10 +200,12 @@ describe(DiscordClient.name, () => {
           }
         },
       })
-      const discord = new DiscordClient(httpClient, DISCORD_TOKEN, [
+      const discord = new DiscordClient(
+        httpClient,
+        DISCORD_TOKEN,
         CHANNEL_ID,
         CHANNEL_ID_2,
-      ])
+      )
 
       await expect(discord.sendMessage('')).toBeRejected(
         `Discord error: ${error}`,
