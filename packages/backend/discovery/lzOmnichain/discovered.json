@@ -1,7 +1,7 @@
 {
   "name": "lzOmnichain",
-  "blockNumber": 16675598,
-  "configHash": "0xa8d94366f910e8704431349a568e4ccb92cd8acbd9c99a2beb431c7c0424b9b2",
+  "blockNumber": 16675693,
+  "configHash": "0xa86cc2bba42e2947aa8910d4f573401f042675013bffb179ca119682cb88dcd9",
   "contracts": [
     {
       "name": "StargateToken",

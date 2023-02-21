@@ -2,8 +2,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('polygonpos')
 
 export const lzOmnichain: Bridge = {
   type: 'bridge',
@@ -87,76 +90,86 @@ export const lzOmnichain: Bridge = {
   contracts: {
     addresses: [
       {
-        address: EthereumAddress('0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6'),
+        address: discovery.getContract('StargateToken').address,
         name: 'StargateToken',
         description: 'StarGate (STG) omnichain token.',
       },
       {
-        address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
-        name: 'Layer Zero default Relayer (Implementation not Verified)',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9'),
-          implementation: EthereumAddress('0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7'),
-        },
-        description: '???.',
-      },
-      {
-        address: EthereumAddress('0x5a54fe5234E811466D5366846283323c954310B2'),
-        name: 'Layer Zero default Oracle (Implementation not Verified)',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8'),
-          implementation: EthereumAddress('0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f'),
-        },
-        description: '???.',
-      },
-      {
-        address: EthereumAddress('0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675'),
+        address: discovery.getContract('Endpoint').address,
         name: 'Endpoint',
-        description: 'LayerZero Ethereum Endpoint.',
+        description: 'Layer Zero Enpoint contract used for cross-chain messaging.'
       },
       {
-        address: EthereumAddress('0x4D73AdB72bC3DD368966edD0f0b2148401A178E2'),
+        address: discovery.getContract('UltraLightNodeV2').address,
         name: 'UltraLightNodeV2',
-        description:
-          'LayerZero UltraLight Node V2. Used by oracles to checkpoint source chain block hashes.',
+        description: 'LayerZero default send and receive library.'
       },
       {
-        address: EthereumAddress('0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d'),
+        address: discovery.getContract('TreasuryV2').address,
         name: 'TreasuryV2',
-        description: 'LayerZero Treasury V2.',
+        description: 'LayerZero contract responsible for fees mechanism.'
+      },
+      {
+        address: discovery.getContract('NonceContract').address,
+        name: 'NonceContract',
+        description: 'LayerZero nonce contract.'
       },
       {
         address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
-        name: 'ILayerZeroLayerV2 (Implementation Not Verified)',
+        name: 'LayerZero Relayer',
         upgradeability: {
           type: 'EIP1967 proxy',
           admin: EthereumAddress('0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9'),
-          implementation: EthereumAddress('0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7'),
+          implementation: EthereumAddress(
+            '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
+          ),
         },
-        description: '???.',
       },
       {
         address: EthereumAddress('0x5a54fe5234E811466D5366846283323c954310B2'),
-        name: 'ILayerZeroOracleV2 (Implementation Not Verified)',
+        name: 'LayerZero Oracle',
         upgradeability: {
           type: 'EIP1967 proxy',
           admin: EthereumAddress('0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8'),
-          implementation: EthereumAddress('0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f'),
+          implementation: EthereumAddress(
+            '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
+          ),
         },
-        description: '???.',
-      },
-      {
-        address: EthereumAddress('0x07245eEa05826F5984c7c3C8F478b04892e4df89'),
-        name: 'Layer Zero Proof Library (Not Verified)',
-        description: '???.',
       },
     ],
     risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },
   permissions: [
+    {
+      accounts: [
+        {
+          address: EthereumAddress('0x65bb797c2B9830d891D87288F029ed8dACc19705'),
+          type: 'MultiSig',
+        },
+      ],
+      name: 'StarGate owner',
+      description:
+        'Can pause STG token, can configure Oracle/Relayer of Layer Zero AMB bridge, can set/change destination address of STG token for any chain.',
+    },
+    {
+      name: 'StarGate MultiSig Participants',
+      accounts: discovery
+        .getContractValue<string[]>(
+          '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+          'getOwners',
+        )
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>(
+          '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+          'getOwners',
+        ).length
+      } StarGate MultiSig.`,
+    },
     {
       accounts: [
         {
@@ -171,13 +184,31 @@ export const lzOmnichain: Bridge = {
     {
       accounts: [
         {
-          address: EthereumAddress('0x65bb797c2B9830d891D87288F029ed8dACc19705'),
+          address: EthereumAddress('0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92'),
           type: 'MultiSig',
         },
       ],
-      name: 'StarGate STG owner',
+      name: 'LayerZero Multisig',
       description:
-        'Can pause STG token, can configure Oracle/Relayer of Layer Zero AMB bridge, can set/change destination address of STG token for any chain.',
+        'Owner of the Endpoint and UltraLightNodeV2 contract.',
+    },
+    {
+      name: 'LayerZero MultiSig Participants',
+      accounts: discovery
+        .getContractValue<string[]>(
+          '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+          'getOwners',
+        )
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>(
+          '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+          'getOwners',
+        ).length
+      } LayerZero MultiSig.`,
     },
   ],
 }

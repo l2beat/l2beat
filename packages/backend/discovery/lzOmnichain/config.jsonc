@@ -1,17 +1,18 @@
 {
-    "$schema": "../config.schema.json",
-    "name": "lzOmnichain",
-    "initialAddresses": ["0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6"],
-    "overrides": {
-        "0x65bb797c2B9830d891D87288F029ed8dACc19705": {
-            "ignoreInWatchMode": ["nonce"]
-        },
-        "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": {
-            "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
-        },
-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": {
-            "ignoreInWatchMode": ["nonce"]
-        }
+  "$schema": "../config.schema.json",
+  "name": "lzOmnichain",
+  "initialAddresses": [
+    "0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6" // STG
+  ],
+  "overrides": {
+    "0x65bb797c2B9830d891D87288F029ed8dACc19705": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": {
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
+    },
+    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
-  
+}
