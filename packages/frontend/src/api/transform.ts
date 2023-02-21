@@ -1,38 +1,40 @@
-import { SimpleNode } from './SimpleNode'
+import { ContractNode, EOANode, SimpleNode } from './SimpleNode'
 import { ContractParameters, ContractValue, ProjectParameters } from './types'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 export function transformContracts(discovery: ProjectParameters): SimpleNode[] {
-  return discovery.contracts
-    .map((contract) => {
-      const { proxyFields, implementations } = getProxyDetails(contract)
-      return {
-        id: contract.address,
-        name: emojifyContractName(contract),
-        discovered: true,
-        fields: [...proxyFields, ...mapFields(contract.values)]
-          .filter(
-            (x) => !x.connection || !implementations.includes(x.connection),
-          )
-          .map((field) => ({
-            ...field,
-            value: field.value === ZERO_ADDRESS ? '∅' : field.value,
-            connection:
-              field.connection !== ZERO_ADDRESS ? field.connection : undefined,
-          })),
-        data: contract as unknown,
-      }
-    })
-    .concat(
-      discovery.eoas.map((address) => ({
-        id: address,
-        name: `🧍 EOA ${address}`,
-        discovered: true,
-        fields: [],
-        data: 'EOA',
-      })),
-    )
+  const contractNodes: ContractNode[] = discovery.contracts.map((contract) => {
+    const { proxyFields, implementations } = getProxyDetails(contract)
+    return {
+      type: 'Contract',
+      id: contract.address,
+      name: emojifyContractName(contract),
+      discovered: true,
+      fields: [...proxyFields, ...mapFields(contract.values)]
+        .filter((x) => !x.connection || !implementations.includes(x.connection))
+        .map((field) => ({
+          ...field,
+          value: field.value === ZERO_ADDRESS ? '∅' : field.value,
+          connection:
+            field.connection !== ZERO_ADDRESS ? field.connection : undefined,
+        })),
+      data: contract,
+    }
+  })
+
+  const eoaNodes: EOANode[] = discovery.eoas.map((address) => ({
+    type: 'EOA',
+    id: address,
+    name: `🧍 EOA ${address}`,
+    discovered: true,
+    fields: [],
+    data: {
+      address,
+    },
+  }))
+
+  return [...contractNodes, ...eoaNodes]
 }
 
 interface FieldProps {

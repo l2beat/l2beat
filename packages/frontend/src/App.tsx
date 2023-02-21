@@ -5,6 +5,7 @@ import { discover } from './api/discover'
 import { merge } from './api/merge'
 import { SimpleNode } from './api/SimpleNode'
 import { useStore } from './store/store'
+import { Sidebar } from './view/Sidebar'
 import { Viewport } from './view/Viewport'
 
 export function App() {
@@ -34,7 +35,7 @@ export function App() {
     setNodes((nodes) => merge(nodes, result))
   }
 
-  const selectedData = nodes.find((x) => x.id === selected)?.data
+  const selectedNode = nodes.find((x) => x.id === selected)
 
   return (
     <div className="grid h-full w-full grid-cols-[1fr,_400px] grid-rows-[64px,_1fr]">
@@ -55,12 +56,7 @@ export function App() {
       </div>
 
       <div className="row-span-2 bg-white p-2 drop-shadow-xl">
-        {!selected && 'Click a contract to select it.'}
-        {selectedData !== undefined ? (
-          <pre className="h-full overflow-auto text-sm">
-            <code>{JSON.stringify(selectedData, null, 2)}</code>
-          </pre>
-        ) : null}
+        <Sidebar node={selectedNode} />
       </div>
 
       <div className="flex h-full w-full items-center justify-center gap-4 p-2">

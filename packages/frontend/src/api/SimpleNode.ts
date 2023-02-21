@@ -1,4 +1,6 @@
-export interface SimpleNode {
+import { ContractParameters } from './types'
+
+interface SimpleNodeShared {
   id: string
   name: string
   discovered: boolean
@@ -6,5 +8,21 @@ export interface SimpleNode {
     name: string
     connection?: string
   }[]
-  data?: unknown
 }
+
+export interface ContractNode extends SimpleNodeShared {
+  type: 'Contract'
+  data: ContractParameters
+}
+
+export interface EOANode extends SimpleNodeShared {
+  type: 'EOA'
+  data: {
+    address: string
+  }
+}
+export interface UnknownNode extends SimpleNodeShared {
+  type: 'Unknown'
+}
+
+export type SimpleNode = ContractNode | EOANode | UnknownNode

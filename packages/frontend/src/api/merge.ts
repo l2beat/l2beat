@@ -20,6 +20,7 @@ function createEmptyNodes(nodes: SimpleNode[]): SimpleNode[] {
   }
 
   return [...unknownIds].map((id) => ({
+    type: 'Unknown',
     id,
     name: 'Unknown',
     fields: [],
