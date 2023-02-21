@@ -21,7 +21,7 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
       entry.type !== 'bridge' && 'hidden',
       entry.isArchived && 'hidden opacity-50',
     ),
-    'data-combined-only': entry.type !== 'bridge' ? true : undefined,
+    'data-layer2': entry.type !== 'bridge' ? true : undefined,
     'data-archived': entry.isArchived,
     href,
   }

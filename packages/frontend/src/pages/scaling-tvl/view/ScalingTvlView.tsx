@@ -117,7 +117,7 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <IncludeArchivedCheckbox className='mb-4'/>
+      <IncludeArchivedCheckbox className="mb-4" />
       <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend showTokenWarnings />
     </section>

@@ -32,13 +32,13 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
       <PageContent>
         <BridgesNavigationTabs selected="tvl" />
         <main>
-          <div data-bridges-only>
+          <div data-bridges-only-cell>
             <TvlHeader
               tvl={props.bridgesTvl}
               tvlWeeklyChange={props.bridgesTvlSevenDayChange}
             />
           </div>
-          <div data-combined-only className="hidden">
+          <div data-combined-only-cell className="hidden">
             <TvlHeader
               tvl={props.combinedTvl}
               tvlWeeklyChange={props.combinedTvlSevenDayChange}
