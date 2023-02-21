@@ -122,8 +122,8 @@ describe(DiscoveryWatcher.name, () => {
       expect(repository.addOrUpdate.calls.length).toEqual(2)
       //sends notification
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
-        [mockMessage(PROJECT_A)],
-        [mockMessage(PROJECT_B)],
+        [mockMessage(PROJECT_A), 'PUBLIC'],
+        [mockMessage(PROJECT_B), 'PUBLIC'],
       ])
     })
 
@@ -304,7 +304,7 @@ describe(DiscoveryWatcher.name, () => {
     })
   })
 
-  describe(DiscoveryWatcher.prototype.notify.name, () => {
+  describe(DiscoveryWatcher.prototype.notifyPublic.name, () => {
     it('sends discord messages', async () => {
       const discoveryWatcher = new DiscoveryWatcher(
         mock<providers.AlchemyProvider>(),
@@ -318,12 +318,12 @@ describe(DiscoveryWatcher.name, () => {
 
       const messages = ['a', 'b', 'c']
 
-      await discoveryWatcher.notify(messages)
+      await discoveryWatcher.notifyPublic(messages)
 
       expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
-        ['a'],
-        ['b'],
-        ['c'],
+        ['a', 'PUBLIC'],
+        ['b', 'PUBLIC'],
+        ['c', 'PUBLIC'],
       ])
     })
   })
