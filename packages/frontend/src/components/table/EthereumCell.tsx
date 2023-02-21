@@ -9,13 +9,15 @@ interface EthereumCellProps {
 
 export function EthereumCell({ project }: EthereumCellProps) {
   return (
-    <span className="relative pl-7">
-      <img
-        className="absolute left-0 top-0 block h-[18px] w-[18px]"
-        src={`/icons/${project.slug}.png`}
-        alt={`${project.name} logo`}
-      />
-      <span className="text-base font-bold md:text-lg">{project.name}</span>
-    </span>
+    <div className="align-middle">
+      <span className="relative pl-7">
+        <img
+          className="absolute left-0 top-0 block h-[18px] w-[18px]"
+          src={`/icons/${project.slug}.png`}
+          alt={`${project.name} logo`}
+        />
+        <span className="text-base font-bold md:text-lg">{project.name}</span>
+      </span>
+    </div>
   )
 }
