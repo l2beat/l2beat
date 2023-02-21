@@ -1,4 +1,4 @@
-import { lzOmnichain } from '../../src/bridges/lzomnichain'
+import { lzOmnichain } from '../../src/bridges/lzOmnichain'
 
 export const IGNORED = [
   '0xc72633f995e98ac3bb8a89e6a9c4af335c3d6e44', // low cap ERC20
