@@ -9,10 +9,10 @@ const discovery = new ProjectDiscovery('lzOmnichain')
 
 export const lzOmnichain: Bridge = {
   type: 'bridge',
-  id: ProjectId('lzOmnichain'),
+  id: ProjectId('lzomnichain'),
   display: {
     name: 'Omnichain (LayerZero)',
-    slug: 'lzOmnichain',
+    slug: 'omnichain',
     links: {
       websites: ['https://layerzero.network/'],
       repositories: [

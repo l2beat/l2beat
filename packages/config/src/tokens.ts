@@ -1629,7 +1629,7 @@ export const tokenList: TokenInfo[] = [
   },
   {
     id: AssetId('stg-stargate-finance'),
-    name: 'Stargate Finance',
+    name: 'StargateToken',
     coingeckoId: CoingeckoId('stargate-finance'),
     address: EthereumAddress('0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6'),
     symbol: 'STG',
