@@ -169,6 +169,65 @@ describe(DiscoveryWatcher.name, () => {
       // does not send a notification
       expect(discordClient.sendMessage.calls.length).toEqual(0)
     })
+
+    it('sends daily reminder to internal channel', async () => {
+      const configReader = mock<ConfigReader>({
+        readDiscovery: async () => ({
+          ...mockProject,
+          contracts: COMMITTED,
+        }),
+
+        readAllConfigs: async () => [
+          mockConfig(PROJECT_A),
+          mockConfig(PROJECT_B),
+        ],
+      })
+
+      const repository = mock<DiscoveryWatcherRepository>({
+        findLatest: async () => undefined,
+        addOrUpdate: async () => '',
+      })
+
+      const discoveryWatcher = new DiscoveryWatcher(
+        provider,
+        discoveryEngine,
+        discordClient,
+        configReader,
+        repository,
+        mock<Clock>(),
+        Logger.SILENT,
+      )
+
+      const NINE_AM = UnixTime.fromDate(new Date('2023-02-21T09:00:00Z'))
+      await discoveryWatcher.update(NINE_AM)
+
+      // gets block number
+      expect(provider.getBlockNumber.calls.length).toEqual(1)
+      // reads all the configs
+      expect(configReader.readAllConfigs.calls.length).toEqual(1)
+      // runs discovery for every project
+      expect(discoveryEngine.run).toHaveBeenCalledExactlyWith([
+        [{ name: PROJECT_A, initialAddresses: [] }, BLOCK_NUMBER],
+        [{ name: PROJECT_B, initialAddresses: [] }, BLOCK_NUMBER],
+      ])
+      // calls repository (and gets undefined)
+      expect(repository.findLatest.calls.length).toEqual(2)
+      // reads commited discovery.json
+      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
+        [PROJECT_A],
+        [PROJECT_B],
+      ])
+      // saves discovery result
+      expect(repository.addOrUpdate.calls.length).toEqual(2)
+      //sends notification
+      expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
+        [mockMessage(PROJECT_A), 'PUBLIC'],
+        [mockMessage(PROJECT_A), 'INTERNAL'],
+        [mockMessage(PROJECT_B), 'PUBLIC'],
+        [mockMessage(PROJECT_B), 'INTERNAL'],
+        [mockDaliyReminder([PROJECT_A, PROJECT_B]), 'INTERNAL'],
+      ])
+    })
   })
 
   describe(DiscoveryWatcher.prototype.findChanges.name, () => {
@@ -199,6 +258,7 @@ describe(DiscoveryWatcher.name, () => {
         DISCOVERY_RESULT,
         // repository returns undefined, so config hash does not matter
         Hash256.random(),
+        false,
         {},
       )
 
@@ -209,9 +269,10 @@ describe(DiscoveryWatcher.name, () => {
         [PROJECT_A],
       ])
       // finds difference between committed and discovery result
-      expect(result).toEqual(
-        diffDiscovery(COMMITTED, DISCOVERY_RESULT.contracts, {}),
-      )
+      expect(result).toEqual({
+        committed: diffDiscovery(COMMITTED, DISCOVERY_RESULT.contracts, {}),
+        database: undefined,
+      })
     })
 
     it('finds difference from repository entry', async () => {
@@ -244,6 +305,7 @@ describe(DiscoveryWatcher.name, () => {
         PROJECT_A,
         DISCOVERY_RESULT,
         getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+        false,
         {},
       )
 
@@ -252,12 +314,15 @@ describe(DiscoveryWatcher.name, () => {
       // skips reading committed file
       expect(configReader.readDiscovery.calls.length).toEqual(0)
       // finds difference between repository and discovery result
-      expect(result).toEqual(
-        diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
-      )
+      expect(result).toEqual({
+        committed: undefined,
+        database: diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
+      })
     })
 
     it('takes config hash into consideration', async () => {
+      const dbEntry = COMMITTED
+
       const configReader = mock<ConfigReader>({
         readDiscovery: async () => ({
           ...mockProject,
@@ -270,7 +335,7 @@ describe(DiscoveryWatcher.name, () => {
           ...mockRecord,
           discovery: {
             ...mockProject,
-            contracts: COMMITTED,
+            contracts: dbEntry,
           },
           configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
         }),
@@ -294,10 +359,14 @@ describe(DiscoveryWatcher.name, () => {
           contracts: DISCOVERY_RESULT.contracts,
         },
         getDiscoveryConfigHash({ ...mockConfig(PROJECT_A), name: 'new-name' }),
+        false,
         {},
       )
 
-      expect(result).toEqual([])
+      expect(result).toEqual({
+        committed: [],
+        database: diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
+      })
 
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
         [PROJECT_A],
@@ -383,4 +452,10 @@ const mockMessage = (project: string): string => {
       ],
     },
   ])[0]
+}
+
+const mockDaliyReminder = (projects: string[]) => {
+  return `The following projects still have unhandled changes:\n${projects.join(
+    '\n',
+  )}`
 }

@@ -14,13 +14,14 @@ export class DiscordClient {
     private readonly discordToken: string,
     private readonly publicChannelId: string,
     private readonly internalChannelId: string,
-  ) { }
+  ) {}
 
   async sendMessage(message: string, channel: 'PUBLIC' | 'INTERNAL') {
     if (message.length > MAX_MESSAGE_LENGTH) {
       throw new Error(`Discord error: Message size exceeded (2000 characters)`)
     }
-    const channelId = channel === 'PUBLIC' ? this.publicChannelId : this.internalChannelId
+    const channelId =
+      channel === 'PUBLIC' ? this.publicChannelId : this.internalChannelId
 
     return this.send(message, channelId)
   }

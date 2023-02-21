@@ -127,7 +127,7 @@ describe(DiscordClient.name, () => {
       const error = JSON.stringify({ message: 'error', code: '0001' })
 
       const httpClient = mock<HttpClient>({
-        fetch: async () => new Response(error, { status: 400 })
+        fetch: async () => new Response(error, { status: 400 }),
       })
       const discord = new DiscordClient(
         httpClient,
