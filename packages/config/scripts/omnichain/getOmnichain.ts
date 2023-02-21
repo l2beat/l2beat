@@ -2,16 +2,19 @@ import chalk from 'chalk'
 import { providers } from 'ethers'
 import fetch from 'node-fetch'
 
+import { ProjectEscrow } from '../../src'
 import { CoinListPlatformResult } from './CoinListPlatformResult'
+import { CHECK, ESCROWS, IGNORED } from './config'
 import { getAllLogs } from './getAllLogs'
-import { CHECK, IGNORED } from './ignored'
 
 const ULTRA_LIGHT_NODE_V2 = '0x4D73AdB72bC3DD368966edD0f0b2148401A178E2'
 const PACKET_RECEIVED_TOPIC =
   '0x2bd2d8a84b748439fd50d79a49502b4eb5faa25b864da6a9ab5c150704be9a4d'
 const CONTRACT_CREATION_BLOCK = 15416271
 
-export async function getOmnichain(provider: providers.JsonRpcProvider) {
+export async function getOmnichain(
+  provider: providers.JsonRpcProvider,
+): Promise<ProjectEscrow[]> {
   const filter = {
     address: ULTRA_LIGHT_NODE_V2,
     topics: [PACKET_RECEIVED_TOPIC],
@@ -87,10 +90,12 @@ export async function getOmnichain(provider: providers.JsonRpcProvider) {
     console.log('Following contracts are unconfigured:\n')
     toUpdate.map((update) => console.log(`\t${chalk.red(update)}`))
     console.log(
-      '\n\tConsider updating lzOmnichain escrows or add this address to ignored inside "scripts/omnichain/ignored.ts"',
+      '\n\tConsider updating lzOmnichain escrows or add this address to ignored inside "scripts/omnichain/config.ts"',
     )
   } else {
     console.log(`${chalk.green('✓')} everything up to date`)
   }
   console.log('\n\n')
+
+  return ESCROWS
 }

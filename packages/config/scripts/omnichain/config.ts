@@ -1,4 +1,14 @@
-import { lzOmnichain } from '../../src/bridges/lzOmnichain'
+import { EthereumAddress, UnixTime } from '@l2beat/shared'
+
+import { ProjectEscrow } from '../../src'
+
+export const ESCROWS: ProjectEscrow[] = [
+  {
+    address: EthereumAddress('0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6'),
+    sinceTimestamp: new UnixTime(1647504559),
+    tokens: ['STG'],
+  },
+]
 
 export const IGNORED = [
   '0xc72633f995e98ac3bb8a89e6a9c4af335c3d6e44', // low cap ERC20
@@ -12,7 +22,7 @@ export const IGNORED = [
   '0x7ffe2672c100bfb0094ad0b4d592dd9f9416f1ac', // low cap ERC20
   '0x4fa745fccc04555f2afa8874cd23961636cdf982', // LayerZero Bridge agEUR
   '0x611747cc4576aab44f602a65df3557150c214493', // NFT
-  ...lzOmnichain.config.escrows.map((e) => e.address.toString().toLowerCase()),
+  ...ESCROWS.map((e) => e.address.toString().toLowerCase()),
 ]
 
 // some projects look like they are still being developed

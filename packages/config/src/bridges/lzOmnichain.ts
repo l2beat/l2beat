@@ -3,6 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 import { CONTRACTS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
+import * as config from './lzOmnichain-config.json'
 import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('lzOmnichain')
@@ -78,13 +79,11 @@ export const lzOmnichain: Bridge = {
     },
   },
   config: {
-    escrows: [
-      {
-        address: EthereumAddress('0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6'),
-        sinceTimestamp: new UnixTime(1647504559),
-        tokens: ['STG'],
-      },
-    ],
+    escrows: config.escrows.map((escrow) => ({
+      address: EthereumAddress(escrow.address),
+      sinceTimestamp: new UnixTime(escrow.sinceTimestamp),
+      tokens: escrow.tokens,
+    })),
   },
   contracts: {
     addresses: [
