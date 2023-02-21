@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
+import { configureFilters } from '../../../scripts/configureFilters'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { ScalingRiskView } from './ScalingRiskView'
 
@@ -13,6 +14,7 @@ export default {
 export function RiskView() {
   useEffect(() => {
     configureTooltips()
+    configureFilters()
   }, [])
   return (
     <>
