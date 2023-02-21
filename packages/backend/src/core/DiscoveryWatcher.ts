@@ -51,6 +51,9 @@ export class DiscoveryWatcher {
     const metricsDone = initMetrics()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
+    const isDailyReminder = timestamp.equals(
+      timestamp.toStartOf('day').add(9, 'hours'),
+    )
     this.logger.info('Update started', { blockNumber })
 
     const projectConfigs = await this.configReader.readAllConfigs()
@@ -66,10 +69,6 @@ export class DiscoveryWatcher {
           blockNumber,
         )
         const configHash = getDiscoveryConfigHash(projectConfig)
-
-        const isDailyReminder = timestamp.equals(
-          timestamp.toStartOf('day').add(9, 'hours'),
-        )
 
         const diff = await this.findChanges(
           projectConfig.name,
@@ -109,13 +108,9 @@ export class DiscoveryWatcher {
       }
     }
 
-    if (unUpdatedProjects.length > 0) {
+    if (isDailyReminder) {
       await this.notify(
-        [
-          `The following projects still have unhandled changes:\n${unUpdatedProjects.join(
-            '\n',
-          )}`,
-        ],
+        [getDailyReminderMessage(unUpdatedProjects, timestamp)],
         'INTERNAL',
       )
     }
@@ -180,6 +175,17 @@ export class DiscoveryWatcher {
       )
     }
   }
+}
+
+function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
+  const dailyReportMessage = `\`\`\`Daily bot report @ ${timestamp.toYYYYMMDD()}\`\`\`\n`
+  if (projects.length > 0) {
+    return `${dailyReportMessage}${projects
+      .map((p) => `:x: ${p}`)
+      .join('\n\n')}`
+  }
+
+  return `${dailyReportMessage}:white_check_mark: everything is up to date`
 }
 
 const latestBlock = new Gauge({

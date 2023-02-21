@@ -225,7 +225,7 @@ describe(DiscoveryWatcher.name, () => {
         [mockMessage(PROJECT_A), 'INTERNAL'],
         [mockMessage(PROJECT_B), 'PUBLIC'],
         [mockMessage(PROJECT_B), 'INTERNAL'],
-        [mockDaliyReminder([PROJECT_A, PROJECT_B]), 'INTERNAL'],
+        [mockDaliyReminder([PROJECT_A, PROJECT_B], NINE_AM), 'INTERNAL'],
       ])
     })
   })
@@ -454,8 +454,8 @@ const mockMessage = (project: string): string => {
   ])[0]
 }
 
-const mockDaliyReminder = (projects: string[]) => {
-  return `The following projects still have unhandled changes:\n${projects.join(
-    '\n',
-  )}`
+const mockDaliyReminder = (projects: string[], timestamp: UnixTime) => {
+  return `\`\`\`Daily bot report @ ${timestamp.toYYYYMMDD()}\`\`\`\n${projects
+    .map((p) => `:x: ${p}`)
+    .join('\n\n')}`
 }
