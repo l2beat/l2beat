@@ -14,7 +14,7 @@ import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash
 import { TaskQueue } from './queue/TaskQueue'
 
 export class DiscoveryWatcher {
-  private readonly taskQueue: TaskQueue<void>
+  private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
     private readonly provider: providers.AlchemyProvider,
@@ -27,7 +27,7 @@ export class DiscoveryWatcher {
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
-      () => this.update(),
+      (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
         metricsId: DiscoveryWatcher.name,
@@ -37,16 +37,15 @@ export class DiscoveryWatcher {
 
   start() {
     this.logger.info('Started')
-    return this.clock.onNewHour(() => {
-      this.taskQueue.addToFront()
+    return this.clock.onNewHour((timestamp) => {
+      this.taskQueue.addToFront(timestamp)
     })
   }
 
-  async update() {
+  async update(timestamp: UnixTime) {
     const metricsDone = initMetrics()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
-    const timestamp = UnixTime.now()
     this.logger.info('Update started', { blockNumber })
 
     const projectConfigs = await this.configReader.readAllConfigs()

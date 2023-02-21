@@ -100,7 +100,7 @@ describe(DiscoveryWatcher.name, () => {
         mock<Clock>(),
         Logger.SILENT,
       )
-      await discoveryWatcher.update()
+      await discoveryWatcher.update(new UnixTime(0))
 
       // gets block number
       expect(provider.getBlockNumber.calls.length).toEqual(1)
@@ -154,7 +154,7 @@ describe(DiscoveryWatcher.name, () => {
         Logger.SILENT,
       )
 
-      await discoveryWatcher.update()
+      await discoveryWatcher.update(new UnixTime(0))
 
       // gets block number
       expect(provider.getBlockNumber.calls.length).toEqual(1)
