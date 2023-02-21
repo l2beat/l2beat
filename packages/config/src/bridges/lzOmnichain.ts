@@ -1,4 +1,3 @@
-
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
@@ -6,7 +5,7 @@ import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
-const discovery = new ProjectDiscovery('polygonpos')
+const discovery = new ProjectDiscovery('lzOmnichain')
 
 export const lzOmnichain: Bridge = {
   type: 'bridge',
@@ -97,22 +96,23 @@ export const lzOmnichain: Bridge = {
       {
         address: discovery.getContract('Endpoint').address,
         name: 'Endpoint',
-        description: 'Layer Zero Enpoint contract used for cross-chain messaging.'
+        description:
+          'Layer Zero Enpoint contract used for cross-chain messaging.',
       },
       {
         address: discovery.getContract('UltraLightNodeV2').address,
         name: 'UltraLightNodeV2',
-        description: 'LayerZero default send and receive library.'
+        description: 'LayerZero default send and receive library.',
       },
       {
         address: discovery.getContract('TreasuryV2').address,
         name: 'TreasuryV2',
-        description: 'LayerZero contract responsible for fees mechanism.'
+        description: 'LayerZero contract responsible for fees mechanism.',
       },
       {
         address: discovery.getContract('NonceContract').address,
         name: 'NonceContract',
-        description: 'LayerZero nonce contract.'
+        description: 'LayerZero nonce contract.',
       },
       {
         address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
@@ -144,7 +144,9 @@ export const lzOmnichain: Bridge = {
     {
       accounts: [
         {
-          address: EthereumAddress('0x65bb797c2B9830d891D87288F029ed8dACc19705'),
+          address: EthereumAddress(
+            '0x65bb797c2B9830d891D87288F029ed8dACc19705',
+          ),
           type: 'MultiSig',
         },
       ],
@@ -173,7 +175,9 @@ export const lzOmnichain: Bridge = {
     {
       accounts: [
         {
-          address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
+          address: EthereumAddress(
+            '0x902F09715B6303d4173037652FA7377e5b98089E',
+          ),
           type: 'Contract',
         },
       ],
@@ -184,13 +188,14 @@ export const lzOmnichain: Bridge = {
     {
       accounts: [
         {
-          address: EthereumAddress('0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92'),
+          address: EthereumAddress(
+            '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
+          ),
           type: 'MultiSig',
         },
       ],
       name: 'LayerZero Multisig',
-      description:
-        'Owner of the Endpoint and UltraLightNodeV2 contract.',
+      description: 'Owner of the Endpoint and UltraLightNodeV2 contract.',
     },
     {
       name: 'LayerZero MultiSig Participants',

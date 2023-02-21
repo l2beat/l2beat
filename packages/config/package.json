@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@l2beat/shared": "*",
+    "chalk": "^4.1.2",
     "dotenv": "^16.0.3",
     "node-fetch": "^2.6.7",
     "zod": "^3.20.2",

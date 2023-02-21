@@ -1,14 +1,14 @@
 import { config as dotenv } from 'dotenv'
-import { providers } from "ethers";
+import { providers } from 'ethers'
 
-import { getEnv } from "../checkVerifiedContracts/utils";
-import { getOmnichain } from "./getOmnichain";
+import { getEnv } from '../checkVerifiedContracts/utils'
+import { getOmnichain } from './getOmnichain'
 
 async function main() {
   const provider = new providers.AlchemyProvider(
-    "homestead",
-    getEnv('CONFIG_ALCHEMY_API_KEY')
-  );
+    'homestead',
+    getEnv('CONFIG_ALCHEMY_API_KEY'),
+  )
 
   await getOmnichain(provider)
 }

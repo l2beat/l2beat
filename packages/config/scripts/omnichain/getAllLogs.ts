@@ -1,28 +1,28 @@
-import { providers } from "ethers";
+import { providers } from 'ethers'
 
 interface LogFilter {
-  address: string;
-  topics: string[];
-  fromBlock: number;
-  toBlock: number;
+  address: string
+  topics: string[]
+  fromBlock: number
+  toBlock: number
 }
 
 export async function getAllLogs(
   provider: providers.JsonRpcProvider,
-  filter: LogFilter
+  filter: LogFilter,
 ): Promise<providers.Log[]> {
   if (filter.fromBlock === filter.toBlock) {
-    return await provider.getLogs(filter);
+    return await provider.getLogs(filter)
   }
   try {
-    return await provider.getLogs(filter);
+    return await provider.getLogs(filter)
   } catch (e) {
     if (
       e instanceof Error &&
-      e.message.includes("Log response size exceeded")
+      e.message.includes('Log response size exceeded')
     ) {
       const midPoint =
-        filter.fromBlock + Math.floor((filter.toBlock - filter.fromBlock) / 2);
+        filter.fromBlock + Math.floor((filter.toBlock - filter.fromBlock) / 2)
       const [a, b] = await Promise.all([
         getAllLogs(provider, {
           ...filter,
@@ -34,10 +34,10 @@ export async function getAllLogs(
           fromBlock: midPoint + 1,
           toBlock: filter.toBlock,
         }),
-      ]);
-      return a.concat(b);
+      ])
+      return a.concat(b)
     } else {
-      throw e;
+      throw e
     }
   }
 }
