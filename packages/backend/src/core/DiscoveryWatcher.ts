@@ -71,7 +71,8 @@ export class DiscoveryWatcher {
 
         if (diff.length > 0) {
           const messages = diffToMessages(projectConfig.name, diff)
-          await this.notifyPublic(messages)
+          await this.notify(messages, 'PUBLIC')
+          await this.notify(messages, 'INTERNAL')
           changesCounter += diff.length
         }
 
@@ -118,7 +119,7 @@ export class DiscoveryWatcher {
     )
   }
 
-  async notifyPublic(messages: string[]) {
+  async notify(messages: string[], channel: 'PUBLIC' | 'INTERNAL') {
     if (!this.discordClient) {
       // TODO: maybe only once? rethink
       this.logger.info(
@@ -128,7 +129,7 @@ export class DiscoveryWatcher {
     }
 
     for (const message of messages) {
-      await this.discordClient.sendMessage(message, 'PUBLIC').then(
+      await this.discordClient.sendMessage(message, channel).then(
         () => this.logger.info('Notification to Discord has been sent'),
         (e) => this.logger.error(e),
       )
