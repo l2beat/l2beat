@@ -52,7 +52,7 @@ export class DiscoveryWatcher {
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
     const isDailyReminder = timestamp.equals(
-      timestamp.toStartOf('day').add(9, 'hours'),
+      timestamp.toStartOf('day').add(8, 'hours'),
     )
     this.logger.info('Update started', { blockNumber })
 
