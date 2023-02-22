@@ -14,6 +14,7 @@
     "lint": "eslint --ext .ts --max-warnings 0 src scripts",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
+    "get-lz-data": "node -r esbuild-register scripts/omnichain",
     "update-multichain": "node -r esbuild-register scripts/multichain",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts"
   },
