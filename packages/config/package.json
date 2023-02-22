@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@l2beat/shared": "*",
+    "cheerio": "^1.0.0-rc.11",
     "dotenv": "^16.0.3",
     "node-fetch": "^2.6.7",
     "zod": "^3.20.2",
