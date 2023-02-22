@@ -215,6 +215,8 @@ describe(SequenceProcessor.name, () => {
         getLatest: getLatestMock,
         processRange: processRangeMock,
         reportError: reportErrorMock,
+        // Because we use fake-timers, we need to disable the refresh interval
+        refreshInterval: Infinity,
       })
 
       await sequenceProcessor.start()
@@ -245,6 +247,8 @@ describe(SequenceProcessor.name, () => {
         getLatest: getLatestMock,
         processRange: processRangeMock,
         reportError: reportErrorMock,
+        // Because we use fake-timers, we need to disable the refresh interval
+        refreshInterval: Infinity,
       })
 
       await sequenceProcessor.start()
