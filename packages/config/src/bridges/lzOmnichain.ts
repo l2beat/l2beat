@@ -23,7 +23,7 @@ export const lzOmnichain: Bridge = {
       socialMedia: ['https://twitter.com/StargateFinance'],
     },
     description:
-      'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol. Risk associated with using any of them varies, depending on the technological decisions made by the developers. It is worth pointing out, that using LayerZero does not guarantee additional security, in only provides default infrastructure (Relayer, Oracle, Inbound and Outbound Library) which can be arbitrarily changed by the token owner.',
+      'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol. Risk associated with using any of them varies, depending on the technological decisions made by the developers. LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings, however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library. Default settings are managed by LayerZero team.',
   },
   riskView: {
     validatedBy: {
@@ -92,8 +92,30 @@ export const lzOmnichain: Bridge = {
   contracts: {
     addresses: [
       {
+        address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
+        name: 'Default LayerZero Relayer',
+        upgradeability: {
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9'),
+          implementation: EthereumAddress(
+            '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
+          ),
+        },
+      },
+      {
+        address: EthereumAddress('0x5a54fe5234E811466D5366846283323c954310B2'),
+        name: 'Default LayerZero Oracle',
+        upgradeability: {
+          type: 'EIP1967 proxy',
+          admin: EthereumAddress('0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8'),
+          implementation: EthereumAddress(
+            '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
+          ),
+        },
+      },
+      {
         address: EthereumAddress('0x462F7eC57C6492B983a8C8322B4369a7f149B859'),
-        name: 'Default Inbound Proof Library',
+        name: 'Default LayerZero Inbound Proof Library',
         description:
           'Contract used to validate messages coming from other chains.',
       },
