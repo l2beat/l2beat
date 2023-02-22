@@ -92,8 +92,10 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <IncludeLayer2sCheckbox className="mb-4" />
-      <IncludeArchivedCheckbox className="ml-2" />
+      <div className="overflow-x-auto whitespace-nowrap pb-4">
+        <IncludeLayer2sCheckbox />
+        <IncludeArchivedCheckbox className="ml-2" />
+      </div>
       <TableView items={items} columns={columns} rows={rows} />
     </section>
   )
