@@ -23,7 +23,7 @@ export const lzOmnichain: Bridge = {
       socialMedia: ['https://twitter.com/StargateFinance'],
     },
     description:
-      'Omnichain tokens are built on top of LayerZero AMB protocol. They inherit its security and add on top of it their own additional security assumptions.',
+      'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol. Risk associated with using any of them varies, depending on the technological decisions made by the developers. It is worth pointing out, that using LayerZero does not guarantee additional security, in only provides default infrastructure (Relayer, Oracle, Inbound and Outbound Library) which can be arbitrarily changed by the token owner.',
   },
   riskView: {
     validatedBy: {
@@ -55,9 +55,13 @@ export const lzOmnichain: Bridge = {
       name: 'Oracles and Relayers',
       description:
         'Omnichain tokens are built on top of LayerZero protocol. LayerZero relies on Oracles to periodically submit source chain block hashes to the destination chain.\
-        Once block hash is submitted, Relayers can provide the merkle proof for the transfers. Omnichain token owner can withdraw all funds from the bridge escrow\
-        by changing Oracle/Relayer pair.',
-      references: [],
+        Once block hash is submitted, Relayers can provide the merkle proof for the transfers. The Oracle and Relayer used can be either default LayerZero contracts, or custom built by the token developers.',
+      references: [
+        {
+          text: 'LayerZero security model analysis',
+          href: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
+        },
+      ],
       risks: [
         {
           category: 'Users can be censored if',
@@ -88,9 +92,10 @@ export const lzOmnichain: Bridge = {
   contracts: {
     addresses: [
       {
-        address: discovery.getContract('StargateToken').address,
-        name: 'StargateToken',
-        description: 'StarGate (STG) omnichain token.',
+        address: EthereumAddress('0x462F7eC57C6492B983a8C8322B4369a7f149B859'),
+        name: 'Default Inbound Proof Library',
+        description:
+          'Contract used to validate messages coming from other chains.',
       },
       {
         address: discovery.getContract('Endpoint').address,
@@ -113,28 +118,6 @@ export const lzOmnichain: Bridge = {
         name: 'NonceContract',
         description: 'LayerZero nonce contract.',
       },
-      {
-        address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
-        name: 'LayerZero Relayer',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9'),
-          implementation: EthereumAddress(
-            '0x76A15d86FbBe691557C8b7A9C4BebF1d8AFE00A7',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress('0x5a54fe5234E811466D5366846283323c954310B2'),
-        name: 'LayerZero Oracle',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8'),
-          implementation: EthereumAddress(
-            '0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f',
-          ),
-        },
-      },
     ],
     risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
@@ -144,45 +127,27 @@ export const lzOmnichain: Bridge = {
       accounts: [
         {
           address: EthereumAddress(
-            '0x65bb797c2B9830d891D87288F029ed8dACc19705',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'StarGate owner',
-      description:
-        'Can pause STG token, can configure Oracle/Relayer of Layer Zero AMB bridge, can set/change destination address of STG token for any chain.',
-    },
-    {
-      name: 'StarGate MultiSig Participants',
-      accounts: discovery
-        .getContractValue<string[]>(
-          '0x65bb797c2B9830d891D87288F029ed8dACc19705',
-          'getOwners',
-        )
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        '0x65bb797c2B9830d891D87288F029ed8dACc19705',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>(
-          '0x65bb797c2B9830d891D87288F029ed8dACc19705',
-          'getOwners',
-        ).length
-      } StarGate MultiSig.`,
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
             '0x902F09715B6303d4173037652FA7377e5b98089E',
           ),
           type: 'Contract',
         },
       ],
-      name: 'Omnichain Tokens Relayer',
+      name: 'Default Relayer',
       description:
         'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+    },
+    {
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0x5a54fe5234E811466D5366846283323c954310B2',
+          ),
+          type: 'Contract',
+        },
+      ],
+      name: 'Default Oracle',
+      description:
+        'Contract that submits source chain block hashes to the destination chain.',
     },
     {
       accounts: [
@@ -194,7 +159,8 @@ export const lzOmnichain: Bridge = {
         },
       ],
       name: 'LayerZero Multisig',
-      description: 'Owner of the Endpoint and UltraLightNodeV2 contract.',
+      description:
+        'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
     },
     {
       name: 'LayerZero MultiSig Participants',

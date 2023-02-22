@@ -41,11 +41,11 @@ export async function getOmnichain(
     ranking.push({ address, count })
   }
 
-  console.log('\nTOP10 by amount of interactions:\n')
+  console.log('\nTOP 20 by amount of interactions:\n')
 
   ranking
     .sort((a, b) => b.count - a.count)
-    .slice(0, 10)
+    .slice(0, 20)
     .map((r) => {
       console.log(`\t${r.address} | ${r.count}`)
       if (!IGNORED.includes(r.address)) {
