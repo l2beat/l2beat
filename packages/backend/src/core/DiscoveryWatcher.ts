@@ -14,8 +14,7 @@ import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash
 import { TaskQueue } from './queue/TaskQueue'
 
 export interface Diff {
-  committed: DiscoveryDiff[] | undefined
-  database: DiscoveryDiff[] | undefined
+  changes: DiscoveryDiff[]
   sendDailyReminder: boolean
 }
 
@@ -79,13 +78,11 @@ export class DiscoveryWatcher {
           projectConfig.overrides,
         )
 
-        const changes = diff.database ? diff.database : diff.committed ?? []
-
-        if (changes.length > 0) {
-          const messages = diffToMessages(projectConfig.name, changes)
+        if (diff.changes.length > 0) {
+          const messages = diffToMessages(projectConfig.name, diff.changes)
           await this.notify(messages, 'PUBLIC')
           await this.notify(messages, 'INTERNAL')
-          changesCounter += changes.length
+          changesCounter += diff.changes.length
         }
 
         if (diff.sendDailyReminder) {
@@ -126,8 +123,7 @@ export class DiscoveryWatcher {
     overrides?: Record<string, DiscoveryContract>,
   ): Promise<Diff> {
     const result: Diff = {
-      committed: undefined,
-      database: undefined,
+      changes: [],
       sendDailyReminder: false,
     }
 
@@ -139,7 +135,7 @@ export class DiscoveryWatcher {
     )
 
     const databaseEntry = await this.repository.findLatest(name)
-    let diffFromDatabase: DiscoveryDiff[] | undefined
+    let diffFromDatabase: DiscoveryDiff[] = []
     if (databaseEntry !== undefined) {
       diffFromDatabase = diffDiscovery(
         databaseEntry.discovery.contracts,
@@ -158,10 +154,10 @@ export class DiscoveryWatcher {
       databaseEntry.configHash !== configHash
     ) {
       this.logger.debug('Using committed file for diff', { project: name })
-      result.committed = diffFromCommitted
+      result.changes = diffFromCommitted
     } else {
       this.logger.debug('Using database record for diff', { project: name })
-      result.database = diffFromDatabase
+      result.changes = diffFromDatabase
     }
 
     return result

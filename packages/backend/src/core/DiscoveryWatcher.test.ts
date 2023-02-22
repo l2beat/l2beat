@@ -268,8 +268,7 @@ describe(DiscoveryWatcher.name, () => {
       ])
       // finds difference between committed and discovery result
       expect(result).toEqual({
-        committed: diffDiscovery(COMMITTED, DISCOVERY_RESULT.contracts, {}),
-        database: undefined,
+        changes: diffDiscovery(COMMITTED, DISCOVERY_RESULT.contracts, {}),
         sendDailyReminder: false,
       })
     })
@@ -312,8 +311,7 @@ describe(DiscoveryWatcher.name, () => {
       expect(repository.findLatest.calls.length).toEqual(1)
       // finds difference between repository and discovery result
       expect(result).toEqual({
-        committed: undefined,
-        database: diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
+        changes: diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
         sendDailyReminder: false,
       })
     })
@@ -362,8 +360,7 @@ describe(DiscoveryWatcher.name, () => {
       )
 
       expect(result).toEqual({
-        committed: [],
-        database: undefined,
+        changes: [],
         sendDailyReminder: false,
       })
 
