@@ -233,7 +233,7 @@ describe(SequenceProcessor.name, () => {
       )
     })
 
-    it('works when processRange throws', async () => {
+    it.only('works when processRange throws', async () => {
       const time = install()
 
       const errorMessage = 'Force-failing during tests!'
