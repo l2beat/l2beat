@@ -6,7 +6,7 @@ interface SimpleNodeShared {
   discovered: boolean
   fields: {
     name: string
-    connection?: string
+    connection?: string // id
   }[]
 }
 

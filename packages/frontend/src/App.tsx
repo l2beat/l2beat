@@ -1,6 +1,9 @@
+import '@total-typescript/ts-reset'
+
 import classNames from 'classnames'
 import { useState } from 'react'
 
+import { deleteNode } from './api/delete'
 import { discover } from './api/discover'
 import { merge } from './api/merge'
 import { SimpleNode } from './api/SimpleNode'
@@ -11,7 +14,8 @@ import { Viewport } from './view/Viewport'
 export function App() {
   const [nodes, setNodes] = useState<SimpleNode[]>([])
   const [loading, setLoading] = useState<Record<string, boolean>>({})
-  const selected = useStore((state) => state.selectedNodeIds[0])
+  const selectedIds = useStore((state) => state.selectedNodeIds)
+  const selectedNodes = nodes.filter((x) => selectedIds.includes(x.id))
 
   function markLoading(id: string, value: boolean) {
     setLoading((loading) => ({ ...loading, [id]: value }))
@@ -35,7 +39,14 @@ export function App() {
     setNodes((nodes) => merge(nodes, result))
   }
 
-  const selectedNode = nodes.find((x) => x.id === selected)
+  function deleteNodeAction(id: string[]) {
+    try {
+      const newNodes = deleteNode(nodes, id)
+      setNodes(newNodes)
+    } catch (e: unknown) {
+      alert(e instanceof Error && e.message ? e.message : 'Unknown error')
+    }
+  }
 
   return (
     <div className="grid h-full w-full grid-cols-[1fr,_400px] grid-rows-[64px,_1fr]">
@@ -56,7 +67,10 @@ export function App() {
       </div>
 
       <div className="row-span-2 bg-white p-2 drop-shadow-xl">
-        <Sidebar node={selectedNode} />
+        <Sidebar
+          selectedNodes={selectedNodes}
+          onDeleteNodes={deleteNodeAction}
+        />
       </div>
 
       <div className="flex h-full w-full items-center justify-center gap-4 p-2">

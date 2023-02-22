@@ -13,6 +13,6 @@ export async function discover(
     return []
   }
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const discovery: ProjectParameters = await res.json()
+  const discovery = (await res.json()) as ProjectParameters
   return transformContracts(discovery)
 }
