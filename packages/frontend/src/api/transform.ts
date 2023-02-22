@@ -11,14 +11,9 @@ export function transformContracts(discovery: ProjectParameters): SimpleNode[] {
       id: contract.address,
       name: emojifyContractName(contract),
       discovered: true,
-      fields: [...proxyFields, ...mapFields(contract.values)]
-        .filter((x) => !x.connection || !implementations.includes(x.connection))
-        .map((field) => ({
-          ...field,
-          value: field.value === ZERO_ADDRESS ? '∅' : field.value,
-          connection:
-            field.connection !== ZERO_ADDRESS ? field.connection : undefined,
-        })),
+      fields: [...proxyFields, ...mapFields(contract.values)].filter(
+        (x) => !x.connection || !implementations.includes(x.connection),
+      ),
       data: contract,
     }
   })
@@ -53,6 +48,10 @@ function mapFields(
   return Object.entries(values).flatMap(
     ([key, value]: [string, ContractValue]): FieldProps[] => {
       if (typeof value === 'string' && isAddress(value)) {
+        if (value === ZERO_ADDRESS) {
+          return []
+        }
+
         return [
           {
             name: concatKey(prefix, key),
