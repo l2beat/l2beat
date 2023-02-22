@@ -89,7 +89,7 @@ export class DiscoveryWatcher {
 
         if (isDailyReminder) {
           if (diff.committed && diff.committed.length > 0) {
-            unUpdatedProjects.push(projectConfig.name)
+            notUpdatedProjects.push(projectConfig.name)
           }
         }
 
