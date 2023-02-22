@@ -164,8 +164,6 @@ describe(DiscoveryWatcher.name, () => {
       expect(discoveryWatcherRepository.findLatest).toHaveBeenCalledExactlyWith(
         [[PROJECT_A]],
       )
-      // skips reading committed file
-      expect(configReader.readDiscovery.calls.length).toEqual(0)
       // does not send a notification
       expect(discordClient.sendMessage.calls.length).toEqual(0)
     })
@@ -272,6 +270,7 @@ describe(DiscoveryWatcher.name, () => {
       expect(result).toEqual({
         committed: diffDiscovery(COMMITTED, DISCOVERY_RESULT.contracts, {}),
         database: undefined,
+        sendDailyReminder: false,
       })
     })
 
@@ -311,12 +310,11 @@ describe(DiscoveryWatcher.name, () => {
 
       // calls repository
       expect(repository.findLatest.calls.length).toEqual(1)
-      // skips reading committed file
-      expect(configReader.readDiscovery.calls.length).toEqual(0)
       // finds difference between repository and discovery result
       expect(result).toEqual({
         committed: undefined,
         database: diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
+        sendDailyReminder: false,
       })
     })
 
@@ -365,7 +363,8 @@ describe(DiscoveryWatcher.name, () => {
 
       expect(result).toEqual({
         committed: [],
-        database: diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
+        database: undefined,
+        sendDailyReminder: false,
       })
 
       expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([

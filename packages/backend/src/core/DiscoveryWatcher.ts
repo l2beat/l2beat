@@ -16,6 +16,7 @@ import { TaskQueue } from './queue/TaskQueue'
 export interface Diff {
   committed: DiscoveryDiff[] | undefined
   database: DiscoveryDiff[] | undefined
+  sendDailyReminder: boolean
 }
 
 export class DiscoveryWatcher {
@@ -87,10 +88,8 @@ export class DiscoveryWatcher {
           changesCounter += changes.length
         }
 
-        if (isDailyReminder) {
-          if (diff.committed && diff.committed.length > 0) {
-            notUpdatedProjects.push(projectConfig.name)
-          }
+        if (diff.sendDailyReminder) {
+          notUpdatedProjects.push(projectConfig.name)
         }
 
         await this.repository.addOrUpdate({
@@ -129,31 +128,40 @@ export class DiscoveryWatcher {
     const result: Diff = {
       committed: undefined,
       database: undefined,
+      sendDailyReminder: false,
     }
+
+    const committed = await this.configReader.readDiscovery(name)
+    const diffFromCommitted = diffDiscovery(
+      committed.contracts,
+      discovery.contracts,
+      overrides,
+    )
 
     const databaseEntry = await this.repository.findLatest(name)
-
-    if (
-      databaseEntry === undefined ||
-      databaseEntry.configHash !== configHash ||
-      isDailyReminder
-    ) {
-      this.logger.debug('Using committed file for diff', { project: name })
-      const committed = await this.configReader.readDiscovery(name)
-      result.committed = diffDiscovery(
-        committed.contracts,
-        discovery.contracts,
-        overrides,
-      )
-    }
-
+    let diffFromDatabase: DiscoveryDiff[] | undefined
     if (databaseEntry !== undefined) {
-      this.logger.debug('Using database record for diff', { project: name })
-      result.database = diffDiscovery(
+      diffFromDatabase = diffDiscovery(
         databaseEntry.discovery.contracts,
         discovery.contracts,
         overrides,
       )
+    }
+
+    if (isDailyReminder && diffFromCommitted.length > 0) {
+      this.logger.debug('Include inside daily reminder', { project: name })
+      result.sendDailyReminder = true
+    }
+
+    if (
+      databaseEntry === undefined ||
+      databaseEntry.configHash !== configHash
+    ) {
+      this.logger.debug('Using committed file for diff', { project: name })
+      result.committed = diffFromCommitted
+    } else {
+      this.logger.debug('Using database record for diff', { project: name })
+      result.database = diffFromDatabase
     }
 
     return result
