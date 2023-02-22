@@ -198,7 +198,7 @@ describe(DiscoveryWatcher.name, () => {
         Logger.SILENT,
       )
 
-      const NINE_AM = UnixTime.fromDate(new Date('2023-02-21T09:00:00Z'))
+      const NINE_AM = UnixTime.fromDate(new Date('2023-02-21T08:00:00Z'))
       await discoveryWatcher.update(NINE_AM)
 
       // gets block number

@@ -59,7 +59,7 @@ export class DiscoveryWatcher {
     const projectConfigs = await this.configReader.readAllConfigs()
 
     let changesCounter = 0
-    const unUpdatedProjects: string[] = []
+    const notUpdatedProjects: string[] = []
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
@@ -110,7 +110,7 @@ export class DiscoveryWatcher {
 
     if (isDailyReminder) {
       await this.notify(
-        [getDailyReminderMessage(unUpdatedProjects, timestamp)],
+        [getDailyReminderMessage(notUpdatedProjects, timestamp)],
         'INTERNAL',
       )
     }
