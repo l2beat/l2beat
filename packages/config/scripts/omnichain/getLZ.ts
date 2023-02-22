@@ -25,7 +25,6 @@ export async function getLZ(
 ): Promise<{ data: LZData[]; chart: ChartPoint[] }> {
   console.log('fetching addresses... (this may take a while)')
   const start = 14388880
-  // const start = 15688880
   const end = await provider.getBlockNumber()
   const batchSize = 10_000
 
@@ -155,6 +154,5 @@ export async function getLZ(
   }
   console.log('ABIs fetched')
 
-  console.log(JSON.stringify(result, null, 2))
   return { data: result, chart }
 }
