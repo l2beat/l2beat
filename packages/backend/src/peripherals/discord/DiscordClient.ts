@@ -12,30 +12,37 @@ export class DiscordClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly discordToken: string,
-    private readonly channelIds: string[],
+    private readonly publicChannelId: string,
+    private readonly internalChannelId: string,
   ) {}
 
-  async sendMessage(message: string) {
+  async sendMessage(message: string, channel: 'PUBLIC' | 'INTERNAL') {
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      throw new Error(`Discord error: Message size exceeded (2000 characters)`)
+    }
+    const channelId =
+      channel === 'PUBLIC' ? this.publicChannelId : this.internalChannelId
+
+    return this.send(message, channelId)
+  }
+
+  private async send(message: string, channelId: string) {
     if (message.length > MAX_MESSAGE_LENGTH) {
       throw new Error(`Discord error: Message size exceeded (2000 characters)`)
     }
 
-    return await Promise.all(
-      this.channelIds.map((channelId) => {
-        const endpoint = `/channels/${channelId}/messages`
-        const body = {
-          content: message,
-        }
+    const endpoint = `/channels/${channelId}/messages`
+    const body = {
+      content: message,
+    }
 
-        return this.query(endpoint, {
-          method: 'POST',
-          body: JSON.stringify(body),
-        })
-      }),
-    )
+    return this.query(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    })
   }
 
-  async query(endpoint: string, options?: RequestInit) {
+  private async query(endpoint: string, options?: RequestInit) {
     const url = 'https://discord.com/api/v10' + endpoint
 
     const res = await this.httpClient.fetch(url, {
