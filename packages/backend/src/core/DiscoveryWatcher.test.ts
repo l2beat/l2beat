@@ -22,7 +22,7 @@ import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
-import { DiscoveryWatcher } from './DiscoveryWatcher'
+import { DiscoveryWatcher, isNineAM } from './DiscoveryWatcher'
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'
@@ -392,6 +392,29 @@ describe(DiscoveryWatcher.name, () => {
         ['b', 'PUBLIC'],
         ['c', 'PUBLIC'],
       ])
+    })
+  })
+
+  describe(isNineAM.name, () => {
+    it('UTC', () => {
+      const nineUTC = UnixTime.fromDate(
+        new Date('2021-01-01T09:00:00.000+00:00'),
+      )
+      expect(isNineAM(nineUTC, 'UTC')).toEqual(true)
+    })
+
+    it('PL', () => {
+      const sevenUTC = UnixTime.fromDate(
+        new Date('2021-01-01T07:00:00.000+00:00'),
+      )
+      expect(isNineAM(sevenUTC, 'PL')).toEqual(true)
+    })
+
+    it('works for "uneven" hours', () => {
+      const nineUTC = UnixTime.fromDate(
+        new Date('2021-01-01T09:01:10.000+00:00'),
+      )
+      expect(isNineAM(nineUTC, 'UTC')).toEqual(true)
     })
   })
 })

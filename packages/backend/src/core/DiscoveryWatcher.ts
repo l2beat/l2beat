@@ -51,10 +51,6 @@ export class DiscoveryWatcher {
     const metricsDone = initMetrics()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
-    const isDailyReminder = timestamp
-      .toStartOf('hour')
-      .equals(timestamp.toStartOf('day').add(8, 'hours'))
-
     this.logger.info('Update started', {
       blockNumber,
       timestamp: timestamp.toNumber(),
@@ -62,7 +58,9 @@ export class DiscoveryWatcher {
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
+    const isDailyReminder = isNineAM(timestamp, 'PL')
     const notUpdatedProjects: string[] = []
+
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
@@ -187,6 +185,15 @@ export class DiscoveryWatcher {
       )
     }
   }
+}
+
+export function isNineAM(timestamp: UnixTime, timezone: 'PL' | 'UTC') {
+  const offset = timezone === 'PL' ? 2 : 0
+  const hour = 9 - offset
+
+  return timestamp
+    .toStartOf('hour')
+    .equals(timestamp.toStartOf('day').add(hour, 'hours'))
 }
 
 function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
