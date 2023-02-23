@@ -58,7 +58,7 @@ export class DiscoveryWatcher {
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
-    const isDailyReminder = isNineAM(timestamp, 'PL')
+    const isDailyReminder = isNineAM(timestamp, 'CET')
     const notUpdatedProjects: string[] = []
 
     for (const projectConfig of projectConfigs) {
@@ -187,8 +187,8 @@ export class DiscoveryWatcher {
   }
 }
 
-export function isNineAM(timestamp: UnixTime, timezone: 'PL' | 'UTC') {
-  const offset = timezone === 'PL' ? 2 : 0
+export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
+  const offset = timezone === 'CET' ? 2 : 0
   const hour = 9 - offset
 
   return timestamp

@@ -407,7 +407,7 @@ describe(DiscoveryWatcher.name, () => {
       const sevenUTC = UnixTime.fromDate(
         new Date('2021-01-01T07:00:00.000+00:00'),
       )
-      expect(isNineAM(sevenUTC, 'PL')).toEqual(true)
+      expect(isNineAM(sevenUTC, 'CET')).toEqual(true)
     })
 
     it('works for "uneven" hours', () => {
