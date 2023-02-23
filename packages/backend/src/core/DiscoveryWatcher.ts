@@ -114,7 +114,6 @@ export class DiscoveryWatcher {
         [getDailyReminderMessage(notUpdatedProjects, timestamp)],
         'INTERNAL',
       )
-      dailyReminderSent.set(1)
     }
 
     this.logger.info('Update finished', { blockNumber })
@@ -228,14 +227,8 @@ const errorsCount = new Counter({
   help: 'Value showing amount of errors since server start',
 })
 
-const dailyReminderSent = new Gauge({
-  name: 'discovery_watcher_daily_reminder_sent',
-  help: 'Value showing that the daily reminder has been sent',
-})
-
 function initMetrics(): (blockNumber: number) => void {
   const histogramDone = syncHistogram.startTimer()
-  dailyReminderSent.set(0)
   changesDetected.set(0)
 
   return (blockNumber: number) => {
