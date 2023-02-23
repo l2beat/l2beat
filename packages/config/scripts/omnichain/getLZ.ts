@@ -1,64 +1,93 @@
 import { load } from 'cheerio'
-import { providers } from 'ethers'
 import fetch from 'node-fetch'
 
 import { getEnv } from '../checkVerifiedContracts/utils'
+import { LZData } from './types'
 
-interface LZData {
-  address: string
-  deployer: string
-  name: string
-  count: number
-  tvl: string
-  ethValue: string
-  isERC20: string
-}
-
-interface ChartPoint {
-  from: number
-  to: number
-  value: number
-}
-
-export async function getLZ(
-  provider: providers.JsonRpcProvider,
-): Promise<{ data: LZData[]; chart: ChartPoint[] }> {
-  console.log('fetching addresses... (this may take a while)')
+export async function getLZ(blockNumber: number): Promise<LZData[]> {
+  const internalTxs = []
   const start = 14388880
-  const end = await provider.getBlockNumber()
+  const end = blockNumber
   const batchSize = 10_000
-
-  const data = []
-  const chart: ChartPoint[] = []
+  console.log(`fetching addresses... (this may take a while)`)
+  console.log(
+    'start block',
+    start,
+    'end block',
+    end,
+    'batch size',
+    batchSize,
+    '\n',
+  )
 
   for (let i = start; i < end; i += batchSize) {
     console.log('fetching from', i, 'to', i + batchSize, '...')
-    const response = await fetch(
-      `https://api.etherscan.io/api?module=account&startblock=${
-        i - 1
-      }&endblock=${
-        i + batchSize
-      }&action=txlistinternal&address=${'0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675'}&apikey=${getEnv(
-        'ETHERSCAN_API_KEY',
-      )})}`,
-    )
-    const d = (await response.json()) as unknown as {
-      result: { from: string }[]
-    }
-    data.push(...d.result)
-    chart.push({
-      from: i,
-      to: i + batchSize,
-      value: d.result.length,
-    })
 
-    console.log('fetched results size', d.result.length, '\n')
-    if (d.result.length === 10_000) {
+    const fetchedInternalTxs = await fetchInternalTxs(i, batchSize)
+    internalTxs.push(...fetchedInternalTxs)
+
+    console.log('fetched results size', fetchedInternalTxs.length, '\n')
+    if (fetchedInternalTxs.length === 10_000) {
       console.log('\n error MAX_SIZE exceeded\n')
     }
   }
+
+  const interactionsCount = internalTxsInteractionsCount(internalTxs)
+  console.log('addresses fetched: ', interactionsCount.size)
+
+  const lzData: LZData[] = []
+
+  console.log('fetching rest of the data... (this may take a while)')
+  let index = 0
+  // eslint-disable-next-line @typescript-eslint/prefer-for-of
+  for (const [address, count] of interactionsCount.entries()) {
+    await avoidRateLimiting()
+    console.log('processing address', index, 'of', interactionsCount.size)
+    index++
+
+    console.log('scraping Etherscan page for', address, '...')
+    const { tvl, ethValue } = await scrapEtherscan(address)
+
+    console.log('fetching deployer for', address, '...')
+    const deployer = await fetchDeployer(address)
+
+    console.log('fetching name and ABI for', address, '...')
+    const { name, isERC20 } = await fetchNameAndABI(address)
+
+    lzData.push({
+      address,
+      deployer,
+      name,
+      count,
+      tvl,
+      ethValue,
+      isERC20,
+    })
+    console.log('\n')
+  }
+
+  return lzData
+}
+
+async function fetchInternalTxs(i: number, batchSize: number) {
+  const response = await fetch(
+    `https://api.etherscan.io/api?module=account&startblock=${i - 1}&endblock=${
+      i + batchSize
+    }&action=txlistinternal&address=${'0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675'}&apikey=${getEnv(
+      'ETHERSCAN_API_KEY',
+    )})}`,
+  )
+
+  const data = (await response.json()) as unknown as {
+    result: { from: string }[]
+  }
+
+  return data.result
+}
+
+function internalTxsInteractionsCount(internalTxs: { from: string }[]) {
   const interactions = new Map<string, number>()
-  data.map((l) => {
+  internalTxs.map((l) => {
     const current = interactions.get(l.from)
     if (current === undefined) {
       interactions.set(l.from, 1)
@@ -66,93 +95,78 @@ export async function getLZ(
       interactions.set(l.from, current + 1)
     }
   })
-  console.log('addresses fetched: ', interactions.size)
 
-  const result: LZData[] = []
-  for (const [address, count] of interactions.entries()) {
-    result.push({
-      address,
-      count,
-      deployer: '',
-      tvl: '0',
-      ethValue: '0',
-      name: '',
-      isERC20: '',
-    })
+  return interactions
+}
+
+async function avoidRateLimiting() {
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+}
+
+async function scrapEtherscan(
+  address: string,
+): Promise<{ tvl: string; ethValue: string }> {
+  const result = { tvl: '0', ethValue: '0' }
+
+  const etherscanPage = await fetch(`https://etherscan.io/address/${address}`)
+
+  const $ = load(await etherscanPage.text())
+
+  const button = $('#dropdownMenuBalance')
+  if (button.text().length > 0) {
+    result.tvl = button.text().slice(2).split('\n')[0]
   }
 
-  console.log('fetching TVLs...')
-  // eslint-disable-next-line @typescript-eslint/prefer-for-of
-  for (let i = 0; i < result.length; i++) {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    console.log('scraping Etherscan page for', result[i].address, '...')
-    const a = await fetch(`https://etherscan.io/address/${result[i].address}`)
-    if (a.ok) {
-      const html = await a.text()
-      if (html) {
-        const $ = load(html)
-        const button = $('#dropdownMenuBalance')
-        if (button.text().length > 0) {
-          result[i].tvl = button.text().slice(2).split('\n')[0]
-        }
+  const ethValue = $('div:contains("Eth Value")')
+    .last()
+    .text()
+    .split('$')[1]
+    .trim()
+    .split(' ')[0]
 
-        const ethValue = $('div:contains("Eth Value")')
-          .last()
-          .text()
-          .split('$')[1]
-          .trim()
-          .split(' ')[0]
-
-        if (ethValue) {
-          result[i].ethValue = ethValue
-        }
-      }
-    }
+  if (ethValue) {
+    result.ethValue = ethValue
   }
-  console.log('TVLs fetched')
 
-  console.log('fetching deployers...')
-  // eslint-disable-next-line @typescript-eslint/prefer-for-of
-  for (let i = 0; i < result.length; i++) {
-    console.log('fetching deployer for', result[i].address, '...')
-    const response = await fetch(
-      `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${
-        result[i].address
-      }&apikey=${getEnv('ETHERSCAN_API_KEY')})}`,
-    )
-    const data = (await response.json()) as unknown as {
-      result: { contractCreator: string }[]
-    }
+  return result
+}
 
-    const deployer = data.result[0].contractCreator
-    result[i].deployer = deployer
+async function fetchDeployer(address: string): Promise<string> {
+  const response = await fetch(
+    `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${address}&apikey=${getEnv(
+      'ETHERSCAN_API_KEY',
+    )})}`,
+  )
+  const data = (await response.json()) as unknown as {
+    result: { contractCreator: string }[]
   }
-  console.log('deployers fetched')
 
-  console.log('fetching names and ABIs...')
-  // eslint-disable-next-line @typescript-eslint/prefer-for-of
-  for (let i = 0; i < result.length; i++) {
-    console.log('fetching name and ABI for', result[i].address, '...')
-    const response = await fetch(
-      `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${
-        result[i].address
-      }&apikey=${getEnv('ETHERSCAN_API_KEY')})}`,
-    )
-    const data = (await response.json()) as unknown as {
-      result: { ABI: string; ContractName: string }[]
-    }
+  return data.result[0].contractCreator
+}
 
-    if (data.result[0].ContractName) {
-      const name = data.result[0].ContractName
-      result[i].name = name
-    }
+async function fetchNameAndABI(
+  address: string,
+): Promise<{ name: string; isERC20: string }> {
+  const result = { name: '', isERC20: '' }
 
-    if (data.result[0].ABI) {
-      const isERC20 = data.result[0].ABI.includes('balanceOf')
-      result[i].isERC20 = isERC20.toString()
-    }
+  const response = await fetch(
+    `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${address}&apikey=${getEnv(
+      'ETHERSCAN_API_KEY',
+    )})}`,
+  )
+  const data = (await response.json()) as unknown as {
+    result: { ABI: string; ContractName: string }[]
   }
-  console.log('ABIs fetched')
 
-  return { data: result, chart }
+  if (data.result[0].ContractName) {
+    const name = data.result[0].ContractName
+    result.name = name
+  }
+
+  if (data.result[0].ABI) {
+    const isERC20 = data.result[0].ABI.includes('balanceOf')
+    result.isERC20 = isERC20.toString()
+  }
+
+  return result
 }

@@ -10,17 +10,13 @@ async function main() {
     'homestead',
     getEnv('CONFIG_ALCHEMY_API_KEY'),
   )
+  const blockNumber = await provider.getBlockNumber()
 
-  const { data, chart } = await getLZ(provider)
+  const data = await getLZ(blockNumber)
 
   writeFileSync(
     './scripts/omnichain/data.csv',
     data.map((d) => Object.values(d).join(';')).join('\n'),
-  )
-
-  writeFileSync(
-    './scripts/omnichain/chart.csv',
-    chart.map((c) => Object.values(c).join(';')).join('\n'),
   )
 }
 
