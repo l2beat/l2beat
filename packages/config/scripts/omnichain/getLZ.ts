@@ -2,7 +2,16 @@ import { load } from 'cheerio'
 import fetch from 'node-fetch'
 
 import { getEnv } from '../checkVerifiedContracts/utils'
-import { LZData } from './types'
+
+export interface LZData {
+  address: string
+  count: number
+  deployer: string
+  tvl: string
+  ethValue: string
+  name: string
+  isERC20: string
+}
 
 export async function getLZ(blockNumber: number): Promise<LZData[]> {
   const internalTxs = []
@@ -56,11 +65,11 @@ export async function getLZ(blockNumber: number): Promise<LZData[]> {
 
     lzData.push({
       address,
-      deployer,
-      name,
       count,
+      deployer,
       tvl,
       ethValue,
+      name,
       isERC20,
     })
     console.log('\n')
