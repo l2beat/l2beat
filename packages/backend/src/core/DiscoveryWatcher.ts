@@ -51,14 +51,17 @@ export class DiscoveryWatcher {
     const metricsDone = initMetrics()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
-    const isDailyReminder = timestamp.equals(
-      timestamp.toStartOf('day').add(8, 'hours'),
-    )
-    this.logger.info('Update started', { blockNumber })
+    const isDailyReminder = timestamp
+      .toStartOf('hour')
+      .equals(timestamp.toStartOf('day').add(8, 'hours'))
+
+    this.logger.info('Update started', {
+      blockNumber,
+      timestamp: timestamp.toNumber(),
+    })
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
-    let changesCounter = 0
     const notUpdatedProjects: string[] = []
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
@@ -82,7 +85,8 @@ export class DiscoveryWatcher {
           const messages = diffToMessages(projectConfig.name, diff.changes)
           await this.notify(messages, 'PUBLIC')
           await this.notify(messages, 'INTERNAL')
-          changesCounter += diff.changes.length
+          this.logger.info('Sending messages', { project: projectConfig.name })
+          changesDetected.inc()
         }
 
         if (diff.sendDailyReminder) {
@@ -105,14 +109,18 @@ export class DiscoveryWatcher {
     }
 
     if (isDailyReminder) {
+      this.logger.info('Sending daily reminder', {
+        projects: notUpdatedProjects,
+      })
       await this.notify(
         [getDailyReminderMessage(notUpdatedProjects, timestamp)],
         'INTERNAL',
       )
+      dailyReminderSent.set(1)
     }
 
     this.logger.info('Update finished', { blockNumber })
-    metricsDone(blockNumber, changesCounter)
+    metricsDone(blockNumber)
   }
 
   async findChanges(
@@ -213,12 +221,18 @@ const errorsCount = new Counter({
   help: 'Value showing amount of errors since server start',
 })
 
-function initMetrics(): (blockNumber: number, changesCounter: number) => void {
-  const histogramDone = syncHistogram.startTimer()
+const dailyReminderSent = new Gauge({
+  name: 'discovery_watcher_daily_reminder_sent',
+  help: 'Value showing that the daily reminder has been sent',
+})
 
-  return (blockNumber: number, changesCounter: number) => {
+function initMetrics(): (blockNumber: number) => void {
+  const histogramDone = syncHistogram.startTimer()
+  dailyReminderSent.set(0)
+  changesDetected.set(0)
+
+  return (blockNumber: number) => {
     histogramDone()
     latestBlock.set(blockNumber)
-    changesDetected.set(changesCounter)
   }
 }
