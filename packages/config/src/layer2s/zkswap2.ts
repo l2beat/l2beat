@@ -15,6 +15,7 @@ const discovery = new ProjectDiscovery('zkswap2')
 export const zkswap2: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkswap2'),
+  isArchived: true,
   display: {
     name: 'ZKSwap 2.0',
     slug: 'zkswap2',

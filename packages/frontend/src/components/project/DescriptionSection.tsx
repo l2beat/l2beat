@@ -10,6 +10,7 @@ export interface DescriptionSectionProps {
   description: string
   warning?: string
   isVerified?: boolean
+  isArchived?: boolean
 }
 
 export function DescriptionSection(props: DescriptionSectionProps) {
@@ -21,6 +22,14 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           color="red"
           isCritical={true}
           className="mt-4"
+        />
+      )}
+      {props.isArchived && (
+        <WarningBar
+          text="This project is archived and no longer maintained."
+          color="red"
+          className="mt-4"
+          isCritical={false}
         />
       )}
       {props.warning && (

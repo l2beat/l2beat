@@ -26,6 +26,7 @@ export function getRiskViewEntry(
     slug: project.display.slug,
     provider: project.technology.provider,
     warning: project.display.warning,
+    isArchived: project.isArchived,
     isVerified,
     ...project.riskView,
   }

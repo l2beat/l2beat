@@ -5,6 +5,7 @@ import { getRowVerificationClassNames } from './getRowVerificationClassNames'
 interface BridgeTableEntry {
   type: 'layer2' | 'bridge'
   slug: string
+  isArchived?: boolean
   isVerified?: boolean
 }
 
@@ -17,9 +18,11 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
   return {
     className: cx(
       getRowVerificationClassNames(entry),
-      entry.type !== 'bridge' && 'hidden',
+      entry.type === 'layer2' && 'hidden',
+      entry.isArchived && 'hidden opacity-50',
     ),
-    'data-combined-only': entry.type !== 'bridge' ? true : undefined,
+    'data-layer2': entry.type === 'layer2' ? true : undefined,
+    'data-archived': entry.isArchived,
     href,
   }
 }
