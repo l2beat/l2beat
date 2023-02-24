@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 
-import { PageContent } from '../../../components/PageContent'
-import { Tooltip } from '../../../components/Tooltip'
-import { configureFilters } from '../../../scripts/configureFilters'
-import { configureTooltips } from '../../../scripts/configureTooltips'
-import { formatLargeNumber } from '../../../utils'
-import { ScalingTvlView } from './ScalingTvlView'
+import { PageContent } from '../../components/PageContent'
+import { Tooltip } from '../../components/Tooltip'
+import { configureFilters } from '../../scripts/configureFilters'
+import { configureTooltips } from '../../scripts/configureTooltips'
+import { formatLargeNumber } from '../../utils'
+import { BridgesTvlView } from '../bridges-tvl/BridgesTvlView'
 
 export default {
-  title: 'Pages/Scaling/TvlView',
+  title: 'Pages/Bridges/TvlView',
 }
 
 export function TvlView() {
@@ -19,13 +19,12 @@ export function TvlView() {
   return (
     <>
       <PageContent>
-        <ScalingTvlView
-          ratingEnabled={true}
+        <BridgesTvlView
           items={[
             {
-              name: 'Forktimism',
-              provider: 'Optimism',
-              slug: 'optimism',
+              name: 'Octagon',
+              type: 'bridge',
+              slug: 'polygon-pos',
               tvl: formatLargeNumber(2_740_000_000),
               tvlBreakdown: {
                 warning: 'Some random warning',
@@ -39,27 +38,20 @@ export function TvlView() {
               },
               oneDayChange: '+3.45%',
               sevenDayChange: '-54.2%',
-              marketShare: '50.42%',
-              purpose: 'Universal',
-              technology: 'Optimistic Rollup',
-              isVerified: false,
-              ratingEntry: {
-                category: {
-                  score: 'B',
-                  requirements: ['There is an existing fraud proof system'],
-                },
-                modifier: {
-                  score: '-',
-                  items: ['Validators are behind a whitelist'],
-                },
-                thingsToImprove: {
-                  improvedScore: 'A',
-                  requirements: ['There should be no instant upgradeability'],
-                },
+              isVerified: true,
+              bridgesMarketShare: '50.42%',
+              combinedMarketShare: '20.89%',
+              validatedBy: {
+                value: 'Destination chain',
+                description:
+                  'Transfers need to be confirmed by 2/3 of Octagon PoS Validators stake.',
+                sentiment: 'warning',
               },
+              category: 'Token Bridge',
             },
             {
               name: 'Arbitrage',
+              type: 'layer2',
               slug: 'arbitrum',
               tvl: formatLargeNumber(2_740_000_000),
               tvlBreakdown: {
@@ -74,15 +66,15 @@ export function TvlView() {
               },
               oneDayChange: '+3.45%',
               sevenDayChange: '-54.2%',
-              marketShare: '50.42%',
-              purpose: 'Universal',
-              technology: 'Optimistic Rollup',
-              isVerified: true,
+              bridgesMarketShare: '0',
+              combinedMarketShare: '20.89%',
+              category: 'Optimistic Rollup',
             },
             {
-              name: 'StorkCommerce',
-              provider: 'StarkEx',
-              slug: 'starknet',
+              name: 'InsectHole',
+              category: 'Token Bridge',
+              type: 'bridge',
+              slug: 'wormholev1',
               tvl: formatLargeNumber(2_740_000_000),
               tvlBreakdown: {
                 warning: 'Some random warning',
@@ -96,36 +88,19 @@ export function TvlView() {
               },
               oneDayChange: '+3.45%',
               sevenDayChange: '-54.2%',
-              marketShare: '50.42%',
-              purpose: 'Universal',
-              technology: 'Optimistic Rollup',
+              bridgesMarketShare: '50.42%',
+              combinedMarketShare: '20.89%',
+              isArchived: true,
               isVerified: false,
-            },
-            {
-              name: 'zk.download',
-              provider: 'zkSync',
-              slug: 'zksync-lite',
-              tvl: formatLargeNumber(2_740_000_000),
-              tvlBreakdown: {
-                warning: 'Some random warning',
-                warningSeverity: 'warning',
-                label: 'The tooltip label',
-                empty: false,
-                associated: 0.4,
-                ether: 0.2,
-                stable: 0.2,
-                other: 0.2,
+              validatedBy: {
+                value: 'Third party',
+                description: 'Random description',
+                sentiment: 'bad',
               },
-              oneDayChange: '+3.45%',
-              sevenDayChange: '-54.2%',
-              marketShare: '50.42%',
-              purpose: 'Universal',
-              technology: 'Optimistic Rollup',
-              isVerified: true,
             },
             {
               name: 'zk.archived',
-              provider: 'StarkEx',
+              type: 'layer2',
               slug: 'layer2financezk',
               tvl: formatLargeNumber(2_740_000_000),
               tvlBreakdown: {
@@ -140,9 +115,9 @@ export function TvlView() {
               },
               oneDayChange: '+3.45%',
               sevenDayChange: '-54.2%',
-              marketShare: '50.42%',
-              purpose: 'Universal',
-              technology: 'Optimistic Rollup',
+              bridgesMarketShare: '50.42%',
+              combinedMarketShare: '20.89%',
+              category: 'Optimistic Rollup',
               isArchived: true,
               isVerified: true,
             },

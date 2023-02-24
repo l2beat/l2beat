@@ -17,6 +17,7 @@ const discovery = new ProjectDiscovery('omg')
 export const omgnetwork: Layer2 = {
   type: 'layer2',
   id: ProjectId('omgnetwork'),
+  isArchived: true,
   display: {
     name: 'OMG Network',
     slug: 'omgnetwork',
