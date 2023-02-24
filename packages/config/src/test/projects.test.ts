@@ -5,7 +5,7 @@ import { bridges, getTokenBySymbol, layer2s } from '../'
 import { checkRisk } from './helpers'
 
 describe('projects', () => {
-  describe('every token is valid', () => {
+  describe  ('every token is valid', () => {
     const symbols = [...layer2s, ...bridges]
       .flatMap((x) =>
         x.config.escrows
