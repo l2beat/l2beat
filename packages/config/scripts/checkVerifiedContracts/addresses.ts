@@ -15,7 +15,10 @@ export function getUniqueContractsForProject(
   project: Layer2 | Bridge,
 ): EthereumAddress[] {
   const projectContracts = project.contracts?.addresses ?? []
-  const mainAddresses = projectContracts.map((c) => c.address)
+  const mainAddresses = projectContracts.flatMap((c) => [
+    c.address,
+    ...(c.multipleAddresses ?? []),
+  ])
   const upgradeabilityAddresses = projectContracts
     .map((c) => c.upgradeability)
     .filter((u): u is ProjectUpgradeability => !!u) // remove undefined
