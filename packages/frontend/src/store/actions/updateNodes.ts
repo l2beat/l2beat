@@ -4,10 +4,14 @@ import { NODE_SPACING, NODE_WIDTH } from '../utils/constants'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
-  const oldNodes = new Map(state.nodes.map((node) => [node.id, node]))
+  const oldNodes = new Map(
+    state.nodes.map((node) => [node.simpleNode.id, node]),
+  )
   const newIds = new Set(nodes.map((node) => node.id))
 
-  const retainedNodes = state.nodes.filter((node) => newIds.has(node.id))
+  const retainedNodes = state.nodes.filter((node) =>
+    newIds.has(node.simpleNode.id),
+  )
 
   const startX =
     retainedNodes.length === 0
@@ -36,9 +40,7 @@ export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
 
 function simpleNodeToNode(node: SimpleNode, x: number, y: number): Node {
   return {
-    id: node.id,
-    name: node.name,
-    discovered: node.discovered,
+    simpleNode: node,
     // height will be updated by updateNodePositions
     box: { x, y, width: NODE_WIDTH, height: 0 },
     fields: node.fields.map((field) => ({
@@ -46,6 +48,10 @@ function simpleNodeToNode(node: SimpleNode, x: number, y: number): Node {
       connection: toConnection(field.connection),
     })),
   }
+}
+
+export function nodeToSimpleNode(node: Node): SimpleNode {
+  return node.simpleNode
 }
 
 function toConnection(nodeId: string | undefined): Connection | undefined {

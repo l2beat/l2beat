@@ -14,8 +14,8 @@ export function updateNodePositions(state: State): State {
 
   const nodeDimensions: Record<string, Box> = {}
   for (const node of state.nodes) {
-    const start = state.selectedPositions[node.id]
-    nodeDimensions[node.id] = {
+    const start = state.selectedPositions[node.simpleNode.id]
+    nodeDimensions[node.simpleNode.id] = {
       width: node.box.width,
       height: HEADER_HEIGHT + BORDER_WIDTH + node.fields.length * FIELD_HEIGHT,
       x: start ? start.x + dx : node.box.x,
@@ -26,10 +26,10 @@ export function updateNodePositions(state: State): State {
   return {
     ...state,
     nodes: state.nodes.map((node) => {
-      const box = nodeDimensions[node.id]
+      const box = nodeDimensions[node.simpleNode.id]
       if (!box) {
         // this should never happen
-        throw new Error('missing dimensions for node ' + node.id)
+        throw new Error('missing dimensions for node ' + node.simpleNode.id)
       }
       return {
         ...node,

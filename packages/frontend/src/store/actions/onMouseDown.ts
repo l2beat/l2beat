@@ -27,20 +27,20 @@ export function onMouseDown(
         y >= node.box.y &&
         y < node.box.y + node.box.height
       ) {
-        const includes = state.selectedNodeIds.includes(node.id)
+        const includes = state.selectedNodeIds.includes(node.simpleNode.id)
 
         let selectedNodeIds: readonly string[]
         let mouseUpAction: State['mouseUpAction']
         if (!event.shiftKey && !includes) {
-          selectedNodeIds = [node.id]
+          selectedNodeIds = [node.simpleNode.id]
         } else if (!event.shiftKey && includes) {
           selectedNodeIds = state.selectedNodeIds
-          mouseUpAction = { type: 'DeselectAllBut', id: node.id }
+          mouseUpAction = { type: 'DeselectAllBut', id: node.simpleNode.id }
         } else if (event.shiftKey && !includes) {
-          selectedNodeIds = [...state.selectedNodeIds, node.id]
+          selectedNodeIds = [...state.selectedNodeIds, node.simpleNode.id]
         } else {
           selectedNodeIds = state.selectedNodeIds
-          mouseUpAction = { type: 'DeselectOne', id: node.id }
+          mouseUpAction = { type: 'DeselectOne', id: node.simpleNode.id }
         }
 
         return {
@@ -56,8 +56,11 @@ export function onMouseDown(
           mouseUpAction,
           selectedPositions: Object.fromEntries(
             state.nodes
-              .filter((x) => selectedNodeIds.includes(x.id))
-              .map((node) => [node.id, { x: node.box.x, y: node.box.y }]),
+              .filter((x) => selectedNodeIds.includes(x.simpleNode.id))
+              .map((node) => [
+                node.simpleNode.id,
+                { x: node.box.x, y: node.box.y },
+              ]),
           ),
         }
       }

@@ -1,3 +1,5 @@
+import { SimpleNode } from '../api/SimpleNode'
+
 export interface State {
   readonly selectedNodeIds: readonly string[]
   readonly nodes: readonly Node[]
@@ -28,9 +30,7 @@ export interface State {
 }
 
 export interface Node {
-  readonly id: string
-  readonly name: string
-  readonly discovered: boolean
+  readonly simpleNode: SimpleNode
   readonly box: Box
   readonly fields: Field[]
 }

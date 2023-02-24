@@ -57,11 +57,16 @@ function SidebarForSingleNode({
     <>
       <h2 className="text-xl font-bold">{humanReadableName}</h2>
       <p className="text-sm text-gray-500">
-        <a href={etherscanLink} target="_blank">
+        <a href={etherscanLink} target="_blank" title="Etherscan">
           {node.data.address}
         </a>{' '}
         {sourceLink ? (
-          <a href={sourceLink} className="font-bold" target="_blank">
+          <a
+            href={sourceLink}
+            className="font-bold"
+            target="_blank"
+            title="DethCode"
+          >
             📜
           </a>
         ) : null}

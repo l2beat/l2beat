@@ -37,7 +37,7 @@ export function Viewport(props: ViewportProps) {
             (field, i) =>
               field.connection && (
                 <Connection
-                  key={`${node.id}-${i}-${field.connection.nodeId}`}
+                  key={`${node.simpleNode.id}-${i}-${field.connection.nodeId}`}
                   from={field.connection.from}
                   to={field.connection.to}
                 />
@@ -46,12 +46,12 @@ export function Viewport(props: ViewportProps) {
         )}
         {nodes.map((node) => (
           <NodeView
-            key={node.id}
+            key={node.simpleNode.id}
             node={node}
-            selected={selectedNodeIds.includes(node.id)}
-            discovered={node.discovered}
+            selected={selectedNodeIds.includes(node.simpleNode.id)}
+            discovered={node.simpleNode.discovered}
             onDiscover={props.onDiscover}
-            loading={!!props.loading[node.id]}
+            loading={!!props.loading[node.simpleNode.id]}
           />
         ))}
       </ScalableView>

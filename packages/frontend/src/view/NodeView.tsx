@@ -13,8 +13,8 @@ export interface NodeViewProps {
 
 export function NodeView(props: NodeViewProps) {
   const onDiscover = useCallback(() => {
-    props.onDiscover(props.node.id)
-  }, [props.onDiscover, props.node.id])
+    props.onDiscover(props.node.simpleNode.id)
+  }, [props.onDiscover, props.node.simpleNode.id])
 
   return (
     <div
@@ -36,7 +36,7 @@ export function NodeView(props: NodeViewProps) {
           props.node.fields.length > 0 && 'border-b-2 border-black',
         )}
       >
-        <div className="truncate">{props.node.name}</div>
+        <div className="truncate">{props.node.simpleNode.name}</div>
         {!props.discovered && (
           <button onClick={onDiscover} disabled={props.loading}>
             {props.loading ? '🔄' : '🔍'}

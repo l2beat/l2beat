@@ -57,9 +57,9 @@ export function onMouseMove(
               (node) =>
                 intersects(node.box, selection) ||
                 (state.mouseMoveAction === 'select-add' &&
-                  state.selectedNodeIds.includes(node.id)),
+                  state.selectedNodeIds.includes(node.simpleNode.id)),
             )
-            .map((x) => x.id),
+            .map((x) => x.simpleNode.id),
           mouseUpAction: undefined,
           mouseMove,
           mouseSelection: toContainerCoordinates(selection, state.transform),
