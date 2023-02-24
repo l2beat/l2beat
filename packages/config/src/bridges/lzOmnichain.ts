@@ -20,6 +20,9 @@ export const lzOmnichain: Bridge = {
         'https://github.com/stargate-protocol',
         'https://github.com/harmony-one/layerzero-bridge.frontend',
       ],
+      documentation: [
+        'https://layerzero.gitbook.io/docs/technical-reference/mainnet/supported-chain-ids',
+      ],
       socialMedia: ['https://twitter.com/LayerZero_Labs'],
     },
     description:
@@ -167,9 +170,15 @@ export const lzOmnichain: Bridge = {
       },
       {
         address: EthereumAddress('0x462F7eC57C6492B983a8C8322B4369a7f149B859'),
-        name: 'Default LayerZero Inbound Proof Library',
+        name: 'Default LayerZero Inbound Proof Library v1',
         description:
-          'Contract used to validate messages coming from other chains.',
+          'Contract used to validate messages coming from other chains, e.g. Ethereum, Arbitrum, Optimism',
+      },
+      {
+        address: EthereumAddress('0x07245eea05826f5984c7c3c8f478b04892e4df89'),
+        name: 'Default LayerZero Inbound Proof Library v2',
+        description:
+          'Contract used to validate messages coming from other chains, e.g. Aptos,',
       },
       {
         address: discovery.getContract('Endpoint').address,
