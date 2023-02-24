@@ -14,11 +14,13 @@
     "lint": "eslint --ext .ts --max-warnings 0 src scripts",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
+    "get-lz-data": "node -r esbuild-register scripts/omnichain",
     "update-multichain": "node -r esbuild-register scripts/multichain",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts"
   },
   "dependencies": {
     "@l2beat/shared": "*",
+    "cheerio": "^1.0.0-rc.11",
     "dotenv": "^16.0.3",
     "node-fetch": "^2.6.7",
     "zod": "^3.20.2",

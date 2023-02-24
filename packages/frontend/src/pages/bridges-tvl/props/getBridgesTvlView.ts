@@ -43,6 +43,7 @@ function getBridgesTvlViewEntry(
     name: project.display.name,
     slug: project.display.slug,
     warning: project.display.warning,
+    isArchived: project.isArchived,
     isVerified,
     tvl: formatUSD(stats.tvl),
     tvlBreakdown: stats.tvlBreakdown,

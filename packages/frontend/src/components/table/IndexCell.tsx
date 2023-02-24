@@ -1,15 +1,21 @@
 import React from 'react'
 
+import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 
 export interface IndexCellProps {
   entry: {
     isVerified?: boolean
+    isArchived?: boolean
   }
   index: number
 }
 
 export function IndexCell({ entry, index }: IndexCellProps) {
+  if (entry.isArchived === true) {
+    return <ArchivedIcon />
+  }
+
   if (entry.isVerified === false) {
     return (
       <UnverifiedContractsWarning

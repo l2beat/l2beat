@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('sollet')
 export const sollet: Bridge = {
   type: 'bridge',
   id: ProjectId('sollet'),
+  isArchived: true,
   display: {
     name: 'Sollet',
     slug: 'sollet',

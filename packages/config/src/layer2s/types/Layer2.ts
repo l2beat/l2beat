@@ -18,6 +18,8 @@ export interface Layer2 {
   type: 'layer2'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
+  /** Is this layer2 archived? */
+  isArchived?: boolean
   /** Information displayed about the layer2 on the frontend */
   display: Layer2Display
   /** Information required to calculate the stats of the layer2 */
