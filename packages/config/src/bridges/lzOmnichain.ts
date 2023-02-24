@@ -88,6 +88,26 @@ export const lzOmnichain: Bridge = {
         sinceTimestamp: new UnixTime(1647504559),
         tokens: ['STG'],
       },
+      {
+        address: EthereumAddress('0x4fa745fccc04555f2afa8874cd23961636cdf982'),
+        sinceTimestamp: new UnixTime(1657699079),
+        tokens: ['agEUR']
+      },
+      {
+        address: EthereumAddress('0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55'),
+        sinceTimestamp: new UnixTime(1663003197),
+        tokens: ['BOBA']
+      },
+      {
+        address: EthereumAddress('0xb0003eb166654f7e57c0463f8d1a438eb238c490'),
+        sinceTimestamp: new UnixTime(1661794745),
+        tokens: ['BOBA']
+      },
+      {
+        address: EthereumAddress('0x6f537839714761388b6d7ed61bc09579d5da2f41'),
+        sinceTimestamp: new UnixTime(1660932033),
+        tokens: ['BOBA']
+      },
     ],
   },
   contracts: {

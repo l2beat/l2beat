@@ -88,6 +88,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('ageur-ageur'),
+    name: 'agEUR',
+    coingeckoId: CoingeckoId('ageur'),
+    address: EthereumAddress('0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8'),
+    symbol: 'agEUR',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1634982805),
+    category: 'stablecoin',
+  },
+  {
     id: AssetId('alusd-alchemix-usd'),
     name: 'Alchemix USD',
     coingeckoId: CoingeckoId('alchemix-usd'),
