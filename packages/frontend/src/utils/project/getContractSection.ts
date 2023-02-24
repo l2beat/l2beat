@@ -191,9 +191,14 @@ function makeTechnologyContract(
     }
   }
 
+  const addresses = [item.address.toString()]
+  if (item.multipleAddresses) {
+    addresses.push(...item.multipleAddresses.map((x) => x.toString()))
+  }
+
   return {
     name: item.name,
-    address: item.address.toString(),
+    addresses,
     description,
     links,
   }

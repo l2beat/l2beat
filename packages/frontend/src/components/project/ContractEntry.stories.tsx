@@ -19,7 +19,7 @@ export const Contracts: Story<ContractEntryProps> = Template.bind({})
 Contracts.args = {
   contract: {
     name: 'Contract',
-    address: '0x65432133f54e0E8A33A975908C5BA1c14e5BbbDf',
+    addresses: ['0x65432133f54e0E8A33A975908C5BA1c14e5BbbDf'],
     description: 'This is a smart contract responsible for X in the system Y.',
     links: [
       {

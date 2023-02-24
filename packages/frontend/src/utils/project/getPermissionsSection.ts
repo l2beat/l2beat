@@ -28,9 +28,15 @@ export function toTechnologyContract(
     }
   })
 
+  const addresses = []
+
+  if (permission.accounts.length > 0) {
+    addresses.push(permission.accounts[0].address.toString())
+  }
+
   return {
     name: permission.name,
-    address: permission.accounts[0]?.address.toString(),
+    addresses,
     description: permission.description,
     links,
   }

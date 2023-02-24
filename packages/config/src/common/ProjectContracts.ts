@@ -23,6 +23,8 @@ export interface ProjectContract {
   description?: string
   /** Details about upgradeability */
   upgradeability?: ProjectUpgradeability
+  /** List more than one contract address */
+  multipleAddresses?: EthereumAddress[]
 }
 
 export type ProjectUpgradeability =
