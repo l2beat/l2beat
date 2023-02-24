@@ -14,5 +14,6 @@ export function getDescriptionSection(
     warning: bridge.display.warning,
     isVerified: verificationStatus.projects[bridge.id.toString()],
     description: bridge.display.description ?? '',
+    isArchived: bridge.isArchived,
   }
 }

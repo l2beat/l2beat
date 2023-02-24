@@ -15,6 +15,7 @@ import { Layer2 } from './types'
 export const gluon: Layer2 = {
   type: 'layer2',
   id: ProjectId('gluon'),
+  isArchived: true,
   display: {
     name: 'Gluon',
     slug: 'gluon',
