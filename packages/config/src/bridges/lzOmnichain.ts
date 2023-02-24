@@ -18,8 +18,9 @@ export const lzOmnichain: Bridge = {
       repositories: [
         'https://github.com/LayerZero-Labs/',
         'https://github.com/stargate-protocol',
+        'https://github.com/harmony-one/layerzero-bridge.frontend'
       ],
-      socialMedia: ['https://twitter.com/StargateFinance'],
+      socialMedia: ['https://twitter.com/LayerZero_Labs',],
     },
     description:
       'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol. Risk associated with using any of them varies, depending on the technological decisions made by the developers. LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings, however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library. Default settings are managed by LayerZero team.',
