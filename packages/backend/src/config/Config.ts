@@ -95,7 +95,8 @@ export interface DiscoveryWatcherConfig {
   readonly discord:
     | {
         readonly token: string
-        readonly channelIds: string[]
+        readonly publicChannelId: string
+        readonly internalChannelId: string
       }
     | false
 }

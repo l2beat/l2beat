@@ -20,6 +20,7 @@ const discovery = new ProjectDiscovery('layer2financeZk')
 export const layer2financezk: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2financezk'),
+  isArchived: true,
   display: {
     name: 'Layer2.Finance-zk',
     slug: 'layer2financezk',

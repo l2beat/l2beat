@@ -13,8 +13,13 @@ import { diffToMessages } from './discovery/utils/diffToMessages'
 import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
 import { TaskQueue } from './queue/TaskQueue'
 
+export interface Diff {
+  changes: DiscoveryDiff[]
+  sendDailyReminder: boolean
+}
+
 export class DiscoveryWatcher {
-  private readonly taskQueue: TaskQueue<void>
+  private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
     private readonly provider: providers.AlchemyProvider,
@@ -27,7 +32,7 @@ export class DiscoveryWatcher {
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
-      () => this.update(),
+      (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
         metricsId: DiscoveryWatcher.name,
@@ -37,21 +42,24 @@ export class DiscoveryWatcher {
 
   start() {
     this.logger.info('Started')
-    return this.clock.onNewHour(() => {
-      this.taskQueue.addToFront()
+    return this.clock.onNewHour((timestamp) => {
+      this.taskQueue.addToFront(timestamp)
     })
   }
 
-  async update() {
+  async update(timestamp: UnixTime) {
     const metricsDone = initMetrics()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
-    const timestamp = UnixTime.now()
+    const isDailyReminder = timestamp.equals(
+      timestamp.toStartOf('day').add(8, 'hours'),
+    )
     this.logger.info('Update started', { blockNumber })
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
     let changesCounter = 0
+    const notUpdatedProjects: string[] = []
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
@@ -66,13 +74,19 @@ export class DiscoveryWatcher {
           projectConfig.name,
           discovery,
           configHash,
+          isDailyReminder,
           projectConfig.overrides,
         )
 
-        if (diff.length > 0) {
-          const messages = diffToMessages(projectConfig.name, diff)
-          await this.notify(messages)
-          changesCounter += diff.length
+        if (diff.changes.length > 0) {
+          const messages = diffToMessages(projectConfig.name, diff.changes)
+          await this.notify(messages, 'PUBLIC')
+          await this.notify(messages, 'INTERNAL')
+          changesCounter += diff.changes.length
+        }
+
+        if (diff.sendDailyReminder) {
+          notUpdatedProjects.push(projectConfig.name)
         }
 
         await this.repository.addOrUpdate({
@@ -89,6 +103,14 @@ export class DiscoveryWatcher {
         errorsCount.inc()
       }
     }
+
+    if (isDailyReminder) {
+      await this.notify(
+        [getDailyReminderMessage(notUpdatedProjects, timestamp)],
+        'INTERNAL',
+      )
+    }
+
     this.logger.info('Update finished', { blockNumber })
     metricsDone(blockNumber, changesCounter)
   }
@@ -97,28 +119,51 @@ export class DiscoveryWatcher {
     name: string,
     discovery: ProjectParameters,
     configHash: Hash256,
+    isDailyReminder: boolean,
     overrides?: Record<string, DiscoveryContract>,
-  ): Promise<DiscoveryDiff[]> {
+  ): Promise<Diff> {
+    const result: Diff = {
+      changes: [],
+      sendDailyReminder: false,
+    }
+
+    const committed = await this.configReader.readDiscovery(name)
+    const diffFromCommitted = diffDiscovery(
+      committed.contracts,
+      discovery.contracts,
+      overrides,
+    )
+
     const databaseEntry = await this.repository.findLatest(name)
+    let diffFromDatabase: DiscoveryDiff[] = []
+    if (databaseEntry !== undefined) {
+      diffFromDatabase = diffDiscovery(
+        databaseEntry.discovery.contracts,
+        discovery.contracts,
+        overrides,
+      )
+    }
+
+    if (isDailyReminder && diffFromCommitted.length > 0) {
+      this.logger.debug('Include inside daily reminder', { project: name })
+      result.sendDailyReminder = true
+    }
 
     if (
       databaseEntry === undefined ||
       databaseEntry.configHash !== configHash
     ) {
       this.logger.debug('Using committed file for diff', { project: name })
-      const committed = await this.configReader.readDiscovery(name)
-      return diffDiscovery(committed.contracts, discovery.contracts, overrides)
+      result.changes = diffFromCommitted
+    } else {
+      this.logger.debug('Using database record for diff', { project: name })
+      result.changes = diffFromDatabase
     }
 
-    this.logger.debug('Using database record for diff', { project: name })
-    return diffDiscovery(
-      databaseEntry.discovery.contracts,
-      discovery.contracts,
-      overrides,
-    )
+    return result
   }
 
-  async notify(messages: string[]) {
+  async notify(messages: string[], channel: 'PUBLIC' | 'INTERNAL') {
     if (!this.discordClient) {
       // TODO: maybe only once? rethink
       this.logger.info(
@@ -128,12 +173,23 @@ export class DiscoveryWatcher {
     }
 
     for (const message of messages) {
-      await this.discordClient.sendMessage(message).then(
+      await this.discordClient.sendMessage(message, channel).then(
         () => this.logger.info('Notification to Discord has been sent'),
         (e) => this.logger.error(e),
       )
     }
   }
+}
+
+function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
+  const dailyReportMessage = `\`\`\`Daily bot report @ ${timestamp.toYYYYMMDD()}\`\`\`\n`
+  if (projects.length > 0) {
+    return `${dailyReportMessage}${projects
+      .map((p) => `:x: ${p}`)
+      .join('\n\n')}`
+  }
+
+  return `${dailyReportMessage}:white_check_mark: everything is up to date`
 }
 
 const latestBlock = new Gauge({
