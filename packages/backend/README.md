@@ -105,7 +105,7 @@ STARKEX_API_KEY=
 
 ## Repository naming convention
 
-- `add(T): number` - adds a new record and returns it's id
+- `add(T): number` - adds a new record and returns its id
 - `addMany(T[]): R[]` - adds many new records and returns their ids
 - `getAll(): T[]` - returns an array of all records
 - `getByKey(K): T[]` - returns an array of all matching records
