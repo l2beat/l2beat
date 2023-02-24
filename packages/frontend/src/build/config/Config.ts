@@ -16,6 +16,7 @@ export interface Config {
     milestones: boolean
     hiring: boolean
     rating: boolean
+    buildAllProjectPages: boolean
   }
   backend: {
     apiUrl: string
