@@ -5,6 +5,7 @@ export interface Config {
     twitter: string
     discord: string
     github: string
+    linkedin: string
     youTube: string
     medium: string
     forum: string

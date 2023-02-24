@@ -7,6 +7,7 @@ export const common: Omit<Config, 'backend'> = {
     twitter: 'https://twitter.com/l2beat',
     discord: 'https://discord.gg/eaVKXPmtWk',
     github: 'https://github.com/l2beat/l2beat',
+    linkedin: 'https://www.linkedin.com/company/l2beat/',
     youTube: 'https://www.youtube.com/channel/UCDrl-fNXFjOoykr4lQij9BA/videos',
     medium: 'https://medium.com/l2beat',
     forum: 'https://gov.l2beat.com/',
