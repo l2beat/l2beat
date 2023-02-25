@@ -16,14 +16,14 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync')
 
-export const zksync: Layer2 = {
+export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
   display: {
-    name: 'zkSync',
-    slug: 'zksync',
+    name: 'zkSync Lite',
+    slug: 'zksync-lite',
     description:
-      'zkSync is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
+      'zkSync Lite (formerly zkSync) is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
     purpose: 'Tokens, NFTs',
     links: {
       websites: ['https://zksync.io/'],
@@ -222,7 +222,7 @@ export const zksync: Layer2 = {
         'getThreshold',
       )}/${
         discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } zkSync MultiSig.`,
+      } zkSync Lite MultiSig.`,
     },
     {
       name: 'Security Council',
@@ -343,7 +343,7 @@ export const zksync: Layer2 = {
         },
       ],
       description:
-        'Account receiving fees for listing tokens. Can be updated by zkSync MultiSig.',
+        'Account receiving fees for listing tokens. Can be updated by zkSync Lite MultiSig.',
     },
   ],
   milestones: [
@@ -353,6 +353,12 @@ export const zksync: Layer2 = {
       date: '2020-06-18T00:00:00Z',
       description:
         'zkSync is live, bringing scalable payments to Ethereum using zkRollup technology.',
+    },
+    {
+      name: 'Rebranding',
+      link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=zkSync%201.0%20is%20now%20zkSync%20Lite',
+      date: '2023-02-16T00:00:00Z',
+      description: 'zkSync becomes zkSync Lite.',
     },
   ],
 }

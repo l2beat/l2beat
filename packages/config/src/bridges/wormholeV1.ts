@@ -6,6 +6,7 @@ import { Bridge } from './types'
 export const wormholeV1: Bridge = {
   type: 'bridge',
   id: ProjectId('wormholeV1'),
+  isArchived: true,
   display: {
     name: 'Wormhole V1',
     slug: 'wormholev1',

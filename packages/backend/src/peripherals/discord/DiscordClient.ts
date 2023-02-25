@@ -5,6 +5,7 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 
 import { HttpClient } from '@l2beat/shared'
 import { RequestInit } from 'node-fetch'
+import { Counter } from 'prom-client'
 
 export const MAX_MESSAGE_LENGTH = 2000
 
@@ -12,15 +13,26 @@ export class DiscordClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly discordToken: string,
-    private readonly channelId: string,
+    private readonly publicChannelId: string,
+    private readonly internalChannelId: string,
   ) {}
 
-  async sendMessage(message: string) {
+  async sendMessage(message: string, channel: 'PUBLIC' | 'INTERNAL') {
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      throw new Error(`Discord error: Message size exceeded (2000 characters)`)
+    }
+    const channelId =
+      channel === 'PUBLIC' ? this.publicChannelId : this.internalChannelId
+
+    return this.send(message, channelId)
+  }
+
+  private async send(message: string, channelId: string) {
     if (message.length > MAX_MESSAGE_LENGTH) {
       throw new Error(`Discord error: Message size exceeded (2000 characters)`)
     }
 
-    const endpoint = `/channels/${this.channelId}/messages`
+    const endpoint = `/channels/${channelId}/messages`
     const body = {
       content: message,
     }
@@ -31,7 +43,7 @@ export class DiscordClient {
     })
   }
 
-  async query(endpoint: string, options?: RequestInit) {
+  private async query(endpoint: string, options?: RequestInit) {
     const url = 'https://discord.com/api/v10' + endpoint
 
     const res = await this.httpClient.fetch(url, {
@@ -49,6 +61,12 @@ export class DiscordClient {
       throw new Error(`Discord error: ${JSON.stringify(body)}`)
     }
 
+    callsCount.inc()
     return res.json() as unknown
   }
 }
+
+const callsCount = new Counter({
+  name: 'discord_client_calls',
+  help: 'Value showing amount of calls to DiscordClient',
+})

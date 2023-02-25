@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { NUGGETS } from '../layer2s'
 import { Bridge } from './types'
 
 export const avalanche: Bridge = {
@@ -154,6 +155,13 @@ export const avalanche: Bridge = {
           type: 'EOA',
         },
       ],
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Avalanche Bridge deep dive',
+      url: 'https://li.fi/knowledge-hub/avalanche-bridge-a-deep-dive/',
+      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
     },
   ],
 }

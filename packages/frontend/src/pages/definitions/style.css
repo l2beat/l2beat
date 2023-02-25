@@ -1,0 +1,25 @@
+.definitions p {
+  @apply text-gray-850 dark:text-gray-400;
+}
+
+.definitions h2 {
+  @apply mb-14 text-4xl;
+}
+.definitions h3 {
+  @apply mb-4 mt-10 text-2xl;
+}
+.definitions h4 {
+  @apply mb-4 mt-10 text-2xl;
+}
+
+.definitions strong {
+  @apply font-medium text-black dark:text-white;
+}
+
+.definitions ol {
+  @apply ml-[2ch] list-decimal font-medium text-black marker:font-medium dark:text-white;
+}
+
+.definitions ul {
+  @apply ml-[2ch] list-disc text-gray-850 dark:text-gray-400;
+}

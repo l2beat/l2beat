@@ -15,23 +15,23 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync2')
 
-export const zksync2: Layer2 = {
+export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
   display: {
-    name: 'zkSync 2.0',
-    slug: 'zksync2',
+    name: 'zkSync Era',
+    slug: 'zksync-era',
     warning:
-      'Currently only whitelisted contracts can be deployed and only whitelisted users can use zkSync 2.0.',
+      'Currently only whitelisted contracts can be deployed and only whitelisted users can use zkSync Era.',
     description:
-      'zkSync 2.0 is a general-purpose zk rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
+      'zkSync Era is a general-purpose zk rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EMV features such as smart contract composability while introducing some new concept such as account abstraction.\
       It is currently deployed on mainnet and available to a whitelisted set of users/developers.',
     purpose: 'Universal',
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://portal.zksync.io/'],
-      documentation: ['https://v2-docs.zksync.io/dev/'],
+      documentation: ['https://era.zksync.io/docs/'],
       explorers: ['https://explorer.zksync.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
@@ -48,6 +48,11 @@ export const zksync2: Layer2 = {
       {
         address: EthereumAddress('0x027C8a79075F96a8cdE315b495949e5f1D92f1D6'),
         sinceTimestamp: new UnixTime(1666718099),
+        tokens: ['ETH'],
+      },
+      {
+        address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
+        sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
       },
     ],
@@ -157,7 +162,7 @@ export const zksync2: Layer2 = {
       {
         address: discovery.getContract('L1EthBridge').address,
         name: 'L1EthBridge',
-        description: 'Standard bridge for depositing ETH to zkSync 2.0.',
+        description: 'Standard bridge for depositing ETH to zkSync Era.',
         upgradeability: discovery.getContract('L1EthBridge').upgradeability,
       },
     ],
@@ -165,7 +170,7 @@ export const zksync2: Layer2 = {
   },
   permissions: [
     {
-      name: 'zkSync 2.0 MultiSig',
+      name: 'zkSync Era MultiSig',
       accounts: [
         {
           type: 'MultiSig',
@@ -173,7 +178,7 @@ export const zksync2: Layer2 = {
         },
       ],
       description:
-        'This MultiSig is the current Governor of zkSync 2.0 main contract and owner of the L1EthBridge. It can upgrade zkSync2.0, upgrade bridge, change rollup parameters with no delay.',
+        'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
     },
     {
       name: 'MultiSig participants',
@@ -185,7 +190,7 @@ export const zksync2: Layer2 = {
         'getThreshold',
       )}/${
         discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } zkSync 2.0 MultiSig.`,
+      } zkSync Era MultiSig.`,
     },
     {
       name: 'Active validator',
@@ -207,6 +212,13 @@ export const zksync2: Layer2 = {
       link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',
       date: '2022-10-28T00:00:00Z',
       description: 'zkSync 2.0 baby alpha is launched on mainnet.',
+    },
+    {
+      name: 'Fair Onboarding Alpha and Rebranding',
+      link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59',
+      date: '2023-02-16T00:00:00Z',
+      description:
+        'zkSync 2.0 rebrands to zkSync Era and lets registered projects deploy on mainnet.',
     },
   ],
 }

@@ -1,19 +1,25 @@
 import React from 'react'
 
+import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
 
 export interface IndexCellProps {
   entry: {
     isVerified?: boolean
+    isArchived?: boolean
   }
   index: number
 }
 
 export function IndexCell({ entry, index }: IndexCellProps) {
+  if (entry.isArchived === true) {
+    return <ArchivedIcon />
+  }
+
   if (entry.isVerified === false) {
     return (
       <UnverifiedContractsWarning
-        className="absolute top-0 left-[1px] -translate-y-1/2 "
+        className="translate-x-[2px]"
         tooltip="This project includes unverified contracts."
       />
     )

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
+import { configureFilters } from '../../../scripts/configureFilters'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { formatLargeNumber } from '../../../utils'
 import { ScalingTvlView } from './ScalingTvlView'
@@ -13,6 +14,7 @@ export default {
 export function TvlView() {
   useEffect(() => {
     configureTooltips()
+    configureFilters()
   }, [])
   return (
     <>
@@ -102,7 +104,7 @@ export function TvlView() {
             {
               name: 'zk.download',
               provider: 'zkSync',
-              slug: 'zksync',
+              slug: 'zksync-lite',
               tvl: formatLargeNumber(2_740_000_000),
               tvlBreakdown: {
                 warning: 'Some random warning',
@@ -119,6 +121,29 @@ export function TvlView() {
               marketShare: '50.42%',
               purpose: 'Universal',
               technology: 'Optimistic Rollup',
+              isVerified: true,
+            },
+            {
+              name: 'zk.archived',
+              provider: 'StarkEx',
+              slug: 'layer2financezk',
+              tvl: formatLargeNumber(2_740_000_000),
+              tvlBreakdown: {
+                warning: 'Some random warning',
+                warningSeverity: 'warning',
+                label: 'The tooltip label',
+                empty: false,
+                associated: 0.4,
+                ether: 0.2,
+                stable: 0.2,
+                other: 0.2,
+              },
+              oneDayChange: '+3.45%',
+              sevenDayChange: '-54.2%',
+              marketShare: '50.42%',
+              purpose: 'Universal',
+              technology: 'Optimistic Rollup',
+              isArchived: true,
               isVerified: true,
             },
           ]}

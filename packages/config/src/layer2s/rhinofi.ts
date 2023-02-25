@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   SHARP_VERIFIER_CONTRACT,
@@ -20,7 +21,6 @@ export const rhinofi: Layer2 = {
   display: {
     name: 'rhino.fi',
     slug: 'rhinofi',
-    warning: 'DeversiFi has rebranded to rhino.fi on Jul 14 2022.',
     description:
       'rhino.fi (formerly DeversiFi) claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
     purpose: 'Exchange',
@@ -223,4 +223,5 @@ export const rhinofi: Layer2 = {
         'DeversiFi is live, bringing first STARKex Validium for spot trading.',
     },
   ],
+  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
 }

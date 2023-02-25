@@ -3,7 +3,8 @@ import React, { useEffect } from 'react'
 
 import { configureDarkThemeToggle } from './configureDarkThemeToggle'
 import { configureSidebarMenu } from './configureSidebarMenu'
-import { Navbar, NavbarPage } from './Navbar'
+import { Navbar } from './Navbar'
+import { NavbarPage } from './types'
 
 export default {
   title: 'Components/Navbar',
@@ -29,9 +30,9 @@ function Template(props: TemplateProps) {
     <Navbar
       showBanner={props.showBanner}
       forumLink="#"
-      showBridges
       showActivity
       showHiring
+      showDefinitions
       selectedPage={props.selectedPage}
       socialLinks={{
         discordLink: '#',

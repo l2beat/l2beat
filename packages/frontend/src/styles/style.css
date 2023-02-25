@@ -1,3 +1,9 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import '../pages/definitions/style.css';
+
 /* Please use https://google-webfonts-helper.herokuapp.com/fonts */
 
 /* roboto-regular - latin */
@@ -37,7 +43,3 @@
   src: url('/fonts/Lora/lora-v17-latin-italic.woff2') format('woff2');
   font-display: block;
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

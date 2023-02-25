@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   SHARP_VERIFIER_CONTRACT,
@@ -282,4 +283,5 @@ export const starknet: Layer2 = {
         'Bridge is live on mainnet, serving as gateway between Ethereum and StarkNet.',
     },
   ],
+  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
 }

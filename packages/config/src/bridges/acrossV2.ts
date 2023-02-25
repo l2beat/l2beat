@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -218,6 +219,13 @@ export const acrossV2: Bridge = {
       ],
       name: 'MultiSig Participants',
       description: 'Participants of 3/5 MultiSig',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Across deep dive',
+      url: 'https://li.fi/knowledge-hub/across-a-deep-dive/',
+      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
     },
   ],
 }

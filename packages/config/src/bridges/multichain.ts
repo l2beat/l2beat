@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import * as config from './multichain-config.json'
 import { Bridge } from './types'
@@ -182,6 +183,18 @@ export const multichain: Bridge = {
       description:
         'It is an upgrade of the network that is used to check cross chain messages.',
       link: 'https://multichainorg.medium.com/fastmpc-mainnet-goes-live-running-in-a-decentralized-way-99f9fe2956b8',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Multichain deep dive',
+      url: 'https://li.fi/knowledge-hub/multichain-a-deep-dive/',
+      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
+    },
+    {
+      title: 'Multichain escrow problem',
+      url: 'https://twitter.com/bkiepuszewski/status/1572537802512044034',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
   ],
 }

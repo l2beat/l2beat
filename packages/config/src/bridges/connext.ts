@@ -1,6 +1,7 @@
 import * as types from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared'
 
+import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -119,6 +120,13 @@ export const connext: Bridge = {
       ],
       name: 'Owner of TransactionManager',
       description: 'Can add and remove Routers and supported assets.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Connext deep dive',
+      url: 'https://li.fi/knowledge-hub/connext-network-a-deep-dive/',
+      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
     },
   ],
 }

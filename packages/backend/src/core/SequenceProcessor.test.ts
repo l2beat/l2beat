@@ -215,15 +215,13 @@ describe(SequenceProcessor.name, () => {
         getLatest: getLatestMock,
         processRange: processRangeMock,
         reportError: reportErrorMock,
+        // Because we use fake-timers, we need to disable the refresh interval
+        refreshInterval: Infinity,
       })
 
       await sequenceProcessor.start()
       await waitForErrorReport(time, reportErrorMock)
 
-      await Promise.all([
-        sequenceProcessor.stop(),
-        waitForErrorReport(time, reportErrorMock),
-      ])
       time.uninstall()
 
       expect(reportErrorMock).toHaveBeenCalledWith(
@@ -249,15 +247,13 @@ describe(SequenceProcessor.name, () => {
         getLatest: getLatestMock,
         processRange: processRangeMock,
         reportError: reportErrorMock,
+        // Because we use fake-timers, we need to disable the refresh interval
+        refreshInterval: Infinity,
       })
 
       await sequenceProcessor.start()
       await waitForErrorReport(time, reportErrorMock)
 
-      await Promise.all([
-        sequenceProcessor.stop(),
-        waitForErrorReport(time, reportErrorMock),
-      ])
       time.uninstall()
 
       expect(reportErrorMock).toHaveBeenCalledWith(
@@ -473,7 +469,7 @@ async function waitForErrorReport(
   let errorReported = false
 
   while (!errorReported) {
-    await time.runToLastAsync()
+    await time.tickAsync(1)
     errorReported = reportErrorMock.calls.length > currentCalls
   }
 }

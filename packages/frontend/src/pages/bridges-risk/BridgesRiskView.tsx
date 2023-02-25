@@ -1,6 +1,8 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
+import { IncludeArchivedCheckbox } from '../../components/IncludeArchivedCheckbox'
+import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
 import { IndexCell } from '../../components/table/IndexCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
@@ -20,6 +22,7 @@ export interface BridgesRiskViewEntry {
   slug: string
   type: 'layer2' | 'bridge'
   warning?: string
+  isArchived?: boolean
   isVerified?: boolean
   category: string
   destination: ProjectRiskViewEntry
@@ -38,10 +41,10 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       minimalWidth: true,
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>
+          <span data-bridges-only-cell>
             <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
           </span>
-          <span data-combined-only className="hidden">
+          <span data-combined-only-cell className="hidden">
             <IndexCell entry={entry} index={index + 1} />
           </span>
         </>
@@ -89,6 +92,10 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
+      <div className="overflow-x-auto whitespace-nowrap pb-4">
+        <IncludeLayer2sCheckbox />
+        <IncludeArchivedCheckbox className="ml-2" />
+      </div>
       <TableView items={items} columns={columns} rows={rows} />
     </section>
   )

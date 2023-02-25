@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
+import { configureFilters } from '../../../scripts/configureFilters'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { ScalingRiskView } from './ScalingRiskView'
 
@@ -13,6 +14,7 @@ export default {
 export function RiskView() {
   useEffect(() => {
     configureTooltips()
+    configureFilters()
   }, [])
   return (
     <>
@@ -54,12 +56,24 @@ export function RiskView() {
             {
               name: 'zk.download',
               provider: 'zkSync',
-              slug: 'zksync',
+              slug: 'zksync-lite',
               stateValidation: risk('medium', 'bad'),
               dataAvailability: risk('medium'),
               upgradeability: risk('long'),
               sequencerFailure: risk('long', 'warning'),
               validatorFailure: risk('short'),
+              isVerified: true,
+            },
+            {
+              name: 'zk.archived',
+              provider: 'StarkEx',
+              slug: 'layer2financezk',
+              stateValidation: risk('medium', 'bad'),
+              dataAvailability: risk('medium'),
+              upgradeability: risk('long'),
+              sequencerFailure: risk('long', 'warning'),
+              validatorFailure: risk('short'),
+              isArchived: true,
               isVerified: true,
             },
           ]}
