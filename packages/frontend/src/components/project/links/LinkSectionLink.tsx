@@ -84,8 +84,11 @@ function parseSocial(href: string): SocialDetails {
       platform: 'instagram',
       text: link.slice('instagram.com/'.length),
     }
-  }
-  return { text: link }
+  } else if (link === 'https://join.zksync.dev/' /* ONE-OFF HACK */)
+    return {
+      platform: 'discord',
+      text: link,
+    }
 }
 
 function simplify(href: string) {
