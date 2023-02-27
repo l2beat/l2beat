@@ -69,6 +69,13 @@ export class DiscoveryWatcher {
           projectConfig,
           blockNumber,
         )
+
+        if (discovery.contracts.some((c) => c.errors !== undefined)) {
+          throw new Error(
+            `Errors occurred during discovery of ${projectConfig.name}`,
+          )
+        }
+
         const configHash = getDiscoveryConfigHash(projectConfig)
 
         const diff = await this.findChanges(
