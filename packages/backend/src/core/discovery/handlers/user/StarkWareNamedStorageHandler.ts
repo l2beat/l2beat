@@ -14,6 +14,7 @@ export const StarkWareNamedStorageHandlerDefinition = z.strictObject({
   type: z.literal('starkWareNamedStorage'),
   tag: z.string(),
   returnType: z.optional(z.enum(['address', 'bytes', 'number'])),
+  ignoreRelative: z.optional(z.boolean()),
 })
 
 export class StarkWareNamedStorageHandler implements Handler {
@@ -48,6 +49,7 @@ export class StarkWareNamedStorageHandler implements Handler {
         storage,
         this.definition.returnType ?? 'bytes',
       ),
+      ignoreRelative: this.definition.ignoreRelative,
     }
   }
 }

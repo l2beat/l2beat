@@ -160,6 +160,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
       expect<unknown>(value).toEqual({
         field: 'someName',
         value: [],
+        ignoreRelative: undefined,
       })
     })
 
@@ -198,6 +199,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
       expect<unknown>(value).toEqual({
         field: 'someName',
         value: [Alice, Bob],
+        ignoreRelative: undefined,
       })
     })
   })

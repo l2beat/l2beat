@@ -211,6 +211,7 @@ describe(CallHandler.name, () => {
       expect<unknown>(result).toEqual({
         field: 'add',
         value: 3,
+        ignoreRelative: undefined,
       })
     })
 
@@ -241,6 +242,7 @@ describe(CallHandler.name, () => {
       expect<unknown>(result).toEqual({
         field: 'add',
         value: 3,
+        ignoreRelative: undefined,
       })
     })
 
@@ -261,6 +263,28 @@ describe(CallHandler.name, () => {
       expect<unknown>(result).toEqual({
         field: 'add',
         error: 'oops',
+        ignoreRelative: undefined,
+      })
+    })
+
+    it('passes ignoreRelative', async () => {
+      const provider = mock<DiscoveryProvider>({
+        async call() {
+          return Bytes.fromHex('3'.padStart(64, '0'))
+        },
+      })
+
+      const handler = new CallHandler(
+        'add',
+        { type: 'call', method, args: [1, 2], ignoreRelative: true },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, {})
+      expect<unknown>(result).toEqual({
+        field: 'add',
+        value: 3,
+        ignoreRelative: true,
       })
     })
   })

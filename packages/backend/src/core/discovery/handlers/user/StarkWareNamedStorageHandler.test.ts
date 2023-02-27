@@ -37,6 +37,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
         field: 'someName',
         value:
           '0x0000000000000000000000000000000000000000000000000000000000000123',
+        ignoreRelative: undefined,
       })
     })
 
@@ -65,6 +66,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       expect(result as unknown).toEqual({
         field: 'someName',
         value: 0x123,
+        ignoreRelative: undefined,
       })
     })
 
@@ -95,6 +97,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       expect(result as unknown).toEqual({
         field: 'someName',
         value: resultAddress,
+        ignoreRelative: undefined,
       })
     })
   })
@@ -119,6 +122,35 @@ describe(StarkWareNamedStorageHandler.name, () => {
     expect(result as unknown).toEqual({
       field: 'someName',
       error: 'foo bar',
+    })
+  })
+
+  it('passes ignoreRelative', async () => {
+    const handler = new StarkWareNamedStorageHandler(
+      'someName',
+      {
+        type: 'starkWareNamedStorage',
+        tag: 'foo',
+        ignoreRelative: true,
+      },
+      DiscoveryLogger.SILENT,
+    )
+
+    const provider = mock<DiscoveryProvider>({
+      async getStorage() {
+        return Bytes.fromHex(
+          '0x0000000000000000000000000000000000000000000000000000000000000123',
+        )
+      },
+    })
+
+    const address = EthereumAddress.random()
+    const result = await handler.execute(provider, address)
+    expect(result as unknown).toEqual({
+      field: 'someName',
+      value:
+        '0x0000000000000000000000000000000000000000000000000000000000000123',
+      ignoreRelative: true,
     })
   })
 })
