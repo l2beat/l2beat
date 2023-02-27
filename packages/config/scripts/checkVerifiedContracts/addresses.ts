@@ -1,6 +1,12 @@
 import { assertUnreachable, EthereumAddress } from '@l2beat/shared'
 
-import { Bridge, Layer2, ProjectUpgradeability } from '../../src'
+import {
+  Bridge,
+  Layer2,
+  ProjectContract,
+  ProjectContractSingleAddress,
+  ProjectUpgradeability,
+} from '../../src'
 import { VerificationMap } from './output'
 import { withoutDuplicates } from './utils'
 
@@ -15,11 +21,9 @@ export function getUniqueContractsForProject(
   project: Layer2 | Bridge,
 ): EthereumAddress[] {
   const projectContracts = project.contracts?.addresses ?? []
-  const mainAddresses = projectContracts.flatMap((c) => [
-    c.address,
-    ...(c.multipleAddresses ?? []),
-  ])
+  const mainAddresses = projectContracts.flatMap((c) => getAddresses(c))
   const upgradeabilityAddresses = projectContracts
+    .filter(isSingleAddress)
     .map((c) => c.upgradeability)
     .filter((u): u is ProjectUpgradeability => !!u) // remove undefined
     .flatMap((u) => gatherAddressesFromUpgradeability(u))
@@ -84,4 +88,19 @@ export function areAllProjectContractsVerified(
   return projectAddresses.every(
     (address) => addressVerificationMap[address.toString()],
   )
+}
+
+function getAddresses(c: ProjectContract): EthereumAddress[] {
+  if (isSingleAddress(c)) {
+    return [c.address]
+  } else {
+    return c.multipleAddresses
+  }
+}
+
+function isSingleAddress(
+  c: ProjectContract,
+): c is ProjectContractSingleAddress {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  return (c as ProjectContractSingleAddress).address !== undefined
 }
