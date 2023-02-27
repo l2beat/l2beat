@@ -7,6 +7,7 @@ export interface HandlerResult {
   field: string
   value?: ContractValue
   error?: string
+  ignoreRelative?: boolean
 }
 
 export interface Handler {

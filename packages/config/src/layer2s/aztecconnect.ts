@@ -10,7 +10,10 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('aztecconnect')
 
 export const aztecconnect: Layer2 = {
   type: 'layer2',
@@ -157,17 +160,12 @@ export const aztecconnect: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
+        address: discovery.getContract('RollupProcessorV2').address,
         description:
           'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
-        name: 'RollupProcessor',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0xC5b735d05c26579B701Be9bED253Bb588503B26B'),
-          implementation: EthereumAddress(
-            '0x3f972e325CecD99a6be267fd36ceB46DCa7C3F28',
-          ),
-        },
+        name: 'RollupProcessorV2',
+        upgradeability:
+          discovery.getContract('RollupProcessorV2').upgradeability,
       },
       {
         address: EthereumAddress('0x4cf32670a53657596E641DFCC6d40f01e4d64927'),
@@ -176,20 +174,19 @@ export const aztecconnect: Layer2 = {
         name: 'AztecFeeDistributor',
       },
       {
-        address: EthereumAddress('0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487'),
+        address: EthereumAddress(
+          discovery.getContractValue('RollupProcessorV2', 'defiBridgeProxy'),
+        ),
         description: 'Bridge Connector to various DeFi Bridges.',
         name: 'DefiBridgeProxy',
       },
       {
-        address: EthereumAddress('0x3937f965E824Fe4e7885B8662669821966d3f293'),
+        address: EthereumAddress(
+          discovery.getContractValue('RollupProcessorV2', 'verifier'),
+        ),
         description:
           'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
-        name: 'StandardVerifier',
-      },
-      {
-        address: EthereumAddress('0x8C3B53F450E53FF14D8C9449465F79ff40668966'),
-        description: 'Verification Keys for the Verifier.',
-        name: 'VerificationKey28x32',
+        name: 'Verifier28x32',
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
