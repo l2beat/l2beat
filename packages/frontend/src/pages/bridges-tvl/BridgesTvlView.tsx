@@ -1,6 +1,8 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
+import { IncludeArchivedCheckbox } from '../../components/IncludeArchivedCheckbox'
+import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
 import { IndexCell } from '../../components/table/IndexCell'
 import { NoInfoCell } from '../../components/table/NoInfoCell'
 import { NumberCell } from '../../components/table/NumberCell'
@@ -24,6 +26,7 @@ export interface BridgesTvlViewEntry {
   name: string
   slug: string
   warning?: string
+  isArchived?: boolean
   isVerified?: boolean
   tvl: string
   tvlBreakdown: TVLBreakdownProps
@@ -45,10 +48,10 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       minimalWidth: true,
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>
+          <span data-bridges-only-cell>
             <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
           </span>
-          <span data-combined-only className="hidden">
+          <span data-combined-only-cell className="hidden">
             <IndexCell entry={entry} index={index + 1} />
           </span>
         </>
@@ -70,28 +73,31 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
-      getValue: (entry) => (
-        <NumberCell signed>{entry.sevenDayChange}</NumberCell>
-      ),
+      getValue: (entry) =>
+        !entry.isArchived && (
+          <NumberCell signed>{entry.sevenDayChange}</NumberCell>
+        ),
     },
     {
       name: 'Breakdown',
       tooltip:
         'Composition of the total value locked broken down by token type.',
-      getValue: (entry) => <TVLBreakdown {...entry.tvlBreakdown} />,
+      getValue: (entry) =>
+        !entry.isArchived && <TVLBreakdown {...entry.tvlBreakdown} />,
     },
     {
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
-      getValue: (entry) => (
-        <NumberCell>
-          <span data-bridges-only>{entry.bridgesMarketShare}</span>
-          <span data-combined-only className="hidden">
-            {entry.combinedMarketShare}
-          </span>
-        </NumberCell>
-      ),
+      getValue: (entry) =>
+        !entry.isArchived && (
+          <NumberCell>
+            <span data-bridges-only-cell>{entry.bridgesMarketShare}</span>
+            <span data-combined-only-cell className="hidden">
+              {entry.combinedMarketShare}
+            </span>
+          </NumberCell>
+        ),
     },
     {
       name: 'Validated by',
@@ -117,6 +123,10 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
+      <div className="overflow-x-auto whitespace-nowrap pb-4">
+        <IncludeLayer2sCheckbox />
+        <IncludeArchivedCheckbox className="ml-2" />
+      </div>
       <TableView items={items} columns={columns} rows={rows} />
     </section>
   )

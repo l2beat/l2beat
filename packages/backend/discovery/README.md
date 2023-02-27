@@ -49,7 +49,7 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 ## Overrides
 
-The most powerful feature in the discovery. It will allows:
+The most powerful feature in the discovery. It will allow:
 
 1. Adding handlers to longer arrays (`maxLength` defaults to 5).
 2. Reading values directly from storage slot (ex. for `private` variables).
@@ -63,7 +63,7 @@ All of the parameters are optional:
 - `ignoreDiscovery: boolean` - if set to `true`, discovery will not consider this contract as a `relative`, effectively skipping discovery of this contract
 - `ignoreMethods: field[]` - discovery will skip this method
 - `ignoreInWatchMode: field[]` - if set to `true`, the `DiscoveryWatcher` will not notify change of this value
-- `fields: Record<field, Handler>` - custom fields that represent more complex vales of the contract: ex. arrays longer than 5 and private variables
+- `fields: Record<field, Handler>` - custom fields that represent more complex values of the contract: ex. arrays longer than 5 and private variables
 
 **Example:**
 

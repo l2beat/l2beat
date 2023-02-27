@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   SHARP_VERIFIER_CONTRACT,
@@ -32,7 +33,7 @@ export const sorare: Layer2 = {
       socialMedia: [
         'https://discord.gg/TSjtHaM',
         'https://reddit.com/r/Sorare/',
-        'https://twitter.com/sorarehq',
+        'https://twitter.com/Sorare',
         'https://instagram.com/sorare_official/',
       ],
     },
@@ -159,4 +160,5 @@ export const sorare: Layer2 = {
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
     },
   ],
+  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
 }

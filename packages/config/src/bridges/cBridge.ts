@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -330,6 +331,18 @@ export const cBridge: Bridge = {
           type: 'EOA',
         },
       ],
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'How HTLC bridge works?',
+      url: 'https://twitter.com/bkiepuszewski/status/1437031523455229964',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+    },
+    {
+      title: 'cBridge deep dive',
+      url: 'https://li.fi/knowledge-hub/cbridge-a-deep-dive/',
+      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
     },
   ],
 }

@@ -1,6 +1,7 @@
 import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
+import { IncludeArchivedCheckbox } from '../../../components/IncludeArchivedCheckbox'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
@@ -21,6 +22,7 @@ export interface ScalingRiskViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  isArchived?: boolean
   isVerified?: boolean
   stateValidation: ProjectRiskViewEntry
   dataAvailability: ProjectRiskViewEntry
@@ -77,6 +79,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
+      <IncludeArchivedCheckbox className="mb-4" />
       <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>

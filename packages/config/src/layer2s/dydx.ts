@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -202,5 +203,13 @@ export const dydx: Layer2 = {
       description:
         'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK.',
     },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'How does escape hatch work?',
+      url: 'https://twitter.com/bkiepuszewski/status/1469201939049103360',
+      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+    },
+    ...NUGGETS.STARKEX_NUGGETS,
   ],
 }

@@ -13,10 +13,8 @@ export function UnverifiedContractsWarning({
   tooltip,
 }: UnverifiedContractsWarningProps) {
   return (
-    <div className="relative">
-      <span className={cx('Tooltip inline-block', className)} title={tooltip}>
-        <UnverifiedIcon className={cx('fill-red-700 dark:fill-red-300')} />
-      </span>
-    </div>
+    <span className={cx('Tooltip inline-block', className)} title={tooltip}>
+      <UnverifiedIcon className={cx('fill-red-700 dark:fill-red-300')} />
+    </span>
   )
 }
