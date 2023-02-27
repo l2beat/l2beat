@@ -49,11 +49,12 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 ## Overrides
 
-The most powerful feature in the discovery. It will allows:
+The most powerful feature in the discovery. It will allow:
 
 1. Adding handlers to longer arrays (`maxLength` defaults to 5).
 2. Reading values directly from storage slot (ex. for `private` variables).
 3. Skipping further discovery for selected contract. Very useful when there is for example `DAI` contract in discovery and we don't want to include all `MakerDAO` contracts in our discovery.
+4. Skipping further discovery of methods values (see `ignoreRelative` in [array handler](#array-handler))
 
 **Parameters:**
 
@@ -63,7 +64,7 @@ All of the parameters are optional:
 - `ignoreDiscovery: boolean` - if set to `true`, discovery will not consider this contract as a `relative`, effectively skipping discovery of this contract
 - `ignoreMethods: field[]` - discovery will skip this method
 - `ignoreInWatchMode: field[]` - if set to `true`, the `DiscoveryWatcher` will not notify change of this value
-- `fields: Record<field, Handler>` - custom fields that represent more complex vales of the contract: ex. arrays longer than 5 and private variables
+- `fields: Record<field, Handler>` - custom fields that represent more complex values of the contract: ex. arrays longer than 5 and private variables
 
 **Example:**
 
@@ -160,6 +161,8 @@ Such methods are automatically called by default, but the results are limited to
 - `method` - (optional) the name or abi of the method to be called. If omitted the name of the field is used. The abi should be provided in the human readable abi format.
 - `length` - (optional) a number, e.g. `3` or a reference to another field, e.g. `{{ value }}` that will be used to determine the number of calls. If this is not provided the method is called until it reverts.
 - `maxLength` - (optional) a guard against infinite loops. Prevents the method to be called an excessive number of times. Defaults to `100`.
+- `startIndex` - (optional) the index of the first element to be read. Defaults to `0`.
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 

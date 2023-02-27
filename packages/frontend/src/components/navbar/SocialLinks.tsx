@@ -4,6 +4,7 @@ import { Config } from '../../build/config'
 import {
   DiscordIcon,
   GithubIcon,
+  LinkedInIcon,
   MediumIcon,
   TwitterIcon,
   YouTubeIcon,
@@ -14,6 +15,7 @@ export interface SocialLinksProps {
   twitterLink: string
   discordLink: string
   githubLink: string
+  linkedinLink: string
   youTubeLink: string
   mediumLink: string
 }
@@ -23,6 +25,7 @@ export function getSocialLinksProps(config: Config) {
     twitterLink: config.links.twitter,
     discordLink: config.links.discord,
     githubLink: config.links.github,
+    linkedinLink: config.links.linkedin,
     youTubeLink: config.links.youTube,
     mediumLink: config.links.medium,
   }
@@ -44,6 +47,11 @@ export function SocialLinks(props: SocialLinksProps) {
       <li>
         <OutLink href={props.githubLink} title="Github">
           <GithubIcon />
+        </OutLink>
+      </li>
+      <li>
+        <OutLink href={props.linkedinLink} title="LinkedIn">
+          <LinkedInIcon />
         </OutLink>
       </li>
       <li>
