@@ -14,6 +14,7 @@ export function Footer() {
         twitterLink="#"
         discordLink="#"
         githubLink="#"
+        linkedinLink="#"
         mediumLink="#"
         youTubeLink="#"
       />
