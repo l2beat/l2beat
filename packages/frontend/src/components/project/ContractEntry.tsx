@@ -52,12 +52,6 @@ export function ContractEntry({
       <BulletIcon className="h-6 md:h-[27px]" />
     )
 
-  const isAddressUnverified = (address: string) => {
-    return verificationStatus.contracts[address] === false
-      ? 'text-red-700 dark:text-red-300'
-      : ''
-  }
-
   return (
     <Callout
       className={cx(color === 'red' ? 'p-4' : 'px-4', className)}
@@ -71,7 +65,11 @@ export function ContractEntry({
               <EtherscanLink
                 address={address}
                 key={i}
-                className={cx(isAddressUnverified(address))}
+                className={cx(
+                  verificationStatus.contracts[address] === false
+                    ? 'text-red-700 dark:text-red-300'
+                    : '',
+                )}
               />
             ))}
             {contract.links.map((x, i) => (
