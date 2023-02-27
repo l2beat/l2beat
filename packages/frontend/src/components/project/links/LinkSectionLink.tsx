@@ -89,6 +89,8 @@ function parseSocial(href: string): SocialDetails {
       platform: 'discord',
       text: link,
     }
+
+  return { text: link }
 }
 
 function simplify(href: string) {
