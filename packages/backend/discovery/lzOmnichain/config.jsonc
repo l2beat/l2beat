@@ -22,11 +22,11 @@
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
           "valueKey": "chainId"
         },
-        //ignore relatives
         "INBOUND_LIBRARIES": {
           "type": "arrayFromOneEvent",
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
-          "valueKey": "lib"
+          "valueKey": "lib",
+          "ignoreRelative": true
         },
         "ETHEREUM_DEFAULT_CONFIG": {
           "type": "call",
