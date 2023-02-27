@@ -36,6 +36,7 @@ describe(StorageHandler.name, () => {
         field: 'someName',
         value:
           '0x0000000000000000000000000000000000000000000000000000000000000123',
+        ignoreRelative: undefined,
       })
     })
 
@@ -64,6 +65,7 @@ describe(StorageHandler.name, () => {
       expect(result as unknown).toEqual({
         field: 'someName',
         value: 0x123,
+        ignoreRelative: undefined,
       })
     })
 
@@ -94,6 +96,7 @@ describe(StorageHandler.name, () => {
       expect(result as unknown).toEqual({
         field: 'someName',
         value: resultAddress,
+        ignoreRelative: undefined,
       })
     })
   })

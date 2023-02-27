@@ -122,6 +122,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       expect<unknown>(value).toEqual({
         field: 'someName',
         value: [],
+        ignoreRelative: undefined,
       })
     })
 
@@ -159,6 +160,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       expect<unknown>(value).toEqual({
         field: 'someName',
         value: [Alice, Bob],
+        ignoreRelative: undefined,
       })
     })
 
@@ -197,6 +199,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       expect<unknown>(value).toEqual({
         field: 'someName',
         value: [Charlie],
+        ignoreRelative: undefined,
       })
     })
 
@@ -233,6 +236,46 @@ describe(ArrayFromOneEventHandler.name, () => {
       expect<unknown>(value).toEqual({
         field: 'someName',
         value: [Alice, Bob, Charlie],
+        ignoreRelative: undefined,
+      })
+    })
+
+    it('passes ignoreRelative', async () => {
+      const Alice = EthereumAddress.random()
+      const Bob = EthereumAddress.random()
+      const Charlie = EthereumAddress.random()
+
+      const address = EthereumAddress.random()
+      const provider = mock<DiscoveryProvider>({
+        async getLogs() {
+          return [
+            OwnerChanged(Alice, true),
+            OwnerChanged(Bob, true),
+            OwnerChanged(Bob, true),
+            OwnerChanged(Bob, false),
+            OwnerChanged(Charlie, false),
+            OwnerChanged(Bob, true),
+          ]
+        },
+      })
+
+      const handler = new ArrayFromOneEventHandler(
+        'someName',
+        {
+          type: 'arrayFromOneEvent',
+          event,
+          valueKey: 'account',
+          flagKey: 'status',
+          ignoreRelative: true,
+        },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const value = await handler.execute(provider, address)
+      expect<unknown>(value).toEqual({
+        field: 'someName',
+        value: [Alice, Bob],
+        ignoreRelative: true,
       })
     })
   })
