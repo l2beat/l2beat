@@ -29,6 +29,13 @@ export interface ProjectContractSingleAddress {
   upgradeability?: ProjectUpgradeability
 }
 
+export function isSingleAddress(
+  c: ProjectContract,
+): c is ProjectContractSingleAddress {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  return (c as ProjectContractSingleAddress).address !== undefined
+}
+
 export interface ProjectContractMultipleAddresses {
   /** Address of the contract */
   multipleAddresses: EthereumAddress[]

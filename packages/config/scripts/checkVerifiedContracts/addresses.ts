@@ -2,9 +2,9 @@ import { assertUnreachable, EthereumAddress } from '@l2beat/shared'
 
 import {
   Bridge,
+  isSingleAddress,
   Layer2,
   ProjectContract,
-  ProjectContractSingleAddress,
   ProjectUpgradeability,
 } from '../../src'
 import { VerificationMap } from './output'
@@ -96,11 +96,4 @@ function getAddresses(c: ProjectContract): EthereumAddress[] {
   } else {
     return c.multipleAddresses
   }
-}
-
-function isSingleAddress(
-  c: ProjectContract,
-): c is ProjectContractSingleAddress {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  return (c as ProjectContractSingleAddress).address !== undefined
 }

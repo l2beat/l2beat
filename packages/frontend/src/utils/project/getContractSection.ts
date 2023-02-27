@@ -1,9 +1,9 @@
 import {
   Bridge,
   CONTRACTS,
+  isSingleAddress,
   Layer2,
   ProjectContract,
-  ProjectContractSingleAddress,
 } from '@l2beat/config'
 import { assertUnreachable, VerificationStatus } from '@l2beat/shared'
 
@@ -226,11 +226,4 @@ function isContractUnverified(
   return contract.multipleAddresses.some(
     (address) => verificationStatus.contracts[address.toString()],
   )
-}
-
-function isSingleAddress(
-  c: ProjectContract,
-): c is ProjectContractSingleAddress {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  return (c as ProjectContractSingleAddress).address !== undefined
 }
