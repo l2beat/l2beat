@@ -52,9 +52,9 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 The most powerful feature in the discovery. It will allow:
 
 1. Adding handlers to longer arrays (`maxLength` defaults to 5).
-2. Reading values directly from storage slot (ex. for `private` variables).
+2. Reading values directly from storage slot (eg. for `private` variables).
 3. Skipping further discovery for selected contract. Very useful when there is for example `DAI` contract in discovery and we don't want to include all `MakerDAO` contracts in our discovery.
-4. Skipping further discovery of methods values (see `ignoreRelative` in [array handler](#array-handler))
+4. Skipping further discovery of methods values (see `ignoreRelative` in e.g. [array handler](#array-handler))
 
 **Parameters:**
 
@@ -221,6 +221,7 @@ The call handler allows you to call view methods with arguments of your choosing
 - `type` - always the literal: `"call"`
 - `method` - (optional) the name or abi of the method to be called. If omitted the name of the field is used. The abi should be provided in the human readable abi format.
 - `args` - an array of values that will be passed as arguments to the method call, e.g. `[1, "0x1234", false]`. It supports field references, e.g. `"{{ value }}"`.
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -271,6 +272,7 @@ This handler allows you to analyze a contract using OpenZeppelin's AccessControl
 
 - `type` - always the literal: `"accessControl"`
 - `roleNames` - (optional) a record of bytes32 role hashes to predefined role names. Usually this handler is pretty good at guessing, so this is often unnecessary
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -302,6 +304,7 @@ This handler allows you to read values from contracts using StarkWare's named st
 - `type` - always the literal: `"starkWareNamedStorage"`
 - `tag` - the string tag of the named storage slot
 - `returnType` - (optional) specifies how to interpret the resulting `bytes32` result. Possible options are `"address"`, `"bytes"` (default), `"number"`.
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -335,6 +338,7 @@ This handler allows you to collect values emitted by a smart contract through a 
 - `valueKey` - the key of the event member to collect. The event must actually have a member with this name
 - `flagKey` - (optional) the key of the event member to use to decide whether to add or remove a given value. That member must be a `bool`, where `true` means add, `false` means remove
 - `invert` - (optional) inverts the behavior of the flag, `false` means add, `true` means remove
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -382,6 +386,7 @@ This handler allows you to collect values emitted by a smart contract through a 
 - `addKey` - the key of the event member to collect in the add event. The event must actually have a member with this name
 - `removeEvent` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
 - `removeKey` - the key of the event member to collect in the remove event. The event must actually have a member with this name
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
