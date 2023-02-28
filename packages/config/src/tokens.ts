@@ -88,6 +88,16 @@ export const tokenList: TokenInfo[] = [
     category: 'other',
   },
   {
+    id: AssetId('ageur-ageur'),
+    name: 'agEUR',
+    coingeckoId: CoingeckoId('ageur'),
+    address: EthereumAddress('0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8'),
+    symbol: 'agEUR',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1634982805),
+    category: 'stablecoin',
+  },
+  {
     id: AssetId('alusd-alchemix-usd'),
     name: 'Alchemix USD',
     coingeckoId: CoingeckoId('alchemix-usd'),
@@ -1625,6 +1635,16 @@ export const tokenList: TokenInfo[] = [
     symbol: 'SPELL',
     decimals: 18,
     sinceTimestamp: new UnixTime(1621289435),
+    category: 'other',
+  },
+  {
+    id: AssetId('stg-stargate-finance'),
+    name: 'StargateToken',
+    coingeckoId: CoingeckoId('stargate-finance'),
+    address: EthereumAddress('0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6'),
+    symbol: 'STG',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1647504559),
     category: 'other',
   },
   {

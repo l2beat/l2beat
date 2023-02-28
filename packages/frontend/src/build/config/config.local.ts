@@ -9,6 +9,7 @@ export function getLocalConfig(): Config {
       // The local backend doesn't support activity
       activity: false,
       rating: false,
+      buildAllProjectPages: true,
     },
     backend: {
       apiUrl: 'http://localhost:3000',

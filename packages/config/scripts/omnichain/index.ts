@@ -3,6 +3,7 @@ import { providers } from 'ethers'
 import { writeFileSync } from 'fs'
 
 import { getEnv } from '../checkVerifiedContracts/utils'
+import { getInboundLibraries } from './getInboundLibraries'
 import { getLZ } from './getLZ'
 
 async function main() {
@@ -11,6 +12,13 @@ async function main() {
     getEnv('CONFIG_ALCHEMY_API_KEY'),
   )
   const blockNumber = await provider.getBlockNumber()
+
+  const libs = await getInboundLibraries(provider)
+
+  writeFileSync(
+    './scripts/omnichain/libraries.csv',
+    JSON.stringify(libs, null, 2),
+  )
 
   const data = await getLZ(blockNumber)
 

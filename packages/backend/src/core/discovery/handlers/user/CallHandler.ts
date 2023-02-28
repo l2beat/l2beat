@@ -14,6 +14,7 @@ export const CallHandlerDefinition = z.strictObject({
   type: z.literal('call'),
   method: z.optional(z.string()),
   args: z.array(z.union([z.string(), z.number()])),
+  ignoreRelative: z.optional(z.boolean()),
 })
 
 export class CallHandler implements Handler {
@@ -63,7 +64,11 @@ export class CallHandler implements Handler {
       this.fragment,
       resolved.args,
     )
-    return { field: this.field, ...callResult }
+    return {
+      field: this.field,
+      ...callResult,
+      ignoreRelative: this.definition.ignoreRelative,
+    }
   }
 }
 

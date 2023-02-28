@@ -10,7 +10,7 @@ import { EtherscanLink } from './EtherscanLink'
 
 export interface TechnologyContract {
   name: string
-  address?: string
+  addresses?: string[]
   description?: string
   links: TechnologyContractLinks[]
 }
@@ -37,13 +37,13 @@ export function ContractEntry({
     .map((c) => verificationStatus.contracts[c.address])
     .some((c) => c === false)
 
-  const isVerified = contract.address
-    ? verificationStatus.contracts[contract.address]
-    : undefined
+  const areAddressesUnverified = (contract.addresses ?? [])
+    .map((c) => verificationStatus.contracts[c])
+    .some((c) => c === false)
 
-  const color = isVerified === false || areLinksUnverified ? 'red' : undefined
+  const color = areAddressesUnverified || areLinksUnverified ? 'red' : undefined
   const icon =
-    isVerified === false || areLinksUnverified ? (
+    areAddressesUnverified || areLinksUnverified ? (
       <UnverifiedContractsWarning
         className="mt-[3px]"
         tooltip="Source code is not verified"
@@ -61,14 +61,17 @@ export function ContractEntry({
         <>
           <div className="flex flex-wrap gap-x-2">
             <strong>{contract.name}</strong>{' '}
-            {contract.address && (
+            {(contract.addresses ?? []).map((address, i) => (
               <EtherscanLink
-                address={contract.address}
+                address={address}
+                key={i}
                 className={cx(
-                  isVerified === false ? 'text-red-700 dark:text-red-300' : '',
+                  verificationStatus.contracts[address] === false
+                    ? 'text-red-700 dark:text-red-300'
+                    : '',
                 )}
               />
-            )}
+            ))}
             {contract.links.map((x, i) => (
               <OutLink
                 key={i}

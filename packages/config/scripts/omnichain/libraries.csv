@@ -1,0 +1,238 @@
+{
+  "configs": [
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 20,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 102,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 512,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 109,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 20,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 114,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 10,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 126,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 20,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 110,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 20,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 111,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 12,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 106,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 5,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 116,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 15,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 101,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 10,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 115,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 5,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 112,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 500000,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 108,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    },
+    {
+      "inboundProofLibraryVersion": 2,
+      "inboundBlockConfirmations": 5,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 125,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    },
+    {
+      "inboundProofLibraryVersion": 2,
+      "inboundBlockConfirmations": 5,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 145,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    },
+    {
+      "inboundProofLibraryVersion": 2,
+      "inboundBlockConfirmations": 5,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 151,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    },
+    {
+      "inboundProofLibraryVersion": 2,
+      "inboundBlockConfirmations": 5,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 150,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    },
+    {
+      "inboundProofLibraryVersion": 2,
+      "inboundBlockConfirmations": 5,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 138,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 5,
+      "relayer": "0000000000000000000000006bd792911f4b3714e88fbdf32b351632e7d22c70",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000004bc7edc45df6f225a67680bc2345fa9b516aa034",
+      "chainId": 12,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 1,
+      "inboundBlockConfirmations": 20,
+      "relayer": "0000000000000000000000006bd792911f4b3714e88fbdf32b351632e7d22c70",
+      "outboundProofType": 1,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000004bc7edc45df6f225a67680bc2345fa9b516aa034",
+      "chainId": 2,
+      "inboundProofLibrary": "0x462f7ec57c6492b983a8c8322b4369a7f149b859"
+    },
+    {
+      "inboundProofLibraryVersion": 2,
+      "inboundBlockConfirmations": 21,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 153,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    },
+    {
+      "inboundProofLibraryVersion": 2,
+      "inboundBlockConfirmations": 2,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 155,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    },
+    {
+      "inboundProofLibraryVersion": 2,
+      "inboundBlockConfirmations": 2,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 156,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    },
+    {
+      "inboundProofLibraryVersion": 2,
+      "inboundBlockConfirmations": 10,
+      "relayer": "000000000000000000000000902f09715b6303d4173037652fa7377e5b98089e",
+      "outboundProofType": 2,
+      "outboundBlockConfirmations": 15,
+      "oracle": "0000000000000000000000005a54fe5234e811466d5366846283323c954310b2",
+      "chainId": 154,
+      "inboundProofLibrary": "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+    }
+  ],
+  "libraries": [
+    "0x462f7ec57c6492b983a8c8322b4369a7f149b859",
+    "0x07245eea05826f5984c7c3c8f478b04892e4df89"
+  ]
+}

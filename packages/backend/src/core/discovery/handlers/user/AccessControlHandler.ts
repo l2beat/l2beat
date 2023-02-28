@@ -14,6 +14,7 @@ export const AccessControlHandlerDefinition = z.strictObject({
   roleNames: z.optional(
     z.record(z.string().regex(/^0x[a-f\d]{64}$/i), z.string()),
   ),
+  ignoreRelative: z.optional(z.boolean()),
 })
 
 const abi = new utils.Interface([
@@ -28,7 +29,7 @@ export class AccessControlHandler implements Handler {
 
   constructor(
     readonly field: string,
-    definition: AccessControlHandlerDefinition,
+    readonly definition: AccessControlHandlerDefinition,
     abi: string[],
     readonly logger: DiscoveryLogger,
   ) {
@@ -106,6 +107,7 @@ export class AccessControlHandler implements Handler {
           },
         ]),
       ),
+      ignoreRelative: this.definition.ignoreRelative,
     }
   }
 }
