@@ -1,7 +1,7 @@
 {
   "name": "aztecconnect",
-  "blockNumber": 16725496,
-  "configHash": "0x7d601d29f8118e1e35712a584cfe0bde13e4dc76bea0fd8ad2decd9ebd852baf",
+  "blockNumber": 16725834,
+  "configHash": "0x5a62d15a98ba74c60c13158846c037a2bf10a5d508ee2f6b3414c1884ee624f4",
   "contracts": [
     {
       "name": "RollupProcessorV2",
@@ -22,23 +22,27 @@
         "escapeBlockUpperBound": 2400,
         "getAsyncDefiInteractionHashesLength": 0,
         "getCapped": true,
-        "getDataSize": 19204096,
-        "getDefiInteractionHashesLength": 0,
+        "getDataSize": 19212288,
+        "getDefiInteractionHashesLength": 3,
         "getEscapeHatchStatus": [
-          true,
-          104
+          false,
+          1926
         ],
         "getImplementationVersion": 2,
-        "getPendingDefiInteractionHashesLength": 0,
+        "getPendingDefiInteractionHashesLength": 3,
         "getSupportedAssetsLength": 15,
         "getSupportedBridgesLength": 17,
-        "lastRollupTimeStamp": 1677572423,
+        "lastRollupTimeStamp": 1677576743,
         "LISTER_ROLE": "0xf94103142c1baabe9ac2b5d1487bf783de9e69cfeea9a72f5c9c94afd7877b8c",
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "paused": false,
-        "prevDefiInteractionsHash": "0x14e0f351ade4ba10438e9b15f66ab2e6389eea5ae870d6e8b2df1418b2e6fd5b",
+        "prevDefiInteractionsHash": "0x18cac5d380e9856b2ff540bba859364c4dff6dc0f9eeebcfafcae1f705125643",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
-        "rollupStateHash": "0x3ebf4b7523e0fe97ad88e61e7f10a4165c0196c9e8e47592e4302e6143c001fe",
+        "rollupProviders": [
+          "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
+          "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
+        ],
+        "rollupStateHash": "0xa6120240d03970ab662588947d54cb427e09137ea6ad008adc589c9c19dc8e14",
         "verifier": "0xB656f4219f565b93DF57D531B574E17FE0F25939",
         "getSupportedAsset": [
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -129,7 +133,9 @@
   ],
   "eoas": [
     "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
-    "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
+    "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
+    "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
+    "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
   ],
   "abis": {
     "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09": [
