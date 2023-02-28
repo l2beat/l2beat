@@ -66,7 +66,6 @@ describe('discovery config.jsonc', () => {
 
   it('discovery.json does not include errors', async () => {
     const configs = await configReader.readAllConfigs()
-    // debugger
     for (const config of configs) {
       const discovery = await configReader.readDiscovery(config.name)
 
