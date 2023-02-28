@@ -49,6 +49,7 @@ export class DiscoveryWatcher {
 
   async update(timestamp: UnixTime) {
     const metricsDone = initMetrics()
+    this.discordClient?.resetCallsCount()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
     this.logger.info('Update started', {
@@ -229,14 +230,15 @@ const syncHistogram = new Histogram({
   buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
 })
 
-const errorsCount = new Counter({
+const errorsCount = new Gauge({
   name: 'discovery_watcher_errors',
-  help: 'Value showing amount of errors since server start',
+  help: 'Value showing amount of errors in the update cycle',
 })
 
 function initMetrics(): (blockNumber: number) => void {
   const histogramDone = syncHistogram.startTimer()
   changesDetected.set(0)
+  errorsCount.set(0)
 
   return (blockNumber: number) => {
     histogramDone()
