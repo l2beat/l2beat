@@ -28,7 +28,19 @@
         "defiInteractionHashes",
         "ethPayments",
         "pendingDefiInteractions"
+      ],
+      "ignoreInWatchMode": [
+        "getDataSize",
+        "getDefiInteractionHashesLength",
+        "getEscapeHatchStatus",
+        "getPendingDefiInteractionHashesLength",
+        "lastRollupTimeStamp",
+        "prevDefiInteractionsHash",
+        "rollupStateHash"
       ]
+    },
+    "0xE298a76986336686CC3566469e3520d23D1a8aaD": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

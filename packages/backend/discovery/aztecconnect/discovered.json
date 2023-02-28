@@ -1,7 +1,7 @@
 {
   "name": "aztecconnect",
-  "blockNumber": 16627346,
-  "configHash": "0x46307dc591839249769336fb0f6c103b96553dd3e125b5ca807b127fd89a0b1f",
+  "blockNumber": 16725496,
+  "configHash": "0x7d601d29f8118e1e35712a584cfe0bde13e4dc76bea0fd8ad2decd9ebd852baf",
   "contracts": [
     {
       "name": "RollupProcessorV2",
@@ -22,23 +22,23 @@
         "escapeBlockUpperBound": 2400,
         "getAsyncDefiInteractionHashesLength": 0,
         "getCapped": true,
-        "getDataSize": 18032640,
-        "getDefiInteractionHashesLength": 2,
+        "getDataSize": 19204096,
+        "getDefiInteractionHashesLength": 0,
         "getEscapeHatchStatus": [
-          false,
-          2014
+          true,
+          104
         ],
         "getImplementationVersion": 2,
-        "getPendingDefiInteractionHashesLength": 2,
+        "getPendingDefiInteractionHashesLength": 0,
         "getSupportedAssetsLength": 15,
         "getSupportedBridgesLength": 17,
-        "lastRollupTimeStamp": 1676380439,
+        "lastRollupTimeStamp": 1677572423,
         "LISTER_ROLE": "0xf94103142c1baabe9ac2b5d1487bf783de9e69cfeea9a72f5c9c94afd7877b8c",
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "paused": false,
-        "prevDefiInteractionsHash": "0x1bd7a6f0d7e2cfb4074b7eb317de127f97069ea608b7bb540b2e0f9c63bc7e36",
+        "prevDefiInteractionsHash": "0x14e0f351ade4ba10438e9b15f66ab2e6389eea5ae870d6e8b2df1418b2e6fd5b",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
-        "rollupStateHash": "0xba716e044d58fd7dbb2143822cc520932223135425da7398f83b17bd89a2a479",
+        "rollupStateHash": "0x3ebf4b7523e0fe97ad88e61e7f10a4165c0196c9e8e47592e4302e6143c001fe",
         "verifier": "0xB656f4219f565b93DF57D531B574E17FE0F25939",
         "getSupportedAsset": [
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -103,7 +103,7 @@
           "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
         ],
         "getThreshold": 1,
-        "nonce": 246,
+        "nonce": 247,
         "VERSION": "1.3.0"
       }
     },
