@@ -6,7 +6,7 @@ import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/Di
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
-import { DiscoveryContract } from './discovery/DiscoveryConfig'
+import { DiscoveryConfig, DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
@@ -66,48 +66,13 @@ export class DiscoveryWatcher {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
       try {
-        const discovery = await this.discoveryEngine.run(
+        await this.updateProject(
           projectConfig,
           blockNumber,
-        )
-
-        if (discovery.contracts.some((c) => c.errors !== undefined)) {
-          throw new Error(
-            `Errors occurred during discovery of ${projectConfig.name}`,
-          )
-        }
-
-        const configHash = getDiscoveryConfigHash(projectConfig)
-
-        const diff = await this.findChanges(
-          projectConfig.name,
-          discovery,
-          configHash,
           isDailyReminder,
-          projectConfig.overrides,
-        )
-
-        if (diff.changes.length > 0) {
-          const messages = diffToMessages(projectConfig.name, diff.changes)
-          await this.notify(messages, 'PUBLIC')
-          await this.notify(messages, 'INTERNAL')
-          this.logger.info('Sending messages', { project: projectConfig.name })
-          changesDetected.inc()
-        }
-
-        if (diff.sendDailyReminder) {
-          notUpdatedProjects.push(projectConfig.name)
-        }
-
-        await this.repository.addOrUpdate({
-          projectName: projectConfig.name,
+          notUpdatedProjects,
           timestamp,
-          blockNumber,
-          discovery,
-          configHash,
-        })
-
-        this.logger.info('Discovery finished', { project: projectConfig.name })
+        )
       } catch (error) {
         this.logger.error(error)
         errorsCount.inc()
@@ -126,6 +91,54 @@ export class DiscoveryWatcher {
 
     this.logger.info('Update finished', { blockNumber })
     metricsDone(blockNumber)
+  }
+
+  private async updateProject(
+    projectConfig: DiscoveryConfig,
+    blockNumber: number,
+    isDailyReminder: boolean,
+    notUpdatedProjects: string[],
+    timestamp: UnixTime,
+  ) {
+    const discovery = await this.discoveryEngine.run(projectConfig, blockNumber)
+
+    if (discovery.contracts.some((c) => c.errors !== undefined)) {
+      throw new Error(
+        `Errors occurred during discovery of ${projectConfig.name}`,
+      )
+    }
+
+    const configHash = getDiscoveryConfigHash(projectConfig)
+
+    const diff = await this.findChanges(
+      projectConfig.name,
+      discovery,
+      configHash,
+      isDailyReminder,
+      projectConfig.overrides,
+    )
+
+    if (diff.changes.length > 0) {
+      const messages = diffToMessages(projectConfig.name, diff.changes)
+      await this.notify(messages, 'PUBLIC')
+      await this.notify(messages, 'INTERNAL')
+      this.logger.info('Sending messages', { project: projectConfig.name })
+      changesDetected.inc()
+    }
+
+    if (diff.sendDailyReminder) {
+      notUpdatedProjects.push(projectConfig.name)
+    }
+
+    await this.repository.addOrUpdate({
+      projectName: projectConfig.name,
+      timestamp,
+      blockNumber,
+      discovery,
+      configHash,
+    })
+
+    this.logger.info('Discovery finished', { project: projectConfig.name })
   }
 
   async findChanges(

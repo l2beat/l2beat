@@ -63,6 +63,7 @@ describe(DiscoveryWatcher.name, () => {
   beforeEach(() => {
     discordClient = mock<DiscordClient>({
       sendMessage: async () => [],
+      resetCallsCount: () => {},
     })
     discoveryEngine = mock<DiscoveryEngine>({
       run: async () => DISCOVERY_RESULT,
