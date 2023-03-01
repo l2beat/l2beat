@@ -22,7 +22,7 @@ export async function getTokenInfo(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
   category: 'ether' | 'stablecoin' | 'other',
-): Promise<TokenInfo[]> {
+): Promise<TokenInfo> {
   const nameResult = await provider.call({
     to: address.toString(),
     data: '0x06fdde03', // name()
@@ -60,12 +60,16 @@ export async function getTokenInfo(
   })
 
   const coin = coinList.find((coin) => {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (coin.platforms.ethereum === undefined) {
+    if (
+      coin.platforms.ethereum === null ||
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      coin.platforms.ethereum === undefined
+    ) {
       return false
     }
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return EthereumAddress(coin.platforms.ethereum!) === address
+    return (
+      coin.platforms.ethereum.toLowerCase() === address.toString().toLowerCase()
+    )
   })
 
   if (coin === undefined || coin.id === undefined) {
@@ -103,6 +107,5 @@ export async function getTokenInfo(
     category,
   }
 
-  console.log(tokenInfo)
-  return []
+  return tokenInfo
 }
