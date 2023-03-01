@@ -22,7 +22,7 @@
     "typecheck": "tsc --noEmit",
     "storybook": "start-storybook -p 6006 --no-open",
     "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared,config} -recsm build --module es6) && build-storybook",
-    "storybook:screenshot": "yarn storycap --serverCmd \"npx http-server ./storybook-static -p 9001\" http://localhost:9001"
+    "storybook:screenshot": "yarn storycap --serverCmd \"npx http-server ./storybook-static -p 9001\" http://localhost:9001 -V 2560x1440 -V 390x844"
   },
   "dependencies": {
     "@l2beat/config": "*",

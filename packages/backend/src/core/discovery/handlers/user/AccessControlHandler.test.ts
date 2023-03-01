@@ -71,6 +71,7 @@ describe(AccessControlHandler.name, () => {
           members: [],
         },
       },
+      ignoreRelative: undefined,
     })
   })
 
@@ -142,6 +143,37 @@ describe(AccessControlHandler.name, () => {
           members: [Charlie],
         },
       },
+      ignoreRelative: undefined,
+    })
+  })
+
+  it('passes relative ignore', async () => {
+    const address = EthereumAddress.random()
+    const provider = mock<DiscoveryProvider>({
+      async getLogs() {
+        return []
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      {
+        type: 'accessControl',
+        ignoreRelative: true,
+      },
+      [],
+      DiscoveryLogger.SILENT,
+    )
+    const value = await handler.execute(provider, address)
+    expect<unknown>(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+      },
+      ignoreRelative: true,
     })
   })
 })

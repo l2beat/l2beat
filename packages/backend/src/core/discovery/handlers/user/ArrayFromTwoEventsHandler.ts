@@ -17,6 +17,7 @@ export const ArrayFromTwoEventsHandlerDefinition = z.strictObject({
   addKey: z.string(),
   removeEvent: z.string(),
   removeKey: z.string(),
+  ignoreRelative: z.optional(z.boolean()),
 })
 
 export class ArrayFromTwoEventsHandler implements Handler {
@@ -79,6 +80,7 @@ export class ArrayFromTwoEventsHandler implements Handler {
     return {
       field: this.field,
       value: [...values],
+      ignoreRelative: this.definition.ignoreRelative,
     }
   }
 }

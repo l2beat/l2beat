@@ -1,0 +1,52 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "aztecconnect",
+  "initialAddresses": ["0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"],
+  "overrides": {
+    "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455": {
+      "fields": {
+        "getSupportedBridge": {
+          "type": "array",
+          "method": "getSupportedBridge",
+          "length": "{{ getSupportedBridgesLength }}",
+          "startIndex": 1,
+          "ignoreRelative": true
+        },
+        "getSupportedAsset": {
+          "type": "array",
+          "method": "getSupportedAsset",
+          "length": "{{ getSupportedAssetsLength }}",
+          "startIndex": 1,
+          "ignoreRelative": true
+        },
+        "rollupProviders": {
+          "type": "arrayFromOneEvent",
+          "event": "RollupProviderUpdated",
+          "valueKey": "providerAddress",
+          "flagKey": "valid"
+        }
+      },
+      "ignoreMethods": [
+        "assetGasLimits",
+        "asyncDefiInteractionHashes",
+        "bridgeGasLimits",
+        "caps",
+        "defiInteractionHashes",
+        "ethPayments",
+        "pendingDefiInteractions"
+      ],
+      "ignoreInWatchMode": [
+        "getDataSize",
+        "getDefiInteractionHashesLength",
+        "getEscapeHatchStatus",
+        "getPendingDefiInteractionHashesLength",
+        "lastRollupTimeStamp",
+        "prevDefiInteractionsHash",
+        "rollupStateHash"
+      ]
+    },
+    "0xE298a76986336686CC3566469e3520d23D1a8aaD": {
+      "ignoreInWatchMode": ["nonce"]
+    }
+  }
+}

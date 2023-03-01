@@ -37,6 +37,7 @@ function Template(props: TemplateProps) {
       socialLinks={{
         discordLink: '#',
         githubLink: '#',
+        linkedinLink: '#',
         mediumLink: '#',
         twitterLink: '#',
         youTubeLink: '#',

@@ -7,6 +7,7 @@ import { Bridge } from './types'
 export const nomad: Bridge = {
   type: 'bridge',
   id: ProjectId('nomad'),
+  isArchived: true,
   display: {
     name: 'Nomad',
     slug: 'nomad',

@@ -14,7 +14,11 @@ export interface ProjectContracts {
   isIncomplete?: boolean
 }
 
-export interface ProjectContract {
+export type ProjectContract =
+  | ProjectContractSingleAddress
+  | ProjectContractMultipleAddresses
+
+export interface ProjectContractSingleAddress {
   /** Address of the contract */
   address: EthereumAddress
   /** Solidity name of the contract */
@@ -23,6 +27,22 @@ export interface ProjectContract {
   description?: string
   /** Details about upgradeability */
   upgradeability?: ProjectUpgradeability
+}
+
+export function isSingleAddress(
+  c: ProjectContract,
+): c is ProjectContractSingleAddress {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  return (c as ProjectContractSingleAddress).address !== undefined
+}
+
+export interface ProjectContractMultipleAddresses {
+  /** Address of the contract */
+  multipleAddresses: EthereumAddress[]
+  /** Solidity name of the contract */
+  name: string
+  /** Description of the contract's role in the system */
+  description?: string
 }
 
 export type ProjectUpgradeability =

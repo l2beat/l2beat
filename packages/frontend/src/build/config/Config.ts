@@ -5,6 +5,7 @@ export interface Config {
     twitter: string
     discord: string
     github: string
+    linkedin: string
     youTube: string
     medium: string
     forum: string
@@ -16,6 +17,7 @@ export interface Config {
     milestones: boolean
     hiring: boolean
     rating: boolean
+    buildAllProjectPages: boolean
   }
   backend: {
     apiUrl: string

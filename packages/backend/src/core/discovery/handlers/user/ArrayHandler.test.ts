@@ -197,6 +197,32 @@ describe(ArrayHandler.name, () => {
       expect<unknown>(result).toEqual({
         field: 'owners',
         value: owners,
+        ignoreRelative: undefined,
+      })
+    })
+
+    it('passes the ignoreRelative field', async () => {
+      const provider = mock<DiscoveryProvider>({
+        async call(passedAddress, data) {
+          expect(passedAddress).toEqual(address)
+          const index = data.get(35)
+          return Bytes.fromHex('00'.repeat(12)).concat(
+            Bytes.fromHex(owners[index].toString()),
+          )
+        },
+      })
+
+      const handler = new ArrayHandler(
+        'owners',
+        { type: 'array', method, length: 3, ignoreRelative: true },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, {})
+      expect<unknown>(result).toEqual({
+        field: 'owners',
+        value: owners,
+        ignoreRelative: true,
       })
     })
 
@@ -223,6 +249,7 @@ describe(ArrayHandler.name, () => {
       expect<unknown>(result).toEqual({
         field: 'owners',
         value: owners,
+        ignoreRelative: undefined,
       })
     })
 
@@ -277,6 +304,7 @@ describe(ArrayHandler.name, () => {
       expect<unknown>(result).toEqual({
         field: 'owners',
         value: owners,
+        ignoreRelative: undefined,
       })
     })
 

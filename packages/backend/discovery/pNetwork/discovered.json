@@ -1,8 +1,30 @@
 {
   "name": "pNetwork",
-  "blockNumber": 16440359,
-  "configHash": "0x9120d358b7473b75ff02b669693c6a9c2e090ee92598c6b542b35db6b5ec8092",
+  "blockNumber": 16720297,
+  "configHash": "0xde648f9842593952677381089354cedd2a969bba27b683a8ba8656820297ddbf",
   "contracts": [
+    {
+      "name": "Erc20Vault",
+      "address": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+      "code": "https://etherscan.deth.net/address/0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "PNETWORK": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
+      }
+    },
+    {
+      "name": "Erc20Vault",
+      "address": "0x9f8622b11984AfC8f0a42A394928702017c5968D",
+      "code": "https://etherscan.deth.net/address/0x9f8622b11984AfC8f0a42A394928702017c5968D",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "PNETWORK": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
+      }
+    },
     {
       "name": "Erc20Vault",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
@@ -48,7 +70,7 @@
           "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
         ],
         "getThreshold": 2,
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       }
     },
@@ -75,7 +97,10 @@
         ],
         "inflationOwner": "0xEC1b464f29845ab180887a00B6b0C8c19Cb13d97",
         "inflationStartTime": 1592411070,
-        "inflationTimeSpans": [31536000, 31536000],
+        "inflationTimeSpans": [
+          31536000,
+          31536000
+        ],
         "inflationWithdrawnAmount": "28350000000000000000000000",
         "name": "pNetwork Token",
         "owner": "0x56db816b3456EDfa6edbC65F00ba45296fE136F2",
@@ -93,11 +118,7 @@
         "type": "immutable"
       },
       "values": {
-        "requiredGas": [398204, 398205, 398206, 398207, 398208],
         "version": "1.0.0"
-      },
-      "errors": {
-        "requiredGas": "Too many values. Update configuration explore fully"
       }
     },
     {
@@ -126,28 +147,6 @@
       },
       "values": {
         "owner": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
-      }
-    },
-    {
-      "name": "Erc20Vault",
-      "address": "0x9f8622b11984AfC8f0a42A394928702017c5968D",
-      "code": "https://etherscan.deth.net/address/0x9f8622b11984AfC8f0a42A394928702017c5968D",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "PNETWORK": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
-      }
-    },
-    {
-      "name": "Erc20Vault",
-      "address": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
-      "code": "https://etherscan.deth.net/address/0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "PNETWORK": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
       }
     }
   ],

@@ -1,12 +1,12 @@
 import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
-import { Counter, Gauge, Histogram } from 'prom-client'
+import { Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
-import { DiscoveryContract } from './discovery/DiscoveryConfig'
+import { DiscoveryConfig, DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
@@ -48,56 +48,24 @@ export class DiscoveryWatcher {
   }
 
   async update(timestamp: UnixTime) {
-    const metricsDone = initMetrics()
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
-    const isDailyReminder = timestamp.equals(
-      timestamp.toStartOf('day').add(8, 'hours'),
-    )
-    this.logger.info('Update started', { blockNumber })
+    const metadataDone = this.initMetadata(blockNumber, timestamp)
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
-    let changesCounter = 0
+    const isDailyReminder = isNineAM(timestamp, 'CET')
     const notUpdatedProjects: string[] = []
-    for (const projectConfig of projectConfigs) {
-      this.logger.info('Discovery started', { project: projectConfig.name })
 
+    for (const projectConfig of projectConfigs) {
       try {
-        const discovery = await this.discoveryEngine.run(
+        await this.updateProject(
           projectConfig,
           blockNumber,
-        )
-        const configHash = getDiscoveryConfigHash(projectConfig)
-
-        const diff = await this.findChanges(
-          projectConfig.name,
-          discovery,
-          configHash,
           isDailyReminder,
-          projectConfig.overrides,
-        )
-
-        if (diff.changes.length > 0) {
-          const messages = diffToMessages(projectConfig.name, diff.changes)
-          await this.notify(messages, 'PUBLIC')
-          await this.notify(messages, 'INTERNAL')
-          changesCounter += diff.changes.length
-        }
-
-        if (diff.sendDailyReminder) {
-          notUpdatedProjects.push(projectConfig.name)
-        }
-
-        await this.repository.addOrUpdate({
-          projectName: projectConfig.name,
+          notUpdatedProjects,
           timestamp,
-          blockNumber,
-          discovery,
-          configHash,
-        })
-
-        this.logger.info('Discovery finished', { project: projectConfig.name })
+        )
       } catch (error) {
         this.logger.error(error)
         errorsCount.inc()
@@ -105,14 +73,60 @@ export class DiscoveryWatcher {
     }
 
     if (isDailyReminder) {
-      await this.notify(
-        [getDailyReminderMessage(notUpdatedProjects, timestamp)],
-        'INTERNAL',
+      await this.sendDailyReminder(notUpdatedProjects, timestamp)
+    }
+
+    metadataDone()
+  }
+
+  private async updateProject(
+    projectConfig: DiscoveryConfig,
+    blockNumber: number,
+    isDailyReminder: boolean,
+    notUpdatedProjects: string[],
+    timestamp: UnixTime,
+  ) {
+    this.logger.info('Discovery started', { project: projectConfig.name })
+
+    const discovery = await this.discoveryEngine.run(projectConfig, blockNumber)
+
+    if (discovery.contracts.some((c) => c.errors !== undefined)) {
+      throw new Error(
+        `Errors occurred during discovery of ${projectConfig.name}`,
       )
     }
 
-    this.logger.info('Update finished', { blockNumber })
-    metricsDone(blockNumber, changesCounter)
+    const configHash = getDiscoveryConfigHash(projectConfig)
+
+    const diff = await this.findChanges(
+      projectConfig.name,
+      discovery,
+      configHash,
+      isDailyReminder,
+      projectConfig.overrides,
+    )
+
+    if (diff.changes.length > 0) {
+      const messages = diffToMessages(projectConfig.name, diff.changes)
+      await this.notify(messages, 'PUBLIC')
+      await this.notify(messages, 'INTERNAL')
+      this.logger.info('Sending messages', { project: projectConfig.name })
+      changesDetected.inc()
+    }
+
+    if (diff.sendDailyReminder) {
+      notUpdatedProjects.push(projectConfig.name)
+    }
+
+    await this.repository.addOrUpdate({
+      projectName: projectConfig.name,
+      timestamp,
+      blockNumber,
+      discovery,
+      configHash,
+    })
+
+    this.logger.info('Discovery finished', { project: projectConfig.name })
   }
 
   async findChanges(
@@ -163,6 +177,19 @@ export class DiscoveryWatcher {
     return result
   }
 
+  private async sendDailyReminder(
+    notUpdatedProjects: string[],
+    timestamp: UnixTime,
+  ) {
+    this.logger.info('Sending daily reminder', {
+      projects: notUpdatedProjects,
+    })
+    await this.notify(
+      [getDailyReminderMessage(notUpdatedProjects, timestamp)],
+      'INTERNAL',
+    )
+  }
+
   async notify(messages: string[], channel: 'PUBLIC' | 'INTERNAL') {
     if (!this.discordClient) {
       // TODO: maybe only once? rethink
@@ -179,6 +206,35 @@ export class DiscoveryWatcher {
       )
     }
   }
+
+  initMetadata(blockNumber: number, timestamp: UnixTime): () => void {
+    this.logger.info('Update started', {
+      blockNumber,
+      timestamp: timestamp.toNumber(),
+    })
+    const histogramDone = syncHistogram.startTimer()
+    changesDetected.set(0)
+    errorsCount.set(0)
+    this.discordClient?.resetCallsCount()
+
+    return () => {
+      histogramDone()
+      latestBlock.set(blockNumber)
+      this.logger.info('Update finished', {
+        blockNumber,
+        timestamp: timestamp.toNumber(),
+      })
+    }
+  }
+}
+
+export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
+  const offset = timezone === 'CET' ? 2 : 0
+  const hour = 9 - offset
+
+  return timestamp
+    .toStartOf('hour')
+    .equals(timestamp.toStartOf('day').add(hour, 'hours'))
 }
 
 function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
@@ -208,17 +264,7 @@ const syncHistogram = new Histogram({
   buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
 })
 
-const errorsCount = new Counter({
+const errorsCount = new Gauge({
   name: 'discovery_watcher_errors',
-  help: 'Value showing amount of errors since server start',
+  help: 'Value showing amount of errors in the update cycle',
 })
-
-function initMetrics(): (blockNumber: number, changesCounter: number) => void {
-  const histogramDone = syncHistogram.startTimer()
-
-  return (blockNumber: number, changesCounter: number) => {
-    histogramDone()
-    latestBlock.set(blockNumber)
-    changesDetected.set(changesCounter)
-  }
-}
