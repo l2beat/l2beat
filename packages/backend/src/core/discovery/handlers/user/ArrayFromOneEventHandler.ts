@@ -17,6 +17,7 @@ export const ArrayFromOneEventHandlerDefinition = z.strictObject({
   valueKey: z.string(),
   flagKey: z.optional(z.string()),
   invert: z.optional(z.boolean()),
+  ignoreRelative: z.optional(z.boolean()),
 })
 
 export class ArrayFromOneEventHandler implements Handler {
@@ -74,6 +75,7 @@ export class ArrayFromOneEventHandler implements Handler {
     return {
       field: this.field,
       value: [...values],
+      ignoreRelative: this.definition.ignoreRelative,
     }
   }
 }

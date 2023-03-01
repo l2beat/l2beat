@@ -8,7 +8,11 @@ import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
 
 export function getBridgeProjectPages(config: Config, pagesData: PagesData) {
-  const included = getIncludedProjects(config.bridges, pagesData.tvlApiResponse)
+  const included = getIncludedProjects(
+    config.bridges,
+    pagesData.tvlApiResponse,
+    config.features.buildAllProjectPages,
+  )
 
   return included.map((bridge) => {
     const { wrapper, props } = getProps(bridge, config, pagesData)

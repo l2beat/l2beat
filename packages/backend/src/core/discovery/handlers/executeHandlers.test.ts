@@ -44,8 +44,8 @@ describe(executeHandlers.name, () => {
       ),
     ])
     expect<unknown[]>(values).toEqual([
-      { field: 'foo', value: 123 },
-      { field: 'bar', value: 456 },
+      { field: 'foo', value: 123, ignoreRelative: undefined },
+      { field: 'bar', value: 456, ignoreRelative: undefined },
     ])
   })
 
@@ -95,10 +95,10 @@ describe(executeHandlers.name, () => {
       ),
     ])
     expect<unknown[]>(values).toEqual([
-      { field: 'foo', value: 123 },
-      { field: 'bar', value: 456 },
-      { field: 'xxx', value: 1001 },
-      { field: 'yyy', value: 1002 },
+      { field: 'foo', value: 123, ignoreRelative: undefined },
+      { field: 'bar', value: 456, ignoreRelative: undefined },
+      { field: 'xxx', value: 1001, ignoreRelative: undefined },
+      { field: 'yyy', value: 1002, ignoreRelative: undefined },
     ])
   })
 
@@ -172,12 +172,12 @@ describe(executeHandlers.name, () => {
       ),
     ])
     expect<unknown[]>(values).toEqual([
-      { field: 'a', value: 100 },
-      { field: 'b', value: 200 },
-      { field: 'ab', value: 30000 },
-      { field: 'bb', value: 40000 },
-      { field: 'aab', value: 3010000 },
-      { field: 'aabbb', value: 305000000 },
+      { field: 'a', value: 100, ignoreRelative: undefined },
+      { field: 'b', value: 200, ignoreRelative: undefined },
+      { field: 'ab', value: 30000, ignoreRelative: undefined },
+      { field: 'bb', value: 40000, ignoreRelative: undefined },
+      { field: 'aab', value: 3010000, ignoreRelative: undefined },
+      { field: 'aabbb', value: 305000000, ignoreRelative: undefined },
     ])
   })
 

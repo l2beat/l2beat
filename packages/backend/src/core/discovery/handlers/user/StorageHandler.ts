@@ -25,6 +25,7 @@ export const StorageHandlerDefinition = z.strictObject({
     z.union([z.number().int().nonnegative(), NumberFromString, Reference]),
   ),
   returnType: z.optional(z.enum(['address', 'bytes', 'number'])),
+  ignoreRelative: z.optional(z.boolean()),
 })
 
 export class StorageHandler implements Handler {
@@ -56,6 +57,7 @@ export class StorageHandler implements Handler {
     return {
       field: this.field,
       value: bytes32ToContractValue(storage, resolved.returnType),
+      ignoreRelative: this.definition.ignoreRelative,
     }
   }
 }
