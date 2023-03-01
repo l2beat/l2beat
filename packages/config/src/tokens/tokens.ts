@@ -25,39 +25,22 @@ you are out of luck. We will fix this in the future.
 
 */
 
-import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared'
+/*
 
+                         === How to add new token ===
+                        Please read before adding tokens
+
+1. Find the token Ethereum address
+2. Run the script `yarn tokens:add <address>`
+3. Commit the changes and open a PR
+
+*/
+
+import { AssetId } from '@l2beat/shared'
 import { tokens } from './tokenList.json'
+import { TokenInfo } from './types'
 
-export interface TokenInfo {
-  /** Internal token id. Usually ticker-name */
-  id: AssetId
-  /** Token name as dictated by the token contract */
-  name: string
-  /** Token symbol as dictated by the token contract */
-  symbol: string
-  /** Token address. Only Ether has no address */
-  address?: EthereumAddress
-  /** Token Coingecko API id. Used to fetch prices */
-  coingeckoId: CoingeckoId
-  /** Token decimals as dictated by the token contract */
-  decimals: number
-  /** Timestamp of the token contract deployment transaction */
-  sinceTimestamp: UnixTime
-  /** Which category does the token belong to */
-  category: 'ether' | 'stablecoin' | 'other'
-}
-
-export const tokenList: TokenInfo[] = tokens.map((t) => ({
-  id: AssetId(t.id),
-  name: t.name,
-  symbol: t.symbol,
-  address: t.address ? EthereumAddress(t.address) : undefined,
-  coingeckoId: CoingeckoId(t.coingeckoId),
-  decimals: t.decimals,
-  sinceTimestamp: new UnixTime(t.sinceTimestamp),
-  category: t.category as 'ether' | 'stablecoin' | 'other',
-}))
+export const tokenList: TokenInfo[] = tokens.map((t) => TokenInfo.parse(t))
 
 const tokenMap = new Map(tokenList.map((t) => [t.symbol, t] as const))
 
@@ -79,18 +62,6 @@ export function getTokenByAssetId(assetId: AssetId) {
   const token = tokenMapByAssetId.get(assetId)
   if (!token) {
     throw new TypeError(`Unknown token ${assetId.toString()}`)
-  }
-  return token
-}
-
-const tokenMapByCoingeckoId = new Map(
-  tokenList.map((t) => [t.coingeckoId, t] as const),
-)
-
-export function getTokenByCoingeckoId(coingeckoId: CoingeckoId) {
-  const token = tokenMapByCoingeckoId.get(coingeckoId)
-  if (!token) {
-    throw new TypeError(`Unknown token ${coingeckoId.toString()}`)
   }
   return token
 }
