@@ -18,6 +18,12 @@
           "length": "{{ getSupportedAssetsLength }}",
           "startIndex": 1,
           "ignoreRelative": true
+        },
+        "rollupProviders": {
+          "type": "arrayFromOneEvent",
+          "event": "RollupProviderUpdated",
+          "valueKey": "providerAddress",
+          "flagKey": "valid"
         }
       },
       "ignoreMethods": [

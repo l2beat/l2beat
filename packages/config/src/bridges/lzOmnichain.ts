@@ -29,7 +29,7 @@ export const lzOmnichain: Bridge = {
       socialMedia: ['https://twitter.com/LayerZero_Labs'],
     },
     description:
-      'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol, currently they are: STG, Harmony Bridge OFT and agEUR. Risk associated with using any of them varies, depending on the technological decisions made by the developers. LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings, however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library. Default settings are managed by LayerZero team.',
+      'This page gathers Omnichain Tokens built on top of LayerZero AMB protocol, currently they are: STG, Harmony Bridge OFT, BOBA and agEUR. Risk associated with using any of them varies, depending on the technological decisions made by the developers. LayerZero as a framework to build omnichain application does not provide any base security as applications can define their own security settings, however applications and tokens choosing the default security settings will leverage security provided by default Oracle, Relayer, Verification Library and Proof Library. Default settings are managed by LayerZero team.',
   },
   riskView: {
     validatedBy: {

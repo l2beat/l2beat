@@ -21,8 +21,7 @@ export const zksyncera: Layer2 = {
   display: {
     name: 'zkSync Era',
     slug: 'zksync-era',
-    warning:
-      'Currently only whitelisted contracts can be deployed and only whitelisted users can use zkSync Era.',
+    warning: 'Currently only registered addresses can bridge to zkSync Era.',
     description:
       'zkSync Era is a general-purpose zk rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EMV features such as smart contract composability while introducing some new concept such as account abstraction.\
@@ -36,7 +35,7 @@ export const zksyncera: Layer2 = {
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
         'https://blog.matter-labs.io/',
-        'https://discord.gg/px2aR7w',
+        'https://join.zksync.dev/',
         'https://t.me/zksync',
         'https://twitter.com/zksync',
       ],
