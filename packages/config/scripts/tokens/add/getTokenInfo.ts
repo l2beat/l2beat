@@ -6,9 +6,35 @@ import {
   UnixTime,
 } from '@l2beat/shared'
 import { providers, utils } from 'ethers'
+import { z } from 'zod'
 
-import { TokenInfo } from '../../src/tokens/types'
-import { getEnv } from '../checkVerifiedContracts/utils'
+import { TokenInfo } from '../../../src/tokens/types'
+import { getEnv } from '../../checkVerifiedContracts/utils'
+
+export async function getTokenInfo(
+  provider: providers.JsonRpcProvider,
+  address: EthereumAddress,
+  category: z.infer<typeof TokenInfo.shape.category>,
+): Promise<TokenInfo> {
+  const name = await getName(provider, address)
+  const coingeckoId = await getCoingeckoId(address)
+  const symbol = await getSymbol(provider, address)
+  const decimals = await getDecimals(provider, address)
+  const sinceTimestamp = await getSinceTimestamp(provider, address)
+
+  const tokenInfo: TokenInfo = {
+    id: AssetId(`${symbol.toLowerCase()}-${name.toLowerCase()}`),
+    name,
+    coingeckoId,
+    address,
+    symbol,
+    decimals,
+    sinceTimestamp,
+    category,
+  }
+
+  return tokenInfo
+}
 
 const ABI = [
   'function aggregate(tuple(address target, bytes callData)[] calls) view returns (uint256 blockNumber, bytes[] returnData)',
@@ -18,11 +44,10 @@ const ABI = [
 ]
 const CODER = new utils.Interface(ABI)
 
-export async function getTokenInfo(
+async function getName(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
-  category: 'ether' | 'stablecoin' | 'other',
-): Promise<TokenInfo> {
+) {
   const nameResult = await provider.call({
     to: address.toString(),
     data: '0x06fdde03', // name()
@@ -30,8 +55,13 @@ export async function getTokenInfo(
   if (nameResult === '0x') {
     throw new Error('Could not find name for token')
   }
-  const name = CODER.decodeFunctionResult('name', nameResult)[0] as string
+  return CODER.decodeFunctionResult('name', nameResult)[0] as string
+}
 
+async function getSymbol(
+  provider: providers.JsonRpcProvider,
+  address: EthereumAddress,
+) {
   const symbolResult = await provider.call({
     to: address.toString(),
     data: '0x95d89b41', // symbol()
@@ -39,8 +69,13 @@ export async function getTokenInfo(
   if (symbolResult === '0x') {
     throw new Error('Could not find symbol for token')
   }
-  const symbol = CODER.decodeFunctionResult('symbol', symbolResult)[0] as string
+  return CODER.decodeFunctionResult('symbol', symbolResult)[0] as string
+}
 
+async function getDecimals(
+  provider: providers.JsonRpcProvider,
+  address: EthereumAddress,
+) {
   const decimalsResult = await provider.call({
     to: address.toString(),
     data: '0x313ce567', // decimals()
@@ -48,10 +83,12 @@ export async function getTokenInfo(
   if (decimalsResult === '0x') {
     throw new Error('Could not find decimals for token')
   }
-  const decimals = parseInt(
+  return parseInt(
     CODER.decodeFunctionResult('decimals', decimalsResult)[0] as string,
   )
+}
 
+async function getCoingeckoId(address: EthereumAddress) {
   const http = new HttpClient()
   const coingeckoClient = new CoingeckoClient(http, undefined)
 
@@ -76,11 +113,18 @@ export async function getTokenInfo(
     throw new Error('Could not find coingeckoId for token')
   }
 
+  return coin.id
+}
+
+async function getSinceTimestamp(
+  provider: providers.JsonRpcProvider,
+  address: EthereumAddress,
+) {
+  const http = new HttpClient()
   const response = await http.fetch(
     `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=
       ${address.toString()}&apikey=${getEnv('ETHERSCAN_API_KEY')}`,
   )
-
   const data = (await response.json()) as unknown as {
     result: { txHash: string }[]
   }
@@ -90,22 +134,7 @@ export async function getTokenInfo(
   const tx = await provider.getTransaction(txHash)
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const blockNumber = tx.blockNumber!
+  const block = await provider.getBlock(tx.blockNumber!)
 
-  const block = await provider.getBlock(blockNumber)
-
-  const sinceTimestamp = new UnixTime(block.timestamp)
-
-  const tokenInfo: TokenInfo = {
-    id: AssetId(`${symbol.toLowerCase()}-${name.toLowerCase()}`),
-    name,
-    coingeckoId: coin.id,
-    address,
-    symbol,
-    decimals,
-    sinceTimestamp,
-    category,
-  }
-
-  return tokenInfo
+  return new UnixTime(block.timestamp)
 }
