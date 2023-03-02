@@ -16,11 +16,14 @@ export async function getTokenInfo(
   address: EthereumAddress,
   category: z.infer<typeof TokenInfo.shape.category>,
 ): Promise<TokenInfo> {
-  const name = await getName(provider, address)
-  const coingeckoId = await getCoingeckoId(address)
-  const symbol = await getSymbol(provider, address)
-  const decimals = await getDecimals(provider, address)
-  const sinceTimestamp = await getSinceTimestamp(provider, address)
+  const [name, coingeckoId, symbol, decimals, sinceTimestamp] =
+    await Promise.all([
+      getName(provider, address),
+      getCoingeckoId(address),
+      getSymbol(provider, address),
+      getDecimals(provider, address),
+      getSinceTimestamp(provider, address),
+    ])
 
   const tokenInfo: TokenInfo = {
     id: AssetId(`${symbol.toLowerCase()}-${name.toLowerCase()}`),
@@ -97,19 +100,13 @@ async function getCoingeckoId(address: EthereumAddress) {
   })
 
   const coin = coinList.find((coin) => {
-    if (
-      coin.platforms.ethereum === null ||
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      coin.platforms.ethereum === undefined
-    ) {
-      return false
-    }
     return (
-      coin.platforms.ethereum.toLowerCase() === address.toString().toLowerCase()
+      coin.platforms.ethereum?.toLowerCase() ===
+      address.toString().toLowerCase()
     )
   })
 
-    if(!coin || !coin.id) {
+  if (!coin?.id) {
     throw new Error('Could not find coingeckoId for token')
   }
 
@@ -129,12 +126,19 @@ async function getSinceTimestamp(
     result: { txHash: string }[]
   }
 
+  if (data.result.length === 0) {
+    throw new Error('Could not find transaction hash for token')
+  }
+
   const txHash = data.result[0].txHash
 
   const tx = await provider.getTransaction(txHash)
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const block = await provider.getBlock(tx.blockNumber!)
+  if (!tx.blockNumber) {
+    throw new Error('Could not find block number for token')
+  }
+
+  const block = await provider.getBlock(tx.blockNumber)
 
   return new UnixTime(block.timestamp)
 }
