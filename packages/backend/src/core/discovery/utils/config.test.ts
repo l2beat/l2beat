@@ -63,4 +63,17 @@ describe('discovery config.jsonc', () => {
       expect(discovery.configHash, { extraMessage }).toEqual(configHash)
     }
   })
+
+  it('discovery.json does not include errors', async () => {
+    const configs = await configReader.readAllConfigs()
+    for (const config of configs) {
+      const discovery = await configReader.readDiscovery(config.name)
+
+      const extraMessage = `${config.name} discovery.json includes errors. Run "yarn discover ${config.name}".`
+      expect(
+        discovery.contracts.every((c) => c.errors === undefined),
+        { extraMessage },
+      ).toEqual(true)
+    }
+  })
 })

@@ -8,7 +8,7 @@ import {
 import { expect } from 'earljs'
 import { Contract, providers, utils } from 'ethers'
 
-import { config } from './test/config'
+import { config } from '../test/config'
 import { tokenList } from './tokens'
 
 describe('tokens', () => {

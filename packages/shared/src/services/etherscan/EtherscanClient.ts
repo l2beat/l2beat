@@ -13,6 +13,7 @@ export class EtherscanClient {
     private readonly httpClient: HttpClient,
     private readonly url: string,
     private readonly apiKey: string,
+    private readonly retryCount = 3,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
@@ -38,7 +39,19 @@ export class EtherscanClient {
     })
     const url = `${this.url}?${query.toString()}`
 
-    const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
+    let res = undefined
+    for (let i = 0; i < this.retryCount; i++) {
+      try {
+        res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
+        break
+      } catch (err) {
+        continue
+      }
+    }
+
+    if (!res) {
+      throw new Error(`Failed to fetch ${url}`)
+    }
 
     if (!res.ok) {
       throw new Error(
