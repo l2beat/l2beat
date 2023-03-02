@@ -16,7 +16,7 @@ export const TokenInfo = z.object({
   /** Token Coingecko API id. Used to fetch prices */
   coingeckoId: branded(z.string(), (s) => CoingeckoId(s)),
   /** Token address. Only Ether has no address */
-  address: z.optional(branded(z.string(), (s) => EthereumAddress(s))),
+  address: branded(z.string(), (s) => EthereumAddress(s)).optional(),
   /** Token symbol as dictated by the token contract */
   symbol: z.string(),
   /** Token decimals as dictated by the token contract */
