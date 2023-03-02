@@ -109,7 +109,7 @@ async function getCoingeckoId(address: EthereumAddress) {
     )
   })
 
-  if (coin === undefined || coin.id === undefined) {
+    if(!coin || !coin.id) {
     throw new Error('Could not find coingeckoId for token')
   }
 
