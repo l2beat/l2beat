@@ -1,6 +1,6 @@
 {
   "name": "cBridge",
-  "blockNumber": 16570813,
+  "blockNumber": 16727908,
   "configHash": "0x0ad3c5afd193c6253fd7ef97be44693ce93bb26d1e6866167aa56aee5ed7de4e",
   "contracts": [
     {
@@ -127,11 +127,17 @@
             "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
             "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
           ],
-          [10000, 10000, 10000, 10000, 10000]
+          [
+            10000,
+            10000,
+            10000,
+            10000,
+            10000
+          ]
         ],
         "MAX_ACTIVE_PERIOD": 2419200,
         "MIN_ACTIVE_PERIOD": 3600,
-        "nextProposalId": 7,
+        "nextProposalId": 8,
         "THRESHOLD_DECIMAL": 100
       }
     },
@@ -143,7 +149,7 @@
         "type": "immutable"
       },
       "values": {
-        "addseq": 4595,
+        "addseq": 4641,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -166,8 +172,8 @@
           "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xc06052199ec2c4c782181094238a1348127cc1e9bed9e2fa92250ec0289dda19",
-        "triggerTime": 1675639298
+        "ssHash": "0xeeba6e7fd19f63af5ce36e5903ea55ac3327a82ed131542c1bf3b950a345af48",
+        "triggerTime": 1677544930
       }
     },
     {
@@ -178,7 +184,7 @@
         "type": "immutable"
       },
       "values": {
-        "owner": "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
+        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
       }
     }
   ],

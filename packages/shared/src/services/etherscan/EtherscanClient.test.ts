@@ -92,6 +92,38 @@ describe(EtherscanClient.name, () => {
       const result = await etherscanClient.call('mod', 'act', {})
       expect(result).toEqual(response)
     })
+
+    it('retries 3 times, then throws', async () => {
+      const httpClient = mock<HttpClient>({
+        async fetch() {
+          throw new Error('timeout')
+        },
+      })
+
+      const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
+
+      await expect(etherscanClient.call('mod', 'act', {})).toBeRejected()
+      expect(httpClient.fetch.calls.length).toEqual(3)
+    })
+
+    it('retries on erros, then fetches the result', async () => {
+      const response = { status: '1' as const, message: 'OK', result: [1, 2] }
+      const httpClient = mock<HttpClient>({
+        async fetch() {
+          throw new Error('timeout')
+        },
+      })
+
+      httpClient.fetch
+        .throwsOnce(new Error('timeout'))
+        .resolvesToOnce(new Response(JSON.stringify(response)))
+
+      const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
+
+      const result = await etherscanClient.call('mod', 'act', {})
+      expect(result).toEqual(response)
+      expect(httpClient.fetch.calls.length).toEqual(2)
+    })
   })
 
   describe(EtherscanClient.prototype.getContractSource.name, () => {

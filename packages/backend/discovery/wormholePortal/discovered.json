@@ -1,7 +1,7 @@
 {
   "name": "wormholePortal",
-  "blockNumber": 16534856,
-  "configHash": "0x916999c47c8afad47803b1acee4cba11c7ea731cdce3f36b15f7ca7efd9b7098",
+  "blockNumber": 16720306,
+  "configHash": "0x6cd17a24828bb5f08539e08783314b616da7717474ce2e7cc59350177d483060",
   "contracts": [
     {
       "name": "BridgeImplementation",
@@ -51,11 +51,7 @@
         "governanceChainId": 1,
         "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
         "isFork": false,
-        "messageFee": 0,
-        "quorum": [1, 1, 2, 3, 3]
-      },
-      "errors": {
-        "quorum": "Too many values. Update configuration explore fully"
+        "messageFee": 0
       }
     }
   ],
