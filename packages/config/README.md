@@ -27,6 +27,7 @@ CONFIG_ALCHEMY_API_KEY=
 - `yarn test` - run tests
 - `yarn typecheck` - check if the code satisfies the typescript compiler
 - `yarn check-verified-contracts` - verify whether source code of given address is verified on Etherscan
+- `yarn tokens:add <address> <category>` - add new token to the config
 
 ### Tests dependencies
 

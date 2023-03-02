@@ -1,3 +1,4 @@
+import { branded } from '@l2beat/shared'
 import { z } from 'zod'
 
 export function stringAsInt(fallback?: number) {
@@ -5,22 +6,6 @@ export function stringAsInt(fallback?: number) {
     const res = z.string().safeParse(s)
     return res.success && s !== '' ? Number(res.data) : fallback
   }, z.number().int())
-}
-
-export function branded<T extends z.ZodTypeAny, B>(
-  schema: T,
-  Brand: (t: z.TypeOf<T>) => B,
-) {
-  return schema
-    .refine((s: T) => {
-      try {
-        Brand(s)
-        return true
-      } catch {
-        return false
-      }
-    })
-    .transform(Brand)
 }
 
 export function stringAs<T>(Brand: (s: string) => T) {
