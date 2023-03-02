@@ -15,3 +15,11 @@ export function branded<B extends z.ZodTypeAny, R>(
     })
     .transform(Brand)
 }
+
+export function stringAs<T>(Brand: (s: string) => T) {
+  return branded(z.string(), Brand)
+}
+
+export function numberAs<T>(Brand: (n: number) => T) {
+  return branded(z.number(), Brand)
+}

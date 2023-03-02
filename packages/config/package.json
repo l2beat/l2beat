@@ -16,10 +16,12 @@
     "typecheck": "tsc --noEmit",
     "get-lz-data": "node -r esbuild-register scripts/omnichain",
     "update-multichain": "node -r esbuild-register scripts/multichain",
-    "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts"
+    "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
+    "tokens:add": "node -r esbuild-register scripts/tokens/add"
   },
   "dependencies": {
     "@l2beat/shared": "*",
+    "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
     "dotenv": "^16.0.3",
     "node-fetch": "^2.6.7",
