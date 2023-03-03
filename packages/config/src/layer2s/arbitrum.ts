@@ -467,6 +467,13 @@ export const arbitrum: Layer2 = {
   },
   milestones: [
     {
+      name: 'Arbitrum surpasses Ethereum in TPS',
+      link: 'https://twitter.com/arbitrum/status/1628410398058708992',
+      date: '2023-02-21T00:00:00Z',
+      description:
+        'For the first time ever, the daily average TPS of a rollup is higher than Ethereum.',
+    },
+    {
       name: 'Nitro Upgrade',
       link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
       date: '2022-08-31T00:00:00Z',
