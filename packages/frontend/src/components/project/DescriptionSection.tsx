@@ -29,6 +29,7 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           text="This project is archived and no longer maintained."
           color="red"
           className="mt-4"
+          isArchived={props.isArchived}
           isCritical={false}
         />
       )}

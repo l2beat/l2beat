@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { ShieldIcon } from '../icons'
+import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 import { Callout } from './Callout'
 
 export interface WarningBarProps {
@@ -9,6 +10,7 @@ export interface WarningBarProps {
   text: string
   isCritical: boolean
   className?: string
+  isArchived?: boolean
 }
 
 export function WarningBar({
@@ -16,6 +18,7 @@ export function WarningBar({
   text,
   isCritical,
   className,
+  isArchived,
 }: WarningBarProps) {
   const iconFill =
     color === 'red'
@@ -26,7 +29,7 @@ export function WarningBar({
     <Callout
       className={cx('p-4', className)}
       color={color}
-      icon={<ShieldIcon className={cx(iconFill)} />}
+      icon={isArchived ? <ArchivedIcon className={cx()}/> : <ShieldIcon className={cx(iconFill)} />}
       body={
         isCritical ? (
           <>
