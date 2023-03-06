@@ -29,7 +29,13 @@ export function WarningBar({
     <Callout
       className={cx('p-4', className)}
       color={color}
-      icon={isArchived ? <ArchivedIcon className={cx()}/> : <ShieldIcon className={cx(iconFill)} />}
+      icon={
+        isArchived ? (
+          <ArchivedIcon className={cx()} />
+        ) : (
+          <ShieldIcon className={cx(iconFill)} />
+        )
+      }
       body={
         isCritical ? (
           <>
