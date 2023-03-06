@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { OtherSites as OtherSitesComponent } from '../otherSites/OtherSites'
 import { PageContent } from '../PageContent'
+import { OtherSites as OtherSitesComponent } from './OtherSites'
 
 export default {
   title: 'Components/OtherSites',
