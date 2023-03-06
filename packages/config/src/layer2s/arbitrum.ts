@@ -523,6 +523,7 @@ export const arbitrum: Layer2 = {
       title: 'Arbitrum is down - but has it really stopped working?',
       url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211',
       thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      muzafferbayindir15@hotmail.com 
     },
   ],
 }
