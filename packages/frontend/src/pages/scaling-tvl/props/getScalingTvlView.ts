@@ -26,6 +26,7 @@ export function getScalingTvlView(
       ),
     ),
     ratingEnabled: config.features.rating,
+    upcomingEnabled: config.features.upcomingRollups,
   }
 }
 
