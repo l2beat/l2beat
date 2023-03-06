@@ -1,8 +1,8 @@
 import { Layer2, Layer2Rating } from '@l2beat/config'
 import React from 'react'
 
-import { IncludeArchivedCheckbox } from '../../../components/IncludeArchivedCheckbox'
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { ScalingTableFilters } from '../../../components/table/filters/ScalingTableFilters'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
@@ -117,7 +117,7 @@ export function ScalingTvlView({ items, ratingEnabled }: ScalingTvlViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <IncludeArchivedCheckbox className="mb-4" />
+      <ScalingTableFilters className="mb-4" />
       <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend showTokenWarnings />
     </section>

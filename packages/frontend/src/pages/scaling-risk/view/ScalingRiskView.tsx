@@ -1,8 +1,8 @@
 import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { IncludeArchivedCheckbox } from '../../../components/IncludeArchivedCheckbox'
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { IncludeArchivedCheckbox } from '../../../components/table/filters/checkboxes/IncludeArchivedCheckbox'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'

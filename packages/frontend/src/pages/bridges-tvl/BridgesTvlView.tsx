@@ -1,8 +1,7 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { IncludeArchivedCheckbox } from '../../components/IncludeArchivedCheckbox'
-import { IncludeLayer2sCheckbox } from '../../components/IncludeLayer2sCheckbox'
+import { BridgesTableFilters } from '../../components/table/filters/BridgesTableFilters'
 import { IndexCell } from '../../components/table/IndexCell'
 import { NoInfoCell } from '../../components/table/NoInfoCell'
 import { NumberCell } from '../../components/table/NumberCell'
@@ -123,10 +122,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <div className="overflow-x-auto whitespace-nowrap pb-4">
-        <IncludeLayer2sCheckbox />
-        <IncludeArchivedCheckbox className="ml-2" />
-      </div>
+      <BridgesTableFilters className="pb-4" />
       <TableView items={items} columns={columns} rows={rows} />
     </section>
   )
