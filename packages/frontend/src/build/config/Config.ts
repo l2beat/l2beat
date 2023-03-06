@@ -18,6 +18,7 @@ export interface Config {
     hiring: boolean
     rating: boolean
     buildAllProjectPages: boolean
+    upcomingRollups: boolean
   }
   backend: {
     apiUrl: string
