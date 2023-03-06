@@ -15,7 +15,7 @@ import {
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
-  upcomingEnabled: boolean
+  upcomingEnabled?: boolean
 }
 
 export interface ScalingRiskViewEntry {

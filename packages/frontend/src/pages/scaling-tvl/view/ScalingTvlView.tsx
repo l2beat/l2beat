@@ -22,7 +22,7 @@ import {
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
   ratingEnabled: boolean
-  upcomingEnabled: boolean
+  upcomingEnabled?: boolean
 }
 
 export interface ScalingTvlViewEntry {

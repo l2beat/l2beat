@@ -20,7 +20,6 @@ export function RiskView() {
     <>
       <PageContent>
         <ScalingRiskView
-          upcomingEnabled={false}
           items={[
             {
               name: 'Forktimism',
