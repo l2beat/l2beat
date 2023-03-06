@@ -24,7 +24,7 @@ export const zksyncera: Layer2 = {
     warning: 'Currently only registered addresses can bridge to zkSync Era.',
     description:
       'zkSync Era is a general-purpose zk rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
-      It implements standard Web3 API and it preserves key EMV features such as smart contract composability while introducing some new concept such as account abstraction.\
+      It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as account abstraction.\
       It is currently deployed on mainnet and available to a whitelisted set of users/developers.',
     purpose: 'Universal',
     links: {
