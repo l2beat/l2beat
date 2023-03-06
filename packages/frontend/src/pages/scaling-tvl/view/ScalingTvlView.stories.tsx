@@ -21,6 +21,7 @@ export function TvlView() {
       <PageContent>
         <ScalingTvlView
           ratingEnabled={true}
+          upcomingEnabled={false}
           items={[
             {
               name: 'Forktimism',
