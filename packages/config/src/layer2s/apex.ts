@@ -23,8 +23,6 @@ export const apex: Layer2 = {
     slug: 'apex',
     description:
       'ApeX Pro is a non-custodial trading platform that delivers limitless cross-margined perpetual contracts trading.',
-    warning:
-      'Smart Contracts on L1 do not enforce at the moment availability of data in DAC.',
     purpose: 'Exchange',
     links: {
       websites: ['https://apex.exchange/'],
@@ -83,6 +81,12 @@ export const apex: Layer2 = {
         },
       },
       {
+        name: 'Committee',
+        address: EthereumAddress('0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4'),
+        description:
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+      },
+      {
         name: 'MultiSigPool',
         address: EthereumAddress('0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE'),
         description:
@@ -93,6 +97,62 @@ export const apex: Layer2 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
+    {
+      name: 'Operator',
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb',
+          ),
+          type: 'EOA',
+        },
+      ],
+      description:
+        'Allowed to update state of the system and verify DA proofs. When Operator is down the state cannot be updated.',
+    },
+    {
+      name: 'Data Availability Committee',
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0x81165b6504520416487E5b4935865b4D3eeaa6e5',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xB0d71Ff040A941bB9CA8453044634EebCE5A053D',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x696cC7615A50CF12d1d1B38bF18A5606e9708296',
+          ),
+          type: 'EOA',
+        },
+      ],
+      description:
+        'Validity proof must be signed by at least 3 of these addresses to approve state update.',
+    },
     {
       name: 'Governor',
       accounts: [
