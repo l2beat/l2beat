@@ -5,14 +5,18 @@ import { IncludeArchivedCheckbox } from './checkboxes/IncludeArchivedCheckbox'
 import { IncludeUpcomingCheckbox } from './checkboxes/IncludeUpcomingCheckbox'
 
 export interface ScalingTableFiltersProps {
+  upcomingEnabled?: boolean
   className?: string
 }
 
-export function ScalingTableFilters({ className }: ScalingTableFiltersProps) {
+export function ScalingTableFilters({
+  className,
+  upcomingEnabled,
+}: ScalingTableFiltersProps) {
   return (
     <div className={cx('overflow-x-auto whitespace-nowrap', className)}>
       <IncludeArchivedCheckbox />
-      <IncludeUpcomingCheckbox className="ml-2" />
+      {upcomingEnabled && <IncludeUpcomingCheckbox className="ml-2" />}
     </div>
   )
 }
