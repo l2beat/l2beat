@@ -13,10 +13,7 @@ import {
   TableView,
 } from '../../../components/table/TableView'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
-import {
-  TVLBreakdown,
-  TVLBreakdownProps,
-} from '../../../components/TVLBreakdown'
+import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
@@ -50,26 +47,19 @@ export function ScalingTvlView({
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: 'Name',
+      headClassName: 'pl-11',
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
-      name: 'TVL',
-      tooltip: 'Total value locked in escrow contracts on Ethereum.',
-      alignRight: true,
-      getValue: (project) =>
-        !project.isUpcoming &&
-        project.tvlBreakdown && <NumberCell>{project.tvl}</NumberCell>,
-    },
-    {
-      name: '7d Change',
-      tooltip: 'Change in the total value locked as compared to a week ago.',
-      alignRight: true,
-      getValue: (project) =>
-        !project.isArchived &&
-        !project.isUpcoming &&
-        project.tvlBreakdown && (
-          <NumberCell signed>{project.sevenDayChange}</NumberCell>
-        ),
+      name: 'Technology',
+      tooltip:
+        'Type of this Layer 2. Determines data availability and proof system used.',
+      shortName: 'Tech',
+      getValue: (project) => (
+        <TechnologyCell provider={project.provider}>
+          {project.technology}
+        </TechnologyCell>
+      ),
     },
     ...(ratingEnabled
       ? [
@@ -84,13 +74,28 @@ export function ScalingTvlView({
         ]
       : []),
     {
-      name: 'Breakdown',
-      tooltip:
-        'Composition of the total value locked broken down by token type.',
+      name: 'Purpose',
+      tooltip: 'Functionality supported by this Layer 2.',
+      getValue: (project) => project.purpose,
+    },
+    {
+      name: 'TVL',
+      tooltip: 'Total value locked in escrow contracts on Ethereum.',
+      alignRight: true,
+      headClassName: '-translate-x-[84px]',
       getValue: (project) =>
-        !project.isArchived &&
-        !project.isUpcoming &&
-        project.tvlBreakdown && <TVLBreakdown {...project.tvlBreakdown} />,
+        !project.isUpcoming && (
+          <>
+            <NumberCell className="font-bold">{project.tvl}</NumberCell>
+            {!project.isArchived ? (
+              <NumberCell signed className="ml-1 w-20 !text-base">
+                {project.sevenDayChange}
+              </NumberCell>
+            ) : (
+              <span className="w-[84px]" />
+            )}
+          </>
+        ),
     },
     {
       name: 'Mkt share',
@@ -100,20 +105,6 @@ export function ScalingTvlView({
         !project.isArchived &&
         !project.isUpcoming &&
         project.tvlBreakdown && <NumberCell>{project.marketShare}</NumberCell>,
-    },
-    {
-      name: 'Purpose',
-      tooltip: 'Functionality supported by this Layer 2.',
-      getValue: (project) => project.purpose,
-    },
-    {
-      name: 'Technology',
-      tooltip:
-        'Type of this Layer 2. Determines data availability and proof system used.',
-      shortName: 'Tech',
-      getValue: (project) => (
-        <TechnologyCell>{project.technology}</TechnologyCell>
-      ),
     },
   ]
 

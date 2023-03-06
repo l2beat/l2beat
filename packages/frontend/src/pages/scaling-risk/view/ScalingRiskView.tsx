@@ -39,6 +39,7 @@ export function ScalingRiskView({
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
       name: 'Name',
+      headClassName: 'pl-11',
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {

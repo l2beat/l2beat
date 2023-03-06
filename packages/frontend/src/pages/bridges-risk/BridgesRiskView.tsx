@@ -35,6 +35,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
     {
       name: 'Name',
+      headClassName: 'pl-11',
       getValue: (entry) => (
         <ProjectCell highlightL2 type={entry.type} project={entry} />
       ),
