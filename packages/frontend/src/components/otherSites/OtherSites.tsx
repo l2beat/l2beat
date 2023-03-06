@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { OutLink } from './OutLink'
+import { OutLink } from '../OutLink'
 
 export function OtherSites() {
   return (
@@ -19,8 +19,8 @@ export function OtherSites() {
         px-[48px] py-[19px]
         rounded-[8px]
         text-lg
-        dark:bg-gradient-to-r from-[#7E41CC] to-[#FF46C0] bg-white" 
-      allowReferrer href="https://l2fees.info/">
+        dark:bg-gradient-to-r from-[#7E41CC] to-[#FF46C0] bg-white"
+        allowReferrer href="https://l2fees.info/">
         <span>
           Find out on L2 Fees
         </span>
