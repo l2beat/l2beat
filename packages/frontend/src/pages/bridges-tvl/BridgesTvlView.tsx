@@ -2,7 +2,6 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { BridgesTableFilters } from '../../components/table/filters/BridgesTableFilters'
-import { IndexCell } from '../../components/table/IndexCell'
 import { NoInfoCell } from '../../components/table/NoInfoCell'
 import { NumberCell } from '../../components/table/NumberCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
@@ -42,21 +41,6 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
   const onlyBridges = items.filter((x) => x.type === 'bridge')
 
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      getValue: (entry, index) => (
-        <>
-          <span data-bridges-only-cell>
-            <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
-          </span>
-          <span data-combined-only-cell className="hidden">
-            <IndexCell entry={entry} index={index + 1} />
-          </span>
-        </>
-      ),
-    },
     {
       name: 'Name',
       getValue: (entry) => (

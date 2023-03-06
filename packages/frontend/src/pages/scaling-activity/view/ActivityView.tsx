@@ -5,7 +5,6 @@ import React from 'react'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ComingSoonCell } from '../../../components/table/ComingSoonCell'
 import { EthereumCell } from '../../../components/table/EthereumCell'
-import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
@@ -37,14 +36,6 @@ export interface ActivityViewEntry {
 
 export function ActivityView({ items }: ActivityViewProps) {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      getValue: (entry, index) => {
-        return <IndexCell entry={entry} index={index + 1} />
-      },
-    },
     {
       name: 'Name',
       minimalWidth: true,
