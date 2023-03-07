@@ -1,15 +1,16 @@
 import React from 'react'
 
-export type Sentiment = 'bad' | 'warning' | 'fine'
+type Sentiment = 'bad' | 'warning' | 'fine'
+type Risk =
+  | 'sequencerFailure'
+  | 'stateValidation'
+  | 'dataAvailability'
+  | 'upgradeability'
+  | 'validatorFailure'
+export type RisksSummary = Record<Risk, Sentiment>
 
 export interface RosetteProps {
-  risks: {
-    sequencerFailure: Sentiment
-    stateValidation: Sentiment
-    dataAvailability: Sentiment
-    upgradeability: Sentiment
-    validatorFailure: Sentiment
-  }
+  risks: RisksSummary
 }
 
 export function SmallRosette({ risks }: RosetteProps) {

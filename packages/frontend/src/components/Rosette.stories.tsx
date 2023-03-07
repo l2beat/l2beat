@@ -3,7 +3,7 @@ import React from 'react'
 
 import {
   BigRosette as BigRosetteComponent,
-  RosetteProps,
+  RisksSummary,
   SmallRosette as SmallRosetteComponent,
 } from './Rosette'
 
@@ -33,13 +33,11 @@ export default {
   },
 }
 
-type TemplateProps = RosetteProps['risks']
-
-function SmallTemplate(risks: TemplateProps) {
+function SmallTemplate(risks: RisksSummary) {
   return <SmallRosetteComponent risks={risks} />
 }
 
-export const SmallRosette: Story<TemplateProps> = SmallTemplate.bind({})
+export const SmallRosette: Story<RisksSummary> = SmallTemplate.bind({})
 SmallRosette.args = {
   sequencerFailure: 'bad',
   stateValidation: 'warning',
@@ -48,11 +46,11 @@ SmallRosette.args = {
   validatorFailure: 'warning',
 }
 
-function BigTemplate(risks: TemplateProps) {
+function BigTemplate(risks: RisksSummary) {
   return <BigRosetteComponent risks={risks} />
 }
 
-export const BigRosette: Story<TemplateProps> = BigTemplate.bind({})
+export const BigRosette: Story<RisksSummary> = BigTemplate.bind({})
 BigRosette.args = {
   sequencerFailure: 'bad',
   stateValidation: 'warning',
