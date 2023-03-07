@@ -1,10 +1,7 @@
 import { KnowledgeNugget, layer2s } from '@l2beat/config'
 import { expect } from 'earljs'
 
-const knowledgeNuggets = layer2s.reduce<KnowledgeNugget[]>((nuggets, l2) => {
-  nuggets.push(...(l2.knowledgeNuggets ?? []))
-  return nuggets
-}, [])
+const knowledgeNuggets = layer2s.flatMap<KnowledgeNugget>(nugget => nugget.knowledgeNuggets ?? [])
 
 describe('knowledgeNuggets', () => {
   describe('title fits character limit', () => {
