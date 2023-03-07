@@ -32,7 +32,7 @@ export const zksyncera: Layer2 = {
       apps: ['https://portal.zksync.io/'],
       documentation: ['https://era.zksync.io/docs/'],
       explorers: ['https://explorer.zksync.io/'],
-      repositories: ['https://github.com/matter-labs/zksync'],
+      repositories: ['https://github.com/matter-labs/zksync-era'],
       socialMedia: [
         'https://blog.matter-labs.io/',
         'https://join.zksync.dev/',

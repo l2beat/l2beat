@@ -3,7 +3,7 @@ import React from 'react'
 import { UnverifiedContractsWarning as UnverifiedContractsWarningComponent } from './UnverifiedContractsWarning'
 
 export default {
-  title: 'Components/UnverifiedContractsWarning',
+  title: 'Components/Table/UnverifiedContractsWarning',
 }
 
 export function UnverifiedContractsWarning() {

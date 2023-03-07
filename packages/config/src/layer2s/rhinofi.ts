@@ -41,7 +41,7 @@ export const rhinofi: Layer2 = {
         'https://rhino.fi/blog',
         'https://twitter.com/rhinofi',
         'https://linkedin.com/company/rhinofi/',
-        'https://youtube.com/c/deversifi',
+        'https://youtube.com/c/rhinofi',
       ],
     },
     activityDataSource: 'Closed API',
