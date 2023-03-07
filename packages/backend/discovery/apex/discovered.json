@@ -1,7 +1,7 @@
 {
   "name": "apex",
-  "blockNumber": 16776647,
-  "configHash": "0xf58a49642f5003f075991f642a0c1e4d8c9eae62417032176b30291734ecd596",
+  "blockNumber": 16776689,
+  "configHash": "0xc16a8d2101d28d79ceb48f9390be49aa005ff4bc20fc85987a134bd8b5f1f6ca",
   "contracts": [
     {
       "name": "Proxy",
@@ -55,6 +55,10 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
+        "OPERATORS": [
+          "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb"
+        ],
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "UNFREEZE_DELAY": 31536000,
@@ -158,6 +162,8 @@
   ],
   "eoas": [
     "0x22c89137525b593Dd2A18434348b550ffA5984Fe",
+    "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+    "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb",
     "0xD716458a0d1Fe4beE8007500BCbCe1Dd306c3868",
     "0xef75e1199B0599BA823b7770AcE8eb34864a1D55"
   ],
