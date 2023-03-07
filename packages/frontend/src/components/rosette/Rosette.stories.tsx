@@ -5,7 +5,7 @@ import {
   BigRosette as BigRosetteComponent,
   RisksSummary,
   SmallRosette as SmallRosetteComponent,
-} from './Rosette'
+} from '.'
 
 export default {
   title: 'Components/Rosette',
