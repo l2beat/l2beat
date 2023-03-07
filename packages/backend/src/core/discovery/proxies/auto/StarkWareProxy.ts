@@ -144,17 +144,34 @@ async function getStarkWareDiamond(
     ],
   ])
 
-  const lastUpgrade = upgrades.at(-1)?.transactionHash
+  const lastUpgrade = upgrades.at(-1)
   if (!lastUpgrade) {
     throw new Error('Diamond without upgrades!?')
   }
 
-  const tx = await provider.getTransaction(Hash256(lastUpgrade))
+  let data: string | undefined
+  if (lastUpgrade.topics[0] === coder.getEventTopic('Upgraded')) {
+    const tx = await provider.getTransaction(
+      Hash256(lastUpgrade.transactionHash),
+    )
 
-  const abi = new utils.Interface([
-    'function upgradeTo(address newImplementation, bytes data, bool finalize)',
-  ])
-  const data = abi.decodeFunctionData('upgradeTo', tx.data).data as string
+    const abi = new utils.Interface([
+      'function upgradeTo(address newImplementation, bytes data, bool finalize)',
+    ])
+
+    data = abi.decodeFunctionData('upgradeTo', tx.data).data as string
+  }
+
+  if (lastUpgrade.topics[0] === coder.getEventTopic('ImplementationUpgraded')) {
+    const lastUpgradeData = upgrades.at(-1)?.data
+    if (!lastUpgradeData) {
+      throw new Error('Diamond without upgrades!?')
+    }
+    data = `0x${lastUpgradeData.slice(130)}`
+  }
+  if (!data) {
+    throw new Error('Diamond without upgrades!? Cannot decode data')
+  }
 
   // we subtract 2 for '0x' and 1 for an external initializer contract
   const maxAddresses = Math.floor((data.length - 2) / 64) - 1
