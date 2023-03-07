@@ -55,6 +55,8 @@ export function ScalingTvlView({
     {
       name: 'Risks',
       tooltip: 'Risks associated with this project.',
+      minimalWidth: true,
+      alignCenter: true,
       getValue: (project) => <SmallRosette risks={project.risks} />,
     },
     {
@@ -95,7 +97,7 @@ export function ScalingTvlView({
           <>
             <NumberCell className="font-bold">{project.tvl}</NumberCell>
             {!project.isArchived ? (
-              <NumberCell signed className="ml-1 w-20 !text-base">
+              <NumberCell signed className="ml-1 w-20 !text-base font-medium">
                 {project.sevenDayChange}
               </NumberCell>
             ) : (
@@ -108,6 +110,7 @@ export function ScalingTvlView({
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
+      minimalWidth: true,
       getValue: (project) =>
         !project.isArchived &&
         !project.isUpcoming &&

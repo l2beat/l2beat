@@ -101,6 +101,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                         column.alignRight && 'justify-end',
                         column.alignCenter && 'justify-center',
                         j !== columns.length - 1 && 'pr-3 md:pr-4',
+                        'md:py-2',
                       )}
                     >
                       {column.getValue(item, i)}
