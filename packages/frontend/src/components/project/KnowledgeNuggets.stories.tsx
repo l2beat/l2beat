@@ -1,4 +1,5 @@
 import React from 'react'
+import { l2KnowledgeNuggets, KnowledgeNugget } from '@l2beat/config'
 
 import { KnowledgeNuggets as KnowledgeNuggetsComponent } from './KnowledgeNuggets'
 
@@ -24,7 +25,7 @@ const knowledgeNuggetsExample = [
 export function KnowledgeNuggets() {
   return (
     <div className="p-4">
-      <KnowledgeNuggetsComponent knowledgeNuggets={knowledgeNuggetsExample} />
+      <KnowledgeNuggetsComponent knowledgeNuggets={l2KnowledgeNuggets} />
     </div>
   )
 }
