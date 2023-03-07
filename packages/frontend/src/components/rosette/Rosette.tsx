@@ -49,6 +49,29 @@ export function SmallRosette({ risks }: RosetteProps) {
 
 export function BigRosette({ risks }: RosetteProps) {
   return (
+    <div className="relative w-[305px] py-12 px-16">
+      <BigRosetteIcon risks={risks} />
+      <span className="absolute bottom-[30px] left-[47px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight">
+        Sequencer failure
+      </span>
+      <span className="absolute top-[77px] left-3 w-[10ch] -rotate-[64deg] text-center text-xs font-medium uppercase leading-tight">
+        State validation
+      </span>
+      <span className="absolute top-[10px] left-1/2 w-[10ch] -translate-x-1/2 text-center text-xs font-medium uppercase leading-tight">
+        Data availability
+      </span>
+      <span className="absolute top-[94px] left-[200px] rotate-[68deg] text-xs font-medium uppercase leading-tight">
+        Upgradeability
+      </span>
+      <span className="absolute bottom-[32px] right-[39px] w-[10ch] -rotate-[36deg] text-center text-xs font-medium uppercase leading-tight">
+        Validator failure
+      </span>
+    </div>
+  )
+}
+
+function BigRosetteIcon({ risks }: RosetteProps) {
+  return (
     <svg
       width="181"
       height="180"
