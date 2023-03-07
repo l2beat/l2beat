@@ -3,58 +3,58 @@ import React from 'react'
 
 import {
   BigRosette as BigRosetteComponent,
-  RisksSummary,
   SmallRosette as SmallRosetteComponent,
 } from './Rosette'
+import { RiskSentiments } from './types'
 
 export default {
   title: 'Components/Rosette',
   argTypes: {
     sequencerFailure: {
-      options: ['bad', 'warning', 'fine'],
+      options: ['bad', 'warning', undefined],
       control: { type: 'select' },
     },
     stateValidation: {
-      options: ['bad', 'warning', 'fine'],
+      options: ['bad', 'warning', undefined],
       control: { type: 'select' },
     },
     dataAvailability: {
-      options: ['bad', 'warning', 'fine'],
+      options: ['bad', 'warning', undefined],
       control: { type: 'select' },
     },
     upgradeability: {
-      options: ['bad', 'warning', 'fine'],
+      options: ['bad', 'warning', undefined],
       control: { type: 'select' },
     },
     validatorFailure: {
-      options: ['bad', 'warning', 'fine'],
+      options: ['bad', 'warning', undefined],
       control: { type: 'select' },
     },
   },
 }
 
-function SmallTemplate(risks: RisksSummary) {
+function SmallTemplate(risks: RiskSentiments) {
   return <SmallRosetteComponent risks={risks} />
 }
 
-export const SmallRosette: Story<RisksSummary> = SmallTemplate.bind({})
+export const SmallRosette: Story<RiskSentiments> = SmallTemplate.bind({})
 SmallRosette.args = {
   sequencerFailure: 'bad',
   stateValidation: 'warning',
-  dataAvailability: 'fine',
+  dataAvailability: undefined,
   upgradeability: 'bad',
   validatorFailure: 'warning',
 }
 
-function BigTemplate(risks: RisksSummary) {
+function BigTemplate(risks: RiskSentiments) {
   return <BigRosetteComponent risks={risks} />
 }
 
-export const BigRosette: Story<RisksSummary> = BigTemplate.bind({})
+export const BigRosette: Story<RiskSentiments> = BigTemplate.bind({})
 BigRosette.args = {
   sequencerFailure: 'bad',
   stateValidation: 'warning',
-  dataAvailability: 'fine',
+  dataAvailability: undefined,
   upgradeability: 'bad',
   validatorFailure: 'warning',
 }

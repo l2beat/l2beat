@@ -1,8 +1,7 @@
-import { Layer2, Layer2RiskView } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
-import { RisksSummary } from '../../../components/Rosette'
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
 import {
@@ -54,7 +53,7 @@ function getScalingTvlViewEntry(
     name: project.display.name,
     slug: project.display.slug,
     provider: project.technology.provider,
-    risks: riskViewToSummary(project.riskView),
+    riskView: project.riskView,
     warning: project.display.warning,
     isVerified,
     isArchived: project.isArchived,
@@ -67,15 +66,5 @@ function getScalingTvlViewEntry(
     purpose: project.display.purpose,
     technology: project.technology.category,
     ratingEntry: project.rating,
-  }
-}
-
-function riskViewToSummary(riskView: Layer2RiskView): RisksSummary {
-  return {
-    stateValidation: riskView.stateValidation.sentiment ?? 'fine',
-    dataAvailability: riskView.dataAvailability.sentiment ?? 'fine',
-    upgradeability: riskView.upgradeability.sentiment ?? 'fine',
-    sequencerFailure: riskView.sequencerFailure.sentiment ?? 'fine',
-    validatorFailure: riskView.validatorFailure.sentiment ?? 'fine',
   }
 }

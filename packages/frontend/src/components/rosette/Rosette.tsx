@@ -1,17 +1,6 @@
 import React from 'react'
 
-type Sentiment = 'bad' | 'warning' | 'fine'
-type Risk =
-  | 'sequencerFailure'
-  | 'stateValidation'
-  | 'dataAvailability'
-  | 'upgradeability'
-  | 'validatorFailure'
-export type RisksSummary = Record<Risk, Sentiment>
-
-export interface RosetteProps {
-  risks: RisksSummary
-}
+import { RosetteProps, Sentiment } from './types'
 
 export function SmallRosette({ risks }: RosetteProps) {
   return (
@@ -104,13 +93,13 @@ function BigRosetteIcon({ risks }: RosetteProps) {
   )
 }
 
-function sentimentToClassName(sentiment: Sentiment): string {
+function sentimentToClassName(sentiment?: Sentiment): string {
   switch (sentiment) {
     case 'bad':
       return 'fill-red-350'
     case 'warning':
       return 'fill-yellow-200'
-    case 'fine':
+    case undefined:
       return 'fill-gray-750'
   }
 }
