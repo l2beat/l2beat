@@ -21,7 +21,7 @@ export function Callout({ color, icon, body, className }: CalloutProps) {
         className,
       )}
     >
-      <span className={cx('flex items-center')}>{icon}</span>
+      <span>{icon}</span>
       <div>{body}</div>
     </div>
   )
