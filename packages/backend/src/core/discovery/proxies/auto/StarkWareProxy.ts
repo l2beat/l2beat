@@ -150,7 +150,8 @@ async function getStarkWareDiamond(
   }
 
   let data: string | undefined
-  if (lastUpgrade.topics[0] === coder.getEventTopic('Upgraded')) {
+
+  try {
     const tx = await provider.getTransaction(
       Hash256(lastUpgrade.transactionHash),
     )
@@ -160,17 +161,16 @@ async function getStarkWareDiamond(
     ])
 
     data = abi.decodeFunctionData('upgradeTo', tx.data).data as string
-  }
-
-  if (lastUpgrade.topics[0] === coder.getEventTopic('ImplementationUpgraded')) {
-    const lastUpgradeData = upgrades.at(-1)?.data
-    if (!lastUpgradeData) {
-      throw new Error('Diamond without upgrades!?')
+  } catch (e) {
+    if (
+      lastUpgrade.topics[0] !== coder.getEventTopic('ImplementationUpgraded')
+    ) {
+      throw e
     }
-    data = `0x${lastUpgradeData.slice(130)}`
-  }
-  if (!data) {
-    throw new Error('Diamond without upgrades!? Cannot decode data')
+    console.log(
+      'Failed to decode upgradeTo data, falling back to decoding logs parameters',
+    )
+    data = `0x${lastUpgrade.data.slice(130)}`
   }
 
   // we subtract 2 for '0x' and 1 for an external initializer contract
