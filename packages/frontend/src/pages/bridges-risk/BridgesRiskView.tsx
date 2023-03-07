@@ -30,8 +30,6 @@ export interface BridgesRiskViewEntry {
 }
 
 export function BridgesRiskView({ items }: BridgesRiskViewProps) {
-  const onlyBridges = items.filter((x) => x.type === 'bridge')
-
   const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
     {
       name: 'Name',

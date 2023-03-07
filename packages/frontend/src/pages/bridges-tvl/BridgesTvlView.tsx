@@ -38,8 +38,6 @@ export interface BridgesTvlViewEntry {
 }
 
 export function BridgesTvlView({ items }: BridgesTvlViewProps) {
-  const onlyBridges = items.filter((x) => x.type === 'bridge')
-
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
     {
       name: 'Name',
