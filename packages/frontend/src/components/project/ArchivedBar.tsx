@@ -8,19 +8,16 @@ export interface ArchiveBarProps {
   className?: string
 }
 
-export function ArchivedBar({
-  text,
-  className
-}: ArchiveBarProps) {
+export function ArchivedBar({ text, className }: ArchiveBarProps) {
   return (
-    <div className={cx('flex justify-center rounded-lg bg-gray-750', className)}>
-      <span className='flex flex-row'>
-        <span className='flex items-center'>
+    <div
+      className={cx('bg-gray-750 flex justify-center rounded-lg', className)}
+    >
+      <span className="flex flex-row">
+        <span className="flex items-center">
           <ArchivedIcon />
         </span>
-        <span className='ml-2 font-medium text-base'>
-          {text}
-        </span>
+        <span className="ml-2 text-base font-medium">{text}</span>
       </span>
     </div>
   )
