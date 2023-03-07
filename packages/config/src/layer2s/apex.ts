@@ -13,7 +13,10 @@ import {
   SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('apex')
 
 export const apex: Layer2 = {
   type: 'layer2',
@@ -98,6 +101,42 @@ export const apex: Layer2 = {
   },
   permissions: [
     {
+      name: 'Governor',
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0xef75e1199B0599BA823b7770AcE8eb34864a1D55',
+          ),
+          type: 'EOA',
+        },
+      ],
+      description:
+        'Allowed to upgrade the implementation of the StarkPerpetual contract, potentially maliciously gaining control over the system or stealing funds.',
+    },
+    {
+      name: 'Governance Multisig',
+      accounts: [
+        {
+          address: discovery.getContract('GnosisSafe').address,
+          type: 'MultiSig',
+        },
+      ],
+      description:
+        'Allowed to upgrade the implementation of the StarkPerpetual contract, potentially maliciously gaining control over the system or stealing funds.',
+    },
+    {
+      name: 'MultiSig participants',
+      accounts: discovery
+        .getContractValue<string[]>('GnosisSafe', 'getOwners')
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        'GnosisSafe',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+      } ApeX MultiSig.`,
+    },
+    {
       name: 'Operator',
       accounts: [
         {
@@ -152,19 +191,6 @@ export const apex: Layer2 = {
       ],
       description:
         'Validity proof must be signed by at least 3 of these addresses to approve state update.',
-    },
-    {
-      name: 'Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x5751a83170BeA11fE7CdA5D599B04153C021f21A',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
     {
       name: 'SHARP Verifier Governor',
