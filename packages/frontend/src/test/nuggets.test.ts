@@ -2,7 +2,7 @@ import { KnowledgeNugget, layer2s } from '@l2beat/config'
 import { expect } from 'earljs'
 
 const knowledgeNuggets = layer2s.reduce<KnowledgeNugget[]>((nuggets, l2) => {
-    nuggets.push(...(l2.knowledgeNuggets || []));
+    nuggets.push(...(l2.knowledgeNuggets ?? []));
     return nuggets;
 }, []);
 
