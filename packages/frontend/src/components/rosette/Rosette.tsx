@@ -38,21 +38,21 @@ export function SmallRosette({ risks }: RosetteProps) {
 
 export function BigRosette({ risks }: RosetteProps) {
   return (
-    <div className="relative w-[305px] py-12 px-16">
+    <div className="relative w-[272px] py-12 px-12">
       <BigRosetteIcon risks={risks} />
-      <span className="absolute bottom-[30px] left-[47px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight">
+      <span className="absolute bottom-[30px] left-[31px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight">
         Sequencer failure
       </span>
-      <span className="absolute top-[77px] left-3 w-[10ch] -rotate-[64deg] text-center text-xs font-medium uppercase leading-tight">
+      <span className="absolute top-[77px] -left-1 w-[10ch] -rotate-[64deg] text-center text-xs font-medium uppercase leading-tight">
         State validation
       </span>
       <span className="absolute top-[10px] left-1/2 w-[10ch] -translate-x-1/2 text-center text-xs font-medium uppercase leading-tight">
         Data availability
       </span>
-      <span className="absolute top-[94px] left-[200px] rotate-[68deg] text-xs font-medium uppercase leading-tight">
+      <span className="absolute top-[94px] left-[184px] rotate-[68deg] text-xs font-medium uppercase leading-tight">
         Upgradeability
       </span>
-      <span className="absolute bottom-[32px] right-[39px] w-[10ch] -rotate-[36deg] text-center text-xs font-medium uppercase leading-tight">
+      <span className="absolute bottom-[32px] right-[23px] w-[10ch] -rotate-[36deg] text-center text-xs font-medium uppercase leading-tight">
         Validator failure
       </span>
     </div>
