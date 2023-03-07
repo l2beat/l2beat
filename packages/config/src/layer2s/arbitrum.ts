@@ -515,12 +515,12 @@ export const arbitrum: Layer2 = {
   },
   knowledgeNuggets: [
     {
-      title: 'Arbitrum update increasing decentralization',
+      title: 'Arbitrum update boosts decentralization',
       url: 'https://twitter.com/bkiepuszewski/status/1594754717330309120',
       thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
     {
-      title: 'Arbitrum is down - but has it really stopped working?',
+      title: 'Arbitrum is down - but does it work?',
       url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211',
       thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },

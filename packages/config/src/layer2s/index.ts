@@ -28,6 +28,7 @@ import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 export * from './common'
 export * from './types'
+import { KnowledgeNugget } from '../common'
 
 export const layer2s: Layer2[] = [
   apex,
@@ -57,5 +58,11 @@ export const layer2s: Layer2[] = [
   zksynclite,
   zksyncera,
 ]
+
+export const l2KnowledgeNuggets = layer2s.reduce<KnowledgeNugget[]>((nuggets, l2) => {
+  nuggets.push(...(l2.knowledgeNuggets ?? []))
+
+  return nuggets;
+}, [])
 
 export const milestonesLayer2s = HOMEPAGE_MILESTONES
