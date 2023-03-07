@@ -13,12 +13,12 @@ export function OtherSites() {
       py-6 md:flex-row
     "
     >
-      <div className="text-center text-lg text-white md:text-left">
+      <div className="text-center text-lg md:text-left">
         Ethereum Layer 1 is expensive. How much does it cost to use Layer 2? 💸
       </div>
       <OutLink
         className="
-        mt-3 ml-0 min-w-[90px] self-center text-center
+        mt-3 ml-0 min-w-[90px] text-center
         text-lg font-bold
         underline md:mt-0 md:ml-4"
         allowReferrer
