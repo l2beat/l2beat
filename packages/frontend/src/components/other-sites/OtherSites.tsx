@@ -13,7 +13,7 @@ export function OtherSites() {
       py-6 md:flex-row
     "
     >
-      <div className="text-center text-lg md:text-left">
+      <div className="text-center text-lg font-semibold md:text-left">
         Ethereum Layer 1 is expensive. How much does it cost to use Layer 2? 💸
       </div>
       <OutLink
