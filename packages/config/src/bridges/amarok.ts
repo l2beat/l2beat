@@ -9,11 +9,14 @@ export const amarok: Bridge = {
     name: 'Connext Amarok',
     slug: 'amarok',
     description:
-      'Connext Amarok is a multilayered architecture that implements Hub-and-Spoke AMB (Arbitrary Message Bridge) with liquidity network built on top of it.\
-    Messages from various domains are aggregated into one message root and are periodically sent to Ethereum using native AMBs. Upon being delivered to Ethereum they are\
-    subsequently aggregated again into a root-of-root of messages before being delivered to their destinations. Each message can be optimistically fast-forwarded by a network of Routers that will\
+      'Connext Amarok is a multilayered system that aggregates various native AMBs in an Hub-and-Spoke architecture with Ethereum being the Hub receiving\
+    messages from other domains. Amarok implements a liquidity network on top of its Hub-and-Spoke architecture.\
+    Messages from various domains are aggregated into one message root and are periodically sent to Ethereum using native AMBs. Note that for Optimistic Rollups (Arbitrum, Optimism)\
+    the AMB is only used as a transport layer, but 7-day delay is being ignored. Upon being delivered to Ethereum these message roots are\
+    subsequently aggregated again into a root-of-root of messages before being delivered to their destination domains. Each message can be optimistically fast-forwarded by a network of Routers that will\
     front liquidity (if the message is a token transfer) or post a bond (if the message is a xChain call). Upon receiving the message root via native AMBs Connext Amarok bridge will\
-    reconciles messages and return bond to the Routers. A set of Watchers is maintained whose purpose is to pause the bridge if the fraud is detected.',
+    reconciles messages and return bond to the Routers. There is a configurable delay programmed into the RootManager contract and the SpokeConnectors\
+    receiving messages. During the delay period a whitelisted set of Watchers can pause the bridge if the fraudulent message passed via AMB is detected.',
     links: {
       websites: ['https://bridge.connext.network/'],
     },
@@ -44,7 +47,8 @@ export const amarok: Bridge = {
       {
         name: 'Root Manager',
         address: EthereumAddress('0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1'),
-        description: '.',
+        description:
+          'Contract responsible for maintaining list of domains and building root-of-roots of messages.',
       },
       {
         name: 'Watcher Manager',
