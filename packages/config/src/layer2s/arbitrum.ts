@@ -520,7 +520,7 @@ export const arbitrum: Layer2 = {
       thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
     {
-      title: 'Arbitrum is down - but does it work?',
+      title: 'Arbitrum is down... or is it?',
       url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211',
       thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
