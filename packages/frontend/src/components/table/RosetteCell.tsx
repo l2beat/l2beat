@@ -23,6 +23,8 @@ export function RosetteCell({ riskValues }: RosetteCellProps) {
           riskValues={riskValues}
         />,
       )}
+      data-tooltip-big
+      data-tooltip-dark
     >
       <SmallRosette risks={riskSummary} />
     </span>

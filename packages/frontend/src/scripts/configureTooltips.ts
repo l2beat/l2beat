@@ -20,6 +20,11 @@ export function configureTooltips() {
     visible = true
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
+    tooltip.classList.toggle('dark:bg-gray-900', !!element.dataset.tooltipDark)
+    tooltipTriangle.classList.toggle(
+      'dark:fill-gray-900',
+      !!element.dataset.tooltipDark,
+    )
     const rect = activeElement.getBoundingClientRect()
     tooltipText.innerHTML = title
     tooltip.style.display = 'block'
