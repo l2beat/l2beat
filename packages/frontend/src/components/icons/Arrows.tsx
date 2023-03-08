@@ -9,7 +9,7 @@ export function ArrowUpIcon(props: SVGAttributes<SVGElement>) {
       aria-label="Arrow up icon"
       alt-text="+"
       className={cx(
-        'inline-block fill-green-700 dark:fill-green-300',
+        'inline-block fill-green-300 dark:fill-green-450',
         props.className,
       )}
     />
@@ -21,10 +21,7 @@ export function ArrowDownIcon(props: SVGAttributes<SVGElement>) {
     <ArrowIcon
       aria-label="Arrow down icon"
       alt-text="-"
-      className={cx(
-        'inline-block rotate-180 fill-red-700 dark:fill-red-300',
-        props.className,
-      )}
+      className={cx('inline-block rotate-180 fill-red-300', props.className)}
     />
   )
 }

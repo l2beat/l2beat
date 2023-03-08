@@ -14,7 +14,7 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
   const providerClassName = 'Tooltip relative inline-block h-4 w-4 ml-1'
   const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4 fill-current'
   return (
-    <span className={cx(isRollup && 'fill-green-700 text-green-700')}>
+    <span className={cx(isRollup && 'text-green-300 dark:text-green-450')}>
       {children}
       {provider === 'StarkEx' && (
         <span

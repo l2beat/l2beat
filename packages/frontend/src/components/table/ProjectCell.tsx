@@ -40,7 +40,7 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
             className="Tooltip relative inline-block h-[1em] w-4"
             title="This project contains unverified contracts."
           >
-            <UnverifiedIcon className="absolute top-px left-0 h-4 w-4 fill-red-700 dark:fill-red-300" />
+            <UnverifiedIcon className="absolute top-px left-0 h-4 w-4 fill-red-300" />
           </span>
         </span>
       )}
