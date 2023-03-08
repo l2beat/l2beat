@@ -11,8 +11,8 @@ export function ArchivedBar({ text }: ArchivedBarProps) {
   return (
     <div
       className={cx(
-        'mb-6 flex justify-center px-2.5 md:px-0',
-        'rounded-lg bg-gray-800 py-2.5',
+        'mb-6 flex justify-center p-2.5 md:px-0',
+        'rounded-lg bg-gray-800',
       )}
     >
       <span className="flex flex-row">
