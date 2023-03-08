@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
-import { KnowledgeNugget, ProjectTechnologyChoice } from '../common'
+import { ProjectTechnologyChoice } from '../common'
 import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s } from './index'
 
-const knowledgeNuggets = layer2s.flatMap<KnowledgeNugget>(
+const knowledgeNuggets = layer2s.flatMap(
   (nugget) => nugget.knowledgeNuggets ?? [],
 )
 
