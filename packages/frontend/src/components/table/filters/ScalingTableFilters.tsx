@@ -15,8 +15,8 @@ export function ScalingTableFilters({
 }: ScalingTableFiltersProps) {
   return (
     <div className={cx('overflow-x-auto whitespace-nowrap', className)}>
-      <IncludeArchivedCheckbox />
-      {upcomingEnabled && <IncludeUpcomingCheckbox className="ml-2" />}
+      {upcomingEnabled && <IncludeUpcomingCheckbox />}
+      <IncludeArchivedCheckbox className={cx(upcomingEnabled ? 'ml-2' : '')} />
     </div>
   )
 }
