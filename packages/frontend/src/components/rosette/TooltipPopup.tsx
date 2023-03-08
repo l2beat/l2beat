@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { BigRosette } from './Rosette'
+import { MediumRosette } from './Rosette'
 import { RiskSentiments, RiskValue, RiskValues } from './types'
 
 export interface RosetteTooltipProps {
@@ -18,9 +18,9 @@ export function RosetteTooltipPopup({
       <span className="text-base font-bold">
         <span className="mr-2">Risk analysis</span>
       </span>
-      <div className="flex gap-4">
-        <div className="-ml-3">
-          <BigRosette risks={riskSummary} />
+      <div className="flex items-center gap-4">
+        <div className="">
+          <MediumRosette risks={riskSummary} />
         </div>
         <div>
           <RiskValueComponent
