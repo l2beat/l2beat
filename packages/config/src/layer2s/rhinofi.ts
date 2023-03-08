@@ -55,15 +55,6 @@ export const rhinofi: Layer2 = {
         tokens: '*',
       },
     ],
-    events: [
-      {
-        name: 'LogStateTransitionFact',
-        abi: 'event LogStateTransitionFact(bytes32 stateTransitionFact)',
-        emitter: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1590491810),
-      },
-    ],
     transactionApi: {
       type: 'starkex',
       product: 'deversifi',

@@ -40,7 +40,6 @@ export const fuelv1: Layer2 = {
         tokens: ['ETH', 'DAI', 'USDC', 'USDT'],
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_FP_1R,

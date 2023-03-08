@@ -66,15 +66,6 @@ export const layer2financezk: Layer2 = {
         tokens: ['cUSDC'],
       },
     ],
-    events: [
-      {
-        name: 'LogStateTransitionFact',
-        abi: ' event LogStateTransitionFact(bytes32 stateTransitionFact)',
-        emitter: EthereumAddress('0x82123571C8a5e0910280C066bc634c4945FFcbC8'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1645130774),
-      },
-    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

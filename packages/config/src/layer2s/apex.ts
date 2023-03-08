@@ -44,7 +44,6 @@ export const apex: Layer2 = {
         tokens: ['USDC'],
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
