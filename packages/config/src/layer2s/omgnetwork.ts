@@ -52,7 +52,6 @@ export const omgnetwork: Layer2 = {
         tokens: '*',
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_EXITS_ONLY,

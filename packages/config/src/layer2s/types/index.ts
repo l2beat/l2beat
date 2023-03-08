@@ -1,5 +1,4 @@
 export * from './Layer2'
-export * from './Layer2Event'
 export * from './Layer2Rating'
 export * from './Layer2RiskView'
 export * from './Layer2Technology'

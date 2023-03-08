@@ -11,7 +11,7 @@ import {
 import { About } from '../../../components/About'
 import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
-import { OtherSites } from '../../../components/OtherSites'
+import { OtherSites } from '../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../components/PageContent'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 

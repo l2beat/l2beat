@@ -27,7 +27,6 @@ export const layer2aWithDups: Layer2 = {
   },
   config: {
     escrows: [],
-    events: [],
   },
   riskView: {
     stateValidation: {
