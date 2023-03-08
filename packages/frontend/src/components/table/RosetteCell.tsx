@@ -2,9 +2,7 @@ import { Layer2RiskView } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { SmallRosette } from '../rosette/Rosette'
-import { RosetteTooltipPopup } from '../rosette/TooltipPopup'
-import { RiskSentiments } from '../rosette/types'
+import { RiskSentiments, RosetteTooltipPopup, SmallRosette } from '../rosette'
 
 export interface RosetteCellProps {
   riskView: Layer2RiskView
