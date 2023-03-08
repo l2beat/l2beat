@@ -6,7 +6,6 @@ import { OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
 
 export interface TechnologyCellProps {
   children: string
-
   provider?: Layer2['technology']['provider']
 }
 
@@ -17,7 +16,6 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
   return (
     <span className={cx(isRollup && 'fill-green-700 text-green-700')}>
       {children}
-
       {provider === 'StarkEx' && (
         <span
           className={providerClassName}

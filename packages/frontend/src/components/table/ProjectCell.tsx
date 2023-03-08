@@ -16,7 +16,7 @@ export interface ProjectCellProps {
 
 export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
   return (
-    <div className="pl-4">
+    <div className="pl-[15px]">
       <span className="relative pl-8 group-hover:underline">
         <img
           className="absolute top-0 left-0 inline-block h-[18px] w-[18px]"

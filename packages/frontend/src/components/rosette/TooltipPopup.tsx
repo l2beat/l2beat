@@ -56,10 +56,11 @@ interface RiskValueProps {
 
 function RiskValueComponent({ title, risk }: RiskValueProps) {
   const sentimentColor =
-    risk.sentiment &&
-    (risk.sentiment === 'bad'
+    risk.sentiment === 'bad'
       ? 'text-orange-600 dark:text-red-300'
-      : 'text-yellow-200')
+      : risk.sentiment === 'warning'
+      ? 'text-yellow-200'
+      : undefined
   return (
     <div className="font-medium">
       <span className="mb-1 block text-[10px] uppercase">{title}</span>
