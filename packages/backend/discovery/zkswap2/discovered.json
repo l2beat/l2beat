@@ -1,7 +1,7 @@
 {
   "name": "zkswap2",
-  "blockNumber": 16618858,
-  "configHash": "0x170e26639a3fa062e1552f849c15b2efe5a26f10b6b3c519eb0d44321373520a",
+  "blockNumber": 16767881,
+  "configHash": "0x2a62be5df79e61dbf2e4d92c5e44803f4c4fd9918900f35e17bc2c2c91939a18",
   "contracts": [
     {
       "name": "",
@@ -135,7 +135,7 @@
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 1760,
+        "firstPendingWithdrawalIndex": 1770,
         "firstPriorityRequestId": 1811,
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0xf2c351f22b148A9fF583a0F81701471a74E7338e",
@@ -143,9 +143,9 @@
         "maxDepositAmount": "39614081257132168796771975168",
         "numberOfPendingWithdrawals": 0,
         "pairManager": "0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D",
-        "totalBlocksChecked": 32240,
-        "totalBlocksCommitted": 32240,
-        "totalBlocksVerified": 32240,
+        "totalBlocksChecked": 32245,
+        "totalBlocksCommitted": 32245,
+        "totalBlocksVerified": 32245,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 72,

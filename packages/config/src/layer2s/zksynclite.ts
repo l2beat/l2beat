@@ -48,22 +48,6 @@ export const zksynclite: Layer2 = {
         tokens: '*',
       },
     ],
-    events: [
-      {
-        name: 'BlockVerification',
-        abi: 'event  BlockVerification(uint32 indexed blockNumber)',
-        emitter: EthereumAddress('0xabea9132b05a70803a4e85094fd0e1800777fbef'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1592218707),
-      },
-      {
-        name: 'BlockCommit',
-        abi: 'event BlockCommit(uint32 indexed blockNumber)',
-        emitter: EthereumAddress('0xabea9132b05a70803a4e85094fd0e1800777fbef'),
-        type: 'data',
-        sinceTimestamp: new UnixTime(1592218707),
-      },
-    ],
     transactionApi: {
       type: 'zksync',
       callsPerMinute: 3_000,

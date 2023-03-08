@@ -73,16 +73,6 @@ describe('layer2s', () => {
     }
   })
 
-  describe('events', () => {
-    for (const project of layer2s) {
-      for (const event of project.config.events) {
-        it(`${event.name} in ${project.display.name} as correct ABI`, () => {
-          expect(event.abi.endsWith(';')).toEqual(false)
-        })
-      }
-    }
-  })
-
   describe('milestones', () => {
     describe('name', () => {
       describe('no longer than 50 characters', () => {

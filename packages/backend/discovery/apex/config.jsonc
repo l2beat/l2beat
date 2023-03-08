@@ -1,0 +1,57 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "apex",
+  "initialAddresses": ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"],
+  "overrides": {
+    "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb": {
+      "ignoreMethods": [
+        "configurationHash",
+        "getEthKey",
+        "getQuantum",
+        "identify",
+        "isAssetRegistered",
+        "validatedSelectors",
+        "getAssetInfo",
+        "getActionCount",
+        "getActionHashByIndex"
+      ],
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getRollupTreeHeight",
+        "getRollupVaultRoot",
+        "getSequenceNumber",
+        "getSystemAssetType",
+        "getValidiumTreeHeight",
+        "getValidiumVaultRoot"
+      ],
+      "fields": {
+        "IS_MULTISIG_GOVERNOR": {
+          "type": "call",
+          "method": "function proxyIsGovernor(address user) external view returns (bool)",
+          "args": ["0xC532d2976209A56DdF4a99B844130f7c0daCa7B6"]
+        },
+        "IS_EOA_GOVERNOR": {
+          "type": "call",
+          "method": "function proxyIsGovernor(address user) external view returns (bool)",
+          "args": ["0xef75e1199B0599BA823b7770AcE8eb34864a1D55"]
+        },
+        "GOVERNORS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event LogNewGovernorAccepted(address acceptedGovernor)",
+          "addKey": "acceptedGovernor",
+          "removeEvent": "event LogRemovedGovernor(address removedGovernor)",
+          "removeKey": "removedGovernor"
+        },
+        "OPERATORS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event LogOperatorAdded(address operator)",
+          "addKey": "operator",
+          "removeEvent": "event LogOperatorRemoved(address operator)",
+          "removeKey": "operator"
+        }
+      }
+    }
+  }
+}

@@ -49,7 +49,6 @@ export const zkswap2: Layer2 = {
         tokens: '*',
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

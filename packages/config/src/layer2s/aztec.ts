@@ -47,15 +47,6 @@ export const aztec: Layer2 = {
         tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
       },
     ],
-    events: [
-      {
-        name: 'RollupProcessed',
-        abi: 'event RollupProcessed (uint256 indexed rollupId, bytes32 dataRoot, bytes32 nullRoot, bytes32 rootRoot, uint256 dataSize)',
-        emitter: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
-        type: 'data',
-        sinceTimestamp: new UnixTime(1614799636),
-      },
-    ],
     transactionApi: {
       type: 'aztec',
       url: 'https://api.aztec.network/falafel-mainnet',
