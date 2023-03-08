@@ -131,7 +131,7 @@ export function ScalingTvlView({
     <section className="mt-4 sm:mt-8">
       <ScalingTableFilters className="mb-4" upcomingEnabled={upcomingEnabled} />
       <TableView items={items} columns={columns} rows={rows} />
-      <ScalingLegend showTokenWarnings />
+      <ScalingLegend />
     </section>
   )
 }
