@@ -9,7 +9,6 @@ export interface WarningBarProps {
   text: string
   isCritical: boolean
   className?: string
-  isArchived?: boolean
 }
 
 export function WarningBar({
