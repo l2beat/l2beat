@@ -22,7 +22,7 @@ export class CoingeckoClient {
     private readonly apiKey: string | undefined,
   ) {
     const rateLimiter = new RateLimiter({
-      callsPerMinute: apiKey ? 450 : 35,
+      callsPerMinute: apiKey ? 450 : 10,
     })
     this.query = rateLimiter.wrap(this.query.bind(this))
   }
