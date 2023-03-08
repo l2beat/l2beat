@@ -34,9 +34,7 @@ export function DetailsHeader(props: HeaderProps) {
           )}
           {props.title}
         </h1>
-        {props.isArchived && (
-          <ArchivedBar text="This project is archived and no longer maintained." />
-        )}
+        {props.isArchived && <ArchivedBar />}
         <DetailsHeaderStats stats={props.stats} />
       </header>
       <HorizontalSeparator className="mt-2 md:mt-6" />
