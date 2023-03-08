@@ -41,7 +41,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
     {
       name: 'Name',
-      headClassName: 'pl-11',
+      headClassName: 'pl-12',
       getValue: (entry) => (
         <ProjectCell highlightL2 type={entry.type} project={entry} />
       ),

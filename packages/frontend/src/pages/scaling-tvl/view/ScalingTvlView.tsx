@@ -50,7 +50,7 @@ export function ScalingTvlView({
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: 'Name',
-      headClassName: 'pl-11',
+      headClassName: 'pl-12',
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {

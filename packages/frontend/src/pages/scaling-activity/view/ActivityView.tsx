@@ -38,7 +38,7 @@ export function ActivityView({ items }: ActivityViewProps) {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
     {
       name: 'Name',
-      headClassName: 'pl-11',
+      headClassName: 'pl-12',
       minimalWidth: true,
       getValue: (project) =>
         project.slug !== 'ethereum' ? (

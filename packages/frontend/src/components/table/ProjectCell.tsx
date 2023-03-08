@@ -16,10 +16,10 @@ export interface ProjectCellProps {
 
 export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
   return (
-    <div className="flex items-center gap-1.5 pl-4">
-      <span className=" flex items-center gap-3 group-hover:underline">
+    <div className="pl-4">
+      <span className="relative pl-8 group-hover:underline">
         <img
-          className=" block h-[18px] w-[18px]"
+          className="absolute top-0 left-0 inline-block h-[18px] w-[18px]"
           src={`/icons/${project.slug}.png`}
           alt={`${project.name} logo`}
         />
@@ -35,16 +35,23 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
         <span className="text-base font-bold md:text-lg">{project.name}</span>
       </span>
       {project.isVerified === false && (
-        <span
-          className="Tooltip inline-block"
-          title="This project contains unverified contracts."
-        >
-          <UnverifiedIcon className="h-4 fill-red-700 dark:fill-red-300" />
+        <span className="pl-1.5">
+          <span
+            className="Tooltip relative inline-block h-[1em] w-4"
+            title="This project contains unverified contracts."
+          >
+            <UnverifiedIcon className="absolute top-px left-0 h-4 w-4 fill-red-700 dark:fill-red-300" />
+          </span>
         </span>
       )}
       {project.warning && (
-        <span className="Tooltip inline-block" title={project.warning}>
-          <ShieldIcon className="h-4 w-[12.8px] fill-yellow-700 dark:fill-yellow-300" />
+        <span className="pl-1.5">
+          <span
+            className="Tooltip relative inline-block h-[1em] w-[12.8px]"
+            title={project.warning}
+          >
+            <ShieldIcon className="absolute top-px left-0 h-4 w-[12.8px] fill-yellow-700 dark:fill-yellow-300" />
+          </span>
         </span>
       )}
     </div>
