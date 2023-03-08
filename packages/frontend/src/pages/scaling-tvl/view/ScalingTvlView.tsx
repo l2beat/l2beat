@@ -1,6 +1,7 @@
-import { Layer2, Layer2Rating, Layer2RiskView } from '@l2beat/config'
+import { Layer2, Layer2Rating } from '@l2beat/config'
 import React from 'react'
 
+import { RiskValues } from '../../../components/rosette'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ScalingTableFilters } from '../../../components/table/filters/ScalingTableFilters'
 import { NumberCell } from '../../../components/table/NumberCell'
@@ -25,7 +26,7 @@ export interface ScalingTvlViewProps {
 export interface ScalingTvlViewEntry {
   name: string
   slug: string
-  riskView: Layer2RiskView
+  riskValues: RiskValues
   provider?: Layer2['technology']['provider']
   warning?: string
   isArchived?: boolean
@@ -57,7 +58,7 @@ export function ScalingTvlView({
       tooltip: 'Risks associated with this project.',
       minimalWidth: true,
       alignCenter: true,
-      getValue: (project) => <RosetteCell riskView={project.riskView} />,
+      getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
     },
     {
       name: 'Technology',

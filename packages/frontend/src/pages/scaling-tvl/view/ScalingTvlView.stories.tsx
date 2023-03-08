@@ -26,30 +26,25 @@ export function TvlView() {
               name: 'Forktimism',
               provider: 'Optimism',
               slug: 'optimism',
-              riskView: {
+              riskValues: {
                 stateValidation: {
                   value: 'Fraud proofs',
-                  description: 'There is an existing fraud proof system',
                   sentiment: undefined,
                 },
                 validatorFailure: {
                   value: 'No mechanism',
-                  description: '',
                   sentiment: 'bad',
                 },
                 upgradeability: {
                   value: 'Yes',
-                  description: '',
                   sentiment: 'bad',
                 },
                 sequencerFailure: {
                   value: 'Transact using L1',
-                  description: '',
                   sentiment: undefined,
                 },
                 dataAvailability: {
                   value: 'Optimistic',
-                  description: '',
                   sentiment: 'warning',
                 },
               },
@@ -89,30 +84,25 @@ export function TvlView() {
               name: 'Arbitrage',
               slug: 'arbitrum',
               tvl: formatLargeNumber(2_740_000_000),
-              riskView: {
+              riskValues: {
                 stateValidation: {
                   value: 'Fraud proofs',
-                  description: 'There is an existing fraud proof system',
                   sentiment: undefined,
                 },
                 validatorFailure: {
                   value: 'No mechanism',
-                  description: '',
                   sentiment: 'bad',
                 },
                 upgradeability: {
                   value: 'Yes',
-                  description: '',
                   sentiment: 'bad',
                 },
                 sequencerFailure: {
                   value: 'Transact using L1',
-                  description: '',
                   sentiment: undefined,
                 },
                 dataAvailability: {
                   value: 'Optimistic',
-                  description: '',
                   sentiment: 'warning',
                 },
               },
@@ -138,30 +128,25 @@ export function TvlView() {
               provider: 'StarkEx',
               slug: 'starknet',
               tvl: formatLargeNumber(2_740_000_000),
-              riskView: {
+              riskValues: {
                 stateValidation: {
                   value: 'Fraud proofs',
-                  description: 'There is an existing fraud proof system',
                   sentiment: undefined,
                 },
                 validatorFailure: {
                   value: 'No mechanism',
-                  description: '',
                   sentiment: 'bad',
                 },
                 upgradeability: {
                   value: 'Yes',
-                  description: '',
                   sentiment: 'bad',
                 },
                 sequencerFailure: {
                   value: 'Transact using L1',
-                  description: '',
                   sentiment: undefined,
                 },
                 dataAvailability: {
                   value: 'Optimistic',
-                  description: '',
                   sentiment: 'warning',
                 },
               },
@@ -187,30 +172,25 @@ export function TvlView() {
               provider: 'zkSync',
               slug: 'zksync-lite',
               tvl: formatLargeNumber(2_740_000_000),
-              riskView: {
+              riskValues: {
                 stateValidation: {
                   value: 'Fraud proofs',
-                  description: 'There is an existing fraud proof system',
                   sentiment: undefined,
                 },
                 validatorFailure: {
                   value: 'No mechanism',
-                  description: '',
                   sentiment: 'bad',
                 },
                 upgradeability: {
                   value: 'Yes',
-                  description: '',
                   sentiment: 'bad',
                 },
                 sequencerFailure: {
                   value: 'Transact using L1',
-                  description: '',
                   sentiment: undefined,
                 },
                 dataAvailability: {
                   value: 'Optimistic',
-                  description: '',
                   sentiment: 'warning',
                 },
               },
@@ -236,30 +216,25 @@ export function TvlView() {
               provider: 'StarkEx',
               slug: 'layer2financezk',
               tvl: formatLargeNumber(2_740_000_000),
-              riskView: {
+              riskValues: {
                 stateValidation: {
                   value: 'Fraud proofs',
-                  description: 'There is an existing fraud proof system',
                   sentiment: undefined,
                 },
                 validatorFailure: {
                   value: 'No mechanism',
-                  description: '',
                   sentiment: 'bad',
                 },
                 upgradeability: {
                   value: 'Yes',
-                  description: '',
                   sentiment: 'bad',
                 },
                 sequencerFailure: {
                   value: 'Transact using L1',
-                  description: '',
                   sentiment: undefined,
                 },
                 dataAvailability: {
                   value: 'Optimistic',
-                  description: '',
                   sentiment: 'warning',
                 },
               },
