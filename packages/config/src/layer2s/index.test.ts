@@ -1,9 +1,13 @@
 import { UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
-import { ProjectTechnologyChoice } from '../common'
+import { KnowledgeNugget, ProjectTechnologyChoice } from '../common'
 import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s } from './index'
+
+const knowledgeNuggets = layer2s.flatMap<KnowledgeNugget>(
+  (nugget) => nugget.knowledgeNuggets ?? [],
+)
 
 describe('layer2s', () => {
   describe('sentences', () => {
@@ -173,6 +177,16 @@ describe('layer2s', () => {
           ).toEqual(true)
         })
       }
+    })
+
+    describe('knowledgeNuggets', () => {
+      describe('title fits character limit', () => {
+        knowledgeNuggets.forEach((nugget) => {
+          it(nugget.title, () => {
+            expect(nugget.title.length).toBeLessThanOrEqualTo(40)
+          })
+        })
+      })
     })
   })
 })
