@@ -41,6 +41,7 @@ export function getProjectHeader(
     technology: project.technology.category,
     ratingEntry: config.features.rating && project.rating,
     isArchived: project.isArchived,
+    isUpcoming: project.isUpcoming,
   }
 }
 

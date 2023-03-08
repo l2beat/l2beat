@@ -23,6 +23,7 @@ export interface ProjectHeaderProps {
   technology: string
   ratingEntry?: false | Layer2Rating
   isArchived?: boolean
+  isUpcoming?: boolean
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
@@ -92,6 +93,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title={props.title}
       icon={props.icon}
       stats={stats}
+      isUpcoming={props.isUpcoming}
       isArchived={props.isArchived}
     />
   )
