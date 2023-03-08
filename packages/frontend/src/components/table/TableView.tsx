@@ -95,7 +95,7 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                 {columns.map((column, j) => (
                   <td
                     key={j}
-                    className={cx('h-9 md:h-10', column.minimalWidth && 'w-0')}
+                    className={cx('h-9 md:h-14', column.minimalWidth && 'w-0')}
                   >
                     <a
                       href={href}
@@ -106,7 +106,6 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                         !column.noPaddingRight &&
                           j !== columns.length - 1 &&
                           'pr-3 md:pr-4',
-                        'md:py-2',
                       )}
                     >
                       {column.getValue(item, i)}
