@@ -92,17 +92,21 @@ export function ScalingTvlView({
       name: 'TVL',
       tooltip: 'Total value locked in escrow contracts on Ethereum.',
       alignRight: true,
-      headClassName: '-translate-x-[84px]',
+      noPaddingRight: true,
+      headClassName: '-translate-x-[72px]',
       getValue: (project) =>
         !project.isUpcoming && (
           <>
             <NumberCell className="font-bold">{project.tvl}</NumberCell>
             {!project.isArchived ? (
-              <NumberCell signed className="ml-1 w-20 !text-base font-medium">
+              <NumberCell
+                signed
+                className="ml-1 w-[72px] !text-base font-medium "
+              >
                 {project.sevenDayChange}
               </NumberCell>
             ) : (
-              <span className="w-[84px]" />
+              <span className="w-[72px]" />
             )}
           </>
         ),

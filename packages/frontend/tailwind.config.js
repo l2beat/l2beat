@@ -20,6 +20,12 @@ module.exports = {
       transparent: 'transparent',
       link: 'rgb(var(--link-rgb) / <alpha-value>)',
       white: '#FAFAFA',
+      neutral: {
+        700: '#323539',
+      },
+      zinc: {
+        800: '#272A2F',
+      },
       gray: {
         50: '#AEAEAE',
         100: '#EDEDED',
@@ -33,7 +39,6 @@ module.exports = {
         700: '#565656',
         750: '#424850',
         800: '#424242',
-        825: '#323539',
         850: '#333333',
         900: '#2F2F2F',
         950: '#111111',
@@ -46,7 +51,7 @@ module.exports = {
         500: '#E5C227',
         700: '#CB9800',
       },
-      orange: '#FF7D1F',
+      orange: { 500: '#FF7D1F', 600: '#F94A24' },
       purple: {
         100: '#7E41CC',
         300: '#F1D6FF',

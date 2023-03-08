@@ -16,6 +16,7 @@ export interface ColumnConfig<T> {
   alignCenter?: true
   minimalWidth?: true
   headClassName?: string
+  noPaddingRight?: true
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
 }
@@ -46,7 +47,9 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                 className={cx(
                   'whitespace-pre py-2 text-sm font-medium uppercase text-gray-700 dark:text-gray-600',
                   column.minimalWidth && 'w-0',
-                  i !== columns.length - 1 && 'pr-3 md:pr-4',
+                  !column.noPaddingRight &&
+                    i !== columns.length - 1 &&
+                    'pr-3 md:pr-4',
                   column.headClassName,
                 )}
               >
@@ -100,7 +103,9 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                         'flex h-full w-full items-center',
                         column.alignRight && 'justify-end',
                         column.alignCenter && 'justify-center',
-                        j !== columns.length - 1 && 'pr-3 md:pr-4',
+                        !column.noPaddingRight &&
+                          j !== columns.length - 1 &&
+                          'pr-3 md:pr-4',
                         'md:py-2',
                       )}
                     >
