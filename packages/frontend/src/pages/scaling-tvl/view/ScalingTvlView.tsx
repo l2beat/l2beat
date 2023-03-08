@@ -32,6 +32,7 @@ export interface ScalingTvlViewEntry {
   warning?: string
   isArchived?: boolean
   isVerified?: boolean
+  isUpcoming?: boolean
   tvl: string
   tvlBreakdown: TVLBreakdownProps
   oneDayChange: string
@@ -64,14 +65,16 @@ export function ScalingTvlView({
       name: 'TVL',
       tooltip: 'Total value locked in escrow contracts on Ethereum.',
       alignRight: true,
-      getValue: (project) => <NumberCell>{project.tvl}</NumberCell>,
+      getValue: (project) =>
+        !project.isUpcoming && <NumberCell>{project.tvl}</NumberCell>,
     },
     {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
       getValue: (project) =>
-        !project.isArchived && (
+        !project.isArchived &&
+        !project.isUpcoming && (
           <NumberCell signed>{project.sevenDayChange}</NumberCell>
         ),
     },
@@ -82,7 +85,8 @@ export function ScalingTvlView({
             tooltip: 'Rating of this Layer 2 based on its features.',
             alignCenter: true as const,
             getValue: (project: ScalingTvlViewEntry) =>
-              !project.isArchived && <RatingCell item={project.ratingEntry} />,
+              !project.isArchived &&
+              !project.isUpcoming && <RatingCell item={project.ratingEntry} />,
           },
         ]
       : []),
@@ -91,14 +95,16 @@ export function ScalingTvlView({
       tooltip:
         'Composition of the total value locked broken down by token type.',
       getValue: (project) =>
-        !project.isArchived && <TVLBreakdown {...project.tvlBreakdown} />,
+        !project.isArchived &&
+        !project.isUpcoming && <TVLBreakdown {...project.tvlBreakdown} />,
     },
     {
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
       getValue: (project) =>
-        !project.isArchived && <NumberCell>{project.marketShare}</NumberCell>,
+        !project.isArchived &&
+        !project.isUpcoming && <NumberCell>{project.marketShare}</NumberCell>,
     },
     {
       name: 'Purpose',

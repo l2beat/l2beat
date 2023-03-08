@@ -19,6 +19,8 @@ export interface Layer2 {
   id: ProjectId
   /** Is this layer2 archived? */
   isArchived?: boolean
+  /** Is this layer2 an upcoming rollup? */
+  isUpcoming?: boolean
   /** Information displayed about the layer2 on the frontend */
   display: Layer2Display
   /** Information required to calculate the stats of the layer2 */

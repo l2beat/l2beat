@@ -1,14 +1,14 @@
 import { ProjectId, TvlApiResponse } from '@l2beat/shared'
-import { partition } from 'lodash'
 
-export function orderByTvl<T extends { id: ProjectId; isArchived?: boolean }>(
-  projects: T[],
-  tvlApiResponse: Pick<TvlApiResponse, 'projects'>,
-): T[] {
-  const [active, archived] = partition(
-    projects,
-    (project) => !project.isArchived,
+export function orderByTvl<
+  T extends { id: ProjectId; isArchived?: boolean; isUpcoming?: boolean },
+>(projects: T[], tvlApiResponse: Pick<TvlApiResponse, 'projects'>): T[] {
+  const active = projects.filter(
+    (project) => !project.isArchived && !project.isUpcoming,
   )
+  const archived = projects.filter((project) => project.isArchived)
+  const upcoming = projects.filter((project) => project.isUpcoming)
+
   const getTvl = (project: T) =>
     tvlApiResponse.projects[project.id.toString()]?.charts.hourly.data.at(
       -1,
@@ -16,5 +16,8 @@ export function orderByTvl<T extends { id: ProjectId; isArchived?: boolean }>(
 
   const sortByTvl = (a: T, b: T) => getTvl(b) - getTvl(a)
 
-  return [...active].sort(sortByTvl).concat([...archived].sort(sortByTvl))
+  return [...active]
+    .sort(sortByTvl)
+    .concat(...upcoming)
+    .concat([...archived].sort(sortByTvl))
 }

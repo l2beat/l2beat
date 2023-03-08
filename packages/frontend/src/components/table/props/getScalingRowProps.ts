@@ -6,6 +6,7 @@ interface ScalingTableEntry {
   slug: string
   isArchived?: boolean
   isVerified?: boolean
+  isUpcoming?: boolean
 }
 
 export function getScalingRowProps(entry: ScalingTableEntry) {
@@ -26,8 +27,10 @@ export function getScalingRowProps(entry: ScalingTableEntry) {
     className: cx(
       getRowVerificationClassNames(entry),
       entry.isArchived && 'hidden opacity-50',
+      entry.isUpcoming && 'hidden opacity-50',
     ),
     href,
     'data-archived': entry.isArchived,
+    'data-upcoming': entry.isUpcoming,
   }
 }
