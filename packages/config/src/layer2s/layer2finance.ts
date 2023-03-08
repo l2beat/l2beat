@@ -44,7 +44,6 @@ export const layer2finance: Layer2 = {
         tokens: ['BUSD', 'DAI', 'USDC', 'USDT', 'WETH'],
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_FP_1R,

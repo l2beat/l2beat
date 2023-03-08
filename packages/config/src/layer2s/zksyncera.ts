@@ -55,7 +55,6 @@ export const zksyncera: Layer2 = {
         tokens: ['ETH'],
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

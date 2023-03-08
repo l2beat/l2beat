@@ -54,7 +54,6 @@ export const gluon: Layer2 = {
         tokens: ['DAI', 'USDT'],
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
