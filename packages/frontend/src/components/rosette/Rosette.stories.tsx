@@ -43,21 +43,33 @@ const args: RiskSentiments = {
 }
 
 function SmallTemplate(risks: RiskSentiments) {
-  return <SmallRosetteComponent risks={risks} />
+  return (
+    <div className="p-4">
+      <SmallRosetteComponent risks={risks} />
+    </div>
+  )
 }
 
 export const SmallRosette: Story<RiskSentiments> = SmallTemplate.bind({})
 SmallRosette.args = args
 
 function MediumTemplate(risks: RiskSentiments) {
-  return <MediumRosetteComponent risks={risks} />
+  return (
+    <div className="p-4">
+      <MediumRosetteComponent risks={risks} />
+    </div>
+  )
 }
 
 export const MediumRosette: Story<RiskSentiments> = MediumTemplate.bind({})
 MediumRosette.args = args
 
 function BigTemplate(risks: RiskSentiments) {
-  return <BigRosetteComponent risks={risks} />
+  return (
+    <div className="p-4">
+      <BigRosetteComponent risks={risks} />
+    </div>
+  )
 }
 
 export const BigRosette: Story<RiskSentiments> = BigTemplate.bind({})
