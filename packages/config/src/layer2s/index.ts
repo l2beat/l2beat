@@ -18,6 +18,7 @@ import { nova } from './nova'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { rhinofi } from './rhinofi'
+import { scroll } from './scroll'
 import { sorare } from './sorare'
 import { starknet } from './starknet'
 import { Layer2 } from './types'
@@ -26,6 +27,7 @@ import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
 import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
+
 export * from './common'
 export * from './types'
 
@@ -49,6 +51,7 @@ export const layer2s: Layer2[] = [
   nova,
   omgnetwork,
   optimism,
+  scroll,
   sorare,
   starknet,
   zkswap,
