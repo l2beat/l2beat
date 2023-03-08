@@ -24,15 +24,6 @@ export function DescriptionSection(props: DescriptionSectionProps) {
           className="mt-4"
         />
       )}
-      {props.isArchived && (
-        <WarningBar
-          text="This project is archived and no longer maintained."
-          color="red"
-          className="mt-4"
-          isArchived={props.isArchived}
-          isCritical={false}
-        />
-      )}
       {props.warning && (
         <WarningBar
           text={props.warning}

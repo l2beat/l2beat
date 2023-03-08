@@ -21,5 +21,6 @@ export function getProjectHeader(
     destination: getDestination(project.technology.destination),
     validatedBy: project.riskView?.validatedBy,
     type: project.technology.category,
+    isArchived: project.isArchived,
   }
 }
