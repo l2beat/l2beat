@@ -11,7 +11,7 @@ export interface RosetteProps {
   risks: RiskSentiments
 }
 
-interface RiskValue {
+export interface RiskValue {
   value: string
   sentiment?: Sentiment
 }
