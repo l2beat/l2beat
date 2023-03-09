@@ -1,6 +1,10 @@
 import { ProjectId } from '@l2beat/shared'
 
-import { EMPTY_TECHNOLOGY_CHOICE, makeBridgeCompatible, RISK_VIEW } from './common'
+import {
+  EMPTY_TECHNOLOGY_CHOICE,
+  makeBridgeCompatible,
+  RISK_VIEW,
+} from './common'
 import { Layer2 } from './types'
 
 export const scroll: Layer2 = {
