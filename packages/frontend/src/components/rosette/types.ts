@@ -9,6 +9,7 @@ export type RiskSentiments = Partial<Record<Risk, Sentiment>>
 
 export interface RosetteProps {
   risks: RiskSentiments
+  className?: string
 }
 
 export interface RiskValue {

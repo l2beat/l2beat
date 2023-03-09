@@ -1,15 +1,16 @@
 import React from 'react'
 
+import { Icon } from '../icons/Icon'
 import { RosetteProps, Sentiment } from './types'
 
-export function SmallRosette({ risks }: RosetteProps) {
+export function SmallRosette({ risks, className }: RosetteProps) {
   return (
-    <svg
+    <Icon
       width="31"
       height="30"
       viewBox="0 0 31 30"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      alt-text="Rosette showing risk summary"
+      className={className}
     >
       <path
         d="M14.6497 17.3247C14.6511 16.8162 14.1568 16.4537 13.6722 16.608L2.30605 20.2267C1.88435 20.361 1.67416 20.8259 1.87579 21.2199C2.55689 22.5506 4.19904 25.3713 6.67017 27.1831C9.35855 29.1542 12.4233 29.7938 13.8318 29.993C14.2569 30.0531 14.6157 29.7182 14.6169 29.2888L14.6497 17.3247Z"
@@ -32,7 +33,7 @@ export function SmallRosette({ risks }: RosetteProps) {
         d="M17.3002 16.6253C16.8151 16.4727 16.322 16.8369 16.3251 17.3454L16.3994 29.2735C16.4022 29.716 16.7835 30.055 17.2196 29.9796C18.6927 29.7252 21.8742 28.9963 24.339 27.1759C27.0205 25.1954 28.5428 22.4596 29.1518 21.1742C29.3357 20.7862 29.1226 20.344 28.713 20.2151L17.3002 16.6253Z"
         className={sentimentToClassName(risks.validatorFailure)}
       />
-    </svg>
+    </Icon>
   )
 }
 
@@ -82,18 +83,14 @@ export function BigRosette({ risks }: RosetteProps) {
   )
 }
 
-function BigRosetteIcon({
-  risks,
-  className,
-}: RosetteProps & { className?: string }) {
+function BigRosetteIcon({ risks, className }: RosetteProps) {
   return (
-    <svg
+    <Icon
       width="181"
       height="180"
       viewBox="0 0 181 180"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
       className={className}
+      alt-text="Rosette showing risk summary"
     >
       <circle
         cx="90.8408"
@@ -121,7 +118,7 @@ function BigRosetteIcon({
         d="M95.5409 102.181C95.5486 99.428 98.2361 97.4805 100.855 98.3304L162.282 118.265C164.561 119.005 165.685 121.528 164.581 123.655C160.854 130.839 151.878 146.061 138.445 155.795C123.83 166.385 107.218 169.756 99.5872 170.792C97.2836 171.105 95.3511 169.28 95.3577 166.956L95.5409 102.181Z"
         className={sentimentToClassName(risks.validatorFailure)}
       />
-    </svg>
+    </Icon>
   )
 }
 
