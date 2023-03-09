@@ -7,7 +7,7 @@ export function ArchivedBar() {
   return (
     <div
       className={cx(
-        'mb-6 flex justify-center py-2.5 md:px-0',
+        'mb-6 flex justify-center py-2.5',
         'rounded-lg bg-gray-200 dark:bg-gray-800',
       )}
     >
@@ -15,7 +15,7 @@ export function ArchivedBar() {
         <span className="flex items-center">
           <ArchivedIcon />
         </span>
-        <span className="ml-2 text-base font-medium dark:text-white">
+        <span className="ml-2 text-base font-medium">
           <span className="md:hidden">This project is archived.</span>
           <span className="hidden md:block">
             This project is archived and no longer maintained.
