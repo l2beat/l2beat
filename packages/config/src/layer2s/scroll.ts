@@ -3,6 +3,13 @@ import { ProjectId } from '@l2beat/shared'
 import { makeBridgeCompatible, RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
+const EMPTY_TECHNOLOGY_CHOICE = {
+  name: '–',
+  description: 'Not provided',
+  references: [],
+  risks: [],
+}
+
 export const scroll: Layer2 = {
   type: 'layer2',
   id: ProjectId('scroll'),
@@ -34,27 +41,24 @@ export const scroll: Layer2 = {
     escrows: [],
   },
   riskView: makeBridgeCompatible({
-    stateValidation: {
-      value: '–',
-      description: 'Not provided',
-    },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: {
-      value: '–',
-      description: 'Not deployed',
-    },
-    sequencerFailure: {
-      value: '–',
-      description: 'Not deployed',
-    },
-    validatorFailure: {
-      value: '–',
-      description: 'Not deployed',
-    },
-    destinationToken: {
-      value: '–',
-      description: 'Not deployed',
-    },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    stateValidation: RISK_VIEW.EMPTY,
+    dataAvailability: RISK_VIEW.EMPTY,
+    upgradeability: RISK_VIEW.EMPTY,
+    sequencerFailure: RISK_VIEW.EMPTY,
+    validatorFailure: RISK_VIEW.EMPTY,
+    destinationToken: RISK_VIEW.EMPTY,
+    validatedBy: RISK_VIEW.EMPTY,
   }),
+  technology: {
+    category: 'ZK Rollup',
+    stateCorrectness: EMPTY_TECHNOLOGY_CHOICE,
+    dataAvailability: EMPTY_TECHNOLOGY_CHOICE,
+    operator: EMPTY_TECHNOLOGY_CHOICE,
+    forceTransactions: EMPTY_TECHNOLOGY_CHOICE,
+    exitMechanisms: [],
+  },
+  contracts: {
+    addresses: [],
+    risks: [],
+  },
 }

@@ -12,6 +12,11 @@ export function makeBridgeCompatible(
 
 // State validation
 
+export const EMPTY: ProjectRiskViewEntry = {
+  value: '–',
+  description: 'Not provided',
+}
+
 export const STATE_FP: ProjectRiskViewEntry = {
   value: 'Fraud proofs',
   description:
@@ -258,6 +263,7 @@ export const CANONICAL_USDC: ProjectRiskViewEntry = {
 }
 
 export const RISK_VIEW = {
+  EMPTY,
   STATE_FP,
   STATE_FP_1R,
   STATE_FP_INT,
