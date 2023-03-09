@@ -10,7 +10,6 @@ export interface DescriptionSectionProps {
   description: string
   warning?: string
   isVerified?: boolean
-  isArchived?: boolean
 }
 
 export function DescriptionSection(props: DescriptionSectionProps) {

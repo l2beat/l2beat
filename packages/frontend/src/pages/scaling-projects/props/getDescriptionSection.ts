@@ -14,6 +14,5 @@ export function getDescriptionSection(
     warning: project.display.warning,
     description: project.display.description,
     isVerified: verificationStatus.projects[project.id.toString()],
-    isArchived: project.isArchived,
   }
 }
