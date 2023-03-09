@@ -15,6 +15,6 @@ export function IncludeArchivedCheckbox({
       role="table-archived"
       id="archived-projects"
       label="Show archived projects"
-    />  
+    />
   )
 }

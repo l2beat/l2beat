@@ -30,7 +30,6 @@ export function getHeader(
     tvlWeeklyChange,
     tpsDaily: tpsDaily?.toString() ?? '',
     tpsWeeklyChange,
-    
   }
 }
 
