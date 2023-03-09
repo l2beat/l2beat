@@ -14,15 +14,15 @@ export function RosetteTooltipPopup({
   riskSummary,
 }: RosetteTooltipProps) {
   return (
-    <div className="flex w-[400px] flex-col">
+    <div className="flex w-[370px] flex-col">
       <span className="text-base font-bold">
         <span className="mr-2">Risk analysis</span>
       </span>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         <div className="">
           <MediumRosette risks={riskSummary} />
         </div>
-        <div>
+        <div className="flex flex-col gap-4">
           <RiskValueComponent
             title="Sequencer failure"
             risk={riskValues.sequencerFailure}
@@ -64,9 +64,7 @@ function RiskValueComponent({ title, risk }: RiskValueProps) {
   return (
     <div className="font-medium">
       <span className="mb-1 block text-[10px] uppercase">{title}</span>
-      <span className={cx(sentimentColor, 'mb-4 block text-base')}>
-        {risk.value}
-      </span>
+      <span className={cx(sentimentColor, 'text-base')}>{risk.value}</span>
     </div>
   )
 }
