@@ -16,10 +16,8 @@ export function UpcomingBar() {
           <UpcomingIcon />
         </span>
         <span className="ml-2 text-base font-medium dark:text-white">
-          This is an upcoming project.{" "}
-          <span className="hidden md:block">
-            Stay tuned!
-          </span>
+          This is an upcoming project.{' '}
+          <span className="hidden md:block">Stay tuned!</span>
         </span>
       </span>
     </div>
