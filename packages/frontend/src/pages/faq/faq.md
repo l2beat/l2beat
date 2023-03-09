@@ -1,7 +1,3 @@
-# Welcome to the L2BEAT FAQ!
-
-Hi! We are glad you've made it here. Below you will find answers to most frequently asked questions about L2BEAT.
-
 ## What is the overall purpose of this site?
 
 L2BEAT was created to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the [rollup-centric Ethereum scaling roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) are aimed at scaling Ethereum.
@@ -22,17 +18,17 @@ No, in its current implementation it is a PoS sidechain with validators solely r
 
 There are two primary (and somewhat independent) mechanisms that L2 chains can use.
 
-First, the L2 state can be verified by L1 through either **Validity Proofs** or **Fraud Proofs**. This mechanism is most important as it ensures that L2 validators cannot cheat and include invalid transactions in a L2 block, e.g. mint coins out of thin air or steal your coins.
+First, the L2 state can be verified by L1 through either <span style='color: var(--text-warning)'>**ValidityProofs**</span> or <span style='color: var(--text-warning)'>**Fraud Proofs**.</span> This mechanism is most important as it ensures that L2 validators cannot cheat and include invalid transactions in a L2 block, e.g. mint coins out of thin air or steal your coins.
 
-The second use of L1 is as a **Data Availability** layer for L2 transactions so that, if there is a dispute, users could independently re-create the L2 state and ensure continued system operation or trustlessly exit to L1.
+The second use of L1 is as a <span style='color: var(--text-warning)'>**Data Availability**</span> layer for L2 transactions so that, if there is a dispute, users could independently re-create the L2 state and ensure continued system operation or trustlessly exit to L1.
 
 ## Can you explain how L1 can help with L2 state validation?
 
 An L2 chain can periodically "commit" its state to L1 by submitting the hash of its current state root. A state root is just a number, e.g: `0x77905a71f4b32221...`. We need a mechanism to ensure that this number corresponds to the actual L2 state.
 
-One way to do so is by providing a zero-knowledge cryptographic **Validity Proof** (zkProof) that will be verified by the L1 smart contract. If the verification passes, users can be sure that the state root is a result of executing valid transaction set.
+One way to do so is by providing a zero-knowledge cryptographic <span style='color: var(--text-warning)'>**ValidityProofs**</span> (zkProof) that will be verified by the L1 smart contract. If the verification passes, users can be sure that the state root is a result of executing valid transaction set.
 
-The other mechanism is to allow any honest L2 chain observer to raise an alarm if they think that the supplied state root is incorrect and provide a **Fraud Proof**. Such a proof allows the L1 contract to trustlessly verify that the state root was incorrect. In such case it will be automatically removed and the chain will roll back.
+The other mechanism is to allow any honest L2 chain observer to raise an alarm if they think that the supplied state root is incorrect and provide a <span style='color: var(--text-warning)'>**Fraud Proofs**.</span>. Such a proof allows the L1 contract to trustlessly verify that the state root was incorrect. In such case it will be automatically removed and the chain will roll back.
 
 ## What if L2 validators submit a fraudulent state commit to L1?
 
@@ -52,10 +48,10 @@ For more details on data availability and its importance in security of scaling 
 
 Depending on whether Validity Proofs or Fraud Proofs are used and what is the mechanism for data availability we can broadly categories L2s into the following categories:
 
-- **zkRollups** - Validity Proofs with data on L1 Ethereum,
-- **Optimistic Rollups** - Fraud Proofs with data on L1 Ethereum,
-- **Validium** - Validity Proofs with data kept off-chain,
-- **Plasma** - Fraud Proofs with data kept off-chain.
+- &#x2022; <span style='color: var(--text-warning)'>**zkRollups**</span> - Validity Proofs with data on L1 Ethereum,
+- &#x2022; <span style='color: var(--text-warning)'>**Optimistic Rollups**</span> - Fraud Proofs with data on L1 Ethereum,
+- &#x2022; <span style='color: var(--text-warning)'>**Validium**</span> - Validity Proofs with data kept off-chain,
+- &#x2022; <span style='color: var(--text-warning)'>**Plasma**</span> - Fraud Proofs with data kept off-chain.
 
 In the future we expect to see hybrid solution using a mix of the above techniques.
 
@@ -93,7 +89,7 @@ We will continuously monitor different L2 technologies with the primary focus on
 
 ## Is L2BEAT performing a security audit for each L2?
 
-No, the L2BEAT team **DOES NOT DO SECURITY AUDITS**. All the information that we present on our site should be independently verified by anyone wanting to use given L2. Our goal is to collect as much information as we can about the "state of L2s" and allow the community to better understand what security assumptions are used to build given L2 solutions.
+No, the L2BEAT team <span style='color: var(--text-warning)'>**DOES NOT DO SECURITY AUDITS**</span>. All the information that we present on our site should be independently verified by anyone wanting to use given L2. Our goal is to collect as much information as we can about the "state of L2s" and allow the community to better understand what security assumptions are used to build given L2 solutions.
 
 ## Why aren't state channel based solutions like Raiden or Nahmii included?
 
