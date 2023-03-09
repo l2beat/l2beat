@@ -1,6 +1,6 @@
 {
   "name": "lzOmnichain",
-  "blockNumber": 16719637,
+  "blockNumber": 16793897,
   "configHash": "0xde7f237d473f8e3ad6994a0a4f96ad217e9f39ee003fed6688bc0afaa93f857b",
   "contracts": [
     {
@@ -42,7 +42,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
-        "nonce": 348,
+        "nonce": 363,
         "VERSION": "1.3.0"
       }
     },
@@ -87,7 +87,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 30,
+        "nonce": 31,
         "VERSION": "1.3.0"
       }
     },
@@ -154,7 +154,8 @@
           153,
           155,
           156,
-          154
+          154,
+          149
         ],
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
