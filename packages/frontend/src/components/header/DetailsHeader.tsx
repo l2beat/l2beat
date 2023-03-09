@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ArchivedBar } from '../project/ArchivedBar'
+import { UpcomingBar } from '../project/UpcomingBar'
 
 export interface HeaderProps {
   title: string
@@ -11,6 +12,7 @@ export interface HeaderProps {
   icon?: string
   stats: Stat[]
   isArchived?: boolean
+  isUpcoming?: boolean
 }
 
 export function DetailsHeader(props: HeaderProps) {
@@ -35,6 +37,7 @@ export function DetailsHeader(props: HeaderProps) {
           {props.title}
         </h1>
         {props.isArchived && <ArchivedBar />}
+        {props.isUpcoming && <UpcomingBar />}
         <DetailsHeaderStats stats={props.stats} />
       </header>
       <HorizontalSeparator className="mt-2 md:mt-6" />

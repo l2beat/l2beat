@@ -3,8 +3,11 @@ export function configureFilters() {
     document.querySelector<HTMLInputElement>('#combined-bridges')
   const archivedCheckbox =
     document.querySelector<HTMLInputElement>('#archived-projects')
+  const upcomingCheckbox =
+    document.querySelector<HTMLInputElement>('#upcoming-rollups')
 
   const archived = Array.from(document.querySelectorAll('[data-archived]'))
+  const upcoming = Array.from(document.querySelectorAll('[data-upcoming]'))
   const L2s = Array.from(document.querySelectorAll('[data-layer2]'))
   const bridgesOnlyCells = Array.from(
     document.querySelectorAll('[data-bridges-only-cell]'),
@@ -16,8 +19,6 @@ export function configureFilters() {
   const archivedBridges = archived.filter((x) => !L2s.includes(x))
   const archivedL2s = archived.filter((x) => L2s.includes(x))
   const activeL2s = L2s.filter((x) => !archivedL2s.includes(x))
-
-  console.log(activeL2s.length)
 
   archivedCheckbox?.addEventListener('change', () => {
     const l2sVisible = !combinedCheckbox || combinedCheckbox.checked
@@ -47,6 +48,12 @@ export function configureFilters() {
         'hidden',
         !(archivedCheckbox?.checked && combinedCheckbox.checked),
       )
+    })
+  })
+
+  upcomingCheckbox?.addEventListener('change', () => {
+    upcoming.forEach((x) => {
+      x.classList.toggle('hidden', !upcomingCheckbox.checked)
     })
   })
 }

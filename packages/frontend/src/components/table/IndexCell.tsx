@@ -7,11 +7,16 @@ export interface IndexCellProps {
   entry: {
     isVerified?: boolean
     isArchived?: boolean
+    isUpcoming?: boolean
   }
   index: number
 }
 
 export function IndexCell({ entry, index }: IndexCellProps) {
+  if (entry.isUpcoming === true) {
+    return null
+  }
+
   if (entry.isArchived === true) {
     return <ArchivedIcon />
   }

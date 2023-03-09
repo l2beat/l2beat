@@ -73,3 +73,11 @@ ArchivedHeader.args = {
   stats: stats,
   isArchived: true,
 }
+
+export const UpcomingHeader: Story<HeaderProps> = Template.bind({})
+UpcomingHeader.args = {
+  title: project.display.name,
+  icon: `/icons/${project.display.slug}.png`,
+  stats: stats,
+  isUpcoming: true,
+}
