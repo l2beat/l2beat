@@ -16,6 +16,7 @@ export interface ProjectHeaderProps {
   destination: ProjectRiskViewEntry
   validatedBy?: ProjectRiskViewEntry
   type: string
+  isArchived?: boolean
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
@@ -44,5 +45,12 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     { title: 'Type', value: props.type },
   ]
 
-  return <DetailsHeader title={props.title} icon={props.icon} stats={stats} />
+  return (
+    <DetailsHeader
+      title={props.title}
+      icon={props.icon}
+      stats={stats}
+      isArchived={props.isArchived}
+    />
+  )
 }

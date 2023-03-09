@@ -22,6 +22,7 @@ export interface ProjectHeaderProps {
   purpose: string
   technology: string
   ratingEntry?: false | Layer2Rating
+  isArchived?: boolean
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
@@ -86,5 +87,12 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     },
   ]
 
-  return <DetailsHeader title={props.title} icon={props.icon} stats={stats} />
+  return (
+    <DetailsHeader
+      title={props.title}
+      icon={props.icon}
+      stats={stats}
+      isArchived={props.isArchived}
+    />
+  )
 }

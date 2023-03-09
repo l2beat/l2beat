@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
+import { ArchivedBar } from '../project/ArchivedBar'
 
 export interface HeaderProps {
   title: string
@@ -9,6 +10,7 @@ export interface HeaderProps {
   titleClassName?: string
   icon?: string
   stats: Stat[]
+  isArchived?: boolean
 }
 
 export function DetailsHeader(props: HeaderProps) {
@@ -32,6 +34,7 @@ export function DetailsHeader(props: HeaderProps) {
           )}
           {props.title}
         </h1>
+        {props.isArchived && <ArchivedBar />}
         <DetailsHeaderStats stats={props.stats} />
       </header>
       <HorizontalSeparator className="mt-2 md:mt-6" />

@@ -40,6 +40,7 @@ export function getProjectHeader(
     purpose: project.display.purpose,
     technology: project.technology.category,
     ratingEntry: config.features.rating && project.rating,
+    isArchived: project.isArchived,
   }
 }
 
