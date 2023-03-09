@@ -9,6 +9,10 @@ import { RatingTooltipPopup } from '../../../components/rating/TooltipPopup'
 import { RiskSentiments } from '../../../components/rosette'
 import { NoDataCell } from '../../../components/table/NoDataCell'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
+import {
+  TVLBreakdown,
+  TVLBreakdownProps,
+} from '../../../components/TVLBreakdown'
 
 export interface ProjectHeaderProps {
   title: string
@@ -22,6 +26,7 @@ export interface ProjectHeaderProps {
   transactionMonthlyCount?: string
   purpose: string
   technology: string
+  tvlBreakdown: TVLBreakdownProps
   risks?: RiskSentiments
   ratingEntry?: false | Layer2Rating
   isArchived?: boolean
@@ -45,7 +50,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     },
     {
       title: 'Breakdown',
-      value: 'PLACEHOLDER',
+      value: <TVLBreakdown {...props.tvlBreakdown} />,
     },
     {
       title: 'Daily TPS',

@@ -7,6 +7,7 @@ import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
+import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
@@ -17,7 +18,8 @@ export function getProjectHeader(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): ProjectHeaderProps {
-  const charts = tvlApiResponse.projects[project.id.toString()]?.charts
+  const apiProject = tvlApiResponse.projects[project.id.toString()]
+  const charts = apiProject?.charts
   const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
 
   const activityData =
@@ -25,6 +27,13 @@ export function getProjectHeader(
   const tpsDaily = getTpsDaily(activityData)
   const tpsWeeklyChange = getTpsWeeklyChange(activityData)
   const transactionMonthlyCount = getTransactionCount(activityData, 'month')
+
+  const tvlBreakdown = getTvlBreakdown(
+    project.display.name,
+    project.config.associatedTokens ?? [],
+    tvl,
+    apiProject?.tokens ?? [],
+  )
 
   return {
     icon: `/icons/${project.display.slug}.png`,
@@ -40,6 +49,7 @@ export function getProjectHeader(
         : undefined,
     purpose: project.display.purpose,
     technology: project.technology.category,
+    tvlBreakdown,
     ratingEntry: config.features.rating && project.rating,
     risks: getRiskSentimentsFromRiskView(project.riskView),
     isArchived: project.isArchived,
