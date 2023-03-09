@@ -6,6 +6,7 @@ import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { RatingBadge } from '../../../components/rating/Badge'
 import { RatingTooltipPopup } from '../../../components/rating/TooltipPopup'
+import { RiskSentiments } from '../../../components/rosette'
 import { NoDataCell } from '../../../components/table/NoDataCell'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 
@@ -21,6 +22,7 @@ export interface ProjectHeaderProps {
   transactionMonthlyCount?: string
   purpose: string
   technology: string
+  risks?: RiskSentiments
   ratingEntry?: false | Layer2Rating
   isArchived?: boolean
   isUpcoming?: boolean
@@ -40,6 +42,26 @@ export function ProjectHeader(props: ProjectHeaderProps) {
         ) : (
           <NoDataCell />
         ),
+    },
+    {
+      title: 'Breakdown',
+      value: 'PLACEHOLDER',
+    },
+    {
+      title: 'Daily TPS',
+      value:
+        props.tpsDaily && props.tpsWeeklyChange ? (
+          <StatWithChange
+            stat={props.tpsDaily}
+            change={props.tpsWeeklyChange}
+          />
+        ) : (
+          <NoDataCell />
+        ),
+    },
+    {
+      title: '30D tx count',
+      value: props.transactionMonthlyCount ?? <NoDataCell />,
     },
     ...(props.ratingEntry
       ? [
@@ -63,28 +85,12 @@ export function ProjectHeader(props: ProjectHeaderProps) {
         ]
       : []),
     {
-      title: 'Daily TPS',
-      value:
-        props.tpsDaily && props.tpsWeeklyChange ? (
-          <StatWithChange
-            stat={props.tpsDaily}
-            change={props.tpsWeeklyChange}
-          />
-        ) : (
-          <NoDataCell />
-        ),
-    },
-    {
-      title: '30D tx count',
-      value: props.transactionMonthlyCount ?? <NoDataCell />,
+      title: 'Technology',
+      value: <TechnologyCell>{props.technology}</TechnologyCell>,
     },
     {
       title: 'Purpose',
       value: props.purpose,
-    },
-    {
-      title: 'Technology',
-      value: <TechnologyCell>{props.technology}</TechnologyCell>,
     },
   ]
 
@@ -93,8 +99,10 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title={props.title}
       icon={props.icon}
       stats={stats}
+      risks={props.risks}
       isUpcoming={props.isUpcoming}
       isArchived={props.isArchived}
+      isSummary
     />
   )
 }

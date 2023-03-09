@@ -2,6 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
+import { RiskSentiments } from '../../../components/rosette'
 import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
@@ -40,6 +41,7 @@ export function getProjectHeader(
     purpose: project.display.purpose,
     technology: project.technology.category,
     ratingEntry: config.features.rating && project.rating,
+    risks: getRiskSentimentsFromRiskView(project.riskView),
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
   }
@@ -57,5 +59,17 @@ function getTitleLength(name: string): 'long' | 'very-long' | undefined {
     case 'Polygon Hermez':
     case 'Metis Andromeda':
       return 'very-long'
+  }
+}
+
+function getRiskSentimentsFromRiskView(
+  riskView: Layer2['riskView'],
+): RiskSentiments {
+  return {
+    sequencerFailure: riskView.sequencerFailure.sentiment,
+    stateValidation: riskView.stateValidation.sentiment,
+    dataAvailability: riskView.dataAvailability.sentiment,
+    upgradeability: riskView.upgradeability.sentiment,
+    validatorFailure: riskView.validatorFailure.sentiment,
   }
 }

@@ -4,6 +4,7 @@ import React, { ReactNode } from 'react'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { UpcomingBar } from '../project/UpcomingBar'
+import { BigRosette, RiskSentiments } from '../rosette'
 
 export interface HeaderProps {
   title: string
@@ -13,6 +14,8 @@ export interface HeaderProps {
   stats: Stat[]
   isArchived?: boolean
   isUpcoming?: boolean
+  isSummary?: boolean
+  risks?: RiskSentiments
 }
 
 export function DetailsHeader(props: HeaderProps) {
@@ -38,7 +41,11 @@ export function DetailsHeader(props: HeaderProps) {
         </h1>
         {props.isArchived && <ArchivedBar />}
         {props.isUpcoming && <UpcomingBar />}
-        <DetailsHeaderStats stats={props.stats} />
+        {props.isSummary && props.risks ? (
+          <Summary stats={props.stats} risks={props.risks} />
+        ) : (
+          <DetailsHeaderStats stats={props.stats} />
+        )}
       </header>
       <HorizontalSeparator className="mt-2 md:mt-6" />
     </>
@@ -51,26 +58,63 @@ interface Stat {
   className?: string
 }
 
+interface SummaryProps {
+  stats: Stat[]
+  risks: RiskSentiments
+}
+
+function Summary(props: SummaryProps) {
+  const topStats = props.stats.slice(0, 4)
+  const bottomStats = props.stats.slice(4)
+  return (
+    <div className="flex gap-8">
+      <ul className="grid h-fit grow grid-cols-4">
+        {topStats.map(({ title, value }) => (
+          <DetailsHeaderStat key={title} title={title} value={value} />
+        ))}
+        <HorizontalSeparator className="col-span-4 mt-2 md:my-6" />
+        {bottomStats.map(({ title, value }) => (
+          <DetailsHeaderStat key={title} title={title} value={value} />
+        ))}
+      </ul>
+      <div>
+        <span className="text-xs text-gray-500 dark:text-gray-600">
+          Risk analysis
+        </span>
+        <BigRosette risks={props.risks} />
+      </div>
+    </div>
+  )
+}
+
 interface DetailsHeaderStatsProps {
   stats: Stat[]
 }
-
+// TODO: Remove this component when we update bridges to new stats
 function DetailsHeaderStats(props: DetailsHeaderStatsProps) {
   return (
     <ul className="flex flex-col justify-between gap-2 md:flex-row">
       {props.stats.map(({ title, value }) => (
-        <li
-          key={title}
-          className="flex items-center justify-between md:flex-col md:items-start md:gap-1"
-        >
-          <span className="text-xs text-gray-500 dark:text-gray-600">
-            {title}
-          </span>
-          <span className="text-lg font-semibold md:text-xl md:font-bold">
-            {value}
-          </span>
-        </li>
+        <DetailsHeaderStat key={title} title={title} value={value} />
       ))}
     </ul>
+  )
+}
+
+function DetailsHeaderStat(props: Stat) {
+  return (
+    <li
+      className={cx(
+        'flex items-center justify-between md:flex-col md:items-start md:gap-1',
+        props.className,
+      )}
+    >
+      <span className="text-xs text-gray-500 dark:text-gray-600">
+        {props.title}
+      </span>
+      <span className="text-lg font-semibold md:text-xl md:font-bold">
+        {props.value}
+      </span>
+    </li>
   )
 }
