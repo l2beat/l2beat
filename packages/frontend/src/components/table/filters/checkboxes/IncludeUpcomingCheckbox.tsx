@@ -12,7 +12,7 @@ export function IncludeUpcomingCheckbox({
 }: IncludeUpcomingCheckboxProps) {
   return (
     <Checkbox
-      className={cx('bg-purple-100 text-white', className)}
+      className={cx('bg-purple-100 text-white dark:bg-purple-100', className)}
       role="table-upcoming"
       id="upcoming-rollups"
       label="Show upcoming rollups"
