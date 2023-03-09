@@ -61,15 +61,6 @@ export const dydx: Layer2 = {
         tokens: ['USDC'],
       },
     ],
-    events: [
-      {
-        name: 'LogStateTransitionFact',
-        abi: 'event LogStateTransitionFact(bytes32 stateTransitionFact)',
-        emitter: EthereumAddress('0xd54f502e184b6b739d7d27a6410a67dc462d69c8'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1613033682),
-      },
-    ],
     transactionApi: {
       type: 'starkex',
       product: 'dydx',

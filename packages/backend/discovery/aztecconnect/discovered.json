@@ -1,7 +1,7 @@
 {
   "name": "aztecconnect",
-  "blockNumber": 16725834,
-  "configHash": "0x5a62d15a98ba74c60c13158846c037a2bf10a5d508ee2f6b3414c1884ee624f4",
+  "blockNumber": 16767970,
+  "configHash": "0x1efcf6ca88a8b1f1301d857dd5eb2b2d744db88007645802e2819e70324d3c68",
   "contracts": [
     {
       "name": "RollupProcessorV2",
@@ -22,27 +22,27 @@
         "escapeBlockUpperBound": 2400,
         "getAsyncDefiInteractionHashesLength": 0,
         "getCapped": true,
-        "getDataSize": 19212288,
-        "getDefiInteractionHashesLength": 3,
+        "getDataSize": 20017152,
+        "getDefiInteractionHashesLength": 1,
         "getEscapeHatchStatus": [
           false,
-          1926
+          590
         ],
         "getImplementationVersion": 2,
-        "getPendingDefiInteractionHashesLength": 3,
+        "getPendingDefiInteractionHashesLength": 1,
         "getSupportedAssetsLength": 15,
         "getSupportedBridgesLength": 17,
-        "lastRollupTimeStamp": 1677576743,
+        "lastRollupTimeStamp": 1678089227,
         "LISTER_ROLE": "0xf94103142c1baabe9ac2b5d1487bf783de9e69cfeea9a72f5c9c94afd7877b8c",
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "paused": false,
-        "prevDefiInteractionsHash": "0x18cac5d380e9856b2ff540bba859364c4dff6dc0f9eeebcfafcae1f705125643",
+        "prevDefiInteractionsHash": "0x2d07b9ecf17baa1cfcedb8751ba942d07b35e1b41ce4182f6b402cfd9e12ac97",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "rollupProviders": [
           "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
           "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
         ],
-        "rollupStateHash": "0xa6120240d03970ab662588947d54cb427e09137ea6ad008adc589c9c19dc8e14",
+        "rollupStateHash": "0xf48ddd6df6204426a5121f935226eed42029a7ce3a749986527502da44cea947",
         "verifier": "0xB656f4219f565b93DF57D531B574E17FE0F25939",
         "getSupportedAsset": [
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -107,7 +107,7 @@
           "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
         ],
         "getThreshold": 1,
-        "nonce": 247,
+        "nonce": 248,
         "VERSION": "1.3.0"
       }
     },

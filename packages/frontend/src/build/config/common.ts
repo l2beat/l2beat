@@ -20,6 +20,7 @@ export const common: Omit<Config, 'backend'> = {
     milestones: true,
     rating: false,
     buildAllProjectPages: false,
+    upcomingRollups: false,
   },
   layer2s,
   bridges,

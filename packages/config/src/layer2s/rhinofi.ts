@@ -41,7 +41,7 @@ export const rhinofi: Layer2 = {
         'https://rhino.fi/blog',
         'https://twitter.com/rhinofi',
         'https://linkedin.com/company/rhinofi/',
-        'https://youtube.com/c/deversifi',
+        'https://youtube.com/c/rhinofi',
       ],
     },
     activityDataSource: 'Closed API',
@@ -53,15 +53,6 @@ export const rhinofi: Layer2 = {
         address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
         sinceTimestamp: new UnixTime(1590491810),
         tokens: '*',
-      },
-    ],
-    events: [
-      {
-        name: 'LogStateTransitionFact',
-        abi: 'event LogStateTransitionFact(bytes32 stateTransitionFact)',
-        emitter: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1590491810),
       },
     ],
     transactionApi: {
@@ -110,7 +101,7 @@ export const rhinofi: Layer2 = {
       {
         name: 'Committee',
         description:
-          'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
         address: EthereumAddress('0x28780349A33eEE56bb92241bAAB8095449e24306'),
       },
       SHARP_VERIFIER_CONTRACT,

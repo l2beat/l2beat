@@ -5,6 +5,10 @@ import { ProjectTechnologyChoice } from '../common'
 import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s } from './index'
 
+const knowledgeNuggets = layer2s.flatMap(
+  (nugget) => nugget.knowledgeNuggets ?? [],
+)
+
 describe('layer2s', () => {
   describe('sentences', () => {
     describe('every description ends with a dot', () => {
@@ -70,16 +74,6 @@ describe('layer2s', () => {
       it(purpose, () => {
         expect(purpose.length).toBeLessThanOrEqualTo(20)
       })
-    }
-  })
-
-  describe('events', () => {
-    for (const project of layer2s) {
-      for (const event of project.config.events) {
-        it(`${event.name} in ${project.display.name} as correct ABI`, () => {
-          expect(event.abi.endsWith(';')).toEqual(false)
-        })
-      }
     }
   })
 
@@ -173,6 +167,16 @@ describe('layer2s', () => {
           ).toEqual(true)
         })
       }
+    })
+
+    describe('knowledgeNuggets', () => {
+      describe('title fits character limit', () => {
+        knowledgeNuggets.forEach((nugget) => {
+          it(nugget.title, () => {
+            expect(nugget.title.length).toBeLessThanOrEqualTo(40)
+          })
+        })
+      })
     })
   })
 })

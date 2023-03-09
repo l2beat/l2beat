@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Checkbox } from './Checkbox'
+import { Checkbox } from '../../../Checkbox'
 
 export interface IncludeArchivedCheckboxProps {
   className?: string

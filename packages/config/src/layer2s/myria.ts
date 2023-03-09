@@ -45,7 +45,6 @@ export const myria: Layer2 = {
         tokens: ['ETH'],
       },
     ],
-    events: [],
     transactionApi: {
       type: 'starkex',
       product: 'myria',

@@ -10,6 +10,7 @@ export function getLocalConfig(): Config {
       activity: false,
       rating: false,
       buildAllProjectPages: true,
+      upcomingRollups: true,
     },
     backend: {
       apiUrl: 'http://localhost:3000',

@@ -8,7 +8,6 @@ import {
   ProjectLinks,
   ProjectPermission,
 } from '../../common'
-import { Layer2Event } from './Layer2Event'
 import { Layer2Rating } from './Layer2Rating'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
@@ -62,8 +61,6 @@ export interface Layer2Config {
   associatedTokens?: string[]
   /** List of contracts in which L1 funds are locked */
   escrows: ProjectEscrow[]
-  /** Metadata about events emitted by the system */
-  events: Layer2Event[]
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
 }

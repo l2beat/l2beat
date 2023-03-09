@@ -1,8 +1,8 @@
 import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { IncludeArchivedCheckbox } from '../../../components/IncludeArchivedCheckbox'
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { ScalingTableFilters } from '../../../components/table/filters/ScalingTableFilters'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
@@ -15,6 +15,7 @@ import {
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
+  upcomingEnabled?: boolean
 }
 
 export interface ScalingRiskViewEntry {
@@ -31,7 +32,10 @@ export interface ScalingRiskViewEntry {
   validatorFailure: ProjectRiskViewEntry
 }
 
-export function ScalingRiskView({ items }: ScalingRiskViewProps) {
+export function ScalingRiskView({
+  items,
+  upcomingEnabled,
+}: ScalingRiskViewProps) {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
       name: '#',
@@ -79,7 +83,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <IncludeArchivedCheckbox className="mb-4" />
+      <ScalingTableFilters className="mb-4" upcomingEnabled={upcomingEnabled} />
       <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>

@@ -8,6 +8,7 @@ export function getStagingConfig(): Config {
       ...common.features,
       rating: false,
       buildAllProjectPages: true,
+      upcomingRollups: true,
     },
     backend: {
       apiUrl: 'https://staging.l2beat.com',
