@@ -53,7 +53,7 @@ export function configureFilters() {
 
   upcomingCheckbox?.addEventListener('change', () => {
     upcoming.forEach((x) => {
-      x.classList.toggle('hidden')
+      x.classList.toggle('hidden', !upcomingCheckbox.checked)
     })
   })
 }
