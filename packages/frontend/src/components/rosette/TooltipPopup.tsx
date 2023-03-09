@@ -14,7 +14,7 @@ export function RosetteTooltipPopup({
   riskSummary,
 }: RosetteTooltipProps) {
   return (
-    <div className="w-88 flex flex-col">
+    <div className="flex w-[400px] flex-col">
       <span className="text-base font-bold">
         <span className="mr-2">Risk analysis</span>
       </span>
