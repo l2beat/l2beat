@@ -27,7 +27,7 @@ export function FaqPage(props: FaqPageProps) {
           </span>
         </span>
         <div className="mt-12 flex flex-row justify-between">
-          <aside className="flex max-w-[288px] flex-col">
+          <aside className="hidden max-w-[288px] md:flex md:flex-col">
             <a
               className={linkClasses}
               href="#what-is-the-overall-purpose-of-this-site"
