@@ -10,9 +10,8 @@ export * from './riskView'
 export * from './stateCorrectness'
 
 export const EMPTY_TECHNOLOGY_CHOICE = {
-    name: '–',
-    description: 'Not provided',
-    references: [],
-    risks: [],
-  }
-  
+  name: '–',
+  description: 'Not provided',
+  references: [],
+  risks: [],
+}

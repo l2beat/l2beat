@@ -29,7 +29,7 @@ export const scroll: Layer2 = {
         'https://github.com/scroll-tech',
       ],
       socialMedia: [
-        'https://www.discord.gg/scroll',
+        'https://discord.gg/scroll',
         'https://www.youtube.com/@Scroll_ZKP',
         'https://twitter.com/Scroll_ZKP',
       ],

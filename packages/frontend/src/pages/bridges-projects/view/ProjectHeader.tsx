@@ -17,6 +17,7 @@ export interface ProjectHeaderProps {
   validatedBy?: ProjectRiskViewEntry
   type: string
   isArchived?: boolean
+  isUpcoming?: boolean
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
@@ -24,7 +25,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     {
       title: 'Total value locked',
       value:
-        props.tvl && props.tvlWeeklyChange ? (
+        props.tvl && props.tvlWeeklyChange && !props.isUpcoming ? (
           <StatWithChange
             className="font-bold"
             stat={props.tvl}
