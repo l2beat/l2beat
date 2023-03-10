@@ -31,7 +31,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     {
       title: 'Total value locked',
       value:
-        props.tvl && props.tvlWeeklyChange ? (
+        props.tvl && props.tvlWeeklyChange && !props.isUpcoming ? (
           <StatWithChange
             className="font-bold"
             stat={props.tvl}
