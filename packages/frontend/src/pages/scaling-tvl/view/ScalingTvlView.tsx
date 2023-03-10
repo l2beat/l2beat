@@ -33,11 +33,11 @@ export interface ScalingTvlViewEntry {
   isArchived?: boolean
   isVerified?: boolean
   isUpcoming?: boolean
-  tvl: string
-  tvlBreakdown: TVLBreakdownProps
-  oneDayChange: string
-  sevenDayChange: string
-  marketShare: string
+  tvl?: string
+  tvlBreakdown?: TVLBreakdownProps
+  oneDayChange?: string
+  sevenDayChange?: string
+  marketShare?: string
   purpose: string
   technology: string
   ratingEntry?: Layer2Rating
@@ -66,7 +66,8 @@ export function ScalingTvlView({
       tooltip: 'Total value locked in escrow contracts on Ethereum.',
       alignRight: true,
       getValue: (project) =>
-        !project.isUpcoming && <NumberCell>{project.tvl}</NumberCell>,
+        !project.isUpcoming &&
+        project.tvlBreakdown && <NumberCell>{project.tvl}</NumberCell>,
     },
     {
       name: '7d Change',
@@ -74,7 +75,8 @@ export function ScalingTvlView({
       alignRight: true,
       getValue: (project) =>
         !project.isArchived &&
-        !project.isUpcoming && (
+        !project.isUpcoming &&
+        project.tvlBreakdown && (
           <NumberCell signed>{project.sevenDayChange}</NumberCell>
         ),
     },
@@ -96,7 +98,8 @@ export function ScalingTvlView({
         'Composition of the total value locked broken down by token type.',
       getValue: (project) =>
         !project.isArchived &&
-        !project.isUpcoming && <TVLBreakdown {...project.tvlBreakdown} />,
+        !project.isUpcoming &&
+        project.tvlBreakdown && <TVLBreakdown {...project.tvlBreakdown} />,
     },
     {
       name: 'Mkt share',
@@ -104,7 +107,8 @@ export function ScalingTvlView({
       alignRight: true,
       getValue: (project) =>
         !project.isArchived &&
-        !project.isUpcoming && <NumberCell>{project.marketShare}</NumberCell>,
+        !project.isUpcoming &&
+        project.tvlBreakdown && <NumberCell>{project.marketShare}</NumberCell>,
     },
     {
       name: 'Purpose',
