@@ -18,7 +18,7 @@ export function getProps(
   const included = getIncludedProjects(
     [...config.bridges, ...config.layer2s],
     tvlApiResponse,
-  ).filter((x) => !x.isUpcoming)
+  )
   const ordering = orderByTvl(included, tvlApiResponse)
 
   return {
