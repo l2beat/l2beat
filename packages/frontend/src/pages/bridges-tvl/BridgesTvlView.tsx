@@ -26,13 +26,14 @@ export interface BridgesTvlViewEntry {
   slug: string
   warning?: string
   isArchived?: boolean
+  isUpcoming?: boolean
   isVerified?: boolean
-  tvl: string
-  tvlBreakdown: TVLBreakdownProps
-  oneDayChange: string
-  sevenDayChange: string
-  bridgesMarketShare: string
-  combinedMarketShare: string
+  tvl?: string
+  tvlBreakdown?: TVLBreakdownProps
+  oneDayChange?: string
+  sevenDayChange?: string
+  bridgesMarketShare?: string
+  combinedMarketShare?: string
   validatedBy?: ProjectRiskViewEntry
   category: string
 }
@@ -66,14 +67,18 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       name: 'TVL',
       tooltip: 'Total value locked in escrow contracts on Ethereum.',
       alignRight: true,
-      getValue: (entry) => <NumberCell>{entry.tvl}</NumberCell>,
+      getValue: (entry) =>
+        !entry.isUpcoming &&
+        entry.tvlBreakdown && <NumberCell>{entry.tvl}</NumberCell>,
     },
     {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
       getValue: (entry) =>
-        !entry.isArchived && (
+        !entry.isArchived &&
+        !entry.isUpcoming &&
+        entry.tvlBreakdown && (
           <NumberCell signed>{entry.sevenDayChange}</NumberCell>
         ),
     },
@@ -82,14 +87,18 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       tooltip:
         'Composition of the total value locked broken down by token type.',
       getValue: (entry) =>
-        !entry.isArchived && <TVLBreakdown {...entry.tvlBreakdown} />,
+        !entry.isArchived &&
+        !entry.isUpcoming &&
+        entry.tvlBreakdown && <TVLBreakdown {...entry.tvlBreakdown} />,
     },
     {
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
       getValue: (entry) =>
-        !entry.isArchived && (
+        !entry.isArchived &&
+        !entry.isUpcoming &&
+        entry.tvlBreakdown && (
           <NumberCell>
             <span data-bridges-only-cell>{entry.bridgesMarketShare}</span>
             <span data-combined-only-cell className="hidden">
