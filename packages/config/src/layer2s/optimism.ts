@@ -362,18 +362,18 @@ export const optimism: Layer2 = {
     {
       title: 'How Optimism compresses data',
       url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      thumbnail: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
     {
       title: 'How does Optimism really work?',
       url: 'https://research.paradigm.xyz/optimism',
-      thumbnailUrl:
+      thumbnail:
         'https://pbs.twimg.com/profile_images/1509651344994418688/OAY8rKKk_400x400.jpg',
     },
     {
       title: 'Modular Rollup Theory',
       url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
-      thumbnailUrl: NUGGETS.getYoutubeThumbnail('jnVjhp41pcc'),
+      thumbnail: NUGGETS.getYoutubeThumbnail('jnVjhp41pcc'),
     },
   ],
 }

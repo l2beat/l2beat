@@ -283,7 +283,7 @@ export const aptos: Bridge = {
     {
       title: 'Security models analysis: isolated vs shared',
       url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
-      thumbnailUrl:
+      thumbnail:
         'https://miro.medium.com/v2/resize:fit:720/format:webp/1*7iEM_gHFZ_Ws_r8N_DP20w.jpeg',
     },
   ],

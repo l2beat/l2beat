@@ -12,22 +12,22 @@ const STARKEX_NUGGETS: KnowledgeNugget[] = [
   {
     title: 'Understand StarkWare #1',
     url: 'https://twitter.com/bkiepuszewski/status/1480473352213041152',
-    thumbnailUrl: BARTEK_TWITTER_THUMBNAIL,
+    thumbnail: BARTEK_TWITTER_THUMBNAIL,
   },
   {
     title: 'Understand StarkWare #2',
     url: 'https://twitter.com/bkiepuszewski/status/1480804584926949377',
-    thumbnailUrl: BARTEK_TWITTER_THUMBNAIL,
+    thumbnail: BARTEK_TWITTER_THUMBNAIL,
   },
   {
     title: 'Understand StarkWare #3',
     url: 'https://twitter.com/bkiepuszewski/status/1481173682219270146',
-    thumbnailUrl: BARTEK_TWITTER_THUMBNAIL,
+    thumbnail: BARTEK_TWITTER_THUMBNAIL,
   },
   {
     title: 'Understand StarkWare #4',
     url: 'https://twitter.com/bkiepuszewski/status/1481521079562784769',
-    thumbnailUrl: BARTEK_TWITTER_THUMBNAIL,
+    thumbnail: BARTEK_TWITTER_THUMBNAIL,
   },
 ]
 

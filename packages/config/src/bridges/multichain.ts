@@ -189,12 +189,12 @@ export const multichain: Bridge = {
     {
       title: 'Multichain deep dive',
       url: 'https://li.fi/knowledge-hub/multichain-a-deep-dive/',
-      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
+      thumbnail: NUGGETS.LIFI_THUMBNAIL,
     },
     {
       title: 'Multichain escrow problem',
       url: 'https://twitter.com/bkiepuszewski/status/1572537802512044034',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      thumbnail: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
     },
   ],
 }
