@@ -22,8 +22,8 @@ export const canvasconnect: Layer2 = {
     name: 'Canvas Connect',
     slug: 'canvasconnect',
     description:
-      'Canvas Connect is a privacy focused Layer 2 ZK network built for Finance and the Digital Economy.Connect offers an API first model that supports easy integration with no solidity skills required. Capital Markets Applications are built on the network that enable the Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
-    purpose: 'DeFi Pooling,Repurchases, Exchange, NFT',
+      'Canvas Connect is a privacy focused Layer 2 ZK network built for Finance and the Digital Economy. Connect offers an API first model that supports easy integration with no solidity skills required. Capital Markets Applications are built on the network that enable the Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
+    purpose: 'Privacy, Real World Assets, Transfer, Exchange, Invest',
     links: {
       websites: ['https://canvas.co/'],
       apps: [],
@@ -107,7 +107,7 @@ export const canvasconnect: Layer2 = {
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
     {
-      name: 'Data Availability Committee', // add one more member if exists. 
+      name: 'Data Availability Committee', // add one more member if exists.
       accounts: [
         {
           address: EthereumAddress(
@@ -124,7 +124,7 @@ export const canvasconnect: Layer2 = {
       accounts: [
         {
           address: EthereumAddress(
-            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',//to check if this is correct
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
           ),
           type: 'EOA',
         },
