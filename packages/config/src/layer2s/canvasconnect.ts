@@ -23,7 +23,7 @@ export const canvasconnect: Layer2 = {
     slug: 'canvasconnect',
     description:
       'Canvas Connect is a privacy focused Layer 2 ZK network built for Finance and the Digital Economy. Connect offers an API first model that supports easy integration with no solidity skills required. Capital Markets Applications are built on the network that enable the Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
-    purpose: 'Privacy, Real World Assets, Transfer, Exchange, Invest',
+    purpose: 'Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
     links: {
       websites: ['https://canvas.co/'],
       apps: [],
@@ -32,7 +32,7 @@ export const canvasconnect: Layer2 = {
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
         'https://twitter.com/canvas_defi',
-        ' https://www.youtube.com/@canvas_defi',
+        'https://www.youtube.com/@canvas_defi',
         'https://canvasdefi.medium.com/',
         'https://www.linkedin.com/company/canvasblockchaingroup',
         'https://www.canvas.co/content'
