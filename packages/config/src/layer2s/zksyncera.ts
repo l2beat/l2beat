@@ -24,8 +24,8 @@ export const zksyncera: Layer2 = {
     warning: 'Currently only registered addresses can bridge to zkSync Era.',
     description:
       'zkSync Era is a general-purpose zk rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
-      It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as account abstraction.\
-      It is currently deployed on mainnet and available to a whitelisted set of users/developers.',
+      It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.\
+      It is currently deployed on mainnet and available for registered projects and developers.',
     purpose: 'Universal',
     links: {
       websites: ['https://zksync.io/'],
@@ -76,7 +76,7 @@ export const zksyncera: Layer2 = {
       references: [
         {
           text: 'Validity proofs - zkSync FAQ',
-          href: 'https://v2-docs.zksync.io/dev/fundamentals/rollups.html#optimistic-rollups-versus-zk-rollups',
+          href: 'https://era.zksync.io/docs/dev/fundamentals/rollups.html#optimistic-rollups-versus-zk-rollups',
         },
       ],
     },
@@ -85,7 +85,7 @@ export const zksyncera: Layer2 = {
       references: [
         {
           text: 'Cryptography used - zkSync FAQ',
-          href: 'https://v2-docs.zksync.io/dev/fundamentals/rollups.html#optimistic-rollups-versus-zk-rollups',
+          href: 'https://era.zksync.io/docs/dev/fundamentals/zkSync.html',
         },
       ],
     },
@@ -106,7 +106,7 @@ export const zksyncera: Layer2 = {
       references: [
         {
           text: "L1 - L2 interoperability - Developer's documentation'",
-          href: 'https://v2-docs.zksync.io/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
+          href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
         },
       ],
     },
@@ -116,7 +116,7 @@ export const zksyncera: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://v2-docs.zksync.io/dev/developer-guides/bridging/bridging-asset.html#introduction',
+            href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/bridging-asset.html',
           },
         ],
       },
@@ -136,7 +136,7 @@ export const zksyncera: Layer2 = {
         references: [
           {
             text: "L1 - L2 interoperability - Developer's documentation",
-            href: 'https://v2-docs.zksync.io/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
+            href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
           },
         ],
       },
@@ -216,7 +216,7 @@ export const zksyncera: Layer2 = {
       link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59',
       date: '2023-02-16T00:00:00Z',
       description:
-        'zkSync 2.0 rebrands to zkSync Era and lets registered projects deploy on mainnet.',
+        'zkSync 2.0 rebrands to zkSync Era and lets registered projects and developers deploy on mainnet.',
     },
   ],
 }
