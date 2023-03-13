@@ -246,5 +246,5 @@ export const apex: Layer2 = {
         'ApeX Pro, a non-custodial decentralized exchange is now live on Mainnet.',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

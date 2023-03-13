@@ -214,5 +214,5 @@ export const rhinofi: Layer2 = {
         'DeversiFi is live, bringing first STARKex Validium for spot trading.',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

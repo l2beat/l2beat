@@ -1,39 +1,53 @@
 import { KnowledgeNugget } from '../../common'
 
-const BARTEK_TWITTER_THUMBNAIL =
-  'https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg'
-const LIFI_THUMBNAIL = 'https://li.fi/logo192.png'
-
-const getYoutubeThumbnail = (videoId: string) => {
-  return `https://img.youtube.com/vi/${videoId}/0.jpg`
+const THUMBNAILS = {
+  ARBITRUM_01: 'arbitrum-01.jpg',
+  ARBITRUM_02: 'arbitrum-02.jpg',
+  AZTEC_01: 'aztec-01.jpg',
+  AZTEC_02: 'aztec-02.jpg',
+  FUEL_01: 'fuel-01.jpg',
+  L2BEAT_01: 'l2beat-01.jpg',
+  L2BEAT_02: 'l2beat-02.jpg',
+  L2BEAT_03: 'l2beat-03.jpg',
+  L2BEAT_04: 'l2beat-04.jpg',
+  MODULAR_ROLLUPS: 'modular-rollups.jpg',
+  OPTIMISM_01: 'optimism-01.jpg',
+  OPTIMISM_02: 'optimism-02.jpg',
+  OPTIMISM_03: 'optimism-03.jpg',
+  STARKWARE_01: 'starkware-01.jpg',
+  STARKWARE_02: 'starkware-02.jpg',
+  STARKWARE_03: 'starkware-03.jpg',
+  STARKWARE_04: 'starkware-04.jpg',
+  STARKWARE_05: 'starkware-05.jpg',
+  TWITTER_01: 'twitter-01.jpg',
+  TWITTER_02: 'twitter-02.jpg',
+  LIFI_01: 'https://li.fi/logo192.png',
 }
 
-const STARKEX_NUGGETS: KnowledgeNugget[] = [
+const STARKWARE: KnowledgeNugget[] = [
   {
     title: 'Understand StarkWare #1',
     url: 'https://twitter.com/bkiepuszewski/status/1480473352213041152',
-    thumbnail: BARTEK_TWITTER_THUMBNAIL,
+    thumbnail: THUMBNAILS.STARKWARE_01,
   },
   {
     title: 'Understand StarkWare #2',
     url: 'https://twitter.com/bkiepuszewski/status/1480804584926949377',
-    thumbnail: BARTEK_TWITTER_THUMBNAIL,
+    thumbnail: THUMBNAILS.STARKWARE_02,
   },
   {
     title: 'Understand StarkWare #3',
     url: 'https://twitter.com/bkiepuszewski/status/1481173682219270146',
-    thumbnail: BARTEK_TWITTER_THUMBNAIL,
+    thumbnail: THUMBNAILS.STARKWARE_03,
   },
   {
     title: 'Understand StarkWare #4',
     url: 'https://twitter.com/bkiepuszewski/status/1481521079562784769',
-    thumbnail: BARTEK_TWITTER_THUMBNAIL,
+    thumbnail: THUMBNAILS.STARKWARE_04,
   },
 ]
 
 export const NUGGETS = {
-  BARTEK_TWITTER_THUMBNAIL,
-  LIFI_THUMBNAIL,
-  getYoutubeThumbnail,
-  STARKEX_NUGGETS,
+  THUMBNAILS,
+  STARKWARE,
 }

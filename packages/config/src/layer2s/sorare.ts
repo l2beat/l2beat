@@ -178,5 +178,5 @@ export const sorare: Layer2 = {
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

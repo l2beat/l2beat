@@ -362,7 +362,7 @@ export const optimism: Layer2 = {
     {
       title: 'How Optimism compresses data',
       url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-      thumbnail: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.TWITTER_01,
     },
     {
       title: 'How does Optimism really work?',
@@ -373,7 +373,7 @@ export const optimism: Layer2 = {
     {
       title: 'Modular Rollup Theory',
       url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
-      thumbnail: NUGGETS.getYoutubeThumbnail('jnVjhp41pcc'),
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUPS,
     },
   ],
 }

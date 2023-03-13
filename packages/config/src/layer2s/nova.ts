@@ -309,7 +309,7 @@ export const nova: Layer2 = {
     {
       title: 'Data availability on Arbitrum Nova',
       url: 'https://twitter.com/bkiepuszewski/status/1555180043525128200',
-      thumbnail: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.TWITTER_01,
     },
   ],
 }

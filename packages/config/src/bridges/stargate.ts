@@ -290,7 +290,7 @@ export const stargate: Bridge = {
     {
       title: 'StarGate Bridge architecture',
       url: 'https://twitter.com/bkiepuszewski/status/1518568490147450880',
-      thumbnail: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.TWITTER_01,
     },
   ],
 }
