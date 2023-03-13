@@ -1,4 +1,4 @@
-import { KnowledgeNugget } from '@l2beat/config'
+import { KnowledgeNugget as KnowledgeNuggetType } from '@l2beat/config'
 import React from 'react'
 
 import { KnowledgeNuggets as KnowledgeNuggetsComponent } from './KnowledgeNuggets'
@@ -7,18 +7,16 @@ export default {
   title: 'Components/Project/KnowledgeNuggets',
 }
 
-const knowledgeNuggetsExample: KnowledgeNugget[] = [
+const knowledgeNuggetsExample: KnowledgeNuggetType[] = [
   {
     title: 'Arbitrum fraud proofs tested on POW ETH',
     url: 'https://www.somelink.com',
-    thumbnail:
-      'https://w0.peakpx.com/wallpaper/551/1016/HD-wallpaper-ethereum-blue-logo-blue-brickwall-ethereum-logo-cryptocurrency-ethereum-neon-logo-cryptocurrency-signs-ethereum-thumbnail.jpg',
+    thumbnail: 'arbitrum-01.jpg',
   },
   {
     title: "Fuel's fraud proofs tested by L2BEAT team",
     url: 'https://www.somelink.com',
-    thumbnail:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNmfsMWOpFJnj9IJ_6FHILHXGKduuZoCIpnA&usqp=CAU',
+    thumbnail: 'fuel-01.jpg',
   },
 ]
 
