@@ -3,6 +3,7 @@ import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { bobanetwork } from './bobanetwork'
+import { canvasconnect } from './canvasconnect'
 import { HOMEPAGE_MILESTONES } from './common'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
@@ -35,6 +36,7 @@ export const layer2s: Layer2[] = [
   aztec,
   aztecconnect,
   bobanetwork,
+  canvasconnect,
   rhinofi,
   dydx,
   fuelv1,
