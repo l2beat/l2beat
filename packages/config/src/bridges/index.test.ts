@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { ProjectTechnologyChoice } from '../common/ProjectTechnologyChoice'
+import { NUGGETS } from '../layer2s'
 import { checkRisk } from '../test/helpers'
 import { bridges, BridgeTechnology } from './index'
 
@@ -109,13 +110,23 @@ describe('bridges', () => {
     })
 
     describe('knowledgeNuggets', () => {
+      const knowledgeNuggets = bridges.flatMap(
+        (nugget) => nugget.knowledgeNuggets ?? [],
+      )
+
       describe('title fits character limit', () => {
-        const knowledgeNuggets = bridges.flatMap(
-          (nugget) => nugget.knowledgeNuggets ?? [],
-        )
         knowledgeNuggets.forEach((nugget) => {
           it(nugget.title, () => {
             expect(nugget.title.length).toBeLessThanOrEqualTo(40)
+          })
+        })
+      })
+
+      describe('uses static thumbnail', () => {
+        const staticThumbnails = Object.values(NUGGETS.THUMBNAILS)
+        knowledgeNuggets.forEach((nugget) => {
+          it(nugget.title, () => {
+            expect(staticThumbnails).toBeAnArrayWith(nugget.thumbnail)
           })
         })
       })

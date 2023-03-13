@@ -367,13 +367,12 @@ export const optimism: Layer2 = {
     {
       title: 'How does Optimism really work?',
       url: 'https://research.paradigm.xyz/optimism',
-      thumbnail:
-        'https://pbs.twimg.com/profile_images/1509651344994418688/OAY8rKKk_400x400.jpg',
+      thumbnail: NUGGETS.THUMBNAILS.PARADIGM_01,
     },
     {
       title: 'Modular Rollup Theory',
       url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
-      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUPS,
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
 }

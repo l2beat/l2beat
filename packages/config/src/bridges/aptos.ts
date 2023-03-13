@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
-import { CONTRACTS } from '../layer2s/common'
+import { CONTRACTS, NUGGETS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -283,8 +283,7 @@ export const aptos: Bridge = {
     {
       title: 'Security models: isolated vs shared',
       url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
-      thumbnail:
-        'https://miro.medium.com/v2/resize:fit:720/format:webp/1*7iEM_gHFZ_Ws_r8N_DP20w.jpeg',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
     },
   ],
 }

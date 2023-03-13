@@ -1,4 +1,4 @@
-import { KnowledgeNugget } from '../../common'
+import { KnowledgeNugget } from './KnowledgeNugget'
 
 const THUMBNAILS = {
   ARBITRUM_01: 'arbitrum-01.jpg',
@@ -10,10 +10,12 @@ const THUMBNAILS = {
   L2BEAT_02: 'l2beat-02.jpg',
   L2BEAT_03: 'l2beat-03.jpg',
   L2BEAT_04: 'l2beat-04.jpg',
-  MODULAR_ROLLUPS: 'modular-rollups.jpg',
+  LIFI_01: 'lifi-01.jpg',
+  MODULAR_ROLLUP: 'modular-rollup.jpg',
   OPTIMISM_01: 'optimism-01.jpg',
   OPTIMISM_02: 'optimism-02.jpg',
   OPTIMISM_03: 'optimism-03.jpg',
+  PARADIGM_01: 'paradigm-01.jpg',
   STARKWARE_01: 'starkware-01.jpg',
   STARKWARE_02: 'starkware-02.jpg',
   STARKWARE_03: 'starkware-03.jpg',
@@ -21,7 +23,7 @@ const THUMBNAILS = {
   STARKWARE_05: 'starkware-05.jpg',
   TWITTER_01: 'twitter-01.jpg',
   TWITTER_02: 'twitter-02.jpg',
-  LIFI_01: 'https://li.fi/logo192.png',
+  VITALIK_01: 'vitalik-01.jpg',
 }
 
 const STARKWARE: KnowledgeNugget[] = [
