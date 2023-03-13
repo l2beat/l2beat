@@ -194,7 +194,7 @@ export const multichain: Bridge = {
     {
       title: 'Multichain escrow problem',
       url: 'https://twitter.com/bkiepuszewski/status/1572537802512044034',
-      thumbnail: NUGGETS.THUMBNAILS.TWITTER_01,
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 }

@@ -199,7 +199,7 @@ export const dydx: Layer2 = {
     {
       title: 'How does escape hatch work?',
       url: 'https://twitter.com/bkiepuszewski/status/1469201939049103360',
-      thumbnail: NUGGETS.THUMBNAILS.TWITTER_01,
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
     ...NUGGETS.STARKWARE,
   ],

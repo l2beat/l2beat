@@ -337,7 +337,7 @@ export const cBridge: Bridge = {
     {
       title: 'How HTLC bridge works?',
       url: 'https://twitter.com/bkiepuszewski/status/1437031523455229964',
-      thumbnail: NUGGETS.THUMBNAILS.TWITTER_01,
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
     {
       title: 'cBridge deep dive',
