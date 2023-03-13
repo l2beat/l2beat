@@ -5,10 +5,6 @@ import { ProjectTechnologyChoice } from '../common'
 import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s } from './index'
 
-const knowledgeNuggets = layer2s.flatMap(
-  (nugget) => nugget.knowledgeNuggets ?? [],
-)
-
 describe('layer2s', () => {
   describe('sentences', () => {
     describe('every description ends with a dot', () => {
@@ -171,6 +167,9 @@ describe('layer2s', () => {
 
     describe('knowledgeNuggets', () => {
       describe('title fits character limit', () => {
+        const knowledgeNuggets = layer2s.flatMap(
+          (nugget) => nugget.knowledgeNuggets ?? [],
+        )
         knowledgeNuggets.forEach((nugget) => {
           it(nugget.title, () => {
             expect(nugget.title.length).toBeLessThanOrEqualTo(40)
