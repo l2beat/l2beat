@@ -1,8 +1,78 @@
 {
   "name": "optimism",
-  "blockNumber": 16154924,
-  "configHash": "0x6734be397d2e0c91a134311aa1e08ab2a21de6aad0b180f7f96975e002fbbaca",
+  "blockNumber": 16793879,
+  "configHash": "0x4cba6b451a6d213a4fb620897524ddf92c685207c974a50d69a602dafd4dcbb4",
   "contracts": [
+    {
+      "name": "CanonicalTransactionChain",
+      "address": "0x5E4e65926BA27467555EB562121fac00D24E9dD2",
+      "code": "https://etherscan.deth.net/address/0x5E4e65926BA27467555EB562121fac00D24E9dD2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
+        "enqueueGasCost": 60000,
+        "enqueueL2GasPrepaid": 1920000,
+        "getLastBlockNumber": 16793826,
+        "getLastTimestamp": 1678404147,
+        "getNextQueueIndex": 313686,
+        "getNumPendingQueueElements": 12,
+        "getQueueLength": 313698,
+        "getTotalBatches": 604684,
+        "getTotalElements": 79653997,
+        "l2GasDiscountDivisor": 32,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "MAX_ROLLUP_TX_SIZE": 50000,
+        "maxTransactionGasLimit": 15000000,
+        "MIN_ROLLUP_TX_GAS": 100000
+      }
+    },
+    {
+      "name": "ChainStorageContainer",
+      "address": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
+      "code": "https://etherscan.deth.net/address/0xD16463EF9b0338CE3D73309028ef1714D220c024",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getGlobalMetadata": "0x0000000000000000010040e200640a6a33000004c9560004bf6c6d",
+        "length": 604684,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "owner": "CanonicalTransactionChain"
+      }
+    },
+    {
+      "name": "StateCommitmentChain",
+      "address": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
+      "code": "https://etherscan.deth.net/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
+        "FRAUD_PROOF_WINDOW": 604800,
+        "getLastSequencerTimestamp": 1678403891,
+        "getTotalBatches": 85067,
+        "getTotalElements": 79653446,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "SEQUENCER_PUBLISH_WINDOW": 12592000
+      }
+    },
+    {
+      "name": "ChainStorageContainer",
+      "address": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
+      "code": "https://etherscan.deth.net/address/0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getGlobalMetadata": "0x000000000000000000000000000000000000640a69330004bf6a46",
+        "length": 85067,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "owner": "StateCommitmentChain"
+      }
+    },
     {
       "name": "Lib_AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -86,7 +156,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 72,
+        "nonce": 73,
         "VERSION": "1.1.1"
       }
     },
@@ -267,76 +337,6 @@
       },
       "values": {
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
-      }
-    },
-    {
-      "name": "CanonicalTransactionChain",
-      "address": "0x5E4e65926BA27467555EB562121fac00D24E9dD2",
-      "code": "https://etherscan.deth.net/address/0x5E4e65926BA27467555EB562121fac00D24E9dD2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
-        "enqueueGasCost": 60000,
-        "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 16154872,
-        "getLastTimestamp": 1670682755,
-        "getNextQueueIndex": 230573,
-        "getNumPendingQueueElements": 6,
-        "getQueueLength": 230579,
-        "getTotalBatches": 357297,
-        "getTotalElements": 47608719,
-        "l2GasDiscountDivisor": 32,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "MAX_ROLLUP_TX_SIZE": 50000,
-        "maxTransactionGasLimit": 15000000,
-        "MIN_ROLLUP_TX_GAS": 100000
-      }
-    },
-    {
-      "name": "ChainStorageContainer",
-      "address": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
-      "code": "https://etherscan.deth.net/address/0xD16463EF9b0338CE3D73309028ef1714D220c024",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getGlobalMetadata": "0x000000000000000000f680f8006394988300000384ad0002d6738f",
-        "length": 357297,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "CanonicalTransactionChain"
-      }
-    },
-    {
-      "name": "StateCommitmentChain",
-      "address": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
-      "code": "https://etherscan.deth.net/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
-        "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1670682623,
-        "getTotalBatches": 52064,
-        "getTotalElements": 47607774,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "SEQUENCER_PUBLISH_WINDOW": 12592000
-      }
-    },
-    {
-      "name": "ChainStorageContainer",
-      "address": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
-      "code": "https://etherscan.deth.net/address/0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000639497ff0002d66fde",
-        "length": 52064,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "StateCommitmentChain"
       }
     }
   ],
