@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
+import { ArrowRightIcon } from '../icons'
 import { OutLink } from '../OutLink'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { UpcomingBar } from '../project/UpcomingBar'
@@ -93,10 +94,8 @@ function Summary(props: SummaryProps) {
         <div className="rounded-lg bg-gray-100 px-6 py-4 dark:bg-neutral-700">
           <ul className="flex gap-4">
             {props.links.map(({ name, links }, i) => (
-              <li className="flex min-w-0 flex-col gap-2">
-                <span key={i} className="text-xs text-gray-550">
-                  {name}
-                </span>
+              <li className="flex min-w-0 flex-col gap-2" key={i}>
+                <span className="text-xs text-gray-550">{name}</span>
                 {links.map((link, i) => (
                   <OutLink
                     key={i}
@@ -114,9 +113,16 @@ function Summary(props: SummaryProps) {
 
       <div>
         <span className="text-xs text-gray-500 dark:text-gray-600">
-          Risk analysis
+          Risks analysis
         </span>
         <BigRosette risks={props.risks} />
+        <a
+          href="/scaling/risk"
+          className="mt-4 block text-center text-sm font-bold text-link underline"
+        >
+          Learn more about Risks analysis{' '}
+          <ArrowRightIcon className="inline-block fill-current" />
+        </a>
       </div>
     </div>
   )
