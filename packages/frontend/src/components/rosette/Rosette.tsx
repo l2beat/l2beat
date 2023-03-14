@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React from 'react'
 
 import { sentimentToFillColor } from '../../utils/risks/color'
@@ -66,9 +67,9 @@ export function MediumRosette({ risks }: RosetteProps) {
   )
 }
 
-export function BigRosette({ risks }: RosetteProps) {
+export function BigRosette({ risks, className }: RosetteProps) {
   return (
-    <div className="relative w-[272px] py-12 px-12">
+    <div className={cx('relative w-[272px] py-12 px-12', className)}>
       <BigRosetteIcon risks={risks} />
       <span className="absolute bottom-[30px] left-[31px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight">
         Sequencer failure

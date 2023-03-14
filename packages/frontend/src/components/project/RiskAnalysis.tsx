@@ -3,82 +3,90 @@ import React from 'react'
 
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValues } from '../../utils/risks/types'
+import { getRiskSentiments } from '../../utils/risks/values'
+import { BigRosette } from '../rosette'
 import { Section } from './Section'
 
 export interface RiskAnalysisProps {
   riskValues: RiskValues
 }
 
-export function RiskAnalysis({
-  riskValues: {
-    stateValidation,
-    sequencerFailure,
-    upgradeability,
-    dataAvailability,
-    validatorFailure,
-  },
-}: RiskAnalysisProps) {
+export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
   return (
     <Section title="Risk analysis" id="risks" className="mt-4">
+      <BigRosette
+        risks={getRiskSentiments(riskValues)}
+        className="mx-auto my-6 lg:hidden"
+      />
       <div>
-        <h3 className="mt-6 text-lg font-bold uppercase">State validation</h3>
+        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
+          State validation
+        </h3>
         <span
           className={cx(
-            sentimentToTextColor(stateValidation.sentiment),
-            'mt-2 block text-2xl font-bold',
+            sentimentToTextColor(riskValues.stateValidation.sentiment),
+            'mt-2 block text-xl font-bold md:text-2xl',
           )}
         >
-          {stateValidation.value}
+          {riskValues.stateValidation.value}
         </span>
-        <p className="mt-2">{stateValidation.description}</p>
+        <p className="mt-2">{riskValues.stateValidation.description}</p>
       </div>
       <div>
-        <h3 className="mt-6 text-lg font-bold uppercase">Data availability</h3>
+        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
+          Data availability
+        </h3>
         <span
           className={cx(
-            sentimentToTextColor(dataAvailability.sentiment),
-            'mt-2 block text-2xl font-bold',
+            sentimentToTextColor(riskValues.dataAvailability.sentiment),
+            'mt-2 block text-xl font-bold md:text-2xl',
           )}
         >
-          {dataAvailability.value}
+          {riskValues.dataAvailability.value}
         </span>
-        <p className="mt-2">{dataAvailability.description}</p>
+        <p className="mt-2">{riskValues.dataAvailability.description}</p>
       </div>
       <div>
-        <h3 className="mt-6 text-lg font-bold uppercase">Upgradeability</h3>
+        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
+          Upgradeability
+        </h3>
         <span
           className={cx(
-            sentimentToTextColor(upgradeability.sentiment),
-            'mt-2 block text-2xl font-bold',
+            sentimentToTextColor(riskValues.upgradeability.sentiment),
+            'mt-2 block text-xl font-bold md:text-2xl',
           )}
         >
-          {upgradeability.value}
+          {riskValues.upgradeability.value}
         </span>
-        <p className="mt-2">{upgradeability.description}</p>
+        <p className="mt-2">{riskValues.upgradeability.description}</p>
       </div>
       <div>
-        <h3 className="mt-6 text-lg font-bold uppercase">Sequencer failure</h3>
+        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
+          Sequencer failure
+        </h3>
         <span
           className={cx(
-            sentimentToTextColor(sequencerFailure.sentiment),
-            'mt-2 block text-2xl font-bold',
+            sentimentToTextColor(riskValues.sequencerFailure.sentiment),
+            'mt-2 block text-xl font-bold md:text-2xl',
           )}
         >
-          {sequencerFailure.value}
+          {riskValues.sequencerFailure.value}
         </span>
-        <p className="mt-2">{sequencerFailure.description}</p>
+        <p className="mt-2">{riskValues.sequencerFailure.description}</p>
       </div>
       <div>
-        <h3 className="mt-6 text-lg font-bold uppercase">Validator failure</h3>
+        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
+          Validator failure
+        </h3>
         <span
           className={cx(
-            sentimentToTextColor(validatorFailure.sentiment),
-            'mt-2 block text-2xl font-bold',
+            sentimentToTextColor(riskValues.validatorFailure.sentiment),
+            'mt-2 block text-xl font-bold md:text-2xl',
           )}
         >
-          {validatorFailure.value}
+          {riskValues.validatorFailure.value}
         </span>
-        <p className="mt-2">{validatorFailure.description}</p>
+        <p className="mt-2">{riskValues.validatorFailure.description}</p>
       </div>
     </Section>
   )

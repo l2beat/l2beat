@@ -153,7 +153,7 @@ function Summary(props: SummaryProps) {
         </span>
         <BigRosette risks={props.risks} />
         <a
-          href="/scaling/risk"
+          href="#risks"
           className="mt-4 block text-center text-sm font-bold text-link underline"
         >
           Learn more about Risks analysis{' '}
