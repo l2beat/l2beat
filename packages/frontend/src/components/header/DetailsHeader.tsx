@@ -82,11 +82,11 @@ function Summary(props: SummaryProps) {
   return (
     <div className="flex w-full gap-2">
       <div className="min-w-0">
-        <ul className="mb-10 grid h-fit grow grid-cols-4">
+        <ul className="grid h-fit grow grid-cols-1 gap-3 md:mb-10 md:grid-cols-4 md:gap-0">
           {topStats.map(({ title, value }) => (
             <DetailsHeaderStat key={title} title={title} value={value} />
           ))}
-          <HorizontalSeparator className="col-span-4 mt-2 md:my-6" />
+          <HorizontalSeparator className="col-span-4 mt-2 hidden md:my-6 md:block" />
           {bottomStats.map(({ title, value }) => (
             <DetailsHeaderStat key={title} title={title} value={value} />
           ))}
@@ -110,8 +110,7 @@ function Summary(props: SummaryProps) {
           </ul>
         </div>
       </div>
-
-      <div>
+      <div className="hidden md:block">
         <span className="text-xs text-gray-500 dark:text-gray-600">
           Risks analysis
         </span>
@@ -146,7 +145,7 @@ function DetailsHeaderStat(props: Stat) {
   return (
     <li
       className={cx(
-        'flex items-center md:flex-col md:items-start md:gap-3',
+        'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
         props.className,
       )}
     >
