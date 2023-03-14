@@ -91,6 +91,7 @@ export class DiscoveryWatcher {
     const discovery = await this.discoveryEngine.run(projectConfig, blockNumber)
 
     if (discovery.contracts.some((c) => c.errors !== undefined)) {
+      notUpdatedProjects.push(projectConfig.name)
       throw new Error(
         `Errors occurred during discovery of ${projectConfig.name}`,
       )

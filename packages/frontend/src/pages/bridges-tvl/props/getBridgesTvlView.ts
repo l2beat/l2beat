@@ -1,7 +1,7 @@
 import { Bridge, Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
 
-import { getTvlStats } from '../../../utils/tvl/getTvlStats'
+import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
 import { BridgesTvlViewEntry } from '../BridgesTvlView'
 
@@ -32,10 +32,15 @@ function getBridgesTvlViewEntry(
 ): BridgesTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
+  let stats: TvlStats | undefined
+
   if (!apiProject) {
-    throw new Error(`Project ${project.display.name} is missing in api`)
+    if (!project.isUpcoming) {
+      throw new Error(`Project ${project.display.name} is missing in api`)
+    }
+  } else {
+    stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
-  const stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   const isVerified = verificationStatus.projects[project.id.toString()]
 
   return {
@@ -45,12 +50,16 @@ function getBridgesTvlViewEntry(
     warning: project.display.warning,
     isArchived: project.isArchived,
     isVerified,
-    tvl: formatUSD(stats.tvl),
-    tvlBreakdown: stats.tvlBreakdown,
-    oneDayChange: stats.oneDayChange,
-    sevenDayChange: stats.sevenDayChange,
-    bridgesMarketShare: formatPercent(stats.tvl / bridgesTvl),
-    combinedMarketShare: formatPercent(stats.tvl / combinedTvl),
+    tvl: stats ? formatUSD(stats.tvl) : undefined,
+    tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
+    oneDayChange: stats ? stats.oneDayChange : undefined,
+    sevenDayChange: stats ? stats.sevenDayChange : undefined,
+    bridgesMarketShare: stats
+      ? formatPercent(stats.tvl / bridgesTvl)
+      : undefined,
+    combinedMarketShare: stats
+      ? formatPercent(stats.tvl / combinedTvl)
+      : undefined,
     validatedBy: project.riskView?.validatedBy,
     category: project.technology.category,
   }

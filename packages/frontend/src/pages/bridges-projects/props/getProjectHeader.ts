@@ -22,5 +22,6 @@ export function getProjectHeader(
     validatedBy: project.riskView?.validatedBy,
     type: project.technology.category,
     isArchived: project.isArchived,
+    isUpcoming: project.isUpcoming,
   }
 }
