@@ -485,7 +485,6 @@ export const arbitrum: Layer2 = {
     {
       title: 'Arbitrum update boosts decentralization',
       url: 'https://twitter.com/bkiepuszewski/status/1594754717330309120',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
     {
       title: 'Arbitrum is down... or is it?',

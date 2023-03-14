@@ -180,11 +180,13 @@ describe('layer2s', () => {
 
       describe('uses static thumbnail', () => {
         const staticThumbnails = Object.values(NUGGETS.THUMBNAILS)
-        knowledgeNuggets.forEach((nugget) => {
-          it(nugget.title, () => {
-            expect(staticThumbnails).toBeAnArrayWith(nugget.thumbnail)
+        knowledgeNuggets
+          .filter((x) => x.thumbnail !== undefined)
+          .forEach((nugget) => {
+            it(nugget.title, () => {
+              expect(staticThumbnails).toBeAnArrayWith(nugget.thumbnail)
+            })
           })
-        })
       })
     })
   })

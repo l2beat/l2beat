@@ -24,6 +24,7 @@ const THUMBNAILS = {
   TWITTER_01: 'twitter-01.jpg',
   TWITTER_02: 'twitter-02.jpg',
   VITALIK_01: 'vitalik-01.jpg',
+  DEFAULT: 'default.jpg',
 }
 
 const STARKWARE: KnowledgeNugget[] = [
