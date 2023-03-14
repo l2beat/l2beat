@@ -1,4 +1,3 @@
-import { KnowledgeNugget as KnowledgeNuggetType } from '@l2beat/config'
 import React from 'react'
 
 import { KnowledgeNuggets as KnowledgeNuggetsComponent } from './KnowledgeNuggets'
@@ -7,7 +6,7 @@ export default {
   title: 'Components/Project/KnowledgeNuggets',
 }
 
-const knowledgeNuggetsExample: KnowledgeNuggetType[] = [
+const knowledgeNuggetsExample = [
   {
     title: 'Arbitrum fraud proofs tested on POW ETH',
     url: 'https://www.somelink.com',
