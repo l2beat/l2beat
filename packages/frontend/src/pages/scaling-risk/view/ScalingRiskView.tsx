@@ -25,6 +25,7 @@ export interface ScalingRiskViewEntry {
   warning?: string
   isArchived?: boolean
   isVerified?: boolean
+  isUpcoming?: boolean
   stateValidation: ProjectRiskViewEntry
   dataAvailability: ProjectRiskViewEntry
   upgradeability: ProjectRiskViewEntry

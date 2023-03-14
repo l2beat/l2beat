@@ -2,7 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
-import { getTvlStats } from '../../../utils/tvl/getTvlStats'
+import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
 import {
   ScalingTvlViewEntry,
@@ -38,10 +38,16 @@ function getScalingTvlViewEntry(
 ): ScalingTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
+
+  let stats: TvlStats | undefined
+
   if (!apiProject) {
-    throw new Error(`Project ${project.display.name} is missing in api`)
+    if (!project.isUpcoming) {
+      throw new Error(`Project ${project.display.name} is missing in api`)
+    }
+  } else {
+    stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
-  const stats = getTvlStats(apiProject, project.display.name, associatedTokens)
 
   return {
     name: project.display.name,
@@ -51,11 +57,11 @@ function getScalingTvlViewEntry(
     isVerified,
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
-    tvl: formatUSD(stats.tvl),
-    tvlBreakdown: stats.tvlBreakdown,
-    oneDayChange: stats.oneDayChange,
-    sevenDayChange: stats.sevenDayChange,
-    marketShare: formatPercent(stats.tvl / aggregateTvl),
+    tvl: stats ? formatUSD(stats.tvl) : undefined,
+    tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
+    oneDayChange: stats ? stats.oneDayChange : undefined,
+    sevenDayChange: stats ? stats.sevenDayChange : undefined,
+    marketShare: stats ? formatPercent(stats.tvl / aggregateTvl) : undefined,
     purpose: project.display.purpose,
     technology: project.technology.category,
     ratingEntry: project.rating,
