@@ -15,6 +15,8 @@ export interface RosetteProps {
 export interface RiskValue {
   value: string
   sentiment?: Sentiment
+  // TODO: make required
+  description?: string
 }
 
 export type RiskValues = Record<Risk, RiskValue>

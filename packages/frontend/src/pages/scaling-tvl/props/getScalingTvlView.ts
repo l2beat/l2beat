@@ -70,27 +70,14 @@ function getScalingTvlViewEntry(
   }
 }
 
-function getRiskValuesFromRiskView(riskView: Layer2RiskView): RiskValues {
+export function getRiskValuesFromRiskView(
+  riskView: Layer2RiskView,
+): RiskValues {
   return {
-    dataAvailability: {
-      value: riskView.dataAvailability.value,
-      sentiment: riskView.dataAvailability.sentiment,
-    },
-    sequencerFailure: {
-      value: riskView.sequencerFailure.value,
-      sentiment: riskView.sequencerFailure.sentiment,
-    },
-    stateValidation: {
-      value: riskView.stateValidation.value,
-      sentiment: riskView.stateValidation.sentiment,
-    },
-    upgradeability: {
-      value: riskView.upgradeability.value,
-      sentiment: riskView.upgradeability.sentiment,
-    },
-    validatorFailure: {
-      value: riskView.validatorFailure.value,
-      sentiment: riskView.validatorFailure.sentiment,
-    },
+    dataAvailability: riskView.dataAvailability,
+    sequencerFailure: riskView.sequencerFailure,
+    stateValidation: riskView.stateValidation,
+    upgradeability: riskView.upgradeability,
+    validatorFailure: riskView.validatorFailure,
   }
 }
