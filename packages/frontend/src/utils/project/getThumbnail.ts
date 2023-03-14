@@ -1,10 +1,11 @@
-import { KnowledgeNugget, NUGGETS } from '@l2beat/config'
+import { KnowledgeNugget } from '@l2beat/config'
 
 export const THUMBNAILS_FOLDER = '/images/thumbnails/'
+export const DEFAULT_THUMBNAIL = THUMBNAILS_FOLDER + 'default.jpg'
 
 export function getThumbnail(knowledgeNugget: KnowledgeNugget): string {
   if (knowledgeNugget.thumbnail === undefined) {
-    return THUMBNAILS_FOLDER + NUGGETS.THUMBNAILS.DEFAULT
+    return DEFAULT_THUMBNAIL
   }
 
   return THUMBNAILS_FOLDER + knowledgeNugget.thumbnail

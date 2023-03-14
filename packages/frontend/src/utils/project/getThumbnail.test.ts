@@ -1,8 +1,12 @@
-import { NUGGETS } from '@l2beat/config'
 import { expect } from 'earljs'
+import { readFileSync } from 'fs'
 import { readdirSync } from 'fs-extra'
 
-import { getThumbnail, THUMBNAILS_FOLDER } from './getThumbnail'
+import {
+  DEFAULT_THUMBNAIL,
+  getThumbnail,
+  THUMBNAILS_FOLDER,
+} from './getThumbnail'
 
 describe('getThumbnail', () => {
   it('returns the default thumbnail if no thumbnail is specified', () => {
@@ -24,12 +28,11 @@ describe('getThumbnail', () => {
     expect(result).toEqual('/images/thumbnails/starkware-01.jpg')
   })
 
-  it('thumbnail paths resolve to existing files', () => {
-    const thumbnail = Object.values(NUGGETS.THUMBNAILS)
-    const files = readdirSync('src/static/' + THUMBNAILS_FOLDER)
+  it('thumbnail folder path resolves to existing folder', () => {
+    expect(() => readdirSync('src/static/' + THUMBNAILS_FOLDER)).not.toThrow()
+  })
 
-    thumbnail.forEach((thumbnail) => {
-      expect(files).toBeAnArrayWith(thumbnail)
-    })
+  it('default thumbnail exists', () => {
+    expect(() => readFileSync('src/static/' + DEFAULT_THUMBNAIL)).not.toThrow()
   })
 })
