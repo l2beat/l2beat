@@ -30,7 +30,9 @@ export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
         >
           {riskValues.stateValidation.value}
         </span>
-        <p className="mt-2">{riskValues.stateValidation.description}</p>
+        <p className="mt-2 text-gray-850 dark:text-gray-400">
+          {riskValues.stateValidation.description}
+        </p>
       </div>
       <div>
         <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
@@ -44,7 +46,9 @@ export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
         >
           {riskValues.dataAvailability.value}
         </span>
-        <p className="mt-2">{riskValues.dataAvailability.description}</p>
+        <p className="mt-2 text-gray-850 dark:text-gray-400">
+          {riskValues.dataAvailability.description}
+        </p>
       </div>
       <div>
         <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
@@ -58,7 +62,9 @@ export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
         >
           {riskValues.upgradeability.value}
         </span>
-        <p className="mt-2">{riskValues.upgradeability.description}</p>
+        <p className="mt-2 text-gray-850 dark:text-gray-400">
+          {riskValues.upgradeability.description}
+        </p>
       </div>
       <div>
         <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
@@ -72,7 +78,9 @@ export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
         >
           {riskValues.sequencerFailure.value}
         </span>
-        <p className="mt-2">{riskValues.sequencerFailure.description}</p>
+        <p className="mt-2 text-gray-850 dark:text-gray-400">
+          {riskValues.sequencerFailure.description}
+        </p>
       </div>
       <div>
         <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
@@ -86,7 +94,9 @@ export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
         >
           {riskValues.validatorFailure.value}
         </span>
-        <p className="mt-2">{riskValues.validatorFailure.description}</p>
+        <p className="mt-2 text-gray-850 dark:text-gray-400">
+          {riskValues.validatorFailure.description}
+        </p>
       </div>
     </Section>
   )
