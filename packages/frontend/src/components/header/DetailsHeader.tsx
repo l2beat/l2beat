@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
+import { OutLink } from '../OutLink'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { BigRosette, RiskSentiments } from '../rosette'
@@ -16,6 +17,7 @@ export interface HeaderProps {
   isUpcoming?: boolean
   isSummary?: boolean
   risks?: RiskSentiments
+  links?: Link[]
 }
 
 export function DetailsHeader(props: HeaderProps) {
@@ -41,8 +43,12 @@ export function DetailsHeader(props: HeaderProps) {
         </h1>
         {props.isArchived && <ArchivedBar />}
         {props.isUpcoming && <UpcomingBar />}
-        {props.isSummary && props.risks ? (
-          <Summary stats={props.stats} risks={props.risks} />
+        {props.isSummary && props.risks && props.links ? (
+          <Summary
+            stats={props.stats}
+            risks={props.risks}
+            links={props.links}
+          />
         ) : (
           <DetailsHeaderStats stats={props.stats} />
         )}
@@ -58,25 +64,54 @@ interface Stat {
   className?: string
 }
 
+export interface Link {
+  name: string
+  links: string[]
+}
+
 interface SummaryProps {
   stats: Stat[]
   risks: RiskSentiments
+  links: Link[]
 }
 
 function Summary(props: SummaryProps) {
   const topStats = props.stats.slice(0, 4)
   const bottomStats = props.stats.slice(4)
   return (
-    <div className="flex gap-8">
-      <ul className="grid h-fit grow grid-cols-4">
-        {topStats.map(({ title, value }) => (
-          <DetailsHeaderStat key={title} title={title} value={value} />
-        ))}
-        <HorizontalSeparator className="col-span-4 mt-2 md:my-6" />
-        {bottomStats.map(({ title, value }) => (
-          <DetailsHeaderStat key={title} title={title} value={value} />
-        ))}
-      </ul>
+    <div className="flex w-full gap-2">
+      <div className="min-w-0">
+        <ul className="mb-10 grid h-fit grow grid-cols-4">
+          {topStats.map(({ title, value }) => (
+            <DetailsHeaderStat key={title} title={title} value={value} />
+          ))}
+          <HorizontalSeparator className="col-span-4 mt-2 md:my-6" />
+          {bottomStats.map(({ title, value }) => (
+            <DetailsHeaderStat key={title} title={title} value={value} />
+          ))}
+        </ul>
+        <div className="rounded-lg bg-gray-100 px-6 py-4 dark:bg-neutral-700">
+          <ul className="flex gap-4">
+            {props.links.map(({ name, links }, i) => (
+              <li className="flex min-w-0 flex-col gap-2">
+                <span key={i} className="text-xs text-gray-550">
+                  {name}
+                </span>
+                {links.map((link, i) => (
+                  <OutLink
+                    key={i}
+                    href={link}
+                    className="truncate text-link underline"
+                  >
+                    {link.slice(8)}
+                  </OutLink>
+                ))}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
       <div>
         <span className="text-xs text-gray-500 dark:text-gray-600">
           Risk analysis
@@ -105,14 +140,14 @@ function DetailsHeaderStat(props: Stat) {
   return (
     <li
       className={cx(
-        'flex items-center justify-between md:flex-col md:items-start md:gap-1',
+        'flex items-center md:flex-col md:items-start md:gap-3',
         props.className,
       )}
     >
       <span className="text-xs text-gray-500 dark:text-gray-600">
         {props.title}
       </span>
-      <span className="text-lg font-semibold md:text-xl md:font-bold">
+      <span className="text-lg font-semibold !leading-none md:text-xl md:font-bold">
         {props.value}
       </span>
     </li>

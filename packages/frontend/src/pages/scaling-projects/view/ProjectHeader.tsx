@@ -2,7 +2,7 @@ import { Layer2Rating } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { DetailsHeader } from '../../../components/header/DetailsHeader'
+import { DetailsHeader, Link } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { RatingBadge } from '../../../components/rating/Badge'
 import { RatingTooltipPopup } from '../../../components/rating/TooltipPopup'
@@ -27,7 +27,8 @@ export interface ProjectHeaderProps {
   purpose: string
   technology: string
   tvlBreakdown: TVLBreakdownProps
-  risks?: RiskSentiments
+  risks: RiskSentiments
+  links: Link[]
   ratingEntry?: false | Layer2Rating
   isArchived?: boolean
   isUpcoming?: boolean
@@ -105,6 +106,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       icon={props.icon}
       stats={stats}
       risks={props.risks}
+      links={props.links}
       isUpcoming={props.isUpcoming}
       isArchived={props.isArchived}
       isSummary

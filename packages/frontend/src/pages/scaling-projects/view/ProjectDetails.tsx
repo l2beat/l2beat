@@ -12,10 +12,7 @@ import {
   DescriptionSectionProps,
 } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggets } from '../../../components/project/KnowledgeNuggets'
-import {
-  LinkSection,
-  LinkSectionProps,
-} from '../../../components/project/links/LinkSection'
+import { LinkSectionProps } from '../../../components/project/links/LinkSection'
 import { Milestones } from '../../../components/project/Milestones'
 import {
   PermissionsSection,
@@ -61,17 +58,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
         )}
         <ContractsSection {...props.contractsSection} />
       </div>
-      <div className="ProjectDetails-Side flex flex-col">
-        <LinkSection {...props.linkSection} />
-        <div className="flex flex-col gap-12 bg-gray-100 py-12 dark:bg-gray-900 md:!bg-transparent">
-          <Milestones milestones={props.milestones} />
-          {!isEmpty(props.knowledgeNuggets) && (
-            <div className="px-4 md:hidden">
-              <HorizontalSeparator />
-            </div>
-          )}
-          <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
-        </div>
+      <div className="ProjectDetails-Side flex flex-col gap-12 bg-gray-100 py-12 dark:bg-gray-900 md:!bg-transparent">
+        <Milestones milestones={props.milestones} />
+        {!isEmpty(props.knowledgeNuggets) && (
+          <div className="px-4 md:hidden">
+            <HorizontalSeparator />
+          </div>
+        )}
+        <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
       </div>
     </main>
   )

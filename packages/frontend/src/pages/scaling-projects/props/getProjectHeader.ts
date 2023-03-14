@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, ProjectLinks } from '@l2beat/config'
 import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
@@ -50,6 +50,7 @@ export function getProjectHeader(
     purpose: project.display.purpose,
     technology: project.technology.category,
     tvlBreakdown,
+    links: getLinks(project.display.links),
     ratingEntry: config.features.rating && project.rating,
     risks: getRiskSentimentsFromRiskView(project.riskView),
     isArchived: project.isArchived,
@@ -82,4 +83,35 @@ function getRiskSentimentsFromRiskView(
     upgradeability: riskView.upgradeability.sentiment,
     validatorFailure: riskView.validatorFailure.sentiment,
   }
+}
+
+function getLinks(links: ProjectLinks) {
+  const items = [
+    {
+      name: 'Website',
+      links: links.websites,
+    },
+    {
+      name: 'App',
+      links: links.apps,
+    },
+    {
+      name: 'Documentation',
+      links: links.documentation,
+    },
+    {
+      name: 'Explorer',
+      links: links.explorers,
+    },
+    {
+      name: 'Repository',
+      links: links.repositories,
+    },
+    {
+      name: 'Social',
+      links: links.socialMedia,
+    },
+  ]
+
+  return items.filter((link) => link.links.length > 0)
 }
