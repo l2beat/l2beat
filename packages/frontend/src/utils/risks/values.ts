@@ -2,9 +2,7 @@ import { Layer2, Layer2RiskView } from '@l2beat/config'
 
 import { RiskSentiments, RiskValues } from './types'
 
-export function getRiskValuesFromRiskView(
-  riskView: Layer2RiskView,
-): RiskValues {
+export function getRiskValues(riskView: Layer2RiskView): RiskValues {
   return {
     dataAvailability: riskView.dataAvailability,
     sequencerFailure: riskView.sequencerFailure,
