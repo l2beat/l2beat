@@ -2,9 +2,10 @@ import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ArrowRightIcon } from '../icons'
+import { ArrowRightIcon, DropdownArrowIcon } from '../icons'
 import { OutLink } from '../OutLink'
 import { ArchivedBar } from '../project/ArchivedBar'
+import { LinkSectionLink } from '../project/links/LinkSectionLink'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { BigRosette, RiskSentiments } from '../rosette'
 
@@ -54,7 +55,7 @@ export function DetailsHeader(props: HeaderProps) {
           <DetailsHeaderStats stats={props.stats} />
         )}
       </header>
-      <HorizontalSeparator className="mt-2 md:mt-6" />
+      <HorizontalSeparator className="mt-4 md:mt-6" />
     </>
   )
 }
@@ -81,7 +82,7 @@ function Summary(props: SummaryProps) {
   const bottomStats = props.stats.slice(4)
   return (
     <div className="flex w-full gap-2">
-      <div className="min-w-0">
+      <div className="w-full min-w-0">
         <ul className="grid h-fit grow grid-cols-1 gap-3 md:mb-10 md:grid-cols-4 md:gap-0">
           {topStats.map(({ title, value }) => (
             <DetailsHeaderStat key={title} title={title} value={value} />
@@ -91,7 +92,7 @@ function Summary(props: SummaryProps) {
             <DetailsHeaderStat key={title} title={title} value={value} />
           ))}
         </ul>
-        <div className="rounded-lg bg-gray-100 px-6 py-4 dark:bg-neutral-700">
+        <div className="hidden rounded-lg bg-gray-100 px-6 py-4 dark:bg-neutral-700 md:block">
           <ul className="flex gap-4">
             {props.links.map(({ name, links }, i) => (
               <li className="flex min-w-0 flex-col gap-2" key={i}>
@@ -108,6 +109,36 @@ function Summary(props: SummaryProps) {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="Dropdown md:hidden">
+          <HorizontalSeparator className="-mx-4 my-4 w-[calc(100%+2rem)]" />
+          <div className="Dropdown-Button flex items-center justify-between">
+            <div>
+              <span className="font-bold">Links</span>
+              <span className="ml-2 font-medium text-gray-600">
+                Website, Docs, etc.
+              </span>
+            </div>
+            <DropdownArrowIcon className="Dropdown-Arrow" />
+          </div>
+          <div className="Dropdown-Items hidden">
+            <table className="mt-1 w-full table-fixed border-collapse text-left text-xs">
+              <tbody>
+                {props.links.map(({ name, links }) => (
+                  <tr className="border-t-[1px] border-gray-300 first:border-none dark:border-gray-850">
+                    <th className="w-[110px] py-3 align-top font-medium text-gray-500 dark:text-gray-550">
+                      {name}
+                    </th>
+                    <td className="py-3 last:pb-0">
+                      {links.map((x, i) => (
+                        <LinkSectionLink key={i} href={x} />
+                      ))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <div className="hidden md:block">
