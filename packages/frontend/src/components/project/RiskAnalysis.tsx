@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { RiskValues } from '../rosette'
+import { RiskValues } from '../../utils/risks/types'
 import { Section } from './Section'
 
 export interface RiskAnalysisProps {

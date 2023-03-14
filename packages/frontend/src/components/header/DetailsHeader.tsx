@@ -1,12 +1,13 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { RiskSentiments } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ArrowRightIcon, DropdownArrowIcon } from '../icons'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
 import { UpcomingBar } from '../project/UpcomingBar'
-import { BigRosette, RiskSentiments } from '../rosette'
+import { BigRosette } from '../rosette'
 
 export interface HeaderProps {
   title: string

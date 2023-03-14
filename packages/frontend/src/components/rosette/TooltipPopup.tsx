@@ -1,17 +1,17 @@
 import cx from 'classnames'
 import React from 'react'
 
+import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { MediumRosette } from './Rosette'
-import { RiskSentiments, RiskValue, RiskValues } from './types'
 
 export interface RosetteTooltipProps {
-  riskSummary: RiskSentiments
+  riskSentiments: RiskSentiments
   riskValues: RiskValues
 }
 
 export function RosetteTooltipPopup({
   riskValues,
-  riskSummary,
+  riskSentiments,
 }: RosetteTooltipProps) {
   return (
     <div className="flex w-[370px] flex-col">
@@ -20,7 +20,7 @@ export function RosetteTooltipPopup({
       </span>
       <div className="flex items-center gap-6">
         <div className="">
-          <MediumRosette risks={riskSummary} />
+          <MediumRosette risks={riskSentiments} />
         </div>
         <div className="flex flex-col gap-4">
           <RiskValueComponent

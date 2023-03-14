@@ -1,7 +1,13 @@
 import React from 'react'
 
+import { sentimentToClassName } from '../../utils/risks/color'
+import { RiskSentiments } from '../../utils/risks/types'
 import { Icon } from '../icons/Icon'
-import { RosetteProps, Sentiment } from './types'
+
+export interface RosetteProps {
+  risks: RiskSentiments
+  className?: string
+}
 
 export function SmallRosette({ risks, className }: RosetteProps) {
   return (
@@ -120,15 +126,4 @@ function BigRosetteIcon({ risks, className }: RosetteProps) {
       />
     </Icon>
   )
-}
-
-function sentimentToClassName(sentiment?: Sentiment): string {
-  switch (sentiment) {
-    case 'bad':
-      return 'fill-orange-600'
-    case 'warning':
-      return 'fill-yellow-200'
-    case undefined:
-      return 'fill-gray-400 dark:fill-gray-750'
-  }
 }

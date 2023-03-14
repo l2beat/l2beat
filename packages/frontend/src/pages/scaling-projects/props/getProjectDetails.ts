@@ -3,7 +3,7 @@ import { VerificationStatus } from '@l2beat/shared'
 
 import { getContractSection } from '../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
-import { getRiskValuesFromRiskView } from '../../scaling-tvl/props/getScalingTvlView'
+import { getRiskValuesFromRiskView } from '../../../utils/risks/values'
 import { ProjectDetailsProps } from '../view/ProjectDetails'
 import { getDescriptionSection } from './getDescriptionSection'
 import { getLinkSection } from './getLinkSection'

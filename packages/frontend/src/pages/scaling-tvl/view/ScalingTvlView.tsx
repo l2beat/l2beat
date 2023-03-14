@@ -1,7 +1,6 @@
 import { Layer2, Layer2Rating } from '@l2beat/config'
 import React from 'react'
 
-import { RiskValues } from '../../../components/rosette'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ScalingTableFilters } from '../../../components/table/filters/ScalingTableFilters'
 import { NumberCell } from '../../../components/table/NumberCell'
@@ -16,6 +15,7 @@ import {
 } from '../../../components/table/TableView'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
+import { RiskValues } from '../../../utils/risks/types'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]

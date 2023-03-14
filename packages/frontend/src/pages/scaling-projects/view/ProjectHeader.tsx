@@ -6,13 +6,13 @@ import { DetailsHeader, Link } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { RatingBadge } from '../../../components/rating/Badge'
 import { RatingTooltipPopup } from '../../../components/rating/TooltipPopup'
-import { RiskSentiments } from '../../../components/rosette'
 import { NoDataCell } from '../../../components/table/NoDataCell'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
 } from '../../../components/TVLBreakdown'
+import { RiskSentiments } from '../../../utils/risks/types'
 
 export interface ProjectHeaderProps {
   title: string
