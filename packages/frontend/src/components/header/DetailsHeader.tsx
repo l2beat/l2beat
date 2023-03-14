@@ -3,7 +3,6 @@ import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ArrowRightIcon, DropdownArrowIcon } from '../icons'
-import { OutLink } from '../OutLink'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
 import { UpcomingBar } from '../project/UpcomingBar'
@@ -69,6 +68,7 @@ interface Stat {
 export interface Link {
   name: string
   links: string[]
+  social?: boolean
 }
 
 interface SummaryProps {
@@ -94,17 +94,13 @@ function Summary(props: SummaryProps) {
         </ul>
         <div className="hidden rounded-lg bg-gray-100 px-6 py-4 dark:bg-neutral-700 md:block">
           <ul className="flex gap-4">
-            {props.links.map(({ name, links }, i) => (
+            {props.links.map(({ name, links, social }, i) => (
               <li className="flex min-w-0 flex-col gap-2" key={i}>
                 <span className="text-xs text-gray-550">{name}</span>
                 {links.map((link, i) => (
-                  <OutLink
-                    key={i}
-                    href={link}
-                    className="truncate text-link underline"
-                  >
-                    {link.slice(8)}
-                  </OutLink>
+                  <span className="text-sm">
+                    <LinkSectionLink key={i} href={link} social={social} />
+                  </span>
                 ))}
               </li>
             ))}
@@ -124,14 +120,14 @@ function Summary(props: SummaryProps) {
           <div className="Dropdown-Items hidden">
             <table className="mt-1 w-full table-fixed border-collapse text-left text-xs">
               <tbody>
-                {props.links.map(({ name, links }) => (
+                {props.links.map(({ name, links, social }) => (
                   <tr className="border-t-[1px] border-gray-300 first:border-none dark:border-gray-850">
                     <th className="w-[110px] py-3 align-top font-medium text-gray-500 dark:text-gray-550">
                       {name}
                     </th>
                     <td className="py-3 last:pb-0">
                       {links.map((x, i) => (
-                        <LinkSectionLink key={i} href={x} />
+                        <LinkSectionLink key={i} href={x} social={social} />
                       ))}
                     </td>
                   </tr>

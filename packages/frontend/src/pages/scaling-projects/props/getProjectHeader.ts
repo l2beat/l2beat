@@ -110,6 +110,7 @@ function getLinks(links: ProjectLinks) {
     {
       name: 'Social',
       links: links.socialMedia,
+      social: true,
     },
   ]
 
