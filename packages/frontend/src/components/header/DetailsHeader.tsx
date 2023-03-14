@@ -95,7 +95,13 @@ function Summary(props: SummaryProps) {
         <div className="hidden rounded-lg bg-gray-100 px-6 py-4 dark:bg-neutral-700 md:block">
           <ul className="flex gap-4">
             {props.links.map(({ name, links, social }, i) => (
-              <li className="flex min-w-0 flex-col gap-2" key={i}>
+              <li
+                className={cx(
+                  'flex min-w-0 flex-col gap-2',
+                  social ? 'shrink-0' : '',
+                )}
+                key={i}
+              >
                 <span className="text-xs text-gray-550">{name}</span>
                 {links.map((link, i) => (
                   <span className="text-sm">
@@ -137,7 +143,7 @@ function Summary(props: SummaryProps) {
           </div>
         </div>
       </div>
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <span className="text-xs text-gray-500 dark:text-gray-600">
           Risks analysis
         </span>
