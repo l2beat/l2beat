@@ -104,8 +104,8 @@ function Summary(props: SummaryProps) {
               >
                 <span className="text-xs text-gray-550">{name}</span>
                 {links.map((link, i) => (
-                  <span className="text-sm">
-                    <LinkSectionLink key={i} href={link} social={social} />
+                  <span className="text-sm" key={i}>
+                    <LinkSectionLink href={link} social={social} />
                   </span>
                 ))}
               </li>
@@ -126,8 +126,11 @@ function Summary(props: SummaryProps) {
           <div className="Dropdown-Items hidden">
             <table className="mt-1 w-full table-fixed border-collapse text-left text-xs">
               <tbody>
-                {props.links.map(({ name, links, social }) => (
-                  <tr className="border-t-[1px] border-gray-300 first:border-none dark:border-gray-850">
+                {props.links.map(({ name, links, social }, i) => (
+                  <tr
+                    className="border-t-[1px] border-gray-300 first:border-none dark:border-gray-850"
+                    key={i}
+                  >
                     <th className="w-[110px] py-3 align-top font-medium text-gray-500 dark:text-gray-550">
                       {name}
                     </th>
