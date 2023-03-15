@@ -44,6 +44,7 @@ export interface ProjectDetailsProps {
   contractsSection: ContractsSectionProps
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
+  isUpcoming?: boolean
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -51,15 +52,19 @@ export function ProjectDetails(props: ProjectDetailsProps) {
     <main className="ProjectDetails">
       <div className="ProjectDetails-Content px-4 md:px-0">
         <DescriptionSection {...props.descriptionSection} />
-        <RiskSection {...props.riskSection} />
-        {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
-        {props.sections.map((section) => (
-          <TechnologySection key={section.id} {...section} />
-        ))}
-        {props.permissionsSection && (
-          <PermissionsSection {...props.permissionsSection} />
+        {!props.isUpcoming && (
+          <>
+            <RiskSection {...props.riskSection} />
+            {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
+            {props.sections.map((section) => (
+              <TechnologySection key={section.id} {...section} />
+            ))}
+            {props.permissionsSection && (
+              <PermissionsSection {...props.permissionsSection} />
+            )}
+            <ContractsSection {...props.contractsSection} />
+          </>
         )}
-        <ContractsSection {...props.contractsSection} />
       </div>
       <div className="ProjectDetails-Side flex flex-col">
         <LinkSection {...props.linkSection} />

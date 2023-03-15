@@ -21,6 +21,7 @@ export function getProjectDetails(
     contractsSection: getContractSection(project, verificationStatus),
     milestones: project.milestones,
     knowledgeNuggets: project.knowledgeNuggets,
+    isUpcoming: project.isUpcoming,
     ...getTechnologyOverview(project),
   }
 }
