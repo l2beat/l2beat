@@ -5,7 +5,6 @@ import {
   ChartProps,
   Footer,
   FooterProps,
-  Header,
   HeaderProps,
   Navbar,
   NavbarProps,
@@ -17,7 +16,6 @@ import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
 export interface ProjectPageProps {
   header: HeaderProps
-  showProjectHeader: boolean
   projectHeader: ProjectHeaderProps
   chart: ChartProps
   projectDetails: ProjectDetailsProps
@@ -31,11 +29,7 @@ export function ProjectPage(props: ProjectPageProps) {
       <Navbar {...props.navbar} />
       <PageContent mobileFull>
         <BridgesMvpWarning />
-        {props.showProjectHeader ? (
-          <ProjectHeader {...props.projectHeader} />
-        ) : (
-          <Header {...props.header} />
-        )}
+        <ProjectHeader {...props.projectHeader} />
         <Chart {...props.chart} mobileFull />
         <ProjectDetails {...props.projectDetails} />
       </PageContent>

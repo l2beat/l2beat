@@ -1,8 +1,8 @@
-import { Layer2, Layer2RiskView } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
-import { RiskValues } from '../../../components/rosette'
+import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
 import {
@@ -54,7 +54,7 @@ function getScalingTvlViewEntry(
     name: project.display.name,
     slug: project.display.slug,
     provider: project.technology.provider,
-    riskValues: getRiskValuesFromRiskView(project.riskView),
+    riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
     isVerified,
     isArchived: project.isArchived,
@@ -67,30 +67,5 @@ function getScalingTvlViewEntry(
     purpose: project.display.purpose,
     technology: project.technology.category,
     ratingEntry: project.rating,
-  }
-}
-
-function getRiskValuesFromRiskView(riskView: Layer2RiskView): RiskValues {
-  return {
-    dataAvailability: {
-      value: riskView.dataAvailability.value,
-      sentiment: riskView.dataAvailability.sentiment,
-    },
-    sequencerFailure: {
-      value: riskView.sequencerFailure.value,
-      sentiment: riskView.sequencerFailure.sentiment,
-    },
-    stateValidation: {
-      value: riskView.stateValidation.value,
-      sentiment: riskView.stateValidation.sentiment,
-    },
-    upgradeability: {
-      value: riskView.upgradeability.value,
-      sentiment: riskView.upgradeability.sentiment,
-    },
-    validatorFailure: {
-      value: riskView.validatorFailure.value,
-      sentiment: riskView.validatorFailure.sentiment,
-    },
   }
 }

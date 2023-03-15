@@ -7,14 +7,11 @@ type Risk =
   | 'validatorFailure'
 export type RiskSentiments = Partial<Record<Risk, Sentiment>>
 
-export interface RosetteProps {
-  risks: RiskSentiments
-  className?: string
-}
-
 export interface RiskValue {
   value: string
   sentiment?: Sentiment
+  // TODO: make required
+  description?: string
 }
 
 export type RiskValues = Record<Risk, RiskValue>

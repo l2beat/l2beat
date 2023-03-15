@@ -21,7 +21,7 @@ export function RosetteTooltip() {
   }, [])
 
   const project: RosetteTooltipProps = {
-    riskSummary: {
+    riskSentiments: {
       validatorFailure: 'bad',
       upgradeability: 'bad',
       sequencerFailure: undefined,
@@ -59,7 +59,7 @@ export function RosetteTooltip() {
         className="Tooltip inline-block"
         title={renderToStaticMarkup(
           <RosetteTooltipPopup
-            riskSummary={project.riskSummary}
+            riskSentiments={project.riskSentiments}
             riskValues={project.riskValues}
           />,
         )}

@@ -1,12 +1,12 @@
 import { Story } from '@storybook/react'
 import React from 'react'
 
+import { RiskSentiments } from '../../utils/risks/types'
 import {
   BigRosette as BigRosetteComponent,
   MediumRosette as MediumRosetteComponent,
   SmallRosette as SmallRosetteComponent,
 } from './Rosette'
-import { RiskSentiments } from './types'
 
 export default {
   title: 'Components/Rosette',
