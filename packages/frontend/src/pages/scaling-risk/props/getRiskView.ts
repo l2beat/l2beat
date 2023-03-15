@@ -30,6 +30,7 @@ export function getRiskViewEntry(
     warning: project.display.warning,
     isArchived: project.isArchived,
     isVerified,
+    isUpcoming: project.isUpcoming,
     ...project.riskView,
   }
 }
