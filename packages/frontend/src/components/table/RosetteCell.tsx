@@ -1,8 +1,8 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { RiskSentiments, RiskValues } from '../../utils/risks/types'
-import { getRiskSentiments } from '../../utils/risks/values'
 
+import { RiskValues } from '../../utils/risks/types'
+import { getRiskSentiments } from '../../utils/risks/values'
 import { RosetteTooltipPopup, SmallRosette } from '../rosette'
 
 export interface RosetteCellProps {
