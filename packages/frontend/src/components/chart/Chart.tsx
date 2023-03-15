@@ -6,6 +6,7 @@ import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
+import { ChartUpcoming } from './ChartUpcoming'
 import { CurrencyControls } from './CurrencyControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
 import { RangeControls } from './RangeControls'
@@ -26,6 +27,7 @@ export interface ChartProps {
   metaChart?: boolean
   mobileFull?: boolean
   milestones?: Milestone[]
+  isUpcoming?: boolean
 }
 
 export function Chart({
@@ -38,7 +40,12 @@ export function Chart({
   metaChart = false,
   mobileFull: fullWidth = false,
   milestones,
+  isUpcoming = false,
 }: ChartProps) {
+  if (isUpcoming) {
+    return <ChartUpcoming mobileFull />
+  }
+
   const days = metaChart || type === 'activity' ? 30 : 7
   return (
     <>

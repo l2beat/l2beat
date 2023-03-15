@@ -34,7 +34,11 @@ export function ProjectPage(props: ProjectPageProps) {
         ) : (
           <Header {...props.header} />
         )}
-        <Chart {...props.chart} mobileFull />
+        <Chart
+          {...props.chart}
+          mobileFull
+          isUpcoming={props.projectDetails.isUpcoming}
+        />
         <ProjectDetails {...props.projectDetails} />
       </PageContent>
       <Footer narrow {...props.footer} />
