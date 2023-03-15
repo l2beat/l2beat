@@ -33,6 +33,7 @@ import {
   TechnologySection,
   TechnologySectionProps,
 } from '../../../components/project/TechnologySection'
+import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
 
 export interface ProjectDetailsProps {
   linkSection: LinkSectionProps
@@ -65,6 +66,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             <ContractsSection {...props.contractsSection} />
           </>
         )}
+        {props.isUpcoming && <UpcomingDisclaimer className="mt-6" />}
       </div>
       <div className="ProjectDetails-Side flex flex-col">
         <LinkSection {...props.linkSection} />
