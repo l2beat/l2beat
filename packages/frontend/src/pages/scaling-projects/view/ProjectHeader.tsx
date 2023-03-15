@@ -51,7 +51,11 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     },
     {
       title: 'Breakdown',
-      value: <TVLBreakdown {...props.tvlBreakdown} />,
+      value: !props.isUpcoming ? (
+        <TVLBreakdown {...props.tvlBreakdown} />
+      ) : (
+        <NoDataCell />
+      ),
     },
     {
       title: 'Daily TPS',
