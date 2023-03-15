@@ -381,7 +381,7 @@ export const bobanetwork: Layer2 = {
     {
       title: 'What is Hybrid Compute?',
       url: 'https://twitter.com/bkiepuszewski/status/1521849011594010624',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 }

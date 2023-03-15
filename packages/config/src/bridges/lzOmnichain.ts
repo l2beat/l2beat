@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared'
 
-import { CONTRACTS } from '../layer2s/common'
+import { CONTRACTS, NUGGETS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { OMNICHAN_ESCROWS } from './lzOmnichain.escrows'
@@ -215,6 +215,13 @@ export const lzOmnichain: Bridge = {
           'getOwners',
         ).length
       } LayerZero MultiSig.`,
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Security models: isolated vs shared',
+      url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
     },
   ],
 }
