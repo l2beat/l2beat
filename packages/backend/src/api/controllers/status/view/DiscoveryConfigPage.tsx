@@ -1,6 +1,6 @@
-import { EthereumAddress } from '@l2beat/shared'
 import React from 'react'
 
+import { ContractConfig } from '../getDiscoveryConfig'
 import { Page } from './Page'
 import { reactToHtml } from './reactToHtml'
 
@@ -16,6 +16,38 @@ export function DiscoveryConfigPage(props: DiscoveryConfigPageProps) {
         <div key={index}>
           <h3>{c.name}</h3>
           <p>{c.address}</p>
+          {c.watched && (
+            <div style={{ paddingLeft: '16px' }}>
+              <h4>Watched</h4>
+              {c.watched.map((i, index) => (
+                <p key={index}>{i}</p>
+              ))}
+            </div>
+          )}
+          {c.ignoreInWatchMode && (
+            <div style={{ paddingLeft: '16px' }}>
+              <h4>Ignore in watch mode</h4>
+              {c.ignoreInWatchMode.map((i, index) => (
+                <p key={index}>{i}</p>
+              ))}
+            </div>
+          )}
+          {c.ignoreMethods && (
+            <div style={{ paddingLeft: '16px' }}>
+              <h4>Ignored methods</h4>
+              {c.ignoreMethods.map((i, index) => (
+                <p key={index}>{i}</p>
+              ))}
+            </div>
+          )}
+          {c.rest && (
+            <div style={{ paddingLeft: '16px' }}>
+              <h4>Functions</h4>
+              {c.rest.map((i, index) => (
+                <p key={index}>{i}</p>
+              ))}
+            </div>
+          )}
         </div>
       ))}
     </Page>
