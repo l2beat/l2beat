@@ -126,7 +126,7 @@ export const connext: Bridge = {
     {
       title: 'Connext deep dive',
       url: 'https://li.fi/knowledge-hub/connext-network-a-deep-dive/',
-      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
     },
   ],
 }

@@ -5,6 +5,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -125,8 +126,7 @@ export const fuelv1: Layer2 = {
     {
       title: 'Fuel security stress test by L2BEAT team',
       url: 'https://twitter.com/krzKaczor/status/1524753284434587649',
-      thumbnailUrl:
-        'https://pbs.twimg.com/media/FSj_9EgVcAAXXCh?format=jpg&name=large',
+      thumbnail: NUGGETS.THUMBNAILS.FUEL_01,
     },
   ],
 }

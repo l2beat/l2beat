@@ -161,7 +161,7 @@ export const avalanche: Bridge = {
     {
       title: 'Avalanche Bridge deep dive',
       url: 'https://li.fi/knowledge-hub/avalanche-bridge-a-deep-dive/',
-      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
     },
   ],
 }

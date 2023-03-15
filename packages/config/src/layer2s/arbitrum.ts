@@ -485,12 +485,12 @@ export const arbitrum: Layer2 = {
     {
       title: 'Arbitrum update boosts decentralization',
       url: 'https://twitter.com/bkiepuszewski/status/1594754717330309120',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
     {
       title: 'Arbitrum is down... or is it?',
       url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_04,
     },
   ],
 }

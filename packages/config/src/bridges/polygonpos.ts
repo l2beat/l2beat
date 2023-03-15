@@ -238,7 +238,7 @@ export const polygonpos: Bridge = {
     {
       title: 'Is Polygon a side-chain?',
       url: 'https://twitter.com/bkiepuszewski/status/1380404149888675840',
-      thumbnailUrl: NUGGETS.BARTEK_TWITTER_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 }
