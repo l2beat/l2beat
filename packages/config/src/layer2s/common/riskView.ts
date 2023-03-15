@@ -258,7 +258,7 @@ export const CANONICAL_USDC: ProjectRiskViewEntry = {
 }
 
 const EMPTY: ProjectRiskViewEntry = {
-  value: 'Empty',
+  value: '',
   description: 'No information available.',
 }
 
