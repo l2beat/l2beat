@@ -1,16 +1,25 @@
+import { EthereumAddress } from '@l2beat/shared'
 import React from 'react'
 
-import { DiscoveryConfig } from '../../../../core/discovery/DiscoveryConfig'
 import { Page } from './Page'
 import { reactToHtml } from './reactToHtml'
 
 interface DiscoveryConfigPageProps {
   project: string
-  config: DiscoveryConfig
+  config: ContractConfig[]
 }
 
 export function DiscoveryConfigPage(props: DiscoveryConfigPageProps) {
-  return <Page title={props.project}>{JSON.stringify(props.config)}</Page>
+  return (
+    <Page title={props.project}>
+      {props.config.map((c, index) => (
+        <div key={index}>
+          <h3>{c.name}</h3>
+          <p>{c.address}</p>
+        </div>
+      ))}
+    </Page>
+  )
 }
 
 export function renderDiscoveryConfigPage(props: DiscoveryConfigPageProps) {
