@@ -41,23 +41,24 @@ export function ChartUpcoming({ mobileFull: fullWidth = false }: ChartProps) {
           <h2 className="hidden text-3xl font-bold md:inline">Chart</h2>
           <TvlActivityToggle />
         </div>
-        <div className="flex flex-col gap-4 blur-sm">
+        <div className="flex flex-col justify-center gap-4">
           <div
             data-role="chart-view"
-            className="relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]"
+            className="relative col-span-4 h-[160px]  xs:h-[200px] sm:h-[260px]"
             role="img"
             aria-label="chart"
           >
             <Logo className="absolute bottom-2 right-2 z-10 h-[25px] w-[60px] opacity-40" />
             <canvas
               data-role="chart-canvas"
-              className="absolute bottom-0 left-0 z-20 block h-[calc(100%_-_20px)] w-full"
+              className="absolute bottom-0 left-0 z-20 block h-[calc(100%_-_20px)] w-full blur-sm "
             />
-            <YAxisLabels />
-            <div
-              data-role="chart-milestones"
-              className="absolute bottom-0 w-[100%]"
-            />
+            <YAxisLabels className="blur-sm" />
+            <div className="absolute top-[0px] z-50 flex  h-full w-full items-center justify-center">
+              <div className="flex h-[20%] w-[50%] items-center justify-center rounded-lg bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                Coming soon
+              </div>
+            </div>
           </div>
         </div>
       </section>
