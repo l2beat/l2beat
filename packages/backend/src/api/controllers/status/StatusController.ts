@@ -2,6 +2,7 @@ import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
+import { ConfigReader } from '../../../core/discovery/ConfigReader'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
@@ -12,6 +13,7 @@ import {
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { renderBalancesPage } from './view/BalancesPage'
+import { renderDiscoveryConfigPage } from './view/DiscoveryConfigPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderReportsPage } from './view/ReportsPage'
 
@@ -24,6 +26,12 @@ export class StatusController {
     private readonly tokens: Token[],
     private readonly projects: Project[],
   ) {}
+
+  async getDiscoveryConfigStatus(project: string): Promise<string> {
+    const configReader = new ConfigReader()
+    const config = await configReader.readConfig(project)
+    return renderDiscoveryConfigPage({ project, config })
+  }
 
   async getPricesStatus(
     from: UnixTime | undefined,
