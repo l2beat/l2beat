@@ -116,10 +116,13 @@ export function ScalingTvlView({
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
       minimalWidth: true,
+      headClassName: 'pr-4',
       getValue: (project) =>
         !project.isArchived &&
         !project.isUpcoming &&
-        project.tvlBreakdown && <NumberCell>{project.marketShare}</NumberCell>,
+        project.tvlBreakdown && (
+          <NumberCell className="pr-4">{project.marketShare}</NumberCell>
+        ),
     },
   ]
 
