@@ -1,6 +1,10 @@
 import { EthereumAddress } from '@l2beat/shared'
 
-import { ProjectContractSingleAddress, ProjectRisk } from '../../common'
+import {
+  ProjectContracts,
+  ProjectContractSingleAddress,
+  ProjectRisk,
+} from '../../common'
 
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'
@@ -42,7 +46,13 @@ export const SHARP_VERIFIER_CONTRACT: ProjectContractSingleAddress = {
   },
 }
 
+const EMPTY: ProjectContracts = {
+  addresses: [],
+  risks: [],
+}
+
 export const CONTRACTS = {
+  EMPTY,
   UNVERIFIED_DESCRIPTION,
   UNVERIFIED_RISK,
   UPGRADE_NO_DELAY_RISK,
