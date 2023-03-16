@@ -34,7 +34,7 @@ export class StatusController {
 
     return renderDiscoveryDashboard({
       projects,
-      allProjectsCount: this.projects.length,
+      allProjects: this.projects.map((p) => p.projectId.toString()),
     })
   }
 
