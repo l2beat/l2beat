@@ -16,6 +16,7 @@ export interface ContractConfig {
   rest?: string[]
   overrides?: string[]
   isUnverified?: boolean
+  proxyType?: string
 }
 
 export async function getDiscoveryConfig(
@@ -100,6 +101,7 @@ export async function getDiscoveryConfig(
       watched,
       rest,
       overrides,
+      proxyType: contract.upgradeability.type,
     }
   })
 

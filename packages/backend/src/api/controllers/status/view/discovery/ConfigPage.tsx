@@ -21,7 +21,7 @@ export function ConfigPage(props: ConfigPageProps) {
             return (
               <React.Fragment key={index}>
                 <input type="radio" name="tabs" id={`tab-${index}`} />
-                <label style={{ color: 'red' }} htmlFor={`tab-${index}`}>
+                <label style={{ color: 'FF5733' }} htmlFor={`tab-${index}`}>
                   {c.address.slice(0, 10)}
                 </label>
                 <div className="tab" key={index}>
@@ -38,28 +38,37 @@ export function ConfigPage(props: ConfigPageProps) {
           }
           return (
             <React.Fragment key={index}>
-              <input type="radio" name="tabs" id={`tab-${index}`} />
+              <input
+                type="radio"
+                name="tabs"
+                id={`tab-${index}`}
+                defaultChecked={index === 0}
+              />
               <label htmlFor={`tab-${index}`}>{c.name}</label>
               <div className="tab" key={index}>
                 <blockquote>
-                  <h4>{c.name}</h4>
+                  <h4>
+                    {c.name} <ProxyIndicator type={c.proxyType} />
+                  </h4>
                   <p>{c.address}</p>
                 </blockquote>
                 {c.watched && (
-                  <details style={{ paddingLeft: '16px' }}>
+                  <details style={{ paddingLeft: '16px' }} open>
                     <summary>Watched</summary>
                     <p>
                       {c.watched.map((i, index) => (
                         <p key={index}>
                           {i}
-                          {c.overrides?.includes(i.split('(')[0]) && ' (o)'}
+                          {c.overrides?.includes(i.split('(')[0]) && (
+                            <OverrideIndicator />
+                          )}
                         </p>
                       ))}
                     </p>
                   </details>
                 )}
                 {c.ignoreInWatchMode && (
-                  <details style={{ paddingLeft: '16px' }}>
+                  <details style={{ paddingLeft: '16px' }} open>
                     <summary>Ignore in watch mode</summary>
                     <p>
                       {c.ignoreInWatchMode.map((i, index) => (
@@ -69,7 +78,7 @@ export function ConfigPage(props: ConfigPageProps) {
                   </details>
                 )}
                 {c.ignoreMethods && (
-                  <details style={{ paddingLeft: '16px' }}>
+                  <details style={{ paddingLeft: '16px' }} open>
                     <p>
                       <summary>Ignored methods</summary>
                       {c.ignoreMethods.map((i, index) => (
@@ -79,7 +88,7 @@ export function ConfigPage(props: ConfigPageProps) {
                   </details>
                 )}
                 {c.rest && (
-                  <details style={{ paddingLeft: '16px' }}>
+                  <details style={{ paddingLeft: '16px' }} open>
                     <p>
                       <summary>Not handled</summary>
                       {c.rest.map((i, index) => (
@@ -99,4 +108,39 @@ export function ConfigPage(props: ConfigPageProps) {
 
 export function renderDiscoveryConfigPage(props: ConfigPageProps) {
   return reactToHtml(<ConfigPage {...props} />)
+}
+
+function ProxyIndicator({ type }: { type?: string }) {
+  if (type === 'immutable') {
+    return null
+  }
+  return (
+    <span
+      style={{
+        background: '#900C3F',
+        borderRadius: '4px',
+        padding: '2px 3px 3px 2px',
+        marginLeft: '8px',
+        fontSize: '12px',
+      }}
+    >
+      {type}
+    </span>
+  )
+}
+
+function OverrideIndicator() {
+  return (
+    <span
+      style={{
+        background: 'grey',
+        borderRadius: '4px',
+        padding: '2px 3px 3px 2px',
+        marginLeft: '8px',
+        fontSize: '12px',
+      }}
+    >
+      override
+    </span>
+  )
 }
