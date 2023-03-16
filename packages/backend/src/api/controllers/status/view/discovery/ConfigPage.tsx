@@ -60,13 +60,17 @@ export function ConfigPage(props: ConfigPageProps) {
                   ))}
                 </blockquote>
                 {c.watched && (
-                  <details style={{ paddingLeft: '16px' }} open>
-                    <summary>Watched</summary>
+                  <details
+                    style={{ paddingLeft: '16px', color: '#52BE80' }}
+                    open
+                  >
+                    <summary style={{ color: 'inherit' }}>Watched</summary>
                     <p>
                       {c.watched.map((i, index) => (
                         <p key={index}>
-                          {i}
-                          {c.overrides?.includes(i.split('(')[0]) && (
+                          {i.name}
+                          <Value value={i.value} />
+                          {c.overrides?.includes(i.name.split('(')[0]) && (
                             <OverrideIndicator />
                           )}
                         </p>
@@ -75,19 +79,32 @@ export function ConfigPage(props: ConfigPageProps) {
                   </details>
                 )}
                 {c.ignoreInWatchMode && (
-                  <details style={{ paddingLeft: '16px' }} open>
-                    <summary>Ignore in watch mode</summary>
+                  <details
+                    style={{ paddingLeft: '16px', color: '#F4D03F' }}
+                    open
+                  >
+                    <summary style={{ color: 'inherit' }}>
+                      Ignore in watch mode
+                    </summary>
                     <p>
                       {c.ignoreInWatchMode.map((i, index) => (
-                        <p key={index}>{i}</p>
+                        <p key={index}>
+                          {i.name}
+                          <Value value={i.value} />
+                        </p>
                       ))}
                     </p>
                   </details>
                 )}
                 {c.ignoreMethods && (
-                  <details style={{ paddingLeft: '16px' }} open>
+                  <details
+                    style={{ paddingLeft: '16px', color: '#C0392B ' }}
+                    open
+                  >
+                    <summary style={{ color: 'inherit' }}>
+                      Ignored methods
+                    </summary>
                     <p>
-                      <summary>Ignored methods</summary>
                       {c.ignoreMethods.map((i, index) => (
                         <p key={index}>{i}</p>
                       ))}
@@ -95,9 +112,12 @@ export function ConfigPage(props: ConfigPageProps) {
                   </details>
                 )}
                 {c.rest && (
-                  <details style={{ paddingLeft: '16px' }} open>
+                  <details
+                    style={{ paddingLeft: '16px', color: '#5D6D7E ' }}
+                    open
+                  >
+                    <summary style={{ color: 'inherit' }}>Not handled</summary>
                     <p>
-                      <summary>Not handled</summary>
                       {c.rest.map((i, index) => (
                         <p key={index}>{i}</p>
                       ))}
@@ -150,4 +170,8 @@ function OverrideIndicator() {
       override
     </span>
   )
+}
+
+function Value({ value }: { value: string | undefined }) {
+  return <span style={{ color: '#939292', marginLeft: '8px' }}>{value}</span>
 }

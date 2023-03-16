@@ -7,11 +7,16 @@ import { ethers } from 'ethers'
 
 import { ConfigReader } from '../../../../core/discovery/ConfigReader'
 
+interface Field {
+  name: string
+  value?: string
+}
+
 export interface ContractConfig {
   name: string
   addresses: EthereumAddress[]
-  watched?: string[]
-  ignoreInWatchMode?: string[]
+  watched?: Field[]
+  ignoreInWatchMode?: Field[]
   ignoreMethods?: string[]
   rest?: string[]
   overrides?: string[]
@@ -35,11 +40,18 @@ export async function getDiscoveryConfig(
       }
     }
 
-    let ignoreInWatchMode: string[] | undefined = undefined
+    let ignoreInWatchMode: Field[] | undefined = undefined
     if (config.overrides?.[contract.address.toString()]) {
       const override = config.overrides[contract.address.toString()]
       if (override.ignoreInWatchMode) {
-        ignoreInWatchMode = override.ignoreInWatchMode
+        ignoreInWatchMode = override.ignoreInWatchMode.map((field) => {
+          return {
+            name: field,
+            value: discovery.contracts
+              .find((c) => c.address === contract.address)
+              ?.values?.[field].toString(),
+          }
+        })
       }
     }
 
@@ -55,14 +67,23 @@ export async function getDiscoveryConfig(
       discovery.contracts.find((c) => c.address === contract.address)?.values ??
       undefined
 
-    let watched = undefined
+    let watched: Field[] | undefined = undefined
     if (values) {
-      watched = Object.keys(values).filter((key) => {
-        if (ignoreInWatchMode === undefined) {
-          return true
-        }
-        return !ignoreInWatchMode.includes(key)
-      })
+      watched = Object.keys(values)
+        .filter((key) => {
+          if (ignoreInWatchMode === undefined) {
+            return true
+          }
+          return !ignoreInWatchMode.map((i) => i.name).includes(key)
+        })
+        .map((field) => {
+          return {
+            name: field,
+            value: discovery.contracts
+              .find((c) => c.address === contract.address)
+              ?.values?.[field].toString(),
+          }
+        })
     }
 
     let overrides = undefined
@@ -82,12 +103,16 @@ export async function getDiscoveryConfig(
       if (ignoreMethods?.includes(fn.split('(')[0])) {
         const index = ignoreMethods.indexOf(fn.split('(')[0])
         ignoreMethods[index] = fn
-      } else if (ignoreInWatchMode?.includes(fn.split('(')[0])) {
-        const index = ignoreInWatchMode.indexOf(fn.split('(')[0])
-        ignoreInWatchMode[index] = fn
-      } else if (watched?.includes(fn.split('(')[0])) {
-        const index = watched.indexOf(fn.split('(')[0])
-        watched[index] = fn
+      } else if (
+        ignoreInWatchMode?.map((i) => i.name).includes(fn.split('(')[0])
+      ) {
+        const index = ignoreInWatchMode
+          .map((i) => i.name)
+          .indexOf(fn.split('(')[0])
+        ignoreInWatchMode[index].name = fn
+      } else if (watched?.map((i) => i.name).includes(fn.split('(')[0])) {
+        const index = watched.map((i) => i.name).indexOf(fn.split('(')[0])
+        watched[index].name = fn
       } else {
         rest.push(fn)
       }
