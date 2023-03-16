@@ -22,11 +22,11 @@ export function ConfigPage(props: ConfigPageProps) {
               <React.Fragment key={index}>
                 <input type="radio" name="tabs" id={`tab-${index}`} />
                 <label style={{ color: 'FF5733' }} htmlFor={`tab-${index}`}>
-                  {c.address.slice(0, 10)}
+                  {c.addresses[0].slice(0, 10)}
                 </label>
                 <div className="tab" key={index}>
                   <div className="card warn">
-                    <p>{c.address}</p>
+                    <p>{c.addresses[0]}</p>
                     <p>
                       This contract does not have a verified source code on
                       Etherscan
@@ -50,7 +50,14 @@ export function ConfigPage(props: ConfigPageProps) {
                   <h4>
                     {c.name} <ProxyIndicator type={c.proxyType} />
                   </h4>
-                  <p>{c.address}</p>
+                  {c.addresses.map((a, index) => (
+                    <p key={index}>
+                      {index !== 0 && `Implementation #${index}: `}
+                      <a href={`https://etherscan.io/address/${a.toString()}`}>
+                        {a.toString()}
+                      </a>
+                    </p>
+                  ))}
                 </blockquote>
                 {c.watched && (
                   <details style={{ paddingLeft: '16px' }} open>

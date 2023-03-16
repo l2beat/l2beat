@@ -9,7 +9,7 @@ import { ConfigReader } from '../../../../core/discovery/ConfigReader'
 
 export interface ContractConfig {
   name: string
-  address: EthereumAddress
+  addresses: EthereumAddress[]
   watched?: string[]
   ignoreInWatchMode?: string[]
   ignoreMethods?: string[]
@@ -30,7 +30,7 @@ export async function getDiscoveryConfig(
     if (contract.unverified) {
       return {
         name: contract.name,
-        address: contract.address,
+        addresses: [contract.address],
         isUnverified: true,
       }
     }
@@ -95,7 +95,7 @@ export async function getDiscoveryConfig(
 
     return {
       name: contract.name,
-      address: contract.address,
+      addresses: getAddresses(contract),
       ignoreInWatchMode,
       ignoreMethods,
       watched,
