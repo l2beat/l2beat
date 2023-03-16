@@ -18,8 +18,10 @@ export function DiscoveryConfigPage(props: DiscoveryConfigPageProps) {
             <input type="radio" name="tabs" id={`tab-${index}`} />
             <label htmlFor={`tab-${index}`}>{c.name}</label>
             <div className="tab" key={index}>
-              <h3>{c.name}</h3>
-              <p>{c.address}</p>
+              <blockquote>
+                <h4>{c.name}</h4>
+                <p>{c.address}</p>
+              </blockquote>
               {c.watched && (
                 <details style={{ paddingLeft: '16px' }}>
                   <summary>Watched</summary>
