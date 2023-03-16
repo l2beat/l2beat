@@ -93,38 +93,50 @@ function Summary(props: SummaryProps) {
             <DetailsHeaderStat key={title} title={title} value={value} />
           ))}
         </ul>
-        <div className="hidden rounded-lg bg-gray-100 px-6 py-4 dark:bg-neutral-700 md:block">
-          <ul className="flex gap-4">
+        <div className="Dropdown hidden rounded-lg bg-gray-100 pt-4 dark:bg-neutral-700 md:block">
+          <ul className="mx-6 flex gap-4 ">
             {props.links.map(({ name, links, social }, i) => (
-              <li
-                className={cx(
-                  'flex min-w-0 flex-col gap-2',
-                  social ? 'shrink-0' : '',
-                )}
-                key={i}
-              >
+              <li className={cx('flex min-w-0 flex-col gap-2')} key={i}>
                 <span className="text-xs text-gray-550">{name}</span>
                 {links.map((link, i) => (
-                  <span className="text-sm" key={i}>
+                  <span
+                    className={cx('text-sm', i !== 0 && 'Dropdown-Item hidden')}
+                    key={i}
+                  >
                     <LinkSectionLink href={link} social={social} />
                   </span>
                 ))}
               </li>
             ))}
           </ul>
+          <label className="mt-4 block border-t-2 border-gray-200 pt-3 pb-4 text-center font-medium   dark:border-gray-700">
+            <input
+              type="checkbox"
+              autoComplete="off"
+              className="Dropdown-Button peer hidden"
+            />
+            Show <span className="peer-checked:hidden">more</span>
+            <span className="hidden peer-checked:inline">less</span> information
+            <DropdownArrowIcon className="ml-2 inline-block -translate-y-px peer-checked:rotate-180" />
+          </label>
         </div>
         <div className="Dropdown md:hidden">
           <HorizontalSeparator className="-mx-4 my-4 w-[calc(100%+2rem)]" />
-          <div className="Dropdown-Button flex items-center justify-between">
+          <label className="flex items-center justify-between">
+            <input
+              type="checkbox"
+              autoComplete="off"
+              className="Dropdown-Button peer hidden"
+            />
             <div>
               <span className="font-bold">Links</span>
               <span className="ml-2 font-medium text-gray-600">
                 Website, Docs, etc.
               </span>
             </div>
-            <DropdownArrowIcon className="Dropdown-Arrow" />
-          </div>
-          <div className="Dropdown-Items hidden">
+            <DropdownArrowIcon className="peer-checked:rotate-180" />
+          </label>
+          <div className="Dropdown-Item hidden">
             <table className="mt-1 w-full table-fixed border-collapse text-left text-xs">
               <tbody>
                 {props.links.map(({ name, links, social }, i) => (
@@ -154,7 +166,7 @@ function Summary(props: SummaryProps) {
         <BigRosette risks={props.risks} />
         <a
           href="#risks"
-          className="mt-4 block text-center text-sm font-bold text-link underline"
+          className="mt-3 block text-center text-sm font-bold text-link underline"
         >
           Learn more about Risks analysis{' '}
           <ArrowRightIcon className="inline-block fill-current" />
