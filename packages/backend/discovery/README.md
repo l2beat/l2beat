@@ -19,7 +19,7 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 - `"$schema": "../config.schema.json"`
 - `name` - name of the project
-- `initialAddresses: address[]` - array of addresses that discovery will start from. Discovery will download the contract ABI, read all the available values, and walk through all the contracts found there (`maxDepth` defaults to 7). Sometimes the most central address is enough here, but in case of a more complex implementation, you will need to add more to cover all important contracts. Usually 3 addresses here is enough.
+- `initialAddresses: address[]` - array of addresses that discovery will start from. Discovery will download the contract ABI, read all the available values, and walk through all the contracts found there (`maxDepth` defaults to 7). By default, discovery checks only `view` or `constant` methods with no arguments or with exactly one argument of `uint256` (array). To check other functions you'll need to write custom handlers (see `overrides`). Sometimes the most central address is enough here, but in case of a more complex implementation, you will need to add more to cover all important contracts. Usually 3 addresses here is enough.
 - `overrides: Record<address, object>` - (optional) key-value object, with contracts as keys. It will allow you to ignore contracts in discovery (ex. token addresses or external contracts) or, override more complex fields and methods ([storage](#storage-handler) and [array](#array-handler) handlers).
 
 **Example:**
