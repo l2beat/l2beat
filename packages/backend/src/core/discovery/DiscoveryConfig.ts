@@ -9,7 +9,7 @@ export const DiscoveryContract = z.object({
   proxyType: z.optional(ManualProxyType),
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.optional(z.array(z.string())),
-  fields: z.optional(
+    fields: z.optional(
     z.record(z.string().regex(/^[a-z_][a-z\d_]*$/i), UserHandlerDefinition),
   ),
 })

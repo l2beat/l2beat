@@ -20,7 +20,10 @@ export function DiscoveryConfigPage(props: DiscoveryConfigPageProps) {
             <div style={{ paddingLeft: '16px' }}>
               <h4>Watched</h4>
               {c.watched.map((i, index) => (
-                <p key={index}>{i}</p>
+                <p key={index}>
+                  {i}
+                  {c.overrides?.includes(i.split('(')[0]) && ' (o)'}
+                </p>
               ))}
             </div>
           )}

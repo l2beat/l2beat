@@ -14,6 +14,7 @@ export interface ContractConfig {
   ignoreInWatchMode?: string[]
   ignoreMethods?: string[]
   rest?: string[]
+  overrides?: string[]
 }
 
 export async function getDiscoveryConfig(
@@ -43,6 +44,7 @@ export async function getDiscoveryConfig(
     const values =
       discovery.contracts.find((c) => c.address === contract.address)?.values ??
       undefined
+    console.log(contract.address, values)
 
     let watched = undefined
     if (values) {
@@ -54,36 +56,43 @@ export async function getDiscoveryConfig(
       })
     }
 
-    const functions = getFunctions(discovery, contract.address)
-
-    const result: {
-      ignoreInWatchMode: string[]
-      ignoreMethods: string[]
-      watched: string[]
-      rest: string[]
-    } = {
-      ignoreInWatchMode: [],
-      ignoreMethods: [],
-      watched: [],
-      rest: [],
-    }
-
-    for (const fn of functions) {
-      if (ignoreMethods?.includes(fn.split('(')[0])) {
-        result.ignoreMethods.push(fn)
-      } else if (ignoreInWatchMode?.includes(fn.split('(')[0])) {
-        result.ignoreInWatchMode.push(fn)
-      } else if (watched?.includes(fn.split('(')[0])) {
-        result.watched.push(fn)
-      } else {
-        result.rest.push(fn)
+    let overrides = undefined
+    if (config.overrides?.[contract.address.toString()]) {
+      if (config.overrides[contract.address.toString()].fields) {
+        overrides = Object.keys(
+          config.overrides[contract.address.toString()].fields,
+        )
       }
     }
+
+    const functions = getFunctions(discovery, contract.address)
+
+    const rest = []
+    for (const fn of functions) {
+      if (ignoreMethods?.includes(fn.split('(')[0])) {
+        const index = ignoreMethods.indexOf(fn.split('(')[0])
+        ignoreMethods[index] = fn
+      } else if (ignoreInWatchMode?.includes(fn.split('(')[0])) {
+        const index = ignoreInWatchMode.indexOf(fn.split('(')[0])
+        ignoreInWatchMode[index] = fn
+      } else if (watched?.includes(fn.split('(')[0])) {
+        const index = watched.indexOf(fn.split('(')[0])
+        watched[index] = fn
+      } else {
+        rest.push(fn)
+      }
+    }
+
+    // console.log(contract.address.toString(), result)
 
     return {
       name: contract.name,
       address: contract.address,
-      ...result,
+      ignoreInWatchMode,
+      ignoreMethods,
+      watched,
+      rest,
+      overrides,
     }
   })
 
