@@ -55,7 +55,7 @@ export function DetailsHeader(props: HeaderProps) {
           <DetailsHeaderStats stats={props.stats} />
         )}
       </header>
-      <HorizontalSeparator className="mt-4 md:mt-6" />
+      <HorizontalSeparator className="md:mt-6" />
     </>
   )
 }
@@ -121,8 +121,8 @@ function Summary(props: SummaryProps) {
           </label>
         </div>
         <div className="Dropdown md:hidden">
-          <HorizontalSeparator className="-mx-4 my-4 w-[calc(100%+2rem)]" />
-          <label className="flex items-center justify-between">
+          <HorizontalSeparator className="-mx-4 mt-4 w-[calc(100%+2rem)]" />
+          <label className="flex items-center justify-between py-4">
             <input
               type="checkbox"
               autoComplete="off"
