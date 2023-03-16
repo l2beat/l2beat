@@ -82,7 +82,12 @@ export const nova: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    upgradeability: {
+      value: '13d or no delay',
+      description:
+        'There is a 13 days delay unless it is overriden by the 9/12 Security Council multisig.',
+      sentiment: 'warning',
+    },
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: {
       value: 'Propose blocks',
