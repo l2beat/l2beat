@@ -46,19 +46,25 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       name: '#',
       alignCenter: true,
       minimalWidth: true,
+      headClassName: 'pl-4',
       getValue: (entry, index) => (
         <>
           <span data-bridges-only-cell>
-            <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
+            <IndexCell
+              entry={entry}
+              index={onlyBridges.indexOf(entry) + 1}
+              className="pl-4"
+            />
           </span>
           <span data-combined-only-cell className="hidden">
-            <IndexCell entry={entry} index={index + 1} />
+            <IndexCell entry={entry} index={index + 1} className="pl-4" />
           </span>
         </>
       ),
     },
     {
       name: 'Name',
+      headClassName: 'pl-8',
       getValue: (entry) => (
         <ProjectCell highlightL2 type={entry.type} project={entry} />
       ),

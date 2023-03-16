@@ -9,8 +9,8 @@ interface EthereumCellProps {
 
 export function EthereumCell({ project }: EthereumCellProps) {
   return (
-    <div className="align-middle">
-      <span className="relative pl-7">
+    <div className="pl-[15px]">
+      <span className="relative pl-8">
         <img
           className="absolute left-0 top-0 block h-[18px] w-[18px]"
           src={`/icons/${project.slug}.png`}

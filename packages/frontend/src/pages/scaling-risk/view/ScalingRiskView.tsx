@@ -42,12 +42,14 @@ export function ScalingRiskView({
       name: '#',
       alignCenter: true,
       minimalWidth: true,
-      getValue: (entry, index) => {
-        return <IndexCell entry={entry} index={index + 1} />
-      },
+      headClassName: 'pl-4',
+      getValue: (entry, index) => (
+        <IndexCell entry={entry} className="pl-4" index={index + 1} />
+      ),
     },
     {
       name: 'Name',
+      headClassName: 'pl-8',
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {

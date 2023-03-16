@@ -1,13 +1,13 @@
-import { Layer2 } from '@l2beat/config'
 import React from 'react'
 
-import { OptimismIcon, ShieldIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
+import { ShieldIcon } from '../icons'
+import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 
 export interface ProjectCellProps {
   project: {
     name: string
     slug: string
-    provider?: Layer2['technology']['provider']
+    isVerified?: boolean
     warning?: string
   }
   highlightL2?: boolean
@@ -15,14 +15,11 @@ export interface ProjectCellProps {
 }
 
 export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
-  const providerClassName = 'Tooltip relative inline-block h-4 w-4 ml-1'
-  const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4'
-
   return (
-    <div className="align-middle">
-      <span className="relative pl-7 group-hover:underline">
+    <div>
+      <span className="relative pl-8 group-hover:underline">
         <img
-          className="absolute left-0 top-0 block h-[18px] w-[18px]"
+          className="absolute top-0 left-0 inline-block h-[18px] w-[18px]"
           src={`/icons/${project.slug}.png`}
           alt={`${project.name} logo`}
         />
@@ -37,36 +34,24 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
         )}
         <span className="text-base font-bold md:text-lg">{project.name}</span>
       </span>
-      {project.provider === 'StarkEx' && (
-        <span
-          className={providerClassName}
-          title="This project is built using StarkEx."
-        >
-          <StarkWareIcon className={providerIconClassName} />
-        </span>
-      )}
-      {project.provider === 'Optimism' && (
-        <span
-          className={providerClassName}
-          title="This project is based on Optimism's code base."
-        >
-          <OptimismIcon className={providerIconClassName} />
-        </span>
-      )}
-      {project.provider === 'zkSync' && (
-        <span
-          className={providerClassName}
-          title="This project is based on zkSync's code base."
-        >
-          <ZkSyncIcon className={providerIconClassName} />
+      {project.isVerified === false && (
+        <span className="pl-1.5">
+          <span
+            className="Tooltip relative inline-block h-[1em] w-4"
+            title="This project contains unverified contracts."
+          >
+            <UnverifiedIcon className="absolute top-px left-0 h-4 w-4 fill-red-300" />
+          </span>
         </span>
       )}
       {project.warning && (
-        <span
-          className="Tooltip relative ml-1 inline-block h-6 w-4"
-          title={project.warning}
-        >
-          <ShieldIcon className="absolute top-1/2 -translate-y-1/2 fill-yellow-700 dark:fill-yellow-300" />
+        <span className="pl-1.5">
+          <span
+            className="Tooltip relative inline-block h-[1em] w-[12.8px]"
+            title={project.warning}
+          >
+            <ShieldIcon className="absolute top-px left-0 h-4 w-[12.8px] fill-yellow-700 dark:fill-yellow-300" />
+          </span>
         </span>
       )}
     </div>

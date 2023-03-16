@@ -15,6 +15,8 @@ export interface ColumnConfig<T> {
   alignRight?: true
   alignCenter?: true
   minimalWidth?: true
+  headClassName?: string
+  noPaddingRight?: true
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
 }
@@ -39,39 +41,44 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
       <table className="w-full border-collapse text-left">
         <thead>
           <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
-            {columns.map((column, i) => (
-              <th
-                key={i}
-                className={cx(
-                  'whitespace-pre py-2 text-sm font-medium uppercase text-gray-700 dark:text-gray-600',
-                  column.minimalWidth && 'w-0',
-                  i !== columns.length - 1 && 'pr-3 md:pr-4',
-                )}
-              >
-                <div
+            {columns.map((column, i) => {
+              const isLastColumn = i === columns.length - 1
+              const hasPaddingRight = !column.noPaddingRight && !isLastColumn
+              return (
+                <th
+                  key={i}
                   className={cx(
-                    'flex flex-row items-center gap-1.5',
-                    column.alignRight && 'justify-end',
-                    column.alignCenter && 'justify-center',
+                    'whitespace-pre py-2 text-sm font-medium uppercase text-gray-50',
+                    column.minimalWidth && 'w-0',
+                    hasPaddingRight && 'pr-3 md:pr-4',
+                    column.headClassName,
                   )}
                 >
-                  <span className={cx(column.shortName && 'hidden md:block')}>
-                    {column.name}
-                  </span>
-                  {column.shortName && (
-                    <span className="md:hidden">{column.shortName}</span>
-                  )}
-                  {column.tooltip && (
-                    <span
-                      className="Tooltip -translate-y-px md:translate-y-0"
-                      title={column.tooltip}
-                    >
-                      <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+                  <div
+                    className={cx(
+                      'flex flex-row items-center gap-1.5',
+                      column.alignRight && 'justify-end',
+                      column.alignCenter && 'justify-center',
+                    )}
+                  >
+                    <span className={cx(column.shortName && 'hidden md:block')}>
+                      {column.name}
                     </span>
-                  )}
-                </div>
-              </th>
-            ))}
+                    {column.shortName && (
+                      <span className="md:hidden">{column.shortName}</span>
+                    )}
+                    {column.tooltip && (
+                      <span
+                        className="Tooltip -translate-y-px md:translate-y-0"
+                        title={column.tooltip}
+                      >
+                        <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+                      </span>
+                    )}
+                  </div>
+                </th>
+              )
+            })}
           </tr>
         </thead>
         <tbody className="">
@@ -87,24 +94,32 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
                   className,
                 )}
               >
-                {columns.map((column, j) => (
-                  <td
-                    key={j}
-                    className={cx('h-9 md:h-10', column.minimalWidth && 'w-0')}
-                  >
-                    <a
-                      href={href}
+                {columns.map((column, j) => {
+                  const isLastColumn = j === columns.length - 1
+                  const hasPaddingRight =
+                    !column.noPaddingRight && !isLastColumn
+                  return (
+                    <td
+                      key={j}
                       className={cx(
-                        'flex h-full w-full items-center',
-                        column.alignRight && 'justify-end',
-                        column.alignCenter && 'justify-center',
-                        j !== columns.length - 1 && 'pr-3 md:pr-4',
+                        'h-9 md:h-14',
+                        column.minimalWidth && 'w-0',
                       )}
                     >
-                      {column.getValue(item, i)}
-                    </a>
-                  </td>
-                ))}
+                      <a
+                        href={href}
+                        className={cx(
+                          'flex h-full w-full items-center',
+                          column.alignRight && 'justify-end',
+                          column.alignCenter && 'justify-center',
+                          hasPaddingRight && 'pr-3 md:pr-4',
+                        )}
+                      >
+                        {column.getValue(item, i)}
+                      </a>
+                    </td>
+                  )
+                })}
               </tr>
             )
           })}

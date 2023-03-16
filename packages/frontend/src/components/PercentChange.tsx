@@ -15,8 +15,8 @@ export function PercentChange({ value, className }: Props) {
   return (
     <span
       className={cx(
-        isMore && 'text-green-700 dark:text-green-300',
-        isLess && 'text-red-700 dark:text-red-300',
+        isMore && 'text-green-300 dark:text-green-450',
+        isLess && 'text-red-300',
         'relative',
         className,
       )}
