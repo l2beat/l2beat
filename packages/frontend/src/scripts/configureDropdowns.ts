@@ -14,7 +14,7 @@ export function configureDropdowns() {
     if (!button) continue
     const items = dropdown.querySelectorAll('.Dropdown-Item')
 
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', () => {
       items.forEach((item) => item.classList.toggle('hidden'))
     })
   }
