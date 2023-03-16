@@ -7,7 +7,7 @@ import { ethers } from 'ethers'
 
 import { ConfigReader } from '../../../../core/discovery/ConfigReader'
 
-interface Field {
+export interface Field {
   name: string
   value?: string
 }
@@ -17,8 +17,8 @@ export interface ContractConfig {
   addresses: EthereumAddress[]
   watched?: Field[]
   ignoreInWatchMode?: Field[]
-  ignoreMethods?: string[]
-  rest?: string[]
+  ignoreMethods?: Field[]
+  rest?: Field[]
   overrides?: string[]
   isUnverified?: boolean
   proxyType?: string
@@ -55,11 +55,15 @@ export async function getDiscoveryConfig(
       }
     }
 
-    let ignoreMethods: string[] | undefined = undefined
+    let ignoreMethods: Field[] | undefined = undefined
     if (config.overrides?.[contract.address.toString()]) {
       const override = config.overrides[contract.address.toString()]
       if (override.ignoreMethods) {
-        ignoreMethods = override.ignoreMethods
+        ignoreMethods = override.ignoreMethods.map((field) => {
+          return {
+            name: field,
+          }
+        })
       }
     }
 
@@ -98,11 +102,11 @@ export async function getDiscoveryConfig(
 
     const functions = getFunctions(discovery, contract.address)
 
-    const rest = []
+    const rest: Field[] = []
     for (const fn of functions) {
-      if (ignoreMethods?.includes(fn.split('(')[0])) {
-        const index = ignoreMethods.indexOf(fn.split('(')[0])
-        ignoreMethods[index] = fn
+      if (ignoreMethods?.map((i) => i.name).includes(fn.split('(')[0])) {
+        const index = ignoreMethods.map((i) => i.name).indexOf(fn.split('(')[0])
+        ignoreMethods[index].name = fn
       } else if (
         ignoreInWatchMode?.map((i) => i.name).includes(fn.split('(')[0])
       ) {
@@ -114,7 +118,7 @@ export async function getDiscoveryConfig(
         const index = watched.map((i) => i.name).indexOf(fn.split('(')[0])
         watched[index].name = fn
       } else {
-        rest.push(fn)
+        rest.push({ name: fn })
       }
     }
 

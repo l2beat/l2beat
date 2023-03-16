@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ContractConfig } from '../../discovery/getDiscoveryConfig'
+import { ContractConfig, Field } from '../../discovery/getDiscoveryConfig'
 import { Page } from '../Page'
 import { reactToHtml } from '../reactToHtml'
 
@@ -60,85 +60,28 @@ export function ConfigPage(props: ConfigPageProps) {
                   ))}
                 </blockquote>
                 {c.watched && (
-                  <details
-                    style={{ paddingLeft: '16px', color: '#52BE80' }}
-                    open
-                  >
-                    <summary style={{ color: 'inherit' }}>Watched</summary>
-                    <p style={{ margin: '0px' }}>
-                      {c.watched.map((i, index) => (
-                        <p
-                          key={index}
-                          style={{ marginTop: '2px', marginBottom: '2px' }}
-                        >
-                          {i.name}
-                          <Value value={i.value} />
-                          {c.overrides?.includes(i.name.split('(')[0]) && (
-                            <OverrideIndicator />
-                          )}
-                        </p>
-                      ))}
-                    </p>
-                  </details>
+                  <Section title="Watched" color="#52BE80" fields={c.watched} />
                 )}
                 {c.ignoreInWatchMode && (
-                  <details
-                    style={{ paddingLeft: '16px', color: '#F4D03F' }}
-                    open
-                  >
-                    <summary style={{ color: 'inherit' }}>
-                      Ignore in watch mode
-                    </summary>
-                    <p style={{ margin: '0px' }}>
-                      {c.ignoreInWatchMode.map((i, index) => (
-                        <p
-                          key={index}
-                          style={{ marginTop: '2px', marginBottom: '2px' }}
-                        >
-                          {i.name}
-                          <Value value={i.value} />
-                        </p>
-                      ))}
-                    </p>
-                  </details>
+                  <Section
+                    title="Ignore in watch mode"
+                    color="#F4D03F"
+                    fields={c.ignoreInWatchMode}
+                  />
                 )}
                 {c.ignoreMethods && (
-                  <details
-                    style={{ paddingLeft: '16px', color: '#C0392B ' }}
-                    open
-                  >
-                    <summary style={{ color: 'inherit' }}>
-                      Ignored methods
-                    </summary>
-                    <p style={{ margin: '0px' }}>
-                      {c.ignoreMethods.map((i, index) => (
-                        <p
-                          key={index}
-                          style={{ marginTop: '2px', marginBottom: '2px' }}
-                        >
-                          {i}
-                        </p>
-                      ))}
-                    </p>
-                  </details>
+                  <Section
+                    title="Ignored methods"
+                    color="#C0392B"
+                    fields={c.ignoreMethods}
+                  />
                 )}
                 {c.rest && (
-                  <details
-                    style={{ paddingLeft: '16px', color: '#5D6D7E ' }}
-                    open
-                  >
-                    <summary style={{ color: 'inherit' }}>Not handled</summary>
-                    <p style={{ margin: '0px' }}>
-                      {c.rest.map((i, index) => (
-                        <p
-                          key={index}
-                          style={{ marginTop: '2px', marginBottom: '2px' }}
-                        >
-                          {i}
-                        </p>
-                      ))}
-                    </p>
-                  </details>
+                  <Section
+                    title="Not handled"
+                    color="#5D6D7E"
+                    fields={c.rest}
+                  />
                 )}
               </div>
             </React.Fragment>
@@ -151,6 +94,30 @@ export function ConfigPage(props: ConfigPageProps) {
 
 export function renderDiscoveryConfigPage(props: ConfigPageProps) {
   return reactToHtml(<ConfigPage {...props} />)
+}
+
+function Section({
+  title,
+  color,
+  fields,
+}: {
+  title: string
+  color: string
+  fields: Field[]
+}) {
+  return (
+    <details style={{ paddingLeft: '16px', color }} open>
+      <summary style={{ color: 'inherit' }}>{title}</summary>
+      <p style={{ margin: '0px' }}>
+        {fields.map((i, index) => (
+          <p key={index} style={{ marginTop: '2px', marginBottom: '2px' }}>
+            {i.name}
+            <Value value={i.value} />
+          </p>
+        ))}
+      </p>
+    </details>
+  )
 }
 
 function ProxyIndicator({ type }: { type?: string }) {
@@ -190,5 +157,6 @@ function OverrideIndicator() {
 }
 
 function Value({ value }: { value: string | undefined }) {
+  if (!value) return null
   return <span style={{ color: '#939292', marginLeft: '8px' }}>{value}</span>
 }
