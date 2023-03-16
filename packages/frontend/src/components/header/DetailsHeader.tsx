@@ -137,17 +137,22 @@ function Summary(props: SummaryProps) {
             <DropdownArrowIcon className="peer-checked:rotate-180" />
           </label>
           <div className="Dropdown-Item hidden">
-            <table className="mt-1 w-full table-fixed border-collapse text-left text-xs">
+            <table className="w-full table-fixed border-collapse text-left text-xs">
               <tbody>
                 {props.links.map(({ name, links, social }, i) => (
                   <tr
                     className="border-t-[1px] border-gray-300 first:border-none dark:border-gray-850"
                     key={i}
                   >
-                    <th className="w-[110px] py-3 align-top font-medium text-gray-500 dark:text-gray-550">
+                    <th
+                      className={cx(
+                        'w-[110px] py-3 align-top font-medium text-gray-500 dark:text-gray-550',
+                        i === 0 && 'pt-0',
+                      )}
+                    >
                       {name}
                     </th>
-                    <td className="py-3 last:pb-0">
+                    <td className={cx('py-3', i === 0 && 'pt-0')}>
                       {links.map((x, i) => (
                         <LinkSectionLink key={i} href={x} social={social} />
                       ))}
