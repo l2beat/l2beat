@@ -54,7 +54,9 @@ export function ScalingTvlView({
       alignCenter: true,
       minimalWidth: true,
       headClassName: 'pl-4',
-      getValue: (_, i) => <IndexCell className="pl-4" index={i + 1} />,
+      getValue: (entry, index) => (
+        <IndexCell entry={entry} className="pl-4" index={index + 1} />
+      ),
     },
     {
       name: 'Name',
