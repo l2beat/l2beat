@@ -48,13 +48,16 @@ export function createStatusRouter(statusController: StatusController) {
     }),
   )
 
-  router.get(
-    '/status/discovery/:project',
-    withTypedContext(paramsParser, async (ctx) => {
-      const { project } = ctx.params
-      ctx.body = await statusController.getDiscoveryConfigStatus(project)
-    }),
-  )
+  router.get('/status/discovery', async (ctx) => {
+    ctx.body = await statusController.getDiscoveryDashboard()
+  }),
+    router.get(
+      '/status/discovery/:project',
+      withTypedContext(paramsParser, async (ctx) => {
+        const { project } = ctx.params
+        ctx.body = await statusController.getDiscoveryConfigStatus(project)
+      }),
+    )
 
   return router
 }

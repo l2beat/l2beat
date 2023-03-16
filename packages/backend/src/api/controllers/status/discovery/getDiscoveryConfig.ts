@@ -5,7 +5,7 @@ import {
 } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
-import { ConfigReader } from '../../../core/discovery/ConfigReader'
+import { ConfigReader } from '../../../../core/discovery/ConfigReader'
 
 export interface ContractConfig {
   name: string
@@ -44,7 +44,6 @@ export async function getDiscoveryConfig(
     const values =
       discovery.contracts.find((c) => c.address === contract.address)?.values ??
       undefined
-    console.log(contract.address, values)
 
     let watched = undefined
     if (values) {
@@ -83,8 +82,6 @@ export async function getDiscoveryConfig(
         rest.push(fn)
       }
     }
-
-    // console.log(contract.address.toString(), result)
 
     return {
       name: contract.name,

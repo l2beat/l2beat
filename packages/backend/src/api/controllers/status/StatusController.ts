@@ -11,9 +11,11 @@ import {
 } from '../../../peripherals/database/BalanceStatusRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
-import { getDiscoveryConfig } from './getDiscoveryConfig'
+import { getDiscoveryConfig } from './discovery/getDiscoveryConfig'
+import { getDiscoveryProjects } from './discovery/getDiscoveryProjects'
 import { renderBalancesPage } from './view/BalancesPage'
-import { renderDiscoveryConfigPage } from './view/DiscoveryConfigPage'
+import { renderDiscoveryConfigPage } from './view/discovery/ConfigPage'
+import { renderDiscoveryDashboard } from './view/discovery/DashboardPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderReportsPage } from './view/ReportsPage'
 
@@ -26,6 +28,12 @@ export class StatusController {
     private readonly tokens: Token[],
     private readonly projects: Project[],
   ) {}
+
+  async getDiscoveryDashboard(): Promise<string> {
+    const projects = await getDiscoveryProjects()
+
+    return renderDiscoveryDashboard({ projects })
+  }
 
   async getDiscoveryConfigStatus(project: string): Promise<string> {
     const config = await getDiscoveryConfig(project)

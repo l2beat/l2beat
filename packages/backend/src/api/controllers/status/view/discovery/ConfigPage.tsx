@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { ContractConfig } from '../getDiscoveryConfig'
-import { Page } from './Page'
-import { reactToHtml } from './reactToHtml'
+import { ContractConfig } from '../../discovery/getDiscoveryConfig'
+import { Page } from '../Page'
+import { reactToHtml } from '../reactToHtml'
 
-interface DiscoveryConfigPageProps {
+interface ConfigPageProps {
   project: string
   config: ContractConfig[]
 }
 
-export function DiscoveryConfigPage(props: DiscoveryConfigPageProps) {
+export function ConfigPage(props: ConfigPageProps) {
   return (
     <Page title={props.project}>
       <div className="tabs">
@@ -73,6 +73,6 @@ export function DiscoveryConfigPage(props: DiscoveryConfigPageProps) {
   )
 }
 
-export function renderDiscoveryConfigPage(props: DiscoveryConfigPageProps) {
-  return reactToHtml(<DiscoveryConfigPage {...props} />)
+export function renderDiscoveryConfigPage(props: ConfigPageProps) {
+  return reactToHtml(<ConfigPage {...props} />)
 }
