@@ -15,6 +15,7 @@ export interface ContractConfig {
   ignoreMethods?: string[]
   rest?: string[]
   overrides?: string[]
+  isUnverified?: boolean
 }
 
 export async function getDiscoveryConfig(
@@ -25,6 +26,14 @@ export async function getDiscoveryConfig(
   const config = await configReader.readConfig(project)
 
   const result = discovery.contracts.map((contract) => {
+    if (contract.unverified) {
+      return {
+        name: contract.name,
+        address: contract.address,
+        isUnverified: true,
+      }
+    }
+
     let ignoreInWatchMode: string[] | undefined = undefined
     if (config.overrides?.[contract.address.toString()]) {
       const override = config.overrides[contract.address.toString()]
@@ -107,7 +116,8 @@ function getFunctions(
     throw new Error(`Contract ${address.toString()} not found`)
   }
 
-  const addresses = getAddresses(discovery, contract)
+  const addresses = getAddresses(contract)
+  console.log(addresses)
 
   const functionNames: string[] | undefined = []
 
@@ -130,10 +140,7 @@ function getFunctions(
   return functions.sort()
 }
 
-function getAddresses(
-  discovery: ProjectParameters,
-  contract: ContractParameters,
-): EthereumAddress[] {
+function getAddresses(contract: ContractParameters): EthereumAddress[] {
   const addresses: EthereumAddress[] = [contract.address]
   if (contract.upgradeability.type === 'immutable') {
     return addresses
