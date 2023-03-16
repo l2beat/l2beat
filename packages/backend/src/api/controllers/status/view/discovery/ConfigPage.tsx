@@ -12,7 +12,10 @@ interface ConfigPageProps {
 export function ConfigPage(props: ConfigPageProps) {
   return (
     <Page title={props.project}>
-      <div className="tabs">
+      <a href="/status/discovery" key="back">
+        ⬅ Back
+      </a>
+      <div className="tabs" style={{ marginTop: '8px' }}>
         {props.config.map((c, index) => {
           if (c.isUnverified) {
             return (
