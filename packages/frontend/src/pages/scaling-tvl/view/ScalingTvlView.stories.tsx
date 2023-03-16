@@ -20,7 +20,7 @@ export function TvlView() {
     <>
       <PageContent>
         <ScalingTvlView
-          ratingEnabled={true}
+          maturityEnabled={true}
           items={[
             {
               name: 'Forktimism',
@@ -65,7 +65,7 @@ export function TvlView() {
               purpose: 'Universal',
               technology: 'Optimistic Rollup',
               isVerified: false,
-              ratingEntry: {
+              maturityEntry: {
                 category: {
                   score: 'B',
                   requirements: ['There is an existing fraud proof system'],

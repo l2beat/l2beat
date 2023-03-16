@@ -1,4 +1,4 @@
-## Ratings - milestones for rollups
+## Maturitys - milestones for rollups
 
 ### Challenge
 

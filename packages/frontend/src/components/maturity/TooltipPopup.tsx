@@ -1,18 +1,18 @@
-import { Layer2Rating } from '@l2beat/config'
+import { Layer2Maturity } from '@l2beat/config'
 import React from 'react'
 
-import { RatingBadge } from './Badge'
+import { MaturityBadge } from './Badge'
 
-export interface RatingProps {
-  item?: Layer2Rating
+export interface MaturityProps {
+  item?: Layer2Maturity
 }
 
-export function RatingTooltipPopup({ item }: Required<RatingProps>) {
+export function MaturityTooltipPopup({ item }: Required<MaturityProps>) {
   return (
     <div className="w-88 flex flex-col gap-4">
       <span className="font-bold">
         <span className="mr-2">Current score</span>
-        <RatingBadge
+        <MaturityBadge
           category={item.category.score}
           modifier={item.modifier?.score}
         />
