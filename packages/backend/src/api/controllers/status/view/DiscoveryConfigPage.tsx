@@ -12,47 +12,61 @@ interface DiscoveryConfigPageProps {
 export function DiscoveryConfigPage(props: DiscoveryConfigPageProps) {
   return (
     <Page title={props.project}>
-      {props.config.map((c, index) => (
-        <div key={index}>
-          <h3>{c.name}</h3>
-          <p>{c.address}</p>
-          {c.watched && (
-            <div style={{ paddingLeft: '16px' }}>
-              <h4>Watched</h4>
-              {c.watched.map((i, index) => (
-                <p key={index}>
-                  {i}
-                  {c.overrides?.includes(i.split('(')[0]) && ' (o)'}
-                </p>
-              ))}
+      <div className="tabs">
+        {props.config.map((c, index) => (
+          <>
+            <input type="radio" name="tabs" id={`tab-${index}`} />
+            <label htmlFor={`tab-${index}`}>{c.name}</label>
+            <div className="tab" key={index}>
+              <h3>{c.name}</h3>
+              <p>{c.address}</p>
+              {c.watched && (
+                <details style={{ paddingLeft: '16px' }}>
+                  <summary>Watched</summary>
+                  <p>
+                    {c.watched.map((i, index) => (
+                      <p key={index}>
+                        {i}
+                        {c.overrides?.includes(i.split('(')[0]) && ' (o)'}
+                      </p>
+                    ))}
+                  </p>
+                </details>
+              )}
+              {c.ignoreInWatchMode && (
+                <details style={{ paddingLeft: '16px' }}>
+                  <summary>Ignore in watch mode</summary>
+                  <p>
+                    {c.ignoreInWatchMode.map((i, index) => (
+                      <p key={index}>{i}</p>
+                    ))}
+                  </p>
+                </details>
+              )}
+              {c.ignoreMethods && (
+                <details style={{ paddingLeft: '16px' }}>
+                  <p>
+                    <summary>Ignored methods</summary>
+                    {c.ignoreMethods.map((i, index) => (
+                      <p key={index}>{i}</p>
+                    ))}
+                  </p>
+                </details>
+              )}
+              {c.rest && (
+                <details style={{ paddingLeft: '16px' }}>
+                  <p>
+                    <summary>Not handled</summary>
+                    {c.rest.map((i, index) => (
+                      <p key={index}>{i}</p>
+                    ))}
+                  </p>
+                </details>
+              )}
             </div>
-          )}
-          {c.ignoreInWatchMode && (
-            <div style={{ paddingLeft: '16px' }}>
-              <h4>Ignore in watch mode</h4>
-              {c.ignoreInWatchMode.map((i, index) => (
-                <p key={index}>{i}</p>
-              ))}
-            </div>
-          )}
-          {c.ignoreMethods && (
-            <div style={{ paddingLeft: '16px' }}>
-              <h4>Ignored methods</h4>
-              {c.ignoreMethods.map((i, index) => (
-                <p key={index}>{i}</p>
-              ))}
-            </div>
-          )}
-          {c.rest && (
-            <div style={{ paddingLeft: '16px' }}>
-              <h4>Functions</h4>
-              {c.rest.map((i, index) => (
-                <p key={index}>{i}</p>
-              ))}
-            </div>
-          )}
-        </div>
-      ))}
+          </>
+        ))}
+      </div>
     </Page>
   )
 }

@@ -10,6 +10,7 @@ export function Page({ title, children }: PageProps) {
     <html lang="en">
       <head>
         <link rel="stylesheet" href="https://classless.de/classless.css" />
+        <link rel="stylesheet" href="https://classless.de/addons/tabbox.css" />
         <style>{':root{--width:1200px}'}</style>
         <title>{title}</title>
       </head>
