@@ -157,6 +157,10 @@ function OverrideIndicator() {
 }
 
 function Value({ value }: { value: string | undefined }) {
-  if (!value) return null
-  return <span style={{ color: '#939292', marginLeft: '8px' }}>{value}</span>
+  if (value === undefined) return null
+  return (
+    <span style={{ color: '#939292', marginLeft: '8px' }}>
+      {value.toString()}
+    </span>
+  )
 }

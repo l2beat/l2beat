@@ -4,6 +4,7 @@ import {
   ProjectParameters,
 } from '@l2beat/shared'
 import { ethers } from 'ethers'
+import { isArray } from 'lodash'
 
 import { ConfigReader } from '../../../../core/discovery/ConfigReader'
 
@@ -47,9 +48,7 @@ export async function getDiscoveryConfig(
         ignoreInWatchMode = override.ignoreInWatchMode.map((field) => {
           return {
             name: field,
-            value: discovery.contracts
-              .find((c) => c.address === contract.address)
-              ?.values?.[field].toString(),
+            value: getValue(discovery, contract, field),
           }
         })
       }
@@ -83,9 +82,7 @@ export async function getDiscoveryConfig(
         .map((field) => {
           return {
             name: field,
-            value: discovery.contracts
-              .find((c) => c.address === contract.address)
-              ?.values?.[field].toString(),
+            value: getValue(discovery, contract, field),
           }
         })
     }
@@ -135,6 +132,21 @@ export async function getDiscoveryConfig(
   })
 
   return result
+}
+
+function getValue(
+  discovery: ProjectParameters,
+  contract: ContractParameters,
+  field: string,
+): string | undefined {
+  const value = discovery.contracts.find((c) => c.address === contract.address)
+    ?.values?.[field]
+
+  if (isArray(value) && value.length === 0) {
+    return '[ ]'
+  }
+
+  return value?.toString()
 }
 
 function getFunctions(
