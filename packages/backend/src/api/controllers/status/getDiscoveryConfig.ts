@@ -58,10 +58,11 @@ export async function getDiscoveryConfig(
 
     let overrides = undefined
     if (config.overrides?.[contract.address.toString()]) {
-      if (config.overrides[contract.address.toString()].fields) {
-        overrides = Object.keys(
-          config.overrides[contract.address.toString()].fields,
-        )
+      if (config.overrides[contract.address.toString()].fields !== undefined) {
+        const overridesObject =
+          config.overrides[contract.address.toString()].fields
+        //@ts-expect-error fix this type issue
+        overrides = Object.keys(overridesObject)
       }
     }
 
@@ -188,6 +189,7 @@ function getAddresses(
     return addresses
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (contract.upgradeability.type === 'EIP2535 diamond proxy') {
     addresses.push(...Object.values(contract.upgradeability.facets))
     return addresses
