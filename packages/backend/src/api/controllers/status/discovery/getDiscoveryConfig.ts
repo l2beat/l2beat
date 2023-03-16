@@ -23,6 +23,7 @@ export interface ContractConfig {
   overrides?: string[]
   isUnverified?: boolean
   proxyType?: string
+  isInitial?: boolean
 }
 
 export async function getDiscoveryConfig(
@@ -38,6 +39,7 @@ export async function getDiscoveryConfig(
         name: contract.name,
         addresses: [contract.address],
         isUnverified: true,
+        isInitial: config.initialAddresses.includes(contract.address),
       }
     }
 
@@ -128,6 +130,7 @@ export async function getDiscoveryConfig(
       rest,
       overrides,
       proxyType: contract.upgradeability.type,
+      isInitial: config.initialAddresses.includes(contract.address),
     }
   })
 

@@ -44,11 +44,17 @@ export function ConfigPage(props: ConfigPageProps) {
                 id={`tab-${index}`}
                 defaultChecked={index === 0}
               />
-              <label htmlFor={`tab-${index}`}>{c.name}</label>
-              <div className="tab" key={index}>
+              <label
+                htmlFor={`tab-${index}`}
+                style={{ color: `${c.isInitial ? '#F7DC6F' : ''}` }}
+              >
+                {c.name}
+              </label>
+              <div className="tab" key={index} id={c.addresses[0].toString()}>
                 <blockquote>
                   <h4>
-                    {c.name} <ProxyIndicator type={c.proxyType} />
+                    {c.name} <InitialIndicator isInitial={c.isInitial} />{' '}
+                    <ProxyIndicator type={c.proxyType} />
                   </h4>
                   {c.addresses.map((a, index) => (
                     <p key={index}>
@@ -109,10 +115,15 @@ function Section({
     <details style={{ paddingLeft: '16px', color }} open>
       <summary style={{ color: 'inherit' }}>{title}</summary>
       <p style={{ margin: '0px' }}>
-        {fields.map((i, index) => (
-          <p key={index} style={{ marginTop: '2px', marginBottom: '2px' }}>
-            {i.name}
-            <Value value={i.value} />
+        {fields.map((field, index) => (
+          <p
+            id={field.name}
+            key={index}
+            style={{ marginTop: '2px', marginBottom: '2px' }}
+          >
+            {field.name}
+            <Value value={field.value} />
+            {/* <OverrideIndicator /> */}
           </p>
         ))}
       </p>
@@ -135,6 +146,26 @@ function ProxyIndicator({ type }: { type?: string }) {
       }}
     >
       {type}
+    </span>
+  )
+}
+
+function InitialIndicator({ isInitial }: { isInitial?: boolean }) {
+  if (!isInitial) {
+    return null
+  }
+  return (
+    <span
+      style={{
+        background: '#F7DC6F',
+        color: 'black',
+        borderRadius: '4px',
+        padding: '2px 3px 3px 2px',
+        marginLeft: '8px',
+        fontSize: '12px',
+      }}
+    >
+      initial
     </span>
   )
 }
