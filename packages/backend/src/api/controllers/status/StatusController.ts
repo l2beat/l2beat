@@ -32,7 +32,10 @@ export class StatusController {
   async getDiscoveryDashboard(): Promise<string> {
     const projects = await getDiscoveryProjects()
 
-    return renderDiscoveryDashboard({ projects })
+    return renderDiscoveryDashboard({
+      projects,
+      allProjectsCount: this.projects.length,
+    })
   }
 
   async getDiscoveryConfigStatus(project: string): Promise<string> {
