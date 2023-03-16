@@ -109,7 +109,7 @@ function Summary(props: SummaryProps) {
               </li>
             ))}
           </ul>
-          <label className="mt-4 block border-t-2 border-gray-200 pt-3 pb-4 text-center font-medium   dark:border-gray-700">
+          <label className="mt-4 block cursor-pointer border-t-2 border-gray-200 pt-3 pb-4 text-center font-medium dark:border-gray-700">
             <input
               type="checkbox"
               autoComplete="off"
@@ -122,7 +122,7 @@ function Summary(props: SummaryProps) {
         </div>
         <div className="Dropdown md:hidden">
           <HorizontalSeparator className="-mx-4 mt-4 w-[calc(100%+2rem)]" />
-          <label className="flex items-center justify-between py-4">
+          <label className="flex cursor-pointer items-center justify-between py-4">
             <input
               type="checkbox"
               autoComplete="off"
