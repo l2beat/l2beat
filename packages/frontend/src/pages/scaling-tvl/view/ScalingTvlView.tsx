@@ -3,6 +3,7 @@ import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ScalingTableFilters } from '../../../components/table/filters/ScalingTableFilters'
+import { IndexCell } from '../../../components/table/IndexCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
@@ -49,8 +50,15 @@ export function ScalingTvlView({
 }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'pl-4',
+      getValue: (_, i) => <IndexCell className="pl-4" index={i + 1} />,
+    },
+    {
       name: 'Name',
-      headClassName: 'pl-12',
+      headClassName: 'pl-8',
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {

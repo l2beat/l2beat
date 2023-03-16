@@ -1,0 +1,19 @@
+import cx from 'classnames'
+import React from 'react'
+interface IndexCellProps {
+  index: number
+  className?: string
+}
+
+export function IndexCell(props: IndexCellProps) {
+  return (
+    <span
+      className={cx(
+        'text-xs font-medium text-gray-50 dark:font-normal dark:text-gray-600',
+        props.className,
+      )}
+    >
+      {props.index}
+    </span>
+  )
+}

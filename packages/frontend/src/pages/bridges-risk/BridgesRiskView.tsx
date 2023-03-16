@@ -2,6 +2,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { BridgesTableFilters } from '../../components/table/filters/BridgesTableFilters'
+import { IndexCell } from '../../components/table/IndexCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import { RiskCell } from '../../components/table/RiskCell'
@@ -32,8 +33,15 @@ export interface BridgesRiskViewEntry {
 export function BridgesRiskView({ items }: BridgesRiskViewProps) {
   const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
     {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'pl-4',
+      getValue: (_, i) => <IndexCell className="pl-4" index={i + 1} />,
+    },
+    {
       name: 'Name',
-      headClassName: 'pl-12',
+      headClassName: 'pl-8',
       getValue: (entry) => (
         <ProjectCell highlightL2 type={entry.type} project={entry} />
       ),
