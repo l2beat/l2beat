@@ -17,7 +17,11 @@ export function IndexCell({ entry, className, index }: IndexCellProps) {
   }
 
   if (entry.isArchived === true) {
-    return <ArchivedIcon className={className} />
+    return (
+      <span className={className}>
+        <ArchivedIcon />
+      </span>
+    )
   }
 
   return (
