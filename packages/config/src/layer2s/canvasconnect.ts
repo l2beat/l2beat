@@ -23,7 +23,8 @@ export const canvasconnect: Layer2 = {
     slug: 'canvasconnect',
     description:
       'Canvas Connect is a privacy focused Layer 2 ZK network built for Finance and the Digital Economy. Connect offers an API first model that supports easy integration with no solidity skills required. Capital Markets Applications are built on the network that enable the Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
-    purpose: 'Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
+    purpose:
+      'Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
     links: {
       websites: ['https://canvas.co/'],
       apps: [],
@@ -35,19 +36,13 @@ export const canvasconnect: Layer2 = {
         'https://www.youtube.com/@canvas_defi',
         'https://canvasdefi.medium.com/',
         'https://www.linkedin.com/company/canvasblockchaingroup',
-        'https://www.canvas.co/content'
+        'https://www.canvas.co/content',
       ],
     },
     activityDataSource: 'Closed API',
   },
   config: {
     escrows: [],
-    transactionApi: {
-      type: 'starkex',
-      product: 'canvasconnect',
-      sinceTimestamp: new UnixTime(1675465200),
-      resyncLastDays: 7,
-    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
@@ -114,7 +109,7 @@ export const canvasconnect: Layer2 = {
             '0x7e1BBDbE450e9f5988AE3d10a99911A20C138063',
           ),
           type: 'EOA',
-        }
+        },
       ],
       description:
         'Validity proof must be signed by at least 2 of these addresses to approve state update.',
