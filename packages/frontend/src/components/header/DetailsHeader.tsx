@@ -109,7 +109,7 @@ function Summary(props: SummaryProps) {
               </li>
             ))}
           </ul>
-          <label className="mt-4 block cursor-pointer border-t border-gray-200 pt-3 pb-4 text-center font-medium dark:border-gray-700">
+          <label className="mt-4 block cursor-pointer border-t border-gray-200 py-3 text-center font-medium dark:border-gray-700">
             <input
               type="checkbox"
               autoComplete="off"
