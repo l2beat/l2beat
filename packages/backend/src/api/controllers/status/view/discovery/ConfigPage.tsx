@@ -16,7 +16,7 @@ export function ConfigPage(props: ConfigPageProps) {
         {props.config.map((c, index) => {
           if (c.isUnverified) {
             return (
-              <>
+              <React.Fragment key={index}>
                 <input type="radio" name="tabs" id={`tab-${index}`} />
                 <label style={{ color: 'red' }} htmlFor={`tab-${index}`}>
                   {c.address.slice(0, 10)}
@@ -30,11 +30,11 @@ export function ConfigPage(props: ConfigPageProps) {
                     </p>
                   </div>
                 </div>
-              </>
+              </React.Fragment>
             )
           }
           return (
-            <>
+            <React.Fragment key={index}>
               <input type="radio" name="tabs" id={`tab-${index}`} />
               <label htmlFor={`tab-${index}`}>{c.name}</label>
               <div className="tab" key={index}>
@@ -86,7 +86,7 @@ export function ConfigPage(props: ConfigPageProps) {
                   </details>
                 )}
               </div>
-            </>
+            </React.Fragment>
           )
         })}
       </div>

@@ -117,7 +117,6 @@ function getFunctions(
   }
 
   const addresses = getAddresses(contract)
-  console.log(addresses)
 
   const functionNames: string[] | undefined = []
 
