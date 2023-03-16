@@ -6,7 +6,6 @@ import {
 import { ethers } from 'ethers'
 
 import { ConfigReader } from '../../../core/discovery/ConfigReader'
-import { DiscoveryConfig } from '../../../core/discovery/DiscoveryConfig'
 
 export interface ContractConfig {
   name: string
@@ -55,20 +54,36 @@ export async function getDiscoveryConfig(
       })
     }
 
-    let rest: string[] | undefined = undefined
-
     const functions = getFunctions(discovery, contract.address)
-    if (functions.length > 0) {
-      rest = functions
+
+    const result: {
+      ignoreInWatchMode: string[]
+      ignoreMethods: string[]
+      watched: string[]
+      rest: string[]
+    } = {
+      ignoreInWatchMode: [],
+      ignoreMethods: [],
+      watched: [],
+      rest: [],
+    }
+
+    for (const fn of functions) {
+      if (ignoreMethods?.includes(fn.split('(')[0])) {
+        result.ignoreMethods.push(fn)
+      } else if (ignoreInWatchMode?.includes(fn.split('(')[0])) {
+        result.ignoreInWatchMode.push(fn)
+      } else if (watched?.includes(fn.split('(')[0])) {
+        result.watched.push(fn)
+      } else {
+        result.rest.push(fn)
+      }
     }
 
     return {
       name: contract.name,
       address: contract.address,
-      ignoreInWatchMode,
-      ignoreMethods,
-      watched,
-      rest,
+      ...result,
     }
   })
 
@@ -86,7 +101,6 @@ function getFunctions(
   }
 
   const addresses = getAddresses(discovery, contract)
-  console.log(addresses)
 
   const functionNames: string[] | undefined = []
 
@@ -106,7 +120,7 @@ function getFunctions(
     .filter(([, fn]) => fn.stateMutability === 'view')
     .map(([name]) => name)
 
-  return functions
+  return functions.sort()
 }
 
 function getAddresses(
@@ -173,6 +187,4 @@ function getAddresses(
   throw new Error(
     'Unhandled upgradeability type: ' + JSON.stringify(contract.upgradeability),
   )
-
-  return []
 }
