@@ -227,7 +227,7 @@ export const arbitrum: Layer2 = {
       name: 'Security Council participants',
       accounts: discovery
         .getContractValue<string[]>(
-          '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+          '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
           'getOwners',
         )
         .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
