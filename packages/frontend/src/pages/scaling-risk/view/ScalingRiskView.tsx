@@ -42,9 +42,9 @@ export function ScalingRiskView({
       name: '#',
       alignCenter: true,
       minimalWidth: true,
-      headClassName: 'pl-4',
+      headClassName: 'md:pl-4',
       getValue: (entry, index) => (
-        <IndexCell entry={entry} className="pl-4" index={index + 1} />
+        <IndexCell entry={entry} className="md:pl-4" index={index + 1} />
       ),
     },
     {
