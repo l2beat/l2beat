@@ -211,6 +211,37 @@ export const arbitrum: Layer2 = {
   },
   permissions: [
     {
+      name: 'Security Council',
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
+          ),
+          type: 'MultiSig',
+        },
+      ],
+      description:
+        'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power).',
+    },
+    {
+      name: 'Security Council participants',
+      accounts: discovery
+        .getContractValue<string[]>(
+          '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+          'getOwners',
+        )
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
+      description: `${discovery.getContractValue(
+        '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>(
+          '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
+          'getOwners',
+        ).length
+      } Security Council MultiSig`,
+    },
+    {
       name: 'Arbitrum MultiSig',
       accounts: [
         {
@@ -221,8 +252,7 @@ export const arbitrum: Layer2 = {
           type: 'MultiSig',
         },
       ],
-      description:
-        'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
+      description: 'The admin of one of the Outboxes',
     },
     {
       name: 'MultiSig participants',
@@ -233,10 +263,13 @@ export const arbitrum: Layer2 = {
         )
         .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
+        '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
         'getThreshold',
       )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+        discovery.getContractValue<string[]>(
+          '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+          'getOwners',
+        ).length
       } Arbitrum MultiSig.`,
     },
     {
@@ -344,7 +377,25 @@ export const arbitrum: Layer2 = {
         address: EthereumAddress('0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD'),
         name: 'ProxyAdmin (1)',
         description:
-          'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by a 4-of-6 multisig.',
+          'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by the Upgrade Executor.',
+      },
+      {
+        address: discovery.getContract('UpgradeExecutor').address,
+        name: 'UpgradeExecutor',
+        description: "This contract can upgrade the system's contracts.",
+        upgradeability: discovery.getContract('UpgradeExecutor').upgradeability,
+      },
+      {
+        address: EthereumAddress('0x5613AF0474EB9c528A34701A5b1662E3C8FA0678'),
+        name: 'ProxyAdmin (2)',
+        description:
+          'This contract is an admin of the Update Executor contract, but is also owned by it. ',
+      },
+      {
+        address: discovery.getContract('L1ArbitrumTimelock').address,
+        name: 'L1ArbitrumTimelock',
+        description:
+          'Timelock contract for Arbitrum DAO Governance. It is the de-facto admin of the system, giving DAO participants the ability to upgrade the system.',
       },
       {
         address: discovery.getContract('RollupProxy').address,
@@ -366,7 +417,7 @@ export const arbitrum: Layer2 = {
         address: discovery.getContract('Inbox').address,
         name: 'Inbox',
         description:
-          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
+          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
         upgradeability: discovery.getContract('Inbox').upgradeability,
       },
       {
@@ -388,16 +439,16 @@ export const arbitrum: Layer2 = {
         ).upgradeability,
       },
       {
-        address: EthereumAddress('0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa'),
-        name: 'ProxyAdmin (2)',
-        description:
-          'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
-      },
-      {
         address: discovery.getContract('L1GatewayRouter').address,
         name: 'L1GatewayRouter',
         description: 'Router managing token <--> gateway mapping.',
         upgradeability: discovery.getContract('L1GatewayRouter').upgradeability,
+      },
+      {
+        address: EthereumAddress('0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa'),
+        name: 'ProxyAdmin (3)',
+        description:
+          'This is yet another proxy admin for the two gateway contracts below. It is owned by the Upgrade Executor.',
       },
       {
         address: discovery.getContract('L1ERC20Gateway').address,
