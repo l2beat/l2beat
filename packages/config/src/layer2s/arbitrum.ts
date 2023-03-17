@@ -242,37 +242,6 @@ export const arbitrum: Layer2 = {
       } Security Council MultiSig`,
     },
     {
-      name: 'Arbitrum MultiSig',
-      accounts: [
-        {
-          address: discovery.getContractUpgradeabilityParam(
-            'RollupProxy',
-            'admin',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      description: 'The admin of one of the Outboxes',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>(
-          '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
-          'getOwners',
-        )
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>(
-          '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
-          'getOwners',
-        ).length
-      } Arbitrum MultiSig.`,
-    },
-    {
       name: 'Sequencer',
       accounts: [
         {
@@ -369,6 +338,37 @@ export const arbitrum: Layer2 = {
       ],
       description:
         'They can submit new state roots and challenge state roots. Some of the validators perform their duties through special purpose smart contracts.',
+    },
+    {
+      name: 'Arbitrum MultiSig',
+      accounts: [
+        {
+          address: discovery.getContractUpgradeabilityParam(
+            'RollupProxy',
+            'admin',
+          ),
+          type: 'MultiSig',
+        },
+      ],
+      description: 'The admin of one of the Outboxes',
+    },
+    {
+      name: 'MultiSig participants',
+      accounts: discovery
+        .getContractValue<string[]>(
+          '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+          'getOwners',
+        )
+        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+        '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+        'getThreshold',
+      )}/${
+        discovery.getContractValue<string[]>(
+          '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+          'getOwners',
+        ).length
+      } Arbitrum MultiSig.`,
     },
   ],
   contracts: {
