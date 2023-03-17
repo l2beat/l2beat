@@ -15,7 +15,7 @@ export function configureRosetteOverlay() {
   circle.addEventListener('mouseout', () => {
     texts.forEach((text) => text.classList.remove('hidden'))
     descriptions.forEach((description) => description.classList.add('hidden'))
-    slices.forEach((slice) => slice.classList.remove('opacity-50'))
+    slices.forEach((slice) => slice.classList.remove('opacity-20'))
   })
 
   for (const slice of slices) {
@@ -25,8 +25,8 @@ export function configureRosetteOverlay() {
       texts
         .find((text) => (text as HTMLElement).dataset.rosette === type)
         ?.classList.remove('hidden')
-      slices.forEach((slice) => slice.classList.add('opacity-50'))
-      slice.classList.remove('opacity-50')
+      slices.forEach((slice) => slice.classList.add('opacity-20'))
+      slice.classList.remove('opacity-20')
       descriptions
         .find(
           (description) =>
