@@ -1,8 +1,12 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { sentimentToFillColor } from '../../utils/risks/color'
-import { RiskSentiments } from '../../utils/risks/types'
+import {
+  sentimentToFillColor,
+  sentimentToTextColor,
+} from '../../utils/risks/color'
+import { RiskSentiments, RiskValues } from '../../utils/risks/types'
+import { getRiskSentiments } from '../../utils/risks/values'
 import { Icon } from '../icons/Icon'
 
 export interface RosetteProps {
@@ -67,10 +71,16 @@ export function MediumRosette({ risks }: RosetteProps) {
   )
 }
 
-export function BigRosette({ risks, className }: RosetteProps) {
+interface BigRosetteProps {
+  risks: RiskValues
+  className?: string
+}
+
+export function BigRosette({ risks, className }: BigRosetteProps) {
+  const riskSentiments = getRiskSentiments(risks)
   return (
     <div className={cx('Rosette relative w-[272px] py-12 px-12', className)}>
-      <BigRosetteIcon risks={risks} />
+      <BigRosetteIcon risks={riskSentiments} />
       <span
         className="Rosette-Text absolute bottom-[30px] left-[31px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight"
         data-rosette="sequencer-failure"
@@ -100,6 +110,86 @@ export function BigRosette({ risks, className }: RosetteProps) {
         data-rosette="validator-failure"
       >
         Validator failure
+      </span>
+      <span
+        className="Rosette-Description hidden"
+        data-rosette="sequencer-failure"
+      >
+        <span
+          className={cx(
+            'absolute left-36 bottom-20',
+            sentimentToTextColor(risks.sequencerFailure.sentiment),
+          )}
+        >
+          {risks.sequencerFailure.value}
+        </span>
+        <span className="absolute bottom-40 -mx-8 text-xs">
+          {risks.sequencerFailure.description}
+        </span>
+      </span>
+      <span
+        className="Rosette-Description hidden"
+        data-rosette="validator-failure"
+      >
+        <span
+          className={cx(
+            'absolute right-36 bottom-20',
+            sentimentToTextColor(risks.validatorFailure.sentiment),
+          )}
+        >
+          {risks.validatorFailure.value}
+        </span>
+        <span className="absolute bottom-40 -mx-8 text-xs">
+          {risks.validatorFailure.description}
+        </span>
+      </span>
+      <span
+        className="Rosette-Description hidden"
+        data-rosette="state-validation"
+      >
+        <span
+          className={cx(
+            'absolute top-20 left-32',
+            sentimentToTextColor(risks.stateValidation.sentiment),
+          )}
+        >
+          {risks.stateValidation.value}
+        </span>
+        <span className="absolute top-44 -mx-8 text-xs">
+          {risks.stateValidation.description}
+        </span>
+      </span>
+      <span
+        className="Rosette-Description hidden"
+        data-rosette="upgradeability"
+      >
+        <span
+          className={cx(
+            'absolute top-20 right-32',
+            sentimentToTextColor(risks.upgradeability.sentiment),
+          )}
+        >
+          {risks.upgradeability.value}
+        </span>
+        <span className="absolute top-44 -mx-8 text-xs">
+          {risks.upgradeability.description}
+        </span>
+      </span>
+      <span
+        className="Rosette-Description hidden"
+        data-rosette="data-availability"
+      >
+        <span
+          className={cx(
+            'absolute top-32 -mx-8',
+            sentimentToTextColor(risks.dataAvailability.sentiment),
+          )}
+        >
+          {risks.dataAvailability.value}
+        </span>
+        <span className="absolute top-40 -mx-8 text-xs">
+          {risks.dataAvailability.description}
+        </span>
       </span>
     </div>
   )

@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { RiskSentiments } from '../../utils/risks/types'
+import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ArrowRightIcon, DropdownArrowIcon } from '../icons'
 import { ArchivedBar } from '../project/ArchivedBar'
@@ -18,7 +18,7 @@ export interface HeaderProps {
   isArchived?: boolean
   isUpcoming?: boolean
   isSummary?: boolean
-  risks?: RiskSentiments
+  risks?: RiskValues
   links?: Link[]
 }
 
@@ -74,7 +74,7 @@ export interface Link {
 
 interface SummaryProps {
   stats: Stat[]
-  risks: RiskSentiments
+  risks: RiskValues
   links: Link[]
 }
 
