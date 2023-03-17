@@ -231,7 +231,7 @@ export const arbitrum: Layer2 = {
           'getOwners',
         )
         .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `${discovery.getContractValue(
+      description: `${discovery.getContractValue<number>(
         '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
         'getThreshold',
       )}/${
@@ -389,7 +389,7 @@ export const arbitrum: Layer2 = {
         address: EthereumAddress('0x5613AF0474EB9c528A34701A5b1662E3C8FA0678'),
         name: 'ProxyAdmin (2)',
         description:
-          'This contract is an admin of the Update Executor contract, but is also owned by it. ',
+          'This contract is an admin of the Update Executor contract, but is also owned by it.',
       },
       {
         address: discovery.getContract('L1ArbitrumTimelock').address,
