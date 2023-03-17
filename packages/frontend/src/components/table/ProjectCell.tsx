@@ -37,20 +37,17 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
       {project.isVerified === false && (
         <span className="pl-1.5">
           <span
-            className="Tooltip relative inline-block h-[1em] w-4"
+            className="Tooltip inline-block"
             title="This project contains unverified contracts."
           >
-            <UnverifiedIcon className="absolute top-px left-0 h-4 w-4 fill-red-300" />
+            <UnverifiedIcon className="relative top-px h-4 w-4 fill-red-300" />
           </span>
         </span>
       )}
       {project.warning && (
         <span className="pl-1.5">
-          <span
-            className="Tooltip relative inline-block h-[1em] w-[12.8px]"
-            title={project.warning}
-          >
-            <ShieldIcon className="absolute top-px left-0 h-4 w-[12.8px] fill-yellow-700 dark:fill-yellow-300" />
+          <span className="Tooltip inline-block" title={project.warning}>
+            <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
           </span>
         </span>
       )}
