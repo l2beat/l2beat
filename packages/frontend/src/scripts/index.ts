@@ -4,6 +4,7 @@ import { configureDarkThemeToggle } from '../components/navbar/configureDarkThem
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureDropdowns } from './configureDropdowns'
 import { configureFilters } from './configureFilters'
+import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureTooltips } from './configureTooltips'
 
 configureFilters()
@@ -13,3 +14,4 @@ configureTooltips()
 configureCharts()
 configureTvlActivity()
 configureDropdowns()
+configureRosetteOverlay()

@@ -1,0 +1,28 @@
+export function configureRosetteOverlay() {
+  const rosette = document.querySelector('.Rosette')
+
+  if (!rosette) return
+
+  const texts = Array.from(rosette.querySelectorAll('.Rosette-Text'))
+  const slices = Array.from(rosette.querySelectorAll('.Rosette-Slice'))
+  const circle = rosette.querySelector('.Rosette-Circle')
+
+  if (!circle) return
+
+  circle.addEventListener('mouseout', () => {
+    texts.forEach((text) => text.classList.remove('hidden'))
+    slices.forEach((slice) => slice.classList.remove('opacity-50'))
+  })
+
+  for (const slice of slices) {
+    slice.addEventListener('mouseover', () => {
+      const type = (slice as HTMLElement).dataset.rosette
+      texts.forEach((text) => text.classList.add('hidden'))
+      texts
+        .find((text) => (text as HTMLElement).dataset.rosette === type)
+        ?.classList.remove('hidden')
+      slices.forEach((slice) => slice.classList.add('opacity-50'))
+      slice.classList.remove('opacity-50')
+    })
+  }
+}
