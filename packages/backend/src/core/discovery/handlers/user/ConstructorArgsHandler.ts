@@ -23,8 +23,8 @@ export class ConstructorArgsHandler implements Handler {
     readonly logger: DiscoveryLogger,
   ) {
     assert(
-      field === 'constructor',
-      'ConstructorArgsHandler can only be used for "constructor" field',
+      field === 'constructorArgs',
+      'ConstructorArgsHandler can only be used for "constructorArgs" field',
     )
 
     const constructorFragment = new ethers.utils.Interface(abi).fragments.find(

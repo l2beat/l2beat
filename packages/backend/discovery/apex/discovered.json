@@ -1,7 +1,7 @@
 {
   "name": "apex",
-  "blockNumber": 16855316,
-  "configHash": "0x5f27286be6b483564de62610c311b838262f3703a69f1fc2584fe4601b2c98fd",
+  "blockNumber": 16855494,
+  "configHash": "0x0eb1bff7685fdc600d0a8cf906a49f3a960d5e2cfa3f2c642cfd2da3eca2e50c",
   "contracts": [
     {
       "name": "Proxy",

@@ -5,7 +5,7 @@
   "overrides": {
     "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4": {
       "fields": {
-        "constructor": {
+        "constructorArgs": {
           "type": "constructorArgs"
         }
       }
