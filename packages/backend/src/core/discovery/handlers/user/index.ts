@@ -17,6 +17,10 @@ import {
 import { ArrayHandler, ArrayHandlerDefinition } from './ArrayHandler'
 import { CallHandler, CallHandlerDefinition } from './CallHandler'
 import {
+  ConstructorArgsDefinition,
+  ConstructorArgsHandler,
+} from './ConstructorArgsHandler'
+import {
   StarkWareNamedStorageHandler,
   StarkWareNamedStorageHandlerDefinition,
 } from './StarkWareNamedStorageHandler'
@@ -31,6 +35,7 @@ export const UserHandlerDefinition = z.union([
   AccessControlHandlerDefinition,
   ArrayFromOneEventHandlerDefinition,
   ArrayFromTwoEventsHandlerDefinition,
+  ConstructorArgsDefinition,
 ])
 
 export function getUserHandler(
@@ -54,5 +59,7 @@ export function getUserHandler(
       return new ArrayFromOneEventHandler(field, definition, abi, logger)
     case 'arrayFromTwoEvents':
       return new ArrayFromTwoEventsHandler(field, definition, abi, logger)
+    case 'constructorArgs':
+      return new ConstructorArgsHandler(field, abi, logger)
   }
 }

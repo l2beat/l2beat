@@ -25,3 +25,14 @@ export const ContractSource = z.object({
 })
 
 export const ContractSourceResult = z.array(ContractSource).length(1)
+
+export type ContractCreatorAndCreationTxHash = z.infer<typeof ContractSource>
+export const ContractCreatorAndCreationTxHash = z.object({
+  contractAddress: z.string(),
+  contractCreator: z.string(),
+  txHash: z.string(),
+})
+
+export const ContractCreatorAndCreationTxHashResult = z
+  .array(ContractCreatorAndCreationTxHash)
+  .length(1)
