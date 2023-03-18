@@ -1,6 +1,5 @@
 import { expect } from 'earljs'
-import { BigNumber } from 'ethers'
-import { Interface } from 'ethers/lib/utils'
+import ethers from 'ethers'
 
 import { decodeConstructorArgs } from './ConstructorArgsHandler'
 
@@ -22,7 +21,7 @@ describe('ConstructorArgsHandler', () => {
         type: 'constructor',
       },
     ]
-    const iface = new Interface(abi)
+    const iface = new ethers.utils.Interface(abi)
 
     const decoded = decodeConstructorArgs(iface, txData)
 
@@ -31,7 +30,7 @@ describe('ConstructorArgsHandler', () => {
       'PIE',
       18,
       '0xdc03b7993bad736ad595eb9e3ba51877ac17ecc31d2355f8f270125b9427ece7',
-      BigNumber.from(0),
+      ethers.BigNumber.from(0),
     ])
   })
 
@@ -56,7 +55,7 @@ describe('ConstructorArgsHandler', () => {
         type: 'constructor',
       },
     ]
-    const iface = new Interface(abi)
+    const iface = new ethers.utils.Interface(abi)
 
     const decoded = decodeConstructorArgs(iface, txData)
 
@@ -69,7 +68,7 @@ describe('ConstructorArgsHandler', () => {
         '0xB0d71Ff040A941bB9CA8453044634EebCE5A053D',
         '0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c',
       ],
-      BigNumber.from(3),
+      ethers.BigNumber.from(3),
     ])
   })
 })

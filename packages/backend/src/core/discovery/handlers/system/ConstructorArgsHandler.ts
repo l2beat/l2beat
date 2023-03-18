@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/shared'
 import { ethers } from 'ethers'
-import { Interface } from 'ethers/lib/utils'
 
 /**
  * Constructor args are ABI encoded and appended to init bytecode. Read more: https://ethereum.stackexchange.com/questions/13008/how-are-the-arguments-of-the-constructor-encoded-in-the-contract-creation-transa?rq=1
@@ -14,7 +13,7 @@ import { Interface } from 'ethers/lib/utils'
  *    So we just pick the longest decoded chunk that works.
  *  */
 export function decodeConstructorArgs(
-  iface: Interface,
+  iface: ethers.utils.Interface,
   txData: string,
 ): ethers.utils.Result {
   const constructor = iface.fragments.find((f) => f.type === 'constructor')
