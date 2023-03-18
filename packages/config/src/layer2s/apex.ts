@@ -153,9 +153,10 @@ export const apex: Layer2 = {
       accounts: discovery
         .getConstructorArg<string[]>('Committee', 0)
         .map((a) => ({ address: EthereumAddress(a), type: 'EOA' })),
-      description: `Validity proof must be signed by at least ${discovery.getConstructorArg<
-        [string[]]
-      >('Committee', 1)} of these addresses to approve state update.`,
+      description: `Validity proof must be signed by at least ${discovery.getConstructorArg<string>(
+        'Committee',
+        1,
+      )} of these addresses to approve state update.`,
     },
     {
       name: 'SHARP Verifier Governor',
