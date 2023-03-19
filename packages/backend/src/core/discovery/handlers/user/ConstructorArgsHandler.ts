@@ -50,6 +50,7 @@ export class ConstructorArgsHandler implements Handler {
   }
 }
 
+/** @internal */
 /**
  * Constructor args are ABI encoded and appended to init bytecode. Read more: https://ethereum.stackexchange.com/questions/13008/how-are-the-arguments-of-the-constructor-encoded-in-the-contract-creation-transa?rq=1
  * After this is done, there is no easy way to split constructor args from init bytecode.
@@ -93,6 +94,7 @@ export function decodeConstructorArgs(
   return longestDecodedArgs
 }
 
+/** @internal */
 export function serializeResult(result: ethers.utils.Result): ContractValue {
   if (Array.isArray(result)) {
     return result.map(serializeResult)
