@@ -1,6 +1,6 @@
 {
   "$schema": "../config.schema.json",
-  "name": "boba",
+  "name": "bobanetwork",
   "initialAddresses": [
     "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00", //Boba Rollup
     "0x1A26ef6575B7BBB864d984D9255C069F6c361a14", //L1LiquidityPool

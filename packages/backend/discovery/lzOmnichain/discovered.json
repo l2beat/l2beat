@@ -1,7 +1,7 @@
 {
   "name": "lzOmnichain",
   "blockNumber": 16793897,
-  "configHash": "0xde7f237d473f8e3ad6994a0a4f96ad217e9f39ee003fed6688bc0afaa93f857b",
+  "configHash": "0xbb1e956769b866df0feb5bb13c5e00c853113fc00a58d20eb5c7f1a2a002b62d",
   "contracts": [
     {
       "name": "StargateToken",
@@ -132,30 +132,8 @@
           "0x5a54fe5234E811466D5366846283323c954310B2"
         ],
         "CHAIN_IDS": [
-          102,
-          109,
-          114,
-          126,
-          110,
-          111,
-          106,
-          116,
-          101,
-          115,
-          112,
-          108,
-          125,
-          145,
-          151,
-          150,
-          138,
-          12,
-          2,
-          153,
-          155,
-          156,
-          154,
-          149
+          102, 109, 114, 126, 110, 111, 106, 116, 101, 115, 112, 108, 125, 145,
+          151, 150, 138, 12, 2, 153, 155, 156, 154, 149
         ],
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,

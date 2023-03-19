@@ -1,7 +1,7 @@
 {
   "name": "layer2financeZk",
   "blockNumber": 16154924,
-  "configHash": "0x98439f03bfa6ef8a20eb11bed9dc42325d475ce804c0b06dd061b2dbfa08ef44",
+  "configHash": "0x88596994bdb1f9ccbd8c6d78e3112ca8f4e75dfb6f21c19e347fbc9b075223b2",
   "contracts": [
     {
       "name": "Broker",

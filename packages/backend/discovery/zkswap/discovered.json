@@ -1,7 +1,7 @@
 {
   "name": "zkswap1",
   "blockNumber": 16154924,
-  "configHash": "0x15469985a24479de2a1df62a7fbc1d26b9f74dcaed2cfde5e311641d1cbc12af",
+  "configHash": "0xe82e48dc5029840cee0194c7b922f464f2012203ec8230c5ae680f39244542ad",
   "contracts": [
     {
       "name": "UpgradeGatekeeper",

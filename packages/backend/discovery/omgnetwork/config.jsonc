@@ -1,6 +1,6 @@
 {
   "$schema": "../config.schema.json",
-  "name": "omg",
+  "name": "omgnetwork",
   "initialAddresses": [
     "0x0D4C1222f5e839a911e2053860e45F18921D72ac",
     "0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3",

@@ -1,6 +1,6 @@
 {
   "$schema": "../config.schema.json",
-  "name": "cBridge",
+  "name": "cbridge",
   "initialAddresses": [
     "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
     "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b"
