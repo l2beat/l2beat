@@ -98,7 +98,7 @@ export const arbitrum: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: {
       value: 'Propose blocks',
