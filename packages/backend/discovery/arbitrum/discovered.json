@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16848862,
-  "configHash": "0xa9d43597fa017a980e30675ec253a4c58ca055de1555bfc1731b536acd39983a",
+  "blockNumber": 16863083,
+  "configHash": "0x4ff778bc19886d8d7e7dd97e04343b1bcb3929c7a580f24e47a7e1290ada926f",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3775,
+        "firstUnresolvedNode": 3823,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 3774,
-        "latestNodeCreated": 3928,
+        "latestConfirmed": 3822,
+        "latestNodeCreated": 3975,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -91,7 +91,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 102633,
+        "batchCount": 105238,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -102,7 +102,7 @@
           3600
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 629196
+        "totalDelayedMessagesRead": 639155
       }
     },
     {
@@ -346,11 +346,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 629262,
+        "delayedMessageCount": 639233,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 102633,
-        "sequencerReportedSubMessageCount": 48601415
+        "sequencerMessageCount": 105238,
+        "sequencerReportedSubMessageCount": 49284319
       }
     },
     {
@@ -360,7 +360,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x360861b7b245c968128F0a53d281aDb1Df760711",
-        "admin": "0x171a2624302775eF943f4f62E76fd22A6813d7c4"
+        "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -377,48 +377,13 @@
       }
     },
     {
-      "name": "ProxyAdmin",
-      "address": "0x171a2624302775eF943f4f62E76fd22A6813d7c4",
-      "code": "https://etherscan.deth.net/address/0x171a2624302775eF943f4f62E76fd22A6813d7c4",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
-      "code": "https://etherscan.deth.net/address/0xC234E41AE2cb00311956Aa7109fC801ae8c80941,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0x2e30e82c06149e106d9459cde774416c518aece8b088f2bd8986744dbe6aa51d",
-        "getChainId": 1,
-        "getOwners": [
-          "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b",
-          "0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
-          "0x64379Dee676ab442B48925Ed603771f386510Ee7",
-          "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
-          "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
-          "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
-        ],
-        "getThreshold": 4,
-        "nonce": 141,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
       "name": "OldOutbox",
       "address": "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
       "code": "https://etherscan.deth.net/address/0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a,0x263a68002876E307804168795519da0B32CC62fE",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x263a68002876E307804168795519da0B32CC62fE",
-        "admin": "0x171a2624302775eF943f4f62E76fd22A6813d7c4"
+        "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
         "beacon": "0x14797f5432f699Cb4d4dB04DF599B74952d78d7b",
@@ -522,28 +487,22 @@
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
     "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
     "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-    "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
     "0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
     "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
     "0x3fE38087A94903A9D946fa1915e1772fe611000f",
     "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-    "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
     "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
     "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
     "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
     "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
     "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
     "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
-    "0x64379Dee676ab442B48925Ed603771f386510Ee7",
-    "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b",
-    "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
     "0x8688515028955734350067695939423222009623",
     "0x88910996671162953E89DdcE5C8137f9077da217",
     "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
     "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
     "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
-    "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd",
-    "0xfE2bf40f2A9183774BF8E871d634A4E50255158B"
+    "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
   ],
   "abis": {
     "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": [
@@ -634,17 +593,6 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)"
-    ],
-    "0x171a2624302775eF943f4f62E76fd22A6813d7c4": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1263,9 +1211,6 @@
     ],
     "0xb965b08A826D4C7634e0Df4c5eF5E1d1f9b5D13A": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
-    ],
-    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": [
-      "constructor(address _singleton)"
     ],
     "0xc4940069140142236D4065b866018f7b2BeC77fD": [
       "function destroy()",

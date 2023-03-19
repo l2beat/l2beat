@@ -50,9 +50,6 @@
         "outboxes"
       ]
     },
-    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": {
-      "ignoreInWatchMode": ["nonce"]
-    },
     "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": {
       "fields": {
         "accessControl": {
