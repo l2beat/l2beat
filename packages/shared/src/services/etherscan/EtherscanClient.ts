@@ -44,9 +44,8 @@ export class EtherscanClient {
       )
     }
 
-    return Hash256(
-      ContractCreatorAndCreationTxHashResult.parse(response.result)[0].txHash,
-    )
+    return ContractCreatorAndCreationTxHashResult.parse(response.result)[0]
+      .txHash
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
