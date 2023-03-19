@@ -221,7 +221,7 @@ export const arbitrum: Layer2 = {
         },
       ],
       description:
-        'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power).',
+        'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
     },
     {
       name: 'Security Council participants',
@@ -346,7 +346,7 @@ export const arbitrum: Layer2 = {
         address: EthereumAddress('0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD'),
         name: 'ProxyAdmin (1)',
         description:
-          'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by the Upgrade Executor.',
+          'This contract is an admin of SequencerInbox, RollupEventInbox, Bridge, Outbox, Inbox and ChallengeManager contracts. It is owned by the Upgrade Executor.',
       },
       {
         address: discovery.getContract('UpgradeExecutor').address,
@@ -365,7 +365,7 @@ export const arbitrum: Layer2 = {
         address: discovery.getContract('L1ArbitrumTimelock').address,
         name: 'L1ArbitrumTimelock',
         description:
-          'Timelock contract for Arbitrum DAO Governance. It is the de-facto admin of the system, giving DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+          'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       },
       {
         address: discovery.getContract('RollupProxy').address,
