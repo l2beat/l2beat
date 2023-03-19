@@ -231,7 +231,7 @@ export const arbitrum: Layer2 = {
           'getOwners',
         )
         .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `${discovery.getContractValue<number>(
+      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
         '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
         'getThreshold',
       )}/${
@@ -351,7 +351,8 @@ export const arbitrum: Layer2 = {
       {
         address: discovery.getContract('UpgradeExecutor').address,
         name: 'UpgradeExecutor',
-        description: "This contract can upgrade the system's contracts.",
+        description:
+          "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
         upgradeability: discovery.getContract('UpgradeExecutor').upgradeability,
       },
       {
@@ -364,7 +365,7 @@ export const arbitrum: Layer2 = {
         address: discovery.getContract('L1ArbitrumTimelock').address,
         name: 'L1ArbitrumTimelock',
         description:
-          'Timelock contract for Arbitrum DAO Governance. It is the de-facto admin of the system, giving DAO participants the ability to upgrade the system.',
+          'Timelock contract for Arbitrum DAO Governance. It is the de-facto admin of the system, giving DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       },
       {
         address: discovery.getContract('RollupProxy').address,
