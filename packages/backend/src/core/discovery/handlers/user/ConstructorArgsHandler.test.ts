@@ -16,7 +16,7 @@ const sampleAbi = ['constructor(string,string,uint8,bytes32,uint256)']
 
 describe(ConstructorArgsHandler.name, () => {
   describe(ConstructorArgsHandler.prototype.execute.name, () => {
-    it('works', async () => {
+    it('correctly extract constructor arguments', async () => {
       const handler = new ConstructorArgsHandler(
         'constructorArgs',
         sampleAbi,
