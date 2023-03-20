@@ -180,7 +180,6 @@ function Section({
           >
             {field.name}
             <Value value={field.value} />
-            {/* <OverrideIndicator /> */}
           </p>
         ))}
       </p>
@@ -223,23 +222,6 @@ function InitialIndicator({ isInitial }: { isInitial?: boolean }) {
       }}
     >
       initial
-    </span>
-  )
-}
-
-function OverrideIndicator() {
-  return (
-    <span
-      style={{
-        background: 'grey',
-        borderRadius: '4px',
-        padding: '2px 3px 3px 2px',
-        marginLeft: '8px',
-        fontSize: '12px',
-        color: 'white',
-      }}
-    >
-      override
     </span>
   )
 }

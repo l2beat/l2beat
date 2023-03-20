@@ -1,6 +1,4 @@
 import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
-import { config } from 'dotenv'
-import { string } from 'zod'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
