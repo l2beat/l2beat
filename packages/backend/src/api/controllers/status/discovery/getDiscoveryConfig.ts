@@ -144,7 +144,7 @@ export async function getDiscoveryConfig(
       ignoreInWatchMode,
       ignoreMethods,
       watched,
-      notHandled: rest,
+      notHandled: rest.length > 0 ? rest : undefined,
       overrides,
       proxyType: contract.upgradeability.type,
       isInitial: config.initialAddresses.includes(contract.address),
