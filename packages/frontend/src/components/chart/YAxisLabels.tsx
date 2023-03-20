@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
-export function YAxisLabels({ className }: { className: string }) {
+export function YAxisLabels({ className }: { className?: string }) {
   return (
     <div
       className={cx(
