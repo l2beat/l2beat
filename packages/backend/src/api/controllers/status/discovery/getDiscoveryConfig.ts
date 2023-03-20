@@ -35,12 +35,28 @@ export async function getDiscoveryConfig(
   const config = await configReader.readConfig(project)
 
   const result = discovery.contracts.map((contract) => {
+    const discoveredBy: string[] = []
+    for (const discoveredContract of discovery.contracts) {
+      if (config.initialAddresses.includes(contract.address)) {
+        continue
+      }
+      const discoveredFields = Object.values(discoveredContract.values ?? {})
+      discoveredFields.push(Object.values(discoveredContract.upgradeability))
+
+      if (
+        JSON.stringify(discoveredFields).includes(contract.address.toString())
+      ) {
+        discoveredBy.push(discoveredContract.address.toString())
+      }
+    }
+
     if (contract.unverified) {
       return {
         name: contract.name,
         addresses: [contract.address],
         isUnverified: true,
         isInitial: config.initialAddresses.includes(contract.address),
+        discoveredBy,
       }
     }
 
@@ -119,24 +135,6 @@ export async function getDiscoveryConfig(
         watched[index].name = fn
       } else {
         rest.push({ name: fn })
-      }
-    }
-
-    const discoveredBy: string[] = []
-    for (const discoveredContract of discovery.contracts) {
-      if (
-        config.initialAddresses.includes(discoveredContract.address) ||
-        config.initialAddresses.includes(contract.address)
-      ) {
-        continue
-      }
-      const discoveredFields = Object.values(discoveredContract.values ?? {})
-      discoveredFields.push(Object.values(discoveredContract.upgradeability))
-
-      if (
-        JSON.stringify(discoveredFields).includes(contract.address.toString())
-      ) {
-        discoveredBy.push(discoveredContract.address.toString())
       }
     }
 

@@ -27,7 +27,10 @@ export async function getDiscoveryProjects(): Promise<DashboardProject[]> {
       notHandledCount: config
         .map((c) => c.notHandled?.length ?? 0)
         .reduce((a, b) => a + b, 0),
-      unverifiedCount: config.filter((c) => c.isUnverified).length,
+      unverifiedCount:
+        config.filter((c) => c.isUnverified).length > 0
+          ? config.filter((c) => c.isUnverified).length
+          : undefined,
     }
 
     projects.push(project)

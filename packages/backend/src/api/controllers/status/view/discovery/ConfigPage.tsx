@@ -1,4 +1,4 @@
-import React from 'react'
+import { default as React } from 'react'
 
 import {
   DashboardContract,
@@ -22,56 +22,13 @@ export function ConfigPage(props: ConfigPageProps) {
       <div className="tabs" style={{ marginTop: '8px' }}>
         {props.config.map((c, index) => {
           if (c.isUnverified) {
-            return (
-              <React.Fragment key={index}>
-                <input type="radio" name="tabs" id={`tab-${index}`} />
-                <label style={{ color: '#FF5733' }} htmlFor={`tab-${index}`}>
-                  {c.addresses[0].slice(0, 10)}
-                </label>
-                <div className="tab" key={index}>
-                  <div className="card warn">
-                    <p>{c.addresses[0]}</p>
-                    <p>
-                      This contract does not have a verified source code on
-                      Etherscan
-                    </p>
-                  </div>
-                </div>
-              </React.Fragment>
-            )
+            return <UnverifiedContract c={c} index={index} />
           }
           return (
             <React.Fragment key={index}>
-              <input
-                type="radio"
-                name="tabs"
-                id={`tab-${index}`}
-                defaultChecked={index === 0}
-              />
-              <label
-                htmlFor={`tab-${index}`}
-                style={{
-                  color: `${c.isInitial ? DASHBOARD_COLORS.INITIAL : ''}`,
-                }}
-              >
-                {c.name}
-              </label>
+              <Tab c={c} index={index} />
               <div className="tab" key={index} id={c.addresses[0].toString()}>
-                <blockquote>
-                  <h4>
-                    {c.name} <InitialIndicator isInitial={c.isInitial} />{' '}
-                    <ProxyIndicator type={c.proxyType} />
-                  </h4>
-                  {c.addresses.map((a, index) => (
-                    <p key={index}>
-                      {index !== 0 && `Implementation #${index}: `}
-                      <a href={`https://etherscan.io/address/${a.toString()}`}>
-                        {a.toString()}
-                      </a>
-                    </p>
-                  ))}
-                  {c.discoveredBy && JSON.stringify(c.discoveredBy)}
-                </blockquote>
+                <Header c={c} />
                 {c.watched && (
                   <Section
                     title="Watched"
@@ -113,6 +70,78 @@ export function renderDiscoveryConfigPage(props: ConfigPageProps) {
   return reactToHtml(<ConfigPage {...props} />)
 }
 
+function UnverifiedContract({
+  c,
+  index,
+}: {
+  c: DashboardContract
+  index: number
+}) {
+  console.log(c)
+  return (
+    <React.Fragment key={index}>
+      <Tab c={c} index={index} textColor={'#FF5733'} />
+      <div className="tab" key={index}>
+        <Header c={c} />
+        <div className="card warn">
+          <p>!!! UNVERIFIED CONTRACT !!!</p>
+          <p>This contract does not have a verified source code on Etherscan</p>
+        </div>
+      </div>
+    </React.Fragment>
+  )
+}
+
+function Tab({
+  c,
+  index,
+  textColor,
+}: {
+  c: DashboardContract
+  index: number
+  textColor?: string
+}) {
+  return (
+    <React.Fragment>
+      <input
+        type="radio"
+        name="tabs"
+        id={`tab-${index}`}
+        defaultChecked={index === 0}
+      />
+      <label
+        htmlFor={`tab-${index}`}
+        style={{
+          color: c.isInitial ? DASHBOARD_COLORS.INITIAL : textColor ?? '',
+        }}
+      >
+        {c.name ? c.name : c.addresses[0].slice(0, 10)}
+      </label>
+    </React.Fragment>
+  )
+}
+
+function Header({ c }: { c: DashboardContract }) {
+  return (
+    <blockquote>
+      <h4>
+        {c.name ? c.name : c.addresses[0].slice(0, 10)}{' '}
+        <InitialIndicator isInitial={c.isInitial} />{' '}
+        <ProxyIndicator type={c.proxyType} />
+      </h4>
+      {c.addresses.map((a, index) => (
+        <p key={index}>
+          {index !== 0 && `Implementation #${index}: `}
+          <a href={`https://etherscan.io/address/${a.toString()}`}>
+            {a.toString()}
+          </a>
+        </p>
+      ))}
+      {c.discoveredBy && JSON.stringify(c.discoveredBy)}
+    </blockquote>
+  )
+}
+
 function Section({
   title,
   color,
@@ -143,7 +172,7 @@ function Section({
 }
 
 function ProxyIndicator({ type }: { type?: string }) {
-  if (type === 'immutable') {
+  if (type === undefined || type === 'immutable') {
     return null
   }
   return (
