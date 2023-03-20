@@ -26,7 +26,6 @@ export const scroll: Layer2 = {
       ],
       socialMedia: [
         'https://discord.gg/scroll',
-        'https://www.youtube.com/@Scroll_ZKP',
         'https://twitter.com/Scroll_ZKP',
       ],
     },

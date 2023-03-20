@@ -38,7 +38,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
             change={props.tvlWeeklyChange}
           />
         ) : (
-          <NoDataCell />
+          <NoDataCell isUpcoming={props.isUpcoming} />
         ),
     },
     ...(props.ratingEntry
@@ -71,12 +71,14 @@ export function ProjectHeader(props: ProjectHeaderProps) {
             change={props.tpsWeeklyChange}
           />
         ) : (
-          <NoDataCell />
+          <NoDataCell isUpcoming={props.isUpcoming} />
         ),
     },
     {
       title: '30D tx count',
-      value: props.transactionMonthlyCount ?? <NoDataCell />,
+      value: props.transactionMonthlyCount ?? (
+        <NoDataCell isUpcoming={props.isUpcoming} />
+      ),
     },
     {
       title: 'Purpose',

@@ -2,7 +2,7 @@ import { Layer2Technology } from '../types'
 
 const EMPTY = {
   name: 'Empty',
-  description: 'No information available',
+  description: 'No information available.',
   references: [],
   risks: [],
 }
