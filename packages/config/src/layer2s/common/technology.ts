@@ -1,5 +1,3 @@
-import { Layer2Technology } from '../types'
-
 const EMPTY = {
   name: 'Empty',
   description: 'No information available.',
@@ -7,8 +5,7 @@ const EMPTY = {
   risks: [],
 }
 
-const UPCOMING: Layer2Technology = {
-  category: 'ZK Rollup',
+const UPCOMING = {
   stateCorrectness: EMPTY,
   dataAvailability: EMPTY,
   operator: EMPTY,

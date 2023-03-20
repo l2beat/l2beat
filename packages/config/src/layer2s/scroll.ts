@@ -34,6 +34,6 @@ export const scroll: Layer2 = {
     escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
+  technology: { ...TECHNOLOGY.UPCOMING, category: 'ZK Rollup' },
   contracts: CONTRACTS.EMPTY,
 }
