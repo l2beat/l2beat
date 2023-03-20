@@ -29,6 +29,22 @@ describe('discovery config.jsonc', () => {
     }).toEqual([])
   })
 
+  it(`every config name is equal to the name in discovery.json`, async () => {
+    const notEqual = []
+
+    for (const config of configs ?? []) {
+      const discovery = await configReader.readDiscovery(config.name)
+      if (discovery.name !== config.name) {
+        notEqual.push(config.name)
+      }
+    }
+
+    expect(notEqual, {
+      extraMessage:
+        'Following projects do not have the same name in config and discovery.json. Run "yarn discover <config.name>"',
+    }).toEqual([])
+  })
+
   it('fields inside ignoreInWatchMode exists in discovery', async function () {
     for (const config of configs ?? []) {
       if (config.overrides === undefined) {
