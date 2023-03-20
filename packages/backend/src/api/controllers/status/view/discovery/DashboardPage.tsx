@@ -3,15 +3,28 @@ import React from 'react'
 import { Page } from '../Page'
 import { reactToHtml } from '../reactToHtml'
 
+interface Project {
+  name: string
+  discoveredCount?: number
+  initialAddressesCount?: number
+}
+
 interface DashboardPageProps {
-  projects: string[]
+  projects: Project[]
   allProjects: string[]
 }
 
 export function DashboardPage(props: DashboardPageProps) {
   const projects = props.projects
-    .concat(props.allProjects.filter((p) => !props.projects.includes(p)))
-    .sort()
+    .concat(
+      props.allProjects
+        .filter(
+          (project) => !props.projects.map((x) => x.name).includes(project),
+        )
+        .map((p) => ({ name: p })),
+    )
+    .sort((a, b) => a.name.localeCompare(b.name))
+
   return (
     <Page title="Discovery">
       <meter
@@ -26,18 +39,39 @@ export function DashboardPage(props: DashboardPageProps) {
       <label style={{ marginLeft: '8px' }} htmlFor="configs-created">
         {props.projects.length}/{props.allProjects.length} configs created
       </label>
-      {projects.map((project, index) => (
-        <div key={index}>
-          {props.projects.includes(project) ? '' : '❌ '}
-          {props.projects.includes(project) ? (
-            <a href={`/status/discovery/${project}`} key={index}>
-              {project}
-            </a>
-          ) : (
-            <span key={index}>{project}</span>
-          )}
-        </div>
-      ))}
+      <table>
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Discovered</th>
+            <th>Initial</th>
+          </tr>
+        </thead>
+        <tbody>
+          {projects.map((project, index) => (
+            <tr key={index}>
+              <td>
+                {project.discoveredCount !== undefined ? '' : '❌ '}
+                {project.discoveredCount !== undefined ? (
+                  <a href={`/status/discovery/${project.name}`}>
+                    {project.name}
+                  </a>
+                ) : (
+                  <span key={index}>{project.name}</span>
+                )}
+              </td>
+              <td>
+                {project.discoveredCount !== undefined &&
+                  project.discoveredCount}
+              </td>
+              <td>
+                {project.initialAddressesCount !== undefined &&
+                  project.initialAddressesCount}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </Page>
   )
 }

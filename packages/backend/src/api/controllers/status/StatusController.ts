@@ -33,7 +33,11 @@ export class StatusController {
     const projects = await getDiscoveryProjects()
 
     return renderDiscoveryDashboard({
-      projects,
+      projects: projects.map((p) => ({
+        name: p,
+        discoveredCount: 0,
+        initialAddressesCount: 0,
+      })),
       allProjects: this.projects.map((p) => p.projectId.toString()),
     })
   }
