@@ -1,6 +1,7 @@
 import { KnowledgeNugget } from '@l2beat/config'
 import React from 'react'
 
+import { getThumbnail } from '../../utils/project/getThumbnail'
 import { ArrowRightIcon } from '../icons'
 import { OutLink } from '../OutLink'
 
@@ -16,7 +17,7 @@ export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
     >
       <div className="relative col-span-2 overflow-hidden rounded-md pb-2/3 drop-shadow-md">
         <img
-          src={knowledgeNugget.thumbnailUrl}
+          src={getThumbnail(knowledgeNugget)}
           className="absolute h-full w-full object-cover transition-all group-hover:scale-105"
         />
       </div>

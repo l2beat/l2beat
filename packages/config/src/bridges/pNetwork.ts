@@ -228,7 +228,7 @@ export const pNetwork: Bridge = {
       link: 'https://medium.com/pnetwork/pgala-post-mortem-measures-taken-to-safeguard-the-ecosystem-from-malicious-actors-and-recovery-6407048f4497',
       date: '2022-11-05T00:00:00Z',
       description:
-        'Due to the misconfiguration of pGALA token on BSC the exploiter took over the control of pGALA tokens.',
+        'Due to the misconfiguration of BSC the exploiter took over the control of pGALA tokens.',
     },
     {
       name: 'pBTC token on BSC exploit',

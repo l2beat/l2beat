@@ -3,11 +3,7 @@ import { expect } from 'earljs'
 
 import { ProjectTechnologyChoice } from '../common'
 import { checkRisk } from '../test/helpers'
-import { layer2s, Layer2Technology, milestonesLayer2s } from './index'
-
-const knowledgeNuggets = layer2s.flatMap(
-  (nugget) => nugget.knowledgeNuggets ?? [],
-)
+import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
 
 describe('layer2s', () => {
   describe('sentences', () => {
@@ -170,12 +166,27 @@ describe('layer2s', () => {
     })
 
     describe('knowledgeNuggets', () => {
+      const knowledgeNuggets = layer2s.flatMap(
+        (nugget) => nugget.knowledgeNuggets ?? [],
+      )
+
       describe('title fits character limit', () => {
         knowledgeNuggets.forEach((nugget) => {
           it(nugget.title, () => {
             expect(nugget.title.length).toBeLessThanOrEqualTo(40)
           })
         })
+      })
+
+      describe('uses static thumbnail', () => {
+        const staticThumbnails = Object.values(NUGGETS.THUMBNAILS)
+        knowledgeNuggets
+          .filter((x) => x.thumbnail !== undefined)
+          .forEach((nugget) => {
+            it(nugget.title, () => {
+              expect(staticThumbnails).toBeAnArrayWith(nugget.thumbnail)
+            })
+          })
       })
     })
   })

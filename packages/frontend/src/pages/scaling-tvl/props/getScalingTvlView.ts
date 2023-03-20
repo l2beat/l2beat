@@ -2,6 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
+import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
 import {
@@ -53,6 +54,7 @@ function getScalingTvlViewEntry(
     name: project.display.name,
     slug: project.display.slug,
     provider: project.technology.provider,
+    riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
     isVerified,
     isArchived: project.isArchived,

@@ -2,3 +2,4 @@ node_modules
 .vscode
 **/yarn-error.log
 packages/frontend/__screenshots__
+**/.DS_Store
