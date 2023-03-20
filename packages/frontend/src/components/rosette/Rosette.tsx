@@ -5,7 +5,7 @@ import {
   sentimentToFillColor,
   sentimentToTextColor,
 } from '../../utils/risks/color'
-import { RiskSentiments, RiskValues } from '../../utils/risks/types'
+import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { getRiskSentiments } from '../../utils/risks/values'
 import { Icon } from '../icons/Icon'
 
@@ -111,86 +111,31 @@ export function BigRosette({ risks, className }: BigRosetteProps) {
       >
         Validator failure
       </span>
-      <span
-        className="Rosette-Description hidden"
+      <OverlayBox
+        className="absolute bottom-40 left-0"
         data-rosette="sequencer-failure"
-      >
-        <span
-          className={cx(
-            'absolute left-36 bottom-20',
-            sentimentToTextColor(risks.sequencerFailure.sentiment),
-          )}
-        >
-          {risks.sequencerFailure.value}
-        </span>
-        <span className="absolute bottom-40 -mx-8 text-xs">
-          {risks.sequencerFailure.description}
-        </span>
-      </span>
-      <span
-        className="Rosette-Description hidden"
+        risk={risks.sequencerFailure}
+      />
+      <OverlayBox
+        className="absolute bottom-40 left-0"
         data-rosette="validator-failure"
-      >
-        <span
-          className={cx(
-            'absolute right-36 bottom-20',
-            sentimentToTextColor(risks.validatorFailure.sentiment),
-          )}
-        >
-          {risks.validatorFailure.value}
-        </span>
-        <span className="absolute bottom-40 -mx-8 text-xs">
-          {risks.validatorFailure.description}
-        </span>
-      </span>
-      <span
-        className="Rosette-Description hidden"
+        risk={risks.validatorFailure}
+      />
+      <OverlayBox
+        className="absolute top-44 left-0"
         data-rosette="state-validation"
-      >
-        <span
-          className={cx(
-            'absolute top-20 left-32',
-            sentimentToTextColor(risks.stateValidation.sentiment),
-          )}
-        >
-          {risks.stateValidation.value}
-        </span>
-        <span className="absolute top-44 -mx-8 text-xs">
-          {risks.stateValidation.description}
-        </span>
-      </span>
-      <span
-        className="Rosette-Description hidden"
+        risk={risks.stateValidation}
+      />
+      <OverlayBox
+        className="absolute top-44 left-0"
         data-rosette="upgradeability"
-      >
-        <span
-          className={cx(
-            'absolute top-20 right-32',
-            sentimentToTextColor(risks.upgradeability.sentiment),
-          )}
-        >
-          {risks.upgradeability.value}
-        </span>
-        <span className="absolute top-44 -mx-8 text-xs">
-          {risks.upgradeability.description}
-        </span>
-      </span>
-      <span
-        className="Rosette-Description hidden"
+        risk={risks.upgradeability}
+      />
+      <OverlayBox
+        className="absolute top-44 left-0"
         data-rosette="data-availability"
-      >
-        <span
-          className={cx(
-            'absolute top-32 -mx-8',
-            sentimentToTextColor(risks.dataAvailability.sentiment),
-          )}
-        >
-          {risks.dataAvailability.value}
-        </span>
-        <span className="absolute top-40 -mx-8 text-xs">
-          {risks.dataAvailability.description}
-        </span>
-      </span>
+        risk={risks.dataAvailability}
+      />
     </div>
   )
 }
@@ -251,5 +196,30 @@ function BigRosetteIcon({ risks, className }: RosetteProps) {
         data-rosette="validator-failure"
       />
     </Icon>
+  )
+}
+
+function OverlayBox({
+  className,
+  risk,
+  ...props
+}: {
+  risk: RiskValue
+  className: string
+  'data-rosette': string
+}) {
+  return (
+    <div
+      {...props}
+      className={cx(
+        'Rosette-Description hidden rounded-md bg-white px-4 py-3 text-left text-sm leading-tight text-gray-700 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.55)] dark:bg-neutral-700 dark:text-white',
+        className,
+      )}
+    >
+      <span className={cx('mb-2 block', sentimentToTextColor(risk.sentiment))}>
+        {risk.value}
+      </span>
+      <span className="text-xs">{risk.description}</span>
+    </div>
   )
 }
