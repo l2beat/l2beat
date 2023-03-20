@@ -2,7 +2,7 @@ import { expect } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { mock } from '../../tools'
-import { EthereumAddress } from '../../types'
+import { EthereumAddress, Hash256 } from '../../types'
 import { HttpClient } from '../HttpClient'
 import { EtherscanClient } from './EtherscanClient'
 
@@ -150,11 +150,49 @@ describe(EtherscanClient.name, () => {
           )
         },
       })
+
       const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
       const source = await etherscanClient.getContractSource(
         EthereumAddress.ZERO,
       )
+
+      expect(httpClient.fetch).toHaveBeenCalledExactlyWith([
+        [
+          'url?module=contract&action=getsourcecode&address=0x0000000000000000000000000000000000000000&apikey=key',
+          expect.anything(),
+        ],
+      ])
       expect(source).toEqual(result)
+    })
+  })
+
+  describe(EtherscanClient.prototype.getContractDeploymentTx.name, () => {
+    it('constructs a correct url', async () => {
+      const result = {
+        contractAddress: EthereumAddress.random(),
+        contractCreator: EthereumAddress.random(),
+        txHash: Hash256.random(),
+      }
+      const httpClient = mock<HttpClient>({
+        async fetch() {
+          return new Response(
+            JSON.stringify({ status: '1', message: 'OK', result: [result] }),
+          )
+        },
+      })
+
+      const etherscanClient = new EtherscanClient(httpClient, 'url', 'key')
+      const source = await etherscanClient.getContractDeploymentTx(
+        EthereumAddress.ZERO,
+      )
+
+      expect(httpClient.fetch).toHaveBeenCalledExactlyWith([
+        [
+          'url?module=contract&action=getcontractcreation&contractaddresses=0x0000000000000000000000000000000000000000&apikey=key',
+          expect.anything(),
+        ],
+      ])
+      expect(source).toEqual(result.txHash)
     })
   })
 })
