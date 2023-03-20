@@ -77,7 +77,6 @@ function UnverifiedContract({
   c: DashboardContract
   index: number
 }) {
-  console.log(c)
   return (
     <React.Fragment key={index}>
       <Tab c={c} index={index} textColor={'#FF5733'} />
@@ -111,6 +110,7 @@ function Tab({
       />
       <label
         htmlFor={`tab-${index}`}
+        id={c.addresses[0].toString()}
         style={{
           color: c.isInitial ? DASHBOARD_COLORS.INITIAL : textColor ?? '',
         }}
@@ -137,8 +137,25 @@ function Header({ c }: { c: DashboardContract }) {
           </a>
         </p>
       ))}
-      {c.discoveredBy && JSON.stringify(c.discoveredBy)}
+      {(c.discoveredBy ?? []).length > 0 && (
+        <blockquote>
+          Discovered by:
+          {c.discoveredBy?.map((d, index) => (
+            <ContractHref key={index} address={d} />
+          ))}
+        </blockquote>
+      )}
     </blockquote>
+  )
+}
+
+function ContractHref(props: { address: string }) {
+  return (
+    <p
+      dangerouslySetInnerHTML={{
+        __html: `<span style="cursor:pointer; color: #85C1E9" onclick="document.getElementById('${props.address}').click()">⬆️ ${props.address}</span>`,
+      }}
+    />
   )
 }
 
