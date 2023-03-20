@@ -23,7 +23,7 @@ export const arbitrum: Layer2 = {
     name: 'Arbitrum One',
     slug: 'arbitrum',
     warning:
-      'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
+      'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted. Also, the DAO is not yet deployed, so all the upgrade power lays in the hands of the Security Council.',
     description:
       "Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.\
       Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Validators (currently whitelisted)\
