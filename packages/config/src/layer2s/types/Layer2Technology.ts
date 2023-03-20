@@ -23,6 +23,8 @@ export interface Layer2Technology {
   additionalPrivacy?: ProjectTechnologyChoice
   /** What are the smart contract capabilities */
   smartContracts?: ProjectTechnologyChoice
+  /** How can the Layer2 be upgraded? */
+  upgradeMechanism?: ProjectTechnologyChoice
 }
 
 export type Layer2Category =
