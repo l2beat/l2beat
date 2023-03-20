@@ -19,7 +19,7 @@ export interface DashboardContract {
   watched?: DashboardContractField[]
   ignoreInWatchMode?: DashboardContractField[]
   ignoreMethods?: DashboardContractField[]
-  rest?: DashboardContractField[]
+  notHandled?: DashboardContractField[]
   overrides?: string[]
   isUnverified?: boolean
   proxyType?: string
@@ -127,7 +127,7 @@ export async function getDiscoveryConfig(
       ignoreInWatchMode,
       ignoreMethods,
       watched,
-      rest,
+      notHandled: rest,
       overrides,
       proxyType: contract.upgradeability.type,
       isInitial: config.initialAddresses.includes(contract.address),

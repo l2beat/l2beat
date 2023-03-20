@@ -1,4 +1,4 @@
-import React from 'react'
+import { default as React, default as React } from 'react'
 
 import { Page } from '../Page'
 import { reactToHtml } from '../reactToHtml'
@@ -47,14 +47,20 @@ export function DashboardPage(props: DashboardPageProps) {
       <table>
         <thead>
           <tr>
-            <th>Project</th>
+            <th rowSpan={2}>Project</th>
+            <th colSpan={3}>Contracts</th>
+            <th rowSpan={2} />
+            <th colSpan={4}>Values</th>
+          </tr>
+          <tr>
+            {/* <th>Project</th> */}
             <th>Discovered</th>
             <th>Initial</th>
+            <th>Unverified</th>
             <th>Watched</th>
             <th>IgnoreInWatchmode</th>
             <th>Ignored</th>
             <th>Not handled</th>
-            <th>Unverified</th>
           </tr>
         </thead>
         <tbody>
@@ -71,13 +77,17 @@ export function DashboardPage(props: DashboardPageProps) {
                 )}
               </td>
               <td>
+                {project.initialAddressesCount !== undefined &&
+                  project.initialAddressesCount}
+              </td>
+              <td>
                 {project.discoveredCount !== undefined &&
                   project.discoveredCount}
               </td>
               <td>
-                {project.initialAddressesCount !== undefined &&
-                  project.initialAddressesCount}
+                {(project.unverifiedCount ?? 0) > 0 && project.unverifiedCount}
               </td>
+              <td />
               <td>
                 {project.watchedCount !== undefined && project.watchedCount}
               </td>
@@ -91,9 +101,6 @@ export function DashboardPage(props: DashboardPageProps) {
               <td>
                 {project.notHandledCount !== undefined &&
                   project.notHandledCount}
-              </td>
-              <td>
-                {(project.unverifiedCount ?? 0) > 0 && project.unverifiedCount}
               </td>
             </tr>
           ))}

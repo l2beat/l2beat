@@ -85,11 +85,11 @@ export function ConfigPage(props: ConfigPageProps) {
                     fields={c.ignoreMethods}
                   />
                 )}
-                {c.rest && (
+                {c.notHandled && (
                   <Section
                     title="Not handled"
                     color="#5D6D7E"
-                    fields={c.rest}
+                    fields={c.notHandled}
                   />
                 )}
               </div>
