@@ -24,6 +24,7 @@ export interface DashboardContract {
   isUnverified?: boolean
   proxyType?: string
   isInitial?: boolean
+  discoveredBy?: string[]
 }
 
 export async function getDiscoveryConfig(
@@ -121,6 +122,24 @@ export async function getDiscoveryConfig(
       }
     }
 
+    const discoveredBy: string[] = []
+    for (const discoveredContract of discovery.contracts) {
+      if (
+        config.initialAddresses.includes(discoveredContract.address) ||
+        config.initialAddresses.includes(contract.address)
+      ) {
+        continue
+      }
+      const discoveredFields = Object.values(discoveredContract.values ?? {})
+      discoveredFields.push(Object.values(discoveredContract.upgradeability))
+
+      if (
+        JSON.stringify(discoveredFields).includes(contract.address.toString())
+      ) {
+        discoveredBy.push(discoveredContract.address.toString())
+      }
+    }
+
     return {
       name: contract.name,
       addresses: getAddresses(contract),
@@ -131,6 +150,7 @@ export async function getDiscoveryConfig(
       overrides,
       proxyType: contract.upgradeability.type,
       isInitial: config.initialAddresses.includes(contract.address),
+      discoveredBy,
     }
   })
 

@@ -70,6 +70,7 @@ export function ConfigPage(props: ConfigPageProps) {
                       </a>
                     </p>
                   ))}
+                  {c.discoveredBy && JSON.stringify(c.discoveredBy)}
                 </blockquote>
                 {c.watched && (
                   <Section
