@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { EthereumAddress, Hash256, stringAs } from '../../types'
+
 export type EtherscanResponse = z.infer<typeof EtherscanResponse>
 export const EtherscanResponse = z.object({
   status: z.enum(['1', '0']),
@@ -25,3 +27,16 @@ export const ContractSource = z.object({
 })
 
 export const ContractSourceResult = z.array(ContractSource).length(1)
+
+export type ContractCreatorAndCreationTxHash = z.infer<
+  typeof ContractCreatorAndCreationTxHash
+>
+export const ContractCreatorAndCreationTxHash = z.object({
+  contractAddress: stringAs(EthereumAddress),
+  contractCreator: stringAs(EthereumAddress),
+  txHash: stringAs(Hash256),
+})
+
+export const ContractCreatorAndCreationTxHashResult = z
+  .array(ContractCreatorAndCreationTxHash)
+  .length(1)

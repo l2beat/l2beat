@@ -1,7 +1,11 @@
 import { RateLimiter } from '../../tools/RateLimiter'
-import { EthereumAddress } from '../../types'
+import { EthereumAddress, Hash256 } from '../../types'
 import { HttpClient } from '../HttpClient'
-import { ContractSourceResult, EtherscanResponse } from './model'
+import {
+  ContractCreatorAndCreationTxHashResult,
+  ContractSourceResult,
+  EtherscanResponse,
+} from './model'
 
 export class EtherscanClient {
   private readonly rateLimiter = new RateLimiter({
@@ -28,6 +32,20 @@ export class EtherscanClient {
       )
     }
     return ContractSourceResult.parse(response.result)[0]
+  }
+
+  async getContractDeploymentTx(address: EthereumAddress): Promise<Hash256> {
+    const response = await this.call('contract', 'getcontractcreation', {
+      contractaddresses: address.toString(),
+    })
+    if (response.status !== '1') {
+      throw new Error(
+        `Error response ${response.message} ${JSON.stringify(response.result)}`,
+      )
+    }
+
+    return ContractCreatorAndCreationTxHashResult.parse(response.result)[0]
+      .txHash
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
