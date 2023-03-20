@@ -168,7 +168,7 @@ function getFunctions(
 
   const addresses = getAddresses(contract)
 
-  const functionNames: string[] | undefined = []
+  const functionNames: Set<string> = new Set<string>()
 
   for (const address of addresses) {
     const abi = Object.entries(discovery.abis).find(
@@ -177,10 +177,10 @@ function getFunctions(
     if (abi === undefined) {
       throw new Error(`ABI for ${address.toString()} not found`)
     }
-    functionNames.push(...abi[1])
+    abi[1].forEach((a) => functionNames.add(a))
   }
 
-  const iface = new ethers.utils.Interface(functionNames)
+  const iface = new ethers.utils.Interface(Array.from(functionNames))
 
   const functions = Object.entries(iface.functions)
     .filter(([, fn]) => fn.stateMutability === 'view')
