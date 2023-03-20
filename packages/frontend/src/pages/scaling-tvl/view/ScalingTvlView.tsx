@@ -68,7 +68,8 @@ export function ScalingTvlView({
       tooltip: 'Risks associated with this project.',
       minimalWidth: true,
       alignCenter: true,
-      getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
+      getValue: (project) =>
+        !project.isUpcoming && <RosetteCell riskValues={project.riskValues} />,
     },
     {
       name: 'Technology',
