@@ -6,6 +6,7 @@ import {
 } from '../../discovery/getDiscoveryConfig'
 import { Page } from '../Page'
 import { reactToHtml } from '../reactToHtml'
+import { DASHBOARD_COLORS } from './types'
 
 interface ConfigPageProps {
   project: string
@@ -49,7 +50,9 @@ export function ConfigPage(props: ConfigPageProps) {
               />
               <label
                 htmlFor={`tab-${index}`}
-                style={{ color: `${c.isInitial ? '#F7DC6F' : ''}` }}
+                style={{
+                  color: `${c.isInitial ? DASHBOARD_COLORS.INITIAL : ''}`,
+                }}
               >
                 {c.name}
               </label>
@@ -69,26 +72,30 @@ export function ConfigPage(props: ConfigPageProps) {
                   ))}
                 </blockquote>
                 {c.watched && (
-                  <Section title="Watched" color="#52BE80" fields={c.watched} />
+                  <Section
+                    title="Watched"
+                    color={DASHBOARD_COLORS.WATCHED}
+                    fields={c.watched}
+                  />
                 )}
                 {c.ignoreInWatchMode && (
                   <Section
                     title="Ignore in watch mode"
-                    color="#F4D03F"
+                    color={DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE}
                     fields={c.ignoreInWatchMode}
                   />
                 )}
                 {c.ignoreMethods && (
                   <Section
                     title="Ignored methods"
-                    color="#C0392B"
+                    color={DASHBOARD_COLORS.IGNORED}
                     fields={c.ignoreMethods}
                   />
                 )}
                 {c.notHandled && (
                   <Section
                     title="Not handled"
-                    color="#5D6D7E"
+                    color={DASHBOARD_COLORS.NOT_HANDLED}
                     fields={c.notHandled}
                   />
                 )}
