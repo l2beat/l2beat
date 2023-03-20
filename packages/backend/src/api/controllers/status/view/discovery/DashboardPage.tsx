@@ -1,4 +1,4 @@
-import { default as React, default as React } from 'react'
+import { default as React } from 'react'
 
 import { Page } from '../Page'
 import { reactToHtml } from '../reactToHtml'
@@ -54,7 +54,6 @@ export function DashboardPage(props: DashboardPageProps) {
             <th colSpan={4}>Values</th>
           </tr>
           <tr>
-            {/* <th>Project</th> */}
             <th>ALL</th>
             <th style={{ color: DASHBOARD_COLORS.INITIAL }}>Initial</th>
             <th style={{ color: DASHBOARD_COLORS.DISCOVERED }}>Discovered</th>
@@ -80,68 +79,53 @@ export function DashboardPage(props: DashboardPageProps) {
                   <span key={index}>{project.name}</span>
                 )}
               </td>
-              <td style={{ padding: '1px 2px' }}>
-                {project.discoveredCount !== undefined &&
-                  project.discoveredCount}
-              </td>
-              <td
-                style={{ color: DASHBOARD_COLORS.INITIAL, padding: '1px 2px' }}
-              >
-                {project.initialAddressesCount !== undefined &&
-                  project.initialAddressesCount}
-              </td>
-              <td
-                style={{
-                  color: DASHBOARD_COLORS.DISCOVERED,
-                  padding: '1px 2px',
-                }}
-              >
-                {project.initialAddressesCount !== undefined &&
-                  project.discoveredCount !== undefined &&
-                  project.discoveredCount - project.initialAddressesCount}
-              </td>
-              <td
-                style={{
-                  color: DASHBOARD_COLORS.UNVERIFIED,
-                  padding: '1px 2px',
-                }}
-              >
-                {(project.unverifiedCount ?? 0) > 0 && project.unverifiedCount}
-              </td>
-              <td style={{ padding: '1px 2px' }} />
-              <td
-                style={{ color: DASHBOARD_COLORS.WATCHED, padding: '1px 2px' }}
-              >
-                {project.watchedCount !== undefined && project.watchedCount}
-              </td>
-              <td
-                style={{
-                  color: DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE,
-                  padding: '1px 2px',
-                }}
-              >
-                {project.ignoredInWatchModeCount !== undefined &&
-                  project.ignoredInWatchModeCount}
-              </td>
-              <td
-                style={{ color: DASHBOARD_COLORS.IGNORED, padding: '1px 2px' }}
-              >
-                {project.ignoredCount !== undefined && project.ignoredCount}
-              </td>
-              <td
-                style={{
-                  color: DASHBOARD_COLORS.NOT_HANDLED,
-                  padding: '1px 2px',
-                }}
-              >
-                {project.notHandledCount !== undefined &&
-                  project.notHandledCount}
-              </td>
+              <TableData value={project.discoveredCount} />
+              <TableData
+                value={project.initialAddressesCount}
+                color={DASHBOARD_COLORS.INITIAL}
+              />
+              <TableData
+                value={
+                  project.discoveredCount && project.initialAddressesCount
+                    ? project.discoveredCount - project.initialAddressesCount
+                    : undefined
+                }
+                color={DASHBOARD_COLORS.DISCOVERED}
+              />
+              <TableData
+                value={project.unverifiedCount}
+                color={DASHBOARD_COLORS.UNVERIFIED}
+              />
+              <TableData />
+              <TableData
+                value={project.watchedCount}
+                color={DASHBOARD_COLORS.WATCHED}
+              />
+              <TableData
+                value={project.ignoredInWatchModeCount}
+                color={DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE}
+              />
+              <TableData
+                value={project.ignoredCount}
+                color={DASHBOARD_COLORS.IGNORED}
+              />
+              <TableData
+                value={project.notHandledCount}
+                color={DASHBOARD_COLORS.NOT_HANDLED}
+              />
             </tr>
           ))}
         </tbody>
       </table>
     </Page>
+  )
+}
+
+function TableData(props: { value?: number; color?: string }) {
+  return (
+    <td style={{ padding: '1px 2px', color: props.color ?? '' }}>
+      {props.value !== undefined && props.value}
+    </td>
   )
 }
 
