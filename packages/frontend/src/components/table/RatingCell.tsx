@@ -14,7 +14,7 @@ export function RatingCell({ item }: RatingProps) {
     <div
       className="Tooltip"
       title={renderToStaticMarkup(<RatingTooltipPopup item={item} />)}
-      data-tooltip-big={true}
+      data-tooltip-big
     >
       <RatingBadge
         category={item.category.score}

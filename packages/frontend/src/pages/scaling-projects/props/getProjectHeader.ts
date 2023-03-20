@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, ProjectLinks } from '@l2beat/config'
 import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
@@ -6,6 +6,8 @@ import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
+import { getRiskSentiments } from '../../../utils/risks/values'
+import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
@@ -16,7 +18,8 @@ export function getProjectHeader(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): ProjectHeaderProps {
-  const charts = tvlApiResponse.projects[project.id.toString()]?.charts
+  const apiProject = tvlApiResponse.projects[project.id.toString()]
+  const charts = apiProject?.charts
   const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
 
   const activityData =
@@ -24,6 +27,13 @@ export function getProjectHeader(
   const tpsDaily = getTpsDaily(activityData)
   const tpsWeeklyChange = getTpsWeeklyChange(activityData)
   const transactionMonthlyCount = getTransactionCount(activityData, 'month')
+
+  const tvlBreakdown = getTvlBreakdown(
+    project.display.name,
+    project.config.associatedTokens ?? [],
+    tvl,
+    apiProject?.tokens ?? [],
+  )
 
   return {
     icon: `/icons/${project.display.slug}.png`,
@@ -39,7 +49,11 @@ export function getProjectHeader(
         : undefined,
     purpose: project.display.purpose,
     technology: project.technology.category,
+    tvlBreakdown,
+    links: getLinks(project.display.links),
     ratingEntry: config.features.rating && project.rating,
+    // TODO: will need to be riskValues when rosette has hover
+    risks: getRiskSentiments(project.riskView),
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
   }
@@ -58,4 +72,36 @@ function getTitleLength(name: string): 'long' | 'very-long' | undefined {
     case 'Metis Andromeda':
       return 'very-long'
   }
+}
+
+function getLinks(links: ProjectLinks) {
+  const items = [
+    {
+      name: 'Website',
+      links: links.websites,
+    },
+    {
+      name: 'App',
+      links: links.apps,
+    },
+    {
+      name: 'Documentation',
+      links: links.documentation,
+    },
+    {
+      name: 'Explorer',
+      links: links.explorers,
+    },
+    {
+      name: 'Repository',
+      links: links.repositories,
+    },
+    {
+      name: 'Social',
+      links: links.socialMedia,
+      social: true,
+    },
+  ]
+
+  return items.filter((link) => link.links.length > 0)
 }

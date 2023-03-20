@@ -12,19 +12,16 @@ import {
   DescriptionSectionProps,
 } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggets } from '../../../components/project/KnowledgeNuggets'
-import {
-  LinkSection,
-  LinkSectionProps,
-} from '../../../components/project/links/LinkSection'
+import { LinkSectionProps } from '../../../components/project/links/LinkSection'
 import { Milestones } from '../../../components/project/Milestones'
 import {
   PermissionsSection,
   PermissionsSectionProps,
 } from '../../../components/project/PermissionsSection'
 import {
-  RiskSection,
-  RiskSectionProps,
-} from '../../../components/project/RiskSection'
+  RiskAnalysis,
+  RiskAnalysisProps,
+} from '../../../components/project/RiskAnalysis'
 import {
   TechnologyIncomplete,
   TechnologyIncompleteProps,
@@ -38,7 +35,7 @@ import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaim
 export interface ProjectDetailsProps {
   linkSection: LinkSectionProps
   descriptionSection: DescriptionSectionProps
-  riskSection: RiskSectionProps
+  riskAnalysis: RiskAnalysisProps
   incomplete?: TechnologyIncompleteProps
   sections: TechnologySectionProps[]
   permissionsSection?: PermissionsSectionProps
@@ -55,7 +52,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
         <DescriptionSection {...props.descriptionSection} />
         {!props.isUpcoming && (
           <>
-            <RiskSection {...props.riskSection} />
+            <RiskAnalysis {...props.riskAnalysis} />
             {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
             {props.sections.map((section) => (
               <TechnologySection key={section.id} {...section} />
@@ -68,17 +65,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
         )}
         {props.isUpcoming && <UpcomingDisclaimer className="mt-6" />}
       </div>
-      <div className="ProjectDetails-Side flex flex-col">
-        <LinkSection {...props.linkSection} />
-        <div className="flex flex-col gap-12 bg-gray-100 py-12 dark:bg-gray-900 md:!bg-transparent">
-          <Milestones milestones={props.milestones} />
-          {!isEmpty(props.knowledgeNuggets) && (
-            <div className="px-4 md:hidden">
-              <HorizontalSeparator />
-            </div>
-          )}
-          <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
-        </div>
+      <div className="ProjectDetails-Side flex flex-col gap-12 bg-gray-100 py-12 dark:bg-gray-900 md:!bg-transparent">
+        <Milestones milestones={props.milestones} />
+        {!isEmpty(props.knowledgeNuggets) && (
+          <div className="px-4 md:hidden">
+            <HorizontalSeparator />
+          </div>
+        )}
+        <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
       </div>
     </main>
   )

@@ -27,6 +27,8 @@ export interface ActivityViewEntry {
   provider?: Layer2['technology']['provider']
   warning?: string
   isVerified?: boolean
+  isUpcoming?: boolean
+  isArchived?: boolean
   dataSource?: string
   tpsDaily?: number
   tpsWeeklyChange: string
@@ -41,12 +43,14 @@ export function ActivityView({ items }: ActivityViewProps) {
       name: '#',
       alignCenter: true,
       minimalWidth: true,
-      getValue: (entry, index) => {
-        return <IndexCell entry={entry} index={index + 1} />
-      },
+      headClassName: 'pl-4',
+      getValue: (entry, index) => (
+        <IndexCell entry={entry} className="pl-4" index={index + 1} />
+      ),
     },
     {
       name: 'Name',
+      headClassName: 'pl-8',
       minimalWidth: true,
       getValue: (project) =>
         project.slug !== 'ethereum' ? (
