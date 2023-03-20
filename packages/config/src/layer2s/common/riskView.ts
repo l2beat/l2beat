@@ -98,7 +98,7 @@ export const UPGRADABLE_YES: ProjectRiskViewEntry = {
 export const UPGRADABLE_ARBITRUM: ProjectRiskViewEntry = {
   value: '13d or no delay',
   description:
-    'There is a 13 days delay unless it is overriden by the 9/12 Security Council multisig.',
+    'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
   sentiment: 'warning',
 }
 
