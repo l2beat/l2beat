@@ -1,4 +1,6 @@
 import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
+import { config } from 'dotenv'
+import { string } from 'zod'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
@@ -33,11 +35,7 @@ export class StatusController {
     const projects = await getDiscoveryProjects()
 
     return renderDiscoveryDashboard({
-      projects: projects.map((p) => ({
-        name: p,
-        discoveredCount: 0,
-        initialAddressesCount: 0,
-      })),
+      projects,
       allProjects: this.projects.map((p) => p.projectId.toString()),
     })
   }

@@ -1,12 +1,15 @@
 import React from 'react'
 
-import { ContractConfig, Field } from '../../discovery/getDiscoveryConfig'
+import {
+  DashboardContract,
+  DashboardContractField,
+} from '../../discovery/getDiscoveryConfig'
 import { Page } from '../Page'
 import { reactToHtml } from '../reactToHtml'
 
 interface ConfigPageProps {
   project: string
-  config: ContractConfig[]
+  config: DashboardContract[]
 }
 
 export function ConfigPage(props: ConfigPageProps) {
@@ -21,7 +24,7 @@ export function ConfigPage(props: ConfigPageProps) {
             return (
               <React.Fragment key={index}>
                 <input type="radio" name="tabs" id={`tab-${index}`} />
-                <label style={{ color: 'FF5733' }} htmlFor={`tab-${index}`}>
+                <label style={{ color: '#FF5733' }} htmlFor={`tab-${index}`}>
                   {c.addresses[0].slice(0, 10)}
                 </label>
                 <div className="tab" key={index}>
@@ -109,7 +112,7 @@ function Section({
 }: {
   title: string
   color: string
-  fields: Field[]
+  fields: DashboardContractField[]
 }) {
   return (
     <details style={{ paddingLeft: '16px', color }} open>

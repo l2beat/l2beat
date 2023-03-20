@@ -3,14 +3,19 @@ import React from 'react'
 import { Page } from '../Page'
 import { reactToHtml } from '../reactToHtml'
 
-interface Project {
+export interface DashboardProject {
   name: string
   discoveredCount?: number
   initialAddressesCount?: number
+  watchedCount?: number
+  ignoredInWatchModeCount?: number
+  ignoredCount?: number
+  notHandledCount?: number
+  unverifiedCount?: number
 }
 
 interface DashboardPageProps {
-  projects: Project[]
+  projects: DashboardProject[]
   allProjects: string[]
 }
 
@@ -45,6 +50,11 @@ export function DashboardPage(props: DashboardPageProps) {
             <th>Project</th>
             <th>Discovered</th>
             <th>Initial</th>
+            <th>Watched</th>
+            <th>IgnoreInWatchmode</th>
+            <th>Ignored</th>
+            <th>Not handled</th>
+            <th>Unverified</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +77,23 @@ export function DashboardPage(props: DashboardPageProps) {
               <td>
                 {project.initialAddressesCount !== undefined &&
                   project.initialAddressesCount}
+              </td>
+              <td>
+                {project.watchedCount !== undefined && project.watchedCount}
+              </td>
+              <td>
+                {project.ignoredInWatchModeCount !== undefined &&
+                  project.ignoredInWatchModeCount}
+              </td>
+              <td>
+                {project.ignoredCount !== undefined && project.ignoredCount}
+              </td>
+              <td>
+                {project.notHandledCount !== undefined &&
+                  project.notHandledCount}
+              </td>
+              <td>
+                {(project.unverifiedCount ?? 0) > 0 && project.unverifiedCount}
               </td>
             </tr>
           ))}

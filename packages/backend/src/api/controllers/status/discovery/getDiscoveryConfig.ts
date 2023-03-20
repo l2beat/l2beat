@@ -8,18 +8,18 @@ import { isArray } from 'lodash'
 
 import { ConfigReader } from '../../../../core/discovery/ConfigReader'
 
-export interface Field {
+export interface DashboardContractField {
   name: string
   value?: string
 }
 
-export interface ContractConfig {
+export interface DashboardContract {
   name: string
   addresses: EthereumAddress[]
-  watched?: Field[]
-  ignoreInWatchMode?: Field[]
-  ignoreMethods?: Field[]
-  rest?: Field[]
+  watched?: DashboardContractField[]
+  ignoreInWatchMode?: DashboardContractField[]
+  ignoreMethods?: DashboardContractField[]
+  rest?: DashboardContractField[]
   overrides?: string[]
   isUnverified?: boolean
   proxyType?: string
@@ -28,7 +28,7 @@ export interface ContractConfig {
 
 export async function getDiscoveryConfig(
   project: string,
-): Promise<ContractConfig[]> {
+): Promise<DashboardContract[]> {
   const configReader = new ConfigReader()
   const discovery = await configReader.readDiscovery(project)
   const config = await configReader.readConfig(project)
@@ -43,7 +43,7 @@ export async function getDiscoveryConfig(
       }
     }
 
-    let ignoreInWatchMode: Field[] | undefined = undefined
+    let ignoreInWatchMode: DashboardContractField[] | undefined = undefined
     if (config.overrides?.[contract.address.toString()]) {
       const override = config.overrides[contract.address.toString()]
       if (override.ignoreInWatchMode) {
@@ -56,7 +56,7 @@ export async function getDiscoveryConfig(
       }
     }
 
-    let ignoreMethods: Field[] | undefined = undefined
+    let ignoreMethods: DashboardContractField[] | undefined = undefined
     if (config.overrides?.[contract.address.toString()]) {
       const override = config.overrides[contract.address.toString()]
       if (override.ignoreMethods) {
@@ -72,7 +72,7 @@ export async function getDiscoveryConfig(
       discovery.contracts.find((c) => c.address === contract.address)?.values ??
       undefined
 
-    let watched: Field[] | undefined = undefined
+    let watched: DashboardContractField[] | undefined = undefined
     if (values) {
       watched = Object.keys(values)
         .filter((key) => {
@@ -101,7 +101,7 @@ export async function getDiscoveryConfig(
 
     const functions = getFunctions(discovery, contract.address)
 
-    const rest: Field[] = []
+    const rest: DashboardContractField[] = []
     for (const fn of functions) {
       if (ignoreMethods?.map((i) => i.name).includes(fn.split('(')[0])) {
         const index = ignoreMethods.map((i) => i.name).indexOf(fn.split('(')[0])
@@ -160,6 +160,10 @@ function getFunctions(
 
   if (contract === undefined) {
     throw new Error(`Contract ${address.toString()} not found`)
+  }
+
+  if (contract.values === undefined) {
+    return []
   }
 
   const addresses = getAddresses(contract)
