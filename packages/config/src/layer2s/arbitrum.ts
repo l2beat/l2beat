@@ -430,17 +430,11 @@ export const arbitrum: Layer2 = {
         upgradeability: discovery.getContract('L1ERC20Gateway').upgradeability,
       },
       {
-        address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
+        address: discovery.getContract('L1CustomGateway').address,
         name: 'L1CustomGateway',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa'),
-          implementation: EthereumAddress(
-            '0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45',
-          ),
-        },
+        upgradeability: discovery.getContract('L1CustomGateway').upgradeability,
       },
       {
         address: EthereumAddress('0xD3B5b60020504bc3489D6949d545893982BA3011'),
