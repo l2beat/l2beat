@@ -10,12 +10,14 @@ import { isArray } from 'lodash'
 
 import { ConfigReader } from '../../../../../core/discovery/ConfigReader'
 
+export interface DashboardContractFieldValue {
+  value: ContractValue
+  discoveryChild?: string
+}
+
 export interface DashboardContractField {
   name: string
-  values?: {
-    value: ContractValue
-    discoveryChild?: string
-  }[]
+  values?: DashboardContractFieldValue[]
 }
 
 export interface DashboardContract {
@@ -30,7 +32,7 @@ export interface DashboardContract {
   isUnverified?: boolean
   proxyType?: string
   isInitial?: boolean
-  discoveredBy?: {
+  discoveredBy: {
     address: string
     name: string
   }[]

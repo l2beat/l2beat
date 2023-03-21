@@ -2,11 +2,11 @@ import { default as React } from 'react'
 
 import { DashboardContract } from '../../props/getProjectContracts'
 import { DASHBOARD_COLORS } from '../constants'
+import { ContractName } from './ContractName'
 
 interface TabProps {
   contract: DashboardContract
   tabIndex: number
-  textColor?: string
 }
 
 export function Tab(props: TabProps) {
@@ -24,12 +24,12 @@ export function Tab(props: TabProps) {
         style={{
           color: props.contract.isInitial
             ? DASHBOARD_COLORS.INITIAL
-            : props.textColor ?? '',
+            : props.contract.isUnverified
+            ? DASHBOARD_COLORS.UNVERIFIED
+            : '',
         }}
       >
-        {props.contract.name
-          ? props.contract.name
-          : props.contract.address.slice(0, 10)}
+        <ContractName contract={props.contract} />
       </label>
     </React.Fragment>
   )

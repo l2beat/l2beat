@@ -12,11 +12,7 @@ interface UnverifiedContractProps {
 export function UnverifiedContract(props: UnverifiedContractProps) {
   return (
     <React.Fragment>
-      <Tab
-        contract={props.contract}
-        tabIndex={props.tabIndex}
-        textColor={'#FF5733'}
-      />
+      <Tab contract={props.contract} tabIndex={props.tabIndex} />
       <div className="tab">
         <Header contract={props.contract} />
         <div className="card warn">

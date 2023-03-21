@@ -30,7 +30,11 @@ export function ProxyIndicator({ type }: { type?: string }) {
     return null
   }
   return (
-    <Indicator text={type} color="white" background={DASHBOARD_COLORS.PROXY} />
+    <Indicator
+      text={type}
+      color="white"
+      background={DASHBOARD_COLORS.PROXY_BACKGROUND}
+    />
   )
 }
 

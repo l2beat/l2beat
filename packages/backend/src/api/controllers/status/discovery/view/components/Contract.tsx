@@ -15,7 +15,7 @@ export function Contract(props: ContractProps) {
   return (
     <React.Fragment>
       <Tab contract={props.contract} tabIndex={props.tabIndex} />
-      <div className="tab" id={props.contract.address.toString()}>
+      <div className="tab">
         <Header contract={props.contract} />
         {props.contract.watched && (
           <Section

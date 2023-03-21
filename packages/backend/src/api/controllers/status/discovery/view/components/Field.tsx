@@ -1,6 +1,10 @@
+import { isArray } from 'lodash'
 import { default as React } from 'react'
 
-import { DashboardContractField } from '../../props/getProjectContracts'
+import {
+  DashboardContractField,
+  DashboardContractFieldValue,
+} from '../../props/getProjectContracts'
 import { Value } from './Value'
 
 interface FieldProps {
@@ -9,22 +13,13 @@ interface FieldProps {
 }
 
 export function Field(props: FieldProps) {
-  if (props.field.values === undefined) {
-    return (
-      <p
-        style={{
-          color: props.color,
-          marginLeft: '8px',
-          marginTop: '2px',
-          marginBottom: '2px',
-        }}
-      >
-        {props.field.name}
-      </p>
-    )
-  }
+  if (!props.field.values || props.field.values.length < 2) {
+    const value: DashboardContractFieldValue | undefined = props.field.values
+      ? props.field.values.length === 0
+        ? { value: '[ ]' }
+        : props.field.values[0]
+      : undefined
 
-  if (props.field.values.length === 0) {
     return (
       <p
         style={{
@@ -35,27 +30,7 @@ export function Field(props: FieldProps) {
         }}
       >
         {props.field.name}
-        <Value value={'[ ]'} />
-      </p>
-    )
-  }
-
-  if (props.field.values.length === 1) {
-    return (
-      <p
-        style={{
-          color: props.color,
-          marginLeft: '14px',
-          marginTop: '2px',
-          marginBottom: '2px',
-        }}
-      >
-        {props.field.name}
-        <Value
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string
-          value={props.field.values[0].value.toString()}
-          discoveryChild={props.field.values[0].discoveryChild}
-        />
+        {value && <Value value={value} />}
       </p>
     )
   }
@@ -63,10 +38,10 @@ export function Field(props: FieldProps) {
   return (
     <details
       style={{
+        color: props.color,
         padding: '0px',
         marginTop: '2px',
         marginBottom: '2px',
-        color: props.color,
       }}
     >
       <summary style={{ color: 'inherit', boxShadow: 'none' }}>
@@ -83,11 +58,7 @@ export function Field(props: FieldProps) {
               marginBottom: '2px',
             }}
           >
-            <Value
-              // eslint-disable-next-line @typescript-eslint/no-base-to-string
-              value={element.value.toString()}
-              discoveryChild={element.discoveryChild}
-            />
+            <Value value={element} />
           </p>
         ))}
       </p>

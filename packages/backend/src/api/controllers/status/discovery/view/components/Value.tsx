@@ -1,19 +1,30 @@
+import { isArray } from 'lodash'
 import { default as React } from 'react'
 
+import { DashboardContractFieldValue } from '../../props/getProjectContracts'
+
 interface ValueProps {
-  value: string
-  discoveryChild?: string
+  value?: DashboardContractFieldValue
 }
 
 export function Value(props: ValueProps) {
-  if (props.discoveryChild) {
+  if (props.value === undefined) {
+    return null
+  }
+
+  if (props.value.discoveryChild) {
     return (
       <span
         dangerouslySetInnerHTML={{
-          __html: `<span style="cursor:pointer; color: #85C1E9" onclick="document.getElementById('${props.discoveryChild}').click()"> ${props.value} ⬇️</span>`,
+          __html: `<span style="cursor:pointer; color: #85C1E9" onclick="document.getElementById('${
+            props.value.discoveryChild
+          }').click()"> ${props.value.value.toString()} ⬇️</span>`,
         }}
       />
     )
   }
-  return <span style={{ color: '#939292' }}> {props.value}</span>
+
+  return (
+    <span style={{ color: '#939292' }}> {props.value.value.toString()}</span>
+  )
 }

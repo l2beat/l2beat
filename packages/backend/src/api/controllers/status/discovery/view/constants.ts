@@ -7,4 +7,5 @@ export const DASHBOARD_COLORS = {
   UNVERIFIED: '#F50404',
   DISCOVERED: '#5DADE2',
   PROXY: '#f7237c',
+  PROXY_BACKGROUND: '#8f0d43',
 }
