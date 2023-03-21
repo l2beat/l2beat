@@ -343,7 +343,9 @@ function getUpgradeability(
         name: key,
         values: [
           {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             value: value.toString(),
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             discoveryChild: getDiscoveryChild(discovery, contract, value),
           },
         ],
@@ -352,7 +354,9 @@ function getUpgradeability(
       result.push({
         name: key,
         values: value.map((v) => ({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           value: v,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           discoveryChild: getDiscoveryChild(discovery, contract, v),
         })),
       })

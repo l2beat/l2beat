@@ -1,4 +1,3 @@
-import { ProjectParameters } from '@l2beat/shared'
 import { default as React } from 'react'
 
 import {
@@ -12,7 +11,6 @@ import { DASHBOARD_COLORS } from './types'
 interface ConfigPageProps {
   project: string
   config: DashboardContract[]
-  discovery: ProjectParameters
 }
 
 export function ConfigPage(props: ConfigPageProps) {
@@ -132,7 +130,9 @@ function Header({ c }: { c: DashboardContract }) {
         <ProxyIndicator type={c.proxyType} />
       </h4>
       <p>
-        <a href={`https://etherscan.io/address/${c.address}`}>{c.address}</a>
+        <a href={`https://etherscan.io/address/${c.address.toString()}`}>
+          {c.address}
+        </a>
       </p>
       {c.upgradeability.length > 0 && (
         <blockquote>
@@ -274,6 +274,7 @@ function Field({
       >
         {field.name}
         <Value
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
           value={field.values[0].value.toString()}
           discoveryChild={field.values[0].discoveryChild}
         />
@@ -300,6 +301,7 @@ function Field({
             }}
           >
             <Value
+              // eslint-disable-next-line @typescript-eslint/no-base-to-string
               value={element.value.toString()}
               discoveryChild={element.discoveryChild}
             />
