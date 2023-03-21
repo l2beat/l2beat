@@ -1,16 +1,16 @@
-import { Layer2Rating } from '@l2beat/config'
+import { Layer2Maturity } from '@l2beat/config'
 import React, { useEffect, useRef } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
-import { RatingTooltipPopup } from './TooltipPopup'
+import { MaturityTooltipPopup } from './TooltipPopup'
 
 export default {
   title: 'Components/Tooltip',
 }
 
-export function RatingTooltip() {
+export function MaturityTooltip() {
   const tooltipRef = useRef<HTMLSpanElement>(null)
   useEffect(() => {
     configureTooltips()
@@ -21,7 +21,7 @@ export function RatingTooltip() {
     tooltipRef.current?.replaceWith(tooltipRef.current.cloneNode(true))
   }, [])
 
-  const item: Layer2Rating = {
+  const item: Layer2Maturity = {
     category: {
       score: 'B',
       requirements: ['There is an existing fraud proof system'],
@@ -41,7 +41,7 @@ export function RatingTooltip() {
       <span
         ref={tooltipRef}
         className="Tooltip inline-block"
-        title={renderToStaticMarkup(<RatingTooltipPopup item={item} />)}
+        title={renderToStaticMarkup(<MaturityTooltipPopup item={item} />)}
         data-tooltip-big
       >
         <span>Element with tooltip</span>

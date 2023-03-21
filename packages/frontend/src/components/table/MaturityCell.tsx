@@ -1,11 +1,11 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { RatingBadge } from '../rating/Badge'
-import { RatingProps, RatingTooltipPopup } from '../rating/TooltipPopup'
+import { MaturityBadge } from '../maturity/Badge'
+import { MaturityProps, MaturityTooltipPopup } from '../maturity/TooltipPopup'
 import { NoInfoCell } from './NoInfoCell'
 
-export function RatingCell({ item }: RatingProps) {
+export function MaturityCell({ item }: MaturityProps) {
   if (!item) {
     return <NoInfoCell />
   }
@@ -13,10 +13,10 @@ export function RatingCell({ item }: RatingProps) {
   return (
     <div
       className="Tooltip"
-      title={renderToStaticMarkup(<RatingTooltipPopup item={item} />)}
+      title={renderToStaticMarkup(<MaturityTooltipPopup item={item} />)}
       data-tooltip-big
     >
-      <RatingBadge
+      <MaturityBadge
         category={item.category.score}
         modifier={item.modifier?.score}
       />
