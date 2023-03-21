@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16869389,
+  "blockNumber": 16875982,
   "configHash": "0xbefb2d704f40d18169c8d4914926083399edef7ef8665eee926ef1df5b54d14f",
   "contracts": [
     {
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3844,
+        "firstUnresolvedNode": 3866,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 3843,
-        "latestNodeCreated": 3996,
+        "latestConfirmed": 3865,
+        "latestNodeCreated": 4019,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -91,13 +91,18 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 106485,
+        "batchCount": 107946,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
-        "maxTimeVariation": [5760, 12, 86400, 3600],
+        "maxTimeVariation": [
+          5760,
+          12,
+          86400,
+          3600
+        ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 644486
+        "totalDelayedMessagesRead": 650205
       }
     },
     {
@@ -142,7 +147,9 @@
           },
           "ADMIN_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
+            "members": [
+              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+            ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
@@ -338,11 +345,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 644539,
+        "delayedMessageCount": 650295,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 106485,
-        "sequencerReportedSubMessageCount": 49588931
+        "sequencerMessageCount": 107946,
+        "sequencerReportedSubMessageCount": 49908585
       }
     },
     {
@@ -492,7 +499,6 @@
   "eoas": [
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
     "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-    "0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
     "0x3fE38087A94903A9D946fa1915e1772fe611000f",
     "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
     "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
