@@ -141,7 +141,7 @@ function Header({ c }: { c: DashboardContract }) {
         <blockquote>
           Discovered by:
           {c.discoveredBy?.map((d, index) => (
-            <ContractHref key={index} address={d} />
+            <ContractHref key={index} address={d.address} name={d.name} />
           ))}
         </blockquote>
       )}
@@ -149,11 +149,11 @@ function Header({ c }: { c: DashboardContract }) {
   )
 }
 
-function ContractHref(props: { address: string }) {
+function ContractHref(props: { address: string; name: string }) {
   return (
     <p
       dangerouslySetInnerHTML={{
-        __html: `<span style="cursor:pointer; color: #85C1E9" onclick="document.getElementById('${props.address}').click()">⬆️ ${props.address}</span>`,
+        __html: `<span style="cursor:pointer; color: #85C1E9" onclick="document.getElementById('${props.address}').click()">⬆️ ${props.name}</span>`,
       }}
     />
   )

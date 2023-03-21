@@ -24,7 +24,10 @@ export interface DashboardContract {
   isUnverified?: boolean
   proxyType?: string
   isInitial?: boolean
-  discoveredBy?: string[]
+  discoveredBy?: {
+    address: string
+    name: string
+  }[]
 }
 
 export async function getDiscoveryConfig(
@@ -35,7 +38,10 @@ export async function getDiscoveryConfig(
   const config = await configReader.readConfig(project)
 
   const result = discovery.contracts.map((contract) => {
-    const discoveredBy: string[] = []
+    const discoveredBy: {
+      name: string
+      address: string
+    }[] = []
     for (const discoveredContract of discovery.contracts) {
       if (config.initialAddresses.includes(contract.address)) {
         continue
@@ -46,7 +52,10 @@ export async function getDiscoveryConfig(
       if (
         JSON.stringify(discoveredFields).includes(contract.address.toString())
       ) {
-        discoveredBy.push(discoveredContract.address.toString())
+        discoveredBy.push({
+          address: discoveredContract.address.toString(),
+          name: discoveredContract.name,
+        })
       }
     }
 
