@@ -1,16 +1,20 @@
-import { RatingCategory, RatingModifier } from '@l2beat/config'
+import { MaturityCategory, MaturityModifier } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
 import { Badge } from '../badge/Badge'
 
-interface RatingBadgeProps {
-  category: RatingCategory
-  modifier?: RatingModifier
+interface MaturityBadgeProps {
+  category: MaturityCategory
+  modifier?: MaturityModifier
   small?: boolean
 }
 
-export function RatingBadge({ category, modifier, small }: RatingBadgeProps) {
+export function MaturityBadge({
+  category,
+  modifier,
+  small,
+}: MaturityBadgeProps) {
   return (
     <Badge
       className={cx(
@@ -26,14 +30,14 @@ export function RatingBadge({ category, modifier, small }: RatingBadgeProps) {
   )
 }
 
-function getColorClassName(rating: RatingCategory): string {
-  switch (rating) {
+function getColorClassName(maturity: MaturityCategory): string {
+  switch (maturity) {
     case 'A':
       return 'bg-green-500 text-black'
     case 'B':
       return 'bg-yellow-100 text-black'
     case 'C':
-      return 'bg-orange text-black'
+      return 'bg-orange-500 text-black'
     case 'D':
       return 'bg-red-400 text-white'
     case '-':

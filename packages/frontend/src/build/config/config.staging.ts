@@ -6,7 +6,7 @@ export function getStagingConfig(): Config {
     ...common,
     features: {
       ...common.features,
-      rating: false,
+      maturity: false,
       buildAllProjectPages: true,
       upcomingRollups: true,
     },

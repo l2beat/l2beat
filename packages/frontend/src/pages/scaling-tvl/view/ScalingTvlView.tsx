@@ -1,33 +1,33 @@
-import { Layer2, Layer2Rating } from '@l2beat/config'
+import { Layer2, Layer2Maturity } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ScalingTableFilters } from '../../../components/table/filters/ScalingTableFilters'
 import { IndexCell } from '../../../components/table/IndexCell'
+import { MaturityCell } from '../../../components/table/MaturityCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
-import { RatingCell } from '../../../components/table/RatingCell'
+import { RosetteCell } from '../../../components/table/RosetteCell'
 import {
   ColumnConfig,
   RowConfig,
   TableView,
 } from '../../../components/table/TableView'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
-import {
-  TVLBreakdown,
-  TVLBreakdownProps,
-} from '../../../components/TVLBreakdown'
+import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
+import { RiskValues } from '../../../utils/risks/types'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
-  ratingEnabled: boolean
+  maturityEnabled: boolean
   upcomingEnabled?: boolean
 }
 
 export interface ScalingTvlViewEntry {
   name: string
   slug: string
+  riskValues: RiskValues
   provider?: Layer2['technology']['provider']
   warning?: string
   isArchived?: boolean
@@ -40,80 +40,35 @@ export interface ScalingTvlViewEntry {
   marketShare?: string
   purpose: string
   technology: string
-  ratingEntry?: Layer2Rating
+  maturityEntry?: Layer2Maturity
 }
 
 export function ScalingTvlView({
   items,
-  ratingEnabled,
+  maturityEnabled,
   upcomingEnabled,
 }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
-      minimalWidth: true,
       alignCenter: true,
-      getValue: (entry, index) => {
-        return <IndexCell entry={entry} index={index + 1} />
-      },
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (entry, index) => (
+        <IndexCell entry={entry} className="md:pl-4" index={index + 1} />
+      ),
     },
     {
       name: 'Name',
+      headClassName: 'pl-8',
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
-      name: 'TVL',
-      tooltip: 'Total value locked in escrow contracts on Ethereum.',
-      alignRight: true,
-      getValue: (project) =>
-        !project.isUpcoming &&
-        project.tvlBreakdown && <NumberCell>{project.tvl}</NumberCell>,
-    },
-    {
-      name: '7d Change',
-      tooltip: 'Change in the total value locked as compared to a week ago.',
-      alignRight: true,
-      getValue: (project) =>
-        !project.isArchived &&
-        !project.isUpcoming &&
-        project.tvlBreakdown && (
-          <NumberCell signed>{project.sevenDayChange}</NumberCell>
-        ),
-    },
-    ...(ratingEnabled
-      ? [
-          {
-            name: 'Rating',
-            tooltip: 'Rating of this Layer 2 based on its features.',
-            alignCenter: true as const,
-            getValue: (project: ScalingTvlViewEntry) =>
-              !project.isArchived &&
-              !project.isUpcoming && <RatingCell item={project.ratingEntry} />,
-          },
-        ]
-      : []),
-    {
-      name: 'Breakdown',
-      tooltip:
-        'Composition of the total value locked broken down by token type.',
-      getValue: (project) =>
-        !project.isArchived &&
-        !project.isUpcoming &&
-        project.tvlBreakdown && <TVLBreakdown {...project.tvlBreakdown} />,
-    },
-    {
-      name: 'Mkt share',
-      tooltip: 'Share of the sum of total value locked of all projects.',
-      alignRight: true,
-      getValue: (project) =>
-        !project.isArchived &&
-        !project.isUpcoming &&
-        project.tvlBreakdown && <NumberCell>{project.marketShare}</NumberCell>,
-    },
-    {
-      name: 'Purpose',
-      tooltip: 'Functionality supported by this Layer 2.',
-      getValue: (project) => project.purpose,
+      name: 'Risks',
+      tooltip: 'Risks associated with this project.',
+      minimalWidth: true,
+      alignCenter: true,
+      getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
     },
     {
       name: 'Technology',
@@ -121,8 +76,65 @@ export function ScalingTvlView({
         'Type of this Layer 2. Determines data availability and proof system used.',
       shortName: 'Tech',
       getValue: (project) => (
-        <TechnologyCell>{project.technology}</TechnologyCell>
+        <TechnologyCell provider={project.provider}>
+          {project.technology}
+        </TechnologyCell>
       ),
+    },
+    ...(maturityEnabled
+      ? [
+          {
+            name: 'Maturity',
+            tooltip: 'Maturity of this Layer 2 based on its features.',
+            alignCenter: true as const,
+            getValue: (project: ScalingTvlViewEntry) =>
+              !project.isArchived &&
+              !project.isUpcoming && (
+                <MaturityCell item={project.maturityEntry} />
+              ),
+          },
+        ]
+      : []),
+    {
+      name: 'Purpose',
+      tooltip: 'Functionality supported by this Layer 2.',
+      getValue: (project) => project.purpose,
+    },
+    {
+      name: 'TVL',
+      tooltip: 'Total value locked in escrow contracts on Ethereum.',
+      alignRight: true,
+      noPaddingRight: true,
+      headClassName: '-translate-x-[72px]',
+      getValue: (project) =>
+        !project.isUpcoming && (
+          <>
+            <NumberCell className="font-bold">{project.tvl}</NumberCell>
+            {!project.isArchived ? (
+              <NumberCell
+                signed
+                className="ml-1 w-[72px] !text-base font-medium "
+              >
+                {project.sevenDayChange}
+              </NumberCell>
+            ) : (
+              <span className="w-[72px]" />
+            )}
+          </>
+        ),
+    },
+    {
+      name: 'Mkt share',
+      tooltip: 'Share of the sum of total value locked of all projects.',
+      alignRight: true,
+      minimalWidth: true,
+      headClassName: 'pr-4',
+      getValue: (project) =>
+        !project.isArchived &&
+        !project.isUpcoming &&
+        project.tvlBreakdown && (
+          <NumberCell className="pr-4">{project.marketShare}</NumberCell>
+        ),
     },
   ]
 
@@ -134,7 +146,7 @@ export function ScalingTvlView({
     <section className="mt-4 sm:mt-8">
       <ScalingTableFilters className="mb-4" upcomingEnabled={upcomingEnabled} />
       <TableView items={items} columns={columns} rows={rows} />
-      <ScalingLegend showTokenWarnings />
+      <ScalingLegend />
     </section>
   )
 }

@@ -23,7 +23,6 @@ export function getProps(
     props: {
       navbar: getNavbarProps(config, 'bridges'),
       header: getHeader(bridge, tvlApiResponse),
-      showProjectHeader: config.features.activity,
       projectHeader: getProjectHeader(bridge, tvlApiResponse),
       chart,
       projectDetails: getProjectDetails(bridge, verificationStatus),

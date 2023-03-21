@@ -1,13 +1,18 @@
-import { Layer2Rating } from '@l2beat/config'
+import { Layer2Maturity } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { DetailsHeader } from '../../../components/header/DetailsHeader'
+import { DetailsHeader, Link } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { RatingBadge } from '../../../components/rating/Badge'
-import { RatingTooltipPopup } from '../../../components/rating/TooltipPopup'
+import { MaturityBadge } from '../../../components/maturity/Badge'
+import { MaturityTooltipPopup } from '../../../components/maturity/TooltipPopup'
 import { NoDataCell } from '../../../components/table/NoDataCell'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
+import {
+  TVLBreakdown,
+  TVLBreakdownProps,
+} from '../../../components/TVLBreakdown'
+import { RiskValues } from '../../../utils/risks/types'
 
 export interface ProjectHeaderProps {
   title: string
@@ -21,7 +26,10 @@ export interface ProjectHeaderProps {
   transactionMonthlyCount?: string
   purpose: string
   technology: string
-  ratingEntry?: false | Layer2Rating
+  tvlBreakdown: TVLBreakdownProps
+  risks: RiskValues
+  links: Link[]
+  maturityEntry?: false | Layer2Maturity
   isArchived?: boolean
   isUpcoming?: boolean
 }
@@ -41,27 +49,14 @@ export function ProjectHeader(props: ProjectHeaderProps) {
           <NoDataCell />
         ),
     },
-    ...(props.ratingEntry
-      ? [
-          {
-            title: 'Rating',
-            value: (
-              <span
-                className="Tooltip"
-                title={renderToStaticMarkup(
-                  <RatingTooltipPopup item={props.ratingEntry} />,
-                )}
-              >
-                <RatingBadge
-                  category={props.ratingEntry.category.score}
-                  modifier={props.ratingEntry.modifier?.score}
-                  small
-                />
-              </span>
-            ),
-          },
-        ]
-      : []),
+    {
+      title: 'Breakdown',
+      value: !props.isUpcoming ? (
+        <TVLBreakdown {...props.tvlBreakdown} />
+      ) : (
+        <NoDataCell />
+      ),
+    },
     {
       title: 'Daily TPS',
       value:
@@ -78,13 +73,34 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: '30D tx count',
       value: props.transactionMonthlyCount ?? <NoDataCell />,
     },
-    {
-      title: 'Purpose',
-      value: props.purpose,
-    },
+    ...(props.maturityEntry
+      ? [
+          {
+            title: 'Maturity',
+            value: (
+              <span
+                className="Tooltip"
+                title={renderToStaticMarkup(
+                  <MaturityTooltipPopup item={props.maturityEntry} />,
+                )}
+              >
+                <MaturityBadge
+                  category={props.maturityEntry.category.score}
+                  modifier={props.maturityEntry.modifier?.score}
+                  small
+                />
+              </span>
+            ),
+          },
+        ]
+      : []),
     {
       title: 'Technology',
       value: <TechnologyCell>{props.technology}</TechnologyCell>,
+    },
+    {
+      title: 'Purpose',
+      value: props.purpose,
     },
   ]
 
@@ -93,8 +109,11 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title={props.title}
       icon={props.icon}
       stats={stats}
+      risks={props.risks}
+      links={props.links}
       isUpcoming={props.isUpcoming}
       isArchived={props.isArchived}
+      isSummary
     />
   )
 }

@@ -12,6 +12,7 @@ import {
   RISK_VIEW,
 } from './common'
 import { ProjectDiscovery } from './common/ProjectDiscovery'
+import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')
@@ -22,6 +23,8 @@ export const nova: Layer2 = {
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
+    warning:
+      'The DAO is not yet deployed, so all the upgrade power lays in the hands of the Security Council.',
     description:
       'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
     purpose: 'Universal',
@@ -82,7 +85,7 @@ export const nova: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: {
       value: 'Propose blocks',
@@ -184,14 +187,34 @@ export const nova: Layer2 = {
         },
       ],
     },
+    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO,
   },
   contracts: {
     addresses: [
       {
-        name: 'ProxyAdmin',
-        address: discovery.getContract('ProxyAdmin').address,
+        name: 'ProxyAdmin (1)',
+        address: EthereumAddress('0x71D78dC7cCC0e037e12de1E50f5470903ce37148'),
         description:
-          'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by a 4-of-6 multisig.',
+          'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by the Upgrade Executor.',
+      },
+      {
+        address: discovery.getContract('UpgradeExecutor').address,
+        name: 'UpgradeExecutor',
+        description:
+          "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+        upgradeability: discovery.getContract('UpgradeExecutor').upgradeability,
+      },
+      {
+        address: EthereumAddress('0x5613AF0474EB9c528A34701A5b1662E3C8FA0678'),
+        name: 'ProxyAdmin (2)',
+        description:
+          'This contract is an admin of the Update Executor contract, but is also owned by it.',
+      },
+      {
+        address: discovery.getContract('L1ArbitrumTimelock').address,
+        name: 'L1ArbitrumTimelock',
+        description:
+          'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       },
       {
         address: discovery.getContract('ArbitrumProxy').address,
@@ -211,7 +234,7 @@ export const nova: Layer2 = {
         address: discovery.getContract('Inbox').address,
         name: 'Inbox',
         description:
-          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
+          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
         upgradeability: discovery.getContract('Inbox').upgradeability,
       },
       {
@@ -242,47 +265,29 @@ export const nova: Layer2 = {
       },
       {
         address: EthereumAddress('0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560'),
-        name: 'ProxyAdmin (2)',
+        name: 'ProxyAdmin (3)',
         description:
-          'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig.',
+          'Yet another proxy admin for the three gateway contracts below. It is also owned by the Upgrade Executor.',
       },
       {
-        address: EthereumAddress('0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48'),
+        address: discovery.getContract('L1GatewayRouter').address,
         name: 'L1GatewayRouter',
         description: 'Router managing token <--> gateway mapping.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560'),
-          implementation: EthereumAddress(
-            '0x52595021fA01B3E14EC6C88953AFc8E35dFf423c',
-          ),
-        },
+        upgradeability: discovery.getContract('L1GatewayRouter').upgradeability,
       },
       {
-        address: EthereumAddress('0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf'),
+        address: discovery.getContract('L1ERC20Gateway').address,
         name: 'L1ERC20Gateway',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560'),
-          implementation: EthereumAddress(
-            '0xb4299A1F5f26fF6a98B7BA35572290C359fde900',
-          ),
-        },
+        upgradeability: discovery.getContract('L1ERC20Gateway').upgradeability,
       },
       {
-        address: EthereumAddress('0x23122da8C581AA7E0d07A36Ff1f16F799650232f'),
+        address: discovery.getContract('L1CustomGateway').address,
         name: 'L1CustomGateway',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560'),
-          implementation: EthereumAddress(
-            '0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45',
-          ),
-        },
+        upgradeability: discovery.getContract('L1CustomGateway').upgradeability,
       },
       {
         address: EthereumAddress('0x97f63339374fCe157Aa8Ee27830172d2AF76A786'),

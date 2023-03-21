@@ -150,46 +150,13 @@ export const apex: Layer2 = {
     },
     {
       name: 'Data Availability Committee',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x81165b6504520416487E5b4935865b4D3eeaa6e5',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xB0d71Ff040A941bB9CA8453044634EebCE5A053D',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x696cC7615A50CF12d1d1B38bF18A5606e9708296',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'Validity proof must be signed by at least 3 of these addresses to approve state update.',
+      accounts: discovery
+        .getConstructorArg<string[]>('Committee', 0)
+        .map((a) => ({ address: EthereumAddress(a), type: 'EOA' })),
+      description: `Validity proof must be signed by at least ${discovery.getConstructorArg<string>(
+        'Committee',
+        1,
+      )} of these addresses to approve state update.`,
     },
     {
       name: 'SHARP Verifier Governor',

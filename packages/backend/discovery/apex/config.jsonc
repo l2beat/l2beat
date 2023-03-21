@@ -3,6 +3,13 @@
   "name": "apex",
   "initialAddresses": ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"],
   "overrides": {
+    "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
     "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb": {
       "ignoreMethods": [
         "configurationHash",

@@ -20,12 +20,34 @@ export function TvlView() {
     <>
       <PageContent>
         <ScalingTvlView
-          ratingEnabled={true}
+          maturityEnabled={true}
           items={[
             {
               name: 'Forktimism',
               provider: 'Optimism',
               slug: 'optimism',
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
               tvl: formatLargeNumber(2_740_000_000),
               tvlBreakdown: {
                 warning: 'Some random warning',
@@ -43,7 +65,7 @@ export function TvlView() {
               purpose: 'Universal',
               technology: 'Optimistic Rollup',
               isVerified: false,
-              ratingEntry: {
+              maturityEntry: {
                 category: {
                   score: 'B',
                   requirements: ['There is an existing fraud proof system'],
@@ -62,6 +84,28 @@ export function TvlView() {
               name: 'Arbitrage',
               slug: 'arbitrum',
               tvl: formatLargeNumber(2_740_000_000),
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
               tvlBreakdown: {
                 warning: 'Some random warning',
                 warningSeverity: 'warning',
@@ -84,6 +128,28 @@ export function TvlView() {
               provider: 'StarkEx',
               slug: 'starknet',
               tvl: formatLargeNumber(2_740_000_000),
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
               tvlBreakdown: {
                 warning: 'Some random warning',
                 warningSeverity: 'warning',
@@ -106,6 +172,28 @@ export function TvlView() {
               provider: 'zkSync',
               slug: 'zksync-lite',
               tvl: formatLargeNumber(2_740_000_000),
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
               tvlBreakdown: {
                 warning: 'Some random warning',
                 warningSeverity: 'warning',
@@ -128,6 +216,28 @@ export function TvlView() {
               provider: 'StarkEx',
               slug: 'layer2financezk',
               tvl: formatLargeNumber(2_740_000_000),
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
               tvlBreakdown: {
                 warning: 'Some random warning',
                 warningSeverity: 'warning',
