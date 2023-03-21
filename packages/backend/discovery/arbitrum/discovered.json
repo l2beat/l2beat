@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16863353,
+  "blockNumber": 16874885,
   "configHash": "0x2e39ab092487f1ad16d7e34dd6cd51dd411bec1dd5ed1c07f217251bdb1165be",
   "contracts": [
     {
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3823,
+        "firstUnresolvedNode": 3862,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 3822,
-        "latestNodeCreated": 3976,
+        "latestConfirmed": 3861,
+        "latestNodeCreated": 4015,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -58,7 +58,7 @@
         "type": "immutable"
       },
       "values": {
-        "owner": "0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
+        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "template": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"
       }
     },
@@ -91,7 +91,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 105295,
+        "batchCount": 107626,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -102,7 +102,7 @@
           3600
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 639433
+        "totalDelayedMessagesRead": 649114
       }
     },
     {
@@ -346,11 +346,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 639525,
+        "delayedMessageCount": 649201,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 105295,
-        "sequencerReportedSubMessageCount": 49297564
+        "sequencerMessageCount": 107626,
+        "sequencerReportedSubMessageCount": 49854455
       }
     },
     {
@@ -487,7 +487,6 @@
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
     "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
     "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-    "0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
     "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
     "0x3fE38087A94903A9D946fa1915e1772fe611000f",
     "0x475816ca2a31D601B4e336f5c2418A67978aBf09",

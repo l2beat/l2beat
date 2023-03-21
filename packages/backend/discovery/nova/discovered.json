@@ -1,6 +1,6 @@
 {
   "name": "nova",
-  "blockNumber": 16869339,
+  "blockNumber": 16874841,
   "configHash": "0xb67ee169298679c0c91eec83372b7ea4f29641a3b1657f4c8a926fb20176e7e8",
   "contracts": [
     {
@@ -162,7 +162,7 @@
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
       "values": {
-        "batchCount": 10922,
+        "batchCount": 10959,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -173,7 +173,7 @@
           3600
         ],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 158052
+        "totalDelayedMessagesRead": 158823
       }
     },
     {
@@ -194,11 +194,11 @@
         "allowedOutboxList": [
           "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
         ],
-        "delayedMessageCount": 158086,
+        "delayedMessageCount": 158850,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 10922,
-        "sequencerReportedSubMessageCount": 3268204
+        "sequencerMessageCount": 10959,
+        "sequencerReportedSubMessageCount": 3300768
       }
     },
     {
@@ -290,12 +290,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 6097,
+        "firstUnresolvedNode": 6116,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 15184042,
-        "latestConfirmed": 6096,
-        "latestNodeCreated": 6250,
+        "latestConfirmed": 6115,
+        "latestNodeCreated": 6268,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -327,7 +327,7 @@
         "type": "immutable"
       },
       "values": {
-        "owner": "0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB",
+        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "template": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"
       }
     },
@@ -423,7 +423,6 @@
     "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
     "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
     "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
-    "0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB",
     "0x8688515028955734350067695939423222009623",
     "0x88910996671162953E89DdcE5C8137f9077da217",
     "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
