@@ -22,7 +22,7 @@ export function ConfigPage(props: ConfigPageProps) {
       <div className="tabs" style={{ marginTop: '8px' }}>
         {props.config.map((c, index) => {
           if (c.isUnverified) {
-            return <UnverifiedContract c={c} index={index} />
+            return <UnverifiedContract c={c} index={index} key={index} />
           }
           return (
             <React.Fragment key={index}>
@@ -78,13 +78,16 @@ function UnverifiedContract({
   index: number
 }) {
   return (
-    <React.Fragment key={index}>
+    <React.Fragment>
       <Tab c={c} index={index} textColor={'#FF5733'} />
-      <div className="tab" key={index}>
+      <div className="tab">
         <Header c={c} />
         <div className="card warn">
-          <p>!!! UNVERIFIED CONTRACT !!!</p>
-          <p>This contract does not have a verified source code on Etherscan</p>
+          <p>
+            !!! UNVERIFIED CONTRACT !!!
+            <br />
+            This contract does not have a verified source code on Etherscan
+          </p>
         </div>
       </div>
     </React.Fragment>
@@ -174,7 +177,7 @@ function Section({
   fields: DashboardContractField[]
 }) {
   return (
-    <details style={{ padding: '16px', color }} open>
+    <details style={{ color }} open>
       <summary style={{ color: 'inherit' }}>{title}</summary>
       <p style={{ margin: '0px' }}>
         {fields.map((field, index) => (
