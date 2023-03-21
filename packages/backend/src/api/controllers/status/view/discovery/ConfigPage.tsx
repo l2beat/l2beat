@@ -171,7 +171,7 @@ function Section({
   fields: DashboardContractField[]
 }) {
   return (
-    <details style={{ paddingLeft: '16px', color }} open>
+    <details style={{ padding: '16px', color }} open>
       <summary style={{ color: 'inherit' }}>{title}</summary>
       <p style={{ margin: '0px' }}>
         {fields.map((field, index) => (
@@ -236,11 +236,13 @@ function Field({
   name: string
   color: string
 }) {
-  if (value === undefined) return null
+  if (value === undefined) {
+    return <span style={{ color, marginLeft: '8px' }}>{name}</span>
+  }
 
   if (isArray(value)) {
     return (
-      <details style={{ paddingLeft: '16px', color }}>
+      <details style={{ padding: '0px', margin: '0px', color }}>
         <summary style={{ color: 'inherit' }}>
           {name}
           {' (array)'}
@@ -252,6 +254,7 @@ function Field({
               style={{
                 marginTop: '2px',
                 marginBottom: '2px',
+                marginLeft: '8px',
                 color: '#939292',
               }}
             >
