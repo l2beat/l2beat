@@ -238,9 +238,12 @@ function getFunctions(
     if (abi === undefined) {
       throw new Error(`ABI for ${address.toString()} not found`)
     }
-    abi[1].forEach((a) => functionNames.add(a))
+    abi[1].forEach((a) => {
+      if (a.includes('view')) {
+        functionNames.add(a)
+      }
+    })
   }
-
   const iface = new ethers.utils.Interface(Array.from(functionNames))
 
   const functions = Object.entries(iface.functions)
