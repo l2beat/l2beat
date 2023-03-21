@@ -14,7 +14,7 @@ export function configureRosetteOverlay() {
     const circle = rosette.querySelector<HTMLElement>('.Rosette-Circle')
     if (!circle) return
 
-    function show(slice: HTMLElement) {
+    const show = (slice: HTMLElement) => {
       const type = slice.dataset.rosette
       texts.forEach((text) =>
         text.classList.add('text-gray-300', 'dark:text-gray-800'),
@@ -30,7 +30,7 @@ export function configureRosetteOverlay() {
         ?.classList.remove('hidden')
     }
 
-    function hide() {
+    const hide = () => {
       texts.forEach((text) =>
         text.classList.remove('text-gray-300', 'dark:text-gray-800'),
       )
