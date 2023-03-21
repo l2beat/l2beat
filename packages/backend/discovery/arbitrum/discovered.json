@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16875982,
-  "configHash": "0xbefb2d704f40d18169c8d4914926083399edef7ef8665eee926ef1df5b54d14f",
+  "blockNumber": 16877077,
+  "configHash": "0x59af3638472a0223a2ec901523744a2d8cf2554422e2f2bc67736da33b495170",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3866,
+        "firstUnresolvedNode": 3870,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 3865,
-        "latestNodeCreated": 4019,
+        "latestConfirmed": 3869,
+        "latestNodeCreated": 4022,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -91,7 +91,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 107946,
+        "batchCount": 108260,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -102,7 +102,7 @@
           3600
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 650205
+        "totalDelayedMessagesRead": 651338
       }
     },
     {
@@ -220,6 +220,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
         "governanceChainInbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "l2Timelock": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
@@ -345,11 +346,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 650295,
+        "delayedMessageCount": 651434,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 107946,
-        "sequencerReportedSubMessageCount": 49908585
+        "sequencerMessageCount": 108260,
+        "sequencerReportedSubMessageCount": 49962487
       }
     },
     {
@@ -434,6 +435,7 @@
       },
       "values": {
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
+        "counterpartGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "l2BeaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
@@ -472,6 +474,7 @@
         "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
       },
       "values": {
+        "counterpartGateway": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
         "defaultGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
@@ -489,6 +492,7 @@
         "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
       },
       "values": {
+        "counterpartGateway": "0x096760F208390250649E3e8763348E783AEF5562",
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
