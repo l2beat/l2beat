@@ -1,19 +1,9 @@
-import { default as React } from 'react'
+import React from 'react'
 
 import { Page } from '../../view/Page'
 import { reactToHtml } from '../../view/reactToHtml'
+import { DashboardProject } from '../props/getProjects'
 import { DASHBOARD_COLORS } from './constants'
-
-export interface DashboardProject {
-  name: string
-  discoveredCount?: number
-  initialAddressesCount?: number
-  watchedCount?: number
-  ignoredInWatchModeCount?: number
-  ignoredCount?: number
-  notHandledCount?: number
-  unverifiedCount?: number
-}
 
 interface DashboardPageProps {
   projects: DashboardProject[]

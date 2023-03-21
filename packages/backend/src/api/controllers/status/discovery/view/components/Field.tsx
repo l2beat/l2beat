@@ -3,59 +3,58 @@ import { default as React } from 'react'
 import { DashboardContractField } from '../../props/getProjectContracts'
 import { Value } from './Value'
 
-export function Field({
-  field,
-  color,
-}: {
+interface FieldProps {
   field: DashboardContractField
   color: string
-}) {
-  if (field.values === undefined) {
+}
+
+export function Field(props: FieldProps) {
+  if (props.field.values === undefined) {
     return (
       <p
         style={{
-          color,
+          color: props.color,
           marginLeft: '8px',
           marginTop: '2px',
           marginBottom: '2px',
         }}
       >
-        {field.name}
+        {props.field.name}
       </p>
     )
   }
 
-  if (field.values.length === 0) {
+  if (props.field.values.length === 0) {
     return (
       <p
         style={{
-          color,
+          color: props.color,
           marginLeft: '12px',
           marginTop: '2px',
           marginBottom: '2px',
         }}
       >
-        {field.name}
+        {props.field.name}
         <Value value={'[ ]'} />
       </p>
     )
   }
 
-  if (field.values.length === 1) {
+  if (props.field.values.length === 1) {
     return (
       <p
         style={{
-          color,
+          color: props.color,
           marginLeft: '14px',
           marginTop: '2px',
           marginBottom: '2px',
         }}
       >
-        {field.name}
+        {props.field.name}
         <Value
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
-          value={field.values[0].value.toString()}
-          discoveryChild={field.values[0].discoveryChild}
+          value={props.field.values[0].value.toString()}
+          discoveryChild={props.field.values[0].discoveryChild}
         />
       </p>
     )
@@ -63,13 +62,18 @@ export function Field({
 
   return (
     <details
-      style={{ padding: '0px', marginTop: '2px', marginBottom: '2px', color }}
+      style={{
+        padding: '0px',
+        marginTop: '2px',
+        marginBottom: '2px',
+        color: props.color,
+      }}
     >
       <summary style={{ color: 'inherit', boxShadow: 'none' }}>
-        {field.name}
+        {props.field.name}
       </summary>
       <p style={{ margin: '0px' }}>
-        {field.values.map((element, index) => (
+        {props.field.values.map((element, index) => (
           <p
             key={index}
             style={{

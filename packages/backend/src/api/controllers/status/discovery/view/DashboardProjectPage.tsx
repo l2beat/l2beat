@@ -19,9 +19,13 @@ export function DashboardProjectPage(props: ConfigPageProps) {
       <div className="tabs" style={{ marginTop: '8px' }}>
         {props.contracts.map((contract, index) =>
           contract.isUnverified ? (
-            <UnverifiedContract contract={contract} index={index} key={index} />
+            <UnverifiedContract
+              contract={contract}
+              tabIndex={index}
+              key={index}
+            />
           ) : (
-            <Contract contract={contract} index={index} key={index} />
+            <Contract contract={contract} tabIndex={index} key={index} />
           ),
         )}
       </div>

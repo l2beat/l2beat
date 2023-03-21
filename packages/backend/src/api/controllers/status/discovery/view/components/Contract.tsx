@@ -6,44 +6,43 @@ import { Header } from './Header'
 import { Section } from './Section'
 import { Tab } from './Tab'
 
-export function Contract({
-  index,
-  contract,
-}: {
-  index: number
+interface ContractProps {
+  tabIndex: number
   contract: DashboardContract
-}) {
+}
+
+export function Contract(props: ContractProps) {
   return (
     <React.Fragment>
-      <Tab contract={contract} index={index} />
-      <div className="tab" id={contract.address.toString()}>
-        <Header c={contract} />
-        {contract.watched && (
+      <Tab contract={props.contract} tabIndex={props.tabIndex} />
+      <div className="tab" id={props.contract.address.toString()}>
+        <Header contract={props.contract} />
+        {props.contract.watched && (
           <Section
             title="Watched"
             color={DASHBOARD_COLORS.WATCHED}
-            fields={contract.watched}
+            fields={props.contract.watched}
           />
         )}
-        {contract.ignoreInWatchMode && (
+        {props.contract.ignoreInWatchMode && (
           <Section
             title="Ignore in watch mode"
             color={DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE}
-            fields={contract.ignoreInWatchMode}
+            fields={props.contract.ignoreInWatchMode}
           />
         )}
-        {contract.ignoreMethods && (
+        {props.contract.ignoreMethods && (
           <Section
             title="Ignored methods"
             color={DASHBOARD_COLORS.IGNORED}
-            fields={contract.ignoreMethods}
+            fields={props.contract.ignoreMethods}
           />
         )}
-        {contract.notHandled && (
+        {props.contract.notHandled && (
           <Section
             title="Not handled"
             color={DASHBOARD_COLORS.NOT_HANDLED}
-            fields={contract.notHandled}
+            fields={props.contract.notHandled}
           />
         )}
       </div>

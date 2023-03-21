@@ -4,33 +4,41 @@ import { DashboardContract } from '../../props/getProjectContracts'
 import { DASHBOARD_COLORS } from '../constants'
 import { ContractHref } from '../ContractHref'
 import { Field } from './Field'
-import { InitialIndicator, ProxyIndicator } from './Indicator'
+import { InitialIndicator, ProxyIndicator } from './Indicators'
 
-export function Header({ c }: { c: DashboardContract }) {
+interface HeaderProps {
+  contract: DashboardContract
+}
+
+export function Header(props: HeaderProps) {
   return (
     <blockquote>
       <h4>
-        {c.name ? c.name : c.address.slice(0, 10)}{' '}
-        <InitialIndicator isInitial={c.isInitial} />{' '}
-        <ProxyIndicator type={c.proxyType} />
+        {props.contract.name
+          ? props.contract.name
+          : props.contract.address.slice(0, 10)}{' '}
+        <InitialIndicator isInitial={props.contract.isInitial} />{' '}
+        <ProxyIndicator type={props.contract.proxyType} />
       </h4>
       <p>
-        <a href={`https://etherscan.io/address/${c.address.toString()}`}>
-          {c.address}
+        <a
+          href={`https://etherscan.io/address/${props.contract.address.toString()}`}
+        >
+          {props.contract.address}
         </a>
       </p>
-      {c.upgradeability.length > 0 && (
+      {props.contract.upgradeability.length > 0 && (
         <blockquote>
           Proxy parameters:{' '}
-          {c.upgradeability.map((u, index) => (
+          {props.contract.upgradeability.map((u, index) => (
             <Field field={u} color={DASHBOARD_COLORS.PROXY} key={index} />
           ))}
         </blockquote>
       )}
-      {(c.discoveredBy ?? []).length > 0 && (
+      {(props.contract.discoveredBy ?? []).length > 0 && (
         <blockquote>
           Discovered by:
-          {c.discoveredBy?.map((d, index) => (
+          {props.contract.discoveredBy?.map((d, index) => (
             <ContractHref key={index} address={d.address} name={d.name} />
           ))}
         </blockquote>

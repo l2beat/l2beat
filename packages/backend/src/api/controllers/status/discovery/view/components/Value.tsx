@@ -1,6 +1,11 @@
 import { default as React } from 'react'
 
-export function Value(props: { value: string; discoveryChild?: string }) {
+interface ValueProps {
+  value: string
+  discoveryChild?: string
+}
+
+export function Value(props: ValueProps) {
   if (props.discoveryChild) {
     return (
       <span

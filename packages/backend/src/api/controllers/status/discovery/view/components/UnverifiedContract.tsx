@@ -4,18 +4,21 @@ import { DashboardContract } from '../../props/getProjectContracts'
 import { Header } from './Header'
 import { Tab } from './Tab'
 
-export function UnverifiedContract({
-  contract,
-  index,
-}: {
+interface UnverifiedContractProps {
   contract: DashboardContract
-  index: number
-}) {
+  tabIndex: number
+}
+
+export function UnverifiedContract(props: UnverifiedContractProps) {
   return (
     <React.Fragment>
-      <Tab contract={contract} index={index} textColor={'#FF5733'} />
+      <Tab
+        contract={props.contract}
+        tabIndex={props.tabIndex}
+        textColor={'#FF5733'}
+      />
       <div className="tab">
-        <Header c={contract} />
+        <Header contract={props.contract} />
         <div className="card warn">
           <p>
             !!! UNVERIFIED CONTRACT !!!

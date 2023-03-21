@@ -1,6 +1,15 @@
 import { ConfigReader } from '../../../../../core/discovery/ConfigReader'
-import { DashboardProject } from '../view/DashboardPage'
 import { getProjectContracts } from './getProjectContracts'
+export interface DashboardProject {
+  name: string
+  discoveredCount?: number
+  initialAddressesCount?: number
+  watchedCount?: number
+  ignoredInWatchModeCount?: number
+  ignoredCount?: number
+  notHandledCount?: number
+  unverifiedCount?: number
+}
 
 export async function getProjects(): Promise<DashboardProject[]> {
   const configReader = new ConfigReader()

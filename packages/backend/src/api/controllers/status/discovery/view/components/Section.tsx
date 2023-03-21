@@ -3,21 +3,19 @@ import { default as React } from 'react'
 import { DashboardContractField } from '../../props/getProjectContracts'
 import { Field } from './Field'
 
-export function Section({
-  title,
-  color,
-  fields,
-}: {
+interface SectionProps {
   title: string
   color: string
   fields: DashboardContractField[]
-}) {
+}
+
+export function Section(props: SectionProps) {
   return (
-    <details style={{ color }} open>
-      <summary style={{ color: 'inherit' }}>{title}</summary>
+    <details style={{ color: props.color }} open>
+      <summary style={{ color: 'inherit' }}>{props.title}</summary>
       <p style={{ margin: '0px' }}>
-        {fields.map((field, index) => (
-          <Field field={field} color={color} key={index} />
+        {props.fields.map((field, index) => (
+          <Field field={field} color={props.color} key={index} />
         ))}
       </p>
     </details>
