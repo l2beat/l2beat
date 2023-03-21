@@ -134,9 +134,14 @@ function Header({ c }: { c: DashboardContract }) {
       <p>
         <a href={`https://etherscan.io/address/${c.address}`}>{c.address}</a>
       </p>
-      {c.upgradeability.map((u, index) => (
-        <Field field={u} color={DASHBOARD_COLORS.PROXY} key={index} />
-      ))}
+      {c.upgradeability.length > 0 && (
+        <blockquote>
+          Proxy parameters:{' '}
+          {c.upgradeability.map((u, index) => (
+            <Field field={u} color={DASHBOARD_COLORS.PROXY} key={index} />
+          ))}
+        </blockquote>
+      )}
       {(c.discoveredBy ?? []).length > 0 && (
         <blockquote>
           Discovered by:
@@ -153,7 +158,7 @@ function ContractHref(props: { address: string; name: string }) {
   return (
     <p
       dangerouslySetInnerHTML={{
-        __html: `<span style="cursor:pointer; color: #85C1E9" onclick="document.getElementById('${props.address}').click()">⬆️ ${props.name}</span>`,
+        __html: `<span style="cursor:pointer; color: #85C1E9; margin-left: 8px" onclick="document.getElementById('${props.address}').click()">⬆️ ${props.name}</span>`,
       }}
     />
   )
