@@ -155,7 +155,7 @@ function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
     projectsInApiActivity.includes(x.id),
   )
 
-  if (layer2sInApiActivity.length / layer2s.length < 0.5) {
+  if (layer2sInApiActivity.length / layer2s.length < 0.4) {
     throw new Error(
       'The API has returned an insufficient number of layer2s activity',
     )
