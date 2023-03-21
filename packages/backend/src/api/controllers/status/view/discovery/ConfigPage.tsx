@@ -175,13 +175,7 @@ function Section({
       <summary style={{ color: 'inherit' }}>{title}</summary>
       <p style={{ margin: '0px' }}>
         {fields.map((field, index) => (
-          <p
-            id={field.name}
-            key={index}
-            style={{ marginTop: '2px', marginBottom: '2px' }}
-          >
-            <Field field={field} color={color} />
-          </p>
+          <Field field={field} color={color} key={index} />
         ))}
       </p>
     </details>
@@ -235,42 +229,71 @@ function Field({
   color: string
 }) {
   if (field.values === undefined) {
-    return <span style={{ color, marginLeft: '8px' }}>{field.name}</span>
+    return (
+      <p
+        style={{
+          color,
+          marginLeft: '8px',
+          marginTop: '2px',
+          marginBottom: '2px',
+        }}
+      >
+        {field.name}
+      </p>
+    )
   }
 
   if (field.values.length === 0) {
     return (
-      <span style={{ color, marginLeft: '8px' }}>
+      <p
+        style={{
+          color,
+          marginLeft: '12px',
+          marginTop: '2px',
+          marginBottom: '2px',
+        }}
+      >
         {field.name}
         <Value value={'[ ]'} />
-      </span>
+      </p>
     )
   }
 
   if (field.values.length === 1) {
     return (
-      <span style={{ color, marginLeft: '8px' }}>
+      <p
+        style={{
+          color,
+          marginLeft: '14px',
+          marginTop: '2px',
+          marginBottom: '2px',
+        }}
+      >
         {field.name}
         <Value
           value={field.values[0].value.toString()}
           discoveryChild={field.values[0].discoveryChild}
         />
-      </span>
+      </p>
     )
   }
 
   return (
-    <details style={{ padding: '0px', margin: '0px', color }}>
-      <summary style={{ color: 'inherit' }}>{field.name}</summary>
+    <details
+      style={{ padding: '0px', marginTop: '2px', marginBottom: '2px', color }}
+    >
+      <summary style={{ color: 'inherit', boxShadow: 'none' }}>
+        {field.name}
+      </summary>
       <p style={{ margin: '0px' }}>
         {field.values.map((element, index) => (
           <p
             key={index}
             style={{
+              marginLeft: '16px',
+              color: '#939292',
               marginTop: '2px',
               marginBottom: '2px',
-              marginLeft: '8px',
-              color: '#939292',
             }}
           >
             <Value
