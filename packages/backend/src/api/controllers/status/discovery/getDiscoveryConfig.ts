@@ -43,7 +43,10 @@ export async function getDiscoveryConfig(
       address: string
     }[] = []
     for (const discoveredContract of discovery.contracts) {
-      if (config.initialAddresses.includes(contract.address)) {
+      if (
+        config.initialAddresses.includes(contract.address) ||
+        contract.address === discoveredContract.address
+      ) {
         continue
       }
       const discoveredFields = Object.values(discoveredContract.values ?? {})
