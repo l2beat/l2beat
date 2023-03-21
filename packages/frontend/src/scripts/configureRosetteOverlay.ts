@@ -38,8 +38,12 @@ export function configureRosetteOverlay() {
       slices.forEach((slice) => slice.classList.remove('opacity-20'))
     }
 
-    circle.addEventListener('mouseleave', () => {
-      hide()
+    circle.addEventListener('mouseleave', hide)
+    document.body.addEventListener('scroll', hide)
+    document.body.addEventListener('click', (e) => {
+      if (!slices.includes(e.target as HTMLElement)) {
+        hide()
+      }
     })
 
     for (const slice of slices) {
