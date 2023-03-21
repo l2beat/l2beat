@@ -1,4 +1,3 @@
-import { isArray } from 'lodash'
 import { default as React } from 'react'
 
 import {
