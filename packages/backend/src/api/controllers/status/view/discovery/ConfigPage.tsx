@@ -1,5 +1,4 @@
-import { ContractValue } from '@l2beat/shared'
-import { isArray } from 'lodash'
+import { ProjectParameters } from '@l2beat/shared'
 import { default as React } from 'react'
 
 import {
@@ -13,6 +12,7 @@ import { DASHBOARD_COLORS } from './types'
 interface ConfigPageProps {
   project: string
   config: DashboardContract[]
+  discovery: ProjectParameters
 }
 
 export function ConfigPage(props: ConfigPageProps) {
@@ -180,7 +180,7 @@ function Section({
             key={index}
             style={{ marginTop: '2px', marginBottom: '2px' }}
           >
-            <Field value={field.value} name={field.name} color={color} />
+            <Field field={field} color={color} />
           </p>
         ))}
       </p>
@@ -228,48 +228,71 @@ function InitialIndicator({ isInitial }: { isInitial?: boolean }) {
 }
 
 function Field({
-  value,
-  name,
+  field,
   color,
 }: {
-  value: ContractValue | undefined
-  name: string
+  field: DashboardContractField
   color: string
 }) {
-  if (value === undefined) {
-    return <span style={{ color, marginLeft: '8px' }}>{name}</span>
+  if (field.values === undefined) {
+    return <span style={{ color, marginLeft: '8px' }}>{field.name}</span>
   }
 
-  if (isArray(value)) {
+  if (field.values.length === 0) {
     return (
-      <details style={{ padding: '0px', margin: '0px', color }}>
-        <summary style={{ color: 'inherit' }}>
-          {name}
-          {' (array)'}
-        </summary>
-        <p style={{ margin: '0px' }}>
-          {value.map((element, index) => (
-            <p
-              key={index}
-              style={{
-                marginTop: '2px',
-                marginBottom: '2px',
-                marginLeft: '8px',
-                color: '#939292',
-              }}
-            >
-              {element.toString()}
-            </p>
-          ))}
-        </p>
-      </details>
+      <span style={{ color, marginLeft: '8px' }}>
+        {field.name}
+        <Value value={'[ ]'} />
+      </span>
+    )
+  }
+
+  if (field.values.length === 1) {
+    return (
+      <span style={{ color, marginLeft: '8px' }}>
+        {field.name}
+        <Value
+          value={field.values[0].value.toString()}
+          discoveryChild={field.values[0].discoveryChild}
+        />
+      </span>
     )
   }
 
   return (
-    <span style={{ color, marginLeft: '8px' }}>
-      {name}
-      <span style={{ color: '#939292' }}> {value.toString()}</span>
-    </span>
+    <details style={{ padding: '0px', margin: '0px', color }}>
+      <summary style={{ color: 'inherit' }}>{field.name}</summary>
+      <p style={{ margin: '0px' }}>
+        {field.values.map((element, index) => (
+          <p
+            key={index}
+            style={{
+              marginTop: '2px',
+              marginBottom: '2px',
+              marginLeft: '8px',
+              color: '#939292',
+            }}
+          >
+            <Value
+              value={element.value.toString()}
+              discoveryChild={element.discoveryChild}
+            />
+          </p>
+        ))}
+      </p>
+    </details>
   )
+}
+
+function Value(props: { value: string; discoveryChild?: string }) {
+  if (props.discoveryChild) {
+    return (
+      <span
+        dangerouslySetInnerHTML={{
+          __html: `<span style="cursor:pointer; color: #85C1E9" onclick="document.getElementById('${props.discoveryChild}').click()"> ${props.value} ⬇️</span>`,
+        }}
+      />
+    )
+  }
+  return <span style={{ color: '#939292' }}> {props.value}</span>
 }

@@ -5,12 +5,16 @@ import {
   ProjectParameters,
 } from '@l2beat/shared'
 import { ethers } from 'ethers'
+import { isArray } from 'lodash'
 
 import { ConfigReader } from '../../../../core/discovery/ConfigReader'
 
 export interface DashboardContractField {
   name: string
-  value?: ContractValue
+  values?: {
+    value: ContractValue
+    discoveryChild?: string
+  }[]
 }
 
 export interface DashboardContract {
@@ -79,7 +83,7 @@ export async function getDiscoveryConfig(
         ignoreInWatchMode = override.ignoreInWatchMode.map((field) => {
           return {
             name: field,
-            value: getValue(discovery, contract, field),
+            values: getValues(discovery, contract, field),
           }
         })
       }
@@ -113,7 +117,7 @@ export async function getDiscoveryConfig(
         .map((field) => {
           return {
             name: field,
-            value: getValue(discovery, contract, field),
+            values: getValues(discovery, contract, field),
           }
         })
     }
@@ -167,15 +171,34 @@ export async function getDiscoveryConfig(
   return result
 }
 
-function getValue(
+function getValues(
   discovery: ProjectParameters,
   contract: ContractParameters,
   field: string,
-): ContractValue | undefined {
+): {
+  value: ContractValue
+  discoveryChild?: string
+}[] {
   const value = discovery.contracts.find((c) => c.address === contract.address)
     ?.values?.[field]
 
-  return value
+  if (value === undefined) {
+    return []
+  }
+
+  if (!isArray(value)) {
+    return [
+      {
+        value: value,
+        discoveryChild: getDiscoveryChild(discovery, contract, value),
+      },
+    ]
+  }
+
+  return value.map((v) => ({
+    value: v,
+    discoveryChild: getDiscoveryChild(discovery, contract, v),
+  }))
 }
 
 function getFunctions(
@@ -277,4 +300,17 @@ function getAddresses(contract: ContractParameters): EthereumAddress[] {
   throw new Error(
     'Unhandled upgradeability type: ' + JSON.stringify(contract.upgradeability),
   )
+}
+function getDiscoveryChild(
+  discovery: ProjectParameters,
+  contract: ContractParameters,
+  v: ContractValue,
+): string | undefined {
+  const i = discovery.contracts.find((c) => c.address.toString() === v)
+
+  if (i === undefined || i.address.toString() === contract.address.toString()) {
+    return undefined
+  }
+
+  return i.address.toString()
 }
