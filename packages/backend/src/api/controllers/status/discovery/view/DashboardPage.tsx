@@ -1,8 +1,8 @@
 import { default as React } from 'react'
 
-import { Page } from '../Page'
-import { reactToHtml } from '../reactToHtml'
-import { DASHBOARD_COLORS } from './types'
+import { Page } from '../../view/Page'
+import { reactToHtml } from '../../view/reactToHtml'
+import { DASHBOARD_COLORS } from './constants'
 
 export interface DashboardProject {
   name: string

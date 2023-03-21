@@ -1,15 +1,15 @@
-import { ConfigReader } from '../../../../core/discovery/ConfigReader'
-import { DashboardProject } from '../view/discovery/DashboardPage'
-import { getDiscoveryConfig } from './getDiscoveryConfig'
+import { ConfigReader } from '../../../../../core/discovery/ConfigReader'
+import { DashboardProject } from '../view/DashboardPage'
+import { getDashboardProject } from './getDashboardProject'
 
-export async function getDiscoveryProjects(): Promise<DashboardProject[]> {
+export async function getDashboard(): Promise<DashboardProject[]> {
   const configReader = new ConfigReader()
   const names = (await configReader.readAllConfigs()).map((c) => c.name)
 
   const projects: DashboardProject[] = []
 
   for (const name of names) {
-    const config = await getDiscoveryConfig(name)
+    const config = await getDashboardProject(name)
 
     const project: DashboardProject = {
       name,

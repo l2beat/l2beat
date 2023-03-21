@@ -1,19 +1,19 @@
 import { default as React } from 'react'
 
+import { Page } from '../../view/Page'
+import { reactToHtml } from '../../view/reactToHtml'
 import {
   DashboardContract,
   DashboardContractField,
-} from '../../discovery/getDiscoveryConfig'
-import { Page } from '../Page'
-import { reactToHtml } from '../reactToHtml'
-import { DASHBOARD_COLORS } from './types'
+} from '../props/getDashboardProject'
+import { DASHBOARD_COLORS } from './constants'
 
 interface ConfigPageProps {
   project: string
   config: DashboardContract[]
 }
 
-export function ConfigPage(props: ConfigPageProps) {
+export function DashboardProjectPage(props: ConfigPageProps) {
   return (
     <Page title={props.project}>
       <a href="/status/discovery" key="back">
@@ -67,7 +67,7 @@ export function ConfigPage(props: ConfigPageProps) {
 }
 
 export function renderDiscoveryConfigPage(props: ConfigPageProps) {
-  return reactToHtml(<ConfigPage {...props} />)
+  return reactToHtml(<DashboardProjectPage {...props} />)
 }
 
 function UnverifiedContract({

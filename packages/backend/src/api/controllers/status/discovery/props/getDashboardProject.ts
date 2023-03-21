@@ -8,7 +8,7 @@ import {
 import { ethers } from 'ethers'
 import { isArray } from 'lodash'
 
-import { ConfigReader } from '../../../../core/discovery/ConfigReader'
+import { ConfigReader } from '../../../../../core/discovery/ConfigReader'
 
 export interface DashboardContractField {
   name: string
@@ -36,7 +36,7 @@ export interface DashboardContract {
   }[]
 }
 
-export async function getDiscoveryConfig(
+export async function getDashboardProject(
   project: string,
 ): Promise<DashboardContract[]> {
   const configReader = new ConfigReader()
