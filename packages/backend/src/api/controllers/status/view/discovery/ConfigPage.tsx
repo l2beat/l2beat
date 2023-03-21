@@ -131,6 +131,9 @@ function Header({ c }: { c: DashboardContract }) {
         <InitialIndicator isInitial={c.isInitial} />{' '}
         <ProxyIndicator type={c.proxyType} />
       </h4>
+      <p>
+        <a href={`https://etherscan.io/address/${c.address}`}>{c.address}</a>
+      </p>
       {c.upgradeability.map((u, index) => (
         <Field field={u} color={DASHBOARD_COLORS.PROXY} key={index} />
       ))}

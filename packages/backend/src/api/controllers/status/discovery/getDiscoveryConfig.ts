@@ -338,7 +338,7 @@ function getUpgradeability(
       return
     }
 
-    if (isArray(value)) {
+    if (!isArray(value)) {
       result.push({
         name: key,
         values: [
@@ -348,17 +348,15 @@ function getUpgradeability(
           },
         ],
       })
+    } else {
+      result.push({
+        name: key,
+        values: value.map((v) => ({
+          value: v,
+          discoveryChild: getDiscoveryChild(discovery, contract, v),
+        })),
+      })
     }
-
-    result.push({
-      name: key,
-      values: [
-        {
-          value: value.toString(),
-          discoveryChild: getDiscoveryChild(discovery, contract, value),
-        },
-      ],
-    })
   })
 
   return result
