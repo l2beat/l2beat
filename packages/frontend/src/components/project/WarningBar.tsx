@@ -18,9 +18,7 @@ export function WarningBar({
   className,
 }: WarningBarProps) {
   const iconFill =
-    color === 'red'
-      ? 'fill-red-700 dark:fill-red-300'
-      : 'fill-yellow-700 dark:fill-yellow-300'
+    color === 'red' ? 'fill-red-300' : 'fill-yellow-700 dark:fill-yellow-300'
 
   return (
     <Callout
@@ -30,8 +28,7 @@ export function WarningBar({
       body={
         isCritical ? (
           <>
-            {text.slice(0, -1)}{' '}
-            <span className="text-red-700 dark:text-red-300">(CRITICAL)</span>
+            {text.slice(0, -1)} <span className="text-red-300">(CRITICAL)</span>
             {text.slice(-1)}
           </>
         ) : (

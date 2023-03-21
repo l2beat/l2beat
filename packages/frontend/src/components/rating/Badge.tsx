@@ -33,7 +33,7 @@ function getColorClassName(rating: RatingCategory): string {
     case 'B':
       return 'bg-yellow-100 text-black'
     case 'C':
-      return 'bg-orange text-black'
+      return 'bg-orange-500 text-black'
     case 'D':
       return 'bg-red-400 text-white'
     case '-':
