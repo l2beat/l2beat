@@ -11,8 +11,8 @@ import {
 } from '../../../peripherals/database/BalanceStatusRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
-import { getDashboard } from './discovery/props/getDashboard'
-import { getDashboardProject } from './discovery/props/getDashboardProject'
+import { getProjectContracts } from './discovery/props/getProjectContracts'
+import { getProjects } from './discovery/props/getProjects'
 import { renderDiscoveryDashboard } from './discovery/view/DashboardPage'
 import { renderDiscoveryConfigPage } from './discovery/view/DashboardProjectPage'
 import { renderBalancesPage } from './view/BalancesPage'
@@ -30,18 +30,22 @@ export class StatusController {
   ) {}
 
   async getDiscoveryDashboard(): Promise<string> {
-    const projects = await getDashboard()
+    const projects = await getProjects()
+    const projectsList = this.projects.map((p) => p.projectId.toString())
 
     return renderDiscoveryDashboard({
       projects,
-      allProjects: this.projects.map((p) => p.projectId.toString()),
+      projectsList,
     })
   }
 
-  async getDiscoveryConfigStatus(project: string): Promise<string> {
-    const config = await getDashboardProject(project)
+  async getDiscoveryDashboardProject(project: string): Promise<string> {
+    const contracts = await getProjectContracts(project)
 
-    return renderDiscoveryConfigPage({ project, config })
+    return renderDiscoveryConfigPage({
+      projectName: project,
+      contracts,
+    })
   }
 
   async getPricesStatus(

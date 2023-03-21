@@ -36,7 +36,7 @@ export interface DashboardContract {
   }[]
 }
 
-export async function getDashboardProject(
+export async function getProjectContracts(
   project: string,
 ): Promise<DashboardContract[]> {
   const configReader = new ConfigReader()

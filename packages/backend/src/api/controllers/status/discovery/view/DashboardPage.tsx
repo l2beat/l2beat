@@ -17,13 +17,13 @@ export interface DashboardProject {
 
 interface DashboardPageProps {
   projects: DashboardProject[]
-  allProjects: string[]
+  projectsList: string[]
 }
 
 export function DashboardPage(props: DashboardPageProps) {
   const projects = props.projects
     .concat(
-      props.allProjects
+      props.projectsList
         .filter(
           (project) => !props.projects.map((x) => x.name).includes(project),
         )
@@ -36,14 +36,14 @@ export function DashboardPage(props: DashboardPageProps) {
       <meter
         id="configs-created"
         min={0}
-        max={props.allProjects.length}
-        low={props.allProjects.length}
-        high={props.allProjects.length}
-        optimum={props.allProjects.length}
+        max={props.projectsList.length}
+        low={props.projectsList.length}
+        high={props.projectsList.length}
+        optimum={props.projectsList.length}
         value={props.projects.length}
       />
       <label style={{ marginLeft: '8px' }} htmlFor="configs-created">
-        {props.projects.length}/{props.allProjects.length} configs created
+        {props.projects.length}/{props.projectsList.length} configs created
       </label>
       <table>
         <thead>

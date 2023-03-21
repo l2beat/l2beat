@@ -1,6 +1,6 @@
 import { default as React } from 'react'
 
-import { DashboardContractField } from '../../props/getDashboardProject'
+import { DashboardContractField } from '../../props/getProjectContracts'
 import { Value } from './Value'
 
 export function Field({

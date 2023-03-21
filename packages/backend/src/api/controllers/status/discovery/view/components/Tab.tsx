@@ -1,14 +1,14 @@
 import { default as React } from 'react'
 
-import { DashboardContract } from '../../props/getDashboardProject'
+import { DashboardContract } from '../../props/getProjectContracts'
 import { DASHBOARD_COLORS } from '../constants'
 
 export function Tab({
-  c,
+  contract,
   index,
   textColor,
 }: {
-  c: DashboardContract
+  contract: DashboardContract
   index: number
   textColor?: string
 }) {
@@ -22,12 +22,14 @@ export function Tab({
       />
       <label
         htmlFor={`tab-${index}`}
-        id={c.address.toString()}
+        id={contract.address.toString()}
         style={{
-          color: c.isInitial ? DASHBOARD_COLORS.INITIAL : textColor ?? '',
+          color: contract.isInitial
+            ? DASHBOARD_COLORS.INITIAL
+            : textColor ?? '',
         }}
       >
-        {c.name ? c.name : c.address.slice(0, 10)}
+        {contract.name ? contract.name : contract.address.slice(0, 10)}
       </label>
     </React.Fragment>
   )

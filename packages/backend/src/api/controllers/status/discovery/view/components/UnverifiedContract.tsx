@@ -1,21 +1,21 @@
-import { default as React } from 'react'
+import React from 'react'
 
-import { DashboardContract } from '../../props/getDashboardProject'
+import { DashboardContract } from '../../props/getProjectContracts'
 import { Header } from './Header'
 import { Tab } from './Tab'
 
 export function UnverifiedContract({
-  c,
+  contract,
   index,
 }: {
-  c: DashboardContract
+  contract: DashboardContract
   index: number
 }) {
   return (
     <React.Fragment>
-      <Tab c={c} index={index} textColor={'#FF5733'} />
+      <Tab contract={contract} index={index} textColor={'#FF5733'} />
       <div className="tab">
-        <Header c={c} />
+        <Header c={contract} />
         <div className="card warn">
           <p>
             !!! UNVERIFIED CONTRACT !!!

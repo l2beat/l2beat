@@ -1,6 +1,6 @@
 import { default as React } from 'react'
 
-import { DashboardContract } from '../../props/getDashboardProject'
+import { DashboardContract } from '../../props/getProjectContracts'
 import { DASHBOARD_COLORS } from '../constants'
 import { Header } from './Header'
 import { Section } from './Section'
@@ -8,42 +8,42 @@ import { Tab } from './Tab'
 
 export function Contract({
   index,
-  c,
+  contract,
 }: {
   index: number
-  c: DashboardContract
-}): JSX.Element {
+  contract: DashboardContract
+}) {
   return (
-    <React.Fragment key={index}>
-      <Tab c={c} index={index} />
-      <div className="tab" key={index} id={c.address.toString()}>
-        <Header c={c} />
-        {c.watched && (
+    <React.Fragment>
+      <Tab contract={contract} index={index} />
+      <div className="tab" id={contract.address.toString()}>
+        <Header c={contract} />
+        {contract.watched && (
           <Section
             title="Watched"
             color={DASHBOARD_COLORS.WATCHED}
-            fields={c.watched}
+            fields={contract.watched}
           />
         )}
-        {c.ignoreInWatchMode && (
+        {contract.ignoreInWatchMode && (
           <Section
             title="Ignore in watch mode"
             color={DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE}
-            fields={c.ignoreInWatchMode}
+            fields={contract.ignoreInWatchMode}
           />
         )}
-        {c.ignoreMethods && (
+        {contract.ignoreMethods && (
           <Section
             title="Ignored methods"
             color={DASHBOARD_COLORS.IGNORED}
-            fields={c.ignoreMethods}
+            fields={contract.ignoreMethods}
           />
         )}
-        {c.notHandled && (
+        {contract.notHandled && (
           <Section
             title="Not handled"
             color={DASHBOARD_COLORS.NOT_HANDLED}
-            fields={c.notHandled}
+            fields={contract.notHandled}
           />
         )}
       </div>

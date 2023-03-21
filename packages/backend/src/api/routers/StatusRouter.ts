@@ -12,6 +12,7 @@ const queryParser = z.object({
     to: stringAs((s) => new UnixTime(+s)).optional(),
   }),
 })
+
 const paramsParser = z.object({
   params: z.object({
     project: z.string(),
@@ -56,7 +57,7 @@ export function createStatusRouter(statusController: StatusController) {
     '/status/discovery/:project',
     withTypedContext(paramsParser, async (ctx) => {
       const { project } = ctx.params
-      ctx.body = await statusController.getDiscoveryConfigStatus(project)
+      ctx.body = await statusController.getDiscoveryDashboardProject(project)
     }),
   )
 
