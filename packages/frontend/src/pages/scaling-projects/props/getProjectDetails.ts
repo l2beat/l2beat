@@ -3,10 +3,10 @@ import { VerificationStatus } from '@l2beat/shared'
 
 import { getContractSection } from '../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
+import { getRiskValues } from '../../../utils/risks/values'
 import { ProjectDetailsProps } from '../view/ProjectDetails'
 import { getDescriptionSection } from './getDescriptionSection'
 import { getLinkSection } from './getLinkSection'
-import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
@@ -16,7 +16,7 @@ export function getProjectDetails(
   return {
     linkSection: getLinkSection(project),
     descriptionSection: getDescriptionSection(project, verificationStatus),
-    riskSection: getRiskSection(project, verificationStatus),
+    riskAnalysis: { riskValues: getRiskValues(project.riskView) },
     permissionsSection: getPermissionsSection(project, verificationStatus),
     contractsSection: getContractSection(project, verificationStatus),
     milestones: project.milestones,

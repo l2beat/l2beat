@@ -225,7 +225,7 @@ export const acrossV2: Bridge = {
     {
       title: 'Across deep dive',
       url: 'https://li.fi/knowledge-hub/across-a-deep-dive/',
-      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
     },
   ],
 }

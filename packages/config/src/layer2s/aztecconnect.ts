@@ -6,6 +6,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -195,19 +196,17 @@ export const aztecconnect: Layer2 = {
     {
       title: 'Explaining the Aztec Network',
       url: 'https://medium.com/aztec-protocol/explaining-the-network-in-aztec-network-166862b3ef7d',
-      thumbnailUrl:
-        'https://miro.medium.com/max/720/1*P6r1E4yB0egVpk1sbYlzcQ.png',
+      thumbnail: NUGGETS.THUMBNAILS.AZTEC_01,
     },
     {
       title: 'Economics of Aztec zkRollup',
       url: 'https://medium.com/aztec-protocol/privacy-for-pennies-scaling-aztecs-zkrollup-9f2b36615cc6',
-      thumbnailUrl:
-        'https://miro.medium.com/v2/resize:fit:1400/format:webp/1*HTS4vJVMVk3JM_VmtZJXIg.jpeg',
+      thumbnail: NUGGETS.THUMBNAILS.AZTEC_02,
     },
     {
       title: 'Understanding PLONK',
       url: 'https://vitalik.ca/general/2019/09/22/plonk.html',
-      thumbnailUrl: 'https://vitalik.ca/images/icon.png',
+      thumbnail: NUGGETS.THUMBNAILS.VITALIK_01,
     },
   ],
 }

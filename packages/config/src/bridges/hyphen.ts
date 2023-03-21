@@ -212,7 +212,7 @@ export const hyphen: Bridge = {
     {
       title: 'Hyphen deep dive',
       url: 'https://li.fi/knowledge-hub/biconomys-hyphen-a-deep-dive/',
-      thumbnailUrl: NUGGETS.LIFI_THUMBNAIL,
+      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
     },
   ],
 }

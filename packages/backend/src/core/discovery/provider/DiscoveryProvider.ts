@@ -86,4 +86,8 @@ export class DiscoveryProvider {
       abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
     }
   }
+
+  async getContractDeploymentTx(address: EthereumAddress) {
+    return this.etherscanClient.getContractDeploymentTx(address)
+  }
 }

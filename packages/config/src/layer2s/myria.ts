@@ -182,5 +182,5 @@ export const myria: Layer2 = {
         'Layer 2 scaling solution powered by Starware is live on Ethereum.',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

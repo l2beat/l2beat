@@ -71,6 +71,11 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
             'smart-contracts',
             project.technology.smartContracts,
           ),
+        project.technology.upgradeMechanism &&
+          makeTechnologyChoice(
+            'upgrade-mechanism',
+            project.technology.upgradeMechanism,
+          ),
       ].filter(noUndefined),
     }
 

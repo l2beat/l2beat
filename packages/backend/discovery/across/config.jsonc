@@ -37,12 +37,18 @@
     "0xB524735356985D2f267FA010D681f061DfF03715": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc": {
-      "ignoreMethods": ["proposals", "getProposal"],
-      "ignoreInWatchMode": ["numProposals", "getCurrentTime"]
+    "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": {
+      "ignoreInWatchMode": ["nonce"]
     },
-    "0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5": {
+    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": {
       "ignoreMethods": ["bondedProposals"],
+      "ignoreInWatchMode": ["bond", "getCurrentTime"]
+    },
+    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": {
+      "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
+      "ignoreMethods": ["getProposal", "proposals"]
+    },
+    "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": {
       "ignoreInWatchMode": ["getCurrentTime"]
     },
     "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381": {
@@ -50,7 +56,7 @@
       "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"]
     },
     "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"]
     },
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
       // Maker: Dai Stablecoin

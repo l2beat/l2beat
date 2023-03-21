@@ -67,7 +67,7 @@ export function ContractEntry({
                 key={i}
                 className={cx(
                   verificationStatus.contracts[address] === false
-                    ? 'text-red-700 dark:text-red-300'
+                    ? 'text-red-300'
                     : '',
                 )}
               />
@@ -79,7 +79,7 @@ export function ContractEntry({
                   'text-link underline',
                   verificationStatus.contracts[x.address] === false &&
                     !x.isAdmin
-                    ? 'text-red-700 dark:text-red-300'
+                    ? 'text-red-300'
                     : '',
                 )}
                 href={x.href}

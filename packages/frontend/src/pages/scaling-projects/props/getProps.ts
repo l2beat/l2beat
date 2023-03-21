@@ -23,7 +23,6 @@ export function getProps(
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       header: getHeader(project, tvlApiResponse, activityApiResponse),
-      showProjectHeader: config.features.activity,
       projectHeader: getProjectHeader(
         project,
         config,
