@@ -1,16 +1,16 @@
 import {
   ContractParameters,
+  ContractValue,
   EthereumAddress,
   ProjectParameters,
 } from '@l2beat/shared'
 import { ethers } from 'ethers'
-import { isArray } from 'lodash'
 
 import { ConfigReader } from '../../../../core/discovery/ConfigReader'
 
 export interface DashboardContractField {
   name: string
-  value?: string
+  value?: ContractValue
 }
 
 export interface DashboardContract {
@@ -168,15 +168,11 @@ function getValue(
   discovery: ProjectParameters,
   contract: ContractParameters,
   field: string,
-): string | undefined {
+): ContractValue | undefined {
   const value = discovery.contracts.find((c) => c.address === contract.address)
     ?.values?.[field]
 
-  if (isArray(value) && value.length === 0) {
-    return '[ ]'
-  }
-
-  return value?.toString()
+  return value
 }
 
 function getFunctions(

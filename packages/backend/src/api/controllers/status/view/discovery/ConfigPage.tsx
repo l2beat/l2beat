@@ -1,3 +1,5 @@
+import { ContractValue } from '@l2beat/shared'
+import { isArray } from 'lodash'
 import { default as React } from 'react'
 
 import {
@@ -178,8 +180,7 @@ function Section({
             key={index}
             style={{ marginTop: '2px', marginBottom: '2px' }}
           >
-            {field.name}
-            <Value value={field.value} />
+            <Field value={field.value} name={field.name} color={color} />
           </p>
         ))}
       </p>
@@ -226,11 +227,46 @@ function InitialIndicator({ isInitial }: { isInitial?: boolean }) {
   )
 }
 
-function Value({ value }: { value: string | undefined }) {
+function Field({
+  value,
+  name,
+  color,
+}: {
+  value: ContractValue | undefined
+  name: string
+  color: string
+}) {
   if (value === undefined) return null
+
+  if (isArray(value)) {
+    return (
+      <details style={{ paddingLeft: '16px', color }}>
+        <summary style={{ color: 'inherit' }}>
+          {name}
+          {' (array)'}
+        </summary>
+        <p style={{ margin: '0px' }}>
+          {value.map((element, index) => (
+            <p
+              key={index}
+              style={{
+                marginTop: '2px',
+                marginBottom: '2px',
+                color: '#939292',
+              }}
+            >
+              {element.toString()}
+            </p>
+          ))}
+        </p>
+      </details>
+    )
+  }
+
   return (
-    <span style={{ color: '#939292', marginLeft: '8px' }}>
-      {value.toString()}
+    <span style={{ color, marginLeft: '8px' }}>
+      {name}
+      <span style={{ color: '#939292' }}> {value.toString()}</span>
     </span>
   )
 }
