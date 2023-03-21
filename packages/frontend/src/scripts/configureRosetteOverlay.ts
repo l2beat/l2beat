@@ -11,6 +11,8 @@ export function configureRosetteOverlay() {
     const descriptions = Array.from(
       rosette.querySelectorAll<HTMLElement>('.Rosette-Description'),
     )
+    const circle = rosette.querySelector<HTMLElement>('.Rosette-Circle')
+    if (!circle) return
 
     function show(slice: HTMLElement) {
       const type = slice.dataset.rosette
@@ -32,13 +34,13 @@ export function configureRosetteOverlay() {
       slices.forEach((slice) => slice.classList.remove('opacity-20'))
     }
 
+    circle.addEventListener('mouseleave', () => {
+      hide()
+    })
+
     for (const slice of slices) {
       slice.addEventListener('mouseenter', () => {
         show(slice)
-      })
-
-      slice.addEventListener('mouseleave', () => {
-        hide()
       })
 
       slice.addEventListener('focus', () => {
