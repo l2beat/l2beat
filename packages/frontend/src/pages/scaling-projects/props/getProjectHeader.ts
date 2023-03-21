@@ -6,7 +6,7 @@ import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
-import { getRiskSentiments } from '../../../utils/risks/values'
+import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
@@ -53,7 +53,7 @@ export function getProjectHeader(
     links: getLinks(project.display.links),
     ratingEntry: config.features.rating && project.rating,
     // TODO: will need to be riskValues when rosette has hover
-    risks: getRiskSentiments(project.riskView),
+    risks: getRiskValues(project.riskView),
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
   }

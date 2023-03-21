@@ -12,7 +12,7 @@ import {
   TVLBreakdown,
   TVLBreakdownProps,
 } from '../../../components/TVLBreakdown'
-import { RiskSentiments } from '../../../utils/risks/types'
+import { RiskValues } from '../../../utils/risks/types'
 
 export interface ProjectHeaderProps {
   title: string
@@ -27,7 +27,7 @@ export interface ProjectHeaderProps {
   purpose: string
   technology: string
   tvlBreakdown: TVLBreakdownProps
-  risks: RiskSentiments
+  risks: RiskValues
   links: Link[]
   ratingEntry?: false | Layer2Rating
   isArchived?: boolean
