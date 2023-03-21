@@ -1,7 +1,11 @@
 {
   "$schema": "../config.schema.json",
   "name": "nova",
-  "initialAddresses": ["0xFb209827c58283535b744575e11953DCC4bEAD88"],
+  "initialAddresses": [
+    "0xFb209827c58283535b744575e11953DCC4bEAD88",
+    "0xc840838bc438d73c16c2f8b22d2ce3669963cd48",
+    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
+  ],
   "overrides": {
     "0xFb209827c58283535b744575e11953DCC4bEAD88": {
       "ignoreMethods": ["proxiableUUID"],
@@ -22,9 +26,6 @@
     "0xA59075221b50C598aED0Eae0bB9869639513af0D": {
       "ignoreMethods": ["challenges"]
     },
-    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": {
-      "ignoreInWatchMode": ["nonce"]
-    },
     "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd": {
       "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
       "ignoreInWatchMode": [
@@ -32,6 +33,16 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ]
+    },
+    "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
+      "ignoreMethods": ["governanceChainInbox", "l2Timelock"]
     }
   }
 }

@@ -46,14 +46,14 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       name: '#',
       alignCenter: true,
       minimalWidth: true,
-      headClassName: 'pl-4',
+      headClassName: 'md:pl-4',
       getValue: (entry, index) => (
         <>
           <span data-bridges-only-cell>
             <IndexCell
               entry={entry}
               index={onlyBridges.indexOf(entry) + 1}
-              className="pl-4"
+              className="md:pl-4"
             />
           </span>
           <span data-combined-only-cell className="hidden">

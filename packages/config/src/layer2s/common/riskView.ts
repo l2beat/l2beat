@@ -95,6 +95,13 @@ export const UPGRADABLE_YES: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export const UPGRADABLE_ARBITRUM: ProjectRiskViewEntry = {
+  value: '13d or no delay',
+  description:
+    'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
+  sentiment: 'warning',
+}
+
 export function UPGRADE_DELAY(delay: string): ProjectRiskViewEntry {
   return {
     value: `${delay} delay`,
@@ -270,6 +277,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_MEMO,
   DATA_EXTERNAL,
   UPGRADABLE_YES,
+  UPGRADABLE_ARBITRUM,
   UPGRADE_DELAY,
   UPGRADABLE_NO,
   SEQUENCER_TRANSACT_L1,
