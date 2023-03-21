@@ -51,7 +51,7 @@ export function getProjectHeader(
     technology: project.technology.category,
     tvlBreakdown,
     links: getLinks(project.display.links),
-    ratingEntry: config.features.rating && project.rating,
+    maturityEntry: config.features.maturity && project.maturity,
     // TODO: will need to be riskValues when rosette has hover
     risks: getRiskValues(project.riskView),
     isArchived: project.isArchived,

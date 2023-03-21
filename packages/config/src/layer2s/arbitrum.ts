@@ -490,7 +490,7 @@ export const arbitrum: Layer2 = {
       date: '2021-08-31T00:00:00Z',
     },
   ],
-  rating: {
+  maturity: {
     category: {
       score: 'B',
       requirements: ['There is an existing fraud proof system'],

@@ -38,7 +38,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       }),
     )
   }
-  if (config.features.rating) {
+  if (config.features.maturity) {
     pages.push(getDefinitionsPage(config))
   }
 
