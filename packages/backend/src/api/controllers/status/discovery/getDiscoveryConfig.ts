@@ -3,6 +3,7 @@ import {
   ContractValue,
   EthereumAddress,
   ProjectParameters,
+  UpgradeabilityParameters,
 } from '@l2beat/shared'
 import { ethers } from 'ethers'
 import { isArray } from 'lodash'
@@ -19,7 +20,8 @@ export interface DashboardContractField {
 
 export interface DashboardContract {
   name: string
-  addresses: EthereumAddress[]
+  address: EthereumAddress
+  upgradeability: DashboardContractField[]
   watched?: DashboardContractField[]
   ignoreInWatchMode?: DashboardContractField[]
   ignoreMethods?: DashboardContractField[]
@@ -69,7 +71,12 @@ export async function getDiscoveryConfig(
     if (contract.unverified) {
       return {
         name: contract.name,
-        addresses: [contract.address],
+        address: contract.address,
+        upgradeability: getUpgradeability(
+          contract.upgradeability,
+          discovery,
+          contract,
+        ),
         isUnverified: true,
         isInitial: config.initialAddresses.includes(contract.address),
         discoveredBy,
@@ -156,7 +163,12 @@ export async function getDiscoveryConfig(
 
     return {
       name: contract.name,
-      addresses: getAddresses(contract),
+      address: contract.address,
+      upgradeability: getUpgradeability(
+        contract.upgradeability,
+        discovery,
+        contract,
+      ),
       ignoreInWatchMode,
       ignoreMethods,
       watched,
@@ -313,4 +325,41 @@ function getDiscoveryChild(
   }
 
   return i.address.toString()
+}
+function getUpgradeability(
+  upgradeability: UpgradeabilityParameters,
+  discovery: ProjectParameters,
+  contract: ContractParameters,
+): DashboardContractField[] {
+  const result: DashboardContractField[] = []
+
+  Object.entries(upgradeability).forEach(([key, value]) => {
+    if (key === 'type' || value === undefined) {
+      return
+    }
+
+    if (isArray(value)) {
+      result.push({
+        name: key,
+        values: [
+          {
+            value: value.toString(),
+            discoveryChild: getDiscoveryChild(discovery, contract, value),
+          },
+        ],
+      })
+    }
+
+    result.push({
+      name: key,
+      values: [
+        {
+          value: value.toString(),
+          discoveryChild: getDiscoveryChild(discovery, contract, value),
+        },
+      ],
+    })
+  })
+
+  return result
 }

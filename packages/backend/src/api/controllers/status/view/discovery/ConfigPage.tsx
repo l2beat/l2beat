@@ -29,7 +29,7 @@ export function ConfigPage(props: ConfigPageProps) {
           return (
             <React.Fragment key={index}>
               <Tab c={c} index={index} />
-              <div className="tab" key={index} id={c.addresses[0].toString()}>
+              <div className="tab" key={index} id={c.address.toString()}>
                 <Header c={c} />
                 {c.watched && (
                   <Section
@@ -112,12 +112,12 @@ function Tab({
       />
       <label
         htmlFor={`tab-${index}`}
-        id={c.addresses[0].toString()}
+        id={c.address.toString()}
         style={{
           color: c.isInitial ? DASHBOARD_COLORS.INITIAL : textColor ?? '',
         }}
       >
-        {c.name ? c.name : c.addresses[0].slice(0, 10)}
+        {c.name ? c.name : c.address.slice(0, 10)}
       </label>
     </React.Fragment>
   )
@@ -127,17 +127,12 @@ function Header({ c }: { c: DashboardContract }) {
   return (
     <blockquote>
       <h4>
-        {c.name ? c.name : c.addresses[0].slice(0, 10)}{' '}
+        {c.name ? c.name : c.address.slice(0, 10)}{' '}
         <InitialIndicator isInitial={c.isInitial} />{' '}
         <ProxyIndicator type={c.proxyType} />
       </h4>
-      {c.addresses.map((a, index) => (
-        <p key={index}>
-          {index !== 0 && `Implementation #${index}: `}
-          <a href={`https://etherscan.io/address/${a.toString()}`}>
-            {a.toString()}
-          </a>
-        </p>
+      {c.upgradeability.map((u, index) => (
+        <Field field={u} color={DASHBOARD_COLORS.PROXY} key={index} />
       ))}
       {(c.discoveredBy ?? []).length > 0 && (
         <blockquote>

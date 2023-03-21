@@ -6,4 +6,5 @@ export const DASHBOARD_COLORS = {
   INITIAL: '#F7DC6F',
   UNVERIFIED: '#F50404',
   DISCOVERED: '#5DADE2',
+  PROXY: '#f7237c',
 }
