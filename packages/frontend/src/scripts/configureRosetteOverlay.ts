@@ -16,10 +16,12 @@ export function configureRosetteOverlay() {
 
     function show(slice: HTMLElement) {
       const type = slice.dataset.rosette
-      texts.forEach((text) => text.classList.add('hidden'))
+      texts.forEach((text) =>
+        text.classList.add('text-gray-300', 'dark:text-gray-800'),
+      )
       texts
         .find((text) => text.dataset.rosette === type)
-        ?.classList.remove('hidden')
+        ?.classList.remove('text-gray-300', 'dark:text-gray-800')
       slices.forEach((slice) => slice.classList.add('opacity-20'))
       slice.classList.remove('opacity-20')
       descriptions.forEach((description) => description.classList.add('hidden'))
@@ -29,7 +31,9 @@ export function configureRosetteOverlay() {
     }
 
     function hide() {
-      texts.forEach((text) => text.classList.remove('hidden'))
+      texts.forEach((text) =>
+        text.classList.remove('text-gray-300', 'dark:text-gray-800'),
+      )
       descriptions.forEach((description) => description.classList.add('hidden'))
       slices.forEach((slice) => slice.classList.remove('opacity-20'))
     }

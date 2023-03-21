@@ -216,7 +216,12 @@ function OverlayBox({
         className,
       )}
     >
-      <span className={cx('mb-2 block', sentimentToTextColor(risk.sentiment))}>
+      <span
+        className={cx(
+          'mb-2 block font-medium',
+          sentimentToTextColor(risk.sentiment),
+        )}
+      >
         {risk.value}
       </span>
       <span className="text-xs">{risk.description}</span>
