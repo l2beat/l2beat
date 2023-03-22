@@ -11,34 +11,37 @@ export interface DashboardProject {
   unverifiedCount?: number
 }
 
-export async function getDashboardProjects(): Promise<DashboardProject[]> {
-  const configReader = new ConfigReader()
+export async function getDashboardProjects(
+  configReader: ConfigReader,
+): Promise<DashboardProject[]> {
   const names = (await configReader.readAllConfigs()).map((c) => c.name)
 
   const projects: DashboardProject[] = []
 
   for (const name of names) {
-    const config = await getDashboardContracts(name)
+    const config = await configReader.readConfig(name)
+    const discovery = await configReader.readDiscovery(name)
+    const contracts = getDashboardContracts(discovery, config)
 
     const project: DashboardProject = {
       name,
-      discoveredCount: config.length,
-      initialAddressesCount: config.filter((c) => c.isInitial).length,
-      watchedCount: config
+      discoveredCount: contracts.length,
+      initialAddressesCount: contracts.filter((c) => c.isInitial).length,
+      watchedCount: contracts
         .map((c) => c.watched?.length ?? 0)
         .reduce((a, b) => a + b, 0),
-      ignoredInWatchModeCount: config
+      ignoredInWatchModeCount: contracts
         .map((c) => c.ignoreInWatchMode?.length ?? 0)
         .reduce((a, b) => a + b, 0),
-      ignoredCount: config
+      ignoredCount: contracts
         .map((c) => c.ignoreMethods?.length ?? 0)
         .reduce((a, b) => a + b, 0),
-      notHandledCount: config
+      notHandledCount: contracts
         .map((c) => c.notHandled?.length ?? 0)
         .reduce((a, b) => a + b, 0),
       unverifiedCount:
-        config.filter((c) => c.isUnverified).length > 0
-          ? config.filter((c) => c.isUnverified).length
+        contracts.filter((c) => c.isUnverified).length > 0
+          ? contracts.filter((c) => c.isUnverified).length
           : undefined,
     }
 

@@ -13,6 +13,7 @@ import { Config } from '../../config'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
+import { ConfigReader } from '../../core/discovery/ConfigReader'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { ReportUpdater } from '../../core/reports/ReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
@@ -69,6 +70,7 @@ export function createTvlModule(
     http,
     logger,
   )
+  const configReader = new ConfigReader()
 
   // #endregion
   // #region updaters
@@ -125,6 +127,7 @@ export function createTvlModule(
     clock,
     config.tvl.tokens,
     config.projects,
+    configReader,
   )
   const dydxController = new DydxController(aggregateReportRepository)
 

@@ -2,6 +2,7 @@ import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
+import { ConfigReader } from '../../../core/discovery/ConfigReader'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
@@ -27,10 +28,11 @@ export class StatusController {
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly projects: Project[],
+    private readonly configReader: ConfigReader,
   ) {}
 
   async getDiscoveryDashboard(): Promise<string> {
-    const projects = await getDashboardProjects()
+    const projects = await getDashboardProjects(this.configReader)
     const projectsList = this.projects.map((p) => p.projectId.toString())
 
     return renderDashboardPage({
@@ -40,7 +42,9 @@ export class StatusController {
   }
 
   async getDiscoveryDashboardProject(project: string): Promise<string> {
-    const contracts = await getDashboardContracts(project)
+    const discovery = await this.configReader.readDiscovery(project)
+    const config = await this.configReader.readConfig(project)
+    const contracts = getDashboardContracts(discovery, config)
 
     return renderDashboardProjectPage({
       projectName: project,
