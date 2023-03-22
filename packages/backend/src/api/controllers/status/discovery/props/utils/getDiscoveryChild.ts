@@ -9,11 +9,16 @@ export function getDiscoveryChild(
   contract: ContractParameters,
   v: ContractValue,
 ): string | undefined {
-  const i = discovery.contracts.find((c) => c.address.toString() === v)
+  const discoveryChild = discovery.contracts.find(
+    (c) => c.address.toString() === v,
+  )
 
-  if (i === undefined || i.address.toString() === contract.address.toString()) {
+  if (
+    discoveryChild === undefined ||
+    discoveryChild.address.toString() === contract.address.toString()
+  ) {
     return undefined
   }
 
-  return i.address.toString()
+  return discoveryChild.address.toString()
 }
