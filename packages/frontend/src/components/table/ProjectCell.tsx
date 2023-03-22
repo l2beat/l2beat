@@ -36,7 +36,11 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
             L2
           </div>
         )}
-        <span className="text-base font-bold md:text-lg">{project.name}</span>
+        {project.name.length < 15 ? (
+          <span className="text-base font-bold md:text-lg">{project.name}</span>
+        ) : (
+          <span className="text-base font-bold md:text-lg">{project.name}</span>
+        )}
       </span>
       {project.isVerified === false && (
         <span className="pl-1.5">
@@ -58,20 +62,20 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
       {project.isArchived && (
         <span className="relative pl-1.5">
           <span
-            className="Tooltip inline-block"
+            className="Tooltip ml-1.5 inline-block"
             title={'This project is archived and no longer maintained.'}
           >
-            <ArchivedIcon className="absolute top-px h-4" />
+            <ArchivedIcon className="absolute top-px left-1.5 h-4" />
           </span>
         </span>
       )}
       {project.isUpcoming && (
-        <span className="relative pl-1.5">
+        <span className="relative pl-2.5">
           <span
-            className="Tooltip inline-block"
+            className="Tooltip ml-0.5 inline-block"
             title={'This is an upcoming project. Stay tuned!'}
           >
-            <UpcomingIcon className="absolute top-px h-4" />
+            <UpcomingIcon className="absolute top-px left-0.5 h-4" />
           </span>
         </span>
       )}
