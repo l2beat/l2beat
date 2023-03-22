@@ -65,6 +65,7 @@ function getContract(
   }
 
   const viewABI = getViewABI(contract, discovery.abis)
+  const functionNames = abiToArray(viewABI)
 
   const ignoreInWatchMode = getIgnoreInWatchMode(
     contract,
@@ -73,9 +74,7 @@ function getContract(
     viewABI,
   )
 
-  const functionNames = abiToArray(viewABI)
-
-  const ignoreMethods = getIgnoredMethods(contract, config)
+  const ignoreMethods = getIgnoredMethods(contract, config, viewABI)
 
   const watched = getWatched(contract, discovery, ignoreInWatchMode)
 
@@ -83,10 +82,7 @@ function getContract(
 
   const rest: DashboardContractField[] = []
   for (const fn of functionNames) {
-    if (ignoreMethods?.map((i) => i.name).includes(fn.split('(')[0])) {
-      const index = ignoreMethods.map((i) => i.name).indexOf(fn.split('(')[0])
-      ignoreMethods[index].name = fn
-    } else if (watched?.map((i) => i.name).includes(fn.split('(')[0])) {
+    if (watched?.map((i) => i.name).includes(fn.split('(')[0])) {
       const index = watched.map((i) => i.name).indexOf(fn.split('(')[0])
       watched[index].name = fn
     } else {
