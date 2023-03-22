@@ -8,7 +8,7 @@ import { isArray } from 'lodash'
 import { getDiscoveryChild } from './getDiscoveryChild'
 import { DashboardContractField } from './getValues'
 
-export function getUpgradeability(
+export function getUpgradeabilityParams(
   upgradeability: UpgradeabilityParameters,
   discovery: ProjectParameters,
   contract: ContractParameters,

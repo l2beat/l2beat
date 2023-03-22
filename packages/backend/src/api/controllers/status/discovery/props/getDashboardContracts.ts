@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectParameters } from '@l2beat/shared'
 
 import { DiscoveryConfig } from '../../../../../core/discovery/DiscoveryConfig'
 import { getFunctions } from './utils/getFunctions'
-import { getUpgradeability } from './utils/getUpgradeability'
+import { getUpgradeabilityParams } from './utils/getUpgradeabilityParams'
 import { DashboardContractField, getValues } from './utils/getValues'
 
 export interface DashboardContract {
@@ -56,7 +56,7 @@ export function getDashboardContracts(
       return {
         name: contract.name,
         address: contract.address,
-        upgradeability: getUpgradeability(
+        upgradeability: getUpgradeabilityParams(
           contract.upgradeability,
           discovery,
           contract,
@@ -148,7 +148,7 @@ export function getDashboardContracts(
     return {
       name: contract.name,
       address: contract.address,
-      upgradeability: getUpgradeability(
+      upgradeability: getUpgradeabilityParams(
         contract.upgradeability,
         discovery,
         contract,
