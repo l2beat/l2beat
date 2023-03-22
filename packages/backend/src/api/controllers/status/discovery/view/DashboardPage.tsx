@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Page } from '../../view/Page'
 import { reactToHtml } from '../../view/reactToHtml'
-import { DashboardProject } from '../props/getProjects'
+import { DashboardProject } from '../props/getDashboardProjects'
 import { DASHBOARD_COLORS } from './constants'
 
 interface DashboardPageProps {
@@ -119,6 +119,6 @@ function TableData(props: { value?: number; color?: string }) {
   )
 }
 
-export function renderDiscoveryDashboard(props: DashboardPageProps) {
+export function renderDashboardPage(props: DashboardPageProps) {
   return reactToHtml(<DashboardPage {...props} />)
 }

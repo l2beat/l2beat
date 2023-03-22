@@ -2,7 +2,7 @@ import { default as React } from 'react'
 
 import { Page } from '../../view/Page'
 import { reactToHtml } from '../../view/reactToHtml'
-import { DashboardContract } from '../props/getProjectContracts'
+import { DashboardContract } from '../props/getDashboardContracts'
 import { Contract } from './components/Contract'
 import { UnverifiedContract } from './components/UnverifiedContract'
 
@@ -33,6 +33,6 @@ export function DashboardProjectPage(props: ConfigPageProps) {
   )
 }
 
-export function renderDiscoveryConfigPage(props: ConfigPageProps) {
+export function renderDashboardProjectPage(props: ConfigPageProps) {
   return reactToHtml(<DashboardProjectPage {...props} />)
 }

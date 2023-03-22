@@ -1,6 +1,6 @@
 import { default as React } from 'react'
 
-import { DashboardContractFieldValue } from '../../props/getProjectContracts'
+import { DashboardContractFieldValue } from '../../props/getDashboardContracts'
 
 interface ValueProps {
   value?: DashboardContractFieldValue

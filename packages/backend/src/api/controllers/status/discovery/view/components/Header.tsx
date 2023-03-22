@@ -1,8 +1,8 @@
 import { default as React } from 'react'
 
-import { DashboardContract } from '../../props/getProjectContracts'
+import { DashboardContract } from '../../props/getDashboardContracts'
 import { DASHBOARD_COLORS } from '../constants'
-import { ContractHref } from '../ContractHref'
+import { ContractHref } from './ContractHref'
 import { ContractName } from './ContractName'
 import { EtherscanLink } from './EtherscanLink'
 import { Field } from './Field'

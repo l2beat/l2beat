@@ -3,7 +3,7 @@ import { default as React } from 'react'
 import {
   DashboardContractField,
   DashboardContractFieldValue,
-} from '../../props/getProjectContracts'
+} from '../../props/getDashboardContracts'
 import { Value } from './Value'
 
 interface FieldProps {

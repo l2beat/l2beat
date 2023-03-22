@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { DashboardContract } from '../../props/getProjectContracts'
+import { DashboardContract } from '../../props/getDashboardContracts'
 import { Header } from './Header'
 import { Tab } from './Tab'
 

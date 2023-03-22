@@ -1,5 +1,5 @@
 import { ConfigReader } from '../../../../../core/discovery/ConfigReader'
-import { getProjectContracts } from './getProjectContracts'
+import { getDashboardContracts } from './getDashboardContracts'
 export interface DashboardProject {
   name: string
   discoveredCount?: number
@@ -11,14 +11,14 @@ export interface DashboardProject {
   unverifiedCount?: number
 }
 
-export async function getProjects(): Promise<DashboardProject[]> {
+export async function getDashboardProjects(): Promise<DashboardProject[]> {
   const configReader = new ConfigReader()
   const names = (await configReader.readAllConfigs()).map((c) => c.name)
 
   const projects: DashboardProject[] = []
 
   for (const name of names) {
-    const config = await getProjectContracts(name)
+    const config = await getDashboardContracts(name)
 
     const project: DashboardProject = {
       name,
