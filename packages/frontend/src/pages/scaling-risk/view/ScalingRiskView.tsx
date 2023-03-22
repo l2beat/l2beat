@@ -33,10 +33,7 @@ export interface ScalingRiskViewEntry {
   validatorFailure: ProjectRiskViewEntry
 }
 
-export function ScalingRiskView({
-  items,
-  upcomingEnabled,
-}: ScalingRiskViewProps) {
+export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
       name: '#',

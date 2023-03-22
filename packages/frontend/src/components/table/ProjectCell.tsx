@@ -56,22 +56,22 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
         </span>
       )}
       {project.isArchived && (
-        <span className="pl-1.5">
+        <span className="relative pl-1.5">
           <span
             className="Tooltip inline-block"
             title={'This project is archived and no longer maintained.'}
           >
-            <ArchivedIcon className="relative top-px h-4" />
+            <ArchivedIcon className="absolute top-px h-4" />
           </span>
         </span>
       )}
       {project.isUpcoming && (
-        <span className="pl-1.5">
+        <span className="relative pl-1.5">
           <span
             className="Tooltip inline-block"
             title={'This is an upcoming project. Stay tuned!'}
           >
-            <UpcomingIcon className="relative top-px h-4" />
+            <UpcomingIcon className="absolute top-px h-4" />
           </span>
         </span>
       )}
