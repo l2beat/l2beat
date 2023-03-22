@@ -1,6 +1,6 @@
 import { default as React } from 'react'
 
-import { DashboardContractField } from '../../props/getDashboardContracts'
+import { DashboardContractField } from '../../props/utils/getValues'
 import { Field } from './Field'
 
 interface SectionProps {
