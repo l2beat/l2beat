@@ -2,6 +2,7 @@ import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
+import { ConfigReader } from '../../../core/discovery/ConfigReader'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
@@ -11,6 +12,10 @@ import {
 } from '../../../peripherals/database/BalanceStatusRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
+import { getDashboardContracts } from './discovery/props/getDashboardContracts'
+import { getDashboardProjects } from './discovery/props/getDashboardProjects'
+import { renderDashboardPage } from './discovery/view/DashboardPage'
+import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
 import { renderBalancesPage } from './view/BalancesPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderReportsPage } from './view/ReportsPage'
@@ -23,7 +28,29 @@ export class StatusController {
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly projects: Project[],
+    private readonly configReader: ConfigReader,
   ) {}
+
+  async getDiscoveryDashboard(): Promise<string> {
+    const projects = await getDashboardProjects(this.configReader)
+    const projectsList = this.projects.map((p) => p.projectId.toString())
+
+    return renderDashboardPage({
+      projects,
+      projectsList,
+    })
+  }
+
+  async getDiscoveryDashboardProject(project: string): Promise<string> {
+    const discovery = await this.configReader.readDiscovery(project)
+    const config = await this.configReader.readConfig(project)
+    const contracts = getDashboardContracts(discovery, config)
+
+    return renderDashboardProjectPage({
+      projectName: project,
+      contracts,
+    })
+  }
 
   async getPricesStatus(
     from: UnixTime | undefined,

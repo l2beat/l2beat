@@ -6,7 +6,7 @@ import { RISK_VIEW } from './common'
 import { OMNICHAN_ESCROWS } from './lzOmnichain.escrows'
 import { Bridge } from './types'
 
-const discovery = new ProjectDiscovery('lzOmnichain')
+const discovery = new ProjectDiscovery('lzomnichain')
 
 export const lzOmnichain: Bridge = {
   type: 'bridge',
