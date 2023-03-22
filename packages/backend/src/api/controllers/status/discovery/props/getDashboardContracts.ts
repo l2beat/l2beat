@@ -3,6 +3,7 @@ import {
   EthereumAddress,
   ProjectParameters,
 } from '@l2beat/shared'
+import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../core/discovery/DiscoveryConfig'
 import { abiToArray } from './dashboardContracts/abiToArray'
@@ -12,7 +13,6 @@ import {
 } from './dashboardContracts/getDiscoveredBy'
 import { getIgnoredMethods } from './dashboardContracts/getIgnoredMethods'
 import { getIgnoreInWatchMode } from './dashboardContracts/getIgnoreInWatchMode'
-import { getOverrides } from './dashboardContracts/getOverrides'
 import { getWatched } from './dashboardContracts/getWatched'
 import { getViewABI } from './utils/getFunctions'
 import { getUpgradeabilityParams } from './utils/getUpgradeabilityParams'
@@ -23,12 +23,11 @@ export interface DashboardContract {
   address: EthereumAddress
   isInitial?: boolean
   discoveredBy: DiscoveredByInfo[]
-  upgradeability: DashboardContractField[]
+  upgradeabilityParams: DashboardContractField[]
   watched?: DashboardContractField[]
   ignoreInWatchMode?: DashboardContractField[]
   ignoreMethods?: DashboardContractField[]
   notHandled?: DashboardContractField[]
-  overrides?: string[]
   isUnverified?: boolean
   proxyType?: string
 }
@@ -51,7 +50,7 @@ function getContract(
 ) {
   const isInitial = config.initialAddresses.includes(contract.address)
   const discoveredBy = getDiscoveredBy(contract, discovery, config)
-  const upgradeability = getUpgradeabilityParams(contract, discovery)
+  const upgradeabilityParams = getUpgradeabilityParams(contract, discovery)
 
   if (contract.unverified) {
     return {
@@ -59,13 +58,12 @@ function getContract(
       address: contract.address,
       isInitial,
       discoveredBy,
-      upgradeability,
+      upgradeabilityParams,
       isUnverified: true,
     }
   }
 
   const viewABI = getViewABI(contract, discovery.abis)
-  const functionNames = abiToArray(viewABI)
 
   const ignoreInWatchMode = getIgnoreInWatchMode(
     contract,
@@ -73,34 +71,43 @@ function getContract(
     config,
     viewABI,
   )
-
   const ignoreMethods = getIgnoredMethods(contract, config, viewABI)
-
   const watched = getWatched(contract, discovery, config, viewABI)
-
-  const overrides = getOverrides(contract, config)
-
-  const rest: DashboardContractField[] = []
-  for (const fn of functionNames) {
-    if (watched?.map((i) => i.name).includes(fn.split('(')[0])) {
-      const index = watched.map((i) => i.name).indexOf(fn.split('(')[0])
-      watched[index].name = fn
-    } else {
-      rest.push({ name: fn })
-    }
-  }
+  const notHandled = getNotHandled(
+    viewABI,
+    ignoreInWatchMode,
+    ignoreMethods,
+    watched,
+  )
 
   return {
     name: contract.name,
     address: contract.address,
-    upgradeability,
+    upgradeabilityParams,
     ignoreInWatchMode,
     ignoreMethods,
     watched,
-    notHandled: rest.length > 0 ? rest : undefined,
-    overrides,
+    notHandled,
     proxyType: contract.upgradeability.type,
     isInitial,
     discoveredBy,
   }
+}
+
+function getNotHandled(
+  viewABI: ethers.utils.Interface,
+  ignoreInWatchMode: DashboardContractField[] | undefined,
+  ignoreMethods: DashboardContractField[] | undefined,
+  watched: DashboardContractField[] | undefined,
+): DashboardContractField[] | undefined {
+  const handled = (ignoreInWatchMode ?? [])
+    .map((field) => field.name)
+    .concat((ignoreMethods ?? []).map((field) => field.name))
+    .concat((watched ?? []).map((field) => field.name))
+
+  const notHandled = abiToArray(viewABI)
+    .filter((field) => !handled.includes(field))
+    .map((name) => ({ name }))
+
+  return notHandled
 }

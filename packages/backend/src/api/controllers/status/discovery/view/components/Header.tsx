@@ -23,10 +23,10 @@ export function Header(props: HeaderProps) {
       <p>
         <EtherscanLink address={props.contract.address} />
       </p>
-      {props.contract.upgradeability.length > 0 && (
+      {props.contract.upgradeabilityParams.length > 0 && (
         <blockquote>
           Proxy parameters:{' '}
-          {props.contract.upgradeability.map((u, index) => (
+          {props.contract.upgradeabilityParams.map((u, index) => (
             <Field field={u} color={DASHBOARD_COLORS.PROXY} key={index} />
           ))}
         </blockquote>
