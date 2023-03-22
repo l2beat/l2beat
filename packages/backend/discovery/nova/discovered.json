@@ -1,7 +1,7 @@
 {
   "name": "nova",
-  "blockNumber": 16874841,
-  "configHash": "0xb67ee169298679c0c91eec83372b7ea4f29641a3b1657f4c8a926fb20176e7e8",
+  "blockNumber": 16877108,
+  "configHash": "0x86eb21bdc033897a154c499c5cf551b118db6306dda858622f9e2599dea9afa5",
   "contracts": [
     {
       "name": "L1CustomGateway",
@@ -120,6 +120,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
+        "governanceChainInbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "l2Timelock": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
@@ -162,7 +164,7 @@
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
       "values": {
-        "batchCount": 10959,
+        "batchCount": 10974,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -173,7 +175,7 @@
           3600
         ],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 158823
+        "totalDelayedMessagesRead": 159256
       }
     },
     {
@@ -194,11 +196,11 @@
         "allowedOutboxList": [
           "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
         ],
-        "delayedMessageCount": 158850,
+        "delayedMessageCount": 159264,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 10959,
-        "sequencerReportedSubMessageCount": 3300768
+        "sequencerMessageCount": 10974,
+        "sequencerReportedSubMessageCount": 3321931
       }
     },
     {
@@ -290,12 +292,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 6116,
+        "firstUnresolvedNode": 6123,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 15184042,
-        "latestConfirmed": 6115,
-        "latestNodeCreated": 6268,
+        "latestConfirmed": 6122,
+        "latestNodeCreated": 6276,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -417,7 +419,6 @@
   "eoas": [
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
     "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-    "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
     "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
     "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
     "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
@@ -427,8 +428,6 @@
     "0x88910996671162953E89DdcE5C8137f9077da217",
     "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
     "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
-    "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
-    "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
     "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
     "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
     "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
