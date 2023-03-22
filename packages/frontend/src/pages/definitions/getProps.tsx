@@ -11,14 +11,14 @@ export function getProps(config: Config): Wrapped<DefinitionsPageProps> {
     props: {
       navbar: getNavbarProps(config, 'definitions'),
       title: 'Definitions',
-      htmlContent: getHtml(path.join(__dirname, 'ratings.md')),
+      htmlContent: getHtml(path.join(__dirname, 'marurity.md')),
       footer: getFooterProps(config),
     },
     wrapper: {
       metadata: {
         title: 'L2BEAT - Definitions',
         description:
-          'Definitions of rollup ratings used on L2BEAT. Learn more about the L2BEAT rollup ratings and how they are calculated.',
+          'Definitions of rollup maturity used on L2BEAT. Learn more about the L2BEAT rollup maturity and how is it calculated.',
         image: 'https://l2beat.com/meta-images/overview-scaling.png',
         url: 'https://l2beat.com/faq/',
       },
