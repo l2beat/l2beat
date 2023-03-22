@@ -1,21 +1,16 @@
-import {
-  ContractParameters,
-  ProjectParameters,
-  UpgradeabilityParameters,
-} from '@l2beat/shared'
+import { ContractParameters, ProjectParameters } from '@l2beat/shared'
 import { isArray } from 'lodash'
 
 import { getDiscoveryChild } from './getDiscoveryChild'
 import { DashboardContractField } from './getValues'
 
 export function getUpgradeabilityParams(
-  upgradeability: UpgradeabilityParameters,
-  discovery: ProjectParameters,
   contract: ContractParameters,
+  discovery: ProjectParameters,
 ): DashboardContractField[] {
   const result: DashboardContractField[] = []
 
-  Object.entries(upgradeability).forEach(([key, value]) => {
+  Object.entries(contract.upgradeability).forEach(([key, value]) => {
     if (key === 'type' || value === undefined) {
       return
     }

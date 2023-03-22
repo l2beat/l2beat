@@ -44,7 +44,7 @@ export function Field(props: FieldProps) {
       }}
     >
       <summary style={{ color: 'inherit', boxShadow: 'none' }}>
-        {props.field.name}
+        {props.field.name} ...
       </summary>
       <p style={{ margin: '0px' }}>
         {props.field.values.map((element, index) => (
