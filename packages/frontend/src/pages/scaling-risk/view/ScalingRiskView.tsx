@@ -86,7 +86,7 @@ export function ScalingRiskView({
 
   return (
     <section className="mt-4 sm:mt-8">
-      <ScalingTableFilters className="mb-4" upcomingEnabled={upcomingEnabled} />
+      <ScalingTableFilters className="mb-4" />
       <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>

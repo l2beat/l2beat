@@ -26,7 +26,7 @@ export function getScalingRowProps(entry: ScalingTableEntry) {
   return {
     className: cx(
       getRowVerificationClassNames(entry),
-      entry.isArchived && 'hidden opacity-65',
+      entry.isArchived && 'hidden opacity-[65%]',
       entry.isUpcoming &&
         cx(
           'hidden',

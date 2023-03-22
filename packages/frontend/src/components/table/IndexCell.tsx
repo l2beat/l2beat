@@ -1,7 +1,6 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 interface IndexCellProps {
   entry: {
     isUpcoming?: boolean
@@ -11,19 +10,7 @@ interface IndexCellProps {
   className?: string
 }
 
-export function IndexCell({ entry, className, index }: IndexCellProps) {
-  if (entry.isUpcoming === true) {
-    return null
-  }
-
-  if (entry.isArchived === true) {
-    return (
-      <span className={className}>
-        <ArchivedIcon />
-      </span>
-    )
-  }
-
+export function IndexCell({ className, index }: IndexCellProps) {
   return (
     <span
       className={cx(
