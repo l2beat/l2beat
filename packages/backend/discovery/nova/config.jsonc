@@ -42,7 +42,16 @@
       }
     },
     "0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
-      "ignoreMethods": ["governanceChainInbox", "l2Timelock"]
+      "ignoreRelatives": ["governanceChainInbox", "l2Timelock"]
+    },
+    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf": {
+      "ignoreRelatives": ["counterpartGateway"]
     }
   }
 }
