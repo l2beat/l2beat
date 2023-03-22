@@ -1,11 +1,9 @@
 import { Layer2Maturity } from '@l2beat/config'
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import { DetailsHeader, Link } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { MaturityBadge } from '../../../components/maturity/Badge'
-import { MaturityTooltipPopup } from '../../../components/maturity/TooltipPopup'
+import { MaturityCell } from '../../../components/table/MaturityCell'
 import { NoDataCell } from '../../../components/table/NoDataCell'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
@@ -80,18 +78,11 @@ export function ProjectHeader(props: ProjectHeaderProps) {
           {
             title: 'Maturity',
             value: (
-              <span
-                className="Tooltip"
-                title={renderToStaticMarkup(
-                  <MaturityTooltipPopup item={props.maturityEntry} />,
-                )}
-              >
-                <MaturityBadge
-                  category={props.maturityEntry.category.score}
-                  modifier={props.maturityEntry.modifier?.score}
-                  small
-                />
-              </span>
+              <MaturityCell
+                maturity={props.maturityEntry}
+                name={props.title}
+                technology={props.technology}
+              />
             ),
           },
         ]

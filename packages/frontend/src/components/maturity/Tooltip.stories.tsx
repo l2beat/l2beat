@@ -22,18 +22,18 @@ export function MaturityTooltip() {
   }, [])
 
   const item: Layer2Maturity = {
-    category: {
-      score: 'B',
-      requirements: ['There is an existing fraud proof system'],
-    },
-    modifier: {
-      score: '-',
-      items: ['Validators are behind a whitelist'],
-    },
-    thingsToImprove: {
-      improvedScore: 'A',
-      requirements: ['There should be no instant upgradeability'],
-    },
+    stage: 'Stage 2',
+    modifiers: [
+      {
+        value: 'Validators are behind a whitelist',
+        sentiment: 'warning',
+      },
+      {
+        value:
+          'The code that secures the system can be changed arbitrarily & without notice',
+        sentiment: 'bad',
+      },
+    ],
   }
 
   return (
@@ -41,7 +41,13 @@ export function MaturityTooltip() {
       <span
         ref={tooltipRef}
         className="Tooltip inline-block"
-        title={renderToStaticMarkup(<MaturityTooltipPopup item={item} />)}
+        title={renderToStaticMarkup(
+          <MaturityTooltipPopup
+            maturity={item}
+            name="Arbitrum"
+            technology="Optimistic Rollup"
+          />,
+        )}
         data-tooltip-big
       >
         <span>Element with tooltip</span>

@@ -1,46 +1,39 @@
-import { MaturityCategory, MaturityModifier } from '@l2beat/config'
+import { Layer2Maturity, MaturityStage } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared'
 import cx from 'classnames'
 import React from 'react'
 
 import { Badge } from '../badge/Badge'
 
 interface MaturityBadgeProps {
-  category: MaturityCategory
-  modifier?: MaturityModifier
-  small?: boolean
+  maturity?: Layer2Maturity
 }
 
-export function MaturityBadge({
-  category,
-  modifier,
-  small,
-}: MaturityBadgeProps) {
+export function MaturityBadge({ maturity }: MaturityBadgeProps) {
   return (
     <Badge
       className={cx(
-        getColorClassName(category),
-        'inline-block py-0.5 text-center text-lg leading-none',
-        small ? 'w-9' : 'w-10',
+        getColorClassName(maturity?.stage),
+        'inline-block w-[70px] whitespace-nowrap py-1 text-center text-sm uppercase leading-none',
       )}
       oneSize
     >
-      {category}
-      {modifier}
+      {maturity?.stage ?? '-'}
     </Badge>
   )
 }
 
-function getColorClassName(maturity: MaturityCategory): string {
-  switch (maturity) {
-    case 'A':
-      return 'bg-green-500 text-black'
-    case 'B':
-      return 'bg-yellow-100 text-black'
-    case 'C':
-      return 'bg-orange-500 text-black'
-    case 'D':
-      return 'bg-red-400 text-white'
-    case '-':
-      return 'bg-red-900 text-white'
+function getColorClassName(stage?: MaturityStage): string {
+  switch (stage) {
+    case 'Stage 0':
+      return 'bg-orange-400 text-black'
+    case 'Stage 1':
+      return 'bg-yellow-250 text-black'
+    case 'Stage 2':
+      return 'bg-green-800 text-white'
+    case undefined:
+      return 'bg-gray-100 dark:bg-gray-750'
+    default:
+      assertUnreachable(stage)
   }
 }

@@ -89,7 +89,11 @@ export function ScalingTvlView({
             getValue: (project: ScalingTvlViewEntry) =>
               !project.isArchived &&
               !project.isUpcoming && (
-                <MaturityCell item={project.maturityEntry} />
+                <MaturityCell
+                  maturity={project.maturityEntry}
+                  name={project.name}
+                  technology={project.technology}
+                />
               ),
           },
         ]

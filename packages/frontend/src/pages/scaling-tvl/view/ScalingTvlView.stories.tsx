@@ -66,18 +66,18 @@ export function TvlView() {
               technology: 'Optimistic Rollup',
               isVerified: false,
               maturityEntry: {
-                category: {
-                  score: 'B',
-                  requirements: ['There is an existing fraud proof system'],
-                },
-                modifier: {
-                  score: '-',
-                  items: ['Validators are behind a whitelist'],
-                },
-                thingsToImprove: {
-                  improvedScore: 'A',
-                  requirements: ['There should be no instant upgradeability'],
-                },
+                stage: 'Stage 2',
+                modifiers: [
+                  {
+                    value: 'Validators are behind a whitelist',
+                    sentiment: 'warning',
+                  },
+                  {
+                    value:
+                      'The code that secures the system can be changed arbitrarily & without notice',
+                    sentiment: 'bad',
+                  },
+                ],
               },
             },
             {

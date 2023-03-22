@@ -1,17 +1,9 @@
-export type MaturityCategory = 'A' | 'B' | 'C' | 'D' | '-'
-export type MaturityModifier = '--' | '-' | '+' | '++'
+export type MaturityStage = 'Stage 0' | 'Stage 1' | 'Stage 2'
 
 export interface Layer2Maturity {
-  category: {
-    score: MaturityCategory
-    requirements: string[]
-  }
-  modifier?: {
-    score: MaturityModifier
-    items: string[]
-  }
-  thingsToImprove?: {
-    improvedScore: MaturityCategory
-    requirements: string[]
-  }
+  stage: MaturityStage
+  modifiers: {
+    sentiment: 'bad' | 'warning'
+    value: string
+  }[]
 }
