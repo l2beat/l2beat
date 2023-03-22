@@ -123,7 +123,7 @@ export function getDashboardContracts(
       }
     }
 
-    const functions = getFunctions(discovery, contract.address)
+    const functions = getFunctions(contract, discovery.abis)
 
     const rest: DashboardContractField[] = []
     for (const fn of functions) {
