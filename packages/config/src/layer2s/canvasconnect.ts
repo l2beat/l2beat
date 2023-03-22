@@ -42,7 +42,14 @@ export const canvasconnect: Layer2 = {
     activityDataSource: 'Closed API',
   },
   config: {
-    escrows: [],
+    escrows: [
+      {
+        address: EthereumAddress('0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d'),
+        sinceTimestamp: new UnixTime(1675209600),
+        tokens: ['ETH','USDC'],
+      },
+
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
@@ -142,5 +149,5 @@ export const canvasconnect: Layer2 = {
     },
   ],
   milestones: [],
-  knowledgeNuggets: [...NUGGETS.STARKEX_NUGGETS],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }
