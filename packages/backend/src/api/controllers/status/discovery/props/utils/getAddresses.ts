@@ -42,9 +42,13 @@ export function gatherAddressesFromUpgradeability(
       result.push(item.userImplementation)
       result.push(item.implementation)
       break
-    case 'immutable':
     case 'gnosis safe':
+      result.push(item.masterCopy)
+      break
     case 'EIP2535 diamond proxy':
+      result.push(...item.facets)
+      break
+    case 'immutable':
       // Ignoring types because no (admin/user)implementation included in them
       break
     default:

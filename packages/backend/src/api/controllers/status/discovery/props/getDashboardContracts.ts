@@ -5,6 +5,7 @@ import {
 } from '@l2beat/shared'
 
 import { DiscoveryConfig } from '../../../../../core/discovery/DiscoveryConfig'
+import { abiToArray } from './dashboardContracts/abiToArray'
 import {
   DiscoveredByInfo,
   getDiscoveredBy,
@@ -13,7 +14,7 @@ import { getIgnoredMethods } from './dashboardContracts/getIgnoredMethods'
 import { getIgnoreInWatchMode } from './dashboardContracts/getIgnoreInWatchMode'
 import { getOverrides } from './dashboardContracts/getOverrides'
 import { getWatched } from './dashboardContracts/getWatched'
-import { getFunctions } from './utils/getFunctions'
+import { getViewABI } from './utils/getFunctions'
 import { getUpgradeabilityParams } from './utils/getUpgradeabilityParams'
 import { DashboardContractField } from './utils/getValues'
 
@@ -63,9 +64,16 @@ function getContract(
     }
   }
 
-  const functions = getFunctions(contract, discovery.abis)
+  const viewABI = getViewABI(contract, discovery.abis)
 
-  const ignoreInWatchMode = getIgnoreInWatchMode(contract, discovery, config)
+  const ignoreInWatchMode = getIgnoreInWatchMode(
+    contract,
+    discovery,
+    config,
+    viewABI,
+  )
+
+  const functionNames = abiToArray(viewABI)
 
   const ignoreMethods = getIgnoredMethods(contract, config)
 
@@ -74,17 +82,10 @@ function getContract(
   const overrides = getOverrides(contract, config)
 
   const rest: DashboardContractField[] = []
-  for (const fn of functions) {
+  for (const fn of functionNames) {
     if (ignoreMethods?.map((i) => i.name).includes(fn.split('(')[0])) {
       const index = ignoreMethods.map((i) => i.name).indexOf(fn.split('(')[0])
       ignoreMethods[index].name = fn
-    } else if (
-      ignoreInWatchMode?.map((i) => i.name).includes(fn.split('(')[0])
-    ) {
-      const index = ignoreInWatchMode
-        .map((i) => i.name)
-        .indexOf(fn.split('(')[0])
-      ignoreInWatchMode[index].name = fn
     } else if (watched?.map((i) => i.name).includes(fn.split('(')[0])) {
       const index = watched.map((i) => i.name).indexOf(fn.split('(')[0])
       watched[index].name = fn

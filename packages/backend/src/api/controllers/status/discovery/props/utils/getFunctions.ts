@@ -4,13 +4,13 @@ import { ethers } from 'ethers'
 import { concatAbis } from '../../../../../../core/discovery/concatAbis'
 import { getAddresses } from './getAddresses'
 
-export function getFunctions(
+export function getViewABI(
   contract: ContractParameters,
   discoveryABIs: Record<string, string[]>,
-): string[] {
+): ethers.utils.Interface {
   // contracts without values do not have ABI in discovery.json
   if (contract.values === undefined) {
-    return []
+    return new ethers.utils.Interface([])
   }
 
   const addresses = getAddresses(contract)
@@ -24,15 +24,11 @@ export function getFunctions(
           `Programmer Error: ABI for ${address.toString()} not found`,
         )
       }
-      return abi
+      return abi.filter((fn) => fn.includes(' view '))
     })
     .flat()
 
   const iface = new ethers.utils.Interface(concatAbis(...abis))
 
-  const functions = Object.entries(iface.functions)
-    .filter(([, fn]) => fn.stateMutability === 'view')
-    .map(([name]) => name)
-
-  return functions
+  return iface
 }
