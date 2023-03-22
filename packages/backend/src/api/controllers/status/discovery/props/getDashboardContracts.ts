@@ -76,7 +76,7 @@ function getContract(
 
   const ignoreMethods = getIgnoredMethods(contract, config, viewABI)
 
-  const watched = getWatched(contract, discovery, ignoreInWatchMode)
+  const watched = getWatched(contract, discovery, config, viewABI)
 
   const overrides = getOverrides(contract, config)
 
