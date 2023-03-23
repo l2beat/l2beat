@@ -1,7 +1,7 @@
 {
   "name": "nova",
-  "blockNumber": 16877108,
-  "configHash": "0x86eb21bdc033897a154c499c5cf551b118db6306dda858622f9e2599dea9afa5",
+  "blockNumber": 16889471,
+  "configHash": "0x3be60b6dd74dbb789961b12b35e38ba99ae896de4a3088e47ea4f95127c71983",
   "contracts": [
     {
       "name": "L1CustomGateway",
@@ -116,6 +116,36 @@
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x0000000000000000000000000000000000000000"
+            ]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x3666a60ff589873ced457a9a8a0aA6F83D708767"
+            ]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -164,7 +194,7 @@
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
       "values": {
-        "batchCount": 10974,
+        "batchCount": 11058,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -175,7 +205,7 @@
           3600
         ],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 159256
+        "totalDelayedMessagesRead": 160719
       }
     },
     {
@@ -196,11 +226,11 @@
         "allowedOutboxList": [
           "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
         ],
-        "delayedMessageCount": 159264,
+        "delayedMessageCount": 160736,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 10974,
-        "sequencerReportedSubMessageCount": 3321931
+        "sequencerMessageCount": 11058,
+        "sequencerReportedSubMessageCount": 3423029
       }
     },
     {
@@ -292,12 +322,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 6123,
+        "firstUnresolvedNode": 6165,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 15184042,
-        "latestConfirmed": 6122,
-        "latestNodeCreated": 6276,
+        "latestConfirmed": 6164,
+        "latestNodeCreated": 6318,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
