@@ -5,11 +5,10 @@ import {
   CoingeckoId,
   EthereumAddress,
   Logger,
-  mock,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared'
-import { expect, mockFn } from 'earljs'
+import { expect, mockFn, mockObject } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
 import {
@@ -29,7 +28,7 @@ describe(BalanceUpdater.name, () => {
     const NOW = UnixTime.now().toStartOf('hour')
 
     it('skips known timestamps', async () => {
-      const clock = mock<Clock>({
+      const clock = mockObject<Clock>({
         onEveryHour: (callback) => {
           callback(NOW.add(-1, 'hours'))
           callback(NOW)
@@ -39,17 +38,17 @@ describe(BalanceUpdater.name, () => {
         },
       })
 
-      const balanceStatusRepository = mock<BalanceStatusRepository>({
+      const balanceStatusRepository = mockObject<BalanceStatusRepository>({
         getByConfigHash: async () => [NOW, NOW.add(1, 'hours')],
         add: async (x) => x.configHash,
       })
-      const balanceRepository = mock<BalanceRepository>({
+      const balanceRepository = mockObject<BalanceRepository>({
         getByTimestamp: async () => [],
       })
 
       const balanceUpdater = new BalanceUpdater(
-        mock<MulticallClient>(),
-        mock<BlockNumberUpdater>(),
+        mockObject<MulticallClient>(),
+        mockObject<BlockNumberUpdater>(),
         balanceRepository,
         balanceStatusRepository,
         clock,
@@ -60,20 +59,15 @@ describe(BalanceUpdater.name, () => {
       await balanceUpdater.start()
 
       await waitForExpect(() => {
-        expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([
-          [
-            {
-              configHash: getBalanceConfigHash([]),
-              timestamp: NOW.add(2, 'hours'),
-            },
-          ],
-          [
-            {
-              configHash: getBalanceConfigHash([]),
-              timestamp: NOW.add(-1, 'hours'),
-            },
-          ],
-        ])
+        expect(balanceStatusRepository.add).toHaveBeenCalledTimes(2)
+        expect(balanceStatusRepository.add).toHaveBeenNthCalledWith(1, {
+          configHash: getBalanceConfigHash([]),
+          timestamp: NOW.add(2, 'hours'),
+        })
+        expect(balanceStatusRepository.add).toHaveBeenNthCalledWith(2, {
+          configHash: getBalanceConfigHash([]),
+          timestamp: NOW.add(-1, 'hours'),
+        })
       })
     })
   })
@@ -98,21 +92,21 @@ describe(BalanceUpdater.name, () => {
         },
       ]
 
-      const balanceRepository = mock<BalanceRepository>({
+      const balanceRepository = mockObject<BalanceRepository>({
         getByTimestamp: async (timestamp) => [
           { assetId: AssetId('baz'), timestamp, balance: 1n, holderAddress },
         ],
         addOrUpdateMany: async () => 0,
       })
-      const balanceStatusRepository = mock<BalanceStatusRepository>({
+      const balanceStatusRepository = mockObject<BalanceStatusRepository>({
         add: async (x) => x.configHash,
       })
       const balanceUpdater = new BalanceUpdater(
-        mock<MulticallClient>(),
-        mock<BlockNumberUpdater>(),
+        mockObject<MulticallClient>(),
+        mockObject<BlockNumberUpdater>(),
         balanceRepository,
         balanceStatusRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         projects,
         Logger.SILENT,
       )
@@ -127,21 +121,20 @@ describe(BalanceUpdater.name, () => {
       balanceUpdater.fetchBalances = fetchBalances
 
       await balanceUpdater.update(timestamp)
-      expect(fetchBalances).toHaveBeenCalledExactlyWith([
+      expect(fetchBalances).toHaveBeenOnlyCalledWith(
         [
-          [
-            { assetId: AssetId('foo'), holder: holderAddress },
-            { assetId: AssetId('bar'), holder: holderAddress },
-          ],
-          timestamp,
+          { assetId: AssetId('foo'), holder: holderAddress },
+          { assetId: AssetId('bar'), holder: holderAddress },
         ],
-      ])
-      expect(balanceRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-        [balances],
-      ])
-      expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([
-        [{ configHash: getBalanceConfigHash(projects), timestamp }],
-      ])
+        timestamp,
+      )
+      expect(balanceRepository.addOrUpdateMany).toHaveBeenOnlyCalledWith(
+        balances,
+      )
+      expect(balanceStatusRepository.add).toHaveBeenOnlyCalledWith({
+        configHash: getBalanceConfigHash(projects),
+        timestamp,
+      })
     })
 
     it('skips work if everything is known', async () => {
@@ -163,22 +156,22 @@ describe(BalanceUpdater.name, () => {
         },
       ]
 
-      const balanceRepository = mock<BalanceRepository>({
+      const balanceRepository = mockObject<BalanceRepository>({
         getByTimestamp: async (timestamp) => [
           { assetId: AssetId('foo'), timestamp, balance: 1n, holderAddress },
           { assetId: AssetId('bar'), timestamp, balance: 1n, holderAddress },
           { assetId: AssetId('baz'), timestamp, balance: 1n, holderAddress },
         ],
       })
-      const balanceStatusRepository = mock<BalanceStatusRepository>({
+      const balanceStatusRepository = mockObject<BalanceStatusRepository>({
         add: async (x) => x.configHash,
       })
       const balanceUpdater = new BalanceUpdater(
-        mock<MulticallClient>(),
-        mock<BlockNumberUpdater>(),
+        mockObject<MulticallClient>(),
+        mockObject<BlockNumberUpdater>(),
         balanceRepository,
         balanceStatusRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         projects,
         Logger.SILENT,
       )
@@ -186,29 +179,30 @@ describe(BalanceUpdater.name, () => {
       const timestamp = new UnixTime(2000)
 
       await balanceUpdater.update(timestamp)
-      expect(balanceStatusRepository.add).toHaveBeenCalledExactlyWith([
-        [{ configHash: getBalanceConfigHash(projects), timestamp }],
-      ])
+      expect(balanceStatusRepository.add).toHaveBeenOnlyCalledWith({
+        configHash: getBalanceConfigHash(projects),
+        timestamp,
+      })
     })
   })
 
   describe(BalanceUpdater.prototype.fetchBalances.name, () => {
     it('performs a multicall for missing data', async () => {
-      const multicallClient = mock<MulticallClient>({
+      const multicallClient = mockObject<MulticallClient>({
         multicall: async () => [
           { success: true, data: Bytes.fromNumber(69).padStart(32) },
           { success: true, data: Bytes.fromNumber(420).padStart(32) },
         ],
       })
-      const blockNumberUpdater = mock<BlockNumberUpdater>({
+      const blockNumberUpdater = mockObject<BlockNumberUpdater>({
         getBlockNumberWhenReady: async () => 1234,
       })
       const balanceUpdater = new BalanceUpdater(
         multicallClient,
         blockNumberUpdater,
-        mock<BalanceRepository>(),
-        mock<BalanceStatusRepository>(),
-        mock<Clock>(),
+        mockObject<BalanceRepository>(),
+        mockObject<BalanceStatusRepository>(),
+        mockObject<Clock>(),
         [],
         Logger.SILENT,
       )

@@ -1,5 +1,5 @@
-import { mock, ProjectId, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { ProjectId, UnixTime } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 
 import { SequenceProcessor } from '../SequenceProcessor'
 import { TransactionCounter } from './TransactionCounter'
@@ -57,5 +57,7 @@ describe(TransactionCounter.name, () => {
 })
 
 function mockProcessor(hasProcessedAll: boolean) {
-  return mock<SequenceProcessor>({ hasProcessedAll: () => hasProcessedAll })
+  return mockObject<SequenceProcessor>({
+    hasProcessedAll: () => hasProcessedAll,
+  })
 }

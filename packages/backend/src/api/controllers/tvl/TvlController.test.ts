@@ -3,12 +3,11 @@ import {
   AssetId,
   EthereumAddress,
   Logger,
-  mock,
   ProjectId,
   TvlApiChart,
   UnixTime,
 } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
@@ -38,9 +37,9 @@ describe(TvlController.name, () => {
   describe(TvlController.prototype.getProjectAssetChart.name, () => {
     it('returns undefined if project does not exist', async () => {
       const controller = new TvlController(
-        mock<ReportStatusRepository>(),
-        mock<AggregateReportRepository>(),
-        mock<ReportRepository>(),
+        mockObject<ReportStatusRepository>(),
+        mockObject<AggregateReportRepository>(),
+        mockObject<ReportRepository>(),
         [],
         [],
         Logger.SILENT,
@@ -54,9 +53,9 @@ describe(TvlController.name, () => {
 
     it('returns undefined if asset does not exist', async () => {
       const controller = new TvlController(
-        mock<ReportStatusRepository>(),
-        mock<AggregateReportRepository>(),
-        mock<ReportRepository>(),
+        mockObject<ReportStatusRepository>(),
+        mockObject<AggregateReportRepository>(),
+        mockObject<ReportRepository>(),
         [OPTIMISM],
         [],
         Logger.SILENT,
@@ -78,13 +77,13 @@ describe(TvlController.name, () => {
       }
 
       const controller = new TvlController(
-        mock<ReportStatusRepository>({
+        mockObject<ReportStatusRepository>({
           async findLatestTimestamp() {
             return START
           },
         }),
-        mock<AggregateReportRepository>(),
-        mock<ReportRepository>({
+        mockObject<AggregateReportRepository>(),
+        mockObject<ReportRepository>({
           getHourlyByProjectAndAsset: async () => [
             { ...baseReport, timestamp: START.add(-1, 'hours') },
             { ...baseReport, timestamp: START },

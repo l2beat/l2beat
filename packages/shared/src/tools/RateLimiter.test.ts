@@ -52,7 +52,7 @@ describe(RateLimiter.name, () => {
     }
     const promiseA = rateLimiter.call(fn)
     const promiseB = rateLimiter.call(fn)
-    await expect(promiseA).toBeRejected('oops')
-    await expect(promiseB).toBeRejected('oops')
+    await expect(promiseA).toBeRejectedWith('oops')
+    await expect(promiseB).toBeRejectedWith('oops')
   })
 })

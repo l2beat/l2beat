@@ -1,5 +1,5 @@
-import { EthereumAddress, Hash256, mock } from '@l2beat/shared'
-import { expect, mockFn } from 'earljs'
+import { EthereumAddress, Hash256 } from '@l2beat/shared'
+import { expect, mockFn, mockObject } from 'earljs'
 import { BigNumber, ethers, providers } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -27,7 +27,7 @@ describe(ConstructorArgsHandler.name, () => {
       const txHash = Hash256.random()
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         getContractDeploymentTx:
           mockFn<DiscoveryProvider['getContractDeploymentTx']>().resolvesTo(
             txHash,
@@ -38,8 +38,7 @@ describe(ConstructorArgsHandler.name, () => {
 
       const response = await handler.execute(provider, contractAddress)
 
-      // @todo fix any here once earl is updated
-      expect(response as any).toEqual({
+      expect(response).toEqual({
         field: 'constructorArgs',
         value: [
           'Pi Day N00b Token',
@@ -49,10 +48,10 @@ describe(ConstructorArgsHandler.name, () => {
           '0',
         ],
       })
-      expect(provider.getContractDeploymentTx).toHaveBeenCalledExactlyWith([
-        [contractAddress],
-      ])
-      expect(provider.getTransaction).toHaveBeenCalledExactlyWith([[txHash]])
+      expect(provider.getContractDeploymentTx).toHaveBeenOnlyCalledWith(
+        contractAddress,
+      )
+      expect(provider.getTransaction).toHaveBeenOnlyCalledWith(txHash)
     })
   })
 })
@@ -64,7 +63,7 @@ describe(decodeConstructorArgs.name, () => {
 
     const decoded = decodeConstructorArgs(ctor, sampleTxData)
 
-    expect(decoded).toBeAnObjectWith([
+    expect([...decoded]).toEqual([
       'Pi Day N00b Token',
       'PIE',
       18,
@@ -99,7 +98,7 @@ describe(decodeConstructorArgs.name, () => {
 
     const decoded = decodeConstructorArgs(ctor, txData)
 
-    expect(decoded).toBeAnObjectWith([
+    expect([...decoded]).toEqual([
       [
         '0x696cC7615A50CF12d1d1B38bF18A5606e9708296',
         '0x81165b6504520416487E5b4935865b4D3eeaa6e5',
@@ -122,10 +121,10 @@ describe('serializeResult', () => {
 
     const serialized = serializeResult(results)
 
-    expect(serialized as any).toEqual([
+    expect(serialized).toEqual([
       ['0x696cC7615A50CF12d1d1B38bF18A5606e9708296'],
       '3',
-    ]) // @todo type error in earl
+    ])
   })
 })
 
