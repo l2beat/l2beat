@@ -25,7 +25,7 @@ export const canvasconnect: Layer2 = {
     description:
       'Canvas Connect is a Layer 2 ZK network built on the StarkEx technology that aims to offer privacy-focused solutions for the finance and digital economy. It aims to enable the transfer, trade, and investment of tokenized real-world assets, stablecoins, CBDCs, and digital assets with assurances of privacy, low cost, and high speed.',
     purpose:
-      'Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
+      'RWA Trading',
     links: {
       websites: ['https://canvas.co/'],
       apps: [],
