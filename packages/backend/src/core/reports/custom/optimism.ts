@@ -1,8 +1,8 @@
 import { AssetId, ProjectId, UnixTime } from '@l2beat/shared'
 
-import { PriceRecord } from '../../peripherals/database/PriceRepository'
-import { ReportRecord } from '../../peripherals/database/ReportRepository'
-import { convertBalance } from './createReport'
+import { PriceRecord } from '../../../peripherals/database/PriceRepository'
+import { ReportRecord } from '../../../peripherals/database/ReportRepository'
+import { convertBalance } from '../createReport'
 
 export const OPTIMISM_PROJECT_ID = ProjectId('optimism')
 export const OP_TOKEN_SINCE_TIMESTAMP = UnixTime.fromDate(

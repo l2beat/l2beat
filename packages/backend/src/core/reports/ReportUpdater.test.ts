@@ -11,8 +11,8 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
+import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from './custom/optimism'
 import { getReportConfigHash } from './getReportConfigHash'
-import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from './optimism'
 import { ReportUpdater } from './ReportUpdater'
 
 describe(ReportUpdater.name, () => {
