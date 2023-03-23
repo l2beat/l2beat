@@ -37,7 +37,6 @@ export function ChartUpcoming({ mobileFull: fullWidth = false }: ChartProps) {
       >
         <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
           <h2 className="hidden text-3xl font-bold md:inline">Chart</h2>
-          <TvlActivityToggle />
         </div>
         <div className="flex flex-col justify-center gap-4">
           <div
