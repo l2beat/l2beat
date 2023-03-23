@@ -1,5 +1,5 @@
-import { EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -39,7 +39,7 @@ describe(AccessControlHandler.name, () => {
 
   it('no logs', async () => {
     const address = EthereumAddress.random()
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async getLogs(providedAddress, topics, fromBlock) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
@@ -63,7 +63,7 @@ describe(AccessControlHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
-    expect<unknown>(value).toEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {
@@ -87,7 +87,7 @@ describe(AccessControlHandler.name, () => {
     const Charlie = EthereumAddress.random()
 
     const address = EthereumAddress.random()
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async getLogs() {
         return [
           RoleGranted(WARRIOR_ROLE, Alice),
@@ -119,28 +119,28 @@ describe(AccessControlHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
-    expect<unknown>(value).toEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {
           adminRole: 'ROGUE_ROLE',
-          members: [Bob],
+          members: [Bob.toString()],
         },
         WARRIOR_ROLE: {
           adminRole: 'WIZARD_ROLE',
-          members: [Bob, Charlie, Alice],
+          members: [Bob.toString(), Charlie.toString(), Alice.toString()],
         },
         WIZARD_ROLE: {
           adminRole: 'DEFAULT_ADMIN_ROLE',
-          members: [Charlie],
+          members: [Charlie.toString()],
         },
         ROGUE_ROLE: {
           adminRole: GOBLIN_ROLE,
-          members: [Alice],
+          members: [Alice.toString()],
         },
         [GOBLIN_ROLE]: {
           adminRole: 'DEFAULT_ADMIN_ROLE',
-          members: [Charlie],
+          members: [Charlie.toString()],
         },
       },
       ignoreRelative: undefined,
@@ -149,7 +149,7 @@ describe(AccessControlHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = EthereumAddress.random()
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async getLogs() {
         return []
       },
@@ -165,7 +165,7 @@ describe(AccessControlHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
     const value = await handler.execute(provider, address)
-    expect<unknown>(value).toEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         DEFAULT_ADMIN_ROLE: {

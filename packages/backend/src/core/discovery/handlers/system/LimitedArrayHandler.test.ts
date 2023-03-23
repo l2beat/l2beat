@@ -1,5 +1,5 @@
-import { Bytes, EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { Bytes, EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -17,7 +17,7 @@ describe(LimitedArrayHandler.name, () => {
       EthereumAddress.random(),
     ]
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async call(passedAddress, data) {
         expect(passedAddress).toEqual(address)
 
@@ -37,9 +37,9 @@ describe(LimitedArrayHandler.name, () => {
     expect(handler.field).toEqual('owners')
 
     const result = await handler.execute(provider, address)
-    expect(result as unknown).toEqual({
+    expect(result).toEqual({
       field: 'owners',
-      value: owners,
+      value: owners.map((x) => x.toString()),
       error: 'Too many values. Update configuration explore fully',
     })
   })
@@ -52,7 +52,7 @@ describe(LimitedArrayHandler.name, () => {
       EthereumAddress.random(),
     ]
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async call(_, data) {
         const index = data.get(35)
 
@@ -68,9 +68,9 @@ describe(LimitedArrayHandler.name, () => {
 
     const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
     const result = await handler.execute(provider, address)
-    expect(result as unknown).toEqual({
+    expect(result).toEqual({
       field: 'owners',
-      value: owners.slice(0, 2),
+      value: owners.map((x) => x.toString()).slice(0, 2),
     })
   })
 
@@ -82,7 +82,7 @@ describe(LimitedArrayHandler.name, () => {
       EthereumAddress.random(),
     ]
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async call(_, data) {
         const index = data.get(35)
 
@@ -98,7 +98,7 @@ describe(LimitedArrayHandler.name, () => {
 
     const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
     const result = await handler.execute(provider, address)
-    expect(result as unknown).toEqual({
+    expect(result).toEqual({
       field: 'owners',
       error: 'foo bar',
     })

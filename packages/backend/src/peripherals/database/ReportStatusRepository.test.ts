@@ -37,8 +37,7 @@ describe(ReportStatusRepository.name, () => {
     expect(timestampsOne).toEqual([TIME_THREE])
 
     const timestampsTwo = await repository.getByConfigHash(HASH_TWO)
-    expect(timestampsTwo.length).toEqual(2)
-    expect(timestampsTwo).toBeAnArrayWith(TIME_ONE, TIME_TWO)
+    expect(timestampsTwo).toEqualUnsorted([TIME_ONE, TIME_TWO])
   })
 
   it('can add the same value multiple times', async () => {

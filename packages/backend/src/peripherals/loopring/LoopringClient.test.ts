@@ -1,5 +1,5 @@
-import { HttpClient, Logger, mock, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { HttpClient, Logger, UnixTime } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { LoopringClient } from './LoopringClient'
@@ -7,7 +7,7 @@ import { LoopringClient } from './LoopringClient'
 describe(LoopringClient.name, () => {
   describe(LoopringClient.prototype.getBlock.name, () => {
     it('gets block', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify({
@@ -28,25 +28,25 @@ describe(LoopringClient.name, () => {
     })
 
     it('throws for invalid schema', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () => new Response(JSON.stringify({ foo: 'bar' })),
       })
       const loopringClient = new LoopringClient(httpClient, Logger.SILENT)
 
-      await expect(loopringClient.getBlock(1)).toBeRejected(
+      await expect(loopringClient.getBlock(1)).toBeRejectedWith(
         TypeError,
         'Invalid Loopring response.',
       )
     })
 
     it('throws for http errors', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch() {
           return new Response('foo', { status: 400 })
         },
       })
       const loopringClient = new LoopringClient(httpClient, Logger.SILENT)
-      await expect(loopringClient.getBlock(1)).toBeRejected(
+      await expect(loopringClient.getBlock(1)).toBeRejectedWith(
         Error,
         'Http error 400: foo',
       )

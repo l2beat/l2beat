@@ -1,6 +1,5 @@
 import { bridges, layer2s } from '@l2beat/config'
 import { assert } from '@l2beat/shared'
-import { expect } from 'earljs'
 
 import { ConfigReader } from '../ConfigReader'
 import { DiscoveryConfig } from '../DiscoveryConfig'
@@ -23,10 +22,10 @@ describe('discovery config.jsonc', () => {
       ?.filter((c) => !projectIds.includes(c.name))
       .map((c) => c.name)
 
-    expect(notCorresponding, {
-      extraMessage:
-        'Following projects do not have the same name as ProjectIds',
-    }).toEqual([])
+    assert(
+      notCorresponding?.length === 0,
+      'Following projects do not have the same name as ProjectIds',
+    )
   })
 
   it(`every config name is equal to the name in discovery.json`, async () => {
@@ -39,10 +38,10 @@ describe('discovery config.jsonc', () => {
       }
     }
 
-    expect(notEqual, {
-      extraMessage:
-        'Following projects do not have the same name in config and discovery.json. Run "yarn discover <config.name>"',
-    }).toEqual([])
+    assert(
+      notEqual.length === 0,
+      'Following projects do not have the same name in config and discovery.json. Run "yarn discover <config.name>"',
+    )
   })
 
   it('fields inside ignoreInWatchMode exists in discovery', async function () {
@@ -80,9 +79,13 @@ describe('discovery config.jsonc', () => {
 
         const ignore = override.ignoreInWatchMode
         const values = Object.keys(contract.values)
-        const extraMessage = `${errorPrefix} - [${ignore.join(',')}]`
 
-        expect(values, { extraMessage }).toBeAnArrayWith(...ignore)
+        assert(
+          ignore.every((x) => values.includes(x)),
+          `${errorPrefix} - [${ignore.join(
+            ',',
+          )}] - fields do not exist in discovery.json`,
+        )
       }
     }
   })
@@ -98,21 +101,20 @@ describe('discovery config.jsonc', () => {
         outdatedHashes.push(config.name)
       }
     }
-    expect(outdatedHashes, {
-      extraMessage:
-        'Following projects have outdated hashes. Run "yarn discover <config.name>',
-    }).toEqual([])
+    assert(
+      outdatedHashes.length === 0,
+      'Following projects have outdated hashes. Run "yarn discover <config.name>',
+    )
   })
 
   it('discovery.json does not include errors', async () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(config.name)
 
-      const extraMessage = `${config.name} discovery.json includes errors. Run "yarn discover ${config.name}".`
-      expect(
+      assert(
         discovery.contracts.every((c) => c.errors === undefined),
-        { extraMessage },
-      ).toEqual(true)
+        `${config.name} discovery.json includes errors. Run "yarn discover ${config.name}".`,
+      )
     }
   })
 })

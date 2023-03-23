@@ -1,5 +1,5 @@
-import { Logger, mock, MockedObject, ProjectId, UnixTime } from '@l2beat/shared'
-import { expect, mockFn } from 'earljs'
+import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
+import { expect, mockFn, mockObject } from 'earljs'
 
 import { Clock } from '../Clock'
 import { SequenceProcessor } from '../SequenceProcessor'
@@ -26,10 +26,10 @@ describe(TransactionCountingMonitor.name, () => {
 
       await monitor.checkIfSynced()
 
-      expect(logger.error).toHaveBeenCalledExactlyWith([])
-      expect(logger.info).toHaveBeenCalledExactlyWith([
-        ['Skipping sync check - too early'],
-      ])
+      expect(logger.error).not.toHaveBeenCalled()
+      expect(logger.info).toHaveBeenOnlyCalledWith(
+        'Skipping sync check - too early',
+      )
     })
 
     it('does not log error if synced', async () => {
@@ -55,37 +55,37 @@ describe(TransactionCountingMonitor.name, () => {
 
       await monitor.checkIfSynced()
 
-      expect(logger.error).toHaveBeenCalledExactlyWith([])
-      expect(logger.info).toHaveBeenCalledExactlyWith([
-        ['Sync check started'],
-        [
-          'Transaction counter sync check result',
-          {
-            syncInfos: [
-              {
-                hasProcessedAll: true,
-                lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
-                projectId: projectIdA,
-                isSynced: true,
-              },
-              {
-                hasProcessedAll: false,
-                lastDayWithData: startOfToday.toYYYYMMDD(),
-                projectId: projectIdB,
-                isSynced: true,
-              },
-            ],
-            today: startOfToday.toYYYYMMDD(),
-          },
-        ],
-        [
-          'All transaction counters are synced',
-          {
-            today: startOfToday.toYYYYMMDD(),
-          },
-        ],
-        ['Sync check finished'],
-      ])
+      expect(logger.error).not.toHaveBeenCalled()
+
+      expect(logger.info).toHaveBeenCalledTimes(4)
+      expect(logger.info).toHaveBeenNthCalledWith(1, 'Sync check started')
+      expect(logger.info).toHaveBeenNthCalledWith(
+        2,
+        'Transaction counter sync check result',
+        {
+          syncInfos: [
+            {
+              hasProcessedAll: true,
+              lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
+              projectId: projectIdA,
+              isSynced: true,
+            },
+            {
+              hasProcessedAll: false,
+              lastDayWithData: startOfToday.toYYYYMMDD(),
+              projectId: projectIdB,
+              isSynced: true,
+            },
+          ],
+          today: startOfToday.toYYYYMMDD(),
+        },
+      )
+      expect(logger.info).toHaveBeenNthCalledWith(
+        3,
+        'All transaction counters are synced',
+        { today: startOfToday.toYYYYMMDD() },
+      )
+      expect(logger.info).toHaveBeenNthCalledWith(4, 'Sync check finished')
     })
 
     it('logs error if at least one not synced', async () => {
@@ -112,37 +112,10 @@ describe(TransactionCountingMonitor.name, () => {
 
       await monitor.checkIfSynced()
 
-      expect(logger.error).toHaveBeenCalledExactlyWith([
-        [
-          {
-            syncInfo: {
-              counters: [
-                {
-                  hasProcessedAll: false,
-                  lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
-                  projectId: projectIdA,
-                  isSynced: false,
-                },
-                {
-                  hasProcessedAll: false,
-                  lastDayWithData: startOfToday.toYYYYMMDD(),
-                  projectId: projectIdB,
-                  isSynced: true,
-                },
-              ],
-              today: startOfToday.toYYYYMMDD(),
-            },
-          },
-          new Error('Not all transaction counters are synced'),
-        ],
-      ])
-
-      expect(logger.info).toHaveBeenCalledExactlyWith([
-        ['Sync check started'],
-        [
-          'Transaction counter sync check result',
-          {
-            syncInfos: [
+      expect(logger.error).toHaveBeenOnlyCalledWith(
+        {
+          syncInfo: {
+            counters: [
               {
                 hasProcessedAll: false,
                 lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
@@ -158,15 +131,40 @@ describe(TransactionCountingMonitor.name, () => {
             ],
             today: startOfToday.toYYYYMMDD(),
           },
-        ],
-        ['Sync check finished'],
-      ])
+        },
+        new Error('Not all transaction counters are synced'),
+      )
+
+      expect(logger.info).toHaveBeenCalledTimes(3)
+      expect(logger.info).toHaveBeenNthCalledWith(1, 'Sync check started')
+      expect(logger.info).toHaveBeenNthCalledWith(
+        2,
+        'Transaction counter sync check result',
+        {
+          syncInfos: [
+            {
+              hasProcessedAll: false,
+              lastDayWithData: lastProcessedTimestampA.toYYYYMMDD(),
+              projectId: projectIdA,
+              isSynced: false,
+            },
+            {
+              hasProcessedAll: false,
+              lastDayWithData: startOfToday.toYYYYMMDD(),
+              projectId: projectIdB,
+              isSynced: true,
+            },
+          ],
+          today: startOfToday.toYYYYMMDD(),
+        },
+      )
+      expect(logger.info).toHaveBeenNthCalledWith(3, 'Sync check finished')
     })
   })
 })
 
 // Not ideal, because looses type information
-// I could not make it work with mock<Logger> - it kept requiring specific overload type of `Logger.info`
+// I could not make it work with mockObject<Logger> - it kept requiring specific overload type of `Logger.info`
 function mockLogger(): Logger & {
   info: ReturnType<typeof mockFn>
   error: ReturnType<typeof mockFn>
@@ -178,8 +176,8 @@ function mockLogger(): Logger & {
   return logger
 }
 
-function mockClock(lastHour: UnixTime): MockedObject<Clock> {
-  return mock<Clock>({ getLastHour: () => lastHour })
+function mockClock(lastHour: UnixTime): ReturnType<typeof mockObject<Clock>> {
+  return mockObject<Clock>({ getLastHour: () => lastHour })
 }
 
 function fakeCounter({
@@ -191,7 +189,7 @@ function fakeCounter({
   hasProcessedAll: boolean
   lastProcessedTimestamp: UnixTime
 }): TransactionCounter {
-  const processor = mock<SequenceProcessor>({
+  const processor = mockObject<SequenceProcessor>({
     hasProcessedAll: () => hasProcessedAll,
   })
   return new TransactionCounter(

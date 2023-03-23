@@ -4,10 +4,9 @@ import {
   EthereumAddress,
   getTimestamps,
   HttpClient,
-  mock,
   UnixTime,
 } from '@l2beat/shared'
-import { expect, mockFn } from 'earljs'
+import { expect, mockFn, mockObject } from 'earljs'
 
 import {
   COINGECKO_HOURLY_MAX_SPAN_IN_DAYS,
@@ -20,7 +19,7 @@ import {
 describe(CoingeckoQueryService.name, () => {
   describe(CoingeckoQueryService.prototype.getUsdPriceHistory.name, () => {
     it('is called with correct parameters', async () => {
-      const coingeckoClient = mock<CoingeckoClient>({
+      const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           marketCaps: [],
           totalVolumes: [],
@@ -39,23 +38,19 @@ describe(CoingeckoQueryService.name, () => {
         UnixTime.fromDate(new Date('2022-01-01')).add(5, 'minutes'),
         'daily',
       )
-      expect(
-        coingeckoClient.getCoinMarketChartRange,
-      ).toHaveBeenCalledExactlyWith([
-        [
-          CoingeckoId('weth'),
-          'usd',
-          UnixTime.fromDate(new Date('2021-01-01')).add(-12, 'hours'),
-          UnixTime.fromDate(new Date('2022-01-01')).add(12, 'hours'),
-          undefined,
-        ],
-      ])
+      expect(coingeckoClient.getCoinMarketChartRange).toHaveBeenOnlyCalledWith(
+        CoingeckoId('weth'),
+        'usd',
+        UnixTime.fromDate(new Date('2021-01-01')).add(-12, 'hours'),
+        UnixTime.fromDate(new Date('2022-01-01')).add(12, 'hours'),
+        undefined,
+      )
     })
 
     it('handles regular days range returned from API', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-      const coingeckoClient = mock<CoingeckoClient>({
+      const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
             { date: START.toDate(), price: 1200 },
@@ -83,7 +78,7 @@ describe(CoingeckoQueryService.name, () => {
     it('handles multiple calls to get hourly', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-      const coingeckoClient = mock<CoingeckoClient>({
+      const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn()
           .returnsOnce({
             prices: [
@@ -142,7 +137,7 @@ describe(CoingeckoQueryService.name, () => {
     it('handles duplicates in data returned from API', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-      const coingeckoClient = mock<CoingeckoClient>({
+      const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
             { date: START.toDate(), price: 1200 },
@@ -174,7 +169,7 @@ describe(CoingeckoQueryService.name, () => {
     it('handles irregular days range returned from API', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-      const coingeckoClient = mock<CoingeckoClient>({
+      const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
             { date: START.add(-2, 'hours').toDate(), price: 1200 },
@@ -209,7 +204,7 @@ describe(CoingeckoQueryService.name, () => {
     it('handles unsorted days range returned from API', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-      const coingeckoClient = mock<CoingeckoClient>({
+      const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinMarketChartRange: mockFn().returns({
           prices: [
             { date: START.add(1, 'days').toDate(), price: 1000 },
@@ -244,24 +239,20 @@ describe(CoingeckoQueryService.name, () => {
 
   describe(CoingeckoQueryService.prototype.getCoinIds.name, () => {
     it('called with correct parameters', async () => {
-      const coingeckoClient = mock<CoingeckoClient>({
+      const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinList: mockFn().returns([]),
       })
 
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
       await coingeckoQueryService.getCoinIds()
-      expect(coingeckoClient.getCoinList).toHaveBeenCalledExactlyWith([
-        [
-          {
-            includePlatform: true,
-          },
-        ],
-      ])
+      expect(coingeckoClient.getCoinList).toHaveBeenOnlyCalledWith({
+        includePlatform: true,
+      })
     })
 
     it('list of coingeckoIds', async () => {
-      const coingeckoClient = mock<CoingeckoClient>({
+      const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinList: mockFn().returns([
           {
             id: CoingeckoId('aave'),
@@ -313,7 +304,7 @@ describe(CoingeckoQueryService.name, () => {
     })
 
     it('coin does not have ethereum address', async () => {
-      const coingeckoClient = mock<CoingeckoClient>({
+      const coingeckoClient = mockObject<CoingeckoClient>({
         getCoinList: mockFn().returns([
           {
             id: CoingeckoId('aave'),

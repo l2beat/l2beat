@@ -1,5 +1,5 @@
-import { EthereumAddress, Logger, mock } from '@l2beat/shared'
-import { expect, mockFn } from 'earljs'
+import { EthereumAddress, Logger } from '@l2beat/shared'
+import { expect, mockFn, mockObject } from 'earljs'
 import { providers } from 'ethers'
 
 import { EthereumClient } from './EthereumClient'
@@ -7,7 +7,10 @@ import { EthereumClient } from './EthereumClient'
 describe(EthereumClient.name, () => {
   describe(EthereumClient.prototype.getAllLogs.name, () => {
     it('divides on two calls', async () => {
-      const provider = mock<providers.Provider>({
+      const provider = mockObject<providers.Provider>({
+        call: mockFn(),
+        getBlock: mockFn(),
+        getBlockNumber: mockFn(),
         getLogs: mockFn()
           .throwsOnce(new Error('Log response size exceeded'))
           .returnsOnce([])
@@ -20,36 +23,32 @@ describe(EthereumClient.name, () => {
       const topic = 'aaaa'
       await ethereumClient.getAllLogs(address, topic, 1000, 2000)
 
-      expect(provider.getLogs).toHaveBeenCalledExactlyWith([
-        [
-          {
-            address: address.toString(),
-            topics: [topic],
-            fromBlock: 1000,
-            toBlock: 2000,
-          },
-        ],
-        [
-          {
-            address: address.toString(),
-            topics: [topic],
-            fromBlock: 1000,
-            toBlock: 1500,
-          },
-        ],
-        [
-          {
-            address: address.toString(),
-            topics: [topic],
-            fromBlock: 1501,
-            toBlock: 2000,
-          },
-        ],
-      ])
+      expect(provider.getLogs).toHaveBeenCalledTimes(3)
+      expect(provider.getLogs).toHaveBeenNthCalledWith(1, {
+        address: address.toString(),
+        topics: [topic],
+        fromBlock: 1000,
+        toBlock: 2000,
+      })
+      expect(provider.getLogs).toHaveBeenNthCalledWith(2, {
+        address: address.toString(),
+        topics: [topic],
+        fromBlock: 1000,
+        toBlock: 1500,
+      })
+      expect(provider.getLogs).toHaveBeenNthCalledWith(3, {
+        address: address.toString(),
+        topics: [topic],
+        fromBlock: 1501,
+        toBlock: 2000,
+      })
     })
 
     it('correctly divides range of two', async () => {
-      const provider = mock<providers.Provider>({
+      const provider = mockObject<providers.Provider>({
+        call: mockFn(),
+        getBlock: mockFn(),
+        getBlockNumber: mockFn(),
         getLogs: mockFn()
           .throwsOnce(new Error('Log response size exceeded'))
           .returnsOnce([])
@@ -62,36 +61,32 @@ describe(EthereumClient.name, () => {
       const topic = 'aaaa'
       await ethereumClient.getAllLogs(address, topic, 1, 2)
 
-      expect(provider.getLogs).toHaveBeenCalledExactlyWith([
-        [
-          {
-            address: address.toString(),
-            topics: [topic],
-            fromBlock: 1,
-            toBlock: 2,
-          },
-        ],
-        [
-          {
-            address: address.toString(),
-            topics: [topic],
-            fromBlock: 1,
-            toBlock: 1,
-          },
-        ],
-        [
-          {
-            address: address.toString(),
-            topics: [topic],
-            fromBlock: 2,
-            toBlock: 2,
-          },
-        ],
-      ])
+      expect(provider.getLogs).toHaveBeenCalledTimes(3)
+      expect(provider.getLogs).toHaveBeenNthCalledWith(1, {
+        address: address.toString(),
+        topics: [topic],
+        fromBlock: 1,
+        toBlock: 2,
+      })
+      expect(provider.getLogs).toHaveBeenNthCalledWith(2, {
+        address: address.toString(),
+        topics: [topic],
+        fromBlock: 1,
+        toBlock: 1,
+      })
+      expect(provider.getLogs).toHaveBeenNthCalledWith(3, {
+        address: address.toString(),
+        topics: [topic],
+        fromBlock: 2,
+        toBlock: 2,
+      })
     })
 
     it('fromBlock === toBlock', async () => {
-      const provider = mock<providers.Provider>({
+      const provider = mockObject<providers.Provider>({
+        call: mockFn(),
+        getBlock: mockFn(),
+        getBlockNumber: mockFn(),
         getLogs: mockFn().throwsOnce(new Error('Log response size exceeded')),
       })
 
@@ -104,16 +99,12 @@ describe(EthereumClient.name, () => {
         ethereumClient.getAllLogs(address, topic, 1, 1),
       ).toBeRejected()
 
-      expect(provider.getLogs).toHaveBeenCalledExactlyWith([
-        [
-          {
-            address: address.toString(),
-            topics: [topic],
-            fromBlock: 1,
-            toBlock: 1,
-          },
-        ],
-      ])
+      expect(provider.getLogs).toHaveBeenOnlyCalledWith({
+        address: address.toString(),
+        topics: [topic],
+        fromBlock: 1,
+        toBlock: 1,
+      })
     })
   })
 })
