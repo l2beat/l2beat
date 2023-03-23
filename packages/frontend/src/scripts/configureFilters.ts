@@ -77,11 +77,6 @@ function renderNumbers() {
     document.querySelectorAll('[data-role="row"]'),
   ).filter((r) => !r.classList.contains('hidden'))
 
-  if (visibleRows.length === 0) {
-    console.error('Programming error: no rows found')
-    return
-  }
-
   visibleRows.forEach((r, index) => {
     const indexCell = r.querySelector('[data-role="index-cell"]')
     if (!indexCell) {
