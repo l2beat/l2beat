@@ -31,7 +31,7 @@ export function getScalingRowProps(entry: ScalingTableEntry) {
         cx(
           'hidden',
           'border-b-white bg-purple-300/80 hover:bg-purple-300',
-          'dark:bg-purple-500 dark:hover:bg-purple-100',
+          'dark:bg-purple-500/40 dark:hover:bg-purple-100',
         ),
     ),
     href,
