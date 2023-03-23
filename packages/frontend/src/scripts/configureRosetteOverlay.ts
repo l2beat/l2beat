@@ -1,9 +1,8 @@
 export function configureRosetteOverlay() {
   const isHoverDisabled = document.querySelector<HTMLElement>(
-    '[data-rosette-hover-disabled]',
-  )?.dataset.rosetteHoverDisabled
-
-  if (isHoverDisabled === 'true') {
+    '[data-rosette-hover-disabled="true"]',
+  )
+  if (isHoverDisabled) {
     console.debug('Rosette hover disabled')
     return
   }

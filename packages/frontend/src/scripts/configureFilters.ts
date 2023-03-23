@@ -67,6 +67,12 @@ export function configureFilters() {
 // because only configureFilters changes the numbering of the rows
 // in the future maybe this should be a separate script with its own eventListener
 function renderNumbers() {
+  const isTableVisible = document.querySelector('[data-role="table"]')
+  if (!isTableVisible) {
+    console.debug('triggered renderNumbers() | table not visible')
+    return
+  }
+
   const visibleRows = Array.from(
     document.querySelectorAll('[data-row]'),
   ).filter((r) => !r.classList.contains('hidden'))
@@ -85,7 +91,7 @@ function renderNumbers() {
     indexCell.innerHTML = `${index + 1}`
   })
 
-  console.debug('triggered renderNumbers()', {
+  console.debug('triggered renderNumbers() |', {
     visibleRowsLength: visibleRows.length,
   })
 }
