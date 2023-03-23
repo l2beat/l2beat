@@ -4,8 +4,8 @@ import { createAddCustomTokenReport } from './report'
 
 export const ARBITRUM_PROJECT_ID = ProjectId('arbitrum')
 // Ethereum block 16890400 timestamp
-export const ARB_TOKEN_SINCE_TIMESTAMP = new UnixTime(1679529671)
-export const ARB_TOKEN_ID = AssetId('arbitrum')
+export const ARB_TOKEN_SINCE_TIMESTAMP = new UnixTime(1679572871)
+export const ARB_TOKEN_ID = AssetId('arb-arbitrum')
 const ARB_TOKEN_DECIMALS = 18
 // This is the circulating supply of ARB as given by Coingecko.
 // The value is obtained by looking at how many tokens have been designated

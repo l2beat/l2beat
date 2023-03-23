@@ -23,8 +23,6 @@ export const nova: Layer2 = {
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
-    warning:
-      'The DAO is not yet deployed, so all the upgrade power lays in the hands of the Security Council.',
     description:
       'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
     purpose: 'Universal',
