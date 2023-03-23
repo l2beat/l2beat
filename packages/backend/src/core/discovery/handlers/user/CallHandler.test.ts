@@ -1,5 +1,5 @@
-import { Bytes, EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { Bytes, EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -188,7 +188,7 @@ describe(CallHandler.name, () => {
     const address = EthereumAddress.random()
 
     it('calls the method with the provided parameters', async () => {
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           expect(data).toEqual(
@@ -208,7 +208,7 @@ describe(CallHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'add',
         value: 3,
         ignoreRelative: undefined,
@@ -216,7 +216,7 @@ describe(CallHandler.name, () => {
     })
 
     it('calls the method with the resolved parameters', async () => {
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           expect(data).toEqual(
@@ -239,7 +239,7 @@ describe(CallHandler.name, () => {
         foo: { field: 'foo', value: 1 },
         bar: { field: 'bar', value: 2 },
       })
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'add',
         value: 3,
         ignoreRelative: undefined,
@@ -247,7 +247,7 @@ describe(CallHandler.name, () => {
     })
 
     it('handles errors', async () => {
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async call() {
           throw new Error('oops')
         },
@@ -260,7 +260,7 @@ describe(CallHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'add',
         error: 'oops',
         ignoreRelative: undefined,
@@ -268,7 +268,7 @@ describe(CallHandler.name, () => {
     })
 
     it('passes ignoreRelative', async () => {
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async call() {
           return Bytes.fromHex('3'.padStart(64, '0'))
         },
@@ -281,7 +281,7 @@ describe(CallHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'add',
         value: 3,
         ignoreRelative: true,

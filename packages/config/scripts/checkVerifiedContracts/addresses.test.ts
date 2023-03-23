@@ -20,9 +20,12 @@ describe('checkVerifiedContracts:addresses', () => {
     ])
 
     for (const contract of allContracts) {
-      expect(verifiedJson.contracts[contract.toString()], {
-        extraMessage: `\n\nNot all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()}`,
-      }).toBeDefined()
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (verifiedJson.contracts[contract.toString()] === undefined) {
+        throw new Error(
+          `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()}`,
+        )
+      }
     }
   })
 

@@ -3,10 +3,9 @@ import {
   CoingeckoId,
   EthereumAddress,
   Logger,
-  mock,
   UnixTime,
 } from '@l2beat/shared'
-import { expect, mockFn } from 'earljs'
+import { expect, mockFn, mockObject } from 'earljs'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
@@ -28,7 +27,7 @@ describe(PriceUpdater.name, () => {
 
   describe(PriceUpdater.prototype.start.name, () => {
     it('triggers update now and on every new hour', async () => {
-      const clock = mock<Clock>({
+      const clock = mockObject<Clock>({
         onNewHour(callback) {
           callback(HOUR_10)
           callback(HOUR_11)
@@ -36,8 +35,8 @@ describe(PriceUpdater.name, () => {
         },
       })
       const priceUpdater = new PriceUpdater(
-        mock<CoingeckoQueryService>(),
-        mock<PriceRepository>(),
+        mockObject<CoingeckoQueryService>(),
+        mockObject<PriceRepository>(),
         clock,
         [],
         Logger.SILENT,
@@ -48,7 +47,7 @@ describe(PriceUpdater.name, () => {
       priceUpdater.start()
 
       await waitForExpect(() => {
-        expect(update.calls.length).toEqual(3)
+        expect(update).toHaveBeenCalledTimes(3)
       })
     })
   })
@@ -59,18 +58,18 @@ describe(PriceUpdater.name, () => {
       const prices: PriceRecord[] = [
         { assetId: AssetId.ETH, priceUsd: 1000.0, timestamp: HOUR_10 },
       ]
-      const priceRepository = mock<PriceRepository>({
+      const priceRepository = mockObject<PriceRepository>({
         findDataBoundaries: mockFn().returns(
           new Map([[AssetId.ETH, { earliest: HOUR_10, latest: HOUR_12 }]]),
         ),
         getByTimestamp: async () => prices,
       })
-      const clock = mock<Clock>({
+      const clock = mockObject<Clock>({
         getFirstHour: () => HOUR_10,
         getLastHour: () => HOUR_12,
       })
       const priceUpdater = new PriceUpdater(
-        mock<CoingeckoQueryService>(),
+        mockObject<CoingeckoQueryService>(),
         priceRepository,
         clock,
         tokens,
@@ -86,18 +85,18 @@ describe(PriceUpdater.name, () => {
       const prices: PriceRecord[] = [
         { assetId: AssetId.ETH, priceUsd: 1000.0, timestamp: HOUR_10 },
       ]
-      const priceRepository = mock<PriceRepository>({
+      const priceRepository = mockObject<PriceRepository>({
         findDataBoundaries: mockFn().returns(
           new Map([[AssetId.ETH, { earliest: HOUR_10, latest: HOUR_12 }]]),
         ),
         getByTimestamp: async () => prices,
       })
-      const clock = mock<Clock>({
+      const clock = mockObject<Clock>({
         getFirstHour: () => HOUR_10,
         getLastHour: () => HOUR_12,
       })
       const priceUpdater = new PriceUpdater(
-        mock<CoingeckoQueryService>(),
+        mockObject<CoingeckoQueryService>(),
         priceRepository,
         clock,
         tokens,
@@ -128,7 +127,7 @@ describe(PriceUpdater.name, () => {
         fakeToken(AssetId.WETH),
       ]
 
-      const priceRepository = mock<PriceRepository>({
+      const priceRepository = mockObject<PriceRepository>({
         findDataBoundaries: mockFn().returns(
           new Map([
             [tokens[0].id, { earliest: HOUR_10, latest: HOUR_12 }],
@@ -138,11 +137,11 @@ describe(PriceUpdater.name, () => {
         addMany: mockFn().returns([]),
       })
 
-      const coingeckoQueryService = mock<CoingeckoQueryService>({
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
         getUsdPriceHistory: mockFn().returns([]),
       })
 
-      const clock = mock<Clock>({
+      const clock = mockObject<Clock>({
         getFirstHour: () => HOUR_09,
         getLastHour: () => HOUR_13,
       })
@@ -156,38 +155,39 @@ describe(PriceUpdater.name, () => {
       )
 
       await priceUpdater.update()
-      expect(
-        coingeckoQueryService.getUsdPriceHistory,
-      ).toHaveBeenCalledExactlyWith([
-        [
-          tokens[0].coingeckoId,
-          HOUR_09.add(-7, 'days'),
-          HOUR_09,
-          'hourly',
-          tokens[0].address,
-        ],
-        [
-          tokens[1].coingeckoId,
-          HOUR_13.add(-7, 'days'),
-          HOUR_13,
-          'hourly',
-          tokens[1].address,
-        ],
-        [
-          tokens[2].coingeckoId,
-          HOUR_09.add(-7, 'days'),
-          HOUR_13,
-          'hourly',
-          tokens[2].address,
-        ],
-        [
-          tokens[0].coingeckoId,
-          HOUR_13.add(-7, 'days'),
-          HOUR_13,
-          'hourly',
-          tokens[0].address,
-        ],
-      ])
+      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenCalledTimes(4)
+      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
+        1,
+        tokens[0].coingeckoId,
+        HOUR_09.add(-7, 'days'),
+        HOUR_09,
+        'hourly',
+        tokens[0].address,
+      )
+      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
+        2,
+        tokens[1].coingeckoId,
+        HOUR_13.add(-7, 'days'),
+        HOUR_13,
+        'hourly',
+        tokens[1].address,
+      )
+      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
+        3,
+        tokens[2].coingeckoId,
+        HOUR_09.add(-7, 'days'),
+        HOUR_13,
+        'hourly',
+        tokens[2].address,
+      )
+      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
+        4,
+        tokens[0].coingeckoId,
+        HOUR_13.add(-7, 'days'),
+        HOUR_13,
+        'hourly',
+        tokens[0].address,
+      )
     })
   })
 
@@ -195,21 +195,21 @@ describe(PriceUpdater.name, () => {
     const TOKEN_ID = AssetId('uni-uniswap')
     const TOKEN_COINGECKO_ID = CoingeckoId('uniswap')
 
-    let coingeckoQueryService = mock<CoingeckoQueryService>()
+    let coingeckoQueryService = mockObject<CoingeckoQueryService>()
     let priceUpdater: PriceUpdater
 
     beforeEach(() => {
-      const priceRepository = mock<PriceRepository>({
+      const priceRepository = mockObject<PriceRepository>({
         findDataBoundaries: mockFn().returns(new Map()),
         addMany: mockFn().returns([]),
       })
-      coingeckoQueryService = mock<CoingeckoQueryService>({
+      coingeckoQueryService = mockObject<CoingeckoQueryService>({
         getUsdPriceHistory: mockFn().returns([]),
       })
       priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         [fakeToken(TOKEN_ID, TOKEN_COINGECKO_ID)],
         Logger.SILENT,
       )
@@ -221,15 +221,13 @@ describe(PriceUpdater.name, () => {
 
         expect(
           coingeckoQueryService.getUsdPriceHistory,
-        ).toHaveBeenCalledExactlyWith([
-          [
-            TOKEN_COINGECKO_ID,
-            HOUR_09.add(-7, 'days'),
-            HOUR_13,
-            'hourly',
-            undefined,
-          ],
-        ])
+        ).toHaveBeenOnlyCalledWith(
+          TOKEN_COINGECKO_ID,
+          HOUR_09.add(-7, 'days'),
+          HOUR_13,
+          'hourly',
+          undefined,
+        )
       })
     })
 
@@ -244,15 +242,13 @@ describe(PriceUpdater.name, () => {
 
         expect(
           coingeckoQueryService.getUsdPriceHistory,
-        ).toHaveBeenCalledExactlyWith([
-          [
-            TOKEN_COINGECKO_ID,
-            HOUR_09.add(-7, 'days'),
-            HOUR_09,
-            'hourly',
-            undefined,
-          ],
-        ])
+        ).toHaveBeenOnlyCalledWith(
+          TOKEN_COINGECKO_ID,
+          HOUR_09.add(-7, 'days'),
+          HOUR_09,
+          'hourly',
+          undefined,
+        )
       })
 
       it('13:00', async () => {
@@ -260,50 +256,57 @@ describe(PriceUpdater.name, () => {
 
         expect(
           coingeckoQueryService.getUsdPriceHistory,
-        ).toHaveBeenCalledExactlyWith([
-          [
-            TOKEN_COINGECKO_ID,
-            HOUR_13.add(-7, 'days'),
-            HOUR_13,
-            'hourly',
-            undefined,
-          ],
-        ])
+        ).toHaveBeenOnlyCalledWith(
+          TOKEN_COINGECKO_ID,
+          HOUR_13.add(-7, 'days'),
+          HOUR_13,
+          'hourly',
+          undefined,
+        )
       })
 
       it('11:00', async () => {
         await priceUpdater.updateToken(TOKEN_ID, BOUNDARY, HOUR_11, HOUR_11)
 
-        expect(coingeckoQueryService.getUsdPriceHistory.calls.length).toEqual(0)
+        expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenCalledTimes(
+          0,
+        )
       })
 
       it('9:00 - 13:00', async () => {
         await priceUpdater.updateToken(TOKEN_ID, BOUNDARY, HOUR_09, HOUR_13)
 
+        expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenCalledTimes(
+          2,
+        )
         expect(
           coingeckoQueryService.getUsdPriceHistory,
-        ).toHaveBeenCalledExactlyWith([
-          [
-            TOKEN_COINGECKO_ID,
-            HOUR_09.add(-7, 'days'),
-            HOUR_09,
-            'hourly',
-            undefined,
-          ],
-          [
-            TOKEN_COINGECKO_ID,
-            HOUR_13.add(-7, 'days'),
-            HOUR_13,
-            'hourly',
-            undefined,
-          ],
-        ])
+        ).toHaveBeenNthCalledWith(
+          1,
+          TOKEN_COINGECKO_ID,
+          HOUR_09.add(-7, 'days'),
+          HOUR_09,
+          'hourly',
+          undefined,
+        )
+        expect(
+          coingeckoQueryService.getUsdPriceHistory,
+        ).toHaveBeenNthCalledWith(
+          2,
+          TOKEN_COINGECKO_ID,
+          HOUR_13.add(-7, 'days'),
+          HOUR_13,
+          'hourly',
+          undefined,
+        )
       })
 
       it('10:00 - 12:00', async () => {
         await priceUpdater.updateToken(TOKEN_ID, BOUNDARY, HOUR_10, HOUR_12)
 
-        expect(coingeckoQueryService.getUsdPriceHistory.calls.length).toEqual(0)
+        expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenCalledTimes(
+          0,
+        )
       })
     })
   })
@@ -312,7 +315,7 @@ describe(PriceUpdater.name, () => {
     it('query coingecko and save to DB', async () => {
       const from = UnixTime.fromDate(new Date('2021-09-07T09:00:00Z'))
 
-      const coingeckoQueryService = mock<CoingeckoQueryService>({
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
         getUsdPriceHistory: mockFn().returnsOnce([
           { value: 100, timestamp: from, deltaMs: 0 },
           { value: 100, timestamp: from.add(1, 'hours'), deltaMs: 0 },
@@ -320,7 +323,7 @@ describe(PriceUpdater.name, () => {
         ]),
       })
 
-      const priceRepository = mock<PriceRepository>({
+      const priceRepository = mockObject<PriceRepository>({
         addMany: mockFn().returns([]),
       })
       const tokens = [fakeToken(AssetId('uni-uniswap'))]
@@ -328,45 +331,37 @@ describe(PriceUpdater.name, () => {
       const priceUpdater = new PriceUpdater(
         coingeckoQueryService,
         priceRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         tokens,
         Logger.SILENT,
       )
 
       await priceUpdater.fetchAndSave(tokens[0].id, from, from.add(2, 'hours'))
 
-      expect(
-        coingeckoQueryService.getUsdPriceHistory,
-      ).toHaveBeenCalledExactlyWith([
-        [
-          tokens[0].coingeckoId,
-          from.add(-7, 'days'),
-          from.add(2, 'hours'),
-          'hourly',
-          undefined,
-        ],
-      ])
+      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenOnlyCalledWith(
+        tokens[0].coingeckoId,
+        from.add(-7, 'days'),
+        from.add(2, 'hours'),
+        'hourly',
+        undefined,
+      )
 
-      expect(priceRepository.addMany).toHaveBeenCalledExactlyWith([
-        [
-          [
-            {
-              assetId: tokens[0].id,
-              priceUsd: 100,
-              timestamp: from,
-            },
-            {
-              assetId: tokens[0].id,
-              priceUsd: 100,
-              timestamp: from.add(1, 'hours'),
-            },
-            {
-              assetId: tokens[0].id,
-              priceUsd: 100,
-              timestamp: from.add(2, 'hours'),
-            },
-          ],
-        ],
+      expect(priceRepository.addMany).toHaveBeenOnlyCalledWith([
+        {
+          assetId: tokens[0].id,
+          priceUsd: 100,
+          timestamp: from,
+        },
+        {
+          assetId: tokens[0].id,
+          priceUsd: 100,
+          timestamp: from.add(1, 'hours'),
+        },
+        {
+          assetId: tokens[0].id,
+          priceUsd: 100,
+          timestamp: from.add(2, 'hours'),
+        },
       ])
     })
   })

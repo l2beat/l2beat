@@ -1,5 +1,5 @@
-import { Logger, mock } from '@l2beat/shared'
-import { expect, mockFn } from 'earljs'
+import { Logger } from '@l2beat/shared'
+import { expect, mockFn, mockObject } from 'earljs'
 import waitForExpect from 'wait-for-expect'
 
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
@@ -50,25 +50,25 @@ describe(ReportUpdater.name, () => {
 
   describe(ReportUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
-      const priceUpdater = mock<PriceUpdater>({
+      const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
           .returnsOnce(FUTURE_PRICES)
           .returnsOnce(PRICES),
       })
-      const balanceUpdater = mock<BalanceUpdater>({
+      const balanceUpdater = mockObject<BalanceUpdater>({
         getBalancesWhenReady: mockFn()
           .returnsOnce(FUTURE_BALANCES)
           .returnsOnce(BALANCES),
       })
-      const reportRepository = mock<ReportRepository>({
+      const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
       })
 
-      const aggregateReportRepository = mock<AggregateReportRepository>({
+      const aggregateReportRepository = mockObject<AggregateReportRepository>({
         addOrUpdateMany: async () => 0,
       })
 
-      const reportStatusRepository = mock<ReportStatusRepository>({
+      const reportStatusRepository = mockObject<ReportStatusRepository>({
         getByConfigHash: async () => [],
         add: async ({ configHash }) => configHash,
       })
@@ -79,7 +79,7 @@ describe(ReportUpdater.name, () => {
         reportRepository,
         aggregateReportRepository,
         reportStatusRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         PROJECTS,
         Logger.SILENT,
       )
@@ -88,44 +88,60 @@ describe(ReportUpdater.name, () => {
       await reportUpdater.update(NOW)
 
       const configHash = getReportConfigHash(PROJECTS)
-      expect(reportStatusRepository.add).toHaveBeenCalledExactlyWith([
-        [{ configHash, timestamp: NOW.add(1, 'hours') }],
-        [{ configHash, timestamp: NOW }],
-      ])
-      expect(reportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-        [FUTURE_REPORTS],
-        [REPORTS],
-      ])
-      expect(
-        aggregateReportRepository.addOrUpdateMany,
-      ).toHaveBeenCalledExactlyWith([
-        [FUTURE_AGGREGATE_REPORTS],
-        [AGGREGATE_REPORTS],
-      ])
+
+      expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
+      expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
+        configHash,
+        timestamp: NOW.add(1, 'hours'),
+      })
+      expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
+        configHash,
+        timestamp: NOW,
+      })
+
+      expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
+      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+        1,
+        FUTURE_REPORTS,
+      )
+      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+        2,
+        REPORTS,
+      )
+
+      expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
+      expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+        1,
+        FUTURE_AGGREGATE_REPORTS,
+      )
+      expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+        2,
+        AGGREGATE_REPORTS,
+      )
     })
   })
 
   describe(ReportUpdater.prototype.start.name, () => {
     it('skips known timestamps', async () => {
-      const priceUpdater = mock<PriceUpdater>({
+      const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
           .returnsOnce(FUTURE_PRICES)
           .returnsOnce(PRICES),
       })
-      const balanceUpdater = mock<BalanceUpdater>({
+      const balanceUpdater = mockObject<BalanceUpdater>({
         getBalancesWhenReady: mockFn()
           .returnsOnce(FUTURE_BALANCES)
           .returnsOnce(BALANCES),
       })
-      const reportRepository = mock<ReportRepository>({
+      const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
       })
 
-      const aggregateReportRepository = mock<AggregateReportRepository>({
+      const aggregateReportRepository = mockObject<AggregateReportRepository>({
         addOrUpdateMany: async () => 0,
       })
 
-      const reportStatusRepository = mock<ReportStatusRepository>({
+      const reportStatusRepository = mockObject<ReportStatusRepository>({
         getByConfigHash: async () => [
           NOW.add(-1, 'hours'),
           NOW.add(2, 'hours'),
@@ -133,7 +149,7 @@ describe(ReportUpdater.name, () => {
         add: async ({ configHash }) => configHash,
       })
 
-      const clock = mock<Clock>({
+      const clock = mockObject<Clock>({
         onEveryHour: (callback) => {
           callback(NOW.add(-1, 'hours'))
           callback(NOW)
@@ -158,22 +174,36 @@ describe(ReportUpdater.name, () => {
 
       await waitForExpect(() => {
         const configHash = getReportConfigHash(PROJECTS)
-        expect(reportStatusRepository.add).toHaveBeenCalledExactlyWith([
-          [{ configHash, timestamp: NOW.add(1, 'hours') }],
-          [{ configHash, timestamp: NOW }],
-        ])
 
-        expect(reportRepository.addOrUpdateMany).toHaveBeenCalledExactlyWith([
-          [FUTURE_REPORTS],
-          [REPORTS],
-        ])
+        expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
+        expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
+          configHash,
+          timestamp: NOW.add(1, 'hours'),
+        })
+        expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
+          configHash,
+          timestamp: NOW,
+        })
 
+        expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
+        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+          1,
+          FUTURE_REPORTS,
+        )
+        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+          2,
+          REPORTS,
+        )
+
+        expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenCalledTimes(
+          2,
+        )
         expect(
           aggregateReportRepository.addOrUpdateMany,
-        ).toHaveBeenCalledExactlyWith([
-          [FUTURE_AGGREGATE_REPORTS],
-          [AGGREGATE_REPORTS],
-        ])
+        ).toHaveBeenNthCalledWith(1, FUTURE_AGGREGATE_REPORTS)
+        expect(
+          aggregateReportRepository.addOrUpdateMany,
+        ).toHaveBeenNthCalledWith(2, AGGREGATE_REPORTS)
       })
     })
   })

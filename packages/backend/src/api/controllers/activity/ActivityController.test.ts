@@ -1,11 +1,10 @@
 import {
   ActivityApiChartPoint,
   ActivityApiResponse,
-  mock,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
 import { Clock } from '../../../core/Clock'
@@ -38,10 +37,10 @@ describe(ActivityController.name, () => {
         includedIds,
         counters,
         mockRepository([]),
-        mock<Clock>({ getLastHour: () => NOW }),
+        mockObject<Clock>({ getLastHour: () => NOW }),
       )
 
-      await expect(controller.getActivity()).toBeRejected(
+      await expect(controller.getActivity()).toBeRejectedWith(
         'Assertion Error: Ethereum missing in daily transaction count',
       )
     })
@@ -84,7 +83,7 @@ describe(ActivityController.name, () => {
             count: 2,
           },
         ]),
-        mock<Clock>({ getLastHour: () => NOW }),
+        mockObject<Clock>({ getLastHour: () => NOW }),
       )
 
       expect(await controller.getActivity()).toEqual(
@@ -156,7 +155,7 @@ describe(ActivityController.name, () => {
             count: 69,
           },
         ]),
-        mock<Clock>({ getLastHour: () => NOW }),
+        mockObject<Clock>({ getLastHour: () => NOW }),
       )
 
       expect(await controller.getActivity()).toEqual(
@@ -222,14 +221,14 @@ function mockCounter({
   hasProcessedAll: boolean
   projectId: ProjectId
 }) {
-  return mock<TransactionCounter>({
+  return mockObject<TransactionCounter>({
     hasProcessedAll: () => hasProcessedAll,
     projectId,
   })
 }
 
 function mockRepository(counts: DailyTransactionCountRecord[]) {
-  return mock<DailyTransactionCountViewRepository>({
+  return mockObject<DailyTransactionCountViewRepository>({
     getDailyCounts: async () => counts,
   })
 }

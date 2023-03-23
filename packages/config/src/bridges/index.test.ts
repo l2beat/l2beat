@@ -54,7 +54,7 @@ describe('bridges', () => {
           }
           for (const milestone of project.milestones) {
             it(`Milestone: ${milestone.name} (${project.display.name}) name is no longer than 50 characters`, () => {
-              expect(milestone.name.length).toBeLessThanOrEqualTo(50)
+              expect(milestone.name.length).toBeLessThanOrEqual(50)
             })
           }
         }
@@ -87,7 +87,9 @@ describe('bridges', () => {
               continue
             }
             it(`Milestone: ${milestone.name} (${project.display.name}) description is no longer than 100 characters`, () => {
-              expect(milestone.description?.length).toBeLessThanOrEqualTo(100)
+              expect(milestone.description?.length ?? 0).toBeLessThanOrEqual(
+                100,
+              )
             })
           }
         }
@@ -117,7 +119,7 @@ describe('bridges', () => {
       describe('title fits character limit', () => {
         knowledgeNuggets.forEach((nugget) => {
           it(nugget.title, () => {
-            expect(nugget.title.length).toBeLessThanOrEqualTo(40)
+            expect(nugget.title.length).toBeLessThanOrEqual(40)
           })
         })
       })
@@ -128,7 +130,7 @@ describe('bridges', () => {
           .filter((x) => x.thumbnail !== undefined)
           .forEach((nugget) => {
             it(nugget.title, () => {
-              expect(staticThumbnails).toBeAnArrayWith(nugget.thumbnail)
+              expect(staticThumbnails).toInclude(nugget.thumbnail!)
             })
           })
       })
