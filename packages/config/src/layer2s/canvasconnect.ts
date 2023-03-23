@@ -93,7 +93,7 @@ export const canvasconnect: Layer2 = {
       },
       SHARP_VERIFIER_CONTRACT,
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {
