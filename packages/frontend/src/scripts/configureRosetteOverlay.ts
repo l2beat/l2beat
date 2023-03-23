@@ -1,15 +1,11 @@
 export function configureRosetteOverlay() {
-  const isHoverDisabled = document.querySelector<HTMLElement>(
-    '[data-rosette-hover-disabled="true"]',
+  const rosettes = Array.from(
+    document.querySelectorAll<HTMLElement>('.Rosette'),
   )
-  if (isHoverDisabled) {
-    console.debug('Rosette hover disabled')
-    return
-  }
-
-  const rosettes = Array.from(document.querySelectorAll('.Rosette'))
 
   for (const rosette of rosettes) {
+    if (rosette.dataset.rosetteHoverDisabled) return
+
     const texts = Array.from(
       rosette.querySelectorAll<HTMLElement>('.Rosette-Text'),
     )

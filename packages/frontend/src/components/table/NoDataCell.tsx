@@ -13,7 +13,11 @@ export function NoDataCell(props: NoDataCellProps) {
     <Badge
       className={cx(props.className)}
       type="gray"
-      title="We don't have data for this item"
+      title={
+        props.isUpcoming
+          ? 'The project is not yet deployed on Ethereum Mainnet'
+          : "We don't have data for this item"
+      }
       oneSize
     >
       {props.isUpcoming ? 'Coming soon' : 'No data'}

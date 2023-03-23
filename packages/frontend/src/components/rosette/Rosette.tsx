@@ -82,7 +82,10 @@ interface BigRosetteProps {
 export function BigRosette({ risks, className, isUpcoming }: BigRosetteProps) {
   const riskSentiments = getRiskSentiments(risks)
   return (
-    <div className={cx('Rosette relative w-[272px] py-12 px-12', className)}>
+    <div
+      className={cx('Rosette relative w-[272px] py-12 px-12', className)}
+      data-rosette-hover-disabled={isUpcoming ?? false}
+    >
       <BigRosetteIcon risks={riskSentiments} isUpcoming={isUpcoming} />
       <span
         className="Rosette-Text absolute bottom-[30px] left-[31px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight"
@@ -152,7 +155,6 @@ function BigRosetteIcon({ risks, className, isUpcoming }: RosetteProps) {
         viewBox="0 0 181 180"
         className={cx(className, isUpcoming && 'opacity-20')}
         alt-text="Rosette showing risk summary"
-        data-rosette-hover-disabled={isUpcoming ?? false}
       >
         <circle
           cx="90.8408"
