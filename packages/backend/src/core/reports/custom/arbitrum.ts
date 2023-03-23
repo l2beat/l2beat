@@ -3,9 +3,8 @@ import { AssetId, ProjectId, UnixTime } from '@l2beat/shared'
 import { createAddCustomTokenReport } from './report'
 
 export const ARBITRUM_PROJECT_ID = ProjectId('arbitrum')
-export const ARB_TOKEN_SINCE_TIMESTAMP = UnixTime.fromDate(
-  new Date('2023-03-23'),
-)
+// Ethereum block 16890400 timestamp
+export const ARB_TOKEN_SINCE_TIMESTAMP = new UnixTime(1679529671)
 export const ARB_TOKEN_ID = AssetId('arbitrum')
 const ARB_TOKEN_DECIMALS = 18
 // This is the circulating supply of ARB as given by Coingecko.
