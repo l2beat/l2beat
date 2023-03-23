@@ -37,6 +37,6 @@ export function getScalingRowProps(entry: ScalingTableEntry) {
     href,
     'data-archived': entry.isArchived,
     'data-upcoming': entry.isUpcoming,
-    'data-row': entry.slug,
+    'data-role': 'row',
   }
 }

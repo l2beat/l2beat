@@ -16,7 +16,7 @@ export function IndexCell({ className }: IndexCellProps) {
         'text-xs font-medium text-gray-50 dark:font-normal dark:text-gray-600',
         className,
       )}
-      data-index-cell
+      data-role="index-cell"
     />
     // the number is set dynamically inside the client-side code
     // see renderNumbers() inside /packages/frontend/src/scripts/configureFilters.ts

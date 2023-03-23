@@ -74,7 +74,7 @@ function renderNumbers() {
   }
 
   const visibleRows = Array.from(
-    document.querySelectorAll('[data-row]'),
+    document.querySelectorAll('[data-role="row"]'),
   ).filter((r) => !r.classList.contains('hidden'))
 
   if (visibleRows.length === 0) {
@@ -83,7 +83,7 @@ function renderNumbers() {
   }
 
   visibleRows.forEach((r, index) => {
-    const indexCell = r.querySelector('[data-index-cell]')
+    const indexCell = r.querySelector('[data-role="index-cell"]')
     if (!indexCell) {
       console.error('Programming error: no index cell found', r)
       return
