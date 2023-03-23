@@ -2,7 +2,6 @@ import { Layer2Maturity, MaturityStage } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { sentimentToFillColor } from '../../utils/risks/color'
 import { ShieldIcon } from '../icons'
 import { MaturityBadge } from './Badge'
 
@@ -21,15 +20,24 @@ export function MaturityTooltipPopup({
     <div className="w-88 flex flex-col gap-4">
       <div>
         <MaturityBadge maturity={maturity} />
-        {stageToDescription(maturity.stage)}
+        <span className="ml-2">{stageToDescription(maturity.stage)}</span>
       </div>
       <div>
-        {name} is {maturity.stage} {technology}
+        <span className="font-bold">{name}</span> is{' '}
+        <span className={cx(stageToTextColor(maturity.stage), 'font-bold')}>
+          {maturity.stage}
+        </span>{' '}
+        {technology}
       </div>
       {maturity.modifiers.map((modifier) => (
-        <div className="flex">
+        <div className="flex gap-2.5">
           <ShieldIcon
-            className={cx('grow-0', sentimentToFillColor(modifier.sentiment))}
+            className={cx(
+              'h-4 grow-0',
+              modifier.sentiment === 'warning'
+                ? 'fill-yellow-700 dark:fill-yellow-300'
+                : 'fill-red-300',
+            )}
           />
           <p>{modifier.value}</p>
         </div>
@@ -46,5 +54,16 @@ function stageToDescription(stage: MaturityStage): string {
       return 'Some training wheels'
     case 'Stage 2':
       return 'No training wheels'
+  }
+}
+
+function stageToTextColor(stage: MaturityStage): string {
+  switch (stage) {
+    case 'Stage 0':
+      return 'text-red-300'
+    case 'Stage 1':
+      return 'text-yellow-200'
+    case 'Stage 2':
+      return 'text-green-800'
   }
 }
