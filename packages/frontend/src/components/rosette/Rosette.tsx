@@ -152,6 +152,7 @@ function BigRosetteIcon({ risks, className, isUpcoming }: RosetteProps) {
         viewBox="0 0 181 180"
         className={cx(className, isUpcoming && 'opacity-20')}
         alt-text="Rosette showing risk summary"
+        data-rosette-hover-disabled={isUpcoming ?? false}
       >
         <circle
           cx="90.8408"
