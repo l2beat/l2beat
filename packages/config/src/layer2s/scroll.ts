@@ -11,7 +11,7 @@ export const scroll: Layer2 = {
     name: 'Scroll',
     slug: 'scroll',
     description:
-      'Scroll will be an EVM compatible zkRollup on Ethereum. Currently it is deployed on the Goerli testnet.',
+      'Scroll is an EVM compatible zkRollup that has been designed for use on the Ethereum network. At present, it is undergoing further testing and optimization on the Goerli testnet before deployment.',
     purpose: 'Universal',
     links: {
       websites: ['https://scroll.io/'],

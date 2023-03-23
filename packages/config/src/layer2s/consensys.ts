@@ -11,7 +11,7 @@ export const consensys: Layer2 = {
     name: 'ConsenSys zkEVM',
     slug: 'consensys',
     description:
-      'Consensys zkEVM will be an EVM compatible zkRollup on Ethereum. Currently it is deployed on the Goerli testnet.',
+      'Consensys zkEVM is an EVM compatible zkRollup that has been designed for use on the Ethereum network. At present, it is undergoing further testing and optimization on the Goerli testnet before deployment.',
     purpose: 'Universal',
     links: {
       websites: ['https://consensys.net/zkevm/'],

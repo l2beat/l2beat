@@ -11,7 +11,7 @@ export const base: Layer2 = {
     name: 'Base',
     slug: 'base',
     description:
-      'Base will be an Optimistic Rollup deployed on Ethereum, built using OP Stack technology. Base is incubated within Coinbase and plans to progressively decentralize in the years ahead. Currently, Base is deployed on the Goerli testnet.',
+      'Base is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology. It is currently in the incubation phase at Coinbase and intends to gradually transition towards a more decentralized model over the coming years. At present, Base is deployed on the Goerli testnet for further testing and optimization.',
     purpose: 'Universal',
     links: {
       websites: ['https://base.org/'],

@@ -17,20 +17,26 @@ export function UpcomingDisclaimer({ className }: UpcomingDisclaimerProps) {
       body={
         <>
           <p>
-            This is an upcoming project. We are gathering data & conducting
-            in-depth research.
+            This project is currently in the development phase and is yet to be
+            launched on the Ethereum Mainnet.
           </p>
           <br />
           <p>
-            Shortly the project will be added to the active projects list along
-            detail information about risk, technology & other technical aspects.
+            Once the deployment process is complete, it will be added to the
+            list of active projects, along with comprehensive information
+            regarding risk, technology, and other technical aspects.
           </p>
           <br />
           Follow us on{' '}
-          <OutLink href={'#'} title="Twitter" className="text-link">
+          <OutLink
+            href={'https://twitter.com/l2beat'}
+            title="Twitter"
+            className="text-link"
+          >
             Twitter
           </OutLink>{' '}
-          to get news about the latest projects added.
+          to stay updated on the latest news regarding this and other Layer 2
+          projects.
         </>
       }
     />

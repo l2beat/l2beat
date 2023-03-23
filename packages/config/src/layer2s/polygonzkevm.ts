@@ -11,7 +11,7 @@ export const polygonzkevm: Layer2 = {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
     description:
-      'Polygon zkEVM will be an EVM compatible zkRollup on Ethereum. Currently it is deployed on the Goerli testnet.',
+      'Polygon zkEVM is an EVM compatible zkRollup that has been designed for use on the Ethereum network. At present, it is undergoing further testing and optimization on the Goerli testnet before deployment.',
     purpose: 'Universal',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
