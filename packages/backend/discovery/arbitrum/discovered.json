@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16877077,
-  "configHash": "0x59af3638472a0223a2ec901523744a2d8cf2554422e2f2bc67736da33b495170",
+  "blockNumber": 16888926,
+  "configHash": "0xd3acce9d7a113b06237f4081d7f9e0a04e74e75e7f914a7128dc8b0b7af1ec14",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3870,
+        "firstUnresolvedNode": 3909,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 3869,
-        "latestNodeCreated": 4022,
+        "latestConfirmed": 3908,
+        "latestNodeCreated": 4062,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -91,7 +91,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 108260,
+        "batchCount": 111050,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -102,7 +102,7 @@
           3600
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 651338
+        "totalDelayedMessagesRead": 664674
       }
     },
     {
@@ -215,6 +215,36 @@
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x0000000000000000000000000000000000000000"
+            ]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x3666a60ff589873ced457a9a8a0aA6F83D708767"
+            ]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -346,11 +376,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 651434,
+        "delayedMessageCount": 664832,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 108260,
-        "sequencerReportedSubMessageCount": 49962487
+        "sequencerMessageCount": 111050,
+        "sequencerReportedSubMessageCount": 50544958
       }
     },
     {
