@@ -20,6 +20,8 @@ export function configureFilters() {
   const archivedL2s = archived.filter((x) => L2s.includes(x))
   const activeL2s = L2s.filter((x) => !archivedL2s.includes(x))
 
+  renderNumbers()
+
   archivedCheckbox?.addEventListener('change', () => {
     const l2sVisible = !combinedCheckbox || combinedCheckbox.checked
 
@@ -31,6 +33,7 @@ export function configureFilters() {
     archivedBridges.forEach((x) =>
       x.classList.toggle('hidden', !archivedCheckbox.checked),
     )
+    renderNumbers()
   })
 
   combinedCheckbox?.addEventListener('change', () => {
@@ -49,11 +52,40 @@ export function configureFilters() {
         !(archivedCheckbox?.checked && combinedCheckbox.checked),
       )
     })
+    renderNumbers()
   })
 
   upcomingCheckbox?.addEventListener('change', () => {
     upcoming.forEach((x) => {
       x.classList.toggle('hidden', !upcomingCheckbox.checked)
     })
+    renderNumbers()
+  })
+}
+
+// this function is currently placed in the same file as configureFilters()
+// because only configureFilters changes the numbering of the rows
+// in the future maybe this should be a separate script with its own eventListener
+function renderNumbers() {
+  const visibleRows = Array.from(
+    document.querySelectorAll('[data-row]'),
+  ).filter((r) => !r.classList.contains('hidden'))
+
+  if (visibleRows.length === 0) {
+    console.error('Programming error: no rows found')
+    return
+  }
+
+  visibleRows.forEach((r, index) => {
+    const indexCell = r.querySelector('[data-index-cell]')
+    if (!indexCell) {
+      console.error('Programming error: no index cell found', r)
+      return
+    }
+    indexCell.innerHTML = `${index + 1}`
+  })
+
+  console.debug('triggered renderNumbers()', {
+    visibleRowsLength: visibleRows.length,
   })
 }

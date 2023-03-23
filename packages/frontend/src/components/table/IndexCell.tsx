@@ -6,19 +6,19 @@ interface IndexCellProps {
     isUpcoming?: boolean
     isArchived?: boolean
   }
-  index: number
   className?: string
 }
 
-export function IndexCell({ className, index }: IndexCellProps) {
+export function IndexCell({ className }: IndexCellProps) {
   return (
     <span
       className={cx(
         'text-xs font-medium text-gray-50 dark:font-normal dark:text-gray-600',
         className,
       )}
-    >
-      {index}
-    </span>
+      data-index-cell
+    />
+    // the number is set dynamically inside the client-side code
+    // see renderNumbers() inside /packages/frontend/src/scripts/configureFilters.ts
   )
 }
