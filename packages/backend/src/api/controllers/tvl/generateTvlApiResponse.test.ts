@@ -7,7 +7,7 @@ import {
   TvlApiToken,
   UnixTime,
 } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'

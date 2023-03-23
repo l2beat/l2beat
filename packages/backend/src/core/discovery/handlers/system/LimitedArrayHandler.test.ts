@@ -1,5 +1,5 @@
-import { Bytes, EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { Bytes, EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -17,7 +17,7 @@ describe(LimitedArrayHandler.name, () => {
       EthereumAddress.random(),
     ]
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async call(passedAddress, data) {
         expect(passedAddress).toEqual(address)
 
@@ -52,7 +52,7 @@ describe(LimitedArrayHandler.name, () => {
       EthereumAddress.random(),
     ]
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async call(_, data) {
         const index = data.get(35)
 
@@ -82,7 +82,7 @@ describe(LimitedArrayHandler.name, () => {
       EthereumAddress.random(),
     ]
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async call(_, data) {
         const index = data.get(35)
 

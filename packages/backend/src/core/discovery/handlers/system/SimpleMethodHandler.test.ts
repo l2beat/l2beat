@@ -1,5 +1,5 @@
-import { Bytes, EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { Bytes, EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -8,7 +8,7 @@ import { SimpleMethodHandler } from './SimpleMethodHandler'
 describe(SimpleMethodHandler.name, () => {
   it('can correctly call balanceOf', async () => {
     const address = EthereumAddress.random()
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async call(passedAddress, data) {
         expect(passedAddress).toEqual(address)
         expect(data).toEqual(Bytes.fromHex('0x722713f7'))
@@ -37,7 +37,7 @@ describe(SimpleMethodHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async call() {
         throw new Error('Error during execution: revert')
       },
@@ -56,7 +56,7 @@ describe(SimpleMethodHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async call() {
         throw new Error('foo bar')
       },

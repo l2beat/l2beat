@@ -6,7 +6,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { ProjectEscrow } from '../../model'
 import { BalanceProject } from './BalanceProject'

@@ -1,5 +1,5 @@
 import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
 import {
@@ -144,7 +144,7 @@ describe(AggregateReportRepository.name, () => {
           fakeAggregateReport({ timestamp: TIME_1 }),
           fakeAggregateReport({ timestamp: TIME_2 }),
         ]),
-      ).toBeRejected('Assertion Error: Timestamps must match')
+      ).toBeRejectedWith('Assertion Error: Timestamps must match')
     })
   })
 

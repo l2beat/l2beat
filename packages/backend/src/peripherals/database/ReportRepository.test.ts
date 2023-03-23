@@ -1,5 +1,5 @@
 import { AssetId, Logger, ProjectId, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../test/database'
 import { ReportRecord, ReportRepository } from './ReportRepository'
@@ -57,7 +57,7 @@ describe(ReportRepository.name, () => {
           fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
           fakeReport({ projectId: PROJECT_C, timestamp: TIME_1 }),
         ]),
-      ).toBeRejected('Assertion Error: Timestamps must match')
+      ).toBeRejectedWith('Assertion Error: Timestamps must match')
     })
   })
 

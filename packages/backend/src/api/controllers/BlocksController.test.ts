@@ -1,12 +1,12 @@
-import { mock, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { UnixTime } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
 import { BlocksController } from './BlocksController'
 
 describe(BlocksController.name, () => {
   it('returns transformed blocks', async () => {
-    const blockNumberRepository = mock<BlockNumberRepository>({
+    const blockNumberRepository = mockObject<BlockNumberRepository>({
       async getAll() {
         return [
           { blockNumber: 123, timestamp: new UnixTime(1000) },

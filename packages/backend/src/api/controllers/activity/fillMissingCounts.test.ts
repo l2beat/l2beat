@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { fillMissingCounts } from './fillMissingCounts'
 

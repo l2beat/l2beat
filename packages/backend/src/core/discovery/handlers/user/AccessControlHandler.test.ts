@@ -1,5 +1,5 @@
-import { EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -39,7 +39,7 @@ describe(AccessControlHandler.name, () => {
 
   it('no logs', async () => {
     const address = EthereumAddress.random()
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async getLogs(providedAddress, topics, fromBlock) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
@@ -87,7 +87,7 @@ describe(AccessControlHandler.name, () => {
     const Charlie = EthereumAddress.random()
 
     const address = EthereumAddress.random()
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async getLogs() {
         return [
           RoleGranted(WARRIOR_ROLE, Alice),
@@ -149,7 +149,7 @@ describe(AccessControlHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = EthereumAddress.random()
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async getLogs() {
         return []
       },

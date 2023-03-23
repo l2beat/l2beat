@@ -1,5 +1,5 @@
 import { ContractParameters, EthereumAddress } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { diffContracts } from './diffContracts'
 

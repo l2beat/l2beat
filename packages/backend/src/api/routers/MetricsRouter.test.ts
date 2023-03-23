@@ -1,4 +1,4 @@
-import { mock } from '@l2beat/shared'
+import { mockObject } from 'earljs'
 import { Histogram } from 'prom-client'
 
 import { Config } from '../../config'
@@ -6,15 +6,15 @@ import { createTestApiServer } from '../../test/testApiServer'
 import { createMetricsRouter } from './MetricsRouter'
 
 export function createMockHistogram() {
-  return mock<Histogram>({
-    labels: () => mock<Histogram>({ observe: () => {} }),
+  return mockObject<Histogram>({
+    labels: () => mockObject<Histogram>({ observe: () => {} }),
   })
 }
 
 describe(createMetricsRouter.name, () => {
   describe('can be configured', () => {
     it('to require auth', async () => {
-      const config = mock<Config>({
+      const config = mockObject<Config>({
         metricsAuth: {
           user: 'user',
           pass: 'pass',
@@ -28,7 +28,7 @@ describe(createMetricsRouter.name, () => {
     })
 
     it('not to require auth', async () => {
-      const config = mock<Config>({
+      const config = mockObject<Config>({
         metricsAuth: false,
       })
       const router = createMetricsRouter(config)

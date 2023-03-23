@@ -1,4 +1,4 @@
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { hashJson } from './hashJson'
 

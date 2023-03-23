@@ -1,5 +1,5 @@
 import { Hash256, Logger, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
 import {
