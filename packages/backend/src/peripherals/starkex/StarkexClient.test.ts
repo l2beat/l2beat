@@ -1,6 +1,6 @@
 import { StarkexProduct } from '@l2beat/config'
-import { HttpClient, Logger, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { HttpClient, Logger } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { StarkexClient } from './StarkexClient'
@@ -11,7 +11,7 @@ describe(StarkexClient.name, () => {
 
   describe(StarkexClient.prototype.call.name, () => {
     it('throws for malformed responses', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch() {
           return new Response(JSON.stringify({ status: '2', foo: 'bar' }))
         },
@@ -22,14 +22,14 @@ describe(StarkexClient.name, () => {
         Logger.SILENT,
       )
 
-      await expect(starkexClient.call('/', 'foo')).toBeRejected(
+      await expect(starkexClient.call('/', 'foo')).toBeRejectedWith(
         TypeError,
         'Invalid Starkex response.',
       )
     })
 
     it('throws for http errors', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch() {
           return new Response('foo', { status: 400 })
         },
@@ -40,7 +40,7 @@ describe(StarkexClient.name, () => {
         Logger.SILENT,
       )
 
-      await expect(starkexClient.call('/', 'foo')).toBeRejected(
+      await expect(starkexClient.call('/', 'foo')).toBeRejectedWith(
         Error,
         `Server responded with non-2XX result: 400 Bad Request`,
       )
@@ -60,7 +60,7 @@ describe(StarkexClient.name, () => {
         token_id: '_all',
       }
 
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch(url, init) {
           expect(url).toEqual(API_URL + '/aggregations/count')
           expect(init?.body).toEqual(JSON.stringify(body))
@@ -82,7 +82,7 @@ describe(StarkexClient.name, () => {
     })
 
     it('returns the count', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch() {
           return new Response(JSON.stringify({ count: 0x45 }))
         },

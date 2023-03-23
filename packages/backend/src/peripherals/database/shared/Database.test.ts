@@ -47,7 +47,7 @@ describe(Database.name, () => {
 
     it('throws for mismatching version', async () => {
       database = getTestDatabase({ requiredMajorVersion: 15 }).database
-      await expect(database.assertRequiredServerVersion()).toBeRejected(
+      await expect(database.assertRequiredServerVersion()).toBeRejectedWith(
         'Assertion Error: Postgres server major version 14 different than required 15',
       )
     })

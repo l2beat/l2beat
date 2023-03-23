@@ -57,13 +57,11 @@ describe(LogThrottler.name, () => {
     expect(logThrottler.isThrottling(logKey)).toEqual(true)
     await time.tickAsync(logThrottlerOptions.throttleTimeInMs)
     expect(logThrottler.isThrottling(logKey)).toEqual(false)
-    expect(logger.info).toHaveBeenCalledExactlyWith([
-      [
-        `"${logKey}" was logged ${throttleLogCalls} times during last ${
-          logThrottlerOptions.throttleTimeInMs / 1000
-        } seconds`,
-      ],
-    ])
+    expect(logger.info).toHaveBeenOnlyCalledWith(
+      `"${logKey}" was logged ${throttleLogCalls} times during last ${
+        logThrottlerOptions.throttleTimeInMs / 1000
+      } seconds`,
+    )
   })
 
   it('should throttle and do not log if throttleCount equals 0', async () => {
@@ -74,7 +72,7 @@ describe(LogThrottler.name, () => {
     expect(logThrottler.isThrottling(logKey)).toEqual(true)
     await time.tickAsync(logThrottlerOptions.throttleTimeInMs)
     expect(logThrottler.isThrottling(logKey)).toEqual(false)
-    expect(logger.info).toHaveBeenCalledExactlyWith([])
+    expect(logger.info).not.toHaveBeenCalled()
   })
 })
 

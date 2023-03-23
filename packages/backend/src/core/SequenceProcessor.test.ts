@@ -1,6 +1,6 @@
 import { Logger, LoggerOptions, LogLevel } from '@l2beat/shared'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect, Mock, mockFn } from 'earljs'
+import { expect, mockFn, MockFunction } from 'earljs'
 import { once } from 'events'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
@@ -78,12 +78,17 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [5]])
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 1, expect.anything(), expect.a(Logger)],
-        [2, 3, expect.anything(), expect.a(Logger)],
-        [4, 5, expect.anything(), expect.a(Logger)],
+
+      expect(getLatestMock).toHaveBeenCalledTimes(2)
+      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatestMock).toHaveBeenNthCalledWith(2, 5)
+
+      checkRanges(processRangeMock, [
+        [0, 1],
+        [2, 3],
+        [4, 5],
       ])
+
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
@@ -107,9 +112,7 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [4, 5, expect.anything(), expect.a(Logger)],
-      ])
+      checkRanges(processRangeMock, [[4, 5]])
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
@@ -133,9 +136,7 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [4, 4, expect.anything(), expect.a(Logger)],
-      ])
+      checkRanges(processRangeMock, [[4, 4]])
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 4,
@@ -159,12 +160,17 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 0, expect.anything(), expect.a(Logger)],
-        [1, 1, expect.anything(), expect.a(Logger)],
-        [2, 2, expect.anything(), expect.a(Logger)],
+
+      expect(getLatestMock).toHaveBeenCalledTimes(2)
+      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatestMock).toHaveBeenNthCalledWith(2, 2)
+
+      checkRanges(processRangeMock, [
+        [0, 0],
+        [1, 1],
+        [2, 2],
       ])
+
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
@@ -188,10 +194,13 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [2]])
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 2, expect.anything(), expect.a(Logger)],
-      ])
+
+      expect(getLatestMock).toHaveBeenCalledTimes(2)
+      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatestMock).toHaveBeenNthCalledWith(2, 2)
+
+      checkRanges(processRangeMock, [[0, 2]])
+
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
@@ -224,10 +233,9 @@ describe(SequenceProcessor.name, () => {
 
       time.uninstall()
 
-      expect(reportErrorMock).toHaveBeenCalledWith(
-        expect.arrayWith(
-          expect.objectWith({ message: expect.stringMatching(errorMessage) }),
-        ),
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith(
+        expect.subset({ message: expect.includes(errorMessage) }),
+        expect.anything(),
       )
     })
 
@@ -256,8 +264,9 @@ describe(SequenceProcessor.name, () => {
 
       time.uninstall()
 
-      expect(reportErrorMock).toHaveBeenCalledWith(
-        expect.arrayWith(expect.objectWith({ message: errorMessage })),
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith(
+        expect.subset({ message: errorMessage }),
+        expect.anything(),
       )
     })
 
@@ -284,7 +293,7 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([])
+      expect(processRangeMock).not.toHaveBeenCalled()
       expect(await repository.findById(PROCESSOR_ID)).toEqual(initialState)
     })
 
@@ -310,19 +319,21 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      // deep inspect getLatestMock. It should be called with [0], [5], and rest is [7]s
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      expect(getLatestMock).toHaveBeenCalledExactlyWith([
-        [0],
-        [5],
-        ...new Array(getLatestMock.calls.length - 2).fill([7]),
+
+      // deep inspect getLatestMock. It should be called with 0, 5, and rest is 7s
+      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatestMock).toHaveBeenNthCalledWith(2, 5)
+      for (let i = 3; i <= getLatestMock.calls.length; i++) {
+        expect(getLatestMock).toHaveBeenNthCalledWith(i, 7)
+      }
+
+      checkRanges(processRangeMock, [
+        [0, 1],
+        [2, 3],
+        [4, 5],
+        [6, 7],
       ])
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 1, expect.anything(), expect.a(Logger)],
-        [2, 3, expect.anything(), expect.a(Logger)],
-        [4, 5, expect.anything(), expect.a(Logger)],
-        [6, 7, expect.anything(), expect.a(Logger)],
-      ])
+
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 7,
@@ -360,15 +371,17 @@ describe(SequenceProcessor.name, () => {
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      expect(getLatestMock).toHaveBeenCalledExactlyWith(
-        expect.arrayWith([0], [1], [2]),
-      )
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 0, expect.anything(), expect.a(Logger)],
-        [1, 1, expect.anything(), expect.a(Logger)],
-        [2, 2, expect.anything(), expect.a(Logger)],
+
+      expect(getLatestMock).toHaveBeenCalledWith(0)
+      expect(getLatestMock).toHaveBeenCalledWith(1)
+      expect(getLatestMock).toHaveBeenCalledWith(2)
+
+      checkRanges(processRangeMock, [
+        [0, 0],
+        [1, 1],
+        [2, 2],
       ])
+
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
@@ -400,24 +413,30 @@ describe(SequenceProcessor.name, () => {
       await sequenceProcessor.start()
 
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
-      expect(getLatestMock).toHaveBeenCalledExactlyWith([[0], [4]])
+      expect(getLatestMock).toHaveBeenCalledTimes(2)
+      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatestMock).toHaveBeenNthCalledWith(2, 4)
       syncedOnce = true
 
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(getLatestMock).toHaveBeenCalledExactlyWith(
-        expect.arrayWith([0], [4], [4], [5]),
-      )
-      expect(processRangeMock).toHaveBeenCalledExactlyWith([
-        [0, 0, expect.anything(), expect.a(Logger)],
-        [1, 1, expect.anything(), expect.a(Logger)],
-        [2, 2, expect.anything(), expect.a(Logger)],
-        [3, 3, expect.anything(), expect.a(Logger)],
-        [4, 4, expect.anything(), expect.a(Logger)],
-        [3, 3, expect.anything(), expect.a(Logger)],
-        [4, 4, expect.anything(), expect.a(Logger)],
-        [5, 5, expect.anything(), expect.a(Logger)],
+
+      expect(getLatestMock).toHaveBeenCalledWith(0)
+      expect(getLatestMock).toHaveBeenCalledWith(4)
+      expect(getLatestMock).toHaveBeenCalledWith(4)
+      expect(getLatestMock).toHaveBeenCalledWith(5)
+
+      checkRanges(processRangeMock, [
+        [0, 0],
+        [1, 1],
+        [2, 2],
+        [3, 3],
+        [4, 4],
+        [3, 3],
+        [4, 4],
+        [5, 5],
       ])
+
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
@@ -461,9 +480,25 @@ describe(SequenceProcessor.name, () => {
   })
 })
 
+function checkRanges(
+  processRangeMock: MockFunction<[number, number, any, Logger], Promise<void>>,
+  ranges: [number, number][],
+) {
+  expect(processRangeMock).toHaveBeenCalledTimes(ranges.length)
+  for (const [i, [start, end]] of ranges.entries()) {
+    expect(processRangeMock).toHaveBeenNthCalledWith(
+      i + 1,
+      start,
+      end,
+      expect.anything(),
+      expect.a(Logger),
+    )
+  }
+}
+
 async function waitForErrorReport(
   time: InstalledClock,
-  reportErrorMock: Mock<any, any>,
+  reportErrorMock: MockFunction<any, any>,
 ) {
   const currentCalls = reportErrorMock.calls.length
   let errorReported = false

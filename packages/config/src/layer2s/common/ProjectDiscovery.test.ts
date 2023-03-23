@@ -1,5 +1,4 @@
-import { mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 
 import {
   contractStub,
@@ -8,7 +7,7 @@ import {
 import { Filesystem, ProjectDiscovery } from './ProjectDiscovery'
 
 describe(ProjectDiscovery.name, () => {
-  const fsMock = mock<Filesystem>({
+  const fsMock = mockObject<Filesystem>({
     readFileSync: () => JSON.stringify(discoveredJsonStub),
   })
   const projectName = 'ExampleProject'

@@ -21,8 +21,7 @@ describe(BlockNumberRepository.name, () => {
 
     const results = await repository.getAll()
 
-    expect(results).toBeAnArrayWith(itemA, itemB)
-    expect(results.length).toEqual(2)
+    expect(results).toEqualUnsorted([itemA, itemB])
   })
 
   it('can find by timestamp', async () => {
