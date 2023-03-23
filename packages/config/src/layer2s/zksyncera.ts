@@ -219,7 +219,7 @@ export const zksyncera: Layer2 = {
     },
     {
       name: 'Full Launch Alpha',
-      link: 'https://blog.matter-labs.io/zksync-era-full-launch-171b12a26b36',
+      link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
       date: '2023-03-24T00:00:00Z',
       description:
         'zkSync Era is now permissionless and open for everyone.',
