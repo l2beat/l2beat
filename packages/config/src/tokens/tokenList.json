@@ -981,16 +981,6 @@
       "category": "other"
     },
     {
-      "id": "ibbtc-interest-bearing-btc",
-      "name": "Interest-Bearing BTC",
-      "coingeckoId": "interest-bearing-bitcoin",
-      "address": "0xc4E15973E6fF2A35cC804c2CF9D2a1b817a8b40F",
-      "symbol": "ibBTC",
-      "decimals": 18,
-      "sinceTimestamp": 1619789623,
-      "category": "other"
-    },
-    {
       "id": "keep-keep-token",
       "name": "KEEP Token",
       "coingeckoId": "keep-network",
