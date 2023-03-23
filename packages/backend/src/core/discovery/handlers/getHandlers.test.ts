@@ -1,4 +1,4 @@
-import { expect, mockObject } from 'earljs'
+import { expect } from 'earljs'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { getHandlers } from './getHandlers'

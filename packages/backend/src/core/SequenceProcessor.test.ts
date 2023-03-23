@@ -498,7 +498,7 @@ function checkRanges(
 
 async function waitForErrorReport(
   time: InstalledClock,
-  reportErrorMock: MockFunction<any[], any>,
+  reportErrorMock: MockFunction<any, any>,
 ) {
   const currentCalls = reportErrorMock.calls.length
   let errorReported = false

@@ -1,5 +1,5 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared'
-import { expect, mockObject } from 'earljs'
+import { expect } from 'earljs'
 
 import { hashJson } from '../../../tools/hashJson'
 import { DiscoveryConfig } from '../DiscoveryConfig'

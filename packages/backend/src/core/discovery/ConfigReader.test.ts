@@ -1,4 +1,4 @@
-import { expect, mockObject } from 'earljs'
+import { expect } from 'earljs'
 import { readdirSync } from 'fs'
 
 import { ConfigReader } from './ConfigReader'

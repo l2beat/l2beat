@@ -1,5 +1,5 @@
 import { AssetId, ProjectId, UnixTime } from '@l2beat/shared'
-import { expect, mockObject } from 'earljs'
+import { expect } from 'earljs'
 
 import { convertBalance, createReport, getBigIntPrice } from './createReport'
 

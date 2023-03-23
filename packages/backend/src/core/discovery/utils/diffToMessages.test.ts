@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared'
-import { expect, mockObject } from 'earljs'
+import { expect } from 'earljs'
 
 import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'

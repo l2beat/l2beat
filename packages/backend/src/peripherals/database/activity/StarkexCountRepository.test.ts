@@ -1,5 +1,5 @@
 import { Logger, ProjectId } from '@l2beat/shared'
-import { expect, mockObject } from 'earljs'
+import { expect } from 'earljs'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
 import { StarkexTransactionCountRepository } from './StarkexCountRepository'

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { expect, mockObject } from 'earljs'
+import { expect } from 'earljs'
 import { describe } from 'mocha'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
