@@ -10,15 +10,22 @@ export const polygonzkevm: Layer2 = {
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
-    description: '',
-    purpose: '',
+    description:
+      'Polygon zkEVM will be an EVM compatible zkRollup on Ethereum. Currently it is deployed on the Goerli testnet.',
+    purpose: 'Universal',
     links: {
-      websites: [],
-      apps: [],
-      documentation: [],
+      websites: ['https://polygon.technology/polygon-zkevm'],
+      apps: ['https://public.zkevm-test.net'],
+      documentation: [
+        'https://wiki.polygon.technology/docs/zkEVM/introduction',
+      ],
       explorers: [],
-      repositories: [],
-      socialMedia: [],
+      repositories: ['https://github.com/0xPolygonHermez'],
+      socialMedia: [
+        'https://twitter.com/0xPolygon',
+        'https://discord.gg/XvpHAxZ',
+        'https://polygon.technology/blog-tags/polygon-zk',
+      ],
     },
   },
   config: {
