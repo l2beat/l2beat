@@ -27,8 +27,8 @@ export const zksynclite: Layer2 = {
     purpose: 'Payments, Tokens',
     links: {
       websites: ['https://zksync.io/'],
-      apps: ['https://wallet.zksync.io/'],
-      documentation: ['https://zksync.io/dev/'],
+      apps: ['https://lite.zksync.io/'],
+      documentation: ['https://docs.zksync.io/dev/'],
       explorers: ['https://zkscan.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
