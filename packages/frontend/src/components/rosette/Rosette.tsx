@@ -75,10 +75,11 @@ export function MediumRosette({ risks }: RosetteProps) {
 
 interface BigRosetteProps {
   risks: RiskValues
+  isUpcoming?: boolean
   className?: string
 }
 
-export function BigRosette({ risks, className }: BigRosetteProps) {
+export function BigRosette({ risks, className, isUpcoming }: BigRosetteProps) {
   const riskSentiments = getRiskSentiments(risks)
   return (
     <div className={cx('Rosette relative w-[272px] py-12 px-12', className)}>
