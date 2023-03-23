@@ -45,7 +45,6 @@ export type StarkexProduct =
   | 'immutable'
   | 'myria'
   | 'deversifi'
-  | 'canvasconnect'
 
 export interface StarkexTransactionApi {
   type: 'starkex'
