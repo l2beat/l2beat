@@ -68,7 +68,7 @@ describe('layer2s', () => {
     const purposes = layer2s.map((x) => x.display.purpose)
     for (const purpose of purposes) {
       it(purpose, () => {
-        expect(purpose.length).toBeLessThanOrEqualTo(20)
+        expect(purpose.length).toBeLessThanOrEqual(20)
       })
     }
   })
@@ -82,13 +82,13 @@ describe('layer2s', () => {
           }
           for (const milestone of project.milestones) {
             it(`Milestone: ${milestone.name} (${project.display.name}) name is no longer than 50 characters`, () => {
-              expect(milestone.name.length).toBeLessThanOrEqualTo(50)
+              expect(milestone.name.length).toBeLessThanOrEqual(50)
             })
           }
         }
         for (const milestone of milestonesLayer2s) {
           it(`Milestone: ${milestone.name} (main page) name is no longer than 50 characters`, () => {
-            expect(milestone.name.length).toBeLessThanOrEqualTo(50)
+            expect(milestone.name.length).toBeLessThanOrEqual(50)
           })
         }
       })
@@ -128,7 +128,9 @@ describe('layer2s', () => {
               continue
             }
             it(`Milestone: ${milestone.name} (${project.display.name}) description is no longer than 100 characters`, () => {
-              expect(milestone.description?.length).toBeLessThanOrEqualTo(100)
+              expect(milestone.description?.length ?? 0).toBeLessThanOrEqual(
+                100,
+              )
             })
           }
         }
@@ -137,7 +139,7 @@ describe('layer2s', () => {
             continue
           }
           it(`Milestone: ${milestone.name} (main page) description is no longer than 100 characters`, () => {
-            expect(milestone.description?.length).toBeLessThanOrEqualTo(100)
+            expect(milestone.description?.length ?? 0).toBeLessThanOrEqual(100)
           })
         }
       })
@@ -173,7 +175,7 @@ describe('layer2s', () => {
       describe('title fits character limit', () => {
         knowledgeNuggets.forEach((nugget) => {
           it(nugget.title, () => {
-            expect(nugget.title.length).toBeLessThanOrEqualTo(40)
+            expect(nugget.title.length).toBeLessThanOrEqual(40)
           })
         })
       })
@@ -184,7 +186,7 @@ describe('layer2s', () => {
           .filter((x) => x.thumbnail !== undefined)
           .forEach((nugget) => {
             it(nugget.title, () => {
-              expect(staticThumbnails).toBeAnArrayWith(nugget.thumbnail)
+              expect(staticThumbnails).toInclude(nugget.thumbnail!)
             })
           })
       })

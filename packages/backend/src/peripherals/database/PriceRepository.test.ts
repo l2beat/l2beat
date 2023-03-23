@@ -59,8 +59,7 @@ describe(PriceRepository.name, () => {
       await repository.addMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toBeAnArrayWith(...DATA, ...newRows)
-      expect(results).toBeAnArrayOfLength(7)
+      expect(results).toEqualUnsorted([...DATA, ...newRows])
     })
 
     it('empty array', async () => {
@@ -84,8 +83,7 @@ describe(PriceRepository.name, () => {
   it(PriceRepository.prototype.getAll.name, async () => {
     const results = await repository.getAll()
 
-    expect(results).toBeAnArrayWith(...DATA)
-    expect(results).toBeAnArrayOfLength(5)
+    expect(results).toEqualUnsorted(DATA)
   })
 
   it(PriceRepository.prototype.getByTimestamp.name, async () => {
@@ -93,15 +91,14 @@ describe(PriceRepository.name, () => {
 
     const results = await repository.getByTimestamp(timestamp)
 
-    expect(results).toBeAnArrayWith(DATA[0], DATA[2])
+    expect(results).toEqualUnsorted([DATA[0], DATA[2]])
   })
 
   it(PriceRepository.prototype.getByToken.name, async () => {
     const token = AssetId('uni-uniswap')
     const results = await repository.getByToken(token)
 
-    expect(results).toBeAnArrayWith(...DATA.filter((d) => d.assetId === token))
-    expect(results).toBeAnArrayOfLength(2)
+    expect(results).toEqualUnsorted(DATA.filter((d) => d.assetId === token))
   })
 
   it(PriceRepository.prototype.deleteAll.name, async () => {
@@ -109,7 +106,7 @@ describe(PriceRepository.name, () => {
 
     const results = await repository.getAll()
 
-    expect(results).toBeAnArrayOfLength(0)
+    expect(results).toEqual([])
   })
 
   describe(PriceRepository.prototype.findDataBoundaries.name, () => {

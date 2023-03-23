@@ -1,5 +1,5 @@
-import { Logger, mock, UnixTime } from '@l2beat/shared'
-import { expect, mockFn } from 'earljs'
+import { Logger, UnixTime } from '@l2beat/shared'
+import { expect, mockFn, mockObject } from 'earljs'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
@@ -16,19 +16,19 @@ describe(BlockNumberUpdater.name, () => {
     const TIME_3 = TIME_0.add(3, 'hours')
 
     it('skips known timestamps', async () => {
-      const etherscan = mock<EtherscanClient>({
+      const etherscan = mockObject<EtherscanClient>({
         getBlockNumberAtOrBefore: mockFn()
           .resolvesToOnce(1300n)
           .resolvesToOnce(1100n),
       })
-      const blockNumberRepository = mock<BlockNumberRepository>({
+      const blockNumberRepository = mockObject<BlockNumberRepository>({
         getAll: mockFn().returns([
           { timestamp: TIME_0, blockNumber: 1000n },
           { timestamp: TIME_2, blockNumber: 1200n },
         ]),
         add: mockFn().returns([]),
       })
-      const clock = mock<Clock>({
+      const clock = mockObject<Clock>({
         onEveryHour: (callback) => {
           callback(TIME_0)
           callback(TIME_1)
@@ -47,10 +47,15 @@ describe(BlockNumberUpdater.name, () => {
       await blockNumberUpdater.start()
 
       await waitForExpect(() => {
-        expect(etherscan.getBlockNumberAtOrBefore).toHaveBeenCalledExactlyWith([
-          [TIME_3],
-          [TIME_1],
-        ])
+        expect(etherscan.getBlockNumberAtOrBefore).toHaveBeenCalledTimes(2)
+        expect(etherscan.getBlockNumberAtOrBefore).toHaveBeenNthCalledWith(
+          1,
+          TIME_3,
+        )
+        expect(etherscan.getBlockNumberAtOrBefore).toHaveBeenNthCalledWith(
+          2,
+          TIME_1,
+        )
       })
     })
   })
@@ -58,16 +63,16 @@ describe(BlockNumberUpdater.name, () => {
   describe(BlockNumberUpdater.prototype.getBlockNumberWhenReady.name, () => {
     it('returns immediately if the data is available', async () => {
       const timestamp = UnixTime.now()
-      const etherscanClient = mock<EtherscanClient>({
+      const etherscanClient = mockObject<EtherscanClient>({
         getBlockNumberAtOrBefore: async () => 1234,
       })
-      const blockNumberRepository = mock<BlockNumberRepository>({
+      const blockNumberRepository = mockObject<BlockNumberRepository>({
         add: async () => 0,
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
         blockNumberRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
 
@@ -78,16 +83,16 @@ describe(BlockNumberUpdater.name, () => {
 
     it('waits until data is available, then returns', async () => {
       const timestamp = UnixTime.now()
-      const etherscanClient = mock<EtherscanClient>({
+      const etherscanClient = mockObject<EtherscanClient>({
         getBlockNumberAtOrBefore: async () => 1234,
       })
-      const blockNumberRepository = mock<BlockNumberRepository>({
+      const blockNumberRepository = mockObject<BlockNumberRepository>({
         add: async () => 0,
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
         blockNumberRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
 
@@ -114,16 +119,16 @@ describe(BlockNumberUpdater.name, () => {
       const from = UnixTime.now()
       const to = from.add(2, 'hours')
 
-      const etherscanClient = mock<EtherscanClient>({
+      const etherscanClient = mockObject<EtherscanClient>({
         getBlockNumberAtOrBefore: async () => 1234,
       })
-      const blockNumberRepository = mock<BlockNumberRepository>({
+      const blockNumberRepository = mockObject<BlockNumberRepository>({
         add: async () => 0,
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
         blockNumberRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
 
@@ -153,16 +158,16 @@ describe(BlockNumberUpdater.name, () => {
       const from = UnixTime.now()
       const to = from.add(2, 'hours')
 
-      const etherscanClient = mock<EtherscanClient>({
+      const etherscanClient = mockObject<EtherscanClient>({
         getBlockNumberAtOrBefore: async () => 1234,
       })
-      const blockNumberRepository = mock<BlockNumberRepository>({
+      const blockNumberRepository = mockObject<BlockNumberRepository>({
         add: async () => 0,
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
         blockNumberRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
       await blockNumberUpdater.update(from)
