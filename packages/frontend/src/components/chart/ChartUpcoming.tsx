@@ -42,7 +42,7 @@ export function ChartUpcoming({ mobileFull: fullWidth = false }: ChartProps) {
         <div className="flex flex-col justify-center gap-4">
           <div
             data-role="chart-view"
-            className="relative col-span-4 h-[160px]  xs:h-[200px] sm:h-[260px]"
+            className="relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]"
             role="img"
             aria-label="chart"
           >
