@@ -4,7 +4,7 @@ export function configureRosetteOverlay() {
   )
 
   for (const rosette of rosettes) {
-    if (rosette.dataset.rosetteHoverDisabled) return
+    if (rosette.dataset.rosetteHoverDisabled === 'true') return
 
     const texts = Array.from(
       rosette.querySelectorAll<HTMLElement>('.Rosette-Text'),
