@@ -53,6 +53,7 @@ export const arbitrum: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
+    associatedTokens: ['ARB'],
     escrows: [
       {
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
