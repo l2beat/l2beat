@@ -21,11 +21,10 @@ export const canvasconnect: Layer2 = {
   display: {
     name: 'Canvas Connect',
     slug: 'canvasconnect',
-    warning: 'Canvas Connect is focused on institutional clients and now there is no possibility for an individual user to use this L2.',
+    warning: 'Canvas Connect is initially open to whitelisted institutional clients. Access for individuals will follow at a later date.',
     description:
       'Canvas Connect is a Layer 2 ZK network built on the StarkEx technology that aims to offer privacy-focused solutions for the finance and digital economy. It aims to enable the transfer, trade, and investment of tokenized real-world assets, stablecoins, CBDCs, and digital assets with assurances of privacy, low cost, and high speed.',
-    purpose:
-      'RWA Trading',
+    purpose: 'Privacy, Finance',
     links: {
       websites: ['https://canvas.co/'],
       apps: [],
@@ -47,7 +46,7 @@ export const canvasconnect: Layer2 = {
       {
         address: EthereumAddress('0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d'),
         sinceTimestamp: new UnixTime(1675209600),
-        tokens: ['ETH','USDC'],
+        tokens: ['ETH', 'USDC'],
       },
 
     ],
@@ -55,7 +54,7 @@ export const canvasconnect: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADE_YES,
+    upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
