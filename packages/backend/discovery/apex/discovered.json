@@ -1,7 +1,7 @@
 {
   "name": "apex",
-  "blockNumber": 16776689,
-  "configHash": "0xc16a8d2101d28d79ceb48f9390be49aa005ff4bc20fc85987a134bd8b5f1f6ca",
+  "blockNumber": 16855494,
+  "configHash": "0x0eb1bff7685fdc600d0a8cf906a49f3a960d5e2cfa3f2c642cfd2da3eca2e50c",
   "contracts": [
     {
       "name": "Proxy",
@@ -24,7 +24,7 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 2440,
+        "getLastBatchId": 2551,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -35,7 +35,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 2329,
+        "getSequenceNumber": 2440,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -154,6 +154,17 @@
         "type": "immutable"
       },
       "values": {
+        "constructorArgs": [
+          [
+            "0x696cC7615A50CF12d1d1B38bF18A5606e9708296",
+            "0x81165b6504520416487E5b4935865b4D3eeaa6e5",
+            "0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A",
+            "0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8",
+            "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D",
+            "0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c"
+          ],
+          "3"
+        ],
         "hasRegisteredFact": true,
         "identify": "StarkWare_Committee_2022_2",
         "signaturesRequired": 3
@@ -161,9 +172,15 @@
     }
   ],
   "eoas": [
+    "0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8",
     "0x22c89137525b593Dd2A18434348b550ffA5984Fe",
     "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+    "0x696cC7615A50CF12d1d1B38bF18A5606e9708296",
     "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb",
+    "0x81165b6504520416487E5b4935865b4D3eeaa6e5",
+    "0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c",
+    "0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A",
+    "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D",
     "0xD716458a0d1Fe4beE8007500BCbCe1Dd306c3868",
     "0xef75e1199B0599BA823b7770AcE8eb34864a1D55"
   ],

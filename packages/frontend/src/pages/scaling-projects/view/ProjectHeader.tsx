@@ -1,18 +1,18 @@
-import { Layer2Rating } from '@l2beat/config'
+import { Layer2Maturity } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { DetailsHeader, Link } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { RatingBadge } from '../../../components/rating/Badge'
-import { RatingTooltipPopup } from '../../../components/rating/TooltipPopup'
+import { MaturityBadge } from '../../../components/maturity/Badge'
+import { MaturityTooltipPopup } from '../../../components/maturity/TooltipPopup'
 import { NoDataCell } from '../../../components/table/NoDataCell'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
   TVLBreakdown,
   TVLBreakdownProps,
 } from '../../../components/TVLBreakdown'
-import { RiskSentiments } from '../../../utils/risks/types'
+import { RiskValues } from '../../../utils/risks/types'
 
 export interface ProjectHeaderProps {
   title: string
@@ -27,9 +27,9 @@ export interface ProjectHeaderProps {
   purpose: string
   technology: string
   tvlBreakdown: TVLBreakdownProps
-  risks: RiskSentiments
+  risks: RiskValues
   links: Link[]
-  ratingEntry?: false | Layer2Rating
+  maturityEntry?: false | Layer2Maturity
   isArchived?: boolean
   isUpcoming?: boolean
 }
@@ -75,20 +75,20 @@ export function ProjectHeader(props: ProjectHeaderProps) {
         <NoDataCell isUpcoming={props.isUpcoming} />
       ),
     },
-    ...(props.ratingEntry
+    ...(props.maturityEntry
       ? [
           {
-            title: 'Rating',
+            title: 'Maturity',
             value: (
               <span
                 className="Tooltip"
                 title={renderToStaticMarkup(
-                  <RatingTooltipPopup item={props.ratingEntry} />,
+                  <MaturityTooltipPopup item={props.maturityEntry} />,
                 )}
               >
-                <RatingBadge
-                  category={props.ratingEntry.category.score}
-                  modifier={props.ratingEntry.modifier?.score}
+                <MaturityBadge
+                  category={props.maturityEntry.category.score}
+                  modifier={props.maturityEntry.modifier?.score}
                   small
                 />
               </span>
