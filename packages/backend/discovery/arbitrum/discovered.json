@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16874885,
-  "configHash": "0x2e39ab092487f1ad16d7e34dd6cd51dd411bec1dd5ed1c07f217251bdb1165be",
+  "blockNumber": 16877077,
+  "configHash": "0x59af3638472a0223a2ec901523744a2d8cf2554422e2f2bc67736da33b495170",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3862,
+        "firstUnresolvedNode": 3870,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 3861,
-        "latestNodeCreated": 4015,
+        "latestConfirmed": 3869,
+        "latestNodeCreated": 4022,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -91,7 +91,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 107626,
+        "batchCount": 108260,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -102,7 +102,7 @@
           3600
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 649114
+        "totalDelayedMessagesRead": 651338
       }
     },
     {
@@ -346,11 +346,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 649201,
+        "delayedMessageCount": 651434,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 107626,
-        "sequencerReportedSubMessageCount": 49854455
+        "sequencerMessageCount": 108260,
+        "sequencerReportedSubMessageCount": 49962487
       }
     },
     {
@@ -481,18 +481,32 @@
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
       }
+    },
+    {
+      "name": "L1CustomGateway",
+      "address": "0xcEe284F754E854890e311e3280b767F80797180d",
+      "code": "https://etherscan.deth.net/address/0xcEe284F754E854890e311e3280b767F80797180d,0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
+        "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      },
+      "values": {
+        "counterpartGateway": "0x096760F208390250649E3e8763348E783AEF5562",
+        "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+        "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+        "whitelist": "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459"
+      }
     }
   ],
   "eoas": [
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-    "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
     "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-    "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
     "0x3fE38087A94903A9D946fa1915e1772fe611000f",
     "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
     "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
     "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
-    "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
     "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
     "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
     "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
@@ -1219,6 +1233,45 @@
       "function root() view returns (bytes32)",
       "function spendOutput(bytes32 _root, bytes32 _id) returns (uint256)",
       "function spentOutput(bytes32) view returns (bool)"
+    ],
+    "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45": [
+      "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
+      "event TokenSet(address indexed l1Address, address indexed l2Address)",
+      "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
+      "event WithdrawRedirected(address indexed from, address indexed to, uint256 indexed exitNum, bytes newData, bytes data, bool madeExternalCall)",
+      "event WithdrawalFinalized(address l1Token, address indexed _from, address indexed _to, uint256 indexed _exitNum, uint256 _amount)",
+      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
+      "function counterpartGateway() view returns (address)",
+      "function encodeWithdrawal(uint256 _exitNum, address _initialDestination) pure returns (bytes32)",
+      "function finalizeInboundTransfer(address _token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function forceRegisterTokenToL2(address[] _l1Addresses, address[] _l2Addresses, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost) payable returns (uint256)",
+      "function getExternalCall(uint256 _exitNum, address _initialDestination, bytes _initialData) view returns (address target, bytes data)",
+      "function getOutboundCalldata(address _l1Token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes outboundCalldata)",
+      "function inbox() view returns (address)",
+      "function initialize(address _l1Counterpart, address _l1Router, address _inbox, address _owner)",
+      "function l1ToL2Token(address) view returns (address)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function outboundTransferCustomRefund(address _l1Token, address _refundTo, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function owner() view returns (address)",
+      "function postUpgradeInit()",
+      "function redirectedExits(bytes32) view returns (bool isExit, address _newTo, bytes _newData)",
+      "function registerTokenToL2(address _l2Address, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost, address _creditBackAddress) payable returns (uint256)",
+      "function registerTokenToL2(address _l2Address, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost) payable returns (uint256)",
+      "function router() view returns (address)",
+      "function setOwner(address newOwner)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
+      "function whitelist() view returns (address)"
+    ],
+    "0xcEe284F754E854890e311e3280b767F80797180d": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9": [
       "error AlreadyInit()",
