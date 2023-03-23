@@ -5943,6 +5943,13 @@ earljs@^0.2.3:
     jest-snapshot "^26.6.2"
     ts-essentials "^6.0.5"
 
+earljs@^0.3.0-canary.20230322T170056:
+  version "0.3.0-canary.20230322T170056"
+  resolved "https://registry.yarnpkg.com/earljs/-/earljs-0.3.0-canary.20230322T170056.tgz#9992767a14e02302452e5a4eefa3ec45fb24edc7"
+  integrity sha512-UG1E68KIiVDk8eL7O00xIE5lfd9BY/nTUjxC9nF3ZVCvBSaa8XUdr/790kfQRIoczByUSw+f1zsQN3vP/p1yoA==
+  dependencies:
+    error-stack-parser "^2.1.4"
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -6060,7 +6067,7 @@ error-ex@^1.2.0, error-ex@^1.3.1:
   dependencies:
     is-arrayish "^0.2.1"
 
-error-stack-parser@^2.0.4, error-stack-parser@^2.0.6:
+error-stack-parser@^2.0.4, error-stack-parser@^2.0.6, error-stack-parser@^2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.1.4.tgz#229cb01cdbfa84440bfa91876285b94680188286"
   integrity sha512-Sk5V6wVazPhq5MhpO+AUxJn5x7XSXGl1R93Vn7i+zS15KDVxQijejNCrz8340/2bgLBjR9GtEG8ZVKONDjcqGQ==

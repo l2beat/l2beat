@@ -12,7 +12,7 @@ describe('common/nuggets', () => {
   describe('thumbnail file exists', () => {
     thumbnails.forEach((thumbnail) => {
       it(thumbnail, () => {
-        expect(files).toBeAnArrayWith(thumbnail)
+        expect(files).toInclude(thumbnail)
       })
     })
   })
