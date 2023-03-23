@@ -12,6 +12,7 @@ import {
   RISK_VIEW,
 } from './common'
 import { ProjectDiscovery } from './common/ProjectDiscovery'
+import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')
@@ -208,18 +209,7 @@ export const arbitrum: Layer2 = {
         },
       ],
     },
-    upgradeMechanism: {
-      name: 'Arbitrum DAO is in charge of upgrades',
-      description:
-        'Arbitrum DAO allows $ARB token holders to propose and vote on changes to the organization and the technologies it governs. The governance smart contracts are implemented on Arbitrum One rollup chain. The DAO can upgrade the Arbitrum One contracts on L2 with 3 days delay and - using L2 --> L1 Governance Relay, update contracts on L1 with additional 3 day delay + 7 days delay for all L2 --> L1 messages (in total a delay of 13 days). The Security Council can upgrade the contracts without any delay. It can also cancel any upgrades initiated by the DAO.',
-      risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('13 days')],
-      references: [
-        {
-          text: 'Arbitrum DAO',
-          href: 'https://docs.arbitrum.foundation/concepts/arbitrum-dao',
-        },
-      ],
-    },
+    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO,
   },
   permissions: [
     {
@@ -421,16 +411,16 @@ export const arbitrum: Layer2 = {
         ).upgradeability,
       },
       {
+        address: EthereumAddress('0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa'),
+        name: 'ProxyAdmin (3)',
+        description:
+          'This is yet another proxy admin for the three gateway contracts below. It is owned by the Upgrade Executor.',
+      },
+      {
         address: discovery.getContract('L1GatewayRouter').address,
         name: 'L1GatewayRouter',
         description: 'Router managing token <--> gateway mapping.',
         upgradeability: discovery.getContract('L1GatewayRouter').upgradeability,
-      },
-      {
-        address: EthereumAddress('0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa'),
-        name: 'ProxyAdmin (3)',
-        description:
-          'This is yet another proxy admin for the two gateway contracts below. It is owned by the Upgrade Executor.',
       },
       {
         address: discovery.getContract('L1ERC20Gateway').address,
@@ -440,17 +430,11 @@ export const arbitrum: Layer2 = {
         upgradeability: discovery.getContract('L1ERC20Gateway').upgradeability,
       },
       {
-        address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
+        address: discovery.getContract('L1CustomGateway').address,
         name: 'L1CustomGateway',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa'),
-          implementation: EthereumAddress(
-            '0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45',
-          ),
-        },
+        upgradeability: discovery.getContract('L1CustomGateway').upgradeability,
       },
       {
         address: EthereumAddress('0xD3B5b60020504bc3489D6949d545893982BA3011'),
@@ -500,7 +484,7 @@ export const arbitrum: Layer2 = {
       date: '2021-08-31T00:00:00Z',
     },
   ],
-  rating: {
+  maturity: {
     category: {
       score: 'B',
       requirements: ['There is an existing fraud proof system'],

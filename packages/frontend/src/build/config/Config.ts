@@ -16,7 +16,7 @@ export interface Config {
     gitcoinOption: boolean
     milestones: boolean
     hiring: boolean
-    rating: boolean
+    maturity: boolean
     buildAllProjectPages: boolean
     upcomingRollups: boolean
   }

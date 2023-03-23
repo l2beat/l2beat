@@ -3,7 +3,8 @@
   "name": "arbitrum",
   "initialAddresses": [
     "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-    "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
+    "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+    "0xcEe284F754E854890e311e3280b767F80797180d"
   ],
   "overrides": {
     "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35": {
@@ -56,6 +57,22 @@
           "type": "accessControl"
         }
       }
+    },
+    // L1ArbitrumTimelock
+    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
+      "ignoreRelatives": ["l2Timelock"]
+    },
+    // L1Erc20Gateway
+    "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    // L1GatewayRouter
+    "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    // L1CustomGateway
+    "0xcEe284F754E854890e311e3280b767F80797180d": {
+      "ignoreRelatives": ["counterpartGateway"]
     }
   }
 }

@@ -15,7 +15,7 @@ import {
 import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('layer2financeZk')
+const discovery = new ProjectDiscovery('layer2financezk')
 
 export const layer2financezk: Layer2 = {
   type: 'layer2',

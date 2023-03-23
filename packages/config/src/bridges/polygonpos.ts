@@ -5,7 +5,7 @@ import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
-const discovery = new ProjectDiscovery('polygonpos')
+const discovery = new ProjectDiscovery('polygon-pos')
 
 export const polygonpos: Bridge = {
   type: 'bridge',

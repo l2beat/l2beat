@@ -1,13 +1,13 @@
-import { Layer2, Layer2Rating } from '@l2beat/config'
+import { Layer2, Layer2Maturity } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { ScalingTableFilters } from '../../../components/table/filters/ScalingTableFilters'
 import { IndexCell } from '../../../components/table/IndexCell'
+import { MaturityCell } from '../../../components/table/MaturityCell'
 import { NumberCell } from '../../../components/table/NumberCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
-import { RatingCell } from '../../../components/table/RatingCell'
 import { RosetteCell } from '../../../components/table/RosetteCell'
 import {
   ColumnConfig,
@@ -20,7 +20,7 @@ import { RiskValues } from '../../../utils/risks/types'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
-  ratingEnabled: boolean
+  maturityEnabled: boolean
   upcomingEnabled?: boolean
 }
 
@@ -40,12 +40,12 @@ export interface ScalingTvlViewEntry {
   marketShare?: string
   purpose: string
   technology: string
-  ratingEntry?: Layer2Rating
+  maturityEntry?: Layer2Maturity
 }
 
 export function ScalingTvlView({
   items,
-  ratingEnabled,
+  maturityEnabled,
   upcomingEnabled,
 }: ScalingTvlViewProps) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
@@ -81,15 +81,17 @@ export function ScalingTvlView({
         </TechnologyCell>
       ),
     },
-    ...(ratingEnabled
+    ...(maturityEnabled
       ? [
           {
-            name: 'Rating',
-            tooltip: 'Rating of this Layer 2 based on its features.',
+            name: 'Maturity',
+            tooltip: 'Maturity of this Layer 2 based on its features.',
             alignCenter: true as const,
             getValue: (project: ScalingTvlViewEntry) =>
               !project.isArchived &&
-              !project.isUpcoming && <RatingCell item={project.ratingEntry} />,
+              !project.isUpcoming && (
+                <MaturityCell item={project.maturityEntry} />
+              ),
           },
         ]
       : []),
