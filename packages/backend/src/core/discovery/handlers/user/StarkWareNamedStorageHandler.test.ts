@@ -33,7 +33,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
-      expect(result as unknown).toEqual({
+      expect(result).toEqual({
         field: 'someName',
         value:
           '0x0000000000000000000000000000000000000000000000000000000000000123',
@@ -63,7 +63,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
-      expect(result as unknown).toEqual({
+      expect(result).toEqual({
         field: 'someName',
         value: 0x123,
         ignoreRelative: undefined,
@@ -94,9 +94,9 @@ describe(StarkWareNamedStorageHandler.name, () => {
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
-      expect(result as unknown).toEqual({
+      expect(result).toEqual({
         field: 'someName',
-        value: resultAddress,
+        value: resultAddress.toString(),
         ignoreRelative: undefined,
       })
     })
@@ -119,7 +119,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
     })
     const address = EthereumAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result as unknown).toEqual({
+    expect(result).toEqual({
       field: 'someName',
       error: 'foo bar',
     })
@@ -146,7 +146,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
 
     const address = EthereumAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result as unknown).toEqual({
+    expect(result).toEqual({
       field: 'someName',
       value:
         '0x0000000000000000000000000000000000000000000000000000000000000123',

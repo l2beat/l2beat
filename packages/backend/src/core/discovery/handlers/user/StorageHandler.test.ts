@@ -32,7 +32,7 @@ describe(StorageHandler.name, () => {
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result as unknown).toEqual({
+      expect(result).toEqual({
         field: 'someName',
         value:
           '0x0000000000000000000000000000000000000000000000000000000000000123',
@@ -62,7 +62,7 @@ describe(StorageHandler.name, () => {
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result as unknown).toEqual({
+      expect(result).toEqual({
         field: 'someName',
         value: 0x123,
         ignoreRelative: undefined,
@@ -93,9 +93,9 @@ describe(StorageHandler.name, () => {
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address, {})
-      expect(result as unknown).toEqual({
+      expect(result).toEqual({
         field: 'someName',
-        value: resultAddress,
+        value: resultAddress.toString(),
         ignoreRelative: undefined,
       })
     })
@@ -346,7 +346,7 @@ describe(StorageHandler.name, () => {
     })
     const address = EthereumAddress.random()
     const result = await handler.execute(provider, address, {})
-    expect(result as unknown).toEqual({
+    expect(result).toEqual({
       field: 'someName',
       error: 'foo bar',
     })

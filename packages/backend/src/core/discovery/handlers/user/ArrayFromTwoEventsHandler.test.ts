@@ -157,7 +157,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
-      expect<unknown>(value).toEqual({
+      expect(value).toEqual({
         field: 'someName',
         value: [],
         ignoreRelative: undefined,
@@ -196,9 +196,9 @@ describe(ArrayFromTwoEventsHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
-      expect<unknown>(value).toEqual({
+      expect(value).toEqual({
         field: 'someName',
-        value: [Alice, Bob],
+        value: [Alice.toString(), Bob.toString()],
         ignoreRelative: undefined,
       })
     })

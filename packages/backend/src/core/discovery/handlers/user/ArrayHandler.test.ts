@@ -194,9 +194,9 @@ describe(ArrayHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'owners',
-        value: owners,
+        value: owners.map((x) => x.toString()),
         ignoreRelative: undefined,
       })
     })
@@ -219,9 +219,9 @@ describe(ArrayHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'owners',
-        value: owners,
+        value: owners.map((x) => x.toString()),
         ignoreRelative: true,
       })
     })
@@ -246,9 +246,9 @@ describe(ArrayHandler.name, () => {
       const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: 3 },
       })
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'owners',
-        value: owners,
+        value: owners.map((x) => x.toString()),
         ignoreRelative: undefined,
       })
     })
@@ -274,7 +274,7 @@ describe(ArrayHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'owners',
         error: 'Execution reverted',
       })
@@ -301,9 +301,9 @@ describe(ArrayHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'owners',
-        value: owners,
+        value: owners.map((x) => x.toString()),
         ignoreRelative: undefined,
       })
     })
@@ -329,7 +329,7 @@ describe(ArrayHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'owners',
         error: 'oops',
       })
@@ -349,7 +349,7 @@ describe(ArrayHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'owners',
         error: 'Too many values. Provide a higher maxLength value',
         value: new Array(100).fill('0x' + '0'.repeat(40)),
@@ -370,7 +370,7 @@ describe(ArrayHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'owners',
         error: 'Too many values. Provide a higher maxLength value',
         value: new Array(15).fill('0x' + '0'.repeat(40)),

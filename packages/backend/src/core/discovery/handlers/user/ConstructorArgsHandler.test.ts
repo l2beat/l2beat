@@ -38,8 +38,7 @@ describe(ConstructorArgsHandler.name, () => {
 
       const response = await handler.execute(provider, contractAddress)
 
-      // @todo fix any here once earl is updated
-      expect(response as any).toEqual({
+      expect(response).toEqual({
         field: 'constructorArgs',
         value: [
           'Pi Day N00b Token',

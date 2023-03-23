@@ -208,7 +208,7 @@ describe(CallHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'add',
         value: 3,
         ignoreRelative: undefined,
@@ -239,7 +239,7 @@ describe(CallHandler.name, () => {
         foo: { field: 'foo', value: 1 },
         bar: { field: 'bar', value: 2 },
       })
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'add',
         value: 3,
         ignoreRelative: undefined,
@@ -260,7 +260,7 @@ describe(CallHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'add',
         error: 'oops',
         ignoreRelative: undefined,
@@ -281,7 +281,7 @@ describe(CallHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const result = await handler.execute(provider, address, {})
-      expect<unknown>(result).toEqual({
+      expect(result).toEqual({
         field: 'add',
         value: 3,
         ignoreRelative: true,

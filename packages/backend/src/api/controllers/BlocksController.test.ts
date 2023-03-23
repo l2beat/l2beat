@@ -15,7 +15,7 @@ describe(BlocksController.name, () => {
       },
     })
     const blocksController = new BlocksController(blockNumberRepository)
-    expect<unknown>(await blocksController.getAllBlocks()).toEqual([
+    expect(await blocksController.getAllBlocks()).toEqual([
       {
         blockNumber: '123',
         timestamp: '1970-01-01T00:16:40.000Z',

@@ -51,9 +51,7 @@ describe(AddressAnalyzer.name, () => {
     const result = await addressAnalyzer.analyze(
       EthereumAddress('0x11223344556677889900aabbccddeeff11223344'),
     )
-    // We cast to unknown here to sidestep a bug in earl
-    // https://github.com/dethcrypto/earl/issues/172
-    expect(result as unknown).toEqual({
+    expect(result).toEqual({
       type: 'Contract',
       verified: true,
       name: 'Foo',
