@@ -23,7 +23,7 @@ export const canvasconnect: Layer2 = {
     slug: 'canvasconnect',
     warning: 'Canvas Connect is focused on institutional clients and now there is no possibility for an individual user to use this L2.',
     description:
-      'Canvas Connect is a privacy focused Layer 2 ZK network built for Finance and the Digital Economy. Connect offers an API first model that supports easy integration with no solidity skills required. Capital Markets Applications are built on the network that enable the Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
+      'Canvas Connect is a Layer 2 ZK network built on the StarkEx technology that aims to offer privacy-focused solutions for the finance and digital economy. It aims to enable the transfer, trade, and investment of tokenized real-world assets, stablecoins, CBDCs, and digital assets with assurances of privacy, low cost, and high speed.',
     purpose:
       'Transfer, Trade & Investment of Tokenised Real World Assets, Stablecoins, CBDCs & Digital Assets with assurances of Privacy, Low Cost and High Speed, all secured by Ethereum.',
     links: {
