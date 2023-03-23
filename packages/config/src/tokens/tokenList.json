@@ -122,16 +122,6 @@
       "category": "other"
     },
     {
-      "id": "arb-arbitrum",
-      "name": "Arbitrum",
-      "coingeckoId": "arbitrum",
-      "address": "0x912ce59144191c1204e64559fe8253a0e49e6548",
-      "symbol": "ARB",
-      "decimals": 18,
-      "sinceTimestamp": 1679529671,
-      "category": "other"
-    },
-    {
       "id": "nft-apenft",
       "name": "APENFT",
       "coingeckoId": "apenft",
@@ -159,6 +149,16 @@
       "symbol": "ANT",
       "decimals": 18,
       "sinceTimestamp": 1602761920,
+      "category": "other"
+    },
+    {
+      "id": "arb-arbitrum",
+      "name": "Arbitrum",
+      "coingeckoId": "arbitrum",
+      "address": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+      "symbol": "ARB",
+      "decimals": 18,
+      "sinceTimestamp": 1679529671,
       "category": "other"
     },
     {
