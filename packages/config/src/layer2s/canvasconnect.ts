@@ -39,7 +39,6 @@ export const canvasconnect: Layer2 = {
         'https://www.canvas.co/content',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   config: {
     escrows: [
