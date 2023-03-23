@@ -37,7 +37,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       alignCenter: true,
       minimalWidth: true,
       headClassName: 'md:pl-4',
-      getValue: (entry) => <IndexCell entry={entry} className="md:pl-4" />,
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
     },
     {
       name: 'Name',

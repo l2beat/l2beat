@@ -2,14 +2,13 @@ import cx from 'classnames'
 import React from 'react'
 
 interface IndexCellProps {
-  entry: {
-    isUpcoming?: boolean
-    isArchived?: boolean
-  }
+  index: number
   className?: string
 }
 
-export function IndexCell({ className }: IndexCellProps) {
+// the number is updated dynamically inside the client-side code
+// see renderNumbers() inside /packages/frontend/src/scripts/configureFilters.ts
+export function IndexCell({ index, className }: IndexCellProps) {
   return (
     <span
       className={cx(
@@ -17,8 +16,8 @@ export function IndexCell({ className }: IndexCellProps) {
         className,
       )}
       data-role="index-cell"
-    />
-    // the number is set dynamically inside the client-side code
-    // see renderNumbers() inside /packages/frontend/src/scripts/configureFilters.ts
+    >
+      {index}
+    </span>
   )
 }
