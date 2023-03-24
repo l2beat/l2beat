@@ -2,6 +2,7 @@ import { isObject } from 'lodash'
 import { default as React } from 'react'
 
 import { DashboardContractFieldValue } from '../../props/utils/getValues'
+import { DASHBOARD_COLORS } from '../constants'
 
 interface ValueProps {
   value?: DashboardContractFieldValue
@@ -24,7 +25,12 @@ export function Value(props: ValueProps) {
     )
   }
 
-  return <span style={{ color: '#939292' }}> {renderValue(props.value)}</span>
+  return (
+    <span style={{ color: DASHBOARD_COLORS.VALUE }}>
+      {' '}
+      {renderValue(props.value)}
+    </span>
+  )
 }
 
 function renderValue({ value }: DashboardContractFieldValue) {
