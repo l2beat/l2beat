@@ -70,12 +70,12 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
         </span>
       )}
       {project.isUpcoming && (
-        <span className="relative pl-3">
+        <span className="pl-1.5">
           <span
-            className="Tooltip ml-0.5 inline-block"
+            className="Tooltip inline-block"
             title={'This is an upcoming project. Stay tuned!'}
           >
-            <UpcomingIcon className="absolute top-[-1px] left-0.5 h-4" />
+            <UpcomingIcon className="relative top-px h-4" />
           </span>
         </span>
       )}
