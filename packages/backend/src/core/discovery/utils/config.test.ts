@@ -118,16 +118,32 @@ describe('discovery config.jsonc', () => {
     }
   })
 
-  it('every custom name correspond to existing contract', async () => {
-    for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+  describe('names', () => {
+    it('every name correspond to existing contract', async () => {
+      for (const config of configs ?? []) {
+        const discovery = await configReader.readDiscovery(config.name)
 
-      assert(
-        Object.keys(config.names ?? {}).every((address) =>
-          discovery.contracts.some((c) => c.address.toString() === address),
-        ),
-        `names field in ${config.name} configuration includes addresses that do not exist inside discovery.json`,
-      )
-    }
+        assert(
+          Object.keys(config.names ?? {}).every((address) =>
+            discovery.contracts.some((c) => c.address.toString() === address),
+          ),
+          `names field in ${config.name} configuration includes addresses that do not exist inside discovery.json`,
+        )
+      }
+    })
+
+    it('every name is unique', async () => {
+      for (const config of configs ?? []) {
+        if (config.names === undefined) {
+          continue
+        }
+
+        assert(
+          new Set(Object.values(config.names)).size ===
+            Object.values(config.names).length,
+          `names field in ${config.name} configuration includes duplicate names`,
+        )
+      }
+    })
   })
 })
