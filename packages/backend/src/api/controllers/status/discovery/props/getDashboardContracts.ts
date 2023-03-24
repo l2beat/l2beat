@@ -20,6 +20,7 @@ import { DashboardContractField } from './utils/getValues'
 
 export interface DashboardContract {
   name: string
+  derivedName?: string
   address: EthereumAddress
   isInitial?: boolean
   discoveredBy: DiscoveredByInfo[]
@@ -55,6 +56,7 @@ function getContract(
   if (contract.unverified) {
     return {
       name: contract.name,
+      derivedName: contract.derivedName,
       address: contract.address,
       isInitial,
       discoveredBy,
@@ -82,6 +84,7 @@ function getContract(
 
   return {
     name: contract.name,
+    derivedName: contract.derivedName,
     address: contract.address,
     upgradeabilityParams,
     ignoreInWatchMode,

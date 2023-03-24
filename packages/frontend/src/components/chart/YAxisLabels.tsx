@@ -1,9 +1,14 @@
 import cx from 'classnames'
 import React from 'react'
 
-export function YAxisLabels() {
+export function YAxisLabels({ className }: { className?: string }) {
   return (
-    <div className="absolute left-0 top-0 z-10 flex h-full w-full flex-col">
+    <div
+      className={cx(
+        'absolute left-0 top-0 z-10 flex h-full w-full flex-col',
+        className,
+      )}
+    >
       <Label className="h-[20px]" />
       <Label className="flex-1" />
       <Label className="flex-1" />

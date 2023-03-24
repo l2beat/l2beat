@@ -3,6 +3,7 @@ import {
   ActivityApiResponse,
   TvlApiCharts,
   TvlApiResponse,
+  UnixTime,
 } from '@l2beat/shared'
 import fsx from 'fs-extra'
 import path from 'path'
@@ -32,6 +33,7 @@ export function createApi(
       urlCharts.set(`${project.display.slug}-tvl`, projectTvlData.charts)
     }
   }
+  urlCharts.set(`placeholder-tvl`, PLACEHOLDER_API_DATA)
 
   if (activityApiResponse) {
     urlCharts.set(
@@ -90,4 +92,59 @@ function getActivityChart(
       }),
     },
   }
+}
+
+const PLACEHOLDER_API_DATA: TvlApiCharts = {
+  hourly: {
+    types: ['timestamp', 'usd', 'eth'],
+    data: [],
+  },
+  sixHourly: {
+    types: ['timestamp', 'usd', 'eth'],
+    data: [
+      [new UnixTime(1573689600), 0, 0],
+      [new UnixTime(1573776000), 10, 0],
+      [new UnixTime(1573862400), 20, 0],
+      [new UnixTime(1573948800), 22, 0],
+      [new UnixTime(1574035200), 23, 0],
+      [new UnixTime(1574121600), 25, 0],
+      [new UnixTime(1574208000), 30, 0],
+      [new UnixTime(1574294400), 32, 0],
+      [new UnixTime(1574380800), 34, 0],
+      [new UnixTime(1574467200), 36, 0],
+      [new UnixTime(1574553600), 38, 0],
+      [new UnixTime(1574640000), 40, 0],
+      [new UnixTime(1574726400), 42, 0],
+      [new UnixTime(1574812800), 44, 0],
+      [new UnixTime(1574899200), 45, 0],
+      [new UnixTime(1574985600), 48, 0],
+      [new UnixTime(1575072000), 50, 0],
+      [new UnixTime(1575158400), 48, 0],
+      [new UnixTime(1575244800), 46, 0],
+      [new UnixTime(1575331200), 42, 0],
+      [new UnixTime(1575417600), 40, 0],
+      [new UnixTime(1575504000), 41, 0],
+      [new UnixTime(1575590400), 43, 0],
+      [new UnixTime(1575676800), 45, 0],
+      [new UnixTime(1575763200), 46, 0],
+      [new UnixTime(1575849600), 50, 0],
+      [new UnixTime(1575936000), 51, 0],
+      [new UnixTime(1576022400), 52, 0],
+      [new UnixTime(1576108800), 53, 0],
+      [new UnixTime(1576195200), 56, 0],
+      [new UnixTime(1576281600), 60, 0],
+      [new UnixTime(1576368000), 61, 0],
+      [new UnixTime(1576454400), 64, 0],
+      [new UnixTime(1576540800), 66, 0],
+      [new UnixTime(1576627200), 63, 0],
+      [new UnixTime(1576713600), 62, 0],
+      [new UnixTime(1576800000), 61, 0],
+      [new UnixTime(1576886400), 58, 0],
+      [new UnixTime(1576972800), 60, 0],
+    ],
+  },
+  daily: {
+    types: ['timestamp', 'usd', 'eth'],
+    data: [],
+  },
 }

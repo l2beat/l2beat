@@ -23,7 +23,7 @@
       "description": "Specific configuration for discovered contracts",
       "unevaluatedProperties": false,
       "patternProperties": {
-        "^0x[a-fA-F\\d]{40}$": {
+        "^.+$": {
           "type": "object",
           "unevaluatedProperties": false,
           "properties": {
@@ -55,6 +55,16 @@
               }
             }
           }
+        }
+      }
+    },
+    "names": {
+      "type": "object",
+      "description": "Human-readable names for discovered contracts",
+      "unevaluatedProperties": false,
+      "patternProperties": {
+        "^0x[a-fA-F\\d]{40}$": {
+          "type": "string"
         }
       }
     }

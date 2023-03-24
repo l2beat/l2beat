@@ -1,35 +1,41 @@
-import { Hash256, ProjectParameters } from '@l2beat/shared'
+import { EthereumAddress, Hash256, ProjectParameters } from '@l2beat/shared'
 import { writeFile } from 'fs/promises'
 
 import { AnalyzedData } from './analyzeItem'
+import { DiscoveryConfig } from './DiscoveryConfig'
 
 export async function saveDiscoveryResult(
   results: AnalyzedData[],
-  name: string,
+  config: DiscoveryConfig,
   blockNumber: number,
   configHash: Hash256,
 ) {
-  const project = prepareDiscoveryFile(results, name, blockNumber, configHash)
+  const project = prepareDiscoveryFile(results, config, blockNumber, configHash)
 
   await writeFile(
-    `discovery/${name}/discovered.json`,
+    `discovery/${config.name}/discovered.json`,
     JSON.stringify(project, null, 2),
   )
 }
 
 export function parseDiscoveryOutput(
   results: AnalyzedData[],
-  name: string,
+  config: DiscoveryConfig,
   blockNumber: number,
   configHash: Hash256,
 ): ProjectParameters {
-  const prepared = prepareDiscoveryFile(results, name, blockNumber, configHash)
+  const prepared = prepareDiscoveryFile(
+    results,
+    config,
+    blockNumber,
+    configHash,
+  )
   return JSON.parse(JSON.stringify(prepared)) as ProjectParameters
 }
 
 export function prepareDiscoveryFile(
   results: AnalyzedData[],
-  name: string,
+  config: DiscoveryConfig,
   blockNumber: number,
   configHash: Hash256,
 ): ProjectParameters {
@@ -42,16 +48,34 @@ export function prepareDiscoveryFile(
   )
 
   return {
-    name,
+    name: config.name,
     blockNumber,
     configHash,
     contracts: results
       .filter((x) => !x.meta.isEOA)
-      .map((x) => ({ ...x, meta: undefined })),
+      .map((x) => ({ ...x, meta: undefined }))
+      .map((x) => ({ ...x, ...getCustomName(x.name, x.address, config) })),
     eoas: results
       .filter((x) => x.meta.isEOA)
       .map((x) => x.address)
       .sort((a, b) => a.localeCompare(b.toString())),
     abis,
+  }
+}
+
+function getCustomName(
+  derivedName: string,
+  address: EthereumAddress,
+  config: DiscoveryConfig,
+) {
+  if (!config.names?.[address.toString()]) {
+    return {
+      name: derivedName,
+    }
+  }
+
+  return {
+    name: config.names[address.toString()],
+    derivedName: derivedName,
   }
 }

@@ -21,15 +21,14 @@ export const zksyncera: Layer2 = {
   display: {
     name: 'zkSync Era',
     slug: 'zksync-era',
-    warning: 'Currently only registered addresses can bridge to zkSync Era.',
     description:
-      'zkSync Era is a general-purpose zk rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
+      'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.\
       It is currently deployed on mainnet and available for registered projects and developers.',
     purpose: 'Universal',
     links: {
       websites: ['https://zksync.io/'],
-      apps: ['https://portal.zksync.io/'],
+      apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
       documentation: ['https://era.zksync.io/docs/'],
       explorers: ['https://explorer.zksync.io/'],
       repositories: ['https://github.com/matter-labs/zksync-era'],
@@ -217,6 +216,12 @@ export const zksyncera: Layer2 = {
       date: '2023-02-16T00:00:00Z',
       description:
         'zkSync 2.0 rebrands to zkSync Era and lets registered projects and developers deploy on mainnet.',
+    },
+    {
+      name: 'Full Launch Alpha',
+      link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
+      date: '2023-03-24T00:00:00Z',
+      description: 'zkSync Era is now permissionless and open for everyone.',
     },
   ],
 }

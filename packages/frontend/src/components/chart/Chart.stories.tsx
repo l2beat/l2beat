@@ -13,9 +13,15 @@ interface TemplateProps {
   tokenCount: number
   hasActivity?: boolean
   type?: 'activity' | 'tvl'
+  isUpcoming?: boolean
 }
 
-function Template({ tokenCount, hasActivity, type }: TemplateProps) {
+function Template({
+  tokenCount,
+  hasActivity,
+  type,
+  isUpcoming,
+}: TemplateProps) {
   const tokens = [
     'DAI',
     'ETH',
@@ -42,6 +48,7 @@ function Template({ tokenCount, hasActivity, type }: TemplateProps) {
         tokens={tokens.slice(0, tokenCount)}
         hasActivity={hasActivity}
         type={type}
+        isUpcoming={isUpcoming}
       />
     </PageContent>
   )
@@ -67,4 +74,9 @@ WithActivity.args = {
   tokenCount: 0,
   hasActivity: true,
   type: 'activity',
+}
+
+export const UpcomingChart: Story<TemplateProps> = Template.bind({})
+UpcomingChart.args = {
+  isUpcoming: true,
 }
