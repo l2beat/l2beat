@@ -1,6 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { Bridge } from './types'
+import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
+
+const discovery = new ProjectDiscovery('amarok')
 
 export const amarok: Bridge = {
   type: 'bridge',
@@ -64,50 +67,51 @@ export const amarok: Bridge = {
     addresses: [
       {
         name: 'Connext Amarok Bridge',
-        address: EthereumAddress('0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6'),
+        address: discovery.getContract('ConnextDiamond').address,
         description:
           'The main Connext Amarok contract. Following Diamond design patter, it contains multiple Facets that implement\
         various parts of the bridge functionality.',
+        upgradeability: discovery.getContract('ConnextDiamond').upgradeability,
       },
       {
         name: 'Root Manager',
-        address: EthereumAddress('0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1'),
+        address: discovery.getContract('RootManager').address,
         description:
-          'Contract responsible for maintaining list of domains and building root-of-roots of messages.',
+          'Contract responsible for maintaining list of domains and building root-of-roots of messages. It keeps tracks of all hub connectors that connect to specific domain.',
       },
       {
         name: 'Watcher Manager',
-        address: EthereumAddress('0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6'),
+        address: discovery.getContract('WatcherManagerConnector').address,
         description:
           'Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.',
       },
       {
         name: 'MainnetSpokeConnector',
-        address: EthereumAddress('0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c'),
+        address: discovery.getContract('MainnetSpokeConnector').address,
         description:
           'Contract that receives messages from other Domains on Ethereum.',
       },
       {
         name: 'MultichainHubConnector',
-        address: EthereumAddress('0xFaf539a73659fEAEC96ec7242f075Be0445526A8'),
+        address: discovery.getContract('MultichainHubConnector').address,
         description:
           'Contract for sending/receiving messages from mainnet to Binance Smart Chain via Multichain AMB.',
       },
       {
         name: 'PolygonHubConnector',
-        address: EthereumAddress('0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE'),
+        address: discovery.getContract('PolygonHubConnector').address,
         description:
           'Contract for sending/receiving messages from mainnet to Polygon via Polygon FxChannel AMB.',
       },
       {
         name: 'GnosisHubConnector',
-        address: EthereumAddress('0xCb0840E861456DA0483166aD4B0F3DC251586B4A'),
+        address: discovery.getContract('GnosisHubConnector').address,
         description:
           'Contract for sending/receiving messages from mainnet to Gnosis via Gnosis AMB.',
       },
       {
         name: 'OptimismHubConnector',
-        address: EthereumAddress('0xc324B7984990248D86dfe90edf7E3657De2565bA'),
+        address: discovery.getContract('OptimismHubConnector').address,
         description:
           'Contract for sending/receiving messages from mainnet to Optimism via Optimism AMB transport layer. Note that it reads messages from Optimism\
         as soon as Optimism state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
@@ -126,21 +130,26 @@ export const amarok: Bridge = {
     {
       name: 'Connext MultiSig',
       description:
-        '3/3 MultiSig. Owner of the main Connext Amarok Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay.',
+        '3/3 MultiSig. Owner of the main Connext Amarok Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
       accounts: [
         {
-          address: EthereumAddress(
-            '0x4d50a469fc788a3c0CdC8Fd67868877dCb246625',
-          ),
+          address: discovery.getContract('GnosisSafe').address,
           type: 'MultiSig',
         },
       ],
     },
     {
-      name: 'Connext SuperAdmin',
+      name: 'Watchers',
       description:
-        'Owner of each individual bridge component, can configure each one of them with no delay.',
+        'Permissioned set of actors who can pause certain bridge components. On Ethereum L1 Watchers can pause RootManager and MainnetSpokeConnector, i.e. modules \
+        receiving messages. They can also remove connector from the RootManager. List of watchers is maintained by the Connext MultiSig.',
       accounts: [
+        {
+          address: EthereumAddress(
+            '0x9c77788d761ee0347Ab550883237CeD274a0F248',
+          ),
+          type: 'EOA',
+        },
         {
           address: EthereumAddress(
             '0xade09131C6f43fe22C2CbABb759636C43cFc181e',
@@ -149,19 +158,6 @@ export const amarok: Bridge = {
         },
       ],
     },
-    {
-      name: 'Connext Router Admin',
-      description: '.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x29A519e21d6A97cdB82270b69c98bAc6426CDCf9',
-          ),
-          type: 'EOA',
-        },
-      ],
-    },
-    //
   ],
   riskView: {
     validatedBy: {
