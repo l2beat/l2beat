@@ -11,7 +11,7 @@ export function LinkSection() {
     <div className="p-4 leading-normal">
       <LinkSectionComponent
         name="Arbitrum One"
-        icon="/icons/arbitrum.png"
+        icon="/icons/arbitrumone.png"
         links={{
           websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
           apps: [],
