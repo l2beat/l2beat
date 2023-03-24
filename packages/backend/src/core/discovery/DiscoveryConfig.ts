@@ -21,9 +21,7 @@ export const DiscoveryConfig = z.object({
   initialAddresses: z.array(stringAs(EthereumAddress)),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number().positive()),
-  overrides: z.optional(
-    z.record(z.string().refine(EthereumAddress.check), DiscoveryContract),
-  ),
+  overrides: z.optional(z.record(z.string(), DiscoveryContract)),
   names: z.optional(
     z.record(z.string().refine(EthereumAddress.check), z.string()),
   ),

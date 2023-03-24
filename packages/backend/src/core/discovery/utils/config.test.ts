@@ -1,5 +1,6 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { assert } from '@l2beat/shared'
+import { assert, EthereumAddress } from '@l2beat/shared'
+import { expect } from 'earljs'
 
 import { ConfigReader } from '../ConfigReader'
 import { DiscoveryConfig } from '../DiscoveryConfig'
@@ -118,6 +119,16 @@ describe('discovery config.jsonc', () => {
     }
   })
 
+  describe('overrides', () => {
+    it('every override correspond to existing contract', async () => {
+      for (const config of configs ?? []) {
+        Object.keys(config.overrides ?? {}).forEach((addressOrName) => {
+          expect(() => getAddress(addressOrName, config)).not.toThrow()
+        })
+      }
+    })
+  })
+
   describe('names', () => {
     it('every name correspond to existing contract', async () => {
       for (const config of configs ?? []) {
@@ -145,5 +156,25 @@ describe('discovery config.jsonc', () => {
         )
       }
     })
+
+    // for (const override of Object.keys(config.overrides ?? {})) {
+    //   if (!known.has(EthereumAddress(override))) {
+    //     logger.configuredButUndiscovered(override.toString())
+    //   }
+    // }
   })
 })
+function getAddress(
+  addressOrName: string,
+  config: DiscoveryConfig,
+): EthereumAddress {
+  try {
+    return EthereumAddress(addressOrName)
+  } catch (e) {
+    const address = Object.entries(config.names ?? {}).find(
+      ([_, name]) => name === addressOrName,
+    )?.[0]
+
+    return EthereumAddress(address ?? '')
+  }
+}
