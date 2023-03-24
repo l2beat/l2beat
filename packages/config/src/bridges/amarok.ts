@@ -18,7 +18,8 @@ export const amarok: Bridge = {
     reconciles messages and return bond to the Routers. There is a configurable delay programmed into the RootManager contract and the SpokeConnectors\
     receiving messages. During the delay period a whitelisted set of Watchers can pause the bridge if the fraudulent message passed via AMB is detected.',
     links: {
-      websites: ['https://bridge.connext.network/'],
+      apps: ['https://bridge.connext.network/', 'https://connextscan.io/'],
+      websites: ['https://blog.connext.network/'],
       documentation: ['https://docs.connext.network/'],
       repositories: [
         'https://github.com/connext',
@@ -30,6 +31,21 @@ export const amarok: Bridge = {
       ],
     },
   },
+  milestones: [
+    {
+      name: 'Connext Amarok mainnet deployment',
+      link: 'https://blog.connext.network/connexts-amarok-upgrade-is-live-683099d61cbb',
+      date: '2023-02-02T00:00:00Z',
+      description: 'Connext Amarok mainnet deployment.',
+    },
+    {
+      name: 'Connext Amarok announced',
+      link: 'https://blog.connext.network/announcing-the-amarok-network-upgrade-5046317860a4',
+      date: '2022-05-11T00:00:00Z',
+      description:
+        'The new, modular architecture for Connext Amarok has been announced.',
+    },
+  ],
   config: {
     escrows: [
       {
