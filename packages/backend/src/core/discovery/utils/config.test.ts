@@ -53,7 +53,10 @@ describe('discovery config.jsonc', () => {
 
       const discovery = await configReader.readDiscovery(config.name)
 
-      for (const [address, override] of Object.entries(config.overrides)) {
+      for (const [addressOrName, override] of Object.entries(
+        config.overrides,
+      )) {
+        const address = getAddress(addressOrName, config)
         if (override.ignoreDiscovery === true) {
           continue
         }
@@ -62,11 +65,9 @@ describe('discovery config.jsonc', () => {
           continue
         }
 
-        const contract = discovery.contracts.find(
-          (c) => c.address.toString() === address,
-        )
+        const contract = discovery.contracts.find((c) => c.address === address)
 
-        const errorPrefix = `${config.name} - ${address}`
+        const errorPrefix = `${config.name} - ${address.toString()}`
 
         assert(
           contract,
@@ -156,12 +157,6 @@ describe('discovery config.jsonc', () => {
         )
       }
     })
-
-    // for (const override of Object.keys(config.overrides ?? {})) {
-    //   if (!known.has(EthereumAddress(override))) {
-    //     logger.configuredButUndiscovered(override.toString())
-    //   }
-    // }
   })
 })
 function getAddress(

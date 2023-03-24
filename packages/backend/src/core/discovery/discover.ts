@@ -94,12 +94,10 @@ export function getContractOverrides(
   config: DiscoveryConfig,
 ) {
   if (config.names?.[address.toString()]) {
-    console.log('using name')
     return config.overrides?.[config.names[address.toString()]]
   }
 
   if (config.overrides?.[address.toString()]) {
-    console.log('using address')
     return config.overrides[address.toString()]
   }
 }
