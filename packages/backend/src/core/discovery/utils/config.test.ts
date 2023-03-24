@@ -121,6 +121,8 @@ describe('discovery config.jsonc', () => {
   })
 
   describe('overrides', () => {
+    // this test ensures that every named override resolves to an address
+    // do not remove it unless you know what you are doing
     it('every override correspond to existing contract', async () => {
       for (const config of configs ?? []) {
         Object.keys(config.overrides ?? {}).forEach((addressOrName) => {

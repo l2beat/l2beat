@@ -89,6 +89,9 @@ export async function discover(
   return [...resolved.values()]
 }
 
+// the mapping of the names to addresses is enforced by the test
+// packages/backend/src/core/discovery/utils/config.test.ts (overrides test)
+// TODO L2B-1235: ensure mapping integrity with discovery.json
 export function getContractOverrides(
   address: EthereumAddress,
   config: DiscoveryConfig,
