@@ -2,8 +2,9 @@
   "$schema": "../config.schema.json",
   "name": "amarok",
   "names": {
-    "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6": "Connext Bridge",
-    "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6": "Watcher Manager",
+    "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6": "ConnextBridge",
+    "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6": "WatcherManager",
+    "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": "GelatoRelayerHub",
     "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE": "PolygonHubConnector",
     "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1": "RootManager",
     "0xd151C9ef49cE2d30B829a98A07767E3280F70961": "ArbitrumHubConnector"
@@ -11,7 +12,7 @@
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
   "overrides": {
-    "Connext Bridge": {
+    "ConnextBridge": {
       "fields": {
         "SEQUENCERS": {
           "type": "arrayFromTwoEvents",
@@ -22,14 +23,17 @@
         },
         "RELAYERS": {
           "type": "arrayFromTwoEvents",
-          "addEvent": "event RelayerAdded(address relayer)",
+          "addEvent": "event RelayerAdded(address relayer, address caller)",
           "addKey": "relayer",
-          "removeEvent": "event RelayerRemoved(address relayer)",
+          "removeEvent": "event RelayerRemoved(address relayer, address caller)",
           "removeKey": "relayer"
         }
       }
     },
-    "Watcher Manager": {
+    "GelatoRelayerHub": {
+      "ignoreDiscovery": true
+    },
+    "WatcherManager": {
       "fields": {
         "WATCHERS": {
           "type": "arrayFromTwoEvents",

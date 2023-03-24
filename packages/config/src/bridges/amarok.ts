@@ -67,11 +67,11 @@ export const amarok: Bridge = {
     addresses: [
       {
         name: 'Connext Amarok Bridge',
-        address: discovery.getContract('Connext Bridge').address,
+        address: discovery.getContract('ConnextBridge').address,
         description:
           'The main Connext Amarok contract. Following Diamond design patter, it contains multiple Facets that implement\
         various parts of the bridge functionality.',
-        upgradeability: discovery.getContract('Connext Bridge').upgradeability,
+        upgradeability: discovery.getContract('ConnextBridge').upgradeability,
       },
       {
         name: 'Root Manager',
@@ -81,7 +81,7 @@ export const amarok: Bridge = {
       },
       {
         name: 'Watcher Manager',
-        address: discovery.getContract('Watcher Manager').address,
+        address: discovery.getContract('WatcherManager').address,
         description:
           'Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.',
       },
