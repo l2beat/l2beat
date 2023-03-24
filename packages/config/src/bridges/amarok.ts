@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { CONTRACTS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { Bridge } from './types'
-import { CONTRACTS } from '../layer2s/common'
 
 const discovery = new ProjectDiscovery('amarok')
 
