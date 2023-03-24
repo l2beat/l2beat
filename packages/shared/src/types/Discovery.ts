@@ -14,6 +14,7 @@ export interface ProjectParameters {
 
 export interface ContractParameters {
   name: string
+  derivedName?: string
   unverified?: true
   address: EthereumAddress
   code?: string
