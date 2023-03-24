@@ -1,45 +1,8 @@
 {
   "name": "zksync2",
-  "blockNumber": 16684347,
-  "configHash": "0x0952484d453d068914efc6ba27fe71a7145822b2d880b23ab0a17ebc7c4f18b7",
+  "blockNumber": 16899791,
+  "configHash": "0xf83b0475bb27b81d03fe04a20463079037165dbf7d55dd1af199eb961b77412c",
   "contracts": [
-    {
-      "name": "L1EthBridge",
-      "address": "0x027C8a79075F96a8cdE315b495949e5f1D92f1D6",
-      "code": "https://etherscan.deth.net/address/0x027C8a79075F96a8cdE315b495949e5f1D92f1D6,0xeb9F40c4Ed46D39074aBe5Cd7E6C54679E5D04ED",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xeb9F40c4Ed46D39074aBe5Cd7E6C54679E5D04ED",
-        "admin": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
-      },
-      "values": {
-        "l2Bridge": "0x2F77dc80286e95508d37F688De83E8124795F8f7"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-      "code": "https://etherscan.deth.net/address/0x4e4943346848c4867F81dFb37c4cA9C5715A7828,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb",
-        "getChainId": 1,
-        "getOwners": [
-          "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
-          "0x474D2b82E02D9712A077574E7764dEfA182653D4",
-          "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
-          "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
-          "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF",
-          "0xa265146cA40F52cfC439888D0b4291b5440e6769"
-        ],
-        "getThreshold": 3,
-        "nonce": 13,
-        "VERSION": "1.3.0"
-      }
-    },
     {
       "name": "DiamondProxy",
       "address": "0x324000e0c256B806548b307aF600aFFF3D000324",
@@ -157,29 +120,58 @@
       "upgradeability": {
         "type": "immutable"
       }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+      "code": "https://etherscan.deth.net/address/0x4e4943346848c4867F81dFb37c4cA9C5715A7828,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb",
+        "getChainId": 1,
+        "getOwners": [
+          "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F",
+          "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
+          "0x474D2b82E02D9712A077574E7764dEfA182653D4",
+          "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
+          "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
+          "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF",
+          "0xa265146cA40F52cfC439888D0b4291b5440e6769"
+        ],
+        "getThreshold": 3,
+        "nonce": 46,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "L1ERC20Bridge",
+      "address": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+      "code": "https://etherscan.deth.net/address/0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063,0x7e5E66B01fe43293545eaB98ec4D31784A5Efa84",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x7e5E66B01fe43293545eaB98ec4D31784A5Efa84",
+        "admin": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      },
+      "values": {
+        "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
+        "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
+        "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019"
+      }
     }
   ],
   "eoas": [
     "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF",
-    "0x2F77dc80286e95508d37F688De83E8124795F8f7",
     "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
     "0x474D2b82E02D9712A077574E7764dEfA182653D4",
     "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
     "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
-    "0xa265146cA40F52cfC439888D0b4291b5440e6769"
+    "0xa265146cA40F52cfC439888D0b4291b5440e6769",
+    "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F"
   ],
   "abis": {
-    "0x027C8a79075F96a8cdE315b495949e5f1D92f1D6": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x20fB418401e9C4eef6E366Ae15166e4fe3eA7E42": [
       "function facetAddress(bytes4 _selector) view returns (address)",
       "function facetAddresses() view returns (address[])",
@@ -251,6 +243,36 @@
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": [
       "constructor(address _singleton)"
     ],
+    "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x7e5E66B01fe43293545eaB98ec4D31784A5Efa84": [
+      "constructor(address _mailbox, address _allowList)",
+      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
+      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
+      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
+      "function __DEPRECATED_lastWithdrawalLimitReset(address) view returns (uint256)",
+      "function __DEPRECATED_withdrawnAmountInWindow(address) view returns (uint256)",
+      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes32[] _merkleProof)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
+      "function finalizeWithdrawal(uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes _message, bytes32[] _merkleProof)",
+      "function initialize(bytes[] _factoryDeps, address _l2TokenBeacon, address _governor, uint256 _deployBridgeImplementationFee, uint256 _deployBridgeProxyFee) payable",
+      "function isWithdrawalFinalized(uint256, uint256) view returns (bool)",
+      "function l2Bridge() view returns (address)",
+      "function l2TokenAddress(address _l1Token) view returns (address)",
+      "function l2TokenBeacon() view returns (address)",
+      "function l2TokenProxyBytecodeHash() view returns (bytes32)",
+      "function totalDepositedAmountPerUser(address, address) view returns (uint256)"
+    ],
     "0xccEF0dAF4727Cc36171dc90A7efDef87A88a70bA": [
       "function compute_powers_of_alpha(tuple(tuple(uint256 value) zero, tuple(uint256 value) alpha, tuple(uint256 value) beta, tuple(uint256 value) gamma, tuple(uint256 value)[9] alpha_values, tuple(uint256 value) eta, tuple(uint256 value) beta_lookup, tuple(uint256 value) gamma_lookup, tuple(uint256 value) beta_plus_one, tuple(uint256 value) beta_gamma, tuple(uint256 value) v, tuple(uint256 value) u, tuple(uint256 value) z, tuple(uint256 value) z_omega, tuple(uint256 value) z_minus_last_omega, tuple(uint256 value) l_0_at_z, tuple(uint256 value) l_n_minus_one_at_z, tuple(uint256 value) t, tuple(uint256 X, uint256 Y) tp) state) pure",
       "function prepare_queries(tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[2] gate_selectors_commitments, tuple(uint256 X, uint256 Y)[8] gate_setup_commitments, tuple(uint256 X, uint256 Y)[4] permutation_commitments, tuple(uint256 X, uint256 Y) lookup_selector_commitment, tuple(uint256 X, uint256 Y)[4] lookup_tables_commitments, tuple(uint256 X, uint256 Y) lookup_table_type_commitment, tuple(uint256 value)[3] non_residues, tuple(uint256[2] X, uint256[2] Y)[2] g2_elements) vk, tuple(uint256[] input_values, tuple(uint256 X, uint256 Y)[4] state_polys_commitments, tuple(uint256 X, uint256 Y) copy_permutation_grand_product_commitment, tuple(uint256 X, uint256 Y)[4] quotient_poly_parts_commitments, tuple(uint256 value)[4] state_polys_openings_at_z, tuple(uint256 value)[1] state_polys_openings_at_z_omega, tuple(uint256 value)[1] gate_selectors_openings_at_z, tuple(uint256 value)[3] copy_permutation_polys_openings_at_z, tuple(uint256 value) copy_permutation_grand_product_opening_at_z_omega, tuple(uint256 value) quotient_poly_opening_at_z, tuple(uint256 value) linearization_poly_opening_at_z, tuple(uint256 X, uint256 Y) lookup_s_poly_commitment, tuple(uint256 X, uint256 Y) lookup_grand_product_commitment, tuple(uint256 value) lookup_s_poly_opening_at_z_omega, tuple(uint256 value) lookup_grand_product_opening_at_z_omega, tuple(uint256 value) lookup_t_poly_opening_at_z, tuple(uint256 value) lookup_t_poly_opening_at_z_omega, tuple(uint256 value) lookup_selector_poly_opening_at_z, tuple(uint256 value) lookup_table_type_poly_opening_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z_omega) proof, tuple(tuple(uint256 value) zero, tuple(uint256 value) alpha, tuple(uint256 value) beta, tuple(uint256 value) gamma, tuple(uint256 value)[9] alpha_values, tuple(uint256 value) eta, tuple(uint256 value) beta_lookup, tuple(uint256 value) gamma_lookup, tuple(uint256 value) beta_plus_one, tuple(uint256 value) beta_gamma, tuple(uint256 value) v, tuple(uint256 value) u, tuple(uint256 value) z, tuple(uint256 value) z_omega, tuple(uint256 value) z_minus_last_omega, tuple(uint256 value) l_0_at_z, tuple(uint256 value) l_n_minus_one_at_z, tuple(uint256 value) t, tuple(uint256 X, uint256 Y) tp) state) view returns (tuple(tuple(uint256 X, uint256 Y)[13] commitments_at_z, tuple(uint256 value)[13] values_at_z, tuple(uint256 X, uint256 Y)[6] commitments_at_z_omega, tuple(uint256 value)[6] values_at_z_omega) queries)",
@@ -320,19 +342,6 @@
       "function executeDiamondCutProposal(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
       "function proposeDiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] _facetCuts, address _initAddress)",
       "function unfreezeDiamond()"
-    ],
-    "0xeb9F40c4Ed46D39074aBe5Cd7E6C54679E5D04ED": [
-      "constructor(address _mailbox, address _allowList)",
-      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
-      "event DepositInitiated(address indexed from, address indexed to, address indexed l1Token, uint256 amount)",
-      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
-      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes32[] _merkleProof)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount) payable returns (bytes32 txHash)",
-      "function finalizeWithdrawal(uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes _message, bytes32[] _merkleProof)",
-      "function initialize(bytes _l2BridgeBytecode)",
-      "function isWithdrawalFinalized(uint256, uint256) view returns (bool)",
-      "function l2Bridge() view returns (address)",
-      "function l2TokenAddress(address) pure returns (address)"
     ]
   }
 }
