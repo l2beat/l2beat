@@ -456,7 +456,7 @@ export const arbitrum: Layer2 = {
       name: 'ARB token airdrop',
       link: 'https://twitter.com/arbitrum/status/1638888588443111425',
       date: '2023-03-23T00:00:00Z',
-      description: 'ARB token launched by Arbitrum Foundation.',
+      description: 'ARB token launched as a governance token for Arbitrum DAO.',
     },
     {
       name: 'Nitro Upgrade',
