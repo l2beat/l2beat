@@ -129,7 +129,9 @@ function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
     )
   }
 
-  const ids = [...bridgesInApi, ...layer2sInApi].map((x) => x.id.toString())
+  const ids = [...bridgesInApi, ...layer2sInApi]
+    .filter((x) => !x.isUpcoming)
+    .map((x) => x.id.toString())
 
   const emptyChartsExist = [
     tvlApiResponse.bridges,
