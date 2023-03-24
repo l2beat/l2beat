@@ -22,7 +22,7 @@ export const layer2financezk: Layer2 = {
   id: ProjectId('layer2financezk'),
   isArchived: true,
   display: {
-    name: 'Layer2.Finance-zk',
+    name: 'L2.Finance-zk',
     slug: 'layer2financezk',
     description:
       'Celer’s Layer2.finance in ZK Proofs Mode Built with StarkEx from StarkWare.',

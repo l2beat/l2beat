@@ -39,28 +39,13 @@ export interface BridgesTvlViewEntry {
 }
 
 export function BridgesTvlView({ items }: BridgesTvlViewProps) {
-  const onlyBridges = items.filter((x) => x.type === 'bridge')
-
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
       minimalWidth: true,
       headClassName: 'md:pl-4',
-      getValue: (entry, index) => (
-        <>
-          <span data-bridges-only-cell>
-            <IndexCell
-              entry={entry}
-              index={onlyBridges.indexOf(entry) + 1}
-              className="md:pl-4"
-            />
-          </span>
-          <span data-combined-only-cell className="hidden">
-            <IndexCell entry={entry} index={index + 1} className="pl-4" />
-          </span>
-        </>
-      ),
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
     },
     {
       name: 'Name',

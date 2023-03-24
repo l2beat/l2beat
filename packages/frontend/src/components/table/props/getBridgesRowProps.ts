@@ -23,6 +23,7 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
     ),
     'data-layer2': entry.type === 'layer2' ? true : undefined,
     'data-archived': entry.isArchived,
+    'data-role': 'row',
     href,
   }
 }

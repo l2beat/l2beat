@@ -54,9 +54,7 @@ export function ScalingTvlView({
       alignCenter: true,
       minimalWidth: true,
       headClassName: 'md:pl-4',
-      getValue: (entry, index) => (
-        <IndexCell entry={entry} className="md:pl-4" index={index + 1} />
-      ),
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
     },
     {
       name: 'Name',
@@ -68,7 +66,8 @@ export function ScalingTvlView({
       tooltip: 'Risks associated with this project.',
       minimalWidth: true,
       alignCenter: true,
-      getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
+      getValue: (project) =>
+        !project.isUpcoming && <RosetteCell riskValues={project.riskValues} />,
     },
     {
       name: 'Technology',

@@ -1,3 +1,4 @@
+import { isObject } from 'lodash'
 import { default as React } from 'react'
 
 import { DashboardContractFieldValue } from '../../props/utils/getValues'
@@ -17,15 +18,15 @@ export function Value(props: ValueProps) {
         dangerouslySetInnerHTML={{
           __html: `<span style="cursor:pointer; color: #85C1E9" onclick="document.getElementById('${
             props.value.discoveryChild
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
-          }').click()"> ${props.value.value.toString()} ⬇️</span>`,
+          }').click()"> ${renderValue(props.value)} ⬇️</span>`,
         }}
       />
     )
   }
 
-  return (
-    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-    <span style={{ color: '#939292' }}> {props.value.value.toString()}</span>
-  )
+  return <span style={{ color: '#939292' }}> {renderValue(props.value)}</span>
+}
+
+function renderValue({ value }: DashboardContractFieldValue) {
+  return isObject(value) ? JSON.stringify(value) : value.toString()
 }

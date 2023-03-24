@@ -152,6 +152,16 @@
       "category": "other"
     },
     {
+      "id": "arb-arbitrum",
+      "name": "Arbitrum",
+      "coingeckoId": "arbitrum",
+      "address": "0xb50721bcf8d664c30412cfbc6cf7a15145234ad1",
+      "symbol": "ARB",
+      "decimals": 18,
+      "sinceTimestamp": 1679572871,
+      "category": "other"
+    },
+    {
       "id": "audio-audius",
       "name": "Audius",
       "coingeckoId": "audius",

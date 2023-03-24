@@ -60,7 +60,12 @@
     },
     // L1ArbitrumTimelock
     "0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
-      "ignoreRelatives": ["l2Timelock"]
+      "ignoreRelatives": ["l2Timelock"],
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
     },
     // L1Erc20Gateway
     "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": {

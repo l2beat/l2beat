@@ -7,9 +7,9 @@ export function getIncludedProjects<
     return projects
   }
 
-  const included = projects.filter(
-    (x) => !!tvlApiResponse.projects[x.id.toString()],
-  )
+  const included = projects
+    .filter((x) => !x.isUpcoming)
+    .filter((x) => !!tvlApiResponse.projects[x.id.toString()])
 
   if (projects.every((x) => x.type === 'layer2')) {
     included.push(...projects.filter((x) => x.isUpcoming))

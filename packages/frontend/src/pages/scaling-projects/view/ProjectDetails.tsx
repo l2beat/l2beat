@@ -30,6 +30,7 @@ import {
   TechnologySection,
   TechnologySectionProps,
 } from '../../../components/project/TechnologySection'
+import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
 
 export interface ProjectDetailsProps {
   linkSection: LinkSectionProps
@@ -41,6 +42,7 @@ export interface ProjectDetailsProps {
   contractsSection: ContractsSectionProps
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
+  isUpcoming?: boolean
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -48,15 +50,20 @@ export function ProjectDetails(props: ProjectDetailsProps) {
     <main className="ProjectDetails">
       <div className="ProjectDetails-Content px-4 md:px-0">
         <DescriptionSection {...props.descriptionSection} />
-        <RiskAnalysis {...props.riskAnalysis} />
-        {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
-        {props.sections.map((section) => (
-          <TechnologySection key={section.id} {...section} />
-        ))}
-        {props.permissionsSection && (
-          <PermissionsSection {...props.permissionsSection} />
+        {!props.isUpcoming && (
+          <>
+            <RiskAnalysis {...props.riskAnalysis} />
+            {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
+            {props.sections.map((section) => (
+              <TechnologySection key={section.id} {...section} />
+            ))}
+            {props.permissionsSection && (
+              <PermissionsSection {...props.permissionsSection} />
+            )}
+            <ContractsSection {...props.contractsSection} />
+          </>
         )}
-        <ContractsSection {...props.contractsSection} />
+        {props.isUpcoming && <UpcomingDisclaimer className="mt-6" />}
       </div>
       <div className="ProjectDetails-Side flex flex-col gap-12 bg-gray-100 py-12 dark:bg-gray-900 md:!bg-transparent">
         <Milestones milestones={props.milestones} />

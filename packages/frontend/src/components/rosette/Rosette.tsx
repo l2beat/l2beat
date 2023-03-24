@@ -8,9 +8,11 @@ import {
 import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { getRiskSentiments } from '../../utils/risks/values'
 import { Icon } from '../icons/Icon'
+import { NoDataCell } from '../table/NoDataCell'
 
 export interface RosetteProps {
   risks: RiskSentiments
+  isUpcoming?: boolean
   className?: string
 }
 
@@ -73,14 +75,18 @@ export function MediumRosette({ risks }: RosetteProps) {
 
 interface BigRosetteProps {
   risks: RiskValues
+  isUpcoming?: boolean
   className?: string
 }
 
-export function BigRosette({ risks, className }: BigRosetteProps) {
+export function BigRosette({ risks, className, isUpcoming }: BigRosetteProps) {
   const riskSentiments = getRiskSentiments(risks)
   return (
-    <div className={cx('Rosette relative w-[272px] py-12 px-12', className)}>
-      <BigRosetteIcon risks={riskSentiments} />
+    <div
+      className={cx('Rosette relative w-[272px] py-12 px-12', className)}
+      data-rosette-hover-disabled={isUpcoming ?? false}
+    >
+      <BigRosetteIcon risks={riskSentiments} isUpcoming={isUpcoming} />
       <span
         className="Rosette-Text absolute bottom-[30px] left-[31px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight"
         data-rosette="sequencer-failure"
@@ -140,62 +146,70 @@ export function BigRosette({ risks, className }: BigRosetteProps) {
   )
 }
 
-function BigRosetteIcon({ risks, className }: RosetteProps) {
+function BigRosetteIcon({ risks, className, isUpcoming }: RosetteProps) {
   return (
-    <Icon
-      width="181"
-      height="180"
-      viewBox="0 0 181 180"
-      className={className}
-      alt-text="Rosette showing risk summary"
-    >
-      <circle
-        cx="90.8408"
-        cy="90"
-        r="90"
-        className="fill-gray-100 dark:fill-neutral-700"
-      />
-      <path
-        d="M80.8589 98.2024C83.4853 97.3765 86.1548 99.3485 86.1374 102.102L85.7291 166.681C85.7139 169.077 83.649 170.912 81.288 170.504C73.3126 169.126 56.0884 165.178 42.7447 155.321C28.2279 144.597 19.9876 129.784 16.6906 122.825C15.6954 120.724 16.8492 118.33 19.0669 117.632L80.8589 98.2024Z"
-        className={cx(
-          sentimentToFillColor(risks.sequencerFailure),
-          'Rosette-Slice focus:outline-none',
-        )}
-        data-rosette="sequencer-failure"
-      />
-      <path
-        d="M80.4851 82.9885C82.0593 85.2473 80.9768 88.3846 78.3447 89.1921L16.604 108.133C14.3134 108.836 11.9444 107.415 11.6271 105.04C10.555 97.018 9.16596 79.4018 14.5768 63.7194C20.4634 46.6582 32.1303 34.3618 37.7841 29.1327C39.4908 27.5543 42.1203 27.9386 43.4495 29.8458L80.4851 82.9885Z"
-        className={cx(
-          sentimentToFillColor(risks.stateValidation),
-          'Rosette-Slice focus:outline-none',
-        )}
-        data-rosette="state-validation"
-      />
-      <path
-        d="M94.4599 77.5583C92.8302 79.7773 89.5113 79.7654 87.8975 77.5349L50.0417 25.2126C48.6372 23.2713 49.2175 20.5705 51.3629 19.5036C58.6097 15.8996 74.8347 8.89881 91.4242 8.95819C109.472 9.02278 124.876 16.0963 131.65 19.7596C133.695 20.8655 134.18 23.4783 132.804 25.352L94.4599 77.5583Z"
-        className={cx(
-          sentimentToFillColor(risks.dataAvailability),
-          'Rosette-Slice focus:outline-none',
-        )}
-        data-rosette="data-availability"
-      />
-      <path
-        d="M103.756 89.1339C101.153 88.2379 100.177 85.0657 101.827 82.8615L140.521 31.1566C141.957 29.2382 144.708 28.9889 146.365 30.7199C151.961 36.5668 163.471 49.9752 168.349 65.8316C173.655 83.082 171.483 99.8928 170.001 107.45C169.553 109.731 167.203 110.971 165.005 110.215L103.756 89.1339Z"
-        className={cx(
-          sentimentToFillColor(risks.upgradeability),
-          'Rosette-Slice focus:outline-none',
-        )}
-        data-rosette="upgradeability"
-      />
-      <path
-        d="M95.5409 102.181C95.5486 99.428 98.2361 97.4805 100.855 98.3304L162.282 118.265C164.561 119.005 165.685 121.528 164.581 123.655C160.854 130.839 151.878 146.061 138.445 155.795C123.83 166.385 107.218 169.756 99.5872 170.792C97.2836 171.105 95.3511 169.28 95.3577 166.956L95.5409 102.181Z"
-        className={cx(
-          sentimentToFillColor(risks.validatorFailure),
-          'Rosette-Slice focus:outline-none',
-        )}
-        data-rosette="validator-failure"
-      />
-    </Icon>
+    <>
+      <Icon
+        width="181"
+        height="180"
+        viewBox="0 0 181 180"
+        className={cx(className, isUpcoming && 'opacity-20')}
+        alt-text="Rosette showing risk summary"
+      >
+        <circle
+          cx="90.8408"
+          cy="90"
+          r="90"
+          className="fill-gray-100 dark:fill-neutral-700"
+        />
+        <path
+          d="M80.8589 98.2024C83.4853 97.3765 86.1548 99.3485 86.1374 102.102L85.7291 166.681C85.7139 169.077 83.649 170.912 81.288 170.504C73.3126 169.126 56.0884 165.178 42.7447 155.321C28.2279 144.597 19.9876 129.784 16.6906 122.825C15.6954 120.724 16.8492 118.33 19.0669 117.632L80.8589 98.2024Z"
+          className={cx(
+            sentimentToFillColor(risks.sequencerFailure),
+            'Rosette-Slice focus:outline-none',
+          )}
+          data-rosette="sequencer-failure"
+        />
+        <path
+          d="M80.4851 82.9885C82.0593 85.2473 80.9768 88.3846 78.3447 89.1921L16.604 108.133C14.3134 108.836 11.9444 107.415 11.6271 105.04C10.555 97.018 9.16596 79.4018 14.5768 63.7194C20.4634 46.6582 32.1303 34.3618 37.7841 29.1327C39.4908 27.5543 42.1203 27.9386 43.4495 29.8458L80.4851 82.9885Z"
+          className={cx(
+            sentimentToFillColor(risks.stateValidation),
+            'Rosette-Slice focus:outline-none',
+          )}
+          data-rosette="state-validation"
+        />
+        <path
+          d="M94.4599 77.5583C92.8302 79.7773 89.5113 79.7654 87.8975 77.5349L50.0417 25.2126C48.6372 23.2713 49.2175 20.5705 51.3629 19.5036C58.6097 15.8996 74.8347 8.89881 91.4242 8.95819C109.472 9.02278 124.876 16.0963 131.65 19.7596C133.695 20.8655 134.18 23.4783 132.804 25.352L94.4599 77.5583Z"
+          className={cx(
+            sentimentToFillColor(risks.dataAvailability),
+            'Rosette-Slice focus:outline-none',
+          )}
+          data-rosette="data-availability"
+        />
+        <path
+          d="M103.756 89.1339C101.153 88.2379 100.177 85.0657 101.827 82.8615L140.521 31.1566C141.957 29.2382 144.708 28.9889 146.365 30.7199C151.961 36.5668 163.471 49.9752 168.349 65.8316C173.655 83.082 171.483 99.8928 170.001 107.45C169.553 109.731 167.203 110.971 165.005 110.215L103.756 89.1339Z"
+          className={cx(
+            sentimentToFillColor(risks.upgradeability),
+            'Rosette-Slice focus:outline-none',
+          )}
+          data-rosette="upgradeability"
+        />
+        <path
+          d="M95.5409 102.181C95.5486 99.428 98.2361 97.4805 100.855 98.3304L162.282 118.265C164.561 119.005 165.685 121.528 164.581 123.655C160.854 130.839 151.878 146.061 138.445 155.795C123.83 166.385 107.218 169.756 99.5872 170.792C97.2836 171.105 95.3511 169.28 95.3577 166.956L95.5409 102.181Z"
+          className={cx(
+            sentimentToFillColor(risks.validatorFailure),
+            'Rosette-Slice focus:outline-none',
+          )}
+          data-rosette="validator-failure"
+        />
+      </Icon>
+      {isUpcoming && (
+        <NoDataCell
+          isUpcoming={isUpcoming}
+          className="absolute top-[130px] left-[90px]"
+        />
+      )}
+    </>
   )
 }
 

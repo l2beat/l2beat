@@ -33,19 +33,14 @@ export interface ScalingRiskViewEntry {
   validatorFailure: ProjectRiskViewEntry
 }
 
-export function ScalingRiskView({
-  items,
-  upcomingEnabled,
-}: ScalingRiskViewProps) {
+export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
       minimalWidth: true,
       headClassName: 'md:pl-4',
-      getValue: (entry, index) => (
-        <IndexCell entry={entry} className="md:pl-4" index={index + 1} />
-      ),
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
     },
     {
       name: 'Name',
@@ -86,7 +81,7 @@ export function ScalingRiskView({
 
   return (
     <section className="mt-4 sm:mt-8">
-      <ScalingTableFilters className="mb-4" upcomingEnabled={upcomingEnabled} />
+      <ScalingTableFilters className="mb-4" />
       <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>
