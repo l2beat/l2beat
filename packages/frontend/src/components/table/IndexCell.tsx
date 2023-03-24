@@ -1,35 +1,21 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 interface IndexCellProps {
-  entry: {
-    isUpcoming?: boolean
-    isArchived?: boolean
-  }
   index: number
   className?: string
 }
 
-export function IndexCell({ entry, className, index }: IndexCellProps) {
-  if (entry.isUpcoming === true) {
-    return null
-  }
-
-  if (entry.isArchived === true) {
-    return (
-      <span className={className}>
-        <ArchivedIcon />
-      </span>
-    )
-  }
-
+// the number is updated dynamically inside the client-side code
+// see renderNumbers() inside /packages/frontend/src/scripts/configureFilters.ts
+export function IndexCell({ index, className }: IndexCellProps) {
   return (
     <span
       className={cx(
         'text-xs font-medium text-gray-50 dark:font-normal dark:text-gray-600',
         className,
       )}
+      data-role="index-cell"
     >
       {index}
     </span>

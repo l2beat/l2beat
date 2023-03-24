@@ -102,3 +102,30 @@ function BigTemplate(risks: RiskSentiments) {
 
 export const BigRosette: Story<RiskSentiments> = BigTemplate.bind({})
 BigRosette.args = args
+
+function UpcomingTemplate(risks: RiskValues) {
+  return (
+    <div className="p-4">
+      <BigRosetteComponent risks={risks} isUpcoming={true} />
+    </div>
+  )
+}
+
+export const UpcomingRosette: Story<RiskValues> = UpcomingTemplate.bind({})
+UpcomingRosette.args = {
+  sequencerFailure: {
+    value: 'Sequencer failure',
+  },
+  dataAvailability: {
+    value: 'Data availability',
+  },
+  upgradeability: {
+    value: 'Upgradeability',
+  },
+  stateValidation: {
+    value: 'State validation',
+  },
+  validatorFailure: {
+    value: 'Validator failure',
+  },
+}

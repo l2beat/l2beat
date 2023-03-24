@@ -1,6 +1,10 @@
 import { EthereumAddress } from '@l2beat/shared'
 
-import { ProjectContractSingleAddress, ProjectRisk } from '../../common'
+import {
+  ProjectContracts,
+  ProjectContractSingleAddress,
+  ProjectRisk,
+} from '../../common'
 import { ProjectDiscovery } from './ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('starknet')
@@ -35,7 +39,13 @@ export const SHARP_VERIFIER_CONTRACT: ProjectContractSingleAddress = {
   upgradeability: discovery.getContract('CallProxy').upgradeability,
 }
 
+const EMPTY: ProjectContracts = {
+  addresses: [],
+  risks: [],
+}
+
 export const CONTRACTS = {
+  EMPTY,
   UNVERIFIED_DESCRIPTION,
   UNVERIFIED_RISK,
   UPGRADE_NO_DELAY_RISK,

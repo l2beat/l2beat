@@ -2,8 +2,10 @@ import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
+import { base } from './base'
 import { bobanetwork } from './bobanetwork'
 import { HOMEPAGE_MILESTONES } from './common'
+import { consensys } from './consensys'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -17,7 +19,9 @@ import { myria } from './myria'
 import { nova } from './nova'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { polygonzkevm } from './polygonzkevm'
 import { rhinofi } from './rhinofi'
+import { scroll } from './scroll'
 import { sorare } from './sorare'
 import { starknet } from './starknet'
 import { Layer2 } from './types'
@@ -34,7 +38,9 @@ export const layer2s: Layer2[] = [
   arbitrum,
   aztec,
   aztecconnect,
+  base,
   bobanetwork,
+  consensys,
   rhinofi,
   dydx,
   fuelv1,
@@ -49,6 +55,8 @@ export const layer2s: Layer2[] = [
   nova,
   omgnetwork,
   optimism,
+  polygonzkevm,
+  scroll,
   sorare,
   starknet,
   zkswap,

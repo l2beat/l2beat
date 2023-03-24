@@ -264,6 +264,21 @@ export const CANONICAL_USDC: ProjectRiskViewEntry = {
     'USDC transferred is considered canonical as it is the basis of the perpetual protocol on the chain.',
 }
 
+const EMPTY: ProjectRiskViewEntry = {
+  value: '',
+  description: 'No information available.',
+}
+
+export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
+  stateValidation: EMPTY,
+  dataAvailability: EMPTY,
+  upgradeability: EMPTY,
+  sequencerFailure: EMPTY,
+  validatorFailure: EMPTY,
+  destinationToken: EMPTY,
+  validatedBy: EMPTY,
+})
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,

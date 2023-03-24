@@ -50,6 +50,7 @@ export function DetailsHeader(props: HeaderProps) {
             stats={props.stats}
             risks={props.risks}
             links={props.links}
+            isUpcoming={props.isUpcoming}
           />
         ) : (
           <DetailsHeaderStats stats={props.stats} />
@@ -76,6 +77,7 @@ interface SummaryProps {
   stats: Stat[]
   risks: RiskValues
   links: Link[]
+  isUpcoming?: boolean
 }
 
 function Summary(props: SummaryProps) {
@@ -168,14 +170,16 @@ function Summary(props: SummaryProps) {
         <span className="text-xs text-gray-500 dark:text-gray-600">
           Risks analysis
         </span>
-        <BigRosette risks={props.risks} />
-        <a
-          href="#risks"
-          className="mt-3 block text-center text-sm font-bold text-link underline"
-        >
-          Learn more about Risks analysis{' '}
-          <ArrowRightIcon className="inline-block fill-current" />
-        </a>
+        <BigRosette risks={props.risks} isUpcoming={props.isUpcoming} />
+        {!props.isUpcoming && (
+          <a
+            href="#risks"
+            className="mt-3 block text-center text-sm font-bold text-link underline"
+          >
+            Learn more about Risks analysis{' '}
+            <ArrowRightIcon className="inline-block fill-current" />
+          </a>
+        )}
       </div>
     </div>
   )

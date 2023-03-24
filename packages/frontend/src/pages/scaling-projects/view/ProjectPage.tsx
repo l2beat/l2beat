@@ -28,7 +28,11 @@ export function ProjectPage(props: ProjectPageProps) {
       <Navbar {...props.navbar} />
       <PageContent mobileFull>
         <ProjectHeader {...props.projectHeader} />
-        <Chart {...props.chart} mobileFull />
+        <Chart
+          {...props.chart}
+          mobileFull
+          isUpcoming={props.projectDetails.isUpcoming}
+        />
         <ProjectDetails {...props.projectDetails} />
       </PageContent>
       <Footer narrow {...props.footer} />
