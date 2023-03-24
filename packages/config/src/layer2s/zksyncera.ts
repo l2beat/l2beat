@@ -53,6 +53,11 @@ export const zksyncera: Layer2 = {
         sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
       },
+      {
+        address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
+        sinceTimestamp: new UnixTime(1676367083),
+        tokens: ['USDC', 'PERP', 'MUTE'],
+      },
     ],
   },
   riskView: makeBridgeCompatible({
