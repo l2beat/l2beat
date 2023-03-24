@@ -117,4 +117,17 @@ describe('discovery config.jsonc', () => {
       )
     }
   })
+
+  it('every custom name correspond to existing contract', async () => {
+    for (const config of configs ?? []) {
+      const discovery = await configReader.readDiscovery(config.name)
+
+      assert(
+        Object.keys(config.names ?? {}).every((address) =>
+          discovery.contracts.some((c) => c.address.toString() === address),
+        ),
+        `names field in ${config.name} configuration includes addresses that do not exist inside discovery.json`,
+      )
+    }
+  })
 })
