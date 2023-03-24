@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   SHARP_VERIFIER_CONTRACT,
@@ -32,7 +33,7 @@ export const sorare: Layer2 = {
       socialMedia: [
         'https://discord.gg/TSjtHaM',
         'https://reddit.com/r/Sorare/',
-        'https://twitter.com/sorarehq',
+        'https://twitter.com/Sorare',
         'https://instagram.com/sorare_official/',
       ],
     },
@@ -44,15 +45,6 @@ export const sorare: Layer2 = {
         address: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
         sinceTimestamp: new UnixTime(1626352527),
         tokens: ['ETH'],
-      },
-    ],
-    events: [
-      {
-        name: 'LogStateTransitionFact',
-        abi: 'event LogStateTransitionFact(bytes32 stateTransitionFact)',
-        emitter: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1626352527),
       },
     ],
     transactionApi: {
@@ -98,6 +90,8 @@ export const sorare: Layer2 = {
       {
         name: 'Committee',
         address: EthereumAddress('0x879cD57975d596004863D30c59d579ef78BBbe32'),
+        description:
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       },
       SHARP_VERIFIER_CONTRACT,
     ],
@@ -119,9 +113,34 @@ export const sorare: Layer2 = {
     },
     {
       name: 'Data Availability Committee',
-      accounts: [],
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0x6EBCb783E53C072e9b1C8786942aefc145C6Df75',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0x9bC546c5741d31b3510D3B240bDB4c517030E318',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xA70A45E56c087A34991A712d437fcFfd79D3a8Ec',
+          ),
+          type: 'EOA',
+        },
+        {
+          address: EthereumAddress(
+            '0xefaaf3A5D0D795C7c1f92cBeDE868C273790026e',
+          ),
+          type: 'EOA',
+        },
+      ],
       description:
-        'There exists a Data Availability Committee with unknown members and an unverified smart contract.',
+        'Validity proof must be signed by at least 2 of these addresses to approve state update.',
     },
     {
       name: 'SHARP Verifier Governor',
@@ -159,4 +178,5 @@ export const sorare: Layer2 = {
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
     },
   ],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

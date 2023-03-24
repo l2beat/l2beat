@@ -5,18 +5,20 @@ export interface Config {
     twitter: string
     discord: string
     github: string
+    linkedin: string
     youTube: string
     medium: string
     forum: string
   }
   features: {
-    bridges: boolean
     activity: boolean
     banner: boolean
     gitcoinOption: boolean
     milestones: boolean
     hiring: boolean
-    rating: boolean
+    maturity: boolean
+    buildAllProjectPages: boolean
+    upcomingRollups: boolean
   }
   backend: {
     apiUrl: string

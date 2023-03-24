@@ -1,10 +1,6 @@
-import {
-  MainnetEtherscanClient,
-  ProjectParameters,
-  wrapAndMeasure,
-} from '@l2beat/shared'
+import { MainnetEtherscanClient, ProjectParameters } from '@l2beat/shared'
 import { providers } from 'ethers'
-import { Histogram } from 'prom-client'
+import { Gauge, Histogram } from 'prom-client'
 
 import { discover } from './discover'
 import { DiscoveryConfig } from './DiscoveryConfig'
@@ -12,13 +8,6 @@ import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { parseDiscoveryOutput } from './saveDiscoveryResult'
 import { getDiscoveryConfigHash } from './utils/getDiscoveryConfigHash'
-
-const discoveryHistogram = new Histogram({
-  name: 'discovery_duration_histogram',
-  help: 'Histogram showing discovery duration',
-  labelNames: ['project'],
-  buckets: [10, 30, 60, 120, 300],
-})
 
 export class DiscoveryEngine {
   constructor(
@@ -31,24 +20,19 @@ export class DiscoveryEngine {
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<ProjectParameters> {
+    const metricsDone = initMetrics()
+
     const discoveryProvider = new DiscoveryProvider(
       this.provider,
       this.etherscanClient,
       blockNumber,
     )
 
-    const wrappedDiscovery = wrapAndMeasure(
-      async () => await discover(discoveryProvider, config, this.logger),
-      {
-        histogram: discoveryHistogram,
-        labels: {
-          project: config.name,
-        },
-      },
-    )
-    const discovered = await wrappedDiscovery()
+    const discovered = await discover(discoveryProvider, config, this.logger)
 
     const configHash = getDiscoveryConfigHash(config)
+
+    metricsDone({ project: config.name }, blockNumber)
 
     // TODO: test this line
     return parseDiscoveryOutput(
@@ -57,5 +41,30 @@ export class DiscoveryEngine {
       blockNumber,
       configHash,
     )
+  }
+}
+
+const latestBlock = new Gauge({
+  name: 'discovery_last_synced',
+  help: 'Value showing latest block number with which DiscoveryWatcher was run',
+  labelNames: ['project'],
+})
+
+const syncHistogram = new Histogram({
+  name: 'discovery_sync_duration_histogram',
+  help: 'Histogram showing discovery duration',
+  labelNames: ['project'],
+  buckets: [2, 4, 6, 8, 10, 15, 20, 30, 60, 120],
+})
+
+function initMetrics(): (
+  labels: { project: string },
+  blockNumber: number,
+) => void {
+  const histogramDone = syncHistogram.startTimer()
+
+  return (labels, blockNumber) => {
+    histogramDone(labels)
+    latestBlock.set(labels, blockNumber)
   }
 }

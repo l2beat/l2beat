@@ -6,11 +6,15 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('aztecconnect')
 
 export const aztecconnect: Layer2 = {
   type: 'layer2',
@@ -26,13 +30,12 @@ export const aztecconnect: Layer2 = {
       apps: ['https://zk.money'],
       documentation: ['https://developers.aztec.network/'],
       explorers: ['https://aztec-connect-prod-explorer.aztec.network/'],
-      repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
+      repositories: ['https://github.com/AztecProtocol/aztec-connect'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',
         'https://medium.com/aztec-protocol',
         'https://t.me/aztecprotocol',
         'https://discord.gg/UDtJr9u',
-        'https://plonk.cafe/',
       ],
     },
     activityDataSource: 'Explorer API',
@@ -43,22 +46,6 @@ export const aztecconnect: Layer2 = {
         address: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
         sinceTimestamp: new UnixTime(1654587783),
         tokens: ['ETH', 'DAI', 'wstETH'],
-      },
-    ],
-    events: [
-      {
-        name: 'RollupProcessed',
-        abi: 'event RollupProcessed (uint256 indexed rollupId, bytes32[] nextExpectedDefiHashes, address sender)',
-        emitter: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1654638194),
-      },
-      {
-        name: 'OffchainData',
-        abi: 'event OffchainData(uint256 indexed rollupId, uint256 chunk, uint256 totalChunks, address sender)',
-        emitter: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
-        type: 'data',
-        sinceTimestamp: new UnixTime(1654638194),
       },
     ],
   },
@@ -158,17 +145,12 @@ export const aztecconnect: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
+        address: discovery.getContract('RollupProcessorV2').address,
         description:
           'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
-        name: 'RollupProcessor',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0xC5b735d05c26579B701Be9bED253Bb588503B26B'),
-          implementation: EthereumAddress(
-            '0x3f972e325CecD99a6be267fd36ceB46DCa7C3F28',
-          ),
-        },
+        name: 'RollupProcessorV2',
+        upgradeability:
+          discovery.getContract('RollupProcessorV2').upgradeability,
       },
       {
         address: EthereumAddress('0x4cf32670a53657596E641DFCC6d40f01e4d64927'),
@@ -177,20 +159,19 @@ export const aztecconnect: Layer2 = {
         name: 'AztecFeeDistributor',
       },
       {
-        address: EthereumAddress('0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487'),
+        address: EthereumAddress(
+          discovery.getContractValue('RollupProcessorV2', 'defiBridgeProxy'),
+        ),
         description: 'Bridge Connector to various DeFi Bridges.',
         name: 'DefiBridgeProxy',
       },
       {
-        address: EthereumAddress('0x3937f965E824Fe4e7885B8662669821966d3f293'),
+        address: EthereumAddress(
+          discovery.getContractValue('RollupProcessorV2', 'verifier'),
+        ),
         description:
           'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
-        name: 'StandardVerifier',
-      },
-      {
-        address: EthereumAddress('0x8C3B53F450E53FF14D8C9449465F79ff40668966'),
-        description: 'Verification Keys for the Verifier.',
-        name: 'VerificationKey28x32',
+        name: 'Verifier28x32',
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -202,6 +183,30 @@ export const aztecconnect: Layer2 = {
       link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
       description:
         'Aztec Connect is live on mainnet, enabling private DeFi on Ethereum.',
+    },
+    {
+      name: 'Introducing Noir',
+      date: '2022-10-06T00:00:00Z',
+      link: 'https://medium.com/aztec-protocol/introducing-noir-the-universal-language-of-zero-knowledge-ff43f38d86d9',
+      description:
+        'Noir - programming language for zero-knowledge proofs, has been introduced.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Explaining the Aztec Network',
+      url: 'https://medium.com/aztec-protocol/explaining-the-network-in-aztec-network-166862b3ef7d',
+      thumbnail: NUGGETS.THUMBNAILS.AZTEC_01,
+    },
+    {
+      title: 'Economics of Aztec zkRollup',
+      url: 'https://medium.com/aztec-protocol/privacy-for-pennies-scaling-aztecs-zkrollup-9f2b36615cc6',
+      thumbnail: NUGGETS.THUMBNAILS.AZTEC_02,
+    },
+    {
+      title: 'Understanding PLONK',
+      url: 'https://vitalik.ca/general/2019/09/22/plonk.html',
+      thumbnail: NUGGETS.THUMBNAILS.VITALIK_01,
     },
   ],
 }

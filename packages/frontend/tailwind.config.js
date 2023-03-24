@@ -1,20 +1,8 @@
 /** @type import("tailwindcss/types").Config */
 module.exports = {
-  content: ['./src/**/*.{html,ts,tsx}'],
+  content: ['./src/**/*.{html,ts,tsx,md,css}'],
   darkMode: 'class',
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Roboto', 'Arial', 'sans-serif'],
-      },
-      zIndex: {
-        1: '1',
-        41: '41',
-      },
-      spacing: {
-        '2/3': '66.666666%',
-      },
-    },
     fontSize: {
       '3xs': ['8px', '12px'],
       '2xs': ['12px', '16px'],
@@ -32,6 +20,12 @@ module.exports = {
       transparent: 'transparent',
       link: 'rgb(var(--link-rgb) / <alpha-value>)',
       white: '#FAFAFA',
+      neutral: {
+        700: '#323539',
+      },
+      zinc: {
+        800: '#272A2F',
+      },
       gray: {
         50: '#AEAEAE',
         100: '#EDEDED',
@@ -43,6 +37,7 @@ module.exports = {
         600: '#848484',
         650: '#5C5C5C',
         700: '#565656',
+        750: '#424850',
         800: '#424242',
         850: '#333333',
         900: '#2F2F2F',
@@ -56,7 +51,7 @@ module.exports = {
         500: '#E5C227',
         700: '#CB9800',
       },
-      orange: '#FF7D1F',
+      orange: { 500: '#FF7D1F', 600: '#F94A24' },
       purple: {
         100: '#7E41CC',
         300: '#F1D6FF',
@@ -72,6 +67,7 @@ module.exports = {
         200: '#B0FFAA',
         300: '#4EAB58',
         400: '#13E000',
+        450: '#50E35F',
         500: '#5BFF4D',
         600: '#11CC00',
         700: '#007408',
@@ -79,7 +75,9 @@ module.exports = {
       },
       red: {
         100: '#FDD9D9',
+        200: '#EE2C01',
         300: '#FA3A3A',
+        350: '#F94A24',
         400: '#FF0000',
         500: '#C32806',
         600: '#C71414',
@@ -94,6 +92,7 @@ module.exports = {
         500: '#53A2FF',
         600: '#2B5CD9',
         700: '#005DD7',
+        800: '#083575',
         900: '#112944',
       },
     },
@@ -103,6 +102,17 @@ module.exports = {
       md: '750px',
       lg: '1000px',
     },
+    extend: {
+      fontFamily: {
+        sans: ['Roboto', 'Arial', 'sans-serif'],
+      },
+      zIndex: {
+        1: '1',
+        41: '41',
+      },
+      spacing: {
+        '2/3': '66.666666%',
+      },
+    },
   },
-  plugins: [],
 }

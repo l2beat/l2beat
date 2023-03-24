@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   SHARP_VERIFIER_CONTRACT,
@@ -44,7 +45,6 @@ export const myria: Layer2 = {
         tokens: ['ETH'],
       },
     ],
-    events: [],
     transactionApi: {
       type: 'starkex',
       product: 'myria',
@@ -182,4 +182,5 @@ export const myria: Layer2 = {
         'Layer 2 scaling solution powered by Starware is live on Ethereum.',
     },
   ],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

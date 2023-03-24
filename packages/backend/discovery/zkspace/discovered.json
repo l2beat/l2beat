@@ -1,6 +1,6 @@
 {
   "name": "zkspace",
-  "blockNumber": 16618848,
+  "blockNumber": 16733944,
   "configHash": "0x5ec7715363bb5f739c381fb4df66f2663218a1657a6fbff15da2c655a7dbd457",
   "contracts": [
     {
@@ -64,7 +64,7 @@
         "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
       },
       "values": {
-        "allPairsLength": 63,
+        "allPairsLength": 64,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
         "zkSyncAddress": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
@@ -109,7 +109,7 @@
         "networkGovernor": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be",
         "tokenLister": "0x8aA2C56dca9d59F4317c2fad632c192b18127709",
         "totalFeeTokens": 8,
-        "totalUserTokens": 40,
+        "totalUserTokens": 41,
         "validators": [
           "0x5bd9404260D2B0D55081E599e4e085BE080141E2"
         ]
@@ -124,7 +124,7 @@
       },
       "values": {
         "listingCap": 1000,
-        "listingCount": 63,
+        "listingCount": 64,
         "listingFeeAmount": 0,
         "listingFeeReceiver": "0x961B513dfD3e363c238E0f98219eE02552A847BD",
         "listingFeeToken": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
@@ -161,20 +161,20 @@
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 400,
-        "firstPriorityRequestId": 1153,
+        "firstPendingWithdrawalIndex": 423,
+        "firstPriorityRequestId": 1205,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
         "governance": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
         "maxDepositAmount": "38685626227668133590597632",
         "numberOfPendingWithdrawals": 0,
         "pairManager": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-        "totalBlocksChecked": 31963,
-        "totalBlocksCommitted": 31978,
-        "totalBlocksVerified": 31974,
+        "totalBlocksChecked": 33227,
+        "totalBlocksCommitted": 33230,
+        "totalBlocksVerified": 33227,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
-        "totalPairTokens": 63,
+        "totalPairTokens": 64,
         "upgradePreparationActivationTime": 0,
         "upgradePreparationActive": false,
         "verifier": "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",

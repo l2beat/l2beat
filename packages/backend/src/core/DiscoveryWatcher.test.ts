@@ -3,11 +3,10 @@ import {
   EthereumAddress,
   Hash256,
   Logger,
-  mock,
   ProjectParameters,
   UnixTime,
 } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect, mockObject } from 'earljs'
 import { providers } from 'ethers'
 
 import {
@@ -22,7 +21,7 @@ import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
-import { DiscoveryWatcher } from './DiscoveryWatcher'
+import { DiscoveryWatcher, isNineAM } from './DiscoveryWatcher'
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'
@@ -56,25 +55,26 @@ const DISCOVERY_RESULT: ProjectParameters = {
 }
 
 describe(DiscoveryWatcher.name, () => {
-  let discordClient = mock<DiscordClient>({})
-  let discoveryEngine = mock<DiscoveryEngine>({})
-  let provider = mock<providers.AlchemyProvider>({})
+  let discordClient = mockObject<DiscordClient>({})
+  let discoveryEngine = mockObject<DiscoveryEngine>({})
+  let provider = mockObject<providers.AlchemyProvider>({})
 
   beforeEach(() => {
-    discordClient = mock<DiscordClient>({
-      sendMessage: async () => {},
+    discordClient = mockObject<DiscordClient>({
+      sendMessage: async () => [],
+      resetCallsCount: () => {},
     })
-    discoveryEngine = mock<DiscoveryEngine>({
+    discoveryEngine = mockObject<DiscoveryEngine>({
       run: async () => DISCOVERY_RESULT,
     })
-    provider = mock<providers.AlchemyProvider>({
+    provider = mockObject<providers.AlchemyProvider>({
       getBlockNumber: async () => BLOCK_NUMBER,
     })
   })
 
   describe(DiscoveryWatcher.prototype.update.name, () => {
     it('iterates over projects and finds diff', async () => {
-      const configReader = mock<ConfigReader>({
+      const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => ({
           ...mockProject,
           contracts: COMMITTED,
@@ -86,7 +86,7 @@ describe(DiscoveryWatcher.name, () => {
         ],
       })
 
-      const repository = mock<DiscoveryWatcherRepository>({
+      const repository = mockObject<DiscoveryWatcherRepository>({
         findLatest: async () => undefined,
         addOrUpdate: async () => '',
       })
@@ -97,49 +97,211 @@ describe(DiscoveryWatcher.name, () => {
         discordClient,
         configReader,
         repository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
-      await discoveryWatcher.update()
+      await discoveryWatcher.update(new UnixTime(0))
 
       // gets block number
-      expect(provider.getBlockNumber.calls.length).toEqual(1)
+      expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
-      expect(configReader.readAllConfigs.calls.length).toEqual(1)
+      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
       // runs discovery for every project
-      expect(discoveryEngine.run).toHaveBeenCalledExactlyWith([
-        [{ name: PROJECT_A, initialAddresses: [] }, BLOCK_NUMBER],
-        [{ name: PROJECT_B, initialAddresses: [] }, BLOCK_NUMBER],
-      ])
+      expect(discoveryEngine.run).toHaveBeenCalledTimes(2)
+      expect(discoveryEngine.run).toHaveBeenNthCalledWith(
+        1,
+        { name: PROJECT_A, initialAddresses: [] },
+        BLOCK_NUMBER,
+      )
+      expect(discoveryEngine.run).toHaveBeenNthCalledWith(
+        2,
+        { name: PROJECT_B, initialAddresses: [] },
+        BLOCK_NUMBER,
+      )
       // calls repository (and gets undefined)
-      expect(repository.findLatest.calls.length).toEqual(2)
-      // reads commited discovery.json
-      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
-        [PROJECT_A],
-        [PROJECT_B],
-      ])
+      expect(repository.findLatest).toHaveBeenCalledTimes(2)
+      // reads committed discovery.json
+      expect(configReader.readDiscovery).toHaveBeenCalledTimes(2)
+      expect(configReader.readDiscovery).toHaveBeenNthCalledWith(1, PROJECT_A)
+      expect(configReader.readDiscovery).toHaveBeenNthCalledWith(2, PROJECT_B)
       // saves discovery result
-      expect(repository.addOrUpdate.calls.length).toEqual(2)
+      expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
       //sends notification
-      expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
-        [mockMessage(PROJECT_A)],
-        [mockMessage(PROJECT_B)],
-      ])
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(4)
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        mockMessage(PROJECT_A),
+        'PUBLIC',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        2,
+        mockMessage(PROJECT_A),
+        'INTERNAL',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        3,
+        mockMessage(PROJECT_B),
+        'PUBLIC',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        4,
+        mockMessage(PROJECT_B),
+        'INTERNAL',
+      )
     })
 
     it('does not send notification about the same change', async () => {
-      const configReader = mock<ConfigReader>({
+      const configReader = mockObject<ConfigReader>({
         readAllConfigs: async () => [mockConfig(PROJECT_A)],
         readDiscovery: async () => ({ ...mockProject, contracts: [] }),
       })
 
-      const discoveryWatcherRepository = mock<DiscoveryWatcherRepository>({
-        findLatest: async () => ({
-          ...mockRecord,
-          discovery: DISCOVERY_RESULT,
-          configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+      const discoveryWatcherRepository = mockObject<DiscoveryWatcherRepository>(
+        {
+          findLatest: async () => ({
+            ...mockRecord,
+            discovery: DISCOVERY_RESULT,
+            configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+          }),
+          addOrUpdate: async () => '',
+        },
+      )
+
+      const discoveryWatcher = new DiscoveryWatcher(
+        provider,
+        discoveryEngine,
+        discordClient,
+        configReader,
+        discoveryWatcherRepository,
+        mockObject<Clock>(),
+        Logger.SILENT,
+      )
+
+      await discoveryWatcher.update(new UnixTime(0))
+
+      // gets block number
+      expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
+      // reads all the configs
+      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
+      // gets latest from database (with the same config hash)
+      expect(discoveryWatcherRepository.findLatest).toHaveBeenOnlyCalledWith(
+        PROJECT_A,
+      )
+      // does not send a notification
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
+    })
+
+    it('sends daily reminder to internal channel', async () => {
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: async () => ({
+          ...mockProject,
+          contracts: COMMITTED,
         }),
+
+        readAllConfigs: async () => [
+          mockConfig(PROJECT_A),
+          mockConfig(PROJECT_B),
+        ],
+      })
+
+      const repository = mockObject<DiscoveryWatcherRepository>({
+        findLatest: async () => undefined,
         addOrUpdate: async () => '',
+      })
+
+      const discoveryWatcher = new DiscoveryWatcher(
+        provider,
+        discoveryEngine,
+        discordClient,
+        configReader,
+        repository,
+        mockObject<Clock>(),
+        Logger.SILENT,
+      )
+
+      const NINE_AM = UnixTime.fromDate(new Date('2023-02-21T07:01:00Z'))
+      await discoveryWatcher.update(NINE_AM)
+
+      // gets block number
+      expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
+      // reads all the configs
+      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
+      // runs discovery for every project
+      expect(discoveryEngine.run).toHaveBeenCalledTimes(2)
+      expect(discoveryEngine.run).toHaveBeenNthCalledWith(
+        1,
+        { name: PROJECT_A, initialAddresses: [] },
+        BLOCK_NUMBER,
+      )
+      expect(discoveryEngine.run).toHaveBeenNthCalledWith(
+        2,
+        { name: PROJECT_B, initialAddresses: [] },
+        BLOCK_NUMBER,
+      )
+      // calls repository (and gets undefined)
+      expect(repository.findLatest).toHaveBeenCalledTimes(2)
+      // reads committed discovery.json
+      expect(configReader.readDiscovery).toHaveBeenCalledTimes(2)
+      expect(configReader.readDiscovery).toHaveBeenNthCalledWith(1, PROJECT_A)
+      expect(configReader.readDiscovery).toHaveBeenNthCalledWith(2, PROJECT_B)
+      // saves discovery result
+      expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
+      //sends notification
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(5)
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        mockMessage(PROJECT_A),
+        'PUBLIC',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        2,
+        mockMessage(PROJECT_A),
+        'INTERNAL',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        3,
+        mockMessage(PROJECT_B),
+        'PUBLIC',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        4,
+        mockMessage(PROJECT_B),
+        'INTERNAL',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        5,
+        mockDailyReminder([PROJECT_A, PROJECT_B], NINE_AM),
+        'INTERNAL',
+      )
+    })
+
+    it('does not send notification if error occured', async () => {
+      const configReader = mockObject<ConfigReader>({
+        readAllConfigs: async () => [mockConfig(PROJECT_A)],
+        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
+      })
+
+      const discoveryWatcherRepository = mockObject<DiscoveryWatcherRepository>(
+        {
+          findLatest: async () => ({
+            ...mockRecord,
+            discovery: DISCOVERY_RESULT,
+            configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+          }),
+          addOrUpdate: async () => '',
+        },
+      )
+
+      const discoveryEngine = mockObject<DiscoveryEngine>({
+        run: async () => {
+          return {
+            ...DISCOVERY_RESULT,
+            contracts: DISCOVERY_RESULT.contracts.map((contract) => ({
+              ...contract,
+              errors: { value: 'error' },
+            })),
+          }
+        },
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
@@ -148,47 +310,88 @@ describe(DiscoveryWatcher.name, () => {
         discordClient,
         configReader,
         discoveryWatcherRepository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
 
-      await discoveryWatcher.update()
+      await discoveryWatcher.update(new UnixTime(0))
 
       // gets block number
-      expect(provider.getBlockNumber.calls.length).toEqual(1)
+      expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
-      expect(configReader.readAllConfigs.calls.length).toEqual(1)
+      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
       // gets latest from database (with the same config hash)
-      expect(discoveryWatcherRepository.findLatest).toHaveBeenCalledExactlyWith(
-        [[PROJECT_A]],
-      )
-      // skips reading committed file
-      expect(configReader.readDiscovery.calls.length).toEqual(0)
+      expect(discoveryWatcherRepository.findLatest).toHaveBeenCalledTimes(0)
+      // does not save changes to database
+      expect(discoveryWatcherRepository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
-      expect(discordClient.sendMessage.calls.length).toEqual(0)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
+    })
+
+    it('handles error', async () => {
+      const configReader = mockObject<ConfigReader>({
+        readAllConfigs: async () => [mockConfig(PROJECT_A)],
+        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
+      })
+
+      const discoveryEngine = mockObject<DiscoveryEngine>({
+        run: async () => {
+          throw new Error('error')
+        },
+      })
+
+      const discoveryWatcherRepository = mockObject<DiscoveryWatcherRepository>(
+        {
+          findLatest: async () => undefined,
+          addOrUpdate: async () => '',
+        },
+      )
+
+      const discoveryWatcher = new DiscoveryWatcher(
+        provider,
+        discoveryEngine,
+        discordClient,
+        configReader,
+        discoveryWatcherRepository,
+        mockObject<Clock>(),
+        Logger.SILENT,
+      )
+
+      await discoveryWatcher.update(new UnixTime(0))
+
+      // gets block number
+      expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
+      // reads all the configs
+      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
+      // gets latest from database (with the same config hash)
+      expect(discoveryWatcherRepository.findLatest).toHaveBeenCalledTimes(0)
+      // does not save changes to database
+      expect(discoveryWatcherRepository.addOrUpdate).toHaveBeenCalledTimes(0)
+      // does not send a notification
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
     })
   })
 
   describe(DiscoveryWatcher.prototype.findChanges.name, () => {
     it('finds difference from committed file', async () => {
-      const configReader = mock<ConfigReader>({
+      const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
       })
 
-      const repository = mock<DiscoveryWatcherRepository>({
+      const repository = mockObject<DiscoveryWatcherRepository>({
         findLatest: async () => undefined,
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
-        mock<providers.AlchemyProvider>(),
-        mock<DiscoveryEngine>(),
-        mock<DiscordClient>(),
+        mockObject<providers.AlchemyProvider>(),
+        mockObject<DiscoveryEngine>(),
+        mockObject<DiscordClient>(),
         configReader,
         repository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
 
@@ -197,30 +400,30 @@ describe(DiscoveryWatcher.name, () => {
         DISCOVERY_RESULT,
         // repository returns undefined, so config hash does not matter
         Hash256.random(),
+        false,
         {},
       )
 
       // calls repository (and gets undefined)
-      expect(repository.findLatest.calls.length).toEqual(1)
+      expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // reads committed file
-      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
-        [PROJECT_A],
-      ])
+      expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
       // finds difference between committed and discovery result
-      expect(result).toEqual(
-        diffDiscovery(COMMITTED, DISCOVERY_RESULT.contracts, {}),
-      )
+      expect(result).toEqual({
+        changes: diffDiscovery(COMMITTED, DISCOVERY_RESULT.contracts, {}),
+        sendDailyReminder: false,
+      })
     })
 
     it('finds difference from repository entry', async () => {
       // for the sake of simplicity we reuse the same values
       const dbEntry = COMMITTED
 
-      const configReader = mock<ConfigReader>({
+      const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => ({ ...mockProject }),
       })
 
-      const repository = mock<DiscoveryWatcherRepository>({
+      const repository = mockObject<DiscoveryWatcherRepository>({
         findLatest: async () => ({
           ...mockRecord,
           discovery: { ...mockProject, contracts: dbEntry },
@@ -229,12 +432,12 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
-        mock<providers.AlchemyProvider>(),
-        mock<DiscoveryEngine>(),
-        mock<DiscordClient>(),
+        mockObject<providers.AlchemyProvider>(),
+        mockObject<DiscoveryEngine>(),
+        mockObject<DiscordClient>(),
         configReader,
         repository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
 
@@ -242,33 +445,35 @@ describe(DiscoveryWatcher.name, () => {
         PROJECT_A,
         DISCOVERY_RESULT,
         getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+        false,
         {},
       )
 
       // calls repository
-      expect(repository.findLatest.calls.length).toEqual(1)
-      // skips reading committed file
-      expect(configReader.readDiscovery.calls.length).toEqual(0)
+      expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // finds difference between repository and discovery result
-      expect(result).toEqual(
-        diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
-      )
+      expect(result).toEqual({
+        changes: diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
+        sendDailyReminder: false,
+      })
     })
 
     it('takes config hash into consideration', async () => {
-      const configReader = mock<ConfigReader>({
+      const dbEntry = COMMITTED
+
+      const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => ({
           ...mockProject,
           contracts: DISCOVERY_RESULT.contracts,
         }),
       })
 
-      const repository = mock<DiscoveryWatcherRepository>({
+      const repository = mockObject<DiscoveryWatcherRepository>({
         findLatest: async () => ({
           ...mockRecord,
           discovery: {
             ...mockProject,
-            contracts: COMMITTED,
+            contracts: dbEntry,
           },
           configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
         }),
@@ -276,12 +481,12 @@ describe(DiscoveryWatcher.name, () => {
       })
 
       const discoveryWatcher = new DiscoveryWatcher(
-        mock<providers.AlchemyProvider>(),
-        mock<DiscoveryEngine>(),
-        mock<DiscordClient>(),
+        mockObject<providers.AlchemyProvider>(),
+        mockObject<DiscoveryEngine>(),
+        mockObject<DiscordClient>(),
         configReader,
         repository,
-        mock<Clock>(),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
 
@@ -292,39 +497,75 @@ describe(DiscoveryWatcher.name, () => {
           contracts: DISCOVERY_RESULT.contracts,
         },
         getDiscoveryConfigHash({ ...mockConfig(PROJECT_A), name: 'new-name' }),
+        false,
         {},
       )
 
-      expect(result).toEqual([])
+      expect(result).toEqual({
+        changes: [],
+        sendDailyReminder: false,
+      })
 
-      expect(configReader.readDiscovery).toHaveBeenCalledExactlyWith([
-        [PROJECT_A],
-      ])
-      expect(repository.findLatest.calls.length).toEqual(1)
+      expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
+      expect(repository.findLatest).toHaveBeenCalledTimes(1)
     })
   })
 
   describe(DiscoveryWatcher.prototype.notify.name, () => {
     it('sends discord messages', async () => {
       const discoveryWatcher = new DiscoveryWatcher(
-        mock<providers.AlchemyProvider>(),
-        mock<DiscoveryEngine>(),
+        mockObject<providers.AlchemyProvider>(),
+        mockObject<DiscoveryEngine>(),
         discordClient,
-        mock<ConfigReader>(),
-        mock<DiscoveryWatcherRepository>({}),
-        mock<Clock>(),
+        mockObject<ConfigReader>(),
+        mockObject<DiscoveryWatcherRepository>({}),
+        mockObject<Clock>(),
         Logger.SILENT,
       )
 
       const messages = ['a', 'b', 'c']
 
-      await discoveryWatcher.notify(messages)
+      await discoveryWatcher.notify(messages, 'PUBLIC')
 
-      expect(discordClient.sendMessage).toHaveBeenCalledExactlyWith([
-        ['a'],
-        ['b'],
-        ['c'],
-      ])
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(3)
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        'a',
+        'PUBLIC',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        2,
+        'b',
+        'PUBLIC',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        3,
+        'c',
+        'PUBLIC',
+      )
+    })
+  })
+
+  describe(isNineAM.name, () => {
+    it('UTC', () => {
+      const nineUTC = UnixTime.fromDate(
+        new Date('2021-01-01T09:00:00.000+00:00'),
+      )
+      expect(isNineAM(nineUTC, 'UTC')).toEqual(true)
+    })
+
+    it('PL', () => {
+      const sevenUTC = UnixTime.fromDate(
+        new Date('2021-01-01T07:00:00.000+00:00'),
+      )
+      expect(isNineAM(sevenUTC, 'CET')).toEqual(true)
+    })
+
+    it('works for "uneven" hours', () => {
+      const nineUTC = UnixTime.fromDate(
+        new Date('2021-01-01T09:01:10.000+00:00'),
+      )
+      expect(isNineAM(nineUTC, 'UTC')).toEqual(true)
     })
   })
 })
@@ -381,4 +622,10 @@ const mockMessage = (project: string): string => {
       ],
     },
   ])[0]
+}
+
+const mockDailyReminder = (projects: string[], timestamp: UnixTime) => {
+  return `\`\`\`Daily bot report @ ${timestamp.toYYYYMMDD()}\`\`\`\n${projects
+    .map((p) => `:x: ${p}`)
+    .join('\n\n')}`
 }

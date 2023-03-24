@@ -5,6 +5,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -37,10 +38,9 @@ export const fuelv1: Layer2 = {
       {
         address: EthereumAddress('0x6880f6Fd960D1581C2730a451A22EED1081cfD72'),
         sinceTimestamp: new UnixTime(1612414780),
-        tokens: ['DAI', 'USDC', 'USDT'],
+        tokens: ['ETH', 'DAI', 'USDC', 'USDT'],
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_FP_1R,
@@ -120,6 +120,13 @@ export const fuelv1: Layer2 = {
       link: 'https://twitter.com/fuellabs_/status/1344707195250896899',
       date: '2020-12-31T00:00:00Z',
       description: 'First trustless Optimistic Rollup is live on Mainnet.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Fuel security stress test by L2BEAT team',
+      url: 'https://twitter.com/krzKaczor/status/1524753284434587649',
+      thumbnail: NUGGETS.THUMBNAILS.FUEL_01,
     },
   ],
 }

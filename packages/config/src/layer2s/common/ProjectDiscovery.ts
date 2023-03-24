@@ -68,6 +68,15 @@ export class ProjectDiscovery {
     return result
   }
 
+  getConstructorArg<T extends ContractValue>(
+    contractIdentifier: string,
+    index: number,
+  ): T {
+    return this.getContractValue<T[]>(contractIdentifier, `constructorArgs`)[
+      index
+    ]
+  }
+
   getContractUpgradeabilityParam<
     K extends keyof MergedUnion<ProjectUpgradeability>,
     T extends MergedUnion<ProjectUpgradeability>[K],

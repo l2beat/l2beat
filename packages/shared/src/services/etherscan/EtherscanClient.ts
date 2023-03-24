@@ -1,7 +1,11 @@
 import { RateLimiter } from '../../tools/RateLimiter'
-import { EthereumAddress } from '../../types'
+import { EthereumAddress, Hash256 } from '../../types'
 import { HttpClient } from '../HttpClient'
-import { ContractSourceResult, EtherscanResponse } from './model'
+import {
+  ContractCreatorAndCreationTxHashResult,
+  ContractSourceResult,
+  EtherscanResponse,
+} from './model'
 
 export class EtherscanClient {
   private readonly rateLimiter = new RateLimiter({
@@ -13,6 +17,7 @@ export class EtherscanClient {
     private readonly httpClient: HttpClient,
     private readonly url: string,
     private readonly apiKey: string,
+    private readonly retryCount = 3,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
@@ -29,6 +34,20 @@ export class EtherscanClient {
     return ContractSourceResult.parse(response.result)[0]
   }
 
+  async getContractDeploymentTx(address: EthereumAddress): Promise<Hash256> {
+    const response = await this.call('contract', 'getcontractcreation', {
+      contractaddresses: address.toString(),
+    })
+    if (response.status !== '1') {
+      throw new Error(
+        `Error response ${response.message} ${JSON.stringify(response.result)}`,
+      )
+    }
+
+    return ContractCreatorAndCreationTxHashResult.parse(response.result)[0]
+      .txHash
+  }
+
   async call(module: string, action: string, params: Record<string, string>) {
     const query = new URLSearchParams({
       module,
@@ -38,7 +57,19 @@ export class EtherscanClient {
     })
     const url = `${this.url}?${query.toString()}`
 
-    const res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
+    let res = undefined
+    for (let i = 0; i < this.retryCount; i++) {
+      try {
+        res = await this.httpClient.fetch(url, { timeout: this.timeoutMs })
+        break
+      } catch (err) {
+        continue
+      }
+    }
+
+    if (!res) {
+      throw new Error(`Failed to fetch ${url}`)
+    }
 
     if (!res.ok) {
       throw new Error(

@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -58,15 +59,6 @@ export const dydx: Layer2 = {
         address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
         sinceTimestamp: new UnixTime(1613033682),
         tokens: ['USDC'],
-      },
-    ],
-    events: [
-      {
-        name: 'LogStateTransitionFact',
-        abi: 'event LogStateTransitionFact(bytes32 stateTransitionFact)',
-        emitter: EthereumAddress('0xd54f502e184b6b739d7d27a6410a67dc462d69c8'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1613033682),
       },
     ],
     transactionApi: {
@@ -202,5 +194,13 @@ export const dydx: Layer2 = {
       description:
         'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK.',
     },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'How does escape hatch work?',
+      url: 'https://twitter.com/bkiepuszewski/status/1469201939049103360',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
+    },
+    ...NUGGETS.STARKWARE,
   ],
 }

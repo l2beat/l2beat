@@ -9,8 +9,9 @@ import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
+import { addArbTokenReport } from './custom/arbitrum'
+import { addOpTokenReport } from './custom/optimism'
 import { getReportConfigHash } from './getReportConfigHash'
-import { addOpTokenReport } from './optimism'
 import { ReportProject } from './ReportProject'
 
 export class ReportUpdater {
@@ -62,6 +63,7 @@ export class ReportUpdater {
     this.logger.debug('Prices and balances ready')
     const reports = createReports(prices, balances, this.projects)
     addOpTokenReport(reports, prices, timestamp)
+    addArbTokenReport(reports, prices, timestamp)
     const aggregatedReports = aggregateReports(
       reports,
       this.projects,

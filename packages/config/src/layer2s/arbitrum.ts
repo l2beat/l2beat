@@ -7,10 +7,12 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   MILESTONES,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
 } from './common'
 import { ProjectDiscovery } from './common/ProjectDiscovery'
+import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')
@@ -51,6 +53,7 @@ export const arbitrum: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
+    associatedTokens: ['ARB'],
     escrows: [
       {
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
@@ -80,38 +83,6 @@ export const arbitrum: Layer2 = {
         tokens: ['DAI'],
       },
     ],
-    events: [
-      {
-        name: 'NodeConfirmed',
-        abi: 'event NodeConfirmed(uint256 indexed nodeNum, bytes32 afterSendAcc, uint256 afterSendCount, bytes32 afterLogAcc, uint256 afterLogCount)',
-        emitter: EthereumAddress('0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1622243344),
-        untilTimestamp: new UnixTime(1661957100),
-      },
-      {
-        name: 'SequencerBatchDeliveredFromOrigin',
-        abi: 'event SequencerBatchDeliveredFromOrigin (uint256 indexed firstMessageNum, bytes32 indexed beforeAcc, uint256 newMessageCount, bytes32 afterAcc, uint256 seqBatchIndex)',
-        emitter: EthereumAddress('0x4c6f947ae67f572afa4ae0730947de7c874f95ef'),
-        type: 'data',
-        sinceTimestamp: new UnixTime(1622243344),
-        untilTimestamp: new UnixTime(1661956210),
-      },
-      {
-        name: 'SequencerBatchDelivered',
-        abi: 'event SequencerBatchDelivered(uint256 indexed batchSequenceNumber,bytes32 indexed beforeAcc,bytes32 indexed afterAcc,bytes32 delayedAcc,uint256 afterDelayedMessagesRead,tuple(uint64 minTimestamp,uint64 maxTimestamp,uint64 minBlockNumber, uint64 maxBlockNumber) timeBounds,uint8 dataLocation)',
-        emitter: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
-        type: 'data',
-        sinceTimestamp: new UnixTime(1661457944),
-      },
-      {
-        name: 'NodeCreated',
-        abi: 'event NodeCreated(uint64 indexed nodeNum,bytes32 indexed parentNodeHash,bytes32 indexed nodeHash,bytes32 executionHash,tuple(tuple(tuple(bytes32[2] bytes32Vals,uint64[2] u64Vals) globalState, uint8 machineStatus) beforeState, tuple(tuple(bytes32[2] bytes32Vals,uint64[2] u64Vals) globalState, uint8 machineStatus) afterState, uint64 numBlocks),bytes32 afterInboxBatchAcc,bytes32 wasmModuleRoot,uint256 inboxMaxCount)',
-        emitter: EthereumAddress('0x5eF0D09d1E6204141B4d37530808eD19f60FBa35'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1661457944),
-      },
-    ],
     transactionApi: {
       type: 'rpc',
       // We need to subtract the Nitro system transactions
@@ -129,7 +100,7 @@ export const arbitrum: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: {
       value: 'Propose blocks',
@@ -239,15 +210,15 @@ export const arbitrum: Layer2 = {
         },
       ],
     },
+    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO,
   },
   permissions: [
     {
-      name: 'Arbitrum MultiSig',
+      name: 'Security Council',
       accounts: [
         {
-          address: discovery.getContractUpgradeabilityParam(
-            'RollupProxy',
-            'admin',
+          address: EthereumAddress(
+            '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
           ),
           type: 'MultiSig',
         },
@@ -256,19 +227,22 @@ export const arbitrum: Layer2 = {
         'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
     },
     {
-      name: 'MultiSig participants',
+      name: 'Security Council participants',
       accounts: discovery
         .getContractValue<string[]>(
-          '0xC234E41AE2cb00311956Aa7109fC801ae8c80941',
+          '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
           'getOwners',
         )
         .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
+        '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
         'getThreshold',
       )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Arbitrum MultiSig.`,
+        discovery.getContractValue<string[]>(
+          '0x3666a60ff589873ced457a9a8a0aA6F83D708767',
+          'getOwners',
+        ).length
+      } Security Council MultiSig`,
     },
     {
       name: 'Sequencer',
@@ -375,7 +349,26 @@ export const arbitrum: Layer2 = {
         address: EthereumAddress('0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD'),
         name: 'ProxyAdmin (1)',
         description:
-          'This contract is an admin of SequencerInbox, Bridge, Outbox and ChallengeManager contracts. It is owned by a 4-of-6 multisig.',
+          'This contract is an admin of SequencerInbox, RollupEventInbox, Bridge, Outbox, Inbox and ChallengeManager contracts. It is owned by the Upgrade Executor.',
+      },
+      {
+        address: discovery.getContract('UpgradeExecutor').address,
+        name: 'UpgradeExecutor',
+        description:
+          "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+        upgradeability: discovery.getContract('UpgradeExecutor').upgradeability,
+      },
+      {
+        address: EthereumAddress('0x5613AF0474EB9c528A34701A5b1662E3C8FA0678'),
+        name: 'ProxyAdmin (2)',
+        description:
+          'This contract is an admin of the Update Executor contract, but is also owned by it.',
+      },
+      {
+        address: discovery.getContract('L1ArbitrumTimelock').address,
+        name: 'L1ArbitrumTimelock',
+        description:
+          'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       },
       {
         address: discovery.getContract('RollupProxy').address,
@@ -397,7 +390,7 @@ export const arbitrum: Layer2 = {
         address: discovery.getContract('Inbox').address,
         name: 'Inbox',
         description:
-          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escowed in a Bridge contract.',
+          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
         upgradeability: discovery.getContract('Inbox').upgradeability,
       },
       {
@@ -420,9 +413,9 @@ export const arbitrum: Layer2 = {
       },
       {
         address: EthereumAddress('0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa'),
-        name: 'ProxyAdmin (2)',
+        name: 'ProxyAdmin (3)',
         description:
-          'This is a different proxy admin for the three gateway contracts below. It is also owned by a 4-of-6 multisig..',
+          'This is yet another proxy admin for the three gateway contracts below. It is owned by the Upgrade Executor.',
       },
       {
         address: discovery.getContract('L1GatewayRouter').address,
@@ -438,17 +431,11 @@ export const arbitrum: Layer2 = {
         upgradeability: discovery.getContract('L1ERC20Gateway').upgradeability,
       },
       {
-        address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
+        address: discovery.getContract('L1CustomGateway').address,
         name: 'L1CustomGateway',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa'),
-          implementation: EthereumAddress(
-            '0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45',
-          ),
-        },
+        upgradeability: discovery.getContract('L1CustomGateway').upgradeability,
       },
       {
         address: EthereumAddress('0xD3B5b60020504bc3489D6949d545893982BA3011'),
@@ -465,6 +452,13 @@ export const arbitrum: Layer2 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [
+    {
+      name: 'Arbitrum surpasses Ethereum in TPS',
+      link: 'https://twitter.com/arbitrum/status/1628410398058708992',
+      date: '2023-02-21T00:00:00Z',
+      description:
+        'For the first time ever, the daily average TPS of a rollup is higher than Ethereum.',
+    },
     {
       name: 'Nitro Upgrade',
       link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
@@ -491,7 +485,7 @@ export const arbitrum: Layer2 = {
       date: '2021-08-31T00:00:00Z',
     },
   ],
-  rating: {
+  maturity: {
     category: {
       score: 'B',
       requirements: ['There is an existing fraud proof system'],
@@ -505,4 +499,16 @@ export const arbitrum: Layer2 = {
       requirements: ['There should be no instant upgradeability'],
     },
   },
+  knowledgeNuggets: [
+    {
+      title: 'Arbitrum update boosts decentralization',
+      url: 'https://twitter.com/bkiepuszewski/status/1594754717330309120',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
+    },
+    {
+      title: 'Arbitrum is down... or is it?',
+      url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_04,
+    },
+  ],
 }

@@ -20,7 +20,11 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      riskView: getRiskView(ordering, verificationStatus),
+      riskView: getRiskView(
+        ordering,
+        verificationStatus,
+        config.features.upcomingRollups,
+      ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
     },

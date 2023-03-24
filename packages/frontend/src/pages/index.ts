@@ -3,6 +3,7 @@ import { PagesData } from '../build/types'
 import { getBridgeProjectPages } from './bridges-projects'
 import { getBridgesRiskPage } from './bridges-risk'
 import { getBridgesTvlPage } from './bridges-tvl'
+import { getDefinitionsPage } from './definitions'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
 import { getMetaImagePages } from './meta-images'
@@ -24,11 +25,11 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
-  if (config.features.bridges) {
-    pages.push(getBridgesTvlPage(config, pagesData))
-    pages.push(getBridgesRiskPage(config, pagesData))
-    pages.push(...getBridgeProjectPages(config, pagesData))
-  }
+
+  pages.push(getBridgesTvlPage(config, pagesData))
+  pages.push(getBridgesRiskPage(config, pagesData))
+  pages.push(...getBridgeProjectPages(config, pagesData))
+
   if (activityApiResponse) {
     pages.push(
       getActivityPage(config, {
@@ -36,6 +37,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         verificationStatus,
       }),
     )
+  }
+  if (config.features.maturity) {
+    pages.push(getDefinitionsPage(config))
   }
 
   outputPages(pages)

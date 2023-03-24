@@ -1,18 +1,88 @@
 # Discovery documentation
 
-## Cache
+NOTE: We use a pseudo-TS syntax to simplify parameter types here:
 
-Are you tired of hitting `yarn discover <project>` and waiting for the output? We got you covered, caching is built into discovery scripts!
+- `address` - string representing contract address
+- `field` - string representing method/value name
 
-### env variable
+## Adding new project
 
-Set the proper environmental variable to prevent script from fetching the same data multiple times:
+Create a new folder in `discovery` named after the project, with `config.jsonc` inside. Then run
 
-`DISCOVERY_BLOCK_NUMBER`- overrides the block number used during local discovery
+```
+yarn discover <project_name>
+```
 
-### proposed usage
+A file `discovered.json` will appear in this folder, showing you this project's structure. Make sure to resolve all the errors by ignoring methods or adding specific field handlers.
 
-`DISCOVERY_BLOCK_NUMBER=<block_number> y discover <project>`
+**Parameters:**
+
+- `"$schema": "../config.schema.json"`
+- `name` - name of the project
+- `initialAddresses: address[]` - array of addresses that discovery will start from. Discovery will download the contract ABI, read all the available values, and walk through all the contracts found there (`maxDepth` defaults to 7). By default, discovery checks only `view` or `constant` methods with no arguments or with exactly one argument of `uint256` (array). To check other functions you'll need to write custom handlers (see `overrides`). Sometimes the most central address is enough here, but in case of a more complex implementation, you will need to add more to cover all important contracts. Usually 3 addresses here is enough.
+- `overrides: Record<address, object>` - (optional) key-value object, with contracts as keys. It will allow you to ignore contracts in discovery (ex. token addresses or external contracts) or, override more complex fields and methods ([storage](#storage-handler) and [array](#array-handler) handlers).
+
+**Example:**
+
+```
+{
+  "$schema": "../config.schema.json"
+  name: "project_a",
+  initialAddresses: ["0x1234", "0x5678"],
+  overrides: {
+    "0x1234": {
+      fields: {
+        field_a: {
+          type: "storage",
+          slot: 1
+        }
+      },
+      ignoreMethods: ["method_a", "method_b"],
+      ignoreInWatchMode: ["method_c"]
+    },
+    "0xabcd": {
+      ignoreDiscovery: true
+    }
+  }
+}
+```
+
+## Overrides
+
+The most powerful feature in the discovery. It will allow:
+
+1. Adding handlers to longer arrays (`maxLength` defaults to 5).
+2. Reading values directly from storage slot (eg. for `private` variables).
+3. Skipping further discovery for selected contract. Very useful when there is for example `DAI` contract in discovery and we don't want to include all `MakerDAO` contracts in our discovery.
+4. Skipping further discovery of methods values (see `ignoreRelative` in e.g. [array handler](#array-handler))
+
+**Parameters:**
+
+All of the parameters are optional:
+
+- `proxyType` - manual proxy override. Most of the times, discovery is smart enough to detect proxyType, useful when that's not the case
+- `ignoreDiscovery: boolean` - if set to `true`, discovery will not consider this contract as a `relative`, effectively skipping discovery of this contract
+- `ignoreRelative: field[]` - discovery will not consider this contract as a `relative`. The difference between `ignoreDiscovery` and `ignoreRelative` is that `ignoreRelative` is configured per field, while `ignoreDiscovery` is configured per contract
+- `ignoreMethods: field[]` - discovery will skip this method
+- `ignoreInWatchMode: field[]` - if set to `true`, the `DiscoveryWatcher` will not notify change of this value
+- `fields: Record<field, Handler>` - custom fields that represent more complex values of the contract: ex. arrays longer than 5 and private variables
+
+**Example:**
+
+```
+{
+  "proxyType": "proxy",
+  "ignoreDiscovery": true,
+  "ignoreMethods": ["method_a", "method_b"],
+  "ignoreInWatchMode": ["method_c"],
+  "fields": {
+    "field_a": {
+      "type": "storage",
+      "slot": 1
+    }
+  }
+}
+```
 
 ## Handlers
 
@@ -20,7 +90,7 @@ Set the proper environmental variable to prevent script from fetching the same d
 
 The storage handler allows you to read values directly from storage.
 
-**Parameters**:
+**Parameters:**
 
 - `type` - always the literal: `"storage"`
 - `slot` - can be one of the following:
@@ -92,6 +162,8 @@ Such methods are automatically called by default, but the results are limited to
 - `method` - (optional) the name or abi of the method to be called. If omitted the name of the field is used. The abi should be provided in the human readable abi format.
 - `length` - (optional) a number, e.g. `3` or a reference to another field, e.g. `{{ value }}` that will be used to determine the number of calls. If this is not provided the method is called until it reverts.
 - `maxLength` - (optional) a guard against infinite loops. Prevents the method to be called an excessive number of times. Defaults to `100`.
+- `startIndex` - (optional) the index of the first element to be read. Defaults to `0`.
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -150,6 +222,7 @@ The call handler allows you to call view methods with arguments of your choosing
 - `type` - always the literal: `"call"`
 - `method` - (optional) the name or abi of the method to be called. If omitted the name of the field is used. The abi should be provided in the human readable abi format.
 - `args` - an array of values that will be passed as arguments to the method call, e.g. `[1, "0x1234", false]`. It supports field references, e.g. `"{{ value }}"`.
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -200,6 +273,7 @@ This handler allows you to analyze a contract using OpenZeppelin's AccessControl
 
 - `type` - always the literal: `"accessControl"`
 - `roleNames` - (optional) a record of bytes32 role hashes to predefined role names. Usually this handler is pretty good at guessing, so this is often unnecessary
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -231,6 +305,7 @@ This handler allows you to read values from contracts using StarkWare's named st
 - `type` - always the literal: `"starkWareNamedStorage"`
 - `tag` - the string tag of the named storage slot
 - `returnType` - (optional) specifies how to interpret the resulting `bytes32` result. Possible options are `"address"`, `"bytes"` (default), `"number"`.
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -264,6 +339,7 @@ This handler allows you to collect values emitted by a smart contract through a 
 - `valueKey` - the key of the event member to collect. The event must actually have a member with this name
 - `flagKey` - (optional) the key of the event member to use to decide whether to add or remove a given value. That member must be a `bool`, where `true` means add, `false` means remove
 - `invert` - (optional) inverts the behavior of the flag, `false` means add, `true` means remove
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -311,6 +387,7 @@ This handler allows you to collect values emitted by a smart contract through a 
 - `addKey` - the key of the event member to collect in the add event. The event must actually have a member with this name
 - `removeEvent` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
 - `removeKey` - the key of the event member to collect in the remove event. The event must actually have a member with this name
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -337,3 +414,17 @@ Same example, but the abis are explicit:
   "removeKey": "minter"
 }
 ```
+
+## Cache
+
+Are you tired of hitting `yarn discover <project>` and waiting for the output? We got you covered, caching is built into discovery scripts!
+
+### env variable
+
+Set the proper environmental variable to prevent script from fetching the same data multiple times:
+
+`DISCOVERY_BLOCK_NUMBER`- overrides the block number used during local discovery
+
+### proposed usage
+
+`DISCOVERY_BLOCK_NUMBER=<block_number> y discover <project>`

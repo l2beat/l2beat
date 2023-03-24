@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   SHARP_VERIFIER_CONTRACT,
@@ -75,29 +76,6 @@ export const starknet: Layer2 = {
         address: EthereumAddress('0xbb3400F107804DFB482565FF1Ec8D8aE66747605'),
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
-      },
-    ],
-    events: [
-      // {
-      //   name: 'LogMemoryPageFactRegular',
-      //   abi: 'event LogMemoryPageFactRegular (bytes32 factHash, uint256 memoryHash, uint256 prod)',
-      //   emitter: EthereumAddress('0x96375087b2F6eFc59e5e0dd5111B4d090EBFDD8B'),
-      //   type: 'data',
-      //   sinceTimestamp: new UnixTime(1635077814),
-      // },
-      {
-        name: 'LogStateUpdate',
-        abi: 'event LogStateUpdate(uint256 globalRoot, int256 blockNumber)',
-        emitter: EthereumAddress('0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1636978914),
-      },
-      {
-        name: 'LogMemoryPageFactRegular',
-        abi: 'event LogMemoryPageFactRegular (bytes32 factHash, uint256 memoryHash, uint256 prod)',
-        emitter: EthereumAddress('0x28067505E54b7Ac2A5F860b343340Be8E73edECD'),
-        type: 'data',
-        sinceTimestamp: new UnixTime(1657029433),
       },
     ],
     transactionApi: {
@@ -282,4 +260,5 @@ export const starknet: Layer2 = {
         'Bridge is live on mainnet, serving as gateway between Ethereum and StarkNet.',
     },
   ],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

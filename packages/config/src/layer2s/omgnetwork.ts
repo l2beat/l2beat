@@ -12,11 +12,12 @@ import {
 import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('omg')
+const discovery = new ProjectDiscovery('omgnetwork')
 
 export const omgnetwork: Layer2 = {
   type: 'layer2',
   id: ProjectId('omgnetwork'),
+  isArchived: true,
   display: {
     name: 'OMG Network',
     slug: 'omgnetwork',
@@ -51,7 +52,6 @@ export const omgnetwork: Layer2 = {
         tokens: '*',
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_EXITS_ONLY,

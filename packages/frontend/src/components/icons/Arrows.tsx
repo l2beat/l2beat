@@ -9,7 +9,7 @@ export function ArrowUpIcon(props: SVGAttributes<SVGElement>) {
       aria-label="Arrow up icon"
       alt-text="+"
       className={cx(
-        'inline-block fill-green-700 dark:fill-green-300',
+        'inline-block fill-green-300 dark:fill-green-450',
         props.className,
       )}
     />
@@ -21,10 +21,7 @@ export function ArrowDownIcon(props: SVGAttributes<SVGElement>) {
     <ArrowIcon
       aria-label="Arrow down icon"
       alt-text="-"
-      className={cx(
-        'inline-block rotate-180 fill-red-700 dark:fill-red-300',
-        props.className,
-      )}
+      className={cx('inline-block rotate-180 fill-red-300', props.className)}
     />
   )
 }
@@ -50,6 +47,24 @@ export function ArrowRightIcon(props: SVGAttributes<SVGElement>) {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M2.10329 6.29419C1.73956 6.29419 1.4447 6.60754 1.4447 6.99408C1.4447 7.38062 1.73956 7.69397 2.10329 7.69397L11.6993 7.69397L8.27358 11.3345C8.01639 11.6079 8.01639 12.051 8.27358 12.3243C8.53078 12.5977 8.94777 12.5977 9.20496 12.3243L13.7549 7.489C14.0121 7.21568 14.0121 6.77253 13.7549 6.49921L9.20496 1.66387C8.94777 1.39055 8.53078 1.39055 8.27358 1.66387C8.01639 1.9372 8.01639 2.38035 8.27358 2.65367L11.6992 6.29419L2.10329 6.29419Z"
+      />
+    </Icon>
+  )
+}
+
+export function DropdownArrowIcon(props: SVGAttributes<SVGElement>) {
+  return (
+    <Icon
+      width="16"
+      height="10"
+      viewBox="0 0 16 10"
+      aria-label="Dropdown arrow icon"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0.484284 0.551423C0.952914 0.0827939 1.71271 0.0827939 2.18134 0.551423L7.99948 6.36956L13.8176 0.551423C14.2862 0.0827939 15.046 0.0827939 15.5147 0.551423C15.9833 1.02005 15.9833 1.77985 15.5147 2.24848L8.94229 8.82087C8.42159 9.34156 7.57737 9.34157 7.05667 8.82087L0.484284 2.24848C0.0156552 1.77985 0.0156552 1.02005 0.484284 0.551423Z"
       />
     </Icon>
   )

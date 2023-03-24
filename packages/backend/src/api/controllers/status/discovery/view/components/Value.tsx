@@ -1,0 +1,32 @@
+import { isObject } from 'lodash'
+import { default as React } from 'react'
+
+import { DashboardContractFieldValue } from '../../props/utils/getValues'
+
+interface ValueProps {
+  value?: DashboardContractFieldValue
+}
+
+export function Value(props: ValueProps) {
+  if (props.value === undefined) {
+    return null
+  }
+
+  if (props.value.discoveryChild) {
+    return (
+      <span
+        dangerouslySetInnerHTML={{
+          __html: `<span style="cursor:pointer; color: #85C1E9" onclick="document.getElementById('${
+            props.value.discoveryChild
+          }').click()"> ${renderValue(props.value)} ⬇️</span>`,
+        }}
+      />
+    )
+  }
+
+  return <span style={{ color: '#939292' }}> {renderValue(props.value)}</span>
+}
+
+function renderValue({ value }: DashboardContractFieldValue) {
+  return isObject(value) ? JSON.stringify(value) : value.toString()
+}

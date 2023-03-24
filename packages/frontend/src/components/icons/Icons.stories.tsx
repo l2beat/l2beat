@@ -15,6 +15,7 @@ import { YouTubeIcon } from './products/YouTubeIcon'
 import { OptimismIcon } from './providers/OptimismIcon'
 import { StarkWareIcon } from './providers/StarkWareIcon'
 import { ZkSyncIcon } from './providers/ZkSyncIcon'
+import { ArchivedIcon } from './symbols/ArchivedIcon'
 import { FinanceIcon } from './symbols/FinanceIcon'
 import { GlobeIcon } from './symbols/GlobeIcon'
 import { InfoIcon } from './symbols/InfoIcon'
@@ -24,6 +25,7 @@ import { MenuOpenIcon } from './symbols/MenuOpenIcon'
 import { MoonIcon } from './symbols/MoonIcon'
 import { ShieldIcon } from './symbols/ShieldIcon'
 import { SunIcon } from './symbols/SunIcon'
+import { UpcomingIcon } from './symbols/UpcomingIcon'
 import { WarningIcon } from './symbols/WarningIcon'
 
 export default {
@@ -69,6 +71,8 @@ export function SymbolIcons() {
       <ShieldIcon />
       <SunIcon />
       <WarningIcon />
+      <ArchivedIcon />
+      <UpcomingIcon />
     </div>
   )
 }

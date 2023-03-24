@@ -1,3 +1,4 @@
+export * from '../../common/nuggets'
 export * from './contracts'
 export * from './dataAvailability'
 export * from './exits'

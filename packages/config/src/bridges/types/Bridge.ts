@@ -14,6 +14,8 @@ import {
 export interface Bridge {
   type: 'bridge'
   id: ProjectId
+  isArchived?: boolean
+  isUpcoming?: boolean
   display: BridgeDisplay
   config: BridgeConfig
   riskView?: BridgeRiskView

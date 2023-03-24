@@ -14,11 +14,12 @@ import {
 import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('zkswap1')
+const discovery = new ProjectDiscovery('zkswap')
 
 export const zkswap: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkswap'),
+  isArchived: true,
   display: {
     name: 'ZKSwap 1.0',
     slug: 'zkswap',
@@ -52,7 +53,6 @@ export const zkswap: Layer2 = {
         tokens: '*',
       },
     ],
-    events: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

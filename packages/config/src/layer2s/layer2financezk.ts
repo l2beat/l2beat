@@ -15,11 +15,12 @@ import {
 import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('layer2financeZk')
+const discovery = new ProjectDiscovery('layer2financezk')
 
 export const layer2financezk: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2financezk'),
+  isArchived: true,
   display: {
     name: 'Layer2.Finance-zk',
     slug: 'layer2financezk',
@@ -63,15 +64,6 @@ export const layer2financezk: Layer2 = {
         address: EthereumAddress('0x3F3b821243E5664822c0babBA2B4f37bf294e7a0'),
         sinceTimestamp: new UnixTime(1648621976),
         tokens: ['cUSDC'],
-      },
-    ],
-    events: [
-      {
-        name: 'LogStateTransitionFact',
-        abi: ' event LogStateTransitionFact(bytes32 stateTransitionFact)',
-        emitter: EthereumAddress('0x82123571C8a5e0910280C066bc634c4945FFcbC8'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1645130774),
       },
     ],
   },

@@ -58,6 +58,8 @@ export async function analyzeItem(
   const parameters = await executeHandlers(provider, address, handlers)
 
   const relatives = parameters
+    .filter((x) => !x.ignoreRelative)
+    .filter((x) => !overrides?.ignoreRelatives?.includes(x.field))
     .flatMap((x) => getRelatives(x.value))
     .concat(proxyDetection?.relatives ?? [])
     .filter((x) => !proxyDetection?.implementations.includes(x))

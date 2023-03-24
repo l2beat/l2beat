@@ -1,9 +1,8 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../../build/config'
 import { NewItemBadge } from '../badge/NewItemBadge'
-import { MenuOpenIcon } from '../icons/symbols/MenuOpenIcon'
+import { MenuOpenIcon } from '../icons'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
 import { Banner } from './Banner'
@@ -16,15 +15,14 @@ import {
   SocialLinks,
   SocialLinksProps,
 } from './SocialLinks'
+import { NavbarPage } from './types'
 import { VerticalBar } from './VerticalBar'
-
-export type NavbarPage = 'scaling' | 'bridges' | 'donate' | 'faq'
 
 export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
-  showBridges: boolean
   showHiring: boolean
+  showDefinitions: boolean
   forumLink: string
   socialLinks: SocialLinksProps
   selectedPage: NavbarPage
@@ -38,8 +36,8 @@ export function getNavbarProps(
     showBanner: config.features.banner,
     forumLink: config.links.forum,
     showHiring: config.features.hiring,
-    showBridges: config.features.bridges,
     showActivity: config.features.activity,
+    showDefinitions: config.features.maturity,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }
@@ -49,65 +47,50 @@ export function Navbar(props: NavbarProps) {
   return (
     <>
       <SidebarMenu
+        selectedPage={props.selectedPage}
         showBanner={props.showBanner}
         showActivity={props.showActivity}
-        showBridges={props.showBridges}
         showHiring={props.showHiring}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
       />
       {props.showBanner && <Banner />}
       <div className="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16">
-        <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center px-4 lg:justify-between lg:px-12">
-          <button id="sidebar-menu-open" className="block lg:hidden">
-            <MenuOpenIcon className="block" aria-label="Open menu" />
-          </button>
+        <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12">
           <ul className="flex h-full items-center">
-            <li
-              className={cx(
-                props.showBridges
-                  ? 'mx-4 lg:ml-0 lg:mr-8'
-                  : 'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
-              )}
-            >
+            <li className="mr-4 lg:mr-8">
               <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
                 <Logo className="h-8 w-auto" />
               </a>
             </li>
-            {props.showBridges && (
-              <>
-                <li className="h-full">
-                  <PageLink
-                    selected={props.selectedPage === 'scaling'}
-                    large
-                    href="/scaling/tvl"
-                  >
-                    Scaling
-                  </PageLink>
-                </li>
-                <li className="h-full">
-                  <PageLink
-                    selected={props.selectedPage === 'bridges'}
-                    large
-                    href="/bridges/tvl"
-                  >
-                    Bridges
-                    <NewItemBadge className="ml-2" />
-                  </PageLink>
-                </li>
-              </>
-            )}
+            <li className="h-full">
+              <PageLink
+                selected={props.selectedPage === 'scaling'}
+                large
+                href="/scaling/tvl"
+              >
+                Scaling
+              </PageLink>
+            </li>
+            <li className="h-full">
+              <PageLink
+                selected={props.selectedPage === 'bridges'}
+                large
+                href="/bridges/tvl"
+              >
+                Bridges
+                <NewItemBadge className="ml-2" />
+              </PageLink>
+            </li>
           </ul>
+          <button id="sidebar-menu-open" className="block lg:hidden">
+            <MenuOpenIcon className="block" aria-label="Open menu" />
+          </button>
           <div className="hidden h-full items-center gap-5 lg:flex">
-            <ul
-              className={cx(
-                'flex items-center gap-4',
-                !props.showBridges && 'absolute left-4 lg:left-12',
-              )}
-            >
+            <ul className="flex items-center gap-4">
               <SocialLinks {...props.socialLinks} />
             </ul>
-            {props.showBridges && <VerticalBar />}
+            <VerticalBar />
             <ul className="flex h-full items-center gap-1.5">
               <li className="h-full">
                 <OutLink
@@ -130,6 +113,16 @@ export function Navbar(props: NavbarProps) {
                   FAQ
                 </PageLink>
               </li>
+              {props.showDefinitions && (
+                <li className="h-full">
+                  <PageLink
+                    selected={props.selectedPage === 'definitions'}
+                    href="/definitions"
+                  >
+                    Definitions
+                  </PageLink>
+                </li>
+              )}
               {props.showHiring && (
                 <li className="h-full">
                   <OutLink

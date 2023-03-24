@@ -2,6 +2,7 @@ import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { ScalingTableFilters } from '../../../components/table/filters/ScalingTableFilters'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
@@ -14,6 +15,7 @@ import {
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
+  upcomingEnabled?: boolean
 }
 
 export interface ScalingRiskViewEntry {
@@ -21,7 +23,9 @@ export interface ScalingRiskViewEntry {
   slug: string
   provider?: Layer2['technology']['provider']
   warning?: string
+  isArchived?: boolean
   isVerified?: boolean
+  isUpcoming?: boolean
   stateValidation: ProjectRiskViewEntry
   dataAvailability: ProjectRiskViewEntry
   upgradeability: ProjectRiskViewEntry
@@ -29,18 +33,23 @@ export interface ScalingRiskViewEntry {
   validatorFailure: ProjectRiskViewEntry
 }
 
-export function ScalingRiskView({ items }: ScalingRiskViewProps) {
+export function ScalingRiskView({
+  items,
+  upcomingEnabled,
+}: ScalingRiskViewProps) {
   const columns: ColumnConfig<ScalingRiskViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
       minimalWidth: true,
-      getValue: (entry, index) => {
-        return <IndexCell entry={entry} index={index + 1} />
-      },
+      headClassName: 'md:pl-4',
+      getValue: (entry, index) => (
+        <IndexCell entry={entry} className="md:pl-4" index={index + 1} />
+      ),
     },
     {
       name: 'Name',
+      headClassName: 'pl-8',
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
@@ -77,6 +86,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
+      <ScalingTableFilters className="mb-4" upcomingEnabled={upcomingEnabled} />
       <TableView items={items} columns={columns} rows={rows} />
       <ScalingLegend />
     </section>

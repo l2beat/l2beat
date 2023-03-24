@@ -16,6 +16,8 @@ export interface ProjectHeaderProps {
   destination: ProjectRiskViewEntry
   validatedBy?: ProjectRiskViewEntry
   type: string
+  isArchived?: boolean
+  isUpcoming?: boolean
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
@@ -23,7 +25,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     {
       title: 'Total value locked',
       value:
-        props.tvl && props.tvlWeeklyChange ? (
+        !props.isUpcoming && props.tvl && props.tvlWeeklyChange ? (
           <StatWithChange
             className="font-bold"
             stat={props.tvl}
@@ -44,5 +46,12 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     { title: 'Type', value: props.type },
   ]
 
-  return <DetailsHeader title={props.title} icon={props.icon} stats={stats} />
+  return (
+    <DetailsHeader
+      title={props.title}
+      icon={props.icon}
+      stats={stats}
+      isArchived={props.isArchived}
+    />
+  )
 }

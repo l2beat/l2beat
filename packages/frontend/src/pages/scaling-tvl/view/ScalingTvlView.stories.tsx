@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
+import { configureFilters } from '../../../scripts/configureFilters'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { formatLargeNumber } from '../../../utils'
 import { ScalingTvlView } from './ScalingTvlView'
@@ -13,17 +14,40 @@ export default {
 export function TvlView() {
   useEffect(() => {
     configureTooltips()
+    configureFilters()
   }, [])
   return (
     <>
       <PageContent>
         <ScalingTvlView
-          ratingEnabled={true}
+          maturityEnabled={true}
           items={[
             {
               name: 'Forktimism',
               provider: 'Optimism',
               slug: 'optimism',
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
               tvl: formatLargeNumber(2_740_000_000),
               tvlBreakdown: {
                 warning: 'Some random warning',
@@ -41,7 +65,7 @@ export function TvlView() {
               purpose: 'Universal',
               technology: 'Optimistic Rollup',
               isVerified: false,
-              ratingEntry: {
+              maturityEntry: {
                 category: {
                   score: 'B',
                   requirements: ['There is an existing fraud proof system'],
@@ -60,6 +84,28 @@ export function TvlView() {
               name: 'Arbitrage',
               slug: 'arbitrum',
               tvl: formatLargeNumber(2_740_000_000),
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
               tvlBreakdown: {
                 warning: 'Some random warning',
                 warningSeverity: 'warning',
@@ -82,6 +128,28 @@ export function TvlView() {
               provider: 'StarkEx',
               slug: 'starknet',
               tvl: formatLargeNumber(2_740_000_000),
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
               tvlBreakdown: {
                 warning: 'Some random warning',
                 warningSeverity: 'warning',
@@ -102,8 +170,30 @@ export function TvlView() {
             {
               name: 'zk.download',
               provider: 'zkSync',
-              slug: 'zksync',
+              slug: 'zksync-lite',
               tvl: formatLargeNumber(2_740_000_000),
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
               tvlBreakdown: {
                 warning: 'Some random warning',
                 warningSeverity: 'warning',
@@ -119,6 +209,51 @@ export function TvlView() {
               marketShare: '50.42%',
               purpose: 'Universal',
               technology: 'Optimistic Rollup',
+              isVerified: true,
+            },
+            {
+              name: 'zk.archived',
+              provider: 'StarkEx',
+              slug: 'layer2financezk',
+              tvl: formatLargeNumber(2_740_000_000),
+              riskValues: {
+                stateValidation: {
+                  value: 'Fraud proofs',
+                  sentiment: undefined,
+                },
+                validatorFailure: {
+                  value: 'No mechanism',
+                  sentiment: 'bad',
+                },
+                upgradeability: {
+                  value: 'Yes',
+                  sentiment: 'bad',
+                },
+                sequencerFailure: {
+                  value: 'Transact using L1',
+                  sentiment: undefined,
+                },
+                dataAvailability: {
+                  value: 'Optimistic',
+                  sentiment: 'warning',
+                },
+              },
+              tvlBreakdown: {
+                warning: 'Some random warning',
+                warningSeverity: 'warning',
+                label: 'The tooltip label',
+                empty: false,
+                associated: 0.4,
+                ether: 0.2,
+                stable: 0.2,
+                other: 0.2,
+              },
+              oneDayChange: '+3.45%',
+              sevenDayChange: '-54.2%',
+              marketShare: '50.42%',
+              purpose: 'Universal',
+              technology: 'Optimistic Rollup',
+              isArchived: true,
               isVerified: true,
             },
           ]}

@@ -37,6 +37,10 @@
               "type": "array",
               "items": { "type": "string" }
             },
+            "ignoreRelatives": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
             "fields": {
               "type": "object",
               "unevaluatedProperties": false,

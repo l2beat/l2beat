@@ -1,6 +1,7 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
+import { BridgesTableFilters } from '../../components/table/filters/BridgesTableFilters'
 import { IndexCell } from '../../components/table/IndexCell'
 import { NoInfoCell } from '../../components/table/NoInfoCell'
 import { NumberCell } from '../../components/table/NumberCell'
@@ -24,13 +25,15 @@ export interface BridgesTvlViewEntry {
   name: string
   slug: string
   warning?: string
+  isArchived?: boolean
+  isUpcoming?: boolean
   isVerified?: boolean
-  tvl: string
-  tvlBreakdown: TVLBreakdownProps
-  oneDayChange: string
-  sevenDayChange: string
-  bridgesMarketShare: string
-  combinedMarketShare: string
+  tvl?: string
+  tvlBreakdown?: TVLBreakdownProps
+  oneDayChange?: string
+  sevenDayChange?: string
+  bridgesMarketShare?: string
+  combinedMarketShare?: string
   validatedBy?: ProjectRiskViewEntry
   category: string
 }
@@ -43,19 +46,25 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       name: '#',
       alignCenter: true,
       minimalWidth: true,
+      headClassName: 'md:pl-4',
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>
-            <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
+          <span data-bridges-only-cell>
+            <IndexCell
+              entry={entry}
+              index={onlyBridges.indexOf(entry) + 1}
+              className="md:pl-4"
+            />
           </span>
-          <span data-combined-only className="hidden">
-            <IndexCell entry={entry} index={index + 1} />
+          <span data-combined-only-cell className="hidden">
+            <IndexCell entry={entry} index={index + 1} className="pl-4" />
           </span>
         </>
       ),
     },
     {
       name: 'Name',
+      headClassName: 'pl-8',
       getValue: (entry) => (
         <ProjectCell highlightL2 type={entry.type} project={entry} />
       ),
@@ -64,34 +73,45 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
       name: 'TVL',
       tooltip: 'Total value locked in escrow contracts on Ethereum.',
       alignRight: true,
-      getValue: (entry) => <NumberCell>{entry.tvl}</NumberCell>,
+      getValue: (entry) =>
+        !entry.isUpcoming &&
+        entry.tvlBreakdown && <NumberCell>{entry.tvl}</NumberCell>,
     },
     {
       name: '7d Change',
       tooltip: 'Change in the total value locked as compared to a week ago.',
       alignRight: true,
-      getValue: (entry) => (
-        <NumberCell signed>{entry.sevenDayChange}</NumberCell>
-      ),
+      getValue: (entry) =>
+        !entry.isArchived &&
+        !entry.isUpcoming &&
+        entry.tvlBreakdown && (
+          <NumberCell signed>{entry.sevenDayChange}</NumberCell>
+        ),
     },
     {
       name: 'Breakdown',
       tooltip:
         'Composition of the total value locked broken down by token type.',
-      getValue: (entry) => <TVLBreakdown {...entry.tvlBreakdown} />,
+      getValue: (entry) =>
+        !entry.isArchived &&
+        !entry.isUpcoming &&
+        entry.tvlBreakdown && <TVLBreakdown {...entry.tvlBreakdown} />,
     },
     {
       name: 'Mkt share',
       tooltip: 'Share of the sum of total value locked of all projects.',
       alignRight: true,
-      getValue: (entry) => (
-        <NumberCell>
-          <span data-bridges-only>{entry.bridgesMarketShare}</span>
-          <span data-combined-only className="hidden">
-            {entry.combinedMarketShare}
-          </span>
-        </NumberCell>
-      ),
+      getValue: (entry) =>
+        !entry.isArchived &&
+        !entry.isUpcoming &&
+        entry.tvlBreakdown && (
+          <NumberCell>
+            <span data-bridges-only-cell>{entry.bridgesMarketShare}</span>
+            <span data-combined-only-cell className="hidden">
+              {entry.combinedMarketShare}
+            </span>
+          </NumberCell>
+        ),
     },
     {
       name: 'Validated by',
@@ -117,6 +137,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
+      <BridgesTableFilters className="pb-4" />
       <TableView items={items} columns={columns} rows={rows} />
     </section>
   )

@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   MILESTONES,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -74,22 +75,6 @@ export const optimism: Layer2 = {
         address: EthereumAddress('0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1'),
         sinceTimestamp: new UnixTime(1624401464),
         tokens: '*',
-      },
-    ],
-    events: [
-      {
-        name: 'SequencerBatchAppended',
-        abi: 'event SequencerBatchAppended (uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)',
-        emitter: EthereumAddress('0x5E4e65926BA27467555EB562121fac00D24E9dD2'),
-        type: 'data',
-        sinceTimestamp: new UnixTime(1636654670),
-      },
-      {
-        name: 'StateBatchAppended',
-        abi: 'event StateBatchAppended (uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)',
-        emitter: EthereumAddress('0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1636654763),
       },
     ],
     transactionApi: {
@@ -371,6 +356,23 @@ export const optimism: Layer2 = {
       link: 'https://medium.com/ethereum-optimism/community-launch-7c9a2a9d3e84',
       date: '2021-08-19T00:00:00Z',
       description: 'All smart contracts allowed after prior approval.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'How Optimism compresses data',
+      url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
+    },
+    {
+      title: 'How does Optimism really work?',
+      url: 'https://research.paradigm.xyz/optimism',
+      thumbnail: NUGGETS.THUMBNAILS.PARADIGM_01,
+    },
+    {
+      title: 'Modular Rollup Theory',
+      url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
+      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
 }

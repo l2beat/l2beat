@@ -9,11 +9,13 @@ import {
 export function getRiskView(
   projects: Layer2[],
   verificationStatus: VerificationStatus,
+  upcomingEnabled: boolean,
 ): ScalingRiskViewProps {
   return {
     items: projects.map((p) =>
       getRiskViewEntry(p, verificationStatus.projects[p.id.toString()]),
     ),
+    upcomingEnabled,
   }
 }
 
@@ -26,7 +28,9 @@ export function getRiskViewEntry(
     slug: project.display.slug,
     provider: project.technology.provider,
     warning: project.display.warning,
+    isArchived: project.isArchived,
     isVerified,
+    isUpcoming: project.isUpcoming,
     ...project.riskView,
   }
 }

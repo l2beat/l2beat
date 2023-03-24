@@ -49,8 +49,7 @@ describe(BalanceRepository.name, () => {
 
       const result = await repository.getByTimestamp(START)
 
-      expect(result).toBeAnArrayWith(DATA[0], ...additionalData)
-      expect(result).toBeAnArrayOfLength(4)
+      expect(result).toEqualUnsorted([DATA[0], ...additionalData])
     })
 
     it('unknown timestamp', async () => {
@@ -97,8 +96,7 @@ describe(BalanceRepository.name, () => {
       await repository.addOrUpdateMany(data)
 
       const result = await repository.getByTimestamp(START)
-      expect(result).toBeAnArrayOfLength(3)
-      expect(result).toBeAnArrayWith(
+      expect(result).toEqualUnsorted([
         {
           holderAddress: HOLDER_A,
           timestamp: START,
@@ -117,7 +115,7 @@ describe(BalanceRepository.name, () => {
           assetId: ASSET_2,
           balance: 1n,
         },
-      )
+      ])
     })
   })
 
@@ -174,8 +172,7 @@ describe(BalanceRepository.name, () => {
       await repository.addOrUpdateMany(newRows)
 
       const result = await repository.getAll()
-      expect(result).toBeAnArrayWith(...DATA, ...newRows)
-      expect(result).toBeAnArrayOfLength(4)
+      expect(result).toEqualUnsorted([...DATA, ...newRows])
     })
 
     it('existing rows only', async () => {
@@ -196,8 +193,7 @@ describe(BalanceRepository.name, () => {
       await repository.addOrUpdateMany(existingRows)
 
       const result = await repository.getAll()
-      expect(result).toBeAnArrayWith(...existingRows)
-      expect(result).toBeAnArrayOfLength(2)
+      expect(result).toEqualUnsorted(existingRows)
     })
 
     it('mixed: existing and new rows', async () => {
@@ -220,8 +216,7 @@ describe(BalanceRepository.name, () => {
       await repository.addOrUpdateMany(mixedRows)
 
       const result = await repository.getAll()
-      expect(result).toBeAnArrayWith(DATA[0], ...mixedRows)
-      expect(result).toBeAnArrayOfLength(3)
+      expect(result).toEqualUnsorted([DATA[0], ...mixedRows])
     })
 
     it('empty array', async () => {

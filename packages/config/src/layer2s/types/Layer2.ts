@@ -8,8 +8,7 @@ import {
   ProjectLinks,
   ProjectPermission,
 } from '../../common'
-import { Layer2Event } from './Layer2Event'
-import { Layer2Rating } from './Layer2Rating'
+import { Layer2Maturity } from './Layer2Maturity'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
@@ -18,6 +17,10 @@ export interface Layer2 {
   type: 'layer2'
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
+  /** Is this layer2 archived? */
+  isArchived?: boolean
+  /** Is this layer2 an upcoming rollup? */
+  isUpcoming?: boolean
   /** Information displayed about the layer2 on the frontend */
   display: Layer2Display
   /** Information required to calculate the stats of the layer2 */
@@ -34,8 +37,8 @@ export interface Layer2 {
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
-  /** Rollup maturity rating data */
-  rating?: Layer2Rating
+  /** Rollup maturity data */
+  maturity?: Layer2Maturity
 }
 
 export interface Layer2Display {
@@ -60,8 +63,6 @@ export interface Layer2Config {
   associatedTokens?: string[]
   /** List of contracts in which L1 funds are locked */
   escrows: ProjectEscrow[]
-  /** Metadata about events emitted by the system */
-  events: Layer2Event[]
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
 }

@@ -6,6 +6,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
 } from './common'
@@ -56,22 +57,6 @@ export const bobanetwork: Layer2 = {
         address: EthereumAddress('0x1A26ef6575B7BBB864d984D9255C069F6c361a14'),
         sinceTimestamp: new UnixTime(1628818577),
         tokens: '*',
-      },
-    ],
-    events: [
-      {
-        name: 'StateBatchAppended',
-        abi: 'event StateBatchAppended (uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)',
-        emitter: EthereumAddress('0xdE7355C971A5B733fe2133753Abd7e5441d441Ec'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1635386294),
-      },
-      {
-        name: 'SequencerBatchAppended',
-        abi: 'event  SequencerBatchAppended (uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)',
-        emitter: EthereumAddress('0xfBd2541e316948B259264c02f370eD088E04c3Db'),
-        type: 'data',
-        sinceTimestamp: new UnixTime(1635386025),
       },
     ],
     transactionApi: {
@@ -390,6 +375,13 @@ export const bobanetwork: Layer2 = {
       date: '2021-11-18T00:00:00Z',
       link: 'https://boba.network/Boba-airdrop-live/',
       description: 'BOBA token launched by OMG Foundation.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'What is Hybrid Compute?',
+      url: 'https://twitter.com/bkiepuszewski/status/1521849011594010624',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 }

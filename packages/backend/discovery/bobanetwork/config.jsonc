@@ -1,0 +1,134 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "bobanetwork",
+  "initialAddresses": [
+    "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00", //Boba Rollup
+    "0x1A26ef6575B7BBB864d984D9255C069F6c361a14", //L1LiquidityPool
+    "0xC891F466e53f40603250837282eAE4e22aD5b088" //L1 NFT Bridge
+  ],
+  "overrides": {
+    "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00": {
+      "ignoreInWatchMode": [
+        "currentDepositInfoHash",
+        "lastHashUpdateBlock",
+        "priorDepositInfoHash"
+      ]
+    },
+    "0xdE7355C971A5B733fe2133753Abd7e5441d441Ec": {
+      "ignoreInWatchMode": [
+        "getLastSequencerTimestamp",
+        "getTotalBatches",
+        "getTotalElements"
+      ]
+    },
+    "0xfBd2541e316948B259264c02f370eD088E04c3Db": {
+      "ignoreMethods": ["getQueueElement"],
+      "ignoreInWatchMode": [
+        "getLastBlockNumber",
+        "getLastTimestamp",
+        "getNextQueueIndex",
+        "getNumPendingQueueElements",
+        "getQueueLength",
+        "getTotalBatches",
+        "getTotalElements"
+      ]
+    },
+    "0x17148284d2da2f38c96346f1776C1BF7D7691231": {
+      "ignoreMethods": ["get"],
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
+    },
+    "0x13992B9f327faCA11568BE18a8ad3E9747e87d93": {
+      "ignoreMethods": ["get"],
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
+    },
+    "0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d": {
+      "ignoreMethods": ["get"],
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
+    },
+    "0x6D4528d192dB72E282265D6092F4B872f9Dff69e": {
+      "ignoreMethods": ["xDomainMessageSender"]
+    },
+    "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820": {
+      "ignoreMethods": ["xDomainMessageSender"]
+    },
+    "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089": {
+      "fields": {
+        "OVM_Proposer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_Proposer"]
+        },
+        "OVM_Sequencer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_Sequencer"]
+        },
+        "L1NFTBridge": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1NFTBridge"]
+        },
+        "Boba_GasPriceOracle": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Boba_GasPriceOracle"]
+        },
+        "BobaBillingContract": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BobaBillingContract"]
+        },
+        "L1LiquidityPool": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1LiquidityPool"]
+        },
+        "L1MultiMessageRelayer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1MultiMessageRelayer"]
+        },
+        "L1MultiMessageRelayerFast": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1MultiMessageRelayerFast"]
+        },
+        "Timelock": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Timelock"]
+        },
+        "L1CrossDomainMessenger": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1CrossDomainMessenger"]
+        },
+        "BondManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BondManager"]
+        },
+        "StateCommitmentChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["StateCommitmentChain"]
+        },
+        "CanonicalTransactionChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["CanonicalTransactionChain"]
+        },
+        "ChainStorageContainerCTCbatches": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["ChainStorageContainer-CTC-batches"]
+        },
+        "ChainStorageContainerSCCbatches": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["ChainStorageContainer-SCC-batches"]
+        }
+      }
+    }
+  }
+}

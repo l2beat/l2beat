@@ -10,6 +10,7 @@ import { gravity } from './gravity'
 import { harmony } from './harmony'
 import { hop } from './hop'
 import { hyphen } from './hyphen'
+import { lzOmnichain } from './lzOmnichain'
 import { multichain } from './multichain'
 import { near } from './near'
 import { nomad } from './nomad'
@@ -47,6 +48,7 @@ export const bridges: Bridge[] = [
   harmony,
   hop,
   hyphen,
+  lzOmnichain,
   multichain,
   near,
   nomad,

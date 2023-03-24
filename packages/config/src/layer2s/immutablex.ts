@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   SHARP_VERIFIER_CONTRACT,
@@ -43,15 +44,6 @@ export const immutablex: Layer2 = {
         address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
         sinceTimestamp: new UnixTime(1615389188),
         tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
-      },
-    ],
-    events: [
-      {
-        name: 'LogStateTransitionFact',
-        abi: ' event LogStateTransitionFact(bytes32 stateTransitionFact)',
-        emitter: EthereumAddress('0x5fdcca53617f4d2b9134b29090c87d01058e27e9'),
-        type: 'state',
-        sinceTimestamp: new UnixTime(1615389188),
       },
     ],
     transactionApi: {
@@ -210,4 +202,5 @@ export const immutablex: Layer2 = {
         'Immutable announce IMX, the native ERC-20 utility token of Immutable X.',
     },
   ],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

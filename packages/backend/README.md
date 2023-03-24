@@ -63,6 +63,8 @@ environment variables. One variable per line `KEY=value`.
 - `TVL_SYNC_ENABLED` (default `true`) - When set to `true` tvl sync is enabled
 - `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
 - `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
+- `DISCORD_CHANNEL_IDS` - space separated list of channel ids the message will be sent to, e.g. "123 456 789" becomes [123, 456, 789]
+- `DISCORD_TOKEN` - Bot account authentication token, for more details go to `DiscordClient.ts`
 
 #### .env boilerplate:
 
@@ -85,6 +87,8 @@ STARKEX_API_KEY=
 #TVL_SYNC_ENABLED=
 #DISCOVERY_BLOCK_NUMBER=
 #WATCHMODE_ENABLED=
+#DISCORD_CHANNEL_IDS=
+#DISCORD_TOKEN=
 ```
 
 ## Scripts
@@ -101,7 +105,7 @@ STARKEX_API_KEY=
 
 ## Repository naming convention
 
-- `add(T): number` - adds a new record and returns it's id
+- `add(T): number` - adds a new record and returns its id
 - `addMany(T[]): R[]` - adds many new records and returns their ids
 - `getAll(): T[]` - returns an array of all records
 - `getByKey(K): T[]` - returns an array of all matching records

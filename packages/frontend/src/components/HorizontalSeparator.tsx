@@ -7,7 +7,7 @@ export function HorizontalSeparator({ className }: SeparatorProps) {
   return (
     <hr
       className={cx(
-        'w-full border-gray-300 dark:border-gray-700 md:border-t-2',
+        'w-full border-gray-200 dark:border-gray-850 md:border-t-2',
         className,
       )}
     />

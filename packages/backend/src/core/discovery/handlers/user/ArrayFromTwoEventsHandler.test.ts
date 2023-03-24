@@ -1,5 +1,5 @@
-import { EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -130,7 +130,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getLogs(providedAddress, topics, fromBlock) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([
@@ -157,9 +157,10 @@ describe(ArrayFromTwoEventsHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
-      expect<unknown>(value).toEqual({
+      expect(value).toEqual({
         field: 'someName',
         value: [],
+        ignoreRelative: undefined,
       })
     })
 
@@ -169,7 +170,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getLogs() {
           return [
             OwnerAdded(Alice),
@@ -195,9 +196,10 @@ describe(ArrayFromTwoEventsHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
-      expect<unknown>(value).toEqual({
+      expect(value).toEqual({
         field: 'someName',
-        value: [Alice, Bob],
+        value: [Alice.toString(), Bob.toString()],
+        ignoreRelative: undefined,
       })
     })
   })

@@ -1,6 +1,7 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
+import { BridgesTableFilters } from '../../components/table/filters/BridgesTableFilters'
 import { IndexCell } from '../../components/table/IndexCell'
 import { ProjectCell } from '../../components/table/ProjectCell'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
@@ -20,6 +21,7 @@ export interface BridgesRiskViewEntry {
   slug: string
   type: 'layer2' | 'bridge'
   warning?: string
+  isArchived?: boolean
   isVerified?: boolean
   category: string
   destination: ProjectRiskViewEntry
@@ -36,19 +38,25 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
       name: '#',
       alignCenter: true,
       minimalWidth: true,
+      headClassName: 'md:pl-4',
       getValue: (entry, index) => (
         <>
-          <span data-bridges-only>
-            <IndexCell entry={entry} index={onlyBridges.indexOf(entry) + 1} />
+          <span data-bridges-only-cell>
+            <IndexCell
+              entry={entry}
+              index={onlyBridges.indexOf(entry) + 1}
+              className="md:pl-4"
+            />
           </span>
-          <span data-combined-only className="hidden">
-            <IndexCell entry={entry} index={index + 1} />
+          <span data-combined-only-cell className="hidden">
+            <IndexCell entry={entry} index={index + 1} className="md:pl-4" />
           </span>
         </>
       ),
     },
     {
       name: 'Name',
+      headClassName: 'pl-8',
       getValue: (entry) => (
         <ProjectCell highlightL2 type={entry.type} project={entry} />
       ),
@@ -89,6 +97,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
+      <BridgesTableFilters className="pb-4" />
       <TableView items={items} columns={columns} rows={rows} />
     </section>
   )

@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -211,7 +212,7 @@ export const cBridge: Bridge = {
     {
       name: 'Bridge Governance',
       description:
-        'The owner of the Token Bridge and Liquidity Network is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
+        'The owner of the Token Bridge, Liquidity Network and Transfer Agent is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
       accounts: [
         {
           address: EthereumAddress(
@@ -330,6 +331,18 @@ export const cBridge: Bridge = {
           type: 'EOA',
         },
       ],
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'How HTLC bridge works?',
+      url: 'https://twitter.com/bkiepuszewski/status/1437031523455229964',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
+    },
+    {
+      title: 'cBridge deep dive',
+      url: 'https://li.fi/knowledge-hub/cbridge-a-deep-dive/',
+      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
     },
   ],
 }

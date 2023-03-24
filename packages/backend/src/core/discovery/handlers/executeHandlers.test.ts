@@ -1,5 +1,5 @@
-import { Bytes, EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { Bytes, EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
@@ -9,7 +9,7 @@ import { StorageHandler } from './user/StorageHandler'
 
 describe(executeHandlers.name, () => {
   function providerWithStorage(layout: Record<string, number>) {
-    return mock<DiscoveryProvider>({
+    return mockObject<DiscoveryProvider>({
       async getStorage(address, slot) {
         const number = Number(BigInt(slot.toString()))
         const value = layout[number]
@@ -44,8 +44,8 @@ describe(executeHandlers.name, () => {
       ),
     ])
     expect<unknown[]>(values).toEqual([
-      { field: 'foo', value: 123 },
-      { field: 'bar', value: 456 },
+      { field: 'foo', value: 123, ignoreRelative: undefined },
+      { field: 'bar', value: 456, ignoreRelative: undefined },
     ])
   })
 
@@ -95,10 +95,10 @@ describe(executeHandlers.name, () => {
       ),
     ])
     expect<unknown[]>(values).toEqual([
-      { field: 'foo', value: 123 },
-      { field: 'bar', value: 456 },
-      { field: 'xxx', value: 1001 },
-      { field: 'yyy', value: 1002 },
+      { field: 'foo', value: 123, ignoreRelative: undefined },
+      { field: 'bar', value: 456, ignoreRelative: undefined },
+      { field: 'xxx', value: 1001, ignoreRelative: undefined },
+      { field: 'yyy', value: 1002, ignoreRelative: undefined },
     ])
   })
 
@@ -172,17 +172,17 @@ describe(executeHandlers.name, () => {
       ),
     ])
     expect<unknown[]>(values).toEqual([
-      { field: 'a', value: 100 },
-      { field: 'b', value: 200 },
-      { field: 'ab', value: 30000 },
-      { field: 'bb', value: 40000 },
-      { field: 'aab', value: 3010000 },
-      { field: 'aabbb', value: 305000000 },
+      { field: 'a', value: 100, ignoreRelative: undefined },
+      { field: 'b', value: 200, ignoreRelative: undefined },
+      { field: 'ab', value: 30000, ignoreRelative: undefined },
+      { field: 'bb', value: 40000, ignoreRelative: undefined },
+      { field: 'aab', value: 3010000, ignoreRelative: undefined },
+      { field: 'aabbb', value: 305000000, ignoreRelative: undefined },
     ])
   })
 
   it('unresolvable self', async () => {
-    const provider = mock<DiscoveryProvider>()
+    const provider = mockObject<DiscoveryProvider>()
     const promise = executeHandlers(provider, EthereumAddress.random(), [
       new StorageHandler(
         'a',
@@ -190,11 +190,11 @@ describe(executeHandlers.name, () => {
         DiscoveryLogger.SILENT,
       ),
     ])
-    await expect(promise).toBeRejected('Impossible to resolve dependencies')
+    await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
 
   it('unresolvable unknown', async () => {
-    const provider = mock<DiscoveryProvider>()
+    const provider = mockObject<DiscoveryProvider>()
     const promise = executeHandlers(provider, EthereumAddress.random(), [
       new StorageHandler(
         'a',
@@ -202,11 +202,11 @@ describe(executeHandlers.name, () => {
         DiscoveryLogger.SILENT,
       ),
     ])
-    await expect(promise).toBeRejected('Impossible to resolve dependencies')
+    await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
 
   it('unresolvable cycle', async () => {
-    const provider = mock<DiscoveryProvider>()
+    const provider = mockObject<DiscoveryProvider>()
     const promise = executeHandlers(provider, EthereumAddress.random(), [
       new StorageHandler(
         'a',
@@ -219,7 +219,7 @@ describe(executeHandlers.name, () => {
         DiscoveryLogger.SILENT,
       ),
     ])
-    await expect(promise).toBeRejected('Impossible to resolve dependencies')
+    await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
 
   it('handles handlers with errors', async () => {
@@ -232,7 +232,7 @@ describe(executeHandlers.name, () => {
       }
     }
 
-    const provider = mock<DiscoveryProvider>()
+    const provider = mockObject<DiscoveryProvider>()
     const values = await executeHandlers(provider, EthereumAddress.random(), [
       new FunkyHandler(),
     ])
