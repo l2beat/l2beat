@@ -81,7 +81,7 @@ export const amarok: Bridge = {
       },
       {
         name: 'Watcher Manager',
-        address: discovery.getContract('WatcherManagerConnector').address,
+        address: discovery.getContract('WatcherManager').address,
         description:
           'Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.',
       },
