@@ -5,8 +5,8 @@ import { ReportProject } from './ReportProject'
 
 // Increment this value to change the hash which in turn causes the system to
 // recalculate reports
-// Last updated because: bridges had to be calculated separately
-const REPORT_LOGIC_VERSION = 1
+// Last updated because: added arbitrum token
+const REPORT_LOGIC_VERSION = 2
 
 export function getReportConfigHash(projects: ReportProject[]) {
   return hashJson([getEntries(projects), REPORT_LOGIC_VERSION])

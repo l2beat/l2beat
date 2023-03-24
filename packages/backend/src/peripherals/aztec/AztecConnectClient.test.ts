@@ -1,5 +1,5 @@
-import { HttpClient, mock, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { HttpClient, UnixTime } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 import { Response } from 'node-fetch'
 
 import { AztecConnectClient } from './AztecConnectClient'
@@ -10,7 +10,7 @@ describe(AztecConnectClient.name, () => {
   describe(AztecConnectClient.prototype.getBlock.name, () => {
     it('gets block', async () => {
       const mined = new Date()
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify({
@@ -30,7 +30,7 @@ describe(AztecConnectClient.name, () => {
     })
 
     it('throws for invalid schema', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () => new Response(JSON.stringify({ foo: 'bar' })),
       })
       const client = new AztecConnectClient(httpClient, BASE_URL)
@@ -38,7 +38,7 @@ describe(AztecConnectClient.name, () => {
     })
 
     it('throws for http errors', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch() {
           return new Response('foo', { status: 400 })
         },
@@ -51,7 +51,7 @@ describe(AztecConnectClient.name, () => {
   describe(AztecConnectClient.prototype.getLatestBlock.name, () => {
     it('gets first mined block', async () => {
       const mined = new Date()
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify([
@@ -83,7 +83,7 @@ describe(AztecConnectClient.name, () => {
     })
 
     it('throws for invalid schema', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () => new Response(JSON.stringify({ foo: 'bar' })),
       })
       const client = new AztecConnectClient(httpClient, BASE_URL)
@@ -91,7 +91,7 @@ describe(AztecConnectClient.name, () => {
     })
 
     it('throws for http errors', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch() {
           return new Response('foo', { status: 400 })
         },
@@ -101,7 +101,7 @@ describe(AztecConnectClient.name, () => {
     })
 
     it('throws if no mined block found', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify([

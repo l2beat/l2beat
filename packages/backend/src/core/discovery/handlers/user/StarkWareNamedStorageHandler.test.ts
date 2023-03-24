@@ -1,5 +1,5 @@
-import { Bytes, EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { Bytes, EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 import { utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -10,7 +10,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
   describe('return types', () => {
     it('can returns storage as bytes', async () => {
       const address = EthereumAddress.random()
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getStorage(passedAddress, slot) {
           expect(passedAddress).toEqual(address)
           expect(slot).toEqual(
@@ -33,7 +33,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
-      expect(result as unknown).toEqual({
+      expect(result).toEqual({
         field: 'someName',
         value:
           '0x0000000000000000000000000000000000000000000000000000000000000123',
@@ -43,7 +43,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
 
     it('can returns storage as number', async () => {
       const address = EthereumAddress.random()
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getStorage() {
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
@@ -63,7 +63,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
-      expect(result as unknown).toEqual({
+      expect(result).toEqual({
         field: 'someName',
         value: 0x123,
         ignoreRelative: undefined,
@@ -74,7 +74,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       const address = EthereumAddress.random()
       const resultAddress = EthereumAddress.random()
 
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getStorage() {
           return Bytes.fromHex(
             '0x000000000000000000000000' + resultAddress.slice(2).toLowerCase(),
@@ -94,9 +94,9 @@ describe(StarkWareNamedStorageHandler.name, () => {
       expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
-      expect(result as unknown).toEqual({
+      expect(result).toEqual({
         field: 'someName',
-        value: resultAddress,
+        value: resultAddress.toString(),
         ignoreRelative: undefined,
       })
     })
@@ -112,14 +112,14 @@ describe(StarkWareNamedStorageHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async getStorage() {
         throw new Error('foo bar')
       },
     })
     const address = EthereumAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result as unknown).toEqual({
+    expect(result).toEqual({
       field: 'someName',
       error: 'foo bar',
     })
@@ -136,7 +136,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const provider = mock<DiscoveryProvider>({
+    const provider = mockObject<DiscoveryProvider>({
       async getStorage() {
         return Bytes.fromHex(
           '0x0000000000000000000000000000000000000000000000000000000000000123',
@@ -146,7 +146,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
 
     const address = EthereumAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result as unknown).toEqual({
+    expect(result).toEqual({
       field: 'someName',
       value:
         '0x0000000000000000000000000000000000000000000000000000000000000123',

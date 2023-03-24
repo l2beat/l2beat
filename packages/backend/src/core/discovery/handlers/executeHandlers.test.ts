@@ -1,5 +1,5 @@
-import { Bytes, EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { Bytes, EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
@@ -9,7 +9,7 @@ import { StorageHandler } from './user/StorageHandler'
 
 describe(executeHandlers.name, () => {
   function providerWithStorage(layout: Record<string, number>) {
-    return mock<DiscoveryProvider>({
+    return mockObject<DiscoveryProvider>({
       async getStorage(address, slot) {
         const number = Number(BigInt(slot.toString()))
         const value = layout[number]
@@ -182,7 +182,7 @@ describe(executeHandlers.name, () => {
   })
 
   it('unresolvable self', async () => {
-    const provider = mock<DiscoveryProvider>()
+    const provider = mockObject<DiscoveryProvider>()
     const promise = executeHandlers(provider, EthereumAddress.random(), [
       new StorageHandler(
         'a',
@@ -190,11 +190,11 @@ describe(executeHandlers.name, () => {
         DiscoveryLogger.SILENT,
       ),
     ])
-    await expect(promise).toBeRejected('Impossible to resolve dependencies')
+    await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
 
   it('unresolvable unknown', async () => {
-    const provider = mock<DiscoveryProvider>()
+    const provider = mockObject<DiscoveryProvider>()
     const promise = executeHandlers(provider, EthereumAddress.random(), [
       new StorageHandler(
         'a',
@@ -202,11 +202,11 @@ describe(executeHandlers.name, () => {
         DiscoveryLogger.SILENT,
       ),
     ])
-    await expect(promise).toBeRejected('Impossible to resolve dependencies')
+    await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
 
   it('unresolvable cycle', async () => {
-    const provider = mock<DiscoveryProvider>()
+    const provider = mockObject<DiscoveryProvider>()
     const promise = executeHandlers(provider, EthereumAddress.random(), [
       new StorageHandler(
         'a',
@@ -219,7 +219,7 @@ describe(executeHandlers.name, () => {
         DiscoveryLogger.SILENT,
       ),
     ])
-    await expect(promise).toBeRejected('Impossible to resolve dependencies')
+    await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
 
   it('handles handlers with errors', async () => {
@@ -232,7 +232,7 @@ describe(executeHandlers.name, () => {
       }
     }
 
-    const provider = mock<DiscoveryProvider>()
+    const provider = mockObject<DiscoveryProvider>()
     const values = await executeHandlers(provider, EthereumAddress.random(), [
       new FunkyHandler(),
     ])

@@ -1,5 +1,5 @@
-import { EthereumAddress, mock } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { EthereumAddress } from '@l2beat/shared'
+import { expect, mockObject } from 'earljs'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -98,7 +98,7 @@ describe(ArrayFromOneEventHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getLogs(providedAddress, topics, fromBlock) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('OwnerChanged')])
@@ -119,7 +119,7 @@ describe(ArrayFromOneEventHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
-      expect<unknown>(value).toEqual({
+      expect(value).toEqual({
         field: 'someName',
         value: [],
         ignoreRelative: undefined,
@@ -132,7 +132,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -157,9 +157,9 @@ describe(ArrayFromOneEventHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
-      expect<unknown>(value).toEqual({
+      expect(value).toEqual({
         field: 'someName',
-        value: [Alice, Bob],
+        value: [Alice.toString(), Bob.toString()],
         ignoreRelative: undefined,
       })
     })
@@ -170,7 +170,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -196,9 +196,9 @@ describe(ArrayFromOneEventHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
-      expect<unknown>(value).toEqual({
+      expect(value).toEqual({
         field: 'someName',
-        value: [Charlie],
+        value: [Charlie.toString()],
         ignoreRelative: undefined,
       })
     })
@@ -209,7 +209,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -233,9 +233,9 @@ describe(ArrayFromOneEventHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
-      expect<unknown>(value).toEqual({
+      expect(value).toEqual({
         field: 'someName',
-        value: [Alice, Bob, Charlie],
+        value: [Alice.toString(), Bob.toString(), Charlie.toString()],
         ignoreRelative: undefined,
       })
     })
@@ -246,7 +246,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mock<DiscoveryProvider>({
+      const provider = mockObject<DiscoveryProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -272,9 +272,9 @@ describe(ArrayFromOneEventHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       const value = await handler.execute(provider, address)
-      expect<unknown>(value).toEqual({
+      expect(value).toEqual({
         field: 'someName',
-        value: [Alice, Bob],
+        value: [Alice.toString(), Bob.toString()],
         ignoreRelative: true,
       })
     })

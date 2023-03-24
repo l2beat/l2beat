@@ -1,7 +1,7 @@
 import { AssetId, ProjectId, UnixTime } from '@l2beat/shared'
 import { expect } from 'earljs'
 
-import { ReportRecord } from '../../peripherals/database/ReportRepository'
+import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import {
   addOpTokenReport,
   OP_TOKEN_ID,

@@ -60,14 +60,14 @@ describe(promiseAllPlus.name, () => {
     })
 
     await time.tickAsync(1000)
-    expect(fns[0]).toHaveBeenCalledExactlyWith([[]])
-    expect(fns[1]).toHaveBeenCalledExactlyWith([[]])
-    expect(fns[2]).toHaveBeenCalledExactlyWith([])
+    expect(fns[0]).toHaveBeenCalledTimes(1)
+    expect(fns[1]).toHaveBeenCalledTimes(1)
+    expect(fns[2]).not.toHaveBeenCalled()
     // note: as soon as first task is done, second is picked = maximum concurrency
     await time.tickAsync(1)
-    expect(fns[0]).toHaveBeenCalledExactlyWith([[]])
-    expect(fns[1]).toHaveBeenCalledExactlyWith([[]])
-    expect(fns[2]).toHaveBeenCalledExactlyWith([[]])
+    expect(fns[0]).toHaveBeenCalledTimes(1)
+    expect(fns[1]).toHaveBeenCalledTimes(1)
+    expect(fns[2]).toHaveBeenCalledTimes(1)
     await time.tickAsync(3001)
 
     const results = await resultsPromise
@@ -89,7 +89,7 @@ describe(promiseAllPlus.name, () => {
 
     expect(results).toEqual([1])
     // called 3 times in total - retried 2 times and finally succeeded
-    expect(mock).toHaveBeenCalledExactlyWith([[], [], []])
+    expect(mock).toHaveBeenCalledTimes(3)
   })
 
   it('propagates permanent errors', async () => {
@@ -101,7 +101,7 @@ describe(promiseAllPlus.name, () => {
     })
     await time.runAllAsync()
 
-    await expect(resultsPromise).toBeRejected(errorMessage)
+    await expect(resultsPromise).toBeRejectedWith(errorMessage)
   })
 
   it('when already errored, skip more work', async () => {
@@ -116,10 +116,10 @@ describe(promiseAllPlus.name, () => {
     })
     await time.runAllAsync()
 
-    await expect(resultsPromise).toBeRejected(errorMessage)
-    expect(mock1).toHaveBeenCalledExactlyWith([[]])
+    await expect(resultsPromise).toBeRejectedWith(errorMessage)
+    expect(mock1).toHaveBeenCalledTimes(1)
     // should never been called because whole thing rejects anyway
-    expect(mock2).toHaveBeenCalledExactlyWith([])
+    expect(mock2).not.toHaveBeenCalled()
   })
 })
 

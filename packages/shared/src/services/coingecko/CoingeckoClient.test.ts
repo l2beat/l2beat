@@ -1,7 +1,6 @@
-import { expect, mockFn } from 'earljs'
+import { expect, mockFn, mockObject } from 'earljs'
 import { Response } from 'node-fetch'
 
-import { mock } from '../../tools'
 import { CoingeckoId, EthereumAddress, UnixTime } from '../../types'
 import { HttpClient } from '../HttpClient'
 import { CoingeckoClient } from './CoingeckoClient'
@@ -11,7 +10,7 @@ import { CoinMarketChartRangeData, CoinMarketChartRangeResult } from './model'
 describe(CoingeckoClient.name, () => {
   describe('query', () => {
     it('constructs a correct url without api key', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch(url) {
           expect(url).toEqual(
             'https://api.coingecko.com/api/v3/a/b?foo=bar&baz=123',
@@ -25,7 +24,7 @@ describe(CoingeckoClient.name, () => {
     })
 
     it('constructs a correct url with api key', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch(url) {
           expect(url).toEqual(
             'https://pro-api.coingecko.com/api/v3/a/b?foo=bar&baz=123&x_cg_pro_api_key=myapikey',
@@ -39,7 +38,7 @@ describe(CoingeckoClient.name, () => {
     })
 
     it('constructs a correct when there are no options', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch(url) {
           expect(url).toEqual('https://api.coingecko.com/api/v3/a/b')
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
@@ -51,31 +50,29 @@ describe(CoingeckoClient.name, () => {
     })
 
     it('throws on non-2XX result', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () => new Response('', { status: 404 }),
       })
 
       const coingeckoClient = new CoingeckoClient(httpClient, undefined)
-      await expect(coingeckoClient.query('/path', {})).toBeRejected(
+      await expect(coingeckoClient.query('/path', {})).toBeRejectedWith(
         'Server responded with non-2XX result: 404 Not Found ',
       )
     })
 
     it('throws on non-json response', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () => new Response('text'),
       })
 
       const coingeckoClient = new CoingeckoClient(httpClient, undefined)
-      await expect(coingeckoClient.query('/path', {})).toBeRejected(
-        expect.stringMatching(/json/),
-      )
+      await expect(coingeckoClient.query('/path', {})).toBeRejectedWith('json')
     })
   })
 
   describe(CoingeckoClient.prototype.getCoinList.name, () => {
     it('fetches coins without platforms', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify([
@@ -93,7 +90,7 @@ describe(CoingeckoClient.name, () => {
     })
 
     it('fetches coins with platforms', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () =>
           new Response(
             JSON.stringify([
@@ -176,7 +173,7 @@ describe(CoingeckoClient.name, () => {
     }
 
     it('fetches historical prices', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: async () => new Response(JSON.stringify(MOCK_PARSED_DATA)),
       })
       const coingeckoClient = new CoingeckoClient(httpClient, undefined)
@@ -191,7 +188,7 @@ describe(CoingeckoClient.name, () => {
     })
 
     it('constructs correct url', async () => {
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         async fetch(url) {
           expect(url).toEqual(
             'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232',
@@ -214,7 +211,7 @@ describe(CoingeckoClient.name, () => {
       const idSupportedByAPI = 'dai-supported'
       const tokenAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
 
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
           .resolvesToOnce(
             new Response(JSON.stringify({ error: 'coin not found' }), {
@@ -255,20 +252,22 @@ describe(CoingeckoClient.name, () => {
         EthereumAddress(tokenAddress),
       )
 
-      expect(httpClient.fetch).toHaveBeenCalledExactlyWith([
-        [
-          `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-          { timeout: 10000 },
-        ],
-        [
-          `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
-          { timeout: 10000 },
-        ],
-        [
-          `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-          { timeout: 10000 },
-        ],
-      ])
+      expect(httpClient.fetch).toHaveBeenCalledTimes(3)
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        1,
+        `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+        { timeout: 10000 },
+      )
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        2,
+        `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
+        { timeout: 10000 },
+      )
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        3,
+        `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+        { timeout: 10000 },
+      )
     })
 
     it('newly obtained coingeckoId is cached', async () => {
@@ -277,7 +276,7 @@ describe(CoingeckoClient.name, () => {
       const idSupportedByAPI2 = 'dai-supported'
       const tokenAddress = '0x6b175474e89094c44da98b954eedeac495271d0f'
 
-      const httpClient = mock<HttpClient>({
+      const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
           .resolvesToOnce(
             new Response(JSON.stringify({ error: 'coin not found' }), {
@@ -353,32 +352,37 @@ describe(CoingeckoClient.name, () => {
         EthereumAddress(tokenAddress),
       )
 
-      expect(httpClient.fetch).toHaveBeenCalledExactlyWith([
-        [
-          `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-          { timeout: 10000 },
-        ],
-        [
-          `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
-          { timeout: 10000 },
-        ],
-        [
-          `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-          { timeout: 10000 },
-        ],
-        [
-          `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-          { timeout: 10000 },
-        ],
-        [
-          `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
-          { timeout: 10000 },
-        ],
-        [
-          `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI2}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
-          { timeout: 10000 },
-        ],
-      ])
+      expect(httpClient.fetch).toHaveBeenCalledTimes(6)
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        1,
+        `https://pro-api.coingecko.com/api/v3/coins/${idInConfig}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+        { timeout: 10000 },
+      )
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        2,
+        `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
+        { timeout: 10000 },
+      )
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        3,
+        `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+        { timeout: 10000 },
+      )
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        4,
+        `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+        { timeout: 10000 },
+      )
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        5,
+        `https://pro-api.coingecko.com/api/v3/coins/list?include_platform=true&x_cg_pro_api_key=${apiKey}`,
+        { timeout: 10000 },
+      )
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        6,
+        `https://pro-api.coingecko.com/api/v3/coins/${idSupportedByAPI2}/market_chart/range?vs_currency=usd&from=1592577232&to=1622577232&x_cg_pro_api_key=${apiKey}`,
+        { timeout: 10000 },
+      )
     })
   })
 })
