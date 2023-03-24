@@ -1,7 +1,7 @@
 {
   "name": "amarok",
-  "blockNumber": 16898453,
-  "configHash": "0x4220fab943ea683bc72ecdabfc8d9c006e637ad7832463ac95730d654327d260",
+  "blockNumber": 16899398,
+  "configHash": "0x56dfd9721da8e20412e57485872fc3fbfb520a50755d43fa937d0c04b40396af",
   "contracts": [
     {
       "name": "ConnextBridge",
@@ -91,7 +91,12 @@
               "0x91f5de79"
             ]
           ],
-          ["0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295", ["0xab2dc3f5"]],
+          [
+            "0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295",
+            [
+              "0xab2dc3f5"
+            ]
+          ],
           [
             "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d",
             [
@@ -210,9 +215,19 @@
           ],
           [
             "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b",
-            ["0x1f931c1c", "0x56a8ea48", "0xbbf2358e", "0x2c67849c"]
+            [
+              "0x1f931c1c",
+              "0x56a8ea48",
+              "0xbbf2358e",
+              "0x2c67849c"
+            ]
           ],
-          ["0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4", ["0x9a7e155e"]],
+          [
+            "0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4",
+            [
+              "0x9a7e155e"
+            ]
+          ],
           [
             "0x3Bcf4185443A339517aD4e580067f178d1B68E1D",
             [
@@ -228,15 +243,46 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 3250,
+        "nonce": 3264,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "relayerFeeVault": "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
+        "RELAYERS": [
+          "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
+          "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
+          "0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2",
+          "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
+          "0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47",
+          "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007",
+          "0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE",
+          "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
+          "0x43728A95386D64384C76Afd416Dcc8118869BA6c",
+          "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6"
+        ],
         "routerAllowlistRemoved": false,
         "routerAllowlistTimestamp": 0,
-        "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
+        "ROUTERS": [
+          "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c",
+          "0x97b9dcB1AA34fE5F12b728D9166ae353d1e7f5C4",
+          "0x8cb19CE8EEDF740389D428879a876A3B030B9170",
+          "0x0e62f9fa1F9b3E49759Dc94494F5bC37a83d1FAD",
+          "0x58507fed0Cb11723dFb6848c92C59Cf0BBEB9927",
+          "0x7ce49752fFA7055622f444df3c69598748cb2E5f",
+          "0x33b2aD85f7DbA818e719FB52095dC768E0eD93ec",
+          "0x048a5EcC705C280b2248aefF88fd581AbbEB8587",
+          "0x975574980a5Da77f5C90bC92431835D91B73669e",
+          "0x6FD84ba95525c4cCd218F2f16F646A08B4b0a598",
+          "0x6892d4D1f73A65B03063B7d78174dC6350Fcc406",
+          "0x32D63da9F776891843C90787CEC54ADA23ABd4C2",
+          "0xFaAB88015477493cFAa5DFAA533099C590876F21",
+          "0x63Cda9C42db542bb91a7175E38673cFb00D402b0",
+          "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8"
+        ],
+        "SEQUENCERS": [
+          "0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"
+        ],
         "xAppConnectionManager": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c"
       },
       "derivedName": "ConnextDiamond"
@@ -254,12 +300,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 16898304,
+        "lastSentBlock": 16899336,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xdf0763a6423b8b4bdf5f2dd529b929613da82429d85e376c208db638ebd11186",
+        "outboundRoot": "0x72129fdb54f776776271de7450cae407acc8a77bf94e211479b36655c7357551",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -313,16 +359,24 @@
         "delayBlocks": 100,
         "DEQUEUE_MAX": 100,
         "domains": [
-          6450786, 6778479, 1869640809, 1886350457, 6648936, 1634886255
+          6450786,
+          6778479,
+          1869640809,
+          1886350457,
+          6648936,
+          1634886255
         ],
         "domainsHash": "0xe741ece3f9550e537df05746072d458479dbc21a49fdee7925337f0b7e1a802c",
-        "getPendingInboundRootsCount": 8,
-        "lastPropagatedRoot": "0xe67ae16725c4ae57b69059e0123010bc36e784ab0437572a50db3bb98ec28e0c",
+        "getPendingInboundRootsCount": 3,
+        "lastPropagatedRoot": "0x74dcfa77255cd0255425cf4151d6280b2a32e1794da3496ae23292b07231709a",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [12458, 12465],
+        "pendingInboundRoots": [
+          12485,
+          12487
+        ],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -447,49 +501,14 @@
       }
     },
     {
-      "name": "RelayerHub",
-      "address": "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
-      "code": "https://etherscan.deth.net/address/0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
+      "name": "RelayTransit",
+      "address": "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
+      "code": "https://etherscan.deth.net/address/0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "connext": "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6",
-        "delay": 604800,
-        "feeCollector": "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
-        "gelatoRelayer": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
-        "owner": "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
-        "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedTimestamp": 0,
-        "RELAYERS": [
-          "0x0000000000000000000000000000000000000000",
-          "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
-          "0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47",
-          "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007",
-          "0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE",
-          "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
-          "0x43728A95386D64384C76Afd416Dcc8118869BA6c",
-          "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6",
-          "0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2",
-          "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9"
-        ],
-        "renounced": false,
-        "rootManager": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
-        "spokeConnector": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c"
-      },
-      "derivedName": "RelayerProxyHub"
-    },
-    {
-      "name": "Relay",
-      "address": "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
-      "code": "https://etherscan.deth.net/address/0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-        "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
-        "paymentToken": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+        "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6"
       }
     },
     {
@@ -544,7 +563,12 @@
           "0x307dC9A863c161e12A3Da117828E0D973740Be3b"
         ],
         "facets": [
-          ["0xe3cfB4D857B2e9BE6e58146D8Ba41231bF910A7E", ["0x1f931c1c"]],
+          [
+            "0xe3cfB4D857B2e9BE6e58146D8Ba41231bF910A7E",
+            [
+              "0x1f931c1c"
+            ]
+          ],
           [
             "0x48Eb9522051B107b2014a7b65f328c9CB39e0f03",
             [
@@ -557,7 +581,10 @@
           ],
           [
             "0x28FC8F0c47cbD403A43F7Bcf476A55a6405D613e",
-            ["0x8da5cb5b", "0xf2fde38b"]
+            [
+              "0x8da5cb5b",
+              "0xf2fde38b"
+            ]
           ],
           [
             "0x5E1adFc15b76eDFB760691dF1F8a9D797F27CCA7",
@@ -574,8 +601,18 @@
               "0xfb2422f3"
             ]
           ],
-          ["0x73023E67dA4D8A0705Fa434FC8553837c1FbA03F", ["0xb87b0b4c"]],
-          ["0x794bbb7ae4397186C472420F8232a3f06a604f5e", ["0xbeabacc8"]],
+          [
+            "0x73023E67dA4D8A0705Fa434FC8553837c1FbA03F",
+            [
+              "0xb87b0b4c"
+            ]
+          ],
+          [
+            "0x794bbb7ae4397186C472420F8232a3f06a604f5e",
+            [
+              "0xbeabacc8"
+            ]
+          ],
           [
             "0xd2C453512109f2Cb8f9a27e59F041887E77a4E3A",
             [
@@ -676,17 +713,6 @@
     },
     {
       "name": "RelayTransit",
-      "address": "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
-      "code": "https://etherscan.deth.net/address/0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6"
-      }
-    },
-    {
-      "name": "RelayTransit",
       "address": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007",
       "code": "https://etherscan.deth.net/address/0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007,0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
       "upgradeability": {
@@ -697,6 +723,19 @@
       "values": {
         "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
         "owner": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9"
+      }
+    },
+    {
+      "name": "Relay",
+      "address": "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
+      "code": "https://etherscan.deth.net/address/0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
+        "paymentToken": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
       }
     },
     {
@@ -711,6 +750,27 @@
       "values": {
         "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
         "owner": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+      "code": "https://etherscan.deth.net/address/0x4d50a469fc788a3c0CdC8Fd67868877dCb246625,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0x60b1292375dabe167590dda781ba4f2d4f046f849a3b9cbcd167e98c3cfd098a",
+        "getChainId": 1,
+        "getOwners": [
+          "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
+          "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
+          "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f"
+        ],
+        "getThreshold": 3,
+        "nonce": 7,
+        "VERSION": "1.3.0"
       }
     },
     {
@@ -731,28 +791,41 @@
   ],
   "eoas": [
     "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
+    "0x048a5EcC705C280b2248aefF88fd581AbbEB8587",
     "0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2",
+    "0x0e62f9fa1F9b3E49759Dc94494F5bC37a83d1FAD",
     "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
     "0x32118e0E825e0292a5bAffbec7d874e3Eb749E0C",
+    "0x32D63da9F776891843C90787CEC54ADA23ABd4C2",
+    "0x33b2aD85f7DbA818e719FB52095dC768E0eD93ec",
     "0x3D529c760F3EC4c89Bdd6549DDabE9097C1da6e9",
     "0x40b46a6C2DEFdCFC1b6Cfb667CD0c024F1FfBBA9",
     "0x43728A95386D64384C76Afd416Dcc8118869BA6c",
     "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
     "0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7",
     "0x549F9cEee0FeCEe98E04bc520620184Ae9B2e045",
+    "0x58507fed0Cb11723dFb6848c92C59Cf0BBEB9927",
     "0x5aA748326f03C651749E7998D88647e59Ee386Bc",
     "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6",
+    "0x63Cda9C42db542bb91a7175E38673cFb00D402b0",
+    "0x6892d4D1f73A65B03063B7d78174dC6350Fcc406",
     "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
     "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
     "0x6fd2072B961aCC9bd6e188f957a0FB1CEb8632dc",
+    "0x6FD84ba95525c4cCd218F2f16F646A08B4b0a598",
     "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
     "0x76B07A4D982982565abd3736c1FFE40B56fd66B3",
+    "0x7ce49752fFA7055622f444df3c69598748cb2E5f",
+    "0x8cb19CE8EEDF740389D428879a876A3B030B9170",
     "0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47",
+    "0x975574980a5Da77f5C90bC92431835D91B73669e",
+    "0x97b9dcB1AA34fE5F12b728D9166ae353d1e7f5C4",
     "0x9c77788d761ee0347Ab550883237CeD274a0F248",
     "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f",
     "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895",
     "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
     "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
+    "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
     "0xc6248B440790d5aD8EBa118FB11c6B2EA818eA85",
     "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
     "0xcBEaC8A60F00D5B969C99D8976E40A5E4a7a150F",
@@ -763,8 +836,10 @@
     "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e",
     "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
     "0xf1beA24376329E01c7c10A00a6A7329591168CF9",
+    "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c",
     "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-    "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754"
+    "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
+    "0xFaAB88015477493cFAa5DFAA533099C590876F21"
   ],
   "abis": {
     "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d": [
@@ -1186,53 +1261,6 @@
     "0x73023E67dA4D8A0705Fa434FC8553837c1FbA03F": [
       "event LogExecSuccess(address indexed executor, address indexed service, address creditToken, uint256 credit, uint256 gasDebitInCreditToken, uint256 gasDebitInNativeToken)",
       "function exec(address _service, bytes _data, address _creditToken) returns (uint256 credit, uint256 gasDebitInNativeToken, uint256 gasDebitInCreditToken, uint256 estimatedGasUsed)"
-    ],
-    "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": [
-      "constructor(address _connext, address _spokeConnector, address _gelatoRelayer, address _feeCollector, address _rootManager)",
-      "error ProposedOwnable__onlyOwner_notOwner()",
-      "error ProposedOwnable__onlyProposed_notProposedOwner()",
-      "error ProposedOwnable__ownershipDelayElapsed_delayNotElapsed()",
-      "error ProposedOwnable__proposeNewOwner_invalidProposal()",
-      "error ProposedOwnable__proposeNewOwner_noOwnershipChange()",
-      "error ProposedOwnable__renounceOwnership_invalidProposal()",
-      "error ProposedOwnable__renounceOwnership_noProposal()",
-      "event ConnextChanged(address updated, address previous)",
-      "event FeeCollectorChanged(address updated, address previous)",
-      "event FundsDeducted(uint256 amount, uint256 balance)",
-      "event FundsReceived(uint256 amount, uint256 balance)",
-      "event GelatoRelayerChanged(address updated, address previous)",
-      "event OwnershipProposed(address indexed proposedOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RelayerAdded(address relayer)",
-      "event RelayerRemoved(address relayer)",
-      "event RootManagerChanged(address rootManager, address oldRootManager)",
-      "event SpokeConnectorChanged(address updated, address previous)",
-      "function acceptProposedOwner()",
-      "function addRelayer(address _relayer)",
-      "function allowedRelayer(address) view returns (bool)",
-      "function connext() view returns (address)",
-      "function delay() view returns (uint256)",
-      "function execute(tuple(tuple(uint32 originDomain, uint32 destinationDomain, uint32 canonicalDomain, address to, address delegate, bool receiveLocal, bytes callData, uint256 slippage, address originSender, uint256 bridgedAmt, uint256 normalizedIn, uint256 nonce, bytes32 canonicalId) params, address[] routers, bytes[] routerSignatures, address sequencer, bytes sequencerSignature) _args, uint256 _fee) returns (bytes32 transferId)",
-      "function feeCollector() view returns (address)",
-      "function gelatoRelayer() view returns (address)",
-      "function owner() view returns (address)",
-      "function propagate(address[] _connectors, uint256[] _messageFees, bytes[] _encodedData, uint256 _relayerFee)",
-      "function proposeNewOwner(address newlyProposed)",
-      "function proposed() view returns (address)",
-      "function proposedTimestamp() view returns (uint256)",
-      "function proveAndProcess(tuple(bytes message, bytes32[32] path, uint256 index)[] _proofs, bytes32 _aggregateRoot, bytes32[32] _aggregatePath, uint256 _aggregateIndex, uint256 _fee)",
-      "function removeRelayer(address _relayer)",
-      "function renounceOwnership()",
-      "function renounced() view returns (bool)",
-      "function rootManager() view returns (address)",
-      "function send(bytes _encodedData, uint256 _messageFee, uint256 _relayerFee)",
-      "function setConnext(address _connext)",
-      "function setFeeCollector(address _feeCollector)",
-      "function setGelatoRelayer(address _gelatoRelayer)",
-      "function setRootManager(address _rootManager)",
-      "function setSpokeConnector(address _spokeConnector)",
-      "function spokeConnector() view returns (address)",
-      "function withdraw()"
     ],
     "0x794bbb7ae4397186C472420F8232a3f06a604f5e": [
       "function transfer(address _token, address _recipient, uint256 _amount)"

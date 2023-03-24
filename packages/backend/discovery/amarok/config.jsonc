@@ -27,6 +27,13 @@
           "addKey": "relayer",
           "removeEvent": "event RelayerRemoved(address relayer, address caller)",
           "removeKey": "relayer"
+        },
+        "ROUTERS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event RouterAdded(address indexed router, address caller)",
+          "addKey": "router",
+          "removeEvent": "event RouterRemoved(address indexed router, address caller)",
+          "removeKey": "router"
         }
       }
     },
