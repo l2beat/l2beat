@@ -19,6 +19,15 @@ export const amarok: Bridge = {
     receiving messages. During the delay period a whitelisted set of Watchers can pause the bridge if the fraudulent message passed via AMB is detected.',
     links: {
       websites: ['https://bridge.connext.network/'],
+      documentation: ['https://docs.connext.network/'],
+      repositories: [
+        'https://github.com/connext',
+        'https://github.com/CoinHippo-Labs/connext-bridge',
+      ],
+      socialMedia: [
+        'https://twitter.com/ConnextNetwork',
+        'https://discord.gg/connext',
+      ],
     },
   },
   config: {
