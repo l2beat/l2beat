@@ -1,5 +1,6 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { assert } from '@l2beat/shared'
+import { assert, EthereumAddress } from '@l2beat/shared'
+import { expect } from 'earljs'
 
 import { ConfigReader } from '../ConfigReader'
 import { DiscoveryConfig } from '../DiscoveryConfig'
@@ -52,7 +53,10 @@ describe('discovery config.jsonc', () => {
 
       const discovery = await configReader.readDiscovery(config.name)
 
-      for (const [address, override] of Object.entries(config.overrides)) {
+      for (const [addressOrName, override] of Object.entries(
+        config.overrides,
+      )) {
+        const address = getAddress(addressOrName, config)
         if (override.ignoreDiscovery === true) {
           continue
         }
@@ -61,11 +65,9 @@ describe('discovery config.jsonc', () => {
           continue
         }
 
-        const contract = discovery.contracts.find(
-          (c) => c.address.toString() === address,
-        )
+        const contract = discovery.contracts.find((c) => c.address === address)
 
-        const errorPrefix = `${config.name} - ${address}`
+        const errorPrefix = `${config.name} - ${address.toString()}`
 
         assert(
           contract,
@@ -117,4 +119,59 @@ describe('discovery config.jsonc', () => {
       )
     }
   })
+
+  describe('overrides', () => {
+    // this test ensures that every named override resolves to an address
+    // do not remove it unless you know what you are doing
+    it('every override correspond to existing contract', async () => {
+      for (const config of configs ?? []) {
+        Object.keys(config.overrides ?? {}).forEach((addressOrName) => {
+          expect(() => getAddress(addressOrName, config)).not.toThrow()
+        })
+      }
+    })
+  })
+
+  describe('names', () => {
+    it('every name correspond to existing contract', async () => {
+      for (const config of configs ?? []) {
+        const discovery = await configReader.readDiscovery(config.name)
+
+        assert(
+          Object.keys(config.names ?? {}).every((address) =>
+            discovery.contracts.some((c) => c.address.toString() === address),
+          ),
+          `names field in ${config.name} configuration includes addresses that do not exist inside discovery.json`,
+        )
+      }
+    })
+
+    it('every name is unique', async () => {
+      for (const config of configs ?? []) {
+        if (config.names === undefined) {
+          continue
+        }
+
+        assert(
+          new Set(Object.values(config.names)).size ===
+            Object.values(config.names).length,
+          `names field in ${config.name} configuration includes duplicate names`,
+        )
+      }
+    })
+  })
 })
+function getAddress(
+  addressOrName: string,
+  config: DiscoveryConfig,
+): EthereumAddress {
+  try {
+    return EthereumAddress(addressOrName)
+  } catch (e) {
+    const address = Object.entries(config.names ?? {}).find(
+      ([_, name]) => name === addressOrName,
+    )?.[0]
+
+    return EthereumAddress(address ?? '')
+  }
+}

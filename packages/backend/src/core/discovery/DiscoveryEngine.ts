@@ -35,12 +35,7 @@ export class DiscoveryEngine {
     metricsDone({ project: config.name }, blockNumber)
 
     // TODO: test this line
-    return parseDiscoveryOutput(
-      discovered,
-      config.name,
-      blockNumber,
-      configHash,
-    )
+    return parseDiscoveryOutput(discovered, config, blockNumber, configHash)
   }
 }
 

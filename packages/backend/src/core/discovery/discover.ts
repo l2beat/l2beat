@@ -35,8 +35,8 @@ export async function discover(
       continue
     }
 
-    const overrides = config.overrides?.[address.toString()]
-    if (overrides?.ignoreDiscovery) {
+    const contractOverrides = getContractOverrides(address, config)
+    if (contractOverrides?.ignoreDiscovery) {
       logger.log(`Skipping ${address.toString()}`)
       logger.log('')
 
@@ -66,7 +66,7 @@ export async function discover(
     const { analyzed, relatives } = await analyzeItem(
       provider,
       address,
-      config,
+      contractOverrides,
       logger,
     )
     resolved.set(address, analyzed)
@@ -86,11 +86,21 @@ export async function discover(
     stack.push(...unknown.map((x) => ({ address: x, depth: depth + 1 })))
   }
 
-  for (const override of Object.keys(config.overrides ?? {})) {
-    if (!known.has(EthereumAddress(override))) {
-      logger.configuredButUndiscovered(override.toString())
-    }
+  return [...resolved.values()]
+}
+
+// the mapping of the names to addresses is enforced by the test
+// packages/backend/src/core/discovery/utils/config.test.ts (overrides test)
+// TODO L2B-1235: ensure mapping integrity with discovery.json
+export function getContractOverrides(
+  address: EthereumAddress,
+  config: DiscoveryConfig,
+) {
+  if (config.names?.[address.toString()]) {
+    return config.overrides?.[config.names[address.toString()]]
   }
 
-  return [...resolved.values()]
+  if (config.overrides?.[address.toString()]) {
+    return config.overrides[address.toString()]
+  }
 }
