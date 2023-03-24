@@ -158,6 +158,24 @@ export const amarok: Bridge = {
         },
       ],
     },
+    {
+      name: 'Sequencers',
+      description:
+        'Permissioned set of actors that sequence routers request to forward liquidity.',
+      accounts: [],
+    },
+    {
+      name: 'Relayers',
+      description:
+        'Permissioned set of actors who can perform certain bridge operations.',
+      accounts: [],
+    },
+    {
+      name: 'Routers',
+      description:
+        'Permissioned set of actors who can forward liquidity and speed-up message delivery.',
+      accounts: [],
+    },
   ],
   riskView: {
     validatedBy: {
