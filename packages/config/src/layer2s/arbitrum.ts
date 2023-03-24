@@ -453,6 +453,12 @@ export const arbitrum: Layer2 = {
   },
   milestones: [
     {
+      name: 'ARB token airdrop',
+      link: 'https://twitter.com/arbitrum/status/1638888588443111425',
+      date: '2023-03-23T00:00:00Z',
+      description: 'ARB token launched by Arbitrum Foundation.',
+    },
+    {
       name: 'Nitro Upgrade',
       link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
       date: '2022-08-31T00:00:00Z',
