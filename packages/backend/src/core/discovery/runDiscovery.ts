@@ -29,5 +29,5 @@ export async function runDiscovery(
   const logger = new DiscoveryLogger({ enabled: true })
 
   const result = await discover(discoveryProvider, projectConfig, logger)
-  await saveDiscoveryResult(result, config.project, blockNumber, configHash)
+  await saveDiscoveryResult(result, projectConfig, blockNumber, configHash)
 }

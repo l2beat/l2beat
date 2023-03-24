@@ -16,7 +16,7 @@ export function Header(props: HeaderProps) {
   return (
     <blockquote>
       <h4>
-        <ContractName contract={props.contract} />
+        <ContractName contract={props.contract} showDerivedName={true} />
         <InitialIndicator isInitial={props.contract.isInitial} />
         <ProxyIndicator type={props.contract.proxyType} />
       </h4>
