@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
-import { Bridge } from './types'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
+import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('amarok')
 
@@ -67,11 +67,11 @@ export const amarok: Bridge = {
     addresses: [
       {
         name: 'Connext Amarok Bridge',
-        address: discovery.getContract('ConnextDiamond').address,
+        address: discovery.getContract('Connext Bridge').address,
         description:
           'The main Connext Amarok contract. Following Diamond design patter, it contains multiple Facets that implement\
         various parts of the bridge functionality.',
-        upgradeability: discovery.getContract('ConnextDiamond').upgradeability,
+        upgradeability: discovery.getContract('Connext Bridge').upgradeability,
       },
       {
         name: 'Root Manager',
@@ -81,7 +81,7 @@ export const amarok: Bridge = {
       },
       {
         name: 'Watcher Manager',
-        address: discovery.getContract('WatcherManager').address,
+        address: discovery.getContract('Watcher Manager').address,
         description:
           'Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.',
       },
