@@ -69,8 +69,7 @@ export const zksyncera: Layer2 = {
       type: 'rpc',
       startBlock: 1,
       url: 'https://mainnet.era.zksync.io',
-      callsPerMinute: 1500,
-      excludeFromActivityApi: true, // excluding until it's synced
+      callsPerMinute: 200,
     },
   },
   riskView: makeBridgeCompatible({
