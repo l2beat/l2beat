@@ -21,6 +21,8 @@ export const zksyncera: Layer2 = {
   display: {
     name: 'zkSync Era',
     slug: 'zksync-era',
+    warning:
+      'Withdrawals are delayed by 24 h. The length of the delay can be arbitrarly set by a MultiSig.',
     description:
       'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.\
@@ -161,6 +163,12 @@ export const zksyncera: Layer2 = {
         address: discovery.getContract('Verifier').address,
         name: 'Verifier',
         description: 'Implements zkProof verification logic.',
+      },
+      {
+        address: discovery.getContract('ValidatorTimelock').address,
+        name: 'ValidatorTimelock',
+        description:
+          'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
       },
       {
         address: discovery.getContract('L1ERC20Bridge').address,
