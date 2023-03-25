@@ -89,7 +89,7 @@ export const arbitrum: Layer2 = {
       // after the block of the update
       assessCount: (count: number, blockNumber: number) =>
         blockNumber >= 22207818 ? count - 1 : count,
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
+      startBlock: 1,
     },
   },
   riskView: makeBridgeCompatible({
