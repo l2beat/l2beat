@@ -68,6 +68,7 @@ export const zksyncera: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
+      url: 'https://mainnet.era.zksync.io',
       excludeFromActivityApi: true, // excluding until it's synced
     },
   },

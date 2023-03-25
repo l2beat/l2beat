@@ -100,7 +100,6 @@ export function getLocalConfig(cli: CliParameters): Config {
         zksync2: {
           type: 'rpc',
           callsPerMinute: 60,
-          url: 'https://mainnet.era.zksync.io',
         },
       },
     },
