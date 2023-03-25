@@ -22,6 +22,7 @@ export function createActivityModule(
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.activity) {
+    logger.info('Activity module disabled')
     return
   }
 
@@ -67,6 +68,7 @@ export function createActivityModule(
 
   const start = async () => {
     if (!config.syncEnabled) {
+      logger.info('Activity sync disabled')
       return
     }
 
