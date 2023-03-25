@@ -21,6 +21,8 @@ export const zksyncera: Layer2 = {
   display: {
     name: 'zkSync Era',
     slug: 'zksync-era',
+    warning:
+      'Withdrawals are delayed by 24 h. The length of the delay can be arbitrarly set by a MultiSig.',
     description:
       'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.\
@@ -154,7 +156,8 @@ export const zksyncera: Layer2 = {
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
           and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
-          It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.',
+          It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
+          It is also serves the purpose of ETH bridge.',
       },
       {
         address: discovery.getContract('Verifier').address,
@@ -162,10 +165,17 @@ export const zksyncera: Layer2 = {
         description: 'Implements zkProof verification logic.',
       },
       {
-        address: discovery.getContract('L1EthBridge').address,
-        name: 'L1EthBridge',
-        description: 'Standard bridge for depositing ETH to zkSync Era.',
-        upgradeability: discovery.getContract('L1EthBridge').upgradeability,
+        address: discovery.getContract('ValidatorTimelock').address,
+        name: 'ValidatorTimelock',
+        description:
+          'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
+      },
+      {
+        address: discovery.getContract('L1ERC20Bridge').address,
+        name: 'L1ERC20Bridge',
+        description:
+          'Standard bridge for depositing ERC20 tokens to zkSync Era.',
+        upgradeability: discovery.getContract('L1ERC20Bridge').upgradeability,
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

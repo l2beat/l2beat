@@ -2,27 +2,28 @@
   "$schema": "../config.schema.json",
   "name": "zksync2",
   "initialAddresses": [
-    "0x324000e0c256B806548b307aF600aFFF3D000324",
-    "0x027c8a79075f96a8cde315b495949e5f1d92f1d6"
+    "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+    "0x3dB52cE065f728011Ac6732222270b3F2360d919"
   ],
   "overrides": {
-    "0x324000e0c256B806548b307aF600aFFF3D000324": {
-      "ignoreMethods": [
-        "getFirstUnprocessedPriorityTx",
+    "0x3dB52cE065f728011Ac6732222270b3F2360d919": {
+      "ignoreMethods": ["committedBlockTimestamp"]
+    },
+    "0x32400084C286CF3E17e7B677ea9583e60a000324": {
+      "ignoreMethods": ["l2LogsRootHash", "storedBlockHash"],
+      "ignoreInWatchMode": [
+        "getPriorityQueueSize",
         "getTotalBlocksCommitted",
         "getTotalBlocksExecuted",
         "getTotalBlocksVerified",
-        "getTotalPriorityTxs",
-        "l2LogsRootHash",
-        "storedBlockHash",
-        "priorityQueueFrontOperation",
-        "getFirstUnprocessedPriorityTx",
-        "getPriorityQueueSize"
-      ],
-      "ignoreInWatchMode": ["getCurrentProposalId"]
+        "getTotalPriorityTxs"
+      ]
     },
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": {
+      "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
     }
   }
 }
