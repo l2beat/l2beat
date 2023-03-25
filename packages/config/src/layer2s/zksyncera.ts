@@ -61,6 +61,11 @@ export const zksyncera: Layer2 = {
         tokens: ['USDC', 'PERP', 'MUTE'],
       },
     ],
+    transactionApi: {
+      type: 'rpc',
+      startBlock: 1,
+      excludeFromActivityApi: true, // excluding until it's synced
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
