@@ -30,7 +30,11 @@ export const zksyncera: Layer2 = {
     purpose: 'Universal',
     links: {
       websites: ['https://zksync.io/'],
-      apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
+      apps: [
+        'https://bridge.zksync.io/',
+        'https://portal.zksync.io/',
+        'https://ecosystem.zksync.io/',
+      ],
       documentation: ['https://era.zksync.io/docs/'],
       explorers: ['https://explorer.zksync.io/'],
       repositories: ['https://github.com/matter-labs/zksync-era'],
