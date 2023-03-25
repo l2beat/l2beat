@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
-  "blockNumber": 16900310,
-  "configHash": "0x34e558e8e2ba107270c63cc4ec1627709c413547e5f2587ec3c1ede929342953",
+  "blockNumber": 16905597,
+  "configHash": "0xa3fceaedcea659a0a82dbf2cedf87e41e18eb166bfe285b4f97842003fb7c781",
   "contracts": [
     {
       "name": "ValidatorTimelock",
@@ -129,20 +129,20 @@
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
         "getCurrentProposalId": 3,
-        "getFirstUnprocessedPriorityTx": 147,
+        "getFirstUnprocessedPriorityTx": 6126,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x010007793a328ef16cc7086708f7f3292ff9b5eed9e7e539c184228f461bf4ef",
         "getL2DefaultAccountBytecodeHash": "0x0100067d861e2f5717a12c3e869cfb657793b86bbb0caa05cc1421f16c5217bc",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 14057,
+        "getPriorityQueueSize": 45466,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 581,
-        "getTotalBlocksExecuted": 366,
-        "getTotalBlocksVerified": 503,
-        "getTotalPriorityTxs": 14204,
+        "getTotalBlocksCommitted": 1152,
+        "getTotalBlocksExecuted": 455,
+        "getTotalBlocksVerified": 648,
+        "getTotalPriorityTxs": 51592,
         "getUpgradeProposalState": 0,
         "getVerifier": "0x473b1887D45D61EfD87731a1D8eC3590b93c565d",
         "getVerifierParams": [
@@ -153,8 +153,8 @@
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x889ab026efae23ea38ca19d475590070da58723d3a6531cc74ff53ff46dc3527",
-          1679627339,
+          "0x02173a947b6abe3c862ece327df8c3b686365d8d4632d28f5f5711b42c1df87c",
+          1679673455,
           0
         ]
       }
