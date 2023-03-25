@@ -224,7 +224,7 @@ export const VALIDATOR_NO_MECHANISM: ProjectRiskViewEntry = {
 export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
   value: 'No mechanism',
   description:
-    'If the whitelisted validator goes down, no activity including withdrawals can happen. Funds will be frozen.',
+    'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
   sentiment: 'bad',
 }
 
