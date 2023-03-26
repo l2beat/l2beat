@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
-  "blockNumber": 16910602,
-  "configHash": "0x3c5443881685ac0da95ca09bf3cb4ae4c95f3becd4b3b287879dd359bbdce9bb",
+  "blockNumber": 16912128,
+  "configHash": "0x52b9f9dfd74514f25f7d3f6eea7ba52629dd8e8430700ed6a6af17ab1b2df17a",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -15,15 +15,26 @@
       },
       "values": {
         "getUpgradeActivationDelay": 1209600,
+        "GOVERNORS": [
+          "0x4744C7dF96E321F9D18CA0D4051BEf5530C6Fb15",
+          "0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a"
+        ],
         "implementation": "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
         "isNotFinalized": true,
+        "OPERATORS": [
+          "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
+        ],
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "VERSION": "3.0.3"
       }
     }
   ],
-  "eoas": [],
+  "eoas": [
+    "0x4744C7dF96E321F9D18CA0D4051BEf5530C6Fb15",
+    "0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a",
+    "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
+  ],
   "abis": {
     "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": [
       "constructor(uint256 upgradeActivationDelay)",
