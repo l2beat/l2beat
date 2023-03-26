@@ -28,12 +28,7 @@
         "getLastBatchId",
         "getOrderRoot",
         "getOrderTreeHeight",
-        "getRollupTreeHeight",
-        "getRollupVaultRoot",
-        "getSequenceNumber",
-        "getSystemAssetType",
-        "getValidiumTreeHeight",
-        "getValidiumVaultRoot"
+        "getSequenceNumber"
       ],
       "fields": {
         "GOVERNORS": {
@@ -49,6 +44,78 @@
           "addKey": "operator",
           "removeEvent": "event LogOperatorRemoved(address operator)",
           "removeKey": "operator"
+        }
+      }
+    },
+    // gpsStatementVerifier
+    "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier1
+    "0x03Fa911dfCa026D9C8Edb508851b390accF912e8": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier2
+    "0xe9664D230490d5A515ef7Ef30033d8075a8D0E24": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier3
+    "0x78Af2BFB12Db15d35f7dE8DD77f29C299C78c590": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier4
+    "0xC879aF7D5eD80e4676C203FD300E640C297F31e3": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier5
+    "0x9E614a417f8309575fC11b175A51599661f2Bd21": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier6
+    "0x8488e8f4e26eBa40faE229AB653d98E341cbE57B": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier7
+    "0x630A97901Ac29590DF83f4A64B8D490D54caf239": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier18
+    "0x217750c27bE9147f9e358D9FF26a8224F8aCC214": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
         }
       }
     }
