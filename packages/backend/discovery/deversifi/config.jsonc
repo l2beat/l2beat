@@ -11,6 +11,42 @@
         }
       }
     },
+    //PedersenHashPointsYColumn
+    "0x519DA5F74503dA351EbBED889111377d33096002": {
+      "ignoreMethods": ["compute"]
+    },
+    //PedersenHashPointsXColumn
+    "0xc4f21318937017B8aBe5fDc0D48f58dBc1d18940": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonPartialRoundKey1Column
+    "0x4d0E80AB34ee2B19295F2CaC3101d03452D874b8": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonPartialRoundKey0Column
+    "0x812c2AD2161D099724A99C8114c539b9e5b449cd": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonFullRoundKey2Column
+    "0x4FB05b7CC348C5a72C59a3f307baf66e3CA1F835": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonFullRoundKey1Column
+    "0xb4711a4614368516529d6118C97905aB4B28e267": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonFullRoundKey0Column
+    "0x37070Fd8051f63E5A6D7E87026e086Cc19db1aBe": {
+      "ignoreMethods": ["compute"]
+    },
+    //EcdsaPointsYColumn
+    "0xcA59f6FD499ffF50c78Ffb420a9bcd0d273abf29": {
+      "ignoreMethods": ["compute"]
+    },
+    //EcdsaPointsXColumn
+    "0x593a71DC43e9B67FE009d7C76B6EfA925FB329B1": {
+      "ignoreMethods": ["compute"]
+    },
     // Main Rollup contract
     "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": {
       "ignoreMethods": [
