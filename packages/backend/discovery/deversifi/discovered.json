@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
-  "blockNumber": 16912184,
-  "configHash": "0x9561a1c1ddcb59d1c797a8a894e20364c8add06639dc8032d9adb3b09af18bdb",
+  "blockNumber": 16912315,
+  "configHash": "0x040d2c9fdb285fca68cc238893157c4ec8d07b13611db7d1f8b434295aea3d20",
   "contracts": [
     {
       "name": "Proxy",
@@ -58,10 +58,6 @@
         "UPGRADE_ACTIVATION_DELAY": 2419200,
         "VERIFIER_REMOVAL_DELAY": 2419200,
         "VERSION": "4.0.1"
-      },
-      "errors": {
-        "initializerSize": "Execution reverted",
-        "UPGRADE_DELAY_SLOT": "Execution reverted"
       }
     },
     {

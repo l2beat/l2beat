@@ -5,28 +5,6 @@
   "overrides": {
     // Main Rollup contract
     "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7": {
-      "ignoreMethods": [
-        "configurationHash",
-        "getEthKey",
-        "getQuantum",
-        "identify",
-        "isAssetRegistered",
-        "validatedSelectors",
-        "getAssetInfo",
-        "getActionCount",
-        "getActionHashByIndex"
-      ],
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getRollupTreeHeight",
-        "getRollupVaultRoot",
-        "getSequenceNumber",
-        "getSystemAssetType",
-        "getValidiumTreeHeight",
-        "getValidiumVaultRoot"
-      ],
       "fields": {
         "GOVERNORS": {
           "type": "arrayFromTwoEvents",

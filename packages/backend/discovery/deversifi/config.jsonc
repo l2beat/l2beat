@@ -58,7 +58,9 @@
         "validatedSelectors",
         "getAssetInfo",
         "getActionCount",
-        "getActionHashByIndex"
+        "getActionHashByIndex",
+        "initializerSize",
+        "UPGRADE_DELAY_SLOT"
       ],
       "ignoreInWatchMode": [
         "getLastBatchId",

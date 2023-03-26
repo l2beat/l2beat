@@ -11,28 +11,6 @@
       }
     },
     "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": {
-      "ignoreMethods": [
-        "configurationHash",
-        "getEthKey",
-        "getQuantum",
-        "identify",
-        "isAssetRegistered",
-        "validatedSelectors",
-        "getAssetInfo",
-        "getActionCount",
-        "getActionHashByIndex"
-      ],
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getRollupTreeHeight",
-        "getRollupVaultRoot",
-        "getSequenceNumber",
-        "getSystemAssetType",
-        "getValidiumTreeHeight",
-        "getValidiumVaultRoot"
-      ],
       "fields": {
         "GOVERNORS": {
           "type": "arrayFromTwoEvents",
