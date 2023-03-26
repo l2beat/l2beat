@@ -1,7 +1,7 @@
 {
   "name": "sorare",
-  "blockNumber": 16910940,
-  "configHash": "0xcd27079a7e7ac829ad3bb214fc0f02fb35afb00612f3e595dc081ff284563f4a",
+  "blockNumber": 16912418,
+  "configHash": "0x1f3926f9dc720375f6bc2b3503d7ea2beb842596a9fb658f4c56264a13c9e05c",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -21,8 +21,6 @@
           "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B"
         ],
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-        "IS_EOA_GOVERNOR": false,
-        "IS_MULTISIG_GOVERNOR": false,
         "isNotFinalized": true,
         "OPERATORS": [
           "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",

@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
-  "blockNumber": 16912128,
-  "configHash": "0x52b9f9dfd74514f25f7d3f6eea7ba52629dd8e8430700ed6a6af17ab1b2df17a",
+  "blockNumber": 16912415,
+  "configHash": "0x83a714079d0bff1f4cc5f59fafc713f54d4f2eea23cacf2abcd003abf3c52adb",
   "contracts": [
     {
       "name": "StarkExchange",
