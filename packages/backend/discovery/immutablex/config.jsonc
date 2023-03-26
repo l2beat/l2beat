@@ -34,16 +34,6 @@
         "getValidiumVaultRoot"
       ],
       "fields": {
-        "IS_MULTISIG_GOVERNOR": {
-          "type": "call",
-          "method": "function proxyIsGovernor(address user) external view returns (bool)",
-          "args": ["0xC532d2976209A56DdF4a99B844130f7c0daCa7B6"]
-        },
-        "IS_EOA_GOVERNOR": {
-          "type": "call",
-          "method": "function proxyIsGovernor(address user) external view returns (bool)",
-          "args": ["0xef75e1199B0599BA823b7770AcE8eb34864a1D55"]
-        },
         "GOVERNORS": {
           "type": "arrayFromTwoEvents",
           "addEvent": "event LogNewGovernorAccepted(address acceptedGovernor)",

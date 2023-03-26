@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
-  "blockNumber": 16910845,
-  "configHash": "0xdf1c5d5e1ea9b1199b0a0423914fdb6120b1be6ebacc836f28360ccb0638c310",
+  "blockNumber": 16911005,
+  "configHash": "0x52d73e6cfa9d49f837517617dee28893cb5e2af334e308ea9c862a0ff6cf3143",
   "contracts": [
     {
       "name": "Proxy",
@@ -42,8 +42,6 @@
           "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA"
         ],
         "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-        "IS_EOA_GOVERNOR": false,
-        "IS_MULTISIG_GOVERNOR": false,
         "isFrozen": false,
         "isNotFinalized": true,
         "isStrictVaultBalancePolicy": false,

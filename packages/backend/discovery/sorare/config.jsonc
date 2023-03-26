@@ -1,18 +1,10 @@
 {
   "$schema": "../config.schema.json",
-  "name": "deversifi",
-  "initialAddresses": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"],
+  "name": "sorare",
+  "initialAddresses": ["0xF5C9F957705bea56a7e806943f98F7777B995826"],
   "overrides": {
-    //comittee
-    "0x28780349A33eEE56bb92241bAAB8095449e24306": {
-      "fields": {
-        "constructorArgs": {
-          "type": "constructorArgs"
-        }
-      }
-    },
     // Main Rollup contract
-    "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": {
+    "0xF5C9F957705bea56a7e806943f98F7777B995826": {
       "ignoreMethods": [
         "configurationHash",
         "getEthKey",
