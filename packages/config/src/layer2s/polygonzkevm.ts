@@ -4,7 +4,6 @@ import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
 export const polygonzkevm: Layer2 = {
-  isUpcoming: true,
   type: 'layer2',
   id: ProjectId('polygonzkevm'),
   display: {
