@@ -16,7 +16,9 @@
         "getTotalBlocksCommitted",
         "getTotalBlocksExecuted",
         "getTotalBlocksVerified",
-        "getTotalPriorityTxs"
+        "getTotalPriorityTxs",
+        "priorityQueueFrontOperation",
+        "getFirstUnprocessedPriorityTx"
       ]
     },
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
