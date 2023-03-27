@@ -50,11 +50,6 @@ export const zksyncera: Layer2 = {
   config: {
     escrows: [
       {
-        address: EthereumAddress('0x027C8a79075F96a8cdE315b495949e5f1D92f1D6'),
-        sinceTimestamp: new UnixTime(1666718099),
-        tokens: ['ETH'],
-      },
-      {
         address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
         sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
