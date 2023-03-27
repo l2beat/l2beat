@@ -1,7 +1,10 @@
-import { ProjectId } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('polygonzkevm')
 
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
@@ -28,7 +31,13 @@ export const polygonzkevm: Layer2 = {
     },
   },
   config: {
-    escrows: [],
+    escrows: [
+      {
+        address: discovery.getContract('Bridge').address,
+        sinceTimestamp: new UnixTime(1679653127),
+        tokens: '*',
+      },
+    ],
   },
   riskView: UPCOMING_RISK_VIEW,
   technology: {

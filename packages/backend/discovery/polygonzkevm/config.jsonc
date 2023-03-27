@@ -1,0 +1,73 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "polygonzkevm",
+  "names": {
+    "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "PolygonZkEvm",
+    "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin",
+    "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "Timelock",
+    "0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9": "FflonkVerifier",
+    "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": "OwnerMultisig",
+    "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0": "MaticToken",
+    "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "GlobalExitRoot",
+    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "Bridge",
+    "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": "AdminMultisig"
+  },
+  "initialAddresses": ["0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"],
+  "overrides": {
+    "PolygonZkEvm": {
+      "ignoreMethods": [
+        "checkStateRootInsidePrime",
+        "pendingStateTransitions",
+        "batchFee",
+        "calculateRewardPerBatch",
+        "getForcedBatchFee",
+        "getLastVerifiedBatch",
+        "lastBatchSequenced",
+        "lastForceBatch",
+        "lastForceBatchSequenced",
+        "lastPendingState",
+        "lastPendingStateConsolidated",
+        "lastTimestamp",
+        "lastVerifiedBatch",
+        "multiplierBatchFee"
+      ],
+      "fields": {}
+    },
+    "Timelock": {
+      "ignoreMethods": [
+        "CANCELLER_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "EXECUTOR_ROLE",
+        "PROPOSER_ROLE",
+        "TIMELOCK_ADMIN_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "OwnerMultisig": {
+      "ignoreMethods": ["nonce"]
+    },
+    "GlobalExitRoot": {
+      "ignoreMethods": [
+        "getLastGlobalExitRoot",
+        "lastMainnetExitRoot",
+        "lastRollupExitRoot"
+      ]
+    },
+    "Bridge": {
+      "ignoreMethods": [
+        "claimedBitMap",
+        "isClaimed",
+        "depositCount",
+        "lastUpdatedDepositCount"
+      ],
+      "fields": {}
+    },
+    "AdminMultisig": {
+      "ignoreMethods": ["nonce"]
+    }
+  }
+}
