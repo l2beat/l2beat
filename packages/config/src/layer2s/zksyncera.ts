@@ -33,16 +33,11 @@ export const zksyncera: Layer2 = {
       : undefined,
     description:
       'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
-      It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.\
-      It is currently deployed on mainnet and available for registered projects and developers.',
+      It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.',
     purpose: 'Universal',
     links: {
-      websites: ['https://zksync.io/'],
-      apps: [
-        'https://bridge.zksync.io/',
-        'https://portal.zksync.io/',
-        'https://ecosystem.zksync.io/',
-      ],
+      websites: ['https://zksync.io/, https://ecosystem.zksync.io/'],
+      apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
       documentation: ['https://era.zksync.io/docs/'],
       explorers: ['https://explorer.zksync.io/'],
       repositories: ['https://github.com/matter-labs/zksync-era'],
@@ -81,8 +76,9 @@ export const zksyncera: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
     validatorFailure: {
-      ...RISK_VIEW.PROVER_DOWN,
-      description: 'Only whitelisted Validators can submit proofs.',
+      value: 'In development',
+      description: 'Currently, there is no generic escape hatch.',
+      sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -103,8 +99,8 @@ export const zksyncera: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'Cryptography used - zkSync FAQ',
-          href: 'https://era.zksync.io/docs/dev/fundamentals/zkSync.html',
+          text: "What are rollups? - Developer's documentation",
+          href: 'https://era.zksync.io/docs/dev/fundamentals/rollups.html#what-are-zk-rollups',
         },
       ],
     },
