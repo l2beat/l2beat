@@ -1,6 +1,6 @@
 {
   "name": "polynetwork",
-  "blockNumber": 16570934,
+  "blockNumber": 16910552,
   "configHash": "0xae93a2566ee5c9f26a394d398160da9421faaa5e9545c6b0f6288e4f8d9ac688",
   "contracts": [
     {
@@ -78,12 +78,8 @@
         "type": "immutable"
       },
       "values": {
-        "ConKeepersPkBytes": "0x0400000000000000143dfccb7b8a6972cde3b695d3c0c032514b0f3825144c46e1f946362547546677bfa719598385ce56f214f81f676832f6dfec4a5d0671bd27156425fcef981451b7529137d34002c4ebd81a2244f0ee7e95b2c0",
-        "CurEpochStartHeight": 1740000,
-        "EthToPolyTxHashIndex": 67292,
-        "getCurEpochConPubKeyBytes": "0x0400000000000000143dfccb7b8a6972cde3b695d3c0c032514b0f3825144c46e1f946362547546677bfa719598385ce56f214f81f676832f6dfec4a5d0671bd27156425fcef981451b7529137d34002c4ebd81a2244f0ee7e95b2c0",
-        "getCurEpochStartHeight": 1740000,
-        "getEthTxHashIndex": 67292,
+        "EthToPolyTxHashIndex": 68686,
+        "getEthTxHashIndex": 68686,
         "isOwner": false,
         "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "paused": false
