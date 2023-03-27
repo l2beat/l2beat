@@ -7,6 +7,7 @@ import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../core/discovery/DiscoveryConfig'
 import { abiToArray } from './dashboardContracts/abiToArray'
+import { getDescription } from './dashboardContracts/getDescription'
 import {
   DiscoveredByInfo,
   getDiscoveredBy,
@@ -84,6 +85,8 @@ function getContract(
     ignoreInWatchMode,
     ignoreMethods,
     watched,
+    contract.address,
+    config,
   )
 
   return {
@@ -107,6 +110,8 @@ function getNotHandled(
   ignoreInWatchMode: DashboardContractField[] | undefined,
   ignoreMethods: DashboardContractField[] | undefined,
   watched: DashboardContractField[] | undefined,
+  address: EthereumAddress,
+  config: DiscoveryConfig,
 ): DashboardContractField[] | undefined {
   const handled = (ignoreInWatchMode ?? [])
     .map((field) => field.name)
@@ -115,7 +120,10 @@ function getNotHandled(
 
   const notHandled = abiToArray(viewABI)
     .filter((field) => !handled.includes(field))
-    .map((name) => ({ name }))
+    .map((name) => ({
+      name,
+      description: getDescription(name, address, config),
+    }))
 
   return notHandled
 }

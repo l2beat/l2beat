@@ -1,12 +1,9 @@
-import {
-  ContractParameters,
-  EthereumAddress,
-  ProjectParameters,
-} from '@l2beat/shared'
+import { ContractParameters, ProjectParameters } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
 import { DashboardContractField, getValues } from '../utils/getValues'
+import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
 
 export function getWatched(
@@ -55,11 +52,4 @@ function getIgnoreInWatchMode(
   }
 
   return config.overrides[contract.address.toString()].ignoreInWatchMode
-}
-function getDescription(
-  field: string,
-  address: EthereumAddress,
-  config: DiscoveryConfig,
-): string | undefined {
-  return config.descriptions?.[address.toString()]?.methods?.[field]
 }

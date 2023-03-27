@@ -3,6 +3,7 @@ import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
 import { DashboardContractField } from '../utils/getValues'
+import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
 
 export function getIgnoredMethods(
@@ -17,6 +18,7 @@ export function getIgnoredMethods(
       ignoreMethods = override.ignoreMethods.map((field) => {
         return {
           name: getFieldName(field, viewABI),
+          description: getDescription(field, contract.address, config),
         }
       })
     }

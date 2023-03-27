@@ -3,6 +3,7 @@ import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
 import { DashboardContractField, getValues } from '../utils/getValues'
+import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
 
 export function getIgnoreInWatchMode(
@@ -19,6 +20,7 @@ export function getIgnoreInWatchMode(
         return {
           name: getFieldName(field, viewABI),
           values: getValues(discovery, contract, field),
+          description: getDescription(field, contract.address, config),
         }
       })
     }
