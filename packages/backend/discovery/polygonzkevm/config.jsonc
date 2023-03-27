@@ -62,7 +62,8 @@
         "claimedBitMap",
         "isClaimed",
         "depositCount",
-        "lastUpdatedDepositCount"
+        "lastUpdatedDepositCount",
+        "getDepositRoot"
       ],
       "fields": {}
     },

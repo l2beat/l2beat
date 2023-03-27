@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
-  "blockNumber": 16920131,
-  "configHash": "0x936314bd808d49ef1f660469d6a9e1d2f9c3bdfd52cb8e00d845bb8896ba0624",
+  "blockNumber": 16921320,
+  "configHash": "0x90babd91138b1f268620495a9586a236556d645b875bb342232aa8f34e45e297",
   "contracts": [
     {
       "name": "PolygonZkEvm",
@@ -167,7 +167,6 @@
         "admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
       },
       "values": {
-        "getDepositRoot": "0x0ffa79b7d803a2bd9c7a0135cb3447afed915a481bad53283b0f2a36fd05848f",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
