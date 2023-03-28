@@ -53,7 +53,7 @@ export const zksyncera: Layer2 = {
         'https://twitter.com/zksync',
       ],
     },
-    activityDataSource: 'Explorer API',
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
