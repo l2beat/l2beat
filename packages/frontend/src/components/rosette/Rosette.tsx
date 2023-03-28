@@ -16,11 +16,7 @@ export interface RosetteProps {
   className?: string
 }
 
-export function SmallRosette({
-  risks,
-  className,
-  isUpcoming = true,
-}: RosetteProps) {
+export function SmallRosette({ risks, className, isUpcoming }: RosetteProps) {
   if (isUpcoming) {
     return <UpcomingBadge className={className} isShort={true} />
   }
