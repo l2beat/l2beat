@@ -22,7 +22,7 @@ export const zksyncera: Layer2 = {
     name: 'zkSync Era',
     slug: 'zksync-era',
     warning:
-      'Withdrawals are delayed by 24 h. The length of the delay can be arbitrarly set by a MultiSig.',
+      'Withdrawals are delayed by 24 h. The length of the delay can be arbitrarily set by a MultiSig.',
     description:
       'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.\
@@ -214,8 +214,12 @@ export const zksyncera: Layer2 = {
       accounts: [
         {
           address: EthereumAddress(
-            '0x112200EaA6d57120c86B8b51a8b6049d56B82211',
+            discovery.getContractValue<string>(
+              'ValidatorTimelock',
+              'validator',
+            ),
           ),
+          // TODO: this type should be derived from discovery
           type: 'EOA',
         },
       ],
