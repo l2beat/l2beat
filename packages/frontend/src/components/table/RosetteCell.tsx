@@ -1,3 +1,4 @@
+import { UPCOMING_RISK } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
@@ -11,9 +12,15 @@ export interface RosetteCellProps {
 
 export function RosetteCell({ riskValues }: RosetteCellProps) {
   const riskSentiments = getRiskSentiments(riskValues)
+  const isUpcoming = Object.values(riskValues).every((value) => {
+    return (
+      value.value === UPCOMING_RISK.value &&
+      value.description === UPCOMING_RISK.description
+    )
+  })
   return (
     <span
-      className="Tooltip relative"
+      className="Tooltip"
       title={renderToStaticMarkup(
         <RosetteTooltipPopup
           riskSentiments={riskSentiments}
@@ -22,7 +29,11 @@ export function RosetteCell({ riskValues }: RosetteCellProps) {
       )}
       data-tooltip-big
     >
-      <SmallRosette risks={riskSentiments} className="h-6 w-6 md:h-8 md:w-8" />
+      <SmallRosette
+        risks={riskSentiments}
+        className="h-6 w-6 md:h-8 md:w-8"
+        isUpcoming={isUpcoming}
+      />
     </span>
   )
 }

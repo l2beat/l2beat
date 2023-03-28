@@ -4,7 +4,7 @@ import React from 'react'
 import { Badge } from './Badge'
 
 export interface UpcomingBadgeProps {
-  isSmall?: boolean
+  isShort?: boolean
   className?: string
 }
 
@@ -13,10 +13,10 @@ export function UpcomingBadge(props: UpcomingBadgeProps) {
     <Badge
       className={cx(props.className)}
       type="gray"
-      title={'The project is not yet deployed on Ethereum Mainnet'}
+      title={'The data for this item is not available yet'}
       oneSize
     >
-      {props.isSmall ? '?' : 'Coming soon'}
+      {props.isShort ? '?' : 'Coming soon'}
     </Badge>
   )
 }

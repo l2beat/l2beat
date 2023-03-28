@@ -264,7 +264,7 @@ export const CANONICAL_USDC: ProjectRiskViewEntry = {
     'USDC transferred is considered canonical as it is the basis of the perpetual protocol on the chain.',
 }
 
-const UPCOMING_RISK: ProjectRiskViewEntry = {
+export const UPCOMING_RISK: ProjectRiskViewEntry = {
   value: '',
   description: 'No information available.',
 }
