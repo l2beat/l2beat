@@ -1,17 +1,26 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
+import { ProjectRiskViewEntry, UPCOMING_RISK } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
 import { Badge } from '../badge/Badge'
+import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { NoInfoCell } from './NoInfoCell'
 
 interface Props {
   item?: ProjectRiskViewEntry
+  isUpcoming?: boolean
 }
 
 export function RiskCell({ item }: Props) {
   if (!item) {
     return <NoInfoCell />
+  }
+
+  if (
+    item.value === UPCOMING_RISK.value &&
+    item.description === UPCOMING_RISK.description
+  ) {
+    return <UpcomingBadge />
   }
 
   return (
