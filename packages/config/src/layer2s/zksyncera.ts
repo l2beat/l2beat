@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -15,14 +16,21 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync2')
 
+const executionDelay = discovery.getContractValue<number>(
+  'ValidatorTimelock',
+  'executionDelay',
+)
+const delay = executionDelay > 0 && formatSeconds(executionDelay)
+
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
   display: {
     name: 'zkSync Era',
     slug: 'zksync-era',
-    warning:
-      'Withdrawals are delayed by 24 h. The length of the delay can be arbitrarily set by a MultiSig.',
+    warning: delay
+      ? `Withdrawals are delayed by ${delay}. The length of the delay can be arbitrarily set by a MultiSig.`
+      : undefined,
     description:
       'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.\
