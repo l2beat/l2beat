@@ -1,11 +1,20 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
-import { CONTRACTS, makeBridgeCompatible, RISK_VIEW } from './common'
+import {
+  CONTRACTS,
+  DATA_AVAILABILITY,
+  EXITS,
+  FORCE_TRANSACTIONS,
+  makeBridgeCompatible,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+} from './common'
 import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
 
+// TODO: get this value from discovery
 const TODO_DELAY = '10 days'
 
 export const polygonzkevm: Layer2 = {
@@ -14,8 +23,7 @@ export const polygonzkevm: Layer2 = {
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
-    warning:
-      'This project is currently undergoing review from our research team.',
+    warning: 'The forced transaction mechanism is currently disabled.',
     description:
       'Polygon zkEVM is aiming to become a decentralized Ethereum Layer 2 scalability solution that uses cryptographic zero-knowledge proofs to offer validity and finality of off-chain transactions. Polygon zkEVM wants to be equivalent with the Ethereum Virtual Machine.',
     purpose: 'Universal',
@@ -46,51 +54,45 @@ export const polygonzkevm: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     //include info that txs are posted, not state diffs
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    // get this value from discovery
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      description:
+        RISK_VIEW.DATA_ON_CHAIN.description +
+        ' Unlike most zk rollups transactions are posted instead of state diffs.',
+    },
     upgradeability: RISK_VIEW.UPGRADE_DELAY(TODO_DELAY),
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
     validatorFailure: {
-      value: 'verifyBatches(...) after delay ',
-      description: `if (
-        sequencedBatches[finalNewBatch].sequencedTimestamp +
-            trustedAggregatorTimeout >
-        block.timestamp
-    )`,
-      //sentiment?: 'warning' | 'bad'
+      value: 'Submit proofs',
+      description:
+        'If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a delay for proving and for finalizing state proven in this way.',
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    // provided there are no bugs in the ZK circuits
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    stateCorrectness: {
-      name: '',
-      description: '',
-      references: [],
-      risks: [],
-    },
-    dataAvailability: {
-      // include info that txs are in DA not state diffs
-      name: '',
-      description: '',
-      references: [],
-      risks: [],
-    },
+    stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
+    dataAvailability: DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
     operator: {
-      name: '',
-      description: '',
+      name: 'The system has a centralized sequencer',
+      description:
+        'Only a trusted sequencer is allowed to submit transaction batches. A mechanism for users to submit their own batches is currently disabled.',
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'the sequencer refuses to include an exit transaction.',
+          isCritical: true,
+        },
+      ],
       references: [],
-      risks: [],
     },
     forceTransactions: {
-      name: '',
-      description: '',
-      references: [],
-      risks: [],
+      ...FORCE_TRANSACTIONS.NO_MECHANISM,
+      description:
+        'The mechanism for allowing users to submit their own transactions is currently disabled.',
     },
-    exitMechanisms: [],
+    exitMechanisms: [EXITS.REGULAR('zk', 'merkle proof')],
     category: 'ZK Rollup',
   },
   permissions: [
@@ -154,40 +156,27 @@ export const polygonzkevm: Layer2 = {
   contracts: {
     addresses: [
       {
-        name: 'PolygonZkEvm',
-        address: discovery.getContract('PolygonZkEvm').address,
+        ...discovery.getMainContractDetails('PolygonZkEvm'),
         description:
           'The main contract of the Polygon zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. This contract receives transaction batches, L2 state roots as well as zk proofs.',
       },
       {
-        name: 'Bridge',
-        address: discovery.getContract('Bridge').address,
+        ...discovery.getMainContractDetails('Bridge'),
         description:
           'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
       },
       {
-        name: 'GlobalExitRoot',
-        address: discovery.getContract('GlobalExitRoot').address,
+        ...discovery.getMainContractDetails('GlobalExitRoot'),
         description:
           'Synchronizes deposit and withdraw merkle trees across L1 and L2. The global root from this contract is injected into the L2 contract.',
       },
-      // {
-      //   name: 'ProxyAdmin',
-      //   address: discovery.getContract('ProxyAdmin').address,
-      //   description: 'TODO: new upgradeability section',
-      // },
-      // {
-      //   name: 'Timelock',
-      //   address: discovery.getContract('Timelock').address,
-      //   description: 'TODO: new upgradeability section',
-      // },
       {
-        name: 'FflonkVerifier',
-        address: discovery.getContract('FflonkVerifier').address,
+        ...discovery.getMainContractDetails('FflonkVerifier'),
         description:
           'An autogenerated contract that verifies zk proofs in the PolygonZkEvm system.',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(TODO_DELAY)],
   },
+  // TODO: new upgradeability section with ProxyAdmin and Timelock
 }

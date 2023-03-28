@@ -45,6 +45,15 @@ export class ProjectDiscovery {
     return JSON.parse(discoveryFile) as ProjectParameters
   }
 
+  getMainContractDetails(identifier: string) {
+    const contract = this.getContract(identifier)
+    return {
+      name: contract.name,
+      address: contract.address,
+      upgradeability: contract.upgradeability,
+    }
+  }
+
   getContract(identifier: string): ContractParameters {
     try {
       identifier = utils.getAddress(identifier)
