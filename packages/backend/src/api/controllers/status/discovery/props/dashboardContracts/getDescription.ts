@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared'
+
 import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
 
 export function getDescription(
@@ -6,5 +7,5 @@ export function getDescription(
   address: EthereumAddress,
   config: DiscoveryConfig,
 ): string | undefined {
-  return config.descriptions?.[address.toString()]?.methods?.[field]
+  return config.descriptions?.[address.toString()]?.methods[field]
 }
