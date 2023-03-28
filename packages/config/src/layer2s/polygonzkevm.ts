@@ -5,6 +5,7 @@ import {
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
+  FRONTRUNNING_RISK,
   makeBridgeCompatible,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -79,6 +80,7 @@ export const polygonzkevm: Layer2 = {
       description:
         'Only a trusted sequencer is allowed to submit transaction batches. A mechanism for users to submit their own batches is currently disabled.',
       risks: [
+        FRONTRUNNING_RISK,
         {
           category: 'Funds can be frozen if',
           text: 'the sequencer refuses to include an exit transaction.',
