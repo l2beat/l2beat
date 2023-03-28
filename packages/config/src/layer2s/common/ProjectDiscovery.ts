@@ -68,6 +68,18 @@ export class ProjectDiscovery {
     return result
   }
 
+  getMultisigStats(contractIdentifier: string) {
+    const threshold = this.getContractValue<number>(
+      contractIdentifier,
+      'getThreshold',
+    )
+    const size = this.getContractValue<string[]>(
+      contractIdentifier,
+      'getOwners',
+    ).length
+    return `${threshold} / ${size}`
+  }
+
   getConstructorArg<T extends ContractValue>(
     contractIdentifier: string,
     index: number,
