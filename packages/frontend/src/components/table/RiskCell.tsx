@@ -1,4 +1,4 @@
-import { ProjectRiskViewEntry, UPCOMING_RISK } from '@l2beat/config'
+import { ProjectRiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
@@ -16,10 +16,7 @@ export function RiskCell({ item }: Props) {
     return <NoInfoCell />
   }
 
-  if (
-    item.value === UPCOMING_RISK.value &&
-    item.description === UPCOMING_RISK.description
-  ) {
+  if (item.value === '' && item.description === 'No information available.') {
     return <UpcomingBadge />
   }
 

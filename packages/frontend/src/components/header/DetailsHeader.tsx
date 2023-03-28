@@ -1,4 +1,3 @@
-import { UPCOMING_RISK } from '@l2beat/config'
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
@@ -87,8 +86,7 @@ function Summary(props: SummaryProps) {
 
   const areAllRisksUpcoming = Object.values(props.risks).every((value) => {
     return (
-      value.value === UPCOMING_RISK.value &&
-      value.description === UPCOMING_RISK.description
+      value.value === '' && value.description === 'No information available.'
     )
   })
   return (

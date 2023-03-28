@@ -1,4 +1,3 @@
-import { UPCOMING_RISK } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
@@ -14,8 +13,7 @@ export function RosetteCell({ riskValues }: RosetteCellProps) {
   const riskSentiments = getRiskSentiments(riskValues)
   const isUpcoming = Object.values(riskValues).every((value) => {
     return (
-      value.value === UPCOMING_RISK.value &&
-      value.description === UPCOMING_RISK.description
+      value.value === '' && value.description === 'No information available.'
     )
   })
   return (
