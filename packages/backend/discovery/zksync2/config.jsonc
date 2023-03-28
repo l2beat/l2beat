@@ -3,12 +3,9 @@
   "name": "zksync2",
   "initialAddresses": [
     "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
-    "0x3dB52cE065f728011Ac6732222270b3F2360d919"
+    "0x32400084C286CF3E17e7B677ea9583e60a000324"
   ],
   "overrides": {
-    "0x3dB52cE065f728011Ac6732222270b3F2360d919": {
-      "ignoreMethods": ["committedBlockTimestamp"]
-    },
     "0x32400084C286CF3E17e7B677ea9583e60a000324": {
       "ignoreMethods": ["l2LogsRootHash", "storedBlockHash"],
       "ignoreInWatchMode": [
@@ -19,7 +16,18 @@
         "getTotalPriorityTxs",
         "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
-      ]
+      ],
+      "fields": {
+        "validators": {
+          "type": "arrayFromOneEvent",
+          "event": "ValidatorStatusUpdate",
+          "valueKey": "validatorAddress",
+          "flagKey": "isActive"
+        }
+      }
+    },
+    "0x3dB52cE065f728011Ac6732222270b3F2360d919": {
+      "ignoreMethods": ["committedBlockTimestamp"]
     },
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
       "ignoreInWatchMode": ["nonce"]
