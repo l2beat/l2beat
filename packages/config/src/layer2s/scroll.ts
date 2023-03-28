@@ -15,15 +15,12 @@ export const scroll: Layer2 = {
     purpose: 'Universal',
     links: {
       websites: ['https://scroll.io'],
-      apps: [
-        'https://scroll.io/alpha/bridge', 
-        'https://uniswap-v3.scroll.io'
-      ],
+      apps: ['https://scroll.io/alpha/bridge', 'https://uniswap-v3.scroll.io'],
       documentation: ['https://guide.scroll.io'],
       explorers: [
-        'https://scroll.io/alpha/rollupscan', 
-        'https://blockscout.scroll.io', 
-        'https://scrollscan-alpha.unifra.io'
+        'https://scroll.io/alpha/rollupscan',
+        'https://blockscout.scroll.io',
+        'https://scrollscan-alpha.unifra.io',
       ],
       repositories: [
         'https://github.com/scroll-tech/zkevm-circuits',
@@ -37,7 +34,6 @@ export const scroll: Layer2 = {
       socialMedia: [
         'https://discord.gg/scroll',
         'https://twitter.com/Scroll_ZKP',
-        'https://www.youtube.com/@Scroll_ZKP'
       ],
     },
   },
