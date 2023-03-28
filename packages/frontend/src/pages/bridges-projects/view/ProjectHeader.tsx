@@ -1,9 +1,9 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
+import { NoDataBadge } from '../../../components/badge/NoDataBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { NoDataCell } from '../../../components/table/NoDataCell'
 import { RiskCell } from '../../../components/table/RiskCell'
 
 export interface ProjectHeaderProps {
@@ -32,7 +32,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
             change={props.tvlWeeklyChange}
           />
         ) : (
-          <NoDataCell />
+          <NoDataBadge />
         ),
     },
     {

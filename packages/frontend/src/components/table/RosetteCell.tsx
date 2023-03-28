@@ -13,7 +13,7 @@ export function RosetteCell({ riskValues }: RosetteCellProps) {
   const riskSentiments = getRiskSentiments(riskValues)
   return (
     <span
-      className="Tooltip"
+      className="Tooltip relative"
       title={renderToStaticMarkup(
         <RosetteTooltipPopup
           riskSentiments={riskSentiments}
