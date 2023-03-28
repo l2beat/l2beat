@@ -31,6 +31,7 @@ export const polygonzkevm: Layer2 = {
         'https://polygon.technology/blog-tags/polygon-zk',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
@@ -40,6 +41,12 @@ export const polygonzkevm: Layer2 = {
         tokens: '*',
       },
     ],
+    transactionApi: {
+      type: 'rpc',
+      startBlock: 1,
+      url: 'https://polygon-rpc.com/zkevm',
+      excludeFromActivityApi: true,
+    },
   },
   riskView: UPCOMING_RISK_VIEW,
   technology: {
