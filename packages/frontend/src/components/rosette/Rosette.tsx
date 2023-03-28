@@ -55,7 +55,7 @@ export function SmallRosette({
       {isUpcoming && (
         <UpcomingBadge
           isSmall={true}
-          className="absolute top-[130px] left-[90px]"
+          className="absolute top-[4px] left-[7px]"
         />
       )}
     </>
