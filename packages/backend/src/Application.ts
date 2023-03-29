@@ -24,16 +24,12 @@ export class Application {
     const logger = new Logger(loggerOptions, logThrottler)
 
     const database = new Database(
-      config.database ? config.database.connection : undefined,
+      config.database.connection,
       config.name,
       logger,
       {
-        minConnectionPoolSize: config.database
-          ? config.database.connectionPoolSize.min
-          : undefined,
-        maxConnectionPoolSize: config.database
-          ? config.database.connectionPoolSize.max
-          : undefined,
+        minConnectionPoolSize: config.database.connectionPoolSize.min,
+        maxConnectionPoolSize: config.database.connectionPoolSize.max,
       },
     )
     const http = new HttpClient()
@@ -50,31 +46,25 @@ export class Application {
       createDiscoveryWatcherModule(config, logger, http, database, clock),
     ]
 
-    const apiServer =
-      config.api &&
-      new ApiServer(
-        config.api.port,
-        logger,
-        modules.flatMap((x) => x?.routers ?? []),
-        handleServerError,
-      )
+    const apiServer = new ApiServer(
+      config.api.port,
+      logger,
+      modules.flatMap((x) => x?.routers ?? []),
+      handleServerError,
+    )
 
     this.start = async () => {
       logger.for(this).info('Starting')
 
-      if (apiServer) {
-        await apiServer.listen()
-      }
+      await apiServer.listen()
 
-      if (config.database) {
-        await database.assertRequiredServerVersion()
-        if (config.database.freshStart) {
-          await database.rollbackAll()
-        }
-        await database.migrateToLatest()
-
-        database.enableQueryLogging()
+      await database.assertRequiredServerVersion()
+      if (config.database.freshStart) {
+        await database.rollbackAll()
       }
+      await database.migrateToLatest()
+
+      database.enableQueryLogging()
 
       for (const module of modules) {
         await module?.start?.()
