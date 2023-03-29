@@ -69,9 +69,9 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
     },
     {
-      name: 'Validator is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
+      name: 'Validator failure',
       tooltip:
-        'What happens if the block producer is offline or decides to censor?',
+        'Validator is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
       getValue: (project) => <RiskCell item={project.validatorFailure} />,
     },
   ]
