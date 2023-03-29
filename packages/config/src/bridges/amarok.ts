@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { CONTRACTS } from '../layer2s/common'
 import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
@@ -47,7 +47,7 @@ export const amarok: Bridge = {
   config: {
     escrows: [
       {
-        address: EthereumAddress('0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6'), // Connext main Diamond contract
+        address: discovery.getContract('ConnextBridge').address,
         sinceTimestamp: new UnixTime(1671625595),
         tokens: ['USDC', 'WETH'],
       },
@@ -99,59 +99,49 @@ export const amarok: Bridge = {
   contracts: {
     addresses: [
       {
-        name: 'Connext Amarok Bridge',
-        address: discovery.getContract('ConnextBridge').address,
+        ...discovery.getMainContractDetails('ConnextBridge'),
         description:
           'The main Connext Amarok contract. Following Diamond design patter, it contains multiple Facets that implement\
         various parts of the bridge functionality.',
-        upgradeability: discovery.getContract('ConnextBridge').upgradeability,
       },
       {
-        name: 'Root Manager',
-        address: discovery.getContract('RootManager').address,
+        ...discovery.getMainContractDetails('RootManager'),
         description:
           'Contract responsible for maintaining list of domains and building root-of-roots of messages. It keeps tracks of all hub connectors that connect to specific domain.',
       },
       {
-        name: 'Watcher Manager',
-        address: discovery.getContract('WatcherManager').address,
+        ...discovery.getMainContractDetails('WatcherManager'),
         description:
           'Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.',
       },
       {
-        name: 'MainnetSpokeConnector',
-        address: discovery.getContract('MainnetSpokeConnector').address,
+        ...discovery.getMainContractDetails('MainnetSpokeConnector'),
         description:
           'Contract that receives messages from other Domains on Ethereum.',
       },
       {
-        name: 'MultichainHubConnector',
-        address: discovery.getContract('MultichainHubConnector').address,
+        ...discovery.getMainContractDetails('MultichainHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Binance Smart Chain via Multichain AMB.',
       },
       {
-        name: 'PolygonHubConnector',
-        address: discovery.getContract('PolygonHubConnector').address,
+        ...discovery.getMainContractDetails('PolygonHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Polygon via Polygon FxChannel AMB.',
       },
       {
-        name: 'GnosisHubConnector',
-        address: discovery.getContract('GnosisHubConnector').address,
+        ...discovery.getMainContractDetails('GnosisHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Gnosis via Gnosis AMB.',
       },
       {
-        name: 'OptimismHubConnector',
-        address: discovery.getContract('OptimismHubConnector').address,
+        ...discovery.getMainContractDetails('OptimismHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Optimism via Optimism AMB transport layer. Note that it reads messages from Optimism\
         as soon as Optimism state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
       },
       {
-        name: 'ArbitrumHubConnector',
-        address: discovery.getContract('ArbitrumHubConnector').address,
+        ...discovery.getMainContractDetails('ArbitrumHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Optimism via Arbitrum AMB transport layer. Note that it reads messages from Arbitrum\
         as soon as Arbitrum state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
@@ -166,9 +156,7 @@ export const amarok: Bridge = {
         '3/3 MultiSig. Owner of the main Connext Amarok Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
       accounts: [
         {
-          address: EthereumAddress(
-            '0x4d50a469fc788a3c0CdC8Fd67868877dCb246625',
-          ),
+          address: discovery.getContract('ConnextBridgeOwner').address,
           type: 'MultiSig',
         },
       ],
@@ -178,106 +166,37 @@ export const amarok: Bridge = {
       description:
         'Permissioned set of actors who can pause certain bridge components. On Ethereum L1 Watchers can pause RootManager and MainnetSpokeConnector, i.e. modules \
         receiving messages. They can also remove connector from the RootManager. List of watchers is maintained by the Connext MultiSig.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x9c77788d761ee0347Ab550883237CeD274a0F248',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xade09131C6f43fe22C2CbABb759636C43cFc181e',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery.getPermissionedAccountsList(
+        'WatcherManager',
+        'WATCHERS',
+      ),
     },
     {
       name: 'Sequencers',
       description:
         'Permissioned set of actors that sequence routers request to forward liquidity.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery.getPermissionedAccountsList(
+        'ConnextBridge',
+        'SEQUENCERS',
+      ),
     },
     {
       name: 'Relayers',
       description:
         'Permissioned set of actors who can perform certain bridge operations.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xaBcC9b596420A9E9172FD5938620E265a0f9Df92',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x43728A95386D64384C76Afd416Dcc8118869BA6c',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery.getPermissionedAccountsList(
+        'ConnextBridge',
+        'RELAYERS',
+      ),
     },
     {
       name: 'Routers',
       description:
         'Permissioned set of actors who can forward liquidity and speed-up message delivery.',
-      accounts: [],
+      accounts: discovery.getPermissionedAccountsList(
+        'ConnextBridge',
+        'ROUTERS',
+      ),
     },
   ],
   riskView: {
