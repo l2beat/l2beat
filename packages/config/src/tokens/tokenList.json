@@ -155,7 +155,7 @@
       "id": "arb-arbitrum",
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
-      "address": "0xb50721bcf8d664c30412cfbc6cf7a15145234ad1",
+      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
       "symbol": "ARB",
       "decimals": 18,
       "sinceTimestamp": 1679572871,
@@ -1178,6 +1178,16 @@
       "symbol": "Metis",
       "decimals": 18,
       "sinceTimestamp": 1607734167,
+      "category": "other"
+    },
+    {
+      "id": "mute-mute.io",
+      "name": "Mute.io",
+      "coingeckoId": "mute",
+      "address": "0xA49d7499271aE71cd8aB9Ac515e6694C755d400c",
+      "symbol": "MUTE",
+      "decimals": 18,
+      "sinceTimestamp": 1611946164,
       "category": "other"
     },
     {

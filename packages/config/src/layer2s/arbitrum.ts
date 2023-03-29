@@ -89,7 +89,7 @@ export const arbitrum: Layer2 = {
       // after the block of the update
       assessCount: (count: number, blockNumber: number) =>
         blockNumber >= 22207818 ? count - 1 : count,
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
+      startBlock: 1,
     },
   },
   riskView: makeBridgeCompatible({
@@ -453,11 +453,10 @@ export const arbitrum: Layer2 = {
   },
   milestones: [
     {
-      name: 'Arbitrum surpasses Ethereum in TPS',
-      link: 'https://twitter.com/arbitrum/status/1628410398058708992',
-      date: '2023-02-21T00:00:00Z',
-      description:
-        'For the first time ever, the daily average TPS of a rollup is higher than Ethereum.',
+      name: 'ARB token airdrop',
+      link: 'https://twitter.com/arbitrum/status/1638888588443111425',
+      date: '2023-03-23T00:00:00Z',
+      description: 'ARB token launched as a governance token for Arbitrum DAO.',
     },
     {
       name: 'Nitro Upgrade',

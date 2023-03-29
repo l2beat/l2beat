@@ -2,11 +2,11 @@ import { Layer2Maturity } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
+import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import { DetailsHeader, Link } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { MaturityBadge } from '../../../components/maturity/Badge'
 import { MaturityTooltipPopup } from '../../../components/maturity/TooltipPopup'
-import { NoDataCell } from '../../../components/table/NoDataCell'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
   TVLBreakdown,
@@ -46,7 +46,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
             change={props.tvlWeeklyChange}
           />
         ) : (
-          <NoDataCell isUpcoming={props.isUpcoming} />
+          <UpcomingBadge />
         ),
     },
     {
@@ -54,7 +54,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       value: !props.isUpcoming ? (
         <TVLBreakdown {...props.tvlBreakdown} />
       ) : (
-        <NoDataCell isUpcoming={props.isUpcoming} />
+        <UpcomingBadge />
       ),
     },
     {
@@ -66,14 +66,12 @@ export function ProjectHeader(props: ProjectHeaderProps) {
             change={props.tpsWeeklyChange}
           />
         ) : (
-          <NoDataCell isUpcoming={props.isUpcoming} />
+          <UpcomingBadge />
         ),
     },
     {
       title: '30D tx count',
-      value: props.transactionMonthlyCount ?? (
-        <NoDataCell isUpcoming={props.isUpcoming} />
-      ),
+      value: props.transactionMonthlyCount ?? <UpcomingBadge />,
     },
     ...(props.maturityEntry
       ? [

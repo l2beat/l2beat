@@ -1,7 +1,7 @@
 import { formatLargeNumber } from './formatLargeNumber'
 
 export function getPercentageChange(now: number, then: number) {
-  if (now === then) {
+  if (now === then || then === 0) {
     return '+0.00%'
   }
   return formatPercent(now / then - 1, true)

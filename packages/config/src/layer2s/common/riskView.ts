@@ -224,7 +224,7 @@ export const VALIDATOR_NO_MECHANISM: ProjectRiskViewEntry = {
 export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
   value: 'No mechanism',
   description:
-    'If the whitelisted validator goes down, no activity including withdrawals can happen. Funds will be frozen.',
+    'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
   sentiment: 'bad',
 }
 
@@ -264,19 +264,19 @@ export const CANONICAL_USDC: ProjectRiskViewEntry = {
     'USDC transferred is considered canonical as it is the basis of the perpetual protocol on the chain.',
 }
 
-const EMPTY: ProjectRiskViewEntry = {
+export const UPCOMING_RISK: ProjectRiskViewEntry = {
   value: '',
   description: 'No information available.',
 }
 
 export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
-  stateValidation: EMPTY,
-  dataAvailability: EMPTY,
-  upgradeability: EMPTY,
-  sequencerFailure: EMPTY,
-  validatorFailure: EMPTY,
-  destinationToken: EMPTY,
-  validatedBy: EMPTY,
+  stateValidation: UPCOMING_RISK,
+  dataAvailability: UPCOMING_RISK,
+  upgradeability: UPCOMING_RISK,
+  sequencerFailure: UPCOMING_RISK,
+  validatorFailure: UPCOMING_RISK,
+  destinationToken: UPCOMING_RISK,
+  validatedBy: UPCOMING_RISK,
 })
 
 export const RISK_VIEW = {
