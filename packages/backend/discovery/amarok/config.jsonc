@@ -1,0 +1,127 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "amarok",
+  "names": {
+    "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6": "ConnextBridge",
+    "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c": "MainnetSpokeConnector",
+    "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6": "WatcherManager",
+    "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE": "PolygonHubConnector",
+    "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1": "RootManager",
+    "0xd151C9ef49cE2d30B829a98A07767E3280F70961": "ArbitrumHubConnector",
+    "0x4a0126Ee88018393b1AD2455060Bc350eAd9908A": "OptimismHubConnector",
+    "0x245F757d660C3ec65416168690431076d58d6413": "GnosisHubConnector",
+    "0xFaf539a73659fEAEC96ec7242f075Be0445526A8": "MultichainHubConnector",
+    "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "RelayTransit",
+    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "ConnextBridgeOwner"
+  },
+  "maxDepth": 9,
+  "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
+  "overrides": {
+    "ConnextBridge": {
+      "fields": {
+        "SEQUENCERS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event SequencerAdded(address sequencer, address caller)",
+          "addKey": "sequencer",
+          "removeEvent": "event SequencerRemoved(address sequencer, address caller)",
+          "removeKey": "sequencer"
+        },
+        "RELAYERS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event RelayerAdded(address relayer, address caller)",
+          "addKey": "relayer",
+          "removeEvent": "event RelayerRemoved(address relayer, address caller)",
+          "removeKey": "relayer"
+        },
+        "ROUTERS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event RouterAdded(address indexed router, address caller)",
+          "addKey": "router",
+          "removeEvent": "event RouterRemoved(address indexed router, address caller)",
+          "removeKey": "router"
+        }
+      },
+      "ignoreInWatchMode": ["nonce", "proposedTimestamp"],
+      "ignoreRelatives": ["lpTokenTargetAddress", "RELAYERS"]
+    },
+    "MainnetSpokeConnector": {
+      "ignoreInWatchMode": [
+        "lastSentBlock",
+        "outboundRoot",
+        "proposedTimestamp",
+        "proposed",
+        "rateLimitBlocks"
+      ]
+    },
+    "WatcherManager": {
+      "fields": {
+        "WATCHERS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event WatcherAdded(address watcher)",
+          "addKey": "watcher",
+          "removeEvent": "event WatcherRemoved(address watcher)",
+          "removeKey": "watcher"
+        }
+      },
+      "ignoreInWatchMode": ["proposedTimestamp", "proposed"]
+    },
+    "RootManager": {
+      "fields": {
+        "connectors": {
+          "type": "array",
+          "method": "connectors",
+          "length": 6
+        },
+        "domains": {
+          "type": "array",
+          "method": "domains",
+          "length": 6
+        }
+      },
+      "ignoreInWatchMode": [
+        "domains",
+        "domainsHash",
+        "getPendingInboundRootsCount",
+        "lastPropagatedRoot",
+        "pendingInboundRoots",
+        "proposedTimestamp",
+        "proposed"
+      ]
+    },
+    "ArbitrumHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "rollup", "outbox"],
+      "ignoreMethods": ["processed"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "PolygonHubConnector": {
+      "ignoreRelatives": [
+        "fxChildTunnel",
+        "mirrorConnector",
+        "ROOT_MANAGER",
+        "checkpointManager",
+        "fxRoot",
+        "AMB"
+      ],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "OptimismHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "GnosisHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "MultichainHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "RelayTransit": {
+      "ignoreRelatives": ["gelato"]
+    },
+    //GelatoRelayerHub
+    "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": {
+      "ignoreDiscovery": true
+    }
+  }
+}

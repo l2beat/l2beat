@@ -18,6 +18,16 @@
       "type": "array",
       "items": { "$ref": "#/$defs/address" }
     },
+    "maxDepth": {
+      "description": "Maximum depth of discovery",
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxAddresses": {
+      "description": "Maximum number of addresses that a discovery script can put on its stack",
+      "type": "integer",
+      "minimum": 0
+    },
     "overrides": {
       "type": "object",
       "description": "Specific configuration for discovered contracts",

@@ -7,8 +7,10 @@ import {
 } from '@l2beat/shared'
 import { utils } from 'ethers'
 import fs from 'fs'
+import { isArray, isString } from 'lodash'
 import path from 'path'
 
+import { ProjectPermissionedAccount } from '../../common'
 import { ProjectUpgradeability } from './../../common/ProjectContracts'
 
 type AllKeys<T> = T extends T ? keyof T : never
@@ -75,6 +77,36 @@ export class ProjectDiscovery {
     )
 
     return result
+  }
+
+  getPermissionedAccountsList(
+    contractIdentifier: string,
+    key: string,
+  ): ProjectPermissionedAccount[] {
+    const value = this.getContractValue(contractIdentifier, key)
+
+    assert(
+      isArray(value),
+      `Value of key ${key} does not exist in ${contractIdentifier} contract (${this.projectName})`,
+    )
+
+    return value.map((account) => {
+      assert(
+        isString(account) && new RegExp('^0x[a-fA-F\\d]{40}$').test(account),
+        `Values of ${key} must be Ethereum addresses`,
+      )
+      const address = EthereumAddress(account)
+      const isEOA = this.discovery.eoas.includes(address)
+      const contract = this.discovery.contracts.find(
+        (contract) => contract.address === address,
+      )
+      const isMultisig = contract?.upgradeability.type === 'gnosis safe'
+
+      const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
+      console.log(address, type)
+
+      return { address: address, type }
+    })
   }
 
   getMultisigStats(contractIdentifier: string) {
