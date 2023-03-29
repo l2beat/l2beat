@@ -13,7 +13,10 @@ import {
   SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('myria')
 
 export const myria: Layer2 = {
   type: 'layer2',
@@ -97,15 +100,13 @@ export const myria: Layer2 = {
   },
   permissions: [
     {
-      name: 'Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245',
-          ),
+      name: 'Governors',
+      accounts: discovery
+        .getContractValue<string[]>('StarkExchange', 'GOVERNORS')
+        .map((governor) => ({
+          address: EthereumAddress(governor),
           type: 'EOA',
-        },
-      ],
+        })),
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
@@ -123,15 +124,13 @@ export const myria: Layer2 = {
         'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
     {
-      name: 'Operator',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xe997ece81cb8A686206ea6042886B594Ecf6DdED',
-          ),
+      name: 'Operators',
+      accounts: discovery
+        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
+        .map((operator) => ({
+          address: EthereumAddress(operator),
           type: 'EOA',
-        },
-      ],
+        })),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },

@@ -1,7 +1,7 @@
 {
   "name": "layer2financezk",
-  "blockNumber": 16154924,
-  "configHash": "0x88596994bdb1f9ccbd8c6d78e3112ca8f4e75dfb6f21c19e347fbc9b075223b2",
+  "blockNumber": 16911198,
+  "configHash": "0xaa8ca66a74dd1a33d0a75b1835729ecdf4734d719f3f9292c9a19da34aff2010",
   "contracts": [
     {
       "name": "Broker",
@@ -57,6 +57,7 @@
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
         "getVaultTreeHeight": 31,
+        "GOVERNORS": [],
         "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -64,6 +65,10 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
+        "OPERATORS": [
+          "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
+        ],
         "orderRegistryAddress": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
@@ -107,13 +112,13 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "callImplementation": "0x522B2871c3918B92c165115d862e50e440905068",
+        "callImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
         "upgradeDelay": 2419200,
         "isFinal": true
       },
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",
-        "callProxyImplementation": "0x522B2871c3918B92c165115d862e50e440905068",
+        "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
         "getUpgradeActivationDelay": 2419200,
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
         "isFrozen": false,
@@ -125,18 +130,18 @@
     },
     {
       "name": "GpsStatementVerifier",
-      "address": "0x522B2871c3918B92c165115d862e50e440905068",
-      "code": "https://etherscan.deth.net/address/0x522B2871c3918B92c165115d862e50e440905068",
+      "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
+      "code": "https://etherscan.deth.net/address/0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
         "getBootloaderConfig": [
-          "211961207453635756308931579519600615486611873783603481462301991964165542501",
-          "748288457286353186729521711023016300332686128124596730496173577358613350710"
+          "2962621603719000361370283216422448934312521782617806945663080079725495842070",
+          "3178097804922730583543126053422762895998573737925004508949311089390705597156"
         ],
         "hasRegisteredFact": true,
-        "identify": "StarkWare_GpsStatementVerifier_2022_5",
+        "identify": "StarkWare_GpsStatementVerifier_2022_7",
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -154,7 +159,11 @@
       }
     }
   ],
-  "eoas": ["0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"],
+  "eoas": [
+    "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+    "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
+    "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
+  ],
   "abis": {
     "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [
       "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",
@@ -323,20 +332,6 @@
       "function registerLimitOrder(address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "function registerMessage(address to, bytes32 messageHash)"
     ],
-    "0x522B2871c3918B92c165115d862e50e440905068": [
-      "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 hashedSupportedCairoVerifiers, uint256 simpleBootloaderProgramHash)",
-      "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
-      "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
-      "function PAGE_INFO_HASH_OFFSET() view returns (uint256)",
-      "function PAGE_INFO_SIZE() view returns (uint256)",
-      "function PAGE_INFO_SIZE_IN_BYTES() view returns (uint256)",
-      "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
-      "function getBootloaderConfig() view returns (uint256, uint256)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
-    ],
     "0x62BCA4DB742A99c834e2c24b609656A70EA25379": [
       "event LogFrozen()",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -374,6 +369,20 @@
       "function removeAvailabilityVerifier(address verifier)",
       "function removeVerifier(address verifier)",
       "function unFreeze()"
+    ],
+    "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": [
+      "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 hashedSupportedCairoVerifiers, uint256 simpleBootloaderProgramHash)",
+      "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
+      "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_HASH_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_SIZE() view returns (uint256)",
+      "function PAGE_INFO_SIZE_IN_BYTES() view returns (uint256)",
+      "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
+      "function getBootloaderConfig() view returns (uint256, uint256)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
     ],
     "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": [
       "constructor(address gpsStatementContract, uint256 programHash_)",

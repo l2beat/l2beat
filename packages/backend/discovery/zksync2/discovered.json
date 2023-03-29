@@ -1,23 +1,8 @@
 {
   "name": "zksync2",
-  "blockNumber": 16905597,
-  "configHash": "0xa3fceaedcea659a0a82dbf2cedf87e41e18eb166bfe285b4f97842003fb7c781",
+  "blockNumber": 16925456,
+  "configHash": "0xfb496fc219f10c0d65fdfdb7a08da91155354783e52d70e9af58ba9cfbba1b58",
   "contracts": [
-    {
-      "name": "ValidatorTimelock",
-      "address": "0x3dB52cE065f728011Ac6732222270b3F2360d919",
-      "code": "https://etherscan.deth.net/address/0x3dB52cE065f728011Ac6732222270b3F2360d919",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "executionDelay": 86400,
-        "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "validator": "0x112200EaA6d57120c86B8b51a8b6049d56B82211",
-        "zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324"
-      }
-    },
     {
       "name": "DiamondProxy",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -129,20 +114,20 @@
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
         "getCurrentProposalId": 3,
-        "getFirstUnprocessedPriorityTx": 6126,
+        "getFirstUnprocessedPriorityTx": 129187,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x010007793a328ef16cc7086708f7f3292ff9b5eed9e7e539c184228f461bf4ef",
         "getL2DefaultAccountBytecodeHash": "0x0100067d861e2f5717a12c3e869cfb657793b86bbb0caa05cc1421f16c5217bc",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 45466,
+        "getPriorityQueueSize": 25220,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 1152,
-        "getTotalBlocksExecuted": 455,
-        "getTotalBlocksVerified": 648,
-        "getTotalPriorityTxs": 51592,
+        "getTotalBlocksCommitted": 3231,
+        "getTotalBlocksExecuted": 2639,
+        "getTotalBlocksVerified": 2999,
+        "getTotalPriorityTxs": 154407,
         "getUpgradeProposalState": 0,
         "getVerifier": "0x473b1887D45D61EfD87731a1D8eC3590b93c565d",
         "getVerifierParams": [
@@ -153,10 +138,28 @@
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x02173a947b6abe3c862ece327df8c3b686365d8d4632d28f5f5711b42c1df87c",
-          1679673455,
+          "0xfc1244388892f995dede81194293ef9895925c687d7add4460a2b479d3b2133e",
+          1679914211,
           0
+        ],
+        "validators": [
+          "0x3dB52cE065f728011Ac6732222270b3F2360d919"
         ]
+      }
+    },
+    {
+      "name": "ValidatorTimelock",
+      "address": "0x3dB52cE065f728011Ac6732222270b3F2360d919",
+      "code": "https://etherscan.deth.net/address/0x3dB52cE065f728011Ac6732222270b3F2360d919",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "executionDelay": 86400,
+        "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "validator": "0x112200EaA6d57120c86B8b51a8b6049d56B82211",
+        "zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       }
     },
     {
@@ -298,18 +301,6 @@
       }
     },
     {
-      "name": "AllowList",
-      "address": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
-      "code": "https://etherscan.deth.net/address/0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-        "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
       "name": "GnosisSafe",
       "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
       "code": "https://etherscan.deth.net/address/0x4e4943346848c4867F81dFb37c4cA9C5715A7828,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -330,8 +321,20 @@
           "0xa265146cA40F52cfC439888D0b4291b5440e6769"
         ],
         "getThreshold": 3,
-        "nonce": 47,
+        "nonce": 48,
         "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "AllowList",
+      "address": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
+      "code": "https://etherscan.deth.net/address/0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
       }
     },
     {

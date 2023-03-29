@@ -100,15 +100,13 @@ export const apex: Layer2 = {
   },
   permissions: [
     {
-      name: 'Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xef75e1199B0599BA823b7770AcE8eb34864a1D55',
-          ),
+      name: 'Governors',
+      accounts: discovery
+        .getContractValue<string[]>('Proxy', 'GOVERNORS')
+        .map((governor) => ({
+          address: EthereumAddress(governor),
           type: 'EOA',
-        },
-      ],
+        })),
       description:
         'Allowed to upgrade the implementation of the StarkPerpetual contract, potentially maliciously gaining control over the system or stealing funds.',
     },
@@ -136,15 +134,13 @@ export const apex: Layer2 = {
       } ApeX MultiSig.`,
     },
     {
-      name: 'Operator',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb',
-          ),
+      name: 'Operators',
+      accounts: discovery
+        .getContractValue<string[]>('Proxy', 'OPERATORS')
+        .map((operator) => ({
+          address: EthereumAddress(operator),
           type: 'EOA',
-        },
-      ],
+        })),
       description:
         'Allowed to update state of the system and verify DA proofs. When Operator is down the state cannot be updated.',
     },
