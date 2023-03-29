@@ -57,7 +57,6 @@ export const polygonzkevm: Layer2 = {
       startBlock: 1,
       url: 'https://polygon-rpc.com/zkevm',
       callsPerMinute: 500,
-      excludeFromActivityApi: true,
     },
   },
   riskView: makeBridgeCompatible({
