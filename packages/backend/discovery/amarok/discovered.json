@@ -1,7 +1,7 @@
 {
   "name": "amarok",
-  "blockNumber": 16932160,
-  "configHash": "0xcc91332d5fbf6f3f6e3d08dc145f18aaed73b98064f6ed17c5336d367c95edab",
+  "blockNumber": 16932330,
+  "configHash": "0x0c353570b242d8c0d7fecf791b0a3bf476c51248f47cb95fd4032db1a6b459dc",
   "contracts": [
     {
       "name": "ConnextBridge",
@@ -316,7 +316,8 @@
         "RESERVE_GAS": 15000,
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
         "watcherManager": "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6"
-      }
+      },
+      "derivedName": "MainnetSpokeConnector"
     },
     {
       "name": "WatcherManager",
@@ -367,15 +368,15 @@
           1634886255
         ],
         "domainsHash": "0xe741ece3f9550e537df05746072d458479dbc21a49fdee7925337f0b7e1a802c",
-        "getPendingInboundRootsCount": 6,
-        "lastPropagatedRoot": "0x4c782801dc4b4a665a56ff4babfd8fa5e9f4c2e1fa924ff22e9973eb71e6baa2",
+        "getPendingInboundRootsCount": 4,
+        "lastPropagatedRoot": "0xfee4c2dbf943eee263f5eb1c2400e395f526a98789a6ceefb5265253c70c53b5",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "pendingInboundRoots": [
-          13262,
-          13267
+          13268,
+          13271
         ],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
@@ -426,13 +427,19 @@
         "type": "immutable"
       },
       "values": {
+        "AMB": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
+        "checkpointManager": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "delay": 604800,
         "DOMAIN": 6648936,
+        "fxChildTunnel": "0x96fDDc1A6FBDb232e9adA1fFc1026799F85128e9",
+        "fxRoot": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
         "MIRROR_DOMAIN": 1886350457,
+        "mirrorConnector": "0x96fDDc1A6FBDb232e9adA1fFc1026799F85128e9",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
+        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
         "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036"
       },
       "derivedName": "PolygonHubConnector"
@@ -445,15 +452,19 @@
         "type": "immutable"
       },
       "values": {
+        "AMB": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "delay": 604800,
         "DOMAIN": 6648936,
         "MIRROR_DOMAIN": 1869640809,
+        "mirrorConnector": "0x32155C9d39084F040Ba17890fE8134dbE2a0453f",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
-        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
-      }
+        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
+        "stateCommitmentChain": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19"
+      },
+      "derivedName": "OptimismHubConnector"
     },
     {
       "name": "GnosisHubConnector",
@@ -463,16 +474,19 @@
         "type": "immutable"
       },
       "values": {
+        "AMB": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
         "delay": 604800,
         "DOMAIN": 6648936,
         "MIRROR_CHAIN_ID": 100,
         "MIRROR_DOMAIN": 6778479,
+        "mirrorConnector": "0x771B2c910D76ecf84B100559CF3Ec4cB2e8D4aC5",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
-      }
+      },
+      "derivedName": "GnosisHubConnector"
     },
     {
       "name": "MultichainHubConnector",
@@ -482,15 +496,18 @@
         "type": "immutable"
       },
       "values": {
+        "AMB": "0xC10Ef9F491C9B59f936957026020C321651ac078",
         "delay": 604800,
         "DOMAIN": 6648936,
         "MIRROR_DOMAIN": 6450786,
+        "mirrorConnector": "0x126A99af70eC62921C07E67943aCF61bF304Ef55",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
-      }
+      },
+      "derivedName": "MultichainHubConnector"
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -501,259 +518,7 @@
       }
     },
     {
-      "name": "RelayTransit",
-      "address": "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
-      "code": "https://etherscan.deth.net/address/0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6"
-      }
-    },
-    {
-      "name": "Gelato",
-      "address": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
-      "code": "https://etherscan.deth.net/address/0x3CACa7b48D0573D793d3b0279b5F0029180E83b6,0xe3cfB4D857B2e9BE6e58146D8Ba41231bF910A7E,0x48Eb9522051B107b2014a7b65f328c9CB39e0f03,0x28FC8F0c47cbD403A43F7Bcf476A55a6405D613e,0x5E1adFc15b76eDFB760691dF1F8a9D797F27CCA7,0x73023E67dA4D8A0705Fa434FC8553837c1FbA03F,0x794bbb7ae4397186C472420F8232a3f06a604f5e,0xd2C453512109f2Cb8f9a27e59F041887E77a4E3A,0x1E96de1C4a3bD866b5D3e9D39004de0c83fc1080,0x307dC9A863c161e12A3Da117828E0D973740Be3b",
-      "upgradeability": {
-        "type": "EIP2535 diamond proxy",
-        "facets": [
-          "0xe3cfB4D857B2e9BE6e58146D8Ba41231bF910A7E",
-          "0x48Eb9522051B107b2014a7b65f328c9CB39e0f03",
-          "0x28FC8F0c47cbD403A43F7Bcf476A55a6405D613e",
-          "0x5E1adFc15b76eDFB760691dF1F8a9D797F27CCA7",
-          "0x73023E67dA4D8A0705Fa434FC8553837c1FbA03F",
-          "0x794bbb7ae4397186C472420F8232a3f06a604f5e",
-          "0xd2C453512109f2Cb8f9a27e59F041887E77a4E3A",
-          "0x1E96de1C4a3bD866b5D3e9D39004de0c83fc1080",
-          "0x307dC9A863c161e12A3Da117828E0D973740Be3b"
-        ]
-      },
-      "values": {
-        "bundleExecutors": [],
-        "checkerSigners": [
-          "0xcBEaC8A60F00D5B969C99D8976E40A5E4a7a150F",
-          "0x549F9cEee0FeCEe98E04bc520620184Ae9B2e045",
-          "0xc6248B440790d5aD8EBa118FB11c6B2EA818eA85"
-        ],
-        "DOMAIN_SEPARATOR": "0x3098d9775af50671b6368081fbbd5f2bfbe79464d511a9309dc80938556d4dc2",
-        "executors": [
-          "0x3D529c760F3EC4c89Bdd6549DDabE9097C1da6e9",
-          "0x32118e0E825e0292a5bAffbec7d874e3Eb749E0C",
-          "0xEBa8F39400fA84B4EF73A6056aE36d3d25C6fd86",
-          "0x76B07A4D982982565abd3736c1FFE40B56fd66B3",
-          "0xf1beA24376329E01c7c10A00a6A7329591168CF9"
-        ],
-        "executorSigners": [
-          "0x3D529c760F3EC4c89Bdd6549DDabE9097C1da6e9",
-          "0xEBa8F39400fA84B4EF73A6056aE36d3d25C6fd86",
-          "0x76B07A4D982982565abd3736c1FFE40B56fd66B3",
-          "0x32118e0E825e0292a5bAffbec7d874e3Eb749E0C",
-          "0xf1beA24376329E01c7c10A00a6A7329591168CF9"
-        ],
-        "facetAddresses": [
-          "0xe3cfB4D857B2e9BE6e58146D8Ba41231bF910A7E",
-          "0x48Eb9522051B107b2014a7b65f328c9CB39e0f03",
-          "0x28FC8F0c47cbD403A43F7Bcf476A55a6405D613e",
-          "0x5E1adFc15b76eDFB760691dF1F8a9D797F27CCA7",
-          "0x73023E67dA4D8A0705Fa434FC8553837c1FbA03F",
-          "0x794bbb7ae4397186C472420F8232a3f06a604f5e",
-          "0xd2C453512109f2Cb8f9a27e59F041887E77a4E3A",
-          "0x1E96de1C4a3bD866b5D3e9D39004de0c83fc1080",
-          "0x307dC9A863c161e12A3Da117828E0D973740Be3b"
-        ],
-        "facets": [
-          [
-            "0xe3cfB4D857B2e9BE6e58146D8Ba41231bF910A7E",
-            [
-              "0x1f931c1c"
-            ]
-          ],
-          [
-            "0x48Eb9522051B107b2014a7b65f328c9CB39e0f03",
-            [
-              "0xcdffacc6",
-              "0x52ef6b2c",
-              "0xadfca15e",
-              "0x7a0ed627",
-              "0x01ffc9a7"
-            ]
-          ],
-          [
-            "0x28FC8F0c47cbD403A43F7Bcf476A55a6405D613e",
-            [
-              "0x8da5cb5b",
-              "0xf2fde38b"
-            ]
-          ],
-          [
-            "0x5E1adFc15b76eDFB760691dF1F8a9D797F27CCA7",
-            [
-              "0xd807c58b",
-              "0x9a8f05ac",
-              "0x3d21c94e",
-              "0x0a1d34de",
-              "0x0f4901f0",
-              "0xaeff94bd",
-              "0xbcdfb2a6",
-              "0x8c40060f",
-              "0x3b96abfe",
-              "0xfb2422f3"
-            ]
-          ],
-          [
-            "0x73023E67dA4D8A0705Fa434FC8553837c1FbA03F",
-            [
-              "0xb87b0b4c"
-            ]
-          ],
-          [
-            "0x794bbb7ae4397186C472420F8232a3f06a604f5e",
-            [
-              "0xbeabacc8"
-            ]
-          ],
-          [
-            "0xd2C453512109f2Cb8f9a27e59F041887E77a4E3A",
-            [
-              "0x1ecd9cd8",
-              "0xafda35cb",
-              "0xe52e63c5",
-              "0xdebfda30",
-              "0x1499e05b",
-              "0xdc09c3e4"
-            ]
-          ],
-          [
-            "0x1E96de1C4a3bD866b5D3e9D39004de0c83fc1080",
-            [
-              "0x143aebca",
-              "0x454b5d05",
-              "0x8830bb87",
-              "0x489a095c",
-              "0x156a08d9"
-            ]
-          ],
-          [
-            "0x307dC9A863c161e12A3Da117828E0D973740Be3b",
-            [
-              "0x3644e515",
-              "0x83ec3077",
-              "0x544dd395",
-              "0x46e356b1",
-              "0x4522589f",
-              "0x0a4806ce",
-              "0xcd2cf366",
-              "0xc415b95c",
-              "0x06fdde03",
-              "0x67c62fe0",
-              "0xf111786a",
-              "0x1c367bc3",
-              "0x54fd4d50"
-            ]
-          ]
-        ],
-        "feeCollector": "0x3AC05161b76a35c1c28dC99Aa01BEd7B24cEA3bf",
-        "MESSAGE_FEE_COLLECTOR_TYPEHASH": "0x15ea0da85861618c9ae40705639b53a47a369c0b4b55741da2aa0f79d3235d9d",
-        "MESSAGE_RELAY_CONTEXT_TYPEHASH": "0xdeafacdf5224fb9ef6c15396bde676d97f8f72cc4bee754b9a0803d446f86215",
-        "MESSAGE_TYPEHASH": "0x87c50c7b9f488d9b1e7b606f3c7542bfe124c63d17647448f2261b53dfa9b976",
-        "name": "ExecWithSigsFacet",
-        "numberOfBundleExecutors": 0,
-        "numberOfCheckerSigners": 3,
-        "numberOfExecutors": 5,
-        "numberOfExecutorSigners": 5,
-        "owner": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
-        "version": "1"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
-      "code": "https://etherscan.deth.net/address/0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0x51fa071b746fb575ec1d78e1903334d2c675f19b8d2d07b7f66038bef3686401",
-        "getChainId": 1,
-        "getOwners": [
-          "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-          "0xebD4919C075417a86F19713dADe101852867A04F",
-          "0x5aA748326f03C651749E7998D88647e59Ee386Bc",
-          "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
-          "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
-          "0x6fd2072B961aCC9bd6e188f957a0FB1CEb8632dc",
-          "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e",
-          "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
-          "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "0x40b46a6C2DEFdCFC1b6Cfb667CD0c024F1FfBBA9",
-          "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
-          "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895",
-          "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
-          "0xDB3eCB5c323D743252e205bCb36eDFaa6D868c01"
-        ],
-        "getThreshold": 6,
-        "nonce": 152,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "FeeCollector",
-      "address": "0x3AC05161b76a35c1c28dC99Aa01BEd7B24cEA3bf",
-      "code": "https://etherscan.deth.net/address/0x3AC05161b76a35c1c28dC99Aa01BEd7B24cEA3bf,0xcCB20AA0413ea73C50142F1CFf461b07f5ae5e48",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xcCB20AA0413ea73C50142F1CFf461b07f5ae5e48",
-        "admin": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
-      },
-      "values": {
-        "owner": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
-      }
-    },
-    {
-      "name": "RelayTransit",
-      "address": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007",
-      "code": "https://etherscan.deth.net/address/0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007,0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
-        "admin": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9"
-      },
-      "values": {
-        "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
-        "owner": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9"
-      }
-    },
-    {
-      "name": "Relay",
-      "address": "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
-      "code": "https://etherscan.deth.net/address/0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-        "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
-        "paymentToken": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-      }
-    },
-    {
-      "name": "GelatoRelay",
-      "address": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
-      "code": "https://etherscan.deth.net/address/0xaBcC9b596420A9E9172FD5938620E265a0f9Df92,0xe20a2c705bFa7BA81CA3a00EB54C4F496c1e1f77",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xe20a2c705bFa7BA81CA3a00EB54C4F496c1e1f77",
-        "admin": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
-      },
-      "values": {
-        "gelato": "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
-        "owner": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
-      }
-    },
-    {
-      "name": "GnosisSafe",
+      "name": "ConnextBridgeOwner",
       "address": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
       "code": "https://etherscan.deth.net/address/0x4d50a469fc788a3c0CdC8Fd67868877dCb246625,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -771,73 +536,30 @@
         "getThreshold": 3,
         "nonce": 7,
         "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "LPToken",
-      "address": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
-      "code": "https://etherscan.deth.net/address/0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
-      "upgradeability": {
-        "type": "immutable"
       },
-      "values": {
-        "decimals": 18,
-        "name": "Nxtp Stable LP Token",
-        "owner": "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
-        "symbol": "NxtpStableLPToken",
-        "totalSupply": 0
-      }
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
-    "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
     "0x048a5EcC705C280b2248aefF88fd581AbbEB8587",
-    "0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2",
     "0x0e62f9fa1F9b3E49759Dc94494F5bC37a83d1FAD",
-    "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
-    "0x32118e0E825e0292a5bAffbec7d874e3Eb749E0C",
     "0x32D63da9F776891843C90787CEC54ADA23ABd4C2",
     "0x33b2aD85f7DbA818e719FB52095dC768E0eD93ec",
-    "0x3D529c760F3EC4c89Bdd6549DDabE9097C1da6e9",
-    "0x40b46a6C2DEFdCFC1b6Cfb667CD0c024F1FfBBA9",
-    "0x43728A95386D64384C76Afd416Dcc8118869BA6c",
     "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
     "0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7",
-    "0x549F9cEee0FeCEe98E04bc520620184Ae9B2e045",
     "0x58507fed0Cb11723dFb6848c92C59Cf0BBEB9927",
-    "0x5aA748326f03C651749E7998D88647e59Ee386Bc",
-    "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6",
     "0x63Cda9C42db542bb91a7175E38673cFb00D402b0",
     "0x6892d4D1f73A65B03063B7d78174dC6350Fcc406",
-    "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
-    "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
-    "0x6fd2072B961aCC9bd6e188f957a0FB1CEb8632dc",
     "0x6FD84ba95525c4cCd218F2f16F646A08B4b0a598",
-    "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
-    "0x76B07A4D982982565abd3736c1FFE40B56fd66B3",
     "0x7ce49752fFA7055622f444df3c69598748cb2E5f",
     "0x8cb19CE8EEDF740389D428879a876A3B030B9170",
-    "0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47",
     "0x975574980a5Da77f5C90bC92431835D91B73669e",
     "0x97b9dcB1AA34fE5F12b728D9166ae353d1e7f5C4",
     "0x9c77788d761ee0347Ab550883237CeD274a0F248",
     "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f",
-    "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895",
     "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
-    "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
     "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
-    "0xc6248B440790d5aD8EBa118FB11c6B2EA818eA85",
-    "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
-    "0xcBEaC8A60F00D5B969C99D8976E40A5E4a7a150F",
-    "0xDB3eCB5c323D743252e205bCb36eDFaa6D868c01",
-    "0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE",
-    "0xEBa8F39400fA84B4EF73A6056aE36d3d25C6fd86",
-    "0xebD4919C075417a86F19713dADe101852867A04F",
-    "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e",
-    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-    "0xf1beA24376329E01c7c10A00a6A7329591168CF9",
     "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c",
-    "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
     "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
     "0xFaAB88015477493cFAa5DFAA533099C590876F21"
   ],
@@ -972,13 +694,6 @@
       "function xcall(uint32 _destination, address _to, address _asset, address _delegate, uint256 _amount, uint256 _slippage, bytes _callData) payable returns (bytes32)",
       "function xcallIntoLocal(uint32 _destination, address _to, address _asset, address _delegate, uint256 _amount, uint256 _slippage, bytes _callData) payable returns (bytes32)"
     ],
-    "0x1E96de1C4a3bD866b5D3e9D39004de0c83fc1080": [
-      "function addBundleExecutors(address[] _bundleExecutors)",
-      "function bundleExecutors() view returns (address[])",
-      "function isBundleExecutor(address _bundleExecutor) view returns (bool)",
-      "function numberOfBundleExecutors() view returns (uint256)",
-      "function removeBundleExecutors(address[] _bundleExecutors)"
-    ],
     "0x245F757d660C3ec65416168690431076d58d6413": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _gasCap, uint256 _mirrorChainId)",
       "error Connector__processMessage_notUsed()",
@@ -1020,30 +735,6 @@
     "0x28A9e7bbed277092E2431F186E1aF898962d4E92": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
-    "0x28FC8F0c47cbD403A43F7Bcf476A55a6405D613e": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function owner() view returns (address owner_)",
-      "function transferOwnership(address _newOwner)"
-    ],
-    "0x307dC9A863c161e12A3Da117828E0D973740Be3b": [
-      "constructor(address _feeCollector)",
-      "event LogExecWithSigs(bytes32 correlationId, tuple(address service, bytes data, uint256 salt, uint256 deadline) msg, address indexed executorSigner, address indexed checkerSigner, uint256 estimatedGasUsed, address sender)",
-      "event LogExecWithSigsFeeCollector(bytes32 correlationId, tuple(address service, bytes data, uint256 salt, uint256 deadline, address feeToken) msg, address indexed executorSigner, address indexed checkerSigner, uint256 observedFee, uint256 estimatedGasUsed, address sender)",
-      "event LogExecWithSigsRelayContext(bytes32 correlationId, tuple(address service, bytes data, uint256 salt, uint256 deadline, address feeToken, uint256 fee) msg, address indexed executorSigner, address indexed checkerSigner, uint256 observedFee, uint256 estimatedGasUsed, address sender)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function MESSAGE_FEE_COLLECTOR_TYPEHASH() view returns (bytes32)",
-      "function MESSAGE_RELAY_CONTEXT_TYPEHASH() view returns (bytes32)",
-      "function MESSAGE_TYPEHASH() view returns (bytes32)",
-      "function execWithSigs(tuple(bytes32 correlationId, tuple(address service, bytes data, uint256 salt, uint256 deadline) msg, bytes executorSignerSig, bytes checkerSignerSig) _call) returns (uint256 estimatedGasUsed)",
-      "function execWithSigsFeeCollector(tuple(bytes32 correlationId, tuple(address service, bytes data, uint256 salt, uint256 deadline, address feeToken) msg, bytes executorSignerSig, bytes checkerSignerSig) _call) returns (uint256 estimatedGasUsed, uint256 observedFee)",
-      "function execWithSigsRelayContext(tuple(bytes32 correlationId, tuple(address service, bytes data, uint256 salt, uint256 deadline, address feeToken, uint256 fee) msg, bytes executorSignerSig, bytes checkerSignerSig) _call) returns (uint256 estimatedGasUsed, uint256 observedFee)",
-      "function feeCollector() view returns (address)",
-      "function name() view returns (string)",
-      "function simulateExecWithSigs(address _service, bytes _data)",
-      "function simulateExecWithSigsFeeCollector(address _service, bytes _data, address _feeToken)",
-      "function simulateExecWithSigsRelayContext(address _service, bytes _data, address _feeToken, uint256 _fee)",
-      "function version() view returns (string)"
-    ],
     "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b": [
       "event DiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
       "event DiamondCutProposed(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata, uint256 deadline)",
@@ -1053,33 +744,12 @@
       "function proposeDiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
       "function rescindDiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)"
     ],
-    "0x3AC05161b76a35c1c28dC99Aa01BEd7B24cEA3bf": [
-      "constructor(address implementationAddress, address ownerAddress, bytes data) payable",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ProxyImplementationUpdated(address indexed previousImplementation, address indexed newImplementation)",
-      "function owner() view returns (address)",
-      "function supportsInterface(bytes4 id) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x3Bcf4185443A339517aD4e580067f178d1B68E1D": [
       "function facetAddress(bytes4 _functionSelector) view returns (address facetAddress_)",
       "function facetAddresses() view returns (address[] facetAddresses_)",
       "function facetFunctionSelectors(address _facet) view returns (bytes4[] facetFunctionSelectors_)",
       "function facets() view returns (tuple(address facetAddress, bytes4[] functionSelectors)[] facets_)",
       "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
-    ],
-    "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6": [
-      "constructor(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, tuple(address owner) _args) payable"
-    ],
-    "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9": [
-      "constructor(address _gelato)",
-      "function ETH() view returns (address)",
-      "function exec(address _dest, bytes _data, uint256 _desiredFee, address _token)",
-      "function gelato() view returns (address)",
-      "function paymentToken() view returns (address)",
-      "function sufficientFee(address _dest, bytes _data, uint256 _desiredFee, address _token) returns (bool canExec, uint256 receivedFee, uint256 desiredFeee)"
     ],
     "0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4": [
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
@@ -1095,13 +765,6 @@
       "error DiamondInit__init_alreadyInitialized()",
       "error DiamondInit__init_domainsDontMatch()",
       "function init(uint32 _domain, address _xAppConnectionManager, uint256 _acceptanceDelay, address _lpTokenTargetAddress)"
-    ],
-    "0x48Eb9522051B107b2014a7b65f328c9CB39e0f03": [
-      "function facetAddress(bytes4 _functionSelector) view returns (address facetAddress_)",
-      "function facetAddresses() view returns (address[] facetAddresses_)",
-      "function facetFunctionSelectors(address _facet) view returns (bytes4[] facetFunctionSelectors_)",
-      "function facets() view returns (tuple(address facetAddress, bytes4[] functionSelectors)[] facets_)",
-      "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
     ],
     "0x4a0126Ee88018393b1AD2455060Bc350eAd9908A": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, address _stateCommitmentChain, uint256 _gasCap)",
@@ -1171,18 +834,6 @@
       "event Receive(uint64 indexed originAndNonce, address indexed token, address indexed recipient, address liquidityProvider, uint256 amount)",
       "event Reconciled(bytes32 indexed transferId, uint32 indexed originDomain, address indexed local, address[] routers, uint256 amount, address caller)",
       "function handle(uint32 _origin, uint32 _nonce, bytes32 _sender, bytes _message)"
-    ],
-    "0x5E1adFc15b76eDFB760691dF1F8a9D797F27CCA7": [
-      "function addCheckerSigners(address[] checkerSigners_)",
-      "function addExecutorSigners(address[] executorSigners_)",
-      "function checkerSigners() view returns (address[])",
-      "function executorSigners() view returns (address[])",
-      "function isCheckerSigner(address checkerSigner_) view returns (bool)",
-      "function isExecutorSigner(address _executorSigner) view returns (bool)",
-      "function numberOfCheckerSigners() view returns (uint256)",
-      "function numberOfExecutorSigners() view returns (uint256)",
-      "function removeCheckerSigners(address[] checkerSigners_)",
-      "function removeExecutorSigners(address[] executorSigners_)"
     ],
     "0x6369F971fd1f1f230B8584151Ed7747FF710Cc68": [
       "error AssetLogic__handleOutgoingAsset_notNative()",
@@ -1257,13 +908,6 @@
       "function removeWatcher(address _watcher)",
       "function renounceOwnership()",
       "function renounced() view returns (bool)"
-    ],
-    "0x73023E67dA4D8A0705Fa434FC8553837c1FbA03F": [
-      "event LogExecSuccess(address indexed executor, address indexed service, address creditToken, uint256 credit, uint256 gasDebitInCreditToken, uint256 gasDebitInNativeToken)",
-      "function exec(address _service, bytes _data, address _creditToken) returns (uint256 credit, uint256 gasDebitInNativeToken, uint256 gasDebitInCreditToken, uint256 estimatedGasUsed)"
-    ],
-    "0x794bbb7ae4397186C472420F8232a3f06a604f5e": [
-      "function transfer(address _token, address _recipient, uint256 _amount)"
     ],
     "0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352": [
       "error AssetLogic__getConfig_notRegistered()",
@@ -1348,26 +992,6 @@
       "function swap(bytes32 key, uint8 tokenIndexFrom, uint8 tokenIndexTo, uint256 dx, uint256 minDy, uint256 deadline) returns (uint256)",
       "function swapExact(bytes32 key, uint256 amountIn, address assetIn, address assetOut, uint256 minAmountOut, uint256 deadline) returns (uint256)",
       "function swapExactOut(bytes32 key, uint256 amountOut, address assetIn, address assetOut, uint256 maxAmountIn, uint256 deadline) returns (uint256)"
-    ],
-    "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007": [
-      "constructor(address implementationAddress, address ownerAddress, bytes data) payable",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ProxyImplementationUpdated(address indexed previousImplementation, address indexed newImplementation)",
-      "function owner() view returns (address)",
-      "function supportsInterface(bytes4 id) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92": [
-      "constructor(address implementationAddress, address ownerAddress, bytes data) payable",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ProxyImplementationUpdated(address indexed previousImplementation, address indexed newImplementation)",
-      "function owner() view returns (address)",
-      "function supportsInterface(bytes4 id) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, address _checkPointManager)",
@@ -1486,9 +1110,6 @@
       "function unapproveRouter(address _router)",
       "function unapproveRouterForPortal(address _router)"
     ],
-    "0xcCB20AA0413ea73C50142F1CFf461b07f5ae5e48": [
-      "function transfer(address _token, address _recipient, uint256 _amount)"
-    ],
     "0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769": [
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
       "error BaseConnextFacet__getApprovedCanonicalId_notAllowlisted()",
@@ -1562,14 +1183,6 @@
       "function setMaxSubmissionCostCap(uint256 _updated)",
       "function setMirrorConnector(address _mirrorConnector)",
       "function verifySender(address _expected) returns (bool)"
-    ],
-    "0xd2C453512109f2Cb8f9a27e59F041887E77a4E3A": [
-      "function addExecutors(address[] _executors)",
-      "function canExec(address _executor) view returns (bool)",
-      "function executors() view returns (address[])",
-      "function isExecutor(address _executor) view returns (bool)",
-      "function numberOfExecutors() view returns (uint256)",
-      "function removeExecutors(address[] _executors)"
     ],
     "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1": [
       "constructor(uint256 _delayBlocks, address _merkle, address _watcherManager)",
@@ -1681,16 +1294,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xe20a2c705bFa7BA81CA3a00EB54C4F496c1e1f77": [
-      "constructor(address _gelato)",
-      "event LogCallWithSyncFee(address indexed target, address feeToken, uint256 fee, bytes32 taskId)",
-      "event LogCallWithSyncFeeV2(address indexed target, bytes32 indexed correlationId)",
-      "event LogUseGelato1Balance(address indexed sponsor, address indexed target, address indexed feeToken, uint256 oneBalanceChainId, uint256 nativeToFeeTokenXRateNumerator, uint256 nativeToFeeTokenXRateDenominator, bytes32 correlationId)",
-      "function callWithSyncFee(address _target, bytes _data, address _feeToken, uint256 _fee, bytes32 _taskId)",
-      "function callWithSyncFeeV2(address _target, bytes _data, bool _isRelayContext, bytes32 _correlationId)",
-      "function gelato() view returns (address)",
-      "function sponsoredCall(tuple(uint256 chainId, address target, bytes data) _call, address _sponsor, address _feeToken, uint256 _oneBalanceChainId, uint256 _nativeToFeeTokenXRateNumerator, uint256 _nativeToFeeTokenXRateDenominator, bytes32 _correlationId)"
-    ],
     "0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81": [
       "error AssetLogic__getConfig_notRegistered()",
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
@@ -1743,19 +1346,6 @@
       "function setupAssetWithDeployedRepresentation(tuple(uint32 domain, bytes32 id) _canonical, address _representation, address _adoptedAssetId, address _stableSwapPool) returns (address)",
       "function updateDetails(tuple(uint32 domain, bytes32 id) _canonical, string _name, string _symbol)",
       "function updateLiquidityCap(tuple(uint32 domain, bytes32 id) _canonical, uint256 _updated)"
-    ],
-    "0xe3cfB4D857B2e9BE6e58146D8Ba41231bF910A7E": [
-      "event DiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
-      "function diamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)"
-    ],
-    "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": [
-      "constructor(address _gelato)",
-      "event LogExecSuccess(bytes32 indexed _taskId)",
-      "function execTransit(address _dest, bytes _data, uint256 _minFee, address _token, bytes32 _taskId)",
-      "function gelato() view returns (address)"
-    ],
-    "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b": [
-      "constructor(address _masterCopy)"
     ],
     "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _processGas, uint256 _reserveGas, uint256 _delayBlocks, address _merkle, address _watcherManager)",
@@ -1841,29 +1431,6 @@
       "function verifySender(address _expected) returns (bool)",
       "function watcherManager() view returns (address)",
       "function withdrawFunds(address _to)"
-    ],
-    "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092": [
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burnFrom(address account, uint256 amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initialize(string name, string symbol) returns (bool)",
-      "function mint(address recipient, uint256 amount)",
-      "function name() view returns (string)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function transferOwnership(address newOwner)"
     ],
     "0xFaf539a73659fEAEC96ec7242f075Be0445526A8": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _mirrorChainId, uint256 _gasCap)",
