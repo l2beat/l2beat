@@ -7,7 +7,6 @@ import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiscoveryWatcherModule } from './modules/discoveryWatcher/DiscoveryWatcherModule'
 import { createHealthModule } from './modules/health/HealthModule'
-import { createInversionModule } from './modules/inversion/InversionModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
 import { Database } from './peripherals/database/shared/Database'
@@ -49,7 +48,6 @@ export class Application {
       createTvlModule(config, logger, http, database, clock),
       createActivityModule(config, logger, http, database, clock),
       createDiscoveryWatcherModule(config, logger, http, database, clock),
-      createInversionModule(config, logger),
     ]
 
     const apiServer =

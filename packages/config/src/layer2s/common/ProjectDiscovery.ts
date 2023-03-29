@@ -135,7 +135,7 @@ export class ProjectDiscovery {
       `Found more than one contracts of ${name} name (${this.projectName})`,
     )
     assert(
-      contracts.length !== 1,
+      contracts.length === 1,
       `Found no contract of ${name} name (${this.projectName})`,
     )
 

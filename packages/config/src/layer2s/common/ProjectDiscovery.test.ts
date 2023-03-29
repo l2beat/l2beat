@@ -38,15 +38,15 @@ describe(ProjectDiscovery.name, () => {
       const name = 'randomContract'
 
       expect(() => discovery.getContract(name)).toThrow(
-        `Assertion Error: Found more than one contracts or no contract of ${name} name found (${projectName})`,
+        `Assertion Error: Found no contract of ${name} name (${projectName})`,
       )
     })
 
     it('should throw an error if there is more than one contract with given name', () => {
-      const name = 'PaymentExitGame'
+      const name = 'DuplicatedNameContractMock'
 
       expect(() => discovery.getContract(name)).toThrow(
-        `Assertion Error: Found more than one contracts or no contract of ${name} name found (${projectName})`,
+        `Assertion Error: Found more than one contracts of ${name} name (${projectName})`,
       )
     })
   })
