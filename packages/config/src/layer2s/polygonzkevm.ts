@@ -45,6 +45,7 @@ export const polygonzkevm: Layer2 = {
       type: 'rpc',
       startBlock: 1,
       url: 'https://polygon-rpc.com/zkevm',
+      callsPerMinute: 500,
       excludeFromActivityApi: true,
     },
   },
