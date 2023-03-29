@@ -12,8 +12,8 @@ export interface Config {
   readonly logThrottler: LogThrottlerConfig | false
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
-  readonly database: DatabaseConfig | false
-  readonly api: ApiConfig | false
+  readonly database: DatabaseConfig
+  readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false

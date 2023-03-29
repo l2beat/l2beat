@@ -14,14 +14,9 @@ export function getLocalConfig(cli: CliParameters): Config {
     throw new Error(`No local config for mode: ${cli.mode}`)
   }
 
-  const apiEnabled = cli.mode === 'server'
-  const databaseEnabled = cli.mode === 'server'
-  const tvlEnabled =
-    cli.mode === 'server' && getEnv.boolean('TVL_SYNC_ENABLED', true)
-  const activityEnabled =
-    cli.mode === 'server' && getEnv.boolean('ACTIVITY_ENABLED', false)
-  const discoveryWatcherEnabled =
-    cli.mode === 'server' && getEnv.boolean('WATCHMODE_ENABLED', false)
+  const tvlEnabled = getEnv.boolean('TVL_SYNC_ENABLED', true)
+  const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)
+  const discoveryWatcherEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     !!process.env.DISCORD_TOKEN &&
     !!process.env.PUBLIC_DISCORD_CHANNEL_ID &&
@@ -41,7 +36,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       safeTimeOffsetSeconds: 60 * 60,
     },
-    database: databaseEnabled && {
+    database: {
       connection: getEnv('LOCAL_DB_URL'),
       freshStart: getEnv.boolean('FRESH_START', false),
       connectionPoolSize: {
@@ -50,7 +45,7 @@ export function getLocalConfig(cli: CliParameters): Config {
         max: 10,
       },
     },
-    api: apiEnabled && {
+    api: {
       port: getEnv.integer('PORT', 3000),
     },
     metricsAuth: false,
