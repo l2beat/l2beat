@@ -40,20 +40,20 @@ export function getDashboardContracts(
   config: DiscoveryConfig,
 ): DashboardContract[] {
   const result = discovery.contracts.map((contract) =>
-    getContract(contract, discovery, config),
+    getContract(discovery, config, contract),
   )
 
   return result
 }
 
 function getContract(
-  contract: ContractParameters,
   discovery: ProjectParameters,
   config: DiscoveryConfig,
+  contract: ContractParameters,
 ) {
   const isInitial = config.initialAddresses.includes(contract.address)
-  const discoveredBy = getDiscoveredBy(contract, discovery, config)
-  const upgradeabilityParams = getUpgradeabilityParams(contract, discovery)
+  const discoveredBy = getDiscoveredBy(discovery, config, contract)
+  const upgradeabilityParams = getUpgradeabilityParams(discovery, contract)
   const description =
     config.descriptions?.[contract.address.toString()]?.description
 
@@ -73,20 +73,20 @@ function getContract(
   const viewABI = getViewABI(contract, discovery.abis)
 
   const ignoreInWatchMode = getIgnoreInWatchMode(
-    contract,
     discovery,
     config,
+    contract,
     viewABI,
   )
-  const ignoreMethods = getIgnoredMethods(contract, config, viewABI)
-  const watched = getWatched(contract, discovery, config, viewABI)
+  const ignoreMethods = getIgnoredMethods(config, contract, viewABI)
+  const watched = getWatched(discovery, config, contract, viewABI)
   const notHandled = getNotHandled(
+    config,
+    contract.address,
     viewABI,
     ignoreInWatchMode,
     ignoreMethods,
     watched,
-    contract.address,
-    config,
   )
 
   return {
@@ -106,12 +106,12 @@ function getContract(
 }
 
 function getNotHandled(
+  config: DiscoveryConfig,
+  address: EthereumAddress,
   viewABI: ethers.utils.Interface,
   ignoreInWatchMode: DashboardContractField[] | undefined,
   ignoreMethods: DashboardContractField[] | undefined,
   watched: DashboardContractField[] | undefined,
-  address: EthereumAddress,
-  config: DiscoveryConfig,
 ): DashboardContractField[] | undefined {
   const handled = (ignoreInWatchMode ?? [])
     .map((field) => field.name)
@@ -122,7 +122,7 @@ function getNotHandled(
     .filter((field) => !handled.includes(field))
     .map((name) => ({
       name,
-      description: getDescription(name, address, config),
+      description: getDescription(config, address, name),
     }))
 
   return notHandled

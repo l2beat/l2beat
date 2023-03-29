@@ -3,8 +3,8 @@ import { ContractParameters } from '@l2beat/shared'
 import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
 
 export function getOverrides(
-  contract: ContractParameters,
   config: DiscoveryConfig,
+  contract: ContractParameters,
 ) {
   let overrides = undefined
   if (config.overrides?.[contract.address.toString()]) {
