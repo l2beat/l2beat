@@ -25,4 +25,13 @@ export const DiscoveryConfig = z.object({
   names: z.optional(
     z.record(z.string().refine(EthereumAddress.check), z.string()),
   ),
+  descriptions: z.optional(
+    z.record(
+      z.string(),
+      z.object({
+        description: z.string(),
+        methods: z.record(z.string(), z.string()),
+      }),
+    ),
+  ),
 })

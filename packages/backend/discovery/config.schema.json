@@ -67,6 +67,31 @@
           "type": "string"
         }
       }
+    },
+    "descriptions": {
+      "type": "object",
+      "description": "Description for contracts and their methods",
+      "unevaluatedProperties": false,
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "unevaluatedProperties": false,
+          "patternProperties": {
+            "description": {
+              "type": "string"
+            },
+            "methods": {
+              "type": "object",
+              "unevaluatedProperties": false,
+              "patternProperties": {
+                "^.+$": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "$defs": {

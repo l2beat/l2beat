@@ -20,6 +20,8 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 - `"$schema": "../config.schema.json"`
 - `name` - name of the project
 - `initialAddresses: address[]` - array of addresses that discovery will start from. Discovery will download the contract ABI, read all the available values, and walk through all the contracts found there (`maxDepth` defaults to 7). By default, discovery checks only `view` or `constant` methods with no arguments or with exactly one argument of `uint256` (array). To check other functions you'll need to write custom handlers (see `overrides`). Sometimes the most central address is enough here, but in case of a more complex implementation, you will need to add more to cover all important contracts. Usually 3 addresses here is enough.
+- `names: Record<address, string>` - (optional) key-value object, with addresses as keys. It will allow you to override the name of the contract in discovery (ex. `Bridge` instead of `Bridge_v1`)
+- `descriptions: Record<address, object>` - (optional) key-value object, with addresses as keys. It will allow you to add descriptions to the contract and its fields (ex. `Bridge` contract with `field_a` field)
 - `overrides: Record<address, object>` - (optional) key-value object, with contracts as keys. It will allow you to ignore contracts in discovery (ex. token addresses or external contracts) or, override more complex fields and methods ([storage](#storage-handler) and [array](#array-handler) handlers).
 
 **Example:**
@@ -29,8 +31,12 @@ A file `discovered.json` will appear in this folder, showing you this project's 
   "$schema": "../config.schema.json"
   name: "project_a",
   initialAddresses: ["0x1234", "0x5678"],
+  names: {
+    "0x1234": "Bridge",
+    "0x5678": "Rollup"
+  },
   overrides: {
-    "0x1234": {
+    "Bridge": {
       fields: {
         field_a: {
           type: "storage",
@@ -40,8 +46,17 @@ A file `discovered.json` will appear in this folder, showing you this project's 
       ignoreMethods: ["method_a", "method_b"],
       ignoreInWatchMode: ["method_c"]
     },
-    "0xabcd": {
+    "Rollup": {
       ignoreDiscovery: true
+    }
+  },
+  descriptions: {
+    "Bridge": {
+      "description": "This is a Bridge contract",
+      "field_a": "This is a field"
+    },
+    "Rollup": {
+      "description": "This is a Rollup contract",
     }
   }
 }

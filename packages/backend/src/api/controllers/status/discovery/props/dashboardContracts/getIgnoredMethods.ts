@@ -3,11 +3,12 @@ import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
 import { DashboardContractField } from '../utils/getValues'
+import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
 
 export function getIgnoredMethods(
-  contract: ContractParameters,
   config: DiscoveryConfig,
+  contract: ContractParameters,
   viewABI: ethers.utils.Interface,
 ) {
   let ignoreMethods: DashboardContractField[] | undefined = undefined
@@ -16,7 +17,8 @@ export function getIgnoredMethods(
     if (override.ignoreMethods) {
       ignoreMethods = override.ignoreMethods.map((field) => {
         return {
-          name: getFieldName(field, viewABI),
+          name: getFieldName(viewABI, field),
+          description: getDescription(config, contract.address, field),
         }
       })
     }
