@@ -26,7 +26,7 @@ export function Footer(props: FooterProps) {
         )}
       >
         <p className="text-center text-sm font-medium md:text-left">
-          Made with ❤️ by the L2BEAT research team.{' '}
+          Made with 💗 by the L2BEAT research team.{' '}
           <br className="hidden lg:inline" />
           Support us by{' '}
           <a className="text-link underline" href="/donate">

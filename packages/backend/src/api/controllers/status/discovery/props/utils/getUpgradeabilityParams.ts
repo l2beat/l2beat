@@ -5,8 +5,8 @@ import { getDiscoveryChild } from './getDiscoveryChild'
 import { DashboardContractField } from './getValues'
 
 export function getUpgradeabilityParams(
-  contract: ContractParameters,
   discovery: ProjectParameters,
+  contract: ContractParameters,
 ): DashboardContractField[] {
   const result: DashboardContractField[] = []
 

@@ -7,10 +7,10 @@ import {
 export function getDiscoveryChild(
   discovery: ProjectParameters,
   contract: ContractParameters,
-  v: ContractValue,
+  value: ContractValue,
 ): string | undefined {
   const discoveryChild = discovery.contracts.find(
-    (c) => c.address.toString() === v,
+    (c) => c.address.toString() === value,
   )
 
   if (

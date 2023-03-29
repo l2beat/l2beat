@@ -27,22 +27,29 @@ export const nova: Layer2 = {
       'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
     purpose: 'Universal',
     links: {
-      websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
+      websites: [
+        'https://nova.arbitrum.io/',
+        'https://arbitrum.io/',
+        'https://arbitrum.foundation/',
+      ],
       apps: [],
       documentation: [
-        'https://developer.offchainlabs.com/',
-        'https://github.com/OffchainLabs/nitro/blob/master/docs/inside_anytrust.md',
+        'https://developer.arbitrum.io/',
+        'https://developer.arbitrum.io/inside-arbitrum-nitro/#inside-anytrust',
       ],
       explorers: [
         'https://nova.arbiscan.io/',
-        'https://a4ba-explorer.arbitrum.io/',
+        'https://nova-explorer.arbitrum.io/',
       ],
-      repositories: ['https://github.com/OffchainLabs/nitro'],
+      repositories: [
+        'https://github.com/ArbitrumFoundation/docs',
+        'https://github.com/ArbitrumFoundation/governance',
+        'https://github.com/OffchainLabs/nitro',
+      ],
       socialMedia: [
-        'https://twitter.com/OffchainLabs',
         'https://twitter.com/arbitrum',
-        'https://medium.com/offchainlabs',
-        'https://discord.gg/5KE54JwyTs',
+        'https://arbitrumfoundation.medium.com/',
+        'https://discord.gg/Arbitrum',
       ],
     },
     activityDataSource: 'Blockchain RPC',

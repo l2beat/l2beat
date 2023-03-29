@@ -105,7 +105,9 @@ describe('discovery config.jsonc', () => {
     }
     assert(
       outdatedHashes.length === 0,
-      'Following projects have outdated hashes. Run "yarn discover <config.name>',
+      `Following projects have outdated hashes: ${outdatedHashes.join(
+        ',',
+      )}. Run yarn discover <outdatedProjectName>`,
     )
   })
 

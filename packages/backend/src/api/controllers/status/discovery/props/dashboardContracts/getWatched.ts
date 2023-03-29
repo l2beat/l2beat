@@ -3,19 +3,20 @@ import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
 import { DashboardContractField, getValues } from '../utils/getValues'
+import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
 
 export function getWatched(
-  contract: ContractParameters,
   discovery: ProjectParameters,
   config: DiscoveryConfig,
+  contract: ContractParameters,
   viewABI: ethers.utils.Interface,
 ) {
   const values =
     discovery.contracts.find((c) => c.address === contract.address)?.values ??
     undefined
 
-  const ignoreInWatchMode = getIgnoreInWatchMode(contract, config)
+  const ignoreInWatchMode = getIgnoreInWatchMode(config, contract)
 
   let watched: DashboardContractField[] | undefined = undefined
   if (values) {
@@ -28,8 +29,9 @@ export function getWatched(
       })
       .map((field) => {
         return {
-          name: getFieldName(field, viewABI),
+          name: getFieldName(viewABI, field),
           values: getValues(discovery, contract, field),
+          description: getDescription(config, contract.address, field),
         }
       })
   }
@@ -37,8 +39,8 @@ export function getWatched(
 }
 
 function getIgnoreInWatchMode(
-  contract: ContractParameters,
   config: DiscoveryConfig,
+  contract: ContractParameters,
 ) {
   if (
     !config.overrides ||
