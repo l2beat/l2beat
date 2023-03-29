@@ -13,7 +13,10 @@ import {
   SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('deversifi')
 
 export const rhinofi: Layer2 = {
   type: 'layer2',
@@ -110,66 +113,25 @@ export const rhinofi: Layer2 = {
   },
   permissions: [
     {
-      name: 'Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA',
-          ),
+      name: 'Governors',
+      accounts: discovery
+        .getContractValue<string[]>('Proxy', 'GOVERNORS')
+        .map((governor) => ({
+          address: EthereumAddress(governor),
           type: 'EOA',
-        },
-      ],
+        })),
       description:
         'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
     {
       name: 'Data Availability Committee',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xf872Cf881873029B8955b582c29b66347f3f1326',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'Validity proof must be signed by at least 4 of these addresses to approve state update.',
+      accounts: discovery
+        .getConstructorArg<string[]>('Committee', 0)
+        .map((a) => ({ address: EthereumAddress(a), type: 'EOA' })),
+      description: `Validity proof must be signed by at least ${discovery.getConstructorArg<string>(
+        'Committee',
+        1,
+      )} of these addresses to approve state update.`,
     },
     {
       name: 'SHARP Verifier Governor',
@@ -185,15 +147,13 @@ export const rhinofi: Layer2 = {
         'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
     {
-      name: 'Operator',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5',
-          ),
+      name: 'Operators',
+      accounts: discovery
+        .getContractValue<string[]>('Proxy', 'OPERATORS')
+        .map((operator) => ({
+          address: EthereumAddress(operator),
           type: 'EOA',
-        },
-      ],
+        })),
       description:
         'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
     },

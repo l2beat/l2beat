@@ -11,6 +11,11 @@ export interface RosetteCellProps {
 
 export function RosetteCell({ riskValues }: RosetteCellProps) {
   const riskSentiments = getRiskSentiments(riskValues)
+  const isUpcoming = Object.values(riskValues).every((value) => {
+    return (
+      value.value === '' && value.description === 'No information available.'
+    )
+  })
   return (
     <span
       className="Tooltip"
@@ -22,7 +27,11 @@ export function RosetteCell({ riskValues }: RosetteCellProps) {
       )}
       data-tooltip-big
     >
-      <SmallRosette risks={riskSentiments} className="h-6 w-6 md:h-8 md:w-8" />
+      <SmallRosette
+        risks={riskSentiments}
+        className="h-6 w-6 md:h-8 md:w-8"
+        isUpcoming={isUpcoming}
+      />
     </span>
   )
 }

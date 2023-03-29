@@ -102,6 +102,13 @@ export const UPGRADABLE_ARBITRUM: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
+export const UPGRADABLE_POLYGON_ZKEVM: ProjectRiskViewEntry = {
+  value: '10d or no delay',
+  description:
+    'There is a 10 days delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.',
+  sentiment: 'warning',
+}
+
 export function UPGRADE_DELAY(delay: string): ProjectRiskViewEntry {
   return {
     value: `${delay} delay`,
@@ -264,19 +271,19 @@ export const CANONICAL_USDC: ProjectRiskViewEntry = {
     'USDC transferred is considered canonical as it is the basis of the perpetual protocol on the chain.',
 }
 
-const EMPTY: ProjectRiskViewEntry = {
+export const UPCOMING_RISK: ProjectRiskViewEntry = {
   value: '',
   description: 'No information available.',
 }
 
 export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
-  stateValidation: EMPTY,
-  dataAvailability: EMPTY,
-  upgradeability: EMPTY,
-  sequencerFailure: EMPTY,
-  validatorFailure: EMPTY,
-  destinationToken: EMPTY,
-  validatedBy: EMPTY,
+  stateValidation: UPCOMING_RISK,
+  dataAvailability: UPCOMING_RISK,
+  upgradeability: UPCOMING_RISK,
+  sequencerFailure: UPCOMING_RISK,
+  validatorFailure: UPCOMING_RISK,
+  destinationToken: UPCOMING_RISK,
+  validatedBy: UPCOMING_RISK,
 })
 
 export const RISK_VIEW = {
@@ -293,6 +300,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL,
   UPGRADABLE_YES,
   UPGRADABLE_ARBITRUM,
+  UPGRADABLE_POLYGON_ZKEVM,
   UPGRADE_DELAY,
   UPGRADABLE_NO,
   SEQUENCER_TRANSACT_L1,
