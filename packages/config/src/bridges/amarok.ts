@@ -90,7 +90,7 @@ export const amarok: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'Connectors to optimistic rollups (Optimism, Arbitrum) receive a fraudulent message within 7-day fraud-proof window.',
+          text: 'connectors to optimistic rollups (Optimism, Arbitrum) receive a fraudulent message within 7-day fraud-proof window.',
           isCritical: true,
         },
       ],

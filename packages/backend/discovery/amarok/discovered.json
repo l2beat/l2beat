@@ -1,7 +1,7 @@
 {
   "name": "amarok",
-  "blockNumber": 16899398,
-  "configHash": "0x56dfd9721da8e20412e57485872fc3fbfb520a50755d43fa937d0c04b40396af",
+  "blockNumber": 16932160,
+  "configHash": "0xcc91332d5fbf6f3f6e3d08dc145f18aaed73b98064f6ed17c5336d367c95edab",
   "contracts": [
     {
       "name": "ConnextBridge",
@@ -243,7 +243,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 3264,
+        "nonce": 3599,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -300,12 +300,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 16899336,
+        "lastSentBlock": 16932107,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0x72129fdb54f776776271de7450cae407acc8a77bf94e211479b36655c7357551",
+        "outboundRoot": "0x89e579a5ffc125dd92f14fc92ac6a9db3bb4c1a4fa8fdfa018bf0f3017f7aa43",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -367,15 +367,15 @@
           1634886255
         ],
         "domainsHash": "0xe741ece3f9550e537df05746072d458479dbc21a49fdee7925337f0b7e1a802c",
-        "getPendingInboundRootsCount": 3,
-        "lastPropagatedRoot": "0x74dcfa77255cd0255425cf4151d6280b2a32e1794da3496ae23292b07231709a",
+        "getPendingInboundRootsCount": 6,
+        "lastPropagatedRoot": "0x4c782801dc4b4a665a56ff4babfd8fa5e9f4c2e1fa924ff22e9973eb71e6baa2",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "pendingInboundRoots": [
-          12485,
-          12487
+          13262,
+          13267
         ],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
