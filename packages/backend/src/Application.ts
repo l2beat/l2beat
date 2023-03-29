@@ -5,7 +5,6 @@ import { Config } from './config'
 import { Clock } from './core/Clock'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
-import { createDiscoveryModule } from './modules/discovery/DiscoveryModule'
 import { createDiscoveryWatcherModule } from './modules/discoveryWatcher/DiscoveryWatcherModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createInversionModule } from './modules/inversion/InversionModule'
@@ -49,7 +48,6 @@ export class Application {
       createMetricsModule(config),
       createTvlModule(config, logger, http, database, clock),
       createActivityModule(config, logger, http, database, clock),
-      createDiscoveryModule(config, logger, http),
       createDiscoveryWatcherModule(config, logger, http, database, clock),
       createInversionModule(config, logger),
     ]
