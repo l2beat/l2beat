@@ -97,6 +97,10 @@ export function getLocalConfig(cli: CliParameters): Config {
           callsPerMinute: 60,
           url: getEnv('ACTIVITY_ARBITRUM_URL', 'https://arb1.arbitrum.io/rpc'),
         },
+        zksync2: {
+          type: 'rpc',
+          callsPerMinute: 60,
+        },
       },
     },
     discovery: discoveryEnabled && {

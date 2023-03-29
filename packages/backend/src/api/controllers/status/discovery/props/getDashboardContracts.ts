@@ -7,6 +7,7 @@ import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../core/discovery/DiscoveryConfig'
 import { abiToArray } from './dashboardContracts/abiToArray'
+import { getDescription } from './dashboardContracts/getDescription'
 import {
   DiscoveredByInfo,
   getDiscoveredBy,
@@ -21,6 +22,7 @@ import { DashboardContractField } from './utils/getValues'
 export interface DashboardContract {
   name: string
   derivedName?: string
+  description?: string
   address: EthereumAddress
   isInitial?: boolean
   discoveredBy: DiscoveredByInfo[]
@@ -38,24 +40,27 @@ export function getDashboardContracts(
   config: DiscoveryConfig,
 ): DashboardContract[] {
   const result = discovery.contracts.map((contract) =>
-    getContract(contract, discovery, config),
+    getContract(discovery, config, contract),
   )
 
   return result
 }
 
 function getContract(
-  contract: ContractParameters,
   discovery: ProjectParameters,
   config: DiscoveryConfig,
+  contract: ContractParameters,
 ) {
   const isInitial = config.initialAddresses.includes(contract.address)
-  const discoveredBy = getDiscoveredBy(contract, discovery, config)
-  const upgradeabilityParams = getUpgradeabilityParams(contract, discovery)
+  const discoveredBy = getDiscoveredBy(discovery, config, contract)
+  const upgradeabilityParams = getUpgradeabilityParams(discovery, contract)
+  const description =
+    config.descriptions?.[contract.address.toString()]?.description
 
   if (contract.unverified) {
     return {
       name: contract.name,
+      description,
       derivedName: contract.derivedName,
       address: contract.address,
       isInitial,
@@ -68,14 +73,16 @@ function getContract(
   const viewABI = getViewABI(contract, discovery.abis)
 
   const ignoreInWatchMode = getIgnoreInWatchMode(
-    contract,
     discovery,
     config,
+    contract,
     viewABI,
   )
-  const ignoreMethods = getIgnoredMethods(contract, config, viewABI)
-  const watched = getWatched(contract, discovery, config, viewABI)
+  const ignoreMethods = getIgnoredMethods(config, contract, viewABI)
+  const watched = getWatched(discovery, config, contract, viewABI)
   const notHandled = getNotHandled(
+    config,
+    contract.address,
     viewABI,
     ignoreInWatchMode,
     ignoreMethods,
@@ -84,6 +91,7 @@ function getContract(
 
   return {
     name: contract.name,
+    description,
     derivedName: contract.derivedName,
     address: contract.address,
     upgradeabilityParams,
@@ -98,6 +106,8 @@ function getContract(
 }
 
 function getNotHandled(
+  config: DiscoveryConfig,
+  address: EthereumAddress,
   viewABI: ethers.utils.Interface,
   ignoreInWatchMode: DashboardContractField[] | undefined,
   ignoreMethods: DashboardContractField[] | undefined,
@@ -110,7 +120,10 @@ function getNotHandled(
 
   const notHandled = abiToArray(viewABI)
     .filter((field) => !handled.includes(field))
-    .map((name) => ({ name }))
+    .map((name) => ({
+      name,
+      description: getDescription(config, address, name),
+    }))
 
   return notHandled
 }

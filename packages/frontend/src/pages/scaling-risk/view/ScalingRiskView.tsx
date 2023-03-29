@@ -64,13 +64,14 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
     },
     {
       name: 'Sequencer failure',
-      tooltip: 'What happens if the sequencer is offline or decides to censor?',
+      tooltip:
+        "Sequencer is an entity responsible for constructing L2 blocks and deciding on the ordering of user's L2 transactions. What happens if it is offline ?",
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
     },
     {
       name: 'Validator failure',
       tooltip:
-        'What happens if the block producer is offline or decides to censor?',
+        'Validator is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
       getValue: (project) => <RiskCell item={project.validatorFailure} />,
     },
   ]

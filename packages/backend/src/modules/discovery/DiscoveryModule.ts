@@ -12,6 +12,7 @@ export function createDiscoveryModule(
   http: HttpClient,
 ): ApplicationModule | undefined {
   if (!config.discovery) {
+    logger.info('Discovery module disabled')
     return
   }
 

@@ -8,9 +8,9 @@ export interface DiscoveredByInfo {
 }
 
 export function getDiscoveredBy(
-  contract: ContractParameters,
   discovery: ProjectParameters,
   config: DiscoveryConfig,
+  contract: ContractParameters,
 ): DiscoveredByInfo[] {
   const discoveredBy: DiscoveredByInfo[] = []
   for (const discoveredContract of discovery.contracts) {

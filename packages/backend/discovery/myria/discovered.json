@@ -1,0 +1,71 @@
+{
+  "name": "myria",
+  "blockNumber": 16912422,
+  "configHash": "0xc9aaea2ba7d634b16289cf6dccb127ed006b01dd1910e3edd2ea7f7ec2a73dcb",
+  "contracts": [
+    {
+      "name": "StarkExchange",
+      "address": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
+      "code": "https://etherscan.deth.net/address/0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7,0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+      "upgradeability": {
+        "type": "StarkWare proxy",
+        "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+        "upgradeDelay": 1209600,
+        "isFinal": false
+      },
+      "values": {
+        "getUpgradeActivationDelay": 1209600,
+        "GOVERNORS": [
+          "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245"
+        ],
+        "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+        "isNotFinalized": true,
+        "OPERATORS": [
+          "0xe997ece81cb8A686206ea6042886B594Ecf6DdED"
+        ],
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.1",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "VERSION": "4.5.1"
+      }
+    }
+  ],
+  "eoas": [
+    "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
+    "0xe997ece81cb8A686206ea6042886B594Ecf6DdED"
+  ],
+  "abis": {
+    "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address testGovernor) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": [
+      "function VERSION() view returns (string)",
+      "function getSubContract(bytes4 selector) view returns (address)",
+      "function handlingContractId(bytes4 selector) pure returns (string id)",
+      "function initialize(bytes data)"
+    ]
+  }
+}

@@ -16,6 +16,7 @@ import { Layer2 } from './types'
 export const hermez: Layer2 = {
   type: 'layer2',
   id: ProjectId('hermez'),
+  isArchived: true,
   display: {
     name: 'Polygon Hermez',
     slug: 'hermez',

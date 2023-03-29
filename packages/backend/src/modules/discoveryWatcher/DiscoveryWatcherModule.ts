@@ -20,6 +20,7 @@ export function createDiscoveryWatcherModule(
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.discoveryWatcher) {
+    logger.info('Discovery Watcher module disabled')
     return
   }
 
