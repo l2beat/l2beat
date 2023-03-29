@@ -13,7 +13,10 @@ import {
   SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('sorare')
 
 export const sorare: Layer2 = {
   type: 'layer2',
@@ -99,15 +102,13 @@ export const sorare: Layer2 = {
   },
   permissions: [
     {
-      name: 'Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x5918481F777dBe437De249492B90AffB4e655de4',
-          ),
+      name: 'Governors',
+      accounts: discovery
+        .getContractValue<string[]>('StarkExchange', 'GOVERNORS')
+        .map((governor) => ({
+          address: EthereumAddress(governor),
           type: 'EOA',
-        },
-      ],
+        })),
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
@@ -156,15 +157,13 @@ export const sorare: Layer2 = {
         'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
     {
-      name: 'Operator',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x63881ac44293E22F3c3183a0C4113586ABb3e653',
-          ),
+      name: 'Operators',
+      accounts: discovery
+        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
+        .map((operator) => ({
+          address: EthereumAddress(operator),
           type: 'EOA',
-        },
-      ],
+        })),
       description:
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
     },

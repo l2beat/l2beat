@@ -1,26 +1,10 @@
 {
   "$schema": "../config.schema.json",
-  "name": "layer2financezk",
-  "initialAddresses": ["0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5"],
+  "name": "myria",
+  "initialAddresses": ["0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"],
   "overrides": {
-    "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": {
-      "ignoreMethods": [
-        "actualPrices",
-        "prices",
-        "rideDeparted",
-        "rideInfos",
-        "ridesShares",
-        "slippages"
-      ]
-    },
-    "0x82123571C8a5e0910280C066bc634c4945FFcbC8": {
-      "ignoreMethods": [
-        "getEthKey",
-        "getQuantum",
-        "identify",
-        "initializerSize",
-        "isAssetRegistered"
-      ],
+    // Main Rollup contract
+    "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7": {
       "fields": {
         "GOVERNORS": {
           "type": "arrayFromTwoEvents",
