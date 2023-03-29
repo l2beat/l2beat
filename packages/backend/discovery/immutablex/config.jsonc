@@ -1,26 +1,16 @@
 {
   "$schema": "../config.schema.json",
-  "name": "layer2financezk",
-  "initialAddresses": ["0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5"],
+  "name": "immutablex",
+  "initialAddresses": ["0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"],
   "overrides": {
-    "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": {
-      "ignoreMethods": [
-        "actualPrices",
-        "prices",
-        "rideDeparted",
-        "rideInfos",
-        "ridesShares",
-        "slippages"
-      ]
+    "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
     },
-    "0x82123571C8a5e0910280C066bc634c4945FFcbC8": {
-      "ignoreMethods": [
-        "getEthKey",
-        "getQuantum",
-        "identify",
-        "initializerSize",
-        "isAssetRegistered"
-      ],
+    "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": {
       "fields": {
         "GOVERNORS": {
           "type": "arrayFromTwoEvents",

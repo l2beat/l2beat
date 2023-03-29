@@ -7,8 +7,8 @@ import {
 } from '../../utils/risks/color'
 import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { getRiskSentiments } from '../../utils/risks/values'
+import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { Icon } from '../icons/Icon'
-import { NoDataCell } from '../table/NoDataCell'
 
 export interface RosetteProps {
   risks: RiskSentiments
@@ -16,7 +16,10 @@ export interface RosetteProps {
   className?: string
 }
 
-export function SmallRosette({ risks, className }: RosetteProps) {
+export function SmallRosette({ risks, className, isUpcoming }: RosetteProps) {
+  if (isUpcoming) {
+    return <UpcomingBadge className={className} isShort={true} />
+  }
   return (
     <Icon
       width="31"
@@ -204,10 +207,7 @@ function BigRosetteIcon({ risks, className, isUpcoming }: RosetteProps) {
         />
       </Icon>
       {isUpcoming && (
-        <NoDataCell
-          isUpcoming={isUpcoming}
-          className="absolute top-[130px] left-[90px]"
-        />
+        <UpcomingBadge className="absolute top-[130px] left-[90px]" />
       )}
     </>
   )

@@ -1,6 +1,6 @@
 import { ProjectRisk, ProjectTechnologyChoice } from '../../common'
 
-const FRONTRUNNING_RISK: ProjectRisk = {
+export const FRONTRUNNING_RISK: ProjectRisk = {
   category: 'MEV can be extracted if',
   text: 'the operator exploits their centralized position and frontruns user transactions.',
 }

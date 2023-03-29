@@ -1,26 +1,10 @@
 {
   "$schema": "../config.schema.json",
-  "name": "layer2financezk",
-  "initialAddresses": ["0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5"],
+  "name": "sorare",
+  "initialAddresses": ["0xF5C9F957705bea56a7e806943f98F7777B995826"],
   "overrides": {
-    "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": {
-      "ignoreMethods": [
-        "actualPrices",
-        "prices",
-        "rideDeparted",
-        "rideInfos",
-        "ridesShares",
-        "slippages"
-      ]
-    },
-    "0x82123571C8a5e0910280C066bc634c4945FFcbC8": {
-      "ignoreMethods": [
-        "getEthKey",
-        "getQuantum",
-        "identify",
-        "initializerSize",
-        "isAssetRegistered"
-      ],
+    // Main Rollup contract
+    "0xF5C9F957705bea56a7e806943f98F7777B995826": {
       "fields": {
         "GOVERNORS": {
           "type": "arrayFromTwoEvents",
