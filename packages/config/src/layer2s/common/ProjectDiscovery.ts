@@ -45,6 +45,15 @@ export class ProjectDiscovery {
     return JSON.parse(discoveryFile) as ProjectParameters
   }
 
+  getMainContractDetails(identifier: string) {
+    const contract = this.getContract(identifier)
+    return {
+      name: contract.name,
+      address: contract.address,
+      upgradeability: contract.upgradeability,
+    }
+  }
+
   getContract(identifier: string): ContractParameters {
     try {
       identifier = utils.getAddress(identifier)
@@ -66,6 +75,18 @@ export class ProjectDiscovery {
     )
 
     return result
+  }
+
+  getMultisigStats(contractIdentifier: string) {
+    const threshold = this.getContractValue<number>(
+      contractIdentifier,
+      'getThreshold',
+    )
+    const size = this.getContractValue<string[]>(
+      contractIdentifier,
+      'getOwners',
+    ).length
+    return `${threshold} / ${size}`
   }
 
   getConstructorArg<T extends ContractValue>(
