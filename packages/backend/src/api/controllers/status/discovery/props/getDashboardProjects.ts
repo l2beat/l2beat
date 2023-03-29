@@ -1,5 +1,6 @@
 import { ConfigReader } from '../../../../../core/discovery/ConfigReader'
 import { getDashboardContracts } from './getDashboardContracts'
+
 export interface DashboardProject {
   name: string
   discoveredCount?: number
