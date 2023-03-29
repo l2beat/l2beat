@@ -57,7 +57,6 @@ export const polygonzkevm: Layer2 = {
       startBlock: 1,
       url: 'https://polygon-rpc.com/zkevm',
       callsPerMinute: 500,
-      excludeFromActivityApi: true,
     },
   },
   riskView: makeBridgeCompatible({
@@ -69,7 +68,8 @@ export const polygonzkevm: Layer2 = {
         RISK_VIEW.DATA_ON_CHAIN.description +
         ' Unlike most zk rollups transactions are posted instead of state diffs.',
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY(TODO_DELAY),
+    upgradeability: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM,
+    // TODO: get delay time (10 days) from config
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
     validatorFailure: {
@@ -116,7 +116,7 @@ export const polygonzkevm: Layer2 = {
       ],
       description: `Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. It is a ${discovery.getMultisigStats(
         'AdminMultisig',
-      )} multisig. They can also upgrade the PolygonZkEvm contracts, but are restricted by a ${TODO_DELAY} delay.`,
+      )} multisig. They can also upgrade the PolygonZkEvm contracts, but are restricted by a ${TODO_DELAY} delay unless rollup is put in the Emergency State.`,
     },
     {
       name: 'Sequencer',
