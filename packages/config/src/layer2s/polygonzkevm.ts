@@ -201,7 +201,7 @@ export const polygonzkevm: Layer2 = {
       name: 'Polygon zkEVM Mainnet Beta is Live',
       link: 'https://polygon.technology/blog/polygon-zkevm-mainnet-beta-is-live?utm_source=twitter&utm_medium=social&utm_campaign=zkevm-launch&utm_term=mainnet-beta-live&utm_content=blog',
       date: '2023-03-27T00:00:00Z',
-      description: 'Polygon zkEVM public beta launched',
+      description: 'Polygon zkEVM public beta launched.',
     },
   ],
 }
