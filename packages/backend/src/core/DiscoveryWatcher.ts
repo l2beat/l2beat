@@ -6,7 +6,7 @@ import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/Di
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
-import { DiscoveryConfig, DiscoveryContract } from './discovery/DiscoveryConfig'
+import { DiscoveryConfig } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
