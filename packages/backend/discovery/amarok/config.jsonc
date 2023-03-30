@@ -85,7 +85,11 @@
         "lastPropagatedRoot",
         "pendingInboundRoots",
         "proposedTimestamp",
-        "proposed"
+        "proposed",
+        "lastPropagatedRoot",
+        "pendingInboundRoots",
+        "pendingInboundRoots",
+        "getPendingInboundRootsCount"
       ]
     },
     "ArbitrumHubConnector": {
