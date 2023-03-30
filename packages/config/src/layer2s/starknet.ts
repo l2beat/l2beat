@@ -164,25 +164,16 @@ export const starknet: Layer2 = {
         address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
       },
       {
-        name: 'WBTC Bridge',
-        description: 'Starkgate bridge for WBTC.',
-        address: discovery.getContract('StarknetWBTCBridge').address,
-        upgradeability:
-          discovery.getContract('StarknetWBTCBridge').upgradeability,
+        ...discovery.getMainContractDetails('WBTC Bridge'),
+        description: 'StarkGate bridge for WBTC.',
       },
       {
-        name: 'USDC Bridge',
-        description: 'Starkgate bridge for USDC.',
-        address: discovery.getContract('StarknetUSDCBridge').address,
-        upgradeability:
-          discovery.getContract('StarknetUSDCBridge').upgradeability,
+        ...discovery.getMainContractDetails('USDC Bridge'),
+        description: 'StarkGate bridge for USDC.',
       },
       {
-        name: 'USDT Bridge',
-        description: 'Starkgate bridge for USDT.',
-        address: discovery.getContract('StarknetUSDTBridge').address,
-        upgradeability:
-          discovery.getContract('StarknetUSDTBridge').upgradeability,
+        ...discovery.getMainContractDetails('USDT Bridge'),
+        description: 'StarkGate bridge for USDT.',
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -216,10 +207,7 @@ export const starknet: Layer2 = {
     },
     {
       name: 'Operators',
-      accounts: discovery
-        .getContractValue<string[]>('Starknet', 'OPERATORS')
-        // TODO: check if address is EOA
-        .map((address) => ({ address: EthereumAddress(address), type: 'EOA' })),
+      accounts: discovery.getPermissionedAccountsList('Starknet', 'OPERATORS'),
       description:
         'Allowed to post state updates. When the operator is down the state cannot be updated.',
     },
