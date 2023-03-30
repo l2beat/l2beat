@@ -21,7 +21,7 @@ describe(StarkexTransactionCountRepository.name, () => {
     () => {
       it('works with empty database', async () => {
         expect(
-          await repository.findLastTimestampByProjectId(ProjectId.STARKNET),
+          await repository.findLastTimestampByProjectId(ProjectId('starknet')),
         ).toEqual(undefined)
       })
     },
