@@ -1,8 +1,8 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared'
 import { expect, mockObject } from 'earljs'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { LimitedArrayHandler } from './LimitedArrayHandler'
 
 describe(LimitedArrayHandler.name, () => {

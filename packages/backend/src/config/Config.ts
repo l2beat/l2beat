@@ -12,13 +12,11 @@ export interface Config {
   readonly logThrottler: LogThrottlerConfig | false
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
-  readonly database: DatabaseConfig | false
-  readonly api: ApiConfig | false
+  readonly database: DatabaseConfig
+  readonly api: ApiConfig
   readonly health: HealthConfig
-  readonly invert: InversionConfig | false
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
-  readonly discovery: DiscoveryModuleConfig | false
   readonly discoveryWatcher: DiscoveryWatcherConfig | false
 }
 
@@ -63,25 +61,12 @@ export interface HealthConfig {
   readonly startedAt: string
   readonly commitSha: string
 }
-
-export interface InversionConfig {
-  readonly file: string
-  readonly useMermaidMarkup: boolean
-}
-
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
   readonly skipExplicitExclusion: boolean
   readonly allowedProjectIds?: string[]
   readonly projects: Record<string, Layer2TransactionApi | undefined>
-}
-
-export interface DiscoveryModuleConfig {
-  readonly project: string
-  readonly blockNumber?: number
-  readonly alchemyApiKey: string
-  readonly etherscanApiKey: string
 }
 
 export interface MetricsAuthConfig {

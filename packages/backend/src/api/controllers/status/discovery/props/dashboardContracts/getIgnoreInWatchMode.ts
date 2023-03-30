@@ -1,8 +1,7 @@
 import { ContractParameters, ProjectParameters } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
-import { getContractOverrides } from '../../../../../../core/discovery/discover'
-import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
+import { DiscoveryConfig } from '../../../../../../core/discovery/config/DiscoveryConfig'
 import { DashboardContractField, getValues } from '../utils/getValues'
 import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
@@ -14,7 +13,7 @@ export function getIgnoreInWatchMode(
   viewABI: ethers.utils.Interface,
 ) {
   let ignoreInWatchMode: DashboardContractField[] | undefined = undefined
-  const override = getContractOverrides(contract.address, config)
+  const override = config.overrides.get(contract.address)
   if (override) {
     if (override.ignoreInWatchMode) {
       ignoreInWatchMode = override.ignoreInWatchMode.map((field) => {

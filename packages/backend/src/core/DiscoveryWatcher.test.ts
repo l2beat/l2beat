@@ -15,12 +15,11 @@ import {
 } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
-import { ConfigReader } from './discovery/ConfigReader'
-import { DiscoveryConfig } from './discovery/DiscoveryConfig'
-import { DiscoveryEngine } from './discovery/DiscoveryEngine'
+import { ConfigReader } from './discovery/config/ConfigReader'
+import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
-import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
+import { DiscoveryEngine } from './discovery/utils/DiscoveryEngine'
 import { DiscoveryWatcher, isNineAM } from './DiscoveryWatcher'
 
 const PROJECT_A = 'project-a'
@@ -110,12 +109,12 @@ describe(DiscoveryWatcher.name, () => {
       expect(discoveryEngine.run).toHaveBeenCalledTimes(2)
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         1,
-        { name: PROJECT_A, initialAddresses: [] },
+        mockConfig(PROJECT_A),
         BLOCK_NUMBER,
       )
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         2,
-        { name: PROJECT_B, initialAddresses: [] },
+        mockConfig(PROJECT_B),
         BLOCK_NUMBER,
       )
       // calls repository (and gets undefined)
@@ -161,7 +160,7 @@ describe(DiscoveryWatcher.name, () => {
           findLatest: async () => ({
             ...mockRecord,
             discovery: DISCOVERY_RESULT,
-            configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+            configHash: mockConfig(PROJECT_A).hash,
           }),
           addOrUpdate: async () => '',
         },
@@ -230,12 +229,12 @@ describe(DiscoveryWatcher.name, () => {
       expect(discoveryEngine.run).toHaveBeenCalledTimes(2)
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         1,
-        { name: PROJECT_A, initialAddresses: [] },
+        mockConfig(PROJECT_A),
         BLOCK_NUMBER,
       )
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         2,
-        { name: PROJECT_B, initialAddresses: [] },
+        mockConfig(PROJECT_B),
         BLOCK_NUMBER,
       )
       // calls repository (and gets undefined)
@@ -286,7 +285,7 @@ describe(DiscoveryWatcher.name, () => {
           findLatest: async () => ({
             ...mockRecord,
             discovery: DISCOVERY_RESULT,
-            configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+            configHash: mockConfig(PROJECT_A).hash,
           }),
           addOrUpdate: async () => '',
         },
@@ -431,7 +430,7 @@ describe(DiscoveryWatcher.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: { ...mockProject, contracts: dbEntry },
-          configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+          configHash: mockConfig(PROJECT_A).hash,
         }),
       })
 
@@ -448,7 +447,7 @@ describe(DiscoveryWatcher.name, () => {
       const result = await discoveryWatcher.findChanges(
         PROJECT_A,
         DISCOVERY_RESULT,
-        getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+        mockConfig(PROJECT_A).hash,
         false,
         mockConfig(PROJECT_A),
       )
@@ -483,7 +482,7 @@ describe(DiscoveryWatcher.name, () => {
             ...mockProject,
             contracts: dbEntry,
           },
-          configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+          configHash: mockConfig(PROJECT_A).hash,
         }),
         addOrUpdate: async () => '',
       })
@@ -504,7 +503,7 @@ describe(DiscoveryWatcher.name, () => {
           ...mockProject,
           contracts: DISCOVERY_RESULT.contracts,
         },
-        getDiscoveryConfigHash({ ...mockConfig(PROJECT_A), name: 'new-name' }),
+        mockConfig('new-name').hash,
         false,
         mockConfig(PROJECT_A),
       )
@@ -610,10 +609,10 @@ function mockContract(
 }
 
 function mockConfig(name: string): DiscoveryConfig {
-  return {
+  return new DiscoveryConfig({
     name,
     initialAddresses: [],
-  }
+  })
 }
 
 const mockMessage = (project: string): string => {
