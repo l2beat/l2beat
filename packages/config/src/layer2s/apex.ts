@@ -78,6 +78,7 @@ export const apex: Layer2 = {
         description:
           'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       },
+      // TODO: add to discovery
       {
         name: 'MultiSigPool',
         address: EthereumAddress('0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE'),
@@ -136,6 +137,7 @@ export const apex: Layer2 = {
         'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
     {
+      // TODO: add to discovery
       name: 'Allowed signers',
       accounts: [
         {

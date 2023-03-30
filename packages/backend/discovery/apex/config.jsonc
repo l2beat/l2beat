@@ -38,6 +38,8 @@
         "getValidiumVaultRoot"
       ],
       "fields": {
+        // TODO: fix discovery
+        // the governors list returned by the discovery is wrong
         "IS_MULTISIG_GOVERNOR": {
           "type": "call",
           "method": "function proxyIsGovernor(address user) external view returns (bool)",
@@ -47,6 +49,11 @@
           "type": "call",
           "method": "function proxyIsGovernor(address user) external view returns (bool)",
           "args": ["0xef75e1199B0599BA823b7770AcE8eb34864a1D55"]
+        },
+        "IS_THIRD_GOVERNOR": {
+          "type": "call",
+          "method": "function proxyIsGovernor(address user) external view returns (bool)",
+          "args": ["0xD716458a0d1Fe4beE8007500BCbCe1Dd306c3868"]
         },
         "GOVERNORS": {
           "type": "arrayFromTwoEvents",

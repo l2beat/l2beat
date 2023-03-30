@@ -1,7 +1,7 @@
 {
   "name": "apex",
-  "blockNumber": 16940395,
-  "configHash": "0xe4b8487576a1e214337c1541d84843595ca04e611f248f3d5afe49e9af95867a",
+  "blockNumber": 16940577,
+  "configHash": "0x2e27118fc4ec6aa55db69b49d8b18f290bca0f5e086e0fcdaafd2836a0ed4c9d",
   "contracts": [
     {
       "name": "StarkwarePerpetual",
@@ -50,6 +50,7 @@
         "initializerSize": 0,
         "IS_EOA_GOVERNOR": true,
         "IS_MULTISIG_GOVERNOR": true,
+        "IS_THIRD_GOVERNOR": false,
         "isFrozen": false,
         "isNotFinalized": true,
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
