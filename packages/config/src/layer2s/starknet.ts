@@ -215,15 +215,11 @@ export const starknet: Layer2 = {
         'Can upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
     },
     {
-      name: 'Operator',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'Operators',
+      accounts: discovery
+        .getContractValue<string[]>('Starknet', 'OPERATORS')
+        // TODO: check if address is EOA
+        .map((address) => ({ address: EthereumAddress(address), type: 'EOA' })),
       description:
         'Allowed to post state updates. When the operator is down the state cannot be updated.',
     },

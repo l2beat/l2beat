@@ -16,12 +16,21 @@
     "0xbb3400F107804DFB482565FF1Ec8D8aE66747605": "StarknetUSDTBridge"
   },
   "overrides": {
+    // Starknet
+    // Make it possible to use the contract name without overriding it
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": {
       "fields": {
         "verifier": {
           "type": "starkWareNamedStorage",
           "tag": "STARKNET_1.0_INIT_VERIFIER_ADDRESS",
           "returnType": "address"
+        },
+        "OPERATORS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event LogOperatorAdded(address operator)",
+          "addKey": "operator",
+          "removeEvent": "event LogOperatorRemoved(address operator)",
+          "removeKey": "operator"
         }
       },
       "ignoreInWatchMode": [
