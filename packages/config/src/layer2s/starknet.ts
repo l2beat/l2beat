@@ -20,7 +20,7 @@ const discovery = new ProjectDiscovery('starknet')
 
 export const starknet: Layer2 = {
   type: 'layer2',
-  id: ProjectId.STARKNET,
+  id: ProjectId('starknet'),
   display: {
     name: 'StarkNet',
     slug: 'starknet',
