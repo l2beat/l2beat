@@ -1,7 +1,7 @@
 import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earljs'
 
-import { DiscoveryContract } from '../DiscoveryConfig'
+import { DiscoveryConfig } from '../DiscoveryConfig'
 import { diffDiscovery } from './diffDiscovery'
 
 describe(diffDiscovery.name, () => {
@@ -88,13 +88,17 @@ describe(diffDiscovery.name, () => {
         values: {},
       },
     ]
-    const ignoreInWatchMode: Record<string, DiscoveryContract> = {
-      [ADDRESS_A.toString()]: {
-        ignoreInWatchMode: ['B'],
+    const config: DiscoveryConfig = {
+      name: '',
+      initialAddresses: [],
+      overrides: {
+        [ADDRESS_A.toString()]: {
+          ignoreInWatchMode: ['B'],
+        },
       },
     }
 
-    const result = diffDiscovery(committed, discovered, ignoreInWatchMode)
+    const result = diffDiscovery(committed, discovered, config)
 
     expect(result).toEqual([
       {

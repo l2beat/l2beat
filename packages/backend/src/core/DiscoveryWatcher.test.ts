@@ -16,7 +16,7 @@ import {
 import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/ConfigReader'
-import { DiscoveryConfig } from './discovery/DiscoveryConfig'
+import { DiscoveryConfig, DiscoveryContract } from './discovery/DiscoveryConfig'
 import { DiscoveryEngine } from './discovery/DiscoveryEngine'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
@@ -401,7 +401,7 @@ describe(DiscoveryWatcher.name, () => {
         // repository returns undefined, so config hash does not matter
         Hash256.random(),
         false,
-        {},
+        mockConfig(PROJECT_A),
       )
 
       // calls repository (and gets undefined)
@@ -410,7 +410,11 @@ describe(DiscoveryWatcher.name, () => {
       expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
       // finds difference between committed and discovery result
       expect(result).toEqual({
-        changes: diffDiscovery(COMMITTED, DISCOVERY_RESULT.contracts, {}),
+        changes: diffDiscovery(
+          COMMITTED,
+          DISCOVERY_RESULT.contracts,
+          mockConfig(PROJECT_A),
+        ),
         sendDailyReminder: false,
       })
     })
@@ -446,14 +450,18 @@ describe(DiscoveryWatcher.name, () => {
         DISCOVERY_RESULT,
         getDiscoveryConfigHash(mockConfig(PROJECT_A)),
         false,
-        {},
+        mockConfig(PROJECT_A),
       )
 
       // calls repository
       expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // finds difference between repository and discovery result
       expect(result).toEqual({
-        changes: diffDiscovery(dbEntry, DISCOVERY_RESULT.contracts, {}),
+        changes: diffDiscovery(
+          dbEntry,
+          DISCOVERY_RESULT.contracts,
+          mockConfig(PROJECT_A),
+        ),
         sendDailyReminder: false,
       })
     })
@@ -498,7 +506,7 @@ describe(DiscoveryWatcher.name, () => {
         },
         getDiscoveryConfigHash({ ...mockConfig(PROJECT_A), name: 'new-name' }),
         false,
-        {},
+        mockConfig(PROJECT_A),
       )
 
       expect(result).toEqual({
