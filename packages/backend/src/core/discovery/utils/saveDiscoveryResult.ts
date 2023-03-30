@@ -1,8 +1,8 @@
 import { EthereumAddress, Hash256, ProjectParameters } from '@l2beat/shared'
 import { writeFile } from 'fs/promises'
 
-import { AnalyzedData } from './analyzeItem'
-import { DiscoveryConfig } from './DiscoveryConfig'
+import { AnalyzedData } from '../analyzeItem'
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 export async function saveDiscoveryResult(
   results: AnalyzedData[],
@@ -68,14 +68,10 @@ function getCustomName(
   address: EthereumAddress,
   config: DiscoveryConfig,
 ) {
-  if (!config.names?.[address.toString()]) {
-    return {
-      name: derivedName,
-    }
+  const name = config.overrides.get(address)?.name
+  if (!name) {
+    return { name: derivedName }
   }
 
-  return {
-    name: config.names[address.toString()],
-    derivedName: derivedName,
-  }
+  return { name, derivedName: derivedName }
 }

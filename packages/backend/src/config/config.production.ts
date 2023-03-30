@@ -55,7 +55,6 @@ export function getProductionConfig(cli: CliParameters): Config {
       startedAt: new Date().toISOString(),
       commitSha: getEnv('HEROKU_SLUG_COMMIT', getGitCommitHash()),
     },
-    invert: false,
     metricsAuth: {
       user: getEnv('METRICS_AUTH_USER'),
       pass: getEnv('METRICS_AUTH_PASS'),
@@ -88,7 +87,6 @@ export function getProductionConfig(cli: CliParameters): Config {
         },
       },
     },
-    discovery: false,
     discoveryWatcher: discoveryWatcherEnabled && {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),

@@ -1,6 +1,5 @@
 import { Application } from './Application'
-import { getCliParameters } from './cli/getCliParameters'
-import { exitWithUsage, printUsage } from './cli/usage'
+import { handleCli } from './cli/handleCli'
 import { getConfig } from './config'
 import { reportError } from './tools/ErrorReporter'
 
@@ -12,15 +11,7 @@ main().catch((e) => {
 })
 
 async function main() {
-  const cli = getCliParameters()
-  if (cli.mode === 'help') {
-    if (cli.error) {
-      exitWithUsage(cli.error)
-    } else {
-      printUsage()
-    }
-  }
-
+  const cli = handleCli()
   const config = getConfig(cli)
   const app = new Application(config)
   await app.start()

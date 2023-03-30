@@ -14,8 +14,8 @@
     "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
     "start:dev": "node -r esbuild-register src server",
     "start": "node -r source-map-support/register build/src/index.js server",
-    "discover": "node -r esbuild-register src discover",
-    "invert": "node -r esbuild-register src invert",
+    "discover": "node -r esbuild-register src/discoveryCli.ts discover",
+    "invert": "node -r esbuild-register src/discoveryCli.ts invert",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },

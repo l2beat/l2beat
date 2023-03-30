@@ -1,18 +1,15 @@
 import { EthereumAddress } from '@l2beat/shared'
 
 import { AnalyzedData, analyzeItem } from './analyzeItem'
-import { DiscoveryConfig } from './DiscoveryConfig'
-import { DiscoveryLogger } from './DiscoveryLogger'
+import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
+import { DiscoveryLogger } from './utils/DiscoveryLogger'
 
 export async function discover(
   provider: DiscoveryProvider,
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
 ) {
-  const maxAddresses = config.maxAddresses ?? 100
-  const maxDepth = config.maxDepth ?? 6
-
   const resolved = new Map<EthereumAddress, AnalyzedData>()
   const known = new Set<EthereumAddress>()
   known.add(EthereumAddress.ZERO)
@@ -35,7 +32,7 @@ export async function discover(
       continue
     }
 
-    const contractOverrides = getContractOverrides(address, config)
+    const contractOverrides = config.overrides.get(address)
     if (contractOverrides?.ignoreDiscovery) {
       logger.log(`Skipping ${address.toString()}`)
       logger.log('')
@@ -43,19 +40,19 @@ export async function discover(
       continue
     }
 
-    if (depth > maxDepth) {
+    if (depth > config.maxDepth) {
       logger.log(`Skipping ${address.toString()}`)
-      logger.error(`Depth ${depth} exceeded max = ${maxDepth}`)
+      logger.error(`Depth ${depth} exceeded max = ${config.maxDepth}`)
       logger.log('')
 
       continue
     }
 
     totalAddresses++
-    if (totalAddresses > maxAddresses) {
+    if (totalAddresses > config.maxAddresses) {
       logger.log(`Skipping ${address.toString()}`)
       logger.error(
-        `Total addresses ${totalAddresses} exceeded max = ${maxAddresses}`,
+        `Total addresses ${totalAddresses} exceeded max = ${config.maxAddresses}`,
       )
       logger.log('')
 
@@ -87,20 +84,4 @@ export async function discover(
   }
 
   return [...resolved.values()]
-}
-
-// the mapping of the names to addresses is enforced by the test
-// packages/backend/src/core/discovery/utils/config.test.ts (overrides test)
-// TODO L2B-1235: ensure mapping integrity with discovery.json
-export function getContractOverrides(
-  address: EthereumAddress,
-  config: DiscoveryConfig,
-) {
-  if (config.names?.[address.toString()]) {
-    return config.overrides?.[config.names[address.toString()]]
-  }
-
-  if (config.overrides?.[address.toString()]) {
-    return config.overrides[address.toString()]
-  }
 }

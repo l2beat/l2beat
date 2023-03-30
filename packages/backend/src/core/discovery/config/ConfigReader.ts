@@ -4,6 +4,7 @@ import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
+import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class ConfigReader {
   async readConfig(name: string): Promise<DiscoveryConfig> {
@@ -15,7 +16,8 @@ export class ConfigReader {
     if (errors.length !== 0) {
       throw new Error('Cannot parse file')
     }
-    return DiscoveryConfig.parse(parsed)
+    const rawConfig = RawDiscoveryConfig.parse(parsed)
+    return new DiscoveryConfig(rawConfig)
   }
 
   async readAllConfigs(): Promise<DiscoveryConfig[]> {
@@ -27,8 +29,7 @@ export class ConfigReader {
 
     for (const config of configs) {
       const contents = await this.readConfig(config)
-
-      result.push(DiscoveryConfig.parse(contents))
+      result.push(contents)
     }
 
     return result

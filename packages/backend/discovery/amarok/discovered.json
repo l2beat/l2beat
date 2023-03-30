@@ -1,7 +1,7 @@
 {
   "name": "amarok",
-  "blockNumber": 16932330,
-  "configHash": "0x0c353570b242d8c0d7fecf791b0a3bf476c51248f47cb95fd4032db1a6b459dc",
+  "blockNumber": 16938311,
+  "configHash": "0x2cb08cb725961f154e5e36da56dc2001fd5bd5956c8593df54138642a585f7b5",
   "contracts": [
     {
       "name": "ConnextBridge",
@@ -243,7 +243,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 3599,
+        "nonce": 3630,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -278,7 +278,8 @@
           "0x32D63da9F776891843C90787CEC54ADA23ABd4C2",
           "0xFaAB88015477493cFAa5DFAA533099C590876F21",
           "0x63Cda9C42db542bb91a7175E38673cFb00D402b0",
-          "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8"
+          "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
+          "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a"
         ],
         "SEQUENCERS": [
           "0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"
@@ -300,12 +301,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 16932107,
+        "lastSentBlock": 16938177,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0x89e579a5ffc125dd92f14fc92ac6a9db3bb4c1a4fa8fdfa018bf0f3017f7aa43",
+        "outboundRoot": "0x1f0ac0885ac81dda792a343de2be90f411816ab0300ce2ce6d34614179325b91",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -368,15 +369,15 @@
           1634886255
         ],
         "domainsHash": "0xe741ece3f9550e537df05746072d458479dbc21a49fdee7925337f0b7e1a802c",
-        "getPendingInboundRootsCount": 4,
-        "lastPropagatedRoot": "0xfee4c2dbf943eee263f5eb1c2400e395f526a98789a6ceefb5265253c70c53b5",
+        "getPendingInboundRootsCount": 2,
+        "lastPropagatedRoot": "0x64f7bbef67647f8958c8a8667e75ba459d72c778b404adadecfa568c0bd9e8ea",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "pendingInboundRoots": [
-          13268,
-          13271
+          13403,
+          13404
         ],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
@@ -543,6 +544,7 @@
   "eoas": [
     "0x048a5EcC705C280b2248aefF88fd581AbbEB8587",
     "0x0e62f9fa1F9b3E49759Dc94494F5bC37a83d1FAD",
+    "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a",
     "0x32D63da9F776891843C90787CEC54ADA23ABd4C2",
     "0x33b2aD85f7DbA818e719FB52095dC768E0eD93ec",
     "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
