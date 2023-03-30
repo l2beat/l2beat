@@ -1,7 +1,7 @@
 import { MainnetEtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
-import { DiscoveryModuleConfig } from '../../config/Config'
+import { DiscoveryModuleConfig } from '../../config/config.discovery'
 import { ConfigReader } from './config/ConfigReader'
 import { discover } from './discover'
 import { ProviderWithCache } from './provider/ProviderWithCache'

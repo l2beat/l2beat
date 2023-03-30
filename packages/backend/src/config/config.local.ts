@@ -10,28 +10,17 @@ import { getGitCommitHash } from './getGitCommitHash'
 
 export function getLocalConfig(cli: CliParameters): Config {
   dotenv()
-  if (
-    cli.mode !== 'server' &&
-    cli.mode !== 'discover' &&
-    cli.mode !== 'invert'
-  ) {
+  if (cli.mode !== 'server') {
     throw new Error(`No local config for mode: ${cli.mode}`)
   }
 
-  const apiEnabled = cli.mode === 'server'
-  const databaseEnabled = cli.mode === 'server'
-  const tvlEnabled =
-    cli.mode === 'server' && getEnv.boolean('TVL_SYNC_ENABLED', true)
-  const activityEnabled =
-    cli.mode === 'server' && getEnv.boolean('ACTIVITY_ENABLED', false)
-  const discoveryEnabled = cli.mode === 'discover'
-  const discoveryWatcherEnabled =
-    cli.mode === 'server' && getEnv.boolean('WATCHMODE_ENABLED', false)
+  const tvlEnabled = getEnv.boolean('TVL_SYNC_ENABLED', true)
+  const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)
+  const discoveryWatcherEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     !!process.env.DISCORD_TOKEN &&
     !!process.env.PUBLIC_DISCORD_CHANNEL_ID &&
     !!process.env.INTERNAL_DISCORD_CHANNEL_ID
-  const invertEnabled = cli.mode === 'invert'
 
   return {
     name: 'Backend/Local',
@@ -47,7 +36,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       safeTimeOffsetSeconds: 60 * 60,
     },
-    database: databaseEnabled && {
+    database: {
       connection: getEnv('LOCAL_DB_URL'),
       freshStart: getEnv.boolean('FRESH_START', false),
       connectionPoolSize: {
@@ -56,7 +45,7 @@ export function getLocalConfig(cli: CliParameters): Config {
         max: 10,
       },
     },
-    api: apiEnabled && {
+    api: {
       port: getEnv.integer('PORT', 3000),
     },
     metricsAuth: false,
@@ -64,10 +53,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       startedAt: new Date().toISOString(),
       commitSha: getGitCommitHash(),
     },
-    invert: invertEnabled && {
-      file: cli.file,
-      useMermaidMarkup: false,
-    },
+
     tvl: tvlEnabled && {
       tokens: tokenList,
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
@@ -102,12 +88,6 @@ export function getLocalConfig(cli: CliParameters): Config {
           callsPerMinute: 60,
         },
       },
-    },
-    discovery: discoveryEnabled && {
-      project: cli.project,
-      blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
-      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
-      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
     },
     discoveryWatcher: discoveryWatcherEnabled && {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
