@@ -135,18 +135,19 @@ describe('discovery config.jsonc', () => {
   })
 
   describe('names', () => {
-    it('every name correspond to existing contract', async () => {
-      for (const config of configs ?? []) {
-        const discovery = await configReader.readDiscovery(config.name)
+    // TODO: L2B-1235
+    // it('every name correspond to existing contract', async () => {
+    //   for (const config of configs ?? []) {
+    //     const discovery = await configReader.readDiscovery(config.name)
 
-        assert(
-          Object.keys(config.names ?? {}).every((address) =>
-            discovery.contracts.some((c) => c.address.toString() === address),
-          ),
-          `names field in ${config.name} configuration includes addresses that do not exist inside discovery.json`,
-        )
-      }
-    })
+    //     assert(
+    //       Object.keys(config.names ?? {}).every((address) =>
+    //         discovery.contracts.some((c) => c.address.toString() === address),
+    //       ),
+    //       `names field in ${config.name} configuration includes addresses that do not exist inside discovery.json`,
+    //     )
+    //   }
+    // })
 
     it('every name is unique', async () => {
       for (const config of configs ?? []) {

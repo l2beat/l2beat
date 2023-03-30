@@ -1,22 +1,25 @@
 import { ContractParameters } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
+import { getContractOverrides } from '../../../../../../core/discovery/discover'
 import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
 import { DashboardContractField } from '../utils/getValues'
+import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
 
 export function getIgnoredMethods(
-  contract: ContractParameters,
   config: DiscoveryConfig,
+  contract: ContractParameters,
   viewABI: ethers.utils.Interface,
 ) {
   let ignoreMethods: DashboardContractField[] | undefined = undefined
-  if (config.overrides?.[contract.address.toString()]) {
-    const override = config.overrides[contract.address.toString()]
+  const override = getContractOverrides(contract.address, config)
+  if (override) {
     if (override.ignoreMethods) {
       ignoreMethods = override.ignoreMethods.map((field) => {
         return {
-          name: getFieldName(field, viewABI),
+          name: getFieldName(viewABI, field),
+          description: getDescription(config, contract.address, field),
         }
       })
     }

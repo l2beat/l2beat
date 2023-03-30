@@ -26,7 +26,7 @@ export const arbitrum: Layer2 = {
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     description:
-      "Arbitrum is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.\
+      "Arbitrum One is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.\
       Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Validators (currently whitelisted)\
       read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any other Validator can challenge the state root within the challenge window (7-days). \
       The challenge will result in an interactive fraud proof game that will be eventually settled by L1. As long as there is at least one honest Validator, users are guaranteed that\
@@ -34,20 +34,21 @@ export const arbitrum: Layer2 = {
       L2 state root within 7 days, the Validator whitelist is dropped and anyone can take over as a new Validator.",
     purpose: 'Universal',
     links: {
-      websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
+      websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
-      documentation: ['https://developer.offchainlabs.com/'],
+      documentation: ['https://developer.arbitrum.io/'],
       explorers: ['https://arbiscan.io', 'https://explorer.arbitrum.io/'],
       repositories: [
+        'https://github.com/ArbitrumFoundation/docs',
+        'https://github.com/ArbitrumFoundation/governance',
         'https://github.com/OffchainLabs/arbitrum',
         'https://github.com/OffchainLabs/nitro',
         'https://github.com/OffchainLabs/arb-os',
       ],
       socialMedia: [
-        'https://twitter.com/OffchainLabs',
         'https://twitter.com/arbitrum',
-        'https://medium.com/offchainlabs',
-        'https://discord.gg/5KE54JwyTs',
+        'https://arbitrumfoundation.medium.com/',
+        'https://discord.gg/Arbitrum',
       ],
     },
     activityDataSource: 'Blockchain RPC',
