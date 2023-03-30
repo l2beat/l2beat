@@ -10,7 +10,10 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('aztec')
 
 export const aztec: Layer2 = {
   type: 'layer2',
@@ -42,7 +45,7 @@ export const aztec: Layer2 = {
   config: {
     escrows: [
       {
-        address: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
+        address: discovery.getContract('AztecRollup').address,
         sinceTimestamp: new UnixTime(1614799636),
         tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
       },
@@ -73,6 +76,7 @@ export const aztec: Layer2 = {
       references: [
         {
           text: 'RollupProcessor.sol#L395 - Etherscan source code',
+          // TODO: regex for hardcoded addresses should not catch this one
           href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395',
         },
       ],
@@ -152,23 +156,21 @@ export const aztec: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
+        ...discovery.getMainContractDetails('AztecRollup'),
         description:
           'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
-        name: 'RollupProcessor',
       },
       {
-        address: EthereumAddress('0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734'),
+        ...discovery.getMainContractDetails('AztecFeeDistributor'),
         description:
           'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
-        name: 'AztecFeeDistributor',
       },
       {
-        address: EthereumAddress('0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1'),
+        ...discovery.getMainContractDetails('TurboVerifier'),
         description:
           'Turbo Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
-        name: 'TurboVerifier',
       },
+      // TODO: add to discovery
       {
         address: EthereumAddress('0x7FaE73Be814d94318fa0756a5D73ae9cf3BA7530'),
         description: 'Verification Keys for the Verifier.',
