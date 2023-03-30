@@ -10,7 +10,6 @@ import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { DiscoveryEngine } from './discovery/utils/DiscoveryEngine'
-import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
 import { TaskQueue } from './queue/TaskQueue'
 
 export interface Diff {
@@ -97,12 +96,10 @@ export class DiscoveryWatcher {
       )
     }
 
-    const configHash = getDiscoveryConfigHash(projectConfig)
-
     const diff = await this.findChanges(
       projectConfig.name,
       discovery,
-      configHash,
+      projectConfig.hash,
       isDailyReminder,
       projectConfig,
     )
@@ -124,7 +121,7 @@ export class DiscoveryWatcher {
       timestamp,
       blockNumber,
       discovery,
-      configHash,
+      configHash: projectConfig.hash,
     })
 
     this.logger.info('Discovery finished', { project: projectConfig.name })

@@ -20,7 +20,6 @@ import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { DiscoveryEngine } from './discovery/utils/DiscoveryEngine'
-import { getDiscoveryConfigHash } from './discovery/utils/getDiscoveryConfigHash'
 import { DiscoveryWatcher, isNineAM } from './DiscoveryWatcher'
 
 const PROJECT_A = 'project-a'
@@ -161,7 +160,7 @@ describe(DiscoveryWatcher.name, () => {
           findLatest: async () => ({
             ...mockRecord,
             discovery: DISCOVERY_RESULT,
-            configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+            configHash: mockConfig(PROJECT_A).hash,
           }),
           addOrUpdate: async () => '',
         },
@@ -286,7 +285,7 @@ describe(DiscoveryWatcher.name, () => {
           findLatest: async () => ({
             ...mockRecord,
             discovery: DISCOVERY_RESULT,
-            configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+            configHash: mockConfig(PROJECT_A).hash,
           }),
           addOrUpdate: async () => '',
         },
@@ -431,7 +430,7 @@ describe(DiscoveryWatcher.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: { ...mockProject, contracts: dbEntry },
-          configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+          configHash: mockConfig(PROJECT_A).hash,
         }),
       })
 
@@ -448,7 +447,7 @@ describe(DiscoveryWatcher.name, () => {
       const result = await discoveryWatcher.findChanges(
         PROJECT_A,
         DISCOVERY_RESULT,
-        getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+        mockConfig(PROJECT_A).hash,
         false,
         mockConfig(PROJECT_A),
       )
@@ -483,7 +482,7 @@ describe(DiscoveryWatcher.name, () => {
             ...mockProject,
             contracts: dbEntry,
           },
-          configHash: getDiscoveryConfigHash(mockConfig(PROJECT_A)),
+          configHash: mockConfig(PROJECT_A).hash,
         }),
         addOrUpdate: async () => '',
       })
@@ -504,7 +503,7 @@ describe(DiscoveryWatcher.name, () => {
           ...mockProject,
           contracts: DISCOVERY_RESULT.contracts,
         },
-        getDiscoveryConfigHash(mockConfig('new-name')),
+        mockConfig('new-name').hash,
         false,
         mockConfig(PROJECT_A),
       )

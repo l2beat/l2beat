@@ -6,7 +6,6 @@ import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { discover } from '../discover'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { DiscoveryLogger } from './DiscoveryLogger'
-import { getDiscoveryConfigHash } from './getDiscoveryConfigHash'
 import { parseDiscoveryOutput } from './saveDiscoveryResult'
 
 export class DiscoveryEngine {
@@ -30,12 +29,10 @@ export class DiscoveryEngine {
 
     const discovered = await discover(discoveryProvider, config, this.logger)
 
-    const configHash = getDiscoveryConfigHash(config)
-
     metricsDone({ project: config.name }, blockNumber)
 
     // TODO: test this line
-    return parseDiscoveryOutput(discovered, config, blockNumber, configHash)
+    return parseDiscoveryOutput(discovered, config, blockNumber, config.hash)
   }
 }
 

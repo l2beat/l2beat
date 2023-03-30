@@ -4,7 +4,6 @@ import { expect } from 'earljs'
 
 import { ConfigReader } from '../config/ConfigReader'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { getDiscoveryConfigHash } from './getDiscoveryConfigHash'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
@@ -92,9 +91,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(config.name)
 
-      const configHash = getDiscoveryConfigHash(config)
-
-      if (discovery.configHash !== configHash) {
+      if (discovery.configHash !== config.hash) {
         outdatedHashes.push(config.name)
       }
     }
