@@ -110,12 +110,12 @@ describe(DiscoveryWatcher.name, () => {
       expect(discoveryEngine.run).toHaveBeenCalledTimes(2)
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         1,
-        { name: PROJECT_A, initialAddresses: [] },
+        mockConfig(PROJECT_A),
         BLOCK_NUMBER,
       )
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         2,
-        { name: PROJECT_B, initialAddresses: [] },
+        mockConfig(PROJECT_B),
         BLOCK_NUMBER,
       )
       // calls repository (and gets undefined)
@@ -230,12 +230,12 @@ describe(DiscoveryWatcher.name, () => {
       expect(discoveryEngine.run).toHaveBeenCalledTimes(2)
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         1,
-        { name: PROJECT_A, initialAddresses: [] },
+        mockConfig(PROJECT_A),
         BLOCK_NUMBER,
       )
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         2,
-        { name: PROJECT_B, initialAddresses: [] },
+        mockConfig(PROJECT_B),
         BLOCK_NUMBER,
       )
       // calls repository (and gets undefined)
@@ -504,7 +504,7 @@ describe(DiscoveryWatcher.name, () => {
           ...mockProject,
           contracts: DISCOVERY_RESULT.contracts,
         },
-        getDiscoveryConfigHash({ ...mockConfig(PROJECT_A), name: 'new-name' }),
+        getDiscoveryConfigHash(mockConfig('new-name')),
         false,
         mockConfig(PROJECT_A),
       )
@@ -610,10 +610,10 @@ function mockContract(
 }
 
 function mockConfig(name: string): DiscoveryConfig {
-  return {
+  return new DiscoveryConfig({
     name,
     initialAddresses: [],
-  }
+  })
 }
 
 const mockMessage = (project: string): string => {

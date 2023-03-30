@@ -68,14 +68,10 @@ function getCustomName(
   address: EthereumAddress,
   config: DiscoveryConfig,
 ) {
-  if (!config.names?.[address.toString()]) {
-    return {
-      name: derivedName,
-    }
+  const name = config.overrides.get(address)?.name
+  if (!name) {
+    return { name: derivedName }
   }
 
-  return {
-    name: config.names[address.toString()],
-    derivedName: derivedName,
-  }
+  return { name, derivedName: derivedName }
 }

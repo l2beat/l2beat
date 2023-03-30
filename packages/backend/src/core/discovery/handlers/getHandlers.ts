@@ -1,12 +1,12 @@
-import { DiscoveryContract } from '../DiscoveryConfig'
 import { DiscoveryLogger } from '../DiscoveryLogger'
+import { ContractOverrides } from '../DiscoveryOverrides'
 import { getSystemHandlers } from './getSystemHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { getUserHandler } from './user'
 
 export function getHandlers(
   abi: string[],
-  overrides: DiscoveryContract | undefined,
+  overrides: ContractOverrides | undefined,
   logger: DiscoveryLogger,
 ) {
   const systemHandlers = getSystemHandlers(abi, overrides, logger)

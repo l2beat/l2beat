@@ -12,7 +12,7 @@ const ADDRESS_A = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
 const ADDRESS_B = EthereumAddress('0xB524735356985D2f267FA010D681f061DfF03715')
 const ADDRESS_C = EthereumAddress('0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc')
 
-const CONFIG: DiscoveryConfig = {
+const CONFIG = new DiscoveryConfig({
   name: 'a',
   initialAddresses: [ADDRESS_A],
   maxAddresses: 1,
@@ -24,7 +24,7 @@ const CONFIG: DiscoveryConfig = {
       ignoreDiscovery: false,
     },
   },
-}
+})
 
 describe(getDiscoveryConfigHash.name, () => {
   it('correctly generates hash for given config', () => {
@@ -46,7 +46,7 @@ describe(getDiscoveryConfigHash.name, () => {
   })
 
   it(getDiscoveryConfigEntries.name, () => {
-    const config: DiscoveryConfig = {
+    const config = new DiscoveryConfig({
       name: 'a',
       initialAddresses: [ADDRESS_A],
       maxDepth: 1,
@@ -78,7 +78,7 @@ describe(getDiscoveryConfigHash.name, () => {
           fields: {},
         },
       },
-    }
+    })
 
     const expected = {
       // correctly sort params (nest level = 0)

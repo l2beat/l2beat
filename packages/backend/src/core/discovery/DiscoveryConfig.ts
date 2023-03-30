@@ -1,37 +1,30 @@
-import { EthereumAddress, ManualProxyType, stringAs } from '@l2beat/shared'
-import * as z from 'zod'
+import { DiscoveryOverrides } from './DiscoveryOverrides'
+import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
-import { UserHandlerDefinition } from './handlers/user'
+export class DiscoveryConfig {
+  readonly overrides: DiscoveryOverrides
 
-export type DiscoveryContract = z.infer<typeof DiscoveryContract>
-export const DiscoveryContract = z.object({
-  ignoreDiscovery: z.optional(z.boolean()),
-  proxyType: z.optional(ManualProxyType),
-  ignoreInWatchMode: z.optional(z.array(z.string())),
-  ignoreMethods: z.optional(z.array(z.string())),
-  ignoreRelatives: z.optional(z.array(z.string())),
-  fields: z.optional(
-    z.record(z.string().regex(/^[a-z_][a-z\d_]*$/i), UserHandlerDefinition),
-  ),
-})
+  constructor(private readonly config: RawDiscoveryConfig) {
+    this.overrides = new DiscoveryOverrides(config)
+  }
 
-export type DiscoveryConfig = z.infer<typeof DiscoveryConfig>
-export const DiscoveryConfig = z.object({
-  name: z.string().min(1),
-  initialAddresses: z.array(stringAs(EthereumAddress)),
-  maxAddresses: z.optional(z.number().positive()),
-  maxDepth: z.optional(z.number().positive()),
-  overrides: z.optional(z.record(z.string(), DiscoveryContract)),
-  names: z.optional(
-    z.record(z.string().refine(EthereumAddress.check), z.string()),
-  ),
-  descriptions: z.optional(
-    z.record(
-      z.string(),
-      z.object({
-        description: z.string(),
-        methods: z.record(z.string(), z.string()),
-      }),
-    ),
-  ),
-})
+  get raw() {
+    return this.config
+  }
+
+  get name() {
+    return this.config.name
+  }
+
+  get initialAddresses() {
+    return this.config.initialAddresses
+  }
+
+  get maxAddresses() {
+    return this.config.maxAddresses ?? 100
+  }
+
+  get maxDepth() {
+    return this.config.maxDepth ?? 6
+  }
+}

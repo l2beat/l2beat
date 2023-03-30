@@ -88,7 +88,7 @@ describe(diffDiscovery.name, () => {
         values: {},
       },
     ]
-    const config: DiscoveryConfig = {
+    const config = new DiscoveryConfig({
       name: '',
       initialAddresses: [],
       overrides: {
@@ -96,7 +96,7 @@ describe(diffDiscovery.name, () => {
           ignoreInWatchMode: ['B'],
         },
       },
-    }
+    })
 
     const result = diffDiscovery(committed, discovered, config)
 

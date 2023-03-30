@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
@@ -102,6 +103,7 @@ describe(getHandlers.name, () => {
         'function flop(uint256 i) view returns (uint256)',
       ],
       {
+        address: EthereumAddress.random(),
         ignoreMethods: ['foo', 'baz', 'flip'],
       },
       DiscoveryLogger.SILENT,
@@ -123,6 +125,7 @@ describe(getHandlers.name, () => {
     const handlers = getHandlers(
       [],
       {
+        address: EthereumAddress.random(),
         fields: {
           foo: { type: 'storage', slot: 1 },
           bar: { type: 'storage', slot: 2 },
@@ -151,6 +154,7 @@ describe(getHandlers.name, () => {
         'function baz() view returns (address)',
       ],
       {
+        address: EthereumAddress.random(),
         fields: {
           foo: { type: 'storage', slot: 1 },
           bar: { type: 'storage', slot: 2 },
@@ -180,6 +184,7 @@ describe(getHandlers.name, () => {
     const handlers = getHandlers(
       [],
       {
+        address: EthereumAddress.random(),
         fields: {
           foo: { type: 'call', args: [] },
         },

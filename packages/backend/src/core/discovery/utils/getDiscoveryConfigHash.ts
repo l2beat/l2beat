@@ -9,7 +9,7 @@ export function getDiscoveryConfigHash(config: DiscoveryConfig): Hash256 {
 }
 
 export function getDiscoveryConfigEntries(config: DiscoveryConfig): string {
-  const sorted = deepSortByKeys(config)
+  const sorted = deepSortByKeys(config.raw)
   return JSON.stringify(sorted)
 }
 
