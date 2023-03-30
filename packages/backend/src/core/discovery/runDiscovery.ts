@@ -2,12 +2,11 @@ import { MainnetEtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { DiscoveryModuleConfig } from '../../config/config.discovery'
-import { ConfigReader } from './ConfigReader'
+import { ConfigReader } from './config/ConfigReader'
 import { discover } from './discover'
-import { DiscoveryLogger } from './DiscoveryLogger'
 import { ProviderWithCache } from './provider/ProviderWithCache'
-import { saveDiscoveryResult } from './saveDiscoveryResult'
-import { getDiscoveryConfigHash } from './utils/getDiscoveryConfigHash'
+import { DiscoveryLogger } from './utils/DiscoveryLogger'
+import { saveDiscoveryResult } from './utils/saveDiscoveryResult'
 
 export async function runDiscovery(
   provider: providers.AlchemyProvider,
@@ -16,7 +15,6 @@ export async function runDiscovery(
   config: DiscoveryModuleConfig,
 ) {
   const projectConfig = await configReader.readConfig(config.project)
-  const configHash = getDiscoveryConfigHash(projectConfig)
 
   const blockNumber = config.blockNumber ?? (await provider.getBlockNumber())
 
@@ -29,5 +27,10 @@ export async function runDiscovery(
   const logger = new DiscoveryLogger({ enabled: true })
 
   const result = await discover(discoveryProvider, projectConfig, logger)
-  await saveDiscoveryResult(result, projectConfig, blockNumber, configHash)
+  await saveDiscoveryResult(
+    result,
+    projectConfig,
+    blockNumber,
+    projectConfig.hash,
+  )
 }

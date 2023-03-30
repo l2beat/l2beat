@@ -1,15 +1,11 @@
-import { Hash256 } from '@l2beat/shared'
 import { isArray, isObject } from 'lodash'
 
-import { hashJson } from '../../../tools/hashJson'
-import { DiscoveryConfig } from '../DiscoveryConfig'
+import { RawDiscoveryConfig } from '../config/RawDiscoveryConfig'
 
-export function getDiscoveryConfigHash(config: DiscoveryConfig): Hash256 {
-  return hashJson(getDiscoveryConfigEntries(config))
-}
-
-export function getDiscoveryConfigEntries(config: DiscoveryConfig): string {
-  const sorted = deepSortByKeys(config)
+export function getDiscoveryConfigEntries(
+  rawConfig: RawDiscoveryConfig,
+): string {
+  const sorted = deepSortByKeys(rawConfig)
   return JSON.stringify(sorted)
 }
 

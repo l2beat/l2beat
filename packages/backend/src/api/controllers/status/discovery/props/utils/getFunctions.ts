@@ -1,7 +1,7 @@
 import { ContractParameters } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
-import { concatAbis } from '../../../../../../core/discovery/concatAbis'
+import { concatAbis } from '../../../../../../core/discovery/utils/concatAbis'
 import { getAddresses } from './getAddresses'
 
 export function getViewABI(

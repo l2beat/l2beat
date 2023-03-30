@@ -1,7 +1,7 @@
 import { ContractParameters, ProjectParameters } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
-import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
+import { DiscoveryConfig } from '../../../../../../core/discovery/config/DiscoveryConfig'
 import { DashboardContractField, getValues } from '../utils/getValues'
 import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
@@ -21,12 +21,7 @@ export function getWatched(
   let watched: DashboardContractField[] | undefined = undefined
   if (values) {
     watched = Object.keys(values)
-      .filter((key) => {
-        if (ignoreInWatchMode === undefined) {
-          return true
-        }
-        return !ignoreInWatchMode.includes(key)
-      })
+      .filter((key) => !ignoreInWatchMode.includes(key))
       .map((field) => {
         return {
           name: getFieldName(viewABI, field),
@@ -42,14 +37,5 @@ function getIgnoreInWatchMode(
   config: DiscoveryConfig,
   contract: ContractParameters,
 ) {
-  if (
-    !config.overrides ||
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    !config.overrides[contract.address.toString()] ||
-    !config.overrides[contract.address.toString()].ignoreInWatchMode
-  ) {
-    return []
-  }
-
-  return config.overrides[contract.address.toString()].ignoreInWatchMode
+  return config.overrides.get(contract.address)?.ignoreInWatchMode ?? []
 }

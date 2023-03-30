@@ -6,7 +6,7 @@ import {
   DiscoveryCliConfig,
   getDiscoveryCliConfig,
 } from './config/config.discovery'
-import { ConfigReader } from './core/discovery/ConfigReader'
+import { ConfigReader } from './core/discovery/config/ConfigReader'
 import { runDiscovery } from './core/discovery/runDiscovery'
 import { runInversion } from './core/inversion/runInversion'
 

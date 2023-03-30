@@ -2,7 +2,7 @@ import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
-import { ConfigReader } from '../../../core/discovery/ConfigReader'
+import { ConfigReader } from '../../../core/discovery/config/ConfigReader'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'

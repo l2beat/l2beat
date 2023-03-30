@@ -2,9 +2,8 @@ import { bridges, layer2s } from '@l2beat/config'
 import { assert, EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earljs'
 
-import { ConfigReader } from '../ConfigReader'
-import { DiscoveryConfig } from '../DiscoveryConfig'
-import { getDiscoveryConfigHash } from './getDiscoveryConfigHash'
+import { ConfigReader } from '../config/ConfigReader'
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
@@ -47,16 +46,9 @@ describe('discovery config.jsonc', () => {
 
   it('fields inside ignoreInWatchMode exists in discovery', async function () {
     for (const config of configs ?? []) {
-      if (config.overrides === undefined) {
-        continue
-      }
-
       const discovery = await configReader.readDiscovery(config.name)
 
-      for (const [addressOrName, override] of Object.entries(
-        config.overrides,
-      )) {
-        const address = getAddress(addressOrName, config)
+      for (const override of config.overrides) {
         if (override.ignoreDiscovery === true) {
           continue
         }
@@ -65,9 +57,11 @@ describe('discovery config.jsonc', () => {
           continue
         }
 
-        const contract = discovery.contracts.find((c) => c.address === address)
+        const contract = discovery.contracts.find(
+          (c) => c.address === override.address,
+        )
 
-        const errorPrefix = `${config.name} - ${address.toString()}`
+        const errorPrefix = `${config.name} - ${override.address.toString()}`
 
         assert(
           contract,
@@ -97,9 +91,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(config.name)
 
-      const configHash = getDiscoveryConfigHash(config)
-
-      if (discovery.configHash !== configHash) {
+      if (discovery.configHash !== config.hash) {
         outdatedHashes.push(config.name)
       }
     }
@@ -127,9 +119,11 @@ describe('discovery config.jsonc', () => {
     // do not remove it unless you know what you are doing
     it('every override correspond to existing contract', async () => {
       for (const config of configs ?? []) {
-        Object.keys(config.overrides ?? {}).forEach((addressOrName) => {
-          expect(() => getAddress(addressOrName, config)).not.toThrow()
-        })
+        for (const key of Object.keys(config.raw.overrides ?? {})) {
+          if (!EthereumAddress.check(key)) {
+            expect(() => config.overrides.get(key)).not.toThrow()
+          }
+        }
       }
     })
   })
@@ -151,30 +145,16 @@ describe('discovery config.jsonc', () => {
 
     it('every name is unique', async () => {
       for (const config of configs ?? []) {
-        if (config.names === undefined) {
+        if (config.raw.names === undefined) {
           continue
         }
 
         assert(
-          new Set(Object.values(config.names)).size ===
-            Object.values(config.names).length,
+          new Set(Object.values(config.raw.names)).size ===
+            Object.values(config.raw.names).length,
           `names field in ${config.name} configuration includes duplicate names`,
         )
       }
     })
   })
 })
-function getAddress(
-  addressOrName: string,
-  config: DiscoveryConfig,
-): EthereumAddress {
-  try {
-    return EthereumAddress(addressOrName)
-  } catch (e) {
-    const address = Object.entries(config.names ?? {}).find(
-      ([_, name]) => name === addressOrName,
-    )?.[0]
-
-    return EthereumAddress(address ?? '')
-  }
-}

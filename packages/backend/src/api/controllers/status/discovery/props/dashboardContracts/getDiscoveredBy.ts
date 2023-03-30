@@ -1,6 +1,6 @@
 import { ContractParameters, ProjectParameters } from '@l2beat/shared'
 
-import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
+import { DiscoveryConfig } from '../../../../../../core/discovery/config/DiscoveryConfig'
 
 export interface DiscoveredByInfo {
   name: string
