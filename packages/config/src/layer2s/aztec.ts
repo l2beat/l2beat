@@ -76,7 +76,6 @@ export const aztec: Layer2 = {
       references: [
         {
           text: 'RollupProcessor.sol#L395 - Etherscan source code',
-          // TODO: regex for hardcoded addresses should not catch this one
           href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395',
         },
       ],
