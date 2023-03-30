@@ -43,7 +43,7 @@ export const aztecconnect: Layer2 = {
   config: {
     escrows: [
       {
-        address: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
+        address: discovery.getContract('AztecConnectRollup').address,
         sinceTimestamp: new UnixTime(1654587783),
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
@@ -145,12 +145,9 @@ export const aztecconnect: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: discovery.getContract('RollupProcessorV2').address,
+        ...discovery.getMainContractDetails('AztecConnectRollup'),
         description:
           'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
-        name: 'RollupProcessorV2',
-        upgradeability:
-          discovery.getContract('RollupProcessorV2').upgradeability,
       },
       {
         address: EthereumAddress('0x4cf32670a53657596E641DFCC6d40f01e4d64927'),
@@ -158,16 +155,17 @@ export const aztecconnect: Layer2 = {
           'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
         name: 'AztecFeeDistributor',
       },
+      // TODO: add function to get account from contract's value
       {
         address: EthereumAddress(
-          discovery.getContractValue('RollupProcessorV2', 'defiBridgeProxy'),
+          discovery.getContractValue('AztecConnectRollup', 'defiBridgeProxy'),
         ),
         description: 'Bridge Connector to various DeFi Bridges.',
         name: 'DefiBridgeProxy',
       },
       {
         address: EthereumAddress(
-          discovery.getContractValue('RollupProcessorV2', 'verifier'),
+          discovery.getContractValue('AztecConnectRollup', 'verifier'),
         ),
         description:
           'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
