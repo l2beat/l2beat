@@ -58,22 +58,22 @@ export const starknet: Layer2 = {
         tokens: ['ETH'],
       },
       {
-        address: discovery.getContract('StarknetDAIBridge').address,
+        address: discovery.getContract('DAI Bridge').address,
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
       },
       {
-        address: discovery.getContract('StarknetWBTCBridge').address,
+        address: discovery.getContract('WBTC Bridge').address,
         sinceTimestamp: new UnixTime(1657137600),
         tokens: ['WBTC'],
       },
       {
-        address: discovery.getContract('StarknetUSDCBridge').address,
+        address: discovery.getContract('USDC Bridge').address,
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
       },
       {
-        address: discovery.getContract('StarknetUSDTBridge').address,
+        address: discovery.getContract('USDT Bridge').address,
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
       },
