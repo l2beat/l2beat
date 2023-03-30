@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared'
 import { zip } from 'lodash'
 
+import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { concatAbis } from './concatAbis'
-import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
 export interface ContractMetadata {
   name: string

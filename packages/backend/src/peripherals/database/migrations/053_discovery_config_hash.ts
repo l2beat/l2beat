@@ -9,7 +9,7 @@ should create a new migration file that fixes the issue.
 
 import { Knex } from 'knex'
 
-import { ConfigReader } from '../../../core/discovery/ConfigReader'
+import { ConfigReader } from '../../../core/discovery/config/ConfigReader'
 import { getDiscoveryConfigHash } from '../../../core/discovery/utils/getDiscoveryConfigHash'
 
 export async function up(knex: Knex) {

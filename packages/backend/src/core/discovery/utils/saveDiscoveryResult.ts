@@ -1,8 +1,8 @@
 import { EthereumAddress, Hash256, ProjectParameters } from '@l2beat/shared'
 import { writeFile } from 'fs/promises'
 
-import { AnalyzedData } from './analyzeItem'
-import { DiscoveryConfig } from './DiscoveryConfig'
+import { AnalyzedData } from '../analyzeItem'
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 export async function saveDiscoveryResult(
   results: AnalyzedData[],

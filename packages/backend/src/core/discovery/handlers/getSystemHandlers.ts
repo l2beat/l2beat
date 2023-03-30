@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
-import { DiscoveryLogger } from '../DiscoveryLogger'
-import { ContractOverrides } from '../DiscoveryOverrides'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { Handler } from './Handler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'

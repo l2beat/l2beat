@@ -1,7 +1,7 @@
 import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 
-import { DiscoveryConfig } from '../DiscoveryConfig'
-import { DiscoveryOverrides } from '../DiscoveryOverrides'
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { DiscoveryOverrides } from '../config/DiscoveryOverrides'
 import { diffContracts, FieldDiff } from './diffContracts'
 
 export interface DiscoveryDiff {

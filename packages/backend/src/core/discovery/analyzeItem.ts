@@ -4,13 +4,13 @@ import {
   EthereumAddress,
 } from '@l2beat/shared'
 
-import { DiscoveryLogger } from './DiscoveryLogger'
-import { ContractOverrides } from './DiscoveryOverrides'
-import { getMetadata } from './getMetadata'
+import { ContractOverrides } from './config/DiscoveryOverrides'
 import { executeHandlers } from './handlers/executeHandlers'
 import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { detectProxy } from './proxies'
+import { DiscoveryLogger } from './utils/DiscoveryLogger'
+import { getMetadata } from './utils/getMetadata'
 
 export interface AnalyzedData extends ContractParameters {
   meta: {

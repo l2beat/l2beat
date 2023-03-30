@@ -5,7 +5,7 @@ import {
 } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
-import { DiscoveryConfig } from '../../../../../core/discovery/DiscoveryConfig'
+import { DiscoveryConfig } from '../../../../../core/discovery/config/DiscoveryConfig'
 import { abiToArray } from './dashboardContracts/abiToArray'
 import { getDescription } from './dashboardContracts/getDescription'
 import {

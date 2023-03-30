@@ -2,12 +2,12 @@ import { MainnetEtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { DiscoveryModuleConfig } from '../../config/Config'
-import { ConfigReader } from './ConfigReader'
+import { ConfigReader } from './config/ConfigReader'
 import { discover } from './discover'
-import { DiscoveryLogger } from './DiscoveryLogger'
 import { ProviderWithCache } from './provider/ProviderWithCache'
-import { saveDiscoveryResult } from './saveDiscoveryResult'
+import { DiscoveryLogger } from './utils/DiscoveryLogger'
 import { getDiscoveryConfigHash } from './utils/getDiscoveryConfigHash'
+import { saveDiscoveryResult } from './utils/saveDiscoveryResult'
 
 export async function runDiscovery(
   provider: providers.AlchemyProvider,

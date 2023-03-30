@@ -2,7 +2,7 @@ import { HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
-import { ConfigReader } from '../../core/discovery/ConfigReader'
+import { ConfigReader } from '../../core/discovery/config/ConfigReader'
 import { runDiscovery } from '../../core/discovery/runDiscovery'
 import { ApplicationModule } from '../ApplicationModule'
 

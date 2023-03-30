@@ -2,7 +2,7 @@ import { Hash256 } from '@l2beat/shared'
 import { isArray, isObject } from 'lodash'
 
 import { hashJson } from '../../../tools/hashJson'
-import { DiscoveryConfig } from '../DiscoveryConfig'
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 export function getDiscoveryConfigHash(config: DiscoveryConfig): Hash256 {
   return hashJson(getDiscoveryConfigEntries(config))

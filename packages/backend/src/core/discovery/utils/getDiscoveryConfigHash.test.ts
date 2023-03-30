@@ -2,7 +2,7 @@ import { EthereumAddress, Hash256 } from '@l2beat/shared'
 import { expect } from 'earljs'
 
 import { hashJson } from '../../../tools/hashJson'
-import { DiscoveryConfig } from '../DiscoveryConfig'
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import {
   getDiscoveryConfigEntries,
   getDiscoveryConfigHash,
