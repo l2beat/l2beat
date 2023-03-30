@@ -41,15 +41,7 @@
           "removeKey": "router"
         }
       },
-      "ignoreInWatchMode": [
-        "nonce",
-        "proposedTimestamp",
-        "outboundRoot",
-        "lastPropagatedRoot",
-        "pendingInboundRoots",
-        "pendingInboundRoots",
-        "getPendingInboundRootsCount"
-      ],
+      "ignoreInWatchMode": ["nonce", "proposedTimestamp"],
       "ignoreRelatives": ["lpTokenTargetAddress", "RELAYERS"]
     },
     "MainnetSpokeConnector": {
@@ -71,15 +63,7 @@
           "removeKey": "watcher"
         }
       },
-      "ignoreInWatchMode": [
-        "proposedTimestamp",
-        "proposed",
-        "lastSentBlock",
-        "lastPropagatedRoot",
-        "pendingInboundRoots",
-        "pendingInboundRoots",
-        "getPendingInboundRootsCount"
-      ]
+      "ignoreInWatchMode": ["proposedTimestamp", "proposed"]
     },
     "RootManager": {
       "fields": {
