@@ -64,7 +64,8 @@ export const arbitrum: Layer2 = {
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
-        address: EthereumAddress('0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'),
+        // TODO: add a way to get this from discovery
+        address: CONTRACTS.ARBITRUM_OLD_BRIDGE,
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
       },
@@ -79,7 +80,7 @@ export const arbitrum: Layer2 = {
         tokens: '*',
       },
       {
-        address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
+        address: discovery.getContract('L1DaiEscrow').address,
         sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
       },
@@ -238,12 +239,13 @@ export const arbitrum: Layer2 = {
         'This is yet another proxy admin for the three gateway contracts. It is owned by the Upgrade Executor.',
       ),
     },
+    // TODO: get sequencer from discovery
     {
       name: 'Sequencer',
       accounts: [
         {
           address: EthereumAddress(
-            '0xa4b1E63Cb4901E327597bc35d36FE8a23e4C253f',
+            '0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc',
           ),
           type: 'EOA',
         },
@@ -378,14 +380,12 @@ export const arbitrum: Layer2 = {
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
       },
       {
-        address: EthereumAddress('0xD3B5b60020504bc3489D6949d545893982BA3011'),
-        name: 'L1DaiGateway',
+        ...discovery.getMainContractDetails('L1DaiGateway'),
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
       },
       {
-        address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
-        name: 'L1Escrow',
+        ...discovery.getMainContractDetails('L1DaiEscrow'),
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       },
       {
