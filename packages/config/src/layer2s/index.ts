@@ -11,6 +11,7 @@ import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { hermez } from './hermez'
+import { honeypot } from './honeypot'
 import { immutablex } from './immutablex'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
@@ -48,6 +49,7 @@ export const layer2s: Layer2[] = [
   fuelv1,
   gluon,
   hermez,
+  honeypot,
   immutablex,
   layer2finance,
   layer2financezk,
