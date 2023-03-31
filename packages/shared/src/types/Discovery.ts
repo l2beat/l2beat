@@ -85,6 +85,7 @@ export interface StarkWareProxyUpgradeability {
   upgradeDelay: number
   isFinal: boolean
   useConstantDelay?: boolean
+  proxyGovernance?: EthereumAddress[]
 }
 
 export interface StarkWareDiamondUpgradeability {
@@ -93,6 +94,7 @@ export interface StarkWareDiamondUpgradeability {
   upgradeDelay: number
   isFinal: boolean
   facets: Record<string, EthereumAddress>
+  proxyGovernance?: EthereumAddress[]
 }
 
 export interface ArbitrumProxyUpgradeability {
