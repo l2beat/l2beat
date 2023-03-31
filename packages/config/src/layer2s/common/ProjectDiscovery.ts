@@ -107,7 +107,6 @@ export class ProjectDiscovery {
     const isMultisig = contract?.upgradeability.type === 'gnosis safe'
 
     const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
-    console.log(address, type)
 
     return { address: address, type }
   }
