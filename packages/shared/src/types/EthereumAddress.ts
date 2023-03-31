@@ -44,8 +44,3 @@ EthereumAddress.random = function random() {
 EthereumAddress.unsafe = function unsafe(address: string) {
   return address as unknown as EthereumAddress
 }
-
-const addressRegexp = new RegExp('^0x[a-fA-F\\d]{40}$')
-EthereumAddress.test = function test(value: string) {
-  return addressRegexp.test(value)
-}

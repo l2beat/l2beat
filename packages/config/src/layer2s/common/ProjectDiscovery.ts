@@ -89,7 +89,7 @@ export class ProjectDiscovery {
 
     return value.map((account) => {
       assert(
-        isString(account) && EthereumAddress.test(account),
+        isString(account) && EthereumAddress.check(account),
         `Values of ${key} must be Ethereum addresses`,
       )
       const address = EthereumAddress(account)
