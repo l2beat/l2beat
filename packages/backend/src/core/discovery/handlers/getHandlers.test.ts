@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { getHandlers } from './getHandlers'

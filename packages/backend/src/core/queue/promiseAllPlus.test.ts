@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/shared'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect, mockFn } from 'earljs'
+import { expect, mockFn } from 'earl'
 
 import { promiseAllPlus } from './promiseAllPlus'
 

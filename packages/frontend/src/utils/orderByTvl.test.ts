@@ -1,5 +1,5 @@
 import { ProjectId, TvlApiProject, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { orderByTvl } from '../../src/utils/orderByTvl'
 

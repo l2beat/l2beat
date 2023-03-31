@@ -1,4 +1,4 @@
-import { expect, mockObject } from 'earljs'
+import { expect, mockObject } from 'earl'
 
 import {
   contractStub,

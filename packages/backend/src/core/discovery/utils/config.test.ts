@@ -1,6 +1,6 @@
 import { bridges, layer2s } from '@l2beat/config'
 import { assert, EthereumAddress } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { ConfigReader } from '../config/ConfigReader'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'

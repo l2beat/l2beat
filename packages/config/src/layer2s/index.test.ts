@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { ProjectTechnologyChoice } from '../common'
 import { checkRisk } from '../test/helpers'

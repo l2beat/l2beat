@@ -1,5 +1,5 @@
 import { AssetId, Logger, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
 import { PriceRecord, PriceRepository } from './PriceRepository'

@@ -1,5 +1,5 @@
 import FakeTimers from '@sinonjs/fake-timers'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { RateLimiter } from './RateLimiter'
 

@@ -1,5 +1,5 @@
 import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { EventTracker } from './EventTracker'
 
