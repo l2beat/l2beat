@@ -53,27 +53,27 @@ export const starknet: Layer2 = {
   config: {
     escrows: [
       {
-        address: EthereumAddress('0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'),
+        address: discovery.getContract('StarknetEthBridge').address,
         sinceTimestamp: new UnixTime(1647857148),
         tokens: ['ETH'],
       },
       {
-        address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
+        address: discovery.getContract('DAI Bridge').address,
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
       },
       {
-        address: EthereumAddress('0x283751A21eafBFcD52297820D27C1f1963D9b5b4'),
+        address: discovery.getContract('WBTC Bridge').address,
         sinceTimestamp: new UnixTime(1657137600),
         tokens: ['WBTC'],
       },
       {
-        address: EthereumAddress('0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'),
+        address: discovery.getContract('USDC Bridge').address,
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
       },
       {
-        address: EthereumAddress('0xbb3400F107804DFB482565FF1Ec8D8aE66747605'),
+        address: discovery.getContract('USDT Bridge').address,
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
       },
@@ -164,28 +164,16 @@ export const starknet: Layer2 = {
         address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
       },
       {
-        name: 'WBTC Bridge',
-        description: 'Starkgate bridge for WBTC.',
-        address: EthereumAddress('0x283751A21eafBFcD52297820D27C1f1963D9b5b4'),
-        upgradeability: discovery.getContract(
-          '0x283751A21eafBFcD52297820D27C1f1963D9b5b4',
-        ).upgradeability,
+        ...discovery.getMainContractDetails('WBTC Bridge'),
+        description: 'StarkGate bridge for WBTC.',
       },
       {
-        name: 'USDC Bridge',
-        description: 'Starkgate bridge for USDC.',
-        address: EthereumAddress('0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'),
-        upgradeability: discovery.getContract(
-          '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816',
-        ).upgradeability,
+        ...discovery.getMainContractDetails('USDC Bridge'),
+        description: 'StarkGate bridge for USDC.',
       },
       {
-        name: 'USDT Bridge',
-        description: 'Starkgate bridge for USDT.',
-        address: EthereumAddress('0xbb3400F107804DFB482565FF1Ec8D8aE66747605'),
-        upgradeability: discovery.getContract(
-          '0xbb3400F107804DFB482565FF1Ec8D8aE66747605',
-        ).upgradeability,
+        ...discovery.getMainContractDetails('USDT Bridge'),
+        description: 'StarkGate bridge for USDT.',
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -218,15 +206,8 @@ export const starknet: Layer2 = {
         'Can upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
     },
     {
-      name: 'Operator',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'Operators',
+      accounts: discovery.getPermissionedAccountsList('Starknet', 'OPERATORS'),
       description:
         'Allowed to post state updates. When the operator is down the state cannot be updated.',
     },

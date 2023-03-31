@@ -85,14 +85,11 @@ export class ProjectDiscovery {
   ): ProjectPermissionedAccount[] {
     const value = this.getContractValue(contractIdentifier, key)
 
-    assert(
-      isArray(value),
-      `Value of key ${key} does not exist in ${contractIdentifier} contract (${this.projectName})`,
-    )
+    assert(isArray(value), `Value of ${key} must be an array`)
 
     return value.map((account) => {
       assert(
-        isString(account) && new RegExp('^0x[a-fA-F\\d]{40}$').test(account),
+        isString(account) && EthereumAddress.check(account),
         `Values of ${key} must be Ethereum addresses`,
       )
       const address = EthereumAddress(account)
