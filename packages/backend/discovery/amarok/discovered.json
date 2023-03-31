@@ -1,7 +1,7 @@
 {
   "name": "amarok",
   "blockNumber": 16938311,
-  "configHash": "0x2cb08cb725961f154e5e36da56dc2001fd5bd5956c8593df54138642a585f7b5",
+  "configHash": "0x0641a339b0e9d920ff3d73f33df35c0658b7afe2e3144760992d20a206507190",
   "contracts": [
     {
       "name": "ConnextBridge",
@@ -91,12 +91,7 @@
               "0x91f5de79"
             ]
           ],
-          [
-            "0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295",
-            [
-              "0xab2dc3f5"
-            ]
-          ],
+          ["0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295", ["0xab2dc3f5"]],
           [
             "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d",
             [
@@ -215,19 +210,9 @@
           ],
           [
             "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b",
-            [
-              "0x1f931c1c",
-              "0x56a8ea48",
-              "0xbbf2358e",
-              "0x2c67849c"
-            ]
+            ["0x1f931c1c", "0x56a8ea48", "0xbbf2358e", "0x2c67849c"]
           ],
-          [
-            "0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4",
-            [
-              "0x9a7e155e"
-            ]
-          ],
+          ["0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4", ["0x9a7e155e"]],
           [
             "0x3Bcf4185443A339517aD4e580067f178d1B68E1D",
             [
@@ -281,9 +266,7 @@
           "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
           "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a"
         ],
-        "SEQUENCERS": [
-          "0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"
-        ],
+        "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c"
       },
       "derivedName": "ConnextDiamond"
@@ -361,12 +344,7 @@
         "delayBlocks": 100,
         "DEQUEUE_MAX": 100,
         "domains": [
-          6450786,
-          6778479,
-          1869640809,
-          1886350457,
-          6648936,
-          1634886255
+          6450786, 6778479, 1869640809, 1886350457, 6648936, 1634886255
         ],
         "domainsHash": "0xe741ece3f9550e537df05746072d458479dbc21a49fdee7925337f0b7e1a802c",
         "getPendingInboundRootsCount": 2,
@@ -375,10 +353,7 @@
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [
-          13403,
-          13404
-        ],
+        "pendingInboundRoots": [13403, 13404],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,

@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
   "blockNumber": 16912315,
-  "configHash": "0x040d2c9fdb285fca68cc238893157c4ec8d07b13611db7d1f8b434295aea3d20",
+  "configHash": "0xafb64ee9eb1419c6a2e0a81e26d98b3be586bad0242e8cccc470f7ae3413a603",
   "contracts": [
     {
       "name": "Proxy",
@@ -48,9 +48,7 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
-        "OPERATORS": [
-          "0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5"
-        ],
+        "OPERATORS": ["0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5"],
         "orderRegistryAddress": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
@@ -167,10 +165,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          23
-        ],
+        "getLayoutInfo": [18, 23],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -260,10 +255,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          24,
-          191
-        ],
+        "getLayoutInfo": [24, 191],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -366,10 +358,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          20,
-          31
-        ],
+        "getLayoutInfo": [20, 31],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -414,10 +403,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          23
-        ],
+        "getLayoutInfo": [18, 23],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -464,10 +450,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          22,
-          63
-        ],
+        "getLayoutInfo": [22, 63],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -514,10 +497,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          15
-        ],
+        "getLayoutInfo": [18, 15],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -564,10 +544,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          15
-        ],
+        "getLayoutInfo": [18, 15],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -614,10 +591,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          15
-        ],
+        "getLayoutInfo": [18, 15],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
