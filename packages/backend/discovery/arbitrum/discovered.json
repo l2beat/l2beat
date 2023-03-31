@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16888926,
-  "configHash": "0xd3acce9d7a113b06237f4081d7f9e0a04e74e75e7f914a7128dc8b0b7af1ec14",
+  "blockNumber": 16946689,
+  "configHash": "0x7358371c23116c466ff84c6b6c7c37897474f041b98cd3f9cde1962a53cff0eb",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3909,
+        "firstUnresolvedNode": 4103,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 3908,
-        "latestNodeCreated": 4062,
+        "latestConfirmed": 4102,
+        "latestNodeCreated": 4256,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -48,7 +48,8 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
-      }
+      },
+      "derivedName": "RollupProxy"
     },
     {
       "name": "ValidatorWalletCreator",
@@ -91,7 +92,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 111050,
+        "batchCount": 126928,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -102,11 +103,12 @@
           3600
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 664674
-      }
+        "totalDelayedMessagesRead": 719065
+      },
+      "derivedName": "SequencerInbox"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "ArbitrumProxyAdmin",
       "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
       "code": "https://etherscan.deth.net/address/0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
       "upgradeability": {
@@ -114,7 +116,8 @@
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "RollupEventInbox",
@@ -165,7 +168,7 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "UpgradeExecutorAdmin",
       "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
       "code": "https://etherscan.deth.net/address/0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
       "upgradeability": {
@@ -173,10 +176,11 @@
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
-      "name": "GnosisSafe",
+      "name": "SecurityCouncil",
       "address": "0x3666a60ff589873ced457a9a8a0aA6F83D708767",
       "code": "https://etherscan.deth.net/address/0x3666a60ff589873ced457a9a8a0aA6F83D708767,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -203,7 +207,8 @@
         "getThreshold": 9,
         "nonce": 13,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L1ArbitrumTimelock",
@@ -254,7 +259,8 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      }
+      },
+      "derivedName": "L1ArbitrumTimelock"
     },
     {
       "name": "Outbox",
@@ -291,7 +297,8 @@
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "paused": false,
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
-      }
+      },
+      "derivedName": "Inbox"
     },
     {
       "name": "ChallengeManager",
@@ -357,7 +364,7 @@
       }
     },
     {
-      "name": "Bridge",
+      "name": "ArbitrumOneBridge",
       "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
       "code": "https://etherscan.deth.net/address/0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a,0x1066CEcC8880948FE55e427E94F1FF221d626591",
       "upgradeability": {
@@ -376,12 +383,13 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 664832,
+        "delayedMessageCount": 719109,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 111050,
-        "sequencerReportedSubMessageCount": 50544958
-      }
+        "sequencerMessageCount": 126928,
+        "sequencerReportedSubMessageCount": 53361110
+      },
+      "derivedName": "Bridge"
     },
     {
       "name": "Outbox",
@@ -404,7 +412,8 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 1,
         "rollup": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
-      }
+      },
+      "derivedName": "Outbox"
     },
     {
       "name": "OldOutbox",
@@ -470,10 +479,11 @@
         "l2BeaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "whitelist": "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459"
-      }
+      },
+      "derivedName": "L1ERC20Gateway"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "GatewaysAdmin",
       "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
       "code": "https://etherscan.deth.net/address/0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
       "upgradeability": {
@@ -481,7 +491,8 @@
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "Whitelist",
@@ -527,7 +538,8 @@
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "whitelist": "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459"
-      }
+      },
+      "derivedName": "L1CustomGateway"
     }
   ],
   "eoas": [
