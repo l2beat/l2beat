@@ -18,7 +18,7 @@ const discovery = new ProjectDiscovery('loopring')
 
 export const loopring: Layer2 = {
   type: 'layer2',
-  id: ProjectId.LOOPRING,
+  id: ProjectId('loopring'),
   display: {
     name: 'Loopring',
     slug: 'loopring',

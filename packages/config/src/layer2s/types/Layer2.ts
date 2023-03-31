@@ -55,7 +55,7 @@ export interface Layer2Display {
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */
-  activityDataSource?: string
+  activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
 }
 
 export interface Layer2Config {
