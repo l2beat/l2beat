@@ -6,7 +6,7 @@ import {
   ProjectParameters,
   UnixTime,
 } from '@l2beat/shared'
-import { expect, mockObject } from 'earljs'
+import { expect, mockObject } from 'earl'
 import { providers } from 'ethers'
 
 import {

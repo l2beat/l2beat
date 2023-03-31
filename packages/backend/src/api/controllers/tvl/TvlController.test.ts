@@ -7,7 +7,7 @@ import {
   TvlApiChart,
   UnixTime,
 } from '@l2beat/shared'
-import { expect, mockObject } from 'earljs'
+import { expect, mockObject } from 'earl'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'

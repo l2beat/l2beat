@@ -5,7 +5,7 @@ import {
   EthereumAddress,
   HttpClient,
 } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
 import { config } from '../test/config'

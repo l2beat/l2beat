@@ -1,6 +1,6 @@
 import { Logger, LoggerOptions, LogLevel } from '@l2beat/shared'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect, mockFn, MockFunction } from 'earljs'
+import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
