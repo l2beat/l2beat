@@ -13,6 +13,7 @@ import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../components/PageContent'
+import { AprilFools } from './AprilFools'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
 export interface TvlPageProps {
@@ -29,6 +30,7 @@ export interface TvlPageProps {
 export function ScalingTvlPage(props: TvlPageProps) {
   return (
     <>
+      <AprilFools {...props} />
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
