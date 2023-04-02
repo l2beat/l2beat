@@ -85,14 +85,11 @@ export class ProjectDiscovery {
   ): ProjectPermissionedAccount[] {
     const value = this.getContractValue(contractIdentifier, key)
 
-    assert(
-      isArray(value),
-      `Value of key ${key} does not exist in ${contractIdentifier} contract (${this.projectName})`,
-    )
+    assert(isArray(value), `Value of ${key} must be an array`)
 
     return value.map((account) => {
       assert(
-        isString(account) && new RegExp('^0x[a-fA-F\\d]{40}$').test(account),
+        isString(account) && EthereumAddress.check(account),
         `Values of ${key} must be Ethereum addresses`,
       )
       const address = EthereumAddress(account)
@@ -103,7 +100,6 @@ export class ProjectDiscovery {
       const isMultisig = contract?.upgradeability.type === 'gnosis safe'
 
       const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
-      console.log(address, type)
 
       return { address: address, type }
     })
@@ -163,8 +159,12 @@ export class ProjectDiscovery {
       (contract) => contract.name === name,
     )
     assert(
+      !(contracts.length > 1),
+      `Found more than one contracts of ${name} name (${this.projectName})`,
+    )
+    assert(
       contracts.length === 1,
-      `Found more than one contracts or no contract of ${name} name found (${this.projectName})`,
+      `Found no contract of ${name} name (${this.projectName})`,
     )
 
     return contracts[0]

@@ -1,4 +1,4 @@
-import { expect, mockObject } from 'earljs'
+import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
 import { EthereumAddress, Hash256 } from '../../types'

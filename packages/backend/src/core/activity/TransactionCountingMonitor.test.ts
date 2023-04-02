@@ -1,5 +1,5 @@
 import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
-import { expect, mockFn, mockObject } from 'earljs'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { Clock } from '../Clock'
 import { SequenceProcessor } from '../SequenceProcessor'

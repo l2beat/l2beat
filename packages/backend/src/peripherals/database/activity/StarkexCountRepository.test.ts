@@ -1,5 +1,5 @@
 import { Logger, ProjectId } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
 import { StarkexTransactionCountRepository } from './StarkexCountRepository'
@@ -21,7 +21,7 @@ describe(StarkexTransactionCountRepository.name, () => {
     () => {
       it('works with empty database', async () => {
         expect(
-          await repository.findLastTimestampByProjectId(ProjectId.STARKNET),
+          await repository.findLastTimestampByProjectId(ProjectId('starknet')),
         ).toEqual(undefined)
       })
     },

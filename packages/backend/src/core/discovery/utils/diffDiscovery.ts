@@ -1,6 +1,7 @@
 import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 
-import { DiscoveryContract } from '../DiscoveryConfig'
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { DiscoveryOverrides } from '../config/DiscoveryOverrides'
 import { diffContracts, FieldDiff } from './diffContracts'
 
 export interface DiscoveryDiff {
@@ -13,7 +14,7 @@ export interface DiscoveryDiff {
 export function diffDiscovery(
   committed: ContractParameters[],
   discovered: ContractParameters[],
-  overrides?: Record<string, DiscoveryContract>,
+  config: DiscoveryConfig,
 ): DiscoveryDiff[] {
   const modifiedOrDeleted: DiscoveryDiff[] = []
 
@@ -30,7 +31,7 @@ export function diffDiscovery(
       continue
     }
 
-    const ignored = getIgnored(committedContract.address, overrides)
+    const ignored = getIgnored(committedContract.address, config.overrides)
 
     const diff = diffContracts(committedContract, discoveredContract, ignored)
 
@@ -63,16 +64,7 @@ export function diffDiscovery(
 
 function getIgnored(
   address: EthereumAddress,
-  overrides?: Partial<Record<string, DiscoveryContract>>,
+  overrides: DiscoveryOverrides,
 ): string[] {
-  if (overrides === undefined) {
-    return []
-  }
-
-  const override = overrides[address.toString()]
-  if (override === undefined) {
-    return []
-  }
-
-  return override.ignoreInWatchMode ?? []
+  return overrides.get(address)?.ignoreInWatchMode ?? []
 }

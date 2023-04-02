@@ -1,6 +1,6 @@
 import * as z from 'zod'
 
-import { DiscoveryLogger } from '../../DiscoveryLogger'
+import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler } from '../Handler'
 import {
   AccessControlHandler,

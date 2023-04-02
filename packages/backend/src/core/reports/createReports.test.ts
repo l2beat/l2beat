@@ -1,5 +1,5 @@
 import { AssetId, ProjectId } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { BALANCES, NOW, PRICES, PROJECTS } from '../../test/projects'
 import { aggregateBalancesPerProject, createReports } from './createReports'

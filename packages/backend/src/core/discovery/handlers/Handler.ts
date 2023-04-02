@@ -1,7 +1,7 @@
 import { ContractValue, EthereumAddress } from '@l2beat/shared'
 
-import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 
 export interface HandlerResult {
   field: string

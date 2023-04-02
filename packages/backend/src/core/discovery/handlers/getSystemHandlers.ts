@@ -1,14 +1,14 @@
 import { utils } from 'ethers'
 
-import { DiscoveryContract } from '../DiscoveryConfig'
-import { DiscoveryLogger } from '../DiscoveryLogger'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { Handler } from './Handler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 
 export function getSystemHandlers(
   abiEntries: string[],
-  overrides: DiscoveryContract | undefined,
+  overrides: ContractOverrides | undefined,
   logger: DiscoveryLogger,
 ) {
   const abi = new utils.Interface(abiEntries)

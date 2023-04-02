@@ -1,4 +1,4 @@
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { Hash256 } from './Hash256'
 

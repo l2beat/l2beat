@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { expect, mockFn, mockObject } from 'earljs'
+import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'

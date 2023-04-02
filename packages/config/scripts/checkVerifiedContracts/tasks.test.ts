@@ -1,6 +1,6 @@
 import { EthereumAddress, EtherscanClient, Logger } from '@l2beat/shared'
 import { install } from '@sinonjs/fake-timers'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { verifyContracts } from './tasks'
 

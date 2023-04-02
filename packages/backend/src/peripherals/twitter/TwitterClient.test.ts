@@ -1,4 +1,4 @@
-import { expect, mockFn, mockObject } from 'earljs'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { TwitterApiWrapper } from './TwitterApiWrapper'
 import { TwitterClient } from './TwitterClient'

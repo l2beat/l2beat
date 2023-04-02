@@ -1,5 +1,5 @@
 import { HttpClient, Logger, UnixTime } from '@l2beat/shared'
-import { expect, mockFn, mockObject } from 'earljs'
+import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
 import { ZksyncClient } from './ZksyncClient'
