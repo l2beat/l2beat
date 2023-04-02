@@ -7,6 +7,7 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  NUGGETS,
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
@@ -202,6 +203,13 @@ export const polygonzkevm: Layer2 = {
       link: 'https://polygon.technology/blog/polygon-zkevm-mainnet-beta-is-live?utm_source=twitter&utm_medium=social&utm_campaign=zkevm-launch&utm_term=mainnet-beta-live&utm_content=blog',
       date: '2023-03-27T00:00:00Z',
       description: 'Polygon zkEVM public beta launched.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'State diffs vs raw tx data',
+      url: 'https://twitter.com/krzKaczor/status/1641505354600046594',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 }
