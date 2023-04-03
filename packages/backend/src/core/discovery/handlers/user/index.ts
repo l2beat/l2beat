@@ -21,6 +21,10 @@ import {
   ConstructorArgsHandler,
 } from './ConstructorArgsHandler'
 import {
+  EventCountHandler,
+  EventCountHandlerDefinition,
+} from './EventCountHandler'
+import {
   StarkWareNamedStorageHandler,
   StarkWareNamedStorageHandlerDefinition,
 } from './StarkWareNamedStorageHandler'
@@ -36,6 +40,7 @@ export const UserHandlerDefinition = z.union([
   ArrayFromOneEventHandlerDefinition,
   ArrayFromTwoEventsHandlerDefinition,
   ConstructorArgsDefinition,
+  EventCountHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -61,5 +66,7 @@ export function getUserHandler(
       return new ArrayFromTwoEventsHandler(field, definition, abi, logger)
     case 'constructorArgs':
       return new ConstructorArgsHandler(field, abi, logger)
+    case 'eventCount':
+      return new EventCountHandler(field, definition, logger)
   }
 }

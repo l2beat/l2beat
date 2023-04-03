@@ -56,7 +56,19 @@
         "firstUnresolvedNode",
         "latestConfirmed",
         "latestNodeCreated"
-      ]
+      ],
+      "fields": {
+        // when this changes, it means the validators have changed
+        "setValidatorCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        }
+      }
     },
     "SequencerInbox": {
       "ignoreMethods": ["inboxAccs"],
@@ -69,6 +81,16 @@
           "type": "call",
           "method": "function isBatchPoster(address) external view returns (bool)",
           "args": ["0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
+        },
+        // when this changes, it means the sequencers have changed
+        "setIsBatchPosterCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000001"
+          ]
         }
       }
     },
