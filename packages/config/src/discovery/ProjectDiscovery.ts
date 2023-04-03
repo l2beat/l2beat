@@ -15,7 +15,7 @@ import {
   ProjectContract,
   ProjectUpgradeability,
 } from '../common/ProjectContracts'
-import { HARDCODED } from './hardcoded/hardcoded'
+import { HARDCODED_PERMISSIONS } from './hardcoded/hardcoded'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -226,14 +226,14 @@ export class ProjectDiscovery {
     return result
   }
 
-  getHardcoded(key: string): ContractValue {
-    const value = HARDCODED[this.projectName][key]
+  getHardcodedPermissionedAccounts(key: string): ProjectPermissionedAccount[] {
+    const permission = HARDCODED_PERMISSIONS[this.projectName][key]
     assert(
-      value,
-      `Value of key ${key} does not exist in hardcoded (${this.projectName})`,
+      permission,
+      `Value of key ${key} is not an address (${this.projectName})`,
     )
 
-    return value
+    return permission
   }
 
   private getContractByAddress(address: string): ContractParameters {

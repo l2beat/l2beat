@@ -1,9 +1,6 @@
 import { expect, mockObject } from 'earl'
 
-import {
-  contractStub,
-  discoveredJsonStub,
-} from '../../test/stubs/discoveredJson'
+import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { Filesystem, ProjectDiscovery } from './ProjectDiscovery'
 
 describe(ProjectDiscovery.name, () => {

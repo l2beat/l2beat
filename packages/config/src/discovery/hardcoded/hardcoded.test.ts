@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 
 import { ProjectDiscovery } from '../ProjectDiscovery'
+import { TESTS_HARDCODED } from './hardcoded'
 
 describe('hardcoded', () => {
   describe('arbitrum', () => {
@@ -12,9 +13,16 @@ describe('hardcoded', () => {
         'setIsBatchPosterCount',
       )
 
-      expect(count).toEqual(
-        arbitrumDiscovery.getHardcoded('SET_IS_BATCH_POSTER_COUNT'),
+      expect(count).toEqual(TESTS_HARDCODED.ARBITRUM_SET_SEQUENCER_COUNT)
+    })
+
+    it('validators', () => {
+      const count = arbitrumDiscovery.getContractValue(
+        'RollupProxy',
+        'setValidatorCount',
       )
+
+      expect(count).toEqual(TESTS_HARDCODED.ARBITRUM_SET_VALIDATOR_COUNT)
     })
   })
 })
