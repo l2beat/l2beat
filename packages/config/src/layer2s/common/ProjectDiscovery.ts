@@ -4,7 +4,6 @@ import {
   ContractValue,
   EthereumAddress,
   ProjectParameters,
-  UpgradeabilityParameters,
 } from '@l2beat/shared'
 import { utils } from 'ethers'
 import fs from 'fs'
@@ -12,7 +11,10 @@ import { isArray, isString } from 'lodash'
 import path from 'path'
 
 import { ProjectPermission, ProjectPermissionedAccount } from '../../common'
-import { ProjectUpgradeability } from './../../common/ProjectContracts'
+import {
+  ProjectContract,
+  ProjectUpgradeability,
+} from './../../common/ProjectContracts'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -48,12 +50,16 @@ export class ProjectDiscovery {
     return JSON.parse(discoveryFile) as ProjectParameters
   }
 
-  getMainContractDetails(identifier: string) {
+  getMainContractDetails(
+    identifier: string,
+    description?: string,
+  ): ProjectContract {
     const contract = this.getContract(identifier)
     return {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
+      description,
     }
   }
 
@@ -133,7 +139,8 @@ export class ProjectDiscovery {
   getContractFromValue(
     contractIdentifier: string,
     key: string,
-  ): ContractParameters {
+    description?: string,
+  ): ProjectContract {
     const address = this.getContractValue(contractIdentifier, key)
     assert(
       isString(address) && EthereumAddress.check(address),
@@ -145,6 +152,7 @@ export class ProjectDiscovery {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
+      description,
     }
   }
 

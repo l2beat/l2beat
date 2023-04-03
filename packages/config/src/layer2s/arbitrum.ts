@@ -215,30 +215,22 @@ export const arbitrum: Layer2 = {
     upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO,
   },
   permissions: [
-    {
-      ...discovery.getGnosisSafeDetails(
-        'SecurityCouncil',
-        'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
-      ),
-    },
-    {
-      ...discovery.contractAsPermissioned(
-        discovery.getContract('ArbitrumProxyAdmin'),
-        'This contract is an admin of SequencerInbox, RollupEventInbox, Bridge, Outbox, Inbox and ChallengeManager contracts. It is owned by the Upgrade Executor.',
-      ),
-    },
-    {
-      ...discovery.contractAsPermissioned(
-        discovery.getContractFromUpgradeability('UpgradeExecutor', 'admin'),
-        'This contract is an admin of the Update Executor contract, but is also owned by it.',
-      ),
-    },
-    {
-      ...discovery.contractAsPermissioned(
-        discovery.getContractFromUpgradeability('L1GatewayRouter', 'admin'),
-        'This is yet another proxy admin for the three gateway contracts. It is owned by the Upgrade Executor.',
-      ),
-    },
+    discovery.getGnosisSafeDetails(
+      'SecurityCouncil',
+      'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('ArbitrumProxyAdmin'),
+      'This contract is an admin of SequencerInbox, RollupEventInbox, Bridge, Outbox, Inbox and ChallengeManager contracts. It is owned by the Upgrade Executor.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContractFromUpgradeability('UpgradeExecutor', 'admin'),
+      'This contract is an admin of the Update Executor contract, but is also owned by it.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContractFromUpgradeability('L1GatewayRouter', 'admin'),
+      'This is yet another proxy admin for the three gateway contracts. It is owned by the Upgrade Executor.',
+    ),
     // TODO: get sequencer from discovery
     {
       name: 'Sequencer',
@@ -341,63 +333,55 @@ export const arbitrum: Layer2 = {
   ],
   contracts: {
     addresses: [
-      {
-        ...discovery.getMainContractDetails('RollupProxy'),
-        description:
-          'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-      },
-      {
-        ...discovery.getMainContractDetails('ArbitrumOneBridge'),
-        description:
-          'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-      },
-      {
-        ...discovery.getMainContractDetails('SequencerInbox'),
-        description:
-          'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-      },
-      {
-        ...discovery.getMainContractDetails('Inbox'),
-        description:
-          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
-      },
-      {
-        ...discovery.getContractFromValue('RollupProxy', 'outbox'),
-        // TODO: add description
-      },
-      {
-        ...discovery.getMainContractDetails('L1GatewayRouter'),
-        description: 'Router managing token <--> gateway mapping.',
-      },
-      {
-        ...discovery.getMainContractDetails('L1ERC20Gateway'),
-        description:
-          'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-      },
-      {
-        ...discovery.getMainContractDetails('L1CustomGateway'),
-        description:
-          'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-      },
-      {
-        ...discovery.getMainContractDetails('L1DaiGateway'),
-        description:
-          'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-      },
-      {
-        ...discovery.getMainContractDetails('L1DaiEscrow'),
-        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-      },
-      {
-        ...discovery.getMainContractDetails('UpgradeExecutor'),
-        description:
-          "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
-      },
-      {
-        ...discovery.getMainContractDetails('L1ArbitrumTimelock'),
-        description:
-          'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
-      },
+      discovery.getMainContractDetails(
+        'RollupProxy',
+        'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
+      ),
+      discovery.getMainContractDetails(
+        'ArbitrumOneBridge',
+        'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+      ),
+      discovery.getMainContractDetails(
+        'SequencerInbox',
+        'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+      ),
+      discovery.getMainContractDetails(
+        'Inbox',
+        'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
+      ),
+      discovery.getContractFromValue(
+        'RollupProxy',
+        'outbox',
+        "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
+      ),
+      discovery.getMainContractDetails(
+        'L1GatewayRouter',
+        'Router managing token <--> gateway mapping.',
+      ),
+      discovery.getMainContractDetails(
+        'L1ERC20Gateway',
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+      ),
+      discovery.getMainContractDetails(
+        'L1CustomGateway',
+        'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
+      ),
+      discovery.getMainContractDetails(
+        'L1DaiGateway',
+        'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
+      ),
+      discovery.getMainContractDetails(
+        'L1DaiEscrow',
+        'DAI Vault for custom DAI Gateway managed by MakerDAO.',
+      ),
+      discovery.getMainContractDetails(
+        'UpgradeExecutor',
+        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+      ),
+      discovery.getMainContractDetails(
+        'L1ArbitrumTimelock',
+        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
