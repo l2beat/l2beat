@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   EXITS,
@@ -8,7 +9,6 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
-import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('metis')

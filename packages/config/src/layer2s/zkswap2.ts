@@ -1,12 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from './common'
-import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 import { zkswap } from './zkswap'
 

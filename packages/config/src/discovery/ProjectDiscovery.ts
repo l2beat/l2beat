@@ -10,11 +10,12 @@ import fs from 'fs'
 import { isArray, isString } from 'lodash'
 import path from 'path'
 
-import { ProjectPermission, ProjectPermissionedAccount } from '../../common'
+import { ProjectPermission, ProjectPermissionedAccount } from '../common'
 import {
   ProjectContract,
   ProjectUpgradeability,
-} from './../../common/ProjectContracts'
+} from '../common/ProjectContracts'
+import { HARDCODED } from './hardcoded/hardcoded'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -223,6 +224,16 @@ export class ProjectDiscovery {
     )
 
     return result
+  }
+
+  getHardcoded(key: string): ContractValue {
+    const value = HARDCODED[this.projectName][key]
+    assert(
+      value,
+      `Value of key ${key} does not exist in hardcoded (${this.projectName})`,
+    )
+
+    return value
   }
 
   private getContractByAddress(address: string): ContractParameters {

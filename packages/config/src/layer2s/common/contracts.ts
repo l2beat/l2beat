@@ -5,7 +5,7 @@ import {
   ProjectContractSingleAddress,
   ProjectRisk,
 } from '../../common'
-import { ProjectDiscovery } from './ProjectDiscovery'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('starknet')
 

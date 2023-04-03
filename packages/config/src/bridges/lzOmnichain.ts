@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS, NUGGETS } from '../layer2s/common'
-import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { OMNICHAN_ESCROWS } from './lzOmnichain.escrows'
 import { Bridge } from './types'

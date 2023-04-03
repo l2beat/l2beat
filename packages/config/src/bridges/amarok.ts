@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s/common'
-import { ProjectDiscovery } from '../layer2s/common/ProjectDiscovery'
 import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('amarok')
