@@ -1,4 +1,4 @@
-import { expect } from 'earljs'
+import { expect } from 'earl'
 import { readdirSync } from 'fs'
 import { afterEach } from 'mocha'
 import path from 'path'

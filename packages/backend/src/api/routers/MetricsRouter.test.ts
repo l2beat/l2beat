@@ -1,4 +1,4 @@
-import { mockObject } from 'earljs'
+import { mockObject } from 'earl'
 import { Histogram } from 'prom-client'
 
 import { Config } from '../../config'

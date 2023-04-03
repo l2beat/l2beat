@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { bridges, layer2s } from '../../src/'
 import { bridge1WithDups } from '../../src/test/stubs/bridge1WithDups'
