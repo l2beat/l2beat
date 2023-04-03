@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { ProjectDiscovery } from '../ProjectDiscovery'
-import { TESTS_HARDCODED } from './hardcoded'
+import { TESTS_HARDCODED } from './test/constants'
 
 describe('hardcoded', () => {
   describe('arbitrum', () => {

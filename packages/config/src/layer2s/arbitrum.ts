@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
+import { HARDCODED_ARBITRUM } from '../discovery/hardcoded/hardcodedArbitrum'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
@@ -64,8 +65,7 @@ export const arbitrum: Layer2 = {
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
-        // TODO: add a way to get this from discovery
-        address: CONTRACTS.ARBITRUM_OLD_BRIDGE,
+        address: HARDCODED_ARBITRUM.OLD_BRIDGE,
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
       },
@@ -234,13 +234,13 @@ export const arbitrum: Layer2 = {
     // TODO: get sequencer from discovery
     {
       name: 'Sequencer',
-      accounts: discovery.getHardcodedPermissionedAccounts('SEQUENCER'),
+      accounts: HARDCODED_ARBITRUM.SEQUENCER,
       description:
         'Central actor allowed to set the order in which L2 transactions are executed.',
     },
     {
       name: 'Validators',
-      accounts: discovery.getHardcodedPermissionedAccounts('VALIDATORS'),
+      accounts: HARDCODED_ARBITRUM.VALIDATORS,
       description:
         'They can submit new state roots and challenge state roots. Some of the validators perform their duties through special purpose smart contracts.',
     },

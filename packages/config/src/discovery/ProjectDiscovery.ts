@@ -15,7 +15,6 @@ import {
   ProjectContract,
   ProjectUpgradeability,
 } from '../common/ProjectContracts'
-import { HARDCODED_PERMISSIONS } from './hardcoded/hardcoded'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -224,16 +223,6 @@ export class ProjectDiscovery {
     )
 
     return result
-  }
-
-  getHardcodedPermissionedAccounts(key: string): ProjectPermissionedAccount[] {
-    const permission = HARDCODED_PERMISSIONS[this.projectName][key]
-    assert(
-      permission,
-      `Value of key ${key} is not an address (${this.projectName})`,
-    )
-
-    return permission
   }
 
   private getContractByAddress(address: string): ContractParameters {
