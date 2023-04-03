@@ -1,5 +1,5 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared'
-import { expect, mockObject } from 'earljs'
+import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'

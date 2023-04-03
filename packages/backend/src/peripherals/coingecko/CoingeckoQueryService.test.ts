@@ -6,7 +6,7 @@ import {
   HttpClient,
   UnixTime,
 } from '@l2beat/shared'
-import { expect, mockFn, mockObject } from 'earljs'
+import { expect, mockFn, mockObject } from 'earl'
 
 import {
   COINGECKO_HOURLY_MAX_SPAN_IN_DAYS,

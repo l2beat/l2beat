@@ -123,6 +123,9 @@
     "RelayTransit": {
       "ignoreRelatives": ["gelato"]
     },
+    "ConnextBridgeOwner": {
+      "ignoreInWatchMode": ["nonce"]
+    },
     //GelatoRelayerHub
     "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": {
       "ignoreDiscovery": true

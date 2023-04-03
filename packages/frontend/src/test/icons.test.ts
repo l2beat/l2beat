@@ -1,5 +1,5 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 import { existsSync } from 'fs'
 import path from 'path'
 

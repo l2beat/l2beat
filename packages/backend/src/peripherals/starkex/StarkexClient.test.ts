@@ -1,6 +1,6 @@
 import { StarkexProduct } from '@l2beat/config'
 import { HttpClient, Logger } from '@l2beat/shared'
-import { expect, mockObject } from 'earljs'
+import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
 import { StarkexClient } from './StarkexClient'
