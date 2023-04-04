@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -39,7 +40,7 @@ export const apex: Layer2 = {
   config: {
     escrows: [
       {
-        address: EthereumAddress('0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb'),
+        address: discovery.getContract('StarkPerpetual').address,
         sinceTimestamp: new UnixTime(1660252039),
         tokens: ['USDC'],
       },
@@ -68,26 +69,14 @@ export const apex: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'StarkPerpetual',
-        address: EthereumAddress('0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb'),
-        description:
-          'Main contract of ApeX exchange. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-        upgradeability: {
-          type: 'StarkWare proxy',
-          implementation: EthereumAddress(
-            '0x67bC2461000cfbe67e9b623EC8B460168BdEC5F0',
-          ),
-          upgradeDelay: 0,
-          isFinal: false,
-        },
-      },
-      {
-        name: 'Committee',
-        address: EthereumAddress('0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4'),
-        description:
-          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-      },
+      discovery.getMainContractDetails(
+        'StarkPerpetual',
+        'Main contract of ApeX exchange. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
+      ),
+      discovery.getMainContractDetails(
+        'Committee',
+        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+      ),
       {
         name: 'MultiSigPool',
         address: EthereumAddress('0xe95b3Dc78c0881dEa17A69BaFC6cFeB8d891e9DE'),
@@ -101,20 +90,15 @@ export const apex: Layer2 = {
   permissions: [
     {
       name: 'Governors',
-      accounts: discovery
-        .getContractValue<string[]>('Proxy', 'GOVERNORS')
-        .map((governor) => ({
-          address: EthereumAddress(governor),
-          type: 'EOA',
-        })),
+      accounts: getProxyGovernance(discovery, 'StarkPerpetual'),
       description:
         'Allowed to upgrade the implementation of the StarkPerpetual contract, potentially maliciously gaining control over the system or stealing funds.',
     },
     {
-      name: 'Governance Multisig',
+      name: 'Perpetual Governance Multisig',
       accounts: [
         {
-          address: discovery.getContract('GnosisSafe').address,
+          address: discovery.getContract('PerpetualGovernanceMultisig').address,
           type: 'MultiSig',
         },
       ],
@@ -122,25 +106,10 @@ export const apex: Layer2 = {
         'Allowed to upgrade the implementation of the StarkPerpetual contract, potentially maliciously gaining control over the system or stealing funds.',
     },
     {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } ApeX MultiSig.`,
-    },
-    {
       name: 'Operators',
       accounts: discovery
-        .getContractValue<string[]>('Proxy', 'OPERATORS')
-        .map((operator) => ({
-          address: EthereumAddress(operator),
-          type: 'EOA',
-        })),
+        .getContractValue<string[]>('StarkPerpetual', 'OPERATORS')
+        .map(discovery.formatPermissionedAccount.bind(discovery)),
       description:
         'Allowed to update state of the system and verify DA proofs. When Operator is down the state cannot be updated.',
     },
@@ -148,22 +117,15 @@ export const apex: Layer2 = {
       name: 'Data Availability Committee',
       accounts: discovery
         .getConstructorArg<string[]>('Committee', 0)
-        .map((a) => ({ address: EthereumAddress(a), type: 'EOA' })),
+        .map(discovery.formatPermissionedAccount.bind(discovery)),
       description: `Validity proof must be signed by at least ${discovery.getConstructorArg<string>(
         'Committee',
         1,
       )} of these addresses to approve state update.`,
     },
     {
-      name: 'SHARP Verifier Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'SHARP Verifier Governors',
+      accounts: getProxyGovernance(discovery, 'CallProxy'),
       description:
         'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
