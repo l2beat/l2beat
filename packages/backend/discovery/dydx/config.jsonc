@@ -2,10 +2,62 @@
   "$schema": "../config.schema.json",
   "name": "dydx",
   "initialAddresses": ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"],
+  "maxDepth": 7,
+  "names": {
+    "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": "StarkPerpetual",
+    "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2": "DydxGovernor",
+    "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9": "GovernanceStrategy",
+    "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": "SafetyModuleV2",
+    "0x92D6C1e31e14520e676a687F0a93788B716BEff5": "DydxToken",
+    "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": "PriorityExecutor",
+    "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": "Executor1",
+    "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc": "Executor2"
+  },
   "overrides": {
-    "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": {
+    "StarkPerpetual": {
       "ignoreMethods": ["configurationHash", "getQuantum", "isAssetRegistered"],
-      "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"]
+      "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],
+      "fields": {
+        "OPERATORS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event LogOperatorAdded(address operator)",
+          "addKey": "operator",
+          "removeEvent": "event LogOperatorRemoved(address operator)",
+          "removeKey": "operator"
+        }
+      }
+    },
+
+    "DydxGovernor": {
+      "ignoreMethods": ["getProposalById", "getProposalState"]
+    },
+    "GovernanceStrategy": {
+      "ignoreMethods": ["getTotalPropositionSupplyAt", "getTotalVotingSupplyAt"]
+    },
+    "SafetyModuleV2": {
+      "ignoreMethods": [
+        "getExchangeRateSnapshot",
+        "getStartOfEpoch",
+        "getCurrentEpoch",
+        "getEpochParameters",
+        "getTimeRemainingInCurrentEpoch",
+        "getTotalActiveBalanceCurrentEpoch",
+        "getTotalActiveBalanceNextEpoch",
+        "getTotalInactiveBalanceCurrentEpoch",
+        "getTotalInactiveBalanceNextEpoch"
+      ]
+    },
+    "DydxToken": {
+      "ignoreMethods": ["_totalSupplySnapshots"]
+    },
+    "PriorityExecutor": {
+      "ignoreMethods": ["getMinimumVotingPowerNeeded"]
+    },
+    "Executor1": {
+      "ignoreMethods": ["getMinimumVotingPowerNeeded"]
+    },
+    "Executor2": {
+      "ignoreMethods": ["getMinimumVotingPowerNeeded"]
     }
   }
 }

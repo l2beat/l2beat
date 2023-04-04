@@ -125,6 +125,25 @@ export class ProjectDiscovery {
     return EthereumAddress(address)
   }
 
+  formatPermissionedAccount(
+    account: ContractValue | EthereumAddress,
+  ): ProjectPermissionedAccount {
+    assert(
+      isString(account) && EthereumAddress.check(account),
+      `Values must be Ethereum addresses`,
+    )
+    const address = EthereumAddress(account)
+    const isEOA = this.discovery.eoas.includes(address)
+    const contract = this.discovery.contracts.find(
+      (contract) => contract.address === address,
+    )
+    const isMultisig = contract?.upgradeability.type === 'gnosis safe'
+
+    const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
+
+    return { address: address, type }
+  }
+
   getPermissionedAccountsList(
     contractIdentifier: string,
     key: string,
@@ -133,22 +152,7 @@ export class ProjectDiscovery {
 
     assert(isArray(value), `Value of ${key} must be an array`)
 
-    return value.map((account) => {
-      assert(
-        isString(account) && EthereumAddress.check(account),
-        `Values of ${key} must be Ethereum addresses`,
-      )
-      const address = EthereumAddress(account)
-      const isEOA = this.discovery.eoas.includes(address)
-      const contract = this.discovery.contracts.find(
-        (contract) => contract.address === address,
-      )
-      const isMultisig = contract?.upgradeability.type === 'gnosis safe'
-
-      const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
-
-      return { address: address, type }
-    })
+    return value.map(this.formatPermissionedAccount.bind(this))
   }
 
   getContractFromValue(
