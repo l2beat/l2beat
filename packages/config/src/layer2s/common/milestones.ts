@@ -93,4 +93,11 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     description:
       'Arbitrum Nova is live, becoming first Optimistic Chain with fallback to Rollup mode.',
   },
+  {
+    name: 'First zkRollup with universal Solidity support',
+    date: '2023-03-24T00:00:00Z',
+    link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
+    description:
+      'zkSync Era is now permissionless and open for everyone brining first zkEVM to mainnet.',
+  },
 ]
