@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared'
 
-import { ProjectPermissionedAccount } from '../../common'
+import { ProjectPermissionedAccount } from '../../../common'
 
 const OLD_BRIDGE = EthereumAddress('0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515')
 
@@ -66,7 +66,7 @@ const VALIDATORS: ProjectPermissionedAccount[] = [
   },
 ]
 
-export const HARDCODED_ARBITRUM = {
+export const ARBITRUM_HARDCODED = {
   OLD_BRIDGE,
   SEQUENCER,
   VALIDATORS,
