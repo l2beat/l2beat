@@ -7,7 +7,7 @@ import {
   getCallResult,
   getCallResultWithRevert,
 } from '../../utils/getCallResult'
-import { getProxyGovernance } from './ StarkWareProxyGovernance'
+import { getProxyGovernance } from './StarkWareProxyGovernance'
 
 // keccak256("StarkWare2019.implemntation-slot")
 const IMPLEMENTATION_SLOT = Bytes.fromHex(
