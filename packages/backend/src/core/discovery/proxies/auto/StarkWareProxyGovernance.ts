@@ -32,21 +32,14 @@ async function getFullGovernance(
   address: EthereumAddress,
   deployer: EthereumAddress,
 ): Promise<string[]> {
-  const definition = {
-    addEvent: 'event LogNewGovernorAccepted(address acceptedGovernor)',
-    addKey: 'acceptedGovernor',
-    removeEvent: 'event LogRemovedGovernor(address removedGovernor)',
-    removeKey: 'removedGovernor',
-  }
-  const abi = new utils.Interface([definition.addEvent, definition.removeEvent])
+  const event = 'event LogNewGovernorAccepted(address acceptedGovernor)'
+  const key = 'acceptedGovernor'
+
+  const abi = new utils.Interface([event])
   const logs = await provider.getLogs(address, [
-    [
-      abi.getEventTopic(definition.addEvent.slice(6)),
-      abi.getEventTopic(definition.removeEvent.slice(6)),
-    ],
+    [abi.getEventTopic(event.slice(6))],
   ])
   const values = new Set<string>()
-
   // As of 04.04.2023 deployer is always a governor
   // but sometimes the event is not emitted
   // in the constructor, so we add it manually
@@ -54,12 +47,7 @@ async function getFullGovernance(
 
   for (const log of logs) {
     const parsed = abi.parseLog(log)
-
-    if (parsed.name.includes('Accepted')) {
-      values.add(parsed.args[definition.addKey])
-    } else {
-      values.delete(parsed.args[definition.removeKey])
-    }
+    values.add(parsed.args[key])
   }
   return Array.from(values)
 }
