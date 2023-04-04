@@ -231,7 +231,6 @@ export const arbitrum: Layer2 = {
       discovery.getContractFromUpgradeability('L1GatewayRouter', 'admin'),
       'This is yet another proxy admin for the three gateway contracts. It is owned by the Upgrade Executor.',
     ),
-    // TODO: get sequencer from discovery
     {
       name: 'Sequencer',
       accounts: HARDCODED.ARBITRUM.SEQUENCER,
@@ -269,6 +268,14 @@ export const arbitrum: Layer2 = {
         "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
       ),
       discovery.getMainContractDetails(
+        'UpgradeExecutor',
+        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+      ),
+      discovery.getMainContractDetails(
+        'L1ArbitrumTimelock',
+        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+      ),
+      discovery.getMainContractDetails(
         'L1GatewayRouter',
         'Router managing token <--> gateway mapping.',
       ),
@@ -284,17 +291,10 @@ export const arbitrum: Layer2 = {
         'L1DaiGateway',
         'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
       ),
-      discovery.getMainContractDetails(
-        'L1DaiEscrow',
+      discovery.getContractFromValue(
+        'L1DaiGateway',
+        'l1Escrow',
         'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-      ),
-      discovery.getMainContractDetails(
-        'UpgradeExecutor',
-        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
-      ),
-      discovery.getMainContractDetails(
-        'L1ArbitrumTimelock',
-        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
