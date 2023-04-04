@@ -80,7 +80,7 @@ export const arbitrum: Layer2 = {
         tokens: '*',
       },
       {
-        address: discovery.getContract('L1DaiEscrow').address,
+        address: discovery.getAddressFromValue('L1DaiGateway', 'l1Escrow'),
         sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
       },
@@ -291,11 +291,11 @@ export const arbitrum: Layer2 = {
         'L1DaiGateway',
         'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
       ),
-      discovery.getContractFromValue(
-        'L1DaiGateway',
-        'l1Escrow',
-        'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-      ),
+      {
+        name: 'L1DaiEscrow',
+        address: discovery.getAddressFromValue('L1DaiGateway', 'l1Escrow'),
+        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
+      },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

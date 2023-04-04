@@ -13,6 +13,7 @@ import path from 'path'
 import { ProjectPermission, ProjectPermissionedAccount } from '../common'
 import {
   ProjectContract,
+  ProjectContractSingleAddress,
   ProjectUpgradeability,
 } from '../common/ProjectContracts'
 
@@ -110,6 +111,20 @@ export class ProjectDiscovery {
     return result
   }
 
+  getAddressFromValue(
+    contractIdentifier: string,
+    key: string,
+  ): EthereumAddress {
+    const address = this.getContractValue(contractIdentifier, key)
+
+    assert(
+      isString(address) && EthereumAddress.check(address),
+      `Value of ${key} must be an Ethereum address`,
+    )
+
+    return EthereumAddress(address)
+  }
+
   getPermissionedAccountsList(
     contractIdentifier: string,
     key: string,
@@ -140,7 +155,7 @@ export class ProjectDiscovery {
     contractIdentifier: string,
     key: string,
     description?: string,
-  ): ProjectContract {
+  ): ProjectContractSingleAddress {
     const address = this.getContractValue(contractIdentifier, key)
     assert(
       isString(address) && EthereumAddress.check(address),
