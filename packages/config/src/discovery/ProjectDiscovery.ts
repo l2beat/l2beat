@@ -10,8 +10,12 @@ import fs from 'fs'
 import { isArray, isString } from 'lodash'
 import path from 'path'
 
-import { ProjectPermissionedAccount } from '../../common'
-import { ProjectUpgradeability } from './../../common/ProjectContracts'
+import { ProjectPermission, ProjectPermissionedAccount } from '../common'
+import {
+  ProjectContract,
+  ProjectContractSingleAddress,
+  ProjectUpgradeability,
+} from '../common/ProjectContracts'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -47,12 +51,40 @@ export class ProjectDiscovery {
     return JSON.parse(discoveryFile) as ProjectParameters
   }
 
-  getMainContractDetails(identifier: string) {
+  getMainContractDetails(
+    identifier: string,
+    description?: string,
+  ): ProjectContract {
     const contract = this.getContract(identifier)
     return {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
+      description,
+    }
+  }
+
+  getGnosisSafeDetails(
+    identifier: string,
+    descriptionPrefix: string,
+  ): ProjectPermission {
+    const contract = this.getContract(identifier)
+    assert(
+      contract.upgradeability.type === 'gnosis safe',
+      `Contract ${contract.name} is not a Gnosis Safe (${this.projectName})`,
+    )
+
+    return {
+      name: identifier,
+      description: `${descriptionPrefix}. This is a Gnosis Safe with ${this.getMultisigStats(
+        identifier,
+      )} threshold`,
+      accounts: [
+        {
+          address: contract.address,
+          type: 'MultiSig',
+        },
+      ],
     }
   }
 
@@ -79,6 +111,20 @@ export class ProjectDiscovery {
     return result
   }
 
+  getAddressFromValue(
+    contractIdentifier: string,
+    key: string,
+  ): EthereumAddress {
+    const address = this.getContractValue(contractIdentifier, key)
+
+    assert(
+      isString(address) && EthereumAddress.check(address),
+      `Value of ${key} must be an Ethereum address`,
+    )
+
+    return EthereumAddress(address)
+  }
+
   getPermissionedAccountsList(
     contractIdentifier: string,
     key: string,
@@ -103,6 +149,59 @@ export class ProjectDiscovery {
 
       return { address: address, type }
     })
+  }
+
+  getContractFromValue(
+    contractIdentifier: string,
+    key: string,
+    description?: string,
+  ): ProjectContractSingleAddress {
+    const address = this.getContractValue(contractIdentifier, key)
+    assert(
+      isString(address) && EthereumAddress.check(address),
+      `Value of ${key} must be an Ethereum address`,
+    )
+    const contract = this.getContract(address)
+
+    return {
+      address: contract.address,
+      name: contract.name,
+      upgradeability: contract.upgradeability,
+      description,
+    }
+  }
+
+  getContractFromUpgradeability<
+    K extends keyof MergedUnion<ProjectUpgradeability>,
+  >(contractIdentifier: string, key: K): ContractParameters {
+    const address = this.getContractUpgradeabilityParam(contractIdentifier, key)
+    assert(
+      isString(address) && EthereumAddress.check(address),
+      `Value of ${key} must be an Ethereum address`,
+    )
+    const contract = this.getContract(address)
+
+    return {
+      address: contract.address,
+      name: contract.name,
+      upgradeability: contract.upgradeability,
+    }
+  }
+
+  contractAsPermissioned(
+    contract: ContractParameters,
+    description: string,
+  ): ProjectPermission {
+    return {
+      name: contract.name,
+      accounts: [
+        {
+          address: contract.address,
+          type: 'Contract',
+        },
+      ],
+      description,
+    }
   }
 
   getMultisigStats(contractIdentifier: string) {

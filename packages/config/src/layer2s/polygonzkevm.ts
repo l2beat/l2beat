@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -11,7 +12,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
-import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
