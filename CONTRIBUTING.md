@@ -47,7 +47,6 @@ If you want to add a new L2 project you can do that by opening a PR. To do this 
       - you can add it in the file `packages/config/src/layer2s/types/Layer2Technology.ts`. Find the optional property `provider`.
       - Create a simple React component to render the technology provider Icon (SVG format required) inside `packages/frontend/src/components/icons/providers`.
       - Import the Icon component created in `packages/frontend/src/components/icons/index.ts`.
-      - Add an entry for the technology provider Icon component you created in `/packages/frontend/src/components/table/ProjectCell.tsx`.
       - To finish, add an entry for the technology provider in the provider's Legend that is located at `packages/frontend/src/components/ScalingLegend.tsx`.
 6. Open a PR :D
 
