@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16888926,
-  "configHash": "0xd3acce9d7a113b06237f4081d7f9e0a04e74e75e7f914a7128dc8b0b7af1ec14",
+  "blockNumber": 16974514,
+  "configHash": "0x28fd1db10cc2fd03059615aed65004e4499da21e6eee0d161a513ff7bcc0f7df",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3909,
+        "firstUnresolvedNode": 4196,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 3908,
-        "latestNodeCreated": 4062,
+        "latestConfirmed": 4195,
+        "latestNodeCreated": 4350,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -37,6 +37,7 @@
         "rollupDeploymentBlock": 15411056,
         "rollupEventInbox": "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+        "setValidatorCount": 7,
         "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
@@ -48,7 +49,8 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
-      }
+      },
+      "derivedName": "RollupProxy"
     },
     {
       "name": "ValidatorWalletCreator",
@@ -91,10 +93,11 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 111050,
+        "batchCount": 132455,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": true,
         "maxTimeVariation": [
           5760,
           12,
@@ -102,11 +105,13 @@
           3600
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "totalDelayedMessagesRead": 664674
-      }
+        "setIsBatchPosterCount": 3,
+        "totalDelayedMessagesRead": 733054
+      },
+      "derivedName": "SequencerInbox"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "ArbitrumProxyAdmin",
       "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
       "code": "https://etherscan.deth.net/address/0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
       "upgradeability": {
@@ -114,7 +119,8 @@
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "RollupEventInbox",
@@ -165,7 +171,7 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "UpgradeExecutorAdmin",
       "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
       "code": "https://etherscan.deth.net/address/0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
       "upgradeability": {
@@ -173,10 +179,11 @@
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
-      "name": "GnosisSafe",
+      "name": "SecurityCouncil",
       "address": "0x3666a60ff589873ced457a9a8a0aA6F83D708767",
       "code": "https://etherscan.deth.net/address/0x3666a60ff589873ced457a9a8a0aA6F83D708767,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -203,7 +210,8 @@
         "getThreshold": 9,
         "nonce": 13,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L1ArbitrumTimelock",
@@ -254,7 +262,8 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      }
+      },
+      "derivedName": "L1ArbitrumTimelock"
     },
     {
       "name": "Outbox",
@@ -291,7 +300,8 @@
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "paused": false,
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
-      }
+      },
+      "derivedName": "Inbox"
     },
     {
       "name": "ChallengeManager",
@@ -357,7 +367,7 @@
       }
     },
     {
-      "name": "Bridge",
+      "name": "ArbitrumOneBridge",
       "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
       "code": "https://etherscan.deth.net/address/0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a,0x1066CEcC8880948FE55e427E94F1FF221d626591",
       "upgradeability": {
@@ -376,12 +386,13 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 664832,
+        "delayedMessageCount": 733077,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 111050,
-        "sequencerReportedSubMessageCount": 50544958
-      }
+        "sequencerMessageCount": 132455,
+        "sequencerReportedSubMessageCount": 54691303
+      },
+      "derivedName": "Bridge"
     },
     {
       "name": "Outbox",
@@ -404,7 +415,8 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 1,
         "rollup": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
-      }
+      },
+      "derivedName": "Outbox"
     },
     {
       "name": "OldOutbox",
@@ -470,10 +482,11 @@
         "l2BeaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "whitelist": "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459"
-      }
+      },
+      "derivedName": "L1ERC20Gateway"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "GatewaysAdmin",
       "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
       "code": "https://etherscan.deth.net/address/0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
       "upgradeability": {
@@ -481,7 +494,8 @@
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "Whitelist",
@@ -527,7 +541,27 @@
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "whitelist": "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459"
-      }
+      },
+      "derivedName": "L1CustomGateway"
+    },
+    {
+      "name": "L1DaiGateway",
+      "address": "0xD3B5b60020504bc3489D6949d545893982BA3011",
+      "code": "https://etherscan.deth.net/address/0xD3B5b60020504bc3489D6949d545893982BA3011",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "counterpartGateway": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+        "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "isOpen": 1,
+        "l1Dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "l1Escrow": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+        "l1Router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+        "l2Counterpart": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+        "l2Dai": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+      },
+      "derivedName": "L1DaiGateway"
     }
   ],
   "eoas": [
@@ -1352,6 +1386,31 @@
     ],
     "0xd315Ac3a82E8EDAA84b347F478e0F59801747970": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
+    ],
+    "0xD3B5b60020504bc3489D6949d545893982BA3011": [
+      "constructor(address _l2Counterpart, address _l1Router, address _inbox, address _l1Dai, address _l2Dai, address _l1Escrow)",
+      "event Closed()",
+      "event Deny(address indexed usr)",
+      "event DepositInitiated(address l1Token, address indexed from, address indexed to, uint256 indexed sequenceNumber, uint256 amount)",
+      "event Rely(address indexed usr)",
+      "event TxToL2(address indexed from, address indexed to, uint256 indexed seqNum, bytes data)",
+      "event WithdrawalFinalized(address l1Token, address indexed from, address indexed to, uint256 indexed exitNum, uint256 amount)",
+      "function calculateL2TokenAddress(address l1Token) view returns (address)",
+      "function close()",
+      "function counterpartGateway() view returns (address)",
+      "function deny(address usr)",
+      "function finalizeInboundTransfer(address l1Token, address from, address to, uint256 amount, bytes data)",
+      "function getOutboundCalldata(address l1Token, address from, address to, uint256 amount, bytes data) pure returns (bytes outboundCalldata)",
+      "function inbox() view returns (address)",
+      "function isOpen() view returns (uint256)",
+      "function l1Dai() view returns (address)",
+      "function l1Escrow() view returns (address)",
+      "function l1Router() view returns (address)",
+      "function l2Counterpart() view returns (address)",
+      "function l2Dai() view returns (address)",
+      "function outboundTransfer(address l1Token, address to, uint256 amount, uint256 maxGas, uint256 gasPriceBid, bytes data) payable returns (bytes)",
+      "function rely(address usr)",
+      "function wards(address) view returns (uint256)"
     ],
     "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459": [
       "constructor()",

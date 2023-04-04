@@ -271,6 +271,37 @@ Call a method and reference other fields in arguments:
 }
 ```
 
+### Events count handler
+
+The call handler allows you to call amount of the emitted events from the contract with the specified topics.
+
+**Case study: Arbitrum validators**
+
+List of validators cannot be easily obtained from the contract, there is no getter. Additionally the method does not emit an event helpful enough to use `arrayFromOneEvent` handler. But it does emit an event that can be used to determine the amount of calls of the functions `setValidator`, when count changes our bot will notify us about the possible changes in the validator set. Later developer can manually update the hardcoded list of validators.
+
+**Parameters:**
+
+- `type` - always the literal: `"eventCount"`
+- `topics` - array of topics to filter events by.
+
+**Examples:**
+
+Count events with the specified topics:
+
+```json
+{
+  "setValidatorCount": {
+    "type": "eventCount",
+    "topics": [
+      // event OwnerFunctionCalled(uint256 indexed id);
+      "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+      // id == 6 is emitted inside setValidator()
+      "0x0000000000000000000000000000000000000000000000000000000000000006"
+    ]
+  }
+}
+```
+
 ### Access control handler
 
 This handler allows you to analyze a contract using OpenZeppelin's AccessControl pattern.

@@ -4,10 +4,48 @@
   "initialAddresses": [
     "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
     "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-    "0xcEe284F754E854890e311e3280b767F80797180d"
+    "0xcEe284F754E854890e311e3280b767F80797180d",
+    "0xD3B5b60020504bc3489D6949d545893982BA3011"
   ],
+  "names": {
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "ArbitrumOneBridge",
+    "0xcEe284F754E854890e311e3280b767F80797180d": "L1CustomGateway",
+    "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": "L1ERC20Gateway",
+    "0x3666a60ff589873ced457a9a8a0aA6F83D708767": "SecurityCouncil",
+    "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": "ArbitrumProxyAdmin",
+    "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "UpgradeExecutorAdmin",
+    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1ArbitrumTimelock",
+    "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35": "RollupProxy",
+    "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": "SequencerInbox",
+    "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "Inbox",
+    "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": "Outbox",
+    "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "GatewaysAdmin",
+    "0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway"
+  },
   "overrides": {
-    "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35": {
+    "ArbitrumOneBridge": {
+      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
+    },
+    "L1CustomGateway": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "L1ERC20Gateway": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "L1ArbitrumTimelock": {
+      "ignoreRelatives": ["l2Timelock"],
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "RollupProxy": {
       "ignoreMethods": [
         // Execution reverted
         "proxiableUUID"
@@ -16,28 +54,63 @@
         "firstUnresolvedNode",
         "latestConfirmed",
         "latestNodeCreated"
-      ]
+      ],
+      "fields": {
+        // when this changes, it means the validators have changed
+        "setValidatorCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        }
+      }
     },
-    "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": {
+    "SequencerInbox": {
       "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"]
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "fields": {
+        // getting sequencers from the contract is too complex at the moment
+        // so we hardcode it in config .ts
+        // this field will notify us in case of changes
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
+          "type": "call",
+          "method": "function isBatchPoster(address) external view returns (bool)",
+          "args": ["0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
+        },
+        // when this changes, it means the sequencers have changed
+        "setIsBatchPosterCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000001"
+          ]
+        }
+      }
+    },
+    "Outbox": {
+      "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
+    },
+    "L1DaiGateway": {
+      "ignoreRelatives": [
+        "counterpartGateway",
+        "inbox",
+        "l1Dai",
+        "l1Escrow",
+        "l1Router",
+        "l2Counterpart",
+        "l2Dai"
+      ]
     },
     "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": {
       "ignoreMethods": ["isSpent", "spent"]
     },
     "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": {
       "ignoreMethods": ["challenges"]
-    },
-    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
-      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ]
-    },
-    "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": {
-      "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
     },
     "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A": {
       // old Rollup core
@@ -58,25 +131,8 @@
         }
       }
     },
-    // L1ArbitrumTimelock
-    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
-      "ignoreRelatives": ["l2Timelock"],
-      "fields": {
-        "accessControl": {
-          "type": "accessControl"
-        }
-      }
-    },
-    // L1Erc20Gateway
-    "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": {
-      "ignoreRelatives": ["counterpartGateway"]
-    },
     // L1GatewayRouter
     "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
-      "ignoreRelatives": ["counterpartGateway"]
-    },
-    // L1CustomGateway
-    "0xcEe284F754E854890e311e3280b767F80797180d": {
       "ignoreRelatives": ["counterpartGateway"]
     }
   }
