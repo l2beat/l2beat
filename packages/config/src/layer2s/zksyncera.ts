@@ -7,6 +7,7 @@ import {
   EXITS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
+  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -250,6 +251,13 @@ export const zksyncera: Layer2 = {
       link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
       date: '2023-03-24T00:00:00Z',
       description: 'zkSync Era is now permissionless and open for everyone.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'State diffs vs raw tx data',
+      url: 'https://twitter.com/krzKaczor/status/1641505354600046594',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 }
