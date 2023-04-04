@@ -1,6 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -17,6 +19,11 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('deversifi')
+const delaySeconds = discovery.getContractUpgradeabilityParam(
+  'StarkExchange',
+  'upgradeDelay',
+)
+const delay = formatSeconds(delaySeconds)
 
 export const rhinofi: Layer2 = {
   type: 'layer2',
@@ -53,7 +60,7 @@ export const rhinofi: Layer2 = {
     associatedTokens: ['DVF'],
     escrows: [
       {
-        address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
+        address: discovery.getContract('StarkExchange').address,
         sinceTimestamp: new UnixTime(1590491810),
         tokens: '*',
       },
@@ -86,36 +93,20 @@ export const rhinofi: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'StarkExchange',
-        address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
-        upgradeability: {
-          type: 'StarkWare proxy',
-          implementation: EthereumAddress(
-            '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
-          ),
-          useConstantDelay: true,
-          // TODO: figure out the double proxy
-          upgradeDelay: 1209600,
-          // upgradeDelay: 2419200,
-          isFinal: false,
-        },
-      },
-      {
-        name: 'Committee',
-        description:
-          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-        address: EthereumAddress('0x28780349A33eEE56bb92241bAAB8095449e24306'),
-      },
+      discovery.getMainContractDetails('StarkExchange'),
+      discovery.getMainContractDetails(
+        'Committee',
+        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+      ),
       SHARP_VERIFIER_CONTRACT,
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
   permissions: [
     {
       name: 'Governors',
       accounts: discovery
-        .getContractValue<string[]>('Proxy', 'GOVERNORS')
+        .getContractValue<string[]>('StarkExchange', 'GOVERNORS')
         .map((governor) => ({
           address: EthereumAddress(governor),
           type: 'EOA',
@@ -134,26 +125,20 @@ export const rhinofi: Layer2 = {
       )} of these addresses to approve state update.`,
     },
     {
-      name: 'SHARP Verifier Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'SHARP Verifier Governors',
+      accounts: getProxyGovernance(discovery, 'CallProxy'),
       description:
         'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
+    discovery.getGnosisSafeDetails(
+      'VerifierGovernorMultisig',
+      'SHARP Verifier Governor.',
+    ),
     {
       name: 'Operators',
       accounts: discovery
-        .getContractValue<string[]>('Proxy', 'OPERATORS')
-        .map((operator) => ({
-          address: EthereumAddress(operator),
-          type: 'EOA',
-        })),
+        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
+        .map(discovery.formatPermissionedAccount.bind(discovery)),
       description:
         'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
     },
