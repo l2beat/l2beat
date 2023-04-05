@@ -4,8 +4,14 @@ import {
   isSingleAddress,
   Layer2,
   ProjectContract,
+  ProjectEscrow,
 } from '@l2beat/config'
-import { assertUnreachable, VerificationStatus } from '@l2beat/shared'
+import {
+  assert,
+  assertUnreachable,
+  EthereumAddress,
+  VerificationStatus,
+} from '@l2beat/shared'
 
 import {
   TechnologyContract,
@@ -22,6 +28,19 @@ export function getContractSection(
     const isUnverified = isContractUnverified(contract, verificationStatus)
     return makeTechnologyContract(contract, project, isUnverified)
   })
+
+  const escrows = project.config.escrows
+    .filter((escrow) => escrow.newVersion && !escrow.hidden)
+    .sort(moreTokensFirst)
+    .map((escrow) => {
+      const isUnverified = isAddressUnverified(
+        escrow.address,
+        verificationStatus,
+      )
+      const contract = escrowToProjectContract(escrow)
+
+      return makeTechnologyContract(contract, project, isUnverified, true)
+    })
 
   const risks =
     project.contracts?.risks.map((risk) => ({
@@ -42,6 +61,7 @@ export function getContractSection(
 
   return {
     contracts: contracts ?? [],
+    escrows: escrows,
     risks: risks,
     architectureImage,
     references: project.contracts?.references ?? [],
@@ -54,6 +74,7 @@ function makeTechnologyContract(
   item: ProjectContract,
   project: Layer2 | Bridge,
   isUnverified: boolean,
+  isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
 
@@ -187,7 +208,8 @@ function makeTechnologyContract(
     const tokens = project.config.escrows.find(
       (x) => x.address === item.address,
     )?.tokens
-    if (tokens) {
+    // if contract is an escrow we already tweak it's name so we don't need to add this
+    if (tokens && !isEscrow) {
       const tokenText =
         tokens === '*'
           ? 'This contract can store any token'
@@ -218,7 +240,7 @@ function isContractUnverified(
     projects: Record<string, boolean | undefined>
     contracts: Record<string, boolean | undefined>
   },
-) {
+): boolean {
   if (isSingleAddress(contract)) {
     return verificationStatus.contracts[contract.address.toString()] === false
   }
@@ -226,4 +248,35 @@ function isContractUnverified(
   return contract.multipleAddresses.some(
     (address) => verificationStatus.contracts[address.toString()],
   )
+}
+
+function isAddressUnverified(
+  address: EthereumAddress,
+  verificationStatus: {
+    projects: Record<string, boolean | undefined>
+    contracts: Record<string, boolean | undefined>
+  },
+): boolean {
+  return verificationStatus.contracts[address.toString()] === false
+}
+
+function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
+  assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
+
+  return {
+    name:
+      escrow.tokens === '*'
+        ? 'Generic escrow'
+        : 'Escrow for ' + escrow.tokens.join(', '),
+    address: escrow.address,
+    description: escrow.description,
+    upgradeability: escrow.upgradeability,
+  }
+}
+
+function moreTokensFirst(a: ProjectEscrow, b: ProjectEscrow) {
+  const aTokens = a.tokens === '*' ? Number.POSITIVE_INFINITY : a.tokens.length
+  const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
+
+  return bTokens - aTokens
 }
