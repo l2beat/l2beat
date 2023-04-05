@@ -24,12 +24,14 @@ export const layer2financezk: Layer2 = {
   display: {
     name: 'L2.Finance-zk',
     slug: 'layer2financezk',
+    warning:
+      'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
     description:
       'Celer’s Layer2.finance in ZK Proofs Mode Built with StarkEx from StarkWare.',
     purpose: 'DeFi protocols',
     links: {
       websites: ['https://layer2.finance/'],
-      apps: ['https://zk.layer2.finance'],
+      apps: [],
       documentation: [],
       explorers: [],
       repositories: [
