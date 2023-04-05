@@ -29,6 +29,7 @@ export function getContractSection(
   })
 
   const escrows = project.config.escrows
+    .sort(moreTokensFirst)
     .map((escrow) => {
       const isUnverified = isAddressUnverified(
         escrow.address,
@@ -40,7 +41,7 @@ export function getContractSection(
         return undefined
       }
 
-      return makeTechnologyContract(contract, project, isUnverified)
+      return makeTechnologyContract(contract, project, isUnverified, true)
     })
     .filter((escrow): escrow is TechnologyContract => !!escrow)
 
@@ -76,6 +77,7 @@ function makeTechnologyContract(
   item: ProjectContract,
   project: Layer2 | Bridge,
   isUnverified: boolean,
+  isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
 
@@ -209,7 +211,8 @@ function makeTechnologyContract(
     const tokens = project.config.escrows.find(
       (x) => x.address === item.address,
     )?.tokens
-    if (tokens) {
+    // if contract is an escrow we already tweak it's name so we don't need to add this
+    if (tokens && !isEscrow) {
       const tokenText =
         tokens === '*'
           ? 'This contract can store any token'
@@ -269,8 +272,19 @@ function escrowToProjectContract(
   }
 
   return {
-    name: 'Escrow for ' + escrow.tokens,
+    name:
+      escrow.tokens === '*'
+        ? 'Generic escrow'
+        : 'Escrow for ' + escrow.tokens.join(', '),
     address: escrow.address,
+    description: escrow.description,
     upgradeability: escrow.upgradeability,
   }
+}
+
+function moreTokensFirst(a: ProjectEscrow, b: ProjectEscrow) {
+  const aTokens = a.tokens === '*' ? Number.POSITIVE_INFINITY : a.tokens.length
+  const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
+
+  return bTokens - aTokens
 }
