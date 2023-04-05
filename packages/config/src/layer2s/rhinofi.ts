@@ -2,6 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
+import { delayDescriptionFromString } from '../utils/delayDescription'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -75,7 +76,7 @@ export const rhinofi: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY('14 days'),
+    upgradeability: RISK_VIEW.UPGRADE_DELAY(delay),
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -106,7 +107,9 @@ export const rhinofi: Layer2 = {
     {
       name: 'Governors',
       accounts: getProxyGovernance(discovery, 'StarkExchange'),
-      description: `Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is ${delay} before the upgrade.`,
+      description:
+        'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromString(delay),
     },
     {
       name: 'Data Availability Committee',
@@ -122,7 +125,8 @@ export const rhinofi: Layer2 = {
       name: 'SHARP Verifier Governors',
       accounts: getProxyGovernance(discovery, 'CallProxy'),
       description:
-        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
+        discovery.getDelayStringFromUpgradeability('CallProxy', 'upgradeDelay'),
     },
     discovery.getGnosisSafeDetails(
       'VerifierGovernorMultisig',

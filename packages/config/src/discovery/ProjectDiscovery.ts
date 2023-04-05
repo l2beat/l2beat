@@ -16,6 +16,7 @@ import {
   ProjectContractSingleAddress,
   ProjectUpgradeability,
 } from '../common/ProjectContracts'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -190,6 +191,14 @@ export class ProjectDiscovery {
       name: contract.name,
       upgradeability: contract.upgradeability,
     }
+  }
+
+  getDelayStringFromUpgradeability<
+    K extends keyof MergedUnion<ProjectUpgradeability>,
+  >(contractIdentifier: string, key: K): string {
+    const delay = this.getContractUpgradeabilityParam(contractIdentifier, key)
+    assert(typeof delay === 'number', `Value of ${key} must be a number`)
+    return delayDescriptionFromSeconds(delay)
   }
 
   contractAsPermissioned(
