@@ -8,4 +8,6 @@ export const DASHBOARD_COLORS = {
   DISCOVERED: '#5DADE2',
   PROXY: '#f7237c',
   PROXY_BACKGROUND: '#8f0d43',
+  VALUE: '#939292',
+  COMMENT: '#CDCDCD',
 }

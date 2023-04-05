@@ -1,6 +1,6 @@
 import { Logger, Retries } from '@l2beat/shared'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { TaskQueue } from './TaskQueue'
 

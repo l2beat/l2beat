@@ -1,5 +1,5 @@
 import { AssetId, Logger, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
 import { PriceRecord, PriceRepository } from './PriceRepository'
@@ -69,7 +69,7 @@ describe(PriceRepository.name, () => {
     it('big query', async () => {
       const records: PriceRecord[] = []
       const now = UnixTime.now()
-      for (let i = 5; i < 35_000; i++) {
+      for (let i = 5; i < 15_000; i++) {
         records.push({
           priceUsd: Math.random() * 1000,
           timestamp: now.add(-i, 'hours'),

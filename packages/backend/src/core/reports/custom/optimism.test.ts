@@ -1,5 +1,5 @@
 import { AssetId, ProjectId, UnixTime } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import {

@@ -3,9 +3,9 @@ import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
-import { ConfigReader } from '../../core/discovery/ConfigReader'
-import { DiscoveryEngine } from '../../core/discovery/DiscoveryEngine'
-import { DiscoveryLogger } from '../../core/discovery/DiscoveryLogger'
+import { ConfigReader } from '../../core/discovery/config/ConfigReader'
+import { DiscoveryEngine } from '../../core/discovery/utils/DiscoveryEngine'
+import { DiscoveryLogger } from '../../core/discovery/utils/DiscoveryLogger'
 import { DiscoveryWatcher } from '../../core/DiscoveryWatcher'
 import { DiscoveryWatcherRepository } from '../../peripherals/database/discovery/DiscoveryWatcherRepository'
 import { Database } from '../../peripherals/database/shared/Database'
@@ -20,6 +20,7 @@ export function createDiscoveryWatcherModule(
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.discoveryWatcher) {
+    logger.info('Discovery Watcher module disabled')
     return
   }
 

@@ -6,7 +6,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared'
-import { expect } from 'earljs'
+import { expect } from 'earl'
 
 import { ProjectEscrow } from '../../model'
 import { getReportConfigHash } from './getReportConfigHash'

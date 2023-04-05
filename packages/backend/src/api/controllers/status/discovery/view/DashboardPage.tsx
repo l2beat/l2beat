@@ -3,6 +3,7 @@ import React from 'react'
 import { Page } from '../../view/Page'
 import { reactToHtml } from '../../view/reactToHtml'
 import { DashboardProject } from '../props/getDashboardProjects'
+import { getHardcoded } from '../props/utils/getHardcoded'
 import { DASHBOARD_COLORS } from './constants'
 
 interface DashboardPageProps {
@@ -11,6 +12,8 @@ interface DashboardPageProps {
 }
 
 export function DashboardPage(props: DashboardPageProps) {
+  const hardcoded = getHardcoded()
+
   const projects = props.projects
     .concat(
       props.projectsList
@@ -39,6 +42,7 @@ export function DashboardPage(props: DashboardPageProps) {
         <thead>
           <tr>
             <th rowSpan={2}>Project</th>
+            <th rowSpan={2}>Hardcoded</th>
             <th colSpan={4}>Contracts</th>
             <th rowSpan={2} />
             <th colSpan={4}>Values</th>
@@ -69,6 +73,12 @@ export function DashboardPage(props: DashboardPageProps) {
                   <span key={index}>{project.name}</span>
                 )}
               </td>
+              <TableData
+                value={
+                  hardcoded[project.name] === 0 ? '✅' : hardcoded[project.name]
+                }
+                color={DASHBOARD_COLORS.UNVERIFIED}
+              />
               <TableData value={project.discoveredCount} />
               <TableData
                 value={project.initialAddressesCount}
@@ -111,7 +121,7 @@ export function DashboardPage(props: DashboardPageProps) {
   )
 }
 
-function TableData(props: { value?: number; color?: string }) {
+function TableData(props: { value?: number | string; color?: string }) {
   return (
     <td style={{ padding: '1px 2px', color: props.color ?? '' }}>
       {props.value !== undefined && props.value}

@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -11,7 +12,6 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
-import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
@@ -27,22 +27,29 @@ export const nova: Layer2 = {
       'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
     purpose: 'Universal',
     links: {
-      websites: ['https://arbitrum.io/', 'https://offchainlabs.com/'],
+      websites: [
+        'https://nova.arbitrum.io/',
+        'https://arbitrum.io/',
+        'https://arbitrum.foundation/',
+      ],
       apps: [],
       documentation: [
-        'https://developer.offchainlabs.com/',
-        'https://github.com/OffchainLabs/nitro/blob/master/docs/inside_anytrust.md',
+        'https://developer.arbitrum.io/',
+        'https://developer.arbitrum.io/inside-arbitrum-nitro/#inside-anytrust',
       ],
       explorers: [
         'https://nova.arbiscan.io/',
-        'https://a4ba-explorer.arbitrum.io/',
+        'https://nova-explorer.arbitrum.io/',
       ],
-      repositories: ['https://github.com/OffchainLabs/nitro'],
+      repositories: [
+        'https://github.com/ArbitrumFoundation/docs',
+        'https://github.com/ArbitrumFoundation/governance',
+        'https://github.com/OffchainLabs/nitro',
+      ],
       socialMedia: [
-        'https://twitter.com/OffchainLabs',
         'https://twitter.com/arbitrum',
-        'https://medium.com/offchainlabs',
-        'https://discord.gg/5KE54JwyTs',
+        'https://arbitrumfoundation.medium.com/',
+        'https://discord.gg/Arbitrum',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -72,7 +79,7 @@ export const nova: Layer2 = {
       // We need to subtract the Nitro system transaction in every block except for genesis
       assessCount: (count: number, blockNumber: number) =>
         blockNumber !== 0 ? count - 1 : count,
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
+      startBlock: 1,
     },
   },
   riskView: makeBridgeCompatible({

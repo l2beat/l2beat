@@ -18,12 +18,22 @@
       "type": "array",
       "items": { "$ref": "#/$defs/address" }
     },
+    "maxDepth": {
+      "description": "Maximum depth of discovery",
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxAddresses": {
+      "description": "Maximum number of addresses that a discovery script can put on its stack",
+      "type": "integer",
+      "minimum": 0
+    },
     "overrides": {
       "type": "object",
       "description": "Specific configuration for discovered contracts",
       "unevaluatedProperties": false,
       "patternProperties": {
-        "^0x[a-fA-F\\d]{40}$": {
+        "^.+$": {
           "type": "object",
           "unevaluatedProperties": false,
           "properties": {
@@ -51,6 +61,41 @@
                   "properties": {
                     "type": { "type": "string" }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "names": {
+      "type": "object",
+      "description": "Human-readable names for discovered contracts",
+      "unevaluatedProperties": false,
+      "patternProperties": {
+        "^0x[a-fA-F\\d]{40}$": {
+          "type": "string"
+        }
+      }
+    },
+    "descriptions": {
+      "type": "object",
+      "description": "Description for contracts and their methods",
+      "unevaluatedProperties": false,
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "unevaluatedProperties": false,
+          "patternProperties": {
+            "description": {
+              "type": "string"
+            },
+            "methods": {
+              "type": "object",
+              "unevaluatedProperties": false,
+              "patternProperties": {
+                "^.+$": {
+                  "type": "string"
                 }
               }
             }

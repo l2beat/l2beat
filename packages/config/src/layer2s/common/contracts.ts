@@ -5,7 +5,7 @@ import {
   ProjectContractSingleAddress,
   ProjectRisk,
 } from '../../common'
-import { ProjectDiscovery } from './ProjectDiscovery'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('starknet')
 
@@ -44,10 +44,15 @@ const EMPTY: ProjectContracts = {
   risks: [],
 }
 
+const ARBITRUM_OLD_BRIDGE = EthereumAddress(
+  '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
+)
+
 export const CONTRACTS = {
   EMPTY,
   UNVERIFIED_DESCRIPTION,
   UNVERIFIED_RISK,
   UPGRADE_NO_DELAY_RISK,
   UPGRADE_WITH_DELAY_RISK,
+  ARBITRUM_OLD_BRIDGE,
 }

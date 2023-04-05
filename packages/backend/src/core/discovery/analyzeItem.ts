@@ -4,13 +4,13 @@ import {
   EthereumAddress,
 } from '@l2beat/shared'
 
-import { DiscoveryConfig } from './DiscoveryConfig'
-import { DiscoveryLogger } from './DiscoveryLogger'
-import { getMetadata } from './getMetadata'
+import { ContractOverrides } from './config/DiscoveryOverrides'
 import { executeHandlers } from './handlers/executeHandlers'
 import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { detectProxy } from './proxies'
+import { DiscoveryLogger } from './utils/DiscoveryLogger'
+import { getMetadata } from './utils/getMetadata'
 
 export interface AnalyzedData extends ContractParameters {
   meta: {
@@ -25,11 +25,9 @@ export interface AnalyzedData extends ContractParameters {
 export async function analyzeItem(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-  config: DiscoveryConfig,
+  overrides: ContractOverrides | undefined,
   logger: DiscoveryLogger,
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
-  const overrides = config.overrides?.[address.toString()]
-
   const proxyDetection = await detectProxy(
     provider,
     address,

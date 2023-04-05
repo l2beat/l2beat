@@ -1,12 +1,12 @@
 import { ContractParameters, ProjectParameters } from '@l2beat/shared'
-import { isArray } from 'lodash'
+import { isArray, isObject } from 'lodash'
 
 import { getDiscoveryChild } from './getDiscoveryChild'
 import { DashboardContractField } from './getValues'
 
 export function getUpgradeabilityParams(
-  contract: ContractParameters,
   discovery: ProjectParameters,
+  contract: ContractParameters,
 ): DashboardContractField[] {
   const result: DashboardContractField[] = []
 
@@ -21,7 +21,7 @@ export function getUpgradeabilityParams(
         values: [
           {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            value: value.toString(),
+            value: isObject(value) ? JSON.stringify(value) : value.toString(),
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             discoveryChild: getDiscoveryChild(discovery, contract, value),
           },

@@ -10,6 +10,7 @@ import { getDiscoveryChild } from './getDiscoveryChild'
 export interface DashboardContractField {
   name: string
   values?: DashboardContractFieldValue[]
+  description?: string
 }
 
 export interface DashboardContractFieldValue {

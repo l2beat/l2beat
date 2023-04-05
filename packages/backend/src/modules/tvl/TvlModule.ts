@@ -13,7 +13,7 @@ import { Config } from '../../config'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
-import { ConfigReader } from '../../core/discovery/ConfigReader'
+import { ConfigReader } from '../../core/discovery/config/ConfigReader'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { ReportUpdater } from '../../core/reports/ReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
@@ -38,6 +38,7 @@ export function createTvlModule(
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.tvl) {
+    logger.info('TVL module disabled')
     return
   }
 
@@ -140,6 +141,7 @@ export function createTvlModule(
 
   const start = async () => {
     if (!config.syncEnabled) {
+      logger.info('TVL sync disabled')
       return
     }
 

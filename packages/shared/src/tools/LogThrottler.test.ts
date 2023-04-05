@@ -1,5 +1,5 @@
 import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect, mockFn } from 'earljs'
+import { expect, mockFn } from 'earl'
 
 import { Logger } from './Logger'
 import { LogThrottler, LogThrottlerOptions } from './LogThrottler'

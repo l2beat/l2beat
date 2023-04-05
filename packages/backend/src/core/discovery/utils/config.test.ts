@@ -1,9 +1,9 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { assert } from '@l2beat/shared'
+import { assert, EthereumAddress } from '@l2beat/shared'
+import { expect } from 'earl'
 
-import { ConfigReader } from '../ConfigReader'
-import { DiscoveryConfig } from '../DiscoveryConfig'
-import { getDiscoveryConfigHash } from './getDiscoveryConfigHash'
+import { ConfigReader } from '../config/ConfigReader'
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
@@ -46,13 +46,9 @@ describe('discovery config.jsonc', () => {
 
   it('fields inside ignoreInWatchMode exists in discovery', async function () {
     for (const config of configs ?? []) {
-      if (config.overrides === undefined) {
-        continue
-      }
-
       const discovery = await configReader.readDiscovery(config.name)
 
-      for (const [address, override] of Object.entries(config.overrides)) {
+      for (const override of config.overrides) {
         if (override.ignoreDiscovery === true) {
           continue
         }
@@ -62,10 +58,10 @@ describe('discovery config.jsonc', () => {
         }
 
         const contract = discovery.contracts.find(
-          (c) => c.address.toString() === address,
+          (c) => c.address === override.address,
         )
 
-        const errorPrefix = `${config.name} - ${address}`
+        const errorPrefix = `${config.name} - ${override.address.toString()}`
 
         assert(
           contract,
@@ -95,15 +91,15 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(config.name)
 
-      const configHash = getDiscoveryConfigHash(config)
-
-      if (discovery.configHash !== configHash) {
+      if (discovery.configHash !== config.hash) {
         outdatedHashes.push(config.name)
       }
     }
     assert(
       outdatedHashes.length === 0,
-      'Following projects have outdated hashes. Run "yarn discover <config.name>',
+      `Following projects have outdated hashes: ${outdatedHashes.join(
+        ',',
+      )}. Run yarn discover <outdatedProjectName>`,
     )
   })
 
@@ -116,5 +112,49 @@ describe('discovery config.jsonc', () => {
         `${config.name} discovery.json includes errors. Run "yarn discover ${config.name}".`,
       )
     }
+  })
+
+  describe('overrides', () => {
+    // this test ensures that every named override resolves to an address
+    // do not remove it unless you know what you are doing
+    it('every override correspond to existing contract', async () => {
+      for (const config of configs ?? []) {
+        for (const key of Object.keys(config.raw.overrides ?? {})) {
+          if (!EthereumAddress.check(key)) {
+            expect(() => config.overrides.get(key)).not.toThrow()
+          }
+        }
+      }
+    })
+  })
+
+  describe('names', () => {
+    // TODO: L2B-1235
+    // it('every name correspond to existing contract', async () => {
+    //   for (const config of configs ?? []) {
+    //     const discovery = await configReader.readDiscovery(config.name)
+
+    //     assert(
+    //       Object.keys(config.names ?? {}).every((address) =>
+    //         discovery.contracts.some((c) => c.address.toString() === address),
+    //       ),
+    //       `names field in ${config.name} configuration includes addresses that do not exist inside discovery.json`,
+    //     )
+    //   }
+    // })
+
+    it('every name is unique', async () => {
+      for (const config of configs ?? []) {
+        if (config.raw.names === undefined) {
+          continue
+        }
+
+        assert(
+          new Set(Object.values(config.raw.names)).size ===
+            Object.values(config.raw.names).length,
+          `names field in ${config.name} configuration includes duplicate names`,
+        )
+      }
+    })
   })
 })

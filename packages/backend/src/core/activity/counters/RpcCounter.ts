@@ -25,7 +25,7 @@ export function createRpcCounter(
   const timeout = transactionApi.timeout ?? 15_000
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
   const url = transactionApi.url
-  assert(url, 'Url for rpc client must be defined')
+  assert(url, `Url for rpc client must be defined for ${projectId.toString()}`)
   const provider = new providers.StaticJsonRpcProvider({
     url,
     timeout,

@@ -16,10 +16,17 @@ export function Header(props: HeaderProps) {
   return (
     <blockquote>
       <h4>
-        <ContractName contract={props.contract} />
+        <ContractName contract={props.contract} showDerivedName={true} />
         <InitialIndicator isInitial={props.contract.isInitial} />
         <ProxyIndicator type={props.contract.proxyType} />
       </h4>
+      {props.contract.description && (
+        <p>
+          <i style={{ color: DASHBOARD_COLORS.COMMENT }}>
+            {props.contract.description}
+          </i>
+        </p>
+      )}
       <p>
         <EtherscanLink address={props.contract.address} />
       </p>

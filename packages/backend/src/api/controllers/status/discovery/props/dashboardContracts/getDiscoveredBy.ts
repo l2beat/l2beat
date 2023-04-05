@@ -1,6 +1,6 @@
 import { ContractParameters, ProjectParameters } from '@l2beat/shared'
 
-import { DiscoveryConfig } from '../../../../../../core/discovery/DiscoveryConfig'
+import { DiscoveryConfig } from '../../../../../../core/discovery/config/DiscoveryConfig'
 
 export interface DiscoveredByInfo {
   name: string
@@ -8,9 +8,9 @@ export interface DiscoveredByInfo {
 }
 
 export function getDiscoveredBy(
-  contract: ContractParameters,
   discovery: ProjectParameters,
   config: DiscoveryConfig,
+  contract: ContractParameters,
 ): DiscoveredByInfo[] {
   const discoveredBy: DiscoveredByInfo[] = []
   for (const discoveredContract of discovery.contracts) {

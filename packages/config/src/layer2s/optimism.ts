@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -11,7 +12,6 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
-import { ProjectDiscovery } from './common/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('optimism')
@@ -79,7 +79,7 @@ export const optimism: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      startBlock: 1, // block 0 has timestamp of beginning of unix time
+      startBlock: 1,
     },
   },
   riskView: makeBridgeCompatible({

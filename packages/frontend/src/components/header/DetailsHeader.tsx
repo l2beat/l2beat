@@ -83,6 +83,12 @@ interface SummaryProps {
 function Summary(props: SummaryProps) {
   const topStats = props.stats.slice(0, 4)
   const bottomStats = props.stats.slice(4)
+
+  const areAllRisksUpcoming = Object.values(props.risks).every((value) => {
+    return (
+      value.value === '' && value.description === 'No information available.'
+    )
+  })
   return (
     <div className="flex w-full gap-2">
       <div className="w-full min-w-0">
@@ -170,7 +176,10 @@ function Summary(props: SummaryProps) {
         <span className="text-xs text-gray-500 dark:text-gray-600">
           Risks analysis
         </span>
-        <BigRosette risks={props.risks} isUpcoming={props.isUpcoming} />
+        <BigRosette
+          risks={props.risks}
+          isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
+        />
         {!props.isUpcoming && (
           <a
             href="#risks"

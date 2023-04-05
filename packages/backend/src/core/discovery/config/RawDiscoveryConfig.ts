@@ -1,7 +1,7 @@
-import { branded, EthereumAddress, ManualProxyType } from '@l2beat/shared'
+import { EthereumAddress, ManualProxyType, stringAs } from '@l2beat/shared'
 import * as z from 'zod'
 
-import { UserHandlerDefinition } from './handlers/user'
+import { UserHandlerDefinition } from '../handlers/user'
 
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
@@ -13,15 +13,19 @@ export const DiscoveryContract = z.object({
   fields: z.optional(
     z.record(z.string().regex(/^[a-z_][a-z\d_]*$/i), UserHandlerDefinition),
   ),
+  description: z.optional(z.string()),
+  // TODO: in fields?
+  methods: z.optional(z.record(z.string(), z.string())),
 })
 
-export type DiscoveryConfig = z.infer<typeof DiscoveryConfig>
-export const DiscoveryConfig = z.object({
+export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
+export const RawDiscoveryConfig = z.object({
   name: z.string().min(1),
-  initialAddresses: z.array(branded(z.string(), EthereumAddress)),
+  initialAddresses: z.array(stringAs(EthereumAddress)),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number().positive()),
-  overrides: z.optional(
-    z.record(z.string().refine(EthereumAddress.check), DiscoveryContract),
+  overrides: z.optional(z.record(z.string(), DiscoveryContract)),
+  names: z.optional(
+    z.record(z.string().refine(EthereumAddress.check), z.string()),
   ),
 })

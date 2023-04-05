@@ -20,6 +20,7 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 - `"$schema": "../config.schema.json"`
 - `name` - name of the project
 - `initialAddresses: address[]` - array of addresses that discovery will start from. Discovery will download the contract ABI, read all the available values, and walk through all the contracts found there (`maxDepth` defaults to 7). By default, discovery checks only `view` or `constant` methods with no arguments or with exactly one argument of `uint256` (array). To check other functions you'll need to write custom handlers (see `overrides`). Sometimes the most central address is enough here, but in case of a more complex implementation, you will need to add more to cover all important contracts. Usually 3 addresses here is enough.
+- `names: Record<address, string>` - (optional) key-value object, with addresses as keys. It will allow you to override the name of the contract in discovery (ex. `Bridge` instead of `Bridge_v1`)
 - `overrides: Record<address, object>` - (optional) key-value object, with contracts as keys. It will allow you to ignore contracts in discovery (ex. token addresses or external contracts) or, override more complex fields and methods ([storage](#storage-handler) and [array](#array-handler) handlers).
 
 **Example:**
@@ -29,8 +30,13 @@ A file `discovered.json` will appear in this folder, showing you this project's 
   "$schema": "../config.schema.json"
   name: "project_a",
   initialAddresses: ["0x1234", "0x5678"],
+  names: {
+    "0x1234": "Bridge",
+    "0x5678": "Rollup"
+  },
   overrides: {
-    "0x1234": {
+    "Bridge": {
+      description: "This is a Bridge contract",
       fields: {
         field_a: {
           type: "storage",
@@ -40,10 +46,10 @@ A file `discovered.json` will appear in this folder, showing you this project's 
       ignoreMethods: ["method_a", "method_b"],
       ignoreInWatchMode: ["method_c"]
     },
-    "0xabcd": {
+    "Rollup": {
       ignoreDiscovery: true
     }
-  }
+  },
 }
 ```
 
@@ -262,6 +268,37 @@ Call a method and reference other fields in arguments:
   "type": "call",
   "method": "function balanceOf(address owner) view returns (uint256)",
   "args": ["{{ admin }}"]
+}
+```
+
+### Events count handler
+
+The call handler allows you to call amount of the emitted events from the contract with the specified topics.
+
+**Case study: Arbitrum validators**
+
+List of validators cannot be easily obtained from the contract, there is no getter. Additionally the method does not emit an event helpful enough to use `arrayFromOneEvent` handler. But it does emit an event that can be used to determine the amount of calls of the functions `setValidator`, when count changes our bot will notify us about the possible changes in the validator set. Later developer can manually update the hardcoded list of validators.
+
+**Parameters:**
+
+- `type` - always the literal: `"eventCount"`
+- `topics` - array of topics to filter events by.
+
+**Examples:**
+
+Count events with the specified topics:
+
+```json
+{
+  "setValidatorCount": {
+    "type": "eventCount",
+    "topics": [
+      // event OwnerFunctionCalled(uint256 indexed id);
+      "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+      // id == 6 is emitted inside setValidator()
+      "0x0000000000000000000000000000000000000000000000000000000000000006"
+    ]
+  }
 }
 ```
 
