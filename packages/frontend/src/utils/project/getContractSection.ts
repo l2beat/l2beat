@@ -38,10 +38,6 @@ export function getContractSection(
         verificationStatus,
       )
       const contract = escrowToProjectContract(escrow)
-      assert(
-        contract,
-        'Escrows in old format should be filtered out at this point',
-      )
 
       return makeTechnologyContract(contract, project, isUnverified, true)
     })
@@ -264,13 +260,8 @@ function isAddressUnverified(
   return verificationStatus.contracts[address.toString()] === false
 }
 
-function escrowToProjectContract(
-  escrow: ProjectEscrow,
-): ProjectContract | undefined {
-  // project config was not yet migrated to the new format
-  if (!escrow.newVersion || escrow.hidden) {
-    return undefined
-  }
+function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
+  assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
 
   return {
     name:
