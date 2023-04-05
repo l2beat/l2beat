@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
@@ -105,20 +105,14 @@ export const rhinofi: Layer2 = {
   permissions: [
     {
       name: 'Governors',
-      accounts: discovery
-        .getContractValue<string[]>('StarkExchange', 'GOVERNORS')
-        .map((governor) => ({
-          address: EthereumAddress(governor),
-          type: 'EOA',
-        })),
-      description:
-        'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+      accounts: getProxyGovernance(discovery, 'StarkExchange'),
+      description: `Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is ${delay} before the upgrade.`,
     },
     {
       name: 'Data Availability Committee',
       accounts: discovery
         .getConstructorArg<string[]>('Committee', 0)
-        .map((a) => ({ address: EthereumAddress(a), type: 'EOA' })),
+        .map(discovery.formatPermissionedAccount.bind(discovery)),
       description: `Validity proof must be signed by at least ${discovery.getConstructorArg<string>(
         'Committee',
         1,
