@@ -7,6 +7,7 @@ import {
   ProjectEscrow,
 } from '@l2beat/config'
 import {
+  assert,
   assertUnreachable,
   EthereumAddress,
   VerificationStatus,
@@ -29,6 +30,7 @@ export function getContractSection(
   })
 
   const escrows = project.config.escrows
+    .filter((escrow) => escrow.newVersion && !escrow.hidden)
     .sort(moreTokensFirst)
     .map((escrow) => {
       const isUnverified = isAddressUnverified(
@@ -36,14 +38,13 @@ export function getContractSection(
         verificationStatus,
       )
       const contract = escrowToProjectContract(escrow)
-      if (!contract) {
-        // happens when escrow is hidden or config is not migrated to new version
-        return undefined
-      }
+      assert(
+        contract,
+        'Escrows in old format should be filtered out at this point',
+      )
 
       return makeTechnologyContract(contract, project, isUnverified, true)
     })
-    .filter((escrow): escrow is TechnologyContract => !!escrow)
 
   const risks =
     project.contracts?.risks.map((risk) => ({

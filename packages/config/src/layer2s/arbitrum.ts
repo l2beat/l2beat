@@ -57,34 +57,35 @@ export const arbitrum: Layer2 = {
   config: {
     associatedTokens: ['ARB'],
     escrows: [
-      {
-        ...discovery.getEscrowDetails('ArbitrumOneBridge'),
+      discovery.getEscrowDetails({
+        identifier: 'ArbitrumOneBridge',
         sinceTimestamp: new UnixTime(1661450734),
         tokens: ['ETH'],
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-      },
-      {
-        ...discovery.getEscrowDetails('L1CustomGateway'),
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'L1CustomGateway',
         sinceTimestamp: new UnixTime(1623867835),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-      },
-      {
-        ...discovery.getEscrowDetails('L1ERC20Gateway'),
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'L1ERC20Gateway',
         sinceTimestamp: new UnixTime(1623784100),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-      },
-      {
-        ...discovery.getEscrowDetails('L1DaiGateway', undefined, 'l1Escrow'),
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'L1DaiGateway',
+        path: 'l1Escrow',
         sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
         description:
           'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
-      },
+      }),
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
