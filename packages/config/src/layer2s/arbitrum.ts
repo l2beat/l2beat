@@ -287,10 +287,6 @@ export const arbitrum: Layer2 = {
         'L1GatewayRouter',
         'Router managing token <--> gateway mapping.',
       ),
-      discovery.getMainContractDetails(
-        'L1CustomGateway',
-        'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
