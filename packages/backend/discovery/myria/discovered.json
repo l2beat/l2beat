@@ -1,7 +1,7 @@
 {
   "name": "myria",
-  "blockNumber": 16912422,
-  "configHash": "0xc9aaea2ba7d634b16289cf6dccb127ed006b01dd1910e3edd2ea7f7ec2a73dcb",
+  "blockNumber": 16982202,
+  "configHash": "0xdcda179273f2e1a400c183a97ebe0332d3c598c1020b01197f3ef934ef03d72a",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -11,13 +11,13 @@
         "type": "StarkWare proxy",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "upgradeDelay": 1209600,
-        "isFinal": false
+        "isFinal": false,
+        "proxyGovernance": [
+          "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245"
+        ]
       },
       "values": {
         "getUpgradeActivationDelay": 1209600,
-        "GOVERNORS": [
-          "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245"
-        ],
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isNotFinalized": true,
         "OPERATORS": [
