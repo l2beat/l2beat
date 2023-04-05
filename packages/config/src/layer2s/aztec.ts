@@ -19,7 +19,7 @@ export const aztec: Layer2 = {
     name: 'Aztec',
     slug: 'aztec',
     warning:
-      'A new version of the protocol, Aztec Connect is available and users are encouraged to move their assets there.',
+      'EOL: Aztec team announced they are going to shut down the rollup infrastructure on July 8th, 2023',
     description:
       'Aztec is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs.',
     purpose: 'Private payments',
