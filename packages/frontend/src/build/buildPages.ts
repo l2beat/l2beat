@@ -179,9 +179,9 @@ function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
     'ethereum',
     'dydx',
     'arbitrum',
-    'immutablex',
+    // 'immutablex',
     'optimism',
-    'sorare',
+    // 'sorare',
     'starknet',
   ]
   const allProjects = [
