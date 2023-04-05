@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { assert, EthereumAddress } from '@l2beat/shared'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -47,7 +47,12 @@ async function getFullGovernance(
 
   for (const log of logs) {
     const parsed = abi.parseLog(log)
-    values.add(parsed.args[key])
+    values.add(getString(parsed.args[key]))
   }
   return Array.from(values)
+}
+
+function getString(value: unknown): string {
+  assert(typeof value === 'string', 'Governor is not a string')
+  return value
 }
