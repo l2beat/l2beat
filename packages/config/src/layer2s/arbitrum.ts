@@ -61,6 +61,8 @@ export const arbitrum: Layer2 = {
         ...discovery.getEscrowDetails('ArbitrumOneBridge'),
         sinceTimestamp: new UnixTime(1661450734),
         tokens: ['ETH'],
+        description:
+          'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
       },
       {
         ...discovery.getEscrowDetails('L1CustomGateway'),
