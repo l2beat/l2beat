@@ -57,32 +57,43 @@ export const arbitrum: Layer2 = {
   config: {
     associatedTokens: ['ARB'],
     escrows: [
-      {
-        address: discovery.getContract('ArbitrumOneBridge').address,
+      discovery.getEscrowDetails({
+        identifier: 'ArbitrumOneBridge',
         sinceTimestamp: new UnixTime(1661450734),
         tokens: ['ETH'],
-      },
+        description:
+          'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'L1CustomGateway',
+        sinceTimestamp: new UnixTime(1623867835),
+        tokens: '*',
+        description:
+          'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'L1ERC20Gateway',
+        sinceTimestamp: new UnixTime(1623784100),
+        tokens: '*',
+        description:
+          'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'L1DaiGateway',
+        path: 'l1Escrow',
+        sinceTimestamp: new UnixTime(1632133470),
+        tokens: ['DAI'],
+        description:
+          'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
+      }),
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
         address: HARDCODED.ARBITRUM.OLD_BRIDGE,
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
-      },
-      {
-        address: discovery.getContract('L1CustomGateway').address,
-        sinceTimestamp: new UnixTime(1623867835),
-        tokens: '*',
-      },
-      {
-        address: discovery.getContract('L1ERC20Gateway').address,
-        sinceTimestamp: new UnixTime(1623784100),
-        tokens: '*',
-      },
-      {
-        address: discovery.getAddressFromValue('L1DaiGateway', 'l1Escrow'),
-        sinceTimestamp: new UnixTime(1632133470),
-        tokens: ['DAI'],
+        hidden: true,
+        newVersion: true,
       },
     ],
     transactionApi: {
@@ -279,23 +290,6 @@ export const arbitrum: Layer2 = {
         'L1GatewayRouter',
         'Router managing token <--> gateway mapping.',
       ),
-      discovery.getMainContractDetails(
-        'L1ERC20Gateway',
-        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-      ),
-      discovery.getMainContractDetails(
-        'L1CustomGateway',
-        'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-      ),
-      discovery.getMainContractDetails(
-        'L1DaiGateway',
-        'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-      ),
-      {
-        name: 'L1DaiEscrow',
-        address: discovery.getAddressFromValue('L1DaiGateway', 'l1Escrow'),
-        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-      },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

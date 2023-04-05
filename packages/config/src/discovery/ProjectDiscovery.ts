@@ -4,13 +4,18 @@ import {
   ContractValue,
   EthereumAddress,
   ProjectParameters,
+  UnixTime,
 } from '@l2beat/shared'
 import { utils } from 'ethers'
 import fs from 'fs'
 import { isArray, isString } from 'lodash'
 import path from 'path'
 
-import { ProjectPermission, ProjectPermissionedAccount } from '../common'
+import {
+  ProjectEscrow,
+  ProjectPermission,
+  ProjectPermissionedAccount,
+} from '../common'
 import {
   ProjectContract,
   ProjectContractSingleAddress,
@@ -61,6 +66,41 @@ export class ProjectDiscovery {
       address: contract.address,
       upgradeability: contract.upgradeability,
       description,
+    }
+  }
+
+  getEscrowDetails({
+    identifier,
+    description,
+    path,
+    sinceTimestamp,
+    tokens,
+    hidden,
+  }: {
+    identifier: string
+    description?: string
+    path?: string
+    sinceTimestamp: UnixTime
+    tokens: string[] | '*'
+    hidden?: boolean
+  }): ProjectEscrow {
+    let contract: ContractParameters
+    if (path) {
+      const address = this.getAddressFromValue(identifier, path)
+      contract = this.getContractByAddress(address.toString())
+    } else {
+      contract = this.getContract(identifier)
+    }
+
+    return {
+      newVersion: true,
+      name: contract.name,
+      address: contract.address,
+      upgradeability: contract.upgradeability,
+      description,
+      sinceTimestamp,
+      tokens,
+      hidden,
     }
   }
 

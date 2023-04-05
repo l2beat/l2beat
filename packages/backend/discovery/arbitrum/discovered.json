@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16974514,
-  "configHash": "0x28fd1db10cc2fd03059615aed65004e4499da21e6eee0d161a513ff7bcc0f7df",
+  "blockNumber": 16975477,
+  "configHash": "0x1ebb27d99695ec5773aaf1d96c56b010801bc8864c5170a4704ef06270266ff9",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 4196,
+        "firstUnresolvedNode": 4200,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 4195,
-        "latestNodeCreated": 4350,
+        "latestConfirmed": 4199,
+        "latestNodeCreated": 4353,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -93,7 +93,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 132455,
+        "batchCount": 132700,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -106,7 +106,7 @@
         ],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 733054
+        "totalDelayedMessagesRead": 733588
       },
       "derivedName": "SequencerInbox"
     },
@@ -386,11 +386,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 733077,
+        "delayedMessageCount": 733621,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 132455,
-        "sequencerReportedSubMessageCount": 54691303
+        "sequencerMessageCount": 132700,
+        "sequencerReportedSubMessageCount": 54738769
       },
       "derivedName": "Bridge"
     },
@@ -562,6 +562,14 @@
         "l2Dai": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
       },
       "derivedName": "L1DaiGateway"
+    },
+    {
+      "name": "L1Escrow",
+      "address": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+      "code": "https://etherscan.deth.net/address/0xA10c7CE4b876998858b1a9E12b10092229539400",
+      "upgradeability": {
+        "type": "immutable"
+      }
     }
   ],
   "eoas": [
@@ -1248,6 +1256,16 @@
       "function zombieAddress(uint256 zombieNum) view returns (address)",
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
+    ],
+    "0xA10c7CE4b876998858b1a9E12b10092229539400": [
+      "constructor()",
+      "event Approve(address indexed token, address indexed spender, uint256 value)",
+      "event Deny(address indexed usr)",
+      "event Rely(address indexed usr)",
+      "function approve(address token, address spender, uint256 value)",
+      "function deny(address usr)",
+      "function rely(address usr)",
+      "function wards(address) view returns (uint256)"
     ],
     "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": [
       "constructor(address _logic, address admin_, bytes _data) payable",

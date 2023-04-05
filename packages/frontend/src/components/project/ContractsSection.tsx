@@ -9,6 +9,7 @@ import { TechnologyIncompleteShort } from './TechnologyIncomplete'
 
 export interface ContractsSectionProps {
   contracts: TechnologyContract[]
+  escrows: TechnologyContract[]
   risks: TechnologyRisk[]
   references: TechnologyReference[]
   architectureImage?: string
@@ -50,6 +51,25 @@ export function ContractsSection(props: ContractsSectionProps) {
           </React.Fragment>
         ))}
       </div>
+      {/* @todo: this "if" can be dropped when all escrows will migrate to new form */}
+      {props.escrows.length > 0 && (
+        <>
+          <h3 className="md:text-md font-bold">
+            The system uses following escrows:
+          </h3>
+          <div className="mt-4 mb-4">
+            {props.escrows.map((contract, i) => (
+              <React.Fragment key={i}>
+                <ContractEntry
+                  contract={contract}
+                  verificationStatus={props.verificationStatus}
+                  className="mt-4 mb-4"
+                />
+              </React.Fragment>
+            ))}
+          </div>
+        </>
+      )}
       {props.risks.length > 0 && (
         <>
           <p className="text-gray-850 dark:text-gray-400">
