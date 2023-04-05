@@ -4,8 +4,13 @@ import {
   isSingleAddress,
   Layer2,
   ProjectContract,
+  ProjectEscrow,
 } from '@l2beat/config'
-import { assertUnreachable, VerificationStatus } from '@l2beat/shared'
+import {
+  assertUnreachable,
+  EthereumAddress,
+  VerificationStatus,
+} from '@l2beat/shared'
 
 import {
   TechnologyContract,
@@ -22,6 +27,22 @@ export function getContractSection(
     const isUnverified = isContractUnverified(contract, verificationStatus)
     return makeTechnologyContract(contract, project, isUnverified)
   })
+
+  const escrows = project.config.escrows
+    .map((escrow) => {
+      const isUnverified = isAddressUnverified(
+        escrow.address,
+        verificationStatus,
+      )
+      const contract = escrowToProjectContract(escrow)
+      if (!contract) {
+        // happens when escrow is hidden or config is not migrated to new version
+        return undefined
+      }
+
+      return makeTechnologyContract(contract, project, isUnverified)
+    })
+    .filter((escrow): escrow is TechnologyContract => !!escrow)
 
   const risks =
     project.contracts?.risks.map((risk) => ({
@@ -42,6 +63,7 @@ export function getContractSection(
 
   return {
     contracts: contracts ?? [],
+    escrows: escrows,
     risks: risks,
     architectureImage,
     references: project.contracts?.references ?? [],
@@ -218,7 +240,7 @@ function isContractUnverified(
     projects: Record<string, boolean | undefined>
     contracts: Record<string, boolean | undefined>
   },
-) {
+): boolean {
   if (isSingleAddress(contract)) {
     return verificationStatus.contracts[contract.address.toString()] === false
   }
@@ -226,4 +248,29 @@ function isContractUnverified(
   return contract.multipleAddresses.some(
     (address) => verificationStatus.contracts[address.toString()],
   )
+}
+
+function isAddressUnverified(
+  address: EthereumAddress,
+  verificationStatus: {
+    projects: Record<string, boolean | undefined>
+    contracts: Record<string, boolean | undefined>
+  },
+): boolean {
+  return verificationStatus.contracts[address.toString()] === false
+}
+
+function escrowToProjectContract(
+  escrow: ProjectEscrow,
+): ProjectContract | undefined {
+  // project config was not yet migrated to the new format
+  if (!escrow.newVersion || escrow.hidden) {
+    return undefined
+  }
+
+  return {
+    name: 'Escrow for ' + escrow.tokens,
+    address: escrow.address,
+    upgradeability: escrow.upgradeability,
+  }
 }

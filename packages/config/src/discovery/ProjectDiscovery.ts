@@ -10,7 +10,11 @@ import fs from 'fs'
 import { isArray, isString } from 'lodash'
 import path from 'path'
 
-import { ProjectPermission, ProjectPermissionedAccount } from '../common'
+import {
+  ProjectEscrowFromDiscovery,
+  ProjectPermission,
+  ProjectPermissionedAccount,
+} from '../common'
 import {
   ProjectContract,
   ProjectContractSingleAddress,
@@ -57,6 +61,28 @@ export class ProjectDiscovery {
   ): ProjectContract {
     const contract = this.getContract(identifier)
     return {
+      name: contract.name,
+      address: contract.address,
+      upgradeability: contract.upgradeability,
+      description,
+    }
+  }
+
+  getEscrowDetails(
+    identifier: string,
+    description?: string,
+    path?: string,
+  ): ProjectEscrowFromDiscovery {
+    let contract: ContractParameters
+    if (path) {
+      const address = this.getAddressFromValue(identifier, path)
+      contract = this.getContractByAddress(address)
+    } else {
+      contract = this.getContract(identifier)
+    }
+
+    return {
+      newVersion: true,
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
