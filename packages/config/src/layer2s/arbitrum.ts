@@ -58,7 +58,7 @@ export const arbitrum: Layer2 = {
     associatedTokens: ['ARB'],
     escrows: [
       {
-        address: discovery.getContract('ArbitrumOneBridge').address,
+        ...discovery.getEscrowDetails('ArbitrumOneBridge'),
         sinceTimestamp: new UnixTime(1661450734),
         tokens: ['ETH'],
       },
@@ -68,19 +68,21 @@ export const arbitrum: Layer2 = {
         address: HARDCODED.ARBITRUM.OLD_BRIDGE,
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
+        hidden: true,
+        newVersion: true,
       },
       {
-        address: discovery.getContract('L1CustomGateway').address,
+        ...discovery.getEscrowDetails('L1CustomGateway'),
         sinceTimestamp: new UnixTime(1623867835),
         tokens: '*',
       },
       {
-        address: discovery.getContract('L1ERC20Gateway').address,
+        ...discovery.getEscrowDetails('L1ERC20Gateway'),
         sinceTimestamp: new UnixTime(1623784100),
         tokens: '*',
       },
       {
-        address: discovery.getAddressFromValue('L1DaiGateway', 'l1Escrow'),
+        ...discovery.getEscrowDetails('L1DaiGateway', undefined, 'l1Escrow'),
         sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
       },
