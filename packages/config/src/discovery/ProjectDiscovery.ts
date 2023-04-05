@@ -76,7 +76,7 @@ export class ProjectDiscovery {
     let contract: ContractParameters
     if (path) {
       const address = this.getAddressFromValue(identifier, path)
-      contract = this.getContractByAddress(address)
+      contract = this.getContractByAddress(address.toString())
     } else {
       contract = this.getContract(identifier)
     }
