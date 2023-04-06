@@ -1,7 +1,7 @@
 {
   "name": "dydx",
-  "blockNumber": 16975300,
-  "configHash": "0x626fc6d23d2797492923d191abfaa2cc9ef8381779e1152a4c18c8b6dbcf85f5",
+  "blockNumber": 16989891,
+  "configHash": "0xf53b6fab7dc9860eebbe0e5c7e7db92ccbe9e82fe1b90ae9f8c952c96e44e453",
   "contracts": [
     {
       "name": "StarkPerpetual",
@@ -28,7 +28,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 15371,
+        "getLastBatchId": 15426,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -37,7 +37,7 @@
         "getRegisteredVerifiers": [
           "0x8Ab85d3A1816a0d7ECE0F57AF6b27FC3b05532F4"
         ],
-        "getSequenceNumber": 15078,
+        "getSequenceNumber": 15133,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
@@ -184,7 +184,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "4852459018461113451904487"
+        "totalSupply": "4848102586920399014529723"
       },
       "derivedName": "SafetyModuleV2"
     },

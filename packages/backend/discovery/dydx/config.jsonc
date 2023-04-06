@@ -45,7 +45,8 @@
         "getTotalActiveBalanceNextEpoch",
         "getTotalInactiveBalanceCurrentEpoch",
         "getTotalInactiveBalanceNextEpoch"
-      ]
+      ],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "DydxToken": {
       "ignoreMethods": ["_totalSupplySnapshots"]
