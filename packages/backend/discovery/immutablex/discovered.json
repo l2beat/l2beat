@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
-  "blockNumber": 16974922,
-  "configHash": "0x83a714079d0bff1f4cc5f59fafc713f54d4f2eea23cacf2abcd003abf3c52adb",
+  "blockNumber": 16989186,
+  "configHash": "0xc434b7a3acfd64d641f5f76b799e526340f22f6a19a466dbcf2973e47ac0346d",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -18,10 +18,6 @@
       },
       "values": {
         "getUpgradeActivationDelay": 1209600,
-        "GOVERNORS": [
-          "0x4744C7dF96E321F9D18CA0D4051BEf5530C6Fb15",
-          "0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a"
-        ],
         "implementation": "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
         "isNotFinalized": true,
         "OPERATORS": [
@@ -34,7 +30,6 @@
     }
   ],
   "eoas": [
-    "0x4744C7dF96E321F9D18CA0D4051BEf5530C6Fb15",
     "0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a",
     "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
   ],

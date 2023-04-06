@@ -1,5 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
+import {
+  delayDescriptionFromSeconds,
+  delayDescriptionFromString,
+} from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -14,6 +21,14 @@ import {
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('immutablex')
+
+const delaySeconds = discovery.getContractUpgradeabilityParam(
+  'StarkExchange',
+  'upgradeDelay',
+)
+const delay = formatSeconds(delaySeconds)
 
 export const immutablex: Layer2 = {
   type: 'layer2',
@@ -40,11 +55,12 @@ export const immutablex: Layer2 = {
   config: {
     associatedTokens: ['IMX'],
     escrows: [
-      {
-        address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
+      discovery.getEscrowDetails({
+        identifier: 'StarkExchange',
         sinceTimestamp: new UnixTime(1615389188),
         tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
-      },
+        description: 'Main StarkEx contract, used also as an escrow.',
+      }),
     ],
     transactionApi: {
       type: 'starkex',
@@ -56,7 +72,7 @@ export const immutablex: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY('14 days'),
+    upgradeability: RISK_VIEW.UPGRADE_DELAY(delay),
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -74,18 +90,7 @@ export const immutablex: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'StarkExchange',
-        address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
-        upgradeability: {
-          type: 'StarkWare proxy',
-          implementation: EthereumAddress(
-            '0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC',
-          ),
-          upgradeDelay: 1209600,
-          isFinal: false,
-        },
-      },
+      discovery.getMainContractDetails('StarkExchange'),
       {
         name: 'Committee',
         description:
@@ -94,21 +99,15 @@ export const immutablex: Layer2 = {
       },
       SHARP_VERIFIER_CONTRACT,
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('14 days')],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
   permissions: [
     {
       name: 'Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: getProxyGovernance(discovery, 'StarkExchange'),
       description:
-        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromString(delay),
     },
     {
       name: 'Data Availability Committee',
@@ -170,18 +169,17 @@ export const immutablex: Layer2 = {
         },
       ],
       description:
-        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
+        // @todo
+        // This should be coming from discovery, but it's not available yet.
+        // because sorare discovery is not detecting the starkware diamond
+        delayDescriptionFromSeconds(2419200),
     },
     {
       name: 'Operator',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery
+        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
+        .map(discovery.formatPermissionedAccount.bind(discovery)),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },
