@@ -24,6 +24,7 @@ import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
 import { starknet } from './starknet'
+import { taiko } from './taiko'
 import { Layer2 } from './types'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
@@ -40,8 +41,6 @@ export const layer2s: Layer2[] = [
   aztecconnect,
   base,
   bobanetwork,
-  linea,
-  rhinofi,
   dydx,
   fuelv1,
   gluon,
@@ -49,6 +48,7 @@ export const layer2s: Layer2[] = [
   immutablex,
   layer2finance,
   layer2financezk,
+  linea,
   loopring,
   metis,
   myria,
@@ -56,14 +56,16 @@ export const layer2s: Layer2[] = [
   omgnetwork,
   optimism,
   polygonzkevm,
+  rhinofi,
   scroll,
   sorare,
   starknet,
+  taiko,
+  zkspace,
   zkswap,
   zkswap2,
-  zkspace,
-  zksynclite,
   zksyncera,
+  zksynclite,
 ]
 
 export const milestonesLayer2s = HOMEPAGE_MILESTONES
