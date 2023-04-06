@@ -11,6 +11,7 @@ export interface ServerCliParameters {
 export interface DiscoverCliParameters {
   mode: 'discover'
   project: string
+  dryRun?: true
 }
 
 export interface InvertCliParameters {
@@ -42,10 +43,24 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
   if (args[0] === 'discover') {
     if (args.length === 1) {
       return { mode: 'help', error: 'Not enough arguments' }
-    } else if (args.length > 2) {
+    } else if (args.length > 3) {
       return { mode: 'help', error: 'Too many arguments' }
     }
-    return { mode: 'discover', project: args[1] }
+    if (args.length === 3) {
+      if (args[2] !== '--dry-run') {
+        return { mode: 'help', error: 'Unknown argument ' + args[2] }
+      } else {
+        return {
+          mode: 'discover',
+          project: args[1],
+          dryRun: true,
+        }
+      }
+    }
+    return {
+      mode: 'discover',
+      project: args[1],
+    }
   }
 
   if (args[0] === 'invert') {
