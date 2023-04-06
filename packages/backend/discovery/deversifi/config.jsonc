@@ -2,9 +2,44 @@
   "$schema": "../config.schema.json",
   "name": "deversifi",
   "initialAddresses": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"],
+  "names": {
+    "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": "StarkExchange",
+    "0x28780349A33eEE56bb92241bAAB8095449e24306": "Committee",
+    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "VerifierGovernorMultisig"
+  },
   "overrides": {
-    //comittee
-    "0x28780349A33eEE56bb92241bAAB8095449e24306": {
+    "StarkExchange": {
+      "ignoreMethods": [
+        "configurationHash",
+        "getEthKey",
+        "getQuantum",
+        "identify",
+        "isAssetRegistered",
+        "validatedSelectors",
+        "getAssetInfo",
+        "getActionCount",
+        "getActionHashByIndex",
+        "initializerSize",
+        "UPGRADE_DELAY_SLOT"
+      ],
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getVaultRoot"
+      ],
+      "fields": {
+        "OPERATORS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event LogOperatorAdded(address operator)",
+          "addKey": "operator",
+          "removeEvent": "event LogOperatorRemoved(address operator)",
+          "removeKey": "operator"
+        }
+      }
+    },
+    "Committee": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
@@ -47,45 +82,7 @@
     "0x593a71DC43e9B67FE009d7C76B6EfA925FB329B1": {
       "ignoreMethods": ["compute"]
     },
-    // Main Rollup contract
-    "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": {
-      "ignoreMethods": [
-        "configurationHash",
-        "getEthKey",
-        "getQuantum",
-        "identify",
-        "isAssetRegistered",
-        "validatedSelectors",
-        "getAssetInfo",
-        "getActionCount",
-        "getActionHashByIndex",
-        "initializerSize",
-        "UPGRADE_DELAY_SLOT"
-      ],
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getSequenceNumber",
-        "getVaultRoot"
-      ],
-      "fields": {
-        "GOVERNORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogNewGovernorAccepted(address acceptedGovernor)",
-          "addKey": "acceptedGovernor",
-          "removeEvent": "event LogRemovedGovernor(address removedGovernor)",
-          "removeKey": "removedGovernor"
-        },
-        "OPERATORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogOperatorAdded(address operator)",
-          "addKey": "operator",
-          "removeEvent": "event LogOperatorRemoved(address operator)",
-          "removeKey": "operator"
-        }
-      }
-    },
+
     // gpsStatementVerifier
     "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": {
       "fields": {

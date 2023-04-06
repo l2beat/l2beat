@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -56,7 +57,7 @@ export const dydx: Layer2 = {
   config: {
     escrows: [
       {
-        address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
+        address: discovery.getContract('StarkPerpetual').address,
         sinceTimestamp: new UnixTime(1613033682),
         tokens: ['USDC'],
       },
@@ -98,13 +99,10 @@ export const dydx: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'StarkPerpetual',
-        address: discovery.getContract('Proxy').address,
-        description:
-          'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-        upgradeability: discovery.getContract('Proxy').upgradeability,
-      },
+      discovery.getMainContractDetails(
+        'StarkPerpetual',
+        'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
+      ),
       {
         name: 'GpsStatementVerifier',
         address: discovery.getContract('CallProxy').address,
@@ -136,9 +134,7 @@ export const dydx: Layer2 = {
       name: 'dYdX Governance',
       accounts: [
         {
-          address: EthereumAddress(
-            '0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2',
-          ),
+          address: discovery.getContract('DydxGovernor').address,
           type: 'Contract',
         },
       ],
@@ -146,28 +142,16 @@ export const dydx: Layer2 = {
         'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
     {
-      name: 'GpsStatementVerifier Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'GpsStatementVerifier Governors',
+      accounts: getProxyGovernance(discovery, 'CallProxy'),
       description:
         'Can upgrade implementation of Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
     },
     {
-      name: 'Operator',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x8129b737912e17212C8693B781928f5D0303390a',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'Operators',
+      accounts: discovery
+        .getContractValue<string[]>('StarkPerpetual', 'OPERATORS')
+        .map(discovery.formatPermissionedAccount.bind(discovery)),
       description:
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },

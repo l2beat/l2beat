@@ -7,6 +7,7 @@ import {
   getCallResult,
   getCallResultWithRevert,
 } from '../../utils/getCallResult'
+import { getProxyGovernance } from './StarkWareProxyGovernance'
 
 // keccak256("StarkWare2019.implemntation-slot")
 const IMPLEMENTATION_SLOT = Bytes.fromHex(
@@ -94,13 +95,19 @@ export async function detectStarkWareProxy(
   if (implementation === EthereumAddress.ZERO) {
     return
   }
-  const [callImplementation, upgradeDelay, isFinal, isDiamond] =
-    await Promise.all([
-      getCallImplementation(provider, address),
-      getUpgradeDelay(provider, address),
-      getFinalizedState(provider, address),
-      getDiamondStatus(provider, address),
-    ])
+  const [
+    callImplementation,
+    upgradeDelay,
+    isFinal,
+    proxyGovernance,
+    isDiamond,
+  ] = await Promise.all([
+    getCallImplementation(provider, address),
+    getUpgradeDelay(provider, address),
+    getFinalizedState(provider, address),
+    getProxyGovernance(provider, address),
+    getDiamondStatus(provider, address),
+  ])
 
   if (isDiamond) {
     return await getStarkWareDiamond(
@@ -109,18 +116,23 @@ export async function detectStarkWareProxy(
       implementation,
       upgradeDelay,
       isFinal,
+      proxyGovernance,
     )
   }
 
+  const relatives = callImplementation ? [callImplementation] : []
+  relatives.push(...proxyGovernance)
+
   return {
     implementations: [implementation],
-    relatives: callImplementation ? [callImplementation] : [],
+    relatives,
     upgradeability: {
       type: 'StarkWare proxy',
       implementation,
       callImplementation,
       upgradeDelay,
       isFinal,
+      proxyGovernance,
     },
   }
 }
@@ -136,6 +148,7 @@ async function getStarkWareDiamond(
   implementation: EthereumAddress,
   upgradeDelay: number,
   isFinal: boolean,
+  proxyGovernance: EthereumAddress[],
 ): Promise<ProxyDetection> {
   const upgrades = await provider.getLogs(address, [
     [
@@ -196,13 +209,14 @@ async function getStarkWareDiamond(
 
   return {
     implementations: [implementation, ...Object.values(facets)],
-    relatives: [],
+    relatives: proxyGovernance,
     upgradeability: {
       type: 'StarkWare diamond',
       implementation,
       upgradeDelay,
       isFinal,
       facets,
+      proxyGovernance,
     },
   }
 }
