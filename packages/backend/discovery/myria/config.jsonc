@@ -6,13 +6,6 @@
     // Main Rollup contract
     "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7": {
       "fields": {
-        "GOVERNORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogNewGovernorAccepted(address acceptedGovernor)",
-          "addKey": "acceptedGovernor",
-          "removeEvent": "event LogRemovedGovernor(address removedGovernor)",
-          "removeKey": "removedGovernor"
-        },
         "OPERATORS": {
           "type": "arrayFromTwoEvents",
           "addEvent": "event LogOperatorAdded(address operator)",

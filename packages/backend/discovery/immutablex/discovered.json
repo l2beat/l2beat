@@ -1,6 +1,6 @@
 {
   "name": "immutablex",
-  "blockNumber": 16912415,
+  "blockNumber": 16974922,
   "configHash": "0x83a714079d0bff1f4cc5f59fafc713f54d4f2eea23cacf2abcd003abf3c52adb",
   "contracts": [
     {
@@ -11,7 +11,10 @@
         "type": "StarkWare proxy",
         "implementation": "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
         "upgradeDelay": 1209600,
-        "isFinal": false
+        "isFinal": false,
+        "proxyGovernance": [
+          "0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a"
+        ]
       },
       "values": {
         "getUpgradeActivationDelay": 1209600,

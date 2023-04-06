@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -161,49 +162,35 @@ export const starknet: Layer2 = {
       {
         name: 'L1Escrow',
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-        address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
+        address: discovery.getContract('DAI Bridge').address,
       },
-      {
-        ...discovery.getMainContractDetails('WBTC Bridge'),
-        description: 'StarkGate bridge for WBTC.',
-      },
-      {
-        ...discovery.getMainContractDetails('USDC Bridge'),
-        description: 'StarkGate bridge for USDC.',
-      },
-      {
-        ...discovery.getMainContractDetails('USDT Bridge'),
-        description: 'StarkGate bridge for USDT.',
-      },
+      discovery.getMainContractDetails(
+        'WBTC Bridge',
+        'StarkGate bridge for WBTC.',
+      ),
+      discovery.getMainContractDetails(
+        'USDC Bridge',
+        'StarkGate bridge for USDC.',
+      ),
+      discovery.getMainContractDetails(
+        'USDT Bridge',
+        'StarkGate bridge for USDT.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {
-      name: 'Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'StarknetCore Governors',
+      accounts: getProxyGovernance(discovery, 'Starknet'),
       description:
-        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
+        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
     },
     {
-      name: 'StarknetCore Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'SHARP Verifier Governors',
+      accounts: getProxyGovernance(discovery, 'CallProxy'),
       description:
-        'Can upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
+        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
     },
     {
       name: 'Operators',

@@ -90,4 +90,11 @@ export class DiscoveryProvider {
   async getContractDeploymentTx(address: EthereumAddress) {
     return this.etherscanClient.getContractDeploymentTx(address)
   }
+
+  async getDeployer(address: EthereumAddress) {
+    const txHash = await this.getContractDeploymentTx(address)
+    const tx = await this.getTransaction(txHash)
+
+    return EthereumAddress(tx.from)
+  }
 }

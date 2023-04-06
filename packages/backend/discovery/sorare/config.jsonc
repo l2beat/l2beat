@@ -2,17 +2,12 @@
   "$schema": "../config.schema.json",
   "name": "sorare",
   "initialAddresses": ["0xF5C9F957705bea56a7e806943f98F7777B995826"],
+  "names": {
+    "0xF5C9F957705bea56a7e806943f98F7777B995826": "StarkExchange"
+  },
   "overrides": {
-    // Main Rollup contract
-    "0xF5C9F957705bea56a7e806943f98F7777B995826": {
+    "StarkExchange": {
       "fields": {
-        "GOVERNORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogNewGovernorAccepted(address acceptedGovernor)",
-          "addKey": "acceptedGovernor",
-          "removeEvent": "event LogRemovedGovernor(address removedGovernor)",
-          "removeKey": "removedGovernor"
-        },
         "OPERATORS": {
           "type": "arrayFromTwoEvents",
           "addEvent": "event LogOperatorAdded(address operator)",
