@@ -7,6 +7,26 @@
   },
   "overrides": {
     "StarkExchange": {
+      "ignoreMethods": [
+        "configurationHash",
+        "getEthKey",
+        "getQuantum",
+        "identify",
+        "isAssetRegistered",
+        "validatedSelectors",
+        "getAssetInfo",
+        "getActionCount",
+        "getActionHashByIndex",
+        "initializerSize",
+        "UPGRADE_DELAY_SLOT"
+      ],
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getValidiumVaultRoot"
+      ],
       "fields": {
         "OPERATORS": {
           "type": "arrayFromTwoEvents",
