@@ -1,11 +1,11 @@
+import { HOMEPAGE_MILESTONES } from './common'
+import { Layer2 } from './types'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { base } from './base'
 import { bobanetwork } from './bobanetwork'
-import { HOMEPAGE_MILESTONES } from './common'
-import { linea } from './consensys'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -13,6 +13,7 @@ import { hermez } from './hermez'
 import { immutablex } from './immutablex'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { linea } from './consensys'
 import { loopring } from './loopring'
 import { metis } from './metis'
 import { myria } from './myria'
@@ -24,7 +25,7 @@ import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
 import { starknet } from './starknet'
-import { Layer2 } from './types'
+import { taiko } from './taiko'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
@@ -40,8 +41,6 @@ export const layer2s: Layer2[] = [
   aztecconnect,
   base,
   bobanetwork,
-  linea,
-  rhinofi,
   dydx,
   fuelv1,
   gluon,
@@ -49,6 +48,7 @@ export const layer2s: Layer2[] = [
   immutablex,
   layer2finance,
   layer2financezk,
+  linea,
   loopring,
   metis,
   myria,
@@ -56,14 +56,16 @@ export const layer2s: Layer2[] = [
   omgnetwork,
   optimism,
   polygonzkevm,
+  rhinofi,
   scroll,
   sorare,
   starknet,
+  taiko,
+  zkspace,
   zkswap,
   zkswap2,
-  zkspace,
-  zksynclite,
   zksyncera,
+  zksynclite,
 ]
 
 export const milestonesLayer2s = HOMEPAGE_MILESTONES
