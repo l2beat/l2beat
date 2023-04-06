@@ -48,7 +48,7 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
     }
     if (args.length === 3) {
       if (args[2] !== '--dry-run') {
-        return { mode: 'help', error: 'Unknown argument' + args[2] }
+        return { mode: 'help', error: 'Unknown argument ' + args[2] }
       } else {
         return {
           mode: 'discover',

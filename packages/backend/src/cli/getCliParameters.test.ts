@@ -35,6 +35,11 @@ describe(getCliParameters.name, () => {
 
   it('discover foo bar', () => {
     const cli = getCliParameters(['discover', 'foo', 'bar'])
+    expect(cli).toEqual({ mode: 'help', error: 'Unknown argument bar' })
+  })
+
+  it('discover foo bar baz', () => {
+    const cli = getCliParameters(['discover', 'foo', 'bar', 'baz'])
     expect(cli).toEqual({ mode: 'help', error: 'Too many arguments' })
   })
 })
