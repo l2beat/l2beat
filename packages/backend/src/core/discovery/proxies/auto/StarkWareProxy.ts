@@ -3,10 +3,7 @@ import { BigNumber, utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
-import {
-  getCallResult,
-  getCallResultWithRevert,
-} from '../../utils/getCallResult'
+import { getCallResult } from '../../utils/getCallResult'
 import { getProxyGovernance } from './StarkWareProxyGovernance'
 
 // keccak256("StarkWare2019.implemntation-slot")
@@ -68,25 +65,6 @@ async function getFinalizedState(
   ).eq(0)
 }
 
-async function getDiamondStatus(
-  provider: DiscoveryProvider,
-  address: EthereumAddress,
-) {
-  try {
-    await getCallResultWithRevert(
-      provider,
-      address,
-      'function nonExistentMethodName() view returns (uint)',
-    )
-    // This should actually never succeed
-    return false
-  } catch (e) {
-    return (
-      e instanceof Error && e.message.includes('"NO_CONTRACT_FOR_FUNCTION"')
-    )
-  }
-}
-
 export async function detectStarkWareProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
@@ -95,31 +73,26 @@ export async function detectStarkWareProxy(
   if (implementation === EthereumAddress.ZERO) {
     return
   }
-  const [
-    callImplementation,
+  const [callImplementation, upgradeDelay, isFinal, proxyGovernance] =
+    await Promise.all([
+      getCallImplementation(provider, address),
+      getUpgradeDelay(provider, address),
+      getFinalizedState(provider, address),
+      getProxyGovernance(provider, address),
+    ])
+
+  const diamond = await getStarkWareDiamond(
+    provider,
+    address,
+    implementation,
     upgradeDelay,
     isFinal,
     proxyGovernance,
-    isDiamond,
-  ] = await Promise.all([
-    getCallImplementation(provider, address),
-    getUpgradeDelay(provider, address),
-    getFinalizedState(provider, address),
-    getProxyGovernance(provider, address),
-    getDiamondStatus(provider, address),
-  ])
+  )
 
-  if (isDiamond) {
-    return await getStarkWareDiamond(
-      provider,
-      address,
-      implementation,
-      upgradeDelay,
-      isFinal,
-      proxyGovernance,
-    )
+  if (diamond) {
+    return diamond
   }
-
   const relatives = callImplementation ? [callImplementation] : []
   relatives.push(...proxyGovernance)
 
@@ -149,7 +122,7 @@ async function getStarkWareDiamond(
   upgradeDelay: number,
   isFinal: boolean,
   proxyGovernance: EthereumAddress[],
-): Promise<ProxyDetection> {
+): Promise<ProxyDetection | false> {
   const upgrades = await provider.getLogs(address, [
     [
       coder.getEventTopic('Upgraded'),
@@ -205,6 +178,13 @@ async function getStarkWareDiamond(
       break
     }
     facets[name] = facet
+  }
+
+  if (Object.keys(facets).length <= 1) {
+    // no facets found, this is not a StarkWare diamond
+    // 1 facet is the implementation itself
+    // and could mean that it's a callProxy
+    return false
   }
 
   return {
