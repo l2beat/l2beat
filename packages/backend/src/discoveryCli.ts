@@ -7,7 +7,7 @@ import {
   getDiscoveryCliConfig,
 } from './config/config.discovery'
 import { ConfigReader } from './core/discovery/config/ConfigReader'
-import { runDiscovery } from './core/discovery/runDiscovery'
+import { dryRunDiscovery, runDiscovery } from './core/discovery/runDiscovery'
 import { runInversion } from './core/inversion/runInversion'
 
 main().catch((e) => {
@@ -40,9 +40,21 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
   )
   const configReader = new ConfigReader()
 
+  if (config.discovery.dryRun) {
+    logger = logger.for('DryRun')
+    logger.info('Starting')
+
+    await dryRunDiscovery(
+      provider,
+      etherscanClient,
+      configReader,
+      config.discovery,
+    )
+    return
+  }
+
   logger = logger.for('Discovery')
   logger.info('Starting')
-
   await runDiscovery(provider, etherscanClient, configReader, config.discovery)
 }
 
