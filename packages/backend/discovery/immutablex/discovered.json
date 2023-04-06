@@ -1,10 +1,10 @@
 {
   "name": "immutablex",
-  "blockNumber": 16976666,
-  "configHash": "0xc434b7a3acfd64d641f5f76b799e526340f22f6a19a466dbcf2973e47ac0346d",
+  "blockNumber": 16989976,
+  "configHash": "0x177bc834e77075b0c1b1f232a51c41f8c72f70b2877108a2d20f8508b3086f29",
   "contracts": [
     {
-      "name": "Proxy",
+      "name": "StarkExchange",
       "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
       "code": "https://etherscan.deth.net/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9,0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC,0xF65C115efd24102315Af53f84aD65aD240bc9D57,0x97AA9658cfE27D6382b71FF9E72d773615Bd529E,0x86d8f977C9cEC503ad4E6805802cEf62Cde13773,0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A,0x2D542881E93491e765E5110c1e373FC2968E720A,0x970d1Fa79c64b256ef68bBFEab34137786811C7F",
       "upgradeability": {
@@ -28,38 +28,20 @@
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 259200,
         "FREEZE_GRACE_PERIOD": 604800,
-        "getActionCount": 0,
-        "getActionHashByIndex": [],
-        "getAssetInfo": [],
-        "getEthKey": [],
-        "getLastBatchId": 15483,
-        "getOrderRoot": "2928795834971518796296204513548148110497084386371147807336079484695517408198",
+        "getLastBatchId": 15560,
+        "getOrderRoot": "2397077373262235487905443268909139818417397639768499165509155195758202779882",
         "getOrderTreeHeight": 63,
-        "getQuantum": [
-          1,
-          1,
-          1,
-          1,
-          1
-        ],
         "getRegisteredAvailabilityVerifiers": [
           "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
         ],
         "getRegisteredVerifiers": [
           "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
         ],
-        "getSequenceNumber": 15356,
+        "getSequenceNumber": 15433,
         "getUpgradeActivationDelay": 1209600,
-        "getVaultRoot": "1072517343416420749296439358314210540688677593449811208145316159099105840184",
+        "getVaultRoot": "2677429301848693958044787799094910760368560396859691243981805463234152974370",
         "getVaultTreeHeight": 31,
         "implementation": "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
-        "isAssetRegistered": [
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
         "isFrozen": false,
         "isNotFinalized": true,
         "isStrictVaultBalancePolicy": false,
@@ -73,16 +55,10 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
         "UNFREEZE_DELAY": 31536000,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "VERIFIER_REMOVAL_DELAY": 2419200,
         "VERSION": "3.0.3"
       },
-      "errors": {
-        "getQuantum": "Too many values. Update configuration explore fully",
-        "identify": "Execution reverted",
-        "initializerSize": "Execution reverted",
-        "isAssetRegistered": "Too many values. Update configuration explore fully"
-      }
+      "derivedName": "Proxy"
     },
     {
       "name": "OrderRegistry",
@@ -187,19 +163,39 @@
         "type": "immutable"
       },
       "values": {
+        "constructorArgs": [
+          [
+            "0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
+            "0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
+            "0x48AF849535DDFa560A0EB0FbDEf436688169B949",
+            "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
+            "0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
+            "0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
+            "0xfF506616E8C53EE5e513b906AC00B5D76664C537"
+          ],
+          "5"
+        ],
         "hasRegisteredFact": true,
         "identify": "StarkWare_Committee_2019_1",
         "signaturesRequired": 5
-      }
+      },
+      "derivedName": "Committee"
     }
   ],
   "eoas": [
+    "0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
+    "0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
     "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
+    "0x48AF849535DDFa560A0EB0FbDEf436688169B949",
+    "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
     "0x59232aC80E6d403b6381393e52f4665ECA328558",
     "0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a",
     "0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
     "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e",
-    "0xebc8416179fE90854fe8B3f774801165572cfD7F"
+    "0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
+    "0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
+    "0xebc8416179fE90854fe8B3f774801165572cfD7F",
+    "0xfF506616E8C53EE5e513b906AC00B5D76664C537"
   ],
   "abis": {
     "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A": [

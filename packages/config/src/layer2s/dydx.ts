@@ -144,7 +144,7 @@ export const dydx: Layer2 = {
       description:
         'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(
-          discovery.getContractValue('PriorityExecutor', 'delay'),
+          discovery.getContractValue('PriorityExecutor', 'getDelay'),
         ),
     },
     {

@@ -48,11 +48,11 @@ export const apex: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: discovery.getContract('StarkPerpetual').address,
+      discovery.getEscrowDetails({
+        identifier: 'StarkExchange',
         sinceTimestamp: new UnixTime(1660252039),
         tokens: ['USDC'],
-      },
+      }),
     ],
   },
   riskView: makeBridgeCompatible({
@@ -79,7 +79,7 @@ export const apex: Layer2 = {
   contracts: {
     addresses: [
       discovery.getMainContractDetails(
-        'StarkPerpetual',
+        'StarkExchange',
         'Main contract of ApeX exchange. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
       ),
       discovery.getMainContractDetails(
@@ -99,15 +99,15 @@ export const apex: Layer2 = {
   permissions: [
     {
       name: 'Governors',
-      accounts: getProxyGovernance(discovery, 'StarkPerpetual'),
+      accounts: getProxyGovernance(discovery, 'StarkExchange'),
       description:
-        'Allowed to upgrade the implementation of the StarkPerpetual contract, potentially maliciously gaining control over the system or stealing funds.' +
+        'Allowed to upgrade the implementation of the StarkExchange contract, potentially maliciously gaining control over the system or stealing funds.' +
         delayDescriptionFromString(delay),
     },
     {
       name: 'Operators',
       accounts: discovery
-        .getContractValue<string[]>('StarkPerpetual', 'OPERATORS')
+        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
         .map(discovery.formatPermissionedAccount.bind(discovery)),
       description:
         'Allowed to update state of the system and verify DA proofs. When Operator is down the state cannot be updated.',

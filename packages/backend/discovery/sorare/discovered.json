@@ -1,7 +1,7 @@
 {
   "name": "sorare",
-  "blockNumber": 16976666,
-  "configHash": "0x2b2ebca6767b3b75af83de1986ac85dea38ecab55060350bcfd2c4f8bbc26aa2",
+  "blockNumber": 16990001,
+  "configHash": "0x79accf7cd3ad73c4bcaa4b79f2eba7ba66f226fd040fe28b038803cdbe315d5e",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -30,8 +30,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 7634,
-        "getOrderRoot": "466959019107713363375064351132631283164160149389954234551674349248847930382",
+        "getLastBatchId": 7668,
+        "getOrderRoot": "2871766589906425230037511176444580285596356516130779262132179019517622306706",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x879cD57975d596004863D30c59d579ef78BBbe32"
@@ -41,10 +41,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 7527,
+        "getSequenceNumber": 7561,
         "getUpgradeActivationDelay": 259200,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "1847622352080562751365503810079867752870320522182409394818356154793110448086",
+        "getValidiumVaultRoot": "1195112549278914253238449607664379408872623377732483124439288920283469970079",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -190,10 +190,20 @@
         "type": "immutable"
       },
       "values": {
+        "constructorArgs": [
+          [
+            "0x6EBCb783E53C072e9b1C8786942aefc145C6Df75",
+            "0x9bC546c5741d31b3510D3B240bDB4c517030E318",
+            "0xA70A45E56c087A34991A712d437fcFfd79D3a8Ec",
+            "0xefaaf3A5D0D795C7c1f92cBeDE868C273790026e"
+          ],
+          "2"
+        ],
         "hasRegisteredFact": true,
         "identify": "StarkWare_Committee_2019_1",
         "signaturesRequired": 2
-      }
+      },
+      "derivedName": "Committee"
     }
   ],
   "eoas": [
@@ -202,9 +212,13 @@
     "0x5918481F777dBe437De249492B90AffB4e655de4",
     "0x59232aC80E6d403b6381393e52f4665ECA328558",
     "0x63881ac44293E22F3c3183a0C4113586ABb3e653",
+    "0x6EBCb783E53C072e9b1C8786942aefc145C6Df75",
     "0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
+    "0x9bC546c5741d31b3510D3B240bDB4c517030E318",
+    "0xA70A45E56c087A34991A712d437fcFfd79D3a8Ec",
     "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8",
-    "0xebc8416179fE90854fe8B3f774801165572cfD7F"
+    "0xebc8416179fE90854fe8B3f774801165572cfD7F",
+    "0xefaaf3A5D0D795C7c1f92cBeDE868C273790026e"
   ],
   "abis": {
     "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": [
