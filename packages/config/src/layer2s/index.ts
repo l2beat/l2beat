@@ -14,6 +14,7 @@ import { immutablex } from './immutablex'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { loopring } from './loopring'
+import { mantle } from './mantle'
 import { metis } from './metis'
 import { myria } from './myria'
 import { nova } from './nova'
@@ -50,6 +51,7 @@ export const layer2s: Layer2[] = [
   layer2financezk,
   linea,
   loopring,
+  mantle,
   metis,
   myria,
   nova,
