@@ -26,6 +26,6 @@ export function sentimentToTextColor(sentiment?: Sentiment): string {
     case 'warning':
       return 'text-yellow-200'
     case undefined:
-      return ''
+      return 'text-green-300 dark:text-green-450'
   }
 }
