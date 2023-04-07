@@ -60,7 +60,7 @@ function RiskValueComponent({ title, risk }: RiskValueProps) {
       ? 'text-orange-600 dark:text-red-300'
       : risk.sentiment === 'warning'
       ? 'text-yellow-200'
-      : 'text-green-300 dark:text-green-450'
+      : undefined
   return (
     <div className="font-medium">
       <span className="mb-1 block text-[10px] uppercase">{title}</span>
