@@ -15,8 +15,7 @@ function Template(props: ContractsSectionProps) {
   )
 }
 
-export const Contracts: Story<ContractsSectionProps> = Template.bind({})
-Contracts.args = {
+const props: ContractsSectionProps = {
   contracts: [
     {
       name: 'CanonicalTransactionChain',
@@ -57,6 +56,15 @@ Contracts.args = {
       links: [],
     },
   ],
+  escrows: [
+    {
+      name: 'L1Escrow',
+      addresses: ['0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'],
+      description:
+        'DAI Vault for custom DAI Gateway managed by MakerDAO. This contract stores the following tokens: DAI.',
+      links: [],
+    },
+  ],
   risks: [
     {
       text: 'Funds can be stolen if a contract receives a malicious code upgrade. There is no delay on code upgrades.',
@@ -83,15 +91,19 @@ Contracts.args = {
   },
 }
 
+export const Contracts: Story<ContractsSectionProps> = Template.bind({})
+Contracts.args = props
+
 export const NoImage: Story<ContractsSectionProps> = Template.bind({})
 NoImage.args = {
-  ...Contracts.args,
+  ...props,
   architectureImage: '',
 }
 
 export const EmptyContract: Story<ContractsSectionProps> = Template.bind({})
 EmptyContract.args = {
   contracts: [],
+  escrows: [],
   risks: [],
   references: [],
 }
