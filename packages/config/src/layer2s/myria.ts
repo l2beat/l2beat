@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getCommittee } from '../discovery/starkware/getCommittee'
@@ -113,12 +113,10 @@ export const myria: Layer2 = {
     },
     {
       name: 'Operators',
-      accounts: discovery
-        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
-        .map((operator) => ({
-          address: EthereumAddress(operator),
-          type: 'EOA',
-        })),
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkExchange',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },

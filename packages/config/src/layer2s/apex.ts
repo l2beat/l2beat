@@ -106,9 +106,10 @@ export const apex: Layer2 = {
     },
     {
       name: 'Operators',
-      accounts: discovery
-        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
-        .map(discovery.formatPermissionedAccount.bind(discovery)),
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkExchange',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update state of the system and verify DA proofs. When Operator is down the state cannot be updated.',
     },

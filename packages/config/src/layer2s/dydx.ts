@@ -155,9 +155,10 @@ export const dydx: Layer2 = {
     },
     {
       name: 'Operators',
-      accounts: discovery
-        .getContractValue<string[]>('StarkPerpetual', 'OPERATORS')
-        .map(discovery.formatPermissionedAccount.bind(discovery)),
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkPerpetual',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },

@@ -127,10 +127,11 @@ export const immutablex: Layer2 = {
         delayDescriptionFromSeconds(2419200),
     },
     {
-      name: 'Operator',
-      accounts: discovery
-        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
-        .map(discovery.formatPermissionedAccount.bind(discovery)),
+      name: 'Operators',
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkExchange',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },
