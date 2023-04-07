@@ -20,6 +20,7 @@ export function getScalingRowProps(entry: ScalingTableEntry) {
         'dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900',
       ),
       href,
+      'data-role': 'row',
     }
   }
 
