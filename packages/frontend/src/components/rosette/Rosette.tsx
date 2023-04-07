@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { default as React, default as React } from 'react'
+import { default as React } from 'react'
 
 import {
   sentimentToFillColor,
