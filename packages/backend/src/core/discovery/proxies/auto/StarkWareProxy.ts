@@ -115,6 +115,7 @@ const coder = new utils.Interface([
   'event ImplementationUpgraded(address indexed implementation, bytes initializer)',
 ])
 
+// if returns false, it means that the proxy is not a StarkWare diamond
 async function getStarkWareDiamond(
   provider: DiscoveryProvider,
   address: EthereumAddress,
@@ -132,7 +133,7 @@ async function getStarkWareDiamond(
 
   const lastUpgrade = upgrades.at(-1)
   if (!lastUpgrade) {
-    throw new Error('Diamond without upgrades!?')
+    return false
   }
 
   let data: string | undefined
