@@ -1,6 +1,12 @@
 import { Sentiment } from './types'
 
-export function sentimentToFillColor(sentiment?: Sentiment): string {
+export function sentimentToFillColor(
+  sentiment?: Sentiment,
+  isUpcoming?: boolean,
+): string {
+  if (isUpcoming) {
+    return 'fill-gray-400 dark:fill-gray-750'
+  }
   switch (sentiment) {
     case 'bad':
       return 'fill-orange-600'
