@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getCommittee } from '../discovery/starkware/getCommittee'
 import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
 import {
   delayDescriptionFromSeconds,
@@ -91,12 +92,10 @@ export const immutablex: Layer2 = {
   contracts: {
     addresses: [
       discovery.getMainContractDetails('StarkExchange'),
-      {
-        name: 'Committee',
-        description:
-          'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
-        address: EthereumAddress('0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295'),
-      },
+      discovery.getMainContractDetails(
+        'Committee',
+        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+      ),
       SHARP_VERIFIER_CONTRACT,
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
@@ -109,55 +108,7 @@ export const immutablex: Layer2 = {
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromString(delay),
     },
-    {
-      name: 'Data Availability Committee',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x48AF849535DDFa560A0EB0FbDEf436688169B949',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xB71FC111D7BA82D5955BaDdD7717f3467184FF61',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xfF506616E8C53EE5e513b906AC00B5D76664C537',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'Validity proof must be signed by at least 5 of these addresses to approve state update.',
-    },
+    getCommittee(discovery),
     {
       name: 'SHARP Verifier Governor',
       accounts: [
@@ -176,10 +127,11 @@ export const immutablex: Layer2 = {
         delayDescriptionFromSeconds(2419200),
     },
     {
-      name: 'Operator',
-      accounts: discovery
-        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
-        .map(discovery.formatPermissionedAccount.bind(discovery)),
+      name: 'Operators',
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkExchange',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },

@@ -1,11 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getCommittee } from '../discovery/starkware/getCommittee'
 import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
-import {
-  delayDescriptionFromSeconds,
-  delayDescriptionFromString,
-} from '../utils/delayDescription'
+import { delayDescriptionFromString } from '../utils/delayDescription'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -54,11 +52,11 @@ export const myria: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
+      discovery.getEscrowDetails({
+        identifier: 'StarkExchange',
         sinceTimestamp: new UnixTime(1659542607),
         tokens: ['ETH'],
-      },
+      }),
     ],
     transactionApi: {
       type: 'starkex',
@@ -89,12 +87,10 @@ export const myria: Layer2 = {
   contracts: {
     addresses: [
       discovery.getMainContractDetails('StarkExchange'),
-      {
-        name: 'Committee',
-        description:
-          'Data Availability Committee (DAC) contract verifing data availability claim from DAC Members (via multisig check).',
-        address: EthereumAddress('0x1e601435E181423e7A8430813d7500012a6169cB'),
-      },
+      discovery.getMainContractDetails(
+        'Committee',
+        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+      ),
       SHARP_VERIFIER_CONTRACT,
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
@@ -107,70 +103,22 @@ export const myria: Layer2 = {
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromString(delay),
     },
+    getCommittee(discovery),
     {
-      name: 'SHARP Verifier Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'SHARP Verifier Governors',
+      accounts: getProxyGovernance(discovery, 'CallProxy'),
       description:
         'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
-        // @todo
-        // This should be coming from discovery, but it's not available yet.
-        // because myria discovery is not detecting the starkware diamond
-        delayDescriptionFromSeconds(2419200),
+        discovery.getDelayStringFromUpgradeability('CallProxy', 'upgradeDelay'),
     },
     {
       name: 'Operators',
-      accounts: discovery
-        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
-        .map((operator) => ({
-          address: EthereumAddress(operator),
-          type: 'EOA',
-        })),
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkExchange',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
-    },
-    {
-      name: 'Data Availability Committee',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x30cF77FC391B4Feba1AB31B01fEd442Bc759c0a8',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xC7544ad893710Bd0bf780bf78dE5547706da75c5',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xf365CDB8C33849d3684AcFf5475E7B6F075F9F0F',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xfBA93b5f744c853648d62C1357532582f77ed394',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'Validity proof must be signed by at least 2 of these 5 addresses to approve state update.',
     },
   ],
   milestones: [

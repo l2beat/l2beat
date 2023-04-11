@@ -1,10 +1,10 @@
 {
   "name": "apex",
-  "blockNumber": 16976206,
-  "configHash": "0x53042af2397c520f0c0658e5571a57a6e3647c530c294bc77e0da5d127cd1e28",
+  "blockNumber": 16989955,
+  "configHash": "0x46da88c9add5ef688ed58853c0a7d195a77d079e29ae5f59022886a35ebf4129",
   "contracts": [
     {
-      "name": "StarkPerpetual",
+      "name": "StarkExchange",
       "address": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
       "code": "https://etherscan.deth.net/address/0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb,0xdD813397b79f8df581eEb0c4B8aB72304c528396,0x533a7f4bE5453513049EB94A2b115F2CcE161dce,0x564EA75a26Dc0Bb5c5033B4752f88953A25AD058,0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859,0x34E7cfedF99995A47B3e3D0AB88ba67072B55035",
       "upgradeability": {
@@ -28,7 +28,7 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 2754,
+        "getLastBatchId": 2776,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -39,7 +39,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 2643,
+        "getSequenceNumber": 2665,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",

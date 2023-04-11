@@ -1,11 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getCommittee } from '../discovery/starkware/getCommittee'
 import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
-import {
-  delayDescriptionFromSeconds,
-  delayDescriptionFromString,
-} from '../utils/delayDescription'
+import { delayDescriptionFromString } from '../utils/delayDescription'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -56,11 +54,11 @@ export const sorare: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
+      discovery.getEscrowDetails({
+        identifier: 'StarkExchange',
         sinceTimestamp: new UnixTime(1626352527),
         tokens: ['ETH'],
-      },
+      }),
     ],
     transactionApi: {
       type: 'starkex',
@@ -91,12 +89,10 @@ export const sorare: Layer2 = {
   contracts: {
     addresses: [
       discovery.getMainContractDetails('StarkExchange'),
-      {
-        name: 'Committee',
-        address: EthereumAddress('0x879cD57975d596004863D30c59d579ef78BBbe32'),
-        description:
-          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-      },
+      discovery.getMainContractDetails(
+        'Committee',
+        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+      ),
       SHARP_VERIFIER_CONTRACT,
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
@@ -109,59 +105,20 @@ export const sorare: Layer2 = {
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromString(delay),
     },
+    getCommittee(discovery),
     {
-      name: 'Data Availability Committee',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x6EBCb783E53C072e9b1C8786942aefc145C6Df75',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x9bC546c5741d31b3510D3B240bDB4c517030E318',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xA70A45E56c087A34991A712d437fcFfd79D3a8Ec',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xefaaf3A5D0D795C7c1f92cBeDE868C273790026e',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'Validity proof must be signed by at least 2 of these addresses to approve state update.',
-    },
-    {
-      name: 'SHARP Verifier Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'SHARP Verifier Governors',
+      accounts: getProxyGovernance(discovery, 'CallProxy'),
       description:
         'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
-        // @todo
-        // This should be coming from discovery, but it's not available yet.
-        // because sorare discovery is not detecting the starkware diamond
-        delayDescriptionFromSeconds(2419200),
+        discovery.getDelayStringFromUpgradeability('CallProxy', 'upgradeDelay'),
     },
     {
       name: 'Operators',
-      accounts: discovery
-        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
-        .map(discovery.formatPermissionedAccount.bind(discovery)),
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkExchange',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
     },

@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -72,6 +73,7 @@ export const dydx: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    // GpsStatementVerifier is instantly upgradable
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
@@ -107,7 +109,7 @@ export const dydx: Layer2 = {
         name: 'GpsStatementVerifier',
         address: discovery.getContract('CallProxy').address,
         description:
-          'STARK Verifier. In contrast to Sorare, ImmutableX, rhino.fi and StarkNet which use common SHARP Prover, dYdX uses seperate Prover/Verifier.',
+          'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
         upgradeability: discovery.getContract('CallProxy').upgradeability,
       },
       {
@@ -127,6 +129,7 @@ export const dydx: Layer2 = {
         address: EthereumAddress('0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830'),
       },
     ],
+    // GpsStatementVerifier is instantly upgradable
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
@@ -139,7 +142,10 @@ export const dydx: Layer2 = {
         },
       ],
       description:
-        'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(
+          discovery.getContractValue('PriorityExecutor', 'getDelay'),
+        ),
     },
     {
       name: 'GpsStatementVerifier Governors',
@@ -149,9 +155,10 @@ export const dydx: Layer2 = {
     },
     {
       name: 'Operators',
-      accounts: discovery
-        .getContractValue<string[]>('StarkPerpetual', 'OPERATORS')
-        .map(discovery.formatPermissionedAccount.bind(discovery)),
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkPerpetual',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },
