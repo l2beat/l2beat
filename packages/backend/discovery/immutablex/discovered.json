@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
-  "blockNumber": 16989976,
-  "configHash": "0x177bc834e77075b0c1b1f232a51c41f8c72f70b2877108a2d20f8508b3086f29",
+  "blockNumber": 17025788,
+  "configHash": "0x5bfcd47d366d4b479883600ade6cf6009a1cd2293d5d6a7bfec9277d82926c0e",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -28,8 +28,8 @@
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 259200,
         "FREEZE_GRACE_PERIOD": 604800,
-        "getLastBatchId": 15560,
-        "getOrderRoot": "2397077373262235487905443268909139818417397639768499165509155195758202779882",
+        "getLastBatchId": 15726,
+        "getOrderRoot": "798093462571001959565320344198177660019225474181830308730153263145201528427",
         "getOrderTreeHeight": 63,
         "getRegisteredAvailabilityVerifiers": [
           "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
@@ -37,9 +37,9 @@
         "getRegisteredVerifiers": [
           "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
         ],
-        "getSequenceNumber": 15433,
+        "getSequenceNumber": 15599,
         "getUpgradeActivationDelay": 1209600,
-        "getVaultRoot": "2677429301848693958044787799094910760368560396859691243981805463234152974370",
+        "getVaultRoot": "679143829900540190016094830754332604148596672466464888346346422264604783801",
         "getVaultTreeHeight": 31,
         "implementation": "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
         "isFrozen": false,
@@ -130,7 +130,7 @@
           "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
         ],
         "getThreshold": 2,
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       }
     },

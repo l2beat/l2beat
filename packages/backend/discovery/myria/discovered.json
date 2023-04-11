@@ -1,7 +1,7 @@
 {
   "name": "myria",
-  "blockNumber": 16989988,
-  "configHash": "0x414235b1bda727c862a8b639ae8ba5d1b8115421fe3ee57128d44caf3a2b18ba",
+  "blockNumber": 17025782,
+  "configHash": "0x18f0703fdeddef7e0aeec5abba0bdf386dfce570b92131400ad85110afcffced",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -29,8 +29,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 1253,
-        "getOrderRoot": "282437095067390478480248526075276590430542533171828467002529498043871138187",
+        "getLastBatchId": 1268,
+        "getOrderRoot": "2627746270414736528620594875242817448628567123452248344741701828130727354124",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x1e601435E181423e7A8430813d7500012a6169cB"
@@ -40,10 +40,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 1253,
+        "getSequenceNumber": 1268,
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "3099159929091404961850178501197217115987396358618950188810060196912878130099",
+        "getValidiumVaultRoot": "1142556133960144545675397414916987654979461418091043451754870442407130953945",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -134,7 +134,7 @@
           "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
         ],
         "getThreshold": 2,
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       }
     },
