@@ -12,6 +12,13 @@ export const MILESTONES = {
 
 export const HOMEPAGE_MILESTONES: Milestone[] = [
   {
+    name: 'First zkRollup (DEX)',
+    date: '2019-12-04T00:00:00Z',
+    link: 'https://medium.loopring.io/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
+    description:
+      'Loopring is live, bringing the first DEX protocol on zkRollup technology.',
+  },
+  {
     name: 'First StarkEx Validium',
     date: '2020-06-03T00:00:00Z',
     link: 'https://medium.com/starkware/starks-over-mainnet-b83e63db04c0',
