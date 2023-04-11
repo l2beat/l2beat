@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
-import { ProjectDiscovery } from '../../ProjectDiscovery'
-import { TESTS_HARDCODED } from '../hardcoded.test'
+import { ProjectDiscovery } from '../../../ProjectDiscovery'
+import { TESTS_HARDCODED } from '../../hardcoded'
 
 describe('hardcoded', () => {
   describe('arbitrum', () => {
@@ -27,6 +27,24 @@ describe('hardcoded', () => {
       )
 
       expect(count).toEqual(TESTS_HARDCODED.ARBITRUM_SET_VALIDATOR_COUNT)
+    })
+
+    it('sequencer delay blocks', () => {
+      const delay = arbitrumDiscovery.getContractValue<number[]>(
+        'SequencerInbox',
+        'maxTimeVariation',
+      )[0]
+
+      expect(delay).toEqual(TESTS_HARDCODED.ARBITRUM_SEQUENCER_DELAY_BLOCKS)
+    })
+
+    it('sequencer delay seconds', () => {
+      const delay = arbitrumDiscovery.getContractValue<number[]>(
+        'SequencerInbox',
+        'maxTimeVariation',
+      )[2]
+
+      expect(delay).toEqual(TESTS_HARDCODED.ARBITRUM_SEQUENCER_DELAY_SECONDS)
     })
   })
 })

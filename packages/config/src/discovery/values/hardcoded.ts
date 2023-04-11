@@ -12,11 +12,13 @@ DO NOT UPDATE THIS FILE ONLY TO FIX THE TESTS
 UNDERSTAND WHAT YOU ARE DOING BEFORE YOU UPDATE THIS FILE
 */
 
-import { ARBITRUM_HARDCODED } from './projects/arbitrumHardcoded'
+// This is the place to insert hardcoded values
+// which should be used inside project's hardcoded tests
 
-// This is the entry point for hardcoding values in the config
-// only HARDCODED object should be imported in project's config
-
-export const HARDCODED = {
-  ARBITRUM: ARBITRUM_HARDCODED,
+export const TESTS_HARDCODED = {
+  ARBITRUM_SET_VALIDATOR_COUNT: 7,
+  ARBITRUM_SET_SEQUENCER_COUNT: 3,
+  ARBITRUM_SEQUENCER_DELAY_BLOCKS: 5760,
+  ARBITRUM_SEQUENCER_DELAY_SECONDS: 86400,
+  ARBITRUM_VALIDATOR_AFK_BLOCKS: 45818,
 }

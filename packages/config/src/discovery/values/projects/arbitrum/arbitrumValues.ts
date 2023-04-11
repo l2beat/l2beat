@@ -1,7 +1,30 @@
 import { EthereumAddress } from '@l2beat/shared'
 
-import { ProjectPermissionedAccount } from '../../../common'
+import { ProjectPermissionedAccount } from '../../../../common'
+import { formatSeconds } from '../../../../utils/formatSeconds'
+import { ProjectDiscovery } from '../../../ProjectDiscovery'
 
+const discovery = new ProjectDiscovery('arbitrum')
+
+const getSequencerFailureString = () => {
+  const maxTimeVariation = discovery.getContractValue<number[]>(
+    'SequencerInbox',
+    'maxTimeVariation',
+  )
+  const SEQUENCER_DELAY_BLOCKS = maxTimeVariation[0]
+  const SEQUENCER_DELAY_SECONDS = maxTimeVariation[2]
+
+  return `In the event of sequencer failure, after ${formatSeconds(
+    SEQUENCER_DELAY_SECONDS,
+  )} (${SEQUENCER_DELAY_BLOCKS} blocks) user can force the transaction to be included in the L2 chain by sending it to the L1.`
+}
+
+const VALIDATOR_AFK_BLOCKS = discovery.getContractValue<number>(
+  'RollupProxy',
+  'VALIDATOR_AFK_BLOCKS',
+)
+
+// HARDCODED
 const OLD_BRIDGE = EthereumAddress('0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515')
 
 const SEQUENCER: ProjectPermissionedAccount[] = [
@@ -70,4 +93,5 @@ export const ARBITRUM_HARDCODED = {
   OLD_BRIDGE,
   SEQUENCER,
   VALIDATORS,
+  getSequencerFailureString,
 }

@@ -20,4 +20,5 @@ export interface ProjectRiskViewEntry {
   value: string
   description: string
   sentiment?: 'warning' | 'bad'
+  references?: string[]
 }

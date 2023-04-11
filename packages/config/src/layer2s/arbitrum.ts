@@ -1,7 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
-import { HARDCODED } from '../discovery/hardcoded/hardcoded'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { VALUES } from '../discovery/values'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -89,7 +90,7 @@ export const arbitrum: Layer2 = {
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
-        address: HARDCODED.ARBITRUM.OLD_BRIDGE,
+        address: VALUES.ARBITRUM.OLD_BRIDGE,
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
         hidden: true,
@@ -114,7 +115,14 @@ export const arbitrum: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM,
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
+    sequencerFailure: {
+      value: 'Transact using L1',
+      description: VALUES.ARBITRUM.getSequencerFailureString(),
+      references: [
+        'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
+        'https://developer.arbitrum.io/sequencer',
+      ],
+    },
     validatorFailure: {
       value: 'Propose blocks',
       description:
@@ -158,7 +166,14 @@ export const arbitrum: Layer2 = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
+      description:
+        OPERATOR.CENTRALIZED_SEQUENCER.description +
+        VALUES.ARBITRUM.getSequencerFailureString(),
       references: [
+        {
+          text: 'Smart Contract',
+          href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
+        },
         {
           text: 'Sequencer - Arbitrum documentation',
           href: 'https://developer.offchainlabs.com/sequencer',
@@ -244,13 +259,13 @@ export const arbitrum: Layer2 = {
     ),
     {
       name: 'Sequencer',
-      accounts: HARDCODED.ARBITRUM.SEQUENCER,
+      accounts: VALUES.ARBITRUM.SEQUENCER,
       description:
         'Central actor allowed to set the order in which L2 transactions are executed.',
     },
     {
       name: 'Validators',
-      accounts: HARDCODED.ARBITRUM.VALIDATORS,
+      accounts: VALUES.ARBITRUM.VALIDATORS,
       description:
         'They can submit new state roots and challenge state roots. Some of the validators perform their duties through special purpose smart contracts.',
     },
