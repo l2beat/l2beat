@@ -125,8 +125,7 @@ export const arbitrum: Layer2 = {
     },
     validatorFailure: {
       value: 'Propose blocks',
-      description:
-        'Anyone can become a Validator after 7-days of inactivity from the currently whitelisted Validators.',
+      description: VALUES.ARBITRUM.getValidatorFailureString(),
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -166,14 +165,7 @@ export const arbitrum: Layer2 = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
-      description:
-        OPERATOR.CENTRALIZED_SEQUENCER.description +
-        VALUES.ARBITRUM.getSequencerFailureString(),
       references: [
-        {
-          text: 'Smart Contract',
-          href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
-        },
         {
           text: 'Sequencer - Arbitrum documentation',
           href: 'https://developer.offchainlabs.com/sequencer',
@@ -182,7 +174,15 @@ export const arbitrum: Layer2 = {
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      description:
+        FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
+        ' ' +
+        VALUES.ARBITRUM.getValidatorFailureString(),
       references: [
+        {
+          text: 'Smart Contract source code',
+          href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
+        },
         {
           text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
           href: 'https://developer.offchainlabs.com/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
