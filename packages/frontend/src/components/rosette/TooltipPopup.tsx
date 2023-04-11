@@ -20,7 +20,7 @@ export function RosetteTooltipPopup({
       </span>
       <div className="flex items-center gap-6">
         <div className="">
-          <MediumRosette risks={riskSentiments} isBrighterGreen />
+          <MediumRosette risks={riskSentiments} />
         </div>
         <div className="flex flex-col gap-4">
           <RiskValueComponent

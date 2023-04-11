@@ -179,7 +179,6 @@ function Summary(props: SummaryProps) {
         <BigRosette
           risks={props.risks}
           isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
-          isBrighterGreen
         />
         {!props.isUpcoming && (
           <a

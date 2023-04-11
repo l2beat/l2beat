@@ -13,11 +13,7 @@ export interface RiskAnalysisProps {
 export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
   return (
     <Section title="Risk analysis" id="risks" className="mt-4">
-      <BigRosette
-        risks={riskValues}
-        isBrighterGreen
-        className="mx-auto my-6 lg:hidden"
-      />
+      <BigRosette risks={riskValues} className="mx-auto my-6 lg:hidden" />
       <div>
         <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
           State validation
