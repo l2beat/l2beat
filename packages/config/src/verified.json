@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-04-06T11:05:45.007Z",
+  "updatedAt": "2023-04-11T11:26:40.547Z",
   "projects": {
     "across-v2": true,
     "allbridge": false,
@@ -30,6 +30,7 @@
     "linea": true,
     "loopring": true,
     "lzomnichain": false,
+    "mantle": true,
     "metis": true,
     "multichain": true,
     "myria": true,

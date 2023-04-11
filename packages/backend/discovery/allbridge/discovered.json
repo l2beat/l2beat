@@ -1,10 +1,10 @@
 {
   "name": "allbridge",
-  "blockNumber": 17024457,
-  "configHash": "0x199905db7785ff754b3298d060a8ca76948cd4704e8292162614e9301b091283",
+  "blockNumber": 17024527,
+  "configHash": "0x7839cc4069edd41048ed7e3b33fe21ed5cbb0eae7b5dd2e1a8ee9cc7650716a7",
   "contracts": [
     {
-      "name": "Bridge",
+      "name": "LPBridge",
       "address": "0xA314330482f325D38A83B492EF6B006224a3bea9",
       "code": "https://etherscan.deth.net/address/0xA314330482f325D38A83B492EF6B006224a3bea9",
       "upgradeability": {
@@ -18,7 +18,8 @@
         "USDC_POOL": "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
         "USDT_POOL": "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
         "wormholeMessenger": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F"
-      }
+      },
+      "derivedName": "Bridge"
     },
     {
       "name": "",
@@ -117,7 +118,7 @@
       }
     },
     {
-      "name": "Bridge",
+      "name": "TokenBridge",
       "address": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
       "code": "https://etherscan.deth.net/address/0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
       "upgradeability": {
@@ -132,7 +133,8 @@
         "TOKEN_MANAGER": "0x593fb413ec9f9ad9f53f309300b515310ff474591268ca3cbe9752fd88eb76a0",
         "unlockSigner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
         "validator": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b"
-      }
+      },
+      "derivedName": "Bridge"
     },
     {
       "name": "",
