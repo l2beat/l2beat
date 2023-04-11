@@ -15,7 +15,7 @@ export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
     <Section title="Risk analysis" id="risks" className="mt-4">
       <BigRosette
         risks={riskValues}
-        isBrighterGreen={true}
+        isBrighterGreen
         className="mx-auto my-6 lg:hidden"
       />
       <div>
