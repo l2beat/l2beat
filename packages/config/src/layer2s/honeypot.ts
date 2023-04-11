@@ -19,18 +19,19 @@ export const honeypot: Layer2 = {
     name: 'Honeypot',
     slug: 'honeypot',
     description:
-      'A Honeypot DApp developed using Cartesi DApp specific Optimistic Rollups SDK in order to battle test the SDKs security assumptions.',
+      'Honeypot is a DApp designed to challenge the security of Cartesi Rollups.\
+       Bug hunters are incentivized to hack the application to obtain the funds locked in the rollup contract.\
+       Honeypot holds real assets with a dual objective: setting a financial benchmark for secure asset management\
+       and providing a gamified battlefield for the community to help audit and test Cartesi Rollups.\
+       Crack the Honeypot, and the spoils are yours – no strings attached!',
     purpose: 'Bug bounty',
     links: {
-      websites: ['https://honeypot.io'], // TODO: Confirm.
-      apps: [], // It will be empty
-      documentation: ['https://honeypot.io/docs'], // TODO: Confirm.
-      explorers: [ 'https://goerli.etherscan.io/address/0x951a21a412b0281190643c17fa24bc42d5386dd6' ], // TODO: Random address.
-      repositories: [ 'https://github.com/honeypot' ], // TODO: Confirm
-      socialMedia: [
-        'https://discord.gg/honeypot',
-        'https://twitter.com/honeypot',
-      ], // TODO: We can point here to specific announcements on our social medias.
+      websites: [],                                 // TODO
+      apps: [],                                     // Ok
+      documentation: ['https://docs.cartesi.io/cartesi-rollups/'], // Ok
+      explorers: [],                                // Ok
+      repositories: [],                             // TODO
+      socialMedia: ['https://discord.gg/du7emFSt'], // Ok
     },
   },
   config: {
@@ -42,13 +43,13 @@ export const honeypot: Layer2 = {
       },
     ],
   },
-  riskView: makeBridgeCompatible({   // TODO: Review all entries
-    stateValidation: RISK_VIEW.STATE_EXITS_ONLY,          // TO BE CONFIRMED
+  riskView: makeBridgeCompatible({
+    stateValidation: RISK_VIEW.STATE_EXITS_ONLY,          // Ok
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,            // Ok
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,             // TO BE CONFIRMED
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,    // TO BE CONFIRNED
-    validatorFailure: RISK_VIEW.VALIDATOR_NO_MECHANISM,   // TO BE CONFIRMED 
-    destinationToken: RISK_VIEW.VALIDATED_BY_ETHEREUM,    // TO BE CONFIRMED
+    upgradeability: RISK_VIEW.UPGRADABLE_NO,              // Ok
+    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,    // Ok
+    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_U,       // Ok 
+    destinationToken: RISK_VIEW.VALIDATED_BY_ETHEREUM,    // Ok
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,         // OK
   }),
   technology: {
@@ -56,24 +57,24 @@ export const honeypot: Layer2 = {
     category: 'Optimistic Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
-      references: [], // TODO: Add link to article explaining the mainnet launch for cartesi rollups
+      references: [],
     },
     dataAvailability: {
       ...DATA_AVAILABILITY.ON_CHAIN,
-      references: [], // TODO: Add link to article explaining the mainnet launch for cartesi rollups
+      references: [],
     },
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
-      references: [], // TODO: Add link to article explaining the mainnet launch for cartesi rollups
+      references: [],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
-      references: [], // TODO: Add link to article explaining the mainnet launch for cartesi rollups
+      references: [],
     },
     exitMechanisms: [
       {
         ...EXITS.REGULAR('optimistic', 'merkle proof'),
-        references: [], // TODO: Add link to article explaining the mainnet launch for cartesi rollups
+        references: [],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
     ],
@@ -81,18 +82,18 @@ export const honeypot: Layer2 = {
   contracts: {
     addresses: [
       {
-        address: EthereumAddress('0x6880f6Fd960D1581C2730a451A22EED1081cfD72'), //TODO: This should be the address of the Honeypot DApp! The Portals now just verify the deposit, but forward the assets themselves to the address of the DApp
-        name: 'Honeypot Cartesi Address',
+        address: EthereumAddress('0x6880f6Fd960D1581C2730a451A22EED1081cfD72'), //TODO: This should be the address of the Honeypot DApp! The Portals now just verify the deposit, but forward the assets themselves to the address of the DApp.
+        name: 'Honeypot DApp Address',
       },
     ],
     risks: [],
   },
   milestones: [
     {
-      name: 'Honeypot DApp live on Mainnet',
-      link: 'https://twitter.com/honeypot/status/1344707195250896899', // To update with launch announcement
-      date: '2020-12-31T00:00:00Z', // To update with launch date
-      description: 'Honeypot DApp live on Mainnet.',
+      name: 'Honeypot DApp announcement',
+      link: 'https://medium.com/cartesi/cartesi-ecosystem-update-2023-124b384401cc#:~:text=Honeypot%20DApp%20on%20Mainnet',
+      date: '2023-04-11T00:00:00Z',
+      description: 'Honeypot DApp first announced to the community',
     },
   ],
 }
