@@ -134,9 +134,10 @@ export const rhinofi: Layer2 = {
     ),
     {
       name: 'Operators',
-      accounts: discovery
-        .getContractValue<string[]>('StarkExchange', 'OPERATORS')
-        .map(discovery.formatPermissionedAccount.bind(discovery)),
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkExchange',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
     },

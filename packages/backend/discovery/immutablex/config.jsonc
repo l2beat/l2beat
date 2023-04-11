@@ -2,15 +2,32 @@
   "$schema": "../config.schema.json",
   "name": "immutablex",
   "initialAddresses": ["0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"],
+  "names": {
+    "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": "StarkExchange",
+    "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295": "Committee"
+  },
   "overrides": {
-    "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4": {
-      "fields": {
-        "constructorArgs": {
-          "type": "constructorArgs"
-        }
-      }
-    },
-    "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": {
+    "StarkExchange": {
+      "ignoreMethods": [
+        "configurationHash",
+        "getEthKey",
+        "getQuantum",
+        "identify",
+        "isAssetRegistered",
+        "validatedSelectors",
+        "getAssetInfo",
+        "getActionCount",
+        "getActionHashByIndex",
+        "initializerSize",
+        "UPGRADE_DELAY_SLOT"
+      ],
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getVaultRoot"
+      ],
       "fields": {
         "OPERATORS": {
           "type": "arrayFromTwoEvents",
@@ -18,6 +35,13 @@
           "addKey": "operator",
           "removeEvent": "event LogOperatorRemoved(address operator)",
           "removeKey": "operator"
+        }
+      }
+    },
+    "Committee": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
         }
       }
     }

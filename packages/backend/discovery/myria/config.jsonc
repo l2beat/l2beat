@@ -2,9 +2,32 @@
   "$schema": "../config.schema.json",
   "name": "myria",
   "initialAddresses": ["0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"],
+  "names": {
+    "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7": "StarkExchange",
+    "0x1e601435E181423e7A8430813d7500012a6169cB": "Committee"
+  },
   "overrides": {
-    // Main Rollup contract
-    "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7": {
+    "StarkExchange": {
+      "ignoreMethods": [
+        "configurationHash",
+        "getEthKey",
+        "getQuantum",
+        "identify",
+        "isAssetRegistered",
+        "validatedSelectors",
+        "getAssetInfo",
+        "getActionCount",
+        "getActionHashByIndex",
+        "initializerSize",
+        "UPGRADE_DELAY_SLOT"
+      ],
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getValidiumVaultRoot"
+      ],
       "fields": {
         "OPERATORS": {
           "type": "arrayFromTwoEvents",
@@ -12,6 +35,13 @@
           "addKey": "operator",
           "removeEvent": "event LogOperatorRemoved(address operator)",
           "removeKey": "operator"
+        }
+      }
+    },
+    "Committee": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
         }
       }
     }

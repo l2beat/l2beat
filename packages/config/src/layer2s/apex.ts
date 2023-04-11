@@ -1,7 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getCommittee } from '../discovery/starkware/getCommittee'
 import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
+import { delayDescriptionFromString } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -18,6 +21,12 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('apex')
+
+const delaySeconds = discovery.getContractUpgradeabilityParam(
+  'StarkExchange',
+  'upgradeDelay',
+)
+const delay = formatSeconds(delaySeconds)
 
 export const apex: Layer2 = {
   type: 'layer2',
@@ -39,17 +48,17 @@ export const apex: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: discovery.getContract('StarkPerpetual').address,
+      discovery.getEscrowDetails({
+        identifier: 'StarkExchange',
         sinceTimestamp: new UnixTime(1660252039),
         tokens: ['USDC'],
-      },
+      }),
     ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
+    upgradeability: RISK_VIEW.UPGRADE_DELAY(delay),
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -70,7 +79,7 @@ export const apex: Layer2 = {
   contracts: {
     addresses: [
       discovery.getMainContractDetails(
-        'StarkPerpetual',
+        'StarkExchange',
         'Main contract of ApeX exchange. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
       ),
       discovery.getMainContractDetails(
@@ -85,49 +94,32 @@ export const apex: Layer2 = {
       },
       SHARP_VERIFIER_CONTRACT,
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
   permissions: [
     {
       name: 'Governors',
-      accounts: getProxyGovernance(discovery, 'StarkPerpetual'),
+      accounts: getProxyGovernance(discovery, 'StarkExchange'),
       description:
-        'Allowed to upgrade the implementation of the StarkPerpetual contract, potentially maliciously gaining control over the system or stealing funds.',
-    },
-    {
-      name: 'Perpetual Governance Multisig',
-      accounts: [
-        {
-          address: discovery.getContract('PerpetualGovernanceMultisig').address,
-          type: 'MultiSig',
-        },
-      ],
-      description:
-        'Allowed to upgrade the implementation of the StarkPerpetual contract, potentially maliciously gaining control over the system or stealing funds.',
+        'Allowed to upgrade the implementation of the StarkExchange contract, potentially maliciously gaining control over the system or stealing funds.' +
+        delayDescriptionFromString(delay),
     },
     {
       name: 'Operators',
-      accounts: discovery
-        .getContractValue<string[]>('StarkPerpetual', 'OPERATORS')
-        .map(discovery.formatPermissionedAccount.bind(discovery)),
+      accounts: discovery.getPermissionedAccountsList(
+        'StarkExchange',
+        'OPERATORS',
+      ),
       description:
         'Allowed to update state of the system and verify DA proofs. When Operator is down the state cannot be updated.',
     },
-    {
-      name: 'Data Availability Committee',
-      accounts: discovery
-        .getConstructorArg<string[]>('Committee', 0)
-        .map(discovery.formatPermissionedAccount.bind(discovery)),
-      description: `Validity proof must be signed by at least ${discovery.getConstructorArg<string>(
-        'Committee',
-        1,
-      )} of these addresses to approve state update.`,
-    },
+    getCommittee(discovery),
     {
       name: 'SHARP Verifier Governors',
       accounts: getProxyGovernance(discovery, 'CallProxy'),
       description:
-        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
+        discovery.getDelayStringFromUpgradeability('CallProxy', 'upgradeDelay'),
     },
     {
       name: 'Allowed signers',

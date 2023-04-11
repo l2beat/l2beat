@@ -3,12 +3,12 @@
   "name": "apex",
   "initialAddresses": ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"],
   "names": {
-    "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb": "StarkPerpetual",
+    "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb": "StarkExchange",
     "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6": "PerpetualGovernanceMultisig",
     "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4": "Committee"
   },
   "overrides": {
-    "StarkPerpetual": {
+    "StarkExchange": {
       "ignoreMethods": [
         "configurationHash",
         "getEthKey",
