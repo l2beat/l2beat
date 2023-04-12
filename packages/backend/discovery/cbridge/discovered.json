@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
-  "blockNumber": 16727908,
-  "configHash": "0xf6cae3198f31e17e6fefd9d07107c570d1fe777bcf9c93a350892942b050a2ad",
+  "blockNumber": 17031482,
+  "configHash": "0xf302229b9c0f24151d680b340b1183a259fc33f35a11cd69c2e7116d8b4afaea",
   "contracts": [
     {
       "name": "MessageBus",
@@ -16,7 +16,7 @@
         "feeBase": 15000000000000,
         "feePerByte": 150000000000,
         "liquidityBridge": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
-        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+        "owner": "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
         "pegBridge": "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
         "pegBridgeV2": "0x52E4f244f380f8fA51816c8a10A63105dd4De084",
         "pegVault": "0xB37D31b2A74029B5951a2778F959282E2D518595",
@@ -33,7 +33,7 @@
         "type": "immutable"
       },
       "values": {
-        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+        "owner": "0x0000000000000000000000000000000000000000"
       }
     },
     {
@@ -51,6 +51,37 @@
         "paused": false,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
       }
+    },
+    {
+      "name": "SimpleGovernance",
+      "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+      "code": "https://etherscan.deth.net/address/0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getVoters": [
+          [
+            "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+            "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+            "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+            "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+            "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+          ],
+          [
+            10000,
+            10000,
+            10000,
+            10000,
+            10000
+          ]
+        ],
+        "MAX_ACTIVE_PERIOD": 2419200,
+        "MIN_ACTIVE_PERIOD": 3600,
+        "nextProposalId": 11,
+        "THRESHOLD_DECIMAL": 100
+      },
+      "derivedName": "SimpleGovernance"
     },
     {
       "name": "OriginalTokenVault",
@@ -79,7 +110,8 @@
           "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
         ],
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      }
+      },
+      "derivedName": "OriginalTokenVault"
     },
     {
       "name": "PeggedTokenBridgeV2",
@@ -112,9 +144,9 @@
       }
     },
     {
-      "name": "SimpleGovernance",
-      "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-      "code": "https://etherscan.deth.net/address/0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+      "name": "MessageBusOwner",
+      "address": "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
+      "code": "https://etherscan.deth.net/address/0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
       "upgradeability": {
         "type": "immutable"
       },
@@ -127,13 +159,19 @@
             "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
             "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
           ],
-          [10000, 10000, 10000, 10000, 10000]
+          [
+            10000,
+            10000,
+            10000,
+            10000,
+            10000
+          ]
         ],
         "MAX_ACTIVE_PERIOD": 2419200,
         "MIN_ACTIVE_PERIOD": 3600,
-        "nextProposalId": 8,
         "THRESHOLD_DECIMAL": 100
-      }
+      },
+      "derivedName": "MessageBusOwner"
     },
     {
       "name": "Bridge",
@@ -143,7 +181,7 @@
         "type": "immutable"
       },
       "values": {
-        "addseq": 4641,
+        "addseq": 4838,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -166,9 +204,10 @@
           "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xeeba6e7fd19f63af5ce36e5903ea55ac3327a82ed131542c1bf3b950a345af48",
-        "triggerTime": 1677544930
-      }
+        "ssHash": "0x004ad9e4925678b95e8a3bf7fc561e64c0052f9274d2c09c0abc204fb89a8d55",
+        "triggerTime": 1681258024
+      },
+      "derivedName": "Bridge"
     },
     {
       "name": "TransferAgent",
@@ -460,6 +499,34 @@
       "function verifySigs(bytes _msg, bytes[] _sigs, address[] _signers, uint256[] _powers) view",
       "function withdraw(bytes _wdmsg, bytes[] _sigs, address[] _signers, uint256[] _powers)",
       "function withdraws(bytes32) view returns (bool)"
+    ],
+    "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175": [
+      "constructor(address[] _voters, uint256[] _powers, uint256 _activePeriod, uint256 _quorumThreshold)",
+      "event Initiated(address[] voters, uint256[] powers, uint256 activePeriod, uint256 quorumThreshold)",
+      "event ParamChangeProposalCreated(uint256 proposalId, uint8 name, uint256 value)",
+      "event ProposalCreated(uint256 proposalId, uint8 proposalType, address target, bytes data, uint256 deadline, address proposer)",
+      "event ProposalExecuted(uint256 proposalId)",
+      "event ProposalVoted(uint256 proposalId, address voter, bool vote)",
+      "event SetMsgFeeProposalCreated(uint256 proposalId, address target, uint8 feeType, uint256 fee)",
+      "event SetPreExecuteMessageGasUsageProposalCreated(uint256 proposalId, address target, uint256 usage)",
+      "event VoterUpdateProposalCreated(uint256 proposalId, address[] voters, uint256[] powers)",
+      "function MAX_ACTIVE_PERIOD() view returns (uint256)",
+      "function MIN_ACTIVE_PERIOD() view returns (uint256)",
+      "function THRESHOLD_DECIMAL() view returns (uint256)",
+      "function countVotes(uint256 _proposalId) view returns (uint256, uint256, bool)",
+      "function executeProposal(uint256 _proposalId, uint8 _type, address _target, bytes _data)",
+      "function getVote(uint256 _proposalId, address _voter) view returns (bool)",
+      "function getVoters() view returns (address[], uint256[])",
+      "function nextProposalId() view returns (uint256)",
+      "function params(uint8) view returns (uint256)",
+      "function proposals(uint256) view returns (bytes32 dataHash, uint256 deadline)",
+      "function proposeParamChange(uint8 _name, uint256 _value) returns (uint256)",
+      "function proposeSetMsgFee(address _target, uint8 _feeType, uint256 _fee) returns (uint256)",
+      "function proposeSetPreExecuteMessageGasUsage(address _target, uint256 _usage)",
+      "function proposeVoterUpdate(address[] _voters, uint256[] _powers) returns (uint256)",
+      "function voteProposal(uint256 _proposalId, bool _vote)",
+      "function voterPowers(address) view returns (uint256)",
+      "function voters(uint256) view returns (address)"
     ],
     "0x7510792A3B1969F9307F3845CE88e39578f2bAE1": [
       "constructor(address _sigsVerifier)",

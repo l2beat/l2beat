@@ -5,8 +5,17 @@
     "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
     "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b"
   ],
+  "names": {
+    "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175": "MessageBusOwner",
+    "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": "SimpleGovernance",
+    "0xB37D31b2A74029B5951a2778F959282E2D518595": "OriginalTokenVault",
+    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": "Bridge"
+  },
   "overrides": {
-    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": {
+    "MessageBusOwner": {
+      "ignoreMethods": ["countVotes", "nextProposalId", "proposals", "voters"]
+    },
+    "Bridge": {
       "fields": {
         "pausers": {
           "type": "arrayFromTwoEvents",
@@ -25,7 +34,7 @@
       },
       "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"]
     },
-    "0xB37D31b2A74029B5951a2778F959282E2D518595": {
+    "OriginalTokenVault": {
       "fields": {
         "pausers": {
           "type": "arrayFromTwoEvents",
@@ -43,7 +52,7 @@
         }
       }
     },
-    "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": {
+    "SimpleGovernance": {
       "ignoreMethods": ["voters", "proposals"],
       "ignoreInWatchMode": ["nextProposalId"]
     },
