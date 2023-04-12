@@ -1,42 +1,51 @@
-import { gatherAddressesFromUpgradeability, UnixTime } from '@l2beat/shared'
+import {
+  EthereumAddress,
+  gatherAddressesFromUpgradeability,
+  UnixTime,
+} from '@l2beat/shared'
 import { expect } from 'earl'
 
 import { ProjectRiskViewEntry, ProjectTechnologyChoice } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED_RISK_VIEW } from '../discovery/values/hardcoded'
 import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
 
 describe('layer2s', () => {
   describe('riskView', () => {
-    for (const layer2 of layer2s) {
-      try {
-        const discovery = new ProjectDiscovery(layer2.id.toString())
+    describe('every contract has source code references', () => {
+      for (const layer2 of layer2s) {
+        try {
+          const discovery = new ProjectDiscovery(layer2.id.toString())
 
-        for (const [name, riskEntry] of Object.entries(layer2.riskView)) {
-          const risk = riskEntry as ProjectRiskViewEntry
-          if (risk.contracts === undefined) continue
+          for (const [name, riskEntry] of Object.entries(layer2.riskView)) {
+            const risk = riskEntry as ProjectRiskViewEntry
+            if (risk.contracts === undefined) continue
 
-          it(`${layer2.id.toString()} : ${name}`, () => {
-            for (const contractIdentifier of risk.contracts ?? []) {
-              const upgradeability =
-                discovery.getContract(contractIdentifier).upgradeability
+            it(`${layer2.id.toString()} : ${name}`, () => {
+              for (const contractIdentifier of risk.contracts ?? []) {
+                const upgradeability =
+                  discovery.getContract(contractIdentifier).upgradeability
 
-              const addresses =
-                gatherAddressesFromUpgradeability(upgradeability)
+                const addresses =
+                  gatherAddressesFromUpgradeability(upgradeability)
 
-              expect(
-                addresses.every((a) =>
-                  HARDCODED_RISK_VIEW[layer2.id.toString()][name].includes(a),
-                ),
-              ).toEqual(true)
-            }
-          })
+                const references = [
+                  ...(risk.references ?? [])
+                    .join(';')
+                    .matchAll(/0x[a-fA-F0-9]{40}/g),
+                ].map((e) => EthereumAddress(e[0]))
+
+                expect(addresses.every((a) => references.includes(a))).toEqual(
+                  true,
+                )
+              }
+            })
+          }
+        } catch {
+          continue
         }
-      } catch {
-        continue
       }
-    }
+    })
   })
 
   describe('sentences', () => {
