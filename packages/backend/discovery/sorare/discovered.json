@@ -1,7 +1,7 @@
 {
   "name": "sorare",
-  "blockNumber": 16990001,
-  "configHash": "0x79accf7cd3ad73c4bcaa4b79f2eba7ba66f226fd040fe28b038803cdbe315d5e",
+  "blockNumber": 17025774,
+  "configHash": "0x1fea05e2b513e6e3d94daa867317197ec91bb0ac6be8468fc3ec2deebc0af917",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -10,7 +10,7 @@
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-        "upgradeDelay": 259200,
+        "upgradeDelay": 1209600,
         "isFinal": false,
         "facets": {
           "StarkWare_AllVerifiers_2022_2": "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -30,8 +30,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 7668,
-        "getOrderRoot": "2871766589906425230037511176444580285596356516130779262132179019517622306706",
+        "getLastBatchId": 7725,
+        "getOrderRoot": "1201496569844954253040258915940075795199069714141732553891506704476278462064",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x879cD57975d596004863D30c59d579ef78BBbe32"
@@ -41,10 +41,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 7561,
-        "getUpgradeActivationDelay": 259200,
+        "getSequenceNumber": 7618,
+        "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "1195112549278914253238449607664379408872623377732483124439288920283469970079",
+        "getValidiumVaultRoot": "1712976829832174192139877744881580094275638317316907884001140169641341753833",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -83,7 +83,7 @@
           "0x59232aC80E6d403b6381393e52f4665ECA328558"
         ],
         "getThreshold": 2,
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       }
     },
@@ -157,7 +157,7 @@
           "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
         ],
         "getThreshold": 2,
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       }
     },
