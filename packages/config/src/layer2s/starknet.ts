@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
+import { STARKWARE_VERIFIER_CONTRACTS } from '../discovery/starkware/verifier'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,7 +13,6 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -139,13 +139,7 @@ export const starknet: Layer2 = {
         address: discovery.getContract('Starknet').address,
         upgradeability: discovery.getContract('Starknet').upgradeability,
       },
-      SHARP_VERIFIER_CONTRACT,
-      {
-        name: 'MemoryPageFactRegistry',
-        description:
-          'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data such as StarkNet contracts state diffs.',
-        address: EthereumAddress('0x28067505E54b7Ac2A5F860b343340Be8E73edECD'),
-      },
+      ...STARKWARE_VERIFIER_CONTRACTS,
       {
         name: 'Eth Bridge',
         description: 'Starkgate bridge for ETH.',

@@ -2,6 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
+import { STARKWARE_VERIFIER_CONTRACTS } from '../discovery/starkware/verifier'
 import { delayDescriptionFromString } from '../utils/delayDescription'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
@@ -14,7 +15,6 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -99,7 +99,7 @@ export const rhinofi: Layer2 = {
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
-      SHARP_VERIFIER_CONTRACT,
+      ...STARKWARE_VERIFIER_CONTRACTS,
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },

@@ -137,7 +137,9 @@ export const dydx: Layer2 = {
       name: 'dYdX Governance',
       accounts: [
         {
-          address: discovery.getContract('DydxGovernor').address,
+          address: EthereumAddress(
+            discovery.getContractValue<string>('PriorityExecutor', 'getAdmin'),
+          ),
           type: 'Contract',
         },
       ],
