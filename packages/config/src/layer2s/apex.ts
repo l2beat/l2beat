@@ -4,7 +4,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   getCommittee,
   getProxyGovernance,
-  getSHARPVerifier,
+  getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
@@ -100,7 +100,7 @@ export const apex: Layer2 = {
         description:
           'Allows deposits in different tokens and swaps them to USDC. Allows fast withdrawals after the agreement of at least 2 designated signers.',
       },
-      ...getSHARPVerifier(verifierAddress),
+      ...getSHARPVerifierContracts(verifierAddress),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
@@ -122,7 +122,7 @@ export const apex: Layer2 = {
         'Allowed to update state of the system and verify DA proofs. When Operator is down the state cannot be updated.',
     },
     getCommittee(discovery),
-    getSHARPVerifierGovernors(verifierAddress),
+    ...getSHARPVerifierGovernors(verifierAddress),
     {
       name: 'Allowed signers',
       accounts: [

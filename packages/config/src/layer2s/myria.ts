@@ -4,7 +4,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   getCommittee,
   getProxyGovernance,
-  getSHARPVerifier,
+  getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
@@ -98,7 +98,7 @@ export const myria: Layer2 = {
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
-      ...getSHARPVerifier(verifierAddress),
+      ...getSHARPVerifierContracts(verifierAddress),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
@@ -111,7 +111,7 @@ export const myria: Layer2 = {
         delayDescriptionFromString(delay),
     },
     getCommittee(discovery),
-    getSHARPVerifierGovernors(verifierAddress),
+    ...getSHARPVerifierGovernors(verifierAddress),
     {
       name: 'Operators',
       accounts: discovery.getPermissionedAccountsList(

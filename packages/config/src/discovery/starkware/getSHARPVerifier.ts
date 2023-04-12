@@ -37,7 +37,7 @@ const MERKLE_STATEMENT_CONTRACT = discovery.getMainContractDetails(
   'Part of STARK Verifier.',
 )
 
-const STARKWARE_VERIFIER_CONTRACTS = [
+const SHARP_VERIFIER_CONTRACTS = [
   CALL_PROXY,
   SHARP_VERIFIER,
   FRI_STATEMENT_CONTRACT,
@@ -46,7 +46,7 @@ const STARKWARE_VERIFIER_CONTRACTS = [
   CAIRO_BOOTLOADER_PROGRAM,
 ]
 
-export function getSHARPVerifier(verifierAddress: EthereumAddress) {
+export function getSHARPVerifierContracts(verifierAddress: EthereumAddress) {
   assert(isSingleAddress(CALL_PROXY), 'CallProxy is not a single address.')
   assert(
     verifierAddress === CALL_PROXY.address,
@@ -54,7 +54,7 @@ export function getSHARPVerifier(verifierAddress: EthereumAddress) {
       discovery.projectName,
   )
 
-  return STARKWARE_VERIFIER_CONTRACTS
+  return SHARP_VERIFIER_CONTRACTS
 }
 
 export function getSHARPVerifierGovernors(verifierAddress: EthereumAddress) {
@@ -65,19 +65,20 @@ export function getSHARPVerifierGovernors(verifierAddress: EthereumAddress) {
       discovery.projectName,
   )
 
-  return {
-    name: 'SHARP Verifier Governors',
-    accounts: getProxyGovernance(discovery, 'SHARPVerifierProxy'),
-    description:
-      'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
-      discovery.getDelayStringFromUpgradeability(
-        'SHARPVerifierProxy',
-        'upgradeDelay',
-      ),
-  }
+  return [
+    {
+      name: 'SHARP Verifier Governors',
+      accounts: getProxyGovernance(discovery, 'SHARPVerifierProxy'),
+      description:
+        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
+        discovery.getDelayStringFromUpgradeability(
+          'SHARPVerifierProxy',
+          'upgradeDelay',
+        ),
+    },
+    discovery.getGnosisSafeDetails(
+      'SHARPVerifierGovernorMultisig',
+      'SHARP Verifier Governor.',
+    ),
+  ]
 }
-
-// discovery.getGnosisSafeDetails(
-//   'VerifierGovernorMultisig',
-//   'SHARP Verifier Governor.',
-// ),

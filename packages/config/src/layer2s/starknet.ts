@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   getProxyGovernance,
-  getSHARPVerifier,
+  getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import {
@@ -143,7 +143,7 @@ export const starknet: Layer2 = {
         address: discovery.getContract('Starknet').address,
         upgradeability: discovery.getContract('Starknet').upgradeability,
       },
-      ...getSHARPVerifier(verifierAddress),
+      ...getSHARPVerifierContracts(verifierAddress),
       {
         name: 'Eth Bridge',
         description: 'Starkgate bridge for ETH.',
@@ -184,7 +184,7 @@ export const starknet: Layer2 = {
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
     },
-    getSHARPVerifierGovernors(verifierAddress),
+    ...getSHARPVerifierGovernors(verifierAddress),
     {
       name: 'Operators',
       accounts: discovery.getPermissionedAccountsList('Starknet', 'OPERATORS'),

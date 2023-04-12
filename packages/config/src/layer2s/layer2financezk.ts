@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { getSHARPVerifier } from '../discovery/starkware'
+import { getSHARPVerifierContracts } from '../discovery/starkware'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -119,7 +119,7 @@ export const layer2financezk: Layer2 = {
         name: 'OrderRegistry',
         address: discovery.getContract('OrderRegistry').address,
       },
-      ...getSHARPVerifier(
+      ...getSHARPVerifierContracts(
         discovery.getAddressFromValue('GpsFactRegistryAdapter', 'gpsContract'),
       ),
     ],
