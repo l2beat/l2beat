@@ -1,8 +1,5 @@
-import { ARBITRUM_HARDCODED } from './projects/arbitrum/arbitrumValues'
-
-// This is the entry point for hardcoding values in the config
-// only HARDCODED object should be imported in project's config
+import { ARBITRUM } from './projects/arbitrum/ARBITRUM'
 
 export const VALUES = {
-  ARBITRUM: ARBITRUM_HARDCODED,
+  ARBITRUM,
 }

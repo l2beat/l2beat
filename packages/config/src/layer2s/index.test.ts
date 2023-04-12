@@ -1,11 +1,44 @@
-import { UnixTime } from '@l2beat/shared'
+import { gatherAddressesFromUpgradeability, UnixTime } from '@l2beat/shared'
 import { expect } from 'earl'
 
-import { ProjectTechnologyChoice } from '../common'
+import { ProjectRiskViewEntry, ProjectTechnologyChoice } from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED_RISK_VIEW } from '../discovery/values/hardcoded'
 import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
 
 describe('layer2s', () => {
+  describe('riskView', () => {
+    for (const layer2 of layer2s) {
+      try {
+        const discovery = new ProjectDiscovery(layer2.id.toString())
+
+        for (const [name, riskEntry] of Object.entries(layer2.riskView)) {
+          const risk = riskEntry as ProjectRiskViewEntry
+          if (risk.contracts === undefined) continue
+
+          it(`${layer2.id.toString()} : ${name}`, () => {
+            for (const contractIdentifier of risk.contracts ?? []) {
+              const upgradeability =
+                discovery.getContract(contractIdentifier).upgradeability
+
+              const addresses =
+                gatherAddressesFromUpgradeability(upgradeability)
+
+              expect(
+                addresses.every((a) =>
+                  HARDCODED_RISK_VIEW[layer2.id.toString()][name].includes(a),
+                ),
+              ).toEqual(true)
+            }
+          })
+        }
+      } catch {
+        continue
+      }
+    }
+  })
+
   describe('sentences', () => {
     describe('every description ends with a dot', () => {
       for (const layer2 of layer2s) {

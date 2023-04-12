@@ -101,7 +101,7 @@ const VALIDATORS: ProjectPermissionedAccount[] = [
   },
 ]
 
-export const ARBITRUM_HARDCODED = {
+export const ARBITRUM = {
   OLD_BRIDGE,
   SEQUENCER,
   VALIDATORS,

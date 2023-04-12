@@ -2,7 +2,6 @@ import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -122,6 +121,7 @@ export const arbitrum: Layer2 = {
         'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
         'https://developer.arbitrum.io/sequencer',
       ],
+      contracts: ['SequencerInbox'],
     },
     validatorFailure: {
       value: 'Propose blocks',

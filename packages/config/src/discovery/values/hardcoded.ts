@@ -12,13 +12,27 @@ DO NOT UPDATE THIS FILE ONLY TO FIX THE TESTS
 UNDERSTAND WHAT YOU ARE DOING BEFORE YOU UPDATE THIS FILE
 */
 
+import { EthereumAddress } from '@l2beat/shared'
+
 // This is the place to insert hardcoded values
 // which should be used inside project's hardcoded tests
 
-export const TESTS_HARDCODED = {
-  ARBITRUM_SET_VALIDATOR_COUNT: 7,
-  ARBITRUM_SET_SEQUENCER_COUNT: 3,
-  ARBITRUM_SEQUENCER_DELAY_BLOCKS: 5760,
-  ARBITRUM_SEQUENCER_DELAY_SECONDS: 86400,
-  ARBITRUM_VALIDATOR_AFK_BLOCKS: 45818,
+export const HARDCODED = {
+  ARBITRUM: {
+    SET_VALIDATOR_COUNT: 7,
+    SET_SEQUENCER_COUNT: 3,
+  },
+}
+
+// project key needs to equal its ProjectId
+// TODO: enforce keys to equal RiskView entries
+export const HARDCODED_RISK_VIEW: Record<
+  string,
+  Record<string, EthereumAddress[]>
+> = {
+  arbitrum: {
+    sequencerFailure: [
+      EthereumAddress('0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9'),
+    ],
+  },
 }
