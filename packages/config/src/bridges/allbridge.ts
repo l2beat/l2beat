@@ -1,6 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('allbridge')
 
 export const allbridge: Bridge = {
   type: 'bridge',
@@ -24,8 +27,8 @@ export const allbridge: Bridge = {
   },
   config: {
     escrows: [
-      {
-        address: EthereumAddress('0xBBbD1BbB4f9b936C3604906D7592A644071dE884'),
+      discovery.getEscrowDetails({
+        identifier: 'TokenBridge',
         sinceTimestamp: new UnixTime(1636635220),
         tokens: [
           'ETH',
@@ -35,22 +38,26 @@ export const allbridge: Bridge = {
           'DAI',
           'MIM',
         ],
-      },
-      {
-        address: EthereumAddress('0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e'),
+        description: 'Lock-Mint token bridge',
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'USDT_POOL',
         sinceTimestamp: new UnixTime(1662596190),
         tokens: ['USDT'],
-      },
-      {
-        address: EthereumAddress('0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C'),
+        description: 'USDT liquidity pool',
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'USDC_POOL',
         sinceTimestamp: new UnixTime(1669206935),
         tokens: ['USDC'],
-      },
-      {
-        address: EthereumAddress('0xCe01bc1be28c0784492cB44EbBDa662c3F539172'),
+        description: 'USDC liquidity pool',
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'DAI_POOL',
         sinceTimestamp: new UnixTime(1669207319),
         tokens: ['DAI'],
-      },
+        description: 'DAI liquidity pool',
+      }),
     ],
   },
   technology: {
@@ -87,16 +94,14 @@ export const allbridge: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0xA314330482f325D38A83B492EF6B006224a3bea9'),
-        name: 'Bridge',
-        description: 'Main liquidity network Allbridge Core bridge contract.',
-      },
-      {
-        address: EthereumAddress('0xBBbD1BbB4f9b936C3604906D7592A644071dE884'),
-        name: 'Bridge',
-        description: 'Main token bridge contract.',
-      },
+      discovery.getMainContractDetails(
+        'LPBridge',
+        'Main liquidity network Allbridge Core bridge contract.',
+      ),
+      discovery.getMainContractDetails(
+        'TokenBridge',
+        'Main token bridge contract.',
+      ),
       {
         address: EthereumAddress('0x93746538D4519C809827205Bd1C2c7a0E15bd74b'),
         name: 'Validator',
@@ -118,21 +123,6 @@ export const allbridge: Bridge = {
         address: EthereumAddress('0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F'),
         name: 'Wormhole Messenger',
         description: 'Contract used to receive messages via Wormhole AMB.',
-      },
-      {
-        address: EthereumAddress('0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e'),
-        name: 'USDT Pool',
-        description: 'Pool holding USDT tokens.',
-      },
-      {
-        address: EthereumAddress('0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C'),
-        name: 'USDC Pool',
-        description: 'Pool holding USDC tokens.',
-      },
-      {
-        address: EthereumAddress('0xCe01bc1be28c0784492cB44EbBDa662c3F539172'),
-        name: 'DAI Pool',
-        description: 'Pool holding DAI tokens.',
       },
     ],
     risks: [],

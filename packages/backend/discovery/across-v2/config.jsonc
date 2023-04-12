@@ -2,8 +2,17 @@
   "$schema": "../config.schema.json",
   "name": "across-v2",
   "initialAddresses": ["0xc186fA914353c44b2E33eBE05f21846F1048bEda"],
+  "names": {
+    "0xc186fA914353c44b2E33eBE05f21846F1048bEda": "HubPool",
+    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2",
+    "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": "EmergencyProposer",
+    "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": "VotingToken",
+    "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": "EmergencyProposalExecutor",
+    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
+    "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381": "Ethereum_SpokePool"
+  },
   "overrides": {
-    "0xc186fA914353c44b2E33eBE05f21846F1048bEda": {
+    "HubPool": {
       "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
       "fields": {
         "crossChainMainnet": {
@@ -37,25 +46,25 @@
     "0xB524735356985D2f267FA010D681f061DfF03715": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": {
+    "EmergencyProposalExecutor": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": {
+    "ProposerV2": {
       "ignoreMethods": ["bondedProposals"],
       "ignoreInWatchMode": ["bond", "getCurrentTime"]
     },
-    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": {
+    "GovernorV2": {
       "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
       "ignoreMethods": ["getProposal", "proposals"]
     },
-    "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": {
+    "EmergencyProposer": {
       "ignoreInWatchMode": ["getCurrentTime"]
     },
-    "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381": {
+    "Ethereum_SpokePool": {
       "ignoreMethods": ["rootBundles"],
       "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"]
     },
-    "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
+    "VotingToken": {
       "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"]
     },
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
