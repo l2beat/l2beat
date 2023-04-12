@@ -1,7 +1,7 @@
 {
   "name": "starknet",
-  "blockNumber": 16975997,
-  "configHash": "0xcde24d5f2e74a3922c7567fce2c02c80af010593c6f708e9aa525c1cc734cf52",
+  "blockNumber": 17031805,
+  "configHash": "0x996ad349b037e56efdcab041eccc55c2a06ce8d5faa2b79553e01f31c8e7e2db",
   "contracts": [
     {
       "name": "Starknet",
@@ -26,7 +26,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 376102,
+        "l1ToL2MessageNonce": 444155,
         "messageCancellationDelay": 432100,
         "OPERATORS": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -35,8 +35,8 @@
         "programHash": "3068850377810731364250169858796291952506855863903938200658516448366463400202",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockNumber": 31288,
-        "stateRoot": "466350917217029186247728714458459329991414493114027818544982812488065960139",
+        "stateBlockNumber": 36756,
+        "stateRoot": "1757146101852157838179710157212496532174122003055401474327607270600111633599",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -61,75 +61,6 @@
         "getThreshold": 2,
         "nonce": 9,
         "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "CallProxy",
-      "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-      "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-      "upgradeability": {
-        "type": "StarkWare proxy",
-        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "callImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-        "upgradeDelay": 2419200,
-        "isFinal": true,
-        "proxyGovernance": [
-          "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
-          "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
-        ]
-      },
-      "values": {
-        "CALL_PROXY_VERSION": "3.1.0",
-        "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-        "getUpgradeActivationDelay": 2419200,
-        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "isFrozen": false,
-        "isNotFinalized": true,
-        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
-        "PROXY_VERSION": "3.0.0",
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
-      "code": "https://etherscan.deth.net/address/0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
-        "getChainId": 1,
-        "getOwners": [
-          "0x59232aC80E6d403b6381393e52f4665ECA328558",
-          "0xebc8416179fE90854fe8B3f774801165572cfD7F",
-          "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
-        ],
-        "getThreshold": 2,
-        "nonce": 1,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "GpsStatementVerifier",
-      "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "code": "https://etherscan.deth.net/address/0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getBootloaderConfig": [
-          "2962621603719000361370283216422448934312521782617806945663080079725495842070",
-          "3178097804922730583543126053422762895998573737925004508949311089390705597156"
-        ],
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_GpsStatementVerifier_2022_7",
-        "PAGE_INFO_ADDRESS_OFFSET": 0,
-        "PAGE_INFO_HASH_OFFSET": 2,
-        "PAGE_INFO_SIZE": 3,
-        "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1
       }
     },
     {
@@ -212,7 +143,7 @@
         "isFrozen": false,
         "isNotFinalized": true,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": 6000000000000,
+        "maxTotalBalance": 9000000000000,
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
@@ -259,17 +190,14 @@
   ],
   "eoas": [
     "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
-    "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
     "0x59232aC80E6d403b6381393e52f4665ECA328558",
     "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
     "0x8dB2469f3355d6769932B853F29e32df06122981",
-    "0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
     "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
     "0xCe958D997F4a5824D4d503A128216322C6C223a0",
     "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
     "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
     "0xdc29f0F7742ec462Af475AceeCECC57601991D23",
-    "0xebc8416179fE90854fe8B3f774801165572cfD7F",
     "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4",
     "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591"
   ],
@@ -283,9 +211,6 @@
       "function deny(address usr)",
       "function rely(address usr)",
       "function wards(address) view returns (uint256)"
-    ],
-    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": [
-      "constructor(address _singleton)"
     ],
     "0x283751A21eafBFcD52297820D27C1f1963D9b5b4": [
       "constructor(uint256 upgradeActivationDelay)",
@@ -346,46 +271,6 @@
       "function setMaxTotalBalance(uint256 maxTotalBalance_)",
       "function withdraw(uint256 amount, address recipient)",
       "function withdraw(uint256 amount)"
-    ],
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": [
-      "constructor(uint256 upgradeActivationDelay)",
-      "event FinalizedImplementation(address indexed implementation)",
-      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
-      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
-      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "function PROXY_GOVERNANCE_TAG() view returns (string)",
-      "function PROXY_VERSION() view returns (string)",
-      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
-      "function addImplementation(address newImplementation, bytes data, bool finalize)",
-      "function getUpgradeActivationDelay() view returns (uint256 delay)",
-      "function implementation() view returns (address _implementation)",
-      "function initialize(bytes) pure",
-      "function isNotFinalized() view returns (bool notFinal)",
-      "function proxyAcceptGovernance()",
-      "function proxyCancelNomination()",
-      "function proxyIsGovernor(address testGovernor) view returns (bool)",
-      "function proxyNominateNewGovernor(address newGovernor)",
-      "function proxyRemoveGovernor(address governorForRemoval)",
-      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
-      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
-    ],
-    "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": [
-      "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 hashedSupportedCairoVerifiers, uint256 simpleBootloaderProgramHash)",
-      "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
-      "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
-      "function PAGE_INFO_HASH_OFFSET() view returns (uint256)",
-      "function PAGE_INFO_SIZE() view returns (uint256)",
-      "function PAGE_INFO_SIZE_IN_BYTES() view returns (uint256)",
-      "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
-      "function getBootloaderConfig() view returns (uint256, uint256)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
     ],
     "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB": [
       "event LogBridgeActivated()",
@@ -548,14 +433,6 @@
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
-    ],
-    "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458": [
-      "function CALL_PROXY_VERSION() view returns (string)",
-      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
-      "function callProxyImplementation() view returns (address _implementation)",
-      "function initialize(bytes data)",
-      "function isFrozen() pure returns (bool)",
-      "function isValid(bytes32 fact) view returns (bool)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",

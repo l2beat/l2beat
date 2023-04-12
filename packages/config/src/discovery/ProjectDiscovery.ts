@@ -43,7 +43,7 @@ const filesystem = {
 export class ProjectDiscovery {
   private readonly discovery: ProjectParameters
   constructor(
-    private readonly projectName: string,
+    public readonly projectName: string,
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
