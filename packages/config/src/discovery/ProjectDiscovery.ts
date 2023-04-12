@@ -17,7 +17,6 @@ import {
   ProjectPermissionedAccount,
 } from '../common'
 import {
-  ProjectContract,
   ProjectContractSingleAddress,
   ProjectUpgradeability,
 } from '../common/ProjectContracts'
@@ -60,7 +59,7 @@ export class ProjectDiscovery {
   getMainContractDetails(
     identifier: string,
     description?: string,
-  ): ProjectContract {
+  ): ProjectContractSingleAddress {
     const contract = this.getContract(identifier)
     return {
       name: contract.name,

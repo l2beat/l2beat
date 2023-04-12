@@ -1,12 +1,11 @@
 import { assert, EthereumAddress } from '@l2beat/shared'
 
-import { isSingleAddress } from '../../common'
 import { ProjectDiscovery } from '../ProjectDiscovery'
 import { getProxyGovernance } from './getProxyGovernance'
 
 const discovery = new ProjectDiscovery('l2beat-starkware')
 
-const CALL_PROXY = discovery.getMainContractDetails(
+const SHARP_VERIFIER_PROXY = discovery.getMainContractDetails(
   'SHARPVerifierProxy',
   'CallProxy for GpsStatementVerifier.',
 )
@@ -38,7 +37,7 @@ const MERKLE_STATEMENT_CONTRACT = discovery.getMainContractDetails(
 )
 
 const SHARP_VERIFIER_CONTRACTS = [
-  CALL_PROXY,
+  SHARP_VERIFIER_PROXY,
   SHARP_VERIFIER,
   FRI_STATEMENT_CONTRACT,
   MERKLE_STATEMENT_CONTRACT,
@@ -47,9 +46,8 @@ const SHARP_VERIFIER_CONTRACTS = [
 ]
 
 export function getSHARPVerifierContracts(verifierAddress: EthereumAddress) {
-  assert(isSingleAddress(CALL_PROXY), 'CallProxy is not a single address.')
   assert(
-    verifierAddress === CALL_PROXY.address,
+    verifierAddress === SHARP_VERIFIER_PROXY.address,
     'CallProxy address mismatch. This project probably uses a different SHARP verifier. Project: ' +
       discovery.projectName,
   )
@@ -58,9 +56,8 @@ export function getSHARPVerifierContracts(verifierAddress: EthereumAddress) {
 }
 
 export function getSHARPVerifierGovernors(verifierAddress: EthereumAddress) {
-  assert(isSingleAddress(CALL_PROXY), 'CallProxy is not a single address.')
   assert(
-    verifierAddress === CALL_PROXY.address,
+    verifierAddress === SHARP_VERIFIER_PROXY.address,
     'CallProxy address mismatch. This project probably uses a different SHARP verifier. Project: ' +
       discovery.projectName,
   )
