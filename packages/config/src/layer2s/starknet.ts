@@ -143,7 +143,7 @@ export const starknet: Layer2 = {
         address: discovery.getContract('Starknet').address,
         upgradeability: discovery.getContract('Starknet').upgradeability,
       },
-      ...getSHARPVerifierContracts(verifierAddress),
+      ...getSHARPVerifierContracts(discovery, verifierAddress),
       {
         name: 'Eth Bridge',
         description: 'Starkgate bridge for ETH.',
@@ -184,7 +184,7 @@ export const starknet: Layer2 = {
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
     },
-    ...getSHARPVerifierGovernors(verifierAddress),
+    ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
       accounts: discovery.getPermissionedAccountsList('Starknet', 'OPERATORS'),

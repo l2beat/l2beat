@@ -45,21 +45,25 @@ const SHARP_VERIFIER_CONTRACTS = [
   CAIRO_BOOTLOADER_PROGRAM,
 ]
 
-export function getSHARPVerifierContracts(verifierAddress: EthereumAddress) {
+export function getSHARPVerifierContracts(
+  projectDiscovery: ProjectDiscovery,
+  verifierAddress: EthereumAddress,
+) {
   assert(
     verifierAddress === SHARP_VERIFIER_PROXY.address,
-    'CallProxy address mismatch. This project probably uses a different SHARP verifier. Project: ' +
-      discovery.projectName,
+    `SHARPVerifierProxy address mismatch. This project probably uses a different SHARP verifier (${projectDiscovery.projectName})`,
   )
 
   return SHARP_VERIFIER_CONTRACTS
 }
 
-export function getSHARPVerifierGovernors(verifierAddress: EthereumAddress) {
+export function getSHARPVerifierGovernors(
+  projectDiscovery: ProjectDiscovery,
+  verifierAddress: EthereumAddress,
+) {
   assert(
     verifierAddress === SHARP_VERIFIER_PROXY.address,
-    'CallProxy address mismatch. This project probably uses a different SHARP verifier. Project: ' +
-      discovery.projectName,
+    `SHARPVerifierProxy address mismatch. This project probably uses a different SHARP verifier (${projectDiscovery.projectName})`,
   )
 
   return [

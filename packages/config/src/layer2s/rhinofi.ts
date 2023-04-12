@@ -107,7 +107,7 @@ export const rhinofi: Layer2 = {
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
-      ...getSHARPVerifierContracts(verifierAddress),
+      ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
@@ -120,7 +120,7 @@ export const rhinofi: Layer2 = {
         delayDescriptionFromString(delay),
     },
     getCommittee(discovery),
-    ...getSHARPVerifierGovernors(verifierAddress),
+    ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
       accounts: discovery.getPermissionedAccountsList(

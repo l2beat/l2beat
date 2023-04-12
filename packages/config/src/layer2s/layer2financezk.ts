@@ -120,6 +120,7 @@ export const layer2financezk: Layer2 = {
         address: discovery.getContract('OrderRegistry').address,
       },
       ...getSHARPVerifierContracts(
+        discovery,
         discovery.getAddressFromValue('GpsFactRegistryAdapter', 'gpsContract'),
       ),
     ],

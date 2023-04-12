@@ -20,7 +20,7 @@ describe('discovery config.jsonc', () => {
   it(`every config name corresponds to ProjectId`, () => {
     const notCorresponding =
       configs
-        ?.filter((c) => !c.name.startsWith('l2beat'))
+        ?.filter((c) => !c.name.startsWith('l2beat-'))
         ?.filter((c) => !projectIds.includes(c.name))
         .map((c) => c.name) ?? []
 
