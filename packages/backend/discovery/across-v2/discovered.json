@@ -1,7 +1,7 @@
 {
   "name": "across-v2",
-  "blockNumber": 16825136,
-  "configHash": "0xa9c70602c046f5fa43e68e5666e21445088eebd9597875adfe3d5a890ed65c45",
+  "blockNumber": 17024464,
+  "configHash": "0xfdd5a880d2460949ba7f4c94a89eba303434bb6294d285cbfc21ad0a04793a04",
   "contracts": [
     {
       "name": "HubPool",
@@ -43,17 +43,18 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0x8478f5aaf26e4ce2cc96106007443cf24ad6fdf26df9ea32705ff58df5c0bdfb",
-          "0x101583e17a481d7f71a08e5dbc0de61078b333217d3a890b5968fe00e69c2e5e",
+          "0x9bf4d86bee2e3a6739317fcf7ad1f5474eebd60049162fc74aecccc8d8689125",
+          "0xec138a7d21f227e3a61fcf4c60d7e40b6dad1f6b856211e619f574d7ce958dde",
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           0,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           4,
-          1678788155
+          1681212731
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "HubPool"
     },
     {
       "name": "GnosisSafe",
@@ -107,14 +108,15 @@
       },
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1678784183,
+        "getCurrentTime": 1681211339,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
         "numProposals": 192
-      }
+      },
+      "derivedName": "GovernorV2"
     },
     {
       "name": "EmergencyProposer",
@@ -126,13 +128,14 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1678784183,
+        "getCurrentTime": 1681211339,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "quorum": "5000000000000000000000000",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      }
+      },
+      "derivedName": "EmergencyProposer"
     },
     {
       "name": "VotingToken",
@@ -143,24 +146,27 @@
       },
       "values": {
         "decimals": 18,
-        "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
+        "getMember": [
+          "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+        ],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "113034856121731916838322317",
+        "totalSupply": "113266095813265034070352815",
         "totalSupplyAt": []
-      }
+      },
+      "derivedName": "VotingToken"
     },
     {
-      "name": "GnosisSafe",
+      "name": "EmergencyProposalExecutor",
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-      "code": "https://etherscan.deth.net/address/0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+      "code": "https://etherscan.deth.net/address/0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
       },
       "values": {
-        "domainSeparator": "0x87e4fd2eebc3ce78ad91eefdd7b7373a852f8cee68059eadd28c7a0a89957697",
-        "getModules": [],
+        "domainSeparator": "0xc6747c7ca6899274b3575cd632681f9db9a0788dd1b7c7379382739baa6aa665",
+        "getChainId": 1,
         "getOwners": [
           "0x9C0BA8Af79a072930Cc41b0F9902ECFaDE8a340d",
           "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
@@ -168,10 +174,10 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "NAME": "Gnosis Safe",
-        "nonce": 368,
-        "VERSION": "1.1.1"
-      }
+        "nonce": 377,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "ProposerV2",
@@ -183,11 +189,12 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1678784183,
+        "getCurrentTime": 1681211339,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      }
+      },
+      "derivedName": "ProposerV2"
     },
     {
       "name": "Polygon_Adapter",
@@ -234,13 +241,14 @@
         "chainId": 1,
         "crossDomainAdmin": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1678784183,
+        "getCurrentTime": 1681211339,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-        "numberOfDeposits": 74726,
+        "numberOfDeposits": 85544,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "Ethereum_SpokePool"
     },
     {
       "name": "Ethereum_Adapter",
@@ -372,51 +380,6 @@
       "function messenger() view returns (address)",
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
-    ],
-    "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedMasterCopy(address masterCopy)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function NAME() view returns (string)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeMasterCopy(address _masterCopy)",
-      "function changeThreshold(uint256 _threshold)",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getMessageHash(bytes message) view returns (bytes32)",
-      "function getModules() view returns (address[])",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isOwner(address owner) view returns (bool)",
-      "function isValidSignature(bytes _data, bytes _signature) returns (bytes4)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signMessage(bytes _data)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A": [
       "constructor(address _rootChainManager, address _fxStateSender, address _depositManager, address _erc20Predicate, address _l1Matic, address _l1Weth)",
