@@ -1,8 +1,29 @@
 {
   "name": "portal",
-  "blockNumber": 16583284,
-  "configHash": "0xf5b2bb66ad09a6f7aa9874bfb119446a5961a6a980efabaf01423a8114194000",
+  "blockNumber": 17031675,
+  "configHash": "0x5f5156be278832d749936d997905e5c6d89cdb8fea18115af89df952495ce95b",
   "contracts": [
+    {
+      "name": "Implementation",
+      "address": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+      "code": "https://etherscan.deth.net/address/0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B,0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "values": {
+        "chainId": 2,
+        "evmChainId": 1,
+        "getCurrentGuardianSetIndex": 3,
+        "getGuardianSetExpiry": 0,
+        "governanceChainId": 1,
+        "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
+        "isFork": false,
+        "messageFee": 0
+      },
+      "derivedName": "Implementation"
+    },
     {
       "name": "BridgeImplementation",
       "address": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
@@ -22,40 +43,66 @@
         "isFork": false,
         "tokenImplementation": "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
         "wormhole": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
-      }
+      },
+      "derivedName": "BridgeImplementation"
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "TokenImplementation",
       "address": "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
       "code": "https://etherscan.deth.net/address/0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
       "upgradeability": {
         "type": "immutable"
-      }
-    },
-    {
-      "name": "Implementation",
-      "address": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-      "code": "https://etherscan.deth.net/address/0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B,0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
-        "admin": "0x0000000000000000000000000000000000000000"
       },
       "values": {
-        "chainId": 2,
-        "evmChainId": 1,
-        "getCurrentGuardianSetIndex": 3,
-        "getGuardianSetExpiry": 0,
-        "governanceChainId": 1,
-        "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
-        "isFork": false,
-        "messageFee": 0
-      }
+        "chainId": 0,
+        "decimals": 0,
+        "DOMAIN_SEPARATOR": "0x0cf2c709fa7ea9acd67676f52f3dbf86e5aff34b6cdc82219ec4212ea2e0569f",
+        "eip712Domain": [
+          "0x1f",
+          "",
+          "1",
+          1,
+          "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
+          "0xbf53adb76067fdab0d008aef3ad8b28bbb63c2ce4c2b63394ede73f01a70c865",
+          []
+        ],
+        "name": "",
+        "nativeContract": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "owner": "0x0000000000000000000000000000000000000000",
+        "symbol": "",
+        "totalSupply": 0
+      },
+      "derivedName": "TokenImplementation"
     }
   ],
   "eoas": [],
   "abis": {
+    "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner_, address spender_) view returns (uint256)",
+      "function approve(address spender_, uint256 amount_) returns (bool)",
+      "function balanceOf(address account_) view returns (uint256)",
+      "function burn(address account_, uint256 amount_)",
+      "function chainId() view returns (uint16)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender_, uint256 subtractedValue_) returns (bool)",
+      "function eip712Domain() view returns (bytes1 domainFields, string domainName, string domainVersion, uint256 domainChainId, address domainVerifyingContract, bytes32 domainSalt, uint256[] domainExtensions)",
+      "function increaseAllowance(address spender_, uint256 addedValue_) returns (bool)",
+      "function initialize(string name_, string symbol_, uint8 decimals_, uint64 sequence_, address owner_, uint16 chainId_, bytes32 nativeContract_)",
+      "function mint(address account_, uint256 amount_)",
+      "function name() view returns (string)",
+      "function nativeContract() view returns (bytes32)",
+      "function nonces(address owner_) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function permit(address owner_, address spender_, uint256 value_, uint256 deadline_, uint8 v_, bytes32 r_, bytes32 s_)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient_, uint256 amount_) returns (bool)",
+      "function transferFrom(address sender_, address recipient_, uint256 amount_) returns (bool)",
+      "function updateDetails(string name_, string symbol_, uint64 sequence_)"
+    ],
     "0x299b4F6066d231521d11FAE8331fb1A4fe794F58": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",

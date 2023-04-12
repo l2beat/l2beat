@@ -1,17 +1,17 @@
 {
   "name": "amarok",
-  "blockNumber": 16938311,
+  "blockNumber": 17031367,
   "configHash": "0x0641a339b0e9d920ff3d73f33df35c0658b7afe2e3144760992d20a206507190",
   "contracts": [
     {
       "name": "ConnextBridge",
       "address": "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6",
-      "code": "https://etherscan.deth.net/address/0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6,0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81,0x0e93f1e9a44AF236186a8cBCdeb22e2E6564856c,0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295,0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d,0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352,0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769,0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D,0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686,0x6369F971fd1f1f230B8584151Ed7747FF710Cc68,0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b,0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4,0x3Bcf4185443A339517aD4e580067f178d1B68E1D",
+      "code": "https://etherscan.deth.net/address/0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6,0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81,0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2,0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295,0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d,0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352,0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769,0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D,0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686,0x6369F971fd1f1f230B8584151Ed7747FF710Cc68,0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b,0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4,0x3Bcf4185443A339517aD4e580067f178d1B68E1D",
       "upgradeability": {
         "type": "EIP2535 diamond proxy",
         "facets": [
           "0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81",
-          "0x0e93f1e9a44AF236186a8cBCdeb22e2E6564856c",
+          "0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2",
           "0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295",
           "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d",
           "0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352",
@@ -31,7 +31,7 @@
         "domain": 6648936,
         "facetAddresses": [
           "0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81",
-          "0x0e93f1e9a44AF236186a8cBCdeb22e2E6564856c",
+          "0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2",
           "0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295",
           "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d",
           "0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352",
@@ -70,7 +70,7 @@
             ]
           ],
           [
-            "0x0e93f1e9a44AF236186a8cBCdeb22e2E6564856c",
+            "0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2",
             [
               "0x8a336231",
               "0x159e041f",
@@ -88,7 +88,10 @@
               "0xbfd79030",
               "0x3339df96",
               "0x8aac16ba",
-              "0x91f5de79"
+              "0x91f5de79",
+              "0x59efa162",
+              "0x93f18ac5",
+              "0x674dc933"
             ]
           ],
           ["0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295", ["0xab2dc3f5"]],
@@ -228,7 +231,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 3630,
+        "nonce": 4073,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -264,7 +267,8 @@
           "0xFaAB88015477493cFAa5DFAA533099C590876F21",
           "0x63Cda9C42db542bb91a7175E38673cFb00D402b0",
           "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
-          "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a"
+          "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a",
+          "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c"
         ],
         "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c"
@@ -284,12 +288,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 16938177,
+        "lastSentBlock": 17031235,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0x1f0ac0885ac81dda792a343de2be90f411816ab0300ce2ce6d34614179325b91",
+        "outboundRoot": "0x12c86bb3c2a43461dc9b9886afc4139199f70d6fe3a18ce52b7a627561f15cea",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -347,13 +351,13 @@
           6450786, 6778479, 1869640809, 1886350457, 6648936, 1634886255
         ],
         "domainsHash": "0xe741ece3f9550e537df05746072d458479dbc21a49fdee7925337f0b7e1a802c",
-        "getPendingInboundRootsCount": 2,
-        "lastPropagatedRoot": "0x64f7bbef67647f8958c8a8667e75ba459d72c778b404adadecfa568c0bd9e8ea",
+        "getPendingInboundRootsCount": 1,
+        "lastPropagatedRoot": "0x0d9fb8d4243e730e6314cc189cae2d3c3f0a86805d6e3e3e720f392efb310396",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [13403, 13404],
+        "pendingInboundRoots": [15528, 15528],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -510,7 +514,7 @@
           "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f"
         ],
         "getThreshold": 3,
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -536,6 +540,7 @@
     "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f",
     "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
     "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
+    "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c",
     "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c",
     "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
     "0xFaAB88015477493cFAa5DFAA533099C590876F21"
@@ -595,7 +600,57 @@
       "function routerAllowlistTimestamp() view returns (uint256)",
       "function unpause()"
     ],
-    "0x0e93f1e9a44AF236186a8cBCdeb22e2E6564856c": [
+    "0x245F757d660C3ec65416168690431076d58d6413": [
+      "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _gasCap, uint256 _mirrorChainId)",
+      "error Connector__processMessage_notUsed()",
+      "error ProposedOwnable__onlyOwner_notOwner()",
+      "error ProposedOwnable__onlyProposed_notProposedOwner()",
+      "error ProposedOwnable__ownershipDelayElapsed_delayNotElapsed()",
+      "error ProposedOwnable__proposeNewOwner_invalidProposal()",
+      "error ProposedOwnable__proposeNewOwner_noOwnershipChange()",
+      "error ProposedOwnable__renounceOwnership_invalidProposal()",
+      "error ProposedOwnable__renounceOwnership_noProposal()",
+      "event GasCapUpdated(uint256 _previous, uint256 _updated)",
+      "event MessageProcessed(bytes data, address caller)",
+      "event MessageSent(bytes data, bytes encodedData, address caller)",
+      "event MirrorConnectorUpdated(address previous, address current)",
+      "event NewConnector(uint32 indexed domain, uint32 indexed mirrorDomain, address amb, address rootManager, address mirrorConnector)",
+      "event OwnershipProposed(address indexed proposedOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function AMB() view returns (address)",
+      "function DOMAIN() view returns (uint32)",
+      "function MIRROR_CHAIN_ID() view returns (uint256)",
+      "function MIRROR_DOMAIN() view returns (uint32)",
+      "function ROOT_MANAGER() view returns (address)",
+      "function acceptProposedOwner()",
+      "function delay() view returns (uint256)",
+      "function executeSignatures(bytes _data, bytes _signatures)",
+      "function mirrorConnector() view returns (address)",
+      "function owner() view returns (address)",
+      "function processMessage(bytes _data)",
+      "function proposeNewOwner(address newlyProposed)",
+      "function proposed() view returns (address)",
+      "function proposedTimestamp() view returns (uint256)",
+      "function renounceOwnership()",
+      "function renounced() view returns (bool)",
+      "function sendMessage(bytes _data, bytes _encodedData) payable",
+      "function setGasCap(uint256 _gasCap)",
+      "function setMirrorConnector(address _mirrorConnector)",
+      "function verifySender(address _expected) returns (bool)"
+    ],
+    "0x28A9e7bbed277092E2431F186E1aF898962d4E92": [
+      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b": [
+      "event DiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
+      "event DiamondCutProposed(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata, uint256 deadline)",
+      "event DiamondCutRescinded(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
+      "function diamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
+      "function getAcceptanceTime(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata) view returns (uint256)",
+      "function proposeDiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
+      "function rescindDiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)"
+    ],
+    "0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2": [
       "error AssetLogic__getConfig_notRegistered()",
       "error AssetLogic__getTokenIndexFromStableSwapPool_notExist()",
       "error AssetLogic__handleIncomingAsset_feeOnTransferNotSupported()",
@@ -650,12 +705,13 @@
       "event SequencerAdded(address sequencer, address caller)",
       "event SequencerRemoved(address sequencer, address caller)",
       "event SlippageUpdated(bytes32 indexed transferId, uint256 slippage)",
-      "event TransferRelayerFeesIncreased(bytes32 indexed transferId, uint256 increase, address caller)",
+      "event TransferRelayerFeesIncreased(bytes32 indexed transferId, uint256 increase, address asset, address caller)",
       "event XAppConnectionManagerSet(address updated, address caller)",
       "event XCalled(bytes32 indexed transferId, uint256 indexed nonce, bytes32 indexed messageHash, tuple(uint32 originDomain, uint32 destinationDomain, uint32 canonicalDomain, address to, address delegate, bool receiveLocal, bytes callData, uint256 slippage, address originSender, uint256 bridgedAmt, uint256 normalizedIn, uint256 nonce, bytes32 canonicalId) params, address asset, uint256 amount, address local, bytes messageBody)",
       "function addSequencer(address _sequencer)",
       "function approvedSequencers(address _sequencer) view returns (bool)",
       "function bumpTransfer(bytes32 _transferId) payable",
+      "function bumpTransfer(bytes32 _transferId, address _relayerFeeAsset, uint256 _relayerFee)",
       "function domain() view returns (uint32)",
       "function enrollRemoteRouter(uint32 _domain, bytes32 _router)",
       "function execute(tuple(tuple(uint32 originDomain, uint32 destinationDomain, uint32 canonicalDomain, address to, address delegate, bool receiveLocal, bytes callData, uint256 slippage, address originSender, uint256 bridgedAmt, uint256 normalizedIn, uint256 nonce, bytes32 canonicalId) params, address[] routers, bytes[] routerSignatures, address sequencer, bytes sequencerSignature) _args) returns (bytes32)",
@@ -669,57 +725,9 @@
       "function transferStatus(bytes32 _transferId) view returns (uint8)",
       "function xAppConnectionManager() view returns (address)",
       "function xcall(uint32 _destination, address _to, address _asset, address _delegate, uint256 _amount, uint256 _slippage, bytes _callData) payable returns (bytes32)",
+      "function xcall(uint32 _destination, address _to, address _asset, address _delegate, uint256 _amount, uint256 _slippage, bytes _callData, uint256 _relayerFee) returns (bytes32)",
+      "function xcallIntoLocal(uint32 _destination, address _to, address _asset, address _delegate, uint256 _amount, uint256 _slippage, bytes _callData, uint256 _relayerFee) returns (bytes32)",
       "function xcallIntoLocal(uint32 _destination, address _to, address _asset, address _delegate, uint256 _amount, uint256 _slippage, bytes _callData) payable returns (bytes32)"
-    ],
-    "0x245F757d660C3ec65416168690431076d58d6413": [
-      "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _gasCap, uint256 _mirrorChainId)",
-      "error Connector__processMessage_notUsed()",
-      "error ProposedOwnable__onlyOwner_notOwner()",
-      "error ProposedOwnable__onlyProposed_notProposedOwner()",
-      "error ProposedOwnable__ownershipDelayElapsed_delayNotElapsed()",
-      "error ProposedOwnable__proposeNewOwner_invalidProposal()",
-      "error ProposedOwnable__proposeNewOwner_noOwnershipChange()",
-      "error ProposedOwnable__renounceOwnership_invalidProposal()",
-      "error ProposedOwnable__renounceOwnership_noProposal()",
-      "event GasCapUpdated(uint256 _previous, uint256 _updated)",
-      "event MessageProcessed(bytes data, address caller)",
-      "event MessageSent(bytes data, bytes encodedData, address caller)",
-      "event MirrorConnectorUpdated(address previous, address current)",
-      "event NewConnector(uint32 indexed domain, uint32 indexed mirrorDomain, address amb, address rootManager, address mirrorConnector)",
-      "event OwnershipProposed(address indexed proposedOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function AMB() view returns (address)",
-      "function DOMAIN() view returns (uint32)",
-      "function MIRROR_CHAIN_ID() view returns (uint256)",
-      "function MIRROR_DOMAIN() view returns (uint32)",
-      "function ROOT_MANAGER() view returns (address)",
-      "function acceptProposedOwner()",
-      "function delay() view returns (uint256)",
-      "function executeSignatures(bytes _data, bytes _signatures)",
-      "function mirrorConnector() view returns (address)",
-      "function owner() view returns (address)",
-      "function processMessage(bytes _data)",
-      "function proposeNewOwner(address newlyProposed)",
-      "function proposed() view returns (address)",
-      "function proposedTimestamp() view returns (uint256)",
-      "function renounceOwnership()",
-      "function renounced() view returns (bool)",
-      "function sendMessage(bytes _data, bytes _encodedData) payable",
-      "function setGasCap(uint256 _gasCap)",
-      "function setMirrorConnector(address _mirrorConnector)",
-      "function verifySender(address _expected) returns (bool)"
-    ],
-    "0x28A9e7bbed277092E2431F186E1aF898962d4E92": [
-      "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
-    ],
-    "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b": [
-      "event DiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
-      "event DiamondCutProposed(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata, uint256 deadline)",
-      "event DiamondCutRescinded(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
-      "function diamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
-      "function getAcceptanceTime(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata) view returns (uint256)",
-      "function proposeDiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
-      "function rescindDiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)"
     ],
     "0x3Bcf4185443A339517aD4e580067f178d1B68E1D": [
       "function facetAddress(bytes4 _functionSelector) view returns (address facetAddress_)",

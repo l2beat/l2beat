@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
-  "blockNumber": 16793897,
-  "configHash": "0xbb1e956769b866df0feb5bb13c5e00c853113fc00a58d20eb5c7f1a2a002b62d",
+  "blockNumber": 17031597,
+  "configHash": "0xfe2207a3c2c90f5c245c5e2f86f47dfbe832ee8ff3fcc5bfb9bdb0b3412ac10c",
   "contracts": [
     {
       "name": "StargateToken",
@@ -42,7 +42,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
-        "nonce": 363,
+        "nonce": 404,
         "VERSION": "1.3.0"
       }
     },
@@ -87,7 +87,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 31,
+        "nonce": 34,
         "VERSION": "1.3.0"
       }
     },
@@ -132,8 +132,33 @@
           "0x5a54fe5234E811466D5366846283323c954310B2"
         ],
         "CHAIN_IDS": [
-          102, 109, 114, 126, 110, 111, 106, 116, 101, 115, 112, 108, 125, 145,
-          151, 150, 138, 12, 2, 153, 155, 156, 154, 149
+          102,
+          109,
+          114,
+          126,
+          110,
+          111,
+          106,
+          116,
+          101,
+          115,
+          112,
+          108,
+          125,
+          145,
+          151,
+          150,
+          138,
+          12,
+          2,
+          153,
+          155,
+          156,
+          154,
+          149,
+          166,
+          158,
+          165
         ],
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -184,7 +209,8 @@
         ],
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0
-      }
+      },
+      "derivedName": "UltraLightNodeV2"
     },
     {
       "name": "TreasuryV2",
