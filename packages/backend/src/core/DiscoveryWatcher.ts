@@ -105,7 +105,11 @@ export class DiscoveryWatcher {
     )
 
     if (diff.changes.length > 0) {
-      const messages = diffToMessages(projectConfig.name, diff.changes)
+      const messages = diffToMessages(
+        projectConfig.name,
+        projectConfig.dependents,
+        diff.changes,
+      )
       await this.notify(messages, 'PUBLIC')
       await this.notify(messages, 'INTERNAL')
       this.logger.info('Sending messages', { project: projectConfig.name })

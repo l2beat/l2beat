@@ -70,7 +70,11 @@ export async function dryRunDiscovery(
   )
 
   if (diff.length > 0) {
-    const messages = diffToMessages(projectConfig.name, diff)
+    const messages = diffToMessages(
+      projectConfig.name,
+      projectConfig.dependents,
+      diff,
+    )
     for (const message of messages) {
       console.log(message)
     }

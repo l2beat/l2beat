@@ -65,7 +65,7 @@
       }
     },
     "SHARPVerifierProxy": {
-      "ignoreDiscovery": true
+      "sharedModule": "l2beat-starkware"
     }
   }
 }

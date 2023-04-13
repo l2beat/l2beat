@@ -38,6 +38,7 @@
           "unevaluatedProperties": false,
           "properties": {
             "ignoreDiscovery": { "type": "boolean" },
+            "sharedModule": { "type": "string" },
             "proxyType": { "type": "string" },
             "ignoreInWatchMode": {
               "type": "array",

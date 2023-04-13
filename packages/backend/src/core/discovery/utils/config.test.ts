@@ -101,7 +101,7 @@ describe('discovery config.jsonc', () => {
     assert(
       outdatedHashes.length === 0,
       `Following projects have outdated hashes: ${outdatedHashes.join(
-        ',',
+        ', ',
       )}. Run yarn discover <outdatedProjectName>`,
     )
   })
@@ -128,7 +128,23 @@ describe('discovery config.jsonc', () => {
           }
         }
       }
-    })
+    }),
+      it('all shared modules exist', async () => {
+        for (const config of configs ?? []) {
+          for (const override of config.overrides) {
+            if (override.sharedModule === undefined) {
+              continue
+            }
+
+            assert(
+              configs?.some((c) => c.name === override.sharedModule),
+              `Shared module ${override.sharedModule.toString()} does not exist (${
+                config.name
+              })`,
+            )
+          }
+        }
+      })
   })
 
   describe('names', () => {

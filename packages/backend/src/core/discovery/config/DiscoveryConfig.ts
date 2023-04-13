@@ -32,6 +32,17 @@ export class DiscoveryConfig {
     return this.config.maxDepth ?? 6
   }
 
+  get dependents() {
+    const dependents = []
+    for (const override of this.overrides) {
+      if (override.sharedModule) {
+        dependents.push(override.sharedModule)
+      }
+    }
+
+    return dependents
+  }
+
   get hash(): Hash256 {
     return hashJson(getDiscoveryConfigEntries(this.config))
   }

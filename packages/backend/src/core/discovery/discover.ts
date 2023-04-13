@@ -40,6 +40,14 @@ export async function discover(
       continue
     }
 
+    if (contractOverrides?.sharedModule) {
+      logger.log(`Skipping shared module ${contractOverrides.sharedModule}`)
+      logger.log(`address: ${address.toString()}`)
+      logger.log('')
+
+      continue
+    }
+
     if (depth > config.maxDepth) {
       logger.log(`Skipping ${address.toString()}`)
       logger.error(`Depth ${depth} exceeded max = ${config.maxDepth}`)
