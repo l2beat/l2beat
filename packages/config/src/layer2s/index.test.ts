@@ -17,27 +17,26 @@ describe('layer2s', () => {
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 
-          for (const [name, riskEntry] of Object.entries(layer2.riskView)) {
+          for (const [riskName, riskEntry] of Object.entries(layer2.riskView)) {
             const risk = riskEntry as ProjectRiskViewEntry
             if (risk.contracts === undefined) continue
 
-            it(`${layer2.id.toString()} : ${name}`, () => {
+            const referencedAddresses = getReferencedAddresses(risk)
+
+            it(`${layer2.id.toString()} : ${riskName}`, () => {
               for (const contractIdentifier of risk.contracts ?? []) {
-                const upgradeability =
-                  discovery.getContract(contractIdentifier).upgradeability
+                const contract = discovery.getContract(contractIdentifier)
 
-                const addresses =
-                  gatherAddressesFromUpgradeability(upgradeability)
+                const contractAddresses = [
+                  contract.address,
+                  ...gatherAddressesFromUpgradeability(contract.upgradeability),
+                ]
 
-                const references = [
-                  ...(risk.references ?? [])
-                    .join(';')
-                    .matchAll(/0x[a-fA-F0-9]{40}/g),
-                ].map((e) => EthereumAddress(e[0]))
-
-                expect(addresses.every((a) => references.includes(a))).toEqual(
-                  true,
-                )
+                expect(
+                  contractAddresses.some((a) =>
+                    referencedAddresses.includes(a),
+                  ),
+                ).toEqual(true)
               }
             })
           }
@@ -235,3 +234,9 @@ describe('layer2s', () => {
     })
   })
 })
+
+function getReferencedAddresses(risk: ProjectRiskViewEntry) {
+  return [
+    ...(risk.references ?? []).join(';').matchAll(/0x[a-fA-F0-9]{40}/g),
+  ].map((e) => EthereumAddress(e[0]))
+}

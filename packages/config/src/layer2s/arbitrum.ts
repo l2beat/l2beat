@@ -126,6 +126,10 @@ export const arbitrum: Layer2 = {
     validatorFailure: {
       value: 'Propose blocks',
       description: VALUES.ARBITRUM.getValidatorFailureString(),
+      references: [
+        'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
+      ],
+      contracts: ['RollupProxy'],
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
