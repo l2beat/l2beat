@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId } from '@l2beat/shared'
 
 import {
   DATA_AVAILABILITY,
@@ -23,10 +23,10 @@ export const honeypot: Layer2 = {
        Bug hunters are incentivized to hack the application to obtain the funds locked in the rollup contract.\
        Honeypot holds real assets with a dual objective: setting a financial benchmark for secure asset management\
        and providing a gamified battlefield for the community to help audit and test Cartesi Rollups.\
-       Crack the Honeypot, and the spoils are yours – no strings attached!',
+       Crack the Honeypot, and the spoils are yours – no strings attached.',
     purpose: 'Bug bounty',
     links: {
-      websites: [],                                 // TODO
+      websites: ['https://docs.cartesi.io/cartesi-rollups/'], // TODO
       apps: [],                                     // Ok
       documentation: ['https://docs.cartesi.io/cartesi-rollups/'], // Ok
       explorers: [],                                // Ok
@@ -35,13 +35,7 @@ export const honeypot: Layer2 = {
     },
   },
   config: {
-    escrows: [
-      {
-        address: EthereumAddress('0x6880f6Fd960D1581C2730a451A22EED1081cfD72'), // TODO: This should be the address of the Honeypot DApp! The Portals now just verify the deposit, but forward the assets themselves to the address of the DApp.
-        sinceTimestamp: new UnixTime(1612414780),
-        tokens: ['DAI'],
-      },
-    ],
+    escrows: [],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_EXITS_ONLY,          // Ok
@@ -93,7 +87,7 @@ export const honeypot: Layer2 = {
       name: 'Honeypot DApp announcement',
       link: 'https://medium.com/cartesi/cartesi-ecosystem-update-2023-124b384401cc#:~:text=Honeypot%20DApp%20on%20Mainnet',
       date: '2023-04-11T00:00:00Z',
-      description: 'Honeypot DApp first announced to the community',
+      description: 'Honeypot DApp first announced to the community.',
     },
   ],
 }
