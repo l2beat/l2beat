@@ -15,7 +15,8 @@
     "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": "USDC Bridge",
     "0xbb3400F107804DFB482565FF1Ec8D8aE66747605": "USDT Bridge",
     // TODO: Make it possible to use the contract name without overriding it
-    "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Starknet"
+    "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Starknet",
+    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy"
   },
   "overrides": {
     "Starknet": {
@@ -62,6 +63,9 @@
           "returnType": "address"
         }
       }
+    },
+    "SHARPVerifierProxy": {
+      "ignoreDiscovery": true
     }
   }
 }

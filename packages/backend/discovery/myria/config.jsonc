@@ -4,7 +4,8 @@
   "initialAddresses": ["0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"],
   "names": {
     "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7": "StarkExchange",
-    "0x1e601435E181423e7A8430813d7500012a6169cB": "Committee"
+    "0x1e601435E181423e7A8430813d7500012a6169cB": "Committee",
+    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy"
   },
   "overrides": {
     "StarkExchange": {
@@ -45,8 +46,8 @@
         }
       }
     },
-    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {
-      "ignoreInWatchMode": ["nonce"]
+    "SHARPVerifierProxy": {
+      "ignoreDiscovery": true
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
-  "blockNumber": 17025788,
-  "configHash": "0x5bfcd47d366d4b479883600ade6cf6009a1cd2293d5d6a7bfec9277d82926c0e",
+  "blockNumber": 17031798,
+  "configHash": "0x4e6e6669c432f76176a5d39c09de58f942b265313f576fc0ef7d79225776209a",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -20,16 +20,14 @@
           "StarkWare_OnchainVaults_2021_1": "0x2D542881E93491e765E5110c1e373FC2968E720A",
           "StarkWare_ProxyUtils_2021_1": "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
         },
-        "proxyGovernance": [
-          "0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a"
-        ]
+        "proxyGovernance": ["0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a"]
       },
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 259200,
         "FREEZE_GRACE_PERIOD": 604800,
-        "getLastBatchId": 15726,
-        "getOrderRoot": "798093462571001959565320344198177660019225474181830308730153263145201528427",
+        "getLastBatchId": 15751,
+        "getOrderRoot": "2607008971220846683229522168481275564734543474145267661168425833583333638678",
         "getOrderTreeHeight": 63,
         "getRegisteredAvailabilityVerifiers": [
           "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
@@ -37,9 +35,9 @@
         "getRegisteredVerifiers": [
           "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
         ],
-        "getSequenceNumber": 15599,
+        "getSequenceNumber": 15624,
         "getUpgradeActivationDelay": 1209600,
-        "getVaultRoot": "679143829900540190016094830754332604148596672466464888346346422264604783801",
+        "getVaultRoot": "1909334867993937994367596687421909201470040801513461123115014219823763981633",
         "getVaultTreeHeight": 31,
         "implementation": "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
         "isFrozen": false,
@@ -48,9 +46,7 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
-        "OPERATORS": [
-          "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
-        ],
+        "OPERATORS": ["0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"],
         "orderRegistryAddress": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
@@ -87,75 +83,6 @@
       }
     },
     {
-      "name": "CallProxy",
-      "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-      "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-      "upgradeability": {
-        "type": "StarkWare proxy",
-        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "callImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-        "upgradeDelay": 2419200,
-        "isFinal": true,
-        "proxyGovernance": [
-          "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
-          "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
-        ]
-      },
-      "values": {
-        "CALL_PROXY_VERSION": "3.1.0",
-        "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-        "getUpgradeActivationDelay": 2419200,
-        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "isFrozen": false,
-        "isNotFinalized": true,
-        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
-        "PROXY_VERSION": "3.0.0",
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
-      "code": "https://etherscan.deth.net/address/0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
-        "getChainId": 1,
-        "getOwners": [
-          "0x59232aC80E6d403b6381393e52f4665ECA328558",
-          "0xebc8416179fE90854fe8B3f774801165572cfD7F",
-          "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
-        ],
-        "getThreshold": 2,
-        "nonce": 2,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "GpsStatementVerifier",
-      "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "code": "https://etherscan.deth.net/address/0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getBootloaderConfig": [
-          "2962621603719000361370283216422448934312521782617806945663080079725495842070",
-          "3178097804922730583543126053422762895998573737925004508949311089390705597156"
-        ],
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_GpsStatementVerifier_2022_7",
-        "PAGE_INFO_ADDRESS_OFFSET": 0,
-        "PAGE_INFO_HASH_OFFSET": 2,
-        "PAGE_INFO_SIZE": 3,
-        "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1
-      }
-    },
-    {
       "name": "Committee",
       "address": "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295",
       "code": "https://etherscan.deth.net/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295",
@@ -185,16 +112,12 @@
   "eoas": [
     "0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
     "0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
-    "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
     "0x48AF849535DDFa560A0EB0FbDEf436688169B949",
     "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
-    "0x59232aC80E6d403b6381393e52f4665ECA328558",
     "0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a",
-    "0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
     "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e",
     "0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
     "0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
-    "0xebc8416179fE90854fe8B3f774801165572cfD7F",
     "0xfF506616E8C53EE5e513b906AC00B5D76664C537"
   ],
   "abis": {
@@ -242,9 +165,6 @@
       "function signaturesRequired() view returns (uint256)",
       "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
     ],
-    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": [
-      "constructor(address _singleton)"
-    ],
     "0x2D542881E93491e765E5110c1e373FC2968E720A": [
       "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",
       "event LogDepositToVault(address ethKey, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
@@ -285,32 +205,6 @@
       "function setDefaultVaultWithdrawalLock(uint256 newDefaultTime)",
       "function withdrawFromVault(uint256 assetId, uint256 vaultId, uint256 quantizedAmount)"
     ],
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": [
-      "constructor(uint256 upgradeActivationDelay)",
-      "event FinalizedImplementation(address indexed implementation)",
-      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
-      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
-      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "function PROXY_GOVERNANCE_TAG() view returns (string)",
-      "function PROXY_VERSION() view returns (string)",
-      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
-      "function addImplementation(address newImplementation, bytes data, bool finalize)",
-      "function getUpgradeActivationDelay() view returns (uint256 delay)",
-      "function implementation() view returns (address _implementation)",
-      "function initialize(bytes) pure",
-      "function isNotFinalized() view returns (bool notFinal)",
-      "function proxyAcceptGovernance()",
-      "function proxyCancelNomination()",
-      "function proxyIsGovernor(address testGovernor) view returns (bool)",
-      "function proxyNominateNewGovernor(address newGovernor)",
-      "function proxyRemoveGovernor(address governorForRemoval)",
-      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
-      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
-    ],
     "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
       "event LogL1LimitOrderRegistered(address userAddress, address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "event LogMsgRegistered(address from, address to, bytes32 msgHash)",
@@ -346,20 +240,6 @@
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function removeImplementation(address newImplementation)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
-    ],
-    "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": [
-      "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 hashedSupportedCairoVerifiers, uint256 simpleBootloaderProgramHash)",
-      "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
-      "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
-      "function PAGE_INFO_HASH_OFFSET() view returns (uint256)",
-      "function PAGE_INFO_SIZE() view returns (uint256)",
-      "function PAGE_INFO_SIZE_IN_BYTES() view returns (uint256)",
-      "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
-      "function getBootloaderConfig() view returns (uint256, uint256)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
     ],
     "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": [
       "constructor(address gpsStatementContract, uint256 programHash_)",
@@ -521,63 +401,6 @@
     "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC": [
       "function VERSION() view returns (string)",
       "function initialize(bytes data)"
-    ],
-    "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458": [
-      "function CALL_PROXY_VERSION() view returns (string)",
-      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
-      "function callProxyImplementation() view returns (address _implementation)",
-      "function initialize(bytes data)",
-      "function isFrozen() pure returns (bool)",
-      "function isValid(bytes32 fact) view returns (bool)"
-    ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0xF65C115efd24102315Af53f84aD65aD240bc9D57": [
       "event LogFrozen()",

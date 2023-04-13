@@ -1,12 +1,13 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { getCommittee } from '../discovery/starkware/getCommittee'
-import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
 import {
-  delayDescriptionFromSeconds,
-  delayDescriptionFromString,
-} from '../utils/delayDescription'
+  getCommittee,
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromString } from '../utils/delayDescription'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -18,7 +19,6 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -30,6 +30,10 @@ const delaySeconds = discovery.getContractUpgradeabilityParam(
   'upgradeDelay',
 )
 const delay = formatSeconds(delaySeconds)
+const verifierAddress = discovery.getAddressFromValue(
+  'GpsFactRegistryAdapter',
+  'gpsContract',
+)
 
 export const immutablex: Layer2 = {
   type: 'layer2',
@@ -96,7 +100,7 @@ export const immutablex: Layer2 = {
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
-      SHARP_VERIFIER_CONTRACT,
+      ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
@@ -109,23 +113,7 @@ export const immutablex: Layer2 = {
         delayDescriptionFromString(delay),
     },
     getCommittee(discovery),
-    {
-      name: 'SHARP Verifier Governor',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
-        // @todo
-        // This should be coming from discovery, but it's not available yet.
-        // because sorare discovery is not detecting the starkware diamond
-        delayDescriptionFromSeconds(2419200),
-    },
+    ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
       accounts: discovery.getPermissionedAccountsList(
