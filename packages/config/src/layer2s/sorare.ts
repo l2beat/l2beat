@@ -1,8 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { getCommittee } from '../discovery/starkware/getCommittee'
-import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
+import {
+  getCommittee,
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
@@ -15,7 +19,6 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -27,6 +30,10 @@ const delaySeconds = discovery.getContractUpgradeabilityParam(
   'upgradeDelay',
 )
 const delay = formatSeconds(delaySeconds)
+const verifierAddress = discovery.getAddressFromValue(
+  'GpsFactRegistryAdapter',
+  'gpsContract',
+)
 
 export const sorare: Layer2 = {
   type: 'layer2',
@@ -93,7 +100,7 @@ export const sorare: Layer2 = {
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
-      SHARP_VERIFIER_CONTRACT,
+      ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
@@ -106,13 +113,7 @@ export const sorare: Layer2 = {
         delayDescriptionFromString(delay),
     },
     getCommittee(discovery),
-    {
-      name: 'SHARP Verifier Governors',
-      accounts: getProxyGovernance(discovery, 'CallProxy'),
-      description:
-        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
-        discovery.getDelayStringFromUpgradeability('CallProxy', 'upgradeDelay'),
-    },
+    ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
       accounts: discovery.getPermissionedAccountsList(

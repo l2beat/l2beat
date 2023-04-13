@@ -4,6 +4,9 @@
   "initialAddresses": [
     "0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6" // STG
   ],
+  "names": {
+    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2"
+  },
   "overrides": {
     "0x65bb797c2B9830d891D87288F029ed8dACc19705": {
       "ignoreInWatchMode": ["nonce"]
@@ -14,8 +17,7 @@
     "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": {
-      // Ultra Light Node V2
+    "UltraLightNodeV2": {
       "fields": {
         "CHAIN_IDS": {
           "type": "arrayFromOneEvent",
@@ -68,7 +70,8 @@
           "method": "defaultAppConfig",
           "args": [112]
         }
-      }
+      },
+      "ignoreInWatchMode": ["CHAIN_IDS"]
     }
   }
 }

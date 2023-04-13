@@ -181,36 +181,14 @@ export const stargate: Bridge = {
     isIncomplete: true,
   },
   permissions: [
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x65bb797c2B9830d891D87288F029ed8dACc19705',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'StarGate Multisig',
-      description: 'Bridge owner, can create new pools, chainpaths, set fees.',
-    },
-    {
-      name: 'StarGate MultiSig Participants',
-      accounts: discovery
-        .getContractValue<string[]>(
-          '0x65bb797c2B9830d891D87288F029ed8dACc19705',
-          'getOwners',
-        )
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        '0x65bb797c2B9830d891D87288F029ed8dACc19705',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>(
-          '0x65bb797c2B9830d891D87288F029ed8dACc19705',
-          'getOwners',
-        ).length
-      } StarGate MultiSig.`,
-    },
+    discovery.contractAsPermissioned(
+      discovery.getContract('StarGate Multisig'),
+      'Bridge owner, can create new pools, chainpaths, set fees.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('LayerZero Multisig'),
+      'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
+    ),
     {
       accounts: [
         {
@@ -247,37 +225,6 @@ export const stargate: Bridge = {
       ],
       name: 'LayerZero Oracle Admin owner',
       description: 'Can upgrade LayerZero oracle contract with no delay.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'LayerZero Multisig',
-      description:
-        'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
-    },
-    {
-      name: 'LayerZero MultiSig Participants',
-      accounts: discovery
-        .getContractValue<string[]>(
-          '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-          'getOwners',
-        )
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>(
-          '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-          'getOwners',
-        ).length
-      } LayerZero MultiSig.`,
     },
   ],
   knowledgeNuggets: [

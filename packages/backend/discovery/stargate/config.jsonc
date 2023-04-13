@@ -2,6 +2,10 @@
   "$schema": "../config.schema.json",
   "name": "stargate",
   "initialAddresses": ["0x8731d54E9D02c286767d56ac03e8037C07e01e98"],
+  "names": {
+    "0x65bb797c2B9830d891D87288F029ed8dACc19705": "StarGate Multisig",
+    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig"
+  },
   "overrides": {
     "0x06D538690AF257Da524f25D0CD52fD85b1c2173E": {
       // POOL Factory contract - we ignore all token pools

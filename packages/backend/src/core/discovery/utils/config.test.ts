@@ -18,13 +18,16 @@ describe('discovery config.jsonc', () => {
   })
 
   it(`every config name corresponds to ProjectId`, () => {
-    const notCorresponding = configs
-      ?.filter((c) => !projectIds.includes(c.name))
-      .map((c) => c.name)
+    const notCorresponding =
+      configs
+        ?.filter((c) => !c.name.startsWith('l2beat-'))
+        ?.filter((c) => !projectIds.includes(c.name))
+        .map((c) => c.name) ?? []
 
     assert(
-      notCorresponding?.length === 0,
-      'Following projects do not have the same name as ProjectIds',
+      notCorresponding.length === 0,
+      'Following projects do not have the same name as ProjectIds: ' +
+        notCorresponding.join(', '),
     )
   })
 

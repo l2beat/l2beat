@@ -5,6 +5,16 @@
     "0xA314330482f325D38A83B492EF6B006224a3bea9",
     "0xBBbD1BbB4f9b936C3604906D7592A644071dE884"
   ],
+  "names": {
+    "0xA314330482f325D38A83B492EF6B006224a3bea9": "LPBridge",
+    "0xBBbD1BbB4f9b936C3604906D7592A644071dE884": "TokenBridge",
+    "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e": "USDT_POOL",
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
+    "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C": "USDC_POOL",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
+    "0xCe01bc1be28c0784492cB44EbBDa662c3F539172": "DAI_POOL"
+  },
   "overrides": {
     "0xA314330482f325D38A83B492EF6B006224a3bea9": {
       "fields": {
@@ -30,6 +40,63 @@
           ]
         }
       }
+    },
+    "USDT_POOL": {
+      "ignoreInWatchMode": [
+        "a",
+        "accRewardPerShareP",
+        "adminFeeAmount",
+        "adminFeeShareBP",
+        "d",
+        "feeShareBP",
+        "getPrice",
+        "getY",
+        "PP",
+        "tokenBalance",
+        "totalLpAmount",
+        "vUsdBalance"
+      ]
+    },
+    "USDC_POOL": {
+      "ignoreInWatchMode": [
+        "a",
+        "accRewardPerShareP",
+        "adminFeeAmount",
+        "adminFeeShareBP",
+        "d",
+        "feeShareBP",
+        "getPrice",
+        "getY",
+        "PP",
+        "tokenBalance",
+        "totalLpAmount",
+        "vUsdBalance"
+      ]
+    },
+    "DAI_POOL": {
+      "ignoreInWatchMode": [
+        "a",
+        "accRewardPerShareP",
+        "adminFeeAmount",
+        "adminFeeShareBP",
+        "d",
+        "feeShareBP",
+        "getPrice",
+        "getY",
+        "PP",
+        "tokenBalance",
+        "totalLpAmount",
+        "vUsdBalance"
+      ]
+    },
+    "USDT": {
+      "ignoreDiscovery": true
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
+    "DAI": {
+      "ignoreDiscovery": true
     }
   }
 }

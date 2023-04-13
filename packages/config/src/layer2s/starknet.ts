@@ -1,7 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
+import {
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -12,12 +16,12 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('starknet')
+const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
 
 export const starknet: Layer2 = {
   type: 'layer2',
@@ -139,13 +143,7 @@ export const starknet: Layer2 = {
         address: discovery.getContract('Starknet').address,
         upgradeability: discovery.getContract('Starknet').upgradeability,
       },
-      SHARP_VERIFIER_CONTRACT,
-      {
-        name: 'MemoryPageFactRegistry',
-        description:
-          'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data such as StarkNet contracts state diffs.',
-        address: EthereumAddress('0x28067505E54b7Ac2A5F860b343340Be8E73edECD'),
-      },
+      ...getSHARPVerifierContracts(discovery, verifierAddress),
       {
         name: 'Eth Bridge',
         description: 'Starkgate bridge for ETH.',
@@ -186,12 +184,7 @@ export const starknet: Layer2 = {
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
     },
-    {
-      name: 'SHARP Verifier Governors',
-      accounts: getProxyGovernance(discovery, 'CallProxy'),
-      description:
-        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate. ',
-    },
+    ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
       accounts: discovery.getPermissionedAccountsList('Starknet', 'OPERATORS'),

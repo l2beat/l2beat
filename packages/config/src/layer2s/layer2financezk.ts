@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getSHARPVerifierContracts } from '../discovery/starkware'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -10,7 +11,6 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -99,7 +99,6 @@ export const layer2financezk: Layer2 = {
         name: 'Committee',
         address: EthereumAddress('0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9'),
       },
-      SHARP_VERIFIER_CONTRACT,
       {
         name: 'Broker',
         description:
@@ -117,14 +116,13 @@ export const layer2financezk: Layer2 = {
         address: EthereumAddress('0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE'),
       },
       {
-        name: 'GpsStatementVerifier',
-        address: discovery.getContract('CallProxy').address,
-        upgradeability: discovery.getContract('CallProxy').upgradeability,
-      },
-      {
         name: 'OrderRegistry',
         address: discovery.getContract('OrderRegistry').address,
       },
+      ...getSHARPVerifierContracts(
+        discovery,
+        discovery.getAddressFromValue('GpsFactRegistryAdapter', 'gpsContract'),
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

@@ -1,0 +1,119 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "l2beat-starkware",
+  "initialAddresses": ["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"],
+  "names": {
+    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
+    "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": "SHARPVerifier",
+    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARPVerifierGovernorMultisig"
+  },
+  "overrides": {
+    "SHARPVerifier": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    //PedersenHashPointsYColumn
+    "0x519DA5F74503dA351EbBED889111377d33096002": {
+      "ignoreMethods": ["compute"]
+    },
+    //PedersenHashPointsXColumn
+    "0xc4f21318937017B8aBe5fDc0D48f58dBc1d18940": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonPartialRoundKey1Column
+    "0x4d0E80AB34ee2B19295F2CaC3101d03452D874b8": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonPartialRoundKey0Column
+    "0x812c2AD2161D099724A99C8114c539b9e5b449cd": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonFullRoundKey2Column
+    "0x4FB05b7CC348C5a72C59a3f307baf66e3CA1F835": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonFullRoundKey1Column
+    "0xb4711a4614368516529d6118C97905aB4B28e267": {
+      "ignoreMethods": ["compute"]
+    },
+    //PoseidonPoseidonFullRoundKey0Column
+    "0x37070Fd8051f63E5A6D7E87026e086Cc19db1aBe": {
+      "ignoreMethods": ["compute"]
+    },
+    //EcdsaPointsYColumn
+    "0xcA59f6FD499ffF50c78Ffb420a9bcd0d273abf29": {
+      "ignoreMethods": ["compute"]
+    },
+    //EcdsaPointsXColumn
+    "0x593a71DC43e9B67FE009d7C76B6EfA925FB329B1": {
+      "ignoreMethods": ["compute"]
+    },
+    // CpuFrillessVerifier1
+    "0x03Fa911dfCa026D9C8Edb508851b390accF912e8": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier2
+    "0xe9664D230490d5A515ef7Ef30033d8075a8D0E24": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier3
+    "0x78Af2BFB12Db15d35f7dE8DD77f29C299C78c590": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier4
+    "0xC879aF7D5eD80e4676C203FD300E640C297F31e3": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier5
+    "0x9E614a417f8309575fC11b175A51599661f2Bd21": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier6
+    "0x8488e8f4e26eBa40faE229AB653d98E341cbE57B": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier7
+    "0x630A97901Ac29590DF83f4A64B8D490D54caf239": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    },
+    // CpuFrillessVerifier8
+    "0x217750c27bE9147f9e358D9FF26a8224F8aCC214": {
+      "fields": {
+        "constructorArgs": {
+          "type": "constructorArgs"
+        }
+      }
+    }
+  }
+}

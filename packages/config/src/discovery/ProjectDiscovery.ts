@@ -17,7 +17,6 @@ import {
   ProjectPermissionedAccount,
 } from '../common'
 import {
-  ProjectContract,
   ProjectContractSingleAddress,
   ProjectUpgradeability,
 } from '../common/ProjectContracts'
@@ -43,7 +42,7 @@ const filesystem = {
 export class ProjectDiscovery {
   private readonly discovery: ProjectParameters
   constructor(
-    private readonly projectName: string,
+    public readonly projectName: string,
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
@@ -60,7 +59,7 @@ export class ProjectDiscovery {
   getMainContractDetails(
     identifier: string,
     description?: string,
-  ): ProjectContract {
+  ): ProjectContractSingleAddress {
     const contract = this.getContract(identifier)
     return {
       name: contract.name,
