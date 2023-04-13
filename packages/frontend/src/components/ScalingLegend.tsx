@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CartesiIcon,OptimismIcon, StarkWareIcon, ZkSyncIcon } from './icons'
+import { CartesiIcon, OptimismIcon, StarkWareIcon, ZkSyncIcon } from './icons'
 
 export function ScalingLegend() {
   return (
