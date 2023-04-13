@@ -1,8 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('cbridge')
 
 export const cBridge: Bridge = {
   type: 'bridge',
@@ -212,50 +215,25 @@ export const cBridge: Bridge = {
     {
       name: 'Bridge Governance',
       description:
-        'The owner of the Token Bridge, Liquidity Network and Transfer Agent is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
+        'The owner of the main bridge contract, can update bridge parameters such as Token Bridge and Liquidity Network addresses.',
       accounts: [
         {
-          address: EthereumAddress(
-            '0xF380166F8490F24AF32Bf47D1aA217FBA62B6575',
-          ),
+          address: discovery.getAddressFromValue('MessageBus', 'owner'),
           type: 'Contract',
         },
       ],
     },
     {
-      name: 'Bridge Governance voters',
+      name: 'Bridge Governance (2)',
       description:
-        'Can vote on proposal which will be executed by the contract. Each voter holds the same voting power.',
+        'The owner of the Token Bridge, Liquidity Network and Transfer Agent is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
       accounts: [
         {
-          address: EthereumAddress(
-            '0x1b9dFC56e38b0F92448659C114e2347Bd803911c',
+          address: discovery.getAddressFromValue(
+            'OriginalTokenVaultV2',
+            'owner',
           ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xDfE4F07D1F36B8d559b25082460a4f6A72531de2',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2',
-          ),
-          type: 'EOA',
+          type: 'Contract',
         },
       ],
     },
@@ -263,74 +241,12 @@ export const cBridge: Bridge = {
       name: 'Governors',
       description:
         'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x8e9174ed59eA4b81E70d0aE0DE13242e2329106c',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x1b9dFC56e38b0F92448659C114e2347Bd803911c',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery.getPermissionedAccountsList('Bridge', 'pausers'),
     },
     {
       name: 'Pausers',
       description: 'Can pause and unpause the system.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xDfE4F07D1F36B8d559b25082460a4f6A72531de2',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x1b9dFC56e38b0F92448659C114e2347Bd803911c',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery.getPermissionedAccountsList('Bridge', 'pausers'),
     },
   ],
   knowledgeNuggets: [
