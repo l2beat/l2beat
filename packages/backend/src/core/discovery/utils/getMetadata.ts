@@ -3,6 +3,13 @@ import { zip } from 'lodash'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { concatAbis } from './concatAbis'
+import { processSources } from './processSources'
+
+interface ContractSource {
+  address: EthereumAddress
+  contract: string
+  files: Record<string, string>
+}
 
 export interface ContractMetadata {
   name: string
@@ -11,6 +18,7 @@ export interface ContractMetadata {
   implementationVerified: boolean
   abi: string[]
   abis: Record<string, string[]>
+  sources: ContractSource[]
 }
 
 export async function getMetadata(
@@ -31,6 +39,7 @@ export async function getMetadata(
       implementationVerified: true,
       abi: [],
       abis: {},
+      sources: [],
     }
   }
 
@@ -58,6 +67,29 @@ export async function getMetadata(
     }
   }
 
+  const sources: ContractSource[] = []
+  sources.push({
+    address,
+    contract: metadata.name,
+    files: metadata.isVerified
+      ? processSources(metadata.source, address, metadata.name)
+      : {},
+  })
+  for (const [implementation, metadata] of zip(
+    implementations,
+    implementationMeta,
+  )) {
+    if (implementation && metadata) {
+      sources.push({
+        address: implementation,
+        contract: metadata.name,
+        files: metadata.isVerified
+          ? processSources(metadata.source, implementation, metadata.name)
+          : {},
+      })
+    }
+  }
+
   return {
     name,
     isEOA: false,
@@ -65,5 +97,6 @@ export async function getMetadata(
     implementationVerified: implementationMeta.every((x) => x.isVerified),
     abi,
     abis,
+    sources,
   }
 }

@@ -1,5 +1,8 @@
 import { EthereumAddress, Hash256, ProjectParameters } from '@l2beat/shared'
 import { writeFile } from 'fs/promises'
+import { mkdirp } from 'mkdirp'
+import { dirname } from 'path'
+import { rimraf } from 'rimraf'
 
 import { AnalyzedData } from '../analyzeItem'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
@@ -12,10 +15,35 @@ export async function saveDiscoveryResult(
 ) {
   const project = prepareDiscoveryFile(results, config, blockNumber, configHash)
 
-  await writeFile(
-    `discovery/${config.name}/discovered.json`,
-    JSON.stringify(project, null, 2),
-  )
+  const root = `discovery/${config.name}`
+
+  await writeFile(`${root}/discovered.json`, JSON.stringify(project, null, 2))
+
+  await rimraf(`${root}/.code`)
+  for (const result of results) {
+    for (const [i, source] of result.meta.sources.entries()) {
+      for (const [file, content] of Object.entries(source.files)) {
+        const name = getSourceName(i, result.meta.sources.length)
+        const path = `${root}/.code/${result.name}${name}/${file}`
+        await mkdirp(dirname(path))
+        await writeFile(path, content)
+      }
+    }
+  }
+}
+
+function getSourceName(i: number, length: number) {
+  let name = ''
+  if (length > 1) {
+    name = i === 0 ? 'proxy' : 'implementation'
+  }
+  if (length > 2 && i > 0) {
+    name += `-${i}`
+  }
+  if (name) {
+    name = `/${name}`
+  }
+  return name
 }
 
 export function parseDiscoveryOutput(
