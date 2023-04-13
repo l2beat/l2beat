@@ -15,10 +15,9 @@ const SHARP_VERIFIER = discovery.getMainContractDetails(
   'Starkware SHARP verifier used collectively by StarkNet, Sorare, Immutable X, Apex, Myria and rhino.fi. It receives STARK proofs from the Prover attesting to the integrity of the Execution Trace of these Programs including correctly computed L2 state root which is part of the Program Output.',
 )
 
-// VALIDIUM VS ROLLUP? - maybe it's only starknet, not sure
 const MEMORY_FACT_REGISTRY = discovery.getMainContractDetails(
   'MemoryPageFactRegistry',
-  'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data such as StarkNet contracts state diffs.',
+  'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data.',
 )
 
 const CAIRO_BOOTLOADER_PROGRAM = discovery.getMainContractDetails(
