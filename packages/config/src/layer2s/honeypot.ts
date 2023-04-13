@@ -27,10 +27,10 @@ export const honeypot: Layer2 = {
     purpose: 'Bug bounty',
     links: {
       websites: ['https://docs.cartesi.io/cartesi-rollups/'], // TODO
-      apps: [],                                     // Ok
+      apps: [], // Ok
       documentation: ['https://docs.cartesi.io/cartesi-rollups/'], // Ok
-      explorers: [],                                // Ok
-      repositories: [],                             // TODO
+      explorers: [], // Ok
+      repositories: [], // TODO
       socialMedia: ['https://discord.gg/du7emFSt'], // Ok
     },
   },
@@ -38,13 +38,13 @@ export const honeypot: Layer2 = {
     escrows: [],
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_EXITS_ONLY,          // Ok
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,            // Ok
-    upgradeability: RISK_VIEW.UPGRADABLE_NO,              // Ok
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,    // Ok
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_U,       // Ok 
-    destinationToken: RISK_VIEW.VALIDATED_BY_ETHEREUM,    // Ok
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,         // OK
+    stateValidation: RISK_VIEW.STATE_EXITS_ONLY, // Ok
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN, // Ok
+    upgradeability: RISK_VIEW.UPGRADABLE_NO, // Ok
+    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1, // Ok
+    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_U, // Ok
+    destinationToken: RISK_VIEW.VALIDATED_BY_ETHEREUM, // Ok
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM, // OK
   }),
   technology: {
     provider: 'Cartesi',
