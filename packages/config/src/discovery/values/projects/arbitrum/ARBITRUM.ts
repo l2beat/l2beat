@@ -1,7 +1,42 @@
 import { EthereumAddress } from '@l2beat/shared'
+import { assert } from 'console'
 
-import { ProjectPermissionedAccount } from '../../../common'
+import { ProjectPermissionedAccount } from '../../../../common'
+import { formatSeconds } from '../../../../utils/formatSeconds'
+import { ProjectDiscovery } from '../../../ProjectDiscovery'
 
+const discovery = new ProjectDiscovery('arbitrum')
+
+const getSequencerFailureString = () => {
+  const maxTimeVariation = discovery.getContractValue<number[]>(
+    'SequencerInbox',
+    'maxTimeVariation',
+  )
+  const delayBlocks = maxTimeVariation[0]
+  const delaySeconds = maxTimeVariation[2]
+
+  return `In the event of sequencer failure, after ${formatSeconds(
+    delaySeconds,
+  )} (${delayBlocks} blocks) user can force the transaction to be included in the L2 chain by sending it to the L1.`
+}
+
+const getValidatorFailureString = () => {
+  const delayBlocks = discovery.getContractValue<number>(
+    'RollupProxy',
+    'VALIDATOR_AFK_BLOCKS',
+  )
+  const delaySeconds = delayBlocks * 13.2
+  const days = 7
+
+  assert(
+    Math.abs(delaySeconds - 3600 * 24 * days) < 60,
+    'Unexpected delaySeconds',
+  )
+
+  return `Anyone can become a Validator after approximately ${days} days (${delayBlocks} blocks) of inactivity from the currently whitelisted Validators.`
+}
+
+// HARDCODED
 const OLD_BRIDGE = EthereumAddress('0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515')
 
 const SEQUENCER: ProjectPermissionedAccount[] = [
@@ -66,8 +101,10 @@ const VALIDATORS: ProjectPermissionedAccount[] = [
   },
 ]
 
-export const ARBITRUM_HARDCODED = {
+export const ARBITRUM = {
   OLD_BRIDGE,
   SEQUENCER,
   VALIDATORS,
+  getSequencerFailureString,
+  getValidatorFailureString,
 }

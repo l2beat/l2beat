@@ -1,11 +1,52 @@
-import { UnixTime } from '@l2beat/shared'
+import {
+  EthereumAddress,
+  gatherAddressesFromUpgradeability,
+  UnixTime,
+} from '@l2beat/shared'
 import { expect } from 'earl'
 
-import { ProjectTechnologyChoice } from '../common'
+import { ProjectRiskViewEntry, ProjectTechnologyChoice } from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
 
 describe('layer2s', () => {
+  describe('riskView', () => {
+    describe('every contract has source code references', () => {
+      for (const layer2 of layer2s) {
+        try {
+          const discovery = new ProjectDiscovery(layer2.id.toString())
+
+          for (const [riskName, riskEntry] of Object.entries(layer2.riskView)) {
+            const risk = riskEntry as ProjectRiskViewEntry
+            if (risk.contracts === undefined) continue
+
+            const referencedAddresses = getReferencedAddresses(risk)
+
+            it(`${layer2.id.toString()} : ${riskName}`, () => {
+              for (const contractIdentifier of risk.contracts ?? []) {
+                const contract = discovery.getContract(contractIdentifier)
+
+                const contractAddresses = [
+                  contract.address,
+                  ...gatherAddressesFromUpgradeability(contract.upgradeability),
+                ]
+
+                expect(
+                  contractAddresses.some((a) =>
+                    referencedAddresses.includes(a),
+                  ),
+                ).toEqual(true)
+              }
+            })
+          }
+        } catch {
+          continue
+        }
+      }
+    })
+  })
+
   describe('sentences', () => {
     describe('every description ends with a dot', () => {
       for (const layer2 of layer2s) {
@@ -193,3 +234,9 @@ describe('layer2s', () => {
     })
   })
 })
+
+function getReferencedAddresses(risk: ProjectRiskViewEntry) {
+  return [
+    ...(risk.references ?? []).join(';').matchAll(/0x[a-fA-F0-9]{40}/g),
+  ].map((e) => EthereumAddress(e[0]))
+}
