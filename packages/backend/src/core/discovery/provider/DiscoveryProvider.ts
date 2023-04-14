@@ -12,6 +12,7 @@ export interface ContractMetadata {
   name: string
   isVerified: boolean
   abi: string[]
+  source: string
 }
 
 /**
@@ -84,6 +85,7 @@ export class DiscoveryProvider {
       name: result.ContractName,
       isVerified,
       abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
+      source: result.SourceCode,
     }
   }
 

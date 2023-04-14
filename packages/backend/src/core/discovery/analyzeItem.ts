@@ -10,16 +10,10 @@ import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { detectProxy } from './proxies'
 import { DiscoveryLogger } from './utils/DiscoveryLogger'
-import { getMetadata } from './utils/getMetadata'
+import { ContractMetadata, getMetadata } from './utils/getMetadata'
 
 export interface AnalyzedData extends ContractParameters {
-  meta: {
-    isEOA: boolean
-    verified: boolean
-    implementationVerified: boolean
-    abi: string[]
-    abis: Record<string, string[]>
-  }
+  meta: ContractMetadata
 }
 
 export async function analyzeItem(
@@ -40,19 +34,19 @@ export async function analyzeItem(
     logger.proxyDetectionFailed(overrides.proxyType)
   }
 
-  const metadata = await getMetadata(
+  const meta = await getMetadata(
     provider,
     address,
     proxyDetection?.implementations ?? [],
   )
 
-  if (metadata.isEOA) {
+  if (meta.isEOA) {
     logger.eoa()
   } else {
-    logger.name(metadata.name)
+    logger.name(meta.name)
   }
 
-  const handlers = getHandlers(metadata.abi, overrides, logger)
+  const handlers = getHandlers(meta.abi, overrides, logger)
   const parameters = await executeHandlers(provider, address, handlers)
 
   const relatives = parameters
@@ -78,25 +72,17 @@ export async function analyzeItem(
 
   return {
     analyzed: {
-      name: metadata.name,
+      name: meta.name,
       unverified:
-        !metadata.isVerified || !metadata.implementationVerified
-          ? true
-          : undefined,
+        !meta.isVerified || !meta.implementationVerified ? true : undefined,
       address,
-      code: !metadata.isEOA
+      code: !meta.isEOA
         ? getCodeLink(address, proxyDetection?.implementations)
         : undefined,
       upgradeability,
       values: Object.entries(values).length !== 0 ? values : undefined,
       errors: Object.entries(errors).length !== 0 ? errors : undefined,
-      meta: {
-        isEOA: metadata.isEOA,
-        verified: metadata.isVerified,
-        implementationVerified: metadata.implementationVerified,
-        abi: metadata.abi,
-        abis: metadata.abis,
-      },
+      meta,
     },
     relatives,
   }
