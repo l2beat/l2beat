@@ -54,16 +54,19 @@ export const zksyncera: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
+      discovery.getEscrowDetails({
+        identifier: 'DiamondProxy',
         sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
-      },
-      {
-        address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
+        description: 'Main rollup contract, additionally serving as an escrow.',
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'L1ERC20Bridge',
         sinceTimestamp: new UnixTime(1676367083),
         tokens: ['USDC', 'PERP', 'MUTE'],
-      },
+        description:
+          'Standard bridge for depositing ERC20 tokens to zkSync Era.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -76,7 +79,19 @@ export const zksyncera: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
+    sequencerFailure: {
+      value: 'Priority queue',
+      description:
+        'L1->L2 messages are added to append only queue, which is processed sequentially, meaning that there is no mechanism to censor certain user. At the moment there is no mechanism that forces L2 operator to process L1->L2 messages. Additionally Priority mode is still under construction meaning that in the event of sequencer failure the state cannot be updated.',
+      sentiment: 'warning',
+      references: [
+        'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
+        'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-mode',
+        'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L56',
+        'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L73',
+      ],
+      contracts: ['DiamondProxy'],
+    },
     validatorFailure: {
       value: 'In development',
       description: 'Currently, there is no generic escape hatch.',
@@ -181,13 +196,6 @@ export const zksyncera: Layer2 = {
         description:
           'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
       },
-      {
-        address: discovery.getContract('L1ERC20Bridge').address,
-        name: 'L1ERC20Bridge',
-        description:
-          'Standard bridge for depositing ERC20 tokens to zkSync Era.',
-        upgradeability: discovery.getContract('L1ERC20Bridge').upgradeability,
-      },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -202,18 +210,6 @@ export const zksyncera: Layer2 = {
       ],
       description:
         'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } zkSync Era MultiSig.`,
     },
     {
       name: 'Active validator',
