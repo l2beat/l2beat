@@ -1,7 +1,7 @@
 {
   "name": "starknet",
-  "blockNumber": 17031805,
-  "configHash": "0x996ad349b037e56efdcab041eccc55c2a06ce8d5faa2b79553e01f31c8e7e2db",
+  "blockNumber": 17039303,
+  "configHash": "0x487d9b36afbbc3e4a435e50d08568568cff7833bf77139148aa999cf1e0a61bc",
   "contracts": [
     {
       "name": "Starknet",
@@ -26,7 +26,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 444155,
+        "l1ToL2MessageNonce": 449857,
         "messageCancellationDelay": 432100,
         "OPERATORS": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -35,8 +35,8 @@
         "programHash": "3068850377810731364250169858796291952506855863903938200658516448366463400202",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockNumber": 36756,
-        "stateRoot": "1757146101852157838179710157212496532174122003055401474327607270600111633599",
+        "stateBlockNumber": 37774,
+        "stateRoot": "3180277124900607863773485173134617945774194740344815897659856725498757852414",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },

@@ -28,4 +28,5 @@ export const RawDiscoveryConfig = z.object({
   names: z.optional(
     z.record(z.string().refine(EthereumAddress.check), z.string()),
   ),
+  sharedModules: z.optional(z.record(z.string(), z.string())),
 })

@@ -10,6 +10,7 @@ import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
 import { DiscoveryEngine } from './discovery/utils/DiscoveryEngine'
+import { findDependents } from './discovery/utils/findDependants'
 import { TaskQueue } from './queue/TaskQueue'
 
 export interface Diff {
@@ -105,7 +106,15 @@ export class DiscoveryWatcher {
     )
 
     if (diff.changes.length > 0) {
-      const messages = diffToMessages(projectConfig.name, diff.changes)
+      const dependents = await findDependents(
+        projectConfig.name,
+        this.configReader,
+      )
+      const messages = diffToMessages(
+        projectConfig.name,
+        dependents,
+        diff.changes,
+      )
       await this.notify(messages, 'PUBLIC')
       await this.notify(messages, 'INTERNAL')
       this.logger.info('Sending messages', { project: projectConfig.name })

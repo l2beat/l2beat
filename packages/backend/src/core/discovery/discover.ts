@@ -40,6 +40,15 @@ export async function discover(
       continue
     }
 
+    const sharedModule = config.getSharedModule(address)
+    if (sharedModule) {
+      logger.log(`Skipping shared module ${sharedModule}`)
+      logger.log(`address: ${address.toString()}`)
+      logger.log('')
+
+      continue
+    }
+
     if (depth > config.maxDepth) {
       logger.log(`Skipping ${address.toString()}`)
       logger.error(`Depth ${depth} exceeded max = ${config.maxDepth}`)
