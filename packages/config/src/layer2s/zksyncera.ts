@@ -1,6 +1,7 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { VALUES } from '../discovery/values'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -103,7 +104,14 @@ export const zksyncera: Layer2 = {
       ],
       contracts: ['ValidatorTimelock', 'DiamondProxy'],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    upgradeability: {
+      ...VALUES.ZKSYNC_2.UPGRADEABILITY_STRING,
+      references: [
+        'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F8#L121',
+        'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51',
+      ],
+      contracts: ['DiamondProxy'],
+    },
     sequencerFailure: {
       value: 'Transact using L1',
       description:
