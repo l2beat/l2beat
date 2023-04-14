@@ -10,6 +10,7 @@ import { ProviderWithCache } from './provider/ProviderWithCache'
 import { diffDiscovery } from './utils/diffDiscovery'
 import { diffToMessages } from './utils/diffToMessages'
 import { DiscoveryLogger } from './utils/DiscoveryLogger'
+import { findDependents } from './utils/findDependants'
 import {
   parseDiscoveryOutput,
   saveDiscoveryResult,
@@ -70,7 +71,11 @@ export async function dryRunDiscovery(
   )
 
   if (diff.length > 0) {
-    const messages = diffToMessages(projectConfig.name, diff)
+    const messages = diffToMessages(
+      projectConfig.name,
+      await findDependents(projectConfig.name, configReader),
+      diff,
+    )
     for (const message of messages) {
       console.log(message)
     }

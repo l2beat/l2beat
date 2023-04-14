@@ -23,9 +23,9 @@ export class ConfigReader {
   async readAllConfigs(): Promise<DiscoveryConfig[]> {
     const result: DiscoveryConfig[] = []
 
-    const configs = readdirSync('discovery').filter(
-      (x) => x !== 'config.schema.json' && x !== 'README.md',
-    )
+    const configs = readdirSync('discovery', { withFileTypes: true })
+      .filter((x) => x.isDirectory())
+      .map((x) => x.name)
 
     for (const config of configs) {
       const contents = await this.readConfig(config)

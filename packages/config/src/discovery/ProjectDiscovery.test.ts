@@ -89,6 +89,18 @@ describe(ProjectDiscovery.name, () => {
           `Assertion Error: Upgradeability param of key ${key} does not exist in ${contractStub.name} contract (${projectName})`,
         )
       })
+
+      it('should not throw an error if upgradeability param is 0', () => {
+        const key = 'zeroUpgradeabilityParam'
+
+        const upgradeabilityParam = discovery.getContractUpgradeabilityParam(
+          contractStub.name,
+          //@ts-expect-error key does not exist on UpgradeabilityParams type
+          key,
+        )
+
+        expect(upgradeabilityParam).toEqual(0)
+      })
     },
   )
 })

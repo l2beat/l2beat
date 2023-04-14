@@ -1,7 +1,7 @@
 {
   "name": "myria",
-  "blockNumber": 17031800,
-  "configHash": "0xd7ab72a7de711491e6a2bfb7bec5e70146a78d29d124903f87f5ff95a579e315",
+  "blockNumber": 17039298,
+  "configHash": "0x1d9046748a0af9c3d7a1ca99b86efb4b153864104108a15bbb306215b5e5083b",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -20,15 +20,17 @@
           "StarkWare_OnchainVaults_2022_2": "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
           "StarkWare_ProxyUtils_2022_2": "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
         },
-        "proxyGovernance": ["0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245"]
+        "proxyGovernance": [
+          "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245"
+        ]
       },
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 1271,
-        "getOrderRoot": "2938013647160000536036855828709843328234151673563319110812346100184238966061",
+        "getLastBatchId": 1277,
+        "getOrderRoot": "2360834696991465875715160504219404772262005493544316300561923148318167766705",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x1e601435E181423e7A8430813d7500012a6169cB"
@@ -38,10 +40,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 1271,
+        "getSequenceNumber": 1277,
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "2666655263879582967147528418262399328447160177481293294381594620073811049090",
+        "getValidiumVaultRoot": "443268220124739882795554319019649989258522669664401563242751405509506465469",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -49,7 +51,9 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
-        "OPERATORS": ["0xe997ece81cb8A686206ea6042886B594Ecf6DdED"],
+        "OPERATORS": [
+          "0xe997ece81cb8A686206ea6042886B594Ecf6DdED"
+        ],
         "orderRegistryAddress": "0x806d435a82B0381bD884540c2235147c13B97fe6",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",

@@ -28,6 +28,16 @@
       "type": "integer",
       "minimum": 0
     },
+    "sharedModules": {
+      "description": "An object which keys are contract identifiers and values are names of shared modules",
+      "type": "object",
+      "unevaluatedProperties": false,
+      "patternProperties": {
+        "^.+$": {
+          "type": "string"
+        }
+      }
+    },
     "overrides": {
       "type": "object",
       "description": "Specific configuration for discovered contracts",

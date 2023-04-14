@@ -616,19 +616,23 @@ function mockConfig(name: string): DiscoveryConfig {
 }
 
 const mockMessage = (project: string): string => {
-  return diffToMessages(project, [
-    {
-      address: ADDRESS_A,
-      name: NAME_A,
-      diff: [
-        {
-          key: 'values.a',
-          before: 'true',
-          after: 'false',
-        },
-      ],
-    },
-  ])[0]
+  return diffToMessages(
+    project,
+    [],
+    [
+      {
+        address: ADDRESS_A,
+        name: NAME_A,
+        diff: [
+          {
+            key: 'values.a',
+            before: 'true',
+            after: 'false',
+          },
+        ],
+      },
+    ],
+  )[0]
 }
 
 const mockDailyReminder = (projects: string[], timestamp: UnixTime) => {

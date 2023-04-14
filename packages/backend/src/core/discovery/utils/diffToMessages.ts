@@ -2,9 +2,15 @@ import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
 
-export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
+export function diffToMessages(
+  name: string,
+  dependents: string[],
+  diffs: DiscoveryDiff[],
+): string[] {
   const header = getHeader(name)
-  const overheadLength = header.length + wrapDiffCodeBlock('').length
+  const dependentsMessage = getDependentsMessage(dependents)
+  const overheadLength =
+    header.length + dependentsMessage.length + wrapDiffCodeBlock('').length
 
   const maxLength = MAX_MESSAGE_LENGTH - overheadLength
   const messages = diffs.flatMap((diff) =>
@@ -13,7 +19,9 @@ export function diffToMessages(name: string, diffs: DiscoveryDiff[]): string[] {
 
   const bundledMessages = bundleMessages(messages, maxLength)
 
-  return bundledMessages.map((m) => `${header}${wrapDiffCodeBlock(m)}`)
+  return bundledMessages.map(
+    (m) => `${header}${dependentsMessage}${wrapDiffCodeBlock(m)}`,
+  )
 }
 
 export function contractDiffToMessages(
@@ -79,6 +87,23 @@ export function fieldDiffToMessage(diff: FieldDiff): string {
 
 function getHeader(name: string) {
   return `${wrapBoldAndItalic(name)} | detected changes`
+}
+
+function getDependentsMessage(dependents: string[]) {
+  if (dependents.length === 0) {
+    return ''
+  }
+  return (
+    '\n' +
+    wrapItalic('This is a shared module, used by the following projects:') +
+    ' ' +
+    wrapBoldAndItalic(dependents.join(', ') + '.')
+  )
+}
+
+export function wrapItalic(content: string) {
+  const affix = '*'
+  return `${affix}${content}${affix}`
 }
 
 export function wrapBoldAndItalic(content: string) {

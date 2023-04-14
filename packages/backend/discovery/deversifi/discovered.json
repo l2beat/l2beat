@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
-  "blockNumber": 17031840,
-  "configHash": "0x537331a6f700dd2a90a68d5f8d7bb92e121a87fbae7f40ff5651cd4dea479d41",
+  "blockNumber": 17039294,
+  "configHash": "0x6c031b922ac35e54545c0a52fa2c2bd4c647f4557cd49a470081f8968e890ac6",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -28,8 +28,8 @@
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
-        "getLastBatchId": 3370,
-        "getOrderRoot": "1237362553241180035248764207116071925122700107647889378971902806853019072455",
+        "getLastBatchId": 3374,
+        "getOrderRoot": "3553315157643401566339677080277321834351744138042041799433202769977924459075",
         "getOrderTreeHeight": 63,
         "getRegisteredAvailabilityVerifiers": [
           "0x28780349A33eEE56bb92241bAAB8095449e24306"
@@ -37,8 +37,8 @@
         "getRegisteredVerifiers": [
           "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
         ],
-        "getSequenceNumber": 3345,
-        "getVaultRoot": "1153600934922470909564694856895828570199903015928216843814101659267730749258",
+        "getSequenceNumber": 3349,
+        "getVaultRoot": "561733811054999089606822230751446847916945345993554879962728496265395754784",
         "getVaultTreeHeight": 31,
         "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
         "isFrozen": false,

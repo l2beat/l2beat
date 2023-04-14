@@ -18,6 +18,9 @@
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Starknet",
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy"
   },
+  "sharedModules": {
+    "SHARPVerifierProxy": "l2beat-starkware"
+  },
   "overrides": {
     "Starknet": {
       "fields": {
@@ -63,9 +66,6 @@
           "returnType": "address"
         }
       }
-    },
-    "SHARPVerifierProxy": {
-      "ignoreDiscovery": true
     }
   }
 }

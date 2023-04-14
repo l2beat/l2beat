@@ -7,6 +7,9 @@
     "0x879cD57975d596004863D30c59d579ef78BBbe32": "Committee",
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy"
   },
+  "sharedModules": {
+    "SHARPVerifierProxy": "l2beat-starkware"
+  },
   "overrides": {
     "StarkExchange": {
       "ignoreMethods": [
@@ -45,9 +48,6 @@
           "type": "constructorArgs"
         }
       }
-    },
-    "SHARPVerifierProxy": {
-      "ignoreDiscovery": true
     }
   }
 }

@@ -10,6 +10,7 @@ import {
   fieldDiffToMessage,
   wrapBoldAndItalic,
   wrapDiffCodeBlock,
+  wrapItalic,
 } from './diffToMessages'
 
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
@@ -19,6 +20,7 @@ describe('Discord message formatting', () => {
   describe(diffToMessages.name, () => {
     it('correctly formats a message', () => {
       const name = 'system'
+      const dependents: string[] = []
       const diff: DiscoveryDiff[] = [
         {
           name: 'Contract',
@@ -43,7 +45,7 @@ describe('Discord message formatting', () => {
         },
       ]
 
-      const result = diffToMessages(name, diff)
+      const result = diffToMessages(name, dependents, diff)
 
       const expected = [
         `***${name}*** | detected changes\`\`\`diff`,
@@ -57,8 +59,54 @@ describe('Discord message formatting', () => {
       expect(result).toEqual([expected.join('')])
     })
 
+    it('adds dependence message', () => {
+      const name = 'module'
+      const dependents: string[] = ['system1', 'system2']
+      const diff: DiscoveryDiff[] = [
+        {
+          name: 'Contract',
+          address: ADDRESS,
+          diff: [
+            {
+              key: 'count',
+              before: '1',
+              after: '2',
+            },
+          ],
+        },
+        {
+          name: 'Contract',
+          address: ADDRESS,
+          type: 'deleted',
+        },
+        {
+          name: 'Contract',
+          address: ADDRESS,
+          type: 'created',
+        },
+      ]
+
+      const result = diffToMessages(name, dependents, diff)
+
+      const expected = [
+        `***${name}*** | detected changes\n`,
+        wrapItalic('This is a shared module, used by the following projects:'),
+        ' ',
+        wrapBoldAndItalic('system1, system2.'),
+        '```diff',
+        '\n',
+        contractDiffToMessages(diff[0])[0],
+        contractDiffToMessages(diff[1])[0],
+        contractDiffToMessages(diff[2])[0],
+        '```',
+      ]
+
+      expect(result).toEqual([expected.join('')])
+    })
+
     it('truncates message larger than 2000 characters', () => {
       const name = 'system'
+      const dependents: string[] = []
       const diff: DiscoveryDiff = {
         name: 'Contract',
         address: ADDRESS,
@@ -70,7 +118,7 @@ describe('Discord message formatting', () => {
         differences.push(diff)
       }
 
-      const result = diffToMessages(name, differences)
+      const result = diffToMessages(name, dependents, differences)
 
       const firstPart = [
         `***${name}*** | detected changes\`\`\`diff\n`,
@@ -120,7 +168,7 @@ describe('Discord message formatting', () => {
         '```',
       ]
 
-      const result = diffToMessages(PROJECT, [contractDiff])
+      const result = diffToMessages(PROJECT, [], [contractDiff])
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
       expect(firstPart.join('').length).toEqual(1987)
@@ -234,6 +282,16 @@ describe('Discord message formatting', () => {
       const result = wrapDiffCodeBlock(messages)
 
       expect(result).toEqual(expected)
+    })
+  })
+
+  describe(wrapItalic.name, () => {
+    it('wraps content correctly', () => {
+      const content = 'projectName'
+
+      const result = wrapItalic(content)
+
+      expect(result).toEqual(`*${content}*`)
     })
   })
 

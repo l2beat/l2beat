@@ -8,6 +8,9 @@
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "VerifierGovernorMultisig"
   },
+  "sharedModules": {
+    "SHARPVerifierProxy": "l2beat-starkware"
+  },
   "overrides": {
     "StarkExchange": {
       "ignoreMethods": [
@@ -46,9 +49,6 @@
           "type": "constructorArgs"
         }
       }
-    },
-    "SHARPVerifierProxy": {
-      "ignoreDiscovery": true
     }
   }
 }
