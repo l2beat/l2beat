@@ -32,6 +32,17 @@ export async function saveDiscoveryResult(
   }
 }
 
+/**
+ * Returns the name of the folder under which to save the source code.
+ * /.code/[getSourceName(...)]/[file]
+ *
+ * If there is only one source, it returns '', meaning that the source code
+ * will be saved under /.code/[file].
+ *
+ * If there are 2 sources, it returns '/proxy' or '/implementation'.
+ *
+ * If there are more it returns '/proxy', '/implementation-1', '/implementation-2', etc.
+ */
 function getSourceName(i: number, length: number) {
   let name = ''
   if (length > 1) {

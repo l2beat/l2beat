@@ -31,6 +31,7 @@ const Sources = z.record(z.object({ content: z.string() }))
 const EtherscanSource = z.object({ language: z.string(), sources: Sources })
 
 function parseSource(source: string) {
+  // etherscan sometimes wraps the json in {} so you get {{...}}
   if (source.startsWith('{{')) {
     source = source.slice(1, -1)
   }
@@ -41,24 +42,35 @@ function parseSource(source: string) {
   } catch {
     validated = Sources.parse(parsed)
   }
-  const entries = Object.entries(validated).map(([name, { content }]) => [
-    path.resolve('/', name),
-    content,
-  ])
+  const entries: [string, string][] = Object.entries(validated).map(
+    ([name, { content }]) => [path.resolve('/', name), content],
+  )
 
-  const commonDir = entries
+  const simplified = removeSharedNesting(entries)
+  return Object.fromEntries(simplified)
+}
+
+/**
+ * Removes the common directory from all file names.
+ *
+ * For example if the paths are /a/b/c/d.sol and /a/b/e/f.sol, it will return
+ * { 'c/d.sol': '...', 'e/f.sol': '...' }, removing the /a/b/ prefix.
+ */
+function removeSharedNesting(entries: [string, string][]): [string, string][] {
+  const commonDirectory = entries
     .map((x) => x[0])
-    .reduce((common, file) => {
-      while (common !== '/') {
-        if (file.startsWith(common)) {
-          return common
+    .reduce((commonDirectory, fileName) => {
+      while (commonDirectory !== '/') {
+        if (fileName.startsWith(commonDirectory)) {
+          return commonDirectory
         }
-        common = path.dirname(common)
+        commonDirectory = path.dirname(commonDirectory)
       }
       return ''
     }, path.dirname(entries[0][0]))
 
-  return Object.fromEntries(
-    entries.map(([name, content]) => [name.slice(commonDir.length), content]),
-  )
+  return entries.map(([fileName, content]) => [
+    fileName.slice(commonDirectory.length),
+    content,
+  ])
 }
