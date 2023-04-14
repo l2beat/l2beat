@@ -86,19 +86,28 @@ export const zksyncera: Layer2 = {
         'https://etherscan.io/address/0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc#code#F7#L24',
         'https://etherscan.io/address/0x473b1887d45d61efd87731a1d8ec3590b93c565d#code#F5#L227',
         'https://era.zksync.io/docs/dev/developer-guides/transactions/transactions.html#transaction-types',
+        'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
       ],
       contracts: ['ValidatorTimelock', 'DiamondProxy', 'Verifier'],
     },
     dataAvailability: {
       value: 'On chain',
       description:
-        'All of the data needed for proof construction is published on chain.',
+        'All of the data (state diffs) needed for proof construction is published on chain.',
+      references: [
+        'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F5#L71',
+        'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L149',
+        'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F11#L41',
+        'https://etherscan.io/tx/0xef9ad50d9b6a30365e4cc6709a5b7479fb67b8948138149597c49ef614782e1b', // example tx (see calldata)
+        'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
+      ],
+      contracts: ['ValidatorTimelock', 'DiamondProxy'],
     },
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: {
       value: 'Transact using L1',
       description:
-        'L2 transactions can be forced through L1 by adding them to append only queue on L1, which is processed sequentially by Sequencer, meaning that there is no mechanism to censor individual user. At the moment there is no mechanism that forces L2 Sequencer to empty the L1 queue.',
+        'L2 transactions can be forced through L1 by adding them to append only queue on L1, which is processed sequentially by Sequencer, meaning that the individual user cannot be censored. At the moment there is no mechanism that forces L2 Sequencer to empty the L1 queue.',
       sentiment: 'warning',
       references: [
         'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
