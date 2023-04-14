@@ -27,7 +27,11 @@ export async function saveDiscoveryResult(
         const name = getSourceName(i, result.meta.sources)
         const path = `${root}/.code/${result.name}${name}/${file}`
         await mkdirp(dirname(path))
-        await writeFile(path, content)
+        await writeFile(
+          path,
+          `// address: ${result.meta.sources[i].address.toString()}\n\n` +
+            content,
+        )
       }
     }
   }
@@ -48,12 +52,7 @@ function getSourceName(i: number, sources: ContractSource[]) {
   let name = ''
   if (sources.length > 1) {
     name =
-      i === 0
-        ? `${i}-${sources[i].contract}-proxy`
-        : `${i}-${sources[i].contract}-implementation`
-  }
-  if (sources.length > 2 && i > 0) {
-    name += `-${i}`
+      i === 0 ? `[${i}]${sources[i].contract}` : `[${i}]${sources[i].contract}`
   }
   if (name) {
     name = `/${name}`
