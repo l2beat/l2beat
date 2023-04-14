@@ -9,7 +9,7 @@ export function processSources(
 ): Record<string, string> {
   let result: Record<string, string> = {}
 
-  const meta = `Address: ${address.toString()}}\nContract: ${contractName}`
+  const meta = `Address: ${address.toString()}\nContract: ${contractName}`
   result['meta.txt'] = meta
 
   if (!code.startsWith('{')) {
