@@ -4,6 +4,7 @@ export const contractStub = {
   code: 'https://etherscan.deth.net/address/0x0D4C1222f5e839a911e2053860e45F18921D72ac',
   upgradeability: {
     type: 'immutable',
+    zeroUpgradeabilityParam: 0,
   },
   values: {
     authority: '0x22405c1782913fb676bc74Ef54a60727B0e1026F',

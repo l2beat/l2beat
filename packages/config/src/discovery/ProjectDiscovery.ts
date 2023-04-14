@@ -144,7 +144,7 @@ export class ProjectDiscovery {
     const contract = this.getContract(contractIdentifier)
     const result = contract.values?.[key] as T | undefined
     assert(
-      result,
+      isNonNullable(result),
       `Value of key ${key} does not exist in ${contractIdentifier} contract (${this.projectName})`,
     )
 
@@ -285,7 +285,7 @@ export class ProjectDiscovery {
     //@ts-expect-error only 'type' is allowed here, but many more are possible with our error handling
     const result = contract.upgradeability[key] as T | undefined
     assert(
-      result,
+      isNonNullable(result),
       `Upgradeability param of key ${key} does not exist in ${contract.name} contract (${this.projectName})`,
     )
 
@@ -320,4 +320,10 @@ export class ProjectDiscovery {
 
     return contracts[0]
   }
+}
+
+function isNonNullable<T>(
+  value: T | undefined | null,
+): value is NonNullable<T> {
+  return value !== null && value !== undefined
 }

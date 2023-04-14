@@ -6,7 +6,6 @@ import { UserHandlerDefinition } from '../handlers/user'
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   ignoreDiscovery: z.optional(z.boolean()),
-  sharedModule: z.optional(z.string()),
   proxyType: z.optional(ManualProxyType),
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.optional(z.array(z.string())),
@@ -29,4 +28,5 @@ export const RawDiscoveryConfig = z.object({
   names: z.optional(
     z.record(z.string().refine(EthereumAddress.check), z.string()),
   ),
+  sharedModules: z.optional(z.record(z.string(), z.string())),
 })

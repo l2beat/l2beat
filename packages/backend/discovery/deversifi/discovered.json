@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
-  "blockNumber": 17038635,
-  "configHash": "0xa1ec7c491ee2f92f97b43f694db3a0919dafaa1ee8c278e274d42552acd7d388",
+  "blockNumber": 17039294,
+  "configHash": "0x6c031b922ac35e54545c0a52fa2c2bd4c647f4557cd49a470081f8968e890ac6",
   "contracts": [
     {
       "name": "StarkExchange",

@@ -40,8 +40,9 @@ export async function discover(
       continue
     }
 
-    if (contractOverrides?.sharedModule) {
-      logger.log(`Skipping shared module ${contractOverrides.sharedModule}`)
+    const sharedModule = config.getSharedModule(address)
+    if (sharedModule) {
+      logger.log(`Skipping shared module ${sharedModule}`)
       logger.log(`address: ${address.toString()}`)
       logger.log('')
 

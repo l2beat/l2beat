@@ -1,7 +1,7 @@
 {
   "name": "sorare",
-  "blockNumber": 17038610,
-  "configHash": "0x44191bd480338ab2beb43e409edfbe052a39c1ab838395ad5b36a39dc9214b6e",
+  "blockNumber": 17039300,
+  "configHash": "0xc5609fb2313ae70f4986e03ef939312ea92f1666e52a40cfd2bb02dc64a90b76",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -30,8 +30,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 7759,
-        "getOrderRoot": "1071505317486784129626613351522741190948599455551274815164361929530003130391",
+        "getLastBatchId": 7760,
+        "getOrderRoot": "2898506270672160968624390328770243908192256469911963778677726254025135262226",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x879cD57975d596004863D30c59d579ef78BBbe32"
@@ -41,10 +41,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 7652,
+        "getSequenceNumber": 7653,
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "119343138746295060661471192090863163266365029539139819475502233431340568918",
+        "getValidiumVaultRoot": "107951178007413057145236536620677357997503526902087877782931292728402638788",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,

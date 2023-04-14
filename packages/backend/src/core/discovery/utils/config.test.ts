@@ -131,16 +131,10 @@ describe('discovery config.jsonc', () => {
     }),
       it('all shared modules exist', async () => {
         for (const config of configs ?? []) {
-          for (const override of config.overrides) {
-            if (override.sharedModule === undefined) {
-              continue
-            }
-
+          for (const sharedModule of config.sharedModules) {
             assert(
-              configs?.some((c) => c.name === override.sharedModule),
-              `Shared module ${override.sharedModule.toString()} does not exist (${
-                config.name
-              })`,
+              configs?.some((c) => c.name === sharedModule),
+              `Shared module ${sharedModule} does not exist (${config.name})`,
             )
           }
         }
