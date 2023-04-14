@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
-import { HARDCODED } from '../discovery/hardcoded/hardcoded'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { VALUES } from '../discovery/values'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -89,7 +89,7 @@ export const arbitrum: Layer2 = {
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
-        address: HARDCODED.ARBITRUM.OLD_BRIDGE,
+        address: VALUES.ARBITRUM.OLD_BRIDGE,
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
         hidden: true,
@@ -114,11 +114,22 @@ export const arbitrum: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM,
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
+    sequencerFailure: {
+      value: 'Transact using L1',
+      description: VALUES.ARBITRUM.getSequencerFailureString(),
+      references: [
+        'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
+        'https://developer.arbitrum.io/sequencer',
+      ],
+      contracts: ['SequencerInbox'],
+    },
     validatorFailure: {
       value: 'Propose blocks',
-      description:
-        'Anyone can become a Validator after 7-days of inactivity from the currently whitelisted Validators.',
+      description: VALUES.ARBITRUM.getValidatorFailureString(),
+      references: [
+        'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
+      ],
+      contracts: ['RollupProxy'],
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -167,7 +178,15 @@ export const arbitrum: Layer2 = {
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      description:
+        FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
+        ' ' +
+        VALUES.ARBITRUM.getValidatorFailureString(),
       references: [
+        {
+          text: 'Smart Contract source code',
+          href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
+        },
         {
           text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
           href: 'https://developer.offchainlabs.com/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
@@ -244,13 +263,13 @@ export const arbitrum: Layer2 = {
     ),
     {
       name: 'Sequencer',
-      accounts: HARDCODED.ARBITRUM.SEQUENCER,
+      accounts: VALUES.ARBITRUM.SEQUENCER,
       description:
         'Central actor allowed to set the order in which L2 transactions are executed.',
     },
     {
       name: 'Validators',
-      accounts: HARDCODED.ARBITRUM.VALIDATORS,
+      accounts: VALUES.ARBITRUM.VALIDATORS,
       description:
         'They can submit new state roots and challenge state roots. Some of the validators perform their duties through special purpose smart contracts.',
     },
