@@ -4,6 +4,7 @@ import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { base } from './base'
 import { bobanetwork } from './bobanetwork'
+import { canvasconnect } from './canvasconnect'
 import { HOMEPAGE_MILESTONES } from './common'
 import { linea } from './consensys'
 import { dydx } from './dydx'
@@ -42,6 +43,7 @@ export const layer2s: Layer2[] = [
   aztecconnect,
   base,
   bobanetwork,
+  canvasconnect,
   dydx,
   fuelv1,
   gluon,
