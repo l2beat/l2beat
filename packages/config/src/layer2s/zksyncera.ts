@@ -89,12 +89,16 @@ export const zksyncera: Layer2 = {
       ],
       contracts: ['ValidatorTimelock', 'DiamondProxy', 'Verifier'],
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    dataAvailability: {
+      value: 'On chain',
+      description:
+        'All of the data needed for proof construction is published on chain.',
+    },
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: {
-      value: 'Priority queue',
+      value: 'Transact using L1',
       description:
-        'L1->L2 messages are added to append only queue, which is processed sequentially, meaning that there is no mechanism to censor certain user. At the moment there is no mechanism that forces L2 operator to process L1->L2 messages. Additionally Priority mode is still under construction meaning that in the event of sequencer failure the state cannot be updated.',
+        'L2 transactions can be forced through L1 by adding them to append only queue on L1, which is processed sequentially by Sequencer, meaning that there is no mechanism to censor individual user. At the moment there is no mechanism that forces L2 Sequencer to empty the L1 queue.',
       sentiment: 'warning',
       references: [
         'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
