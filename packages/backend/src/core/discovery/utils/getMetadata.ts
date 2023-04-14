@@ -5,7 +5,7 @@ import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { concatAbis } from './concatAbis'
 import { processSources } from './processSources'
 
-interface ContractSource {
+export interface ContractSource {
   address: EthereumAddress
   contract: string
   files: Record<string, string>
