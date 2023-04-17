@@ -19,7 +19,6 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  // SHARP_VERIFIER_CONTRACT,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -54,10 +53,9 @@ export const canvasconnect: Layer2 = {
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
         'https://twitter.com/canvas_defi',
-        'https://www.youtube.com/@canvas_defi',
         'https://canvasdefi.medium.com/',
-        'https://www.linkedin.com/company/canvasblockchaingroup',
-        'https://www.canvas.co/content',
+        'https://linkedin.com/company/canvasblockchaingroup',
+        'https://canvas.co/content',
       ],
     },
   },
