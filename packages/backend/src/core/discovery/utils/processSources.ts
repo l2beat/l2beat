@@ -9,20 +9,19 @@ export function processSources(
 ): Record<string, string> {
   let result: Record<string, string> = {}
 
-  const meta = `Address: ${address.toString()}}\nContract: ${contractName}`
-  result['meta.txt'] = meta
-
   if (!code.startsWith('{')) {
-    result[`${contractName}.sol`] = code
+    result = parseSingleFile(contractName, code)
   } else {
     try {
-      result = { ...result, ...parseSource(code) }
+      result = parseSource(code)
     } catch (e) {
       console.error(e)
       console.log(code)
     }
   }
 
+  const meta = `Address: ${address.toString()}}\nContract: ${contractName}`
+  result['meta.txt'] = meta
   return result
 }
 
@@ -46,7 +45,42 @@ function parseSource(source: string) {
     ([name, { content }]) => [path.resolve('/', name), content],
   )
 
+  if (entries.length === 1) {
+    return parseSingleFile(path.parse(entries[0][0]).name, entries[0][1])
+  }
+
   const simplified = removeSharedNesting(entries)
+  return Object.fromEntries(simplified)
+}
+
+function parseSingleFile(name: string, content: string) {
+  const singleFile = { [`${name}.sol`]: content }
+  if (!content.includes('// File: ')) {
+    return singleFile
+  }
+
+  const lines = content.split('\n')
+  const boundaries = lines
+    .map((line, i) => ({ line, i }))
+    .filter(({ line }) => line.startsWith('// File: '))
+
+  if (boundaries.length === 0) {
+    return singleFile
+  }
+
+  // Try to split the files based on likely output from truffle-flattener
+  const preamble = lines.slice(0, boundaries[0].i).join('\n')
+  const entries: [string, string][] = []
+  for (let i = 0; i < boundaries.length; i++) {
+    const start = boundaries[i].i
+    const end = boundaries[i + 1]?.i ?? lines.length
+    const fileName = boundaries[i].line.slice('// File: '.length).trim()
+    const fileContent = preamble + '\n' + lines.slice(start, end).join('\n')
+    entries.push([path.resolve('/', fileName), fileContent])
+  }
+
+  const simplified = removeSharedNesting(entries)
+  simplified.push(['flattened.sol', content])
   return Object.fromEntries(simplified)
 }
 
