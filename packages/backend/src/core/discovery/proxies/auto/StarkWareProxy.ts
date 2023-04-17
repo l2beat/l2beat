@@ -3,7 +3,7 @@ import { BigNumber, utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
-import { getCallResult } from '../../utils/getCallResult'
+import { getCallResultWithRevert } from '../../utils/getCallResult'
 import { getProxyGovernance } from './StarkWareProxyGovernance'
 
 // keccak256("StarkWare2019.implemntation-slot")
@@ -170,7 +170,7 @@ async function getStarkWareDiamond(
       break
     }
     const facet = EthereumAddress('0x' + bytes32.slice(24))
-    const name = await getCallResult<string>(
+    const name = await getCallResultWithRevert<string>(
       provider,
       facet,
       'function identify() view returns (string)',
