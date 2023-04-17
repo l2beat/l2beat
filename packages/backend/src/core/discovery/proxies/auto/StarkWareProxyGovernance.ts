@@ -2,7 +2,7 @@ import { assert, EthereumAddress } from '@l2beat/shared'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { getCallResult } from '../../utils/getCallResult'
+import { getCallResultWithRevert } from '../../utils/getCallResult'
 
 export async function getProxyGovernance(
   provider: DiscoveryProvider,
@@ -13,9 +13,9 @@ export async function getProxyGovernance(
 
   // One contract emits same events for proxy and implementation governance
   // so we need to filter out the ones that are not proxy governors
-  const isGovernorAll = await Promise.all(
+  const isGovernorAll: boolean[] = await Promise.all(
     fullGovernance.map((governor) =>
-      getCallResult(
+      getCallResultWithRevert<boolean>(
         provider,
         address,
         'function proxyIsGovernor(address testGovernor) view returns (bool)',
@@ -23,6 +23,7 @@ export async function getProxyGovernance(
       ),
     ),
   )
+
   const filteredGovernance = fullGovernance.filter((_, i) => isGovernorAll[i])
   return filteredGovernance.map((governor) => EthereumAddress(governor))
 }
