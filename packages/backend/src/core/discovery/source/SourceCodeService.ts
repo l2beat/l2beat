@@ -47,9 +47,7 @@ export class SourceCodeService {
       sourceCodes.push({
         address,
         contract: item.name,
-        files: item.isVerified
-          ? processSources(item.source, address, item.name)
-          : {},
+        files: processSources(address, item),
       })
     }
 

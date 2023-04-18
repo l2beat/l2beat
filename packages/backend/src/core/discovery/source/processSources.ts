@@ -2,32 +2,36 @@ import { EthereumAddress } from '@l2beat/shared'
 import path from 'path'
 import z from 'zod'
 
+import { ContractMetadata } from '../provider/DiscoveryProvider'
+
 export function processSources(
-  code: string,
   address: EthereumAddress,
-  contractName: string,
+  { name, source, isVerified }: Omit<ContractMetadata, 'abi'>,
 ): Record<string, string> {
+  if (!isVerified) {
+    return { 'meta.txt': createMetaTxt(address, 'Unverified source code!') }
+  }
+
   let result: Record<string, string> = {}
 
-  if (!code.startsWith('{')) {
-    result = parseSingleFile(contractName, code)
+  if (!source.startsWith('{')) {
+    result = parseSingleFile(`${name}.sol`, source)
   } else {
     try {
-      result = parseSource(code)
+      result = parseSource(source)
     } catch (e) {
       console.error(e)
-      console.log(code)
+      console.log(source)
     }
   }
 
-  const meta = `Address: ${address.toString()}}\nContract: ${contractName}`
-  result['meta.txt'] = meta
+  result['meta.txt'] = createMetaTxt(address, name)
   return result
 }
 
 type Sources = z.infer<typeof Sources>
 const Sources = z.record(z.object({ content: z.string() }))
-const EtherscanSource = z.object({ language: z.string(), sources: Sources })
+const EtherscanSource = z.object({ sources: Sources })
 
 function parseSource(source: string) {
   // etherscan sometimes wraps the json in {} so you get {{...}}
@@ -42,19 +46,19 @@ function parseSource(source: string) {
     validated = Sources.parse(parsed)
   }
   const entries: [string, string][] = Object.entries(validated).map(
-    ([name, { content }]) => [path.resolve('/', name), content],
+    ([name, { content }]) => [sanitizePath(name), content],
   )
 
   if (entries.length === 1) {
-    return parseSingleFile(path.parse(entries[0][0]).name, entries[0][1])
+    return parseSingleFile(...entries[0])
   }
 
   const simplified = removeSharedNesting(entries)
   return Object.fromEntries(simplified)
 }
 
-function parseSingleFile(name: string, content: string) {
-  const singleFile = { [`${name}.sol`]: content }
+function parseSingleFile(file: string, content: string) {
+  const singleFile = { [path.basename(file)]: content }
   if (!content.includes('// File: ')) {
     return singleFile
   }
@@ -75,8 +79,9 @@ function parseSingleFile(name: string, content: string) {
     const start = boundaries[i].i
     const end = boundaries[i + 1]?.i ?? lines.length
     const fileName = boundaries[i].line.slice('// File: '.length).trim()
-    const fileContent = preamble + '\n' + lines.slice(start, end).join('\n')
-    entries.push([path.resolve('/', fileName), fileContent])
+    const fileContent =
+      (preamble ? preamble + '\n' : '') + lines.slice(start + 1, end).join('\n')
+    entries.push([sanitizePath(fileName), fileContent])
   }
 
   const simplified = removeSharedNesting(entries)
@@ -100,11 +105,25 @@ function removeSharedNesting(entries: [string, string][]): [string, string][] {
         }
         commonDirectory = path.dirname(commonDirectory)
       }
-      return ''
+      return '/'
     }, path.dirname(entries[0][0]))
 
-  return entries.map(([fileName, content]) => [
-    fileName.slice(commonDirectory.length),
-    content,
-  ])
+  const length = commonDirectory.endsWith('/')
+    ? commonDirectory.length
+    : commonDirectory.length + 1
+
+  return entries.map(([fileName, content]) => [fileName.slice(length), content])
+}
+
+function sanitizePath(file: string) {
+  if (file.startsWith('https://')) {
+    file = file.slice('https://'.length)
+  } else if (file.startsWith('http://')) {
+    file = file.slice('http://'.length)
+  }
+  return path.resolve('/', file)
+}
+
+export function createMetaTxt(address: EthereumAddress, name: string) {
+  return `Address: ${address.toString()}\nContract: ${name}\n`
 }
