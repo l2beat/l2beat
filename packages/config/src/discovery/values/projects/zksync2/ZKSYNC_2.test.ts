@@ -1,4 +1,8 @@
-import { assert, gatherAddressesFromUpgradeability } from '@l2beat/shared'
+import {
+  assert,
+  EthereumAddress,
+  gatherAddressesFromUpgradeability,
+} from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../../../ProjectDiscovery'
 import { HARDCODED } from '../../hardcoded'
@@ -19,6 +23,20 @@ describe('HARDCODED: zksync2', () => {
         HARDCODED.ZKSYNC_2.FACETS.includes(f.toString()),
       ) && facetAddresses.length === HARDCODED.ZKSYNC_2.FACETS.length,
       'Upgrade facet changed, see the source code for the new upgradeability params',
+    )
+  })
+
+  // currently the security council is set as ZERO address
+  // when this test fails it means that the security council changed
+  // update the permissons section and updgradeability risk
+  it('security council', () => {
+    const address = discovery.getAddressFromValue(
+      'DiamondProxy',
+      'getSecurityCouncil',
+    )
+    assert(
+      address === EthereumAddress(HARDCODED.ZKSYNC_2.SECURITY_COUNCIL),
+      'Security Council changed, upgrade returned value and upgradeability risk.',
     )
   })
 })

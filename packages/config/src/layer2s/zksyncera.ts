@@ -104,7 +104,7 @@ export const zksyncera: Layer2 = {
       contracts: ['ValidatorTimelock', 'DiamondProxy'],
     },
     upgradeability: {
-      ...VALUES.ZKSYNC_2.getUpgradeabilityRisk(),
+      ...VALUES.ZKSYNC_2.UPGRADEABILITY_STRING,
       references: [
         'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F8#L121',
         'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51',
@@ -245,7 +245,7 @@ export const zksyncera: Layer2 = {
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1.',
     },
-    VALUES.ZKSYNC_2.getSecurityCouncil(),
+    VALUES.ZKSYNC_2.SECURITY_COUNCIL,
   ],
   milestones: [
     {
