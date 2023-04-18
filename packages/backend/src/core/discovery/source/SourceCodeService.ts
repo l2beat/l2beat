@@ -2,7 +2,7 @@ import { EthereumAddress } from '@l2beat/shared'
 import { zip } from 'lodash'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { concatAbis } from './concatAbis'
+import { deduplicateAbi } from './deduplicateAbi'
 import { processSources } from './processSources'
 
 export class SourceCodeService {
@@ -37,22 +37,7 @@ export async function getMetadata(
   address: EthereumAddress,
   implementations: EthereumAddress[],
 ): Promise<ContractMetadata> {
-  const [code, metadata] = await Promise.all([
-    provider.getCode(address),
-    provider.getMetadata(address),
-  ])
-
-  if (code.length === 0) {
-    return {
-      name: 'EOA',
-      isEOA: true,
-      isVerified: true,
-      implementationVerified: true,
-      abi: [],
-      abis: {},
-      sources: [],
-    }
-  }
+  const metadata = await provider.getMetadata(address)
 
   const implementationMeta = await Promise.all(
     implementations.map((address) => provider.getMetadata(address)),
@@ -60,10 +45,10 @@ export async function getMetadata(
 
   const name =
     implementationMeta.length === 1 ? implementationMeta[0].name : metadata.name
-  const abi = concatAbis(
+  const abi = deduplicateAbi([
     ...metadata.abi,
     ...implementationMeta.flatMap((x) => x.abi),
-  )
+  ])
 
   const abis: Record<string, string[]> = {}
   if (metadata.abi.length > 0) {
