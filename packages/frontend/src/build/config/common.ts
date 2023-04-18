@@ -13,7 +13,7 @@ export const common: Omit<Config, 'backend'> = {
     forum: 'https://gov.l2beat.com/',
   },
   features: {
-    banner: true,
+    banner: false,
     gitcoinOption: false,
     hiring: true,
     activity: true,
