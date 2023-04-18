@@ -93,7 +93,7 @@ export function prepareDiscoveryFile(
     configHash,
     contracts: results
       .filter((x) => !x.isEOA)
-      .map((x) => ({ ...x, meta: undefined }))
+      .map((x) => ({ ...x, isEOA: undefined, meta: undefined }))
       .map((x) => ({ ...x, ...getCustomName(x.name, x.address, config) })),
     eoas: results
       .filter((x) => x.isEOA)
