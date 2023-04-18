@@ -6,9 +6,17 @@ Hi! We are glad you've made it here. Below you will find answers to most frequen
 
 L2BEAT was created to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the [rollup-centric Ethereum scaling roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) are aimed at scaling Ethereum.
 
-## Why do you need L2BEAT if you have DeFi Pulse, DeFi Lama, etc.?
+## Why do you need L2BEAT if you have DeFi Pulse, DefiLlama, etc.?
 
 While the above-mentioned sites are great, they focus primarily at tracking TVL (Total Value Locked) in DeFi projects on various chain. In comparison L2BEAT will track only L2 projects (at first on Ethereum only) and will eventually report not just TVL but various metrics related to the liveness and security of these projects.
+
+## Why does the Total Value Locked (TVL) on L2BEAT differ from the one on DefiLlama?
+
+L2BEAT and DefiLlama use different methodologies for calculating TVL. L2BEAT accounts for all assets locked in Ethereum contracts, including L2-native governance tokens (ARB, OP), while DefiLlama focuses on assets actively engaged in dApps on specific networks.
+
+Let's assume L2BEAT reports a TVL of 2.5 billion, while DefiLlama reports a TVL of 1 billion for the same Layer 2 network (e.g., Arbitrum). This suggests that 1.5 billion worth of assets have been bridged to Arbitrum from Layer 1 (Ethereum), but are not yet being used in any dApps listed by DefiLlama. For instance, if you deposit 1 ETH to Optimism, L2BEAT would include it in their TVL calculation, but DefiLlama would not. However, if you use that 1 ETH on Optimism to provide liquidity on Uniswap, DefiLlama would then include it in their TVL calculation. Also, at L2BEAT, the value of L2-native governance tokens is included, which adds to the discrepancy.
+
+The discrepancy in reported TVL between L2BEAT and DefiLlama is due to different interpretations of "Total Value Locked." L2BEAT considers the entire Ethereum ecosystem, while DefiLlama emphasizes assets used in dApps on individual blockchain networks.
 
 ## What exactly are L2s and why Polygon is not included?
 

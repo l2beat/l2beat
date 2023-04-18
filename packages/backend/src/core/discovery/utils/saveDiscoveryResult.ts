@@ -105,7 +105,7 @@ export function prepareDiscoveryFile(
   }
 }
 
-function getCustomName(
+export function getCustomName(
   derivedName: string,
   address: EthereumAddress,
   config: DiscoveryConfig,
