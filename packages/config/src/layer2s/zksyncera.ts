@@ -78,9 +78,7 @@ export const zksyncera: Layer2 = {
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
-      value: 'ZK proofs (SN)',
-      description:
-        'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+      ...RISK_VIEW.STATE_ZKP_SN,
       references: [
         'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F5#L89',
         'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L254',
@@ -92,7 +90,7 @@ export const zksyncera: Layer2 = {
       contracts: ['ValidatorTimelock', 'DiamondProxy', 'Verifier'],
     },
     dataAvailability: {
-      value: 'On chain',
+      ...RISK_VIEW.DATA_ON_CHAIN,
       description:
         'All of the data (state diffs) needed for proof construction is published on chain.',
       references: [
@@ -113,7 +111,7 @@ export const zksyncera: Layer2 = {
       contracts: ['DiamondProxy'],
     },
     sequencerFailure: {
-      value: 'Transact using L1',
+      ...RISK_VIEW.SEQUENCER_TRANSACT_L1,
       description:
         'L2 transactions can be forced through L1 by adding them to append only queue on L1, which is processed sequentially by Sequencer, meaning that the individual user cannot be censored. At the moment there is no mechanism that forces L2 Sequencer to empty the L1 queue.',
       sentiment: 'warning',
