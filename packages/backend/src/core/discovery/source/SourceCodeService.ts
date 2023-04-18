@@ -3,96 +3,57 @@ import { zip } from 'lodash'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { deduplicateAbi } from './deduplicateAbi'
+import { getDerivedName } from './getDerivedName'
 import { processSources } from './processSources'
 
-export class SourceCodeService {
-  constructor(private readonly provider: DiscoveryProvider) {}
-
-  async getMetadata(
-    address: EthereumAddress,
-    implementations: EthereumAddress[],
-  ) {
-    return getMetadata(this.provider, address, implementations)
-  }
-}
-
-interface ContractSource {
+interface SourceCode {
   address: EthereumAddress
   contract: string
   files: Record<string, string>
 }
 
-export interface ContractMetadata {
+export interface ContractSources {
   name: string
-  isEOA: boolean
   isVerified: boolean
-  implementationVerified: boolean
   abi: string[]
   abis: Record<string, string[]>
-  sources: ContractSource[]
+  sourceCodes: SourceCode[]
 }
 
-export async function getMetadata(
-  provider: DiscoveryProvider,
-  address: EthereumAddress,
-  implementations: EthereumAddress[],
-): Promise<ContractMetadata> {
-  const metadata = await provider.getMetadata(address)
+export class SourceCodeService {
+  constructor(private readonly provider: DiscoveryProvider) {}
 
-  const implementationMeta = await Promise.all(
-    implementations.map((address) => provider.getMetadata(address)),
-  )
+  async getSources(
+    address: EthereumAddress,
+    implementations?: EthereumAddress[],
+  ): Promise<ContractSources> {
+    const addresses = [address, ...(implementations ?? [])]
+    const metadata = await Promise.all(
+      addresses.map((x) => this.provider.getMetadata(x)),
+    )
 
-  const name =
-    implementationMeta.length === 1 ? implementationMeta[0].name : metadata.name
-  const abi = deduplicateAbi([
-    ...metadata.abi,
-    ...implementationMeta.flatMap((x) => x.abi),
-  ])
+    const name = getDerivedName(metadata.map((x) => x.name))
+    const abi = deduplicateAbi(metadata.flatMap((x) => x.abi))
 
-  const abis: Record<string, string[]> = {}
-  if (metadata.abi.length > 0) {
-    abis[address.toString()] = metadata.abi
-  }
-  for (const [implementation, metadata] of zip(
-    implementations,
-    implementationMeta,
-  )) {
-    if (implementation && metadata && metadata.abi.length > 0) {
-      abis[implementation.toString()] = metadata.abi
-    }
-  }
-
-  const sources: ContractSource[] = []
-  sources.push({
-    address,
-    contract: metadata.name,
-    files: metadata.isVerified
-      ? processSources(metadata.source, address, metadata.name)
-      : {},
-  })
-  for (const [implementation, metadata] of zip(
-    implementations,
-    implementationMeta,
-  )) {
-    if (implementation && metadata) {
-      sources.push({
-        address: implementation,
-        contract: metadata.name,
-        files: metadata.isVerified
-          ? processSources(metadata.source, implementation, metadata.name)
+    const abis: Record<string, string[]> = {}
+    const sourceCodes: SourceCode[] = []
+    for (const [address, item] of zip(addresses, metadata)) {
+      if (!address || !item) {
+        continue
+      }
+      if (item.abi.length !== 0) {
+        abis[address.toString()] = item.abi
+      }
+      sourceCodes.push({
+        address,
+        contract: item.name,
+        files: item.isVerified
+          ? processSources(item.source, address, item.name)
           : {},
       })
     }
-  }
 
-  return {
-    name,
-    isEOA: false,
-    isVerified: metadata.isVerified,
-    implementationVerified: implementationMeta.every((x) => x.isVerified),
-    abi,
-    abis,
-    sources,
+    const isVerified = metadata.every((x) => x.isVerified)
+    return { name, isVerified, abi, abis, sourceCodes }
   }
 }

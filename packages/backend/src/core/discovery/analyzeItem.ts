@@ -9,11 +9,12 @@ import { executeHandlers } from './handlers/executeHandlers'
 import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { detectProxy } from './proxies'
-import { ContractMetadata, SourceCodeService } from './source/SourceCodeService'
+import { ContractSources, SourceCodeService } from './source/SourceCodeService'
 import { DiscoveryLogger } from './utils/DiscoveryLogger'
 
 export interface AnalyzedData extends ContractParameters {
-  meta: ContractMetadata
+  isEOA: boolean
+  meta: ContractSources
 }
 
 export async function analyzeItem(
@@ -41,9 +42,9 @@ export async function analyzeItem(
   }
 
   const sourceCodeService = new SourceCodeService(provider)
-  const meta = await sourceCodeService.getMetadata(
+  const meta = await sourceCodeService.getSources(
     address,
-    proxyDetection?.implementations ?? [],
+    proxyDetection?.implementations,
   )
 
   logger.name(meta.name)
@@ -75,8 +76,8 @@ export async function analyzeItem(
   return {
     analyzed: {
       name: meta.name,
-      unverified:
-        !meta.isVerified || !meta.implementationVerified ? true : undefined,
+      isEOA: false,
+      unverified: !meta.isVerified ? true : undefined,
       address,
       code: getCodeLink(address, proxyDetection?.implementations),
       upgradeability,
@@ -95,6 +96,7 @@ function eoa(address: EthereumAddress): {
   return {
     analyzed: {
       name: 'EOA',
+      isEOA: true,
       unverified: undefined,
       address,
       code: undefined,
@@ -103,12 +105,10 @@ function eoa(address: EthereumAddress): {
       errors: undefined,
       meta: {
         name: 'EOA',
-        isEOA: true,
         isVerified: true,
-        implementationVerified: true,
         abi: [],
         abis: {},
-        sources: [],
+        sourceCodes: [],
       },
     },
     relatives: [],
