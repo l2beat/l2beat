@@ -32,7 +32,6 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       icon: <ActivityIcon />,
       link: '/scaling/activity',
       selected: props.selected === 'activity',
-      new: true,
     })
   }
   return <NavigationTabs pages={pages} />

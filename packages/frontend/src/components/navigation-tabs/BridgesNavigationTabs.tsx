@@ -17,7 +17,6 @@ export function BridgesNavigationTabs(props: BridgesNavigationTabsProps) {
           icon: <TvlIcon />,
           link: '/bridges/tvl',
           selected: props.selected === 'tvl',
-          new: true,
         },
         {
           icon: <RiskIcon />,
@@ -25,7 +24,6 @@ export function BridgesNavigationTabs(props: BridgesNavigationTabsProps) {
           shortTitle: 'Risks',
           link: '/bridges/risk',
           selected: props.selected === 'risk',
-          new: true,
         },
       ]}
     />
