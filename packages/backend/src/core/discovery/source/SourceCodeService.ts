@@ -5,6 +5,17 @@ import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { concatAbis } from './concatAbis'
 import { processSources } from './processSources'
 
+export class SourceCodeService {
+  constructor(private readonly provider: DiscoveryProvider) {}
+
+  async getMetadata(
+    address: EthereumAddress,
+    implementations: EthereumAddress[],
+  ) {
+    return getMetadata(this.provider, address, implementations)
+  }
+}
+
 interface ContractSource {
   address: EthereumAddress
   contract: string
