@@ -14,7 +14,7 @@ describe(processSources.name, () => {
       })
 
       expect(result).toEqual({
-        'meta.txt': createMetaTxt(address, 'Unverified source code!'),
+        'meta.txt': createMetaTxt(address, 'Test', false),
       })
     })
   })
@@ -30,7 +30,7 @@ describe(processSources.name, () => {
 
       expect(result).toEqual({
         'Test.sol': 'test',
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
 
@@ -48,7 +48,7 @@ describe(processSources.name, () => {
         'Foo.sol': `one\ntwo\nfoo1\nfoo2`,
         'Bar.sol': `one\ntwo\nbar1\nbar2`,
         'flattened.sol': source,
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
 
@@ -66,7 +66,7 @@ describe(processSources.name, () => {
         'b/Foo.sol': `one\ntwo\nfoo1\nfoo2`,
         'c/d/Bar.sol': `one\ntwo\nbar1\nbar2`,
         'flattened.sol': source,
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
 
@@ -88,7 +88,7 @@ describe(processSources.name, () => {
         'example.com/foo/Foo.sol': `foo`,
         'example.com/bar/Bar.sol': `bar`,
         'flattened.sol': source,
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
   })
@@ -107,7 +107,7 @@ describe(processSources.name, () => {
       expect(result).toEqual({
         'Foo.sol': 'foo',
         'Bar.sol': 'bar',
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
 
@@ -125,7 +125,7 @@ describe(processSources.name, () => {
       expect(result).toEqual({
         'Foo.sol': 'foo',
         'Bar.sol': 'bar',
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
 
@@ -145,7 +145,7 @@ describe(processSources.name, () => {
       expect(result).toEqual({
         'Foo.sol': 'foo',
         'Bar.sol': 'bar',
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
 
@@ -166,7 +166,7 @@ describe(processSources.name, () => {
       expect(result).toEqual({
         'Foo.sol': 'foo',
         'Bar.sol': 'bar',
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
 
@@ -183,7 +183,7 @@ describe(processSources.name, () => {
       expect(result).toEqual({
         'b/Foo.sol': 'foo',
         'c/d/Bar.sol': 'bar',
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
 
@@ -202,7 +202,7 @@ describe(processSources.name, () => {
         'etc/passwd': 'admin: admin',
         'example.com/foo/Foo.sol': 'foo',
         'example.com/bar/Bar.sol': 'bar',
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
 
@@ -220,7 +220,7 @@ describe(processSources.name, () => {
         'b/Foo.sol': `one\ntwo\nfoo1\nfoo2`,
         'c/d/Bar.sol': `one\ntwo\nbar1\nbar2`,
         'flattened.sol': source,
-        'meta.txt': createMetaTxt(address, 'Test'),
+        'meta.txt': createMetaTxt(address, 'Test', true),
       })
     })
   })
