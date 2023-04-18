@@ -21,9 +21,9 @@ export async function saveDiscoveryResult(
 
   await rimraf(`${root}/.code`)
   for (const result of results) {
-    for (const [i, source] of result.meta.sourceCodes.entries()) {
-      for (const [file, content] of Object.entries(source.files)) {
-        const codebase = getSourceName(i, result.meta.sourceCodes.length)
+    for (const [i, files] of result.meta.files.entries()) {
+      for (const [file, content] of Object.entries(files)) {
+        const codebase = getSourceName(i, result.meta.files.length)
         const { name } = getCustomName(result.name, result.address, config)
         const path = `${root}/.code/${name}${codebase}/${file}`
         await mkdirp(dirname(path))

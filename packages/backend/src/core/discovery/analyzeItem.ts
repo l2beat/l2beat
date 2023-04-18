@@ -108,7 +108,7 @@ function eoa(address: EthereumAddress): {
         isVerified: true,
         abi: [],
         abis: {},
-        sourceCodes: [],
+        files: [],
       },
     },
     relatives: [],
