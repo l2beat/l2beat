@@ -23,8 +23,9 @@ export async function saveDiscoveryResult(
   for (const result of results) {
     for (const [i, source] of result.meta.sources.entries()) {
       for (const [file, content] of Object.entries(source.files)) {
-        const name = getSourceName(i, result.meta.sources.length)
-        const path = `${root}/.code/${result.name}${name}/${file}`
+        const codebase = getSourceName(i, result.meta.sources.length)
+        const { name } = getCustomName(result.name, result.address, config)
+        const path = `${root}/.code/${name}${codebase}/${file}`
         await mkdirp(dirname(path))
         await writeFile(path, content)
       }
@@ -102,7 +103,7 @@ export function prepareDiscoveryFile(
   }
 }
 
-function getCustomName(
+export function getCustomName(
   derivedName: string,
   address: EthereumAddress,
   config: DiscoveryConfig,
