@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
-  "blockNumber": 17072572,
-  "configHash": "0x729578a6278ef9c15daac0975e80d3aa5ed54ca2c177842777ad93e957d5807d",
+  "blockNumber": 17074001,
+  "configHash": "0xbdbba8feb72cbc6d51aecd66f9b5bc1eee1bf9a72544d2c7f966a3a7577f623f",
   "contracts": [
     {
       "name": "L1ERC20Bridge",
@@ -150,20 +150,20 @@
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
         "getCurrentProposalId": 3,
-        "getFirstUnprocessedPriorityTx": 527116,
+        "getFirstUnprocessedPriorityTx": 529056,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x010007793a328ef16cc7086708f7f3292ff9b5eed9e7e539c184228f461bf4ef",
         "getL2DefaultAccountBytecodeHash": "0x0100067d861e2f5717a12c3e869cfb657793b86bbb0caa05cc1421f16c5217bc",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 5742,
+        "getPriorityQueueSize": 5100,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 17653,
-        "getTotalBlocksExecuted": 17299,
-        "getTotalBlocksVerified": 17602,
-        "getTotalPriorityTxs": 532858,
+        "getTotalBlocksCommitted": 17731,
+        "getTotalBlocksExecuted": 17394,
+        "getTotalBlocksVerified": 17681,
+        "getTotalPriorityTxs": 534156,
         "getUpgradeProposalState": 0,
         "getVerifier": "0x473b1887D45D61EfD87731a1D8eC3590b93c565d",
         "getVerifierParams": [
@@ -174,8 +174,8 @@
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0xe2a818658504b0a8e32b4b81e5aa295f132271770a3b9fda4971cd9c01e6bdf9",
-          1681720919,
+          "0x3d1a2ed06e9f9c3a9427362da73c90b0c7b31f68cd9b2b865ddacb756ec2533c",
+          1681736219,
           0
         ],
         "validators": ["0x3dB52cE065f728011Ac6732222270b3F2360d919"]
