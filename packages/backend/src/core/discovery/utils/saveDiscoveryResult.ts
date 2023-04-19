@@ -4,7 +4,7 @@ import { mkdirp } from 'mkdirp'
 import { dirname } from 'path'
 import { rimraf } from 'rimraf'
 
-import { Analysis, AnalyzedContract } from '../analysis/analyzeItem'
+import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 export async function saveDiscoveryResult(
