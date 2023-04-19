@@ -1,7 +1,7 @@
 {
   "name": "nova",
-  "blockNumber": 17079732,
-  "configHash": "0x3be60b6dd74dbb789961b12b35e38ba99ae896de4a3088e47ea4f95127c71983",
+  "blockNumber": 17079825,
+  "configHash": "0x1640230f938149f3499a78101d21551acc017b7138742036a391c318ded82ee9",
   "contracts": [
     {
       "name": "ArbitrumProxy",
@@ -79,7 +79,17 @@
       "code": "https://etherscan.deth.net/address/0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "values": {
+        "NOVA_STAKERS": [
+          [
+            "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87",
+            "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"
+          ],
+          false
+        ]
+      },
+      "derivedName": "ValidatorUtils"
     },
     {
       "name": "SequencerInbox",
@@ -91,13 +101,13 @@
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
       "values": {
-        "batchCount": 12357,
+        "batchCount": 12359,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 200233
+        "totalDelayedMessagesRead": 200245
       }
     },
     {
@@ -357,11 +367,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 200241,
+        "delayedMessageCount": 200251,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 12357,
-        "sequencerReportedSubMessageCount": 6134067
+        "sequencerMessageCount": 12359,
+        "sequencerReportedSubMessageCount": 6136910
       }
     },
     {

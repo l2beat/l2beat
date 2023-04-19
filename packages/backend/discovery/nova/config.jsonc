@@ -6,7 +6,20 @@
     "0xc840838bc438d73c16c2f8b22d2ce3669963cd48",
     "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
   ],
+  "names": {
+    "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": "ValidatorUtils"
+  },
   "overrides": {
+    "ValidatorUtils": {
+      "fields": {
+        "NOVA_STAKERS": {
+          "type": "call",
+          "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
+          "args": ["0xFb209827c58283535b744575e11953DCC4bEAD88", 0, 100]
+        }
+      },
+      "ignoreRelatives": ["NOVA_STAKERS"]
+    },
     "0xFb209827c58283535b744575e11953DCC4bEAD88": {
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": [
