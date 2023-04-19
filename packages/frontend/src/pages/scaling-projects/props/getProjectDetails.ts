@@ -1,6 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared'
 
+import { ChartProps } from '../../../components'
 import { getContractSection } from '../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
 import { getRiskValues } from '../../../utils/risks/values'
@@ -12,8 +13,10 @@ import { getTechnologyOverview } from './getTechnologyOverview'
 export function getProjectDetails(
   project: Layer2,
   verificationStatus: VerificationStatus,
+  chart: ChartProps,
 ): ProjectDetailsProps {
   return {
+    chart,
     linkSection: getLinkSection(project),
     descriptionSection: getDescriptionSection(project, verificationStatus),
     riskAnalysis: { riskValues: getRiskValues(project.riskView) },

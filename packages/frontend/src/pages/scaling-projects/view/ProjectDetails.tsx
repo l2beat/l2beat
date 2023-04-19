@@ -2,6 +2,7 @@ import { KnowledgeNugget, Milestone } from '@l2beat/config'
 import { isEmpty } from 'lodash'
 import React from 'react'
 
+import { Chart, ChartProps } from '../../../components'
 import { HorizontalSeparator } from '../../../components/HorizontalSeparator'
 import {
   ContractsSection,
@@ -12,7 +13,6 @@ import {
   DescriptionSectionProps,
 } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggets } from '../../../components/project/KnowledgeNuggets'
-import { LinkSectionProps } from '../../../components/project/links/LinkSection'
 import { Milestones } from '../../../components/project/Milestones'
 import {
   PermissionsSection,
@@ -31,8 +31,10 @@ import {
   TechnologySectionProps,
 } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
+import { LinkSectionProps } from '../../../components/project/links/LinkSection'
 
 export interface ProjectDetailsProps {
+  chart: ChartProps
   linkSection: LinkSectionProps
   descriptionSection: DescriptionSectionProps
   riskAnalysis: RiskAnalysisProps
@@ -48,6 +50,7 @@ export interface ProjectDetailsProps {
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <div className="px-4 md:px-0">
+      <Chart {...props.chart} mobileFull isUpcoming={props.isUpcoming} />
       {!props.isUpcoming && (
         <>
           <Milestones milestones={props.milestones} />

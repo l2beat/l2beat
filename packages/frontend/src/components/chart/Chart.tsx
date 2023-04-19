@@ -62,12 +62,12 @@ export function Chart({
             : 'mt-4',
         )}
       >
-        {!metaChart && hasActivity && hasTvl && (
+        {!metaChart && hasTvl && (
           <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
-            <h2 className="hidden text-3xl font-bold md:inline">
+            <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
               <a href="#chart">Chart</a>
             </h2>
-            <TvlActivityToggle />
+            {hasActivity && <TvlActivityToggle />}
           </div>
         )}
         <div className="flex flex-col gap-4">

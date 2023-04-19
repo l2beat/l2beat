@@ -1,8 +1,6 @@
 import React from 'react'
 
 import {
-  Chart,
-  ChartProps,
   Footer,
   FooterProps,
   HeaderProps,
@@ -21,7 +19,6 @@ export interface ProjectPageProps {
   navbar: NavbarProps
   header: HeaderProps
   projectHeader: ProjectHeaderProps
-  chart: ChartProps
   projectDetails: ProjectDetailsProps
   footer: FooterProps
 }
@@ -41,11 +38,6 @@ export function ProjectPage(props: ProjectPageProps) {
             />
           </div>
           <div className="col-span-5">
-            <Chart
-              {...props.chart}
-              mobileFull
-              isUpcoming={props.projectDetails.isUpcoming}
-            />
             <ProjectDetails {...props.projectDetails} />
           </div>
         </div>
