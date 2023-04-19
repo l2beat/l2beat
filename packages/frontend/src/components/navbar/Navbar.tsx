@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Config } from '../../build/config'
-import { NewItemBadge } from '../badge/NewItemBadge'
 import { MenuOpenIcon } from '../icons'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
@@ -79,7 +78,6 @@ export function Navbar(props: NavbarProps) {
                 href="/bridges/tvl"
               >
                 Bridges
-                <NewItemBadge className="ml-2" />
               </PageLink>
             </li>
           </ul>
