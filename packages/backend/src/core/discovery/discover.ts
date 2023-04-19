@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared'
 
-import { AnalyzedData, analyzeItem } from './analyzeItem'
+import { AnalyzedData, analyzeItem } from './analysis/analyzeItem'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { DiscoveryLogger } from './utils/DiscoveryLogger'

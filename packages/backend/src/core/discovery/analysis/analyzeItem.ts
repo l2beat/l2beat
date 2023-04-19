@@ -1,16 +1,13 @@
-import {
-  ContractParameters,
-  ContractValue,
-  EthereumAddress,
-} from '@l2beat/shared'
+import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 
-import { ContractOverrides } from './config/DiscoveryOverrides'
-import { executeHandlers } from './handlers/executeHandlers'
-import { getHandlers } from './handlers/getHandlers'
-import { DiscoveryProvider } from './provider/DiscoveryProvider'
-import { detectProxy } from './proxies'
-import { ContractSources, SourceCodeService } from './source/SourceCodeService'
-import { DiscoveryLogger } from './utils/DiscoveryLogger'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { executeHandlers } from '../handlers/executeHandlers'
+import { getHandlers } from '../handlers/getHandlers'
+import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { detectProxy } from '../proxies'
+import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
+import { DiscoveryLogger } from '../utils/DiscoveryLogger'
+import { getRelatives } from './getRelatives'
 
 export interface AnalyzedData extends ContractParameters {
   isEOA: boolean
@@ -52,13 +49,12 @@ export async function analyzeItem(
   const handlers = getHandlers(meta.abi, overrides, logger)
   const parameters = await executeHandlers(provider, address, handlers)
 
-  const relatives = parameters
-    .filter((x) => !x.ignoreRelative)
-    .filter((x) => !overrides?.ignoreRelatives?.includes(x.field))
-    .flatMap((x) => getRelatives(x.value))
-    .concat(proxyDetection?.relatives ?? [])
-    .filter((x) => !proxyDetection?.implementations.includes(x))
-    .filter((x, i, a) => a.indexOf(x) === i)
+  const relatives = getRelatives(
+    parameters,
+    overrides?.ignoreRelatives,
+    proxyDetection?.relatives,
+    proxyDetection?.implementations,
+  )
 
   const upgradeability = proxyDetection?.upgradeability ?? { type: 'immutable' }
 
@@ -113,21 +109,6 @@ function eoa(address: EthereumAddress): {
     },
     relatives: [],
   }
-}
-
-function getRelatives(value: ContractValue | undefined): EthereumAddress[] {
-  if (Array.isArray(value)) {
-    return value.flatMap(getRelatives)
-  } else if (typeof value === 'object') {
-    return Object.values(value).flatMap(getRelatives)
-  } else if (typeof value === 'string') {
-    try {
-      return [EthereumAddress(value)]
-    } catch {
-      return []
-    }
-  }
-  return []
 }
 
 function getCodeLink(
