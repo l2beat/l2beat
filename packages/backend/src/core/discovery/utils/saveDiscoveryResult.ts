@@ -6,7 +6,6 @@ import { rimraf } from 'rimraf'
 
 import { AnalyzedData } from '../analyzeItem'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { ContractSource } from './getMetadata'
 
 export async function saveDiscoveryResult(
   results: AnalyzedData[],
@@ -28,11 +27,7 @@ export async function saveDiscoveryResult(
         const { name } = getCustomName(result.name, result.address, config)
         const path = `${root}/.code/${name}${codebase}/${file}`
         await mkdirp(dirname(path))
-        await writeFile(
-          path,
-          `// address: ${result.meta.sources[i].address.toString()}\n\n` +
-            content,
-        )
+        await writeFile(path, content)
       }
     }
   }
@@ -49,11 +44,13 @@ export async function saveDiscoveryResult(
  *
  * If there are more it returns '/proxy', '/implementation-1', '/implementation-2', etc.
  */
-function getSourceName(i: number, sources: ContractSource[]) {
+function getSourceName(i: number, length: number) {
   let name = ''
-  if (sources.length > 1) {
-    name =
-      i === 0 ? `[${i}]${sources[i].contract}` : `[${i}]${sources[i].contract}`
+  if (length > 1) {
+    name = i === 0 ? 'proxy' : 'implementation'
+  }
+  if (length > 2 && i > 0) {
+    name += `-${i}`
   }
   if (name) {
     name = `/${name}`
