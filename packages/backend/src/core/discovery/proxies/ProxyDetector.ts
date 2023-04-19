@@ -43,7 +43,7 @@ export class ProxyDetector {
 
   async detectProxy(
     address: EthereumAddress,
-    manualProxyType: ManualProxyType | undefined,
+    manualProxyType?: ManualProxyType,
   ): Promise<ProxyDetails | undefined> {
     if (manualProxyType) {
       return this.getManualProxy(address, manualProxyType)
