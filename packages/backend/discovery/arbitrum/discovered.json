@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "blockNumber": 17079868,
+  "blockNumber": 17079946,
   "configHash": "0x324012a3786a79c1391dfc5be611b2311fcd4ea8ab76b849ceb7c33b9dd5cf38",
   "contracts": [
     {
@@ -21,11 +21,11 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 4552,
+        "firstUnresolvedNode": 4553,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 4551,
+        "latestConfirmed": 4552,
         "latestNodeCreated": 4709,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
@@ -103,7 +103,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 158542,
+        "batchCount": 158571,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -111,7 +111,7 @@
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 782289
+        "totalDelayedMessagesRead": 782350
       },
       "derivedName": "SequencerInbox"
     },
@@ -255,10 +255,8 @@
         "governanceChainInbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "l2Timelock": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      },
-      "errors": {
-        "RETRYABLE_TICKET_MAGIC": "Execution reverted"
       },
       "derivedName": "L1ArbitrumTimelock"
     },
@@ -383,11 +381,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 782325,
+        "delayedMessageCount": 782370,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 158542,
-        "sequencerReportedSubMessageCount": 59841356
+        "sequencerMessageCount": 158571,
+        "sequencerReportedSubMessageCount": 59845124
       },
       "derivedName": "Bridge"
     },
@@ -582,6 +580,7 @@
     "0x8688515028955734350067695939423222009623",
     "0x88910996671162953E89DdcE5C8137f9077da217",
     "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
+    "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
     "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
     "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
   ],
