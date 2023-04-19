@@ -10,11 +10,8 @@ interface Props {
 
 export function Section(props: Props) {
   return (
-    <section className={cx(props.className, 'mt-10 md:mt-16')}>
-      <h2
-        id={props.id}
-        className="text-2xl font-bold md:text-4xl md:leading-normal"
-      >
+    <section id={props.id} className={cx(props.className, 'mt-10 md:mt-16')}>
+      <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
         <a href={`#${props.id}`}>{props.title}</a>
       </h2>
       {props.children}

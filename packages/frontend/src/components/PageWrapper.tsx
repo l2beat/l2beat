@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react'
 
 import { PageMetadata } from '../pages/Page'
-import { Head } from './head'
 import { Tooltip } from './Tooltip'
+import { Head } from './head'
 
 export interface PageWrapperProps {
   htmlClassName?: string

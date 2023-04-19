@@ -47,33 +47,34 @@ export interface ProjectDetailsProps {
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
-    <main className="ProjectDetails">
-      <div className="ProjectDetails-Content px-4 md:px-0">
-        <DescriptionSection {...props.descriptionSection} />
-        {!props.isUpcoming && (
-          <>
-            <RiskAnalysis {...props.riskAnalysis} />
-            {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
-            {props.sections.map((section) => (
-              <TechnologySection key={section.id} {...section} />
-            ))}
-            {props.permissionsSection && (
-              <PermissionsSection {...props.permissionsSection} />
-            )}
-            <ContractsSection {...props.contractsSection} />
-          </>
-        )}
-        {props.isUpcoming && <UpcomingDisclaimer className="mt-6" />}
-      </div>
-      <div className="ProjectDetails-Side flex flex-col gap-12 bg-gray-100 py-12 dark:bg-gray-900 md:!bg-transparent">
-        <Milestones milestones={props.milestones} />
-        {!isEmpty(props.knowledgeNuggets) && (
-          <div className="px-4 md:hidden">
-            <HorizontalSeparator />
-          </div>
-        )}
-        <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
-      </div>
-    </main>
+    <div className="px-4 md:px-0">
+      {!props.isUpcoming && (
+        <>
+          <Milestones milestones={props.milestones} />
+          <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
+        </>
+      )}
+
+      <DescriptionSection {...props.descriptionSection} />
+      {!props.isUpcoming && (
+        <>
+          <RiskAnalysis {...props.riskAnalysis} />
+          {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
+          {props.sections.map((section) => (
+            <TechnologySection key={section.id} {...section} />
+          ))}
+          {props.permissionsSection && (
+            <PermissionsSection {...props.permissionsSection} />
+          )}
+          <ContractsSection {...props.contractsSection} />
+        </>
+      )}
+      {props.isUpcoming && <UpcomingDisclaimer className="mt-6" />}
+      {!isEmpty(props.knowledgeNuggets) && (
+        <div className="px-4 md:hidden">
+          <HorizontalSeparator />
+        </div>
+      )}
+    </div>
   )
 }
