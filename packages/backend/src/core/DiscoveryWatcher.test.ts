@@ -337,7 +337,11 @@ describe(DiscoveryWatcher.name, () => {
 
       const discoveryWatcherRepository = mockObject<DiscoveryWatcherRepository>(
         {
-          findLatest: async () => undefined,
+          findLatest: async () => ({
+            ...mockRecord,
+            discovery: DISCOVERY_RESULT,
+            configHash: mockConfig(PROJECT_A).hash,
+          }),
           addOrUpdate: async () => '',
         },
       )
@@ -346,8 +350,8 @@ describe(DiscoveryWatcher.name, () => {
         run: mockFn(),
       })
 
-      discoveryEngine.run.resolvesToOnce(DISCOVERY_RESULT)
       discoveryEngine.run.resolvesToOnce({ ...DISCOVERY_RESULT, contracts: [] })
+      discoveryEngine.run.resolvesToOnce({ ...DISCOVERY_RESULT })
 
       const discoveryWatcher = new DiscoveryWatcher(
         provider,
