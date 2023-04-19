@@ -63,7 +63,8 @@ environment variables. One variable per line `KEY=value`.
 - `TVL_SYNC_ENABLED` (default `true`) - When set to `true` tvl sync is enabled
 - `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
 - `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
-- `DISCORD_CHANNEL_IDS` - space separated list of channel ids the message will be sent to, e.g. "123 456 789" becomes [123, 456, 789]
+- `PUBLIC_DISCORD_CHANNEL_ID` - public channel id the message will be sent to
+- `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
 - `DISCORD_TOKEN` - Bot account authentication token, for more details go to `DiscordClient.ts`
 
 #### .env boilerplate:
@@ -87,7 +88,8 @@ STARKEX_API_KEY=
 #TVL_SYNC_ENABLED=
 #DISCOVERY_BLOCK_NUMBER=
 #WATCHMODE_ENABLED=
-#DISCORD_CHANNEL_IDS=
+#PUBLIC_DISCORD_CHANNEL_ID=
+#INTERNAL_DISCORD_CHANNEL_ID=
 #DISCORD_TOKEN=
 ```
 
@@ -123,3 +125,4 @@ The `/status` endpoints were created to see the current progress of the Updaters
 - `/status/prices`
 - `/status/balances`
 - `/status/reports`
+- `/status/discovery`
