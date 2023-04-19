@@ -9,11 +9,12 @@ import { executeHandlers } from './handlers/executeHandlers'
 import { getHandlers } from './handlers/getHandlers'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { detectProxy } from './proxies'
+import { ContractSources, SourceCodeService } from './source/SourceCodeService'
 import { DiscoveryLogger } from './utils/DiscoveryLogger'
-import { ContractMetadata, getMetadata } from './utils/getMetadata'
 
 export interface AnalyzedData extends ContractParameters {
-  meta: ContractMetadata
+  isEOA: boolean
+  meta: ContractSources
 }
 
 export async function analyzeItem(
@@ -22,6 +23,12 @@ export async function analyzeItem(
   overrides: ContractOverrides | undefined,
   logger: DiscoveryLogger,
 ): Promise<{ analyzed: AnalyzedData; relatives: EthereumAddress[] }> {
+  const code = await provider.getCode(address)
+  if (code.length === 0) {
+    logger.eoa()
+    return eoa(address)
+  }
+
   const proxyDetection = await detectProxy(
     provider,
     address,
@@ -34,17 +41,13 @@ export async function analyzeItem(
     logger.proxyDetectionFailed(overrides.proxyType)
   }
 
-  const meta = await getMetadata(
-    provider,
+  const sourceCodeService = new SourceCodeService(provider)
+  const meta = await sourceCodeService.getSources(
     address,
-    proxyDetection?.implementations ?? [],
+    proxyDetection?.implementations,
   )
 
-  if (meta.isEOA) {
-    logger.eoa()
-  } else {
-    logger.name(meta.name)
-  }
+  logger.name(meta.name)
 
   const handlers = getHandlers(meta.abi, overrides, logger)
   const parameters = await executeHandlers(provider, address, handlers)
@@ -73,18 +76,42 @@ export async function analyzeItem(
   return {
     analyzed: {
       name: meta.name,
-      unverified:
-        !meta.isVerified || !meta.implementationVerified ? true : undefined,
+      isEOA: false,
+      unverified: !meta.isVerified ? true : undefined,
       address,
-      code: !meta.isEOA
-        ? getCodeLink(address, proxyDetection?.implementations)
-        : undefined,
+      code: getCodeLink(address, proxyDetection?.implementations),
       upgradeability,
       values: Object.entries(values).length !== 0 ? values : undefined,
       errors: Object.entries(errors).length !== 0 ? errors : undefined,
       meta,
     },
     relatives,
+  }
+}
+
+function eoa(address: EthereumAddress): {
+  analyzed: AnalyzedData
+  relatives: EthereumAddress[]
+} {
+  return {
+    analyzed: {
+      name: 'EOA',
+      isEOA: true,
+      unverified: undefined,
+      address,
+      code: undefined,
+      upgradeability: { type: 'immutable' },
+      values: undefined,
+      errors: undefined,
+      meta: {
+        name: 'EOA',
+        isVerified: true,
+        abi: [],
+        abis: {},
+        files: [],
+      },
+    },
+    relatives: [],
   }
 }
 

@@ -82,7 +82,7 @@ export class DiscoveryProvider {
     const isVerified = result.ABI !== 'Contract source code not verified'
 
     return {
-      name: result.ContractName,
+      name: result.ContractName.trim(),
       isVerified,
       abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
       source: result.SourceCode,

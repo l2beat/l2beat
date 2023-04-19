@@ -21,9 +21,9 @@ export async function saveDiscoveryResult(
 
   await rimraf(`${root}/.code`)
   for (const result of results) {
-    for (const [i, source] of result.meta.sources.entries()) {
-      for (const [file, content] of Object.entries(source.files)) {
-        const codebase = getSourceName(i, result.meta.sources.length)
+    for (const [i, files] of result.meta.files.entries()) {
+      for (const [file, content] of Object.entries(files)) {
+        const codebase = getSourceName(i, result.meta.files.length)
         const { name } = getCustomName(result.name, result.address, config)
         const path = `${root}/.code/${name}${codebase}/${file}`
         await mkdirp(dirname(path))
@@ -92,11 +92,11 @@ export function prepareDiscoveryFile(
     blockNumber,
     configHash,
     contracts: results
-      .filter((x) => !x.meta.isEOA)
-      .map((x) => ({ ...x, meta: undefined }))
+      .filter((x) => !x.isEOA)
+      .map((x) => ({ ...x, isEOA: undefined, meta: undefined }))
       .map((x) => ({ ...x, ...getCustomName(x.name, x.address, config) })),
     eoas: results
-      .filter((x) => x.meta.isEOA)
+      .filter((x) => x.isEOA)
       .map((x) => x.address)
       .sort((a, b) => a.localeCompare(b.toString())),
     abis,
