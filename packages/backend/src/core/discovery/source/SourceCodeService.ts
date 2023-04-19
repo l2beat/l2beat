@@ -3,7 +3,7 @@ import { zip } from 'lodash'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { deduplicateAbi } from './deduplicateAbi'
-import { getDerivedName } from './getDerivedName'
+import { getLegacyDerivedName } from './getDerivedName'
 import { processSources } from './processSources'
 
 export interface ContractSources {
@@ -26,7 +26,7 @@ export class SourceCodeService {
       addresses.map((x) => this.provider.getMetadata(x)),
     )
 
-    const name = getDerivedName(metadata.map((x) => x.name))
+    const name = getLegacyDerivedName(metadata.map((x) => x.name))
     const abi = deduplicateAbi(metadata.flatMap((x) => x.abi))
 
     const abis: Record<string, string[]> = {}

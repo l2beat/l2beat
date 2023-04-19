@@ -23,8 +23,8 @@ describe(getDerivedName.name, () => {
     expect(result).toEqual('Escrow (Unknown)')
   })
 
-  it('returns diamond when given more names', () => {
+  it('returns implementation count when given more names', () => {
     const result = getDerivedName(['Proxy', 'Facet A', 'Facet B'])
-    expect(result).toEqual('Proxy (Diamond 2)')
+    expect(result).toEqual('Proxy (2 implementations)')
   })
 })
