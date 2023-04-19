@@ -1,7 +1,7 @@
 import { ContractParameters } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
-import { concatAbis } from '../../../../../../core/discovery/utils/concatAbis'
+import { deduplicateAbi } from '../../../../../../core/discovery/source/deduplicateAbi'
 import { getAddresses } from './getAddresses'
 
 export function getViewABI(
@@ -28,7 +28,5 @@ export function getViewABI(
     })
     .flat()
 
-  const iface = new ethers.utils.Interface(concatAbis(...abis))
-
-  return iface
+  return new ethers.utils.Interface(deduplicateAbi(abis))
 }
