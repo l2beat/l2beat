@@ -1,7 +1,6 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { NewItemBadge } from '../badge/NewItemBadge'
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
@@ -62,7 +61,6 @@ export function SidebarMenu(props: SidebarMenuProps) {
                   <li className="flex items-center gap-2 font-medium">
                     <ActivityIcon className="h-auto w-4" />
                     <a href="/scaling/activity">Activity</a>
-                    <NewItemBadge />
                   </li>
                 )}
               </ul>
@@ -74,18 +72,15 @@ export function SidebarMenu(props: SidebarMenuProps) {
                 <span className="text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
                   <a href="/bridges/tvl">Bridges</a>
                 </span>
-                <NewItemBadge />
               </div>
               <ul className="ml-4 flex flex-col gap-4">
                 <li className="flex items-center gap-2 font-medium">
                   <TvlIcon className="h-auto w-4" />
                   <a href="/bridges/tvl">Total Value Locked</a>
-                  <NewItemBadge />
                 </li>
                 <li className="flex items-center gap-2 font-medium">
                   <RiskIcon className="h-auto w-4" />
                   <a href="/bridges/risk">Risks</a>
-                  <NewItemBadge />
                 </li>
               </ul>
             </li>
