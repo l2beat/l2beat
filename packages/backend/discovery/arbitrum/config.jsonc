@@ -20,7 +20,8 @@
     "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "Inbox",
     "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": "Outbox",
     "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "GatewaysAdmin",
-    "0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway"
+    "0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway",
+    "0x9E40625F52829Cf04bC4839F186D621ee33b0E67": "ValidatorUtils"
   },
   "overrides": {
     "ArbitrumOneBridge": {
@@ -104,6 +105,16 @@
         "l2Counterpart",
         "l2Dai"
       ]
+    },
+    "ValidatorUtils": {
+      "fields": {
+        "ARBITRUM_STAKERS": {
+          "type": "call",
+          "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
+          "args": ["0x5eF0D09d1E6204141B4d37530808eD19f60FBa35", 0, 100]
+        }
+      },
+      "ignoreRelatives": ["ARBITRUM_STAKERS"]
     },
     "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": {
       "ignoreMethods": ["isSpent", "spent"]
