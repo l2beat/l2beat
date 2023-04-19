@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared'
 
-import { AnalyzedData, analyzeItem } from './analysis/analyzeItem'
+import { Analysis, analyzeItem } from './analysis/analyzeItem'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { DiscoveryLogger } from './utils/DiscoveryLogger'
@@ -10,7 +10,7 @@ export async function discover(
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
 ) {
-  const resolved = new Map<EthereumAddress, AnalyzedData>()
+  const resolved = new Map<EthereumAddress, Analysis>()
   const known = new Set<EthereumAddress>()
   known.add(EthereumAddress.ZERO)
   for (const address of config.initialAddresses) {
