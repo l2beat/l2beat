@@ -4,7 +4,7 @@ import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { executeHandlers } from '../handlers/executeHandlers'
 import { getHandlers } from '../handlers/getHandlers'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { detectProxy } from '../proxies'
+import { ProxyDetector } from '../proxies/ProxyDetector'
 import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
 import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { getRelatives } from './getRelatives'
@@ -26,14 +26,11 @@ export async function analyzeItem(
     return eoa(address)
   }
 
-  const proxyDetection = await detectProxy(
-    provider,
-    address,
-    overrides?.proxyType,
-  )
+  const proxyDetector = new ProxyDetector(provider)
+  const proxy = await proxyDetector.detectProxy(address, overrides?.proxyType)
 
-  if (proxyDetection) {
-    logger.proxyDetected(proxyDetection.upgradeability.type)
+  if (proxy) {
+    logger.proxyDetected(proxy.upgradeability.type)
   } else if (overrides?.proxyType) {
     logger.proxyDetectionFailed(overrides.proxyType)
   }
@@ -41,7 +38,7 @@ export async function analyzeItem(
   const sourceCodeService = new SourceCodeService(provider)
   const meta = await sourceCodeService.getSources(
     address,
-    proxyDetection?.implementations,
+    proxy?.implementations,
   )
 
   logger.name(meta.name)
@@ -52,11 +49,11 @@ export async function analyzeItem(
   const relatives = getRelatives(
     parameters,
     overrides?.ignoreRelatives,
-    proxyDetection?.relatives,
-    proxyDetection?.implementations,
+    proxy?.relatives,
+    proxy?.implementations,
   )
 
-  const upgradeability = proxyDetection?.upgradeability ?? { type: 'immutable' }
+  const upgradeability = proxy?.upgradeability ?? { type: 'immutable' }
 
   const values: ContractParameters['values'] = {}
   const errors: ContractParameters['errors'] = {}
@@ -75,7 +72,7 @@ export async function analyzeItem(
       isEOA: false,
       unverified: !meta.isVerified ? true : undefined,
       address,
-      code: getCodeLink(address, proxyDetection?.implementations),
+      code: getCodeLink(address, proxy?.implementations),
       upgradeability,
       values: Object.entries(values).length !== 0 ? values : undefined,
       errors: Object.entries(errors).length !== 0 ? errors : undefined,

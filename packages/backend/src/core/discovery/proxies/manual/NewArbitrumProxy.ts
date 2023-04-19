@@ -1,4 +1,4 @@
-import { EthereumAddress, ProxyDetection } from '@l2beat/shared'
+import { EthereumAddress, ProxyDetails } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { getCallResult } from '../../utils/getCallResult'
@@ -7,7 +7,7 @@ import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
 export async function getNewArbitrumProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-): Promise<ProxyDetection | undefined> {
+): Promise<ProxyDetails | undefined> {
   const detection = await detectEip1967Proxy(provider, address)
   if (!detection || detection.upgradeability.type !== 'EIP1967 proxy') {
     return undefined
