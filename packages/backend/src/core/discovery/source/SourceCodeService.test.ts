@@ -89,7 +89,7 @@ describe(SourceCodeService.name, () => {
         [BAZ_ADDRESS.toString()]: ['function baz()'],
       },
       isVerified: true,
-      name: 'Baz (Bar)',
+      name: 'Baz',
       files: [
         processSources(BAR_ADDRESS, BAR_METADATA),
         processSources(BAZ_ADDRESS, BAZ_METADATA),
@@ -114,7 +114,7 @@ describe(SourceCodeService.name, () => {
         [BAR_ADDRESS.toString()]: ['function bar()'],
       },
       isVerified: false,
-      name: 'Foo (Bar)',
+      name: 'Foo',
       files: [
         processSources(BAR_ADDRESS, BAR_METADATA),
         processSources(FOO_ADDRESS, FOO_METADATA),
