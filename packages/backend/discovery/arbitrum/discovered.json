@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "blockNumber": 16975477,
-  "configHash": "0x1ebb27d99695ec5773aaf1d96c56b010801bc8864c5170a4704ef06270266ff9",
+  "blockNumber": 17079946,
+  "configHash": "0x324012a3786a79c1391dfc5be611b2311fcd4ea8ab76b849ceb7c33b9dd5cf38",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -21,12 +21,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 4200,
+        "firstUnresolvedNode": 4553,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 4199,
-        "latestNodeCreated": 4353,
+        "latestConfirmed": 4552,
+        "latestNodeCreated": 4709,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -81,7 +81,17 @@
       "code": "https://etherscan.deth.net/address/0x9E40625F52829Cf04bC4839F186D621ee33b0E67",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "values": {
+        "ARBITRUM_STAKERS": [
+          [
+            "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5",
+            "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"
+          ],
+          false
+        ]
+      },
+      "derivedName": "ValidatorUtils"
     },
     {
       "name": "SequencerInbox",
@@ -93,20 +103,15 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 132700,
+        "batchCount": 158571,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "IS_HARDCODED_SEQUENCER_BATCH_POSTER": true,
-        "maxTimeVariation": [
-          5760,
-          12,
-          86400,
-          3600
-        ],
+        "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 733588
+        "totalDelayedMessagesRead": 782350
       },
       "derivedName": "SequencerInbox"
     },
@@ -153,9 +158,7 @@
           },
           "ADMIN_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": [
-              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-            ]
+            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
@@ -230,27 +233,19 @@
           },
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-            ]
+            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
-            ]
+            "members": ["0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x0000000000000000000000000000000000000000"
-            ]
+            "members": ["0x0000000000000000000000000000000000000000"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x3666a60ff589873ced457a9a8a0aA6F83D708767"
-            ]
+            "members": ["0x3666a60ff589873ced457a9a8a0aA6F83D708767"]
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
@@ -386,11 +381,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 733621,
+        "delayedMessageCount": 782370,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 132700,
-        "sequencerReportedSubMessageCount": 54738769
+        "sequencerMessageCount": 158571,
+        "sequencerReportedSubMessageCount": 59845124
       },
       "derivedName": "Bridge"
     },

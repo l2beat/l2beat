@@ -21,10 +21,6 @@ export async function detectProxy(
   address: EthereumAddress,
   manualProxyType: ManualProxyType | undefined,
 ): Promise<ProxyDetection | undefined> {
-  const code = await provider.getCode(address)
-  if (code.length === 0) {
-    return
-  }
   if (manualProxyType) {
     return getManualProxy(provider, address, manualProxyType)
   }
