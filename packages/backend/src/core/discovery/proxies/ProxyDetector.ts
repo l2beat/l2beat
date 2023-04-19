@@ -1,6 +1,7 @@
 import { EthereumAddress, ManualProxyType, ProxyDetails } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
@@ -37,6 +38,7 @@ const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
 export class ProxyDetector {
   constructor(
     private readonly provider: DiscoveryProvider,
+    private readonly logger: DiscoveryLogger,
     private readonly autoDetectors = DEFAULT_AUTO_DETECTORS,
     private readonly manualDetectors = MANUAL_DETECTORS,
   ) {}
@@ -45,9 +47,20 @@ export class ProxyDetector {
     address: EthereumAddress,
     manualProxyType?: ManualProxyType,
   ): Promise<ProxyDetails | undefined> {
-    if (manualProxyType) {
-      return this.getManualProxy(address, manualProxyType)
+    const proxy = manualProxyType
+      ? await this.getManualProxy(address, manualProxyType)
+      : await this.getAutoProxy(address)
+
+    if (proxy) {
+      this.logger.proxyDetected(proxy.upgradeability.type)
+    } else if (manualProxyType) {
+      this.logger.proxyDetectionFailed(manualProxyType)
     }
+
+    return proxy
+  }
+
+  async getAutoProxy(address: EthereumAddress) {
     const checks = await Promise.all(
       this.autoDetectors.map((detect) => detect(this.provider, address)),
     )

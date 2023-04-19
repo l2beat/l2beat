@@ -2,6 +2,7 @@ import { EthereumAddress, ProxyDetails } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { ProxyDetector } from './ProxyDetector'
 
 describe(ProxyDetector.name, () => {
@@ -28,7 +29,7 @@ describe(ProxyDetector.name, () => {
   it('can detect no proxy', async () => {
     const provider = mockObject<DiscoveryProvider>()
 
-    const detector = new ProxyDetector(provider, [
+    const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [
       async () => undefined,
       async () => undefined,
     ])
@@ -40,7 +41,7 @@ describe(ProxyDetector.name, () => {
   it('detects the first proxy', async () => {
     const provider = mockObject<DiscoveryProvider>()
 
-    const detector = new ProxyDetector(provider, [
+    const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [
       async () => undefined,
       async () => FIRST_DETAILS,
       async () => undefined,
@@ -54,7 +55,7 @@ describe(ProxyDetector.name, () => {
   it('detects a manual proxy', async () => {
     const provider = mockObject<DiscoveryProvider>()
 
-    const detector = new ProxyDetector(provider, [], {
+    const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [], {
       'call implementation proxy': async () => FIRST_DETAILS,
       'new Arbitrum proxy': async () => SECOND_DETAILS,
     })
