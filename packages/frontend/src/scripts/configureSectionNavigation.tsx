@@ -1,4 +1,12 @@
+import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import {
+  NavigationList,
+  SectionNavigationItem,
+} from '../components/project/SectionNavigation'
+
 export function configureSectionNavigation() {
+  let previouslyHighlightedItem: HTMLAnchorElement | undefined
   const sectionNavigation = document.querySelector('#section-navigation')
   const sectionNavigationList = sectionNavigation?.querySelector(
     '#section-navigation-list',
@@ -20,52 +28,29 @@ export function configureSectionNavigation() {
   )
     return
 
-  // const sections: SectionNavigationItem[] = []
-
-  // document.querySelectorAll<HTMLElement>('section').forEach((section) => {
-  //   sections.push({
-  //     id: section.querySelector('h2')?.id || '',
-  //     title: section.querySelector('h2')?.textContent || '',
-  //   })
-  // })
-
-  // const listItems = sections
-  //   .map((section) => `<a href="#${section.id}">${section.title}</a>`)
-  //   .join('')
-  // sectionNavigationList.innerHTML = listItems
-
+  renderNavigationList(sections, sectionNavigationList)
   const sectionNavigationListItems = sectionNavigationList.querySelectorAll('a')
 
-  let previouslyHighlightedItem: HTMLAnchorElement | null = null
-
-  const highlightItem = (item: HTMLAnchorElement) => {
+  function highlightItem(item: HTMLAnchorElement) {
     previouslyHighlightedItem?.classList.toggle('opacity-60', true)
     item.classList.toggle('opacity-60', false)
     previouslyHighlightedItem = item
   }
 
-  const selectedSectionHref = window.location.hash
-  if (selectedSectionHref) {
-    sectionNavigationListItems.forEach((item) => {
-      if (item.getAttribute('href') === selectedSectionHref) {
-        highlightItem(item)
-      }
-    })
-  }
-
   const handleShowingProjectTitle = () => {
-    const navigationMargin = 32
+    const navigationTopOffset = 32
     const navigationOffset = sectionNavigation.getBoundingClientRect().top
 
-    if (navigationOffset === navigationMargin) {
+    if (navigationOffset === navigationTopOffset) {
       sectionNavigationHeader?.classList.toggle('hidden', false)
     } else {
       sectionNavigationHeader?.classList.toggle('hidden', true)
     }
   }
 
-  const offsetRatio = 0.1
   const handleHighlightOnScroll = () => {
+    const offsetRatio = 0.1
+
     sections.forEach((section) => {
       const sectionTop = section.offsetTop
       const sectionHeight = section.offsetHeight
@@ -89,6 +74,7 @@ export function configureSectionNavigation() {
     handleShowingProjectTitle()
     handleHighlightOnScroll()
   })
+
   sectionNavigationListItems.forEach((item) => {
     item.addEventListener('click', () => highlightItem(item))
   })
@@ -96,4 +82,23 @@ export function configureSectionNavigation() {
   sectionNavigationScrollToTopButton.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   })
+}
+
+function renderNavigationList(
+  sections: NodeListOf<HTMLElement>,
+  target: Element,
+) {
+  const navigationListSections: SectionNavigationItem[] = []
+
+  sections.forEach((section) => {
+    const id = section.id
+    const title = section.querySelector('h2')?.textContent
+    if (!id || !title) return
+
+    navigationListSections.push({ id, title })
+  })
+
+  target.innerHTML = renderToStaticMarkup(
+    <NavigationList sections={navigationListSections} />,
+  )
 }

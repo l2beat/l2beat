@@ -5,7 +5,6 @@ import { SummaryIcon } from '../icons/projects/SummaryIcon'
 interface SectionNavigationProps {
   title: string
   icon: string | undefined
-  sections: SectionNavigationItem[]
 }
 
 export interface SectionNavigationItem {
@@ -37,17 +36,19 @@ export function SectionNavigation(props: SectionNavigationProps) {
           <SummaryIcon />
           Summary
         </div>
-        <NavigationList sections={props.sections} />
+        <div id="section-navigation-list"></div>
       </div>
     </div>
   )
 }
 
-function NavigationList({ sections }: { sections: SectionNavigationItem[] }) {
-  // bg-gradient-to-b from-purple-100 via-pink-100 to-red-200
-
+export function NavigationList({
+  sections,
+}: {
+  sections: SectionNavigationItem[]
+}) {
   return (
-    <div id="section-navigation-list" className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3">
       {sections.map((section, i) => (
         <a
           key={section.id}
