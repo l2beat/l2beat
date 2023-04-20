@@ -100,6 +100,8 @@ export function prepareDiscoveryFile(
     configHash,
     contracts: contracts.map((x) => ({
       ...x,
+      type: undefined,
+      sources: undefined,
       ...getCustomName(x.name, x.address, config),
     })),
     eoas: results
