@@ -107,7 +107,7 @@ export class DiscoveryWatcher {
     )
 
     if (diff.changes.length > 0) {
-      await this.sanityCheck(discovery, projectConfig, blockNumber)
+      await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
 
       const dependents = await findDependents(
         projectConfig.name,
@@ -222,6 +222,7 @@ export class DiscoveryWatcher {
   // results.
   async sanityCheck(
     discovery: ProjectParameters,
+    diff: Diff,
     projectConfig: DiscoveryConfig,
     blockNumber: number,
   ) {
@@ -232,10 +233,16 @@ export class DiscoveryWatcher {
 
     if (!isEqual(discovery, secondDiscovery)) {
       await this.notify(
-        [`⚠️ [${projectConfig.name}]: 3rd party API returns non-integral data`],
+        [
+          `⚠️ [${projectConfig.name}]: API error (Alchemy or Etherscan) | ${blockNumber}`,
+        ],
         'INTERNAL',
       )
-      throw new Error('Sanity check failed')
+      throw new Error(
+        `[${
+          projectConfig.name
+        }] Sanity check failed | ${blockNumber}\n${JSON.stringify(diff)}}`,
+      )
     }
   }
 
