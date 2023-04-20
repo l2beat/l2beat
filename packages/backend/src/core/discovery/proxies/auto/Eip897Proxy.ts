@@ -1,4 +1,4 @@
-import { EthereumAddress, ProxyDetection } from '@l2beat/shared'
+import { EthereumAddress, ProxyDetails } from '@l2beat/shared'
 import { BigNumber } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -35,7 +35,7 @@ async function getImplementation(
 export async function detectEip897Proxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-): Promise<ProxyDetection | undefined> {
+): Promise<ProxyDetails | undefined> {
   const type = await getProxyType(provider, address)
   if (!type) {
     return

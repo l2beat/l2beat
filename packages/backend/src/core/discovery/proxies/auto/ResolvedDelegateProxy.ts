@@ -8,7 +8,7 @@ Implementation address is resolved by calling the libAddressManager.getAddress(i
 It does not have an owner
 
 */
-import { Bytes, EthereumAddress, ProxyDetection } from '@l2beat/shared'
+import { Bytes, EthereumAddress, ProxyDetails } from '@l2beat/shared'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -65,7 +65,7 @@ async function getImplementation(
 export async function detectResolvedDelegateProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-): Promise<ProxyDetection | undefined> {
+): Promise<ProxyDetails | undefined> {
   const addressManager = await getAddressManager(provider, address)
   if (addressManager === EthereumAddress.ZERO) {
     return

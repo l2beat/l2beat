@@ -1,4 +1,4 @@
-import { EthereumAddress, ProxyDetection } from '@l2beat/shared'
+import { EthereumAddress, ProxyDetails } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
@@ -25,7 +25,7 @@ async function getMasterCopy(
 export async function detectGnosisSafe(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-): Promise<ProxyDetection | undefined> {
+): Promise<ProxyDetails | undefined> {
   const masterCopy = await getMasterCopy(provider, address)
   if (!masterCopy) {
     return

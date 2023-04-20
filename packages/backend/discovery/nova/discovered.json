@@ -1,34 +1,138 @@
 {
   "name": "nova",
-  "blockNumber": 16889471,
-  "configHash": "0x3be60b6dd74dbb789961b12b35e38ba99ae896de4a3088e47ea4f95127c71983",
+  "blockNumber": 17079825,
+  "configHash": "0x1640230f938149f3499a78101d21551acc017b7138742036a391c318ded82ee9",
   "contracts": [
     {
-      "name": "L1CustomGateway",
-      "address": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-      "code": "https://etherscan.deth.net/address/0x23122da8C581AA7E0d07A36Ff1f16F799650232f,0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
+      "name": "ArbitrumProxy",
+      "address": "0xFb209827c58283535b744575e11953DCC4bEAD88",
+      "code": "https://etherscan.deth.net/address/0xFb209827c58283535b744575e11953DCC4bEAD88,0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f,0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff",
       "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
-        "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+        "type": "Arbitrum proxy",
+        "admin": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+        "adminImplementation": "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
+        "userImplementation": "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
       },
       "values": {
-        "counterpartGateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
+        "baseStake": "1000000000000000000",
+        "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
+        "chainId": 42170,
+        "challengeManager": "0xA59075221b50C598aED0Eae0bB9869639513af0D",
+        "confirmPeriodBlocks": 45818,
+        "currentRequiredStake": "1000000000000000000",
+        "extraChallengeTimeBlocks": 200,
+        "firstUnresolvedNode": 6799,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+        "isERC20Enabled": false,
+        "lastStakeBlock": 17079333,
+        "latestConfirmed": 6798,
+        "latestNodeCreated": 6955,
+        "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
+        "minimumAssertionPeriod": 75,
+        "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-        "router": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
-        "whitelist": "0x0000000000000000000000000000000000000000"
+        "paused": false,
+        "requireUnresolved": [],
+        "requireUnresolvedExists": [],
+        "rollupDeploymentBlock": 15016829,
+        "rollupEventInbox": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
+        "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
+        "stakerCount": 2,
+        "stakeToken": "0x0000000000000000000000000000000000000000",
+        "totalWithdrawableFunds": 0,
+        "VALIDATOR_AFK_BLOCKS": 45818,
+        "validatorUtils": "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
+        "validatorWalletCreator": "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
+        "validatorWhitelistDisabled": false,
+        "wasmModuleRoot": "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3",
+        "zombieAddress": [],
+        "zombieCount": 0,
+        "zombieLatestStakedNode": []
+      }
+    },
+    {
+      "name": "ValidatorWalletCreator",
+      "address": "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
+      "code": "https://etherscan.deth.net/address/0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+        "template": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"
+      }
+    },
+    {
+      "name": "ValidatorWallet",
+      "address": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
+      "code": "https://etherscan.deth.net/address/0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "ValidatorUtils",
+      "address": "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
+      "code": "https://etherscan.deth.net/address/0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "NOVA_STAKERS": [
+          [
+            "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87",
+            "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"
+          ],
+          false
+        ]
+      },
+      "derivedName": "ValidatorUtils"
+    },
+    {
+      "name": "SequencerInbox",
+      "address": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
+      "code": "https://etherscan.deth.net/address/0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b,0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9",
+        "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      },
+      "values": {
+        "batchCount": 12359,
+        "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
+        "DATA_AUTHENTICATED_FLAG": "0x40",
+        "HEADER_LENGTH": 40,
+        "maxTimeVariation": [5760, 12, 86400, 3600],
+        "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
+        "totalDelayedMessagesRead": 200245
       }
     },
     {
       "name": "ProxyAdmin",
-      "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560",
-      "code": "https://etherscan.deth.net/address/0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560",
+      "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148",
+      "code": "https://etherscan.deth.net/address/0x71D78dC7cCC0e037e12de1E50f5470903ce37148",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      }
+    },
+    {
+      "name": "RollupEventInbox",
+      "address": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
+      "code": "https://etherscan.deth.net/address/0x304807A7ed6c1296df2128E6ff3836e477329CD2,0x32642eE509001D02615951090c7c56D6000e22C2",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x32642eE509001D02615951090c7c56D6000e22C2",
+        "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      },
+      "values": {
+        "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
+        "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88"
       }
     },
     {
@@ -48,9 +152,7 @@
           },
           "ADMIN_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": [
-              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-            ]
+            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
@@ -123,27 +225,19 @@
           },
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-            ]
+            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
-            ]
+            "members": ["0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x0000000000000000000000000000000000000000"
-            ]
+            "members": ["0x0000000000000000000000000000000000000000"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x3666a60ff589873ced457a9a8a0aA6F83D708767"
-            ]
+            "members": ["0x3666a60ff589873ced457a9a8a0aA6F83D708767"]
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
@@ -155,82 +249,6 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      }
-    },
-    {
-      "name": "Inbox",
-      "address": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
-      "code": "https://etherscan.deth.net/address/0xc4448b71118c9071Bcb9734A0EAc55D18A153949,0x1b2676D32E2f7430a564DD4560641F990dFE3D6a",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x1b2676D32E2f7430a564DD4560641F990dFE3D6a",
-        "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
-      },
-      "values": {
-        "allowListEnabled": false,
-        "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
-        "paused": false,
-        "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148",
-      "code": "https://etherscan.deth.net/address/0x71D78dC7cCC0e037e12de1E50f5470903ce37148",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
-    },
-    {
-      "name": "SequencerInbox",
-      "address": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-      "code": "https://etherscan.deth.net/address/0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b,0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9",
-        "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
-      },
-      "values": {
-        "batchCount": 11058,
-        "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
-        "DATA_AUTHENTICATED_FLAG": "0x40",
-        "HEADER_LENGTH": 40,
-        "maxTimeVariation": [
-          5760,
-          12,
-          86400,
-          3600
-        ],
-        "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 160719
-      }
-    },
-    {
-      "name": "Bridge",
-      "address": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
-      "code": "https://etherscan.deth.net/address/0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd,0x1066CEcC8880948FE55e427E94F1FF221d626591",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
-        "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
-      },
-      "values": {
-        "activeOutbox": "0x0000000000000000000000000000000000000000",
-        "allowedDelayedInboxList": [
-          "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
-          "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
-        ],
-        "allowedOutboxList": [
-          "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
-        ],
-        "delayedMessageCount": 160736,
-        "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 11058,
-        "sequencerReportedSubMessageCount": 3423029
       }
     },
     {
@@ -255,131 +273,19 @@
       }
     },
     {
-      "name": "RollupEventInbox",
-      "address": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
-      "code": "https://etherscan.deth.net/address/0x304807A7ed6c1296df2128E6ff3836e477329CD2,0x32642eE509001D02615951090c7c56D6000e22C2",
+      "name": "Inbox",
+      "address": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+      "code": "https://etherscan.deth.net/address/0xc4448b71118c9071Bcb9734A0EAc55D18A153949,0x1b2676D32E2f7430a564DD4560641F990dFE3D6a",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x32642eE509001D02615951090c7c56D6000e22C2",
+        "implementation": "0x1b2676D32E2f7430a564DD4560641F990dFE3D6a",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
       "values": {
+        "allowListEnabled": false,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
-        "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88"
-      }
-    },
-    {
-      "name": "L1GatewayRouter",
-      "address": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
-      "code": "https://etherscan.deth.net/address/0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48,0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
-        "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
-      },
-      "values": {
-        "counterpartGateway": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
-        "defaultGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
-        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-        "router": "0x0000000000000000000000000000000000000000",
-        "whitelist": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
-      "name": "L1ERC20Gateway",
-      "address": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-      "code": "https://etherscan.deth.net/address/0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf,0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
-        "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
-      },
-      "values": {
-        "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
-        "counterpartGateway": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
-        "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
-        "l2BeaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
-        "router": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
-        "whitelist": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
-      "name": "ArbitrumProxy",
-      "address": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-      "code": "https://etherscan.deth.net/address/0xFb209827c58283535b744575e11953DCC4bEAD88,0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f,0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff",
-      "upgradeability": {
-        "type": "Arbitrum proxy",
-        "admin": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-        "adminImplementation": "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
-        "userImplementation": "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
-      },
-      "values": {
-        "baseStake": "1000000000000000000",
-        "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
-        "chainId": 42170,
-        "challengeManager": "0xA59075221b50C598aED0Eae0bB9869639513af0D",
-        "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "1000000000000000000",
-        "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 6165,
-        "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
-        "isERC20Enabled": false,
-        "lastStakeBlock": 15184042,
-        "latestConfirmed": 6164,
-        "latestNodeCreated": 6318,
-        "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
-        "minimumAssertionPeriod": 75,
-        "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
-        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "paused": false,
-        "requireUnresolved": [],
-        "requireUnresolvedExists": [],
-        "rollupDeploymentBlock": 15016829,
-        "rollupEventInbox": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
-        "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "stakerCount": 2,
-        "stakeToken": "0x0000000000000000000000000000000000000000",
-        "totalWithdrawableFunds": 0,
-        "VALIDATOR_AFK_BLOCKS": 45818,
-        "validatorUtils": "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
-        "validatorWalletCreator": "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
-        "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3",
-        "zombieAddress": [],
-        "zombieCount": 0,
-        "zombieLatestStakedNode": []
-      }
-    },
-    {
-      "name": "ValidatorWalletCreator",
-      "address": "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
-      "code": "https://etherscan.deth.net/address/0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-        "template": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"
-      }
-    },
-    {
-      "name": "ValidatorWallet",
-      "address": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
-      "code": "https://etherscan.deth.net/address/0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
-      "name": "ValidatorUtils",
-      "address": "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
-      "code": "https://etherscan.deth.net/address/0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
-      "upgradeability": {
-        "type": "immutable"
+        "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
       }
     },
     {
@@ -443,6 +349,93 @@
       "code": "https://etherscan.deth.net/address/0x8323B58C522690E6aFae94044825F0c79A93d236",
       "upgradeability": {
         "type": "immutable"
+      }
+    },
+    {
+      "name": "Bridge",
+      "address": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
+      "code": "https://etherscan.deth.net/address/0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd,0x1066CEcC8880948FE55e427E94F1FF221d626591",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
+        "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      },
+      "values": {
+        "activeOutbox": "0x0000000000000000000000000000000000000000",
+        "allowedDelayedInboxList": [
+          "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+          "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
+        ],
+        "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
+        "delayedMessageCount": 200251,
+        "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
+        "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
+        "sequencerMessageCount": 12359,
+        "sequencerReportedSubMessageCount": 6136910
+      }
+    },
+    {
+      "name": "L1GatewayRouter",
+      "address": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
+      "code": "https://etherscan.deth.net/address/0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48,0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
+        "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      },
+      "values": {
+        "counterpartGateway": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
+        "defaultGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+        "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+        "router": "0x0000000000000000000000000000000000000000",
+        "whitelist": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560",
+      "code": "https://etherscan.deth.net/address/0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      }
+    },
+    {
+      "name": "L1ERC20Gateway",
+      "address": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+      "code": "https://etherscan.deth.net/address/0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf,0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
+        "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      },
+      "values": {
+        "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
+        "counterpartGateway": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
+        "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+        "l2BeaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
+        "router": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
+        "whitelist": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "L1CustomGateway",
+      "address": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+      "code": "https://etherscan.deth.net/address/0x23122da8C581AA7E0d07A36Ff1f16F799650232f,0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
+        "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      },
+      "values": {
+        "counterpartGateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
+        "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+        "router": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
+        "whitelist": "0x0000000000000000000000000000000000000000"
       }
     }
   ],

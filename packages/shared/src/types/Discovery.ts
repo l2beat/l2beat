@@ -30,7 +30,7 @@ export type ContractValue =
   | ContractValue[]
   | { [key: string]: ContractValue }
 
-export interface ProxyDetection {
+export interface ProxyDetails {
   upgradeability: UpgradeabilityParameters
   implementations: EthereumAddress[]
   relatives: EthereumAddress[]
