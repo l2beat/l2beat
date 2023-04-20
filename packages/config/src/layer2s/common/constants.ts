@@ -1,1 +1,1 @@
-export const MIN_VIABLE_DELAY = 60 * 60 * 12
+export const DANGER_DELAY_THRESHOLD_SECONDS = 60 * 60 * 12

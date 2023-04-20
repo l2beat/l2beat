@@ -1,7 +1,7 @@
 import { ProjectRiskViewEntry } from '../../common'
 import { formatSeconds } from '../../utils/formatSeconds'
 import { Layer2RiskView } from '../types'
-import { MIN_VIABLE_DELAY } from './constants'
+import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 
 export function makeBridgeCompatible(
   entry: Omit<Layer2RiskView, 'sourceUpgradeability'>,
@@ -121,7 +121,7 @@ export function UPGRADE_DELAY(delay: string): ProjectRiskViewEntry {
 }
 
 function UPGRADE_DELAY_SECONDS(delay: number): ProjectRiskViewEntry {
-  if (delay < MIN_VIABLE_DELAY) {
+  if (delay < DANGER_DELAY_THRESHOLD_SECONDS) {
     return UPGRADABLE_YES
   }
   const delayString = formatSeconds(delay)
