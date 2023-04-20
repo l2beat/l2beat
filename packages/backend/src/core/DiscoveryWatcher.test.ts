@@ -370,7 +370,7 @@ describe(DiscoveryWatcher.name, () => {
 
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        `⚠️ [${PROJECT_A}]: 3rd party API returns non-integral data`,
+        `⚠️ [${PROJECT_A}]: API error (Alchemy or Etherscan) | ${BLOCK_NUMBER}`,
         'INTERNAL',
       )
     })
