@@ -6,7 +6,7 @@ import {
   ProjectParameters,
   UnixTime,
 } from '@l2beat/shared'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { providers } from 'ethers'
 
 import {
@@ -105,15 +105,15 @@ describe(DiscoveryWatcher.name, () => {
       expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
       expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
-      // runs discovery for every project
-      expect(discoveryEngine.run).toHaveBeenCalledTimes(2)
+      // runs discovery for every project + sanity check
+      expect(discoveryEngine.run).toHaveBeenCalledTimes(2 * 2)
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         1,
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
       )
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
-        2,
+        3,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
       )
@@ -186,6 +186,8 @@ describe(DiscoveryWatcher.name, () => {
       expect(discoveryWatcherRepository.findLatest).toHaveBeenOnlyCalledWith(
         PROJECT_A,
       )
+      // runs discovery
+      expect(discoveryEngine.run).toHaveBeenCalledTimes(1)
       // does not send a notification
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
     })
@@ -225,15 +227,15 @@ describe(DiscoveryWatcher.name, () => {
       expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
       expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
-      // runs discovery for every project
-      expect(discoveryEngine.run).toHaveBeenCalledTimes(2)
+      // runs discovery for every project + sanity check
+      expect(discoveryEngine.run).toHaveBeenCalledTimes(2 * 2)
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
         1,
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
       )
       expect(discoveryEngine.run).toHaveBeenNthCalledWith(
-        2,
+        3,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
       )
@@ -325,6 +327,52 @@ describe(DiscoveryWatcher.name, () => {
       expect(discoveryWatcherRepository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
+    })
+
+    it('does not send notification if sanity check failed', async () => {
+      const configReader = mockObject<ConfigReader>({
+        readAllConfigs: async () => [mockConfig(PROJECT_A)],
+        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
+      })
+
+      const discoveryWatcherRepository = mockObject<DiscoveryWatcherRepository>(
+        {
+          findLatest: async () => ({
+            ...mockRecord,
+            discovery: DISCOVERY_RESULT,
+            configHash: mockConfig(PROJECT_A).hash,
+          }),
+          addOrUpdate: async () => '',
+        },
+      )
+
+      const discoveryEngine = mockObject<DiscoveryEngine>({
+        run: mockFn(),
+      })
+
+      discoveryEngine.run.resolvesToOnce({ ...DISCOVERY_RESULT, contracts: [] })
+      discoveryEngine.run.resolvesToOnce({ ...DISCOVERY_RESULT })
+
+      const discoveryWatcher = new DiscoveryWatcher(
+        provider,
+        discoveryEngine,
+        discordClient,
+        configReader,
+        discoveryWatcherRepository,
+        mockObject<Clock>(),
+        Logger.SILENT,
+      )
+
+      await discoveryWatcher.update(new UnixTime(0))
+
+      // send notification about the error of 3rd party API
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
+
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        `⚠️ [${PROJECT_A}]: 3rd party API returns non-integral data`,
+        'INTERNAL',
+      )
     })
 
     it('handles error', async () => {
