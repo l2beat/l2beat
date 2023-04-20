@@ -79,7 +79,8 @@ export const zksyncera: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: {
       value: 'ZK proofs',
-      description: 'todo',
+      description:
+        'Uses PLONK zero-knowledge proof system with KZG commitments.',
       references: [
         'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F5#L89',
         'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L254',
@@ -104,7 +105,7 @@ export const zksyncera: Layer2 = {
       contracts: ['ValidatorTimelock', 'DiamondProxy'],
     },
     upgradeability: {
-      ...VALUES.ZKSYNC_2.UPGRADEABILITY_STRING,
+      ...VALUES.ZKSYNC_2.getUpgradeabilityString(),
       references: [
         'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F8#L121',
         'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51',

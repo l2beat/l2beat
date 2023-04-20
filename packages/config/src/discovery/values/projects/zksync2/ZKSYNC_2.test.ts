@@ -40,4 +40,15 @@ describe('HARDCODED: zksync2', () => {
       'Security Council changed, upgrade returned value and upgradeability risk.',
     )
   })
+
+  // currently the governor is set as a multisig
+  // when this test fails it means that the governor changed
+  // update the permissons section and updgradeability risk
+  it('governor', () => {
+    const address = discovery.getAddressFromValue('DiamondProxy', 'getGovernor')
+    assert(
+      address === EthereumAddress(HARDCODED.ZKSYNC_2.GOVERNOR),
+      'Governor changed, upgrade returned value and upgradeability risk.',
+    )
+  })
 })

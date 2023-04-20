@@ -1,7 +1,19 @@
 import { ProjectPermission, ProjectRiskViewEntry } from '../../../../common'
 import { RISK_VIEW } from '../../../../layer2s/common/riskView'
+import { ProjectDiscovery } from '../../../ProjectDiscovery'
 
-const UPGRADEABILITY_STRING: ProjectRiskViewEntry = RISK_VIEW.UPGRADABLE_YES
+const getUpgradeabilityString = (): ProjectRiskViewEntry => {
+  const discovery = new ProjectDiscovery('zksync2')
+
+  const stats = discovery.getMultisigStats(
+    discovery.getAddressFromValue('DiamondProxy', 'getGovernor').toString(),
+  )
+
+  return {
+    ...RISK_VIEW.UPGRADABLE_YES,
+    description: `The code that secures the system can be changed arbitrarily and without notice by the governor, that currently is a ${stats} Multisig.`,
+  }
+}
 
 const SECURITY_COUNCIL: ProjectPermission = {
   name: 'Security Council',
@@ -11,6 +23,6 @@ const SECURITY_COUNCIL: ProjectPermission = {
 }
 
 export const ZKSYNC_2 = {
-  UPGRADEABILITY_STRING,
+  getUpgradeabilityString,
   SECURITY_COUNCIL,
 }
