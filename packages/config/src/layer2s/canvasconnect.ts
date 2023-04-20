@@ -41,9 +41,9 @@ export const canvasconnect: Layer2 = {
     name: 'Canvas Connect',
     slug: 'canvasconnect',
     warning:
-      'Canvas Connect is initially open only to whitelisted institutional clients.',
+      'Canvas Connect is currently open only to whitelisted institutional clients.',
     description:
-      'Canvas Connect is a Layer 2 ZK network built on the StarkEx technology that aims to offer privacy-focused solutions for the finance and digital economy. It aims to enable the transfer, trade, and investment of tokenized real-world assets, stablecoins, CBDCs, and digital assets with assurances of privacy, low cost, and high speed.',
+      'Canvas Connect is a Layer 2 solution based on StarkEx technology, specifically designed to provide centralized investment and trading services to financial institutions.',
     purpose: 'Privacy, Finance',
     links: {
       websites: ['https://canvas.co/'],
