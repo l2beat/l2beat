@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress, ProxyDetection } from '@l2beat/shared'
+import { Bytes, EthereumAddress, ProxyDetails } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
@@ -38,7 +38,7 @@ async function getAdmin(provider: DiscoveryProvider, address: EthereumAddress) {
 export async function detectZeppelinOSProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-): Promise<ProxyDetection | undefined> {
+): Promise<ProxyDetails | undefined> {
   const implementation = await getImplementation(provider, address)
   if (implementation === EthereumAddress.ZERO) {
     return

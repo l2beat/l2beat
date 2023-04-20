@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress, Hash256, ProxyDetection } from '@l2beat/shared'
+import { Bytes, EthereumAddress, Hash256, ProxyDetails } from '@l2beat/shared'
 import { BigNumber, utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -68,7 +68,7 @@ async function getFinalizedState(
 export async function detectStarkWareProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-): Promise<ProxyDetection | undefined> {
+): Promise<ProxyDetails | undefined> {
   const implementation = await getImplementation(provider, address)
   if (implementation === EthereumAddress.ZERO) {
     return
@@ -123,7 +123,7 @@ async function getStarkWareDiamond(
   upgradeDelay: number,
   isFinal: boolean,
   proxyGovernance: EthereumAddress[],
-): Promise<ProxyDetection | false> {
+): Promise<ProxyDetails | false> {
   const upgrades = await provider.getLogs(address, [
     [
       coder.getEventTopic('Upgraded'),
