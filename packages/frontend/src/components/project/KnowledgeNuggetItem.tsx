@@ -13,19 +13,19 @@ export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
   return (
     <OutLink
       href={knowledgeNugget.url}
-      className="group w-[250px] items-center gap-4 rounded-md pr-4 transition-all hover:bg-gray-400 dark:hover:bg-gray-900 "
+      className="group grid max-w-md grid-cols-5 items-center gap-3 rounded-md pr-4 transition-all hover:bg-gray-400 dark:hover:bg-gray-900 "
     >
-      <div className="relative overflow-hidden rounded-md pb-2/3 drop-shadow-md">
+      <div className="relative col-span-2 overflow-hidden rounded-md pb-2/3 drop-shadow-md">
         <img
           src={getThumbnail(knowledgeNugget)}
           className="absolute h-full w-full object-cover transition-all group-hover:scale-105"
         />
       </div>
-      <div className="mt-2 flex-col transition-all group-hover:translate-x-0.5">
+      <div className="col-span-3 flex-col transition-all group-hover:translate-x-0.5">
         <p className="text-lg font-bold leading-tight">
           {knowledgeNugget.title}
         </p>
-        <p className="mt-3 flex items-center gap-1 text-sm font-bold text-link underline">
+        <p className="flex flex-wrap items-center gap-1 text-sm font-bold text-link underline">
           Learn more
           <ArrowRightIcon className="fill-link" />
         </p>
