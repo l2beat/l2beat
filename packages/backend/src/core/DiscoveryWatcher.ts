@@ -1,5 +1,6 @@
 import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
+import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
@@ -106,6 +107,8 @@ export class DiscoveryWatcher {
     )
 
     if (diff.changes.length > 0) {
+      await this.sanityCheck(discovery, projectConfig, blockNumber)
+
       const dependents = await findDependents(
         projectConfig.name,
         this.configReader,
@@ -211,6 +214,28 @@ export class DiscoveryWatcher {
         () => this.logger.info('Notification to Discord has been sent'),
         (e) => this.logger.error(e),
       )
+    }
+  }
+
+  // 3rd party APIs are unstable, so we do a sanity check before sending
+  // notifications, which makes the same request again and compares the
+  // results.
+  async sanityCheck(
+    discovery: ProjectParameters,
+    projectConfig: DiscoveryConfig,
+    blockNumber: number,
+  ) {
+    const secondDiscovery = await this.discoveryEngine.run(
+      projectConfig,
+      blockNumber,
+    )
+
+    if (!isEqual(discovery, secondDiscovery)) {
+      await this.notify(
+        [`⚠️ [${projectConfig.name}]: 3rd party API returns non-integral data`],
+        'INTERNAL',
+      )
+      throw new Error('Sanity check failed')
     }
   }
 
