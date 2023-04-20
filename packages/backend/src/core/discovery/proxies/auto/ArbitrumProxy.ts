@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress, ProxyDetection } from '@l2beat/shared'
+import { Bytes, EthereumAddress, ProxyDetails } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
@@ -21,7 +21,7 @@ async function getSecondaryImplementation(
 export async function detectArbitrumProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-): Promise<ProxyDetection | undefined> {
+): Promise<ProxyDetails | undefined> {
   const userImplementation = await getSecondaryImplementation(provider, address)
   if (userImplementation === EthereumAddress.ZERO) {
     return
