@@ -1,32 +1,30 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import {
-  NavigationList,
+  DesktopNavigationList,
   SectionNavigationItem,
-} from '../components/project/SectionNavigation'
+} from '../../components/project/section-navigation/DesktopSectionNavigation'
 
-export function configureSectionNavigation() {
-  let previouslyHighlightedItem: HTMLAnchorElement | undefined
-  const sectionNavigation = document.querySelector('#section-navigation')
+export function configureDesktopSectionNavigation() {
+  const sectionNavigation = document.querySelector(
+    '#desktop-section-navigation',
+  )
   const sectionNavigationList = sectionNavigation?.querySelector(
-    '#section-navigation-list',
+    '#desktop-section-navigation-list',
   )
   const sectionNavigationHeader = sectionNavigation?.querySelector(
-    '#section-navigation-header',
+    '#desktop-section-navigation-header',
   )
-  const sectionNavigationScrollToTopButton =
-    sectionNavigationHeader?.querySelector(
-      '#section-navigation-scroll-to-top-button',
-    )
   const sections = document.querySelectorAll('section')
 
-  if (
-    !sectionNavigation ||
-    !sectionNavigationList ||
-    !sectionNavigationHeader ||
-    !sectionNavigationScrollToTopButton
-  )
+  if (!sectionNavigation || !sectionNavigationList || !sectionNavigationHeader)
     return
+
+  let previouslyHighlightedItem: HTMLAnchorElement | undefined
+  const sectionNavigationScrollToTopButton =
+    sectionNavigationHeader?.querySelector(
+      '#desktop-section-navigation-scroll-to-top-button',
+    )
 
   renderNavigationList(sections, sectionNavigationList)
   const sectionNavigationListItems = sectionNavigationList.querySelectorAll('a')
@@ -79,7 +77,7 @@ export function configureSectionNavigation() {
     item.addEventListener('click', () => highlightItem(item))
   })
 
-  sectionNavigationScrollToTopButton.addEventListener('click', () => {
+  sectionNavigationScrollToTopButton?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   })
 }
@@ -99,6 +97,6 @@ function renderNavigationList(
   })
 
   target.innerHTML = renderToStaticMarkup(
-    <NavigationList sections={navigationListSections} />,
+    <DesktopNavigationList sections={navigationListSections} />,
   )
 }

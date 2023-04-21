@@ -8,7 +8,8 @@ import {
   NavbarProps,
 } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
-import { SectionNavigation } from '../../../components/project/SectionNavigation'
+import { DesktopSectionNavigation } from '../../../components/project/section-navigation/DesktopSectionNavigation'
+import { MobileSectionNavigation } from '../../../components/project/section-navigation/MobileSectionNavigation'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
@@ -24,11 +25,14 @@ export function ProjectPage(props: ProjectPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
+      <div className="sticky top-0 z-[1000] md:hidden">
+        <MobileSectionNavigation />
+      </div>
       <PageContent mobileFull>
         <ProjectHeader {...props.projectHeader} />
         <div className="mt-8 grid grid-cols-7 gap-x-12">
           <div className="col-span-2 hidden md:block">
-            <SectionNavigation
+            <DesktopSectionNavigation
               title={props.projectHeader.title}
               icon={props.projectHeader.icon}
             />

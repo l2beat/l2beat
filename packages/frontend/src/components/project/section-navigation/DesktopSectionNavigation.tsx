@@ -1,6 +1,6 @@
 import React from 'react'
-import { HorizontalSeparator } from '../HorizontalSeparator'
-import { SummaryIcon } from '../icons/projects/SummaryIcon'
+import { HorizontalSeparator } from '../../HorizontalSeparator'
+import { SummaryIcon } from '../../icons/projects/SummaryIcon'
 
 interface SectionNavigationProps {
   title: string
@@ -12,10 +12,10 @@ export interface SectionNavigationItem {
   id: string
 }
 
-export function SectionNavigation(props: SectionNavigationProps) {
+export function DesktopSectionNavigation(props: SectionNavigationProps) {
   return (
-    <div className="sticky top-8" id="section-navigation">
-      <div id="section-navigation-header" className="hidden">
+    <div className="sticky top-8" id="desktop-section-navigation">
+      <div id="desktop-section-navigation-header" className="hidden">
         <div className="flex flex-row items-center">
           {props.icon && (
             <img
@@ -25,7 +25,10 @@ export function SectionNavigation(props: SectionNavigationProps) {
             />
           )}
           <span className="ml-4 text-2xl font-bold">{props.title}</span>
-          <div className="ml-auto" id="section-navigation-scroll-to-top-button">
+          <div
+            className="ml-auto"
+            id="desktop-section-navigation-scroll-to-top-button"
+          >
             TOP
           </div>
         </div>
@@ -36,13 +39,13 @@ export function SectionNavigation(props: SectionNavigationProps) {
           <SummaryIcon />
           Summary
         </div>
-        <div id="section-navigation-list"></div>
+        <div id="desktop-section-navigation-list"></div>
       </div>
     </div>
   )
 }
 
-export function NavigationList({
+export function DesktopNavigationList({
   sections,
 }: {
   sections: SectionNavigationItem[]

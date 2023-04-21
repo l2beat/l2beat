@@ -5,8 +5,8 @@ import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureDropdowns } from './configureDropdowns'
 import { configureFilters } from './configureFilters'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
-import { configureSectionNavigation } from './configureSectionNavigation'
 import { configureTooltips } from './configureTooltips'
+import { configureSectionNavigation } from './section-navigation'
 
 configureFilters()
 configureDarkThemeToggle()
