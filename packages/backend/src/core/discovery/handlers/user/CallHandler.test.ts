@@ -187,6 +187,8 @@ describe(CallHandler.name, () => {
     const method = 'function add(uint256 a, uint256 b) view returns (uint256)'
     const signature = '0x771602f7'
     const address = EthereumAddress.random()
+    const revertErrorMessage =
+      '(code: 3, message: execution reverted: xDomainMessageSender is not set, data: Some(String("0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f78446f6d61696e4d65737361676553656e646572206973206e6f742073657400")))'
 
     it('calls the method with the provided parameters', async () => {
       const provider = mockObject<DiscoveryProvider>({
@@ -289,12 +291,10 @@ describe(CallHandler.name, () => {
       })
     })
 
-    it('catches revert error', async () => {
+    it('should catch revert error', async () => {
       const provider = mockObject<DiscoveryProvider>({
         async call() {
-          throw new Error(
-            '(code: 3, message: execution reverted: xDomainMessageSender is not set, data: Some(String("0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f78446f6d61696e4d65737361676553656e646572206973206e6f742073657400")))',
-          )
+          throw new Error(revertErrorMessage)
         },
       })
 
@@ -312,12 +312,10 @@ describe(CallHandler.name, () => {
       })
     })
 
-    it('catches does not catch revert error', async () => {
+    it('should not catch revert error when expectRevert is false', async () => {
       const provider = mockObject<DiscoveryProvider>({
         async call() {
-          throw new Error(
-            '(code: 3, message: execution reverted: xDomainMessageSender is not set, data: Some(String("0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f78446f6d61696e4d65737361676553656e646572206973206e6f742073657400")))',
-          )
+          throw new Error(revertErrorMessage)
         },
       })
 
