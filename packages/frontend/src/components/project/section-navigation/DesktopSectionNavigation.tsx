@@ -25,17 +25,14 @@ export function DesktopSectionNavigation(props: SectionNavigationProps) {
             />
           )}
           <span className="ml-4 text-2xl font-bold">{props.title}</span>
-          <div
-            className="ml-auto"
-            id="desktop-section-navigation-scroll-to-top-button"
-          >
-            TOP
-          </div>
         </div>
         <HorizontalSeparator className="my-4" />
       </div>
       <div className="flex flex-col gap-3">
-        <div className="flex flex-row items-center gap-3">
+        <div
+          className="flex cursor-pointer flex-row items-center gap-3 opacity-60 hover:opacity-100"
+          id="desktop-section-navigation-summary"
+        >
           <SummaryIcon />
           Summary
         </div>

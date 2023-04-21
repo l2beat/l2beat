@@ -15,21 +15,27 @@ export function configureDesktopSectionNavigation() {
   const sectionNavigationHeader = sectionNavigation?.querySelector(
     '#desktop-section-navigation-header',
   )
+  const sectionNavigationSummary = sectionNavigation?.querySelector(
+    '#desktop-section-navigation-summary',
+  )
   const sections = document.querySelectorAll('section')
 
-  if (!sectionNavigation || !sectionNavigationList || !sectionNavigationHeader)
+  if (
+    !sectionNavigation ||
+    !sectionNavigationList ||
+    !sectionNavigationHeader ||
+    !sectionNavigationSummary
+  )
     return
 
-  let previouslyHighlightedItem: HTMLAnchorElement | undefined
-  const sectionNavigationScrollToTopButton =
-    sectionNavigationHeader?.querySelector(
-      '#desktop-section-navigation-scroll-to-top-button',
-    )
-
+  let previouslyHighlightedItem: HTMLAnchorElement | Element | undefined
+  highlightItem(sectionNavigationSummary)
   renderNavigationList(sections, sectionNavigationList)
-  const sectionNavigationListItems = sectionNavigationList.querySelectorAll('a')
+  const lastSection = Array.from(
+    sectionNavigationList.querySelectorAll('a'),
+  ).pop()
 
-  function highlightItem(item: HTMLAnchorElement | undefined) {
+  function highlightItem(item: HTMLAnchorElement | Element | undefined) {
     previouslyHighlightedItem?.classList.toggle('opacity-60', true)
     item?.classList.toggle('opacity-60', false)
     previouslyHighlightedItem = item
@@ -46,16 +52,15 @@ export function configureDesktopSectionNavigation() {
     }
   }
 
-  const handleHighlightOnScroll = () => {
+  const handleHighlighting = () => {
     const offsetRatio = 0.2
 
     if (isScrolledToTop()) {
-      highlightItem(undefined)
+      highlightItem(sectionNavigationSummary)
     }
 
     if (isScrolledToBottom()) {
-      const lastSection = sectionNavigationListItems.length - 1
-      highlightItem(sectionNavigationListItems[lastSection])
+      highlightItem(lastSection)
       return
     }
 
@@ -66,29 +71,26 @@ export function configureDesktopSectionNavigation() {
       const viewportHeight = window.innerHeight
 
       const scrollPos = window.pageYOffset + viewportHeight * offsetRatio
-      const sectionId = section.id
+      const isCurrentSection =
+        scrollPos >= sectionTop && scrollPos < sectionBottom
 
-      if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-        sectionNavigationListItems.forEach((item) => {
-          if (item.getAttribute('href') === `#${sectionId}`) {
-            highlightItem(item)
-          }
-        })
+      if (isCurrentSection) {
+        const sectionNavigationItem = sectionNavigationList.querySelector(
+          `a[href="#${section.id}"]`,
+        )
+        if (!sectionNavigationItem) return
+        highlightItem(sectionNavigationItem)
       }
     })
   }
 
   window.addEventListener('scroll', () => {
     handleShowingProjectTitle()
-    handleHighlightOnScroll()
+    handleHighlighting()
   })
 
-  sectionNavigationListItems.forEach((item) => {
-    item.addEventListener('click', () => highlightItem(item))
-  })
-
-  sectionNavigationScrollToTopButton?.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+  sectionNavigationSummary.addEventListener('click', () => {
+    window.scrollTo({ top: 0 })
   })
 }
 
