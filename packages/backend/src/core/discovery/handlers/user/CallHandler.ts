@@ -72,12 +72,12 @@ export class CallHandler implements Handler {
         value: 'EXPECT_REVERT',
         ignoreRelative: this.definition.ignoreRelative,
       }
-    } else {
-      return {
-        field: this.field,
-        ...callResult,
-        ignoreRelative: this.definition.ignoreRelative,
-      }
+    }
+
+    return {
+      field: this.field,
+      ...callResult,
+      ignoreRelative: this.definition.ignoreRelative,
     }
   }
 }
