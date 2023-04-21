@@ -11,5 +11,5 @@ export function delayDescriptionFromString(delay: string): string {
     return 'Currently there is no delay before the upgrade, so the users will not have time to migrate.'
   }
 
-  return `Currently there is ${delay} delay before the upgrade,`
+  return `Currently there is ${delay} delay before the upgrade.`
 }
