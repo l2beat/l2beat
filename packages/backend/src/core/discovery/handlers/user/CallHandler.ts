@@ -6,7 +6,7 @@ import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
-import { callMethod } from '../utils/callMethod'
+import { callMethod, EXEC_REVERT_MSG } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 
 export type CallHandlerDefinition = z.infer<typeof CallHandlerDefinition>
@@ -15,6 +15,7 @@ export const CallHandlerDefinition = z.strictObject({
   method: z.optional(z.string()),
   args: z.array(z.union([z.string(), z.number()])),
   ignoreRelative: z.optional(z.boolean()),
+  expectRevert: z.optional(z.boolean()),
 })
 
 export class CallHandler implements Handler {
@@ -64,10 +65,19 @@ export class CallHandler implements Handler {
       this.fragment,
       resolved.args,
     )
-    return {
-      field: this.field,
-      ...callResult,
-      ignoreRelative: this.definition.ignoreRelative,
+
+    if (this.definition.expectRevert && callResult.error === EXEC_REVERT_MSG) {
+      return {
+        field: this.field,
+        value: 'EXPECT_REVERT',
+        ignoreRelative: this.definition.ignoreRelative,
+      }
+    } else {
+      return {
+        field: this.field,
+        ...callResult,
+        ignoreRelative: this.definition.ignoreRelative,
+      }
     }
   }
 }

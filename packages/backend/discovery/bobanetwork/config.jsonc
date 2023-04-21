@@ -7,11 +7,20 @@
     "0xC891F466e53f40603250837282eAE4e22aD5b088" //L1 NFT Bridge
   ],
   "names": {
-    "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E": "L1CrossDomainMessengerFast"
+    "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E": "L1CrossDomainMessengerFast",
+    "0x6D4528d192dB72E282265D6092F4B872f9Dff69e": "L1CrossDomainMessenger_1",
+    "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820": "L1CrossDomainMessenger_2"
   },
   "overrides": {
     "L1CrossDomainMessengerFast": {
-      "ignoreMethods": ["xDomainMessageSender"]
+      "fields": {
+        "xDomainMessageSender": {
+          "type": "call",
+          "method": "function xDomainMessageSender() view returns (address)",
+          "args": [],
+          "expectRevert": true
+        }
+      }
     },
     "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00": {
       "ignoreInWatchMode": [
@@ -51,11 +60,25 @@
       "ignoreMethods": ["get"],
       "ignoreInWatchMode": ["getGlobalMetadata", "length"]
     },
-    "0x6D4528d192dB72E282265D6092F4B872f9Dff69e": {
-      "ignoreMethods": ["xDomainMessageSender"]
+    "L1CrossDomainMessenger_1": {
+      "fields": {
+        "xDomainMessageSender": {
+          "type": "call",
+          "method": "function xDomainMessageSender() view returns (address)",
+          "args": [],
+          "expectRevert": true
+        }
+      }
     },
-    "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820": {
-      "ignoreMethods": ["xDomainMessageSender"]
+    "L1CrossDomainMessenger_2": {
+      "fields": {
+        "xDomainMessageSender": {
+          "type": "call",
+          "method": "function xDomainMessageSender() view returns (address)",
+          "args": [],
+          "expectRevert": true
+        }
+      }
     },
     "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089": {
       "fields": {

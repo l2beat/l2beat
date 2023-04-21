@@ -1,7 +1,7 @@
 {
   "name": "bobanetwork",
-  "blockNumber": 17094219,
-  "configHash": "0x9c0368630ae9a795d64018ab6d339cefbc3ccbe8b7858aaa3f4659cd099b6782",
+  "blockNumber": 17095000,
+  "configHash": "0x97e96bde217106864e5a44a5b22f3ebd850041079e7b2db3149a4ccf53c011f9",
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -21,7 +21,7 @@
       }
     },
     {
-      "name": "L1CrossDomainMessenger",
+      "name": "L1CrossDomainMessenger_1",
       "address": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
       "code": "https://etherscan.deth.net/address/0x6D4528d192dB72E282265D6092F4B872f9Dff69e,0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820",
       "upgradeability": {
@@ -33,8 +33,10 @@
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
-        "paused": false
-      }
+        "paused": false,
+        "xDomainMessageSender": "EXPECT_REVERT"
+      },
+      "derivedName": "L1CrossDomainMessenger"
     },
     {
       "name": "Lib_AddressManager",
@@ -72,9 +74,9 @@
       "values": {
         "batches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1682072303,
-        "getTotalBatches": 15163,
-        "getTotalElements": 1005059,
+        "getLastSequencerTimestamp": 1682079707,
+        "getTotalBatches": 15165,
+        "getTotalElements": 1005096,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "SEQUENCER_PUBLISH_WINDOW": 1800
       }
@@ -154,12 +156,13 @@
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
-        "paused": false
+        "paused": false,
+        "xDomainMessageSender": "EXPECT_REVERT"
       },
       "derivedName": "L1CrossDomainMessengerFast"
     },
     {
-      "name": "L1CrossDomainMessenger",
+      "name": "L1CrossDomainMessenger_2",
       "address": "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820",
       "code": "https://etherscan.deth.net/address/0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820",
       "upgradeability": {
@@ -168,8 +171,10 @@
       "values": {
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
-        "paused": false
-      }
+        "paused": false,
+        "xDomainMessageSender": "EXPECT_REVERT"
+      },
+      "derivedName": "L1CrossDomainMessenger"
     },
     {
       "name": "ChainStorageContainer",
@@ -179,8 +184,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000644262ef00000f5603",
-        "length": 15163,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000064427fdb00000f5628",
+        "length": 15165,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "StateCommitmentChain"
       }
@@ -193,8 +198,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x00000000000000000104d5b800644260870000005ec800000f5603",
-        "length": 16946,
+        "getGlobalMetadata": "0x00000000000000000104d8370064427f030000005ec800000f5628",
+        "length": 16948,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "CanonicalTransactionChain"
       }
@@ -210,13 +215,13 @@
         "batches": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17094072,
-        "getLastTimestamp": 1682071687,
+        "getLastBlockNumber": 17094711,
+        "getLastTimestamp": 1682079491,
         "getNextQueueIndex": 24264,
         "getNumPendingQueueElements": 0,
         "getQueueLength": 24264,
-        "getTotalBatches": 16946,
-        "getTotalElements": 1005059,
+        "getTotalBatches": 16948,
+        "getTotalElements": 1005096,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "MAX_ROLLUP_TX_SIZE": 50000,

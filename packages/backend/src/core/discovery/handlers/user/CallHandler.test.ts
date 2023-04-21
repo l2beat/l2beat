@@ -3,6 +3,7 @@ import { expect, mockObject } from 'earl'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
+import { EXEC_REVERT_MSG } from '../utils/callMethod'
 import { CallHandler } from './CallHandler'
 
 describe(CallHandler.name, () => {
@@ -285,6 +286,52 @@ describe(CallHandler.name, () => {
         field: 'add',
         value: 3,
         ignoreRelative: true,
+      })
+    })
+
+    it('catches revert error', async () => {
+      const provider = mockObject<DiscoveryProvider>({
+        async call() {
+          throw new Error(
+            '(code: 3, message: execution reverted: xDomainMessageSender is not set, data: Some(String("0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f78446f6d61696e4d65737361676553656e646572206973206e6f742073657400")))',
+          )
+        },
+      })
+
+      const handler = new CallHandler(
+        'add',
+        { type: 'call', method, args: [1, 2], expectRevert: true },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, {})
+      expect(result).toEqual({
+        field: 'add',
+        value: 'EXPECT_REVERT',
+        ignoreRelative: undefined,
+      })
+    })
+
+    it('catches does not catch revert error', async () => {
+      const provider = mockObject<DiscoveryProvider>({
+        async call() {
+          throw new Error(
+            '(code: 3, message: execution reverted: xDomainMessageSender is not set, data: Some(String("0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f78446f6d61696e4d65737361676553656e646572206973206e6f742073657400")))',
+          )
+        },
+      })
+
+      const handler = new CallHandler(
+        'add',
+        { type: 'call', method, args: [1, 2], expectRevert: false },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, {})
+      expect(result).toEqual({
+        field: 'add',
+        error: EXEC_REVERT_MSG,
+        ignoreRelative: undefined,
       })
     })
   })
