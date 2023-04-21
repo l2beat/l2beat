@@ -6,7 +6,13 @@
     "0x1A26ef6575B7BBB864d984D9255C069F6c361a14", //L1LiquidityPool
     "0xC891F466e53f40603250837282eAE4e22aD5b088" //L1 NFT Bridge
   ],
+  "names": {
+    "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E": "L1CrossDomainMessengerFast"
+  },
   "overrides": {
+    "L1CrossDomainMessengerFast": {
+      "ignoreMethods": ["xDomainMessageSender"]
+    },
     "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00": {
       "ignoreInWatchMode": [
         "currentDepositInfoHash",
