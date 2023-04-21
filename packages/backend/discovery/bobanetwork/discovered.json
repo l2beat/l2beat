@@ -1,7 +1,7 @@
 {
   "name": "bobanetwork",
-  "blockNumber": 16535463,
-  "configHash": "0xb091eec60a445e862d2ece5fb51e97e663c59aa62992c487beba741d97e8834a",
+  "blockNumber": 17094219,
+  "configHash": "0x9c0368630ae9a795d64018ab6d339cefbc3ccbe8b7858aaa3f4659cd099b6782",
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -13,11 +13,11 @@
         "admin": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
       },
       "values": {
-        "currentDepositInfoHash": "0xdd297ffebea2f0150b2c56e0c6d6a29d46b93545cb28046e615f08da416d853a",
+        "currentDepositInfoHash": "0x1d30cb0c7721c29050305a18b2b179a7751cf2297803960bce751928c833565a",
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "lastHashUpdateBlock": 16533940,
+        "lastHashUpdateBlock": 17089362,
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
-        "priorDepositInfoHash": "0xecdac107c50c72bc80a5f494163e1be6caaeeccaf28fb85527078cf46da8f851"
+        "priorDepositInfoHash": "0xe6492d2a29f6d17435cccc19837473c8b676f2d1da9ed96205f4320d7fc3ded2"
       }
     },
     {
@@ -72,9 +72,9 @@
       "values": {
         "batches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1675271495,
-        "getTotalBatches": 13314,
-        "getTotalElements": 955096,
+        "getLastSequencerTimestamp": 1682072303,
+        "getTotalBatches": 15163,
+        "getTotalElements": 1005059,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "SEQUENCER_PUBLISH_WINDOW": 1800
       }
@@ -87,10 +87,10 @@
         "type": "immutable"
       },
       "values": {
-        "depositL2Gas": 0,
-        "l2NFTBridge": "0x0000000000000000000000000000000000000000",
-        "messenger": "0x0000000000000000000000000000000000000000",
-        "owner": "0x0000000000000000000000000000000000000000",
+        "depositL2Gas": 1400000,
+        "l2NFTBridge": "0xa87E6c7E8B9148f9Ef124344d6c384f8E20c3e14",
+        "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
+        "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
         "paused": false
       }
     },
@@ -126,20 +126,37 @@
       "values": {
         "currentDepositInfoHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "l1CrossDomainMessenger": "0x0000000000000000000000000000000000000000",
-        "L1StandardBridgeAddress": "0x0000000000000000000000000000000000000000",
-        "L2LiquidityPoolAddress": "0x0000000000000000000000000000000000000000",
+        "L1StandardBridgeAddress": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
+        "L2LiquidityPoolAddress": "0xe97738dBd11F854E49faEbd5d346034833B4a317",
         "lastHashUpdateBlock": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
+        "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
         "ownerRewardFeeRate": 0,
         "paused": false,
         "priorDepositInfoHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "relayerMessenger": "0x0000000000000000000000000000000000000000",
-        "SAFE_GAS_STIPEND": 0,
-        "senderMessenger": "0x0000000000000000000000000000000000000000",
-        "SETTLEMENT_L2_GAS": 0,
-        "userRewardMaxFeeRate": 0,
-        "userRewardMinFeeRate": 0
+        "relayerMessenger": "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E",
+        "SAFE_GAS_STIPEND": 2300,
+        "senderMessenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
+        "SETTLEMENT_L2_GAS": 700000,
+        "userRewardMaxFeeRate": 50,
+        "userRewardMinFeeRate": 5
       }
+    },
+    {
+      "name": "L1CrossDomainMessengerFast",
+      "address": "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E",
+      "code": "https://etherscan.deth.net/address/0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E,0x4CD1948de677e6f791B463daaB807645D3460996",
+      "upgradeability": {
+        "type": "resolved delegate proxy",
+        "addressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
+        "implementationName": "OVM_L1CrossDomainMessengerFast",
+        "implementation": "0x4CD1948de677e6f791B463daaB807645D3460996"
+      },
+      "values": {
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
+        "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
+        "paused": false
+      },
+      "derivedName": "L1CrossDomainMessengerFast"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -162,8 +179,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x00000000000000000000000000000000000063da9d4700000e92d8",
-        "length": 13314,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000644262ef00000f5603",
+        "length": 15163,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "StateCommitmentChain"
       }
@@ -176,8 +193,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000fc4f150063da9ae70000005c9f00000e92d8",
-        "length": 15070,
+        "getGlobalMetadata": "0x00000000000000000104d5b800644260870000005ec800000f5603",
+        "length": 16946,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "CanonicalTransactionChain"
       }
@@ -193,13 +210,13 @@
         "batches": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 16535317,
-        "getLastTimestamp": 1675270887,
-        "getNextQueueIndex": 23711,
-        "getNumPendingQueueElements": 1,
-        "getQueueLength": 23712,
-        "getTotalBatches": 15070,
-        "getTotalElements": 955096,
+        "getLastBlockNumber": 17094072,
+        "getLastTimestamp": 1682071687,
+        "getNextQueueIndex": 24264,
+        "getNumPendingQueueElements": 0,
+        "getQueueLength": 24264,
+        "getTotalBatches": 16946,
+        "getTotalElements": 1005059,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -256,7 +273,9 @@
     "0x4a792F51CCc616b82EF74d2478C732e161c5E6b1",
     "0x5558c63d5bf229450995adc160c023C9F4d4bE80",
     "0x5d0763cf905DA3689B072FD19baD8dF823b2c349",
+    "0xa87E6c7E8B9148f9Ef124344d6c384f8E20c3e14",
     "0xCc72f566Fd5C7EDeB8dAA4Fe394967f5546eC5B8",
+    "0xe97738dBd11F854E49faEbd5d346034833B4a317",
     "0xfa46908B587f9102E81CE6C43b7B41b52881c57F"
   ],
   "abis": {
@@ -329,6 +348,37 @@
       "function batchRelayMessages(tuple(address target, address sender, bytes message, uint256 messageNonce, tuple(bytes32 stateRoot, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) stateRootBatchHeader, tuple(uint256 index, bytes32[] siblings) stateRootProof, bytes stateTrieWitness, bytes storageTrieWitness) proof)[] _messages, bytes32 _standardBridgeDepositHash, bytes32 _lpDepositHash)",
       "function libAddressManager() view returns (address)",
       "function resolve(string _name) view returns (address)"
+    ],
+    "0x4CD1948de677e6f791B463daaB807645D3460996": [
+      "constructor()",
+      "event FailedRelayedMessage(bytes32 indexed msgHash)",
+      "event MessageAllowed(bytes32 indexed _xDomainCalldataHash)",
+      "event MessageBlocked(bytes32 indexed _xDomainCalldataHash)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RelayedMessage(bytes32 indexed msgHash)",
+      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
+      "event Unpaused(address account)",
+      "function allowMessage(bytes32 _xDomainCalldataHash)",
+      "function blockMessage(bytes32 _xDomainCalldataHash)",
+      "function blockedMessages(bytes32) view returns (bool)",
+      "function failedMessages(bytes32) view returns (bool)",
+      "function initialize(address _libAddressManager)",
+      "function libAddressManager() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function relayMessage(address _target, address _sender, bytes _message, uint256 _messageNonce, tuple(bytes32 stateRoot, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) stateRootBatchHeader, tuple(uint256 index, bytes32[] siblings) stateRootProof, bytes stateTrieWitness, bytes storageTrieWitness) _proof, bytes32 _standardBridgeDepositHash, bytes32 _lpDepositHash)",
+      "function relayMessage(address _target, address _sender, bytes _message, uint256 _messageNonce, tuple(bytes32 stateRoot, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) stateRootBatchHeader, tuple(uint256 index, bytes32[] siblings) stateRootProof, bytes stateTrieWitness, bytes storageTrieWitness) _proof)",
+      "function relayedMessages(bytes32) view returns (bool)",
+      "function renounceOwnership()",
+      "function replayMessage(address _target, address _sender, bytes _message, uint256 _queueIndex, uint32 _oldGasLimit, uint32 _newGasLimit)",
+      "function resolve(string _name) view returns (address)",
+      "function sendMessage(address _target, bytes _message, uint32 _gasLimit)",
+      "function successfulMessages(bytes32) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function xDomainMessageSender() view returns (address)"
     ],
     "0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d": [
       "constructor(address _libAddressManager, string _owner)",
@@ -421,6 +471,9 @@
       "function addressManager(string) view returns (address)",
       "function setTargetContract(address _proxyTarget)",
       "function transferProxyOwnership(address _newOwner)"
+    ],
+    "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E": [
+      "constructor(address _libAddressManager, string _implementationName)"
     ],
     "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00": [
       "constructor(address _owner)",
