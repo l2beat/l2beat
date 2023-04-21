@@ -74,7 +74,14 @@ export const myria: Layer2 = {
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
+    dataAvailability: {
+      ...RISK_VIEW.DATA_EXTERNAL_DAC,
+      references: [
+        'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F13#L188',
+        'https://etherscan.io/address/0x1e601435E181423e7A8430813d7500012a6169cB#code#F1#L60',
+      ],
+      contracts: ['StarkExchange', 'Committee'],
+    },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_NFT,
