@@ -29,9 +29,9 @@ export function configureDesktopSectionNavigation() {
   renderNavigationList(sections, sectionNavigationList)
   const sectionNavigationListItems = sectionNavigationList.querySelectorAll('a')
 
-  function highlightItem(item: HTMLAnchorElement) {
+  function highlightItem(item: HTMLAnchorElement | undefined) {
     previouslyHighlightedItem?.classList.toggle('opacity-60', true)
-    item.classList.toggle('opacity-60', false)
+    item?.classList.toggle('opacity-60', false)
     previouslyHighlightedItem = item
   }
 
@@ -47,7 +47,17 @@ export function configureDesktopSectionNavigation() {
   }
 
   const handleHighlightOnScroll = () => {
-    const offsetRatio = 0.1
+    const offsetRatio = 0.2
+
+    if (isScrolledToTop()) {
+      highlightItem(undefined)
+    }
+
+    if (isScrolledToBottom()) {
+      const lastSection = sectionNavigationListItems.length - 1
+      highlightItem(sectionNavigationListItems[lastSection])
+      return
+    }
 
     sections.forEach((section) => {
       const sectionTop = section.offsetTop
@@ -99,4 +109,17 @@ function renderNavigationList(
   target.innerHTML = renderToStaticMarkup(
     <DesktopNavigationList sections={navigationListSections} />,
   )
+}
+
+function isScrolledToBottom() {
+  const scrollHeight = document.documentElement.scrollHeight
+  const scrollTop = document.documentElement.scrollTop
+  const clientHeight = document.documentElement.clientHeight
+  const scrolledToBottom = scrollTop + clientHeight >= scrollHeight
+  return scrolledToBottom
+}
+
+function isScrolledToTop() {
+  const scrollTop = document.documentElement.scrollTop
+  return scrollTop === 0
 }
