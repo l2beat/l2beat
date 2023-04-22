@@ -116,9 +116,9 @@ export class ProjectDiscovery {
 
     return {
       name: identifier,
-      description: `${descriptionPrefix}. This is a Gnosis Safe with ${this.getMultisigStats(
+      description: `${descriptionPrefix} This is a Gnosis Safe with ${this.getMultisigStats(
         identifier,
-      )} threshold`,
+      )} threshold.`,
       accounts: [
         {
           address: contract.address,
