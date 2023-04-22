@@ -60,6 +60,7 @@ export function getContractSection(
     : undefined
 
   return {
+    associatedTokens: project.config.associatedTokens ?? [],
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
