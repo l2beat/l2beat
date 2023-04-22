@@ -5,6 +5,8 @@ import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { isRevert } from '../../utils/isRevert'
 import { toContractValue } from './toContractValue'
 
+export const EXEC_REVERT_MSG = 'Execution reverted'
+
 export async function callMethod(
   provider: DiscoveryProvider,
   address: EthereumAddress,
@@ -22,7 +24,7 @@ export async function callMethod(
     }
   } catch (e) {
     return {
-      error: isRevert(e) ? 'Execution reverted' : getErrorMessage(e),
+      error: isRevert(e) ? EXEC_REVERT_MSG : getErrorMessage(e),
     }
   }
 }

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProxyDetection } from '@l2beat/shared'
+import { EthereumAddress, ProxyDetails } from '@l2beat/shared'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { getCallResult } from '../../utils/getCallResult'
@@ -6,7 +6,7 @@ import { getCallResult } from '../../utils/getCallResult'
 export async function getCallImplementationProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
-): Promise<ProxyDetection | undefined> {
+): Promise<ProxyDetails | undefined> {
   const implementation = await getCallResult<EthereumAddress>(
     provider,
     address,
