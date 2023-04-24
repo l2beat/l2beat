@@ -4,6 +4,7 @@ import { expect } from 'earl'
 import { hashJson } from '../../../tools/hashJson'
 import { getDiscoveryConfigEntries } from '../utils/getDiscoveryConfigEntries'
 import { DiscoveryConfig } from './DiscoveryConfig'
+import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 const ADDRESS_A = EthereumAddress.random()
 const ADDRESS_B = EthereumAddress.random()
@@ -53,6 +54,25 @@ describe(DiscoveryConfig.name, () => {
       const expected = hashJson(getDiscoveryConfigEntries(CONFIG.raw))
 
       expect(result).toEqual(expected)
+    })
+
+    it('does not modify original config object', () => {
+      const config: DiscoveryConfig = new DiscoveryConfig({
+        name: 'a',
+        initialAddresses: [
+          EthereumAddress('0x0000000000000000000000000000000000000003'),
+          EthereumAddress('0x0000000000000000000000000000000000000002'),
+          EthereumAddress('0x0000000000000000000000000000000000000001'),
+        ],
+      })
+      const copiedConfig = JSON.parse(
+        JSON.stringify(config.raw),
+      ) as RawDiscoveryConfig
+
+      // run hash getter, which will run the function that sorts the config
+      config.hash
+
+      expect(config.raw).toEqual(copiedConfig)
     })
   })
 })

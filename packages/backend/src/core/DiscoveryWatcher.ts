@@ -240,9 +240,7 @@ export class DiscoveryWatcher {
       )
       throw new Error(
         `[${projectConfig.name}] Sanity check failed | ${blockNumber}\n
-        potential-diff ${JSON.stringify(diff)}}\n
-        firstJson ${JSON.stringify(discovery)}\n
-        secondJson ${JSON.stringify(secondDiscovery)}`,
+        potential-diff ${JSON.stringify(diff)}}`,
       )
     }
   }

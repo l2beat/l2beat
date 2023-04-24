@@ -29,7 +29,8 @@
     },
 
     "DydxGovernor": {
-      "ignoreMethods": ["getProposalById", "getProposalState"]
+      "ignoreMethods": ["getProposalById", "getProposalState"],
+      "ignoreInWatchMode": ["getProposalsCount"]
     },
     "GovernanceStrategy": {
       "ignoreMethods": ["getTotalPropositionSupplyAt", "getTotalVotingSupplyAt"]
