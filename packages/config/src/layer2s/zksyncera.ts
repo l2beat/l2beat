@@ -128,7 +128,7 @@ export const zksyncera: Layer2 = {
     validatorFailure: {
       value: 'No mechanism',
       description:
-        'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked. ',
+        'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked.',
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
