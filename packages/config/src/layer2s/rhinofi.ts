@@ -84,7 +84,7 @@ export const rhinofi: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY(delay),
+    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -109,7 +109,7 @@ export const rhinofi: Layer2 = {
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
   },
   permissions: [
     {

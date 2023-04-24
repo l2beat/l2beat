@@ -1,6 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared'
 
 import { ProjectContracts, ProjectRisk } from '../../common'
+import { formatSeconds } from '../../utils/formatSeconds'
+import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'
@@ -24,6 +26,14 @@ function UPGRADE_WITH_DELAY_RISK(delay: string): ProjectRisk {
   }
 }
 
+function UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds: number): ProjectRisk {
+  if (delaySeconds < DANGER_DELAY_THRESHOLD_SECONDS) {
+    return UPGRADE_NO_DELAY_RISK
+  }
+  const delay = formatSeconds(delaySeconds)
+  return UPGRADE_WITH_DELAY_RISK(delay)
+}
+
 const EMPTY: ProjectContracts = {
   addresses: [],
   risks: [],
@@ -39,5 +49,6 @@ export const CONTRACTS = {
   UNVERIFIED_RISK,
   UPGRADE_NO_DELAY_RISK,
   UPGRADE_WITH_DELAY_RISK,
+  UPGRADE_WITH_DELAY_SECONDS_RISK,
   ARBITRUM_OLD_BRIDGE,
 }
