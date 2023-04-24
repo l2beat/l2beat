@@ -1,6 +1,8 @@
 import { debounce } from 'lodash'
 import { highlightCurrentSection } from './highlightCurrentSection'
 
+const ARROWS_THRESHOLD = 8
+
 export function configureMobileSectionNavigation() {
   const sectionNavigation = document.querySelector('#mobile-section-navigation')
   const sectionNavigationList = sectionNavigation?.querySelector(
@@ -10,13 +12,21 @@ export function configureMobileSectionNavigation() {
     sectionNavigation?.querySelector<HTMLAnchorElement>(
       'a#mobile-section-navigation-summary',
     )
+  const arrowLeft = sectionNavigation?.querySelector(
+    '#mobile-section-navigation-arrow-left',
+  )
+  const arrowRight = sectionNavigation?.querySelector(
+    '#mobile-section-navigation-arrow-right',
+  )
 
   const sections = document.querySelectorAll('section')
 
   if (
     !sectionNavigation ||
     !sectionNavigationList ||
-    !sectionNavigationSummary
+    !sectionNavigationSummary ||
+    !arrowLeft ||
+    !arrowRight
   ) {
     return
   }
@@ -42,15 +52,38 @@ export function configureMobileSectionNavigation() {
     })
   })
 
+  const showArrows = () => {
+    const isScrolledToStart =
+      sectionNavigationList.scrollLeft < ARROWS_THRESHOLD
+    const isScrolledToEnd =
+      sectionNavigationList.scrollLeft >
+      sectionNavigationList.scrollWidth -
+        sectionNavigationList.clientWidth -
+        ARROWS_THRESHOLD
+
+    if (isScrolledToStart) {
+      arrowLeft.classList.add('opacity-0')
+    } else {
+      arrowLeft.classList.remove('opacity-0')
+    }
+
+    if (isScrolledToEnd) {
+      arrowRight.classList.add('opacity-0')
+    } else {
+      arrowRight.classList.remove('opacity-0')
+    }
+  }
+  showArrows()
+
   const scrollToItem = debounce((item: HTMLAnchorElement) => {
     if (destinationItem && destinationItem !== item) {
       return
     }
     const scrollPosition =
       item.offsetLeft -
-      sectionNavigation.getBoundingClientRect().width / 2 +
+      sectionNavigationList.getBoundingClientRect().width / 2 +
       item.offsetWidth / 2
-    sectionNavigation.scrollTo({
+    sectionNavigationList.scrollTo({
       left: scrollPosition,
       behavior: 'smooth',
     })
@@ -73,4 +106,5 @@ export function configureMobileSectionNavigation() {
       destinationItem = item
     })
   })
+  sectionNavigationList.addEventListener('scroll', showArrows)
 }
