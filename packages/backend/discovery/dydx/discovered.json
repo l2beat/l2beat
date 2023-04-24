@@ -1,7 +1,7 @@
 {
   "name": "dydx",
-  "blockNumber": 16989891,
-  "configHash": "0xf53b6fab7dc9860eebbe0e5c7e7db92ccbe9e82fe1b90ae9f8c952c96e44e453",
+  "blockNumber": 17094221,
+  "configHash": "0xea614516defa6835f5df41e5e738cd4ead53de1a260201fbbdec0fe41bc3fdb2",
   "contracts": [
     {
       "name": "StarkPerpetual",
@@ -28,7 +28,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 15426,
+        "getLastBatchId": 15814,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -37,7 +37,7 @@
         "getRegisteredVerifiers": [
           "0x8Ab85d3A1816a0d7ECE0F57AF6b27FC3b05532F4"
         ],
-        "getSequenceNumber": 15133,
+        "getSequenceNumber": 15521,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
@@ -119,7 +119,7 @@
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
         "EIP712_DOMAIN_NAME": "dYdX Governance",
         "getGovernanceStrategy": "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
-        "getProposalsCount": 12,
+        "getProposalsCount": 13,
         "getVotingDelay": 6570,
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "VOTE_EMITTED_TYPEHASH": "0x4e031542a9553ed1c4e810c54674ab4b984243e335b246aa3de73663bf4c11ee"
@@ -184,7 +184,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "4848102586920399014529723"
+        "totalSupply": "4531674602956725346964080"
       },
       "derivedName": "SafetyModuleV2"
     },

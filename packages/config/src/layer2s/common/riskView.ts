@@ -1,5 +1,7 @@
 import { ProjectRiskViewEntry } from '../../common'
+import { formatSeconds } from '../../utils/formatSeconds'
 import { Layer2RiskView } from '../types'
+import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 
 export function makeBridgeCompatible(
   entry: Omit<Layer2RiskView, 'sourceUpgradeability'>,
@@ -116,6 +118,14 @@ export function UPGRADE_DELAY(delay: string): ProjectRiskViewEntry {
       'The code that secures the system can be changed arbitrarily but users have some time to react.',
     sentiment: 'warning',
   }
+}
+
+function UPGRADE_DELAY_SECONDS(delay: number): ProjectRiskViewEntry {
+  if (delay < DANGER_DELAY_THRESHOLD_SECONDS) {
+    return UPGRADABLE_YES
+  }
+  const delayString = formatSeconds(delay)
+  return UPGRADE_DELAY(delayString)
 }
 
 export const UPGRADABLE_NO: ProjectRiskViewEntry = {
@@ -302,6 +312,7 @@ export const RISK_VIEW = {
   UPGRADABLE_ARBITRUM,
   UPGRADABLE_POLYGON_ZKEVM,
   UPGRADE_DELAY,
+  UPGRADE_DELAY_SECONDS,
   UPGRADABLE_NO,
   SEQUENCER_TRANSACT_L1,
   SEQUENCER_STARKEX_PERPETUAL,
