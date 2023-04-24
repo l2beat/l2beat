@@ -23,11 +23,14 @@ export interface ProjectPageProps {
 }
 
 export function ProjectPage(props: ProjectPageProps) {
+  const sections = props.projectDetails.items.filter(
+    (i): i is ProjectDetailsSection => i.isSection === true,
+  )
   return (
     <>
       <Navbar {...props.navbar} />
       <div className="sticky top-0 z-[1000] md:hidden">
-        <MobileSectionNavigation />
+        <MobileSectionNavigation sections={sections} />
       </div>
       <PageContent mobileFull>
         <ProjectHeader {...props.projectHeader} />
@@ -36,9 +39,7 @@ export function ProjectPage(props: ProjectPageProps) {
             <DesktopSectionNavigation
               title={props.projectHeader.title}
               icon={props.projectHeader.icon}
-              sections={props.projectDetails.items.filter(
-                (i): i is ProjectDetailsSection => i.isSection === true,
-              )}
+              sections={sections}
             />
           </div>
           <div className="col-span-7 md:col-span-5">

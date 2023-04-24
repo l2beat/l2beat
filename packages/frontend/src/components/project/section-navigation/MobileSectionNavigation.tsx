@@ -1,7 +1,11 @@
 import React from 'react'
-import { SectionNavigationItem } from './DesktopSectionNavigation'
+import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 
-export function MobileSectionNavigation() {
+interface Props {
+  sections: ProjectDetailsSection[]
+}
+
+export function MobileSectionNavigation({ sections }: Props) {
   return (
     <div
       id="mobile-section-navigation"
@@ -12,29 +16,37 @@ export function MobileSectionNavigation() {
         scrollbarColor: 'transparent transparent',
       }}
     >
-      <div id="mobile-section-navigation-list"></div>
+      <div
+        className="flex flex-row items-center"
+        id="mobile-section-navigation-list"
+      >
+        <a
+          href="#"
+          id="mobile-section-navigation-summary"
+          className="whitespace-nowrap p-4 text-xs"
+        >
+          Summary
+        </a>
+        <MobileNavigationList sections={sections} />
+      </div>
     </div>
   )
 }
 
-export function MobileNavigationList({
-  sections,
-}: {
-  sections: SectionNavigationItem[]
-}) {
+function MobileNavigationList({ sections }: Pick<Props, 'sections'>) {
   return (
-    <div className="flex flex-row items-center gap-3">
+    <>
       {sections.map((section) => {
         return (
           <a
-            key={section.id}
-            href={`#${section.id}`}
+            key={section.props.id}
+            href={`#${section.props.id}`}
             className="whitespace-nowrap p-4 text-xs"
           >
-            {section.title}
+            {section.props.title}
           </a>
         )
       })}
-    </div>
+    </>
   )
 }

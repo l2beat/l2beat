@@ -1,3 +1,5 @@
+import { highlightCurrentSection } from './highlightCurrentSection'
+
 export function configureDesktopSectionNavigation() {
   const sectionNavigation = document.querySelector(
     '#desktop-section-navigation',
@@ -8,9 +10,10 @@ export function configureDesktopSectionNavigation() {
   const sectionNavigationHeader = sectionNavigation?.querySelector(
     '#desktop-section-navigation-header',
   )
-  const sectionNavigationSummary = sectionNavigation?.querySelector(
-    '#desktop-section-navigation-summary',
-  )
+  const sectionNavigationSummary =
+    sectionNavigation?.querySelector<HTMLAnchorElement>(
+      'a#desktop-section-navigation-summary',
+    )
   const sections = document.querySelectorAll('section')
 
   if (
@@ -21,9 +24,9 @@ export function configureDesktopSectionNavigation() {
   )
     return
 
-  let previouslyHighlightedItem: HTMLAnchorElement | Element | undefined
+  let previouslyHighlightedItem: Element | undefined
 
-  const highlightItem = (item: HTMLAnchorElement | Element) => {
+  const highlightItem = (item: Element) => {
     previouslyHighlightedItem?.classList.toggle('opacity-60', true)
     item.classList.toggle('opacity-60', false)
     previouslyHighlightedItem = item
@@ -56,67 +59,4 @@ export function configureDesktopSectionNavigation() {
       onHighlight: highlightItem,
     })
   })
-}
-
-interface HighlightCurrentSectionOpts {
-  navigationList: Element
-  summary: Element
-  sections: NodeListOf<HTMLElement>
-  onHighlight: (item: HTMLAnchorElement | Element) => void
-}
-
-function highlightCurrentSection({
-  navigationList,
-  summary,
-  sections,
-  onHighlight,
-}: HighlightCurrentSectionOpts) {
-  const offsetRatio = 0.15
-
-  if (isScrolledToTop()) {
-    onHighlight(summary)
-    return
-  }
-
-  if (isScrolledToBottom()) {
-    const lastSection = sections[sections.length - 1]
-    const lastSectionNavigationItem = navigationList.querySelector(
-      `a[href="#${lastSection.id}"]`,
-    )
-    if (!lastSectionNavigationItem) return
-    onHighlight(lastSectionNavigationItem)
-    return
-  }
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop
-    const sectionHeight = section.offsetHeight
-    const sectionBottom = sectionTop + sectionHeight
-    const viewportHeight = window.innerHeight
-
-    const scrollPos = window.pageYOffset + viewportHeight * offsetRatio
-    const isCurrentSection =
-      scrollPos >= sectionTop && scrollPos < sectionBottom
-
-    if (isCurrentSection) {
-      const sectionNavigationItem = navigationList.querySelector(
-        `a[href="#${section.id}"]`,
-      )
-      if (!sectionNavigationItem) return
-      onHighlight(sectionNavigationItem)
-    }
-  })
-}
-
-function isScrolledToBottom() {
-  const scrollHeight = document.documentElement.scrollHeight
-  const scrollTop = document.documentElement.scrollTop
-  const clientHeight = document.documentElement.clientHeight
-  const scrolledToBottom = scrollTop + clientHeight >= scrollHeight
-  return scrolledToBottom
-}
-
-function isScrolledToTop() {
-  const scrollTop = document.documentElement.scrollTop
-  return scrollTop === 0
 }

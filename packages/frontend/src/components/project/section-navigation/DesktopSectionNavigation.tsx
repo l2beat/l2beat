@@ -9,11 +9,6 @@ interface SectionNavigationProps {
   sections: ProjectDetailsSection[]
 }
 
-export interface SectionNavigationItem {
-  title: string
-  id: string
-}
-
 export function DesktopSectionNavigation(props: SectionNavigationProps) {
   return (
     <div className="sticky top-8" id="desktop-section-navigation">
@@ -30,7 +25,7 @@ export function DesktopSectionNavigation(props: SectionNavigationProps) {
         </div>
         <HorizontalSeparator className="my-4" />
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3" id="desktop-section-navigation-list">
         <a
           href="#"
           className="flex flex-row items-center gap-3 opacity-60 hover:opacity-100"
@@ -39,17 +34,17 @@ export function DesktopSectionNavigation(props: SectionNavigationProps) {
           <SummaryIcon />
           Summary
         </a>
-        <div id="desktop-section-navigation-list">
-          <NavigationList sections={props.sections} />
-        </div>
+        <SectionNavigationList sections={props.sections} />
       </div>
     </div>
   )
 }
 
-function NavigationList({ sections }: { sections: ProjectDetailsSection[] }) {
+function SectionNavigationList({
+  sections,
+}: Pick<SectionNavigationProps, 'sections'>) {
   return (
-    <div className="flex flex-col gap-3">
+    <>
       {sections.map((section, i) => (
         <a
           key={section.props.id}
@@ -60,7 +55,7 @@ function NavigationList({ sections }: { sections: ProjectDetailsSection[] }) {
           <span className="ml-3">{section.props.title}</span>
         </a>
       ))}
-    </div>
+    </>
   )
 }
 

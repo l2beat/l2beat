@@ -1,56 +1,61 @@
-import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
-import { SectionNavigationItem } from '../../components/project/section-navigation/DesktopSectionNavigation'
-import { MobileNavigationList } from '../../components/project/section-navigation/MobileSectionNavigation'
+import { highlightCurrentSection } from './highlightCurrentSection'
 
 export function configureMobileSectionNavigation() {
   const sectionNavigation = document.querySelector('#mobile-section-navigation')
   const sectionNavigationList = sectionNavigation?.querySelector(
     '#mobile-section-navigation-list',
   )
+  const sectionNavigationSummary =
+    sectionNavigation?.querySelector<HTMLAnchorElement>(
+      'a#mobile-section-navigation-summary',
+    )
 
   const sections = document.querySelectorAll('section')
 
-  if (!sectionNavigation || !sectionNavigationList || sections.length === 0) {
+  if (
+    !sectionNavigation ||
+    !sectionNavigationList ||
+    !sectionNavigationSummary
+  ) {
     return
   }
-  let previouslyHighlightedItem: HTMLAnchorElement | undefined
-  renderNavigationList(sections, sectionNavigationList)
-  const sectionNavigationListItems = sectionNavigationList.querySelectorAll('a')
+  let previouslyHighlightedItem: Element | undefined
+  let destinationItem: HTMLAnchorElement | null = null
 
-  const handleHighlightOnScroll = () => {
-    const offsetRatio = 0.1
-
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop
-      const sectionHeight = section.offsetHeight
-      const sectionBottom = sectionTop + sectionHeight
-      const viewportHeight = window.innerHeight
-
-      const scrollPos = window.pageYOffset + viewportHeight * offsetRatio
-      const sectionId = section.id
-
-      if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-        sectionNavigationListItems.forEach((item) => {
-          if (item.getAttribute('href') === `#${sectionId}`) {
-            highlightItem(item)
-          }
-        })
-      }
-    })
-  }
+  highlightCurrentSection({
+    navigationList: sectionNavigationList,
+    sections,
+    summary: sectionNavigationSummary,
+    onHighlight: highlightItem,
+  })
 
   window.addEventListener('scroll', () => {
-    handleHighlightOnScroll()
-  })
-
-  sectionNavigationListItems.forEach((item) => {
-    item.addEventListener('click', () => {
-      highlightItem(item)
+    highlightCurrentSection({
+      navigationList: sectionNavigationList,
+      sections,
+      summary: sectionNavigationSummary,
+      onHighlight: (item) => {
+        highlightItem(item)
+        scrollToItem(item as HTMLAnchorElement)
+      },
     })
   })
 
-  function highlightItem(item: HTMLAnchorElement) {
+  const scrollToItem = (item: HTMLAnchorElement) => {
+    if (destinationItem && destinationItem !== item) {
+      return
+    }
+    const scrollPosition =
+      item.offsetLeft -
+      sectionNavigation.getBoundingClientRect().width / 2 +
+      item.offsetWidth / 2
+    sectionNavigation.scrollTo({
+      left: scrollPosition,
+    })
+    destinationItem = null
+  }
+
+  function highlightItem(item: Element | HTMLAnchorElement) {
     previouslyHighlightedItem?.classList.remove(
       'border-b-2',
       'text-pink-200',
@@ -59,23 +64,11 @@ export function configureMobileSectionNavigation() {
     item.classList.add('border-b-2', 'text-pink-200', 'border-b-pink-200')
     previouslyHighlightedItem = item
   }
-}
 
-function renderNavigationList(
-  sections: NodeListOf<HTMLElement>,
-  target: Element,
-) {
-  const navigationListSections: SectionNavigationItem[] = []
-
-  sections.forEach((section) => {
-    const id = section.id
-    const title = section.querySelector('h2')?.textContent
-    if (!id || !title) return
-
-    navigationListSections.push({ id, title })
+  const sectionNavigationItems = sectionNavigationList.querySelectorAll('a')
+  sectionNavigationItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      destinationItem = item
+    })
   })
-
-  target.innerHTML = renderToStaticMarkup(
-    <MobileNavigationList sections={navigationListSections} />,
-  )
 }
