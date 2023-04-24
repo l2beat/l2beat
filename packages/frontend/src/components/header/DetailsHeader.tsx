@@ -6,8 +6,8 @@ import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ArrowRightIcon } from '../icons'
 import { ArrowheadDownIcon } from '../icons/ArrowHeads'
 import { ArchivedBar } from '../project/ArchivedBar'
-import { UpcomingBar } from '../project/UpcomingBar'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
+import { UpcomingBar } from '../project/UpcomingBar'
 import { BigRosette } from '../rosette'
 
 export interface HeaderProps {

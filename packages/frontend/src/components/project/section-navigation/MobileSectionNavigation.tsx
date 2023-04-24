@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { ArrowheadLeftIcon, ArrowheadRightIcon } from '../../icons/ArrowHeads'
 
@@ -46,6 +47,8 @@ function MobileNavigationList({ sections }: Pick<Props, 'sections'>) {
   return (
     <>
       {sections.map((section) => {
+        if (!section.props.id || !section.props.title) return
+
         return (
           <a
             key={section.props.id}

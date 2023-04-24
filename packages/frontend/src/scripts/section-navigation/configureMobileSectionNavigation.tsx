@@ -1,4 +1,5 @@
 import { debounce } from 'lodash'
+
 import { highlightCurrentSection } from './highlightCurrentSection'
 
 const ARROWS_THRESHOLD = 8
@@ -47,7 +48,7 @@ export function configureMobileSectionNavigation() {
       summary: sectionNavigationSummary,
       onHighlight: (item) => {
         highlightItem(item)
-        scrollToItem(item as HTMLAnchorElement)
+        scrollToItem(item )
       },
     })
   })

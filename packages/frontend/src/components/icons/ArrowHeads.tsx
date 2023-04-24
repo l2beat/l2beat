@@ -1,12 +1,13 @@
 import classNames from 'classnames'
 import React, { SVGAttributes } from 'react'
+
 import { Icon } from './Icon'
 
 export function ArrowheadRightIcon(props: SVGAttributes<SVGElement>) {
   const { className, ...rest } = props
   return (
     <ArrowheadDownIcon
-      className={classNames('-rotate-90', props.className)}
+      className={classNames('-rotate-90', className)}
       {...rest}
     />
   )
@@ -16,7 +17,7 @@ export function ArrowheadLeftIcon(props: SVGAttributes<SVGElement>) {
   const { className, ...rest } = props
   return (
     <ArrowheadDownIcon
-      className={classNames('rotate-90', props.className)}
+      className={classNames('rotate-90', className)}
       {...rest}
     />
   )

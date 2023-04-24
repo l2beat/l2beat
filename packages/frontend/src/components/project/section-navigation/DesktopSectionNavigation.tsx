@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
@@ -45,16 +46,20 @@ function SectionNavigationList({
 }: Pick<SectionNavigationProps, 'sections'>) {
   return (
     <>
-      {sections.map((section, i) => (
-        <a
-          key={section.props.id}
-          href={`#${section.props.id}`}
-          className="flex flex-row items-center opacity-60 hover:opacity-100"
-        >
-          <NavigationListIndex index={i + 1} />
-          <span className="ml-3">{section.props.title}</span>
-        </a>
-      ))}
+      {sections.map((section, i) => {
+        if (!section.props.id || !section.props.title) return
+
+        return (
+          <a
+            key={section.props.id}
+            href={`#${section.props.id}`}
+            className="flex flex-row items-center opacity-60 hover:opacity-100"
+          >
+            <NavigationListIndex index={i + 1} />
+            <span className="ml-3">{section.props.title}</span>
+          </a>
+        )
+      })}
     </>
   )
 }

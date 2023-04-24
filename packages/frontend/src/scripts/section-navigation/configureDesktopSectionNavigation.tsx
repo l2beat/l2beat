@@ -44,9 +44,9 @@ export function configureDesktopSectionNavigation() {
     const navigationOffset = sectionNavigation.getBoundingClientRect().top
 
     if (navigationOffset === navigationTopOffset) {
-      sectionNavigationHeader?.classList.toggle('hidden', false)
+      sectionNavigationHeader.classList.toggle('hidden', false)
     } else {
-      sectionNavigationHeader?.classList.toggle('hidden', true)
+      sectionNavigationHeader.classList.toggle('hidden', true)
     }
   }
 

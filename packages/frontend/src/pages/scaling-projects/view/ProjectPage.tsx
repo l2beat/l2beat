@@ -24,7 +24,7 @@ export interface ProjectPageProps {
 
 export function ProjectPage(props: ProjectPageProps) {
   const sections = props.projectDetails.items.filter(
-    (i): i is ProjectDetailsSection => i.isSection === true,
+    (i): i is ProjectDetailsSection => i.isSection,
   )
   return (
     <>

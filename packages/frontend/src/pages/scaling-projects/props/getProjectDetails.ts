@@ -1,7 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared'
-
 import { isEmpty } from 'lodash'
+
 import { ChartProps } from '../../../components'
 import { ContractsSectionProps } from '../../../components/project/ContractsSection'
 import { DescriptionSectionProps } from '../../../components/project/DescriptionSection'
@@ -14,7 +14,6 @@ import { TechnologySectionProps } from '../../../components/project/TechnologySe
 import { getContractSection } from '../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
 import { getRiskValues } from '../../../utils/risks/values'
-import { ProjectDetailsProps } from '../view/ProjectDetails'
 import { getDescriptionSection } from './getDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
@@ -22,7 +21,7 @@ export function getProjectDetails(
   project: Layer2,
   verificationStatus: VerificationStatus,
   chart: ChartProps,
-): ProjectDetailsProps {
+) {
   const isUpcoming = project.isUpcoming
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(project)
