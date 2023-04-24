@@ -18,7 +18,7 @@ export function MobileSectionNavigation({ sections }: Props) {
         </div>
       </div>
       <div
-        className="flex flex-row items-center overflow-x-auto"
+        className="scrollbar-hide flex flex-row items-center overflow-x-auto"
         id="mobile-section-navigation-list"
       >
         <a
