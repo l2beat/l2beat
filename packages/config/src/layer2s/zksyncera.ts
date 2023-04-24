@@ -105,7 +105,7 @@ export const zksyncera: Layer2 = {
       contracts: ['ValidatorTimelock', 'DiamondProxy'],
     },
     upgradeability: {
-      ...VALUES.ZKSYNC_2.getUpgradeabilityString(),
+      ...VALUES.ZKSYNC_2.UPGRADEABILITY,
       references: [
         'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F8#L121',
         'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51',
