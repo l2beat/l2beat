@@ -14,6 +14,7 @@ import {
 import { TechnologySection } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
 import { ProjectDetailsItem } from '../props/getProjectDetails'
+import { assertUnreachable } from '@l2beat/shared'
 
 export interface ProjectDetailsProps {
   isUpcoming?: boolean
@@ -53,6 +54,8 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return <ContractsSection key={item.type} {...item.props} />
           case 'UpcomingDisclaimer':
             return <UpcomingDisclaimer key={item.type} className="mt-6" />
+          default:
+            assertUnreachable(item)
         }
       })}
     </div>
