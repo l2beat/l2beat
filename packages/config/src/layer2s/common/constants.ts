@@ -1,0 +1,1 @@
+export const DANGER_DELAY_THRESHOLD_SECONDS = 60 * 60 * 12
