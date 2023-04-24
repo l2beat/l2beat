@@ -31,13 +31,14 @@ export function DesktopSectionNavigation(props: SectionNavigationProps) {
         <HorizontalSeparator className="my-4" />
       </div>
       <div className="flex flex-col gap-3">
-        <div
-          className="flex cursor-pointer flex-row items-center gap-3 opacity-60 hover:opacity-100"
+        <a
+          href="#"
+          className="flex flex-row items-center gap-3 opacity-60 hover:opacity-100"
           id="desktop-section-navigation-summary"
         >
           <SummaryIcon />
           Summary
-        </div>
+        </a>
         <div id="desktop-section-navigation-list">
           <NavigationList sections={props.sections} />
         </div>

@@ -56,10 +56,6 @@ export function configureDesktopSectionNavigation() {
       onHighlight: highlightItem,
     })
   })
-
-  sectionNavigationSummary.addEventListener('click', () => {
-    window.scrollTo({ top: 0 })
-  })
 }
 
 interface HighlightCurrentSectionOpts {
