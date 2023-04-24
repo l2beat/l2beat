@@ -9,11 +9,18 @@ interface ProjectNavigationProps {
   icon: string | undefined
   sections: ProjectDetailsSection[]
 }
+export const DESKTOP_PROJECT_NAVIGATION_IDS = {
+  container: 'desktop-project-navigation',
+  listHeader: 'desktop-project-navigation-header',
+  list: 'desktop-project-navigation-list',
+  summaryItem: 'desktop-project-navigation-summary',
+  index: 'desktop-project-navigation-item-index',
+}
 
 export function DesktopProjectNavigation(props: ProjectNavigationProps) {
   return (
-    <div className="sticky top-8" id="desktop-section-navigation">
-      <div id="desktop-section-navigation-header" className="hidden">
+    <div className="sticky top-8" id={DESKTOP_PROJECT_NAVIGATION_IDS.container}>
+      <div id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader} className="hidden">
         <div className="flex flex-row items-center">
           {props.icon && (
             <img
@@ -26,11 +33,14 @@ export function DesktopProjectNavigation(props: ProjectNavigationProps) {
         </div>
         <HorizontalSeparator className="my-4" />
       </div>
-      <div className="flex flex-col gap-3" id="desktop-section-navigation-list">
+      <div
+        className="flex flex-col gap-3"
+        id={DESKTOP_PROJECT_NAVIGATION_IDS.list}
+      >
         <a
           href="#"
           className="flex flex-row items-center gap-3 opacity-60 hover:opacity-100"
-          id="desktop-section-navigation-summary"
+          id={DESKTOP_PROJECT_NAVIGATION_IDS.summaryItem}
         >
           <SummaryIcon />
           Summary
@@ -66,7 +76,10 @@ function ProjectNavigationList({
 
 function NavigationListIndex(props: { index: number }) {
   return (
-    <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-neutral-700 text-center text-xs font-bold">
+    <div
+      className="flex h-6 w-6 items-center justify-center rounded-lg bg-neutral-700 text-center text-xs font-bold"
+      id={DESKTOP_PROJECT_NAVIGATION_IDS.index}
+    >
       <span>{props.index}</span>
     </div>
   )

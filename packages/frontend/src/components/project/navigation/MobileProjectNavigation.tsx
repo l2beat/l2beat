@@ -7,12 +7,23 @@ interface Props {
   sections: ProjectDetailsSection[]
 }
 
+export const MOBILE_PROJECT_NAVIGATION_IDS = {
+  container: 'mobile-project-navigation',
+  list: 'mobile-project-navigation-list',
+  summaryItem: 'mobile-project-navigation-summary',
+  arrowLeft: 'mobile-project-navigation-arrow-left',
+  arrowRight: 'mobile-project-navigation-arrow-right',
+}
+
 export function MobileProjectNavigation({ sections }: Props) {
   return (
-    <div id="mobile-section-navigation" className="relative bg-[#000000]">
+    <div
+      id={MOBILE_PROJECT_NAVIGATION_IDS.container}
+      className="relative bg-[#000000]"
+    >
       <div
         className="absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-[#000000] opacity-0 transition-opacity"
-        id="mobile-section-navigation-arrow-left"
+        id={MOBILE_PROJECT_NAVIGATION_IDS.arrowLeft}
       >
         <div className="flex h-full items-center justify-center">
           <ArrowheadLeftIcon className="scale-75" />
@@ -20,11 +31,11 @@ export function MobileProjectNavigation({ sections }: Props) {
       </div>
       <div
         className="scrollbar-hide flex flex-row items-center overflow-x-auto"
-        id="mobile-section-navigation-list"
+        id={MOBILE_PROJECT_NAVIGATION_IDS.list}
       >
         <a
           href="#"
-          id="mobile-section-navigation-summary"
+          id={MOBILE_PROJECT_NAVIGATION_IDS.summaryItem}
           className="whitespace-nowrap p-4 text-xs"
         >
           Summary
@@ -33,7 +44,7 @@ export function MobileProjectNavigation({ sections }: Props) {
       </div>
       <div
         className="absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-[#000000] opacity-0 transition-opacity"
-        id="mobile-section-navigation-arrow-right"
+        id={MOBILE_PROJECT_NAVIGATION_IDS.arrowRight}
       >
         <div className="flex h-full items-center justify-center">
           <ArrowheadRightIcon className="scale-75" />

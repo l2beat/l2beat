@@ -1,23 +1,25 @@
 import { debounce } from 'lodash'
 
+import { MOBILE_PROJECT_NAVIGATION_IDS } from '../../components/project/navigation/MobileProjectNavigation'
 import { highlightCurrentSection } from './highlightCurrentSection'
 
 const ARROWS_THRESHOLD = 8
 
 export function configureMobileProjectNavigation() {
-  const projectNavigation = document.querySelector('#mobile-section-navigation')
-  const projectNavigationList = projectNavigation?.querySelector(
-    '#mobile-section-navigation-list',
+  const projectNavigation = document.querySelector(
+    `#${MOBILE_PROJECT_NAVIGATION_IDS.container}`,
   )
-  const projectNavigationSummary =
-    projectNavigation?.querySelector<HTMLAnchorElement>(
-      'a#mobile-section-navigation-summary',
-    )
+  const projectNavigationList = projectNavigation?.querySelector(
+    `#${MOBILE_PROJECT_NAVIGATION_IDS.list}`,
+  )
+  const summaryItem = projectNavigation?.querySelector<HTMLAnchorElement>(
+    `a#${MOBILE_PROJECT_NAVIGATION_IDS.summaryItem}`,
+  )
   const arrowLeft = projectNavigation?.querySelector(
-    '#mobile-section-navigation-arrow-left',
+    `#${MOBILE_PROJECT_NAVIGATION_IDS.arrowLeft}`,
   )
   const arrowRight = projectNavigation?.querySelector(
-    '#mobile-section-navigation-arrow-right',
+    `#${MOBILE_PROJECT_NAVIGATION_IDS.arrowRight}`,
   )
 
   const sections = document.querySelectorAll('section')
@@ -25,7 +27,7 @@ export function configureMobileProjectNavigation() {
   if (
     !projectNavigation ||
     !projectNavigationList ||
-    !projectNavigationSummary ||
+    !summaryItem ||
     !arrowLeft ||
     !arrowRight
   ) {
@@ -37,7 +39,7 @@ export function configureMobileProjectNavigation() {
   highlightCurrentSection({
     navigationList: projectNavigationList,
     sections,
-    summary: projectNavigationSummary,
+    summary: summaryItem,
     onHighlight: highlightItem,
   })
 
@@ -45,7 +47,7 @@ export function configureMobileProjectNavigation() {
     highlightCurrentSection({
       navigationList: projectNavigationList,
       sections,
-      summary: projectNavigationSummary,
+      summary: summaryItem,
       onHighlight: (item) => {
         highlightItem(item)
         scrollToItem(item)
