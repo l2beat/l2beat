@@ -11,9 +11,9 @@ interface ProjectNavigationProps {
 }
 export const DESKTOP_PROJECT_NAVIGATION_IDS = {
   container: 'desktop-project-navigation',
-  listHeader: 'desktop-project-navigation-header',
+  listHeader: 'desktop-project-navigation-list-header',
   list: 'desktop-project-navigation-list',
-  summaryItem: 'desktop-project-navigation-summary',
+  summaryItem: 'desktop-project-navigation-summary-item',
   index: 'desktop-project-navigation-item-index',
 }
 
@@ -39,7 +39,7 @@ export function DesktopProjectNavigation(props: ProjectNavigationProps) {
       >
         <a
           href="#"
-          className="flex flex-row items-center gap-3 opacity-60 hover:opacity-100"
+          className="flex flex-row items-center gap-3 opacity-60 transition-opacity hover:opacity-100"
           id={DESKTOP_PROJECT_NAVIGATION_IDS.summaryItem}
         >
           <SummaryIcon />
@@ -63,7 +63,7 @@ function ProjectNavigationList({
           <a
             key={section.props.id}
             href={`#${section.props.id}`}
-            className="flex flex-row items-center opacity-60 hover:opacity-100"
+            className="flex flex-row items-center opacity-60 transition-opacity hover:opacity-100"
           >
             <NavigationListIndex index={i + 1} />
             <span className="ml-3">{section.props.title}</span>

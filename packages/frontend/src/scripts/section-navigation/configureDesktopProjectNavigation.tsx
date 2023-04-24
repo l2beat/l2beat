@@ -1,6 +1,11 @@
 import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../components/project/navigation/DesktopProjectNavigation'
 import { highlightCurrentSection } from './highlightCurrentSection'
 
+interface PreviouslyHighlighted {
+  item: Element
+  index: Element | null
+}
+
 export function configureDesktopProjectNavigation() {
   const container = document.querySelector(
     `#${DESKTOP_PROJECT_NAVIGATION_IDS.container}`,
@@ -8,27 +13,39 @@ export function configureDesktopProjectNavigation() {
   const list = container?.querySelector(
     `#${DESKTOP_PROJECT_NAVIGATION_IDS.list}`,
   )
+
   const listHeader = container?.querySelector(
     `#${DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}`,
   )
-  const summary = container?.querySelector<HTMLAnchorElement>(
+  const summaryItem = list?.querySelector<HTMLAnchorElement>(
     `a#${DESKTOP_PROJECT_NAVIGATION_IDS.summaryItem}`,
   )
   const sections = document.querySelectorAll('section')
 
-  if (!container || !list || !listHeader || !summary) return
+  if (!container || !list || !listHeader || !summaryItem) return
 
-  let previouslyHighlightedItem: Element | undefined
+  let previouslyHighlightedItem: PreviouslyHighlighted | undefined
 
   const highlightItem = (item: Element) => {
-    previouslyHighlightedItem?.classList.toggle('opacity-60', true)
-    item.classList.toggle('opacity-60', false)
-    previouslyHighlightedItem = item
+    const index = item.querySelector(`#${DESKTOP_PROJECT_NAVIGATION_IDS.index}`)
+
+    previouslyHighlightedItem?.item.classList.add('opacity-60')
+    previouslyHighlightedItem?.index?.classList.remove(
+      'bg-gradient-to-r',
+      'from-purple-100',
+      'to-pink-100',
+    )
+    previouslyHighlightedItem?.index?.classList.add('bg-neutral-700')
+
+    item.classList.remove('opacity-60')
+    index?.classList.remove('bg-neutral-700')
+    index?.classList.add('bg-gradient-to-r', 'from-purple-100', 'to-pink-100')
+    previouslyHighlightedItem = { item, index }
   }
 
   highlightCurrentSection({
     navigationList: list,
-    summary: summary,
+    summary: summaryItem,
     sections,
     onHighlight: highlightItem,
   })
@@ -48,7 +65,7 @@ export function configureDesktopProjectNavigation() {
     handleShowingProjectTitle()
     highlightCurrentSection({
       navigationList: list,
-      summary: summary,
+      summary: summaryItem,
       sections,
       onHighlight: highlightItem,
     })
