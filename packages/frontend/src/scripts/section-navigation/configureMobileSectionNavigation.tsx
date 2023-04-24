@@ -1,3 +1,4 @@
+import { debounce } from 'lodash'
 import { highlightCurrentSection } from './highlightCurrentSection'
 
 export function configureMobileSectionNavigation() {
@@ -41,7 +42,7 @@ export function configureMobileSectionNavigation() {
     })
   })
 
-  const scrollToItem = (item: HTMLAnchorElement) => {
+  const scrollToItem = debounce((item: HTMLAnchorElement) => {
     if (destinationItem && destinationItem !== item) {
       return
     }
@@ -51,9 +52,10 @@ export function configureMobileSectionNavigation() {
       item.offsetWidth / 2
     sectionNavigation.scrollTo({
       left: scrollPosition,
+      behavior: 'smooth',
     })
     destinationItem = null
-  }
+  }, 50)
 
   function highlightItem(item: Element | HTMLAnchorElement) {
     previouslyHighlightedItem?.classList.remove(
