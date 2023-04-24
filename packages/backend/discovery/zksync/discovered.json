@@ -1,6 +1,6 @@
 {
   "name": "zksync",
-  "blockNumber": 16697215,
+  "blockNumber": 17043954,
   "configHash": "0x7d9847e421a09c79fe74775b4e570778a7a65a284da67236d39ec8e90a6e411a",
   "contracts": [
     {
@@ -52,7 +52,7 @@
         "getTarget": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
-        "totalTokens": 177,
+        "totalTokens": 181,
         "validators": ["0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"]
       }
     },
@@ -82,7 +82,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 9594
+        "totalSupply": 14819
       }
     },
     {
@@ -97,15 +97,15 @@
       "values": {
         "additional": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
         "exodusMode": false,
-        "firstPriorityRequestId": 778112,
+        "firstPriorityRequestId": 1167743,
         "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "getNoticePeriod": 0,
         "getTarget": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
         "isReadyForUpgrade": true,
-        "totalBlocksCommitted": 160325,
-        "totalBlocksExecuted": 160316,
-        "totalBlocksProven": 160320,
-        "totalOpenPriorityRequests": 34
+        "totalBlocksCommitted": 223276,
+        "totalBlocksExecuted": 223244,
+        "totalBlocksProven": 223247,
+        "totalOpenPriorityRequests": 96
       }
     },
     {

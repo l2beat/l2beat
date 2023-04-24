@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
-  "blockNumber": 16925456,
-  "configHash": "0xfb496fc219f10c0d65fdfdb7a08da91155354783e52d70e9af58ba9cfbba1b58",
+  "blockNumber": 17115561,
+  "configHash": "0xbdbba8feb72cbc6d51aecd66f9b5bc1eee1bf9a72544d2c7f966a3a7577f623f",
   "contracts": [
     {
       "name": "DiamondProxy",
@@ -114,20 +114,20 @@
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
         "getCurrentProposalId": 3,
-        "getFirstUnprocessedPriorityTx": 129187,
+        "getFirstUnprocessedPriorityTx": 553310,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x010007793a328ef16cc7086708f7f3292ff9b5eed9e7e539c184228f461bf4ef",
         "getL2DefaultAccountBytecodeHash": "0x0100067d861e2f5717a12c3e869cfb657793b86bbb0caa05cc1421f16c5217bc",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 25220,
+        "getPriorityQueueSize": 5401,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 3231,
-        "getTotalBlocksExecuted": 2639,
-        "getTotalBlocksVerified": 2999,
-        "getTotalPriorityTxs": 154407,
+        "getTotalBlocksCommitted": 19501,
+        "getTotalBlocksExecuted": 19109,
+        "getTotalBlocksVerified": 19410,
+        "getTotalPriorityTxs": 558711,
         "getUpgradeProposalState": 0,
         "getVerifier": "0x473b1887D45D61EfD87731a1D8eC3590b93c565d",
         "getVerifierParams": [
@@ -138,14 +138,15 @@
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0xfc1244388892f995dede81194293ef9895925c687d7add4460a2b479d3b2133e",
-          1679914211,
+          "0x4a040bddc64ba6c023c3cb3a8d026749b5d6c0f8f4f2269bd6bbc128b410080e",
+          1682240591,
           0
         ],
         "validators": [
           "0x3dB52cE065f728011Ac6732222270b3F2360d919"
         ]
-      }
+      },
+      "derivedName": "DiamondProxy"
     },
     {
       "name": "ValidatorTimelock",
@@ -314,14 +315,14 @@
         "getOwners": [
           "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F",
           "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
-          "0x474D2b82E02D9712A077574E7764dEfA182653D4",
+          "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
           "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
           "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
           "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF",
           "0xa265146cA40F52cfC439888D0b4291b5440e6769"
         ],
-        "getThreshold": 3,
-        "nonce": 48,
+        "getThreshold": 4,
+        "nonce": 51,
         "VERSION": "1.3.0"
       }
     },
@@ -350,15 +351,16 @@
         "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
         "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
         "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019"
-      }
+      },
+      "derivedName": "L1ERC20Bridge"
     }
   ],
   "eoas": [
     "0x112200EaA6d57120c86B8b51a8b6049d56B82211",
     "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF",
     "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
-    "0x474D2b82E02D9712A077574E7764dEfA182653D4",
     "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
+    "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
     "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
     "0xa265146cA40F52cfC439888D0b4291b5440e6769",
     "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F"

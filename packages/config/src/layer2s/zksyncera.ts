@@ -1,6 +1,7 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { VALUES } from '../discovery/values'
 import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
@@ -54,16 +55,19 @@ export const zksyncera: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
+      discovery.getEscrowDetails({
+        identifier: 'DiamondProxy',
         sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
-      },
-      {
-        address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
+        description: 'Main rollup contract, additionally serving as an escrow.',
+      }),
+      discovery.getEscrowDetails({
+        identifier: 'L1ERC20Bridge',
         sinceTimestamp: new UnixTime(1676367083),
         tokens: ['USDC', 'PERP', 'MUTE'],
-      },
+        description:
+          'Standard bridge for depositing ERC20 tokens to zkSync Era.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -73,13 +77,58 @@ export const zksyncera: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
+    stateValidation: {
+      value: 'ZK proofs',
+      description:
+        'Uses PLONK zero-knowledge proof system with KZG commitments.',
+      references: [
+        'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F5#L89',
+        'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L254',
+        'https://etherscan.io/address/0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc#code#F7#L24',
+        'https://etherscan.io/address/0x473b1887d45d61efd87731a1d8ec3590b93c565d#code#F5#L227',
+        'https://era.zksync.io/docs/dev/developer-guides/transactions/transactions.html#transaction-types',
+        'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
+      ],
+      contracts: ['ValidatorTimelock', 'DiamondProxy', 'Verifier'],
+    },
+    dataAvailability: {
+      value: 'On chain (SD)',
+      description:
+        'All of the data (SD = state diffs) needed for proof construction is published on chain.',
+      references: [
+        'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F5#L71',
+        'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L149',
+        'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F11#L41',
+        'https://etherscan.io/tx/0xef9ad50d9b6a30365e4cc6709a5b7479fb67b8948138149597c49ef614782e1b', // example tx (see calldata)
+        'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
+      ],
+      contracts: ['ValidatorTimelock', 'DiamondProxy'],
+    },
+    upgradeability: {
+      ...VALUES.ZKSYNC_2.UPGRADEABILITY,
+      references: [
+        'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F8#L121',
+        'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51',
+      ],
+      contracts: ['DiamondProxy'],
+    },
+    sequencerFailure: {
+      value: 'Transact using L1',
+      description:
+        'L2 transactions can be forced through L1 by adding them to append only queue on L1, which is processed sequentially by Sequencer, meaning that the individual user cannot be censored. At the moment there is no mechanism that forces L2 Sequencer to empty the L1 queue.',
+      sentiment: 'warning',
+      references: [
+        'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
+        'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-mode',
+        'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L56',
+        'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L73',
+      ],
+      contracts: ['DiamondProxy'],
+    },
     validatorFailure: {
-      value: 'In development',
-      description: 'Currently, there is no generic escape hatch.',
+      value: 'No mechanism',
+      description:
+        'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked.',
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -161,77 +210,43 @@ export const zksyncera: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        address: discovery.getContract('DiamondProxy').address,
-        name: 'ZkSync Diamond Proxy',
-        description:
-          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
-          and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
-          It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
-          It is also serves the purpose of ETH bridge.',
-      },
-      {
-        address: discovery.getContract('Verifier').address,
-        name: 'Verifier',
-        description: 'Implements zkProof verification logic.',
-      },
-      {
-        address: discovery.getContract('ValidatorTimelock').address,
-        name: 'ValidatorTimelock',
-        description:
-          'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
-      },
-      {
-        address: discovery.getContract('L1ERC20Bridge').address,
-        name: 'L1ERC20Bridge',
-        description:
-          'Standard bridge for depositing ERC20 tokens to zkSync Era.',
-        upgradeability: discovery.getContract('L1ERC20Bridge').upgradeability,
-      },
+      discovery.getMainContractDetails(
+        'DiamondProxy',
+        'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
+      and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
+      It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
+      It is also serves the purpose of ETH bridge.',
+      ),
+      discovery.getMainContractDetails(
+        'Verifier',
+        'Implements zkProof verification logic.',
+      ),
+      discovery.getMainContractDetails(
+        'ValidatorTimelock',
+        'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {
-      name: 'zkSync Era MultiSig',
-      accounts: [
-        {
-          type: 'MultiSig',
-          address: discovery.getContract('GnosisSafe').address,
-        },
-      ],
-      description:
-        'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+      ...discovery.getGnosisSafeDetails(
         'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } zkSync Era MultiSig.`,
+        'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
+      ),
+      name: 'zkSync Era MultiSig',
     },
     {
       name: 'Active validator',
       accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>(
-              'ValidatorTimelock',
-              'validator',
-            ),
-          ),
-          // TODO: this type should be derived from discovery
-          type: 'EOA',
-        },
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue<string>('ValidatorTimelock', 'validator'),
+        ),
       ],
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1.',
     },
+    VALUES.ZKSYNC_2.SECURITY_COUNCIL,
   ],
   milestones: [
     {
