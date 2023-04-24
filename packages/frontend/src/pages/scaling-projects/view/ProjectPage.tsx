@@ -10,6 +10,7 @@ import {
 import { PageContent } from '../../../components/PageContent'
 import { DesktopSectionNavigation } from '../../../components/project/section-navigation/DesktopSectionNavigation'
 import { MobileSectionNavigation } from '../../../components/project/section-navigation/MobileSectionNavigation'
+import { ProjectDetailsSection } from '../props/getProjectDetails'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
@@ -35,7 +36,9 @@ export function ProjectPage(props: ProjectPageProps) {
             <DesktopSectionNavigation
               title={props.projectHeader.title}
               icon={props.projectHeader.icon}
-              sections={props.projectDetails.sections}
+              sections={props.projectDetails.items.filter(
+                (i): i is ProjectDetailsSection => i.isSection === true,
+              )}
             />
           </div>
           <div className="col-span-7 md:col-span-5">

@@ -9,6 +9,7 @@ import { KnowledgeNuggetsProps } from '../../../components/project/KnowledgeNugg
 import { MilestonesSectionProps } from '../../../components/project/Milestones'
 import { PermissionsSectionProps } from '../../../components/project/PermissionsSection'
 import { RiskAnalysisProps } from '../../../components/project/RiskAnalysis'
+import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../../../components/project/TechnologySection'
 import { getContractSection } from '../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
@@ -26,15 +27,17 @@ export function getProjectDetails(
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(project)
   const permissionsSection = getPermissionsSection(project, verificationStatus)
-  const sections: Section[] = []
+  const items: ProjectDetailsItem[] = []
 
-  sections.push({
+  items.push({
+    isSection: true,
     type: 'ChartSection',
     props: { ...chart, id: 'chart', title: 'Chart' },
   })
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
-    sections.push({
+    items.push({
+      isSection: true,
       type: 'MilestonesSection',
       props: {
         milestones: project.milestones,
@@ -49,7 +52,8 @@ export function getProjectDetails(
     project.knowledgeNuggets &&
     !isEmpty(project.knowledgeNuggets)
   ) {
-    sections.push({
+    items.push({
+      isSection: true,
       type: 'KnowledgeNuggetsSection',
       props: {
         knowledgeNuggets: project.knowledgeNuggets,
@@ -59,13 +63,15 @@ export function getProjectDetails(
     })
   }
 
-  sections.push({
+  items.push({
+    isSection: true,
     type: 'DescriptionSection',
     props: getDescriptionSection(project, verificationStatus),
   })
 
   if (!isUpcoming) {
-    sections.push({
+    items.push({
+      isSection: true,
       type: 'RiskAnalysisSection',
       props: {
         riskValues: getRiskValues(project.riskView),
@@ -74,9 +80,18 @@ export function getProjectDetails(
       },
     })
 
+    if (incomplete) {
+      items.push({
+        type: 'TechnologyIncompleteNote',
+        isSection: false,
+        props: incomplete,
+      })
+    }
+
     technologySections.forEach((section) =>
-      sections.push({
+      items.push({
         type: 'TechnologySection',
+        isSection: true,
         props: {
           items: section.items,
           id: section.id,
@@ -86,9 +101,9 @@ export function getProjectDetails(
     )
 
     if (permissionsSection) {
-      sections.push({
+      items.push({
         type: 'PermissionsSection',
-
+        isSection: true,
         props: {
           ...permissionsSection,
           id: 'permissions',
@@ -97,16 +112,19 @@ export function getProjectDetails(
       })
     }
 
-    sections.push({
+    items.push({
       type: 'ContractsSection',
+      isSection: true,
       props: getContractSection(project, verificationStatus),
     })
   }
 
-  return { incomplete, isUpcoming, sections }
+  return { incomplete, isUpcoming, items }
 }
 
-export type Section =
+export type ProjectDetailsItem = ProjectDetailsSection | NonSectionElement
+
+export type ProjectDetailsSection =
   | ChartSection
   | DescriptionSection
   | MilestonesSection
@@ -116,41 +134,61 @@ export type Section =
   | PermissionsSection
   | ContractsSection
 
+type NonSectionElement = TechnologyIncompleteNote | UpcomingDisclaimer
+
 interface ChartSection {
   type: 'ChartSection'
+  isSection: true
   props: ChartProps
 }
 interface DescriptionSection {
   type: 'DescriptionSection'
+  isSection: true
   props: DescriptionSectionProps
 }
 
 interface MilestonesSection {
   type: 'MilestonesSection'
+  isSection: true
   props: MilestonesSectionProps
 }
 
 interface KnowledgeNuggetsSection {
   type: 'KnowledgeNuggetsSection'
+  isSection: true
   props: KnowledgeNuggetsProps
 }
 
 interface RiskAnalysisSection {
   type: 'RiskAnalysisSection'
+  isSection: true
   props: RiskAnalysisProps
 }
 
+interface TechnologyIncompleteNote {
+  isSection: false
+  type: 'TechnologyIncompleteNote'
+  props: TechnologyIncompleteProps
+}
 interface TechnologySection {
   type: 'TechnologySection'
+  isSection: true
   props: TechnologySectionProps
 }
 
 interface PermissionsSection {
   type: 'PermissionsSection'
+  isSection: true
   props: PermissionsSectionProps
 }
 
 interface ContractsSection {
   type: 'ContractsSection'
+  isSection: true
   props: ContractsSectionProps
+}
+
+interface UpcomingDisclaimer {
+  isSection: false
+  type: 'UpcomingDisclaimer'
 }

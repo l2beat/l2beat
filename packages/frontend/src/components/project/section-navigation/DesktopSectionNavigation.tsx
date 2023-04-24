@@ -1,12 +1,12 @@
 import React from 'react'
-import { Section } from '../../../pages/scaling-projects/props/getProjectDetails'
+import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
 
 interface SectionNavigationProps {
   title: string
   icon: string | undefined
-  sections: Section[]
+  sections: ProjectDetailsSection[]
 }
 
 export interface SectionNavigationItem {
@@ -46,7 +46,7 @@ export function DesktopSectionNavigation(props: SectionNavigationProps) {
   )
 }
 
-function NavigationList({ sections }: { sections: Section[] }) {
+function NavigationList({ sections }: { sections: ProjectDetailsSection[] }) {
   return (
     <div className="flex flex-col gap-3">
       {sections.map((section, i) => (

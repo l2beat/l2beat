@@ -7,50 +7,54 @@ import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNu
 import { MilestonesSection } from '../../../components/project/Milestones'
 import { PermissionsSection } from '../../../components/project/PermissionsSection'
 import { RiskAnalysis } from '../../../components/project/RiskAnalysis'
-import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
+import {
+  TechnologyIncomplete,
+  TechnologyIncompleteProps,
+} from '../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
-import { Section } from '../props/getProjectDetails'
+import { ProjectDetailsItem } from '../props/getProjectDetails'
 
 export interface ProjectDetailsProps {
   isUpcoming?: boolean
-  sections: Section[]
+  items: ProjectDetailsItem[]
   incomplete?: TechnologyIncompleteProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <div className="px-4 md:px-0">
-      {props.sections.map((section) => {
-        switch (section.type) {
+      {props.items.map((item) => {
+        switch (item.type) {
           case 'ChartSection':
             return (
               <Chart
-                key={section.type}
-                {...section.props}
+                key={item.type}
+                {...item.props}
                 mobileFull
                 isUpcoming={props.isUpcoming}
               />
             )
           case 'MilestonesSection':
-            return <MilestonesSection key={section.type} {...section.props} />
+            return <MilestonesSection key={item.type} {...item.props} />
           case 'KnowledgeNuggetsSection':
-            return (
-              <KnowledgeNuggetsSection key={section.type} {...section.props} />
-            )
+            return <KnowledgeNuggetsSection key={item.type} {...item.props} />
           case 'DescriptionSection':
-            return <DescriptionSection key={section.type} {...section.props} />
+            return <DescriptionSection key={item.type} {...item.props} />
           case 'RiskAnalysisSection':
-            return <RiskAnalysis key={section.type} {...section.props} />
+            return <RiskAnalysis key={item.type} {...item.props} />
+          case 'TechnologyIncompleteNote':
+            return <TechnologyIncomplete key={item.type} {...item.props} />
           case 'TechnologySection':
-            return <TechnologySection key={section.type} {...section.props} />
+            return <TechnologySection key={item.type} {...item.props} />
           case 'PermissionsSection':
-            return <PermissionsSection key={section.type} {...section.props} />
+            return <PermissionsSection key={item.type} {...item.props} />
           case 'ContractsSection':
-            return <ContractsSection key={section.type} {...section.props} />
+            return <ContractsSection key={item.type} {...item.props} />
+          case 'UpcomingDisclaimer':
+            return <UpcomingDisclaimer key={item.type} className="mt-6" />
         }
       })}
-      {props.isUpcoming && <UpcomingDisclaimer className="mt-6" />}
     </div>
   )
 }
