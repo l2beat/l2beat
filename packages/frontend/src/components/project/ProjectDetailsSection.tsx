@@ -8,7 +8,7 @@ interface Props {
   children: ReactNode
 }
 
-export function Section(props: Props) {
+export function ProjectDetailsSection(props: Props) {
   return (
     <section id={props.id} className={cx(props.className, 'mt-10 md:mt-16')}>
       <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">

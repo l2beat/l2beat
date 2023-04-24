@@ -1,83 +1,56 @@
-import { KnowledgeNugget, Milestone } from '@l2beat/config'
-import { isEmpty } from 'lodash'
 import React from 'react'
 
-import { Chart, ChartProps } from '../../../components'
-import { HorizontalSeparator } from '../../../components/HorizontalSeparator'
-import {
-  ContractsSection,
-  ContractsSectionProps,
-} from '../../../components/project/ContractsSection'
-import {
-  DescriptionSection,
-  DescriptionSectionProps,
-} from '../../../components/project/DescriptionSection'
-import { KnowledgeNuggets } from '../../../components/project/KnowledgeNuggets'
-import { Milestones } from '../../../components/project/Milestones'
-import {
-  PermissionsSection,
-  PermissionsSectionProps,
-} from '../../../components/project/PermissionsSection'
-import {
-  RiskAnalysis,
-  RiskAnalysisProps,
-} from '../../../components/project/RiskAnalysis'
-import {
-  TechnologyIncomplete,
-  TechnologyIncompleteProps,
-} from '../../../components/project/TechnologyIncomplete'
-import {
-  TechnologySection,
-  TechnologySectionProps,
-} from '../../../components/project/TechnologySection'
+import { Chart } from '../../../components'
+import { ContractsSection } from '../../../components/project/ContractsSection'
+import { DescriptionSection } from '../../../components/project/DescriptionSection'
+import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
+import { MilestonesSection } from '../../../components/project/Milestones'
+import { PermissionsSection } from '../../../components/project/PermissionsSection'
+import { RiskAnalysis } from '../../../components/project/RiskAnalysis'
+import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
+import { TechnologySection } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
-import { LinkSectionProps } from '../../../components/project/links/LinkSection'
+import { Section } from '../props/getProjectDetails'
 
 export interface ProjectDetailsProps {
-  chart: ChartProps
-  linkSection: LinkSectionProps
-  descriptionSection: DescriptionSectionProps
-  riskAnalysis: RiskAnalysisProps
-  incomplete?: TechnologyIncompleteProps
-  sections: TechnologySectionProps[]
-  permissionsSection?: PermissionsSectionProps
-  contractsSection: ContractsSectionProps
-  milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
   isUpcoming?: boolean
+  sections: Section[]
+  incomplete?: TechnologyIncompleteProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <div className="px-4 md:px-0">
-      <Chart {...props.chart} mobileFull isUpcoming={props.isUpcoming} />
-      {!props.isUpcoming && (
-        <>
-          <Milestones milestones={props.milestones} />
-          <KnowledgeNuggets knowledgeNuggets={props.knowledgeNuggets} />
-        </>
-      )}
-
-      <DescriptionSection {...props.descriptionSection} />
-      {!props.isUpcoming && (
-        <>
-          <RiskAnalysis {...props.riskAnalysis} />
-          {props.incomplete && <TechnologyIncomplete {...props.incomplete} />}
-          {props.sections.map((section) => (
-            <TechnologySection key={section.id} {...section} />
-          ))}
-          {props.permissionsSection && (
-            <PermissionsSection {...props.permissionsSection} />
-          )}
-          <ContractsSection {...props.contractsSection} />
-        </>
-      )}
+      {props.sections.map((section) => {
+        switch (section.type) {
+          case 'ChartSection':
+            return (
+              <Chart
+                key={section.type}
+                {...section.props}
+                mobileFull
+                isUpcoming={props.isUpcoming}
+              />
+            )
+          case 'MilestonesSection':
+            return <MilestonesSection key={section.type} {...section.props} />
+          case 'KnowledgeNuggetsSection':
+            return (
+              <KnowledgeNuggetsSection key={section.type} {...section.props} />
+            )
+          case 'DescriptionSection':
+            return <DescriptionSection key={section.type} {...section.props} />
+          case 'RiskAnalysisSection':
+            return <RiskAnalysis key={section.type} {...section.props} />
+          case 'TechnologySection':
+            return <TechnologySection key={section.type} {...section.props} />
+          case 'PermissionsSection':
+            return <PermissionsSection key={section.type} {...section.props} />
+          case 'ContractsSection':
+            return <ContractsSection key={section.type} {...section.props} />
+        }
+      })}
       {props.isUpcoming && <UpcomingDisclaimer className="mt-6" />}
-      {!isEmpty(props.knowledgeNuggets) && (
-        <div className="px-4 md:hidden">
-          <HorizontalSeparator />
-        </div>
-      )}
     </div>
   )
 }

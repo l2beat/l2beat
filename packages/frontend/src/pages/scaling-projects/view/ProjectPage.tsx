@@ -35,6 +35,7 @@ export function ProjectPage(props: ProjectPageProps) {
             <DesktopSectionNavigation
               title={props.projectHeader.title}
               icon={props.projectHeader.icon}
+              sections={props.projectDetails.sections}
             />
           </div>
           <div className="col-span-7 md:col-span-5">

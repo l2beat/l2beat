@@ -1,10 +1,3 @@
-import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
-import {
-  DesktopNavigationList,
-  SectionNavigationItem,
-} from '../../components/project/section-navigation/DesktopSectionNavigation'
-
 export function configureDesktopSectionNavigation() {
   const sectionNavigation = document.querySelector(
     '#desktop-section-navigation',
@@ -29,17 +22,19 @@ export function configureDesktopSectionNavigation() {
     return
 
   let previouslyHighlightedItem: HTMLAnchorElement | Element | undefined
-  highlightItem(sectionNavigationSummary)
-  renderNavigationList(sections, sectionNavigationList)
-  const lastSection = Array.from(
-    sectionNavigationList.querySelectorAll('a'),
-  ).pop()
 
-  function highlightItem(item: HTMLAnchorElement | Element | undefined) {
+  const highlightItem = (item: HTMLAnchorElement | Element) => {
     previouslyHighlightedItem?.classList.toggle('opacity-60', true)
-    item?.classList.toggle('opacity-60', false)
+    item.classList.toggle('opacity-60', false)
     previouslyHighlightedItem = item
   }
+
+  highlightCurrentSection({
+    navigationList: sectionNavigationList,
+    summary: sectionNavigationSummary,
+    sections,
+    onHighlight: highlightItem,
+  })
 
   const handleShowingProjectTitle = () => {
     const navigationTopOffset = 32
@@ -52,41 +47,14 @@ export function configureDesktopSectionNavigation() {
     }
   }
 
-  const handleHighlighting = () => {
-    const offsetRatio = 0.2
-
-    if (isScrolledToTop()) {
-      highlightItem(sectionNavigationSummary)
-    }
-
-    if (isScrolledToBottom()) {
-      highlightItem(lastSection)
-      return
-    }
-
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop
-      const sectionHeight = section.offsetHeight
-      const sectionBottom = sectionTop + sectionHeight
-      const viewportHeight = window.innerHeight
-
-      const scrollPos = window.pageYOffset + viewportHeight * offsetRatio
-      const isCurrentSection =
-        scrollPos >= sectionTop && scrollPos < sectionBottom
-
-      if (isCurrentSection) {
-        const sectionNavigationItem = sectionNavigationList.querySelector(
-          `a[href="#${section.id}"]`,
-        )
-        if (!sectionNavigationItem) return
-        highlightItem(sectionNavigationItem)
-      }
-    })
-  }
-
   window.addEventListener('scroll', () => {
     handleShowingProjectTitle()
-    handleHighlighting()
+    highlightCurrentSection({
+      navigationList: sectionNavigationList,
+      summary: sectionNavigationSummary,
+      sections,
+      onHighlight: highlightItem,
+    })
   })
 
   sectionNavigationSummary.addEventListener('click', () => {
@@ -94,23 +62,54 @@ export function configureDesktopSectionNavigation() {
   })
 }
 
-function renderNavigationList(
-  sections: NodeListOf<HTMLElement>,
-  target: Element,
-) {
-  const navigationListSections: SectionNavigationItem[] = []
+interface HighlightCurrentSectionOpts {
+  navigationList: Element
+  summary: Element
+  sections: NodeListOf<HTMLElement>
+  onHighlight: (item: HTMLAnchorElement | Element) => void
+}
+
+function highlightCurrentSection({
+  navigationList,
+  summary,
+  sections,
+  onHighlight,
+}: HighlightCurrentSectionOpts) {
+  const offsetRatio = 0.15
+
+  if (isScrolledToTop()) {
+    onHighlight(summary)
+    return
+  }
+
+  if (isScrolledToBottom()) {
+    const lastSection = sections[sections.length - 1]
+    const lastSectionNavigationItem = navigationList.querySelector(
+      `a[href="#${lastSection.id}"]`,
+    )
+    if (!lastSectionNavigationItem) return
+    onHighlight(lastSectionNavigationItem)
+    return
+  }
 
   sections.forEach((section) => {
-    const id = section.id
-    const title = section.querySelector('h2')?.textContent
-    if (!id || !title) return
+    const sectionTop = section.offsetTop
+    const sectionHeight = section.offsetHeight
+    const sectionBottom = sectionTop + sectionHeight
+    const viewportHeight = window.innerHeight
 
-    navigationListSections.push({ id, title })
+    const scrollPos = window.pageYOffset + viewportHeight * offsetRatio
+    const isCurrentSection =
+      scrollPos >= sectionTop && scrollPos < sectionBottom
+
+    if (isCurrentSection) {
+      const sectionNavigationItem = navigationList.querySelector(
+        `a[href="#${section.id}"]`,
+      )
+      if (!sectionNavigationItem) return
+      onHighlight(sectionNavigationItem)
+    }
   })
-
-  target.innerHTML = renderToStaticMarkup(
-    <DesktopNavigationList sections={navigationListSections} />,
-  )
 }
 
 function isScrolledToBottom() {
