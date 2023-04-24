@@ -22,12 +22,12 @@ export function highlightCurrentSection({
 
   if (isScrolledToBottom()) {
     const lastSection = sections[sections.length - 1]
-    const lastSectionNavigationItem =
+    const lastProjectNavigationItem =
       navigationList.querySelector<HTMLAnchorElement>(
         `a[href="#${lastSection.id}"]`,
       )
-    if (!lastSectionNavigationItem) return
-    onHighlight(lastSectionNavigationItem)
+    if (!lastProjectNavigationItem) return
+    onHighlight(lastProjectNavigationItem)
     return
   }
 
@@ -42,19 +42,19 @@ export function highlightCurrentSection({
       scrollPos >= sectionTop && scrollPos < sectionBottom
 
     if (isCurrentSection) {
-      const sectionNavigationItem =
+      const projectNavigationItem =
         navigationList.querySelector<HTMLAnchorElement>(
           `a[href="#${section.id}"]`,
         )
 
       if (
-        !sectionNavigationItem ||
-        previouslyHighlightedItem === sectionNavigationItem
+        !projectNavigationItem ||
+        previouslyHighlightedItem === projectNavigationItem
       )
         return
 
-      onHighlight(sectionNavigationItem)
-      previouslyHighlightedItem = sectionNavigationItem
+      onHighlight(projectNavigationItem)
+      previouslyHighlightedItem = projectNavigationItem
     }
   })
 }

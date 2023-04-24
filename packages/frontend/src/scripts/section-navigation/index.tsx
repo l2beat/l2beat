@@ -1,7 +1,7 @@
-import { configureDesktopSectionNavigation } from './configureDesktopSectionNavigation'
-import { configureMobileSectionNavigation } from './configureMobileSectionNavigation'
+import { configureDesktopProjectNavigation } from './configureDesktopProjectNavigation'
+import { configureMobileProjectNavigation } from './configureMobileProjectNavigation'
 
-export function configureSectionNavigation() {
-  configureDesktopSectionNavigation()
-  configureMobileSectionNavigation()
+export function configureProjectNavigation() {
+  configureDesktopProjectNavigation()
+  configureMobileProjectNavigation()
 }

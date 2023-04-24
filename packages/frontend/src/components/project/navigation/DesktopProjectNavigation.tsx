@@ -4,13 +4,13 @@ import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/get
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
 
-interface SectionNavigationProps {
+interface ProjectNavigationProps {
   title: string
   icon: string | undefined
   sections: ProjectDetailsSection[]
 }
 
-export function DesktopSectionNavigation(props: SectionNavigationProps) {
+export function DesktopProjectNavigation(props: ProjectNavigationProps) {
   return (
     <div className="sticky top-8" id="desktop-section-navigation">
       <div id="desktop-section-navigation-header" className="hidden">
@@ -35,15 +35,15 @@ export function DesktopSectionNavigation(props: SectionNavigationProps) {
           <SummaryIcon />
           Summary
         </a>
-        <SectionNavigationList sections={props.sections} />
+        <ProjectNavigationList sections={props.sections} />
       </div>
     </div>
   )
 }
 
-function SectionNavigationList({
+function ProjectNavigationList({
   sections,
-}: Pick<SectionNavigationProps, 'sections'>) {
+}: Pick<ProjectNavigationProps, 'sections'>) {
   return (
     <>
       {sections.map((section, i) => {

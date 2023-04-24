@@ -4,28 +4,28 @@ import { highlightCurrentSection } from './highlightCurrentSection'
 
 const ARROWS_THRESHOLD = 8
 
-export function configureMobileSectionNavigation() {
-  const sectionNavigation = document.querySelector('#mobile-section-navigation')
-  const sectionNavigationList = sectionNavigation?.querySelector(
+export function configureMobileProjectNavigation() {
+  const projectNavigation = document.querySelector('#mobile-section-navigation')
+  const projectNavigationList = projectNavigation?.querySelector(
     '#mobile-section-navigation-list',
   )
-  const sectionNavigationSummary =
-    sectionNavigation?.querySelector<HTMLAnchorElement>(
+  const projectNavigationSummary =
+    projectNavigation?.querySelector<HTMLAnchorElement>(
       'a#mobile-section-navigation-summary',
     )
-  const arrowLeft = sectionNavigation?.querySelector(
+  const arrowLeft = projectNavigation?.querySelector(
     '#mobile-section-navigation-arrow-left',
   )
-  const arrowRight = sectionNavigation?.querySelector(
+  const arrowRight = projectNavigation?.querySelector(
     '#mobile-section-navigation-arrow-right',
   )
 
   const sections = document.querySelectorAll('section')
 
   if (
-    !sectionNavigation ||
-    !sectionNavigationList ||
-    !sectionNavigationSummary ||
+    !projectNavigation ||
+    !projectNavigationList ||
+    !projectNavigationSummary ||
     !arrowLeft ||
     !arrowRight
   ) {
@@ -35,31 +35,31 @@ export function configureMobileSectionNavigation() {
   let destinationItem: HTMLAnchorElement | null = null
 
   highlightCurrentSection({
-    navigationList: sectionNavigationList,
+    navigationList: projectNavigationList,
     sections,
-    summary: sectionNavigationSummary,
+    summary: projectNavigationSummary,
     onHighlight: highlightItem,
   })
 
   window.addEventListener('scroll', () => {
     highlightCurrentSection({
-      navigationList: sectionNavigationList,
+      navigationList: projectNavigationList,
       sections,
-      summary: sectionNavigationSummary,
+      summary: projectNavigationSummary,
       onHighlight: (item) => {
         highlightItem(item)
-        scrollToItem(item )
+        scrollToItem(item)
       },
     })
   })
 
   const showArrows = () => {
     const isScrolledToStart =
-      sectionNavigationList.scrollLeft < ARROWS_THRESHOLD
+      projectNavigationList.scrollLeft < ARROWS_THRESHOLD
     const isScrolledToEnd =
-      sectionNavigationList.scrollLeft >
-      sectionNavigationList.scrollWidth -
-        sectionNavigationList.clientWidth -
+      projectNavigationList.scrollLeft >
+      projectNavigationList.scrollWidth -
+        projectNavigationList.clientWidth -
         ARROWS_THRESHOLD
 
     if (isScrolledToStart) {
@@ -82,9 +82,9 @@ export function configureMobileSectionNavigation() {
     }
     const scrollPosition =
       item.offsetLeft -
-      sectionNavigationList.getBoundingClientRect().width / 2 +
+      projectNavigationList.getBoundingClientRect().width / 2 +
       item.offsetWidth / 2
-    sectionNavigationList.scrollTo({
+    projectNavigationList.scrollTo({
       left: scrollPosition,
       behavior: 'smooth',
     })
@@ -101,11 +101,11 @@ export function configureMobileSectionNavigation() {
     previouslyHighlightedItem = item
   }
 
-  const sectionNavigationItems = sectionNavigationList.querySelectorAll('a')
-  sectionNavigationItems.forEach((item) => {
+  const projectNavigationItems = projectNavigationList.querySelectorAll('a')
+  projectNavigationItems.forEach((item) => {
     item.addEventListener('click', () => {
       destinationItem = item
     })
   })
-  sectionNavigationList.addEventListener('scroll', showArrows)
+  projectNavigationList.addEventListener('scroll', showArrows)
 }

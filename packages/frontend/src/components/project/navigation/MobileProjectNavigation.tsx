@@ -7,7 +7,7 @@ interface Props {
   sections: ProjectDetailsSection[]
 }
 
-export function MobileSectionNavigation({ sections }: Props) {
+export function MobileProjectNavigation({ sections }: Props) {
   return (
     <div id="mobile-section-navigation" className="relative bg-[#000000]">
       <div
@@ -29,7 +29,7 @@ export function MobileSectionNavigation({ sections }: Props) {
         >
           Summary
         </a>
-        <MobileNavigationList sections={sections} />
+        <ProjectNavigationList sections={sections} />
       </div>
       <div
         className="absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-[#000000] opacity-0 transition-opacity"
@@ -43,7 +43,7 @@ export function MobileSectionNavigation({ sections }: Props) {
   )
 }
 
-function MobileNavigationList({ sections }: Pick<Props, 'sections'>) {
+function ProjectNavigationList({ sections }: Pick<Props, 'sections'>) {
   return (
     <>
       {sections.map((section) => {

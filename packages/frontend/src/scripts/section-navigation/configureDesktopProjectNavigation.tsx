@@ -1,26 +1,26 @@
 import { highlightCurrentSection } from './highlightCurrentSection'
 
-export function configureDesktopSectionNavigation() {
-  const sectionNavigation = document.querySelector(
+export function configureDesktopProjectNavigation() {
+  const projectNavigation = document.querySelector(
     '#desktop-section-navigation',
   )
-  const sectionNavigationList = sectionNavigation?.querySelector(
+  const projectNavigationList = projectNavigation?.querySelector(
     '#desktop-section-navigation-list',
   )
-  const sectionNavigationHeader = sectionNavigation?.querySelector(
+  const projectNavigationHeader = projectNavigation?.querySelector(
     '#desktop-section-navigation-header',
   )
-  const sectionNavigationSummary =
-    sectionNavigation?.querySelector<HTMLAnchorElement>(
+  const projectNavigationSummary =
+    projectNavigation?.querySelector<HTMLAnchorElement>(
       'a#desktop-section-navigation-summary',
     )
   const sections = document.querySelectorAll('section')
 
   if (
-    !sectionNavigation ||
-    !sectionNavigationList ||
-    !sectionNavigationHeader ||
-    !sectionNavigationSummary
+    !projectNavigation ||
+    !projectNavigationList ||
+    !projectNavigationHeader ||
+    !projectNavigationSummary
   )
     return
 
@@ -33,28 +33,28 @@ export function configureDesktopSectionNavigation() {
   }
 
   highlightCurrentSection({
-    navigationList: sectionNavigationList,
-    summary: sectionNavigationSummary,
+    navigationList: projectNavigationList,
+    summary: projectNavigationSummary,
     sections,
     onHighlight: highlightItem,
   })
 
   const handleShowingProjectTitle = () => {
     const navigationTopOffset = 32
-    const navigationOffset = sectionNavigation.getBoundingClientRect().top
+    const navigationOffset = projectNavigation.getBoundingClientRect().top
 
     if (navigationOffset === navigationTopOffset) {
-      sectionNavigationHeader.classList.toggle('hidden', false)
+      projectNavigationHeader.classList.toggle('hidden', false)
     } else {
-      sectionNavigationHeader.classList.toggle('hidden', true)
+      projectNavigationHeader.classList.toggle('hidden', true)
     }
   }
 
   window.addEventListener('scroll', () => {
     handleShowingProjectTitle()
     highlightCurrentSection({
-      navigationList: sectionNavigationList,
-      summary: sectionNavigationSummary,
+      navigationList: projectNavigationList,
+      summary: projectNavigationSummary,
       sections,
       onHighlight: highlightItem,
     })
