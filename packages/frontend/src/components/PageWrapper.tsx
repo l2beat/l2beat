@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react'
 
+import classNames from 'classnames'
 import { PageMetadata } from '../pages/Page'
-import { Head } from './head'
 import { Tooltip } from './Tooltip'
+import { Head } from './head'
 
 export interface PageWrapperProps {
   htmlClassName?: string
@@ -13,7 +14,13 @@ export interface PageWrapperProps {
 
 export function PageWrapper(props: PageWrapperProps) {
   return (
-    <html lang="en" className={props.htmlClassName}>
+    <html
+      lang="en"
+      className={classNames(
+        'scroll-pt-16 scroll-smooth md:scroll-pt-8',
+        props.htmlClassName,
+      )}
+    >
       <Head {...props.metadata} preloadApi={props.preloadApi} />
       <body className="bg-white text-black dark:bg-black dark:text-white">
         {props.children}
