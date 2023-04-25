@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { DESKTOP_PROJECT_NAVIGATION_IDS } from '.'
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
@@ -8,13 +9,6 @@ interface ProjectNavigationProps {
   title: string
   icon: string | undefined
   sections: ProjectDetailsSection[]
-}
-export const DESKTOP_PROJECT_NAVIGATION_IDS = {
-  container: 'desktop-project-navigation',
-  listHeader: 'desktop-project-navigation-list-header',
-  list: 'desktop-project-navigation-list',
-  summaryItem: 'desktop-project-navigation-summary-item',
-  index: 'desktop-project-navigation-item-index',
 }
 
 export function DesktopProjectNavigation(props: ProjectNavigationProps) {

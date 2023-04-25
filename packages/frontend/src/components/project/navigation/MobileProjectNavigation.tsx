@@ -1,18 +1,11 @@
 import React from 'react'
 
+import { MOBILE_PROJECT_NAVIGATION_IDS } from '.'
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { ChevronLeftIcon, ChevronRightIcon } from '../../icons/Chevron'
 
 interface Props {
   sections: ProjectDetailsSection[]
-}
-
-export const MOBILE_PROJECT_NAVIGATION_IDS = {
-  container: 'mobile-project-navigation',
-  list: 'mobile-project-navigation-list',
-  summaryItem: 'mobile-project-navigation-summary',
-  arrowLeft: 'mobile-project-navigation-arrow-left',
-  arrowRight: 'mobile-project-navigation-arrow-right',
 }
 
 export function MobileProjectNavigation({ sections }: Props) {
