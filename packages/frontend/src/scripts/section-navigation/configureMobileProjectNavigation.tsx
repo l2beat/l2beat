@@ -6,75 +6,59 @@ import { highlightCurrentSection } from './highlightCurrentSection'
 const ARROWS_THRESHOLD = 8
 
 export function configureMobileProjectNavigation() {
-  const projectNavigation = document.querySelector(
+  const container = document.querySelector(
     `#${MOBILE_PROJECT_NAVIGATION_IDS.container}`,
   )
-  const projectNavigationList = projectNavigation?.querySelector(
+  const list = container?.querySelector(
     `#${MOBILE_PROJECT_NAVIGATION_IDS.list}`,
   )
-  const summaryItem = projectNavigation?.querySelector<HTMLAnchorElement>(
+  const summaryItem = container?.querySelector<HTMLAnchorElement>(
     `a#${MOBILE_PROJECT_NAVIGATION_IDS.summaryItem}`,
   )
-  const arrowLeft = projectNavigation?.querySelector(
+  const arrowLeft = container?.querySelector(
     `#${MOBILE_PROJECT_NAVIGATION_IDS.arrowLeft}`,
   )
-  const arrowRight = projectNavigation?.querySelector(
+  const arrowRight = container?.querySelector(
     `#${MOBILE_PROJECT_NAVIGATION_IDS.arrowRight}`,
   )
 
   const sections = document.querySelectorAll('section')
 
-  if (
-    !projectNavigation ||
-    !projectNavigationList ||
-    !summaryItem ||
-    !arrowLeft ||
-    !arrowRight
-  ) {
+  if (!container || !list || !summaryItem || !arrowLeft || !arrowRight) {
     return
   }
-  let previouslyHighlightedItem: Element | undefined
+  let previouslyHighlightedItem: Element | null = null
   let destinationItem: HTMLAnchorElement | null = null
 
   highlightCurrentSection({
-    navigationList: projectNavigationList,
+    navigationList: list,
     sections,
     summary: summaryItem,
     onHighlight: highlightItem,
+    previouslyHighlightedItem,
   })
 
   window.addEventListener('scroll', () => {
     highlightCurrentSection({
-      navigationList: projectNavigationList,
+      navigationList: list,
       sections,
       summary: summaryItem,
       onHighlight: (item) => {
         highlightItem(item)
         scrollToItem(item)
       },
+      previouslyHighlightedItem,
     })
   })
 
   const showArrows = () => {
-    const isScrolledToStart =
-      projectNavigationList.scrollLeft < ARROWS_THRESHOLD
+    const isScrolledToStart = list.scrollLeft < ARROWS_THRESHOLD
     const isScrolledToEnd =
-      projectNavigationList.scrollLeft >
-      projectNavigationList.scrollWidth -
-        projectNavigationList.clientWidth -
-        ARROWS_THRESHOLD
+      list.scrollLeft > list.scrollWidth - list.clientWidth - ARROWS_THRESHOLD
 
-    if (isScrolledToStart) {
-      arrowLeft.classList.add('opacity-0')
-    } else {
-      arrowLeft.classList.remove('opacity-0')
-    }
+    arrowLeft.classList.toggle('opacity-0', isScrolledToStart)
 
-    if (isScrolledToEnd) {
-      arrowRight.classList.add('opacity-0')
-    } else {
-      arrowRight.classList.remove('opacity-0')
-    }
+    arrowRight.classList.toggle('opacity-0', isScrolledToEnd)
   }
   showArrows()
 
@@ -84,9 +68,9 @@ export function configureMobileProjectNavigation() {
     }
     const scrollPosition =
       item.offsetLeft -
-      projectNavigationList.getBoundingClientRect().width / 2 +
+      list.getBoundingClientRect().width / 2 +
       item.offsetWidth / 2
-    projectNavigationList.scrollTo({
+    list.scrollTo({
       left: scrollPosition,
       behavior: 'smooth',
     })
@@ -103,11 +87,11 @@ export function configureMobileProjectNavigation() {
     previouslyHighlightedItem = item
   }
 
-  const projectNavigationItems = projectNavigationList.querySelectorAll('a')
+  const projectNavigationItems = list.querySelectorAll('a')
   projectNavigationItems.forEach((item) => {
     item.addEventListener('click', () => {
       destinationItem = item
     })
   })
-  projectNavigationList.addEventListener('scroll', showArrows)
+  list.addEventListener('scroll', showArrows)
 }

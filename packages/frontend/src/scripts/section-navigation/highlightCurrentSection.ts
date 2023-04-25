@@ -3,18 +3,18 @@ interface HighlightCurrentSectionOpts {
   summary: HTMLAnchorElement
   sections: NodeListOf<HTMLElement>
   onHighlight: (item: HTMLAnchorElement) => void
+  previouslyHighlightedItem: Element | null
 }
 
-let previouslyHighlightedItem: Element | null = null
+const OFFSET_RATIO = 0.15
 
 export function highlightCurrentSection({
   navigationList,
   summary,
   sections,
   onHighlight,
+  previouslyHighlightedItem,
 }: HighlightCurrentSectionOpts) {
-  const offsetRatio = 0.15
-
   if (isScrolledToTop()) {
     onHighlight(summary)
     return
@@ -37,7 +37,7 @@ export function highlightCurrentSection({
     const sectionBottom = sectionTop + sectionHeight
     const viewportHeight = window.innerHeight
 
-    const scrollPos = window.pageYOffset + viewportHeight * offsetRatio
+    const scrollPos = window.pageYOffset + viewportHeight * OFFSET_RATIO
     const isCurrentSection =
       scrollPos >= sectionTop && scrollPos < sectionBottom
 
@@ -50,11 +50,11 @@ export function highlightCurrentSection({
       if (
         !projectNavigationItem ||
         previouslyHighlightedItem === projectNavigationItem
-      )
+      ) {
         return
+      }
 
       onHighlight(projectNavigationItem)
-      previouslyHighlightedItem = projectNavigationItem
     }
   })
 }

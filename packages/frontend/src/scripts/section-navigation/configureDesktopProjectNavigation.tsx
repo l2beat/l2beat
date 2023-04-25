@@ -13,7 +13,6 @@ export function configureDesktopProjectNavigation() {
   const list = container?.querySelector(
     `#${DESKTOP_PROJECT_NAVIGATION_IDS.list}`,
   )
-
   const listHeader = container?.querySelector(
     `#${DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}`,
   )
@@ -24,23 +23,23 @@ export function configureDesktopProjectNavigation() {
 
   if (!container || !list || !listHeader || !summaryItem) return
 
-  let previouslyHighlightedItem: PreviouslyHighlighted | undefined
+  let previouslyHighlighted: PreviouslyHighlighted | null = null
 
   const highlightItem = (item: Element) => {
     const index = item.querySelector(`#${DESKTOP_PROJECT_NAVIGATION_IDS.index}`)
 
-    previouslyHighlightedItem?.item.classList.add('opacity-60')
-    previouslyHighlightedItem?.index?.classList.remove(
+    previouslyHighlighted?.item.classList.add('opacity-60')
+    previouslyHighlighted?.index?.classList.remove(
       'bg-gradient-to-r',
       'from-purple-100',
       'to-pink-100',
     )
-    previouslyHighlightedItem?.index?.classList.add('bg-neutral-700')
+    previouslyHighlighted?.index?.classList.add('bg-neutral-700')
 
     item.classList.remove('opacity-60')
     index?.classList.remove('bg-neutral-700')
     index?.classList.add('bg-gradient-to-r', 'from-purple-100', 'to-pink-100')
-    previouslyHighlightedItem = { item, index }
+    previouslyHighlighted = { item, index }
   }
 
   highlightCurrentSection({
@@ -48,6 +47,7 @@ export function configureDesktopProjectNavigation() {
     summary: summaryItem,
     sections,
     onHighlight: highlightItem,
+    previouslyHighlightedItem: null,
   })
 
   const handleShowingProjectTitle = () => {
@@ -68,6 +68,9 @@ export function configureDesktopProjectNavigation() {
       summary: summaryItem,
       sections,
       onHighlight: highlightItem,
+      previouslyHighlightedItem: previouslyHighlighted
+        ? previouslyHighlighted.item
+        : null,
     })
   })
 }
