@@ -1,11 +1,13 @@
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
-import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, getTimestamps, Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
+import { createReportsPerEscrow } from '../../../core/reports/createReports'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
+import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
 import {
   BalanceStatusRecord,
   BalanceStatusRepository,
@@ -19,12 +21,14 @@ import { getDiff } from './discovery/props/utils/getDiff'
 import { renderDashboardPage } from './discovery/view/DashboardPage'
 import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
 import { renderBalancesPage } from './view/BalancesPage'
+import { renderEscrowsPage } from './view/EscrowsPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderReportsPage } from './view/ReportsPage'
 
 export class StatusController {
   constructor(
     private readonly priceRepository: PriceRepository,
+    private readonly balanceRepository: BalanceRepository,
     private readonly balanceStatusRepository: BalanceStatusRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly updateMonitorRepository: UpdateMonitorRepository,
@@ -131,6 +135,17 @@ export class StatusController {
     }))
 
     return renderReportsPage({ reports })
+  }
+
+  async getEscrowsDashboard(timestamp: UnixTime): Promise<string> {
+    const [prices, balances] = await Promise.all([
+      this.priceRepository.getByTimestamp(timestamp),
+      this.balanceRepository.getByTimestamp(ChainId.ETHEREUM, timestamp),
+    ])
+
+    const reports = createReportsPerEscrow(prices, balances, this.projects)
+
+    return renderEscrowsPage(reports)
   }
 
   private getFirstHour(from: UnixTime | undefined) {

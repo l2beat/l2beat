@@ -60,5 +60,21 @@ export function createStatusRouter(statusController: StatusController) {
     }),
   )
 
+  router.get(
+    '/status/escrows/:timestamp',
+    withTypedContext(
+      z.object({
+        params: z.object({
+          timestamp: stringAs((s) => new UnixTime(+s)),
+        }),
+      }),
+      async (ctx) => {
+        const { timestamp } = ctx.params
+
+        ctx.body = await statusController.getEscrowsDashboard(timestamp)
+      },
+    ),
+  )
+
   return router
 }
