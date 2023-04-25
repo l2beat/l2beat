@@ -47,6 +47,14 @@ export function configureMobileProjectNavigation() {
     previouslyHighlightedItem = item
   }
 
+  const onArrowClick = (dir: 'left' | 'right') => {
+    const scrollPosition = list.getBoundingClientRect().width
+    list.scrollBy({
+      left: dir === 'left' ? -scrollPosition : scrollPosition,
+      behavior: 'smooth',
+    })
+  }
+
   showArrows()
   highlightCurrentSection({
     navigationList: list,
@@ -75,4 +83,8 @@ export function configureMobileProjectNavigation() {
       },
     })
   })
+
+  arrowLeft.addEventListener('click', () => onArrowClick('left'))
+
+  arrowRight.addEventListener('click', () => onArrowClick('right'))
 }
