@@ -98,6 +98,7 @@ describe(DiscoveryWatcher.name, () => {
         repository,
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
       await discoveryWatcher.update(new UnixTime(0))
 
@@ -174,6 +175,7 @@ describe(DiscoveryWatcher.name, () => {
         discoveryWatcherRepository,
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
 
       await discoveryWatcher.update(new UnixTime(0))
@@ -218,6 +220,7 @@ describe(DiscoveryWatcher.name, () => {
         repository,
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
 
       const NINE_AM = UnixTime.fromDate(new Date('2023-02-21T07:01:00Z'))
@@ -313,6 +316,7 @@ describe(DiscoveryWatcher.name, () => {
         discoveryWatcherRepository,
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
 
       await discoveryWatcher.update(new UnixTime(0))
@@ -361,6 +365,7 @@ describe(DiscoveryWatcher.name, () => {
         discoveryWatcherRepository,
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
 
       await discoveryWatcher.update(new UnixTime(0))
@@ -402,6 +407,7 @@ describe(DiscoveryWatcher.name, () => {
         discoveryWatcherRepository,
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
 
       await discoveryWatcher.update(new UnixTime(0))
@@ -440,6 +446,7 @@ describe(DiscoveryWatcher.name, () => {
         repository,
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
 
       const result = await discoveryWatcher.findChanges(
@@ -490,6 +497,7 @@ describe(DiscoveryWatcher.name, () => {
         repository,
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
 
       const result = await discoveryWatcher.findChanges(
@@ -543,6 +551,7 @@ describe(DiscoveryWatcher.name, () => {
         repository,
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
 
       const result = await discoveryWatcher.findChanges(
@@ -576,27 +585,28 @@ describe(DiscoveryWatcher.name, () => {
         mockObject<DiscoveryWatcherRepository>({}),
         mockObject<Clock>(),
         Logger.SILENT,
+        false,
       )
 
       const messages = ['a', 'b', 'c']
 
-      await discoveryWatcher.notify(messages, 'PUBLIC')
+      await discoveryWatcher.notify(messages, { internalOnly: true })
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(3)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         'a',
-        'PUBLIC',
+        'INTERNAL',
       )
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         2,
         'b',
-        'PUBLIC',
+        'INTERNAL',
       )
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         3,
         'c',
-        'PUBLIC',
+        'INTERNAL',
       )
     })
   })
