@@ -1,5 +1,6 @@
 import React from 'react'
 
+import console from 'console'
 import { DESKTOP_PROJECT_NAVIGATION_IDS } from '.'
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
@@ -21,7 +22,7 @@ export function DesktopProjectNavigation({
   return (
     <div className="sticky top-8" id={DESKTOP_PROJECT_NAVIGATION_IDS.container}>
       <div id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader} className="hidden">
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center gap-4">
           {project.icon && (
             <img
               className="h-8 w-8"
@@ -29,7 +30,7 @@ export function DesktopProjectNavigation({
               alt={`${project.title} logo`}
             />
           )}
-          <span className="ml-4 text-2xl font-bold">{project.title}</span>
+          <span className="text-2xl font-bold">{project.title}</span>
         </div>
         <HorizontalSeparator className="my-4" />
       </div>
