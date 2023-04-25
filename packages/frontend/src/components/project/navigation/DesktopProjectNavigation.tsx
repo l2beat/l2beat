@@ -22,7 +22,7 @@ export function DesktopProjectNavigation({
     <div className="sticky top-8" id={DESKTOP_PROJECT_NAVIGATION_IDS.container}>
       <div
         id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}
-        className="-translate-y-16 opacity-0 transition-all duration-700"
+        className="-translate-y-16 opacity-0 transition-all duration-300"
       >
         <div className="flex flex-row items-center gap-4">
           {project.icon && (
@@ -37,7 +37,7 @@ export function DesktopProjectNavigation({
         <HorizontalSeparator className="my-4" />
       </div>
       <div
-        className="flex -translate-y-16 flex-col gap-3 transition-transform duration-700"
+        className="flex -translate-y-16 flex-col gap-3 transition-transform duration-300"
         id={DESKTOP_PROJECT_NAVIGATION_IDS.list}
       >
         <a
