@@ -1,8 +1,8 @@
 import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
-import { PageContent } from '../PageContent'
 import { configureCharts } from '../chart/configure'
+import { PageContent } from '../PageContent'
 import { ChartSection as ChartSectionComponent } from './ChartSection'
 
 export default {

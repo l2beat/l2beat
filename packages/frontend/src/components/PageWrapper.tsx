@@ -1,9 +1,9 @@
+import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
-import classNames from 'classnames'
 import { PageMetadata } from '../pages/Page'
-import { Tooltip } from './Tooltip'
 import { Head } from './head'
+import { Tooltip } from './Tooltip'
 
 export interface PageWrapperProps {
   htmlClassName?: string

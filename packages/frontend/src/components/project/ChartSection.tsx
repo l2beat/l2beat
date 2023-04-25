@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Chart, ChartProps } from '../chart/Chart'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 

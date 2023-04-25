@@ -1,8 +1,9 @@
 import { range } from 'lodash'
 import React, { useEffect } from 'react'
-import { MOBILE_PROJECT_NAVIGATION_IDS } from '.'
+
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { configureMobileProjectNavigation } from '../../../scripts/section-navigation/configureMobileProjectNavigation'
+import { MOBILE_PROJECT_NAVIGATION_IDS } from './index'
 import { MobileProjectNavigation } from './MobileProjectNavigation'
 
 export default {

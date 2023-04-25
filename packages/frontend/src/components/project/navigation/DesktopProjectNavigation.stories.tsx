@@ -1,5 +1,6 @@
 import { range } from 'lodash'
 import React, { useEffect } from 'react'
+
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { configureDesktopProjectNavigation } from '../../../scripts/section-navigation/configureDesktopProjectNavigation'
 import { DesktopProjectNavigation } from './DesktopProjectNavigation'
