@@ -4,7 +4,7 @@ import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
-import { DiscordClient } from '../peripherals/discord/DiscordClient'
+import { Channel, DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/config/ConfigReader'
 import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
@@ -30,6 +30,7 @@ export class DiscoveryWatcher {
     private readonly repository: DiscoveryWatcherRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
+    private readonly runOnStart: boolean,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -41,8 +42,12 @@ export class DiscoveryWatcher {
     )
   }
 
-  start() {
+  async start() {
     this.logger.info('Started')
+    if (this.runOnStart) {
+      await this.notify('Discovery watcher started.')
+      this.taskQueue.addToFront(UnixTime.now())
+    }
     return this.clock.onNewHour((timestamp) => {
       this.taskQueue.addToFront(timestamp)
     })
@@ -118,8 +123,7 @@ export class DiscoveryWatcher {
         dependents,
         diff.changes,
       )
-      await this.notify(messages, 'PUBLIC')
-      await this.notify(messages, 'INTERNAL')
+      await this.notify(messages)
       this.logger.info('Sending messages', { project: projectConfig.name })
       changesDetected.inc()
     }
@@ -194,13 +198,15 @@ export class DiscoveryWatcher {
     this.logger.info('Sending daily reminder', {
       projects: notUpdatedProjects,
     })
-    await this.notify(
-      [getDailyReminderMessage(notUpdatedProjects, timestamp)],
-      'INTERNAL',
-    )
+    await this.notify(getDailyReminderMessage(notUpdatedProjects, timestamp), {
+      internalOnly: true,
+    })
   }
 
-  async notify(messages: string[], channel: 'PUBLIC' | 'INTERNAL') {
+  async notify(
+    messages: string | string[],
+    options?: { internalOnly: boolean },
+  ) {
     if (!this.discordClient) {
       // TODO: maybe only once? rethink
       this.logger.info(
@@ -209,11 +215,18 @@ export class DiscoveryWatcher {
       return
     }
 
-    for (const message of messages) {
-      await this.discordClient.sendMessage(message, channel).then(
-        () => this.logger.info('Notification to Discord has been sent'),
-        (e) => this.logger.error(e),
-      )
+    const arrayMessages = Array.isArray(messages) ? messages : [messages]
+    for (const message of arrayMessages) {
+      const channels: Channel[] = options?.internalOnly
+        ? ['INTERNAL']
+        : ['PUBLIC', 'INTERNAL']
+
+      for (const channel of channels) {
+        await this.discordClient.sendMessage(message, channel).then(
+          () => this.logger.info('Notification to Discord has been sent'),
+          (e) => this.logger.error(e),
+        )
+      }
     }
   }
 
@@ -233,10 +246,8 @@ export class DiscoveryWatcher {
 
     if (!isEqual(discovery, secondDiscovery)) {
       await this.notify(
-        [
-          `⚠️ [${projectConfig.name}]: API error (Alchemy or Etherscan) | ${blockNumber}`,
-        ],
-        'INTERNAL',
+        `⚠️ [${projectConfig.name}]: API error (Alchemy or Etherscan) | ${blockNumber}`,
+        { internalOnly: true },
       )
       throw new Error(
         `[${projectConfig.name}] Sanity check failed | ${blockNumber}\n
