@@ -29,9 +29,7 @@ export function ProjectPage(props: ProjectPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <div className="sticky top-0 z-[1000] md:hidden">
-        <MobileProjectNavigation sections={sections} />
-      </div>
+      <MobileProjectNavigation sections={sections} />
       <PageContent mobileFull>
         <ProjectHeader {...props.projectHeader} />
         <div className="mt-8 grid grid-cols-7 gap-x-12">
