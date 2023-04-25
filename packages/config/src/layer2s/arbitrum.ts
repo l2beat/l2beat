@@ -245,7 +245,7 @@ export const arbitrum: Layer2 = {
     upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO,
   },
   permissions: [
-    discovery.getGnosisSafeDetails(
+    ...discovery.getGnosisSafeDetails(
       'SecurityCouncil',
       'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
     ),

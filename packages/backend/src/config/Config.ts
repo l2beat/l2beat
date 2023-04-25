@@ -75,12 +75,13 @@ export interface MetricsAuthConfig {
 }
 
 export interface DiscoveryWatcherConfig {
+  readonly runOnStart?: boolean
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
   readonly discord:
     | {
         readonly token: string
-        readonly publicChannelId: string
+        readonly publicChannelId?: string
         readonly internalChannelId: string
       }
     | false
