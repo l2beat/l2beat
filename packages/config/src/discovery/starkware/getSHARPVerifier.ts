@@ -1,5 +1,6 @@
 import { assert, EthereumAddress } from '@l2beat/shared'
 
+import { ProjectPermission } from '../../common'
 import { ProjectDiscovery } from '../ProjectDiscovery'
 import { getProxyGovernance } from './getProxyGovernance'
 
@@ -12,7 +13,7 @@ const SHARP_VERIFIER_PROXY = discovery.getMainContractDetails(
 
 const SHARP_VERIFIER = discovery.getMainContractDetails(
   'SHARPVerifier',
-  'Starkware SHARP verifier used collectively by StarkNet, Sorare, Immutable X, Apex, Myria and rhino.fi. It receives STARK proofs from the Prover attesting to the integrity of the Execution Trace of these Programs including correctly computed L2 state root which is part of the Program Output.',
+  'Starkware SHARP verifier used collectively by StarkNet, Sorare, ImmutableX, Apex, Myria, rhino.fi and Canvas Connect. It receives STARK proofs from the Prover attesting to the integrity of the Execution Trace of these Programs including correctly computed L2 state root which is part of the Program Output.',
 )
 
 const MEMORY_FACT_REGISTRY = discovery.getMainContractDetails(
@@ -59,7 +60,7 @@ export function getSHARPVerifierContracts(
 export function getSHARPVerifierGovernors(
   projectDiscovery: ProjectDiscovery,
   verifierAddress: EthereumAddress,
-) {
+): ProjectPermission[] {
   assert(
     verifierAddress === SHARP_VERIFIER_PROXY.address,
     `SHARPVerifierProxy address mismatch. This project probably uses a different SHARP verifier (${projectDiscovery.projectName})`,
@@ -76,7 +77,7 @@ export function getSHARPVerifierGovernors(
           'upgradeDelay',
         ),
     },
-    discovery.getGnosisSafeDetails(
+    ...discovery.getGnosisSafeDetails(
       'SHARPVerifierGovernorMultisig',
       'SHARP Verifier Governor.',
     ),

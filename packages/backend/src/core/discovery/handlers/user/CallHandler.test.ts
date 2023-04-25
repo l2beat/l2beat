@@ -3,6 +3,7 @@ import { expect, mockObject } from 'earl'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
+import { EXEC_REVERT_MSG } from '../utils/callMethod'
 import { CallHandler } from './CallHandler'
 
 describe(CallHandler.name, () => {
@@ -186,6 +187,8 @@ describe(CallHandler.name, () => {
     const method = 'function add(uint256 a, uint256 b) view returns (uint256)'
     const signature = '0x771602f7'
     const address = EthereumAddress.random()
+    const revertErrorMessage =
+      '(code: 3, message: execution reverted: xDomainMessageSender is not set, data: Some(String("0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f78446f6d61696e4d65737361676553656e646572206973206e6f742073657400")))'
 
     it('calls the method with the provided parameters', async () => {
       const provider = mockObject<DiscoveryProvider>({
@@ -285,6 +288,48 @@ describe(CallHandler.name, () => {
         field: 'add',
         value: 3,
         ignoreRelative: true,
+      })
+    })
+
+    it('should catch revert error', async () => {
+      const provider = mockObject<DiscoveryProvider>({
+        async call() {
+          throw new Error(revertErrorMessage)
+        },
+      })
+
+      const handler = new CallHandler(
+        'add',
+        { type: 'call', method, args: [1, 2], expectRevert: true },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, {})
+      expect(result).toEqual({
+        field: 'add',
+        value: 'EXPECT_REVERT',
+        ignoreRelative: undefined,
+      })
+    })
+
+    it('should not catch revert error when expectRevert is false', async () => {
+      const provider = mockObject<DiscoveryProvider>({
+        async call() {
+          throw new Error(revertErrorMessage)
+        },
+      })
+
+      const handler = new CallHandler(
+        'add',
+        { type: 'call', method, args: [1, 2], expectRevert: false },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, {})
+      expect(result).toEqual({
+        field: 'add',
+        error: EXEC_REVERT_MSG,
+        ignoreRelative: undefined,
       })
     })
   })

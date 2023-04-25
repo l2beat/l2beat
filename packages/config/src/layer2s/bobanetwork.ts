@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -11,6 +12,8 @@ import {
   RISK_VIEW,
 } from './common'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = {
   type: 'layer2',
@@ -218,19 +221,10 @@ export const bobanetwork: Layer2 = {
           ),
         },
       },
-      {
-        name: 'L1CrossDomainMessengerFast',
-        address: EthereumAddress('0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E'),
-        description:
-          'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
-          implementation: EthereumAddress(
-            '0x4CD1948de677e6f791B463daaB807645D3460996',
-          ),
-        },
-      },
+      discovery.getMainContractDetails(
+        'L1CrossDomainMessengerFast',
+        'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
+      ),
       {
         name: 'L1MultiMessageRelayer',
         description:

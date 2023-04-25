@@ -1,8 +1,11 @@
 import { EthereumAddress } from '@l2beat/shared'
 
-import { AnalyzedData, analyzeItem } from './analyzeItem'
+import { AddressAnalyzer, Analysis } from './analysis/AddressAnalyzer'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
+import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
+import { ProxyDetector } from './proxies/ProxyDetector'
+import { SourceCodeService } from './source/SourceCodeService'
 import { DiscoveryLogger } from './utils/DiscoveryLogger'
 
 export async function discover(
@@ -10,7 +13,7 @@ export async function discover(
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
 ) {
-  const resolved = new Map<EthereumAddress, AnalyzedData>()
+  const resolved = new Map<EthereumAddress, Analysis>()
   const known = new Set<EthereumAddress>()
   known.add(EthereumAddress.ZERO)
   for (const address of config.initialAddresses) {
@@ -69,13 +72,21 @@ export async function discover(
     }
     logger.log(`Analyzing ${address.toString()}`)
 
-    const { analyzed, relatives } = await analyzeItem(
+    const proxyDetector = new ProxyDetector(provider, logger)
+    const sourceCodeService = new SourceCodeService(provider)
+    const handlerExecutor = new HandlerExecutor(provider, logger)
+    const addressAnalyzer = new AddressAnalyzer(
       provider,
-      address,
-      contractOverrides,
+      proxyDetector,
+      sourceCodeService,
+      handlerExecutor,
       logger,
     )
-    resolved.set(address, analyzed)
+    const { analysis, relatives } = await addressAnalyzer.analyze(
+      address,
+      contractOverrides,
+    )
+    resolved.set(address, analysis)
 
     const unknown = relatives.filter((x) => !known.has(x))
     if (unknown.length > 0) {

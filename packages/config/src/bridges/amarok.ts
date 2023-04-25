@@ -75,7 +75,7 @@ export const amarok: Bridge = {
         'Messages on the source chain are send perdiodically to the Ethereum chain via native AMB. Once they arrive on Etherum, they can be send from Ethereum, again\
         via native AMB, to the destination chain. Token transfers can be fronted by Routers providing liquidity. Similarly arbitrary messages can be sped up. Watchers provide\
         additional protection in case native AMB gets compromised and forges the message. For optimistic rollups (Optimism, Arbitrum) their native AMB is used but\
-        7-day dispute window is ignored. For BSC (Binance Chain) MutltiChain AMB is used.',
+        7-day dispute window is ignored. For BSC (Binance Chain) MultiChain AMB is used.',
       references: [],
       risks: [
         {
@@ -101,7 +101,7 @@ export const amarok: Bridge = {
       {
         ...discovery.getMainContractDetails('ConnextBridge'),
         description:
-          'The main Connext Amarok contract. Following Diamond design patter, it contains multiple Facets that implement\
+          'The main Connext Amarok contract. Following Diamond design pattern, it contains multiple Facets that implement\
         various parts of the bridge functionality.',
       },
       {

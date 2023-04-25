@@ -4,11 +4,11 @@ import { mkdirp } from 'mkdirp'
 import { dirname } from 'path'
 import { rimraf } from 'rimraf'
 
-import { AnalyzedData } from '../analyzeItem'
+import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 export async function saveDiscoveryResult(
-  results: AnalyzedData[],
+  results: Analysis[],
   config: DiscoveryConfig,
   blockNumber: number,
   configHash: Hash256,
@@ -21,9 +21,12 @@ export async function saveDiscoveryResult(
 
   await rimraf(`${root}/.code`)
   for (const result of results) {
-    for (const [i, files] of result.meta.files.entries()) {
+    if (result.type === 'EOA') {
+      continue
+    }
+    for (const [i, files] of result.sources.files.entries()) {
       for (const [file, content] of Object.entries(files)) {
-        const codebase = getSourceName(i, result.meta.files.length)
+        const codebase = getSourceName(i, result.sources.files.length)
         const { name } = getCustomName(result.name, result.address, config)
         const path = `${root}/.code/${name}${codebase}/${file}`
         await mkdirp(dirname(path))
@@ -59,7 +62,7 @@ function getSourceName(i: number, length: number) {
 }
 
 export function parseDiscoveryOutput(
-  results: AnalyzedData[],
+  results: Analysis[],
   config: DiscoveryConfig,
   blockNumber: number,
   configHash: Hash256,
@@ -74,14 +77,18 @@ export function parseDiscoveryOutput(
 }
 
 export function prepareDiscoveryFile(
-  results: AnalyzedData[],
+  results: Analysis[],
   config: DiscoveryConfig,
   blockNumber: number,
   configHash: Hash256,
 ): ProjectParameters {
   let abis: Record<string, string[]> = {}
+  const contracts: AnalyzedContract[] = []
   for (const result of results) {
-    abis = { ...abis, ...result.meta.abis }
+    if (result.type === 'Contract') {
+      contracts.push(result)
+      abis = { ...abis, ...result.sources.abis }
+    }
   }
   abis = Object.fromEntries(
     Object.entries(abis).sort(([a], [b]) => a.localeCompare(b)),
@@ -91,12 +98,14 @@ export function prepareDiscoveryFile(
     name: config.name,
     blockNumber,
     configHash,
-    contracts: results
-      .filter((x) => !x.isEOA)
-      .map((x) => ({ ...x, isEOA: undefined, meta: undefined }))
-      .map((x) => ({ ...x, ...getCustomName(x.name, x.address, config) })),
+    contracts: contracts.map((x) => ({
+      ...x,
+      type: undefined,
+      sources: undefined,
+      ...getCustomName(x.name, x.address, config),
+    })),
     eoas: results
-      .filter((x) => x.isEOA)
+      .filter((x) => x.type === 'EOA')
       .map((x) => x.address)
       .sort((a, b) => a.localeCompare(b.toString())),
     abis,
