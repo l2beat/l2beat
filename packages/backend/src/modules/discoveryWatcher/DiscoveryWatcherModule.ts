@@ -65,13 +65,14 @@ export function createDiscoveryWatcherModule(
     discoveryWatcherRepository,
     clock,
     logger,
+    !!config.discoveryWatcher.runOnStart,
   )
 
-  const start = () => {
+  const start = async () => {
     logger = logger.for('DiscoveryWatcherModule')
     logger.info('Starting')
 
-    discoveryWatcher.start()
+    await discoveryWatcher.start()
   }
 
   return {
