@@ -36,7 +36,7 @@ export function MobileProjectNavigation({ sections }: Props) {
         <a
           href="#"
           id={MOBILE_PROJECT_NAVIGATION_IDS.summaryItem}
-          className="whitespace-nowrap p-4 text-xs"
+          className="whitespace-nowrap p-4 text-xs transition-colors"
         >
           Summary
         </a>
@@ -64,7 +64,7 @@ function ProjectNavigationList({ sections }: Pick<Props, 'sections'>) {
           <a
             key={section.props.id}
             href={`#${section.props.id}`}
-            className="whitespace-nowrap p-4 text-xs"
+            className="whitespace-nowrap p-4 text-xs transition-colors"
           >
             {section.props.title}
           </a>
