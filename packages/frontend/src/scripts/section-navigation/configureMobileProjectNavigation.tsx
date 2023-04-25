@@ -12,25 +12,6 @@ export function configureMobileProjectNavigation() {
   let previouslyHighlightedItem: Element | null = null
   let destinationItem: HTMLAnchorElement | null = null
 
-  highlightCurrentSection({
-    navigationList: list,
-    sections,
-    summary: summaryItem,
-    onHighlight: highlightItem,
-  })
-
-  window.addEventListener('scroll', () => {
-    highlightCurrentSection({
-      navigationList: list,
-      sections,
-      summary: summaryItem,
-      onHighlight: (item) => {
-        highlightItem(item)
-        scrollToItem(item)
-      },
-    })
-  })
-
   const showArrows = () => {
     const isScrolledToStart = list.scrollLeft < ARROWS_THRESHOLD
     const isScrolledToEnd =
@@ -40,7 +21,6 @@ export function configureMobileProjectNavigation() {
 
     arrowRight.classList.toggle('opacity-0', isScrolledToEnd)
   }
-  showArrows()
 
   const scrollToItem = debounce((item: HTMLAnchorElement) => {
     if (destinationItem && destinationItem !== item) {
@@ -57,7 +37,7 @@ export function configureMobileProjectNavigation() {
     destinationItem = null
   }, 50)
 
-  function highlightItem(item: Element | HTMLAnchorElement) {
+  const highlightItem = (item: Element | HTMLAnchorElement) => {
     previouslyHighlightedItem?.classList.remove(
       'border-b-2',
       'text-pink-200',
@@ -67,11 +47,32 @@ export function configureMobileProjectNavigation() {
     previouslyHighlightedItem = item
   }
 
+  showArrows()
+  highlightCurrentSection({
+    navigationList: list,
+    sections,
+    summary: summaryItem,
+    onHighlight: highlightItem,
+  })
+
   const projectNavigationItems = list.querySelectorAll('a')
   projectNavigationItems.forEach((item) => {
     item.addEventListener('click', () => {
       destinationItem = item
     })
   })
+
   list.addEventListener('scroll', showArrows)
+
+  window.addEventListener('scroll', () => {
+    highlightCurrentSection({
+      navigationList: list,
+      sections,
+      summary: summaryItem,
+      onHighlight: (item) => {
+        highlightItem(item)
+        scrollToItem(item)
+      },
+    })
+  })
 }

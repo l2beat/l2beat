@@ -39,13 +39,6 @@ export function configureDesktopProjectNavigation() {
     previouslyHighlighted = { item, index }
   }
 
-  highlightCurrentSection({
-    navigationList: list,
-    summary: summaryItem,
-    sections,
-    onHighlight: highlightItem,
-  })
-
   const handleShowingProjectTitle = () => {
     const navigationTopOffset = 32
     const navigationOffset = container.getBoundingClientRect().top
@@ -56,6 +49,13 @@ export function configureDesktopProjectNavigation() {
       listHeader.classList.toggle('hidden', true)
     }
   }
+
+  highlightCurrentSection({
+    navigationList: list,
+    summary: summaryItem,
+    sections,
+    onHighlight: highlightItem,
+  })
 
   window.addEventListener('scroll', () => {
     handleShowingProjectTitle()
