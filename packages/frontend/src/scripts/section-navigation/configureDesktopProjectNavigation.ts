@@ -44,9 +44,11 @@ export function configureDesktopProjectNavigation() {
     const navigationOffset = container.getBoundingClientRect().top
 
     if (navigationOffset <= navigationTopOffset) {
-      listHeader.classList.toggle('hidden', false)
+      listHeader.classList.remove('opacity-0', '-translate-y-16')
+      list.classList.remove('-translate-y-16')
     } else {
-      listHeader.classList.toggle('hidden', true)
+      listHeader.classList.add('opacity-0', '-translate-y-16')
+      list.classList.add('-translate-y-16')
     }
   }
 
