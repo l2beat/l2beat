@@ -20,7 +20,10 @@ export function getProjectPages(config: Config, pagesData: PagesData) {
     return {
       slug: `/scaling/projects/${project.display.slug}`,
       page: (
-        <PageWrapper {...wrapper} htmlClassName="scroll-smooth">
+        <PageWrapper
+          {...wrapper}
+          htmlClassName="scroll-smooth scroll-pt-16 md:scroll-pt-8"
+        >
           <ProjectPage {...props} />
         </PageWrapper>
       ),
