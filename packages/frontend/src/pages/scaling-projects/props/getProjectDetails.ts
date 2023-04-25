@@ -108,7 +108,7 @@ export function getProjectDetails(
       type: 'ContractsSection',
       props: getContractSection(project, verificationStatus),
     })
-
+  } else {
     items.push({
       type: 'UpcomingDisclaimer',
       excludeFromNavigation: true,
