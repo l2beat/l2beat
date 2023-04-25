@@ -33,8 +33,8 @@ export interface ChartProps {
 }
 
 export function Chart({
-  id,
-  title,
+  id = 'chart',
+  title = 'Chart',
   tvlEndpoint,
   activityEndpoint,
   tokens,
@@ -54,7 +54,7 @@ export function Chart({
   return (
     <>
       <section
-        id={id ?? 'chart'}
+        id={id}
         data-role="chart"
         data-type={type}
         data-tvl-endpoint={tvlEndpoint}
@@ -69,7 +69,7 @@ export function Chart({
         {!metaChart && hasTvl && (
           <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
             <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
-              <a href="#chart">{title ?? 'Chart'}</a>
+              <a href={`#${id}`}>{title}</a>
             </h2>
             {hasActivity && <TvlActivityToggle />}
           </div>

@@ -29,14 +29,12 @@ export function getProjectDetails(
   const items: ProjectDetailsItem[] = []
 
   items.push({
-    isSection: true,
     type: 'ChartSection',
     props: { ...chart, id: 'chart', title: 'Chart' },
   })
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
     items.push({
-      isSection: true,
       type: 'MilestonesSection',
       props: {
         milestones: project.milestones,
@@ -52,7 +50,6 @@ export function getProjectDetails(
     !isEmpty(project.knowledgeNuggets)
   ) {
     items.push({
-      isSection: true,
       type: 'KnowledgeNuggetsSection',
       props: {
         knowledgeNuggets: project.knowledgeNuggets,
@@ -63,14 +60,12 @@ export function getProjectDetails(
   }
 
   items.push({
-    isSection: true,
     type: 'DescriptionSection',
     props: getDescriptionSection(project, verificationStatus),
   })
 
   if (!isUpcoming) {
     items.push({
-      isSection: true,
       type: 'RiskAnalysisSection',
       props: {
         riskValues: getRiskValues(project.riskView),
@@ -82,7 +77,7 @@ export function getProjectDetails(
     if (incomplete) {
       items.push({
         type: 'TechnologyIncompleteNote',
-        isSection: false,
+        excludeFromNavigation: true,
         props: incomplete,
       })
     }
@@ -90,7 +85,6 @@ export function getProjectDetails(
     technologySections.forEach((section) =>
       items.push({
         type: 'TechnologySection',
-        isSection: true,
         props: {
           items: section.items,
           id: section.id,
@@ -102,7 +96,6 @@ export function getProjectDetails(
     if (permissionsSection) {
       items.push({
         type: 'PermissionsSection',
-        isSection: true,
         props: {
           ...permissionsSection,
           id: 'permissions',
@@ -113,15 +106,22 @@ export function getProjectDetails(
 
     items.push({
       type: 'ContractsSection',
-      isSection: true,
       props: getContractSection(project, verificationStatus),
+    })
+
+    items.push({
+      type: 'UpcomingDisclaimer',
+      excludeFromNavigation: true,
     })
   }
 
   return { incomplete, isUpcoming, items }
 }
 
-export type ProjectDetailsItem = ProjectDetailsSection | NonSectionElement
+export type ProjectDetailsItem = { excludeFromNavigation?: boolean } & (
+  | ProjectDetailsSection
+  | NonSectionElement
+)
 
 export type ProjectDetailsSection =
   | ChartSection
@@ -137,57 +137,47 @@ type NonSectionElement = TechnologyIncompleteNote | UpcomingDisclaimer
 
 interface ChartSection {
   type: 'ChartSection'
-  isSection: true
   props: ChartProps
 }
 interface DescriptionSection {
   type: 'DescriptionSection'
-  isSection: true
   props: DescriptionSectionProps
 }
 
 interface MilestonesSection {
   type: 'MilestonesSection'
-  isSection: true
   props: MilestonesSectionProps
 }
 
 interface KnowledgeNuggetsSection {
   type: 'KnowledgeNuggetsSection'
-  isSection: true
   props: KnowledgeNuggetsProps
 }
 
 interface RiskAnalysisSection {
   type: 'RiskAnalysisSection'
-  isSection: true
   props: RiskAnalysisProps
 }
 
 interface TechnologyIncompleteNote {
-  isSection: false
   type: 'TechnologyIncompleteNote'
   props: TechnologyIncompleteProps
 }
 interface TechnologySection {
   type: 'TechnologySection'
-  isSection: true
   props: TechnologySectionProps
 }
 
 interface PermissionsSection {
   type: 'PermissionsSection'
-  isSection: true
   props: PermissionsSectionProps
 }
 
 interface ContractsSection {
   type: 'ContractsSection'
-  isSection: true
   props: ContractsSectionProps
 }
 
 interface UpcomingDisclaimer {
-  isSection: false
   type: 'UpcomingDisclaimer'
 }
