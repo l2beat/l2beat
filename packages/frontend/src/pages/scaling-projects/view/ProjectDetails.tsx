@@ -1,3 +1,4 @@
+import { assertUnreachable } from '@l2beat/shared'
 import React from 'react'
 
 import { Chart } from '../../../components'
@@ -14,7 +15,6 @@ import {
 import { TechnologySection } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
 import { ProjectDetailsItem } from '../props/getProjectDetails'
-import { assertUnreachable } from '@l2beat/shared'
 
 export interface ProjectDetailsProps {
   isUpcoming?: boolean
