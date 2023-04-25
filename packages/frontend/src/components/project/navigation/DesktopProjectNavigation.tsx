@@ -5,25 +5,31 @@ import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/get
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
 
-interface ProjectNavigationProps {
+interface Project {
   title: string
   icon: string | undefined
+}
+interface ProjectNavigationProps {
+  project: Project
   sections: ProjectDetailsSection[]
 }
 
-export function DesktopProjectNavigation(props: ProjectNavigationProps) {
+export function DesktopProjectNavigation({
+  project,
+  sections,
+}: ProjectNavigationProps) {
   return (
     <div className="sticky top-8" id={DESKTOP_PROJECT_NAVIGATION_IDS.container}>
       <div id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader} className="hidden">
         <div className="flex flex-row items-center">
-          {props.icon && (
+          {project.icon && (
             <img
               className="h-8 w-8"
-              src={props.icon}
-              alt={`${props.title} logo`}
+              src={project.icon}
+              alt={`${project.title} logo`}
             />
           )}
-          <span className="ml-4 text-2xl font-bold">{props.title}</span>
+          <span className="ml-4 text-2xl font-bold">{project.title}</span>
         </div>
         <HorizontalSeparator className="my-4" />
       </div>
@@ -39,7 +45,7 @@ export function DesktopProjectNavigation(props: ProjectNavigationProps) {
           <SummaryIcon />
           Summary
         </a>
-        <ProjectNavigationList sections={props.sections} />
+        <ProjectNavigationList sections={sections} />
       </div>
     </div>
   )
