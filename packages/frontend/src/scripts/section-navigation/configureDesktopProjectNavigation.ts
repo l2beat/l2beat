@@ -43,13 +43,14 @@ export function configureDesktopProjectNavigation() {
     const navigationTopOffset = 32
     const navigationOffset = container.getBoundingClientRect().top
 
-    if (navigationOffset === navigationTopOffset) {
+    if (navigationOffset <= navigationTopOffset) {
       listHeader.classList.toggle('hidden', false)
     } else {
       listHeader.classList.toggle('hidden', true)
     }
   }
 
+  handleShowingProjectTitle()
   highlightCurrentSection({
     navigationList: list,
     summary: summaryItem,
