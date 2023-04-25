@@ -77,7 +77,7 @@ function ProjectNavigationList({
 function NavigationListIndex(props: { index: number }) {
   return (
     <div
-      className="flex h-6 w-6 items-center justify-center rounded-lg bg-neutral-700 text-center text-xs font-bold"
+      className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-center text-xs font-bold dark:bg-neutral-700"
       id={DESKTOP_PROJECT_NAVIGATION_IDS.index}
     >
       <span>{props.index}</span>

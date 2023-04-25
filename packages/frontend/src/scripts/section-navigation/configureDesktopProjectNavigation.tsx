@@ -21,12 +21,21 @@ export function configureDesktopProjectNavigation() {
       'bg-gradient-to-r',
       'from-purple-100',
       'to-pink-100',
+      'text-white',
     )
-    previouslyHighlighted?.index?.classList.add('bg-neutral-700')
+    previouslyHighlighted?.index?.classList.add(
+      'bg-gray-100',
+      'dark:bg-neutral-700',
+    )
 
     item.classList.remove('opacity-60')
-    index?.classList.remove('bg-neutral-700')
-    index?.classList.add('bg-gradient-to-r', 'from-purple-100', 'to-pink-100')
+    index?.classList.remove('bg-gray-100', 'dark:bg-neutral-700')
+    index?.classList.add(
+      'bg-gradient-to-r',
+      'from-purple-100',
+      'to-pink-100',
+      'text-white',
+    )
     previouslyHighlighted = { item, index }
   }
 
