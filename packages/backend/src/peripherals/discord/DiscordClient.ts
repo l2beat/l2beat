@@ -9,6 +9,8 @@ import { Gauge } from 'prom-client'
 
 export const MAX_MESSAGE_LENGTH = 2000
 
+export type Channel = 'PUBLIC' | 'INTERNAL'
+
 export class DiscordClient {
   constructor(
     private readonly httpClient: HttpClient,
@@ -17,7 +19,7 @@ export class DiscordClient {
     private readonly internalChannelId: string,
   ) {}
 
-  async sendMessage(message: string, channel: 'PUBLIC' | 'INTERNAL') {
+  async sendMessage(message: string, channel: Channel) {
     if (message.length > MAX_MESSAGE_LENGTH) {
       throw new Error(`Discord error: Message size exceeded (2000 characters)`)
     }

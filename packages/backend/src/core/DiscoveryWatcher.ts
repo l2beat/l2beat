@@ -4,7 +4,7 @@ import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
-import { DiscordClient } from '../peripherals/discord/DiscordClient'
+import { Channel, DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/config/ConfigReader'
 import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
@@ -217,13 +217,11 @@ export class DiscoveryWatcher {
 
     const arrayMessages = Array.isArray(messages) ? messages : [messages]
     for (const message of arrayMessages) {
-      type Channel = 'PUBLIC' | 'INTERNAL'
       const channels: Channel[] = options?.internalOnly
         ? ['INTERNAL']
         : ['PUBLIC', 'INTERNAL']
 
       for (const channel of channels) {
-        console.log(channels)
         await this.discordClient.sendMessage(message, channel).then(
           () => this.logger.info('Notification to Discord has been sent'),
           (e) => this.logger.error(e),
