@@ -53,8 +53,6 @@ function ProjectNavigationList({ sections }: Pick<Props, 'sections'>) {
   return (
     <>
       {sections.map((section) => {
-        if (!section.props.id || !section.props.title) return
-
         return (
           <a
             key={section.props.id}

@@ -1,7 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared'
 import React from 'react'
 
-import { Chart } from '../../../components'
+import { ChartSection } from '../../../components/project/ChartSection'
 import { ContractsSection } from '../../../components/project/ContractsSection'
 import { DescriptionSection } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
@@ -28,14 +28,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
       {props.items.map((item) => {
         switch (item.type) {
           case 'ChartSection':
-            return (
-              <Chart
-                key={item.type}
-                {...item.props}
-                mobileFull
-                isUpcoming={props.isUpcoming}
-              />
-            )
+            return <ChartSection key={item.type} {...item.props} />
           case 'MilestonesSection':
             return <MilestonesSection key={item.type} {...item.props} />
           case 'KnowledgeNuggetsSection':

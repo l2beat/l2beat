@@ -51,8 +51,6 @@ function ProjectNavigationList({
   return (
     <>
       {sections.map((section, i) => {
-        if (!section.props.id || !section.props.title) return
-
         return (
           <a
             key={section.props.id}

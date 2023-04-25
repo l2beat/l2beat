@@ -3,6 +3,7 @@ import { VerificationStatus } from '@l2beat/shared'
 import { isEmpty } from 'lodash'
 
 import { ChartProps } from '../../../components'
+import { ChartSectionProps } from '../../../components/project/ChartSection'
 import { ContractsSectionProps } from '../../../components/project/ContractsSection'
 import { DescriptionSectionProps } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggetsProps } from '../../../components/project/KnowledgeNuggetsSection'
@@ -137,7 +138,7 @@ type NonSectionElement = TechnologyIncompleteNote | UpcomingDisclaimer
 
 interface ChartSection {
   type: 'ChartSection'
-  props: ChartProps
+  props: ChartSectionProps
 }
 interface DescriptionSection {
   type: 'DescriptionSection'
