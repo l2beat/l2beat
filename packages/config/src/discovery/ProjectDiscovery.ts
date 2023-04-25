@@ -107,25 +107,32 @@ export class ProjectDiscovery {
   getGnosisSafeDetails(
     identifier: string,
     descriptionPrefix: string,
-  ): ProjectPermission {
+  ): ProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
       contract.upgradeability.type === 'gnosis safe',
       `Contract ${contract.name} is not a Gnosis Safe (${this.projectName})`,
     )
 
-    return {
-      name: identifier,
-      description: `${descriptionPrefix} This is a Gnosis Safe with ${this.getMultisigStats(
-        identifier,
-      )} threshold.`,
-      accounts: [
-        {
-          address: contract.address,
-          type: 'MultiSig',
-        },
-      ],
-    }
+    return [
+      {
+        name: identifier,
+        description: `${descriptionPrefix} This is a Gnosis Safe with ${this.getMultisigStats(
+          identifier,
+        )} threshold.`,
+        accounts: [
+          {
+            address: contract.address,
+            type: 'MultiSig',
+          },
+        ],
+      },
+      {
+        name: `${identifier} participants`,
+        description: `Those are the participants of the ${identifier}`,
+        accounts: this.getPermissionedAccountsList(identifier, 'getOwners'),
+      },
+    ]
   }
 
   getContract(identifier: string): ContractParameters {

@@ -229,13 +229,10 @@ export const zksyncera: Layer2 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    {
-      ...discovery.getGnosisSafeDetails(
-        'GnosisSafe',
-        'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
-      ),
-      name: 'zkSync Era MultiSig',
-    },
+    ...discovery.getGnosisSafeDetails(
+      'zkSync Era MultiSig',
+      'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
+    ),
     {
       name: 'Active validator',
       accounts: [
