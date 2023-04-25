@@ -23,7 +23,7 @@ export function KnowledgeNuggets() {
   return (
     <div className="p-4">
       <KnowledgeNuggetsComponent
-        title="Knowledge nugget"
+        title="Knowledge nuggets"
         id="knowledge-nuggets"
         knowledgeNuggets={knowledgeNuggetsExample}
       />
