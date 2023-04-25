@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
-import { ArrowheadLeftIcon, ArrowheadRightIcon } from '../../icons/ArrowHeads'
+import { ChevronLeftIcon, ChevronRightIcon } from '../../icons/Chevron'
 
 interface Props {
   sections: ProjectDetailsSection[]
@@ -26,7 +26,7 @@ export function MobileProjectNavigation({ sections }: Props) {
         id={MOBILE_PROJECT_NAVIGATION_IDS.arrowLeft}
       >
         <div className="flex h-full items-center justify-center">
-          <ArrowheadLeftIcon className="scale-75" />
+          <ChevronLeftIcon className="scale-75" />
         </div>
       </div>
       <div
@@ -47,7 +47,7 @@ export function MobileProjectNavigation({ sections }: Props) {
         id={MOBILE_PROJECT_NAVIGATION_IDS.arrowRight}
       >
         <div className="flex h-full items-center justify-center">
-          <ArrowheadRightIcon className="scale-75" />
+          <ChevronRightIcon className="scale-75" />
         </div>
       </div>
     </div>

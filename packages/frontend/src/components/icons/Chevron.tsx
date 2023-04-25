@@ -3,27 +3,24 @@ import React, { SVGAttributes } from 'react'
 
 import { Icon } from './Icon'
 
-export function ArrowheadRightIcon(props: SVGAttributes<SVGElement>) {
+export function ChevronRightIcon(props: SVGAttributes<SVGElement>) {
   const { className, ...rest } = props
   return (
-    <ArrowheadDownIcon
+    <ChevronDownIcon
       className={classNames('-rotate-90', className)}
       {...rest}
     />
   )
 }
 
-export function ArrowheadLeftIcon(props: SVGAttributes<SVGElement>) {
+export function ChevronLeftIcon(props: SVGAttributes<SVGElement>) {
   const { className, ...rest } = props
   return (
-    <ArrowheadDownIcon
-      className={classNames('rotate-90', className)}
-      {...rest}
-    />
+    <ChevronDownIcon className={classNames('rotate-90', className)} {...rest} />
   )
 }
 
-export function ArrowheadDownIcon(props: SVGAttributes<SVGElement>) {
+export function ChevronDownIcon(props: SVGAttributes<SVGElement>) {
   return (
     <Icon
       width="16"
