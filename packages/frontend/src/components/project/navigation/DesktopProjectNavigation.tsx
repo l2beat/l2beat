@@ -1,6 +1,5 @@
 import React from 'react'
 
-import console from 'console'
 import { DESKTOP_PROJECT_NAVIGATION_IDS } from '.'
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { HorizontalSeparator } from '../../HorizontalSeparator'

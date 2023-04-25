@@ -34,13 +34,13 @@ export function ProjectPage(props: ProjectPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <div className="md:hidden">
+      <div className="sticky top-0 z-40 md:hidden">
         <MobileProjectNavigation sections={sections} />
       </div>
       <PageContent mobileFull>
         <ProjectHeader {...props.projectHeader} />
-        <div className="mt-8 grid grid-cols-7 gap-x-12">
-          <div className="col-span-2 hidden md:block">
+        <div className="grid grid-cols-7 gap-x-12">
+          <div className="col-span-2 mt-16 hidden md:block">
             <DesktopProjectNavigation project={project} sections={sections} />
           </div>
           <div className="col-span-7 md:col-span-5">
