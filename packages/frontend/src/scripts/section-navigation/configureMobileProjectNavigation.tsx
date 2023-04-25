@@ -1,32 +1,14 @@
 import { debounce } from 'lodash'
 
-import { MOBILE_PROJECT_NAVIGATION_IDS } from '../../components/project/navigation/MobileProjectNavigation'
+import { getMobileElements } from './getElements'
 import { highlightCurrentSection } from './highlightCurrentSection'
 
 const ARROWS_THRESHOLD = 8
 
 export function configureMobileProjectNavigation() {
-  const container = document.querySelector(
-    `#${MOBILE_PROJECT_NAVIGATION_IDS.container}`,
-  )
-  const list = container?.querySelector(
-    `#${MOBILE_PROJECT_NAVIGATION_IDS.list}`,
-  )
-  const summaryItem = container?.querySelector<HTMLAnchorElement>(
-    `a#${MOBILE_PROJECT_NAVIGATION_IDS.summaryItem}`,
-  )
-  const arrowLeft = container?.querySelector(
-    `#${MOBILE_PROJECT_NAVIGATION_IDS.arrowLeft}`,
-  )
-  const arrowRight = container?.querySelector(
-    `#${MOBILE_PROJECT_NAVIGATION_IDS.arrowRight}`,
-  )
+  const { list, summaryItem, arrowLeft, arrowRight, sections } =
+    getMobileElements()
 
-  const sections = document.querySelectorAll('section')
-
-  if (!container || !list || !summaryItem || !arrowLeft || !arrowRight) {
-    return
-  }
   let previouslyHighlightedItem: Element | null = null
   let destinationItem: HTMLAnchorElement | null = null
 

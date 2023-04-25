@@ -1,4 +1,5 @@
 import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../components/project/navigation/DesktopProjectNavigation'
+import { getDesktopElements } from './getElements'
 import { highlightCurrentSection } from './highlightCurrentSection'
 
 interface PreviouslyHighlighted {
@@ -7,21 +8,8 @@ interface PreviouslyHighlighted {
 }
 
 export function configureDesktopProjectNavigation() {
-  const container = document.querySelector(
-    `#${DESKTOP_PROJECT_NAVIGATION_IDS.container}`,
-  )
-  const list = container?.querySelector(
-    `#${DESKTOP_PROJECT_NAVIGATION_IDS.list}`,
-  )
-  const listHeader = container?.querySelector(
-    `#${DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}`,
-  )
-  const summaryItem = list?.querySelector<HTMLAnchorElement>(
-    `a#${DESKTOP_PROJECT_NAVIGATION_IDS.summaryItem}`,
-  )
-  const sections = document.querySelectorAll('section')
-
-  if (!container || !list || !listHeader || !summaryItem) return
+  const { container, list, listHeader, summaryItem, sections } =
+    getDesktopElements()
 
   let previouslyHighlighted: PreviouslyHighlighted | null = null
 
