@@ -60,7 +60,10 @@ export function getContractSection(
     : undefined
 
   return {
-    associatedTokens: project.config.associatedTokens ?? [],
+    nativeL2TokensIncludedInTVL:
+      project.type === 'layer2'
+        ? project.config.nativeL2TokensIncludedInTVL ?? []
+        : [],
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,

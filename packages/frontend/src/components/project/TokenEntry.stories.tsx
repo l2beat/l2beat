@@ -7,5 +7,5 @@ export default {
 }
 
 export function TokenEntryStory() {
-  return <TokenEntry associatedTokens={['ARB']} />
+  return <TokenEntry l2Tokens={['ARB']} />
 }

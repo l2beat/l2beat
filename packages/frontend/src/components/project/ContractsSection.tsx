@@ -16,7 +16,7 @@ export interface ContractsSectionProps {
   architectureImage?: string
   isIncomplete?: boolean
   verificationStatus: VerificationStatus
-  associatedTokens: string[]
+  nativeL2TokensIncludedInTVL: string[]
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -69,9 +69,9 @@ export function ContractsSection(props: ContractsSectionProps) {
                 />
               </React.Fragment>
             ))}
-            {props.associatedTokens.length > 0 && (
+            {props.nativeL2TokensIncludedInTVL.length > 0 && (
               <TokenEntry
-                associatedTokens={props.associatedTokens}
+                l2Tokens={props.nativeL2TokensIncludedInTVL}
                 className="mt-4 mb-4"
               />
             )}

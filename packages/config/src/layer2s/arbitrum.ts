@@ -56,6 +56,7 @@ export const arbitrum: Layer2 = {
   },
   config: {
     associatedTokens: ['ARB'],
+    nativeL2TokensIncludedInTVL: ['ARB'],
     escrows: [
       discovery.getEscrowDetails({
         identifier: 'ArbitrumOneBridge',

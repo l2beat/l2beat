@@ -5,11 +5,11 @@ import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Callout } from './Callout'
 
 export interface TokenEntryProps {
-  associatedTokens: string[]
+  l2Tokens: string[]
   className?: string
 }
 
-export function TokenEntry({ className, associatedTokens }: TokenEntryProps) {
+export function TokenEntry({ className, l2Tokens }: TokenEntryProps) {
   return (
     <Callout
       className={cx('px-4', className)}
@@ -17,7 +17,7 @@ export function TokenEntry({ className, associatedTokens }: TokenEntryProps) {
       body={
         <>
           <div className="flex flex-wrap gap-x-2">
-            <strong>Tokens:</strong> {associatedTokens.join(', ')}
+            <strong>Tokens:</strong> {l2Tokens.join(', ')}
           </div>
         </>
       }

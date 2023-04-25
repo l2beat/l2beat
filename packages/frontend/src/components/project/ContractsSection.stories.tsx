@@ -94,7 +94,7 @@ const props: ContractsSectionProps = {
       '0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15': true,
     },
   },
-  associatedTokens: ['ARB'],
+  nativeL2TokensIncludedInTVL: ['ARB'],
 }
 
 export const Contracts: Story<ContractsSectionProps> = Template.bind({})
