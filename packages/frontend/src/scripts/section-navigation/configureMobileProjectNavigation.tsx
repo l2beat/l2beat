@@ -17,7 +17,6 @@ export function configureMobileProjectNavigation() {
     sections,
     summary: summaryItem,
     onHighlight: highlightItem,
-    previouslyHighlightedItem,
   })
 
   window.addEventListener('scroll', () => {
@@ -29,7 +28,6 @@ export function configureMobileProjectNavigation() {
         highlightItem(item)
         scrollToItem(item)
       },
-      previouslyHighlightedItem,
     })
   })
 

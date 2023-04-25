@@ -35,7 +35,6 @@ export function configureDesktopProjectNavigation() {
     summary: summaryItem,
     sections,
     onHighlight: highlightItem,
-    previouslyHighlightedItem: null,
   })
 
   const handleShowingProjectTitle = () => {
@@ -56,9 +55,6 @@ export function configureDesktopProjectNavigation() {
       summary: summaryItem,
       sections,
       onHighlight: highlightItem,
-      previouslyHighlightedItem: previouslyHighlighted
-        ? previouslyHighlighted.item
-        : null,
     })
   })
 }
