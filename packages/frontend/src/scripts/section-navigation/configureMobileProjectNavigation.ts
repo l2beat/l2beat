@@ -40,10 +40,16 @@ export function configureMobileProjectNavigation() {
   const highlightItem = (item: Element | HTMLAnchorElement) => {
     previouslyHighlightedItem?.classList.remove(
       'border-b-2',
-      'text-pink-200',
-      'border-b-pink-200',
+      'border-current',
+      'text-pink-900',
+      'dark:text-pink-200',
     )
-    item.classList.add('border-b-2', 'text-pink-200', 'border-b-pink-200')
+    item.classList.add(
+      'border-b-2',
+      'border-current',
+      'text-pink-900',
+      'dark:text-pink-200',
+    )
     previouslyHighlightedItem = item
   }
 

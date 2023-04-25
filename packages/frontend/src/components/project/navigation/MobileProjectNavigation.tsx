@@ -10,7 +10,7 @@ interface Props {
 
 export function MobileProjectNavigation({ sections }: Props) {
   return (
-    <div className="sticky top-0 z-[1000] md:hidden">
+    <div className="sticky top-0 z-40 md:hidden">
       <div
         id={MOBILE_PROJECT_NAVIGATION_IDS.container}
         className="relative bg-white dark:bg-[#000000] "
