@@ -66,6 +66,11 @@ const props: ContractsSectionProps = {
         'DAI Vault for custom DAI Gateway managed by MakerDAO. This contract stores the following tokens: DAI.',
       links: [],
     },
+    {
+      name: 'Generic escrow',
+      addresses: ['0x5E4e65926BA27467555EB562121fac00D24E9dD2'],
+      links: [],
+    },
   ],
   risks: [
     {
@@ -91,6 +96,7 @@ const props: ContractsSectionProps = {
       '0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15': true,
     },
   },
+  nativeL2TokensIncludedInTVL: ['ARB'],
 }
 
 export const Contracts: Story<ContractsSectionProps> = Template.bind({})
