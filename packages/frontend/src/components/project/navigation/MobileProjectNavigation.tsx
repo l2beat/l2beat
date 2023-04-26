@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
-import { ChevronLeftIcon, ChevronRightIcon } from '../../icons/Chevron'
+import { ChevronLeftIcon, ChevronRightIcon } from '../../icons'
 import { MOBILE_PROJECT_NAVIGATION_IDS } from './index'
 
 interface Props {
