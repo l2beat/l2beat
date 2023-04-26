@@ -2,13 +2,13 @@ import { MainnetEtherscanClient, ProjectParameters } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Gauge, Histogram } from 'prom-client'
 
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { discover } from '../discover'
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { DiscoveryLogger } from './DiscoveryLogger'
-import { parseDiscoveryOutput } from './saveDiscoveryResult'
+import { DiscoveryConfig } from './config/DiscoveryConfig'
+import { discover } from './engine/discover'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
+import { DiscoveryLogger } from './utils/DiscoveryLogger'
+import { parseDiscoveryOutput } from './utils/saveDiscoveryResult'
 
-export class DiscoveryEngine {
+export class DiscoveryRunner {
   constructor(
     private readonly provider: providers.AlchemyProvider,
     private readonly etherscanClient: MainnetEtherscanClient,
