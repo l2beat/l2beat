@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { configureMobileProjectNavigation } from '../../../scripts/section-navigation/configureMobileProjectNavigation'
-import { MOBILE_PROJECT_NAVIGATION_IDS } from './index'
+import { MOBILE_PROJECT_NAVIGATION_IDS } from './ids'
 import { MobileProjectNavigation } from './MobileProjectNavigation'
 
 export default {

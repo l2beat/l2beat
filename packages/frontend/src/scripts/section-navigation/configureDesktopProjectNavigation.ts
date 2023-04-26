@@ -1,4 +1,4 @@
-import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../components/project/navigation'
+import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../components/project/navigation/ids'
 import { getDesktopElements } from './getElements'
 import { highlightCurrentSection } from './highlightCurrentSection'
 

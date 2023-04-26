@@ -1,7 +1,7 @@
 import {
   DESKTOP_PROJECT_NAVIGATION_IDS,
   MOBILE_PROJECT_NAVIGATION_IDS,
-} from '../../components/project/navigation'
+} from '../../components/project/navigation/ids'
 
 export function getDesktopElements() {
   const container = document.querySelector(

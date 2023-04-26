@@ -3,7 +3,7 @@ import React from 'react'
 import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
-import { DESKTOP_PROJECT_NAVIGATION_IDS } from './index'
+import { DESKTOP_PROJECT_NAVIGATION_IDS } from './ids'
 
 interface Project {
   title: string
