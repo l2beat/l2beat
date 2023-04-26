@@ -69,6 +69,10 @@ export function getContractSection(
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
     verificationStatus,
+    nativeL2TokensIncludedInTVL:
+      project.type === 'layer2'
+        ? project.config.nativeL2TokensIncludedInTVL ?? []
+        : [],
   }
 }
 
