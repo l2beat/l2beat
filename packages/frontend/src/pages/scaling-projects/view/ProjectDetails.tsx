@@ -41,7 +41,10 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return <RiskAnalysis key={item.props.id} {...item.props} />
           case 'TechnologyIncompleteNote':
             return (
-              <TechnologyIncomplete key={item.type + index} {...item.props} />
+              <TechnologyIncomplete
+                key={`${item.type}${index}`}
+                {...item.props}
+              />
             )
           case 'TechnologySection':
             return <TechnologySection key={item.props.id} {...item.props} />
@@ -51,7 +54,10 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return <ContractsSection key={item.props.id} {...item.props} />
           case 'UpcomingDisclaimer':
             return (
-              <UpcomingDisclaimer key={item.type + index} className="mt-6" />
+              <UpcomingDisclaimer
+                key={`${item.type}${index}`}
+                className="mt-6"
+              />
             )
           default:
             assertUnreachable(item)
