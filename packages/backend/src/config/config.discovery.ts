@@ -23,6 +23,7 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       dryRun: cli.dryRun,
+      dev: cli.dev,
     },
   }
 }
@@ -37,7 +38,8 @@ export interface DiscoveryModuleConfig {
   readonly blockNumber?: number
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
-  readonly dryRun?: true
+  readonly dryRun?: boolean
+  readonly dev?: boolean
 }
 
 export interface InversionConfig {
