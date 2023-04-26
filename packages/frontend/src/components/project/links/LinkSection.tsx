@@ -26,11 +26,7 @@ export function LinkSection(props: LinkSectionProps) {
       <table className="w-full table-fixed border-collapse text-left text-xs">
         <tbody>
           <LinkSectionLinks name="Website" links={props.links.websites} />
-          <LinkSectionLinks
-            name="Social media"
-            links={props.links.socialMedia}
-            social
-          />
+          <LinkSectionLinks name="Social" links={props.links.socialMedia} />
           <LinkSectionLinks name="App" links={props.links.apps} />
           <LinkSectionLinks
             name="Documentation"
@@ -38,7 +34,7 @@ export function LinkSection(props: LinkSectionProps) {
           />
           <LinkSectionLinks name="Explorer" links={props.links.explorers} />
           <LinkSectionLinks
-            name="Source code"
+            name="Repository"
             links={props.links.repositories}
           />
         </tbody>

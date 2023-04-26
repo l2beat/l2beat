@@ -1,15 +1,16 @@
 import React from 'react'
 
-import { GlobeIcon, ProductIcon, ProductIconType } from '../../icons'
 import { OutLink } from '../../OutLink'
+import { Link } from '../../header/DetailsHeader'
+import { GlobeIcon, ProductIcon, ProductIconType } from '../../icons'
 
 interface Props {
+  name: Link['name']
   href: string
-  social?: boolean
 }
 
-export function LinkSectionLink({ href, social }: Props) {
-  if (social) {
+export function LinkSectionLink({ href, name }: Props) {
+  if (name === 'Social') {
     const parsed = parseSocial(href)
     return (
       <OutLink

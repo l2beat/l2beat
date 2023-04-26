@@ -1,14 +1,14 @@
 import React from 'react'
 
+import { Link } from '../../header/DetailsHeader'
 import { LinkSectionLink } from './LinkSectionLink'
 
 interface Props {
-  name: string
+  name: Link['name']
   links: string[]
-  social?: boolean
 }
 
-export function LinkSectionLinks({ name, links, social }: Props) {
+export function LinkSectionLinks({ name, links }: Props) {
   if (links.length === 0) {
     return null
   }
@@ -19,7 +19,7 @@ export function LinkSectionLinks({ name, links, social }: Props) {
       </th>
       <td className="py-3 md:pr-6">
         {links.map((x, i) => (
-          <LinkSectionLink key={i} href={x} social={social} />
+          <LinkSectionLink key={i} href={x} name={name} />
         ))}
       </td>
     </tr>
