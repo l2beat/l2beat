@@ -12,19 +12,19 @@ export class DiscoveryStack {
   private counter = 0
 
   push(addresses: EthereumAddress[], depth: number) {
-    const filtered = addresses
-      .filter((x) => !this.known.has(x) && x !== EthereumAddress.ZERO)
-      // we reverse the addresses to make the traversal more logical
+    const uniqueReversed = addresses
+      .filter((x, i, a) => a.indexOf(x) === i)
       .reverse()
-    for (const address of filtered) {
+    const added = []
+    for (const address of uniqueReversed) {
       if (this.known.has(address) || address === EthereumAddress.ZERO) {
         continue
       }
-
-      this.known.add(address)
       this.stack.push({ address, depth })
+      this.known.add(address)
+      added.push(address)
     }
-    return filtered
+    return added.reverse()
   }
 
   isEmpty() {

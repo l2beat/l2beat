@@ -45,7 +45,7 @@ export class DiscoveryLogger {
   logRelatives(relatives: EthereumAddress[]) {
     if (relatives.length > 0) {
       this.log(`  New relatives found: ${relatives.length}`)
-      for (const relative of [...relatives].reverse()) {
+      for (const relative of relatives) {
         this.log(`    - ${relative.toString()}`)
       }
     }
