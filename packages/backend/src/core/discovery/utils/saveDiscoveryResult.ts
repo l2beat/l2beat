@@ -15,7 +15,7 @@ export async function saveDiscoveryResult(
   configHash: Hash256,
 ) {
   const project = prepareDiscoveryFile(results, config, blockNumber, configHash)
-  const json = toPrettyJson(project)
+  const json = await toPrettyJson(project)
 
   const root = `discovery/${config.name}`
 

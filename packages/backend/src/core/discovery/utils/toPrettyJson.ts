@@ -1,14 +1,10 @@
-import { format } from 'prettier'
+import { format, resolveConfig } from 'prettier'
 
-export function toPrettyJson(value: unknown) {
+export async function toPrettyJson(value: unknown) {
   const ugly = JSON.stringify(value, null, 2)
+  const options = await resolveConfig(process.cwd())
   return format(ugly, {
     parser: 'json',
-    // our config is in .prettierrc
-    semi: false,
-    singleQuote: true,
-    printWidth: 80,
-    bracketSpacing: true,
-    trailingComma: 'all',
+    ...options,
   })
 }
