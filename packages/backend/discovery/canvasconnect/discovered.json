@@ -20,9 +20,7 @@
           "StarkWare_OnchainVaults_2022_2": "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
           "StarkWare_ProxyUtils_2022_2": "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
         },
-        "proxyGovernance": [
-          "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A"
-        ]
+        "proxyGovernance": ["0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A"]
       },
       "values": {
         "defaultVaultWithdrawalLock": 0,

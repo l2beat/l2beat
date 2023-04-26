@@ -6,6 +6,7 @@ import { rimraf } from 'rimraf'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { toPrettyJson } from './toPrettyJson'
 
 export async function saveDiscoveryResult(
   results: Analysis[],
@@ -14,10 +15,11 @@ export async function saveDiscoveryResult(
   configHash: Hash256,
 ) {
   const project = prepareDiscoveryFile(results, config, blockNumber, configHash)
+  const json = await toPrettyJson(project)
 
   const root = `discovery/${config.name}`
 
-  await writeFile(`${root}/discovered.json`, JSON.stringify(project, null, 2))
+  await writeFile(`${root}/discovered.json`, json)
 
   await rimraf(`${root}/.code`)
   for (const result of results) {

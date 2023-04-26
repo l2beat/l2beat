@@ -24,7 +24,11 @@ export async function runDiscovery(
 ) {
   const projectConfig = await configReader.readConfig(config.project)
 
-  const blockNumber = config.blockNumber ?? (await provider.getBlockNumber())
+  const blockNumber =
+    config.blockNumber ??
+    (config.dev
+      ? (await configReader.readDiscovery(config.project)).blockNumber
+      : await provider.getBlockNumber())
 
   const discoveryProvider = new ProviderWithCache(
     provider,

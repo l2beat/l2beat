@@ -72,9 +72,7 @@
         "implementation": "0x455603AD9ae671F6c1f0f746F24d7904cA603581",
         "upgradeDelay": 604800,
         "isFinal": false,
-        "proxyGovernance": [
-          "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae"
-        ]
+        "proxyGovernance": ["0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae"]
       },
       "values": {
         "bridgedToken": "0x0000000000000000000000000000000000000000",
@@ -103,9 +101,7 @@
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "upgradeDelay": 604800,
         "isFinal": false,
-        "proxyGovernance": [
-          "0xdc29f0F7742ec462Af475AceeCECC57601991D23"
-        ]
+        "proxyGovernance": ["0xdc29f0F7742ec462Af475AceeCECC57601991D23"]
       },
       "values": {
         "getUpgradeActivationDelay": 604800,
@@ -131,9 +127,7 @@
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "upgradeDelay": 604800,
         "isFinal": false,
-        "proxyGovernance": [
-          "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4"
-        ]
+        "proxyGovernance": ["0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4"]
       },
       "values": {
         "getUpgradeActivationDelay": 604800,
@@ -159,9 +153,7 @@
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "upgradeDelay": 604800,
         "isFinal": false,
-        "proxyGovernance": [
-          "0x8dB2469f3355d6769932B853F29e32df06122981"
-        ]
+        "proxyGovernance": ["0x8dB2469f3355d6769932B853F29e32df06122981"]
       },
       "values": {
         "getUpgradeActivationDelay": 604800,

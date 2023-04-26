@@ -30,12 +30,37 @@ describe(getCliParameters.name, () => {
 
   it('discover foo', () => {
     const cli = getCliParameters(['discover', 'foo'])
-    expect(cli).toEqual({ mode: 'discover', project: 'foo' })
+    expect(cli).toEqual({
+      mode: 'discover',
+      project: 'foo',
+      dryRun: false,
+      dev: false,
+    })
+  })
+
+  it('discover foo --dry-run', () => {
+    const cli = getCliParameters(['discover', 'foo', '--dry-run'])
+    expect(cli).toEqual({
+      mode: 'discover',
+      project: 'foo',
+      dryRun: true,
+      dev: false,
+    })
+  })
+
+  it('discover --dev foo', () => {
+    const cli = getCliParameters(['discover', '--dev', 'foo'])
+    expect(cli).toEqual({
+      mode: 'discover',
+      project: 'foo',
+      dryRun: false,
+      dev: true,
+    })
   })
 
   it('discover foo bar', () => {
     const cli = getCliParameters(['discover', 'foo', 'bar'])
-    expect(cli).toEqual({ mode: 'help', error: 'Unknown argument bar' })
+    expect(cli).toEqual({ mode: 'help', error: 'Too many arguments' })
   })
 
   it('discover foo bar baz', () => {

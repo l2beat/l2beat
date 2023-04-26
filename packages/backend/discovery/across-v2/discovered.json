@@ -146,9 +146,7 @@
       },
       "values": {
         "decimals": 18,
-        "getMember": [
-          "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-        ],
+        "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
         "totalSupply": "113266095813265034070352815",
