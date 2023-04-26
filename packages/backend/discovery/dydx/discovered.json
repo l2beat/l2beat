@@ -18,9 +18,7 @@
           "StarkWare_PerpetualState_2020_1": "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0",
           "StarkWare_PerpetualForcedActions_2020_1": "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
         },
-        "proxyGovernance": [
-          "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0"
-        ]
+        "proxyGovernance": ["0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0"]
       },
       "values": {
         "configurationDelay": 0,
@@ -52,9 +50,7 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
-        "OPERATORS": [
-          "0x8129b737912e17212C8693B781928f5D0303390a"
-        ],
+        "OPERATORS": ["0x8129b737912e17212C8693B781928f5D0303390a"],
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "UNFREEZE_DELAY": 31536000,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
@@ -322,9 +318,7 @@
         "callImplementation": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
         "upgradeDelay": 0,
         "isFinal": true,
-        "proxyGovernance": [
-          "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
-        ]
+        "proxyGovernance": ["0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"]
       },
       "values": {
         "callProxyImplementation": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
