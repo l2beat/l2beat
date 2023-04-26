@@ -2,8 +2,7 @@ import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryStackItem } from './DiscoveryStack'
 
 export function shouldSkip(item: DiscoveryStackItem, config: DiscoveryConfig) {
-  const overrides = config.overrides.get(item.address)
-  if (overrides?.ignoreDiscovery) {
+  if (config.overrides.get(item.address).ignoreDiscovery) {
     return 'Address ignored'
   }
 
