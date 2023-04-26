@@ -1,10 +1,12 @@
 import React from 'react'
 
 import { OutLink } from '../OutLink'
-import { Section } from './Section'
+import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { WarningBar } from './WarningBar'
 
 export interface DescriptionSectionProps {
+  id: string
+  title: string
   editLink: string
   issueLink: string
   description: string
@@ -14,7 +16,7 @@ export interface DescriptionSectionProps {
 
 export function DescriptionSection(props: DescriptionSectionProps) {
   return (
-    <Section title="Description" id="description" className="!mt-0 md:!mt-6">
+    <ProjectDetailsSection title={props.title} id={props.id}>
       {props.isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."
@@ -45,6 +47,6 @@ export function DescriptionSection(props: DescriptionSectionProps) {
         </OutLink>
         .
       </p>
-    </Section>
+    </ProjectDetailsSection>
   )
 }

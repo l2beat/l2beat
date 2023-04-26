@@ -16,6 +16,8 @@ function Template({ warning, isVerified }: TemplateProps) {
   return (
     <div className="p-4 leading-normal">
       <DescriptionSectionComponent
+        id="description"
+        title="Description"
         description='Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure. With the Nov 2021 upgrade to "EVM equivalent" OVM 2.0 old fraud proof system has been disabled while the new fraud-proof system is being built (https://github.com/geohot/cannon).'
         warning={warning}
         issueLink="#"

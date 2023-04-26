@@ -6,6 +6,7 @@ import { configureDropdowns } from './configureDropdowns'
 import { configureFilters } from './configureFilters'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureTooltips } from './configureTooltips'
+import { configureProjectNavigation } from './section-navigation'
 
 configureFilters()
 configureDarkThemeToggle()
@@ -15,3 +16,4 @@ configureCharts()
 configureTvlActivity()
 configureDropdowns()
 configureRosetteOverlay()
+configureProjectNavigation()

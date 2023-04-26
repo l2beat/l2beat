@@ -29,8 +29,7 @@ export function getProps(
         tvlApiResponse,
         activityApiResponse,
       ),
-      chart,
-      projectDetails: getProjectDetails(project, verificationStatus),
+      projectDetails: getProjectDetails(project, verificationStatus, chart),
       footer: getFooterProps(config),
     },
     wrapper: {

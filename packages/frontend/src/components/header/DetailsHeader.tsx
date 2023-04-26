@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ArrowRightIcon, DropdownArrowIcon } from '../icons'
+import { ArrowRightIcon, ChevronDownIcon } from '../icons'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
 import { UpcomingBar } from '../project/UpcomingBar'
@@ -125,7 +125,7 @@ function Summary(props: SummaryProps) {
             />
             Show <span className="peer-checked:hidden">more</span>
             <span className="hidden peer-checked:inline">less</span> information
-            <DropdownArrowIcon className="ml-2 inline-block -translate-y-px peer-checked:rotate-180" />
+            <ChevronDownIcon className="ml-2 inline-block -translate-y-px peer-checked:rotate-180" />
           </label>
         </div>
         <div className="Dropdown md:hidden">
@@ -142,7 +142,7 @@ function Summary(props: SummaryProps) {
                 Website, Docs, etc.
               </span>
             </div>
-            <DropdownArrowIcon className="peer-checked:rotate-180" />
+            <ChevronDownIcon className="peer-checked:rotate-180" />
           </label>
           <div className="Dropdown-Item hidden">
             <table className="w-full table-fixed border-collapse text-left text-xs">

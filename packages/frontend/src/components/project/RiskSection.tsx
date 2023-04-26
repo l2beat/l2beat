@@ -1,7 +1,7 @@
 import { ProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
 
-import { Section } from './Section'
+import { ProjectDetailsSection } from './ProjectDetailsSection'
 
 export interface RiskSectionProps {
   riskGroups: RiskGroup[]
@@ -24,7 +24,7 @@ export function RiskSection({ riskGroups }: RiskSectionProps) {
     return null
   }
   return (
-    <Section title="Risk summary" id="risks" className="mt-4">
+    <ProjectDetailsSection title="Risk summary" id="risks" className="mt-4">
       {riskGroups.map((group, i) => (
         <div className="mt-4 md:mt-6" key={i}>
           <h3 className="font-bold text-red-300 md:text-lg">{group.name}</h3>
@@ -50,6 +50,6 @@ export function RiskSection({ riskGroups }: RiskSectionProps) {
           </ol>
         </div>
       ))}
-    </Section>
+    </ProjectDetailsSection>
   )
 }

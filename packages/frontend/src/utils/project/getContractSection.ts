@@ -60,6 +60,8 @@ export function getContractSection(
     : undefined
 
   return {
+    id: 'contracts',
+    title: 'Smart Contracts',
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
