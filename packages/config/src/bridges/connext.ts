@@ -1,6 +1,5 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
-import { ProjectId, UnixTime } from '@l2beat/shared'
 import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
