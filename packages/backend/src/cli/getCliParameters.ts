@@ -11,8 +11,8 @@ export interface ServerCliParameters {
 export interface DiscoverCliParameters {
   mode: 'discover'
   project: string
-  dryRun?: boolean
-  dev?: boolean
+  dryRun: boolean
+  dev: boolean
 }
 
 export interface InvertCliParameters {
@@ -65,12 +65,8 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
       const result: DiscoverCliParameters = {
         mode: 'discover',
         project: remaining[0],
-      }
-      if (dryRun) {
-        result.dryRun = true
-      }
-      if (dev) {
-        result.dev = true
+        dryRun,
+        dev,
       }
       return result
     }
