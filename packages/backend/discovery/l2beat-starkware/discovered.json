@@ -112,10 +112,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          23
-        ],
+        "getLayoutInfo": [18, 23],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -205,10 +202,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          24,
-          191
-        ],
+        "getLayoutInfo": [24, 191],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -311,10 +305,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          20,
-          31
-        ],
+        "getLayoutInfo": [20, 31],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -359,10 +350,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          23
-        ],
+        "getLayoutInfo": [18, 23],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -409,10 +397,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          22,
-          63
-        ],
+        "getLayoutInfo": [22, 63],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -459,10 +444,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          15
-        ],
+        "getLayoutInfo": [18, 15],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -509,10 +491,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          15
-        ],
+        "getLayoutInfo": [18, 15],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -559,10 +538,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [
-          18,
-          15
-        ],
+        "getLayoutInfo": [18, 15],
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,

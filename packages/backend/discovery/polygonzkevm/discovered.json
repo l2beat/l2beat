@@ -69,21 +69,15 @@
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
-            ]
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
-            ]
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
-            ]
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           }
         },
         "getMinDelay": 864000,
