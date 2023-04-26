@@ -60,10 +60,8 @@ export function getContractSection(
     : undefined
 
   return {
-    nativeL2TokensIncludedInTVL:
-      project.type === 'layer2'
-        ? project.config.nativeL2TokensIncludedInTVL ?? []
-        : [],
+    id: 'contracts',
+    title: 'Smart Contracts',
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
@@ -71,6 +69,10 @@ export function getContractSection(
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
     verificationStatus,
+    nativeL2TokensIncludedInTVL:
+      project.type === 'layer2'
+        ? project.config.nativeL2TokensIncludedInTVL ?? []
+        : [],
   }
 }
 

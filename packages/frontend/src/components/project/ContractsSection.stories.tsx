@@ -16,6 +16,8 @@ function Template(props: ContractsSectionProps) {
 }
 
 const props: ContractsSectionProps = {
+  id: 'contracts',
+  title: 'Smart Contracts',
   contracts: [
     {
       name: 'CanonicalTransactionChain',

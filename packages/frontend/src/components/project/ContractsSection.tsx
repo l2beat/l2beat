@@ -2,13 +2,15 @@ import { VerificationStatus } from '@l2beat/shared'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
+import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
-import { Section } from './Section'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
 import { TokenEntry } from './TokenEntry'
 
 export interface ContractsSectionProps {
+  id: string
+  title: string
   contracts: TechnologyContract[]
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
@@ -25,7 +27,7 @@ export function ContractsSection(props: ContractsSectionProps) {
   }
 
   return (
-    <Section title="Smart Contracts" id="contracts">
+    <ProjectDetailsSection title={props.title} id={props.id}>
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="mt-4 mb-8 text-center">
@@ -87,6 +89,6 @@ export function ContractsSection(props: ContractsSectionProps) {
         </>
       )}
       <ReferenceList references={props.references} />
-    </Section>
+    </ProjectDetailsSection>
   )
 }

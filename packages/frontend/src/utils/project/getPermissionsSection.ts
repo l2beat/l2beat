@@ -10,6 +10,8 @@ export function getPermissionsSection(
 ): PermissionsSectionProps | undefined {
   return (
     project.permissions && {
+      id: 'permissions',
+      title: 'Permissions',
       permissions: project.permissions.map(toTechnologyContract),
       verificationStatus,
     }

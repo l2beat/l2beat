@@ -1,8 +1,8 @@
 import React from 'react'
 
+import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
-import { Section } from './Section'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
 
 export interface TechnologySectionProps {
@@ -26,7 +26,7 @@ export function TechnologySection({
   items,
 }: TechnologySectionProps) {
   return (
-    <Section title={title} id={id}>
+    <ProjectDetailsSection title={title} id={id}>
       {items.map((item, i) => (
         <div className="mt-4 md:mt-6" key={i}>
           <h3 id={item.id} className="text-xl font-bold">
@@ -40,6 +40,6 @@ export function TechnologySection({
           <ReferenceList references={item.references} />
         </div>
       ))}
-    </Section>
+    </ProjectDetailsSection>
   )
 }
