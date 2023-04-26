@@ -18,7 +18,7 @@ import { YouTubeIcon } from './products/YouTubeIcon'
 import { OptimismIcon } from './providers/OptimismIcon'
 import { StarkWareIcon } from './providers/StarkWareIcon'
 import { ZkSyncIcon } from './providers/ZkSyncIcon'
-import { AppIcon } from './symbols/AppIcon'
+import { AppsIcon } from './symbols/AppsIcon'
 import { ArchivedIcon } from './symbols/ArchivedIcon'
 import { BulletIcon } from './symbols/BulletIcon'
 import { CodeIcon } from './symbols/CodeIcon'
@@ -26,11 +26,11 @@ import { DocumentIcon } from './symbols/DocumentIcon'
 import { FinanceIcon } from './symbols/FinanceIcon'
 import { GlobeIcon } from './symbols/GlobeIcon'
 import { InfoIcon } from './symbols/InfoIcon'
-import { LinkIcon } from './symbols/LinkIcon'
 import { MenuCloseIcon } from './symbols/MenuCloseIcon'
 import { MenuOpenIcon } from './symbols/MenuOpenIcon'
 import { MilestoneIcon } from './symbols/MilestoneIcon'
 import { MoonIcon } from './symbols/MoonIcon'
+import { OutLinkIcon } from './symbols/OutLinkIcon'
 import { SearchIcon } from './symbols/SearchIcon'
 import { ShieldIcon } from './symbols/ShieldIcon'
 import { SunIcon } from './symbols/SunIcon'
@@ -98,7 +98,7 @@ export function ProviderIcons() {
 export function SymbolIcons() {
   return (
     <Template>
-      <AppIcon />
+      <AppsIcon />
       <ArchivedIcon />
       <BulletIcon />
       <CodeIcon />
@@ -106,7 +106,7 @@ export function SymbolIcons() {
       <FinanceIcon />
       <GlobeIcon />
       <InfoIcon />
-      <LinkIcon />
+      <OutLinkIcon />
       <MenuCloseIcon />
       <MenuOpenIcon />
       <MilestoneIcon />

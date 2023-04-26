@@ -1,0 +1,32 @@
+import { assertUnreachable } from '@l2beat/shared'
+import React from 'react'
+import { Link } from '../header/DetailsHeader'
+import { AppsIcon } from './symbols/AppsIcon'
+import { CodeIcon } from './symbols/CodeIcon'
+import { DocumentIcon } from './symbols/DocumentIcon'
+import { GlobeIcon } from './symbols/GlobeIcon'
+import { SearchIcon } from './symbols/SearchIcon'
+import { UserIcon } from './symbols/UserIcon'
+
+interface LinkNameIconProps {
+  name: Link['name']
+}
+
+export function LinkIcon({ name }: LinkNameIconProps) {
+  switch (name) {
+    case 'Website':
+      return <GlobeIcon />
+    case 'App':
+      return <AppsIcon />
+    case 'Documentation':
+      return <DocumentIcon />
+    case 'Explorer':
+      return <SearchIcon />
+    case 'Repository':
+      return <CodeIcon />
+    case 'Social':
+      return <UserIcon />
+    default:
+      assertUnreachable(name)
+  }
+}
