@@ -9,9 +9,9 @@ import { Clock } from './Clock'
 import { ConfigReader } from './discovery/config/ConfigReader'
 import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 import { DiscoveryRunner } from './discovery/DiscoveryRunner'
-import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
-import { diffToMessages } from './discovery/utils/diffToMessages'
-import { findDependents } from './discovery/utils/findDependants'
+import { diffDiscovery, DiscoveryDiff } from './discovery/output/diffDiscovery'
+import { diffToMessages } from './discovery/output/diffToMessages'
+import { findDependents } from './discovery/utils/findDependents'
 import { TaskQueue } from './queue/TaskQueue'
 
 export interface Diff {

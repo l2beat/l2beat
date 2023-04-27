@@ -1,7 +1,7 @@
 import { EthereumAddress, ManualProxyType, ProxyDetails } from '@l2beat/shared'
 
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'

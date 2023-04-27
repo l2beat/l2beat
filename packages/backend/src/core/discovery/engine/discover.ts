@@ -1,10 +1,10 @@
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 import { SourceCodeService } from '../source/SourceCodeService'
-import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { DiscoveryEngine } from './DiscoveryEngine'
 
 export async function discover(

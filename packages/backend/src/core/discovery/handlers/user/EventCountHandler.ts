@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 
 export type EventCountHandlerDefinition = z.infer<

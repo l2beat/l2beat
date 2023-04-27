@@ -2,8 +2,8 @@ import { Bytes, EthereumAddress } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { StarkWareNamedStorageHandler } from './StarkWareNamedStorageHandler'
 
 describe(StarkWareNamedStorageHandler.name, () => {
