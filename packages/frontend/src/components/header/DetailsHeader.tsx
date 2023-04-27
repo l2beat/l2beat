@@ -218,7 +218,7 @@ function LinkSection(props: { links: ProjectLink[] }) {
 function LinkSectionItem(props: ProjectLink) {
   if (props.links.length === 1) {
     return (
-      <div className="gray-100 group flex cursor-pointer flex-row items-center gap-1.5 rounded-lg py-1.5 px-2 text-xs font-medium dark:bg-neutral-700 dark:hover:bg-gray-750">
+      <div className="group flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium dark:bg-neutral-700 dark:hover:bg-gray-750">
         <OutLink
           href={props.links[0]}
           className="flex flex-row items-center gap-1.5"
