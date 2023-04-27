@@ -11,9 +11,10 @@ const IMPLEMENTATION_SLOT = Bytes.fromHex(
 export async function getImplementation(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ) {
   return bytes32ToAddress(
-    await provider.getStorage(address, IMPLEMENTATION_SLOT),
+    await provider.getStorage(address, IMPLEMENTATION_SLOT, blockNumber),
   )
 }
 
@@ -25,19 +26,23 @@ const ADMIN_SLOT = Bytes.fromHex(
 export async function getAdmin(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ) {
-  return bytes32ToAddress(await provider.getStorage(address, ADMIN_SLOT))
+  return bytes32ToAddress(
+    await provider.getStorage(address, ADMIN_SLOT, blockNumber),
+  )
 }
 
 export async function detectEip1967Proxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const implementation = await getImplementation(provider, address)
+  const implementation = await getImplementation(provider, address, blockNumber)
   if (implementation === EthereumAddress.ZERO) {
     return
   }
-  const admin = await getAdmin(provider, address)
+  const admin = await getAdmin(provider, address, blockNumber)
   return {
     implementations: [implementation],
     relatives: [admin],

@@ -13,15 +13,13 @@ export function getIgnoredMethods(
 ) {
   let ignoreMethods: DashboardContractField[] | undefined = undefined
   const override = config.overrides.get(contract.address)
-  if (override) {
-    if (override.ignoreMethods) {
-      ignoreMethods = override.ignoreMethods.map((field) => {
-        return {
-          name: getFieldName(viewABI, field),
-          description: getDescription(config, contract.address, field),
-        }
-      })
-    }
+  if (override.ignoreMethods) {
+    ignoreMethods = override.ignoreMethods.map((field) => {
+      return {
+        name: getFieldName(viewABI, field),
+        description: getDescription(config, contract.address, field),
+      }
+    })
   }
   return ignoreMethods
 }

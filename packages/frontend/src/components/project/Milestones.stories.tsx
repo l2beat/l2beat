@@ -1,21 +1,21 @@
 import { Story } from '@storybook/react'
 import React from 'react'
 
-import { Milestones, MilestonesProps } from './Milestones'
+import { MilestonesSection, MilestonesSectionProps } from './Milestones'
 
 export default {
   title: 'Components/Project/Milestones',
 }
 
-function Template(props: MilestonesProps) {
+function Template(props: MilestonesSectionProps) {
   return (
     <div className="p-4">
-      <Milestones {...props} />
+      <MilestonesSection {...props} />
     </div>
   )
 }
 
-export const Milestone: Story<MilestonesProps> = Template.bind({})
+export const Milestone: Story<MilestonesSectionProps> = Template.bind({})
 Milestone.args = {
   milestones: [
     {

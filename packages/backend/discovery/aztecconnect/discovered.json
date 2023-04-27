@@ -24,10 +24,7 @@
         "getCapped": true,
         "getDataSize": 20017152,
         "getDefiInteractionHashesLength": 1,
-        "getEscapeHatchStatus": [
-          false,
-          590
-        ],
+        "getEscapeHatchStatus": [false, 590],
         "getImplementationVersion": 2,
         "getPendingDefiInteractionHashesLength": 1,
         "getSupportedAssetsLength": 15,

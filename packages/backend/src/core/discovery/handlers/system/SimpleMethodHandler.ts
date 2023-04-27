@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared'
 import { utils } from 'ethers'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
@@ -23,12 +23,19 @@ export class SimpleMethodHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Calling ',
       this.fragment.name + '()',
     ])
-    const callResult = await callMethod(provider, address, this.fragment, [])
+    const callResult = await callMethod(
+      provider,
+      address,
+      this.fragment,
+      [],
+      blockNumber,
+    )
     return { field: this.field, ...callResult }
   }
 }

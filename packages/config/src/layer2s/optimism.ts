@@ -47,6 +47,7 @@ export const optimism: Layer2 = {
   },
   config: {
     associatedTokens: ['OP'],
+    nativeL2TokensIncludedInTVL: ['OP'],
     escrows: [
       {
         // old snx bridge

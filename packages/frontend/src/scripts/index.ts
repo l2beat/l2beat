@@ -4,8 +4,10 @@ import { configureDarkThemeToggle } from '../components/navbar/configureDarkThem
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureDropdowns } from './configureDropdowns'
 import { configureFilters } from './configureFilters'
+import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureTooltips } from './configureTooltips'
+import { configureProjectNavigation } from './section-navigation'
 
 configureFilters()
 configureDarkThemeToggle()
@@ -15,3 +17,5 @@ configureCharts()
 configureTvlActivity()
 configureDropdowns()
 configureRosetteOverlay()
+configureProjectNavigation()
+configureHoverableDropdown()

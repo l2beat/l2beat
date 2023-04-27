@@ -11,7 +11,6 @@ export function gatherAddressesFromUpgradeability(
   switch (item.type) {
     case 'EIP1967 proxy':
     case 'ZeppelinOS proxy':
-    case 'StarkWare diamond':
     case 'resolved delegate proxy':
     case 'call implementation proxy':
     case 'EIP897 proxy':
@@ -37,6 +36,10 @@ export function gatherAddressesFromUpgradeability(
       break
     case 'EIP2535 diamond proxy':
       result.push(...item.facets)
+      break
+    case 'StarkWare diamond':
+      result.push(item.implementation)
+      result.push(...Object.values(item.facets))
       break
     case 'immutable':
       // Ignoring types because no (admin/user)implementation included in them

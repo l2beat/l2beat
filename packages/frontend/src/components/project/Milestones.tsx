@@ -1,24 +1,24 @@
 import { Milestone } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
 import { ArrowRightIcon } from '../icons'
 import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
 import { OutLink } from '../OutLink'
+import { ProjectDetailsSection } from './ProjectDetailsSection'
 
-export interface MilestonesProps {
-  milestones?: Milestone[]
-  className?: string
+export interface MilestonesSectionProps {
+  title: string
+  id: string
+  milestones: Milestone[]
 }
 
-export function Milestones({ milestones, className }: MilestonesProps) {
-  if (milestones === undefined) {
-    return null
-  }
-
+export function MilestonesSection({
+  milestones,
+  title,
+  id,
+}: MilestonesSectionProps) {
   return (
-    <div className={cx('px-4 md:px-0', className)}>
-      <p className="text-[28px] font-bold leading-[32px]">Milestones</p>
+    <ProjectDetailsSection title={title} id={id}>
       <div className="relative h-auto">
         <div className="absolute left-[15.4px] mt-2 h-[100%]">
           <div className="h-[60%] w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500 " />
@@ -56,7 +56,7 @@ export function Milestones({ milestones, className }: MilestonesProps) {
             ))}
         </div>
       </div>
-    </div>
+    </ProjectDetailsSection>
   )
 }
 

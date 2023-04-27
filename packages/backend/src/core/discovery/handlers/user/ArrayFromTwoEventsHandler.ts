@@ -2,8 +2,8 @@ import { ContractValue, EthereumAddress } from '@l2beat/shared'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
@@ -55,6 +55,7 @@ export class ArrayFromTwoEventsHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Querying ',
@@ -62,12 +63,17 @@ export class ArrayFromTwoEventsHandler implements Handler {
       ' and ',
       this.removeFragment.name,
     ])
-    const logs = await provider.getLogs(address, [
+    const logs = await provider.getLogs(
+      address,
       [
-        this.abi.getEventTopic(this.addFragment),
-        this.abi.getEventTopic(this.removeFragment),
+        [
+          this.abi.getEventTopic(this.addFragment),
+          this.abi.getEventTopic(this.removeFragment),
+        ],
       ],
-    ])
+      0,
+      blockNumber,
+    )
     const values = new Set<ContractValue>()
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)

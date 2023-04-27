@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared'
 import chalk from 'chalk'
 
 interface LoggerOptions {
@@ -30,19 +31,36 @@ export class DiscoveryLogger {
     console.log(`  ${chalk.yellow(field)} ${chalk.gray(dots)} ${content}`)
   }
 
-  error(message: string) {
-    this.log(`  Error: ${chalk.red(message)}`)
+  logSkip(address: EthereumAddress, reason: string) {
+    this.log(`Skipping ${address.toString()}`)
+    if (reason.startsWith('Error: ')) {
+      const message = reason.slice('Error: '.length)
+      this.log(`  Error: ${chalk.red(message)}`)
+    } else {
+      this.log(`  Reason: ${reason}`)
+    }
+    this.log('')
   }
 
-  eoa() {
+  logRelatives(relatives: EthereumAddress[]) {
+    if (relatives.length > 0) {
+      this.log(`  New relatives found: ${relatives.length}`)
+      for (const relative of relatives) {
+        this.log(`    - ${relative.toString()}`)
+      }
+    }
+    this.log('')
+  }
+
+  logEoa() {
     this.log(`  Type: ${chalk.blue('EOA')}`)
   }
 
-  name(name: string) {
+  logName(name: string) {
     this.log(`  Name: ${chalk.bold(name)}`)
   }
 
-  configuredButUndiscovered(override: string) {
+  logConfiguredButUndiscovered(override: string) {
     this.log(
       `${chalk.red('Override for')} ${chalk.bold(override)} ${chalk.red(
         'was configured, but the address was not discovered',
@@ -50,11 +68,11 @@ export class DiscoveryLogger {
     )
   }
 
-  proxyDetected(type: string) {
+  logProxyDetected(type: string) {
     this.log(`  Proxy detected: ${chalk.bgRed.whiteBright(` ${type} `)}`)
   }
 
-  proxyDetectionFailed(type: string) {
+  logProxyDetectionFailed(type: string) {
     this.log(
       `  Manual proxy detection failed: ${chalk.bgRed.whiteBright(
         ` ${type} `,

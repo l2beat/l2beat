@@ -11,9 +11,10 @@ const IMPLEMENTATION_SLOT = Bytes.fromHex(
 async function getImplementation(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ) {
   return bytes32ToAddress(
-    await provider.getStorage(address, IMPLEMENTATION_SLOT),
+    await provider.getStorage(address, IMPLEMENTATION_SLOT, blockNumber),
   )
 }
 
@@ -22,8 +23,14 @@ const OWNER_SLOT = Bytes.fromHex(
   '0x337c729c04082e3bdd94ba7d2b5a8a642f3a138702366a91707825373a2029ba',
 )
 
-async function getOwner(provider: DiscoveryProvider, address: EthereumAddress) {
-  return bytes32ToAddress(await provider.getStorage(address, OWNER_SLOT))
+async function getOwner(
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
+  blockNumber: number,
+) {
+  return bytes32ToAddress(
+    await provider.getStorage(address, OWNER_SLOT, blockNumber),
+  )
 }
 
 // keccak256("org.zeppelinos.proxy.admin")
@@ -31,21 +38,28 @@ const ADMIN_SLOT = Bytes.fromHex(
   '0x10d6a54a4754c8869d6886b5f5d7fbfa5b4522237ea5c60d11bc4e7a1ff9390b',
 )
 
-async function getAdmin(provider: DiscoveryProvider, address: EthereumAddress) {
-  return bytes32ToAddress(await provider.getStorage(address, ADMIN_SLOT))
+async function getAdmin(
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
+  blockNumber: number,
+) {
+  return bytes32ToAddress(
+    await provider.getStorage(address, ADMIN_SLOT, blockNumber),
+  )
 }
 
 export async function detectZeppelinOSProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const implementation = await getImplementation(provider, address)
+  const implementation = await getImplementation(provider, address, blockNumber)
   if (implementation === EthereumAddress.ZERO) {
     return
   }
   const [owner, admin] = await Promise.all([
-    getOwner(provider, address),
-    getAdmin(provider, address),
+    getOwner(provider, address, blockNumber),
+    getAdmin(provider, address, blockNumber),
   ])
   return {
     implementations: [implementation],

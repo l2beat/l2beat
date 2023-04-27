@@ -4,15 +4,17 @@ import React from 'react'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValues } from '../../utils/risks/types'
 import { BigRosette } from '../rosette'
-import { Section } from './Section'
+import { ProjectDetailsSection } from './ProjectDetailsSection'
 
 export interface RiskAnalysisProps {
+  id: string
+  title: string
   riskValues: RiskValues
 }
 
-export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
+export function RiskAnalysis({ id, title, riskValues }: RiskAnalysisProps) {
   return (
-    <Section title="Risk analysis" id="risks" className="mt-4">
+    <ProjectDetailsSection title={title} id={id} className="mt-4">
       <BigRosette risks={riskValues} className="mx-auto my-6 lg:hidden" />
       <div>
         <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
@@ -94,6 +96,6 @@ export function RiskAnalysis({ riskValues }: RiskAnalysisProps) {
           {riskValues.validatorFailure.description}
         </p>
       </div>
-    </Section>
+    </ProjectDetailsSection>
   )
 }

@@ -99,9 +99,8 @@ function getLinks(links: ProjectLinks) {
     {
       name: 'Social',
       links: links.socialMedia,
-      social: true,
     },
-  ]
+  ] as const
 
   return items.filter((link) => link.links.length > 0)
 }

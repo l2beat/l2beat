@@ -1,8 +1,8 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared'
 
 import { hashJson } from '../../../tools/hashJson'
-import { getDiscoveryConfigEntries } from '../utils/getDiscoveryConfigEntries'
 import { DiscoveryOverrides } from './DiscoveryOverrides'
+import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class DiscoveryConfig {

@@ -2,12 +2,15 @@ import { VerificationStatus } from '@l2beat/shared'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
+import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
-import { Section } from './Section'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
+import { TokenEntry } from './TokenEntry'
 
 export interface ContractsSectionProps {
+  id: string
+  title: string
   contracts: TechnologyContract[]
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
@@ -15,6 +18,7 @@ export interface ContractsSectionProps {
   architectureImage?: string
   isIncomplete?: boolean
   verificationStatus: VerificationStatus
+  nativeL2TokensIncludedInTVL: string[]
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -23,7 +27,7 @@ export function ContractsSection(props: ContractsSectionProps) {
   }
 
   return (
-    <Section title="Smart Contracts" id="contracts">
+    <ProjectDetailsSection title={props.title} id={props.id}>
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="mt-4 mb-8 text-center">
@@ -55,7 +59,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.escrows.length > 0 && (
         <>
           <h3 className="md:text-md font-bold">
-            The system uses following escrows:
+            TVL is calculated based on these smart contracts and tokens:
           </h3>
           <div className="mt-4 mb-4">
             {props.escrows.map((contract, i) => (
@@ -67,6 +71,12 @@ export function ContractsSection(props: ContractsSectionProps) {
                 />
               </React.Fragment>
             ))}
+            {props.nativeL2TokensIncludedInTVL.length > 0 && (
+              <TokenEntry
+                l2Tokens={props.nativeL2TokensIncludedInTVL}
+                className="mt-4 mb-4"
+              />
+            )}
           </div>
         </>
       )}
@@ -79,6 +89,6 @@ export function ContractsSection(props: ContractsSectionProps) {
         </>
       )}
       <ReferenceList references={props.references} />
-    </Section>
+    </ProjectDetailsSection>
   )
 }

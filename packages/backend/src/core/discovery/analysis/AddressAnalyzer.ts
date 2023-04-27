@@ -1,11 +1,11 @@
 import { ContractParameters, EthereumAddress } from '@l2beat/shared'
 
 import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
-import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { getCodeLink } from './getCodeLink'
 import { getRelatives } from './getRelatives'
 
@@ -33,15 +33,17 @@ export class AddressAnalyzer {
   async analyze(
     address: EthereumAddress,
     overrides: ContractOverrides | undefined,
+    blockNumber: number,
   ): Promise<{ analysis: Analysis; relatives: EthereumAddress[] }> {
-    const code = await this.provider.getCode(address)
+    const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
-      this.logger.eoa()
+      this.logger.logEoa()
       return { analysis: { type: 'EOA', address }, relatives: [] }
     }
 
     const proxy = await this.proxyDetector.detectProxy(
       address,
+      blockNumber,
       overrides?.proxyType,
     )
 
@@ -50,12 +52,13 @@ export class AddressAnalyzer {
       proxy?.implementations,
     )
 
-    this.logger.name(sources.name)
+    this.logger.logName(sources.name)
 
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
       sources.abi,
       overrides,
+      blockNumber,
     )
 
     return {

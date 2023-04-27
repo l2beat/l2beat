@@ -2,8 +2,8 @@ import { Bytes, EthereumAddress, getErrorMessage } from '@l2beat/shared'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
 
@@ -29,6 +29,7 @@ export class StarkWareNamedStorageHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Reading named storage at ',
@@ -39,7 +40,7 @@ export class StarkWareNamedStorageHandler implements Handler {
       const slot = Bytes.fromHex(
         utils.solidityKeccak256(['string'], [this.definition.tag]),
       )
-      storage = await provider.getStorage(address, slot)
+      storage = await provider.getStorage(address, slot, blockNumber)
     } catch (e) {
       return { field: this.field, error: getErrorMessage(e) }
     }

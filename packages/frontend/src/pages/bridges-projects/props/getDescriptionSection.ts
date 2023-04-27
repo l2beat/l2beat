@@ -9,6 +9,8 @@ export function getDescriptionSection(
   verificationStatus: VerificationStatus,
 ): DescriptionSectionProps {
   return {
+    id: 'description',
+    title: 'Description',
     issueLink: getIssueLink(`Problem: ${bridge.display.name} project page`),
     editLink: getEditLink(bridge),
     warning: bridge.display.warning,

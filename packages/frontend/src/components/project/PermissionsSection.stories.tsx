@@ -41,6 +41,8 @@ export function PermissionsSection() {
   return (
     <div className="p-4 leading-normal">
       <PermissionsSectionComponent
+        id="permissions"
+        title="Permissions"
         permissions={permissions}
         verificationStatus={{
           projects: {},

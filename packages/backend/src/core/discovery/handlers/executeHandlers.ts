@@ -5,8 +5,9 @@ import { Handler, HandlerResult } from './Handler'
 
 export async function executeHandlers(
   provider: DiscoveryProvider,
-  address: EthereumAddress,
   handlers: Handler[],
+  address: EthereumAddress,
+  blockNumber: number,
 ) {
   const results: HandlerResult[] = []
   const batches = orderByDependencies(handlers)
@@ -15,7 +16,7 @@ export async function executeHandlers(
     const batchResults = await Promise.all(
       batch.map(async (x) => {
         try {
-          return await x.execute(provider, address, fields)
+          return await x.execute(provider, address, blockNumber, fields)
         } catch (e) {
           return { field: x.field, error: getErrorMessage(e) }
         }

@@ -12,23 +12,33 @@ const SECONDARY_IMPLEMENTATION_SLOT = Bytes.fromHex(
 async function getSecondaryImplementation(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ) {
   return bytes32ToAddress(
-    await provider.getStorage(address, SECONDARY_IMPLEMENTATION_SLOT),
+    await provider.getStorage(
+      address,
+      SECONDARY_IMPLEMENTATION_SLOT,
+      blockNumber,
+    ),
   )
 }
 
 export async function detectArbitrumProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const userImplementation = await getSecondaryImplementation(provider, address)
+  const userImplementation = await getSecondaryImplementation(
+    provider,
+    address,
+    blockNumber,
+  )
   if (userImplementation === EthereumAddress.ZERO) {
     return
   }
   const [adminImplementation, admin] = await Promise.all([
-    getImplementation(provider, address),
-    getAdmin(provider, address),
+    getImplementation(provider, address, blockNumber),
+    getAdmin(provider, address, blockNumber),
   ])
   return {
     implementations: [adminImplementation, userImplementation],

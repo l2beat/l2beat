@@ -2,11 +2,13 @@ import { Bytes, EthereumAddress } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { StarkWareNamedStorageHandler } from './StarkWareNamedStorageHandler'
 
 describe(StarkWareNamedStorageHandler.name, () => {
+  const BLOCK_NUMBER = 1234
+
   describe('return types', () => {
     it('can returns storage as bytes', async () => {
       const address = EthereumAddress.random()
@@ -32,7 +34,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       )
       expect(handler.field).toEqual('someName')
 
-      const result = await handler.execute(provider, address)
+      const result = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(result).toEqual({
         field: 'someName',
         value:
@@ -62,7 +64,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       )
       expect(handler.field).toEqual('someName')
 
-      const result = await handler.execute(provider, address)
+      const result = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(result).toEqual({
         field: 'someName',
         value: 0x123,
@@ -93,7 +95,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       )
       expect(handler.field).toEqual('someName')
 
-      const result = await handler.execute(provider, address)
+      const result = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(result).toEqual({
         field: 'someName',
         value: resultAddress.toString(),
@@ -118,7 +120,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       },
     })
     const address = EthereumAddress.random()
-    const result = await handler.execute(provider, address)
+    const result = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(result).toEqual({
       field: 'someName',
       error: 'foo bar',
@@ -145,7 +147,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
     })
 
     const address = EthereumAddress.random()
-    const result = await handler.execute(provider, address)
+    const result = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(result).toEqual({
       field: 'someName',
       value:

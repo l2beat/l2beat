@@ -20,9 +20,7 @@
           "StarkWare_OnchainVaults_2021_1": "0x2D542881E93491e765E5110c1e373FC2968E720A",
           "StarkWare_ProxyUtils_2021_1": "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
         },
-        "proxyGovernance": [
-          "0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a"
-        ]
+        "proxyGovernance": ["0x799Ec7ff0Bf9d8Bb4f3643aa85dA0971b1104B5a"]
       },
       "values": {
         "defaultVaultWithdrawalLock": 0,
@@ -48,9 +46,7 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
-        "OPERATORS": [
-          "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
-        ],
+        "OPERATORS": ["0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"],
         "orderRegistryAddress": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
