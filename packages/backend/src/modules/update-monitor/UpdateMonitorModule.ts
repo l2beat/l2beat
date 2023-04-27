@@ -18,43 +18,40 @@ import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'
 
-export function createDiscoveryModule(
+export function createUpdateMonitorModule(
   config: Config,
   logger: Logger,
   http: HttpClient,
   database: Database,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.discoveryWatcher) {
-    logger.info('Discovery Watcher module disabled')
+  if (!config.updateMonitor) {
+    logger.info('UpdateMonitor module disabled')
     return
   }
 
   const provider = new providers.AlchemyProvider(
     'mainnet',
-    config.discoveryWatcher.alchemyApiKey,
+    config.updateMonitor.alchemyApiKey,
   )
   const etherscanClient = new MainnetEtherscanClient(
     http,
-    config.discoveryWatcher.etherscanApiKey,
+    config.updateMonitor.etherscanApiKey,
   )
   const discoveryProvider = new DiscoveryProvider(provider, etherscanClient)
 
-  const discordClient = config.discoveryWatcher.discord
+  const discordClient = config.updateMonitor.discord
     ? new DiscordClient(
         http,
-        config.discoveryWatcher.discord.token,
-        config.discoveryWatcher.discord.publicChannelId,
-        config.discoveryWatcher.discord.internalChannelId,
+        config.updateMonitor.discord.token,
+        config.updateMonitor.discord.publicChannelId,
+        config.updateMonitor.discord.internalChannelId,
       )
     : undefined
 
   const configReader = new ConfigReader()
 
-  const discoveryWatcherRepository = new UpdateMonitorRepository(
-    database,
-    logger,
-  )
+  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
   const discoveryLogger = DiscoveryLogger.SILENT
 
@@ -79,14 +76,14 @@ export function createDiscoveryModule(
     discoveryRunner,
     discordClient,
     configReader,
-    discoveryWatcherRepository,
+    updateMonitorRepository,
     clock,
     logger,
-    !!config.discoveryWatcher.runOnStart,
+    !!config.updateMonitor.runOnStart,
   )
 
   const start = async () => {
-    logger = logger.for('DiscoveryWatcherModule')
+    logger = logger.for('UpdateMonitorModule')
     logger.info('Starting')
 
     await updateMonitor.start()

@@ -299,17 +299,17 @@ function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
 
 const latestBlock = new Gauge({
   name: 'discovery_watcher_last_synced',
-  help: 'Value showing latest block number with which DiscoveryWatcher was run',
+  help: 'Value showing latest block number with which UpdateMonitor was run',
 })
 
 const changesDetected = new Gauge({
   name: 'discovery_watcher_changes_detected',
-  help: 'Value showing the amount of changes detected by DiscoveryWatcher',
+  help: 'Value showing the amount of changes detected by UpdateMonitor',
 })
 
 const syncHistogram = new Histogram({
   name: 'discovery_watcher_sync_duration_histogram',
-  help: 'Histogram showing DiscoveryWatcher sync duration',
+  help: 'Histogram showing UpdateMonitor sync duration',
   buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
 })
 

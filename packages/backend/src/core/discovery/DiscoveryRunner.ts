@@ -25,7 +25,7 @@ export class DiscoveryRunner {
 
 const latestBlock = new Gauge({
   name: 'discovery_last_synced',
-  help: 'Value showing latest block number with which DiscoveryWatcher was run',
+  help: 'Value showing latest block number with which UpdateMonitor was run',
   labelNames: ['project'],
 })
 
