@@ -12,10 +12,7 @@ import {
   DescriptionSectionProps,
 } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
-import {
-  LinkSection,
-  LinkSectionProps,
-} from '../../../components/project/links/LinkSection'
+
 import { MilestonesSection } from '../../../components/project/Milestones'
 import {
   PermissionsSection,
@@ -34,7 +31,6 @@ import {
   TechnologySectionProps,
 } from '../../../components/project/TechnologySection'
 export interface ProjectDetailsProps {
-  linkSection: LinkSectionProps
   descriptionSection: DescriptionSectionProps
   riskSection: RiskSectionProps
   incomplete?: TechnologyIncompleteProps
@@ -61,7 +57,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
         <ContractsSection {...props.contractsSection} />
       </div>
       <div className="ProjectDetails-Side flex flex-col">
-        <LinkSection {...props.linkSection} />
         <div className="flex flex-col gap-12 bg-gray-100 py-12 dark:bg-gray-900 md:!bg-transparent">
           {props.milestones && (
             <MilestonesSection
