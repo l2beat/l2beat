@@ -31,7 +31,7 @@ export function DetailsHeader(props: HeaderProps) {
           value.description === 'No information available.'
         )
       })
-    : false
+    : undefined
   return (
     <>
       <header className="md:mt-15 mt-6 flex flex-row justify-end px-4 md:px-0">
