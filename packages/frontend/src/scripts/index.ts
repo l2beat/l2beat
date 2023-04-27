@@ -3,6 +3,7 @@ import { configureTvlActivity } from '../components/header/configureTvlActivity'
 import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureDropdowns } from './configureDropdowns'
+import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureFilters } from './configureFilters'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureTooltips } from './configureTooltips'
@@ -17,3 +18,4 @@ configureTvlActivity()
 configureDropdowns()
 configureRosetteOverlay()
 configureProjectNavigation()
+configureHoverableDropdown()

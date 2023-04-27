@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react'
 
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
+import { HoverableDropdown } from '../HoverableDropdown'
 import { OutLink } from '../OutLink'
 import {
   ArrowRightIcon,
@@ -225,23 +226,47 @@ function LinkSection(props: { links: Link[] }) {
 }
 
 function LinkSectionItem(props: Link) {
-  return (
-    <div className="group flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-neutral-700 py-1.5 px-2 text-xs font-medium hover:bg-gray-750">
-      {props.links.length === 1 ? (
+  if (props.links.length === 1) {
+    return (
+      <div className="gray-100 group flex cursor-pointer flex-row items-center gap-1.5 rounded-lg py-1.5 px-2 text-xs font-medium dark:bg-neutral-700 dark:hover:bg-gray-750">
         <OutLink
           href={props.links[0]}
           className="flex flex-row items-center gap-1.5"
         >
           <LinkIcon name={props.name} />
-          {props.name} <OutLinkIcon width={16} height={16} />
+          {props.name} <OutLinkIcon />
         </OutLink>
-      ) : (
-        <>
-          <LinkIcon name={props.name} />
-          {props.name}
-          <ChevronDownIcon className="m-auto scale-75 transition-transform duration-300 group-hover:-rotate-180" />
-        </>
-      )}
-    </div>
+      </div>
+    )
+  }
+
+  return (
+    <HoverableDropdown>
+      <HoverableDropdown.Toggle>
+        <LinkIcon name={props.name} />
+        {props.name}
+      </HoverableDropdown.Toggle>
+      <HoverableDropdown.Menu className="flex flex-col gap-3">
+        {props.links.map((link) => {
+          return (
+            <OutLink
+              key={link}
+              href={link}
+              className="flex items-center gap-1.5 text-xs font-medium"
+            >
+              {formatLink(link)} <OutLinkIcon />
+            </OutLink>
+          )
+        })}
+      </HoverableDropdown.Menu>
+    </HoverableDropdown>
   )
+}
+
+function formatLink(link: string) {
+  const formattedLink = link.replace('https://', '').replace('http://', '')
+  if (formattedLink.endsWith('/')) {
+    return formattedLink.slice(0, -1)
+  }
+  return formattedLink
 }
