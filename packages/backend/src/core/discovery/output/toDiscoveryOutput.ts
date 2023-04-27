@@ -19,22 +19,23 @@ export function toDiscoveryOutput(
 export function processAnalysis(
   results: Analysis[],
 ): Omit<DiscoveryOutput, 'name' | 'blockNumber' | 'configHash'> {
+  // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
+  // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
+
   const { contracts, abis } = getContracts(results)
   return {
-    contracts: contracts
-      .map((x) =>
-        withoutUndefinedKeys({
-          address: x.address,
-          name: x.name,
-          derivedName: x.name !== x.derivedName ? x.derivedName : undefined,
-          unverified: x.isVerified ? undefined : (true as const),
-          code: x.codeLink,
-          upgradeability: x.upgradeability,
-          values: Object.keys(x.values).length === 0 ? undefined : x.values,
-          errors: Object.keys(x.errors).length === 0 ? undefined : x.errors,
-        }),
-      )
-      .sort((a, b) => a.address.localeCompare(b.address.toString())),
+    contracts: contracts.map((x) =>
+      withoutUndefinedKeys({
+        name: x.name,
+        address: x.address,
+        unverified: x.isVerified ? undefined : (true as const),
+        code: x.codeLink,
+        upgradeability: x.upgradeability,
+        values: Object.keys(x.values).length === 0 ? undefined : x.values,
+        errors: Object.keys(x.errors).length === 0 ? undefined : x.errors,
+        derivedName: x.derivedName,
+      }),
+    ),
     eoas: results
       .filter((x) => x.type === 'EOA')
       .map((x) => x.address)
@@ -49,7 +50,7 @@ function getContracts(results: Analysis[]) {
   for (const result of results) {
     if (result.type === 'Contract') {
       contracts.push(result)
-      abis = { ...abis, ...result.sources.abis }
+      abis = { ...abis, ...result.abis }
     }
   }
   abis = Object.fromEntries(

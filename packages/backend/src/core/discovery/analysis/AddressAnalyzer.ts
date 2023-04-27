@@ -9,7 +9,7 @@ import { DiscoveryLogger } from '../DiscoveryLogger'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
-import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
+import { SourceCodeService } from '../source/SourceCodeService'
 import { getCodeLink } from './getCodeLink'
 import { getRelatives } from './getRelatives'
 
@@ -19,13 +19,14 @@ export interface AnalyzedContract {
   type: 'Contract'
   address: EthereumAddress
   name: string
-  derivedName: string
+  derivedName: string | undefined
   isVerified: boolean
   codeLink: string
   upgradeability: UpgradeabilityParameters
   values: Record<string, ContractValue>
   errors: Record<string, string>
-  sources: ContractSources
+  abis: Record<string, string[]>
+  sources: Record<string, string>[]
 }
 
 export interface AnalyzedEOA {
@@ -77,14 +78,15 @@ export class AddressAnalyzer {
       analysis: {
         type: 'Contract',
         name: overrides?.name ?? sources.name,
-        derivedName: sources.name,
+        derivedName: overrides?.name !== undefined ? sources.name : undefined,
         isVerified: sources.isVerified,
         address,
         codeLink: getCodeLink(address, proxy?.implementations),
         upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
         values,
         errors,
-        sources,
+        abis: sources.abis,
+        sources: sources.files,
       },
       relatives: getRelatives(
         results,

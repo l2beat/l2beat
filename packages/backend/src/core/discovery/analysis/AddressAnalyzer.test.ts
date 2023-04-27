@@ -100,7 +100,8 @@ describe(AddressAnalyzer.name, () => {
         upgradeability: { type: 'EIP1967 proxy', implementation, admin },
         values: { owner: owner.toString() },
         errors: {},
-        sources,
+        abis: sources.abis,
+        sources: sources.files,
       },
       relatives: [owner, admin],
     })
@@ -167,7 +168,8 @@ describe(AddressAnalyzer.name, () => {
         upgradeability: { type: 'EIP1967 proxy', implementation, admin },
         values: { owner: owner.toString() },
         errors: {},
-        sources,
+        abis: sources.abis,
+        sources: sources.files,
       },
       relatives: [owner, admin],
     })
