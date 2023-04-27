@@ -1,4 +1,4 @@
-import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
+import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
@@ -145,7 +145,7 @@ export class DiscoveryWatcher {
 
   async findChanges(
     name: string,
-    discovery: ProjectParameters,
+    discovery: DiscoveryOutput,
     configHash: Hash256,
     isDailyReminder: boolean,
     config: DiscoveryConfig,
@@ -234,7 +234,7 @@ export class DiscoveryWatcher {
   // notifications, which makes the same request again and compares the
   // results.
   async sanityCheck(
-    discovery: ProjectParameters,
+    discovery: DiscoveryOutput,
     diff: Diff,
     projectConfig: DiscoveryConfig,
     blockNumber: number,

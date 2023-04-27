@@ -1,9 +1,9 @@
 import {
   ContractParameters,
+  DiscoveryOutput,
   EthereumAddress,
   Hash256,
   Logger,
-  ProjectParameters,
   UnixTime,
 } from '@l2beat/shared'
 import { expect, mockFn, mockObject } from 'earl'
@@ -38,7 +38,7 @@ const COMMITTED: ContractParameters[] = [
   mockContract(NAME_B, ADDRESS_B),
 ]
 
-const DISCOVERY_RESULT: ProjectParameters = {
+const DISCOVERY_RESULT: DiscoveryOutput = {
   name: PROJECT_A,
   blockNumber: BLOCK_NUMBER,
   configHash: Hash256.random(),
@@ -643,7 +643,7 @@ const mockRecord: DiscoveryWatcherRecord = {
   discovery: DISCOVERY_RESULT,
 }
 
-const mockProject: ProjectParameters = {
+const mockProject: DiscoveryOutput = {
   name: PROJECT_A,
   blockNumber: BLOCK_NUMBER,
   configHash: Hash256.random(),

@@ -2,8 +2,8 @@ import {
   assert,
   ContractParameters,
   ContractValue,
+  DiscoveryOutput,
   EthereumAddress,
-  ProjectParameters,
   UnixTime,
 } from '@l2beat/shared'
 import { utils } from 'ethers'
@@ -40,7 +40,7 @@ const filesystem = {
 }
 
 export class ProjectDiscovery {
-  private readonly discovery: ProjectParameters
+  private readonly discovery: DiscoveryOutput
   constructor(
     public readonly projectName: string,
     private readonly fs: Filesystem = filesystem,
@@ -48,12 +48,12 @@ export class ProjectDiscovery {
     this.discovery = this.getDiscoveryJson(projectName)
   }
 
-  private getDiscoveryJson(project: string): ProjectParameters {
+  private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
       path.resolve(`../backend/discovery/${project}/discovered.json`),
     )
 
-    return JSON.parse(discoveryFile) as ProjectParameters
+    return JSON.parse(discoveryFile) as DiscoveryOutput
   }
 
   getMainContractDetails(

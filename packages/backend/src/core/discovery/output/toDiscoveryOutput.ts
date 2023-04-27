@@ -1,4 +1,4 @@
-import { Hash256, ProjectParameters } from '@l2beat/shared'
+import { DiscoveryOutput, Hash256 } from '@l2beat/shared'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 
@@ -7,7 +7,7 @@ export function toDiscoveryOutput(
   configHash: Hash256,
   blockNumber: number,
   results: Analysis[],
-): ProjectParameters {
+): DiscoveryOutput {
   return {
     name: configName,
     blockNumber,
@@ -18,7 +18,7 @@ export function toDiscoveryOutput(
 
 export function processAnalysis(
   results: Analysis[],
-): Omit<ProjectParameters, 'name' | 'blockNumber' | 'configHash'> {
+): Omit<DiscoveryOutput, 'name' | 'blockNumber' | 'configHash'> {
   const { contracts, abis } = getContracts(results)
   return {
     contracts: contracts
