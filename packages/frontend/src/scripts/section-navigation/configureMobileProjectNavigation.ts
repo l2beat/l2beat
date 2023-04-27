@@ -6,8 +6,11 @@ import { highlightCurrentSection } from './highlightCurrentSection'
 const ARROWS_THRESHOLD = 8
 
 export function configureMobileProjectNavigation() {
-  const { list, summaryItem, arrowLeft, arrowRight, sections } =
-    getMobileElements()
+  const elements = getMobileElements()
+
+  if (!elements) return
+
+  const { list, summaryItem, arrowLeft, arrowRight, sections } = elements
 
   let previouslyHighlightedItem: Element | null = null
   let destinationItem: HTMLAnchorElement | null = null
