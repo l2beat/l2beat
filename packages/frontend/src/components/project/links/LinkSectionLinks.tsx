@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { Link } from '../../header/DetailsHeader'
+import { ProjectLink } from '../../icons'
 import { LinkSectionLink } from './LinkSectionLink'
 
 interface Props {
-  name: Link['name']
+  name: ProjectLink['name']
   links: string[]
 }
 

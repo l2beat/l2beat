@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from './Arrows'
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
 import { EthereumLineIcon } from './chart/EthereumLineIcon'
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
 import { ActivityIcon } from './pages/ActivityIcon'
 import { RiskIcon } from './pages/RiskIcon'
 import { TvlIcon } from './pages/TvlIcon'

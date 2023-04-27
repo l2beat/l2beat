@@ -1,11 +1,15 @@
 import React from 'react'
 
+import {
+  GlobeIcon,
+  ProductIcon,
+  ProductIconType,
+  ProjectLink,
+} from '../../icons'
 import { OutLink } from '../../OutLink'
-import { Link } from '../../header/DetailsHeader'
-import { GlobeIcon, ProductIcon, ProductIconType } from '../../icons'
 
 interface Props {
-  name: Link['name']
+  name: ProjectLink['name']
   href: string
 }
 

@@ -4,16 +4,17 @@ import React, { ReactNode } from 'react'
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { HoverableDropdown } from '../HoverableDropdown'
-import { OutLink } from '../OutLink'
 import {
   ArrowRightIcon,
   ChevronDownIcon,
-  LinkIcon,
   OutLinkIcon,
+  ProjectLink,
+  ProjectLinkIcon,
 } from '../icons'
+import { OutLink } from '../OutLink'
 import { ArchivedBar } from '../project/ArchivedBar'
-import { UpcomingBar } from '../project/UpcomingBar'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
+import { UpcomingBar } from '../project/UpcomingBar'
 import { BigRosette } from '../rosette'
 
 export interface HeaderProps {
@@ -26,7 +27,7 @@ export interface HeaderProps {
   isUpcoming?: boolean
   isSummary?: boolean
   risks?: RiskValues
-  links?: Link[]
+  links?: ProjectLink[]
 }
 
 export function DetailsHeader(props: HeaderProps) {
@@ -100,20 +101,9 @@ interface Stat {
   className?: string
 }
 
-export interface Link {
-  name:
-    | 'Website'
-    | 'App'
-    | 'Documentation'
-    | 'Explorer'
-    | 'Repository'
-    | 'Social'
-  links: string[]
-}
-
 interface SummaryProps {
   stats: Stat[]
-  links: Link[]
+  links: ProjectLink[]
   isUpcoming?: boolean
 }
 
@@ -215,7 +205,7 @@ function DetailsHeaderStat(props: Stat) {
   )
 }
 
-function LinkSection(props: { links: Link[] }) {
+function LinkSection(props: { links: ProjectLink[] }) {
   return (
     <div className="flex flex-row gap-1.5">
       {props.links.map((link) => {
@@ -225,7 +215,7 @@ function LinkSection(props: { links: Link[] }) {
   )
 }
 
-function LinkSectionItem(props: Link) {
+function LinkSectionItem(props: ProjectLink) {
   if (props.links.length === 1) {
     return (
       <div className="gray-100 group flex cursor-pointer flex-row items-center gap-1.5 rounded-lg py-1.5 px-2 text-xs font-medium dark:bg-neutral-700 dark:hover:bg-gray-750">
@@ -233,7 +223,7 @@ function LinkSectionItem(props: Link) {
           href={props.links[0]}
           className="flex flex-row items-center gap-1.5"
         >
-          <LinkIcon name={props.name} />
+          <ProjectLinkIcon name={props.name} />
           {props.name} <OutLinkIcon />
         </OutLink>
       </div>
@@ -243,7 +233,7 @@ function LinkSectionItem(props: Link) {
   return (
     <HoverableDropdown>
       <HoverableDropdown.Toggle>
-        <LinkIcon name={props.name} />
+        <ProjectLinkIcon name={props.name} />
         {props.name}
       </HoverableDropdown.Toggle>
       <HoverableDropdown.Menu className="flex flex-col gap-3">

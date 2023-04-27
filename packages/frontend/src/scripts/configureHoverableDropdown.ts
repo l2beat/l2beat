@@ -1,8 +1,6 @@
 export function configureHoverableDropdown() {
   const hoverableDropdowns = document.querySelectorAll('.HoverableDropdown')
 
-  if (!hoverableDropdowns) return
-
   const show = (hoverableDrodpownMenu: Element) => {
     hoverableDrodpownMenu.classList.remove('opacity-0', 'pointer-events-none')
   }

@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import React, { ReactNode } from 'react'
+
 import { ChevronDownIcon } from './icons'
 
 interface ExpandableMenuProps {
