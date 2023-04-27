@@ -63,6 +63,11 @@ function parseSocial(href: string): SocialDetails {
       platform: 'medium',
       text: link.slice('medium.com/'.length),
     }
+  } else if (link.endsWith('.medium.com')) {
+    return {
+      platform: 'medium',
+      text: link.slice(0, -'.medium.com'.length),
+    }
   } else if (link.startsWith('youtube.com')) {
     return {
       platform: 'youtube',
