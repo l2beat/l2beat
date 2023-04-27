@@ -94,7 +94,7 @@ describe(AddressAnalyzer.name, () => {
         type: 'Contract',
         address,
         name: 'Test',
-        derivedName: 'Test',
+        derivedName: undefined,
         codeLink: `https://etherscan.deth.net/address/${address.toString()},${implementation.toString()}`,
         isVerified: true,
         upgradeability: { type: 'EIP1967 proxy', implementation, admin },
@@ -161,7 +161,7 @@ describe(AddressAnalyzer.name, () => {
       analysis: {
         type: 'Contract',
         name: 'Test',
-        derivedName: 'Test',
+        derivedName: undefined,
         address,
         codeLink: `https://etherscan.deth.net/address/${address.toString()},${implementation.toString()}`,
         isVerified: false,
