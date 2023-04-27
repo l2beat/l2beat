@@ -7,7 +7,7 @@ import { checkRisk } from '../test/helpers'
 import { bridges, BridgeTechnology } from './index'
 
 describe('bridges', () => {
-  describe.only('links', () => {
+  describe('links', () => {
     it('all links do not contain spaces', () => {
       for (const bridge of bridges) {
         bridge.display.links
