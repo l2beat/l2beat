@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
+import { BridgeProjectDetailsSection } from '../../../pages/bridges-projects/props/getProjectDetails'
+import { ScalingProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
 import { DESKTOP_PROJECT_NAVIGATION_IDS } from './ids'
@@ -11,7 +12,7 @@ interface Project {
 }
 interface ProjectNavigationProps {
   project: Project
-  sections: ProjectDetailsSection[]
+  sections: (ScalingProjectDetailsSection | BridgeProjectDetailsSection)[]
 }
 
 export function DesktopProjectNavigation({

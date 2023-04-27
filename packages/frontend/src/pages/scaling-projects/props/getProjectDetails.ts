@@ -27,7 +27,7 @@ export function getProjectDetails(
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(project)
   const permissionsSection = getPermissionsSection(project, verificationStatus)
-  const items: ProjectDetailsItem[] = []
+  const items: ScalingProjectDetailsItem[] = []
 
   items.push({
     type: 'ChartSection',
@@ -119,12 +119,12 @@ export function getProjectDetails(
   return { incomplete, isUpcoming, items }
 }
 
-export type ProjectDetailsItem = { excludeFromNavigation?: boolean } & (
-  | ProjectDetailsSection
+export type ScalingProjectDetailsItem = { excludeFromNavigation?: boolean } & (
+  | ScalingProjectDetailsSection
   | NonSectionElement
 )
 
-export type ProjectDetailsSection =
+export type ScalingProjectDetailsSection =
   | ChartSection
   | DescriptionSection
   | MilestonesSection
