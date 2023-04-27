@@ -37,7 +37,12 @@ export async function runDiscovery(
   )
 
   const logger = new DiscoveryLogger({ enabled: true })
-  const result = await discover(discoveryProvider, projectConfig, logger)
+  const result = await discover(
+    discoveryProvider,
+    projectConfig,
+    logger,
+    blockNumber,
+  )
   await saveDiscoveryResult(
     result,
     projectConfig,
@@ -94,16 +99,13 @@ async function justDiscover(
   projectConfig: DiscoveryConfig,
   blockNumber: number,
 ) {
-  const discoveryProvider = new DiscoveryProvider(
-    provider,
-    etherscanClient,
-    blockNumber,
-  )
+  const discoveryProvider = new DiscoveryProvider(provider, etherscanClient)
 
   const result = await discover(
     discoveryProvider,
     projectConfig,
     DiscoveryLogger.SILENT,
+    blockNumber,
   )
 
   return parseDiscoveryOutput(

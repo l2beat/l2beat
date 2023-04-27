@@ -12,11 +12,12 @@ export async function callMethod(
   address: EthereumAddress,
   fragment: utils.FunctionFragment,
   parameters: unknown[],
+  blockNumber: number,
 ) {
   const abi = new utils.Interface([fragment])
   try {
     const callData = Bytes.fromHex(abi.encodeFunctionData(fragment, parameters))
-    const result = await provider.call(address, callData)
+    const result = await provider.call(address, callData, blockNumber)
     const decoded = abi.decodeFunctionResult(fragment, result.toString())
     const mapped = decoded.map(toContractValue)
     return {

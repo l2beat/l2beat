@@ -17,6 +17,7 @@ export interface Handler {
   execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult>
 }

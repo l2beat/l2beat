@@ -25,6 +25,7 @@ export class LimitedArrayHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Calling array (max: ',
@@ -34,7 +35,7 @@ export class LimitedArrayHandler implements Handler {
     ])
     const results = await Promise.all(
       Array.from({ length: this.limit }).map((_, index) =>
-        callMethod(provider, address, this.fragment, [index]),
+        callMethod(provider, address, this.fragment, [index], blockNumber),
       ),
     )
     const value: ContractValue[] = []

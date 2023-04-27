@@ -8,6 +8,8 @@ import { HandlerResult } from '../Handler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 
 describe(StorageHandler.name, () => {
+  const BLOCK_NUMBER = 1234
+
   describe('return types', () => {
     it('can returns storage as bytes', async () => {
       const address = EthereumAddress.random()
@@ -31,7 +33,7 @@ describe(StorageHandler.name, () => {
       )
       expect(handler.field).toEqual('someName')
 
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'someName',
         value:
@@ -61,7 +63,7 @@ describe(StorageHandler.name, () => {
       )
       expect(handler.field).toEqual('someName')
 
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'someName',
         value: 0x123,
@@ -92,7 +94,7 @@ describe(StorageHandler.name, () => {
       )
       expect(handler.field).toEqual('someName')
 
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'someName',
         value: resultAddress.toString(),
@@ -210,6 +212,7 @@ describe(StorageHandler.name, () => {
       const result = await handler.execute(
         provider,
         EthereumAddress.random(),
+        BLOCK_NUMBER,
         options.previousResults ?? {},
       )
       if (options.expectedSlot !== undefined) {
@@ -345,7 +348,7 @@ describe(StorageHandler.name, () => {
       },
     })
     const address = EthereumAddress.random()
-    const result = await handler.execute(provider, address, {})
+    const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
     expect(result).toEqual({
       field: 'someName',
       error: 'foo bar',

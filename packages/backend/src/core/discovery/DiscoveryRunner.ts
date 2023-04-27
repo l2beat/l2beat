@@ -24,10 +24,14 @@ export class DiscoveryRunner {
     const discoveryProvider = new DiscoveryProvider(
       this.provider,
       this.etherscanClient,
-      blockNumber,
     )
 
-    const discovered = await discover(discoveryProvider, config, this.logger)
+    const discovered = await discover(
+      discoveryProvider,
+      config,
+      this.logger,
+      blockNumber,
+    )
 
     metricsDone({ project: config.name }, blockNumber)
 
