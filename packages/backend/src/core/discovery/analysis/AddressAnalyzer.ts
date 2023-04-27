@@ -1,4 +1,8 @@
-import { ContractParameters, EthereumAddress } from '@l2beat/shared'
+import {
+  ContractValue,
+  EthereumAddress,
+  UpgradeabilityParameters,
+} from '@l2beat/shared'
 
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
@@ -9,8 +13,18 @@ import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
 import { getCodeLink } from './getCodeLink'
 import { getRelatives } from './getRelatives'
 
-export interface AnalyzedContract extends ContractParameters {
+export type Analysis = AnalyzedContract | AnalyzedEOA
+
+export interface AnalyzedContract {
   type: 'Contract'
+  address: EthereumAddress
+  name: string
+  derivedName: string
+  isVerified: boolean
+  codeLink: string
+  upgradeability: UpgradeabilityParameters
+  values: Record<string, ContractValue>
+  errors: Record<string, string>
   sources: ContractSources
 }
 
@@ -18,8 +32,6 @@ export interface AnalyzedEOA {
   type: 'EOA'
   address: EthereumAddress
 }
-
-export type Analysis = AnalyzedContract | AnalyzedEOA
 
 export class AddressAnalyzer {
   constructor(
@@ -64,10 +76,11 @@ export class AddressAnalyzer {
     return {
       analysis: {
         type: 'Contract',
-        name: sources.name,
-        unverified: !sources.isVerified ? true : undefined,
+        name: overrides?.name ?? sources.name,
+        derivedName: sources.name,
+        isVerified: sources.isVerified,
         address,
-        code: getCodeLink(address, proxy?.implementations),
+        codeLink: getCodeLink(address, proxy?.implementations),
         upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
         values,
         errors,

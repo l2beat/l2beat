@@ -8,8 +8,8 @@ import { DiscoveryLogger } from './DiscoveryLogger'
 import { discover } from './engine/discover'
 import { diffDiscovery } from './output/diffDiscovery'
 import { diffToMessages } from './output/diffToMessages'
-import { parseDiscoveryOutput } from './output/prepareDiscoveryFile'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
+import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { ProviderWithCache } from './provider/ProviderWithCache'
 import { findDependents } from './utils/findDependents'
@@ -90,22 +90,17 @@ export async function dryRunDiscovery(
 async function justDiscover(
   provider: providers.AlchemyProvider,
   etherscanClient: MainnetEtherscanClient,
-  projectConfig: DiscoveryConfig,
+  config: DiscoveryConfig,
   blockNumber: number,
 ) {
   const discoveryProvider = new DiscoveryProvider(provider, etherscanClient)
 
   const result = await discover(
     discoveryProvider,
-    projectConfig,
+    config,
     DiscoveryLogger.SILENT,
     blockNumber,
   )
 
-  return parseDiscoveryOutput(
-    result,
-    projectConfig,
-    blockNumber,
-    projectConfig.hash,
-  )
+  return toDiscoveryOutput(config.name, config.hash, blockNumber, result)
 }
