@@ -3,19 +3,12 @@ import React, { ReactNode } from 'react'
 
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { HoverableDropdown } from '../HoverableDropdown'
-import {
-  ArrowRightIcon,
-  ChevronDownIcon,
-  OutLinkIcon,
-  ProjectLink,
-  ProjectLinkIcon,
-} from '../icons'
-import { OutLink } from '../OutLink'
+import { ArrowRightIcon, ChevronDownIcon, ProjectLink } from '../icons'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { BigRosette } from '../rosette'
+import { LinkSection } from './LinkSection'
 
 export interface HeaderProps {
   title: string
@@ -113,8 +106,8 @@ function Summary(props: SummaryProps) {
 
   return (
     <div className="w-full min-w-0">
-      <div className="my-6">
-        <LinkSection links={props.links} />
+      <div className="my-6 hidden md:block">
+        <LinkSection projectLinks={props.links} />
       </div>
 
       <div className="grid h-fit grow grid-cols-1 gap-3 md:grid-cols-3 md:gap-0 md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800">
@@ -203,60 +196,4 @@ function DetailsHeaderStat(props: Stat) {
       </span>
     </li>
   )
-}
-
-function LinkSection(props: { links: ProjectLink[] }) {
-  return (
-    <div className="flex flex-row gap-1.5">
-      {props.links.map((link) => {
-        return <LinkSectionItem key={link.name} {...link} />
-      })}
-    </div>
-  )
-}
-
-function LinkSectionItem(props: ProjectLink) {
-  if (props.links.length === 1) {
-    return (
-      <div className="group flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium dark:bg-neutral-700 dark:hover:bg-gray-750">
-        <OutLink
-          href={props.links[0]}
-          className="flex flex-row items-center gap-1.5"
-        >
-          <ProjectLinkIcon name={props.name} />
-          {props.name} <OutLinkIcon />
-        </OutLink>
-      </div>
-    )
-  }
-
-  return (
-    <HoverableDropdown>
-      <HoverableDropdown.Toggle>
-        <ProjectLinkIcon name={props.name} />
-        {props.name}
-      </HoverableDropdown.Toggle>
-      <HoverableDropdown.Menu className="flex flex-col gap-3">
-        {props.links.map((link) => {
-          return (
-            <OutLink
-              key={link}
-              href={link}
-              className="flex items-center gap-1.5 text-xs font-medium"
-            >
-              {formatLink(link)} <OutLinkIcon />
-            </OutLink>
-          )
-        })}
-      </HoverableDropdown.Menu>
-    </HoverableDropdown>
-  )
-}
-
-function formatLink(link: string) {
-  const formattedLink = link.replace('https://', '').replace('http://', '')
-  if (formattedLink.endsWith('/')) {
-    return formattedLink.slice(0, -1)
-  }
-  return formattedLink
 }
