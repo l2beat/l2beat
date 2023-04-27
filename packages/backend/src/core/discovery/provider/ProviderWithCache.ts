@@ -7,37 +7,33 @@ import {
 import { providers } from 'ethers'
 
 import { isRevert } from '../utils/isRevert'
-import { ProviderCache } from './Cache'
 import { ContractMetadata, DiscoveryProvider } from './DiscoveryProvider'
+import { ProviderCache } from './ProviderCache'
 
 const identity = <T>(x: T) => x
 
 export class ProviderWithCache extends DiscoveryProvider {
   private readonly cache: ProviderCache
 
-  constructor(
-    provider: providers.Provider,
-    etherscanClient: EtherscanClient,
-    // TODO: remove reliance on this!
-    private readonly blockNumber: number,
-  ) {
+  constructor(provider: providers.Provider, etherscanClient: EtherscanClient) {
     super(provider, etherscanClient)
-    this.cache = new ProviderCache(blockNumber)
+    this.cache = new ProviderCache()
   }
 
   private async cacheOrFetch<R, S>(
+    filename: string,
     key: string,
     fetch: () => Promise<R>,
     toCache: (value: R) => S,
     fromCache: (value: S) => R,
   ) {
-    const known = this.cache.get(key)
+    const known = this.cache.get(filename, key)
     if (known !== undefined) {
       return fromCache(known as S)
     }
 
     const result = await fetch()
-    this.cache.set(key, toCache(result))
+    this.cache.set(filename, key, toCache(result))
 
     return result
   }
@@ -47,10 +43,8 @@ export class ProviderWithCache extends DiscoveryProvider {
     data: Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
-    if (blockNumber !== this.blockNumber) {
-      throw new Error('Unsupported historical block number!')
-    }
     const result = await this.cacheOrFetch(
+      `blocks/${blockNumber}`,
       `call.${address.toString()}.${data.toString()}`,
       async () => {
         try {
@@ -80,10 +74,8 @@ export class ProviderWithCache extends DiscoveryProvider {
     slot: number | Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
-    if (blockNumber !== this.blockNumber) {
-      throw new Error('Unsupported historical block number!')
-    }
     return this.cacheOrFetch(
+      `blocks/${blockNumber}`,
       `getStorage.${address.toString()}.${slot.toString()}`,
       () => super.getStorage(address, slot, blockNumber),
       (result) => result.toString(),
@@ -97,10 +89,8 @@ export class ProviderWithCache extends DiscoveryProvider {
     fromBlock: number,
     blockNumber: number,
   ): Promise<providers.Log[]> {
-    if (blockNumber !== this.blockNumber) {
-      throw new Error('Unsupported historical block number!')
-    }
     return this.cacheOrFetch(
+      `blocks/${blockNumber}`,
       `getLogs.${address.toString()}.${JSON.stringify(topics)}.${fromBlock}`,
       () => super.getLogs(address, topics, fromBlock, blockNumber),
       identity,
@@ -112,10 +102,8 @@ export class ProviderWithCache extends DiscoveryProvider {
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<Bytes> {
-    if (blockNumber !== this.blockNumber) {
-      throw new Error('Unsupported historical block number!')
-    }
     return this.cacheOrFetch(
+      `blocks/${blockNumber}`,
       `getCode.${address.toString()}`,
       () => super.getCode(address, blockNumber),
       (result) => result.toString(),
@@ -127,7 +115,8 @@ export class ProviderWithCache extends DiscoveryProvider {
     hash: Hash256,
   ): Promise<providers.TransactionResponse> {
     return this.cacheOrFetch(
-      `getTransaction.${hash.toString()}`,
+      `transactions/${hash.toString()}}`,
+      `getTransaction`,
       () => super.getTransaction(hash),
       identity,
       identity,
@@ -138,7 +127,8 @@ export class ProviderWithCache extends DiscoveryProvider {
     address: EthereumAddress,
   ): Promise<ContractMetadata> {
     return this.cacheOrFetch(
-      `getMetadata.${address.toString()}`,
+      `addresses/${address.toString()}}`,
+      `getMetadata`,
       () => super.getMetadata(address),
       identity,
       identity,

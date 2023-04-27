@@ -30,11 +30,7 @@ export async function runDiscovery(
       ? (await configReader.readDiscovery(config.project)).blockNumber
       : await provider.getBlockNumber())
 
-  const discoveryProvider = new ProviderWithCache(
-    provider,
-    etherscanClient,
-    blockNumber,
-  )
+  const discoveryProvider = new ProviderWithCache(provider, etherscanClient)
 
   const logger = new DiscoveryLogger({ enabled: true })
   const result = await discover(
