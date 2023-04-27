@@ -15,11 +15,11 @@ interface LinkSectionProps {
   projectLinks: ProjectLink[]
 }
 
-export function LinkSection(props: LinkSectionProps) {
+export function DesktopProjectLinks(props: LinkSectionProps) {
   return (
     <div className="flex flex-row gap-1.5">
       {props.projectLinks.map((link) => {
-        return <LinkSectionItem key={link.name} projectLink={link} />
+        return <ProjectLinkItem key={link.name} projectLink={link} />
       })}
     </div>
   )
@@ -29,7 +29,7 @@ interface LinkSectionItemProps {
   projectLink: ProjectLink
 }
 
-function LinkSectionItem({ projectLink }: LinkSectionItemProps) {
+function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
   if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
       <div className="group flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium dark:bg-neutral-700 dark:hover:bg-gray-750">

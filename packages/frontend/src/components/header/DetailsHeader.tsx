@@ -3,12 +3,12 @@ import React, { ReactNode } from 'react'
 
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ArrowRightIcon, ChevronDownIcon, ProjectLink } from '../icons'
+import { ArrowRightIcon, ProjectLink } from '../icons'
 import { ArchivedBar } from '../project/ArchivedBar'
-import { LinkSectionLink } from '../project/links/LinkSectionLink'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { BigRosette } from '../rosette'
-import { LinkSection } from './LinkSection'
+import { DesktopProjectLinks } from './DesktopProjectLinks'
+import { MobileProjectLinks } from './MobileProjectLinks'
 
 export interface HeaderProps {
   title: string
@@ -107,9 +107,8 @@ function Summary(props: SummaryProps) {
   return (
     <div className="w-full min-w-0">
       <div className="my-6 hidden md:block">
-        <LinkSection projectLinks={props.links} />
+        <DesktopProjectLinks projectLinks={props.links} />
       </div>
-
       <div className="grid h-fit grow grid-cols-1 gap-3 md:grid-cols-3 md:gap-0 md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800">
         {topStats.map(({ title, value }) => (
           <DetailsHeaderStat key={title} title={title} value={value} />
@@ -119,48 +118,8 @@ function Summary(props: SummaryProps) {
           <DetailsHeaderStat key={title} title={title} value={value} />
         ))}
       </div>
-      <div className="Dropdown md:hidden">
-        <HorizontalSeparator className="-mx-4 mt-4 w-[calc(100%+2rem)]" />
-        <label className="flex items-center justify-between py-4">
-          <input
-            type="checkbox"
-            autoComplete="off"
-            className="Dropdown-Button peer hidden"
-          />
-          <div>
-            <span className="font-bold">Links:</span>
-            <span className="ml-2 font-medium text-gray-600">
-              Website, Docs, etc.
-            </span>
-          </div>
-          <ChevronDownIcon className="peer-checked:rotate-180" />
-        </label>
-        <div className="Dropdown-Item hidden">
-          <table className="w-full table-fixed border-collapse text-left text-xs">
-            <tbody>
-              {props.links.map(({ name, links }, i) => (
-                <tr
-                  className="border-t-[1px] border-gray-300 first:border-none dark:border-gray-850"
-                  key={i}
-                >
-                  <th
-                    className={cx(
-                      'w-[110px] py-3 align-top font-medium text-gray-500 dark:text-gray-550',
-                      i === 0 && 'pt-0',
-                    )}
-                  >
-                    {name}
-                  </th>
-                  <td className={cx('py-3', i === 0 && 'pt-0')}>
-                    {links.map((x, i) => (
-                      <LinkSectionLink key={i} href={x} name={name} />
-                    ))}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="md:hidden">
+        <MobileProjectLinks projectLinks={props.links} />
       </div>
     </div>
   )
