@@ -7,6 +7,18 @@ import { checkRisk } from '../test/helpers'
 import { bridges, BridgeTechnology } from './index'
 
 describe('bridges', () => {
+  describe('links', () => {
+    it('all links do not contain spaces', () => {
+      for (const bridge of bridges) {
+        bridge.display.links
+        const links = Object.values(bridge.display.links).flat()
+        for (const link of links) {
+          expect(link).not.toInclude(' ')
+        }
+      }
+    })
+  })
+
   describe('technology', () => {
     for (const bridge of bridges) {
       describe(bridge.display.name, () => {
