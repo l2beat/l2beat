@@ -5,7 +5,7 @@ import { Config } from './config'
 import { Clock } from './core/Clock'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
-import { createDiscoveryWatcherModule } from './modules/discoveryWatcher/DiscoveryWatcherModule'
+import { createDiscoveryModule } from './modules/discovery/DiscoveryModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
@@ -43,7 +43,7 @@ export class Application {
       createMetricsModule(config),
       createTvlModule(config, logger, http, database, clock),
       createActivityModule(config, logger, http, database, clock),
-      createDiscoveryWatcherModule(config, logger, http, database, clock),
+      createDiscoveryModule(config, logger, http, database, clock),
     ]
 
     const apiServer = new ApiServer(
