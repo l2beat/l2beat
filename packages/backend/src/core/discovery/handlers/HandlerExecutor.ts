@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared'
 
 import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { executeHandlers } from './executeHandlers'
 import { getHandlers } from './getHandlers'
 import { getValuesAndErrors } from './getValuesAndErrors'

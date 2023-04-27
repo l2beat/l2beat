@@ -4,17 +4,15 @@ import { providers } from 'ethers'
 import { DiscoveryModuleConfig } from '../../config/config.discovery'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
+import { DiscoveryLogger } from './DiscoveryLogger'
 import { discover } from './engine/discover'
+import { diffDiscovery } from './output/diffDiscovery'
+import { diffToMessages } from './output/diffToMessages'
+import { parseDiscoveryOutput } from './output/prepareDiscoveryFile'
+import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { ProviderWithCache } from './provider/ProviderWithCache'
-import { diffDiscovery } from './utils/diffDiscovery'
-import { diffToMessages } from './utils/diffToMessages'
-import { DiscoveryLogger } from './utils/DiscoveryLogger'
-import { findDependents } from './utils/findDependants'
-import {
-  parseDiscoveryOutput,
-  saveDiscoveryResult,
-} from './utils/saveDiscoveryResult'
+import { findDependents } from './utils/findDependents'
 
 export async function runDiscovery(
   provider: providers.AlchemyProvider,

@@ -3,10 +3,10 @@ import { providers } from 'ethers'
 import { Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryConfig } from './config/DiscoveryConfig'
+import { DiscoveryLogger } from './DiscoveryLogger'
 import { discover } from './engine/discover'
+import { parseDiscoveryOutput } from './output/prepareDiscoveryFile'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
-import { DiscoveryLogger } from './utils/DiscoveryLogger'
-import { parseDiscoveryOutput } from './utils/saveDiscoveryResult'
 
 export class DiscoveryRunner {
   constructor(

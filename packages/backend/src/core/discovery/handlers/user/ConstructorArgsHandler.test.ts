@@ -2,8 +2,8 @@ import { EthereumAddress, Hash256 } from '@l2beat/shared'
 import { expect, mockFn, mockObject } from 'earl'
 import { BigNumber, ethers, providers } from 'ethers'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import {
   ConstructorArgsHandler,
   decodeConstructorArgs,

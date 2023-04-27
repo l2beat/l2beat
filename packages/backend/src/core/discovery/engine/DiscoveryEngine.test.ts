@@ -3,7 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryLogger } from '../utils/DiscoveryLogger'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryEngine } from './DiscoveryEngine'
 
 describe(DiscoveryEngine.name, () => {

@@ -1,8 +1,8 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { EXEC_REVERT_MSG } from '../utils/callMethod'
 import { CallHandler } from './CallHandler'
 

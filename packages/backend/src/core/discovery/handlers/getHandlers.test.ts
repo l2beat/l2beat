@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earl'
 
-import { DiscoveryLogger } from '../utils/DiscoveryLogger'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { getHandlers } from './getHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'

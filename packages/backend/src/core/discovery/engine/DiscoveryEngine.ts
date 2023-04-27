@@ -1,6 +1,6 @@
 import { AddressAnalyzer, Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryLogger } from '../utils/DiscoveryLogger'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryStack } from './DiscoveryStack'
 import { shouldSkip } from './shouldSkip'
 
