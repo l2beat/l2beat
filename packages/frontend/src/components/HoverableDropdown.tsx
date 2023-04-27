@@ -3,11 +3,12 @@ import React, { ReactNode } from 'react'
 
 import { ChevronDownIcon } from './icons'
 
-interface ExpandableMenuProps {
+interface HoverableDropdownProps {
   className?: string
   children: ReactNode
 }
-export function HoverableDropdown(props: ExpandableMenuProps) {
+
+export function HoverableDropdown(props: HoverableDropdownProps) {
   return (
     <div className={classNames('HoverableDropdown group', props.className)}>
       {props.children}
@@ -15,7 +16,11 @@ export function HoverableDropdown(props: ExpandableMenuProps) {
   )
 }
 
-HoverableDropdown.Toggle = function (props: ExpandableMenuProps) {
+interface HoverableDropdownToggleProps {
+  children: ReactNode
+}
+
+HoverableDropdown.Toggle = function (props: HoverableDropdownToggleProps) {
   return (
     <div className="HoverableDropdownToggle gray-100 relative flex cursor-pointer flex-row items-center gap-1.5 rounded-lg py-1.5 px-2 text-xs font-medium dark:bg-neutral-700 dark:group-hover:bg-gray-750">
       {props.children}
@@ -24,7 +29,12 @@ HoverableDropdown.Toggle = function (props: ExpandableMenuProps) {
   )
 }
 
-HoverableDropdown.Menu = function (props: ExpandableMenuProps) {
+interface HoverableDropdownMenuProps {
+  className?: string
+  children: ReactNode
+}
+
+HoverableDropdown.Menu = function (props: HoverableDropdownMenuProps) {
   return (
     <div className="HoverableDropdownMenu pointer-events-none absolute z-10 opacity-0 transition-opacity duration-300">
       <div className="h-1.5" />
