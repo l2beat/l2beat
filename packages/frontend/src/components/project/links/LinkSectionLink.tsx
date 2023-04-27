@@ -1,12 +1,13 @@
 import React from 'react'
 
+import { formatLink } from '../../../utils/formatLink'
+import { OutLink } from '../../OutLink'
 import {
   GlobeIcon,
   ProductIcon,
   ProductIconType,
   ProjectLink,
 } from '../../icons'
-import { OutLink } from '../../OutLink'
 
 interface Props {
   name: ProjectLink['name']
@@ -35,7 +36,7 @@ export function LinkSectionLink({ href, name }: Props) {
   }
   return (
     <OutLink className="block truncate text-link underline" href={href}>
-      {simplify(href)}
+      {formatLink(href)}
     </OutLink>
   )
 }
@@ -46,7 +47,7 @@ interface SocialDetails {
 }
 
 function parseSocial(href: string): SocialDetails {
-  const link = simplify(href)
+  const link = formatLink(href)
   if (link.startsWith('discord.gg')) {
     return {
       platform: 'discord',
@@ -96,14 +97,4 @@ function parseSocial(href: string): SocialDetails {
     }
 
   return { text: link }
-}
-
-function simplify(href: string) {
-  if (href.startsWith('https://')) {
-    href = href.slice('https://'.length)
-  }
-  if (href.endsWith('/')) {
-    href = href.slice(0, -1)
-  }
-  return href
 }

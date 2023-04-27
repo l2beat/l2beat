@@ -1,8 +1,9 @@
 import React from 'react'
 
+import { formatLink } from '../../utils/formatLink'
 import { HoverableDropdown } from '../HoverableDropdown'
-import { OutLinkIcon, ProjectLink, ProjectLinkIcon } from '../icons'
 import { OutLink } from '../OutLink'
+import { OutLinkIcon, ProjectLink, ProjectLinkIcon } from '../icons'
 
 interface LinkSectionProps {
   projectLinks: ProjectLink[]
@@ -58,12 +59,4 @@ function LinkSectionItem({ projectLink }: LinkSectionItemProps) {
       </HoverableDropdown.Menu>
     </HoverableDropdown>
   )
-}
-
-function formatLink(link: string) {
-  const formattedLink = link.replace('https://', '').replace('http://', '')
-  if (formattedLink.endsWith('/')) {
-    return formattedLink.slice(0, -1)
-  }
-  return formattedLink
 }
