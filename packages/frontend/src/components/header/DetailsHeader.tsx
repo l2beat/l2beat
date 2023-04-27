@@ -35,7 +35,7 @@ export function DetailsHeader(props: HeaderProps) {
   return (
     <>
       <header className="md:mt-15 mt-6 flex flex-row justify-end px-4 md:px-0">
-        <div className="w-full md:mr-8">
+        <div className="w-full lg:mr-8">
           <h1
             className={cx(
               'relative mb-4 flex items-center justify-start gap-3',
@@ -114,7 +114,7 @@ function Summary(props: SummaryProps) {
         {topStats.map(({ title, value }) => (
           <DetailsHeaderStat key={title} title={title} value={value} />
         ))}
-        <HorizontalSeparator className="col-span-4 mt-2 hidden md:my-4 md:block" />
+        <HorizontalSeparator className="col-span-3 mt-2 hidden md:my-4 md:block" />
         {bottomStats.map(({ title, value }) => (
           <DetailsHeaderStat key={title} title={title} value={value} />
         ))}
@@ -172,7 +172,7 @@ interface DetailsHeaderStatsProps {
 // TODO: Remove this component when we update bridges to new stats
 function DetailsHeaderStats(props: DetailsHeaderStatsProps) {
   return (
-    <ul className="flex flex-col justify-between gap-2">
+    <ul className="flex flex-col justify-between gap-2 md:flex-row">
       {props.stats.map(({ title, value }) => (
         <DetailsHeaderStat key={title} title={title} value={value} />
       ))}
