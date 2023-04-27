@@ -1,29 +1,45 @@
 export function configureHoverableDropdown() {
-  const hoverableDropdowns = document.querySelectorAll('.HoverableDropdown')
+  const hoverableDropdowns =
+    document.querySelectorAll<HTMLElement>('.HoverableDropdown')
 
-  const show = (hoverableDrodpownMenu: Element) => {
-    hoverableDrodpownMenu.classList.remove('opacity-0', 'pointer-events-none')
+  const show = (menu: HTMLElement) => {
+    menu.classList.remove('opacity-0', 'pointer-events-none')
   }
 
-  const hide = (hoverableDrodpownMenu: Element) => {
-    hoverableDrodpownMenu.classList.add('opacity-0', 'pointer-events-none')
+  const hide = (menu: HTMLElement) => {
+    menu.classList.add('opacity-0', 'pointer-events-none')
   }
 
   hoverableDropdowns.forEach((hoverableDropdown) => {
-    const hoverableDropdownToggle = hoverableDropdown.querySelector(
-      '.HoverableDropdownToggle',
-    )
-    const hoverableDropdownMenu = hoverableDropdown.querySelector(
-      '.HoverableDropdownMenu',
-    )
-    if (!hoverableDropdownToggle || !hoverableDropdownMenu) return
+    const elements = getHoverableDropdownElements(hoverableDropdown)
 
-    hoverableDropdownToggle.addEventListener('mouseenter', () => {
-      show(hoverableDropdownMenu)
+    if (!elements) return
+
+    const { menu, toggle } = elements
+
+    toggle.addEventListener('mouseenter', () => {
+      show(menu)
     })
 
     hoverableDropdown.addEventListener('mouseleave', () => {
-      hide(hoverableDropdownMenu)
+      hide(menu)
     })
   })
+}
+
+function getHoverableDropdownElements(hoverableDropdown: HTMLElement) {
+  const toggle = hoverableDropdown.querySelector<HTMLElement>(
+    '.HoverableDropdownToggle',
+  )
+
+  const menu = hoverableDropdown.querySelector<HTMLElement>(
+    '.HoverableDropdownMenu',
+  )
+
+  if (!toggle || !menu) return
+
+  return {
+    toggle,
+    menu,
+  }
 }
