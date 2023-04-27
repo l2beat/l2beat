@@ -52,9 +52,9 @@ export class ProxyDetector {
       : await this.getAutoProxy(address)
 
     if (proxy) {
-      this.logger.proxyDetected(proxy.upgradeability.type)
+      this.logger.logProxyDetected(proxy.upgradeability.type)
     } else if (manualProxyType) {
-      this.logger.proxyDetectionFailed(manualProxyType)
+      this.logger.logProxyDetectionFailed(manualProxyType)
     }
 
     return proxy

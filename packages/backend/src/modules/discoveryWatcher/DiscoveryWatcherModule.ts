@@ -4,7 +4,7 @@ import { providers } from 'ethers'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { ConfigReader } from '../../core/discovery/config/ConfigReader'
-import { DiscoveryEngine } from '../../core/discovery/utils/DiscoveryEngine'
+import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
 import { DiscoveryLogger } from '../../core/discovery/utils/DiscoveryLogger'
 import { DiscoveryWatcher } from '../../core/DiscoveryWatcher'
 import { DiscoveryWatcherRepository } from '../../peripherals/database/discovery/DiscoveryWatcherRepository'
@@ -51,7 +51,7 @@ export function createDiscoveryWatcherModule(
 
   const discoveryLogger = DiscoveryLogger.SILENT
 
-  const discoveryEngine = new DiscoveryEngine(
+  const discoveryRunner = new DiscoveryRunner(
     provider,
     etherscanClient,
     discoveryLogger,
@@ -59,7 +59,7 @@ export function createDiscoveryWatcherModule(
 
   const discoveryWatcher = new DiscoveryWatcher(
     provider,
-    discoveryEngine,
+    discoveryRunner,
     discordClient,
     configReader,
     discoveryWatcherRepository,

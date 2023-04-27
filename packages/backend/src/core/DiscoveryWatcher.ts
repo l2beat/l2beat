@@ -8,9 +8,9 @@ import { Channel, DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/config/ConfigReader'
 import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
+import { DiscoveryRunner } from './discovery/DiscoveryRunner'
 import { diffDiscovery, DiscoveryDiff } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
-import { DiscoveryEngine } from './discovery/utils/DiscoveryEngine'
 import { findDependents } from './discovery/utils/findDependants'
 import { TaskQueue } from './queue/TaskQueue'
 
@@ -24,7 +24,7 @@ export class DiscoveryWatcher {
 
   constructor(
     private readonly provider: providers.AlchemyProvider,
-    private readonly discoveryEngine: DiscoveryEngine,
+    private readonly discoveryRunner: DiscoveryRunner,
     private readonly discordClient: DiscordClient | undefined,
     private readonly configReader: ConfigReader,
     private readonly repository: DiscoveryWatcherRepository,
@@ -94,7 +94,7 @@ export class DiscoveryWatcher {
   ) {
     this.logger.info('Discovery started', { project: projectConfig.name })
 
-    const discovery = await this.discoveryEngine.run(projectConfig, blockNumber)
+    const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
 
     if (discovery.contracts.some((c) => c.errors !== undefined)) {
       notUpdatedProjects.push(projectConfig.name)
@@ -239,7 +239,7 @@ export class DiscoveryWatcher {
     projectConfig: DiscoveryConfig,
     blockNumber: number,
   ) {
-    const secondDiscovery = await this.discoveryEngine.run(
+    const secondDiscovery = await this.discoveryRunner.run(
       projectConfig,
       blockNumber,
     )

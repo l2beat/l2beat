@@ -66,5 +66,5 @@ function getIgnored(
   address: EthereumAddress,
   overrides: DiscoveryOverrides,
 ): string[] {
-  return overrides.get(address)?.ignoreInWatchMode ?? []
+  return overrides.get(address).ignoreInWatchMode ?? []
 }

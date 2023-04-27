@@ -119,7 +119,7 @@ export function getCustomName(
   address: EthereumAddress,
   config: DiscoveryConfig,
 ) {
-  const name = config.overrides.get(address)?.name
+  const name = config.overrides.get(address).name
   if (!name) {
     return { name: derivedName }
   }

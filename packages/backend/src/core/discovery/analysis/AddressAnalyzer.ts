@@ -36,7 +36,7 @@ export class AddressAnalyzer {
   ): Promise<{ analysis: Analysis; relatives: EthereumAddress[] }> {
     const code = await this.provider.getCode(address)
     if (code.length === 0) {
-      this.logger.eoa()
+      this.logger.logEoa()
       return { analysis: { type: 'EOA', address }, relatives: [] }
     }
 
@@ -50,7 +50,7 @@ export class AddressAnalyzer {
       proxy?.implementations,
     )
 
-    this.logger.name(sources.name)
+    this.logger.logName(sources.name)
 
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
