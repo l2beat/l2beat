@@ -11,6 +11,17 @@ import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
 
 describe('layer2s', () => {
+  describe('links', () => {
+    it('all links do not contain spaces', () => {
+      for (const layer2 of layer2s) {
+        const links = Object.values(layer2.display.links).flat()
+        for (const link of links) {
+          expect(link).not.toInclude(' ')
+        }
+      }
+    })
+  })
+
   describe('riskView', () => {
     describe('every contract has source code references', () => {
       for (const layer2 of layer2s) {
