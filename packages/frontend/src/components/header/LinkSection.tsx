@@ -44,13 +44,13 @@ function LinkSectionItem({ projectLink }: LinkSectionItemProps) {
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}
       </HoverableDropdown.Toggle>
-      <HoverableDropdown.Menu className="flex flex-col gap-3">
+      <HoverableDropdown.Menu className="flex flex-col">
         {projectLink.links.map((link) => {
           return (
             <OutLink
               key={link}
               href={link}
-              className="flex items-center gap-1.5 text-xs font-medium"
+              className="flex items-center gap-1.5 rounded-lg py-1.5 px-3 text-xs font-medium transition-colors hover:bg-gray-750"
             >
               {formatLink(link)} <OutLinkIcon />
             </OutLink>
