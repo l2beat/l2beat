@@ -46,7 +46,7 @@ interface SocialDetails {
   text: string
 }
 
-function parseSocial(href: string): SocialDetails {
+export function parseSocial(href: string): SocialDetails {
   const link = formatLink(href)
   if (link.startsWith('discord.gg')) {
     return {

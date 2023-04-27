@@ -3,7 +3,13 @@ import React from 'react'
 import { formatLink } from '../../utils/formatLink'
 import { HoverableDropdown } from '../HoverableDropdown'
 import { OutLink } from '../OutLink'
-import { OutLinkIcon, ProjectLink, ProjectLinkIcon } from '../icons'
+import {
+  OutLinkIcon,
+  ProductIcon,
+  ProjectLink,
+  ProjectLinkIcon,
+} from '../icons'
+import { parseSocial } from '../project/links/LinkSectionLink'
 
 interface LinkSectionProps {
   projectLinks: ProjectLink[]
@@ -24,7 +30,7 @@ interface LinkSectionItemProps {
 }
 
 function LinkSectionItem({ projectLink }: LinkSectionItemProps) {
-  if (projectLink.links.length === 1) {
+  if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
       <div className="group flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium dark:bg-neutral-700 dark:hover:bg-gray-750">
         <OutLink
@@ -46,13 +52,17 @@ function LinkSectionItem({ projectLink }: LinkSectionItemProps) {
       </HoverableDropdown.Toggle>
       <HoverableDropdown.Menu className="flex flex-col">
         {projectLink.links.map((link) => {
+          const parsed = parseSocial(link)
           return (
             <OutLink
               key={link}
               href={link}
               className="flex items-center gap-1.5 rounded-lg py-1.5 px-3 text-xs font-medium transition-colors hover:bg-gray-750"
             >
-              {formatLink(link)} <OutLinkIcon />
+              {projectLink.name === 'Social' && parsed.platform && (
+                <ProductIcon product={parsed.platform} width={16} height={16} />
+              )}
+              {parsed ? parsed.text : formatLink(link)} <OutLinkIcon />
             </OutLink>
           )
         })}
