@@ -128,7 +128,7 @@ function Summary(props: SummaryProps) {
             className="Dropdown-Button peer hidden"
           />
           <div>
-            <span className="font-bold">Links</span>
+            <span className="font-bold">Links:</span>
             <span className="ml-2 font-medium text-gray-600">
               Website, Docs, etc.
             </span>
