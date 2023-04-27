@@ -4,7 +4,7 @@ import { providers } from 'ethers'
 import { DiscoveryModuleConfig } from '../../config/config.discovery'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
-import { discover } from './discover'
+import { discover } from './engine/discover'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 import { ProviderWithCache } from './provider/ProviderWithCache'
 import { diffDiscovery } from './utils/diffDiscovery'
@@ -30,14 +30,15 @@ export async function runDiscovery(
       ? (await configReader.readDiscovery(config.project)).blockNumber
       : await provider.getBlockNumber())
 
-  const discoveryProvider = new ProviderWithCache(
-    provider,
-    etherscanClient,
-    blockNumber,
-  )
+  const discoveryProvider = new ProviderWithCache(provider, etherscanClient)
 
   const logger = new DiscoveryLogger({ enabled: true })
-  const result = await discover(discoveryProvider, projectConfig, logger)
+  const result = await discover(
+    discoveryProvider,
+    projectConfig,
+    logger,
+    blockNumber,
+  )
   await saveDiscoveryResult(
     result,
     projectConfig,
@@ -94,16 +95,13 @@ async function justDiscover(
   projectConfig: DiscoveryConfig,
   blockNumber: number,
 ) {
-  const discoveryProvider = new DiscoveryProvider(
-    provider,
-    etherscanClient,
-    blockNumber,
-  )
+  const discoveryProvider = new DiscoveryProvider(provider, etherscanClient)
 
   const result = await discover(
     discoveryProvider,
     projectConfig,
     DiscoveryLogger.SILENT,
+    blockNumber,
   )
 
   return parseDiscoveryOutput(

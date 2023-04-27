@@ -7,6 +7,8 @@ import { EXEC_REVERT_MSG } from '../utils/callMethod'
 import { CallHandler } from './CallHandler'
 
 describe(CallHandler.name, () => {
+  const BLOCK_NUMBER = 1234
+
   describe('dependencies', () => {
     it('detects no dependencies for a simple definition', () => {
       const handler = new CallHandler(
@@ -210,7 +212,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'add',
         value: 3,
@@ -238,7 +240,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {
         foo: { field: 'foo', value: 1 },
         bar: { field: 'bar', value: 2 },
       })
@@ -262,7 +264,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'add',
         error: 'oops',
@@ -283,7 +285,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'add',
         value: 3,
@@ -304,7 +306,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'add',
         value: 'EXPECT_REVERT',
@@ -325,7 +327,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'add',
         error: EXEC_REVERT_MSG,

@@ -6,6 +6,8 @@ import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { ArrayHandler } from './ArrayHandler'
 
 describe(ArrayHandler.name, () => {
+  const BLOCK_NUMBER = 1234
+
   describe('dependencies', () => {
     it('detects no dependencies for a simple definition', () => {
       const handler = new ArrayHandler(
@@ -193,7 +195,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'owners',
         value: owners.map((x) => x.toString()),
@@ -218,7 +220,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'owners',
         value: owners.map((x) => x.toString()),
@@ -243,7 +245,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {
         foo: { field: 'foo', value: 3 },
       })
       expect(result).toEqual({
@@ -273,7 +275,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'owners',
         error: 'Execution reverted',
@@ -300,7 +302,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'owners',
         value: owners.map((x) => x.toString()),
@@ -328,7 +330,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'owners',
         error: 'oops',
@@ -348,7 +350,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'owners',
         error: 'Too many values. Provide a higher maxLength value',
@@ -369,7 +371,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, {})
+      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
       expect(result).toEqual({
         field: 'owners',
         error: 'Too many values. Provide a higher maxLength value',

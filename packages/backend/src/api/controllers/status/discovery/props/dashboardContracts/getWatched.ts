@@ -37,5 +37,5 @@ function getIgnoreInWatchMode(
   config: DiscoveryConfig,
   contract: ContractParameters,
 ) {
-  return config.overrides.get(contract.address)?.ignoreInWatchMode ?? []
+  return config.overrides.get(contract.address).ignoreInWatchMode ?? []
 }

@@ -17,9 +17,9 @@ import { DiscordClient } from '../peripherals/discord/DiscordClient'
 import { Clock } from './Clock'
 import { ConfigReader } from './discovery/config/ConfigReader'
 import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
+import { DiscoveryRunner } from './discovery/DiscoveryRunner'
 import { diffDiscovery } from './discovery/utils/diffDiscovery'
 import { diffToMessages } from './discovery/utils/diffToMessages'
-import { DiscoveryEngine } from './discovery/utils/DiscoveryEngine'
 import { DiscoveryWatcher, isNineAM } from './DiscoveryWatcher'
 
 const PROJECT_A = 'project-a'
@@ -55,7 +55,7 @@ const DISCOVERY_RESULT: ProjectParameters = {
 
 describe(DiscoveryWatcher.name, () => {
   let discordClient = mockObject<DiscordClient>({})
-  let discoveryEngine = mockObject<DiscoveryEngine>({})
+  let discoveryEngine = mockObject<DiscoveryRunner>({})
   let provider = mockObject<providers.AlchemyProvider>({})
 
   beforeEach(() => {
@@ -63,7 +63,7 @@ describe(DiscoveryWatcher.name, () => {
       sendMessage: async () => [],
       resetCallsCount: () => {},
     })
-    discoveryEngine = mockObject<DiscoveryEngine>({
+    discoveryEngine = mockObject<DiscoveryRunner>({
       run: async () => DISCOVERY_RESULT,
     })
     provider = mockObject<providers.AlchemyProvider>({
@@ -296,7 +296,7 @@ describe(DiscoveryWatcher.name, () => {
         },
       )
 
-      const discoveryEngine = mockObject<DiscoveryEngine>({
+      const discoveryEngine = mockObject<DiscoveryRunner>({
         run: async () => {
           return {
             ...DISCOVERY_RESULT,
@@ -350,7 +350,7 @@ describe(DiscoveryWatcher.name, () => {
         },
       )
 
-      const discoveryEngine = mockObject<DiscoveryEngine>({
+      const discoveryEngine = mockObject<DiscoveryRunner>({
         run: mockFn(),
       })
 
@@ -386,7 +386,7 @@ describe(DiscoveryWatcher.name, () => {
         readDiscovery: async () => ({ ...mockProject, contracts: [] }),
       })
 
-      const discoveryEngine = mockObject<DiscoveryEngine>({
+      const discoveryEngine = mockObject<DiscoveryRunner>({
         run: async () => {
           throw new Error('error')
         },
@@ -440,7 +440,7 @@ describe(DiscoveryWatcher.name, () => {
 
       const discoveryWatcher = new DiscoveryWatcher(
         mockObject<providers.AlchemyProvider>(),
-        mockObject<DiscoveryEngine>(),
+        mockObject<DiscoveryRunner>(),
         mockObject<DiscordClient>(),
         configReader,
         repository,
@@ -491,7 +491,7 @@ describe(DiscoveryWatcher.name, () => {
 
       const discoveryWatcher = new DiscoveryWatcher(
         mockObject<providers.AlchemyProvider>(),
-        mockObject<DiscoveryEngine>(),
+        mockObject<DiscoveryRunner>(),
         mockObject<DiscordClient>(),
         configReader,
         repository,
@@ -545,7 +545,7 @@ describe(DiscoveryWatcher.name, () => {
 
       const discoveryWatcher = new DiscoveryWatcher(
         mockObject<providers.AlchemyProvider>(),
-        mockObject<DiscoveryEngine>(),
+        mockObject<DiscoveryRunner>(),
         mockObject<DiscordClient>(),
         configReader,
         repository,
@@ -579,7 +579,7 @@ describe(DiscoveryWatcher.name, () => {
     it('sends discord messages', async () => {
       const discoveryWatcher = new DiscoveryWatcher(
         mockObject<providers.AlchemyProvider>(),
-        mockObject<DiscoveryEngine>(),
+        mockObject<DiscoveryRunner>(),
         discordClient,
         mockObject<ConfigReader>(),
         mockObject<DiscoveryWatcherRepository>({}),

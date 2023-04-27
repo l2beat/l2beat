@@ -8,7 +8,8 @@ export async function getCallResult<T>(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   methodAbi: string,
-  values: unknown[] = [],
+  values: unknown[],
+  blockNumber: number,
 ) {
   try {
     return await getCallResultWithRevert<T>(
@@ -16,6 +17,7 @@ export async function getCallResult<T>(
       address,
       methodAbi,
       values,
+      blockNumber,
     )
   } catch (e) {
     if (isRevert(e)) {
@@ -29,11 +31,12 @@ export async function getCallResultWithRevert<T>(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   methodAbi: string,
-  values: unknown[] = [],
+  values: unknown[],
+  blockNumber: number,
 ) {
   const abi = new utils.Interface([methodAbi])
   const fragment = Object.values(abi.functions)[0]
   const callData = Bytes.fromHex(abi.encodeFunctionData(fragment, values))
-  const result = await provider.call(address, callData)
+  const result = await provider.call(address, callData, blockNumber)
   return abi.decodeFunctionResult(fragment, result.toString())[0] as T
 }

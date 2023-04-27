@@ -23,12 +23,19 @@ export class SimpleMethodHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Calling ',
       this.fragment.name + '()',
     ])
-    const callResult = await callMethod(provider, address, this.fragment, [])
+    const callResult = await callMethod(
+      provider,
+      address,
+      this.fragment,
+      [],
+      blockNumber,
+    )
     return { field: this.field, ...callResult }
   }
 }

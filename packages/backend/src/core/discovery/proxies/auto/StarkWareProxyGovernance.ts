@@ -7,9 +7,15 @@ import { getCallResult } from '../../utils/getCallResult'
 export async function getProxyGovernance(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ) {
   const deployer = await provider.getDeployer(address)
-  const fullGovernance = await getFullGovernance(provider, address, deployer)
+  const fullGovernance = await getFullGovernance(
+    provider,
+    address,
+    deployer,
+    blockNumber,
+  )
 
   // One contract emits same events for proxy and implementation governance
   // so we need to filter out the ones that are not proxy governors
@@ -20,6 +26,7 @@ export async function getProxyGovernance(
         address,
         'function proxyIsGovernor(address testGovernor) view returns (bool)',
         [governor],
+        blockNumber,
       ),
     ),
   )
@@ -31,14 +38,18 @@ async function getFullGovernance(
   provider: DiscoveryProvider,
   address: EthereumAddress,
   deployer: EthereumAddress,
+  blockNumber: number,
 ): Promise<string[]> {
   const event = 'event LogNewGovernorAccepted(address acceptedGovernor)'
   const key = 'acceptedGovernor'
 
   const abi = new utils.Interface([event])
-  const logs = await provider.getLogs(address, [
-    [abi.getEventTopic(event.slice(6))],
-  ])
+  const logs = await provider.getLogs(
+    address,
+    [[abi.getEventTopic(event.slice(6))]],
+    0,
+    blockNumber,
+  )
   const values = new Set<string>()
   // As of 04.04.2023 deployer is always a governor
   // but sometimes the event is not emitted

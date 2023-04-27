@@ -49,6 +49,7 @@ export class CallHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const resolved = resolveDependencies(this.definition, previousResults)
@@ -64,6 +65,7 @@ export class CallHandler implements Handler {
       address,
       this.fragment,
       resolved.args,
+      blockNumber,
     )
 
     if (this.definition.expectRevert && callResult.error === EXEC_REVERT_MSG) {

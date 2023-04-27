@@ -7,6 +7,8 @@ import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { AccessControlHandler } from './AccessControlHandler'
 
 describe(AccessControlHandler.name, () => {
+  const BLOCK_NUMBER = 1234
+
   const abi = new utils.Interface([
     'event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)',
     'event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)',
@@ -40,7 +42,7 @@ describe(AccessControlHandler.name, () => {
   it('no logs', async () => {
     const address = EthereumAddress.random()
     const provider = mockObject<DiscoveryProvider>({
-      async getLogs(providedAddress, topics, fromBlock) {
+      async getLogs(providedAddress, topics, fromBlock, toBlock) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
           [
@@ -49,7 +51,8 @@ describe(AccessControlHandler.name, () => {
             abi.getEventTopic('RoleAdminChanged'),
           ],
         ])
-        expect(fromBlock).toEqual(undefined)
+        expect(fromBlock).toEqual(0)
+        expect(toBlock).toEqual(BLOCK_NUMBER)
         return []
       },
     })
@@ -62,7 +65,7 @@ describe(AccessControlHandler.name, () => {
       [],
       DiscoveryLogger.SILENT,
     )
-    const value = await handler.execute(provider, address)
+    const value = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(value).toEqual({
       field: 'someName',
       value: {
@@ -118,7 +121,7 @@ describe(AccessControlHandler.name, () => {
       ],
       DiscoveryLogger.SILENT,
     )
-    const value = await handler.execute(provider, address)
+    const value = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(value).toEqual({
       field: 'someName',
       value: {
@@ -164,7 +167,7 @@ describe(AccessControlHandler.name, () => {
       [],
       DiscoveryLogger.SILENT,
     )
-    const value = await handler.execute(provider, address)
+    const value = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(value).toEqual({
       field: 'someName',
       value: {

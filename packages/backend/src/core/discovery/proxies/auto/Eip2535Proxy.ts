@@ -10,11 +10,14 @@ import { getCallResult } from '../../utils/getCallResult'
 export async function detectEip2535proxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
   const facets = await getCallResult<EthereumAddress[]>(
     provider,
     address,
     'function facetAddresses() external view returns (address[] memory facetAd)',
+    [],
+    blockNumber,
   )
 
   if (facets === undefined) {
