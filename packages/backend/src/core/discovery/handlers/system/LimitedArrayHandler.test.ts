@@ -6,6 +6,7 @@ import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { LimitedArrayHandler } from './LimitedArrayHandler'
 
 describe(LimitedArrayHandler.name, () => {
+  const BLOCK_NUMBER = 1234
   const method = 'function owners(uint256 index) view returns (address)'
   const signature = '0x025e7c27'
 
@@ -36,7 +37,7 @@ describe(LimitedArrayHandler.name, () => {
     const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
     expect(handler.field).toEqual('owners')
 
-    const result = await handler.execute(provider, address)
+    const result = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(result).toEqual({
       field: 'owners',
       value: owners.map((x) => x.toString()),
@@ -67,7 +68,7 @@ describe(LimitedArrayHandler.name, () => {
     })
 
     const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
-    const result = await handler.execute(provider, address)
+    const result = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(result).toEqual({
       field: 'owners',
       value: owners.map((x) => x.toString()).slice(0, 2),
@@ -97,7 +98,7 @@ describe(LimitedArrayHandler.name, () => {
     })
 
     const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
-    const result = await handler.execute(provider, address)
+    const result = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(result).toEqual({
       field: 'owners',
       error: 'foo bar',

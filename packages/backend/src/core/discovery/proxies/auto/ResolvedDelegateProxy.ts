@@ -18,6 +18,7 @@ import { getCallResultWithRevert } from '../../utils/getCallResult'
 async function getAddressManager(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ) {
   // addressManager is stored in libAddressManager[address(this)] (slot 1)
   const slot = Bytes.fromHex(
@@ -25,12 +26,13 @@ async function getAddressManager(
       new utils.AbiCoder().encode(['address', 'uint'], [address, 1]),
     ),
   )
-  return bytes32ToAddress(await provider.getStorage(address, slot))
+  return bytes32ToAddress(await provider.getStorage(address, slot, blockNumber))
 }
 
 async function getImplementationName(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ) {
   // implementationName is stored in implementationName[address(this)] (slot 0)
   const slot = Bytes.fromHex(
@@ -38,7 +40,9 @@ async function getImplementationName(
       new utils.AbiCoder().encode(['address', 'uint'], [address, 0]),
     ),
   )
-  const nameEncoded = (await provider.getStorage(address, slot)).toString()
+  const nameEncoded = (
+    await provider.getStorage(address, slot, blockNumber)
+  ).toString()
   const length = parseInt(nameEncoded.slice(-2), 16) / 2
   if (length > 31) {
     throw new Error(
@@ -52,12 +56,14 @@ async function getImplementation(
   provider: DiscoveryProvider,
   addressManager: EthereumAddress,
   implementationName: string,
+  blockNumber: number,
 ) {
   const implementation = await getCallResultWithRevert<string>(
     provider,
     addressManager,
     'function getAddress(string implementationName) view returns(address)',
     [implementationName],
+    blockNumber,
   )
   return EthereumAddress(implementation)
 }
@@ -65,12 +71,17 @@ async function getImplementation(
 export async function detectResolvedDelegateProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const addressManager = await getAddressManager(provider, address)
+  const addressManager = await getAddressManager(provider, address, blockNumber)
   if (addressManager === EthereumAddress.ZERO) {
     return
   }
-  const implementationName = await getImplementationName(provider, address)
+  const implementationName = await getImplementationName(
+    provider,
+    address,
+    blockNumber,
+  )
   if (implementationName === '') {
     return
   }
@@ -78,6 +89,7 @@ export async function detectResolvedDelegateProxy(
     provider,
     addressManager,
     implementationName,
+    blockNumber,
   )
   return {
     implementations: [implementation],

@@ -16,6 +16,7 @@ import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 type Detector = (
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ) => Promise<ProxyDetails | undefined>
 
 const DEFAULT_AUTO_DETECTORS: Detector[] = [
@@ -45,11 +46,12 @@ export class ProxyDetector {
 
   async detectProxy(
     address: EthereumAddress,
+    blockNumber: number,
     manualProxyType?: ManualProxyType,
   ): Promise<ProxyDetails | undefined> {
     const proxy = manualProxyType
-      ? await this.getManualProxy(address, manualProxyType)
-      : await this.getAutoProxy(address)
+      ? await this.getManualProxy(address, manualProxyType, blockNumber)
+      : await this.getAutoProxy(address, blockNumber)
 
     if (proxy) {
       this.logger.logProxyDetected(proxy.upgradeability.type)
@@ -60,9 +62,11 @@ export class ProxyDetector {
     return proxy
   }
 
-  async getAutoProxy(address: EthereumAddress) {
+  async getAutoProxy(address: EthereumAddress, blockNumber: number) {
     const checks = await Promise.all(
-      this.autoDetectors.map((detect) => detect(this.provider, address)),
+      this.autoDetectors.map((detect) =>
+        detect(this.provider, address, blockNumber),
+      ),
     )
     return checks.find((x) => x !== undefined)
   }
@@ -70,11 +74,12 @@ export class ProxyDetector {
   async getManualProxy(
     address: EthereumAddress,
     manualProxyType: ManualProxyType,
+    blockNumber: number,
   ) {
     const detector = this.manualDetectors[manualProxyType]
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (detector) {
-      return detector(this.provider, address)
+      return detector(this.provider, address, blockNumber)
     }
   }
 }

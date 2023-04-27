@@ -7,6 +7,8 @@ import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { ArrayFromOneEventHandler } from './ArrayFromOneEventHandler'
 
 describe(ArrayFromOneEventHandler.name, () => {
+  const BLOCK_NUMBER = 1234
+
   describe('constructor', () => {
     it('finds the specified event by name', () => {
       const handler = new ArrayFromOneEventHandler(
@@ -99,10 +101,11 @@ describe(ArrayFromOneEventHandler.name, () => {
     it('no logs', async () => {
       const address = EthereumAddress.random()
       const provider = mockObject<DiscoveryProvider>({
-        async getLogs(providedAddress, topics, fromBlock) {
+        async getLogs(providedAddress, topics, fromBlock, toBlock) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('OwnerChanged')])
-          expect(fromBlock).toEqual(undefined)
+          expect(fromBlock).toEqual(0)
+          expect(toBlock).toEqual(BLOCK_NUMBER)
           return []
         },
       })
@@ -118,7 +121,7 @@ describe(ArrayFromOneEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address)
+      const value = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(value).toEqual({
         field: 'someName',
         value: [],
@@ -156,7 +159,7 @@ describe(ArrayFromOneEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address)
+      const value = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(value).toEqual({
         field: 'someName',
         value: [Alice.toString(), Bob.toString()],
@@ -195,7 +198,7 @@ describe(ArrayFromOneEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address)
+      const value = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(value).toEqual({
         field: 'someName',
         value: [Charlie.toString()],
@@ -232,7 +235,7 @@ describe(ArrayFromOneEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address)
+      const value = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(value).toEqual({
         field: 'someName',
         value: [Alice.toString(), Bob.toString(), Charlie.toString()],
@@ -271,7 +274,7 @@ describe(ArrayFromOneEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address)
+      const value = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(value).toEqual({
         field: 'someName',
         value: [Alice.toString(), Bob.toString()],

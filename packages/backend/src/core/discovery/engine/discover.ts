@@ -11,6 +11,7 @@ export async function discover(
   provider: DiscoveryProvider,
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
+  blockNumber: number,
 ) {
   const proxyDetector = new ProxyDetector(provider, logger)
   const sourceCodeService = new SourceCodeService(provider)
@@ -23,5 +24,5 @@ export async function discover(
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)
-  return discoveryEngine.discover(config)
+  return discoveryEngine.discover(config, blockNumber)
 }

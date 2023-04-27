@@ -7,14 +7,17 @@ import { getCallResult } from '../../utils/getCallResult'
 async function getMasterCopy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ) {
   const [callResult, slot0] = await Promise.all([
     getCallResult<string>(
       provider,
       address,
       'function masterCopy() view returns(address)',
+      [],
+      blockNumber,
     ),
-    provider.getStorage(address, 0),
+    provider.getStorage(address, 0, blockNumber),
   ])
   const slot0Address = bytes32ToAddress(slot0)
   if (callResult && slot0Address === EthereumAddress(callResult)) {
@@ -25,8 +28,9 @@ async function getMasterCopy(
 export async function detectGnosisSafe(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const masterCopy = await getMasterCopy(provider, address)
+  const masterCopy = await getMasterCopy(provider, address, blockNumber)
   if (!masterCopy) {
     return
   }

@@ -10,7 +10,7 @@ export class DiscoveryEngine {
     private readonly logger: DiscoveryLogger,
   ) {}
 
-  async discover(config: DiscoveryConfig) {
+  async discover(config: DiscoveryConfig, blockNumber: number) {
     const resolved: Analysis[] = []
     const stack = new DiscoveryStack()
     stack.push(config.initialAddresses, 0)
@@ -28,6 +28,7 @@ export class DiscoveryEngine {
       const { analysis, relatives } = await this.addressAnalyzer.analyze(
         item.address,
         config.overrides.get(item.address),
+        blockNumber,
       )
       resolved.push(analysis)
 

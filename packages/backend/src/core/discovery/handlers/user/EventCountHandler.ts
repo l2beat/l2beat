@@ -25,9 +25,15 @@ export class EventCountHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [`Counting events`])
-    const logs = await provider.getLogs(address, this.definition.topics)
+    const logs = await provider.getLogs(
+      address,
+      this.definition.topics,
+      0,
+      blockNumber,
+    )
 
     return {
       field: this.field,

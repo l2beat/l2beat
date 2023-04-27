@@ -6,6 +6,8 @@ import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { ProxyDetector } from './ProxyDetector'
 
 describe(ProxyDetector.name, () => {
+  const BLOCK_NUMBER = 1234
+
   const FIRST_DETAILS: ProxyDetails = {
     upgradeability: {
       type: 'EIP1967 proxy',
@@ -33,7 +35,10 @@ describe(ProxyDetector.name, () => {
       async () => undefined,
       async () => undefined,
     ])
-    const result = await detector.detectProxy(EthereumAddress.random())
+    const result = await detector.detectProxy(
+      EthereumAddress.random(),
+      BLOCK_NUMBER,
+    )
 
     expect(result).toEqual(undefined)
   })
@@ -47,7 +52,10 @@ describe(ProxyDetector.name, () => {
       async () => undefined,
       async () => SECOND_DETAILS,
     ])
-    const result = await detector.detectProxy(EthereumAddress.random())
+    const result = await detector.detectProxy(
+      EthereumAddress.random(),
+      BLOCK_NUMBER,
+    )
 
     expect(result).toEqual(FIRST_DETAILS)
   })
@@ -61,6 +69,7 @@ describe(ProxyDetector.name, () => {
     })
     const result = await detector.detectProxy(
       EthereumAddress.random(),
+      BLOCK_NUMBER,
       'call implementation proxy',
     )
 

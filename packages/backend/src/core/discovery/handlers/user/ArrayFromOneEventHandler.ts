@@ -51,11 +51,15 @@ export class ArrayFromOneEventHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Querying ', this.fragment.name])
-    const logs = await provider.getLogs(address, [
-      this.abi.getEventTopic(this.fragment),
-    ])
+    const logs = await provider.getLogs(
+      address,
+      [this.abi.getEventTopic(this.fragment)],
+      0,
+      blockNumber,
+    )
     const values = new Set<ContractValue>()
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)

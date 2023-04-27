@@ -50,6 +50,7 @@ export class ArrayHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
@@ -61,7 +62,13 @@ export class ArrayHandler implements Handler {
     const value: ContractValue[] = []
     const maxLength = Math.min(resolved.maxLength, resolved.length ?? Infinity)
     for (let i = resolved.startIndex; i < maxLength; i++) {
-      const current = await callMethod(provider, address, this.fragment, [i])
+      const current = await callMethod(
+        provider,
+        address,
+        this.fragment,
+        [i],
+        blockNumber,
+      )
       if (current.error) {
         if (
           current.error !== 'Execution reverted' ||

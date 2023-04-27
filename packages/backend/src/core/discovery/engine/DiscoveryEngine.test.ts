@@ -7,6 +7,7 @@ import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { DiscoveryEngine } from './DiscoveryEngine'
 
 describe(DiscoveryEngine.name, () => {
+  const BLOCK_NUMBER = 1234
   const A = EthereumAddress.random()
   const B = EthereumAddress.random()
   const C = EthereumAddress.random()
@@ -23,24 +24,24 @@ describe(DiscoveryEngine.name, () => {
       analyze: mockFn(),
     })
     addressAnalyzer.analyze
-      .given(A, config.overrides.get(A))
+      .given(A, config.overrides.get(A), BLOCK_NUMBER)
       .resolvesToOnce({
         analysis: { type: 'EOA', address: A },
         relatives: [B, C],
       })
-      .given(C, config.overrides.get(C))
+      .given(C, config.overrides.get(C), BLOCK_NUMBER)
       .resolvesToOnce({
         analysis: { type: 'EOA', address: C },
         relatives: [B, D],
       })
-      .given(D, config.overrides.get(D))
+      .given(D, config.overrides.get(D), BLOCK_NUMBER)
       .resolvesToOnce({
         analysis: { type: 'EOA', address: D },
         relatives: [],
       })
 
     const engine = new DiscoveryEngine(addressAnalyzer, DiscoveryLogger.SILENT)
-    const result = await engine.discover(config)
+    const result = await engine.discover(config, BLOCK_NUMBER)
 
     expect(result).toEqual([
       { type: 'EOA', address: A },

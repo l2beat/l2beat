@@ -7,6 +7,8 @@ import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { ArrayFromTwoEventsHandler } from './ArrayFromTwoEventsHandler'
 
 describe(ArrayFromTwoEventsHandler.name, () => {
+  const BLOCK_NUMBER = 1234
+
   describe('constructor', () => {
     it('finds the specified events by name', () => {
       const handler = new ArrayFromTwoEventsHandler(
@@ -131,7 +133,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
     it('no logs', async () => {
       const address = EthereumAddress.random()
       const provider = mockObject<DiscoveryProvider>({
-        async getLogs(providedAddress, topics, fromBlock) {
+        async getLogs(providedAddress, topics, fromBlock, toBlock) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([
             [
@@ -139,7 +141,8 @@ describe(ArrayFromTwoEventsHandler.name, () => {
               abi.getEventTopic('OwnerRemoved'),
             ],
           ])
-          expect(fromBlock).toEqual(undefined)
+          expect(fromBlock).toEqual(0)
+          expect(toBlock).toEqual(BLOCK_NUMBER)
           return []
         },
       })
@@ -156,7 +159,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address)
+      const value = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(value).toEqual({
         field: 'someName',
         value: [],
@@ -195,7 +198,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address)
+      const value = await handler.execute(provider, address, BLOCK_NUMBER)
       expect(value).toEqual({
         field: 'someName',
         value: [Alice.toString(), Bob.toString()],

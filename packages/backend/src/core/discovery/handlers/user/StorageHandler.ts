@@ -42,6 +42,7 @@ export class StorageHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Reading storage'])
@@ -50,7 +51,7 @@ export class StorageHandler implements Handler {
     let storage: Bytes
     try {
       const slot = computeSlot(resolved)
-      storage = await provider.getStorage(address, slot)
+      storage = await provider.getStorage(address, slot, blockNumber)
     } catch (e) {
       return { field: this.field, error: getErrorMessage(e) }
     }
