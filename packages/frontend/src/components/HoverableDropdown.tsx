@@ -37,7 +37,7 @@ interface HoverableDropdownMenuProps {
 HoverableDropdown.Menu = function (props: HoverableDropdownMenuProps) {
   return (
     <div className="HoverableDropdownMenu pointer-events-none absolute z-10 opacity-0 transition-opacity duration-300">
-      <div className="h-1.5" />
+      <hr className="h-1.5 border-t-0" />
       <div
         className={classNames(
           'rounded-lg bg-gray-100 px-4 py-2.5 shadow-[0px_4px_20px_rgba(0,0,0,0.50)] dark:bg-neutral-700',
