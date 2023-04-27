@@ -1,5 +1,6 @@
 import { default as classNames } from 'classnames'
 import React from 'react'
+
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ChevronDownIcon, ProjectLink } from '../icons'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'

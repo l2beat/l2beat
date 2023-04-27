@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+
 import { formatLink } from './formatLink'
 
 describe('formatLink', () => {

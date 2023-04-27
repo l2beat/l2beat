@@ -1,13 +1,13 @@
 import React from 'react'
 
 import { formatLink } from '../../../utils/formatLink'
-import { OutLink } from '../../OutLink'
 import {
   GlobeIcon,
   ProductIcon,
   ProductIconType,
   ProjectLink,
 } from '../../icons'
+import { OutLink } from '../../OutLink'
 
 interface Props {
   name: ProjectLink['name']
