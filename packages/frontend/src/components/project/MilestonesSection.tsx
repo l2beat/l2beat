@@ -2,9 +2,9 @@ import { Milestone } from '@l2beat/config'
 import React from 'react'
 
 import { ExpandableContainer } from '../ExpandableContainer'
-import { OutLink } from '../OutLink'
 import { ArrowRightIcon } from '../icons'
 import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
+import { OutLink } from '../OutLink'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 
 export interface MilestonesSectionProps {

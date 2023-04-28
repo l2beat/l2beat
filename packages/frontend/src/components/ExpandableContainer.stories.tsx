@@ -1,5 +1,6 @@
 import { range } from 'lodash'
 import React, { useEffect } from 'react'
+
 import { configureExpandableContainer } from '../scripts/configureExpandableContainer'
 import { ExpandableContainer as ExpandableContainerComponent } from './ExpandableContainer'
 
@@ -84,17 +85,11 @@ export function WithCustomMaxHeight() {
 export function WithoutButton() {
   return (
     <Template>
-      {range(1).map(() => {
-        return (
-          <div className="my-2">
-            Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit
-            sit enim ullamco qui anim ex id aliquip deserunt quis. Voluptate
-            occaecat anim elit magna officia sunt. Proident irure commodo culpa
-            officia nisi labore veniam esse irure minim pariatur culpa. Culpa
-            exercitation amet deserunt dolor veniam dolor.
-          </div>
-        )
-      })}
+      <div className="my-2">
+        Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit sit
+        enim ullamco qui anim ex id aliquip deserunt quis. Voluptate occaecat
+        anim elit magna officia sunt.
+      </div>
     </Template>
   )
 }
