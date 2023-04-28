@@ -1,6 +1,6 @@
 {
   "name": "amarok",
-  "blockNumber": 17094119,
+  "blockNumber": 17129635,
   "configHash": "0x0641a339b0e9d920ff3d73f33df35c0658b7afe2e3144760992d20a206507190",
   "contracts": [
     {
@@ -231,7 +231,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 4244,
+        "nonce": 4314,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -247,7 +247,9 @@
           "0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE",
           "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
           "0x43728A95386D64384C76Afd416Dcc8118869BA6c",
-          "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6"
+          "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6",
+          "0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28",
+          "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
         ],
         "routerAllowlistRemoved": false,
         "routerAllowlistTimestamp": 0,
@@ -268,7 +270,8 @@
           "0x63Cda9C42db542bb91a7175E38673cFb00D402b0",
           "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
           "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a",
-          "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c"
+          "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c",
+          "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa"
         ],
         "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c"
@@ -288,12 +291,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 17093629,
+        "lastSentBlock": 17123632,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xc993f45a13496d4510037dd377e94534d6da00f54dc91125e5f176e427cbfa7f",
+        "outboundRoot": "0xeb3885e345c902c5ff926108453a594ed3846372059af1edf1654e644156261d",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -352,13 +355,13 @@
           6450786, 6778479, 1869640809, 1886350457, 6648936, 1634886255
         ],
         "domainsHash": "0xe741ece3f9550e537df05746072d458479dbc21a49fdee7925337f0b7e1a802c",
-        "getPendingInboundRootsCount": 1,
-        "lastPropagatedRoot": "0x82dc1bd5ff1dffd8185601423a2437a5040136a03631892515048be655e88bc8",
+        "getPendingInboundRootsCount": 2,
+        "lastPropagatedRoot": "0x14bf6c8bd3113ea38fdfeda63dcc5612ef13256d62d177083e3435282718cca1",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [16776, 16776],
+        "pendingInboundRoots": [17467, 17468],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -515,7 +518,7 @@
           "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f"
         ],
         "getThreshold": 3,
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -542,6 +545,7 @@
     "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f",
     "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
     "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
+    "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
     "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c",
     "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c",
     "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
