@@ -16,7 +16,7 @@ import {
   LinkSection,
   LinkSectionProps,
 } from '../../../components/project/links/LinkSection'
-import { MilestonesSection } from '../../../components/project/Milestones'
+import { MilestonesSection } from '../../../components/project/MilestonesSection'
 import {
   PermissionsSection,
   PermissionsSectionProps,
