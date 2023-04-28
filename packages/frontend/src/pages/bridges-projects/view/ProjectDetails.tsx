@@ -1,21 +1,19 @@
+import { assertUnreachable } from '@l2beat/shared'
 import React from 'react'
 
+import { ChartSection } from '../../../components/project/ChartSection'
 import { ContractsSection } from '../../../components/project/ContractsSection'
 import { DescriptionSection } from '../../../components/project/DescriptionSection'
-
-import { assertUnreachable } from '@l2beat/shared'
-import { ChartSection } from '../../../components/project/ChartSection'
 import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
 import { MilestonesSection } from '../../../components/project/Milestones'
 import { PermissionsSection } from '../../../components/project/PermissionsSection'
-import { RiskAnalysis } from '../../../components/project/RiskAnalysis'
+import { RiskSection } from '../../../components/project/RiskSection'
 import {
   TechnologyIncomplete,
   TechnologyIncompleteProps,
 } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../components/project/TechnologySection'
 import { BridgeProjectDetailsItem } from '../props/getProjectDetails'
-import { RiskSection } from '../../../components/project/RiskSection'
 export interface ProjectDetailsProps {
   incomplete?: TechnologyIncompleteProps
   items: BridgeProjectDetailsItem[]

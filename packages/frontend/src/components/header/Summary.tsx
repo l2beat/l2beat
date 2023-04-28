@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import { chunk } from 'lodash'
 import React, { ReactNode } from 'react'
+
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ProjectLink } from '../icons'
 import { DesktopProjectLinks } from './DesktopProjectLinks'
