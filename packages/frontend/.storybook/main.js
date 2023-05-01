@@ -6,6 +6,7 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-postcss',
     'storybook-dark-mode',
+    'storycap',
   ],
   framework: '@storybook/react',
   core: {
