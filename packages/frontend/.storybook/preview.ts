@@ -1,4 +1,4 @@
-import { withScreenshot } from 'storycap'
+import { ScreenshotOptions, withScreenshot } from 'storycap'
 import '../src/styles/main.scss'
 import '../src/styles/style.css'
 
@@ -11,20 +11,22 @@ document.body.classList.add(
 
 export const decorators = [withScreenshot]
 
-export const parameters = {
-  screenshot: {
-    viewports: {
-      mobile: {
-        width: 390,
-        height: 844,
-      },
-      large: {
-        width: 2560,
-        height: 1440,
-      },
+const screenshotOptions: ScreenshotOptions = {
+  delay: 50,
+  viewports: {
+    mobile: {
+      width: 390,
+      height: 844,
+      isMobile: true,
     },
-    delay: 100,
+    large: {
+      width: 2560,
+      height: 1440,
+    },
   },
+}
+export const parameters = {
+  screenshot: screenshotOptions,
   layout: 'fullscreen',
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
