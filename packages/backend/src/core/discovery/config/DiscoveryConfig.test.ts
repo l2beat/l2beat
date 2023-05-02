@@ -2,8 +2,8 @@ import { EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earl'
 
 import { hashJson } from '../../../tools/hashJson'
-import { getDiscoveryConfigEntries } from '../utils/getDiscoveryConfigEntries'
 import { DiscoveryConfig } from './DiscoveryConfig'
+import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 const ADDRESS_A = EthereumAddress.random()

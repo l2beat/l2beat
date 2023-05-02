@@ -1,15 +1,21 @@
 import React from 'react'
 
-import { GlobeIcon, ProductIcon, ProductIconType } from '../../icons'
+import { formatLink } from '../../../utils/formatLink'
+import {
+  GlobeIcon,
+  ProductIcon,
+  ProductIconType,
+  ProjectLink,
+} from '../../icons'
 import { OutLink } from '../../OutLink'
 
 interface Props {
+  name: ProjectLink['name']
   href: string
-  social?: boolean
 }
 
-export function LinkSectionLink({ href, social }: Props) {
-  if (social) {
+export function LinkSectionLink({ href, name }: Props) {
+  if (name === 'Social') {
     const parsed = parseSocial(href)
     return (
       <OutLink
@@ -30,7 +36,7 @@ export function LinkSectionLink({ href, social }: Props) {
   }
   return (
     <OutLink className="block truncate text-link underline" href={href}>
-      {simplify(href)}
+      {formatLink(href)}
     </OutLink>
   )
 }
@@ -40,8 +46,8 @@ interface SocialDetails {
   text: string
 }
 
-function parseSocial(href: string): SocialDetails {
-  const link = simplify(href)
+export function parseSocial(href: string): SocialDetails {
+  const link = formatLink(href)
   if (link.startsWith('discord.gg')) {
     return {
       platform: 'discord',
@@ -56,6 +62,11 @@ function parseSocial(href: string): SocialDetails {
     return {
       platform: 'medium',
       text: link.slice('medium.com/'.length),
+    }
+  } else if (link.endsWith('.medium.com')) {
+    return {
+      platform: 'medium',
+      text: link.slice(0, -'.medium.com'.length),
     }
   } else if (link.startsWith('youtube.com')) {
     return {
@@ -91,14 +102,4 @@ function parseSocial(href: string): SocialDetails {
     }
 
   return { text: link }
-}
-
-function simplify(href: string) {
-  if (href.startsWith('https://')) {
-    href = href.slice('https://'.length)
-  }
-  if (href.endsWith('/')) {
-    href = href.slice(0, -1)
-  }
-  return href
 }

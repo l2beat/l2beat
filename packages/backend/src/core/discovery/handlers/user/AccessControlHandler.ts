@@ -2,8 +2,8 @@ import { EthereumAddress } from '@l2beat/shared'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 
 export type AccessControlHandlerDefinition = z.infer<
@@ -54,15 +54,21 @@ export class AccessControlHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Checking AccessControl'])
-    const logs = await provider.getLogs(address, [
+    const logs = await provider.getLogs(
+      address,
       [
-        abi.getEventTopic('RoleGranted'),
-        abi.getEventTopic('RoleRevoked'),
-        abi.getEventTopic('RoleAdminChanged'),
+        [
+          abi.getEventTopic('RoleGranted'),
+          abi.getEventTopic('RoleRevoked'),
+          abi.getEventTopic('RoleAdminChanged'),
+        ],
       ],
-    ])
+      0,
+      blockNumber,
+    )
 
     const roles: Record<
       string,

@@ -2,8 +2,8 @@ import { bridges, layer2s } from '@l2beat/config'
 import { assert, EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earl'
 
-import { ConfigReader } from '../config/ConfigReader'
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { ConfigReader } from './ConfigReader'
+import { DiscoveryConfig } from './DiscoveryConfig'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()

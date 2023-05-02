@@ -18,7 +18,7 @@ export class DiscoveryOverrides {
     }
   }
 
-  get(nameOrAddress: string | EthereumAddress): ContractOverrides | undefined {
+  get(nameOrAddress: string | EthereumAddress): ContractOverrides {
     let name: string | undefined
     let address: EthereumAddress | undefined
 
@@ -45,7 +45,7 @@ export class DiscoveryOverrides {
   *[Symbol.iterator]() {
     for (const key of Object.keys(this.config.overrides ?? {})) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      yield this.get(key)!
+      yield this.get(key)
     }
   }
 }

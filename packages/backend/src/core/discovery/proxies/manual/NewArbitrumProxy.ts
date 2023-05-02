@@ -7,8 +7,9 @@ import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
 export async function getNewArbitrumProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
+  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const detection = await detectEip1967Proxy(provider, address)
+  const detection = await detectEip1967Proxy(provider, address, blockNumber)
   if (!detection || detection.upgradeability.type !== 'EIP1967 proxy') {
     return undefined
   }
@@ -18,12 +19,14 @@ export async function getNewArbitrumProxy(
       address,
       'function getAdminFacet() view returns (address)',
       [],
+      blockNumber,
     ),
     getCallResult<EthereumAddress>(
       provider,
       address,
       'function getUserFacet() view returns (address)',
       [],
+      blockNumber,
     ),
   ])
   if (!adminFacet || !userFacet) {

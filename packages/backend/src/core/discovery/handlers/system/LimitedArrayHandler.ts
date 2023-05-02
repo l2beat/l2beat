@@ -1,8 +1,8 @@
 import { ContractValue, EthereumAddress } from '@l2beat/shared'
 import { utils } from 'ethers'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
@@ -25,6 +25,7 @@ export class LimitedArrayHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Calling array (max: ',
@@ -34,7 +35,7 @@ export class LimitedArrayHandler implements Handler {
     ])
     const results = await Promise.all(
       Array.from({ length: this.limit }).map((_, index) =>
-        callMethod(provider, address, this.fragment, [index]),
+        callMethod(provider, address, this.fragment, [index], blockNumber),
       ),
     )
     const value: ContractValue[] = []

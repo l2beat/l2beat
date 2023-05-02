@@ -1,5 +1,8 @@
 import React from 'react'
 
+import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from './Arrows'
+import { EthereumLineIcon } from './chart/EthereumLineIcon'
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
 import { ActivityIcon } from './pages/ActivityIcon'
 import { RiskIcon } from './pages/RiskIcon'
 import { TvlIcon } from './pages/TvlIcon'
@@ -15,26 +18,60 @@ import { YouTubeIcon } from './products/YouTubeIcon'
 import { OptimismIcon } from './providers/OptimismIcon'
 import { StarkWareIcon } from './providers/StarkWareIcon'
 import { ZkSyncIcon } from './providers/ZkSyncIcon'
+import { AppsIcon } from './symbols/AppsIcon'
 import { ArchivedIcon } from './symbols/ArchivedIcon'
+import { BulletIcon } from './symbols/BulletIcon'
+import { CodeIcon } from './symbols/CodeIcon'
+import { DocumentIcon } from './symbols/DocumentIcon'
 import { FinanceIcon } from './symbols/FinanceIcon'
 import { GlobeIcon } from './symbols/GlobeIcon'
 import { InfoIcon } from './symbols/InfoIcon'
-import { LinkIcon } from './symbols/LinkIcon'
 import { MenuCloseIcon } from './symbols/MenuCloseIcon'
 import { MenuOpenIcon } from './symbols/MenuOpenIcon'
+import { MilestoneIcon } from './symbols/MilestoneIcon'
 import { MoonIcon } from './symbols/MoonIcon'
+import { OutLinkIcon } from './symbols/OutLinkIcon'
+import { SearchIcon } from './symbols/SearchIcon'
 import { ShieldIcon } from './symbols/ShieldIcon'
 import { SunIcon } from './symbols/SunIcon'
+import { UnverifiedIcon } from './symbols/UnverifiedIcon'
 import { UpcomingIcon } from './symbols/UpcomingIcon'
+import { UserIcon } from './symbols/UserIcon'
 import { WarningIcon } from './symbols/WarningIcon'
 
 export default {
   title: 'Components/Icons',
 }
 
-export function ProductIcons() {
+function Template(props: { children: React.ReactNode }) {
   return (
     <div className="mx-auto flex max-w-lg justify-center gap-2 p-4">
+      {props.children}
+    </div>
+  )
+}
+
+export function ChartIcons() {
+  return (
+    <Template>
+      <EthereumLineIcon />
+    </Template>
+  )
+}
+
+export function PageIcons() {
+  return (
+    <Template>
+      <TvlIcon />
+      <RiskIcon />
+      <ActivityIcon />
+    </Template>
+  )
+}
+
+export function ProductIcons() {
+  return (
+    <Template>
       <DiscordIcon />
       <GithubIcon />
       <InstagramIcon />
@@ -44,45 +81,63 @@ export function ProductIcons() {
       <TelegramIcon />
       <TwitterIcon />
       <YouTubeIcon />
-    </div>
+    </Template>
   )
 }
 
 export function ProviderIcons() {
   return (
-    <div className="mx-auto flex max-w-lg justify-center gap-2 p-4">
+    <Template>
       <OptimismIcon />
       <StarkWareIcon />
       <ZkSyncIcon />
-    </div>
+    </Template>
   )
 }
 
 export function SymbolIcons() {
   return (
-    <div className="mx-auto flex max-w-lg justify-center gap-2 p-4">
+    <Template>
+      <AppsIcon />
+      <ArchivedIcon />
+      <BulletIcon />
+      <CodeIcon />
+      <DocumentIcon />
       <FinanceIcon />
       <GlobeIcon />
       <InfoIcon />
-      <LinkIcon />
+      <OutLinkIcon />
       <MenuCloseIcon />
       <MenuOpenIcon />
+      <MilestoneIcon />
       <MoonIcon />
+      <SearchIcon />
       <ShieldIcon />
       <SunIcon />
-      <WarningIcon />
-      <ArchivedIcon />
+      <UnverifiedIcon />
       <UpcomingIcon />
-    </div>
+      <UserIcon />
+      <WarningIcon />
+    </Template>
   )
 }
 
-export function PageIcons() {
+export function ArrowIcons() {
   return (
-    <div className="mx-auto flex max-w-lg justify-center gap-2 p-4">
-      <TvlIcon />
-      <RiskIcon />
-      <ActivityIcon />
-    </div>
+    <Template>
+      <ArrowUpIcon />
+      <ArrowDownIcon />
+      <ArrowRightIcon />
+    </Template>
+  )
+}
+
+export function ChevronIcons() {
+  return (
+    <Template>
+      <ChevronLeftIcon />
+      <ChevronRightIcon />
+      <ChevronDownIcon />
+    </Template>
   )
 }

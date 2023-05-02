@@ -1,6 +1,6 @@
 import { isArray, isObject } from 'lodash'
 
-import { RawDiscoveryConfig } from '../config/RawDiscoveryConfig'
+import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export function getDiscoveryConfigEntries(
   rawConfig: RawDiscoveryConfig,

@@ -2,8 +2,8 @@ import { assert, ContractValue, EthereumAddress } from '@l2beat/shared'
 import { ethers } from 'ethers'
 import { z } from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 
 export type ConstructorArgsDefinition = z.infer<

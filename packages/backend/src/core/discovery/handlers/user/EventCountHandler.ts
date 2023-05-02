@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 
 export type EventCountHandlerDefinition = z.infer<
@@ -25,9 +25,15 @@ export class EventCountHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [`Counting events`])
-    const logs = await provider.getLogs(address, this.definition.topics)
+    const logs = await provider.getLogs(
+      address,
+      this.definition.topics,
+      0,
+      blockNumber,
+    )
 
     return {
       field: this.field,

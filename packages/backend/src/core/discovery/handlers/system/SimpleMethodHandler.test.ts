@@ -1,11 +1,13 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { SimpleMethodHandler } from './SimpleMethodHandler'
 
 describe(SimpleMethodHandler.name, () => {
+  const BLOCK_NUMBER = 1234
+
   it('can correctly call balanceOf', async () => {
     const address = EthereumAddress.random()
     const provider = mockObject<DiscoveryProvider>({
@@ -24,7 +26,7 @@ describe(SimpleMethodHandler.name, () => {
     )
     expect(handler.field).toEqual('balanceOf')
 
-    const result = await handler.execute(provider, address)
+    const result = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(result).toEqual({
       field: 'balanceOf',
       value: 0x123,
@@ -43,7 +45,7 @@ describe(SimpleMethodHandler.name, () => {
       },
     })
     const address = EthereumAddress.random()
-    const result = await handler.execute(provider, address)
+    const result = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(result).toEqual({
       field: 'balanceOf',
       error: 'Execution reverted',
@@ -62,7 +64,7 @@ describe(SimpleMethodHandler.name, () => {
       },
     })
     const address = EthereumAddress.random()
-    const result = await handler.execute(provider, address)
+    const result = await handler.execute(provider, address, BLOCK_NUMBER)
     expect(result).toEqual({
       field: 'balanceOf',
       error: 'foo bar',

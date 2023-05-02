@@ -3,8 +3,9 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
-import { DetailsHeader, Link } from '../../../components/header/DetailsHeader'
+import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
+import { ProjectLink } from '../../../components/icons'
 import { MaturityBadge } from '../../../components/maturity/Badge'
 import { MaturityTooltipPopup } from '../../../components/maturity/TooltipPopup'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
@@ -28,7 +29,7 @@ export interface ProjectHeaderProps {
   technology: string
   tvlBreakdown: TVLBreakdownProps
   risks: RiskValues
-  links: Link[]
+  links: ProjectLink[]
   maturityEntry?: false | Layer2Maturity
   isArchived?: boolean
   isUpcoming?: boolean

@@ -1,14 +1,16 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
-import { DiscoveryLogger } from '../utils/DiscoveryLogger'
 import { AddressAnalyzer } from './AddressAnalyzer'
 
 describe(AddressAnalyzer.name, () => {
+  const BLOCK_NUMBER = 1234
+
   it('handles EOAs', async () => {
     const addressAnalyzer = new AddressAnalyzer(
       mockObject<DiscoveryProvider>({
@@ -21,7 +23,11 @@ describe(AddressAnalyzer.name, () => {
     )
 
     const address = EthereumAddress.random()
-    const result = await addressAnalyzer.analyze(address, undefined)
+    const result = await addressAnalyzer.analyze(
+      address,
+      undefined,
+      BLOCK_NUMBER,
+    )
 
     expect(result).toEqual({
       analysis: { type: 'EOA', address },
@@ -77,7 +83,11 @@ describe(AddressAnalyzer.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const result = await addressAnalyzer.analyze(address, undefined)
+    const result = await addressAnalyzer.analyze(
+      address,
+      undefined,
+      BLOCK_NUMBER,
+    )
 
     expect(result).toEqual({
       analysis: {
@@ -139,7 +149,11 @@ describe(AddressAnalyzer.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const result = await addressAnalyzer.analyze(address, undefined)
+    const result = await addressAnalyzer.analyze(
+      address,
+      undefined,
+      BLOCK_NUMBER,
+    )
 
     expect(result).toEqual({
       analysis: {

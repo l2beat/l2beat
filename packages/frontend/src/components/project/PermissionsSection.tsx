@@ -2,19 +2,23 @@ import { VerificationStatus } from '@l2beat/shared'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
-import { Section } from './Section'
+import { ProjectDetailsSection } from './ProjectDetailsSection'
 
 export interface PermissionsSectionProps {
+  id: string
+  title: string
   permissions: TechnologyContract[]
   verificationStatus: VerificationStatus
 }
 
 export function PermissionsSection({
+  id,
+  title,
   permissions,
   verificationStatus,
 }: PermissionsSectionProps) {
   return (
-    <Section title="Permissioned Addresses" id="permissionedAddresses">
+    <ProjectDetailsSection title={title} id={id}>
       <h3 className="md:text-md mt-4 font-bold">
         The system uses the following set of permissioned addresses:
       </h3>
@@ -28,6 +32,6 @@ export function PermissionsSection({
           />
         ))}
       </div>
-    </Section>
+    </ProjectDetailsSection>
   )
 }

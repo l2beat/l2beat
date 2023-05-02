@@ -1,5 +1,5 @@
 import { ContractOverrides } from '../config/DiscoveryOverrides'
-import { DiscoveryLogger } from '../utils/DiscoveryLogger'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { getSystemHandlers } from './getSystemHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { getUserHandler } from './user'

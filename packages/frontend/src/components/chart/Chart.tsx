@@ -17,6 +17,7 @@ import { TvlActivityToggle } from './TvlActivityToggle'
 import { YAxisLabels } from './YAxisLabels'
 
 export interface ChartProps {
+  showTitle?: boolean
   type?: 'tvl' | 'activity'
   tvlEndpoint?: string
   activityEndpoint?: string
@@ -31,6 +32,7 @@ export interface ChartProps {
 }
 
 export function Chart({
+  showTitle = true,
   tvlEndpoint,
   activityEndpoint,
   tokens,
@@ -50,6 +52,7 @@ export function Chart({
   return (
     <>
       <section
+        id="chart"
         data-role="chart"
         data-type={type}
         data-tvl-endpoint={tvlEndpoint}
@@ -59,12 +62,15 @@ export function Chart({
           fullWidth
             ? 'bg-gray-100 px-4 py-6 dark:bg-gray-950 md:bg-transparent md:p-0 md:dark:bg-transparent'
             : 'mt-4',
-          'md:mt-8',
         )}
       >
-        {!metaChart && hasActivity && hasTvl && (
+        {!metaChart && hasTvl && hasActivity && (
           <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
-            <h2 className="hidden text-3xl font-bold md:inline">Chart</h2>
+            {showTitle && (
+              <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
+                <a href="#chart">Chart</a>
+              </h2>
+            )}
             <TvlActivityToggle />
           </div>
         )}

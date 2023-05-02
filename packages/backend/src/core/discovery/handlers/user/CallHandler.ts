@@ -2,8 +2,8 @@ import { EthereumAddress } from '@l2beat/shared'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
+import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { DiscoveryLogger } from '../../utils/DiscoveryLogger'
 import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
 import { callMethod, EXEC_REVERT_MSG } from '../utils/callMethod'
@@ -49,6 +49,7 @@ export class CallHandler implements Handler {
   async execute(
     provider: DiscoveryProvider,
     address: EthereumAddress,
+    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const resolved = resolveDependencies(this.definition, previousResults)
@@ -64,6 +65,7 @@ export class CallHandler implements Handler {
       address,
       this.fragment,
       resolved.args,
+      blockNumber,
     )
 
     if (this.definition.expectRevert && callResult.error === EXEC_REVERT_MSG) {

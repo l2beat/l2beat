@@ -29,13 +29,16 @@ export class DiscoveryProvider {
   constructor(
     private readonly provider: providers.Provider,
     private readonly etherscanClient: EtherscanClient,
-    readonly blockNumber: number,
   ) {}
 
-  async call(address: EthereumAddress, data: Bytes): Promise<Bytes> {
+  async call(
+    address: EthereumAddress,
+    data: Bytes,
+    blockNumber: number,
+  ): Promise<Bytes> {
     const result = await this.provider.call(
       { to: address.toString(), data: data.toString() },
-      this.blockNumber,
+      blockNumber,
     )
     return Bytes.fromHex(result)
   }
@@ -43,11 +46,12 @@ export class DiscoveryProvider {
   async getStorage(
     address: EthereumAddress,
     slot: number | bigint | Bytes,
+    blockNumber: number,
   ): Promise<Bytes> {
     const result = await this.provider.getStorageAt(
       address.toString(),
       slot instanceof Bytes ? slot.toString() : slot,
-      this.blockNumber,
+      blockNumber,
     )
     return Bytes.fromHex(result)
   }
@@ -55,12 +59,13 @@ export class DiscoveryProvider {
   async getLogs(
     address: EthereumAddress,
     topics: (string | string[])[],
-    fromBlock = 0,
+    fromBlock: number,
+    toBlock: number,
   ): Promise<providers.Log[]> {
     return this.provider.getLogs({
       address: address.toString(),
       fromBlock,
-      toBlock: this.blockNumber,
+      toBlock,
       topics,
     })
   }
@@ -69,11 +74,8 @@ export class DiscoveryProvider {
     return this.provider.getTransaction(transactionHash.toString())
   }
 
-  async getCode(address: EthereumAddress): Promise<Bytes> {
-    const result = await this.provider.getCode(
-      address.toString(),
-      this.blockNumber,
-    )
+  async getCode(address: EthereumAddress, blockNumber: number): Promise<Bytes> {
+    const result = await this.provider.getCode(address.toString(), blockNumber)
     return Bytes.fromHex(result)
   }
 

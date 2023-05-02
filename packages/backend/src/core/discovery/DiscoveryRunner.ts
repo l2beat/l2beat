@@ -2,13 +2,13 @@ import { MainnetEtherscanClient, ProjectParameters } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Gauge, Histogram } from 'prom-client'
 
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { discover } from '../discover'
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
-import { parseDiscoveryOutput } from './saveDiscoveryResult'
+import { discover } from './engine/discover'
+import { parseDiscoveryOutput } from './output/prepareDiscoveryFile'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
-export class DiscoveryEngine {
+export class DiscoveryRunner {
   constructor(
     private readonly provider: providers.AlchemyProvider,
     private readonly etherscanClient: MainnetEtherscanClient,
@@ -24,10 +24,14 @@ export class DiscoveryEngine {
     const discoveryProvider = new DiscoveryProvider(
       this.provider,
       this.etherscanClient,
-      blockNumber,
     )
 
-    const discovered = await discover(discoveryProvider, config, this.logger)
+    const discovered = await discover(
+      discoveryProvider,
+      config,
+      this.logger,
+      blockNumber,
+    )
 
     metricsDone({ project: config.name }, blockNumber)
 

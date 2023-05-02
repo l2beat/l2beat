@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { KnowledgeNuggets as KnowledgeNuggetsComponent } from './KnowledgeNuggets'
+import { KnowledgeNuggetsSection as KnowledgeNuggetsComponent } from './KnowledgeNuggetsSection'
 
 export default {
   title: 'Components/Project/KnowledgeNuggets',
@@ -22,7 +22,11 @@ const knowledgeNuggetsExample = [
 export function KnowledgeNuggets() {
   return (
     <div className="p-4">
-      <KnowledgeNuggetsComponent knowledgeNuggets={knowledgeNuggetsExample} />
+      <KnowledgeNuggetsComponent
+        title="Knowledge nuggets"
+        id="knowledge-nuggets"
+        knowledgeNuggets={knowledgeNuggetsExample}
+      />
     </div>
   )
 }

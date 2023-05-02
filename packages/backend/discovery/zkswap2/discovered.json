@@ -84,9 +84,7 @@
         "tokenLister": "0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E",
         "totalFeeTokens": 10,
         "totalUserTokens": 45,
-        "validators": [
-          "0x38101ae98196C8BCf7dF1835Bf3983B384272ae4"
-        ]
+        "validators": ["0x38101ae98196C8BCf7dF1835Bf3983B384272ae4"]
       }
     },
     {
