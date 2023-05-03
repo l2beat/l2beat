@@ -1,6 +1,7 @@
-const { mergeConfig } = require('vite')
+import type { StorybookViteConfig } from '@storybook/builder-vite'
+import { mergeConfig } from 'vite'
 
-module.exports = {
+const config: StorybookViteConfig = {
   stories: ['../src/**/*.stories.tsx'],
   addons: [
     '@storybook/addon-essentials',
@@ -24,3 +25,5 @@ module.exports = {
     })
   },
 }
+
+export default config
