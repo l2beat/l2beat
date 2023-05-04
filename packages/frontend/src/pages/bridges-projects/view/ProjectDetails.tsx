@@ -13,10 +13,10 @@ import {
   TechnologyIncompleteProps,
 } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../components/project/TechnologySection'
-import { BridgeProjectDetailsItem } from '../props/getProjectDetails'
+import { BridgeDetailsItem } from '../props/getProjectDetails'
 export interface ProjectDetailsProps {
   incomplete?: TechnologyIncompleteProps
-  items: BridgeProjectDetailsItem[]
+  items: BridgeDetailsItem[]
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {

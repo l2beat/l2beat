@@ -10,7 +10,7 @@ import {
 import { PageContent } from '../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../../components/project/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../../components/project/navigation/MobileProjectNavigation'
-import { ScalingProjectDetailsSection } from '../props/getProjectDetails'
+import { ScalingDetailsSection } from '../props/getProjectDetails'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
@@ -29,7 +29,7 @@ export function ProjectPage(props: ProjectPageProps) {
   }
 
   const sections = props.projectDetails.items.filter(
-    (i): i is ScalingProjectDetailsSection => !i.excludeFromNavigation,
+    (i): i is ScalingDetailsSection => !i.excludeFromNavigation,
   )
   return (
     <>

@@ -11,7 +11,7 @@ import { BridgesMvpWarning } from '../../../components/BridgesMvpWarning'
 import { PageContent } from '../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../../components/project/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../../components/project/navigation/MobileProjectNavigation'
-import { BridgeProjectDetailsSection } from '../props/getProjectDetails'
+import { BridgeDetailsSection } from '../props/getProjectDetails'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
@@ -30,7 +30,7 @@ export function ProjectPage(props: ProjectPageProps) {
   }
 
   const sections = props.projectDetails.items.filter(
-    (i): i is BridgeProjectDetailsSection => !i.excludeFromNavigation,
+    (i): i is BridgeDetailsSection => !i.excludeFromNavigation,
   )
 
   return (

@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { BridgeProjectDetailsSection } from '../../../pages/bridges-projects/props/getProjectDetails'
-import { ScalingProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
+import { BridgeDetailsSection } from '../../../pages/bridges-projects/props/getProjectDetails'
+import { ScalingDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { ChevronLeftIcon, ChevronRightIcon } from '../../icons'
 import { MOBILE_PROJECT_NAVIGATION_IDS } from './ids'
 
 interface Props {
-  sections: (ScalingProjectDetailsSection | BridgeProjectDetailsSection)[]
+  sections: (ScalingDetailsSection | BridgeDetailsSection)[]
 }
 
 export function MobileProjectNavigation({ sections }: Props) {

@@ -27,7 +27,7 @@ export function getProjectDetails(
     getTechnologyOverview(bridge)
   const permissionsSection = getPermissionsSection(bridge, verificationStatus)
 
-  const items: BridgeProjectDetailsItem[] = []
+  const items: BridgeDetailsItem[] = []
   items.push({
     type: 'ChartSection',
     props: { ...chart, id: 'chart', title: 'Chart' },
@@ -105,12 +105,12 @@ export function getProjectDetails(
   }
 }
 
-export type BridgeProjectDetailsItem = { excludeFromNavigation?: boolean } & (
-  | BridgeProjectDetailsSection
+export type BridgeDetailsItem = { excludeFromNavigation?: boolean } & (
+  | BridgeDetailsSection
   | NonSectionElement
 )
 
-export type BridgeProjectDetailsSection =
+export type BridgeDetailsSection =
   | ChartSection
   | DescriptionSection
   | MilestonesSection
