@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, forwardRef } from 'react'
 
 import { ChevronDownIcon } from './icons'
 
@@ -9,22 +9,36 @@ interface HoverableDropdownProps {
   children: ReactNode
 }
 
-export function HoverableDropdown(props: HoverableDropdownProps) {
+export const HoverableDropdown = forwardRef<
+  HTMLDivElement,
+  HoverableDropdownProps
+>((props, ref) => {
   return (
-    <div className={classNames('HoverableDropdown group', props.className)}>
-      <HoverableDropdownToggle>{props.title}</HoverableDropdownToggle>
+    <div
+      className={classNames(
+        'HoverableDropdown group w-min whitespace-pre',
+        props.className,
+      )}
+    >
+      <HoverableDropdownToggle toggleRef={ref}>
+        {props.title}
+      </HoverableDropdownToggle>
       <HoverableDropdownMenu>{props.children}</HoverableDropdownMenu>
     </div>
   )
-}
+})
 
 interface HoverableDropdownToggleProps {
   children: ReactNode
+  toggleRef?: React.Ref<HTMLDivElement>
 }
 
 function HoverableDropdownToggle(props: HoverableDropdownToggleProps) {
   return (
-    <div className="HoverableDropdownToggle relative flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium transition-colors group-hover:bg-gray-200 dark:bg-neutral-700 dark:group-hover:bg-gray-750">
+    <div
+      ref={props.toggleRef}
+      className="HoverableDropdownToggle relative flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium transition-colors group-hover:bg-gray-200 dark:bg-neutral-700 dark:group-hover:bg-gray-750"
+    >
       {props.children}
       <ChevronDownIcon className="HoverableDropdownToggleIcon m-auto scale-75 transition-transform duration-300 group-hover:-rotate-180" />
     </div>
