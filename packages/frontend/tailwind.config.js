@@ -121,6 +121,10 @@ module.exports = {
       spacing: {
         '2/3': '66.666666%',
       },
+      transitionProperty: {
+        height: 'height',
+        'max-height': 'max-height',
+      },
     },
   },
 }

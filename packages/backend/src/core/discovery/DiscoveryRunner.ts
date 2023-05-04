@@ -1,46 +1,31 @@
-import { DiscoveryOutput, MainnetEtherscanClient } from '@l2beat/shared'
-import { providers } from 'ethers'
+import { DiscoveryOutput } from '@l2beat/shared'
 import { Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryConfig } from './config/DiscoveryConfig'
-import { DiscoveryLogger } from './DiscoveryLogger'
-import { discover } from './engine/discover'
+import { DiscoveryEngine } from './engine/DiscoveryEngine'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
-import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
 export class DiscoveryRunner {
-  constructor(
-    private readonly provider: providers.AlchemyProvider,
-    private readonly etherscanClient: MainnetEtherscanClient,
-    private readonly logger: DiscoveryLogger,
-  ) {}
+  constructor(private readonly discoveryEngine: DiscoveryEngine) {}
 
   async run(
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<DiscoveryOutput> {
-    const metricsDone = initMetrics()
+    const histogramDone = syncHistogram.startTimer()
 
-    const discoveryProvider = new DiscoveryProvider(
-      this.provider,
-      this.etherscanClient,
-    )
+    const result = await this.discoveryEngine.discover(config, blockNumber)
 
-    const discovered = await discover(
-      discoveryProvider,
-      config,
-      this.logger,
-      blockNumber,
-    )
+    histogramDone({ project: config.name })
+    latestBlock.set({ project: config.name }, blockNumber)
 
-    metricsDone({ project: config.name }, blockNumber)
-    return toDiscoveryOutput(config.name, config.hash, blockNumber, discovered)
+    return toDiscoveryOutput(config.name, config.hash, blockNumber, result)
   }
 }
 
 const latestBlock = new Gauge({
   name: 'discovery_last_synced',
-  help: 'Value showing latest block number with which DiscoveryWatcher was run',
+  help: 'Value showing latest block number with which UpdateMonitor was run',
   labelNames: ['project'],
 })
 
@@ -50,15 +35,3 @@ const syncHistogram = new Histogram({
   labelNames: ['project'],
   buckets: [2, 4, 6, 8, 10, 15, 20, 30, 60, 120],
 })
-
-function initMetrics(): (
-  labels: { project: string },
-  blockNumber: number,
-) => void {
-  const histogramDone = syncHistogram.startTimer()
-
-  return (labels, blockNumber) => {
-    histogramDone(labels)
-    latestBlock.set(labels, blockNumber)
-  }
-}
