@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { CheckIcon } from './icons/symbols/CheckIcon'
+import { CheckIcon } from './icons'
 
 export interface IncludeLayer2sCheckboxProps {
   className?: string
