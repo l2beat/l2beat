@@ -63,7 +63,7 @@ export function Chart({
         data-milestones={JSON.stringify(milestones)}
         className={cx(
           fullWidth
-            ? 'bg-gray-100 px-4 py-6 dark:bg-gray-950 md:bg-transparent md:p-0 md:dark:bg-transparent'
+            ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
             : 'mt-4',
           sectionClassName,
         )}
