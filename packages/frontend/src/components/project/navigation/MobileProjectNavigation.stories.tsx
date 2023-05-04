@@ -1,7 +1,7 @@
 import { range } from 'lodash'
 import React, { useEffect } from 'react'
 
-import { ProjectDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
+import { ScalingDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { configureMobileProjectNavigation } from '../../../scripts/section-navigation/configureMobileProjectNavigation'
 import { MOBILE_PROJECT_NAVIGATION_IDS } from './ids'
 import { MobileProjectNavigation } from './MobileProjectNavigation'
@@ -10,7 +10,7 @@ export default {
   title: 'Components/Project/Navigation/MobileProjectNavigation',
 }
 
-const sections: ProjectDetailsSection[] = range(10).map(() => ({
+const sections: ScalingDetailsSection[] = range(10).map(() => ({
   type: 'DescriptionSection',
   props: {
     id: 'example',

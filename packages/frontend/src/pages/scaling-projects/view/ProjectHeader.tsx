@@ -107,6 +107,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
 
   return (
     <DetailsHeader
+      type="layer2"
       title={props.title}
       icon={props.icon}
       stats={stats}
@@ -114,7 +115,6 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       links={props.links}
       isUpcoming={props.isUpcoming}
       isArchived={props.isArchived}
-      isSummary
     />
   )
 }
