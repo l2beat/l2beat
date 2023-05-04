@@ -47,7 +47,6 @@ export function Navbar(props: NavbarProps) {
     <>
       <SidebarMenu
         selectedPage={props.selectedPage}
-        showBanner={props.showBanner}
         showActivity={props.showActivity}
         showHiring={props.showHiring}
         forumLink={props.forumLink}

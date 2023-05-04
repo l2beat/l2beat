@@ -12,14 +12,14 @@ export function configureSidebarMenu() {
   sidebarMenuShadow?.addEventListener('click', closeMenu)
 
   function openMenu() {
-    sidebarMenu?.classList.remove('hidden')
-    sidebarMenuShadow?.classList.remove('hidden')
+    sidebarMenu?.classList.remove('translate-x-full')
+    sidebarMenuShadow?.classList.remove('translate-x-full')
     document.body.classList.add('w-screen', 'h-screen', 'overflow-hidden')
   }
 
   function closeMenu() {
-    sidebarMenu?.classList.add('hidden')
-    sidebarMenuShadow?.classList.add('hidden')
+    sidebarMenu?.classList.add('translate-x-full')
+    sidebarMenuShadow?.classList.add('translate-x-full')
     document.body.classList.remove('w-screen', 'h-screen', 'overflow-hidden')
   }
 }

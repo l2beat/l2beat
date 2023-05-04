@@ -1,7 +1,7 @@
 import {
   ContractParameters,
+  DiscoveryOutput,
   EthereumAddress,
-  ProjectParameters,
 } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
@@ -36,7 +36,7 @@ export interface DashboardContract {
 }
 
 export function getDashboardContracts(
-  discovery: ProjectParameters,
+  discovery: DiscoveryOutput,
   config: DiscoveryConfig,
 ): DashboardContract[] {
   const result = discovery.contracts.map((contract) =>
@@ -47,7 +47,7 @@ export function getDashboardContracts(
 }
 
 function getContract(
-  discovery: ProjectParameters,
+  discovery: DiscoveryOutput,
   config: DiscoveryConfig,
   contract: ContractParameters,
 ) {

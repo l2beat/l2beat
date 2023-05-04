@@ -1,6 +1,8 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { CheckIcon } from './icons'
+
 export interface IncludeLayer2sCheckboxProps {
   className?: string
   label: ReactNode
@@ -19,8 +21,8 @@ export function Checkbox({
   return (
     <label
       className={cx(
-        'bg-gray-200 text-base font-medium dark:bg-gray-750',
-        'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg p-1 pr-2',
+        'bg-gray-200 text-base font-semibold dark:bg-gray-750',
+        'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg p-2',
         className,
       )}
     >
@@ -32,32 +34,7 @@ export function Checkbox({
         className="peer hidden"
         defaultChecked={defaultChecked}
       />
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        role="img"
-        fill="none"
-        stroke="none"
-        className="peer-checked:stroke-black dark:peer-checked:stroke-white"
-      >
-        <rect
-          x="0"
-          y="0"
-          width="24"
-          height="24"
-          rx="6"
-          ry="6"
-          stroke="none"
-          className="fill-white dark:fill-black"
-        />
-        <path
-          d="M4.95 12.95L9.35 17.3L19.05 7.6"
-          strokeWidth="2.7"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <CheckIcon />
       <span>{label}</span>
     </label>
   )

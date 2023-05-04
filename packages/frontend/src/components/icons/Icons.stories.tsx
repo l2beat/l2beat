@@ -21,6 +21,7 @@ import { ZkSyncIcon } from './providers/ZkSyncIcon'
 import { AppsIcon } from './symbols/AppsIcon'
 import { ArchivedIcon } from './symbols/ArchivedIcon'
 import { BulletIcon } from './symbols/BulletIcon'
+import { CheckIcon } from './symbols/CheckIcon'
 import { CodeIcon } from './symbols/CodeIcon'
 import { DocumentIcon } from './symbols/DocumentIcon'
 import { FinanceIcon } from './symbols/FinanceIcon'
@@ -101,6 +102,7 @@ export function SymbolIcons() {
       <AppsIcon />
       <ArchivedIcon />
       <BulletIcon />
+      <CheckIcon />
       <CodeIcon />
       <DocumentIcon />
       <FinanceIcon />

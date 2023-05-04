@@ -3,7 +3,7 @@ import React from 'react'
 import { KnowledgeNuggetsSection as KnowledgeNuggetsComponent } from './KnowledgeNuggetsSection'
 
 export default {
-  title: 'Components/Project/KnowledgeNuggets',
+  title: 'Components/Project/KnowledgeNuggetsSection',
 }
 
 const knowledgeNuggetsExample = [
