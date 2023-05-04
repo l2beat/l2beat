@@ -1,7 +1,7 @@
 import {
   ContractParameters,
   ContractValue,
-  ProjectParameters,
+  DiscoveryOutput,
 } from '@l2beat/shared'
 import { isArray } from 'lodash'
 
@@ -19,7 +19,7 @@ export interface DashboardContractFieldValue {
 }
 
 export function getValues(
-  discovery: ProjectParameters,
+  discovery: DiscoveryOutput,
   contract: ContractParameters,
   field: string,
 ): DashboardContractFieldValue[] {

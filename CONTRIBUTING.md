@@ -43,11 +43,12 @@ If you want to add a new L2 project you can do that by opening a PR. To do this 
 4. Add an 256x256 png project icon under 10KB into `packages/frontend/src/static/icons`.
 5. If your project is a fork of an already existing L2 project (like Boba Network that is on top of Optimism) or it was built using a Rollups SDK/framework (like ImmutableX that is on top of StarkEx) you can show this information by:
    - In your project's .ts file find the field `technology`, add a field `provider` (if it is not already) and set the technology provider your project is based on.
-   - If the technology provider in which your project is based on is not defined in L2BEAT yet:
-     - you can add it in the file `packages/config/src/layer2s/types/Layer2Technology.ts`. Find the optional property `provider`.
+   - If the technology provider in which your project is based on is not defined in L2BEAT yet, you will need to:
+     - Add the new provider in the file `packages/config/src/layer2s/types/Layer2Technology.ts` (find the optional property `provider`).
      - Create a simple React component to render the technology provider Icon (SVG format required) inside `packages/frontend/src/components/icons/providers`.
      - Import the Icon component created in `packages/frontend/src/components/icons/index.ts`.
-     - To finish, add an entry for the technology provider in the provider's Legend that is located at `packages/frontend/src/components/ScalingLegend.tsx`.
+     - Add an entry for the technology provider in the provider's Legend that is located at `packages/frontend/src/components/ScalingLegend.tsx`.
+     - To finish, add the technology provider icon in the technology column of the project's table that is located at `packages/frontend/src/components/table/TechnologyCell.tsx`.
 6. Open a PR :D
 
 Adding a new project in this way will automatically update both the data fetching logic as well as the frontend.

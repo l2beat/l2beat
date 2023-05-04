@@ -6,7 +6,7 @@ import { rimraf } from 'rimraf'
 
 import { Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { getCustomName, prepareDiscoveryFile } from './prepareDiscoveryFile'
+import { toDiscoveryOutput } from './toDiscoveryOutput'
 import { toPrettyJson } from './toPrettyJson'
 
 export async function saveDiscoveryResult(
@@ -15,7 +15,12 @@ export async function saveDiscoveryResult(
   blockNumber: number,
   configHash: Hash256,
 ) {
-  const project = prepareDiscoveryFile(results, config, blockNumber, configHash)
+  const project = toDiscoveryOutput(
+    config.name,
+    configHash,
+    blockNumber,
+    results,
+  )
   const json = await toPrettyJson(project)
 
   const root = `discovery/${config.name}`
@@ -27,11 +32,10 @@ export async function saveDiscoveryResult(
     if (result.type === 'EOA') {
       continue
     }
-    for (const [i, files] of result.sources.files.entries()) {
+    for (const [i, files] of result.sources.entries()) {
       for (const [file, content] of Object.entries(files)) {
-        const codebase = getSourceName(i, result.sources.files.length)
-        const { name } = getCustomName(result.name, result.address, config)
-        const path = `${root}/.code/${name}${codebase}/${file}`
+        const codebase = getSourceName(i, result.sources.length)
+        const path = `${root}/.code/${result.name}${codebase}/${file}`
         await mkdirp(dirname(path))
         await writeFile(path, content)
       }

@@ -5,7 +5,7 @@ import { ChartSection } from '../../../components/project/ChartSection'
 import { ContractsSection } from '../../../components/project/ContractsSection'
 import { DescriptionSection } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
-import { MilestonesSection } from '../../../components/project/Milestones'
+import { MilestonesSection } from '../../../components/project/MilestonesSection'
 import { PermissionsSection } from '../../../components/project/PermissionsSection'
 import { RiskAnalysis } from '../../../components/project/RiskAnalysis'
 import {
