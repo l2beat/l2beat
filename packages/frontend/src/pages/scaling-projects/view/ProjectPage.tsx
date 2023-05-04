@@ -34,7 +34,7 @@ export function ProjectPage(props: ProjectPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <div className="sticky top-0 z-40 md:hidden">
+      <div className="sticky top-0 z-100 md:hidden">
         <MobileProjectNavigation sections={sections} />
       </div>
       <PageContent mobileFull>

@@ -108,9 +108,10 @@ module.exports = {
       10: '10', // Hoverable dropdown menu, Chart logo and Y axis, Borders (TvlActivityToggle and DesktopTabs)
       20: '20', // Chart canvas and loader, Items (DesktopTabs, TvlActivityToggle)
       30: '30', // Chart hover line
-      40: '40', // Mobile project navigation, Milestones, Chart hover line point (squares and circles)
-      41: '41', // Chart hover content
-      50: '50', // Tooltip, Chart "Coming soon" disclaimer
+      40: '40', // Milestones, Chart hover line point (squares and circles)
+      50: '50', // Chart hover content
+      60: '60', // Tooltip, Chart "Coming soon" disclaimer
+      100: '100', // Mobile project navigation
       999: '999', // Mobile side menu
     },
     extend: {
