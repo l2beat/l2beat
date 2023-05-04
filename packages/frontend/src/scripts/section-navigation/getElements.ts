@@ -19,7 +19,7 @@ export function getDesktopElements() {
   const sections = document.querySelectorAll('section')
 
   if (!container || !list || !listHeader || !summaryItem) {
-    throw new Error('Could not find all elements for desktop navigation')
+    return
   }
 
   return {
@@ -51,7 +51,7 @@ export function getMobileElements() {
   const sections = document.querySelectorAll('section')
 
   if (!container || !list || !summaryItem || !arrowLeft || !arrowRight) {
-    throw new Error('Could not find all elements for mobile navigation')
+    return
   }
 
   return {

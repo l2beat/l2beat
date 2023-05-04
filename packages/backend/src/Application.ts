@@ -5,10 +5,10 @@ import { Config } from './config'
 import { Clock } from './core/Clock'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
-import { createDiscoveryWatcherModule } from './modules/discoveryWatcher/DiscoveryWatcherModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
+import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { Database } from './peripherals/database/shared/Database'
 import { handleServerError, reportError } from './tools/ErrorReporter'
 
@@ -43,7 +43,7 @@ export class Application {
       createMetricsModule(config),
       createTvlModule(config, logger, http, database, clock),
       createActivityModule(config, logger, http, database, clock),
-      createDiscoveryWatcherModule(config, logger, http, database, clock),
+      createUpdateMonitorModule(config, logger, http, database, clock),
     ]
 
     const apiServer = new ApiServer(
