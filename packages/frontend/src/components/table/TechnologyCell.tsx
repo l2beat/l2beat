@@ -2,7 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
+import { CartesiIcon, OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
 
 export interface TechnologyCellProps {
   children: string
@@ -16,6 +16,14 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
   return (
     <span className={cx(isRollup && 'text-green-300 dark:text-green-450')}>
       {children}
+      {provider === 'Cartesi' && (
+        <span
+          className={providerClassName}
+          title="This project is built using Cartesi."
+        >
+          <CartesiIcon className={providerIconClassName} />
+        </span>
+      )}
       {provider === 'StarkEx' && (
         <span
           className={providerClassName}
