@@ -24,8 +24,7 @@ export function getProps(
       navbar: getNavbarProps(config, 'bridges'),
       header: getHeader(bridge, tvlApiResponse),
       projectHeader: getProjectHeader(bridge, tvlApiResponse),
-      chart,
-      projectDetails: getProjectDetails(bridge, verificationStatus),
+      projectDetails: getProjectDetails(bridge, verificationStatus, chart),
       footer: getFooterProps(config),
     },
     wrapper: {

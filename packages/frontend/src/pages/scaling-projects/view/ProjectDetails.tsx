@@ -14,11 +14,11 @@ import {
 } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
-import { ProjectDetailsItem } from '../props/getProjectDetails'
+import { ScalingDetailsItem } from '../props/getProjectDetails'
 
 export interface ProjectDetailsProps {
   isUpcoming?: boolean
-  items: ProjectDetailsItem[]
+  items: ScalingDetailsItem[]
   incomplete?: TechnologyIncompleteProps
 }
 
