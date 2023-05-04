@@ -1,11 +1,11 @@
-import { MainnetEtherscanClient, ProjectParameters } from '@l2beat/shared'
+import { DiscoveryOutput, MainnetEtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { discover } from './engine/discover'
-import { parseDiscoveryOutput } from './output/prepareDiscoveryFile'
+import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
 export class DiscoveryRunner {
@@ -18,7 +18,7 @@ export class DiscoveryRunner {
   async run(
     config: DiscoveryConfig,
     blockNumber: number,
-  ): Promise<ProjectParameters> {
+  ): Promise<DiscoveryOutput> {
     const metricsDone = initMetrics()
 
     const discoveryProvider = new DiscoveryProvider(
@@ -34,9 +34,7 @@ export class DiscoveryRunner {
     )
 
     metricsDone({ project: config.name }, blockNumber)
-
-    // TODO: test this line
-    return parseDiscoveryOutput(discovered, config, blockNumber, config.hash)
+    return toDiscoveryOutput(config.name, config.hash, blockNumber, discovered)
   }
 }
 

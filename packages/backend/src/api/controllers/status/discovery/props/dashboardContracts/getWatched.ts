@@ -1,4 +1,4 @@
-import { ContractParameters, ProjectParameters } from '@l2beat/shared'
+import { ContractParameters, DiscoveryOutput } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../../core/discovery/config/DiscoveryConfig'
@@ -7,7 +7,7 @@ import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
 
 export function getWatched(
-  discovery: ProjectParameters,
+  discovery: DiscoveryOutput,
   config: DiscoveryConfig,
   contract: ContractParameters,
   viewABI: ethers.utils.Interface,
