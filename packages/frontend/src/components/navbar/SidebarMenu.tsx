@@ -1,4 +1,3 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
@@ -12,7 +11,6 @@ import { NavbarPage } from './types'
 
 export interface SidebarMenuProps {
   selectedPage: NavbarPage
-  showBanner: boolean
   showActivity: boolean
   showHiring: boolean
   forumLink: string
@@ -24,12 +22,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
     <>
       <div
         id="sidebar-menu"
-        className={cx(
-          'fixed left-0 bottom-0 z-50 hidden w-full text-base',
-          props.showBanner ? 'top-8' : 'top-0',
-
-          'flex flex-col bg-white dark:bg-black',
-        )}
+        className="fixed left-0 bottom-0 top-0  z-50 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black"
       >
         <div className="mt-[11.5px] flex items-center justify-between px-4">
           <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
@@ -116,10 +109,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
       </div>
       <div
         id="sidebar-menu-shadow"
-        className={cx(
-          'fixed top-0 left-0 z-40 hidden',
-          'h-full w-full bg-black opacity-30',
-        )}
+        className="fixed top-0 left-0 z-40 h-full w-full translate-x-full bg-black opacity-30 transition-transform duration-300"
       />
     </>
   )
