@@ -10,11 +10,11 @@ export const amarok: Bridge = {
   type: 'bridge',
   id: ProjectId('amarok'),
   display: {
-    name: 'Connext Amarok',
-    slug: 'amarok',
+    name: 'Connext',
+    slug: 'connext',
     description:
-      'Connext Amarok is a multilayered system that aggregates various native AMBs in an Hub-and-Spoke architecture with Ethereum being the Hub receiving\
-    messages from other domains. Amarok implements a liquidity network on top of its Hub-and-Spoke architecture.',
+      'Connext is a multilayered system that aggregates various native AMBs in an Hub-and-Spoke architecture with Ethereum being the Hub receiving\
+    messages from other domains. It implements a liquidity network on top of its Hub-and-Spoke architecture.',
     links: {
       apps: ['https://bridge.connext.network/', 'https://connextscan.io/'],
       websites: ['https://blog.connext.network/'],
@@ -63,7 +63,7 @@ export const amarok: Bridge = {
         'Messages from various domains are aggregated into one message root and are periodically sent to Ethereum using native AMBs. Note that for Optimistic Rollups (Arbitrum, Optimism)\
       the AMB is only used as a transport layer, but 7-day delay is being ignored. Upon being delivered to Ethereum these message roots are\
       subsequently aggregated again into a root-of-root of messages before being delivered to their destination domains. Each message can be optimistically fast-forwarded by a network of Routers that will\
-      front liquidity (if the message is a token transfer) or post a bond (if the message is a xChain call). Upon receiving the message root via native AMBs Connext Amarok bridge will\
+      front liquidity (if the message is a token transfer) or post a bond (if the message is a xChain call). Upon receiving the message root via native AMBs Connext bridge will\
       reconciles messages and return bond to the Routers. There is a configurable delay programmed into the RootManager contract and the SpokeConnectors\
       receiving messages. During the delay period a whitelisted set of Watchers can pause the bridge if the fraudulent message passed via AMB is detected.',
       references: [],
@@ -85,7 +85,7 @@ export const amarok: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'native AMBs that Amarok uses allow for passing forged messages and this is not caught by Watchers.',
+          text: 'native AMBs that Connext uses allow for passing forged messages and this is not caught by Watchers.',
           isCritical: false,
         },
         {
@@ -101,7 +101,7 @@ export const amarok: Bridge = {
       {
         ...discovery.getMainContractDetails('ConnextBridge'),
         description:
-          'The main Connext Amarok contract. Following Diamond design pattern, it contains multiple Facets that implement\
+          'The main Connext contract. Following Diamond design pattern, it contains multiple Facets that implement\
         various parts of the bridge functionality.',
       },
       {
@@ -153,7 +153,7 @@ export const amarok: Bridge = {
     {
       name: 'Connext MultiSig',
       description:
-        '3/3 MultiSig. Owner of the main Connext Amarok Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
+        '3/3 MultiSig. Owner of the main Connext Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
       accounts: [
         {
           address: discovery.getContract('ConnextBridgeOwner').address,
@@ -208,7 +208,7 @@ export const amarok: Bridge = {
     },
     sourceUpgradeability: {
       value: 'YES',
-      description: 'Connext Amarok can be upgraded by 3/3 MultiSig',
+      description: 'Connext can be upgraded by 3/3 MultiSig',
       sentiment: 'bad',
     },
   },

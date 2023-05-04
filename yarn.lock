@@ -5917,10 +5917,10 @@ each-props@^1.3.2:
     is-plain-object "^2.0.1"
     object.defaults "^1.1.0"
 
-earl@^1.0.0-canary.20230331T135758:
-  version "1.0.0-canary.20230331T135758"
-  resolved "https://registry.yarnpkg.com/earl/-/earl-1.0.0-canary.20230331T135758.tgz#63bbde543b193452f1ddf4f1408095c3d32e892a"
-  integrity sha512-M8qnIZMNHUvWoXFZ08qE0cz2IU8T65W12fPQmCU2hS1njSARXFb6dwvg/Ejncc4g/B3MDz5Ueb9efFg2a0lukw==
+earl@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/earl/-/earl-1.1.0.tgz#6bd601c3fe3d2e9a2a05a5244f260463052de926"
+  integrity sha512-gOYd1+WYoWEkyGvUi9aKJ3Y8zSfIH0YShpvhjj59cwA8NiaWcgZe6wDOHu18j8JqGjHQtGnGIF0F+HlYRh9q9A==
   dependencies:
     error-stack-parser "^2.1.4"
 

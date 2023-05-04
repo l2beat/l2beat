@@ -1,11 +1,11 @@
 import {
   ContractParameters,
   ContractValue,
-  ProjectParameters,
+  DiscoveryOutput,
 } from '@l2beat/shared'
 
 export function getDiscoveryChild(
-  discovery: ProjectParameters,
+  discovery: DiscoveryOutput,
   contract: ContractParameters,
   value: ContractValue,
 ): string | undefined {
