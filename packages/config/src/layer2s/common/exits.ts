@@ -52,7 +52,7 @@ const STARKEX_REGULAR: ProjectTechnologyChoice = {
   references: [
     {
       text: 'Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/spot/spot-trading-full-withdrawals.html,
+      href: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html#forced_trade',
     },
   ],
 }
@@ -79,7 +79,7 @@ const STARKEX_FORCED: ProjectTechnologyChoice = {
     },
     {
       text: 'Forced Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html',
+      href: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html#forced_withdrawal',
     },
     {
       text: 'Full Withdrawal - StarkEx documentation',
