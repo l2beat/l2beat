@@ -1,4 +1,4 @@
-import { ProjectParameters } from '@l2beat/shared'
+import { DiscoveryOutput } from '@l2beat/shared'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
@@ -35,7 +35,7 @@ export class ConfigReader {
     return result
   }
 
-  async readDiscovery(name: string): Promise<ProjectParameters> {
+  async readDiscovery(name: string): Promise<DiscoveryOutput> {
     const contents = await readFile(
       `discovery/${name}/discovered.json`,
       'utf-8',
@@ -43,6 +43,6 @@ export class ConfigReader {
 
     const parsed: unknown = JSON.parse(contents)
 
-    return parsed as ProjectParameters
+    return parsed as DiscoveryOutput
   }
 }

@@ -17,7 +17,7 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
-  readonly discoveryWatcher: DiscoveryWatcherConfig | false
+  readonly updateMonitor: UpdateMonitorConfig | false
 }
 
 export interface LoggerConfig {
@@ -74,7 +74,7 @@ export interface MetricsAuthConfig {
   readonly pass: string
 }
 
-export interface DiscoveryWatcherConfig {
+export interface UpdateMonitorConfig {
   readonly runOnStart?: boolean
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string

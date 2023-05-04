@@ -36,7 +36,7 @@
     "@types/sinonjs__fake-timers": "^8.1.2",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
-    "earl": "^1.0.0-canary.20230331T135758",
+    "earl": "^1.1.0",
     "esbuild": "^0.14.43",
     "esbuild-register": "^3.3.3",
     "eslint": "^8.32.0",

@@ -1,5 +1,4 @@
-import * as types from '@l2beat/shared'
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
@@ -7,10 +6,11 @@ import { Bridge } from './types'
 
 export const connext: Bridge = {
   type: 'bridge',
-  id: types.ProjectId('connext'),
+  id: ProjectId('connext'),
+  isArchived: true,
   display: {
-    name: 'Connext',
-    slug: 'connext',
+    name: 'Connext (Legacy)',
+    slug: 'connext-legacy',
     links: {
       websites: [
         'https://bridge.connext.network/',
@@ -32,7 +32,7 @@ export const connext: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09'),
-        sinceTimestamp: new types.UnixTime(1636004546),
+        sinceTimestamp: new UnixTime(1636004546),
         tokens: ['USDC', 'USDT', 'DAI', 'WBTC'],
       },
     ],

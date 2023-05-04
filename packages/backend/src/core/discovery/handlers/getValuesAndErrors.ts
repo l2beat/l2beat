@@ -13,8 +13,5 @@ export function getValuesAndErrors(results: HandlerResult[]) {
       errors[result.field] = result.error
     }
   }
-  return {
-    values: Object.entries(values).length !== 0 ? values : undefined,
-    errors: Object.entries(errors).length !== 0 ? errors : undefined,
-  }
+  return { values, errors }
 }
