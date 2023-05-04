@@ -52,7 +52,7 @@ const STARKEX_REGULAR: ProjectTechnologyChoice = {
   references: [
     {
       text: 'Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/withdrawal',
+      href: 'https://docs.starkware.co/starkex/spot/spot-trading-full-withdrawals.html,
     },
   ],
 }
@@ -65,7 +65,7 @@ const STARKEX_REGULAR_NFT: ProjectTechnologyChoice = {
   references: [
     {
       text: 'Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/withdrawal',
+      href: 'https://docs.starkware.co/starkex/spot/spot-trading-full-withdrawals.html',
     },
   ],
 }
@@ -75,15 +75,15 @@ const STARKEX_FORCED: ProjectTechnologyChoice = {
   references: [
     {
       text: 'Forced Operations - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/forced-operations',
+      href: 'https://docs.starkware.co/starkex/spot/shared/README-forced-operations.html',
     },
     {
       text: 'Forced Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-perpetual-trading',
+      href: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html',
     },
     {
       text: 'Full Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-spot-trading',
+      href: 'https://docs.starkware.co/starkex/spot/spot-trading-full-withdrawals.html',
     },
   ],
 }
