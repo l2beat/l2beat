@@ -25,7 +25,7 @@ export function MilestonesSection({
           <div className="h-[60%] w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500 " />
           <div className="h-[40%] w-[1.7px] bg-gradient-to-b from-green-400 dark:w-px dark:from-green-500" />
         </div>
-        <div className="ml-10 mt-6">
+        <div className="ml-10">
           {milestones
             .sort(
               (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
