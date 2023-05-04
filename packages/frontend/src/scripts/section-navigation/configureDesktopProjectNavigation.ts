@@ -8,8 +8,11 @@ interface PreviouslyHighlighted {
 }
 
 export function configureDesktopProjectNavigation() {
-  const { container, list, listHeader, summaryItem, sections } =
-    getDesktopElements()
+  const elements = getDesktopElements()
+
+  if (!elements) return
+
+  const { container, list, listHeader, summaryItem, sections } = elements
 
   let previouslyHighlighted: PreviouslyHighlighted | null = null
 
