@@ -1,6 +1,6 @@
+import { range } from 'lodash'
 import React, { useEffect } from 'react'
 
-import { range } from 'lodash'
 import { configureHoverableDropdown } from '../scripts/configureHoverableDropdown'
 import { HoverableDropdown as HoverableDropdownComponent } from './HoverableDropdown'
 

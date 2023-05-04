@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { ReactNode, forwardRef } from 'react'
+import React, { forwardRef, ReactNode } from 'react'
 
 import { ChevronDownIcon } from './icons'
 
