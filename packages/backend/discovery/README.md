@@ -70,7 +70,7 @@ All of the parameters are optional:
 - `ignoreDiscovery: boolean` - if set to `true`, discovery will not consider this contract as a `relative`, effectively skipping discovery of this contract
 - `ignoreRelative: field[]` - discovery will not consider this contract as a `relative`. The difference between `ignoreDiscovery` and `ignoreRelative` is that `ignoreRelative` is configured per field, while `ignoreDiscovery` is configured per contract
 - `ignoreMethods: field[]` - discovery will skip this method
-- `ignoreInWatchMode: field[]` - if set to `true`, the `DiscoveryWatcher` will not notify change of this value
+- `ignoreInWatchMode: field[]` - if set to `true`, the `UpdateMonitor` will not notify change of this value
 - `fields: Record<field, Handler>` - custom fields that represent more complex values of the contract: ex. arrays longer than 5 and private variables
 
 **Example:**

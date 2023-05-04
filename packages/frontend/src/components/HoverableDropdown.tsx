@@ -38,7 +38,7 @@ interface HoverableDropdownMenuProps {
 
 function HoverableDropdownMenu(props: HoverableDropdownMenuProps) {
   return (
-    <div className="HoverableDropdownMenu pointer-events-none absolute z-10 opacity-0 transition-opacity duration-300">
+    <div className="HoverableDropdownMenu pointer-events-none absolute z-50 opacity-0 transition-opacity duration-300">
       <hr className="h-1.5 border-t-0" />
       <div
         className={classNames(

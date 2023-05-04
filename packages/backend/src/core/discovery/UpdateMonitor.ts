@@ -1,25 +1,25 @@
-import { Hash256, Logger, ProjectParameters, UnixTime } from '@l2beat/shared'
+import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
-import { DiscoveryWatcherRepository } from '../peripherals/database/discovery/DiscoveryWatcherRepository'
-import { Channel, DiscordClient } from '../peripherals/discord/DiscordClient'
-import { Clock } from './Clock'
-import { ConfigReader } from './discovery/config/ConfigReader'
-import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
-import { DiscoveryRunner } from './discovery/DiscoveryRunner'
-import { diffDiscovery, DiscoveryDiff } from './discovery/output/diffDiscovery'
-import { diffToMessages } from './discovery/output/diffToMessages'
-import { findDependents } from './discovery/utils/findDependents'
-import { TaskQueue } from './queue/TaskQueue'
+import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
+import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
+import { Clock } from '../Clock'
+import { TaskQueue } from '../queue/TaskQueue'
+import { ConfigReader } from './config/ConfigReader'
+import { DiscoveryConfig } from './config/DiscoveryConfig'
+import { DiscoveryRunner } from './DiscoveryRunner'
+import { diffDiscovery, DiscoveryDiff } from './output/diffDiscovery'
+import { diffToMessages } from './output/diffToMessages'
+import { findDependents } from './utils/findDependents'
 
 export interface Diff {
   changes: DiscoveryDiff[]
   sendDailyReminder: boolean
 }
 
-export class DiscoveryWatcher {
+export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
@@ -27,7 +27,7 @@ export class DiscoveryWatcher {
     private readonly discoveryRunner: DiscoveryRunner,
     private readonly discordClient: DiscordClient | undefined,
     private readonly configReader: ConfigReader,
-    private readonly repository: DiscoveryWatcherRepository,
+    private readonly repository: UpdateMonitorRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
@@ -37,7 +37,7 @@ export class DiscoveryWatcher {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: DiscoveryWatcher.name,
+        metricsId: UpdateMonitor.name,
       },
     )
   }
@@ -145,7 +145,7 @@ export class DiscoveryWatcher {
 
   async findChanges(
     name: string,
-    discovery: ProjectParameters,
+    discovery: DiscoveryOutput,
     configHash: Hash256,
     isDailyReminder: boolean,
     config: DiscoveryConfig,
@@ -234,7 +234,7 @@ export class DiscoveryWatcher {
   // notifications, which makes the same request again and compares the
   // results.
   async sanityCheck(
-    discovery: ProjectParameters,
+    discovery: DiscoveryOutput,
     diff: Diff,
     projectConfig: DiscoveryConfig,
     blockNumber: number,
@@ -299,17 +299,17 @@ function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
 
 const latestBlock = new Gauge({
   name: 'discovery_watcher_last_synced',
-  help: 'Value showing latest block number with which DiscoveryWatcher was run',
+  help: 'Value showing latest block number with which UpdateMonitor was run',
 })
 
 const changesDetected = new Gauge({
   name: 'discovery_watcher_changes_detected',
-  help: 'Value showing the amount of changes detected by DiscoveryWatcher',
+  help: 'Value showing the amount of changes detected by UpdateMonitor',
 })
 
 const syncHistogram = new Histogram({
   name: 'discovery_watcher_sync_duration_histogram',
-  help: 'Histogram showing DiscoveryWatcher sync duration',
+  help: 'Histogram showing UpdateMonitor sync duration',
   buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
 })
 

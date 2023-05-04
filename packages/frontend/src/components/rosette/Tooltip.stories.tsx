@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
+import { hoverOver } from '../../utils/storybook/hoverOver'
 import { Tooltip as TooltipComponent } from '../Tooltip'
 import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
 
@@ -10,14 +11,9 @@ export default {
 }
 
 export function RosetteTooltip() {
-  const tooltipRef = useRef<HTMLSpanElement>(null)
   useEffect(() => {
     configureTooltips()
-    // show tooltip
-    tooltipRef.current?.dispatchEvent(new MouseEvent('mouseenter'))
-    // remove all event listeners, leaving them will cause reg-viz to remove tooltip
-    document.body.replaceWith(document.body.cloneNode(true))
-    tooltipRef.current?.replaceWith(tooltipRef.current.cloneNode(true))
+    hoverOver('.Tooltip')
   }, [])
 
   const project: RosetteTooltipProps = {
@@ -55,7 +51,6 @@ export function RosetteTooltip() {
   return (
     <div className="m-4 ml-32">
       <span
-        ref={tooltipRef}
         className="Tooltip inline-block"
         title={renderToStaticMarkup(
           <RosetteTooltipPopup
