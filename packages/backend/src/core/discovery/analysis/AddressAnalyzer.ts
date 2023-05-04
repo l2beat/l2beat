@@ -1,25 +1,38 @@
-import { ContractParameters, EthereumAddress } from '@l2beat/shared'
+import {
+  ContractValue,
+  EthereumAddress,
+  UpgradeabilityParameters,
+} from '@l2beat/shared'
 
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
-import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
+import { SourceCodeService } from '../source/SourceCodeService'
 import { getCodeLink } from './getCodeLink'
 import { getRelatives } from './getRelatives'
 
-export interface AnalyzedContract extends ContractParameters {
+export type Analysis = AnalyzedContract | AnalyzedEOA
+
+export interface AnalyzedContract {
   type: 'Contract'
-  sources: ContractSources
+  address: EthereumAddress
+  name: string
+  derivedName: string | undefined
+  isVerified: boolean
+  codeLink: string
+  upgradeability: UpgradeabilityParameters
+  values: Record<string, ContractValue>
+  errors: Record<string, string>
+  abis: Record<string, string[]>
+  sources: Record<string, string>[]
 }
 
 export interface AnalyzedEOA {
   type: 'EOA'
   address: EthereumAddress
 }
-
-export type Analysis = AnalyzedContract | AnalyzedEOA
 
 export class AddressAnalyzer {
   constructor(
@@ -64,14 +77,16 @@ export class AddressAnalyzer {
     return {
       analysis: {
         type: 'Contract',
-        name: sources.name,
-        unverified: !sources.isVerified ? true : undefined,
+        name: overrides?.name ?? sources.name,
+        derivedName: overrides?.name !== undefined ? sources.name : undefined,
+        isVerified: sources.isVerified,
         address,
-        code: getCodeLink(address, proxy?.implementations),
+        codeLink: getCodeLink(address, proxy?.implementations),
         upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
         values,
         errors,
-        sources,
+        abis: sources.abis,
+        sources: sources.files,
       },
       relatives: getRelatives(
         results,

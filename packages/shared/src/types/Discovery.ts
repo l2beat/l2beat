@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { EthereumAddress } from './EthereumAddress'
 import { Hash256 } from './Hash256'
 
-export interface ProjectParameters {
+export interface DiscoveryOutput {
   name: string
   blockNumber: number
   contracts: ContractParameters[]

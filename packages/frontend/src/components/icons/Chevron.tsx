@@ -21,18 +21,20 @@ export function ChevronLeftIcon(props: SVGAttributes<SVGElement>) {
 }
 
 export function ChevronDownIcon(props: SVGAttributes<SVGElement>) {
+  const { className, ...rest } = props
   return (
     <Icon
       width="16"
-      height="10"
-      viewBox="0 0 16 10"
+      height="16"
+      viewBox="0 0 16 16"
       aria-label="Dropdown arrow icon"
-      {...props}
+      className={classNames('my-auto', className)}
+      {...rest}
     >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M0.484284 0.551423C0.952914 0.0827939 1.71271 0.0827939 2.18134 0.551423L7.99948 6.36956L13.8176 0.551423C14.2862 0.0827939 15.046 0.0827939 15.5147 0.551423C15.9833 1.02005 15.9833 1.77985 15.5147 2.24848L8.94229 8.82087C8.42159 9.34156 7.57737 9.34157 7.05667 8.82087L0.484284 2.24848C0.0156552 1.77985 0.0156552 1.02005 0.484284 0.551423Z"
+        d="M0.484807 4.55147C0.953436 4.08284 1.71323 4.08284 2.18186 4.55147L8 10.3696L13.8181 4.55147C14.2868 4.08284 15.0466 4.08284 15.5152 4.55147C15.9838 5.0201 15.9838 5.7799 15.5152 6.24853L8.94281 12.8209C8.42212 13.3416 7.5779 13.3416 7.05719 12.8209L0.484807 6.24853C0.0161778 5.7799 0.0161778 5.0201 0.484807 4.55147Z"
       />
     </Icon>
   )

@@ -5,8 +5,8 @@ import { getValuesAndErrors } from './getValuesAndErrors'
 describe(getValuesAndErrors.name, () => {
   it('returns empty values and errors', () => {
     expect(getValuesAndErrors([])).toEqual({
-      values: undefined,
-      errors: undefined,
+      values: {},
+      errors: {},
     })
   })
 
@@ -39,7 +39,7 @@ describe(getValuesAndErrors.name, () => {
         { field: 'e', error: 'Error 2' },
       ]),
     ).toEqual({
-      values: undefined,
+      values: {},
       errors: {
         d: 'Error 1',
         e: 'Error 2',
@@ -60,7 +60,7 @@ describe(getValuesAndErrors.name, () => {
         b: 2,
         c: 3,
       },
-      errors: undefined,
+      errors: {},
     })
   })
 })

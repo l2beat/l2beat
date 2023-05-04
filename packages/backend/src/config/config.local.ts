@@ -16,7 +16,7 @@ export function getLocalConfig(cli: CliParameters): Config {
 
   const tvlEnabled = getEnv.boolean('TVL_SYNC_ENABLED', true)
   const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)
-  const discoveryWatcherEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
+  const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     !!process.env.DISCORD_TOKEN && !!process.env.INTERNAL_DISCORD_CHANNEL_ID
 
@@ -87,7 +87,7 @@ export function getLocalConfig(cli: CliParameters): Config {
         },
       },
     },
-    discoveryWatcher: discoveryWatcherEnabled && {
+    updateMonitor: updateMonitorEnabled && {
       runOnStart: true,
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
