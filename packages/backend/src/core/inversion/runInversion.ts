@@ -1,8 +1,4 @@
-import {
-  ContractValue,
-  EthereumAddress,
-  ProjectParameters,
-} from '@l2beat/shared'
+import { ContractValue, DiscoveryOutput, EthereumAddress } from '@l2beat/shared'
 import chalk from 'chalk'
 import { constants, utils } from 'ethers'
 import { readFile } from 'fs/promises'
@@ -22,7 +18,7 @@ interface Role {
 export async function runInversion(file: string, useMermaidMarkup: boolean) {
   const addresses = new Map<string, AddressDetails>()
   const data = await readFile(file, 'utf-8')
-  const project = JSON.parse(data) as ProjectParameters
+  const project = JSON.parse(data) as DiscoveryOutput
 
   function add(address: ContractValue, role?: Role) {
     if (

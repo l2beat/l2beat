@@ -3,24 +3,24 @@ import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
 import {
-  DiscoveryWatcherRecord,
-  DiscoveryWatcherRepository,
-} from './DiscoveryWatcherRepository'
+  UpdateMonitorRecord,
+  UpdateMonitorRepository,
+} from './UpdateMonitorRepository'
 
 const CONFIG_HASH = Hash256.random()
 
-describe(DiscoveryWatcherRepository.name, () => {
+describe(UpdateMonitorRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new DiscoveryWatcherRepository(database, Logger.SILENT)
+  const repository = new UpdateMonitorRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
-  it(DiscoveryWatcherRepository.prototype.findLatest.name, async () => {
+  it(UpdateMonitorRepository.prototype.findLatest.name, async () => {
     const projectName = 'project'
 
-    const expected: DiscoveryWatcherRecord = {
+    const expected: UpdateMonitorRecord = {
       projectName,
       blockNumber: -1,
       timestamp: new UnixTime(0),
@@ -41,10 +41,10 @@ describe(DiscoveryWatcherRepository.name, () => {
     expect(result).toEqual(expected)
   })
 
-  it(DiscoveryWatcherRepository.prototype.addOrUpdate.name, async () => {
+  it(UpdateMonitorRepository.prototype.addOrUpdate.name, async () => {
     const projectName = 'project'
 
-    const discovery: DiscoveryWatcherRecord = {
+    const discovery: UpdateMonitorRecord = {
       projectName,
       blockNumber: -1,
       timestamp: new UnixTime(0),
@@ -60,7 +60,7 @@ describe(DiscoveryWatcherRepository.name, () => {
     }
     await repository.addOrUpdate(discovery)
 
-    const updated: DiscoveryWatcherRecord = { ...discovery, blockNumber: 1 }
+    const updated: UpdateMonitorRecord = { ...discovery, blockNumber: 1 }
     await repository.addOrUpdate(updated)
     const latest = await repository.findLatest(projectName)
 

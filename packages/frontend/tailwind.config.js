@@ -103,16 +103,27 @@ module.exports = {
       md: '750px',
       lg: '1000px',
     },
+    zIndex: {
+      1: '1',
+      10: '10', // Chart logo and Y axis, Borders (TvlActivityToggle and DesktopTabs)
+      20: '20', // Chart canvas and loader, Items (DesktopTabs, TvlActivityToggle)
+      30: '30', // Chart hover line
+      40: '40', // Milestones, Chart hover line point (squares and circles)
+      50: '50', // Chart hover content
+      60: '60', // Tooltip, Hoverable dropdown menu, Chart "Coming soon" disclaimer
+      100: '100', // Mobile project navigation
+      999: '999', // Mobile side menu
+    },
     extend: {
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
       },
-      zIndex: {
-        1: '1',
-        41: '41',
-      },
       spacing: {
         '2/3': '66.666666%',
+      },
+      transitionProperty: {
+        height: 'height',
+        'max-height': 'max-height',
       },
     },
   },

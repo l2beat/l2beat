@@ -4,6 +4,7 @@ import React from 'react'
 import { NoDataBadge } from '../../../components/badge/NoDataBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
+import { ProjectLink } from '../../../components/icons'
 import { RiskCell } from '../../../components/table/RiskCell'
 
 export interface ProjectHeaderProps {
@@ -16,6 +17,7 @@ export interface ProjectHeaderProps {
   destination: ProjectRiskViewEntry
   validatedBy?: ProjectRiskViewEntry
   type: string
+  links: ProjectLink[]
   isArchived?: boolean
   isUpcoming?: boolean
 }
@@ -48,8 +50,10 @@ export function ProjectHeader(props: ProjectHeaderProps) {
 
   return (
     <DetailsHeader
+      type="bridge"
       title={props.title}
       icon={props.icon}
+      links={props.links}
       stats={stats}
       isArchived={props.isArchived}
     />

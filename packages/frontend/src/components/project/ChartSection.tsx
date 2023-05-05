@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Chart, ChartProps } from '../chart/Chart'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
 
 export interface ChartSectionProps extends ChartProps {
   id: string
@@ -9,10 +8,7 @@ export interface ChartSectionProps extends ChartProps {
 }
 
 export function ChartSection(props: ChartSectionProps) {
-  const { id, title, ...rest } = props
   return (
-    <ProjectDetailsSection title={title} id={id}>
-      <Chart {...rest} mobileFull showTitle={false} />
-    </ProjectDetailsSection>
+    <Chart {...props} mobileFull sectionClassName="-mx-4 md:mx-0 md:mt-16" />
   )
 }

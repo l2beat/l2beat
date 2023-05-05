@@ -2,16 +2,19 @@ import { MainnetEtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { DiscoveryModuleConfig } from '../../config/config.discovery'
+import { AddressAnalyzer } from './analysis/AddressAnalyzer'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
-import { discover } from './engine/discover'
+import { DiscoveryEngine } from './engine/DiscoveryEngine'
+import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { diffDiscovery } from './output/diffDiscovery'
 import { diffToMessages } from './output/diffToMessages'
-import { parseDiscoveryOutput } from './output/prepareDiscoveryFile'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
-import { DiscoveryProvider } from './provider/DiscoveryProvider'
+import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { ProviderWithCache } from './provider/ProviderWithCache'
+import { ProxyDetector } from './proxies/ProxyDetector'
+import { SourceCodeService } from './source/SourceCodeService'
 import { findDependents } from './utils/findDependents'
 
 export async function runDiscovery(
@@ -28,11 +31,10 @@ export async function runDiscovery(
       ? (await configReader.readDiscovery(config.project)).blockNumber
       : await provider.getBlockNumber())
 
-  const discoveryProvider = new ProviderWithCache(provider, etherscanClient)
-
   const logger = new DiscoveryLogger({ enabled: true })
   const result = await discover(
-    discoveryProvider,
+    provider,
+    etherscanClient,
     projectConfig,
     logger,
     blockNumber,
@@ -90,22 +92,37 @@ export async function dryRunDiscovery(
 async function justDiscover(
   provider: providers.AlchemyProvider,
   etherscanClient: MainnetEtherscanClient,
-  projectConfig: DiscoveryConfig,
+  config: DiscoveryConfig,
   blockNumber: number,
 ) {
-  const discoveryProvider = new DiscoveryProvider(provider, etherscanClient)
-
   const result = await discover(
-    discoveryProvider,
-    projectConfig,
+    provider,
+    etherscanClient,
+    config,
     DiscoveryLogger.SILENT,
     blockNumber,
   )
+  return toDiscoveryOutput(config.name, config.hash, blockNumber, result)
+}
 
-  return parseDiscoveryOutput(
-    result,
-    projectConfig,
-    blockNumber,
-    projectConfig.hash,
+export async function discover(
+  provider: providers.AlchemyProvider,
+  etherscanClient: MainnetEtherscanClient,
+  config: DiscoveryConfig,
+  logger: DiscoveryLogger,
+  blockNumber: number,
+) {
+  const discoveryProvider = new ProviderWithCache(provider, etherscanClient)
+  const proxyDetector = new ProxyDetector(discoveryProvider, logger)
+  const sourceCodeService = new SourceCodeService(discoveryProvider)
+  const handlerExecutor = new HandlerExecutor(discoveryProvider, logger)
+  const addressAnalyzer = new AddressAnalyzer(
+    discoveryProvider,
+    proxyDetector,
+    sourceCodeService,
+    handlerExecutor,
+    logger,
   )
+  const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)
+  return discoveryEngine.discover(config, blockNumber)
 }

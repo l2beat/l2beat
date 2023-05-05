@@ -5,7 +5,7 @@ import { ChartSection } from '../../../components/project/ChartSection'
 import { ContractsSection } from '../../../components/project/ContractsSection'
 import { DescriptionSection } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNuggetsSection'
-import { MilestonesSection } from '../../../components/project/Milestones'
+import { MilestonesSection } from '../../../components/project/MilestonesSection'
 import { PermissionsSection } from '../../../components/project/PermissionsSection'
 import { RiskAnalysis } from '../../../components/project/RiskAnalysis'
 import {
@@ -14,11 +14,11 @@ import {
 } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
-import { ProjectDetailsItem } from '../props/getProjectDetails'
+import { ScalingDetailsItem } from '../props/getProjectDetails'
 
 export interface ProjectDetailsProps {
   isUpcoming?: boolean
-  items: ProjectDetailsItem[]
+  items: ScalingDetailsItem[]
   incomplete?: TechnologyIncompleteProps
 }
 

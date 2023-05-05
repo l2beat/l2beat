@@ -10,6 +10,8 @@ export function RiskSection() {
   return (
     <div className="p-4 leading-normal">
       <RiskSectionComponent
+        id="risks"
+        title="Risks summary"
         riskGroups={[
           {
             name: 'Funds can be stolen if',

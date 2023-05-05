@@ -13,7 +13,7 @@ export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
   return (
     <OutLink
       href={knowledgeNugget.url}
-      className="group grid max-w-md grid-cols-5 items-center gap-3 rounded-md pr-4 transition-all hover:bg-gray-400 dark:hover:bg-gray-900 "
+      className="group grid grid-cols-7 items-center gap-3 rounded-md pr-4 transition-all hover:bg-gray-400 dark:hover:bg-gray-900 "
     >
       <div className="relative col-span-2 overflow-hidden rounded-md pb-2/3 drop-shadow-md">
         <img
@@ -21,7 +21,7 @@ export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
           className="absolute h-full w-full object-cover transition-all group-hover:scale-105"
         />
       </div>
-      <div className="col-span-3 flex-col transition-all group-hover:translate-x-0.5">
+      <div className="col-span-5 flex-col transition-all group-hover:translate-x-0.5">
         <p className="text-lg font-bold leading-tight">
           {knowledgeNugget.title}
         </p>

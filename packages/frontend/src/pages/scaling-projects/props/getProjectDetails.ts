@@ -7,7 +7,7 @@ import { ChartSectionProps } from '../../../components/project/ChartSection'
 import { ContractsSectionProps } from '../../../components/project/ContractsSection'
 import { DescriptionSectionProps } from '../../../components/project/DescriptionSection'
 import { KnowledgeNuggetsProps } from '../../../components/project/KnowledgeNuggetsSection'
-import { MilestonesSectionProps } from '../../../components/project/Milestones'
+import { MilestonesSectionProps } from '../../../components/project/MilestonesSection'
 import { PermissionsSectionProps } from '../../../components/project/PermissionsSection'
 import { RiskAnalysisProps } from '../../../components/project/RiskAnalysis'
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
@@ -27,7 +27,7 @@ export function getProjectDetails(
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(project)
   const permissionsSection = getPermissionsSection(project, verificationStatus)
-  const items: ProjectDetailsItem[] = []
+  const items: ScalingDetailsItem[] = []
 
   items.push({
     type: 'ChartSection',
@@ -119,12 +119,12 @@ export function getProjectDetails(
   return { incomplete, isUpcoming, items }
 }
 
-export type ProjectDetailsItem = { excludeFromNavigation?: boolean } & (
-  | ProjectDetailsSection
+export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (
+  | ScalingDetailsSection
   | NonSectionElement
 )
 
-export type ProjectDetailsSection =
+export type ScalingDetailsSection =
   | ChartSection
   | DescriptionSection
   | MilestonesSection

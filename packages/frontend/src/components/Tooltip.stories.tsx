@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 
 import { Tooltip as TooltipComponent } from '../components/Tooltip'
 import { configureTooltips } from '../scripts/configureTooltips'
@@ -9,16 +9,14 @@ export default {
 }
 
 export function Tooltip() {
-  const tooltipRef = useRef<HTMLSpanElement>(null)
   useEffect(() => {
     configureTooltips()
-    hoverOver(tooltipRef)
+    hoverOver('.Tooltip')
   }, [])
 
   return (
     <div className="m-4 ml-32">
       <span
-        ref={tooltipRef}
         className="Tooltip inline-block"
         title="Et sunt qui cupidatat minim aliqua occaecat labore elit. Reprehenderit cupidatat culpa aliqua mollit. Adipisicing tempor reprehenderit laborum enim aliquip Lorem excepteur."
       >

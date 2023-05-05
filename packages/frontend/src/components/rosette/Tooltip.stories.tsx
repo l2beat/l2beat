@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
@@ -11,10 +11,9 @@ export default {
 }
 
 export function RosetteTooltip() {
-  const tooltipRef = useRef<HTMLSpanElement>(null)
   useEffect(() => {
     configureTooltips()
-    hoverOver(tooltipRef)
+    hoverOver('.Tooltip')
   }, [])
 
   const project: RosetteTooltipProps = {
@@ -52,7 +51,6 @@ export function RosetteTooltip() {
   return (
     <div className="m-4 ml-32">
       <span
-        ref={tooltipRef}
         className="Tooltip inline-block"
         title={renderToStaticMarkup(
           <RosetteTooltipPopup

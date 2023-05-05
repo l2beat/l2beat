@@ -79,7 +79,7 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
-  interface DiscoveryWatcherRow {
+  interface UpdateMonitorRow {
     project_name: string
     block_number: number
     unix_timestamp: Date
@@ -100,7 +100,7 @@ declare module 'knex/types/tables' {
     'activity.block': BlockTransactionCountRow
     'activity.starkex': StarkexTransactionCountRow
     'activity.daily_count_view': DailyTransactionCountRow
-    discovery_watcher: DiscoveryWatcherRow
+    update_monitor: UpdateMonitorRow
   }
 }
 

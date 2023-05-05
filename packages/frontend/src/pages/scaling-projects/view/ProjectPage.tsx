@@ -10,7 +10,7 @@ import {
 import { PageContent } from '../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../../components/project/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../../components/project/navigation/MobileProjectNavigation'
-import { ProjectDetailsSection } from '../props/getProjectDetails'
+import { ScalingDetailsSection } from '../props/getProjectDetails'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
@@ -29,21 +29,21 @@ export function ProjectPage(props: ProjectPageProps) {
   }
 
   const sections = props.projectDetails.items.filter(
-    (i): i is ProjectDetailsSection => !i.excludeFromNavigation,
+    (i): i is ScalingDetailsSection => !i.excludeFromNavigation,
   )
   return (
     <>
       <Navbar {...props.navbar} />
-      <div className="sticky top-0 z-40 md:hidden">
+      <div className="sticky top-0 z-100 md:hidden">
         <MobileProjectNavigation sections={sections} />
       </div>
       <PageContent mobileFull>
         <ProjectHeader {...props.projectHeader} />
-        <div className="grid grid-cols-7 gap-x-12">
+        <div className="grid grid-cols-8 gap-x-12">
           <div className="col-span-2 mt-16 hidden md:block">
             <DesktopProjectNavigation project={project} sections={sections} />
           </div>
-          <div className="col-span-7 md:col-span-5">
+          <div className="col-span-full md:col-span-6">
             <ProjectDetails {...props.projectDetails} />
           </div>
         </div>

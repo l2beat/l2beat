@@ -1,6 +1,7 @@
 import { Milestone } from '@l2beat/config'
 import React from 'react'
 
+import { ExpandableContainer } from '../ExpandableContainer'
 import { ArrowRightIcon } from '../icons'
 import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
 import { OutLink } from '../OutLink'
@@ -19,12 +20,12 @@ export function MilestonesSection({
 }: MilestonesSectionProps) {
   return (
     <ProjectDetailsSection title={title} id={id}>
-      <div className="relative h-auto">
+      <ExpandableContainer className="relative">
         <div className="absolute left-[15.4px] mt-2 h-[100%]">
           <div className="h-[60%] w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500 " />
           <div className="h-[40%] w-[1.7px] bg-gradient-to-b from-green-400 dark:w-px dark:from-green-500" />
         </div>
-        <div className="ml-10 mt-6">
+        <div className="ml-10">
           {milestones
             .sort(
               (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
@@ -55,7 +56,7 @@ export function MilestonesSection({
               </div>
             ))}
         </div>
-      </div>
+      </ExpandableContainer>
     </ProjectDetailsSection>
   )
 }

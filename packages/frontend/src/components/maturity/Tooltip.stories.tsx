@@ -1,5 +1,5 @@
 import { Layer2Maturity } from '@l2beat/config'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
@@ -12,10 +12,9 @@ export default {
 }
 
 export function MaturityTooltip() {
-  const tooltipRef = useRef<HTMLSpanElement>(null)
   useEffect(() => {
     configureTooltips()
-    hoverOver(tooltipRef)
+    hoverOver('.Tooltip')
   }, [])
 
   const item: Layer2Maturity = {
@@ -36,7 +35,6 @@ export function MaturityTooltip() {
   return (
     <div className="m-4 ml-32">
       <span
-        ref={tooltipRef}
         className="Tooltip inline-block"
         title={renderToStaticMarkup(<MaturityTooltipPopup item={item} />)}
         data-tooltip-big
