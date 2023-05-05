@@ -1,18 +1,19 @@
-import type { StorybookViteConfig } from '@storybook/builder-vite'
+import { StorybookConfig } from '@storybook/react-vite'
 import { mergeConfig } from 'vite'
 
-const config: StorybookViteConfig = {
+const config: StorybookConfig = {
   stories: ['../src/**/*.stories.tsx'],
   addons: [
     '@storybook/addon-essentials',
-    '@storybook/addon-postcss',
+    '@storybook/addon-styling',
     'storybook-dark-mode',
     'storycap',
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: '@storybook/builder-vite',
+  framework: {
+    name: '@storybook/react-vite',
+    options: {},
   },
+  core: {},
   features: {
     storyStoreV7: true,
   },
@@ -25,5 +26,4 @@ const config: StorybookViteConfig = {
     })
   },
 }
-
 export default config
