@@ -17,22 +17,24 @@ import { TvlActivityToggle } from './TvlActivityToggle'
 import { YAxisLabels } from './YAxisLabels'
 
 export interface ChartProps {
-  showTitle?: boolean
   type?: 'tvl' | 'activity'
+  title?: string
+  id?: string
   tvlEndpoint?: string
   activityEndpoint?: string
   tokens?: TokenControl[]
-  className?: string
   hasActivity?: boolean
   hasTvl?: boolean
   metaChart?: boolean
   mobileFull?: boolean
   milestones?: Milestone[]
   isUpcoming?: boolean
+  sectionClassName?: string
 }
 
 export function Chart({
-  showTitle = true,
+  title = 'Chart',
+  id = 'chart',
   tvlEndpoint,
   activityEndpoint,
   tokens,
@@ -43,6 +45,7 @@ export function Chart({
   mobileFull: fullWidth = false,
   milestones,
   isUpcoming = false,
+  sectionClassName,
 }: ChartProps) {
   if (isUpcoming) {
     return <ChartUpcoming mobileFull />
@@ -52,7 +55,7 @@ export function Chart({
   return (
     <>
       <section
-        id="chart"
+        id={id}
         data-role="chart"
         data-type={type}
         data-tvl-endpoint={tvlEndpoint}
@@ -60,17 +63,16 @@ export function Chart({
         data-milestones={JSON.stringify(milestones)}
         className={cx(
           fullWidth
-            ? 'bg-gray-100 px-4 py-6 dark:bg-gray-950 md:bg-transparent md:p-0 md:dark:bg-transparent'
+            ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
             : 'mt-4',
+          sectionClassName,
         )}
       >
         {!metaChart && hasTvl && hasActivity && (
           <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
-            {showTitle && (
-              <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
-                <a href="#chart">Chart</a>
-              </h2>
-            )}
+            <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
+              <a href={`#${id}`}>{title}</a>
+            </h2>
             <TvlActivityToggle />
           </div>
         )}
