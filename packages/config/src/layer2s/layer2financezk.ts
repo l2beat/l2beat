@@ -86,7 +86,7 @@ export const layer2financezk: Layer2 = {
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
-    exitMechanisms: EXITS.STARKEX,
+    exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {
     addresses: [
