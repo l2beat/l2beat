@@ -1,3 +1,5 @@
+const overflowThreshold = 24
+
 export function configureHoverableDropdown() {
   const hoverableDropdowns =
     document.querySelectorAll<HTMLElement>('.HoverableDropdown')
@@ -24,6 +26,32 @@ export function configureHoverableDropdown() {
     hoverableDropdown.addEventListener('mouseleave', () => {
       hide(menu)
     })
+  })
+
+  window.addEventListener('load', () => moveOverflowingMenu(hoverableDropdowns))
+
+  window.addEventListener('resize', () =>
+    moveOverflowingMenu(hoverableDropdowns),
+  )
+}
+
+function moveOverflowingMenu(hoverableDropdowns: NodeListOf<HTMLElement>) {
+  hoverableDropdowns.forEach((hoverableDropdown) => {
+    const elements = getHoverableDropdownElements(hoverableDropdown)
+
+    if (!elements) return
+
+    const { menu } = elements
+
+    const hoverableDropdownRect = hoverableDropdown.getBoundingClientRect()
+    const menuRect = menu.getBoundingClientRect()
+
+    const diff =
+      hoverableDropdownRect.left +
+      menuRect.width +
+      overflowThreshold -
+      window.innerWidth
+    menu.classList.toggle('right-0', diff > 0)
   })
 }
 
