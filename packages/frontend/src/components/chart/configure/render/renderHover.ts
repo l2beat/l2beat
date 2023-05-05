@@ -95,7 +95,7 @@ export function renderHover(
       }
       if (window.innerWidth < 750) {
         rows.push(
-          `<div class="z-60 text-link"><a href="${point.milestone.link}" target="blank">Learn more</a></div>`,
+          `<div class="text-link"><a href="${point.milestone.link}" target="blank">Learn more</a></div>`,
         )
       }
     } else {

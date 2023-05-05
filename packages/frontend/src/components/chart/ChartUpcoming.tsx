@@ -50,7 +50,7 @@ export function ChartUpcoming({ mobileFull: fullWidth = false }: ChartProps) {
               className="absolute bottom-0 left-0 z-20 block h-[calc(100%_-_20px)] w-full blur-sm "
             />
             <YAxisLabels className="blur-sm" />
-            <div className="absolute top-0 z-50 flex  h-full w-full items-center justify-center">
+            <div className="absolute top-0 z-60 flex  h-full w-full items-center justify-center">
               <div className="flex h-[20%] w-1/2 items-center justify-center rounded-lg bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
                 Coming soon
               </div>
