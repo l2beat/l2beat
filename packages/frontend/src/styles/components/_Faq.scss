@@ -41,6 +41,19 @@
     color: var(--link);
     text-decoration: underline;
   }
+
+  ul {
+    list-style: disc inside;
+    padding-left: 16px;
+  }
+}
+
+html.light article.Faq strong {
+  color: #cb9800;
+}
+
+html.dark .Faq strong {
+  color: #fdcf44;
 }
 
 .Faq-Table {
