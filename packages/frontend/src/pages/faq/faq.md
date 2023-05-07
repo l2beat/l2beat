@@ -1,7 +1,3 @@
-# Welcome to the L2BEAT FAQ!
-
-Hi! We are glad you've made it here. Below you will find answers to most frequently asked questions about L2BEAT.
-
 ## What is the overall purpose of this site?
 
 L2BEAT was created to provide transparent and verifiable insights into emerging layer two (L2) technologies which, in line with the [rollup-centric Ethereum scaling roadmap](https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698) are aimed at scaling Ethereum.
@@ -56,7 +52,7 @@ To trustlessly withdraw coins from L2, users need to prove ownership of the coin
 
 For more details on data availability and its importance in security of scaling protocols, see Ethereum.org's [page on the topic](https://ethereum.org/en/developers/docs/data-availability/).
 
-<h2 id="categories">Ok, so what are the main categories of L2s?</h2>
+## Ok, so what are the main categories of L2s?
 
 Depending on whether Validity Proofs or Fraud Proofs are used and what is the mechanism for data availability we can broadly categories L2s into the following categories:
 
