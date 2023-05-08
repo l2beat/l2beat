@@ -7,7 +7,6 @@ export interface FaqItem {
 
 export const faqItems: FaqItem[] = [
   {
-    // id: 'what-is-l2beat',
     question: 'What is the overall purpose of this site?',
     answer: (
       <span>
@@ -24,13 +23,11 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
-    // id: 'why-do-you-need-l2beat',
     question: 'Why do you need L2BEAT if you have DeFi Pulse, DefiLlama, etc.?',
     answer:
       'While the above-mentioned sites are great, they focus primarily at tracking TVL (Total Value Locked) in DeFi projects on various chain. In comparison L2BEAT will track only L2 projects (at first on Ethereum only) and will eventually report not just TVL but various metrics related to the liveness and security of these projects.',
   },
   {
-    // id: 'tvl-difference',
     question:
       'Why does the Total Value Locked (TVL) on L2BEAT differ from the one on DefiLlama?',
     answer: (
@@ -63,7 +60,6 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
-    // id: 'what-are-l2s',
     question: 'What exactly are L2s and why Polygon is not included?',
     answer: (
       <span>
@@ -87,13 +83,11 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
-    // id: '',
     question: "But isn't Polygon a Plasma, Rollup and Sidechain all in one?",
     answer:
       'No, in its current implementation it is a PoS sidechain with validators solely responsible for validating Polygon transactions. We are only interested in what is implemented and can be independently verified. When their architecture changes, we will be more than happy to include them.',
   },
   {
-    // id: 'how-can-l1-help-with-the-security-of-l2',
     question: 'Right, so how can L1 help with the security of L2?',
     answer: (
       <div>
@@ -103,15 +97,14 @@ export const faqItems: FaqItem[] = [
         </p>
         <p className="mt-4">
           First, the L2 state can be verified by L1 through either{' '}
-          <FaqStrong>Validity Proofs</FaqStrong> or{' '}
-          <FaqStrong>Fraud Proofs</FaqStrong>. This mechanism is most important
-          as it ensures that L2 validators cannot cheat and include invalid
-          transactions in a L2 block, e.g. mint coins out of thin air or steal
-          your coins.
+          <Strong>Validity Proofs</Strong> or <Strong>Fraud Proofs</Strong>.
+          This mechanism is most important as it ensures that L2 validators
+          cannot cheat and include invalid transactions in a L2 block, e.g. mint
+          coins out of thin air or steal your coins.
         </p>
         <p className="mt-4">
-          The second use of L1 is as a <FaqStrong>Data Availability</FaqStrong>{' '}
-          layer for L2 transactions so that, if there is a dispute, users could
+          The second use of L1 is as a <Strong>Data Availability</Strong> layer
+          for L2 transactions so that, if there is a dispute, users could
           independently re-create the L2 state and ensure continued system
           operation or trustlessly exit to L1.
         </p>
@@ -119,7 +112,6 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
-    // id: 'how-can-l1-help-with-l2-state-validation',
     question: 'Can you explain how L1 can help with L2 state validation?',
     answer: (
       <div>
@@ -131,36 +123,32 @@ export const faqItems: FaqItem[] = [
         </p>
         <p className="mt-4">
           One way to do so is by providing a zero-knowledge cryptographic{' '}
-          <FaqStrong>Validity Proof</FaqStrong> (zkProof) that will be verified
-          by the L1 smart contract. If the verification passes, users can be
-          sure that the state root is a result of executing valid transaction
-          set.
+          <Strong>Validity Proof</Strong> (zkProof) that will be verified by the
+          L1 smart contract. If the verification passes, users can be sure that
+          the state root is a result of executing valid transaction set.
         </p>
         <p className="mt-4">
           The other mechanism is to allow any honest L2 chain observer to raise
           an alarm if they think that the supplied state root is incorrect and
-          provide a <FaqStrong>Fraud Proof</FaqStrong>. Such a proof allows the
-          L1 contract to trustlessly verify that the state root was incorrect.
-          In such case it will be automatically removed and the chain will roll
+          provide a <Strong>Fraud Proof</Strong>. Such a proof allows the L1
+          contract to trustlessly verify that the state root was incorrect. In
+          such case it will be automatically removed and the chain will roll
           back.
         </p>
       </div>
     ),
   },
   {
-    // id: 'what-if-l2-validators-submit-a-fradulent-state-commit-to-l1',
     question: 'What if L2 validators submit a fraudulent state commit to L1?',
     answer:
       'A state root from L2 is typically used to check coin ownership on L2 that user wants to withdraw to L1. If the fraudulent state root is submitted, it may attest that all coins belong to a dishonest L2 validator rather than legitimate users. These coins can be then withdrawn to L1 from L2&mdash;effectively stealing them. This is why it is not enough to simply commit state roots of L2 to L1, we need to be sure that this state root is valid.',
   },
   {
-    // id: 'other-ways-l2-validators-can-steal-users-coins',
     question: "Are there any other ways L2 validators can steal user's coins?",
     answer:
       'Most L2 constructions are upgradable and until upgradability mechanism is either fully disabled or controlled by a sufficiently decentralised DAO, the funds can be, in theory, stolen through the upgrade mechanism. L2BEAT will closely monitor how the particular construction is upgradable and who currently controls the upgradability keys.',
   },
   {
-    // id: 'why-data-availability-is-important',
     question: 'What about data availability? Why is it important?',
     answer: (
       <div>
@@ -189,32 +177,30 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
-    // id: 'l2s-main-categories',
-    question: 'Ok, so what are the main categories of L2s',
+    question: 'Ok, so what are the main categories of L2s?',
     answer: (
       <div>
         <p className="mt-4">
           Depending on whether Validity Proofs or Fraud Proofs are used and what
           is the mechanism for data availability we can broadly categories L2s
           into the following categories:
-          <FaqUnorderedList>
+          <UnorderedList>
             <li>
-              <FaqStrong>zkRollups</FaqStrong> - Validity Proofs with data on L1
+              <Strong>zkRollups</Strong> - Validity Proofs with data on L1
               Ethereum,
             </li>
             <li>
-              <FaqStrong>Optimistic Rollups</FaqStrong> - Fraud Proofs with data
-              on L1 Ethereum,
+              <Strong>Optimistic Rollups</Strong> - Fraud Proofs with data on L1
+              Ethereum,
             </li>
             <li>
-              <FaqStrong>Validium</FaqStrong> - Validity Proofs with data kept
+              <Strong>Validium</Strong> - Validity Proofs with data kept
               off-chain,
             </li>
             <li>
-              <FaqStrong>Plasma</FaqStrong> - Fraud Proofs with data kept
-              off-chain.
+              <Strong>Plasma</Strong> - Fraud Proofs with data kept off-chain.
             </li>
-          </FaqUnorderedList>
+          </UnorderedList>
         </p>
         <p className="mt-4">
           In the future we expect to see hybrid solution using a mix of the
@@ -255,7 +241,6 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
-    // id: 'metrics-calculation',
     question: 'How exactly do you calculate metrics like TVL?',
     answer: (
       <div>
@@ -279,18 +264,16 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
-    // id: 'l2beat-aims-to-track',
     question: 'Apart from TVL, what is L2BEAT aiming to track?',
     answer:
       "We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (TVL, frequency of state root commits, number of transactions, gas cost, etc...) but we will try highlight main risks related to their implementation that may affect user's funds security.",
   },
   {
-    // id: 'is-l2beat-performing-a-security-audit-for-each-l2',
     question: 'Is L2BEAT performing a security audit for each L2?',
     answer: (
       <span>
-        No, the L2BEAT team <FaqStrong>DOES NOT DO SECURITY AUDITS</FaqStrong>.
-        All the information that we present on our site should be independently
+        No, the L2BEAT team <Strong>DOES NOT DO SECURITY AUDITS</Strong>. All
+        the information that we present on our site should be independently
         verified by anyone wanting to use given L2. Our goal is to collect as
         much information as we can about the "state of L2s" and allow the
         community to better understand what security assumptions are used to
@@ -360,7 +343,7 @@ export const faqItems: FaqItem[] = [
   },
 ]
 
-function FaqStrong({ children }: { children: ReactNode }) {
+function Strong({ children }: { children: ReactNode }) {
   return (
     <span className="font-bold text-yellow-700 dark:text-yellow-300">
       {children}
@@ -368,6 +351,6 @@ function FaqStrong({ children }: { children: ReactNode }) {
   )
 }
 
-function FaqUnorderedList({ children }: { children: ReactNode }) {
+function UnorderedList({ children }: { children: ReactNode }) {
   return <ul className="list-inside list-disc pl-4">{children}</ul>
 }
