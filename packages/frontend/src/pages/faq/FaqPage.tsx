@@ -39,7 +39,7 @@ export function FaqPage(props: FaqPageProps) {
               </a>
             ))}
           </div>
-          <article className="ml-16">
+          <article className="lg:ml-16">
             {props.items.map((item) => (
               <section
                 id={questionToId(item.question)}
