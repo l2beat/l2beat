@@ -28,18 +28,16 @@ export function FaqPage(props: FaqPageProps) {
           <HorizontalSeparator className="mt-12 mb-4" />
         </div>
         <div className="flex">
-          <div className="mt-8 hidden md:block">
-            <div className="sticky top-8 w-72 flex-shrink-0 flex-col gap-4 lg:flex">
-              {props.items.map((item) => (
-                <a
-                  key={questionToId(item.question)}
-                  href={`#${questionToId(item.question)}`}
-                  className="text-base font-semibold text-gray-850 transition hover:text-pink-900 dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100"
-                >
-                  {item.question}
-                </a>
-              ))}
-            </div>
+          <div className="mt-8 hidden w-72 flex-shrink-0 flex-col gap-4 lg:flex">
+            {props.items.map((item) => (
+              <a
+                key={questionToId(item.question)}
+                href={`#${questionToId(item.question)}`}
+                className="text-base font-semibold text-gray-850 transition hover:text-pink-900 dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100"
+              >
+                {item.question}
+              </a>
+            ))}
           </div>
           <article className="ml-16">
             {props.items.map((item) => (
