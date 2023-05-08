@@ -223,7 +223,7 @@ export const faqItems: FaqItem[] = [
         <table className="mx-auto mt-4 border-collapse">
           <thead>
             <tr>
-              <td className="border border-b-2 border-r-2 py-1 px-2 md:py-2 md:px-4"></td>
+              <td className="border border-b-2 border-r-2 py-1 px-2 md:py-2 md:px-4" />
               <th className="border border-b-2 py-1 px-2 md:py-2 md:px-4">
                 Validity Proofs
               </th>

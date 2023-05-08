@@ -1,8 +1,8 @@
 import { Config } from '../../build/config'
 import { getFooterProps, getNavbarProps } from '../../components'
 import { Wrapped } from '../Page'
-import { FaqPageProps } from './FaqPage'
 import { faqItems } from './faqItems'
+import { FaqPageProps } from './FaqPage'
 
 export function getProps(config: Config): Wrapped<FaqPageProps> {
   return {
