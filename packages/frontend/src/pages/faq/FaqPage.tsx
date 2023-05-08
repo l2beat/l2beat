@@ -65,5 +65,8 @@ export function FaqPage(props: FaqPageProps) {
 }
 
 function questionToId(question: string) {
-  return question.replace(' ', '-').replace(/\W/g, '').toLowerCase()
+  return question
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-') // replace non-alphanumeric characters with hyphens
+    .replace(/^-+|-+$/g, '') // remove leading and trailing hyphens
 }
