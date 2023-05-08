@@ -33,7 +33,7 @@ export function DesktopProjectNavigation({
               alt={`${project.title} logo`}
             />
           )}
-          <span className="text-2xl font-bold">{project.title}</span>
+          <span className="text-xl font-bold lg:text-2xl">{project.title}</span>
         </div>
         <HorizontalSeparator className="my-4" />
       </div>
@@ -79,7 +79,7 @@ function ProjectNavigationList({
 function NavigationListIndex(props: { index: number }) {
   return (
     <div
-      className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-center text-xs font-bold dark:bg-neutral-700"
+      className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-center text-xs font-bold dark:bg-neutral-700"
       id={DESKTOP_PROJECT_NAVIGATION_IDS.index}
     >
       <span>{props.index}</span>
