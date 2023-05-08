@@ -28,7 +28,7 @@ export function FaqPage(props: FaqPageProps) {
           <HorizontalSeparator className="mt-12 mb-4" />
         </div>
         <div className="flex">
-          <div className="mt-8 hidden w-72 flex-shrink-0 flex-col gap-4 lg:flex">
+          <div className="mt-12 hidden w-72 flex-shrink-0 flex-col gap-4 lg:flex">
             {props.items.map((item) => (
               <a
                 key={questionToId(item.question)}
@@ -42,12 +42,13 @@ export function FaqPage(props: FaqPageProps) {
           <article className="lg:ml-16">
             {props.items.map((item) => (
               <section
+                className="mt-12"
                 id={questionToId(item.question)}
                 key={questionToId(item.question)}
               >
                 <a
                   href={`#${questionToId(item.question)}`}
-                  className="my-8 block text-2xl font-bold text-gray-850 no-underline dark:text-white"
+                  className="mb-4 block text-2xl font-bold text-gray-850 no-underline dark:text-white"
                 >
                   {item.question}
                 </a>
