@@ -1,4 +1,4 @@
-import { formatLargeNumber } from './formatLargeNumber'
+import { formatLargeNumber } from '@l2beat/shared'
 
 export function getPercentageChange(now: number, then: number) {
   if (now === then || then === 0) {

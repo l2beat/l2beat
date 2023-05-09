@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import {
+  EthereumAddress,
+  formatLargeNumber,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -24,18 +29,13 @@ const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
 const bridgeLimitETH =
   discovery.getContractValue<number>('StarknetEthBridge', 'maxTotalBalance') /
-  1e18 /
-  1e6
+  1e18
 const bridgeLimitUSDC =
-  discovery.getContractValue<number>('USDC Bridge', 'maxTotalBalance') /
-  1e6 /
-  1e6
+  discovery.getContractValue<number>('USDC Bridge', 'maxTotalBalance') / 1e6
 const bridgeLimitWBTC =
   discovery.getContractValue<number>('WBTC Bridge', 'maxTotalBalance') / 1e8
 const bridgeLimitUSDT =
-  discovery.getContractValue<number>('USDT Bridge', 'maxTotalBalance') /
-  1e6 /
-  1e6
+  discovery.getContractValue<number>('USDT Bridge', 'maxTotalBalance') / 1e6
 
 export const starknet: Layer2 = {
   type: 'layer2',
@@ -160,7 +160,9 @@ export const starknet: Layer2 = {
       ...getSHARPVerifierContracts(discovery, verifierAddress),
       {
         name: 'Eth Bridge',
-        description: `Starkgate bridge for ETH, currently the limit is ${bridgeLimitETH}M ETH.`,
+        description: `Starkgate bridge for ETH, currently the limit is ${formatLargeNumber(
+          bridgeLimitETH,
+        )} ETH.`,
         address: discovery.getContract('StarknetEthBridge').address,
         upgradeability:
           discovery.getContract('StarknetEthBridge').upgradeability,
@@ -178,15 +180,21 @@ export const starknet: Layer2 = {
       },
       discovery.getMainContractDetails(
         'WBTC Bridge',
-        `StarkGate bridge for WBTC, currently the limit is ${bridgeLimitWBTC} WBTC.`,
+        `StarkGate bridge for WBTC, currently the limit is ${formatLargeNumber(
+          bridgeLimitWBTC,
+        )} WBTC.`,
       ),
       discovery.getMainContractDetails(
         'USDC Bridge',
-        `StarkGate bridge for USDC, currently the limit is ${bridgeLimitUSDC}M USDC.`,
+        `StarkGate bridge for USDC, currently the limit is ${formatLargeNumber(
+          bridgeLimitUSDC,
+        )} USDC.`,
       ),
       discovery.getMainContractDetails(
         'USDT Bridge',
-        `StarkGate bridge for USDT, currently the limit is ${bridgeLimitUSDT}M USDT.`,
+        `StarkGate bridge for USDT, currently the limit is ${formatLargeNumber(
+          bridgeLimitUSDT,
+        )} USDT.`,
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

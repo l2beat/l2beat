@@ -1,4 +1,4 @@
-import { formatLargeNumber } from '../../../../../utils'
+import { formatLargeNumber } from '@l2beat/shared'
 
 export function formatCurrency(value: number, currency: string) {
   const num = formatLargeNumber(value)

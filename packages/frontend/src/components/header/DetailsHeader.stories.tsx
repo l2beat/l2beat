@@ -1,7 +1,7 @@
+import { formatLargeNumber } from '@l2beat/shared'
 import { Story } from '@storybook/react'
 import React from 'react'
 
-import { formatLargeNumber } from '../../utils'
 import { ProjectLink } from '../icons'
 import { PageContent } from '../PageContent'
 import { TechnologyCell } from '../table/TechnologyCell'
