@@ -7,6 +7,7 @@ import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFilters } from './configureFilters'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
+import { configureTabNavigations } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
 import { configureProjectNavigation } from './section-navigation'
 
@@ -21,3 +22,4 @@ configureRosetteOverlay()
 configureHoverableDropdown()
 configureProjectNavigation()
 configureExpandableContainer()
+configureTabNavigations()

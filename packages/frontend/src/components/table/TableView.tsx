@@ -3,7 +3,7 @@ import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../icons'
 
-interface Props<T> {
+export interface TableViewProps<T> {
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
@@ -29,7 +29,7 @@ export interface RowConfig<T> {
     Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
-export function TableView<T>({ items, columns, rows }: Props<T>) {
+export function TableView<T>({ items, columns, rows }: TableViewProps<T>) {
   return (
     <div
       className={cx(
