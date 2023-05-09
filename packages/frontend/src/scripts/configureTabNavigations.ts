@@ -21,23 +21,26 @@ function configureTabNavigation(tabNavigation: HTMLElement) {
   )
 
   if (!underline || !tabsContainers || !content || tabs.length === 0) return
-
-  const preselectedTab =
+  let currentTab =
     tabs.find((tab) => tab.href.endsWith(window.location.hash)) ?? tabs[0]
-  if (!preselectedTab.dataset.content) throw new Error('Tab content not found')
 
-  content.innerHTML = preselectedTab.dataset.content
-  underline.style.left = `${preselectedTab.offsetLeft}px`
-  underline.style.width = `${preselectedTab.clientWidth}px`
+  const highlightTab = (tab: HTMLAnchorElement) => {
+    if (!tab.dataset.content) throw new Error('Tab content not found')
+    content.innerHTML = tab.dataset.content
+    underline.style.left = `${tab.offsetLeft}px`
+    underline.style.width = `${tab.clientWidth}px`
+    currentTab = tab
+  }
+
+  highlightTab(currentTab)
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', (e) => {
       e.preventDefault()
-      if (!tab.dataset.content) throw new Error('Tab content not found')
       history.pushState({}, '', tab.href)
-      content.innerHTML = tab.dataset.content
-      underline.style.left = `${tab.offsetLeft}px`
-      underline.style.width = `${tab.clientWidth}px`
+      highlightTab(tab)
     })
   })
+
+  window.addEventListener('resize', () => highlightTab(currentTab))
 }
