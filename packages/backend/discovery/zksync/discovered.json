@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "blockNumber": 17222077,
-  "configHash": "0xd80ccba5561c6483f2154d3ecec18b2bac6a1da3b6bf13d65adc0efb4051ac70",
+  "configHash": "0x9e90d79d0b3440cd5180ddbcc141538032e089c6f9a56b927b97922080d9f1a3",
   "contracts": [
     {
       "name": "ZkSync",
@@ -36,8 +36,6 @@
       },
       "values": {
         "defaultFactory": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
-        "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-        "getTarget": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
         "totalTokens": 181,
@@ -99,8 +97,10 @@
         "listingCap": 64000,
         "listingFee": "500000000000000000000",
         "listingFeeToken": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "tokenListers": ["0xE24f4870Ab85DE8E356C5fC56138587206c70d99"],
         "treasury": "0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
-      }
+      },
+      "derivedName": "TokenGovernance"
     },
     {
       "name": "Verifier",
@@ -111,10 +111,7 @@
         "implementation": "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC",
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
-      "values": {
-        "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-        "getTarget": "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC"
-      }
+      "derivedName": "Verifier"
     },
     {
       "name": "UpgradeGatekeeper",

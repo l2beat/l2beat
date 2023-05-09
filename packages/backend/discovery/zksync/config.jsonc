@@ -7,6 +7,8 @@
     "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": "Governance",
     "0xE24f4870Ab85DE8E356C5fC56138587206c70d99": "ZkSyncMultisig",
     "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": "NftFactory",
+    "0x35cc31f63deef017c38d51B038891bAE7d614e86": "TokenGovernance",
+    "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D": "Verifier",
     // Other
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": "Dai"
   },
@@ -58,6 +60,8 @@
           "method": "function getNoticePeriod() pure returns (uint256)",
           "args": []
         }
+        // TODO: security council members
+        // TODO: security council threshold
       },
       "ignoreMethods": [
         "getMaster",
@@ -71,6 +75,7 @@
     },
     "Governance": {
       "fields": {
+        // network governor can pause tokens and add validators
         "validators": {
           "type": "arrayFromOneEvent",
           "event": "ValidatorStatusUpdate",
@@ -78,7 +83,21 @@
           "flagKey": "isActive"
         }
       },
+      "ignoreMethods": ["getMaster", "getTarget"],
       "ignoreInWatchMode": ["totalTokens"]
+    },
+    "TokenGovernance": {
+      "fields": {
+        "tokenListers": {
+          "type": "arrayFromOneEvent",
+          "event": "TokenListerUpdate",
+          "valueKey": "tokenLister",
+          "flagKey": "isActive"
+        }
+      }
+    },
+    "Verifier": {
+      "ignoreMethods": ["getMaster", "getTarget"]
     },
     "NftFactory": {
       "ignoreMethods": [
