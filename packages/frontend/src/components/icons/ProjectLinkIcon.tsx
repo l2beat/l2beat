@@ -1,4 +1,3 @@
-import { assertUnreachable } from '@l2beat/shared'
 import React from 'react'
 
 import { AppsIcon } from './symbols/AppsIcon'
@@ -38,6 +37,6 @@ export function ProjectLinkIcon({ name }: LinkNameIconProps) {
     case 'Social':
       return <UserIcon />
     default:
-      assertUnreachable(name)
+      throw Error('Invalid link name')
   }
 }

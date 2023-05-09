@@ -1,9 +1,7 @@
-import path from 'path'
-
 import { Config } from '../../build/config'
 import { getFooterProps, getNavbarProps } from '../../components'
-import { getHtml } from '../markdown/getHtml'
 import { Wrapped } from '../Page'
+import { faqItems } from './faqItems'
 import { FaqPageProps } from './FaqPage'
 
 export function getProps(config: Config): Wrapped<FaqPageProps> {
@@ -11,7 +9,7 @@ export function getProps(config: Config): Wrapped<FaqPageProps> {
     props: {
       navbar: getNavbarProps(config, 'faq'),
       title: 'Frequently Asked Questions',
-      content: getHtml(path.join(__dirname, 'faq.md')),
+      items: faqItems,
       footer: getFooterProps(config),
     },
     wrapper: {

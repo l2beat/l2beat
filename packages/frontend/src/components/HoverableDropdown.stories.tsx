@@ -2,6 +2,7 @@ import { range } from 'lodash'
 import React, { useEffect } from 'react'
 
 import { configureHoverableDropdown } from '../scripts/configureHoverableDropdown'
+import { hoverOver } from '../utils/storybook/hoverOver'
 import { HoverableDropdown as HoverableDropdownComponent } from './HoverableDropdown'
 
 export default {
@@ -11,11 +12,7 @@ export default {
 export const HoverableDropdown = () => {
   useEffect(() => {
     configureHoverableDropdown()
-    const hoverableDropdownToggle = document.querySelector(
-      '.HoverableDropdownToggle',
-    )
-    hoverableDropdownToggle?.dispatchEvent(new MouseEvent('mouseenter'))
-    document.body.replaceWith(document.body.cloneNode(true))
+    hoverOver('.HoverableDropdownToggle')
   }, [])
 
   return (
