@@ -1,6 +1,6 @@
 {
   "name": "starknet",
-  "blockNumber": 17215493,
+  "blockNumber": 17039303,
   "configHash": "0x487d9b36afbbc3e4a435e50d08568568cff7833bf77139148aa999cf1e0a61bc",
   "contracts": [
     {
@@ -26,7 +26,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 526573,
+        "l1ToL2MessageNonce": 449857,
         "messageCancellationDelay": 432100,
         "OPERATORS": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -35,8 +35,8 @@
         "programHash": "3068850377810731364250169858796291952506855863903938200658516448366463400202",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockNumber": 49595,
-        "stateRoot": "196264987430857762254882210770641690824207800188878175502225951604623098726",
+        "stateBlockNumber": 37774,
+        "stateRoot": "3180277124900607863773485173134617945774194740344815897659856725498757852414",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -85,7 +85,7 @@
         "isNotFinalized": true,
         "l2TokenContract": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": "30000000000000000000000",
+        "maxTotalBalance": "20000000000000000000000",
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
@@ -137,7 +137,7 @@
         "isFrozen": false,
         "isNotFinalized": true,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": 18000000000000,
+        "maxTotalBalance": 9000000000000,
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"

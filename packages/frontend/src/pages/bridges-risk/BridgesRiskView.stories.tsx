@@ -1,10 +1,10 @@
-import { formatLargeNumber } from '@l2beat/shared'
 import React, { useEffect } from 'react'
 
 import { PageContent } from '../../components/PageContent'
 import { Tooltip } from '../../components/Tooltip'
 import { configureFilters } from '../../scripts/configureFilters'
 import { configureTooltips } from '../../scripts/configureTooltips'
+import { formatLargeNumber } from '../../utils'
 import { BridgesTvlView } from '../bridges-tvl/BridgesTvlView'
 
 export default {
