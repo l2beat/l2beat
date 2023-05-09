@@ -31,8 +31,10 @@ function configureTabNavigation(tabNavigation: HTMLElement) {
   underline.style.width = `${preselectedTab.clientWidth}px`
 
   tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault()
       if (!tab.dataset.content) throw new Error('Tab content not found')
+      history.pushState({}, '', tab.href)
       content.innerHTML = tab.dataset.content
       underline.style.left = `${tab.offsetLeft}px`
       underline.style.width = `${tab.clientWidth}px`
