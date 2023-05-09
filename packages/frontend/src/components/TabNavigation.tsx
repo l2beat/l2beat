@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { renderToString } from 'react-dom/server'
+
 import { HorizontalSeparator } from './HorizontalSeparator'
 
 interface TabsProps {
@@ -32,7 +33,7 @@ export function TabNavigation({ tabs }: TabsProps) {
         <span className="TabNavigationUnderline absolute bottom-0 block h-1 rounded-t-sm bg-pink-200 transition-all duration-300" />
       </div>
       <HorizontalSeparator className="mb-6" />
-      <div className="TabNavigationContent"></div>
+      <div className="TabNavigationContent" />
     </div>
   )
 }

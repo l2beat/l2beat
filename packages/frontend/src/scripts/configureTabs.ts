@@ -15,21 +15,25 @@ function configureTabNavigation(tabNavigation: HTMLElement) {
   const content = tabNavigation.querySelector<HTMLElement>(
     '.TabNavigationContent',
   )
-
-  if (!underline || !tabsContainers || !content) return
   const tabs = Array.from(
-    tabsContainers.querySelectorAll<HTMLAnchorElement>('.TabNavigationTab'),
+    tabsContainers?.querySelectorAll<HTMLAnchorElement>('.TabNavigationTab') ??
+      [],
   )
+
+  if (!underline || !tabsContainers || !content || tabs.length === 0) return
+
   const preselectedTab =
     tabs.find((tab) => tab.href.endsWith(window.location.hash)) ?? tabs[0]
+  if (!preselectedTab.dataset.content) throw new Error('Tab content not found')
 
-  content.innerHTML = preselectedTab.dataset.content || ''
+  content.innerHTML = preselectedTab.dataset.content
   underline.style.left = `${preselectedTab.offsetLeft}px`
   underline.style.width = `${preselectedTab.clientWidth}px`
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
-      content.innerHTML = tab.dataset.content || ''
+      if (!tab.dataset.content) throw new Error('Tab content not found')
+      content.innerHTML = tab.dataset.content
       underline.style.left = `${tab.offsetLeft}px`
       underline.style.width = `${tab.clientWidth}px`
     })
