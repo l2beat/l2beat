@@ -7,6 +7,7 @@ interface TabsProps {
 }
 
 interface Tab {
+  id: string
   name: string
   content: ReactElement
 }
@@ -17,14 +18,15 @@ export function TabNavigation({ tabs }: TabsProps) {
       <div className="relative">
         <div className="TabNavigationTabsContainer space-x-8">
           {tabs.map((tab) => (
-            <div
-              className="TabNavigationTab group relative inline-block cursor-pointer py-3 px-1 text-base font-semibold"
-              key={tab.name}
+            <a
+              className="TabNavigationTab group relative inline-block py-3 px-1 text-base font-semibold"
+              key={tab.id}
+              href={`#${tab.id}`}
               data-content={renderToString(tab.content)}
             >
               {tab.name}
               <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-850 opacity-0 transition-all duration-300 group-hover:opacity-80" />
-            </div>
+            </a>
           ))}
         </div>
         <span className="TabNavigationUnderline absolute bottom-0 block h-1 rounded-t-sm bg-pink-200 transition-all duration-300" />

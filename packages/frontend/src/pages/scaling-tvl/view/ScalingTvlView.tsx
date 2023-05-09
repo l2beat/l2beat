@@ -49,6 +49,7 @@ export function ScalingTvlView({
       <TabNavigation
         tabs={[
           {
+            id: 'active',
             name: 'Active projects',
             content: (
               <ActiveTableView
@@ -61,6 +62,7 @@ export function ScalingTvlView({
             ),
           },
           {
+            id: 'upcoming',
             name: 'Upcoming projects',
             content: (
               <UpcomingTableView
@@ -70,6 +72,7 @@ export function ScalingTvlView({
             ),
           },
           {
+            id: 'archived',
             name: 'Archived projects',
             content: (
               <ArchivedTableView

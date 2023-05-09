@@ -15,12 +15,17 @@ function configureTabNavigation(tabNavigation: HTMLElement) {
   const content = tabNavigation.querySelector<HTMLElement>(
     '.TabNavigationContent',
   )
-  if (!underline || !tabsContainers || !content) return
-  const tabs = tabsContainers.querySelectorAll<HTMLElement>('.TabNavigationTab')
 
-  content.innerHTML = tabs[0].dataset.content || ''
-  underline.style.left = `${tabs[0].offsetLeft}px`
-  underline.style.width = `${tabs[0].clientWidth}px`
+  if (!underline || !tabsContainers || !content) return
+  const tabs = Array.from(
+    tabsContainers.querySelectorAll<HTMLAnchorElement>('.TabNavigationTab'),
+  )
+  const preselectedTab =
+    tabs.find((tab) => tab.href.endsWith(window.location.hash)) ?? tabs[0]
+
+  content.innerHTML = preselectedTab.dataset.content || ''
+  underline.style.left = `${preselectedTab.offsetLeft}px`
+  underline.style.width = `${preselectedTab.clientWidth}px`
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
