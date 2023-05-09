@@ -1,3 +1,4 @@
+import { withThemeByDataAttribute } from '@storybook/addon-styling'
 import { ScreenshotOptions, withScreenshot } from 'storycap'
 import '../src/styles/main.scss'
 import '../src/styles/style.css'
@@ -9,7 +10,17 @@ document.body.classList.add(
   'dark:text-white',
 )
 
-export const decorators = [withScreenshot]
+export const decorators = [
+  withScreenshot,
+  withThemeByDataAttribute({
+    themes: {
+      light: 'light',
+      dark: 'dark',
+    },
+    defaultTheme: 'light',
+    attributeName: 'class',
+  }),
+]
 
 const screenshotOptions: ScreenshotOptions = {
   delay: 50,
@@ -35,9 +46,5 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
-  },
-  darkMode: {
-    classTarget: 'html',
-    stylePreview: true,
   },
 }

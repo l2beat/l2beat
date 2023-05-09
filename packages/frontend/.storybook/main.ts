@@ -1,4 +1,4 @@
-import { StorybookConfig } from '@storybook/react-vite'
+import type { StorybookConfig } from '@storybook/react-vite'
 import { mergeConfig } from 'vite'
 
 const config: StorybookConfig = {
@@ -6,7 +6,6 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-styling',
-    'storybook-dark-mode',
     'storycap',
   ],
   framework: {
