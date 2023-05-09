@@ -10,9 +10,7 @@ import { RiskCell } from '../RiskCell'
 import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 
-export function getBridgesTvlColumns(
-  tab: 'active' | 'canonical-bridges' | 'archived',
-) {
+export function getArchivedBridgesTvlColumns() {
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
     {
       name: '#',
@@ -53,48 +51,53 @@ export function getBridgesTvlColumns(
       getValue: (entry) => <TechnologyCell>{entry.category}</TechnologyCell>,
     },
   ]
-  if (tab === 'active' || tab === 'canonical-bridges') {
-    columns.splice(
-      3,
-      0,
-      {
-        name: '7d Change',
-        tooltip: 'Change in the total value locked as compared to a week ago.',
-        alignRight: true,
-        getValue: (entry) =>
-          entry.tvlBreakdown && (
-            <NumberCell signed>{entry.sevenDayChange}</NumberCell>
-          ),
-      },
-      {
-        name: 'Breakdown',
-        tooltip:
-          'Composition of the total value locked broken down by token type.',
-        getValue: (entry) =>
-          entry.tvlBreakdown && <TVLBreakdown {...entry.tvlBreakdown} />,
-      },
-      {
-        name: 'Mkt share',
-        tooltip: 'Share of the sum of total value locked of all projects.',
-        alignRight: true,
-        getValue: (entry) =>
-          entry.tvlBreakdown && (
-            <NumberCell>
-              <span data-bridges-only-cell>{entry.bridgesMarketShare}</span>
-              <span data-combined-only-cell className="hidden">
-                {entry.combinedMarketShare}
-              </span>
-            </NumberCell>
-          ),
-      },
-    )
-    return columns
-  }
 
-  if (tab === 'archived') {
-    return columns
-  }
-  throw new Error(`Unknown tab: ${tab}`)
+  return columns
+}
+
+export function getActiveBridgesTvlColumns() {
+  const columns = getArchivedBridgesTvlColumns()
+
+  columns.splice(
+    3,
+    0,
+    {
+      name: '7d Change',
+      tooltip: 'Change in the total value locked as compared to a week ago.',
+      alignRight: true,
+      getValue: (entry) =>
+        entry.tvlBreakdown && (
+          <NumberCell signed>{entry.sevenDayChange}</NumberCell>
+        ),
+    },
+    {
+      name: 'Breakdown',
+      tooltip:
+        'Composition of the total value locked broken down by token type.',
+      getValue: (entry) =>
+        entry.tvlBreakdown && <TVLBreakdown {...entry.tvlBreakdown} />,
+    },
+    {
+      name: 'Mkt share',
+      tooltip: 'Share of the sum of total value locked of all projects.',
+      alignRight: true,
+      getValue: (entry) =>
+        entry.tvlBreakdown && (
+          <NumberCell>
+            <span data-bridges-only-cell>{entry.bridgesMarketShare}</span>
+            <span data-combined-only-cell className="hidden">
+              {entry.combinedMarketShare}
+            </span>
+          </NumberCell>
+        ),
+    },
+  )
+
+  return columns
+}
+
+export function getCanonicalBridgesTvlColumns() {
+  return getActiveBridgesTvlColumns()
 }
 
 export function getBridgesRiskColumns() {

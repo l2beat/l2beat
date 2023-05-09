@@ -5,7 +5,11 @@ import { TVLBreakdownProps } from '../../components/TVLBreakdown'
 import { TabNavigation } from '../../components/TabNavigation'
 import { RowConfig, TableView } from '../../components/table/TableView'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
-import { getBridgesTvlColumns } from '../../components/table/props/getBridgesTableColumns'
+import {
+  getActiveBridgesTvlColumns,
+  getArchivedBridgesTvlColumns,
+  getCanonicalBridgesTvlColumns,
+} from '../../components/table/props/getBridgesTableColumns'
 
 export interface BridgesTvlViewProps {
   items: BridgesTvlViewEntry[]
@@ -46,7 +50,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 items={items.filter(
                   (item) => item.type === 'bridge' && !item.isArchived,
                 )}
-                columns={getBridgesTvlColumns('active')}
+                columns={getActiveBridgesTvlColumns()}
                 rows={rows}
               />
             ),
@@ -59,7 +63,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 items={items.filter(
                   (item) => item.type === 'layer2' && !item.isArchived,
                 )}
-                columns={getBridgesTvlColumns('canonical-bridges')}
+                columns={getCanonicalBridgesTvlColumns()}
                 rows={rows}
               />
             ),
@@ -72,7 +76,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 items={items.filter(
                   (item) => item.type === 'bridge' && item.isArchived,
                 )}
-                columns={getBridgesTvlColumns('archived')}
+                columns={getArchivedBridgesTvlColumns()}
                 rows={rows}
               />
             ),
