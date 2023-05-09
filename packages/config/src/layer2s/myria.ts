@@ -96,7 +96,7 @@ export const myria: Layer2 = {
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
-    exitMechanisms: EXITS.STARKEX_NFT,
+    exitMechanisms: EXITS.STARKEX_SPOT,
   },
   contracts: {
     addresses: [
