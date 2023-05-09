@@ -47,17 +47,17 @@ function EMERGENCY(
   }
 }
 
-const STARKEX_REGULAR: ProjectTechnologyChoice = {
+const STARKEX_REGULAR_PERPETUAL: ProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   references: [
     {
       text: 'Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/withdrawal',
+      href: 'https://docs.starkware.co/starkex/perpetual/withdrawal-perpetual.html',
     },
   ],
 }
 
-const STARKEX_REGULAR_NFT: ProjectTechnologyChoice = {
+const STARKEX_REGULAR_SPOT: ProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   description:
     REGULAR('zk', 'no proof').description +
@@ -65,45 +65,51 @@ const STARKEX_REGULAR_NFT: ProjectTechnologyChoice = {
   references: [
     {
       text: 'Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/withdrawal',
+      href: 'https://docs.starkware.co/starkex/spot/withdrawal.html',
     },
   ],
 }
 
-const STARKEX_FORCED: ProjectTechnologyChoice = {
+const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
   ...FORCED,
   references: [
     {
       text: 'Forced Operations - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/forced-operations',
+      href: 'https://docs.starkware.co/starkex/perpetual/shared/README-forced-operations.html',
     },
     {
       text: 'Forced Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-perpetual-trading',
+      href: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html#forced_withdrawal',
     },
     {
-      text: 'Full Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-spot-trading',
+      text: 'Forced Trade - StarkEx documentation',
+      href: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html#forced_trade',
     },
   ],
 }
 
-const STARKEX_EMERGENCY: ProjectTechnologyChoice = {
-  ...EMERGENCY('a frozen state', 'merkle proof'),
+const STARKEX_FORCED_SPOT: ProjectTechnologyChoice = {
+  ...FORCED,
   references: [
     {
       text: 'Forced Operations - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/forced-operations',
-    },
-    {
-      text: 'Forced Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-perpetual-trading',
+      href: 'https://docs.starkware.co/starkex/spot/shared/README-forced-operations.html',
     },
     {
       text: 'Full Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/in-spot-trading/in-spot-trading',
+      href: 'https://docs.starkware.co/starkex/spot/spot-trading-full-withdrawals.html',
     },
   ],
+}
+
+const STARKEX_EMERGENCY_PERPETUAL: ProjectTechnologyChoice = {
+  ...EMERGENCY('a frozen state', 'merkle proof'),
+  references: [...STARKEX_FORCED_PERPETUAL.references],
+}
+
+const STARKEX_EMERGENCY_SPOT: ProjectTechnologyChoice = {
+  ...EMERGENCY('a frozen state', 'merkle proof'),
+  references: [...STARKEX_FORCED_SPOT.references],
 }
 
 const OPERATOR_CENSORS_WITHDRAWAL: ProjectRisk = {
@@ -157,8 +163,16 @@ export const EXITS = {
   REGULAR,
   FORCED,
   EMERGENCY,
-  STARKEX: [STARKEX_REGULAR, STARKEX_FORCED, STARKEX_EMERGENCY],
-  STARKEX_NFT: [STARKEX_REGULAR_NFT, STARKEX_FORCED, STARKEX_EMERGENCY],
+  STARKEX_PERPETUAL: [
+    STARKEX_REGULAR_PERPETUAL,
+    STARKEX_FORCED_PERPETUAL,
+    STARKEX_EMERGENCY_PERPETUAL,
+  ],
+  STARKEX_SPOT: [
+    STARKEX_REGULAR_SPOT,
+    STARKEX_FORCED_SPOT,
+    STARKEX_EMERGENCY_SPOT,
+  ],
   STARKNET: [STARKNET_REGULAR, STARKNET_EMERGENCY],
   PLASMA,
   RISK_CENTRALIZED_VALIDATOR,
