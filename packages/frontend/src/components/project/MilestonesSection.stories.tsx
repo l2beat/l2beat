@@ -2,6 +2,7 @@ import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
 import { configureExpandableContainer } from '../../scripts/configureExpandableContainer'
+import { click } from '../../utils/storybook/click'
 import { MilestonesSection, MilestonesSectionProps } from './MilestonesSection'
 
 export default {
@@ -46,7 +47,7 @@ Collapsed.args = {
 
 export function Expanded() {
   useEffect(() => {
-    document.querySelector<HTMLElement>('.ExpandableContainerButton')?.click()
+    click('.ExpandableContainerButton')
   }, [])
   return (
     <Template
