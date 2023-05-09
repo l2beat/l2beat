@@ -1,4 +1,5 @@
 import { Layer2 } from '@l2beat/config'
+import { formatLargeNumber } from '@l2beat/shared'
 import cx from 'classnames'
 import React from 'react'
 
@@ -14,7 +15,6 @@ import {
   RowConfig,
   TableView,
 } from '../../../components/table/TableView'
-import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
 
 export interface ActivityViewProps {

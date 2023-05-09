@@ -1,8 +1,11 @@
 import { Layer2, ProjectLinks } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
+import {
+  ActivityApiResponse,
+  formatLargeNumber,
+  TvlApiResponse,
+} from '@l2beat/shared'
 
 import { Config } from '../../../build/config'
-import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
