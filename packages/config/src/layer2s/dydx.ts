@@ -97,7 +97,7 @@ export const dydx: Layer2 = {
     },
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
-    exitMechanisms: EXITS.STARKEX,
+    exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {
     addresses: [
