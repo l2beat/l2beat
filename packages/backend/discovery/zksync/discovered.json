@@ -1,16 +1,17 @@
 {
   "name": "zksync",
   "blockNumber": 17222077,
-  "configHash": "0xb3202e3cd6ef8f6c3bb81345ecb6b54a99cf9b2cf56c1074a56f36969a67e70e",
+  "configHash": "0x84bf19fc108018ad10704dfa4c3e60ea16887e9bdabf177a77475097581fc2aa",
   "contracts": [
     {
       "name": "ZkSync",
       "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
-      "code": "https://etherscan.deth.net/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF,0x8e972b354E6933275513C355Ee14D44A832aD2d9",
+      "code": "https://etherscan.deth.net/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF,0x8e972b354E6933275513C355Ee14D44A832aD2d9,0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "zkSync Lite proxy",
+        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
         "implementation": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
-        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
+        "additional": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD"
       },
       "values": {
         "additional": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
@@ -23,23 +24,7 @@
         "totalBlocksProven": 236545,
         "totalOpenPriorityRequests": 84
       },
-      "derivedName": "ZkSync"
-    },
-    {
-      "name": "AdditionalZkSync",
-      "address": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
-      "code": "https://etherscan.deth.net/address/0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "exodusMode": false,
-        "firstPriorityRequestId": 0,
-        "totalBlocksCommitted": 0,
-        "totalBlocksExecuted": 0,
-        "totalBlocksProven": 0,
-        "totalOpenPriorityRequests": 0
-      }
+      "derivedName": "Proxy"
     },
     {
       "name": "UpgradeGatekeeper",

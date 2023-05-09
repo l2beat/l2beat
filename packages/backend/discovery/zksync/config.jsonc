@@ -21,6 +21,7 @@
       }
     },
     "ZkSync": {
+      "proxyType": "zkSync Lite proxy",
       "fields": {
         "additional": {
           "type": "storage",

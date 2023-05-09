@@ -34,7 +34,7 @@ export async function getNewArbitrumProxy(
   }
   return {
     implementations: [...detection.implementations, adminFacet, userFacet],
-    relatives: [],
+    relatives: [detection.upgradeability.admin],
     upgradeability: {
       type: 'new Arbitrum proxy',
       admin: detection.upgradeability.admin,
