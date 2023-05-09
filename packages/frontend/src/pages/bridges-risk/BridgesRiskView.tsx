@@ -1,16 +1,10 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { BridgesTableFilters } from '../../components/table/filters/BridgesTableFilters'
-import { IndexCell } from '../../components/table/IndexCell'
-import { ProjectCell } from '../../components/table/ProjectCell'
+import { TabNavigation } from '../../components/TabNavigation'
+import { RowConfig, TableView } from '../../components/table/TableView'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
-import { RiskCell } from '../../components/table/RiskCell'
-import {
-  ColumnConfig,
-  RowConfig,
-  TableView,
-} from '../../components/table/TableView'
+import { getBridgesRiskColumns } from '../../components/table/props/getBridgesTableColumns'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]
@@ -31,50 +25,7 @@ export interface BridgesRiskViewEntry {
 }
 
 export function BridgesRiskView({ items }: BridgesRiskViewProps) {
-  const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (entry) => (
-        <ProjectCell highlightL2 type={entry.type} project={entry} />
-      ),
-    },
-    {
-      name: 'Destination',
-      tooltip: 'What chains can you get to using this bridge?',
-      getValue: (entry) => <RiskCell item={entry.destination} />,
-    },
-    {
-      name: 'Validated by',
-      tooltip: 'How are the messages sent via this bridge checked?',
-      getValue: (entry) => <RiskCell item={entry.validatedBy} />,
-    },
-    {
-      name: 'Type',
-      tooltip:
-        'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
-      getValue: (entry) => (
-        <span className="sm:text-xs md:text-base">{entry.category}</span>
-      ),
-    },
-    {
-      name: 'Source\nUpgradeability',
-      tooltip: 'Are the Ethereum contracts upgradeable?',
-      getValue: (entry) => <RiskCell item={entry.sourceUpgradeability} />,
-    },
-    {
-      name: 'Destination\nToken',
-      tooltip: 'What is the token that you receive from this bridge?',
-      getValue: (entry) => <RiskCell item={entry.destinationToken} />,
-    },
-  ]
+  const columns = getBridgesRiskColumns()
 
   const rows: RowConfig<BridgesRiskViewEntry> = {
     getProps: getBridgesRowProps,
@@ -82,8 +33,49 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <BridgesTableFilters className="pb-4" />
-      <TableView items={items} columns={columns} rows={rows} />
+      <TabNavigation
+        tabs={[
+          {
+            id: 'active',
+            name: 'Active projects',
+            content: (
+              <TableView
+                items={items.filter(
+                  (item) => item.type === 'bridge' && !item.isArchived,
+                )}
+                columns={columns}
+                rows={rows}
+              />
+            ),
+          },
+          {
+            id: 'canonical-bridges',
+            name: 'Canonical bridges to Layer2s',
+            content: (
+              <TableView
+                items={items.filter(
+                  (item) => item.type === 'layer2' && !item.isArchived,
+                )}
+                columns={columns}
+                rows={rows}
+              />
+            ),
+          },
+          {
+            id: 'archived',
+            name: 'Archived projects',
+            content: (
+              <TableView
+                items={items.filter(
+                  (item) => item.type === 'bridge' && item.isArchived,
+                )}
+                columns={columns}
+                rows={rows}
+              />
+            ),
+          },
+        ]}
+      />
     </section>
   )
 }

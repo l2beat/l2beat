@@ -1,4 +1,5 @@
 import React from 'react'
+import { BridgesRiskViewEntry } from '../../../pages/bridges-risk/BridgesRiskView'
 import { BridgesTvlViewEntry } from '../../../pages/bridges-tvl/BridgesTvlView'
 import { TVLBreakdown } from '../../TVLBreakdown'
 import { IndexCell } from '../IndexCell'
@@ -9,7 +10,7 @@ import { RiskCell } from '../RiskCell'
 import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 
-export function getBridgesTableColumns(
+export function getBridgesTvlColumns(
   tab: 'active' | 'canonical-bridges' | 'archived',
 ) {
   const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
@@ -94,4 +95,53 @@ export function getBridgesTableColumns(
     return columns
   }
   throw new Error(`Unknown tab: ${tab}`)
+}
+
+export function getBridgesRiskColumns() {
+  const columns: ColumnConfig<BridgesRiskViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      getValue: (entry) => (
+        <ProjectCell highlightL2 type={entry.type} project={entry} />
+      ),
+    },
+    {
+      name: 'Destination',
+      tooltip: 'What chains can you get to using this bridge?',
+      getValue: (entry) => <RiskCell item={entry.destination} />,
+    },
+    {
+      name: 'Validated by',
+      tooltip: 'How are the messages sent via this bridge checked?',
+      getValue: (entry) => <RiskCell item={entry.validatedBy} />,
+    },
+    {
+      name: 'Type',
+      tooltip:
+        'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
+      getValue: (entry) => (
+        <span className="sm:text-xs md:text-base">{entry.category}</span>
+      ),
+    },
+    {
+      name: 'Source\nUpgradeability',
+      tooltip: 'Are the Ethereum contracts upgradeable?',
+      getValue: (entry) => <RiskCell item={entry.sourceUpgradeability} />,
+    },
+    {
+      name: 'Destination\nToken',
+      tooltip: 'What is the token that you receive from this bridge?',
+      getValue: (entry) => <RiskCell item={entry.destinationToken} />,
+    },
+  ]
+
+  return columns
 }
