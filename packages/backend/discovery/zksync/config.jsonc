@@ -23,13 +23,45 @@
     "ZkSync": {
       "proxyType": "zkSync Lite proxy",
       "fields": {
-        "additional": {
+        "upgradePreparationActive": {
           "type": "storage",
-          "slot": 19,
+          "slot": 0,
+          "returnType": "number" // TODO: boolean
+        },
+        "upgradePreparationActivationTime": {
+          "type": "storage",
+          "slot": 1,
+          "returnType": "number"
+        },
+        "verifier": {
+          "type": "storage",
+          "slot": 2,
           "returnType": "address"
+        },
+        "governance": {
+          "type": "storage",
+          "slot": 3,
+          "returnType": "address"
+        },
+        "approvedUpgradeNoticePeriod": {
+          "type": "storage",
+          "slot": 20,
+          "returnType": "number"
+        },
+        "upgradeStartTimestamp": {
+          "type": "storage",
+          "slot": 21,
+          "returnType": "number"
+        },
+        "noticePeriod": {
+          "type": "call",
+          "method": "function getNoticePeriod() pure returns (uint256)",
+          "args": []
         }
       },
-      "ignoreInWatchMode": [
+      "ignoreMethods": [
+        "getMaster",
+        "getTarget",
         "firstPriorityRequestId",
         "totalBlocksCommitted",
         "totalBlocksExecuted",
