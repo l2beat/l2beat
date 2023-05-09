@@ -2,7 +2,6 @@ import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { ScalingTableFilters } from '../../../components/table/filters/ScalingTableFilters'
 import { IndexCell } from '../../../components/table/IndexCell'
 import { ProjectCell } from '../../../components/table/ProjectCell'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
@@ -12,6 +11,7 @@ import {
   RowConfig,
   TableView,
 } from '../../../components/table/TableView'
+import { TabNavigation } from '../../../components/TabNavigation'
 
 export interface ScalingRiskViewProps {
   items: ScalingRiskViewEntry[]
@@ -82,8 +82,32 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <ScalingTableFilters className="mb-4" />
-      <TableView items={items} columns={columns} rows={rows} />
+      <TabNavigation
+        tabs={[
+          {
+            id: 'active',
+            name: 'Active projects',
+            content: (
+              <TableView
+                items={items.filter((item) => !item.isArchived)}
+                columns={columns}
+                rows={rows}
+              />
+            ),
+          },
+          {
+            id: 'archived',
+            name: 'Archived projects',
+            content: (
+              <TableView
+                items={items.filter((item) => item.isArchived)}
+                columns={columns}
+                rows={rows}
+              />
+            ),
+          },
+        ]}
+      />
       <ScalingLegend />
     </section>
   )
