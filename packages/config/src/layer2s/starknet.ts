@@ -22,10 +22,20 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
-const bridgeLimitETH = discovery.getContractValue<number>("StarknetEthBridge", "maxTotalBalance") / 1e18 / 1e6
-const bridgeLimitUSDC = discovery.getContractValue<number>("USDC Bridge", "maxTotalBalance") / 1e6 / 1e6
-const bridgeLimitWBTC = discovery.getContractValue<number>("WBTC Bridge", "maxTotalBalance") / 1e8
-const bridgeLimitUSDT = discovery.getContractValue<number>("USDT Bridge", "maxTotalBalance") / 1e6 / 1e6
+const bridgeLimitETH =
+  discovery.getContractValue<number>('StarknetEthBridge', 'maxTotalBalance') /
+  1e18 /
+  1e6
+const bridgeLimitUSDC =
+  discovery.getContractValue<number>('USDC Bridge', 'maxTotalBalance') /
+  1e6 /
+  1e6
+const bridgeLimitWBTC =
+  discovery.getContractValue<number>('WBTC Bridge', 'maxTotalBalance') / 1e8
+const bridgeLimitUSDT =
+  discovery.getContractValue<number>('USDT Bridge', 'maxTotalBalance') /
+  1e6 /
+  1e6
 
 export const starknet: Layer2 = {
   type: 'layer2',
@@ -168,15 +178,15 @@ export const starknet: Layer2 = {
       },
       discovery.getMainContractDetails(
         'WBTC Bridge',
-        `StarkGate bridge for WBTC, currently the limit is ${bridgeLimitWBTC} WBTC.`
+        `StarkGate bridge for WBTC, currently the limit is ${bridgeLimitWBTC} WBTC.`,
       ),
       discovery.getMainContractDetails(
         'USDC Bridge',
-        `StarkGate bridge for USDC, currently the limit is ${bridgeLimitUSDC}M USDC.`
+        `StarkGate bridge for USDC, currently the limit is ${bridgeLimitUSDC}M USDC.`,
       ),
       discovery.getMainContractDetails(
         'USDT Bridge',
-        `StarkGate bridge for USDT, currently the limit is ${bridgeLimitUSDT}M USDT.`
+        `StarkGate bridge for USDT, currently the limit is ${bridgeLimitUSDT}M USDT.`,
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
