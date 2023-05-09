@@ -1,20 +1,11 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { BridgesTableFilters } from '../../components/table/filters/BridgesTableFilters'
-import { IndexCell } from '../../components/table/IndexCell'
-import { NoInfoCell } from '../../components/table/NoInfoCell'
-import { NumberCell } from '../../components/table/NumberCell'
-import { ProjectCell } from '../../components/table/ProjectCell'
+import { TVLBreakdownProps } from '../../components/TVLBreakdown'
+import { TabNavigation } from '../../components/TabNavigation'
+import { RowConfig, TableView } from '../../components/table/TableView'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
-import { RiskCell } from '../../components/table/RiskCell'
-import {
-  ColumnConfig,
-  RowConfig,
-  TableView,
-} from '../../components/table/TableView'
-import { TechnologyCell } from '../../components/table/TechnologyCell'
-import { TVLBreakdown, TVLBreakdownProps } from '../../components/TVLBreakdown'
+import { getBridgesTableColumns } from '../../components/table/props/getBridgesTableColumns'
 
 export interface BridgesTvlViewProps {
   items: BridgesTvlViewEntry[]
@@ -39,91 +30,53 @@ export interface BridgesTvlViewEntry {
 }
 
 export function BridgesTvlView({ items }: BridgesTvlViewProps) {
-  const columns: ColumnConfig<BridgesTvlViewEntry>[] = [
-    {
-      name: '#',
-      alignCenter: true,
-      minimalWidth: true,
-      headClassName: 'md:pl-4',
-      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
-    },
-    {
-      name: 'Name',
-      headClassName: 'pl-8',
-      getValue: (entry) => (
-        <ProjectCell highlightL2 type={entry.type} project={entry} />
-      ),
-    },
-    {
-      name: 'TVL',
-      tooltip: 'Total value locked in escrow contracts on Ethereum.',
-      alignRight: true,
-      getValue: (entry) =>
-        !entry.isUpcoming &&
-        entry.tvlBreakdown && <NumberCell>{entry.tvl}</NumberCell>,
-    },
-    {
-      name: '7d Change',
-      tooltip: 'Change in the total value locked as compared to a week ago.',
-      alignRight: true,
-      getValue: (entry) =>
-        !entry.isArchived &&
-        !entry.isUpcoming &&
-        entry.tvlBreakdown && (
-          <NumberCell signed>{entry.sevenDayChange}</NumberCell>
-        ),
-    },
-    {
-      name: 'Breakdown',
-      tooltip:
-        'Composition of the total value locked broken down by token type.',
-      getValue: (entry) =>
-        !entry.isArchived &&
-        !entry.isUpcoming &&
-        entry.tvlBreakdown && <TVLBreakdown {...entry.tvlBreakdown} />,
-    },
-    {
-      name: 'Mkt share',
-      tooltip: 'Share of the sum of total value locked of all projects.',
-      alignRight: true,
-      getValue: (entry) =>
-        !entry.isArchived &&
-        !entry.isUpcoming &&
-        entry.tvlBreakdown && (
-          <NumberCell>
-            <span data-bridges-only-cell>{entry.bridgesMarketShare}</span>
-            <span data-combined-only-cell className="hidden">
-              {entry.combinedMarketShare}
-            </span>
-          </NumberCell>
-        ),
-    },
-    {
-      name: 'Validated by',
-      tooltip: 'How are the messages sent via this bridge checked?',
-      getValue: (entry) =>
-        entry.validatedBy ? (
-          <RiskCell item={entry.validatedBy} />
-        ) : (
-          <NoInfoCell />
-        ),
-    },
-    {
-      name: 'Type',
-      tooltip:
-        'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
-      getValue: (entry) => <TechnologyCell>{entry.category}</TechnologyCell>,
-    },
-  ]
-
   const rows: RowConfig<BridgesTvlViewEntry> = {
     getProps: getBridgesRowProps,
   }
 
   return (
     <section className="mt-4 sm:mt-8">
-      <BridgesTableFilters className="pb-4" />
-      <TableView items={items} columns={columns} rows={rows} />
+      <TabNavigation
+        tabs={[
+          {
+            id: 'active',
+            name: 'Active projects',
+            content: (
+              <TableView
+                items={items.filter(
+                  (item) => item.type === 'bridge' && !item.isArchived,
+                )}
+                columns={getBridgesTableColumns('active')}
+                rows={rows}
+              />
+            ),
+          },
+          {
+            id: 'canonical-bridges',
+            name: 'Canonical bridges to Layer2s',
+            content: (
+              <TableView
+                items={items.filter(
+                  (item) => item.type === 'layer2' && !item.isArchived,
+                )}
+                columns={getBridgesTableColumns('canonical-bridges')}
+                rows={rows}
+              />
+            ),
+          },
+          {
+            id: 'archived',
+            name: 'Archived projects',
+            content: (
+              <TableView
+                items={items.filter((item) => item.isArchived)}
+                columns={getBridgesTableColumns('archived')}
+                rows={rows}
+              />
+            ),
+          },
+        ]}
+      />
     </section>
   )
 }

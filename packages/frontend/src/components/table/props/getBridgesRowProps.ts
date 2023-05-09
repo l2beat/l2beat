@@ -1,5 +1,3 @@
-import cx from 'classnames'
-
 import { getRowVerificationClassNames } from './getRowVerificationClassNames'
 
 interface BridgeTableEntry {
@@ -16,14 +14,7 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
       : `/bridges/projects/${entry.slug}`
 
   return {
-    className: cx(
-      getRowVerificationClassNames(entry),
-      entry.type === 'layer2' && 'hidden',
-      entry.isArchived && 'hidden opacity-50',
-    ),
-    'data-layer2': entry.type === 'layer2' ? true : undefined,
-    'data-archived': entry.isArchived,
-    'data-role': 'row',
+    className: getRowVerificationClassNames(entry),
     href,
   }
 }
