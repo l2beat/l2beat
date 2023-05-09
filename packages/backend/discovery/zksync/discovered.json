@@ -1,8 +1,46 @@
 {
   "name": "zksync",
   "blockNumber": 17222077,
-  "configHash": "0x7d9847e421a09c79fe74775b4e570778a7a65a284da67236d39ec8e90a6e411a",
+  "configHash": "0xb3202e3cd6ef8f6c3bb81345ecb6b54a99cf9b2cf56c1074a56f36969a67e70e",
   "contracts": [
+    {
+      "name": "ZkSync",
+      "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+      "code": "https://etherscan.deth.net/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF,0x8e972b354E6933275513C355Ee14D44A832aD2d9",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
+        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
+      },
+      "values": {
+        "additional": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
+        "exodusMode": false,
+        "firstPriorityRequestId": 1211000,
+        "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+        "getTarget": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
+        "totalBlocksCommitted": 236564,
+        "totalBlocksExecuted": 236545,
+        "totalBlocksProven": 236545,
+        "totalOpenPriorityRequests": 84
+      },
+      "derivedName": "ZkSync"
+    },
+    {
+      "name": "AdditionalZkSync",
+      "address": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
+      "code": "https://etherscan.deth.net/address/0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "exodusMode": false,
+        "firstPriorityRequestId": 0,
+        "totalBlocksCommitted": 0,
+        "totalBlocksExecuted": 0,
+        "totalBlocksProven": 0,
+        "totalOpenPriorityRequests": 0
+      }
+    },
     {
       "name": "UpgradeGatekeeper",
       "address": "0x38A43F4330f24fe920F943409709fc9A6084C939",
@@ -21,10 +59,11 @@
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
         "versionId": 10
-      }
+      },
+      "derivedName": "UpgradeGatekeeper"
     },
     {
-      "name": "GnosisSafe",
+      "name": "ZkSyncMultisig",
       "address": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
       "code": "https://etherscan.deth.net/address/0xE24f4870Ab85DE8E356C5fC56138587206c70d99,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
@@ -47,44 +86,8 @@
         "NAME": "Gnosis Safe",
         "nonce": 108,
         "VERSION": "1.1.1"
-      }
-    },
-    {
-      "name": "ZkSync",
-      "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
-      "code": "https://etherscan.deth.net/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF,0x8e972b354E6933275513C355Ee14D44A832aD2d9",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
-        "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939"
       },
-      "values": {
-        "additional": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
-        "exodusMode": false,
-        "firstPriorityRequestId": 1211000,
-        "getMaster": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-        "getTarget": "0x8e972b354E6933275513C355Ee14D44A832aD2d9",
-        "totalBlocksCommitted": 236564,
-        "totalBlocksExecuted": 236545,
-        "totalBlocksProven": 236545,
-        "totalOpenPriorityRequests": 84
-      }
-    },
-    {
-      "name": "AdditionalZkSync",
-      "address": "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
-      "code": "https://etherscan.deth.net/address/0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "exodusMode": false,
-        "firstPriorityRequestId": 0,
-        "totalBlocksCommitted": 0,
-        "totalBlocksExecuted": 0,
-        "totalBlocksProven": 0,
-        "totalOpenPriorityRequests": 0
-      }
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Governance",
@@ -103,10 +106,11 @@
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
         "totalTokens": 181,
         "validators": ["0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"]
-      }
+      },
+      "derivedName": "Governance"
     },
     {
-      "name": "ZkSyncNFTFactory",
+      "name": "NftFactory",
       "address": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
       "code": "https://etherscan.deth.net/address/0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
       "upgradeability": {
@@ -117,7 +121,8 @@
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
         "totalSupply": 15091
-      }
+      },
+      "derivedName": "ZkSyncNFTFactory"
     },
     {
       "name": "TokenGovernance",

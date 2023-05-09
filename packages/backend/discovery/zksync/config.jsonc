@@ -1,9 +1,18 @@
 {
   "$schema": "../config.schema.json",
   "name": "zksync",
-  "initialAddresses": ["0x38A43F4330f24fe920F943409709fc9A6084C939"],
+  "names": {
+    "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF": "ZkSync",
+    "0x38A43F4330f24fe920F943409709fc9A6084C939": "UpgradeGatekeeper",
+    "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": "Governance",
+    "0xE24f4870Ab85DE8E356C5fC56138587206c70d99": "ZkSyncMultisig",
+    "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": "NftFactory",
+    // Other
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": "Dai"
+  },
+  "initialAddresses": ["0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"],
   "overrides": {
-    "0x38A43F4330f24fe920F943409709fc9A6084C939": {
+    "UpgradeGatekeeper": {
       "ignoreMethods": ["nextTargets"],
       "fields": {
         "managedContracts": {
@@ -11,7 +20,7 @@
         }
       }
     },
-    "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF": {
+    "ZkSync": {
       "fields": {
         "additional": {
           "type": "storage",
@@ -27,7 +36,7 @@
         "totalOpenPriorityRequests"
       ]
     },
-    "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": {
+    "Governance": {
       "fields": {
         "validators": {
           "type": "arrayFromOneEvent",
@@ -38,7 +47,7 @@
       },
       "ignoreInWatchMode": ["totalTokens"]
     },
-    "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": {
+    "NftFactory": {
       "ignoreMethods": [
         "tokenURI",
         "getCreatorFingerprint",
@@ -52,12 +61,11 @@
       ],
       "ignoreInWatchMode": ["totalSupply"]
     },
-    "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
-      // Dai
-      "ignoreDiscovery": true
-    },
-    "0xE24f4870Ab85DE8E356C5fC56138587206c70d99": {
+    "ZkSyncMultisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "Dai": {
+      "ignoreDiscovery": true
     }
   }
 }
