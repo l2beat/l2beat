@@ -1,6 +1,5 @@
 export * from './address'
 export * from './divOrZero'
-export * from './formatLargeNumber'
 export * from './gatherAddressesFromUpgradeability'
 export * from './getTimestamps'
 export * from './toBatches'
