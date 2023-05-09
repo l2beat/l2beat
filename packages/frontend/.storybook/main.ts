@@ -1,15 +1,16 @@
-const { mergeConfig } = require('vite')
+import type { StorybookConfig } from '@storybook/react-vite'
+import { mergeConfig } from 'vite'
 
-module.exports = {
+const config: StorybookConfig = {
   stories: ['../src/**/*.stories.tsx'],
   addons: [
     '@storybook/addon-essentials',
-    '@storybook/addon-postcss',
-    'storybook-dark-mode',
+    '@storybook/addon-styling',
+    'storycap',
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: '@storybook/builder-vite',
+  framework: {
+    name: '@storybook/react-vite',
+    options: {},
   },
   features: {
     storyStoreV7: true,
@@ -23,3 +24,4 @@ module.exports = {
     })
   },
 }
+export default config
