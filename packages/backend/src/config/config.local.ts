@@ -85,6 +85,11 @@ export function getLocalConfig(cli: CliParameters): Config {
           type: 'rpc',
           callsPerMinute: 60,
         },
+        nova: {
+          type: 'rpc',
+          callsPerMinute: 60,
+          url: getEnv('ACTIVITY_NOVA_URL', 'https://nova.arbitrum.io/rpc'),
+        },
       },
     },
     updateMonitor: updateMonitorEnabled && {
