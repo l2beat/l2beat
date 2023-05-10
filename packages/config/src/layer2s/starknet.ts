@@ -1,6 +1,6 @@
 import {
   EthereumAddress,
-  formatLargeNumber,
+  formatLargeNumberShared,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared'
@@ -160,7 +160,7 @@ export const starknet: Layer2 = {
       ...getSHARPVerifierContracts(discovery, verifierAddress),
       {
         name: 'Eth Bridge',
-        description: `Starkgate bridge for ETH, currently the limit is ${formatLargeNumber(
+        description: `Starkgate bridge for ETH, currently the limit is ${formatLargeNumberShared(
           bridgeLimitETH,
         )} ETH.`,
         address: discovery.getContract('StarknetEthBridge').address,
@@ -180,19 +180,19 @@ export const starknet: Layer2 = {
       },
       discovery.getMainContractDetails(
         'WBTC Bridge',
-        `StarkGate bridge for WBTC, currently the limit is ${formatLargeNumber(
+        `StarkGate bridge for WBTC, currently the limit is ${formatLargeNumberShared(
           bridgeLimitWBTC,
         )} WBTC.`,
       ),
       discovery.getMainContractDetails(
         'USDC Bridge',
-        `StarkGate bridge for USDC, currently the limit is ${formatLargeNumber(
+        `StarkGate bridge for USDC, currently the limit is ${formatLargeNumberShared(
           bridgeLimitUSDC,
         )} USDC.`,
       ),
       discovery.getMainContractDetails(
         'USDT Bridge',
-        `StarkGate bridge for USDT, currently the limit is ${formatLargeNumber(
+        `StarkGate bridge for USDT, currently the limit is ${formatLargeNumberShared(
           bridgeLimitUSDT,
         )} USDT.`,
       ),
