@@ -1,0 +1,20 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "degate",
+  "initialAddresses": ["0x814d0c1903d69eb1c7ceb8f5190b20a06892d1da"],
+  "overrides": {
+    "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5": {
+      "ignoreMethods": ["getBlockInfo"],
+      "ignoreInWatchMode": [
+        "getBlockHeight",
+        "getMerkleRoot",
+        "getProtocolFeeValues",
+        "getNumAvailableForcedSlots",
+        "getConstants"
+      ]
+    },
+    "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": {
+      "ignoreInWatchMode": ["transactionCount"]
+    }
+  }
+}
