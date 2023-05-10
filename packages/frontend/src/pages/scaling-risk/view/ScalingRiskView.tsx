@@ -27,6 +27,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
           {
             id: 'active',
             name: 'Active projects',
+            shortName: 'Active',
             content: (
               <TableView
                 items={items.filter((item) => !item.isArchived)}
@@ -39,6 +40,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
           {
             id: 'archived',
             name: 'Archived projects',
+            shortName: 'Archived',
             content: (
               <TableView
                 items={items.filter((item) => item.isArchived)}

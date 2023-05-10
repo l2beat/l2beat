@@ -28,6 +28,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
           {
             id: 'active',
             name: 'Active projects',
+            shortName: 'Active',
             content: (
               <TableView
                 items={items.filter(
@@ -42,6 +43,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
           {
             id: 'canonical-bridges',
             name: 'Canonical bridges to Layer2s',
+            shortName: 'Canonical',
             content: (
               <TableView
                 items={items.filter(
@@ -55,6 +57,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
           {
             id: 'archived',
             name: 'Archived projects',
+            shortName: 'Archived',
             content: (
               <TableView
                 items={items.filter(

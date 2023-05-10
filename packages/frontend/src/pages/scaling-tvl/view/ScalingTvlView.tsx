@@ -35,6 +35,7 @@ export function ScalingTvlView({
           {
             id: 'active',
             name: 'Active projects',
+            shortName: 'Active',
             content: (
               <TableView
                 items={items.filter(
@@ -49,6 +50,7 @@ export function ScalingTvlView({
           {
             id: 'upcoming',
             name: 'Upcoming projects',
+            shortName: 'Upcoming',
             content: (
               <TableView
                 items={items.filter((item) => item.isUpcoming)}
@@ -61,6 +63,7 @@ export function ScalingTvlView({
           {
             id: 'archived',
             name: 'Archived projects',
+            shortName: 'Archived',
             content: (
               <TableView
                 items={items.filter((item) => item.isArchived)}

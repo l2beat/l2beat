@@ -26,6 +26,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
           {
             id: 'active',
             name: 'Active projects',
+            shortName: 'Active',
             content: (
               <TableView
                 items={items.filter(
@@ -40,6 +41,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
           {
             id: 'canonical-bridges',
             name: 'Canonical bridges to Layer2s',
+            shortName: 'Canonical',
             content: (
               <TableView
                 items={items.filter(
@@ -53,6 +55,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
           {
             id: 'archived',
             name: 'Archived projects',
+            shortName: 'Archived',
             content: (
               <TableView
                 items={items.filter(
