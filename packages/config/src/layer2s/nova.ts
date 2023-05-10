@@ -74,8 +74,6 @@ export const nova: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      url: 'https://nova.arbitrum.io/rpc',
-      callsPerMinute: 200,
       // We need to subtract the Nitro system transaction in every block except for genesis
       assessCount: (count: number, blockNumber: number) =>
         blockNumber !== 0 ? count - 1 : count,
