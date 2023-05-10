@@ -7,7 +7,8 @@ import { configureTabNavigations } from '../../../scripts/configureTabNavigation
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { formatLargeNumber } from '../../../utils'
 import { click } from '../../../utils/storybook/click'
-import { ScalingTvlView, ScalingTvlViewEntry } from './ScalingTvlView'
+import { ScalingTvlViewEntry } from '../types'
+import { ScalingTvlView } from './ScalingTvlView'
 
 const meta = {
   title: 'Pages/Scaling/TvlView',

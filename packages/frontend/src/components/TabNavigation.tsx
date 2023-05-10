@@ -24,6 +24,7 @@ export function TabNavigation({ tabs }: TabsProps) {
             <a
               className="TabNavigationTab group relative flex items-center py-3 px-1 font-semibold"
               key={tab.id}
+              id={tab.id}
               href={`#${tab.id}`}
               data-content={renderToString(tab.content)}
             >
