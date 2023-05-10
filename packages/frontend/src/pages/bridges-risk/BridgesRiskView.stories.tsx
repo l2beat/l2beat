@@ -1,6 +1,6 @@
+import { Meta, StoryObj } from '@storybook/react'
 import React, { useEffect } from 'react'
 
-import { Meta, StoryObj } from '@storybook/react'
 import { PageContent } from '../../components/PageContent'
 import { Tooltip } from '../../components/Tooltip'
 import { configureTabNavigations } from '../../scripts/configureTabNavigations'
