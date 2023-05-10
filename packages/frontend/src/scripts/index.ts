@@ -4,14 +4,12 @@ import { configureDarkThemeToggle } from '../components/navbar/configureDarkThem
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
-import { configureFilters } from './configureFilters'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureTabNavigations } from './configureTabNavigations'
 import { configureTooltips } from './configureTooltips'
 import { configureProjectNavigation } from './section-navigation'
 
-configureFilters()
 configureDarkThemeToggle()
 configureSidebarMenu()
 configureTooltips()
