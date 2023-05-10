@@ -85,6 +85,11 @@ export function getProductionConfig(cli: CliParameters): Config {
           callsPerMinute: getEnv.integer('ACTIVITY_ARBITRUM_CALLS'),
           url: getEnv('ACTIVITY_ARBITRUM_URL'),
         },
+        nova: {
+          type: 'rpc',
+          callsPerMinute: getEnv.integer('ACTIVITY_NOVA_CALLS'),
+          url: getEnv('ACTIVITY_NOVA_URL'),
+        },
       },
     },
     updateMonitor: updateMonitorEnabled && {
