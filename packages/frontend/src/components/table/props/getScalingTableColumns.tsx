@@ -1,6 +1,7 @@
 import React from 'react'
-import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/ScalingRiskView'
-import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/view/ScalingTvlView'
+
+import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
+import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
 import { IndexCell } from '../IndexCell'
 import { MaturityCell } from '../MaturityCell'
 import { NumberCell } from '../NumberCell'

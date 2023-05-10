@@ -1,38 +1,19 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { TVLBreakdownProps } from '../../components/TVLBreakdown'
-import { TabNavigation } from '../../components/TabNavigation'
 import { ActiveIcon } from '../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../components/icons/symbols/ArchivedIcon'
-import { RowConfig, TableView } from '../../components/table/TableView'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import {
   getActiveBridgesTvlColumns,
   getArchivedBridgesTvlColumns,
   getCanonicalBridgesTvlColumns,
 } from '../../components/table/props/getBridgesTableColumns'
+import { RowConfig, TableView } from '../../components/table/TableView'
+import { TabNavigation } from '../../components/TabNavigation'
+import { BridgesTvlViewEntry } from './types'
 
 export interface BridgesTvlViewProps {
   items: BridgesTvlViewEntry[]
-}
-
-export interface BridgesTvlViewEntry {
-  type: 'bridge' | 'layer2'
-  name: string
-  slug: string
-  warning?: string
-  isArchived?: boolean
-  isUpcoming?: boolean
-  isVerified?: boolean
-  tvl?: string
-  tvlBreakdown?: TVLBreakdownProps
-  oneDayChange?: string
-  sevenDayChange?: string
-  bridgesMarketShare?: string
-  combinedMarketShare?: string
-  validatedBy?: ProjectRiskViewEntry
-  category: string
 }
 
 export function BridgesTvlView({ items }: BridgesTvlViewProps) {

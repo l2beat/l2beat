@@ -1,29 +1,15 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
-import { TabNavigation } from '../../components/TabNavigation'
 import { ActiveIcon } from '../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../components/icons/symbols/ArchivedIcon'
-import { RowConfig, TableView } from '../../components/table/TableView'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import { getBridgesRiskColumns } from '../../components/table/props/getBridgesTableColumns'
+import { RowConfig, TableView } from '../../components/table/TableView'
+import { TabNavigation } from '../../components/TabNavigation'
+import { BridgesRiskViewEntry } from './types'
 
 export interface BridgesRiskViewProps {
   items: BridgesRiskViewEntry[]
-}
-
-export interface BridgesRiskViewEntry {
-  name: string
-  slug: string
-  type: 'layer2' | 'bridge'
-  warning?: string
-  isArchived?: boolean
-  isVerified?: boolean
-  category: string
-  destination: ProjectRiskViewEntry
-  validatedBy?: ProjectRiskViewEntry
-  sourceUpgradeability?: ProjectRiskViewEntry
-  destinationToken?: ProjectRiskViewEntry
 }
 
 export function BridgesRiskView({ items }: BridgesRiskViewProps) {
