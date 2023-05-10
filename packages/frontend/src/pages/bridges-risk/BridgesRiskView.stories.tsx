@@ -1,130 +1,213 @@
 import React, { useEffect } from 'react'
 
+import { Meta, StoryObj } from '@storybook/react'
 import { PageContent } from '../../components/PageContent'
 import { Tooltip } from '../../components/Tooltip'
-import { configureFilters } from '../../scripts/configureFilters'
+import { configureTabNavigations } from '../../scripts/configureTabNavigations'
 import { configureTooltips } from '../../scripts/configureTooltips'
-import { formatLargeNumber } from '../../utils'
-import { BridgesTvlView } from '../bridges-tvl/BridgesTvlView'
+import { click } from '../../utils/storybook/click'
+import { BridgesRiskView } from './BridgesRiskView'
+import { BridgesRiskViewEntry } from './types'
 
-export default {
-  title: 'Pages/Bridges/TvlView',
-}
+const meta = {
+  title: 'Pages/Bridges/RiskView',
+} satisfies Meta<typeof BridgesRiskView>
+export default meta
 
-export function TvlView() {
+type Story = StoryObj<typeof BridgesRiskView>
+
+const items: BridgesRiskViewEntry[] = [
+  {
+    type: 'bridge',
+    name: 'Sollet',
+    slug: 'sollet',
+    warning:
+      'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead.',
+    isArchived: true,
+    isVerified: true,
+    category: 'Token Bridge',
+    destination: { value: 'Solana', description: '' },
+    validatedBy: {
+      value: 'Third Party',
+      description: 'Withdrawals need to be signed by an EOA account.',
+      sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: 'No',
+      description: 'Source code is not upgradeable',
+    },
+    destinationToken: {
+      value: 'Wrapped',
+      description:
+        'Tokens transferred by the bridge are not canonical. Users who wish to obtain the canonical counterparts need to do so by trading. Sollet Bridge and its wrapped asset are deprecated in favor of assets bridged via Wormhole.',
+      sentiment: 'bad',
+    },
+  },
+  {
+    type: 'bridge',
+    name: 'Sollet.unverfied',
+    slug: 'sollet',
+    warning:
+      'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead.',
+    isArchived: true,
+    isVerified: false,
+    category: 'Token Bridge',
+    destination: { value: 'Solana', description: '' },
+    validatedBy: {
+      value: 'Third Party',
+      description: 'Withdrawals need to be signed by an EOA account.',
+      sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: 'No',
+      description: 'Source code is not upgradeable',
+    },
+    destinationToken: {
+      value: 'Wrapped',
+      description:
+        'Tokens transferred by the bridge are not canonical. Users who wish to obtain the canonical counterparts need to do so by trading. Sollet Bridge and its wrapped asset are deprecated in favor of assets bridged via Wormhole.',
+      sentiment: 'bad',
+    },
+  },
+  {
+    type: 'layer2',
+    name: 'L2.Finance-zk',
+    slug: 'layer2financezk',
+    warning:
+      'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
+    isArchived: true,
+    isVerified: false,
+    category: 'Validium',
+    destination: { value: 'L2.Finance-zk', description: '' },
+    validatedBy: {
+      value: 'Ethereum',
+      description: 'Smart contracts on Ethereum validate all bridge transfers.',
+    },
+    sourceUpgradeability: {
+      value: 'Yes',
+      description:
+        'The code that secures the system can be changed arbitrarily and without notice.',
+      sentiment: 'bad',
+    },
+  },
+  {
+    type: 'bridge',
+    name: 'pNetwork',
+    slug: 'pnetwork',
+    warning:
+      'TVL of the bridge does not take into the account pTokens minted on Ethereum. These are wrapped tokens that should be backed 1:1 with their native counterparts on    other chains, for example pBTC being backed by BTC on  Bitcoin or pFTM backed by FTM on Fantom.',
+    isArchived: undefined,
+    isVerified: true,
+    category: 'Token Bridge',
+    destination: {
+      value: 'Various',
+      description:
+        'Algorand,\n' +
+        'Polygon,\n' +
+        'Arbitrum,\n' +
+        'Bitcoin,\n' +
+        'BSC,\n' +
+        'EOS,\n' +
+        'Telos,\n' +
+        'xDAI,\n' +
+        'Ultra,\n' +
+        'Fio,\n' +
+        'Fantom,\n' +
+        'Phoenix',
+    },
+  },
+  {
+    type: 'bridge',
+    name: 'Poly Bridge',
+    slug: 'polynetwork',
+    warning: undefined,
+    isArchived: undefined,
+    isVerified: false,
+    category: 'Token Bridge',
+    destination: { value: 'Various', description: '' },
+    validatedBy: {
+      value: 'Third Party',
+      description: '3/4 MultiSig of PolyNetwork Keepers',
+      sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: 'Yes',
+      description: 'Contracts can be upgraded',
+      sentiment: 'bad',
+    },
+    destinationToken: {
+      value: 'Wrapped',
+      description:
+        'Tokens transferred by the bridge are not canonical. Users who wish to obtain the canonical counterparts need to do so by trading.',
+      sentiment: 'bad',
+    },
+  },
+  {
+    type: 'layer2',
+    name: 'Boba Network',
+    slug: 'bobanetwork',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
+    isArchived: undefined,
+    isVerified: true,
+    category: 'Optimistic Rollup',
+    destination: { value: 'Boba Network', description: '' },
+    validatedBy: {
+      value: 'Ethereum',
+      description: 'Smart contracts on Ethereum validate all bridge transfers.',
+    },
+    destinationToken: {
+      value: 'Native & Canonical',
+      description:
+        'ETH and BOBA transferred via this bridge are used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+    },
+    sourceUpgradeability: {
+      value: 'Yes',
+      description:
+        'The code that secures the system can be changed arbitrarily and without notice.',
+      sentiment: 'bad',
+    },
+  },
+]
+
+function Template() {
   useEffect(() => {
     configureTooltips()
-    configureFilters()
+    configureTabNavigations()
   }, [])
   return (
     <>
       <PageContent>
-        <BridgesTvlView
-          items={[
-            {
-              name: 'Octagon',
-              type: 'bridge',
-              slug: 'polygon-pos',
-              tvl: formatLargeNumber(2_740_000_000),
-              tvlBreakdown: {
-                warning: 'Some random warning',
-                warningSeverity: 'warning',
-                label: 'The tooltip label',
-                empty: false,
-                associated: 0.4,
-                ether: 0.2,
-                stable: 0.2,
-                other: 0.2,
-              },
-              oneDayChange: '+3.45%',
-              sevenDayChange: '-54.2%',
-              isVerified: true,
-              bridgesMarketShare: '50.42%',
-              combinedMarketShare: '20.89%',
-              validatedBy: {
-                value: 'Destination chain',
-                description:
-                  'Transfers need to be confirmed by 2/3 of Octagon PoS Validators stake.',
-                sentiment: 'warning',
-              },
-              category: 'Token Bridge',
-            },
-            {
-              name: 'Arbitrage',
-              type: 'layer2',
-              slug: 'arbitrum',
-              tvl: formatLargeNumber(2_740_000_000),
-              tvlBreakdown: {
-                warning: 'Some random warning',
-                warningSeverity: 'warning',
-                label: 'The tooltip label',
-                empty: false,
-                associated: 0.4,
-                ether: 0.2,
-                stable: 0.2,
-                other: 0.2,
-              },
-              oneDayChange: '+3.45%',
-              sevenDayChange: '-54.2%',
-              bridgesMarketShare: '0',
-              combinedMarketShare: '20.89%',
-              category: 'Optimistic Rollup',
-            },
-            {
-              name: 'InsectHole',
-              category: 'Token Bridge',
-              type: 'bridge',
-              slug: 'wormholev1',
-              tvl: formatLargeNumber(2_740_000_000),
-              tvlBreakdown: {
-                warning: 'Some random warning',
-                warningSeverity: 'warning',
-                label: 'The tooltip label',
-                empty: false,
-                associated: 0.4,
-                ether: 0.2,
-                stable: 0.2,
-                other: 0.2,
-              },
-              oneDayChange: '+3.45%',
-              sevenDayChange: '-54.2%',
-              bridgesMarketShare: '50.42%',
-              combinedMarketShare: '20.89%',
-              isArchived: true,
-              isVerified: false,
-              validatedBy: {
-                value: 'Third party',
-                description: 'Random description',
-                sentiment: 'bad',
-              },
-            },
-            {
-              name: 'zk.archived',
-              type: 'layer2',
-              slug: 'layer2financezk',
-              tvl: formatLargeNumber(2_740_000_000),
-              tvlBreakdown: {
-                warning: 'Some random warning',
-                warningSeverity: 'warning',
-                label: 'The tooltip label',
-                empty: false,
-                associated: 0.4,
-                ether: 0.2,
-                stable: 0.2,
-                other: 0.2,
-              },
-              oneDayChange: '+3.45%',
-              sevenDayChange: '-54.2%',
-              bridgesMarketShare: '50.42%',
-              combinedMarketShare: '20.89%',
-              category: 'Optimistic Rollup',
-              isArchived: true,
-              isVerified: true,
-            },
-          ]}
-        />
+        <BridgesRiskView items={items} />
       </PageContent>
       <Tooltip />
     </>
   )
+}
+
+export const Active: Story = {
+  render: () => {
+    useEffect(() => {
+      click('.TabNavigationTab#active')
+    }, [])
+    return <Template />
+  },
+}
+
+export const CanonicalBridges: Story = {
+  render: () => {
+    useEffect(() => {
+      click('.TabNavigationTab#canonical-bridges')
+    }, [])
+    return <Template />
+  },
+}
+
+export const Archived: Story = {
+  render: () => {
+    useEffect(() => {
+      click('.TabNavigationTab#archived')
+    }, [])
+    return <Template />
+  },
 }
