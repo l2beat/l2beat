@@ -3,6 +3,8 @@ import React from 'react'
 
 import { TVLBreakdownProps } from '../../components/TVLBreakdown'
 import { TabNavigation } from '../../components/TabNavigation'
+import { ActiveIcon } from '../../components/icons/symbols/ActiveIcon'
+import { ArchivedIcon } from '../../components/icons/symbols/ArchivedIcon'
 import { RowConfig, TableView } from '../../components/table/TableView'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import {
@@ -54,6 +56,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 rows={rows}
               />
             ),
+            icon: <ActiveIcon />,
           },
           {
             id: 'canonical-bridges',
@@ -80,6 +83,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 rows={rows}
               />
             ),
+            icon: <ArchivedIcon />,
           },
         ]}
       />

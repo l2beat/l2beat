@@ -3,6 +3,8 @@ import React from 'react'
 
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { TabNavigation } from '../../../components/TabNavigation'
+import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
+import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
 import { RowConfig, TableView } from '../../../components/table/TableView'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import { getScalingRiskColumns } from '../../../components/table/props/getScalingTableColumns'
@@ -47,6 +49,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
                 rows={rows}
               />
             ),
+            icon: <ActiveIcon />,
           },
           {
             id: 'archived',
@@ -58,6 +61,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
                 rows={rows}
               />
             ),
+            icon: <ArchivedIcon />,
           },
         ]}
       />

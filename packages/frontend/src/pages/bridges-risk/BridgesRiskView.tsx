@@ -2,6 +2,8 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { TabNavigation } from '../../components/TabNavigation'
+import { ActiveIcon } from '../../components/icons/symbols/ActiveIcon'
+import { ArchivedIcon } from '../../components/icons/symbols/ArchivedIcon'
 import { RowConfig, TableView } from '../../components/table/TableView'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import { getBridgesRiskColumns } from '../../components/table/props/getBridgesTableColumns'
@@ -47,6 +49,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
                 rows={rows}
               />
             ),
+            icon: <ActiveIcon />,
           },
           {
             id: 'canonical-bridges',
@@ -73,6 +76,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
                 rows={rows}
               />
             ),
+            icon: <ArchivedIcon />,
           },
         ]}
       />

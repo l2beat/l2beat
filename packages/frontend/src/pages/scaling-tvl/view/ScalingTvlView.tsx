@@ -4,6 +4,9 @@ import React from 'react'
 import { ScalingLegend } from '../../../components/ScalingLegend'
 import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
 import { TabNavigation } from '../../../components/TabNavigation'
+import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
+import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
+import { UpcomingIcon } from '../../../components/icons/symbols/UpcomingIcon'
 import { RowConfig, TableView } from '../../../components/table/TableView'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import {
@@ -62,6 +65,7 @@ export function ScalingTvlView({
                 columns={getActiveScalingTvlColumns(maturityEnabled)}
               />
             ),
+            icon: <ActiveIcon />,
           },
           {
             id: 'upcoming',
@@ -73,6 +77,7 @@ export function ScalingTvlView({
                 columns={getUpcomingScalingTvlColumns()}
               />
             ),
+            icon: <UpcomingIcon />,
           },
           {
             id: 'archived',
@@ -84,6 +89,7 @@ export function ScalingTvlView({
                 columns={getArchivedScalingTvlColumns()}
               />
             ),
+            icon: <ArchivedIcon />,
           },
         ]}
       />
