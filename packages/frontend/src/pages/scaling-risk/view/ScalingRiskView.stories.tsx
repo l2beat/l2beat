@@ -1,20 +1,26 @@
 import { ProjectRiskViewEntry } from '@l2beat/config'
 import React, { useEffect } from 'react'
 
+import { Meta, StoryObj } from '@storybook/react'
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
-import { configureFilters } from '../../../scripts/configureFilters'
+import { configureTabNavigations } from '../../../scripts/configureTabNavigations'
 import { configureTooltips } from '../../../scripts/configureTooltips'
+import { click } from '../../../utils/storybook/click'
 import { ScalingRiskView } from './ScalingRiskView'
 
-export default {
+const meta = {
   title: 'Pages/Scaling/RiskView',
-}
+  component: ScalingRiskView,
+} satisfies Meta<typeof ScalingRiskView>
+export default meta
 
-export function RiskView() {
+type Story = StoryObj<typeof ScalingRiskView>
+
+function Template() {
   useEffect(() => {
     configureTooltips()
-    configureFilters()
+    configureTabNavigations()
   }, [])
   return (
     <>
@@ -82,6 +88,24 @@ export function RiskView() {
       <Tooltip />
     </>
   )
+}
+
+export const Active: Story = {
+  render: () => {
+    useEffect(() => {
+      click('.TabNavigationTab#active')
+    }, [])
+    return <Template />
+  },
+}
+
+export const Archived: Story = {
+  render: () => {
+    useEffect(() => {
+      click('.TabNavigationTab#archived')
+    }, [])
+    return <Template />
+  },
 }
 
 function risk(
