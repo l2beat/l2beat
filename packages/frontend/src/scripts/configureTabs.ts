@@ -3,13 +3,13 @@ interface TabWithContent {
   content: HTMLElement
 }
 
-export function configureTabNavigations() {
-  const tabNavigations = document.querySelectorAll<HTMLElement>('.Tabs')
+export function configureTabs() {
+  const tabs = document.querySelectorAll<HTMLElement>('.Tabs')
 
-  tabNavigations.forEach(configureTabNavigation)
+  tabs.forEach(configureTabsNavigation)
 }
 
-function configureTabNavigation(tabNavigation: HTMLElement) {
+function configureTabsNavigation(tabNavigation: HTMLElement) {
   const elements = getElements(tabNavigation)
   if (!elements) {
     return

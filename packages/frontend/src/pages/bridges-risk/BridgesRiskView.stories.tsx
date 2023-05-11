@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../components/PageContent'
 import { Tooltip } from '../../components/Tooltip'
-import { configureTabNavigations } from '../../scripts/configureTabs'
+import { configureTabs } from '../../scripts/configureTabs'
 import { configureTooltips } from '../../scripts/configureTooltips'
 import { click } from '../../utils/storybook/click'
 import { BridgesRiskView } from './BridgesRiskView'
@@ -173,7 +173,7 @@ const items: BridgesRiskViewEntry[] = [
 function Template() {
   useEffect(() => {
     configureTooltips()
-    configureTabNavigations()
+    configureTabs()
   }, [])
   return (
     <>
