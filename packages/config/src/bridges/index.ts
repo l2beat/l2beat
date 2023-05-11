@@ -26,6 +26,7 @@ import { polynetwork } from './polynetwork'
 import { portal } from './portal'
 import { ronin } from './ronin'
 import { satellite } from './satellite'
+import { skaleIMA } from './skaleIMA'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
 import { synapse } from './synapse'
@@ -63,6 +64,7 @@ export const bridges: Bridge[] = [
   pNetwork,
   ronin,
   satellite,
+  skaleIMA,
   sollet,
   stargate,
   synapse,
