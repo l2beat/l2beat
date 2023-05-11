@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -15,9 +16,7 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
-
-// TODO: get this value from discovery
-const TODO_DELAY = '10 days'
+const delay = discovery.getContractValue<number>('Timelock', 'getMinDelay')
 
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
@@ -69,9 +68,8 @@ export const polygonzkevm: Layer2 = {
         RISK_VIEW.DATA_ON_CHAIN.description +
         ' Unlike most zk rollups transactions are posted instead of state diffs.',
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM,
-    // TODO: get delay time (10 days) from config
-    // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract
+    upgradeability: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(delay),
+    // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
     validatorFailure: {
       value: 'Submit proofs',
@@ -107,18 +105,10 @@ export const polygonzkevm: Layer2 = {
     category: 'ZK Rollup',
   },
   permissions: [
-    {
-      name: 'Admin Multisig',
-      accounts: [
-        {
-          address: discovery.getContract('AdminMultisig').address,
-          type: 'MultiSig',
-        },
-      ],
-      description: `Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. It is a ${discovery.getMultisigStats(
-        'AdminMultisig',
-      )} multisig. They can also upgrade the PolygonZkEvm contracts, but are restricted by a ${TODO_DELAY} delay unless rollup is put in the Emergency State.`,
-    },
+    ...discovery.getGnosisSafeDetails(
+      'AdminMultisig',
+      'Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the PolygonZkEvm contracts, but are restricted by a 10d delay unless rollup is put in the Emergency State.'
+    ),
     {
       name: 'Sequencer',
       accounts: [
@@ -151,18 +141,10 @@ export const polygonzkevm: Layer2 = {
       description:
         'The trusted aggregator provides the PolygonZkEvm contract with zk proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a significant delay.',
     },
-    {
-      name: 'Security Council',
-      accounts: [
-        {
-          address: discovery.getContract('OwnerMultisig').address,
-          type: 'MultiSig',
-        },
-      ],
-      description: `The security council is a multisig that can be used to trigger the emergency state which pauses bridge functionality and restricts advancing system state. It is a ${discovery.getMultisigStats(
-        'OwnerMultisig',
-      )} multisig.`,
-    },
+    ...discovery.getGnosisSafeDetails(
+      'OwnerMultisig',
+      'The OwnerMultisig (Security Council) is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradability delay.'
+    ),
   ],
   contracts: {
     addresses: [
@@ -194,7 +176,7 @@ export const polygonzkevm: Layer2 = {
         href: 'https://github.com/0xPolygonHermez/zkevm-contracts/blob/b1cefea1431e59b2121e543b786b93af99e859f4/contracts/PolygonZkEVMGlobalExitRootL2.sol#L17',
       },
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(TODO_DELAY)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(formatSeconds(delay))],
   },
   // TODO: new upgradeability section with ProxyAdmin and Timelock
   milestones: [
