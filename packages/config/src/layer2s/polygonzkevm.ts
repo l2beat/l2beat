@@ -17,6 +17,14 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
 const delay = discovery.getContractValue<number>('Timelock', 'getMinDelay')
+const trustedAggregatorTimeout = discovery.getContractValue<number>(
+  'PolygonZkEvm',
+  'trustedAggregatorTimeout',
+)
+const pendingStateTimeout = discovery.getContractValue<number>(
+  'PolygonZkEvm',
+  'pendingStateTimeout',
+)
 
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
@@ -86,8 +94,11 @@ export const polygonzkevm: Layer2 = {
     },
     validatorFailure: {
       value: 'Submit proofs',
-      description:
-        'If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a delay for proving and for finalizing state proven in this way.',
+      description: `If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a ${formatSeconds(
+        trustedAggregatorTimeout,
+      )} delay for proving and a ${formatSeconds(
+        pendingStateTimeout,
+      )} delay for finalizing state proven in this way.`,
       references: [
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L636',
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L859',
@@ -192,8 +203,11 @@ export const polygonzkevm: Layer2 = {
           type: 'EOA',
         },
       ],
-      description:
-        'The trusted aggregator provides the PolygonZkEvm contract with zk proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a significant delay.',
+      description: `The trusted aggregator provides the PolygonZkEvm contract with zk proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${formatSeconds(
+        trustedAggregatorTimeout,
+      )} delay for proving and a ${formatSeconds(
+        pendingStateTimeout,
+      )} delay for finalizing state proven in this way.`,
     },
     ...discovery.getGnosisSafeDetails(
       'OwnerMultisig',
