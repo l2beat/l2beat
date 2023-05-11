@@ -88,9 +88,15 @@ function getElements(tabNavigation: HTMLElement) {
       const content = tabNavigation.querySelector<HTMLElement>(
         `#${val.id}.TabNavigationContent`,
       )
+
+      if (!content)
+        throw new Error(
+          `No content found for tab with id ${val.id} in tab navigation`,
+        )
+
       prev[val.id] = {
         tab: val,
-        content: content!,
+        content: content,
       }
       return prev
     },
