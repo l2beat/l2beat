@@ -134,7 +134,7 @@ function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
     .filter((x) => !x.isUpcoming)
     .map((x) => x.id.toString())
 
-  const emptyChartsExist = [
+  const allProjects = [
     tvlApiResponse.bridges,
     tvlApiResponse.layers2s,
     tvlApiResponse.combined,
@@ -142,11 +142,32 @@ function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
       .filter(([id]) => ids.includes(id))
       .map(([, project]) => project?.charts),
   ]
+
+  const emptyChartsExist = allProjects
     .flatMap((x) => [x?.daily, x?.sixHourly, x?.hourly])
     .some((x) => x?.data.length === 0)
 
   if (emptyChartsExist) {
     throw new Error('The API has returned some empty tvl charts')
+  }
+
+  const now = UnixTime.now()
+  const acceptableDelay = UnixTime.HOUR * 4
+  const delayedProjects = allProjects.filter((x) => {
+    if (!x) {
+      return false
+    }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const lastValue = x.hourly.data.at(-1)!
+    const lastTimestamp = lastValue[0].toNumber()
+    const delay = now.toNumber() - lastTimestamp
+    return delay > acceptableDelay
+  })
+
+  if (delayedProjects.length > 0) {
+    throw new Error(
+      `Some projects tvl data is delayed! Acceptable delay is ${acceptableDelay} seconds.`,
+    )
   }
 }
 
@@ -210,6 +231,7 @@ function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
   const acceptableDelay = UnixTime.DAY * 2 + UnixTime.HOUR
   const delayedProjects = allProjects
     .map(([name, data]) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const lastValue = data.data.at(-1)!
       const lastTimestamp = lastValue[0]
       const delay = now.toNumber() - lastTimestamp.toNumber()
