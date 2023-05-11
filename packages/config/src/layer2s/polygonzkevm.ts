@@ -25,6 +25,7 @@ const pendingStateTimeout = discovery.getContractValue<number>(
   'PolygonZkEvm',
   'pendingStateTimeout',
 )
+const _HALT_AGGREGATION_TIMEOUT = 604800 // internal constant
 
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
@@ -98,7 +99,7 @@ export const polygonzkevm: Layer2 = {
         trustedAggregatorTimeout,
       )} delay for proving and a ${formatSeconds(
         pendingStateTimeout,
-      )} delay for finalizing state proven in this way.`,
+      )} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
       references: [
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L636',
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L859',
@@ -207,7 +208,7 @@ export const polygonzkevm: Layer2 = {
         trustedAggregatorTimeout,
       )} delay for proving and a ${formatSeconds(
         pendingStateTimeout,
-      )} delay for finalizing state proven in this way.`,
+      )} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getGnosisSafeDetails(
       'OwnerMultisig',
@@ -218,8 +219,9 @@ export const polygonzkevm: Layer2 = {
     addresses: [
       {
         ...discovery.getMainContractDetails('PolygonZkEvm'),
-        description:
-          'The main contract of the Polygon zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. This contract receives transaction batches, L2 state roots as well as zk proofs.',
+        description: `The main contract of the Polygon zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${formatSeconds(
+          _HALT_AGGREGATION_TIMEOUT,
+        )} timeout. This contract receives transaction batches, L2 state roots as well as zk proofs.`,
       },
       {
         ...discovery.getMainContractDetails('Bridge'),
