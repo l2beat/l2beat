@@ -22,7 +22,7 @@ export function TabNavigation({ tabs }: TabsProps) {
         <div className="TabNavigationTabsContainer flex justify-around gap-x-8 md:justify-start">
           {tabs.map((tab) => (
             <a
-              className="TabNavigationTab group relative flex items-center py-3 px-1 font-semibold"
+              className="TabNavigationTab it ems-center group relative  flex py-3 px-1 font-semibold transition-colors"
               key={tab.id}
               id={tab.id}
               href={`#${tab.id}`}
