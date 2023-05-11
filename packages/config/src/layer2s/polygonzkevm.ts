@@ -60,28 +60,61 @@ export const polygonzkevm: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      references: [
+        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L817',
+      ],
+    },
     //include info that txs are posted, not state diffs
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       description:
         RISK_VIEW.DATA_ON_CHAIN.description +
         ' Unlike most zk rollups transactions are posted instead of state diffs.',
+      references: [
+        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L186',
+      ],
     },
     upgradeability: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(delay),
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM,
+      references: [
+        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L243',
+      ],
+    },
     validatorFailure: {
       value: 'Submit proofs',
       description:
         'If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a delay for proving and for finalizing state proven in this way.',
+      references: [
+        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L636',
+        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L859',
+      ],
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
-    dataAvailability: DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+    stateCorrectness: {
+      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+      references: [
+        {
+          text: 'PolygonZkEvm.sol#L817 - Etherscan source code, _verifyAndRewardBatches function',
+          href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L817',
+        },
+      ],
+    },
+    dataAvailability: {
+      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      references: [
+        {
+          text: 'PolygonZkEvm.sol#L186 - Etherscan source code, sequencedBatches mapping',
+          href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L186',
+        },
+      ],
+    },
     operator: {
       name: 'The system has a centralized sequencer',
       description:
@@ -94,14 +127,35 @@ export const polygonzkevm: Layer2 = {
           isCritical: true,
         },
       ],
-      references: [],
+      references: [
+        {
+          text: 'PolygonZkEvm.sol#L454 - Etherscan source code, onlyTrustedSequencer modifier',
+          href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L454',
+        },
+      ],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.NO_MECHANISM,
       description:
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
+      references: [
+        {
+          text: 'PolygonZkEvm.sol#L468 - Etherscan source code, isForceBatchAllowed modifier',
+          href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L468',
+        },
+      ],
     },
-    exitMechanisms: [EXITS.REGULAR('zk', 'merkle proof')],
+    exitMechanisms: [
+      {
+        ...EXITS.REGULAR('zk', 'merkle proof'),
+        references: [
+          {
+            text: 'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
+            href: 'https://etherscan.io/address/0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C#code#F19#L311',
+          },
+        ],
+      },
+    ],
     category: 'ZK Rollup',
   },
   permissions: [
