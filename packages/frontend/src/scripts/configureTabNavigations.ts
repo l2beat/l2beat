@@ -26,6 +26,8 @@ function configureTabNavigation(tabNavigation: HTMLElement) {
 
   const highlightTab = (tab: HTMLAnchorElement) => {
     if (!tab.dataset.content) throw new Error('Tab content not found')
+    currentTab.classList.remove('text-pink-900', 'dark:text-pink-200')
+    tab.classList.add('text-pink-900', 'dark:text-pink-200')
     content.innerHTML = tab.dataset.content
     underline.style.left = `${tab.offsetLeft}px`
     underline.style.width = `${tab.clientWidth}px`

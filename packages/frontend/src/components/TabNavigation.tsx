@@ -37,7 +37,7 @@ export function TabNavigation({ tabs }: TabsProps) {
             </a>
           ))}
         </div>
-        <span className="TabNavigationUnderline absolute bottom-0 block h-1 rounded-t-sm bg-pink-200 transition-all duration-300" />
+        <span className="TabNavigationUnderline absolute bottom-0 block h-1 rounded-t-sm bg-pink-900 transition-all duration-300 dark:bg-pink-200" />
       </div>
       <HorizontalSeparator className="mb-3 md:mb-6" />
       <div className="TabNavigationContent" />
