@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../components/PageContent'
 import { Tooltip } from '../../components/Tooltip'
-import { configureTabNavigations } from '../../scripts/configureTabNavigations'
+import { configureTabNavigations } from '../../scripts/configureTabs'
 import { configureTooltips } from '../../scripts/configureTooltips'
 import { formatLargeNumber } from '../../utils'
 import { click } from '../../utils/storybook/click'
