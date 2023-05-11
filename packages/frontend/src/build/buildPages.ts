@@ -4,6 +4,7 @@ import {
   ActivityApiResponse,
   ProjectId,
   TvlApiResponse,
+  UnixTime,
 } from '@l2beat/shared'
 
 import { HttpClient } from '../../../shared/build'
@@ -202,6 +203,25 @@ function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
       `Some projects have 0 TPS! ${zeroTpsProjects
         .map((v) => v[0])
         .join(', ')}`,
+    )
+  }
+
+  const now = UnixTime.now()
+  const acceptableDelay = UnixTime.DAY * 2 + UnixTime.HOUR
+  const delayedProjects = allProjects
+    .map(([name, data]) => {
+      const lastValue = data.data.at(-1)!
+      const lastTimestamp = lastValue[0]
+      const delay = now.toNumber() - lastTimestamp.toNumber()
+      return { name, delay }
+    })
+    .filter(({ delay }) => delay > acceptableDelay)
+
+  if (delayedProjects.length > 0) {
+    throw new Error(
+      `Some projects activity data is delayed! ${delayedProjects
+        .map(({ name, delay }) => `${name} (${delay} seconds)`)
+        .join(', ')}. Acceptable delay is ${acceptableDelay} seconds.`,
     )
   }
 }
