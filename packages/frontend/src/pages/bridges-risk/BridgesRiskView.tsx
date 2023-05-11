@@ -39,20 +39,6 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
             icon: <ActiveIcon />,
           },
           {
-            id: 'canonical-bridges',
-            name: 'Canonical bridges to Layer2s',
-            shortName: 'Canonical',
-            content: (
-              <TableView
-                items={items.filter(
-                  (item) => item.type === 'layer2' && !item.isArchived,
-                )}
-                columns={columns}
-                rows={rows}
-              />
-            ),
-          },
-          {
             id: 'archived',
             name: 'Archived projects',
             shortName: 'Archived',

@@ -2,11 +2,11 @@ import React from 'react'
 
 import { ActiveIcon } from '../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../components/icons/symbols/ArchivedIcon'
+import { IncludeLayer2sCheckbox } from '../../components/table/filters/checkboxes/IncludeLayer2sCheckbox'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import {
   getActiveBridgesTvlColumns,
   getArchivedBridgesTvlColumns,
-  getCanonicalBridgesTvlColumns,
 } from '../../components/table/props/getBridgesTableColumns'
 import { RowConfig, TableView } from '../../components/table/TableView'
 import { TabNavigation } from '../../components/TabNavigation'
@@ -23,6 +23,8 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
+      <IncludeLayer2sCheckbox className="mb-4" />
+
       <TabNavigation
         tabs={[
           {
@@ -31,9 +33,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             shortName: 'Active',
             content: (
               <TableView
-                items={items.filter(
-                  (item) => item.type === 'bridge' && !item.isArchived,
-                )}
+                items={items.filter((item) => !item.isArchived)}
                 columns={getActiveBridgesTvlColumns()}
                 rows={rows}
               />
@@ -41,28 +41,12 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             icon: <ActiveIcon />,
           },
           {
-            id: 'canonical-bridges',
-            name: 'Canonical bridges to Layer2s',
-            shortName: 'Canonical',
-            content: (
-              <TableView
-                items={items.filter(
-                  (item) => item.type === 'layer2' && !item.isArchived,
-                )}
-                columns={getCanonicalBridgesTvlColumns()}
-                rows={rows}
-              />
-            ),
-          },
-          {
             id: 'archived',
             name: 'Archived projects',
             shortName: 'Archived',
             content: (
               <TableView
-                items={items.filter(
-                  (item) => item.type === 'bridge' && item.isArchived,
-                )}
+                items={items.filter((item) => item.isArchived)}
                 columns={getArchivedBridgesTvlColumns()}
                 rows={rows}
               />

@@ -152,15 +152,6 @@ export const Active: Story = {
   },
 }
 
-export const CanonicalBridges: Story = {
-  render: () => {
-    useEffect(() => {
-      click('.TabNavigationTab#canonical-bridges')
-    }, [])
-    return <Template />
-  },
-}
-
 export const Archived: Story = {
   render: () => {
     useEffect(() => {

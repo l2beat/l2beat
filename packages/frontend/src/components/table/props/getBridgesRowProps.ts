@@ -1,3 +1,5 @@
+import classNames from 'classnames'
+
 import { getRowVerificationClassNames } from './getRowVerificationClassNames'
 
 interface BridgeTableEntry {
@@ -14,7 +16,12 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
       : `/bridges/projects/${entry.slug}`
 
   return {
-    className: getRowVerificationClassNames(entry),
+    className: classNames(
+      getRowVerificationClassNames(entry),
+      entry.type === 'layer2' && 'hidden',
+    ),
+    'data-layer2': entry.type === 'layer2' ? true : undefined,
+    'data-role': 'row',
     href,
   }
 }
