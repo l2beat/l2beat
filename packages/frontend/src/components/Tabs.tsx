@@ -18,10 +18,10 @@ export function Tabs({ items }: TabsProps) {
   return (
     <div className="Tabs">
       <div className="relative">
-        <div className="TabsItemsContainer flex md:gap-x-8">
+        <div className="TabsItemsContainer grid auto-cols-fr grid-flow-col md:flex md:gap-x-8">
           {items.map((tab) => (
             <a
-              className="TabsItem group relative flex flex-grow items-center justify-center py-3 px-4 font-semibold transition-colors md:flex-grow-0"
+              className="TabsItem group relative flex items-center justify-center py-3 px-4 font-semibold transition-colors"
               key={tab.id}
               id={tab.id}
               href={`#${tab.id}`}
