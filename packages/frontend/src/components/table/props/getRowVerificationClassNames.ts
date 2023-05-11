@@ -11,7 +11,7 @@ export function getRowVerificationClassNames(entry: {
     )
   }
   if (entry.isUpcoming === true) {
-    return 'bg-purple-100/40 dark:hover:bg-purple-100/60'
+    return 'dark:bg-purple-500/40 dark:hover:bg-purple-500/60'
   }
   return ''
 }

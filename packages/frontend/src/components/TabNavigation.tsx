@@ -33,7 +33,7 @@ export function TabNavigation({ tabs }: TabsProps) {
               <span className="inline text-xs md:hidden">
                 {tab.shortName ?? tab.name}
               </span>
-              <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-850 opacity-0 transition-all duration-300 group-hover:opacity-80" />
+              <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-700 opacity-0 transition-all duration-300 group-hover:opacity-80" />
             </a>
           ))}
         </div>
