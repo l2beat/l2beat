@@ -9,7 +9,7 @@ import {
   getArchivedBridgesTvlColumns,
 } from '../../components/table/props/getBridgesTableColumns'
 import { RowConfig, TableView } from '../../components/table/TableView'
-import { TabNavigation } from '../../components/TabNavigation'
+import { Tabs } from '../../components/Tabs'
 import { BridgesTvlViewEntry } from './types'
 
 export interface BridgesTvlViewProps {
@@ -25,8 +25,8 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
     <section className="mt-4 sm:mt-8">
       <IncludeLayer2sCheckbox className="mb-4" />
 
-      <TabNavigation
-        tabs={[
+      <Tabs
+        items={[
           {
             id: 'active',
             name: 'Active projects',

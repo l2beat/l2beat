@@ -3,7 +3,7 @@ import React, { ReactElement, ReactNode } from 'react'
 import { HorizontalSeparator } from './HorizontalSeparator'
 
 interface TabsProps {
-  tabs: Tab[]
+  items: Tab[]
 }
 
 interface Tab {
@@ -14,14 +14,14 @@ interface Tab {
   shortName?: string
 }
 
-export function TabNavigation({ tabs }: TabsProps) {
+export function Tabs({ items }: TabsProps) {
   return (
-    <div className="TabNavigation">
+    <div className="Tabs">
       <div className="relative">
-        <div className="TabNavigationTabsContainer flex justify-around gap-x-8 md:justify-start">
-          {tabs.map((tab) => (
+        <div className="TabsItemsContainer flex justify-around gap-x-8 md:justify-start">
+          {items.map((tab) => (
             <a
-              className="TabNavigationTab group relative flex items-center py-3 px-1 font-semibold transition-colors"
+              className="TabsItem group relative flex items-center py-3 px-1 font-semibold transition-colors"
               key={tab.id}
               id={tab.id}
               href={`#${tab.id}`}
@@ -35,11 +35,11 @@ export function TabNavigation({ tabs }: TabsProps) {
             </a>
           ))}
         </div>
-        <span className="TabNavigationUnderline absolute bottom-0 block h-1 rounded-t-sm bg-pink-900 transition-all duration-300 dark:bg-pink-200" />
+        <span className="TabsUnderline absolute bottom-0 block h-1 rounded-t-sm bg-pink-900 transition-all duration-300 dark:bg-pink-200" />
       </div>
       <HorizontalSeparator className="mb-3 md:mb-6" />
-      {tabs.map((tab) => (
-        <div className="TabNavigationContent hidden" id={tab.id} key={tab.id}>
+      {items.map((tab) => (
+        <div className="TabsContent hidden" id={tab.id} key={tab.id}>
           {tab.content}
         </div>
       ))}

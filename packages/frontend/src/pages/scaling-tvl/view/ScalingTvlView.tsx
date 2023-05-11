@@ -11,7 +11,7 @@ import {
   getUpcomingScalingTvlColumns,
 } from '../../../components/table/props/getScalingTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
-import { TabNavigation } from '../../../components/TabNavigation'
+import { Tabs } from '../../../components/Tabs'
 import { ScalingTvlViewEntry } from '../types'
 
 export interface ScalingTvlViewProps {
@@ -30,8 +30,8 @@ export function ScalingTvlView({
 
   return (
     <section className="mt-4 sm:mt-8">
-      <TabNavigation
-        tabs={[
+      <Tabs
+        items={[
           {
             id: 'active',
             name: 'Active projects',

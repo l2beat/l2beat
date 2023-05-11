@@ -5,7 +5,7 @@ import { ArchivedIcon } from '../../components/icons/symbols/ArchivedIcon'
 import { getBridgesRowProps } from '../../components/table/props/getBridgesRowProps'
 import { getBridgesRiskColumns } from '../../components/table/props/getBridgesTableColumns'
 import { RowConfig, TableView } from '../../components/table/TableView'
-import { TabNavigation } from '../../components/TabNavigation'
+import { Tabs } from '../../components/Tabs'
 import { BridgesRiskViewEntry } from './types'
 
 export interface BridgesRiskViewProps {
@@ -21,8 +21,8 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <TabNavigation
-        tabs={[
+      <Tabs
+        items={[
           {
             id: 'active',
             name: 'Active projects',

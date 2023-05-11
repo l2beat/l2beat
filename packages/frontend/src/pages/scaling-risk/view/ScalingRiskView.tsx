@@ -6,7 +6,7 @@ import { ScalingLegend } from '../../../components/ScalingLegend'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import { getScalingRiskColumns } from '../../../components/table/props/getScalingTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
-import { TabNavigation } from '../../../components/TabNavigation'
+import { Tabs } from '../../../components/Tabs'
 import { ScalingRiskViewEntry } from './types'
 
 export interface ScalingRiskViewProps {
@@ -22,8 +22,8 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
-      <TabNavigation
-        tabs={[
+      <Tabs
+        items={[
           {
             id: 'active',
             name: 'Active projects',

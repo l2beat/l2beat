@@ -4,8 +4,7 @@ interface TabWithContent {
 }
 
 export function configureTabNavigations() {
-  const tabNavigations =
-    document.querySelectorAll<HTMLElement>('.TabNavigation')
+  const tabNavigations = document.querySelectorAll<HTMLElement>('.Tabs')
 
   tabNavigations.forEach(configureTabNavigation)
 }
@@ -68,15 +67,12 @@ function configureTabNavigation(tabNavigation: HTMLElement) {
 
 function getElements(tabNavigation: HTMLElement) {
   const tabsContainers = tabNavigation.querySelector<HTMLElement>(
-    '.TabNavigationTabsContainer',
+    '.TabsItemsContainer',
   )
-  const underline = tabNavigation.querySelector<HTMLElement>(
-    '.TabNavigationUnderline',
-  )
+  const underline = tabNavigation.querySelector<HTMLElement>('.TabsUnderline')
 
   const tabs = Array.from(
-    tabsContainers?.querySelectorAll<HTMLAnchorElement>('.TabNavigationTab') ??
-      [],
+    tabsContainers?.querySelectorAll<HTMLAnchorElement>('.TabsItem') ?? [],
   )
 
   if (!underline || !tabsContainers || tabs.length === 0) {
@@ -86,7 +82,7 @@ function getElements(tabNavigation: HTMLElement) {
   const tabsWithContent = tabs.reduce<Record<string, TabWithContent>>(
     (prev, val) => {
       const content = tabNavigation.querySelector<HTMLElement>(
-        `#${val.id}.TabNavigationContent`,
+        `#${val.id}.TabsContent`,
       )
 
       if (!content)
