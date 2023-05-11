@@ -107,7 +107,7 @@ export const polygonzkevm: Layer2 = {
   permissions: [
     ...discovery.getGnosisSafeDetails(
       'AdminMultisig',
-      'Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the PolygonZkEvm contracts, but are restricted by a 10d delay unless rollup is put in the Emergency State.'
+      'Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the PolygonZkEvm contracts, but are restricted by a 10d delay unless rollup is put in the Emergency State.',
     ),
     {
       name: 'Sequencer',
@@ -143,7 +143,7 @@ export const polygonzkevm: Layer2 = {
     },
     ...discovery.getGnosisSafeDetails(
       'OwnerMultisig',
-      'The OwnerMultisig (Security Council) is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradability delay.'
+      'The OwnerMultisig (Security Council) is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradability delay.',
     ),
   ],
   contracts: {

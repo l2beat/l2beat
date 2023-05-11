@@ -108,8 +108,7 @@ export function UPGRADABLE_POLYGON_ZKEVM(delay: number): ProjectRiskViewEntry {
   const delayString: string = formatSeconds(delay)
   return {
     value: `${delayString} or no delay`,
-    description:
-      `There is a ${delayString} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.`,
+    description: `There is a ${delayString} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.`,
     sentiment: 'warning',
   }
 }
