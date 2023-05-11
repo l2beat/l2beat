@@ -1,3 +1,8 @@
+interface TabWithContent {
+  tab: HTMLAnchorElement
+  content: HTMLElement
+}
+
 export function configureTabNavigations() {
   const tabNavigations =
     document.querySelectorAll<HTMLElement>('.TabNavigation')
@@ -6,43 +11,95 @@ export function configureTabNavigations() {
 }
 
 function configureTabNavigation(tabNavigation: HTMLElement) {
+  const elements = getElements(tabNavigation)
+  if (!elements) {
+    return
+  }
+  const { tabsWithContent, tabs, underline } = elements
+
+  let selectedId =
+    tabs.find((tab) => tab.href.endsWith(window.location.hash))?.id ??
+    tabs[0].id
+
+  const highlightTab = (tab: HTMLAnchorElement) => {
+    tabsWithContent[selectedId].tab.classList.remove(
+      'text-pink-900',
+      'dark:text-pink-200',
+    )
+    tab.classList.add('text-pink-900', 'dark:text-pink-200')
+  }
+
+  const switchContent = (content: HTMLElement) => {
+    tabsWithContent[selectedId].content.classList.add('hidden')
+    content.classList.remove('hidden')
+  }
+
+  const moveUnderline = (tab: HTMLAnchorElement) => {
+    underline.style.left = `${tab.offsetLeft}px`
+    underline.style.width = `${tab.clientWidth}px`
+  }
+
+  const onTabClick = (id: string) => {
+    const { tab, content } = tabsWithContent[id]
+
+    switchContent(content)
+    highlightTab(tab)
+    moveUnderline(tab)
+    selectedId = id
+  }
+
+  const onResize = () => {
+    const { tab } = tabsWithContent[selectedId]
+    moveUnderline(tab)
+  }
+
+  onTabClick(selectedId)
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault()
+      history.pushState({}, '', tab.href)
+      onTabClick(tab.id)
+    })
+  })
+
+  window.addEventListener('resize', onResize)
+}
+
+function getElements(tabNavigation: HTMLElement) {
   const tabsContainers = tabNavigation.querySelector<HTMLElement>(
     '.TabNavigationTabsContainer',
   )
   const underline = tabNavigation.querySelector<HTMLElement>(
     '.TabNavigationUnderline',
   )
-  const content = tabNavigation.querySelector<HTMLElement>(
-    '.TabNavigationContent',
-  )
+
   const tabs = Array.from(
     tabsContainers?.querySelectorAll<HTMLAnchorElement>('.TabNavigationTab') ??
       [],
   )
 
-  if (!underline || !tabsContainers || !content || tabs.length === 0) return
-  let currentTab =
-    tabs.find((tab) => tab.href.endsWith(window.location.hash)) ?? tabs[0]
-
-  const highlightTab = (tab: HTMLAnchorElement) => {
-    if (!tab.dataset.content) throw new Error('Tab content not found')
-    currentTab.classList.remove('text-pink-900', 'dark:text-pink-200')
-    tab.classList.add('text-pink-900', 'dark:text-pink-200')
-    content.innerHTML = tab.dataset.content
-    underline.style.left = `${tab.offsetLeft}px`
-    underline.style.width = `${tab.clientWidth}px`
-    currentTab = tab
+  if (!underline || !tabsContainers || tabs.length === 0) {
+    return
   }
 
-  highlightTab(currentTab)
+  const tabsWithContent = tabs.reduce<Record<string, TabWithContent>>(
+    (prev, val) => {
+      const content = tabNavigation.querySelector<HTMLElement>(
+        `#${val.id}.TabNavigationContent`,
+      )
+      prev[val.id] = {
+        tab: val,
+        content: content!,
+      }
+      return prev
+    },
+    {},
+  )
 
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', (e) => {
-      e.preventDefault()
-      history.pushState({}, '', tab.href)
-      highlightTab(tab)
-    })
-  })
-
-  window.addEventListener('resize', () => highlightTab(currentTab))
+  return {
+    tabs,
+    underline,
+    tabsWithContent,
+  }
 }

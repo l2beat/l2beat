@@ -1,5 +1,4 @@
 import React, { ReactElement, ReactNode } from 'react'
-import { renderToString } from 'react-dom/server'
 
 import { HorizontalSeparator } from './HorizontalSeparator'
 
@@ -22,11 +21,10 @@ export function TabNavigation({ tabs }: TabsProps) {
         <div className="TabNavigationTabsContainer flex justify-around gap-x-8 md:justify-start">
           {tabs.map((tab) => (
             <a
-              className="TabNavigationTab it ems-center group relative  flex py-3 px-1 font-semibold transition-colors"
+              className="TabNavigationTab group relative flex items-center py-3 px-1 font-semibold transition-colors"
               key={tab.id}
               id={tab.id}
               href={`#${tab.id}`}
-              data-content={renderToString(tab.content)}
             >
               {tab.icon && <span className="mr-1.5">{tab.icon}</span>}
               <span className="hidden text-base md:inline">{tab.name}</span>
@@ -40,7 +38,11 @@ export function TabNavigation({ tabs }: TabsProps) {
         <span className="TabNavigationUnderline absolute bottom-0 block h-1 rounded-t-sm bg-pink-900 transition-all duration-300 dark:bg-pink-200" />
       </div>
       <HorizontalSeparator className="mb-3 md:mb-6" />
-      <div className="TabNavigationContent" />
+      {tabs.map((tab) => (
+        <div className="TabNavigationContent hidden" id={tab.id} key={tab.id}>
+          {tab.content}
+        </div>
+      ))}
     </div>
   )
 }
