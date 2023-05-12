@@ -12,100 +12,104 @@ import { ScalingRiskView } from './ScalingRiskView'
 const meta = {
   title: 'Pages/Scaling/RiskView',
   component: ScalingRiskView,
+  args: {
+    items: [
+      {
+        name: 'Forktimism',
+        provider: 'Optimism',
+        slug: 'optimism',
+        stateValidation: risk('short', 'warning'),
+        dataAvailability: risk('medium', 'warning'),
+        upgradeability: risk('medium', 'bad'),
+        sequencerFailure: risk('long'),
+        validatorFailure: risk('short', 'bad'),
+        isVerified: false,
+      },
+      {
+        name: 'Arbitrage',
+        slug: 'arbitrum',
+        stateValidation: risk('long'),
+        dataAvailability: risk('medium'),
+        upgradeability: risk('short', 'bad'),
+        sequencerFailure: risk('short'),
+        validatorFailure: risk('long', 'warning'),
+        isVerified: true,
+      },
+      {
+        name: 'StorkCommerce',
+        provider: 'StarkEx',
+        slug: 'starknet',
+        stateValidation: risk('short'),
+        dataAvailability: risk('medium'),
+        upgradeability: risk('long'),
+        sequencerFailure: risk('medium', 'bad'),
+        validatorFailure: risk('long', 'warning'),
+        isVerified: false,
+      },
+      {
+        name: 'zk.download',
+        provider: 'zkSync',
+        slug: 'zksync-lite',
+        stateValidation: risk('medium', 'bad'),
+        dataAvailability: risk('medium'),
+        upgradeability: risk('long'),
+        sequencerFailure: risk('long', 'warning'),
+        validatorFailure: risk('short'),
+        isVerified: true,
+      },
+      {
+        name: 'zk.archived',
+        provider: 'StarkEx',
+        slug: 'layer2financezk',
+        stateValidation: risk('medium', 'bad'),
+        dataAvailability: risk('medium'),
+        upgradeability: risk('long'),
+        sequencerFailure: risk('long', 'warning'),
+        validatorFailure: risk('short'),
+        isArchived: true,
+        isVerified: true,
+      },
+    ],
+  },
+  decorators: [
+    (Story) => (
+      <>
+        <PageContent>
+          <Story />
+        </PageContent>
+        <Tooltip />
+      </>
+    ),
+  ],
 } satisfies Meta<typeof ScalingRiskView>
 export default meta
 
 type Story = StoryObj<typeof ScalingRiskView>
 
-function Template() {
-  useEffect(() => {
-    configureTooltips()
-    configureTabs()
-  }, [])
-  return (
-    <>
-      <PageContent>
-        <ScalingRiskView
-          items={[
-            {
-              name: 'Forktimism',
-              provider: 'Optimism',
-              slug: 'optimism',
-              stateValidation: risk('short', 'warning'),
-              dataAvailability: risk('medium', 'warning'),
-              upgradeability: risk('medium', 'bad'),
-              sequencerFailure: risk('long'),
-              validatorFailure: risk('short', 'bad'),
-              isVerified: false,
-            },
-            {
-              name: 'Arbitrage',
-              slug: 'arbitrum',
-              stateValidation: risk('long'),
-              dataAvailability: risk('medium'),
-              upgradeability: risk('short', 'bad'),
-              sequencerFailure: risk('short'),
-              validatorFailure: risk('long', 'warning'),
-              isVerified: true,
-            },
-            {
-              name: 'StorkCommerce',
-              provider: 'StarkEx',
-              slug: 'starknet',
-              stateValidation: risk('short'),
-              dataAvailability: risk('medium'),
-              upgradeability: risk('long'),
-              sequencerFailure: risk('medium', 'bad'),
-              validatorFailure: risk('long', 'warning'),
-              isVerified: false,
-            },
-            {
-              name: 'zk.download',
-              provider: 'zkSync',
-              slug: 'zksync-lite',
-              stateValidation: risk('medium', 'bad'),
-              dataAvailability: risk('medium'),
-              upgradeability: risk('long'),
-              sequencerFailure: risk('long', 'warning'),
-              validatorFailure: risk('short'),
-              isVerified: true,
-            },
-            {
-              name: 'zk.archived',
-              provider: 'StarkEx',
-              slug: 'layer2financezk',
-              stateValidation: risk('medium', 'bad'),
-              dataAvailability: risk('medium'),
-              upgradeability: risk('long'),
-              sequencerFailure: risk('long', 'warning'),
-              validatorFailure: risk('short'),
-              isArchived: true,
-              isVerified: true,
-            },
-          ]}
-        />
-      </PageContent>
-      <Tooltip />
-    </>
-  )
-}
-
 export const Active: Story = {
-  render: () => {
-    useEffect(() => {
-      click('.TabsItem#active')
-    }, [])
-    return <Template />
-  },
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        click('.TabsItem#active')
+      }, [])
+      return <Story />
+    },
+  ],
 }
 
 export const Archived: Story = {
-  render: () => {
-    useEffect(() => {
-      click('.TabsItem#archived')
-    }, [])
-    return <Template />
-  },
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        click('.TabsItem#archived')
+      }, [])
+      return <Story />
+    },
+  ],
 }
 
 function risk(
