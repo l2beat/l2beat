@@ -1,4 +1,3 @@
-import { ProjectRiskViewEntry } from '@l2beat/config'
 import { Meta, StoryObj } from '@storybook/react'
 import React, { useEffect } from 'react'
 
@@ -581,20 +580,4 @@ export const Archived: Story = {
       return <Story />
     },
   ],
-}
-
-function risk(
-  length: 'short' | 'medium' | 'long',
-  sentiment?: 'warning' | 'bad',
-): ProjectRiskViewEntry {
-  return {
-    value:
-      length === 'short'
-        ? 'Some value'
-        : length === 'medium'
-        ? 'Medium text entry'
-        : 'Quite a longer value',
-    description: 'Some longer description of the thing',
-    sentiment,
-  }
 }
