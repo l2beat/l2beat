@@ -1,4 +1,4 @@
-import { ActivityApiResponse, assert,TvlApiResponse } from '@l2beat/common'
+import { ActivityApiResponse, assert, TvlApiResponse } from '@l2beat/common'
 import { Bridge, Layer2 } from '@l2beat/config'
 
 import { getTpsDaily } from '../../utils/activity/getTpsDaily'
