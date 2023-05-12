@@ -1,6 +1,6 @@
 {
   "name": "dydx",
-  "blockNumber": 17094221,
+  "blockNumber": 17242065,
   "configHash": "0xea614516defa6835f5df41e5e738cd4ead53de1a260201fbbdec0fe41bc3fdb2",
   "contracts": [
     {
@@ -18,7 +18,10 @@
           "StarkWare_PerpetualState_2020_1": "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0",
           "StarkWare_PerpetualForcedActions_2020_1": "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
         },
-        "proxyGovernance": ["0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0"]
+        "proxyGovernance": [
+          "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
+          "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
+        ]
       },
       "values": {
         "configurationDelay": 0,
@@ -26,21 +29,21 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 15814,
+        "getLastBatchId": 16318,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
           "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1"
         ],
         "getRegisteredVerifiers": [
-          "0x8Ab85d3A1816a0d7ECE0F57AF6b27FC3b05532F4"
+          "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 15521,
+        "getSequenceNumber": 16025,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
         "getVaultTreeHeight": 64,
-        "globalConfigurationHash": "0x00b763230e8b7409f7a22c099d0159583b77cf79805449042082598e0acd6d97",
+        "globalConfigurationHash": "0x03cbd17769430aed60aa8b9a5867b375c3fdca23e56cbbd83e33290577f50449",
         "identify": "StarkWare_PerpetualTokensAndRamping_2020_1",
         "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
         "initializerSize": 384,
@@ -58,6 +61,46 @@
         "VERSION": "1.0.0"
       },
       "derivedName": "Proxy"
+    },
+    {
+      "name": "Committee",
+      "address": "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
+      "code": "https://etherscan.deth.net/address/0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "hasRegisteredFact": false,
+        "identify": "StarkWare_Committee_2019_1",
+        "signaturesRequired": 1
+      }
+    },
+    {
+      "name": "FinalizableGpsFactAdapter",
+      "address": "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
+      "code": "https://etherscan.deth.net/address/0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "gpsContract": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
+        "isFinalized": true,
+        "programHash": "3022993219738828102988654230098311570191704199468817569337520096526584973032"
+      }
+    },
+    {
+      "name": "GpsStatementVerifier",
+      "address": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
+      "code": "https://etherscan.deth.net/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_GpsStatementVerifier_2020_1"
+      }
     },
     {
       "name": "StarkExRemoverGovernorV2",
@@ -136,6 +179,57 @@
       "derivedName": "GovernanceStrategy"
     },
     {
+      "name": "DydxToken",
+      "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
+      "code": "https://etherscan.deth.net/address/0x92D6C1e31e14520e676a687F0a93788B716BEff5",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "_mintingRestrictedBefore": 1784041200,
+        "_totalSupplySnapshotsCount": 1,
+        "_transfersRestrictedBefore": 1631113200,
+        "decimals": 18,
+        "DELEGATE_BY_TYPE_TYPEHASH": "0x10d8d059343739efce7dad10d09f0806da52b252b3e6a7951920d2d6ec4102e5",
+        "DELEGATE_TYPEHASH": "0x9a9a49b990ba9bb39f8048c490a40ab25c18f55d208d5fbcf958261a9b48716d",
+        "DOMAIN_SEPARATOR": "0x17e76dd75f3dfe3e50d31322433cc1405e898404a5724da2d4804cab81e0a88a",
+        "EIP712_DOMAIN": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+        "EIP712_VERSION": "0x31",
+        "INITIAL_SUPPLY": "1000000000000000000000000000",
+        "MINT_MAX_PERCENT": 2,
+        "MINT_MIN_INTERVAL": 31536000,
+        "name": "dYdX",
+        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "symbol": "DYDX",
+        "totalSupply": "1000000000000000000000000000",
+        "TRANSFER_RESTRICTION_LIFTED_NO_LATER_THAN": 1631977200
+      },
+      "derivedName": "DydxToken"
+    },
+    {
+      "name": "Executor2",
+      "address": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
+      "code": "https://etherscan.deth.net/address/0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getAdmin": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
+        "getDelay": 172800,
+        "getPendingAdmin": "0x0000000000000000000000000000000000000000",
+        "GRACE_PERIOD": 604800,
+        "MAXIMUM_DELAY": 604800,
+        "MINIMUM_DELAY": 86400,
+        "MINIMUM_QUORUM": 200,
+        "ONE_HUNDRED_WITH_PRECISION": 10000,
+        "PROPOSITION_THRESHOLD": 50,
+        "VOTE_DIFFERENTIAL": 50,
+        "VOTING_DURATION": 26280
+      },
+      "derivedName": "Executor"
+    },
+    {
       "name": "SafetyModuleV2",
       "address": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC",
       "code": "https://etherscan.deth.net/address/0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC,0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A",
@@ -180,9 +274,34 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "4531674602956725346964080"
+        "totalSupply": "4455753190189394228404526"
       },
       "derivedName": "SafetyModuleV2"
+    },
+    {
+      "name": "Treasury",
+      "address": "0x639192D54431F8c816368D3FB4107Bc168d0E871",
+      "code": "https://etherscan.deth.net/address/0x639192D54431F8c816368D3FB4107Bc168d0E871,0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
+        "admin": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
+      },
+      "values": {
+        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
+        "REVISION": 1
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
+      "code": "https://etherscan.deth.net/address/0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -216,149 +335,9 @@
         "VOTING_DURATION": 65700
       },
       "derivedName": "Executor"
-    },
-    {
-      "name": "Treasury",
-      "address": "0x639192D54431F8c816368D3FB4107Bc168d0E871",
-      "code": "https://etherscan.deth.net/address/0x639192D54431F8c816368D3FB4107Bc168d0E871,0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
-        "admin": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
-      },
-      "values": {
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
-        "REVISION": 1
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
-      "code": "https://etherscan.deth.net/address/0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
-      }
-    },
-    {
-      "name": "Executor2",
-      "address": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
-      "code": "https://etherscan.deth.net/address/0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getAdmin": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
-        "getDelay": 172800,
-        "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "GRACE_PERIOD": 604800,
-        "MAXIMUM_DELAY": 604800,
-        "MINIMUM_DELAY": 86400,
-        "MINIMUM_QUORUM": 200,
-        "ONE_HUNDRED_WITH_PRECISION": 10000,
-        "PROPOSITION_THRESHOLD": 50,
-        "VOTE_DIFFERENTIAL": 50,
-        "VOTING_DURATION": 26280
-      },
-      "derivedName": "Executor"
-    },
-    {
-      "name": "DydxToken",
-      "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
-      "code": "https://etherscan.deth.net/address/0x92D6C1e31e14520e676a687F0a93788B716BEff5",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "_mintingRestrictedBefore": 1784041200,
-        "_totalSupplySnapshotsCount": 1,
-        "_transfersRestrictedBefore": 1631113200,
-        "decimals": 18,
-        "DELEGATE_BY_TYPE_TYPEHASH": "0x10d8d059343739efce7dad10d09f0806da52b252b3e6a7951920d2d6ec4102e5",
-        "DELEGATE_TYPEHASH": "0x9a9a49b990ba9bb39f8048c490a40ab25c18f55d208d5fbcf958261a9b48716d",
-        "DOMAIN_SEPARATOR": "0x17e76dd75f3dfe3e50d31322433cc1405e898404a5724da2d4804cab81e0a88a",
-        "EIP712_DOMAIN": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
-        "EIP712_VERSION": "0x31",
-        "INITIAL_SUPPLY": "1000000000000000000000000000",
-        "MINT_MAX_PERCENT": 2,
-        "MINT_MIN_INTERVAL": 31536000,
-        "name": "dYdX",
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "symbol": "DYDX",
-        "totalSupply": "1000000000000000000000000000",
-        "TRANSFER_RESTRICTION_LIFTED_NO_LATER_THAN": 1631977200
-      },
-      "derivedName": "DydxToken"
-    },
-    {
-      "name": "FinalizableGpsFactAdapter",
-      "address": "0x8Ab85d3A1816a0d7ECE0F57AF6b27FC3b05532F4",
-      "code": "https://etherscan.deth.net/address/0x8Ab85d3A1816a0d7ECE0F57AF6b27FC3b05532F4",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "gpsContract": "0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C",
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_FinalizableGpsFactAdapterForTesting_2021_1",
-        "isFinalized": true,
-        "programHash": "3034699314518632418633798167565169540135516579166751375550467178691995202911"
-      }
-    },
-    {
-      "name": "CallProxy",
-      "address": "0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C",
-      "code": "https://etherscan.deth.net/address/0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C,0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2",
-      "upgradeability": {
-        "type": "StarkWare proxy",
-        "implementation": "0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2",
-        "callImplementation": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
-        "upgradeDelay": 0,
-        "isFinal": true,
-        "proxyGovernance": ["0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"]
-      },
-      "values": {
-        "callProxyImplementation": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
-        "getUpgradeActivationDelay": 0,
-        "implementation": "0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2",
-        "isFrozen": false,
-        "isNotFinalized": true,
-        "MAIN_DISPATCHER_SAFEGUARD_SLOT": "0xf3afa5472f846c7817e22b15110d7b184f2d3d6417baee645a1e963b8fac7e24",
-        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
-      }
-    },
-    {
-      "name": "GpsStatementVerifier",
-      "address": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
-      "code": "https://etherscan.deth.net/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_GpsStatementVerifier_2020_1"
-      }
-    },
-    {
-      "name": "Committee",
-      "address": "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
-      "code": "https://etherscan.deth.net/address/0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "hasRegisteredFact": false,
-        "identify": "StarkWare_Committee_2019_1",
-        "signaturesRequired": 1
-      }
     }
   ],
   "eoas": [
-    "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
     "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080",
     "0x8129b737912e17212C8693B781928f5D0303390a",
     "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
@@ -752,23 +731,6 @@
       "function signaturesRequired() view returns (uint256)",
       "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
     ],
-    "0x8Ab85d3A1816a0d7ECE0F57AF6b27FC3b05532F4": [
-      "constructor(address gpsStatementContract, uint256 programHash_)",
-      "function acceptOwnership()",
-      "function finalize()",
-      "function gpsContract() view returns (address)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isAdmin(address testedAddress) view returns (bool)",
-      "function isFinalized() view returns (bool)",
-      "function isOwner(address testedAddress) view returns (bool)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function nominateNewOwner(address newOwner)",
-      "function programHash() view returns (uint256)",
-      "function registerAdmin(address newAdmin)",
-      "function removeAdmin(address removedAdmin)",
-      "function setProgramHash(uint256 newProgramHash)"
-    ],
     "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9": [
       "constructor(address dydxToken, address stakedDydxToken)",
       "function DYDX_TOKEN() view returns (address)",
@@ -918,40 +880,6 @@
       "function mainRemoveGovernor(address governorForRemoval)",
       "function unFreeze()"
     ],
-    "0xC8c212f11f6ACca77A7afeB7282dEBa5530eb46C": [
-      "constructor(uint256 upgradeActivationDelay)",
-      "event FinalizedImplementation(address indexed implementation)",
-      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
-      "event ImplementationRemoved(address indexed implementation)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event Upgraded(address indexed implementation)",
-      "function MAIN_DISPATCHER_SAFEGUARD_SLOT() view returns (bytes32)",
-      "function PROXY_GOVERNANCE_TAG() view returns (string)",
-      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
-      "function addImplementation(address newImplementation, bytes data, bool finalize)",
-      "function getUpgradeActivationDelay() view returns (uint256 delay)",
-      "function implementation() view returns (address _implementation)",
-      "function initialize(bytes) pure",
-      "function isNotFinalized() view returns (bool notFinal)",
-      "function proxyAcceptGovernance()",
-      "function proxyCancelNomination()",
-      "function proxyIsGovernor(address testGovernor) view returns (bool)",
-      "function proxyNominateNewGovernor(address newGovernor)",
-      "function proxyRemoveGovernor(address governorForRemoval)",
-      "function removeImplementation(address newImplementation)",
-      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
-    ],
-    "0xCC5B2c75cbbD281b2Fc4B58C7d5B080d023C92F2": [
-      "function MAIN_DISPATCHER_SAFEGUARD_SLOT() view returns (bytes32)",
-      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
-      "function callProxyImplementation() view returns (address _implementation)",
-      "function implementation() view returns (address _implementation)",
-      "function initialize(bytes data)",
-      "function isFrozen() pure returns (bool)"
-    ],
     "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
@@ -1075,6 +1003,24 @@
       "function setPendingAdmin(address newPendingAdmin)",
       "function validateCreatorOfProposal(address governance, address user, uint256 blockNumber) view returns (bool)",
       "function validateProposalCancellation(address governance, address user, uint256 blockNumber) view returns (bool)"
+    ],
+    "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C": [
+      "constructor(address gpsStatementContract, uint256 programHash_)",
+      "event Finalized()",
+      "function acceptOwnership()",
+      "function finalize()",
+      "function gpsContract() view returns (address)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isAdmin(address testedAddress) view returns (bool)",
+      "function isFinalized() view returns (bool)",
+      "function isOwner(address testedAddress) view returns (bool)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function nominateNewOwner(address newOwner)",
+      "function programHash() view returns (uint256)",
+      "function registerAdmin(address newAdmin)",
+      "function removeAdmin(address removedAdmin)",
+      "function setProgramHash(uint256 newProgramHash)"
     ],
     "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0": [
       "constructor(address starkPerpetual, address[] mainGovernorsToRemove, address[] proxyGovernorsToRemove)",
