@@ -77,13 +77,27 @@ function getActivityChart(
   apiChart: ActivityApiChart,
   ethereumChart: ActivityApiChart,
 ): FrontendActivityChart {
-  const length = Math.min(apiChart.data.length, ethereumChart.data.length)
+  const lastProjectTimestamp = apiChart.data.at(-1)?.[0]
+  if (!lastProjectTimestamp) {
+    throw new Error('No data in activity chart')
+  }
+  const ethChartTimestampIndex = ethereumChart.data.findIndex(
+    (x) => x[0].toNumber() === lastProjectTimestamp.toNumber(),
+  )
+  if (ethChartTimestampIndex === -1) {
+    throw new Error('No matching timestamp in ethereum chart')
+  }
+  const alignedEthChartData = ethereumChart.data.slice(
+    0,
+    ethChartTimestampIndex + 1,
+  )
+  const length = Math.min(apiChart.data.length, alignedEthChartData.length)
   return {
     daily: {
       types: ['timestamp', 'transactions', 'ethereumTransactions'],
       data: new Array(length).fill(0).map((x, i) => {
         const apiPoint = apiChart.data.at(-length + i)
-        const ethPoint = ethereumChart.data.at(-length + i)
+        const ethPoint = alignedEthChartData.at(-length + i)
         return [
           apiPoint?.[0].toNumber() ?? 0,
           apiPoint?.[1] ?? 0,
