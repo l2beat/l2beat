@@ -92,7 +92,12 @@ export const optimism: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_QUEUE,
+      references: [
+        'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L201',
+      ],
+    },
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -128,7 +133,7 @@ export const optimism: Layer2 = {
       ],
     },
     operator: {
-      ...OPERATOR.CENTRALIZED_SEQUENCER,
+      ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
           text: 'How will the sequencer be decentralized over time? - Optimism documentation',
@@ -137,7 +142,7 @@ export const optimism: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.NO_MECHANISM,
       references: [
         {
           text: ' Chain Contracts - Optimism documentation',
