@@ -1,1 +1,1 @@
-# @l2beat/services
+# @l2beat/common
