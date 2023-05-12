@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/common'
 import { utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'

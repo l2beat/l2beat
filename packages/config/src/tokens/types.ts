@@ -5,7 +5,7 @@ import {
   numberAs,
   stringAs,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/common'
 import { z } from 'zod'
 
 export type TokenInfo = z.infer<typeof TokenInfo>

@@ -1,4 +1,4 @@
-import { TvlApiChartPoint, UnixTime } from '@l2beat/shared'
+import { TvlApiChartPoint, UnixTime } from '@l2beat/common'
 
 import { asNumber } from './asNumber'
 

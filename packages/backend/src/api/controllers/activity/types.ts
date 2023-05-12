@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/common'
 
 export interface DailyTransactionCount {
   count: number

@@ -7,7 +7,7 @@ import {
   Retries,
   ShouldRetry,
   wrapAndMeasure,
-} from '@l2beat/shared'
+} from '@l2beat/common'
 import assert from 'assert'
 import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'

@@ -1,4 +1,4 @@
-import { Hash256 } from '@l2beat/shared'
+import { Hash256 } from '@l2beat/common'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname } from 'path'

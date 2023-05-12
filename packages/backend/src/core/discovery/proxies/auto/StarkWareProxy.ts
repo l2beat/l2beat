@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress, Hash256, ProxyDetails } from '@l2beat/shared'
+import { Bytes, EthereumAddress, Hash256, ProxyDetails } from '@l2beat/common'
 import { BigNumber, utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'

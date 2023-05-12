@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/common'
 
 export function getCodeLink(
   address: EthereumAddress,

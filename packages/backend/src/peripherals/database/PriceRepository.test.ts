@@ -1,4 +1,4 @@
-import { AssetId, Logger, UnixTime } from '@l2beat/shared'
+import { AssetId, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'

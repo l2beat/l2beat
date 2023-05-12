@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared'
+import { assert } from '@l2beat/common'
 
 import { Block, Rollup, Rollups, toBlock } from './schemas'
 

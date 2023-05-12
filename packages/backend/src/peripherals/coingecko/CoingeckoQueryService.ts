@@ -1,10 +1,10 @@
 import {
-  CoingeckoClient,
   CoingeckoId,
   EthereumAddress,
   getTimestamps,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/common'
+import { CoingeckoClient } from '@l2beat/services'
 
 type Granularity = 'daily' | 'hourly'
 interface Price {

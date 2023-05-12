@@ -1,4 +1,5 @@
-import { HttpClient, Logger, LogThrottler } from '@l2beat/shared'
+import { Logger, LogThrottler } from '@l2beat/common'
+import { HttpClient } from '@l2beat/services'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'

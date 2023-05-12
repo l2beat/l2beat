@@ -1,4 +1,4 @@
-import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
+import { Logger, ProjectId, UnixTime } from '@l2beat/common'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Clock } from '../Clock'

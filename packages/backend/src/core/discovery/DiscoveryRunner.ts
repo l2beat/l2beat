@@ -1,4 +1,4 @@
-import { DiscoveryOutput } from '@l2beat/shared'
+import { DiscoveryOutput } from '@l2beat/common'
 import { Gauge, Histogram } from 'prom-client'
 
 import { DiscoveryConfig } from './config/DiscoveryConfig'

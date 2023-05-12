@@ -1,4 +1,5 @@
-import { HttpClient, Logger, UnixTime } from '@l2beat/shared'
+import { Logger, UnixTime } from '@l2beat/common'
+import { HttpClient } from '@l2beat/services'
 import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 

@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared'
+import { Bytes, EthereumAddress } from '@l2beat/common'
 
 export type BlockTag = number | 'earliest' | 'latest' | 'pending'
 

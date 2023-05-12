@@ -1,5 +1,5 @@
+import { TvlApiResponse, VerificationStatus } from '@l2beat/common'
 import { Bridge, Layer2 } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
 
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'

@@ -1,5 +1,6 @@
+import { Logger, ProjectId, UnixTime } from '@l2beat/common'
 import { StarknetTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger, ProjectId, UnixTime } from '@l2beat/shared'
+import { HttpClient } from '@l2beat/services'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'

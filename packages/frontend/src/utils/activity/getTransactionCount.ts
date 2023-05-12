@@ -1,4 +1,4 @@
-import { ActivityApiChartPoint } from '@l2beat/shared'
+import { ActivityApiChartPoint } from '@l2beat/common'
 
 export function getTransactionCount(
   data: ActivityApiChartPoint[] | undefined,

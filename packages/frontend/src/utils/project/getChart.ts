@@ -1,5 +1,5 @@
+import { ActivityApiResponse, ProjectId, TvlApiResponse } from '@l2beat/common'
 import { Bridge, Layer2, safeGetTokenByAssetId } from '@l2beat/config'
-import { ActivityApiResponse, ProjectId, TvlApiResponse } from '@l2beat/shared'
 
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'

@@ -1,4 +1,4 @@
-import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
+import { getTimestamps, Hash256, UnixTime } from '@l2beat/common'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'

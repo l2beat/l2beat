@@ -1,4 +1,10 @@
 import {
+  assert,
+  assertUnreachable,
+  EthereumAddress,
+  VerificationStatus,
+} from '@l2beat/common'
+import {
   Bridge,
   CONTRACTS,
   isSingleAddress,
@@ -6,12 +12,6 @@ import {
   ProjectContract,
   ProjectEscrow,
 } from '@l2beat/config'
-import {
-  assert,
-  assertUnreachable,
-  EthereumAddress,
-  VerificationStatus,
-} from '@l2beat/shared'
 
 import {
   TechnologyContract,

@@ -1,4 +1,4 @@
-import { AssetId, ProjectId, UnixTime } from '@l2beat/shared'
+import { AssetId, ProjectId, UnixTime } from '@l2beat/common'
 
 import { createAddCustomTokenReport } from './report'
 

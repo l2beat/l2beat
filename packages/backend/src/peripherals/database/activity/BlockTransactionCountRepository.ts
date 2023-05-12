@@ -1,4 +1,4 @@
-import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
+import { Logger, ProjectId, UnixTime } from '@l2beat/common'
 import { Knex } from 'knex'
 import { BlockTransactionCountRow } from 'knex/types/tables'
 

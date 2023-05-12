@@ -1,4 +1,4 @@
-import { ContractValue, DiscoveryOutput, EthereumAddress } from '@l2beat/shared'
+import { ContractValue, DiscoveryOutput, EthereumAddress } from '@l2beat/common'
 import chalk from 'chalk'
 import { constants, utils } from 'ethers'
 import { readFile } from 'fs/promises'

@@ -1,4 +1,4 @@
-import { json, ProjectId, UnixTime } from '@l2beat/shared'
+import { json, ProjectId, UnixTime } from '@l2beat/common'
 
 import {
   ALL_PROCESSED_EVENT,

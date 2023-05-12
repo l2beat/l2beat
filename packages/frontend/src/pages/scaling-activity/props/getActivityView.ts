@@ -1,10 +1,10 @@
-import { Layer2 } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiResponse,
   ProjectId,
   VerificationStatus,
-} from '@l2beat/shared'
+} from '@l2beat/common'
+import { Layer2 } from '@l2beat/config'
 
 import { getMaxTps } from '../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'

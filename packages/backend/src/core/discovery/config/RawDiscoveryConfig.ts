@@ -1,4 +1,4 @@
-import { EthereumAddress, ManualProxyType, stringAs } from '@l2beat/shared'
+import { EthereumAddress, ManualProxyType, stringAs } from '@l2beat/common'
 import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'

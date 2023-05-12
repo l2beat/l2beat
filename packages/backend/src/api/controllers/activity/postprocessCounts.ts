@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/common'
 
 import { fillMissingCounts } from './fillMissingCounts'
 import { DailyTransactionCount } from './types'

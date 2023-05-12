@@ -5,7 +5,7 @@ import {
   Hash256,
   Logger,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/common'
 import { setTimeout } from 'timers/promises'
 
 import {

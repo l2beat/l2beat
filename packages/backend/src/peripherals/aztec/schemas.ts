@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/common'
 import { z } from 'zod'
 
 import { stringAs } from '../../tools/types'

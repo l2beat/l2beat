@@ -1,4 +1,4 @@
-import { ContractValue, EthereumAddress } from '@l2beat/shared'
+import { ContractValue, EthereumAddress } from '@l2beat/common'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'

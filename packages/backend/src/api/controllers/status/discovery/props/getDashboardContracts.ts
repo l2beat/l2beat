@@ -2,7 +2,7 @@ import {
   ContractParameters,
   DiscoveryOutput,
   EthereumAddress,
-} from '@l2beat/shared'
+} from '@l2beat/common'
 import { ethers } from 'ethers'
 
 import { DiscoveryConfig } from '../../../../../core/discovery/config/DiscoveryConfig'

@@ -1,4 +1,4 @@
-import { getErrorMessage } from '@l2beat/shared'
+import { getErrorMessage } from '@l2beat/common'
 
 import { Handler, HandlerResult } from '../Handler'
 

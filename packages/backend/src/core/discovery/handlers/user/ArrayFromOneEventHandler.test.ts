@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/common'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 

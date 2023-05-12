@@ -5,7 +5,7 @@ import {
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
-} from '@l2beat/shared'
+} from '@l2beat/common'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { Token } from '../../../model'

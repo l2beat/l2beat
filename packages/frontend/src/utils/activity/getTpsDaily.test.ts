@@ -1,4 +1,4 @@
-import { ActivityApiChartPoint, UnixTime } from '@l2beat/shared'
+import { ActivityApiChartPoint, UnixTime } from '@l2beat/common'
 import { expect } from 'earl'
 
 import { getTpsDaily } from '../../../src/utils/activity/getTpsDaily'

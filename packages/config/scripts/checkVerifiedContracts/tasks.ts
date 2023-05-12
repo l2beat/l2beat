@@ -1,9 +1,5 @@
-import {
-  EthereumAddress,
-  EtherscanClient,
-  Logger,
-  toBatches,
-} from '@l2beat/shared'
+import { EthereumAddress, Logger, toBatches } from '@l2beat/common'
+import { EtherscanClient } from '@l2beat/services'
 
 import { isContractVerified } from './etherscan'
 import { VerificationMap } from './output'

@@ -1,12 +1,12 @@
-import { bridges, layer2s } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiResponse,
   ProjectId,
   TvlApiResponse,
-} from '@l2beat/shared'
+} from '@l2beat/common'
+import { bridges, layer2s } from '@l2beat/config'
+import { HttpClient } from '@l2beat/services'
 
-import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'

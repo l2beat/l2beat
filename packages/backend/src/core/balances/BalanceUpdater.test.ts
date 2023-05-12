@@ -1,4 +1,3 @@
-import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
   Bytes,
@@ -7,7 +6,8 @@ import {
   Logger,
   ProjectId,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/common'
+import { TokenInfo } from '@l2beat/config'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 

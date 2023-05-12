@@ -1,7 +1,6 @@
+import { HttpClient } from '@l2beat/services'
 import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
-
-import { HttpClient } from '../../../../shared/build'
 
 export class JsonHttpClient {
   constructor(

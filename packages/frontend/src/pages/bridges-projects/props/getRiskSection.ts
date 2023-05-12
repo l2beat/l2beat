@@ -1,5 +1,5 @@
+import { VerificationStatus } from '@l2beat/common'
 import { Bridge, CONTRACTS, ProjectRisk } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
 
 import { RiskSectionProps } from '../../../components/project/RiskSection'
 import { groupRisks } from '../../../utils/project/groupRisks'

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/common'
 import { expect } from 'earl'
 
 import { ProjectTechnologyChoice } from '../common/ProjectTechnologyChoice'

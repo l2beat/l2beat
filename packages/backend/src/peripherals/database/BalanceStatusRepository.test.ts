@@ -1,4 +1,4 @@
-import { Hash256, Logger, UnixTime } from '@l2beat/shared'
+import { Hash256, Logger, UnixTime } from '@l2beat/common'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'

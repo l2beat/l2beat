@@ -2,7 +2,7 @@ import {
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/common'
 import { expect } from 'earl'
 
 import { ProjectRiskViewEntry, ProjectTechnologyChoice } from '../common'

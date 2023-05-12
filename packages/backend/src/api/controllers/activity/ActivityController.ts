@@ -1,4 +1,4 @@
-import { ActivityApiResponse, assert, json, ProjectId } from '@l2beat/shared'
+import { ActivityApiResponse, assert, json, ProjectId } from '@l2beat/common'
 
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
 import { Clock } from '../../../core/Clock'

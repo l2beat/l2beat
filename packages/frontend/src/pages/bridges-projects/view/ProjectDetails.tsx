@@ -1,4 +1,4 @@
-import { assertUnreachable } from '@l2beat/shared'
+import { assertUnreachable } from '@l2beat/common'
 import React from 'react'
 
 import { ChartSection } from '../../../components/project/ChartSection'

@@ -1,5 +1,5 @@
+import { VerificationStatus } from '@l2beat/common'
 import { Bridge } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
 import { isEmpty } from 'lodash'
 
 import { ChartProps } from '../../../components'

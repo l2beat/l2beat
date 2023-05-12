@@ -1,4 +1,4 @@
-import { ActivityApiChartPoint } from '@l2beat/shared'
+import { ActivityApiChartPoint } from '@l2beat/common'
 
 const SECONDS_IN_A_DAY = 24 * 60 * 60
 

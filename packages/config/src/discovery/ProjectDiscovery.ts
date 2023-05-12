@@ -5,7 +5,7 @@ import {
   DiscoveryOutput,
   EthereumAddress,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/common'
 import { utils } from 'ethers'
 import fs from 'fs'
 import { isArray, isString } from 'lodash'

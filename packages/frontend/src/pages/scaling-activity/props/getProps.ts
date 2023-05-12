@@ -1,4 +1,4 @@
-import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared'
+import { ActivityApiResponse, VerificationStatus } from '@l2beat/common'
 
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'

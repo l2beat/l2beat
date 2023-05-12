@@ -1,9 +1,5 @@
-import {
-  Bytes,
-  EthereumAddress,
-  EtherscanClient,
-  Hash256,
-} from '@l2beat/shared'
+import { Bytes, EthereumAddress, Hash256 } from '@l2beat/common'
+import { EtherscanClient } from '@l2beat/services'
 import { providers } from 'ethers'
 
 import { isRevert } from '../utils/isRevert'

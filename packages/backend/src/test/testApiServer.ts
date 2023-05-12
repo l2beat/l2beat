@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/common'
 import { agent } from 'supertest'
 
 import { ApiServer } from '../../src/api/ApiServer'

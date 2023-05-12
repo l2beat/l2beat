@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared'
+import { ProjectId } from '@l2beat/common'
 
 import {
   KnowledgeNugget,

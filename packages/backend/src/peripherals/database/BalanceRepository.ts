@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
+import { AssetId, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
 import { BalanceRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'

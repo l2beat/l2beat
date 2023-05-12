@@ -1,4 +1,4 @@
-import { Logger, wrapAndMeasure } from '@l2beat/shared'
+import { Logger, wrapAndMeasure } from '@l2beat/common'
 import { Knex } from 'knex'
 import { Histogram } from 'prom-client'
 

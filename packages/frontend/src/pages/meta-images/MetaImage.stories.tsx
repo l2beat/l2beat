@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared'
+import { ProjectId } from '@l2beat/common'
 import { Meta, Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 

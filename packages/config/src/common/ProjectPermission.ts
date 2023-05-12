@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/common'
 
 export interface ProjectPermission {
   accounts: ProjectPermissionedAccount[]

@@ -3,7 +3,7 @@ import {
   formatLargeNumberShared,
   ProjectId,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/common'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {

@@ -1,11 +1,6 @@
+import { getErrorMessage, json, Logger, RateLimiter } from '@l2beat/common'
 import { StarkexProduct } from '@l2beat/config'
-import {
-  getErrorMessage,
-  HttpClient,
-  json,
-  Logger,
-  RateLimiter,
-} from '@l2beat/shared'
+import { HttpClient } from '@l2beat/services'
 
 import { parseStarkexApiResponse } from './parseStarkexApiResponse'
 

@@ -1,4 +1,5 @@
-import { assert, HttpClient, RateLimiter } from '@l2beat/shared'
+import { assert, RateLimiter } from '@l2beat/common'
+import { HttpClient } from '@l2beat/services'
 
 import { findMinedBlockOrThrow } from './findMinedBlockOrThrow'
 import {

@@ -1,5 +1,5 @@
+import { TvlApiResponse } from '@l2beat/common'
 import { Bridge, ProjectLinks } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/shared'
 
 import { ProjectLink } from '../../../components/icons'
 import { getDestination } from '../../../utils/getDestination'

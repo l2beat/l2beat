@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/common'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 

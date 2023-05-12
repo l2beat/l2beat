@@ -2,7 +2,7 @@ import {
   ActivityApiChartPoint,
   ActivityApiResponse,
   ProjectId,
-} from '@l2beat/shared'
+} from '@l2beat/common'
 
 import { findMinLast } from './findMinLast'
 import { formatChart } from './formatChart'

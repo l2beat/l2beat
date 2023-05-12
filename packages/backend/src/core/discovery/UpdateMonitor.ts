@@ -1,4 +1,4 @@
-import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/shared'
+import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/common'
 import { providers } from 'ethers'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'

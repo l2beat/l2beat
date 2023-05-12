@@ -1,4 +1,4 @@
-import { ContractValue } from '@l2beat/shared'
+import { ContractValue } from '@l2beat/common'
 import * as z from 'zod'
 
 import { HandlerResult } from './Handler'

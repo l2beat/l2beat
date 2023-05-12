@@ -1,4 +1,4 @@
-import { DiscoveryOutput } from '@l2beat/shared'
+import { DiscoveryOutput } from '@l2beat/common'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'

@@ -1,4 +1,4 @@
-import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/shared'
+import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/common'
 import { UpdateMonitorRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'

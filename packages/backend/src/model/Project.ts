@@ -1,3 +1,4 @@
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/common'
 import {
   Bridge,
   getTokenBySymbol,
@@ -6,7 +7,6 @@ import {
   TokenInfo,
   tokenList,
 } from '@l2beat/config'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 export interface Project {
   projectId: ProjectId

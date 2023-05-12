@@ -1,4 +1,4 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared'
+import { EthereumAddress, Hash256 } from '@l2beat/common'
 
 import { hashJson } from '../../../tools/hashJson'
 import { DiscoveryOverrides } from './DiscoveryOverrides'

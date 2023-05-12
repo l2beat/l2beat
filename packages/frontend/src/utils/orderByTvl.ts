@@ -1,4 +1,4 @@
-import { ProjectId, TvlApiResponse } from '@l2beat/shared'
+import { ProjectId, TvlApiResponse } from '@l2beat/common'
 
 export function orderByTvl<
   T extends { id: ProjectId; isArchived?: boolean; isUpcoming?: boolean },

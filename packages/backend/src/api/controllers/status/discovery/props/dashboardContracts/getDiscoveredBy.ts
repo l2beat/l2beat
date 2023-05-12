@@ -1,4 +1,4 @@
-import { ContractParameters, DiscoveryOutput } from '@l2beat/shared'
+import { ContractParameters, DiscoveryOutput } from '@l2beat/common'
 
 import { DiscoveryConfig } from '../../../../../../core/discovery/config/DiscoveryConfig'
 

@@ -1,10 +1,5 @@
-import {
-  AssetId,
-  CoingeckoClient,
-  EthereumAddress,
-  HttpClient,
-  UnixTime,
-} from '@l2beat/shared'
+import { AssetId, EthereumAddress, UnixTime } from '@l2beat/common'
+import { CoingeckoClient, HttpClient } from '@l2beat/services'
 import { providers, utils } from 'ethers'
 import { z } from 'zod'
 

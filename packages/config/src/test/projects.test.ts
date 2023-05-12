@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared'
+import { EthereumAddress, ProjectId } from '@l2beat/common'
 import { expect } from 'earl'
 
 import { bridges, getTokenBySymbol, layer2s } from '../'

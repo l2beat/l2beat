@@ -1,4 +1,4 @@
-import { MainnetEtherscanClient } from '@l2beat/shared'
+import { MainnetEtherscanClient } from '@l2beat/services'
 import { providers } from 'ethers'
 
 import { DiscoveryModuleConfig } from '../../config/config.discovery'

@@ -1,4 +1,4 @@
-import { EthereumAddress, UpgradeabilityParameters } from '@l2beat/shared'
+import { EthereumAddress, UpgradeabilityParameters } from '@l2beat/common'
 import { expect } from 'earl'
 
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'

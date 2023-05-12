@@ -1,4 +1,4 @@
-import { ActivityApiChartPoint } from '@l2beat/shared'
+import { ActivityApiChartPoint } from '@l2beat/common'
 
 import { formatPercent, getPercentageChange } from '../utils'
 import { getTpsDaily } from './getTpsDaily'
