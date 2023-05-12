@@ -73,7 +73,7 @@ export function outputCharts(
   }
 }
 
-function getActivityChart(
+export function getActivityChart(
   apiChart: ActivityApiChart,
   ethereumChart: ActivityApiChart,
 ): FrontendActivityChart {
