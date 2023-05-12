@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from './HorizontalSeparator'
 
@@ -9,7 +9,7 @@ interface TabsProps {
 interface Tab {
   id: string
   name: string
-  content: ReactElement
+  content: ReactNode
   icon?: ReactNode
   shortName?: string
 }
