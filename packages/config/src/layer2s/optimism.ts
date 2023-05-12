@@ -180,29 +180,10 @@ export const optimism: Layer2 = {
     },
   },
   permissions: [
-    {
-      name: 'Optimism MultiSig',
-      accounts: [
-        {
-          address: discovery.getContract('GnosisSafe').address,
-          type: 'MultiSig',
-        },
-      ],
-      description:
-        'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Optimism MultiSig.`,
-    },
+    ...discovery.getGnosisSafeDetails(
+      'OptimismMultisig',
+      'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+    ),
     {
       name: 'Sequencer',
       accounts: [
