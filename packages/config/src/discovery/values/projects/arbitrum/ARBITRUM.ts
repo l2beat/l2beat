@@ -1,5 +1,4 @@
 import { EthereumAddress } from '@l2beat/shared'
-import { assert } from 'console'
 
 import { ProjectPermissionedAccount } from '../../../../common'
 import { formatSeconds } from '../../../../utils/formatSeconds'
@@ -12,28 +11,17 @@ const getSequencerFailureString = () => {
     'SequencerInbox',
     'maxTimeVariation',
   )
-  const delayBlocks = maxTimeVariation[0]
   const delaySeconds = maxTimeVariation[2]
 
   return `In the event of sequencer failure, after ${formatSeconds(
     delaySeconds,
-  )} (${delayBlocks} blocks) user can force the transaction to be included in the L2 chain by sending it to the L1.`
+  )} users can force transactions to be included in the L2 chain by sending it to the L1.`
 }
 
-const getValidatorFailureString = () => {
-  const delayBlocks = discovery.getContractValue<number>(
-    'RollupProxy',
-    'VALIDATOR_AFK_BLOCKS',
-  )
-  const delaySeconds = delayBlocks * 13.2
-  const days = 7
+const getValidatorFailureString = (delayBlocks: number) => {
+  const delay = formatSeconds(delayBlocks * 12)
 
-  assert(
-    Math.abs(delaySeconds - 3600 * 24 * days) < 60,
-    'Unexpected delaySeconds',
-  )
-
-  return `Anyone can become a Validator after approximately ${days} days (${delayBlocks} blocks) of inactivity from the currently whitelisted Validators.`
+  return `Anyone can become a Validator after approximately ${delay} (${delayBlocks} blocks) of inactivity from the currently whitelisted Validators.`
 }
 
 // HARDCODED
