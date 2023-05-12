@@ -1,4 +1,4 @@
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/common'
+import { ActivityApiResponse, assert,TvlApiResponse } from '@l2beat/common'
 import { Bridge, Layer2 } from '@l2beat/config'
 
 import { getTpsDaily } from '../../utils/activity/getTpsDaily'
@@ -6,16 +6,6 @@ import { formatUSD, getPercentageChange } from '../../utils/utils'
 import { Wrapped } from '../Page'
 import { ActivityMetaImageProps } from './ActivityMetaImage'
 import { TvlMetaImageProps } from './TvlMetaImage'
-
-// where should this be placed? we already have it in backend code
-export function assert(
-  condition: unknown,
-  message?: string,
-): asserts condition {
-  if (!condition) {
-    throw new Error(message ? `Assertion Error: ${message}` : 'Assertion Error')
-  }
-}
 
 export function getProps(
   tvlApiResponse: TvlApiResponse,
