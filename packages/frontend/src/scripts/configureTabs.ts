@@ -78,26 +78,23 @@ function getElements(tabNavigation: HTMLElement) {
   if (!underline || !tabsContainers || tabs.length === 0) {
     return
   }
+  const tabsWithContent: Record<string, TabWithContent> = {}
 
-  const tabsWithContent = tabs.reduce<Record<string, TabWithContent>>(
-    (prev, val) => {
-      const content = tabNavigation.querySelector<HTMLElement>(
-        `#${val.id}.TabsContent`,
+  tabs.forEach((tab) => {
+    const content = tabNavigation.querySelector<HTMLElement>(
+      `#${tab.id}.TabsContent`,
+    )
+
+    if (!content)
+      throw new Error(
+        `No content found for tab with id ${tab.id} in tab navigation`,
       )
 
-      if (!content)
-        throw new Error(
-          `No content found for tab with id ${val.id} in tab navigation`,
-        )
-
-      prev[val.id] = {
-        tab: val,
-        content: content,
-      }
-      return prev
-    },
-    {},
-  )
+    tabsWithContent[tab.id] = {
+      tab,
+      content,
+    }
+  })
 
   return {
     tabs,
