@@ -204,7 +204,7 @@ export const optimism: Layer2 = {
         {
           address: EthereumAddress(
             discovery.getContractValue<string>(
-              'Lib_AddressManager',
+              'LibAddressManager',
               'OVM_Sequencer',
             ),
           ),
@@ -219,7 +219,7 @@ export const optimism: Layer2 = {
         {
           address: EthereumAddress(
             discovery.getContractValue<string>(
-              'Lib_AddressManager',
+              'LibAddressManager',
               'OVM_Proposer',
             ),
           ),
@@ -266,17 +266,17 @@ export const optimism: Layer2 = {
       },
       {
         name: 'L1CrossDomainMessenger',
-        address: discovery.getContract('L1CrossDomainMessenger').address,
+        address: discovery.getContract('L1CrossDomainMessengerProxy').address,
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        upgradeability: discovery.getContract('L1CrossDomainMessenger')
+        upgradeability: discovery.getContract('L1CrossDomainMessengerProxy')
           .upgradeability,
       },
       {
         name: 'Lib_AddressManager',
         description:
           'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
-        address: discovery.getContract('Lib_AddressManager').address,
+        address: discovery.getContract('LibAddressManager').address,
       },
       {
         name: 'L1StandardBridge',
