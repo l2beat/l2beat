@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 

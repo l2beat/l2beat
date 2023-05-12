@@ -3,9 +3,9 @@ import {
   DiscoveryOutput,
   EthereumAddress,
   Hash256,
-  Logger,
   UnixTime,
 } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers } from 'ethers'
 

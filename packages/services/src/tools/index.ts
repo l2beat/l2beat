@@ -1,4 +1,3 @@
-export * from './assert'
 export * from './EventTracker'
 export * from './ILogger'
 export * from './Logger'

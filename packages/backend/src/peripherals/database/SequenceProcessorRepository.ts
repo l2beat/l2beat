@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { Knex } from 'knex'
 import { SequenceProcessorRow } from 'knex/types/tables'
 

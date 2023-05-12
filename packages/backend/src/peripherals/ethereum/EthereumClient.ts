@@ -1,4 +1,5 @@
-import { Bytes, EthereumAddress, Logger, UnixTime } from '@l2beat/common'
+import { Bytes, EthereumAddress, UnixTime } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { providers } from 'ethers'
 
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'

@@ -1,4 +1,5 @@
-import { assert, Logger, ProjectId, UnixTime } from '@l2beat/common'
+import { assert, ProjectId, UnixTime } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { AggregateReportRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'

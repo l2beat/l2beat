@@ -1,5 +1,6 @@
-import { EthereumAddress, Hash256, RateLimiter } from '@l2beat/common'
+import { EthereumAddress, Hash256 } from '@l2beat/common'
 
+import { RateLimiter } from '../../tools'
 import { HttpClient } from '../HttpClient'
 import {
   ContractCreatorAndCreationTxHashResult,

@@ -1,4 +1,4 @@
-import { Logger, Retries } from '@l2beat/common'
+import { Logger, Retries } from '@l2beat/services'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect } from 'earl'
 

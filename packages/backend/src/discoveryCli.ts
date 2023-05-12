@@ -1,5 +1,4 @@
-import { Logger } from '@l2beat/common'
-import { HttpClient, MainnetEtherscanClient } from '@l2beat/services'
+import { HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/services'
 import { providers } from 'ethers'
 
 import { handleCli } from './cli/handleCli'

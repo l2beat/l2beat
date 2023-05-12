@@ -1,5 +1,5 @@
-import { getErrorMessage, Logger, RateLimiter, UnixTime } from '@l2beat/common'
-import { HttpClient } from '@l2beat/services'
+import { getErrorMessage, UnixTime } from '@l2beat/common'
+import { HttpClient, Logger, RateLimiter } from '@l2beat/services'
 
 import { stringAsInt } from '../../tools/types'
 import { parseEtherscanResponse } from './parseEtherscanResponse'

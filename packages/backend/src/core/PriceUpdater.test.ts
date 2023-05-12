@@ -1,10 +1,5 @@
-import {
-  AssetId,
-  CoingeckoId,
-  EthereumAddress,
-  Logger,
-  UnixTime,
-} from '@l2beat/common'
+import { AssetId, CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'

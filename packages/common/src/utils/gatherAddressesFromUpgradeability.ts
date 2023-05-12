@@ -1,7 +1,5 @@
-// TODO: Move to shared
-
-import { assertUnreachable } from '../tools'
 import { EthereumAddress, UpgradeabilityParameters } from '../types'
+import { assertUnreachable } from './assert'
 
 export function gatherAddressesFromUpgradeability(
   item: UpgradeabilityParameters,

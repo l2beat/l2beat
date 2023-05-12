@@ -1,5 +1,6 @@
-import { LogLevel, UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/common'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
+import { LogLevel } from '@l2beat/services'
 
 import { CliParameters } from '../cli/getCliParameters'
 import { bridgeToProject, layer2ToProject } from '../model'

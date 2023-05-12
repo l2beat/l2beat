@@ -1,4 +1,5 @@
-import { EthereumAddress, Logger } from '@l2beat/common'
+import { EthereumAddress } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers } from 'ethers'
 
@@ -17,6 +18,7 @@ describe(EthereumClient.name, () => {
           .returnsOnce([]),
       })
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const ethereumClient = new EthereumClient(provider, Logger.SILENT)
 
       const address = EthereumAddress.random()

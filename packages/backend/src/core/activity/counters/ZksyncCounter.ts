@@ -1,6 +1,6 @@
-import { Logger, ProjectId } from '@l2beat/common'
+import { ProjectId } from '@l2beat/common'
 import { ZksyncTransactionApi } from '@l2beat/config'
-import { HttpClient } from '@l2beat/services'
+import { HttpClient, Logger } from '@l2beat/services'
 import { range } from 'lodash'
 
 import { ZksyncTransactionRepository } from '../../../peripherals/database/activity/ZksyncTransactionRepository'

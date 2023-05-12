@@ -1,4 +1,4 @@
-import { assert } from './assert'
+import { assert } from '@l2beat/common'
 
 export type ShouldRetry<T> = (
   job: { task: T; attempts: number },

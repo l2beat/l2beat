@@ -1,4 +1,4 @@
-import { json } from '../types'
+import { json } from '@l2beat/common'
 
 export enum LogLevel {
   NONE = 0,

@@ -3,9 +3,9 @@ import {
   AssetId,
   EthereumAddress,
   Hash256,
-  Logger,
   UnixTime,
 } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { setTimeout } from 'timers/promises'
 
 import {

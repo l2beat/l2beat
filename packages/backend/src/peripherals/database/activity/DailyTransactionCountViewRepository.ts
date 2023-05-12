@@ -1,4 +1,5 @@
-import { Logger, ProjectId, UnixTime } from '@l2beat/common'
+import { ProjectId, UnixTime } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { DailyTransactionCountRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'

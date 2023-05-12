@@ -1,4 +1,5 @@
-import { Logger, UnixTime } from '@l2beat/common'
+import { UnixTime } from '@l2beat/common'
+import { Logger } from '@l2beat/services'
 import { setTimeout } from 'timers/promises'
 
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'

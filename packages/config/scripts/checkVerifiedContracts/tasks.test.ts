@@ -1,5 +1,5 @@
-import { EthereumAddress, Logger } from '@l2beat/common'
-import { EtherscanClient } from '@l2beat/services'
+import { EthereumAddress } from '@l2beat/common'
+import { EtherscanClient, Logger } from '@l2beat/services'
 import { install } from '@sinonjs/fake-timers'
 import { expect } from 'earl'
 

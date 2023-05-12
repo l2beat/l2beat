@@ -1,4 +1,4 @@
-import { Logger, LoggerOptions, LogLevel } from '@l2beat/common'
+import { Logger, LoggerOptions, LogLevel } from '@l2beat/services'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'

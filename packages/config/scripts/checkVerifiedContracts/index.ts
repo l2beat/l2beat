@@ -1,4 +1,5 @@
-import { EthereumAddress, Logger, LogLevel } from '@l2beat/common'
+import { EthereumAddress } from '@l2beat/common'
+import { Logger, LogLevel } from '@l2beat/services'
 import { config as dotenv } from 'dotenv'
 
 import { bridges, layer2s } from '../../src'

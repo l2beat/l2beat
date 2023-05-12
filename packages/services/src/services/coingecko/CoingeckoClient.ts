@@ -1,10 +1,6 @@
-import {
-  CoingeckoId,
-  EthereumAddress,
-  RateLimiter,
-  UnixTime,
-} from '@l2beat/common'
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/common'
 
+import { RateLimiter } from '../../tools'
 import { HttpClient } from '../HttpClient'
 import {
   CoinListEntry,
