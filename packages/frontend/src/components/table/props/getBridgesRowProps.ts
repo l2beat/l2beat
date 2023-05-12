@@ -21,7 +21,7 @@ export function getBridgesRowProps(entry: BridgeTableEntry) {
       entry.type === 'layer2' && 'hidden',
     ),
     'data-layer2': entry.type === 'layer2' ? true : undefined,
-    'data-role': 'row',
+    'data-table-index-rerender': true,
     href,
   }
 }
