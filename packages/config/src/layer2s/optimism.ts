@@ -353,7 +353,7 @@ export const optimism: Layer2 = {
     },
     {
       title: 'How does Optimism really work?',
-      url: 'https://research.paradigm.xyz/optimism',
+      url: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work',
       thumbnail: NUGGETS.THUMBNAILS.PARADIGM_01,
     },
     {
