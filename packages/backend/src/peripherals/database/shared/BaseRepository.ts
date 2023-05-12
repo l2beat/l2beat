@@ -1,5 +1,5 @@
 import { wrapAndMeasure } from '@l2beat/common'
-import { Logger } from '@l2beat/services'
+import { Logger } from '@l2beat/shared'
 import { Knex } from 'knex'
 import { Histogram } from 'prom-client'
 

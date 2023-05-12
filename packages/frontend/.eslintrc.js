@@ -5,7 +5,7 @@ module.exports = {
       files: ['*'],
       excludedFiles: ['**/build/**/*.ts'],
       rules: {
-        'no-restricted-imports': ['error', { paths: ['@l2beat/services'] }],
+        'no-restricted-imports': ['error', { paths: ['@l2beat/shared'] }],
       },
     },
   ],

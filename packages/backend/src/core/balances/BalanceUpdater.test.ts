@@ -7,7 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/common'
 import { TokenInfo } from '@l2beat/config'
-import { Logger } from '@l2beat/services'
+import { Logger } from '@l2beat/shared'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 

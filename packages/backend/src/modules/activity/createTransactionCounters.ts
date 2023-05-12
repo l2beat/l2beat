@@ -1,6 +1,6 @@
 import { assert, ProjectId } from '@l2beat/common'
 import { Layer2TransactionApi } from '@l2beat/config'
-import { HttpClient, Logger } from '@l2beat/services'
+import { HttpClient, Logger } from '@l2beat/shared'
 import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'

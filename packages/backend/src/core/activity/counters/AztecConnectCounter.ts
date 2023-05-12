@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/common'
 import { AztecConnectTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger } from '@l2beat/services'
+import { HttpClient, Logger } from '@l2beat/shared'
 import { range } from 'lodash'
 
 import { AztecConnectClient } from '../../../peripherals/aztec'

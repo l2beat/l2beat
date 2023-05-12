@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/common'
-import { Logger, Retries } from '@l2beat/services'
+import { Logger, Retries } from '@l2beat/shared'
 
 import { TaskQueue } from './TaskQueue'
 

@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/services'
+import { Logger } from '@l2beat/shared'
 
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { Clock } from '../Clock'

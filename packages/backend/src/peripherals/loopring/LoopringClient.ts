@@ -1,5 +1,5 @@
 import { getErrorMessage } from '@l2beat/common'
-import { HttpClient, Logger, RateLimiter } from '@l2beat/services'
+import { HttpClient, Logger, RateLimiter } from '@l2beat/shared'
 
 import { LoopringResponse } from './schemas'
 

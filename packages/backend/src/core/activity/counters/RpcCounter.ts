@@ -1,6 +1,6 @@
 import { assert, ProjectId, UnixTime } from '@l2beat/common'
 import { RpcTransactionApi } from '@l2beat/config'
-import { Logger } from '@l2beat/services'
+import { Logger } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { range } from 'lodash'
 

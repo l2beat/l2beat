@@ -4,7 +4,7 @@ import {
   json,
   wrapAndMeasure,
 } from '@l2beat/common'
-import { EventTracker, Logger, Retries, ShouldRetry } from '@l2beat/services'
+import { EventTracker, Logger, Retries, ShouldRetry } from '@l2beat/shared'
 import assert from 'assert'
 import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'

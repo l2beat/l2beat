@@ -1,5 +1,5 @@
 import { StarkexProduct } from '@l2beat/config'
-import { HttpClient, Logger } from '@l2beat/services'
+import { HttpClient, Logger } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/common'
 import { Layer2TransactionApi } from '@l2beat/config'
-import { LogLevel } from '@l2beat/services'
+import { LogLevel } from '@l2beat/shared'
 import { Knex } from 'knex'
 
 import { Project, Token } from '../model'

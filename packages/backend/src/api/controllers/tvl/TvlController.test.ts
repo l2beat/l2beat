@@ -6,7 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/common'
 import { tokenList } from '@l2beat/config'
-import { Logger } from '@l2beat/services'
+import { Logger } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
 import { ReportProject } from '../../../core/reports/ReportProject'

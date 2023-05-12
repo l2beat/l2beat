@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/common'
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { LogLevel } from '@l2beat/services'
+import { LogLevel } from '@l2beat/shared'
 import { config as dotenv } from 'dotenv'
 
 import { CliParameters } from '../cli/getCliParameters'

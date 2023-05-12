@@ -1,4 +1,4 @@
-import { HttpClient } from '@l2beat/services'
+import { HttpClient } from '@l2beat/shared'
 import crypto from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 

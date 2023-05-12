@@ -1,5 +1,5 @@
 import { Bytes, EthereumAddress, Hash256 } from '@l2beat/common'
-import { EtherscanClient } from '@l2beat/services'
+import { EtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'

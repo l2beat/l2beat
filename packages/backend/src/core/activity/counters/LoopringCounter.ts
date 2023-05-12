@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/common'
 import { LoopringTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger } from '@l2beat/services'
+import { HttpClient, Logger } from '@l2beat/shared'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'

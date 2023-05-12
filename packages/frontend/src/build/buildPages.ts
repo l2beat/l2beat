@@ -5,7 +5,7 @@ import {
   TvlApiResponse,
 } from '@l2beat/common'
 import { bridges, layer2s } from '@l2beat/config'
-import { HttpClient } from '@l2beat/services'
+import { HttpClient } from '@l2beat/shared'
 
 import { renderPages } from '../pages'
 import { JsonHttpClient } from './caching/JsonHttpClient'

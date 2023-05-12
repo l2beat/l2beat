@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/common'
 import { StarkexTransactionApi } from '@l2beat/config'
-import { Logger } from '@l2beat/services'
+import { Logger } from '@l2beat/shared'
 import { range } from 'lodash'
 
 import { StarkexTransactionCountRepository } from '../../../peripherals/database/activity/StarkexCountRepository'

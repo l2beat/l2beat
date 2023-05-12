@@ -1,5 +1,5 @@
 {
-  "name": "@l2beat/services",
+  "name": "@l2beat/shared",
   "version": "0.1.0",
   "private": true,
   "main": "build/index.js",

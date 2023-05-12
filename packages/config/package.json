@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@l2beat/common": "*",
-    "@l2beat/services": "*",
+    "@l2beat/shared": "*",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
     "dotenv": "^16.0.3",

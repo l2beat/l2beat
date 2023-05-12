@@ -1,5 +1,5 @@
 import { Hash256, UnixTime } from '@l2beat/common'
-import { Logger } from '@l2beat/services'
+import { Logger } from '@l2beat/shared'
 
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'

@@ -4,7 +4,7 @@ import {
   getTimestamps,
   UnixTime,
 } from '@l2beat/common'
-import { CoingeckoClient, HttpClient } from '@l2beat/services'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { expect, mockFn, mockObject } from 'earl'
 
 import {

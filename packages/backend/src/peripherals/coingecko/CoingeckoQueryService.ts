@@ -4,7 +4,7 @@ import {
   getTimestamps,
   UnixTime,
 } from '@l2beat/common'
-import { CoingeckoClient } from '@l2beat/services'
+import { CoingeckoClient } from '@l2beat/shared'
 
 type Granularity = 'daily' | 'hourly'
 interface Price {
