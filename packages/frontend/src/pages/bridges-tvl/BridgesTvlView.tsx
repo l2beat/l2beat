@@ -33,7 +33,9 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
             shortName: 'Active',
             content: (
               <TableView
-                items={items.filter((item) => !item.isArchived)}
+                items={items.filter(
+                  (item) => !item.isArchived && !item.isUpcoming,
+                )}
                 columns={getActiveBridgesTvlColumns()}
                 rows={rows}
               />

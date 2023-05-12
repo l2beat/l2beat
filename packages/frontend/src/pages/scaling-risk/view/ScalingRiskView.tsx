@@ -30,7 +30,9 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
             shortName: 'Active',
             content: (
               <TableView
-                items={items.filter((item) => !item.isArchived)}
+                items={items.filter(
+                  (item) => !item.isArchived && !item.isUpcoming,
+                )}
                 columns={columns}
                 rows={rows}
               />
