@@ -1,7 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { getProxyGovernance } from '../discovery/starkware/getProxyGovernance'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import {
   CONTRACTS,
@@ -18,6 +17,10 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('dydx')
+const delaySeconds = discovery.getContractValue<number>(
+  'PriorityExecutor',
+  'getDelay',
+)
 
 export const dydx: Layer2 = {
   type: 'layer2',
@@ -73,8 +76,7 @@ export const dydx: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    // GpsStatementVerifier is instantly upgradable
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL,
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
     destinationToken: RISK_VIEW.CANONICAL_USDC,
@@ -105,13 +107,10 @@ export const dydx: Layer2 = {
         'StarkPerpetual',
         'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
       ),
-      {
-        name: 'GpsStatementVerifier',
-        address: discovery.getContract('CallProxy').address,
-        description:
-          'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
-        upgradeability: discovery.getContract('CallProxy').upgradeability,
-      },
+      discovery.getMainContractDetails(
+        'GpsStatementVerifier',
+        'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
+      ),
       {
         name: 'MemoryPageFactRegistry',
         description:
@@ -129,8 +128,7 @@ export const dydx: Layer2 = {
         address: EthereumAddress('0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830'),
       },
     ],
-    // GpsStatementVerifier is instantly upgradable
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
   },
   permissions: [
     {
@@ -145,15 +143,7 @@ export const dydx: Layer2 = {
       ],
       description:
         'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromSeconds(
-          discovery.getContractValue('PriorityExecutor', 'getDelay'),
-        ),
-    },
-    {
-      name: 'GpsStatementVerifier Governors',
-      accounts: getProxyGovernance(discovery, 'CallProxy'),
-      description:
-        'Can upgrade implementation of Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        delayDescriptionFromSeconds(delaySeconds),
     },
     {
       name: 'Operators',
