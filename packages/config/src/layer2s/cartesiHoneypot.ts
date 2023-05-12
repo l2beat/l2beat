@@ -1,4 +1,3 @@
-//todo: adds notes to Notion
 import { ProjectId } from '@l2beat/shared'
 
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
@@ -15,16 +14,19 @@ export const cartesiHoneypot: Layer2 = {
       'Honeypot is a application specific rollup (roll-app) designed to challenge the security of Cartesi Rollups.\
        Bug hunters are incentivized to hack the application to obtain the funds locked in the rollup contract.\
        Honeypot holds real assets with a dual objective: setting a financial benchmark for secure asset management\
-       and providing a gamified battlefield for the community to help audit and test Cartesi Rollups.\
-       ',
+       and providing a gamified battlefield for the community to help audit and test Cartesi Rollups.',
     purpose: 'Bug bounty',
     links: {
-      websites: ['https://docs.cartesi.io/cartesi-rollups/'], // TODO
-      apps: [], // Ok
-      documentation: ['https://docs.cartesi.io/cartesi-rollups/'], // Ok
-      explorers: [], // Ok
-      repositories: [], // TODO
-      socialMedia: ['https://discord.gg/du7emFSt'], // Ok
+      websites: ['https://cartesi.io/'],
+      apps: [],
+      documentation: ['https://docs.cartesi.io/cartesi-rollups/'],
+      explorers: [],
+      repositories: [],
+      socialMedia: [
+        'https://twitter.com/cartesiproject',
+        'https://medium.com/cartesi',
+        'https://discord.gg/uxYE5YNv3N',
+      ],
     },
   },
   config: {
@@ -39,6 +41,12 @@ export const cartesiHoneypot: Layer2 = {
       link: 'https://medium.com/cartesi/cartesi-ecosystem-update-2023-124b384401cc#:~:text=Honeypot%20DApp%20on%20Mainnet',
       date: '2023-04-11T00:00:00Z',
       description: 'Honeypot DApp first announced to the community.',
+    },
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Application-Specific Rollups',
+      url: 'https://medium.com/cartesi/application-specific-rollups-e12ed5d9de01',
     },
   ],
 }
