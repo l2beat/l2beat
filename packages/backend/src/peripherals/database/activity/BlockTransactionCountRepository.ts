@@ -22,10 +22,16 @@ export class BlockTransactionCountRepository extends BaseRepository {
     records: BlockTransactionCountRecord[],
     trx?: Knex.Transaction,
   ) {
+    for (const record of records) {
+      await this.add(record, trx)
+    }
+    return records.length
+  }
+
+  async add(record: BlockTransactionCountRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
-    const rows = records.map(toRow)
-    await knex('activity.block').insert(rows)
-    return rows.length
+    await knex('activity.block').insert(toRow(record))
+    return `${record.projectId.toString()}-${record.blockNumber})}`
   }
 
   async deleteAll() {
