@@ -146,7 +146,7 @@ function Template() {
 export const Active: Story = {
   render: () => {
     useEffect(() => {
-      click('.TabNavigationTab#active')
+      click('.TabsItem#active')
     }, [])
     return <Template />
   },
@@ -155,7 +155,7 @@ export const Active: Story = {
 export const Archived: Story = {
   render: () => {
     useEffect(() => {
-      click('.TabNavigationTab#archived')
+      click('.TabsItem#archived')
     }, [])
     return <Template />
   },
