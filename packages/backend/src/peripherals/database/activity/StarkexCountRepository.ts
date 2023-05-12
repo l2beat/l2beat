@@ -22,13 +22,19 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     records: StarkexTransactionCountRecord[],
     trx?: Knex.Transaction,
   ) {
+    for (const record of records) {
+      await this.add(record, trx)
+    }
+    return records.length
+  }
+
+  async add(record: StarkexTransactionCountRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
-    const rows = records.map(toRow)
     await knex('activity.starkex')
-      .insert(rows)
+      .insert(toRow(record))
       .onConflict(['project_id', 'unix_timestamp'])
       .merge()
-    return rows.length
+    return `${record.projectId.toString()}-${record.timestamp.toString()})}`
   }
 
   async deleteAll() {
