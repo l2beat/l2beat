@@ -126,6 +126,7 @@ export async function detectStarkWareProxy(
 const coder = new utils.Interface([
   'event Upgraded(address indexed implementation)',
   'event ImplementationUpgraded(address indexed implementation, bytes initializer)',
+  'event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)',
 ])
 
 // if returns false, it means that the proxy is not a StarkWare diamond
@@ -169,14 +170,41 @@ async function getStarkWareDiamond(
     data = abi.decodeFunctionData('upgradeTo', tx.data).data as string
   } catch (e) {
     if (
-      lastUpgrade.topics[0] !== coder.getEventTopic('ImplementationUpgraded')
+      !(e instanceof Error) ||
+      !e.message.includes('data signature does not match function upgradeTo.')
     ) {
       throw e
     }
-    console.log(
-      'Failed to decode upgradeTo data, falling back to decoding logs parameters',
-    )
-    data = `0x${lastUpgrade.data.slice(130)}`
+    console.log('Failed to decode upgradeTo data')
+
+    if (lastUpgrade.topics[0] === coder.getEventTopic('Upgraded')) {
+      // dydx uses the Upgraded event with governance
+      // so we cannot get the info from their tx data
+      // we need to find the ImplementationAdded event that holds the initializer
+      console.log('Trying to find corresponding ImplementationAdded event')
+      const implementationsAdded = await provider.getLogs(
+        address,
+        [coder.getEventTopic('ImplementationAdded')],
+        0,
+        blockNumber,
+      )
+      const correspondingImplementationAdded = implementationsAdded.find(
+        (log) => {
+          return log.topics[1] === lastUpgrade.topics[1]
+        },
+      )
+
+      if (!correspondingImplementationAdded) {
+        throw new Error(
+          'Failed to find corresponding ImplementationAdded event',
+        )
+      }
+
+      data = `0x${correspondingImplementationAdded.data.slice(194)}`
+    } else {
+      console.log('Falling back to decoding logs parameters')
+      data = `0x${lastUpgrade.data.slice(130)}`
+    }
   }
 
   // we subtract 2 for '0x' and 1 for an external initializer contract
@@ -206,6 +234,7 @@ async function getStarkWareDiamond(
     // no facets found, this is not a StarkWare diamond
     // 1 facet is the implementation itself
     // and could mean that it's a callProxy
+    console.log('No facets found')
     return false
   }
 
