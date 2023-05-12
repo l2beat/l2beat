@@ -27,7 +27,7 @@ export const optimism: Layer2 = {
     description:
       'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure. \
     With the Nov 2021 upgrade to "EVM equivalent" OVM 2.0 old fraud proof system has been disabled while the \
-    new fraud-proof system is being built (https://github.com/geohot/cannon).',
+    new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
     purpose: 'Universal',
     links: {
       websites: ['https://optimism.io/'],
