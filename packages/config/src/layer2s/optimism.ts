@@ -128,7 +128,7 @@ export const optimism: Layer2 = {
       references: [
         {
           text: 'Data Availability Batches - Paradigm Research',
-          href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
+          href: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work#data-availability-batches',
         },
       ],
     },
