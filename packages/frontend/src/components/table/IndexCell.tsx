@@ -6,8 +6,8 @@ interface IndexCellProps {
   className?: string
 }
 
-// the number is updated dynamically inside the client-side code
-// see renderNumbers() inside /packages/frontend/src/scripts/configureFilters.ts
+// the number is updated dynamically inside the client-side code on the bridges page
+// see renderNumbers() inside /packages/frontend/src/scripts/configureCanonicalBridgesFilter.ts
 export function IndexCell({ index, className }: IndexCellProps) {
   return (
     <span
@@ -17,7 +17,7 @@ export function IndexCell({ index, className }: IndexCellProps) {
       )}
       data-role="index-cell"
     >
-      {index}
+      {index + 1}
     </span>
   )
 }

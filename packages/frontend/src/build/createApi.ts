@@ -77,21 +77,46 @@ function getActivityChart(
   apiChart: ActivityApiChart,
   ethereumChart: ActivityApiChart,
 ): FrontendActivityChart {
-  const length = Math.min(apiChart.data.length, ethereumChart.data.length)
   return {
     daily: {
       types: ['timestamp', 'transactions', 'ethereumTransactions'],
-      data: new Array(length).fill(0).map((x, i) => {
-        const apiPoint = apiChart.data.at(-length + i)
-        const ethPoint = ethereumChart.data.at(-length + i)
-        return [
-          apiPoint?.[0].toNumber() ?? 0,
-          apiPoint?.[1] ?? 0,
-          ethPoint?.[1] ?? 0,
-        ]
-      }),
+      data: alignActivityData(apiChart.data, ethereumChart.data),
     },
   }
+}
+
+export function alignActivityData(
+  apiChartData: ActivityApiChart['data'],
+  ethereumChartData: ActivityApiChart['data'],
+): FrontendActivityChart['daily']['data'] {
+  const lastProjectTimestamp = apiChartData.at(-1)?.[0]
+  if (!lastProjectTimestamp) {
+    throw new Error('No data in activity chart')
+  }
+  const ethChartTimestampIndex = ethereumChartData.findIndex(
+    (x) => x[0].toNumber() === lastProjectTimestamp.toNumber(),
+  )
+  if (ethChartTimestampIndex === -1) {
+    throw new Error('No matching timestamp in ethereum chart')
+  }
+  const alignedEthChartData = ethereumChartData.slice(
+    0,
+    ethChartTimestampIndex + 1,
+  )
+  const length = Math.min(apiChartData.length, alignedEthChartData.length)
+
+  const data: FrontendActivityChart['daily']['data'] = new Array(length)
+    .fill(0)
+    .map((_, i) => {
+      const apiPoint = apiChartData.at(-length + i)
+      const ethPoint = alignedEthChartData.at(-length + i)
+      return [
+        apiPoint?.[0].toNumber() ?? 0,
+        apiPoint?.[1] ?? 0,
+        ethPoint?.[1] ?? 0,
+      ]
+    })
+  return data
 }
 
 const PLACEHOLDER_API_DATA: TvlApiCharts = {

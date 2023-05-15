@@ -22,8 +22,8 @@ describe('layer2s', () => {
     })
   })
 
-  describe('riskView', () => {
-    describe('every contract has source code references', () => {
+  describe('references', () => {
+    describe('every contract has risk view code references', () => {
       for (const layer2 of layer2s) {
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
@@ -32,7 +32,7 @@ describe('layer2s', () => {
             const risk = riskEntry as ProjectRiskViewEntry
             if (risk.contracts === undefined) continue
 
-            const referencedAddresses = getReferencedAddresses(risk)
+            const referencedAddresses = getReferencedAddresses(risk.references)
 
             it(`${layer2.id.toString()} : ${riskName}`, () => {
               for (const contractIdentifier of risk.contracts ?? []) {
@@ -49,6 +49,28 @@ describe('layer2s', () => {
                   ),
                 ).toEqual(true)
               }
+            })
+          }
+        } catch {
+          continue
+        }
+      }
+    })
+
+    describe('permissions references are valid', () => {
+      for (const layer2 of layer2s) {
+        try {
+          const discovery = new ProjectDiscovery(layer2.id.toString())
+
+          for (const { name, references } of layer2.permissions ?? []) {
+            const referencedAddresses = getReferencedAddresses(references)
+            if (referencedAddresses.length === 0) continue
+
+            it(`${layer2.id.toString()} : ${name}`, () => {
+              const contractAddresses = discovery.getAllContractAddresses()
+              expect(
+                contractAddresses.some((a) => referencedAddresses.includes(a)),
+              ).toEqual(true)
             })
           }
         } catch {
@@ -246,8 +268,8 @@ describe('layer2s', () => {
   })
 })
 
-function getReferencedAddresses(risk: ProjectRiskViewEntry) {
-  return [
-    ...(risk.references ?? []).join(';').matchAll(/0x[a-fA-F0-9]{40}/g),
-  ].map((e) => EthereumAddress(e[0]))
+function getReferencedAddresses(references: string[] = []) {
+  return [...references.join(';').matchAll(/0x[a-fA-F0-9]{40}/g)].map((e) =>
+    EthereumAddress(e[0]),
+  )
 }

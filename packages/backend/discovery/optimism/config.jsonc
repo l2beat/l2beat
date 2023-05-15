@@ -6,8 +6,21 @@
     "0x5E4e65926BA27467555EB562121fac00D24E9dD2",
     "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19"
   ],
+  "names": {
+    "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "LibAddressManager",
+    "0x5E4e65926BA27467555EB562121fac00D24E9dD2": "CanonicalTransactionChain",
+    "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19": "StateCommitmentChain",
+    "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572": "SCCStorageContainerBatches_OLD",
+    "0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039": "CTCStorageContainerQueue",
+    "0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE": "CTCStorageContainerBatches_OLD",
+    "0xD16463EF9b0338CE3D73309028ef1714D220c024": "CTCStorageContainerBatches",
+    "0xb0ddFf09c4019e31960de11bD845E836078E8EbE": "SCCStorageContainerBatches",
+    "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": "CanonicalTransactionChain_OLD",
+    "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": "L1CrossDomainMessengerProxy",
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig"
+  },
   "overrides": {
-    "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
+    "LibAddressManager": {
       "fields": {
         "BondManager": {
           "type": "call",
@@ -106,27 +119,27 @@
         }
       }
     },
-    "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572": {
+    "SCCStorageContainerBatches_OLD": {
       "ignoreMethods": ["get"]
     },
-    "0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039": {
+    "CTCStorageContainerQueue": {
       "ignoreMethods": ["get"]
     },
-    "0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE": {
+    "CTCStorageContainerBatches_OLD": {
       "ignoreMethods": ["get"]
     },
-    "0xD16463EF9b0338CE3D73309028ef1714D220c024": {
+    "CTCStorageContainerBatches": {
       "ignoreMethods": ["get"],
       "ignoreInWatchMode": ["getGlobalMetadata", "length"]
     },
-    "0xb0ddFf09c4019e31960de11bD845E836078E8EbE": {
+    "SCCStorageContainerBatches": {
       "ignoreMethods": ["get"],
       "ignoreInWatchMode": ["getGlobalMetadata", "length"]
     },
-    "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": {
+    "CanonicalTransactionChain_OLD": {
       "ignoreMethods": ["getQueueElement"]
     },
-    "0x5E4e65926BA27467555EB562121fac00D24E9dD2": {
+    "CanonicalTransactionChain": {
       "ignoreMethods": ["getQueueElement"],
       "ignoreInWatchMode": [
         "getLastBlockNumber",
@@ -138,17 +151,17 @@
         "getTotalElements"
       ]
     },
-    "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": {
+    "L1CrossDomainMessengerProxy": {
       "ignoreMethods": ["xDomainMessageSender"]
     },
-    "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19": {
+    "StateCommitmentChain": {
       "ignoreInWatchMode": [
         "getLastSequencerTimestamp",
         "getTotalBatches",
         "getTotalElements"
       ]
     },
-    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": {
+    "OptimismMultisig": {
       "ignoreInWatchMode": ["nonce"]
     }
   }
