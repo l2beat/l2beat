@@ -3,7 +3,7 @@ import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
 
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
-import { BridgesTvlViewEntry } from '../BridgesTvlView'
+import { BridgesTvlViewEntry } from '../types'
 
 export function getBridgesTvlView(
   projects: (Bridge | Layer2)[],
