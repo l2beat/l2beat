@@ -188,8 +188,8 @@ export const zksynclite: Layer2 = {
         'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
       ),
       discovery.getMainContractDetails(
-      'NftFactory',
-        'Allows for withdrawing NFTs minted on L2 to L1',
+        'NftFactory',
+        'Allows for withdrawing NFTs minted on L2 to L1.',
       ),
     ],
     risks: [
@@ -210,6 +210,9 @@ export const zksynclite: Layer2 = {
         'securityCouncilMembers',
       ),
       description: `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
+      references: [
+        'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
+      ],
     },
     {
       name: 'Active validators',
