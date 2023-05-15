@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { OutLink } from '../OutLink'
+import { Link } from '../Link'
 
 export interface ReferenceListProps {
   references: TechnologyReference[]
@@ -19,9 +19,7 @@ export function ReferenceList({ references }: ReferenceListProps) {
     <ol className="mt-4 text-xs md:mt-6">
       {references.map((reference, i) => (
         <li key={i}>
-          <OutLink className="text-link underline" href={reference.href}>
-            {reference.text}
-          </OutLink>
+          <Link href={reference.href}>{reference.text}</Link>
         </li>
       ))}
     </ol>

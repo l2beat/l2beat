@@ -18,7 +18,6 @@ module.exports = {
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
-      link: 'rgb(var(--link-rgb) / <alpha-value>)',
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
@@ -92,6 +91,7 @@ module.exports = {
         400: '#BADAFF',
         450: '#96C0F7',
         500: '#53A2FF',
+        550: '#1F87FF',
         600: '#2B5CD9',
         700: '#005DD7',
         800: '#083575',

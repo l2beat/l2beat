@@ -94,9 +94,7 @@ export function renderHover(
         rows.push(renderDescriptionRow(point.milestone.description))
       }
       if (window.innerWidth < 750) {
-        rows.push(
-          `<div class="text-link"><a href="${point.milestone.link}" target="blank">Learn more</a></div>`,
-        )
+        rows.push(renderLearnMoreLink('Learn more', point.milestone.link))
       }
     } else {
       rows.push(renderDateRow(point.date))
@@ -178,4 +176,9 @@ function renderNameRow(name: string) {
 
 function renderDescriptionRow(description: string) {
   return `<div class="max-w-[216px] mb-1 text-left">${description}</div>`
+}
+
+//TODO: Check if there is a better way to do this
+function renderLearnMoreLink(text: string, link: string) {
+  return `<a href="${link}" class="group text-xs" target="_blank" rel="noreferrer noopener"><span class="inline-flex items-center font-semibold transition-colors text-blue-700 group-hover:text-blue-550 dark:text-blue-500"><span class="flex items-center gap-1 underline transition-transform group-hover:-translate-x-px">${text}</span><svg width="15" height="14" viewBox="0 0 15 14" fill="var(--text)" role="img" aria-label="Arrow pointing to the right icon" class="ml-1 inline-block fill-current transition-transform group-hover:translate-x-px group-hover:fill-blue-550 dark:fill-blue-500"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.10329 6.29419C1.73956 6.29419 1.4447 6.60754 1.4447 6.99408C1.4447 7.38062 1.73956 7.69397 2.10329 7.69397L11.6993 7.69397L8.27358 11.3345C8.01639 11.6079 8.01639 12.051 8.27358 12.3243C8.53078 12.5977 8.94777 12.5977 9.20496 12.3243L13.7549 7.489C14.0121 7.21568 14.0121 6.77253 13.7549 6.49921L9.20496 1.66387C8.94777 1.39055 8.53078 1.39055 8.27358 1.66387C8.01639 1.9372 8.01639 2.38035 8.27358 2.65367L11.6992 6.29419L2.10329 6.29419Z"></path></svg></span></a>`
 }
