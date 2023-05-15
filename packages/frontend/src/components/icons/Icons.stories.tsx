@@ -18,6 +18,7 @@ import { YouTubeIcon } from './products/YouTubeIcon'
 import { OptimismIcon } from './providers/OptimismIcon'
 import { StarkWareIcon } from './providers/StarkWareIcon'
 import { ZkSyncIcon } from './providers/ZkSyncIcon'
+import { ActiveIcon } from './symbols/ActiveIcon'
 import { AppsIcon } from './symbols/AppsIcon'
 import { ArchivedIcon } from './symbols/ArchivedIcon'
 import { BulletIcon } from './symbols/BulletIcon'
@@ -99,6 +100,7 @@ export function ProviderIcons() {
 export function SymbolIcons() {
   return (
     <Template>
+      <ActiveIcon />
       <AppsIcon />
       <ArchivedIcon />
       <BulletIcon />
