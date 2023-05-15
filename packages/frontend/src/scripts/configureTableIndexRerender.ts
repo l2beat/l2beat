@@ -2,7 +2,7 @@
   If you want to rerender indexes of a table (e.g. when you filter rows and want to re-render indexes),
   you need to add the following attributes to the table element:
   - data-role="table"
-  - data-table-index-rerender="true"
+  - data-table-indexes-renderer-on="true"
 
   You also need to add the following attributes to the index cell:
   - data-role="index-cell"
