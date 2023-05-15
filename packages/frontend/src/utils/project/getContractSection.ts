@@ -188,6 +188,27 @@ function makeTechnologyContract(
           })
           break
 
+        case 'zkSync Lite proxy':
+          links.push({
+            name: 'Implementation (Upgradable)',
+            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            address: item.upgradeability.implementation.toString(),
+            isAdmin: false,
+          })
+          links.push({
+            name: 'Additional implementation (Upgradable)',
+            href: `https://etherscan.io/address/${item.upgradeability.additional.toString()}#code`,
+            address: item.upgradeability.additional.toString(),
+            isAdmin: false,
+          })
+          links.push({
+            name: 'Admin',
+            href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
+            address: item.upgradeability.admin.toString(),
+            isAdmin: true,
+          })
+          break
+
         // Ignore types
         case 'immutable':
         case 'gnosis safe':
