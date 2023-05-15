@@ -105,20 +105,51 @@ export const dydx: Layer2 = {
   technology: {
     provider: 'StarkEx',
     category: 'ZK Rollup',
-    stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
+    stateCorrectness: {
+      ...STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
+      references: [
+        ...STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS.references,
+        {
+          text: 'UpdatePerpetualState.sol#L125 - Etherscan source code, verifyFact function call',
+          href: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
+        },
+      ],
+    },
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: {
       ...DATA_AVAILABILITY.STARKEX_ON_CHAIN,
       references: [
         ...DATA_AVAILABILITY.STARKEX_ON_CHAIN.references,
         {
-          text: 'UpdatePerpetualState.sol#L82 - Etherscan source code',
+          text: 'UpdatePerpetualState.sol#L82 - Etherscan source code, updateState function',
           href: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',
         },
       ],
     },
-    operator: OPERATOR.STARKEX_OPERATOR,
-    forceTransactions: FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
+    operator: {
+      ...OPERATOR.STARKEX_OPERATOR,
+      references: [
+        ...OPERATOR.STARKEX_OPERATOR.references,
+        {
+          text: 'Operator.sol#L42 - Etherscan source code, onlyOperator modifier',
+          href: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F26#L42',
+        },
+      ],
+    },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
+      references: [
+        ...FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW.references,
+        {
+          text: 'ForcedTrades.sol#L46 - Etherscan source code, forcedTradeRequest function',
+          href: 'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',
+        },
+        {
+          text: 'ForcedWithdrawals.sol#L32 - Etherscan source code, forcedWithdrawalRequest function',
+          href: 'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F6#L32',
+        },
+      ],
+    },
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {
