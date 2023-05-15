@@ -1,4 +1,4 @@
-import { bridges, layer2s } from '@l2beat/config'
+import { bridges as allBridges, layer2s as allLayer2s } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiResponse,
@@ -7,6 +7,13 @@ import {
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared'
+
+const bridges = allBridges
+  .filter((x) => !x.isUpcoming)
+  .filter((x) => !x.isArchived)
+const layer2s = allLayer2s
+  .filter((x) => !x.isUpcoming)
+  .filter((x) => !x.isArchived)
 
 export type TvlProjectData = [string, TvlApiCharts]
 
@@ -93,8 +100,11 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
   const layer2sInApiActivity = layer2s.filter((x) =>
     projectsInApiActivity.includes(x.id),
   )
+  const layer2sWithActivityConfig = layer2s.filter(
+    (x) => x.config.transactionApi,
+  )
 
-  if (layer2sInApiActivity.length / layer2s.length < 0.4) {
+  if (layer2sInApiActivity.length / layer2sWithActivityConfig.length < 0.8) {
     throw new Error(
       'The API has returned an insufficient number of layer2s activity',
     )
