@@ -79,15 +79,15 @@ describe(tvlSanityCheck.name, () => {
           'projectA',
           {
             hourly: {
-              data: [[today.add(-3, 'days'), 1, 3]],
+              data: [[today.add(-5, 'hours'), 1, 3]],
               types: ['timestamp', 'string', 'string'],
             },
             daily: {
-              data: [[today.add(-3, 'days'), 1, 3]],
+              data: [],
               types: ['timestamp', 'string', 'string'],
             },
             sixHourly: {
-              data: [[today.add(-3, 'days'), 1, 3]],
+              data: [],
               types: ['timestamp', 'string', 'string'],
             },
           },
@@ -199,21 +199,13 @@ describe(activitySanityCheck.name, () => {
     })
 
     it('throws if delayed activity', () => {
+      const now = today.add(3, 'hours')
       const allProjects: ActivityProjectData[] = [
-        [
-          'projectA',
-          [
-            [today.add(-3, 'days'), 1],
-            [today.add(-2, 'days'), 2],
-            [today.add(-1, 'days'), 3],
-            [today, 4],
-          ],
-        ],
-        ['projectB', [[today.add(-3, 'days'), 5]]],
+        ['projectA', [[today.add(-2, 'days'), 1]]],
       ]
 
-      expect(() => checkIfDelayedActivity(allProjects, today)).toThrow(
-        /Some projects activity data is delayed! projectB/,
+      expect(() => checkIfDelayedActivity(allProjects, now)).toThrow(
+        /Some projects activity data is delayed! projectA/,
       )
     })
   })

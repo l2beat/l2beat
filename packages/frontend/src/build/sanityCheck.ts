@@ -176,7 +176,12 @@ export function checkIfZeroTpsProjects(
   }
 }
 
-const ACTIVITY_ACCEPTABLE_DELAY = UnixTime.DAY * 2 + UnixTime.HOUR
+// the activity data is delayed by max 2 days
+// we cannot summarize the day until the day finishes
+// so we're left with yesterday until after midnight
+// when we have 1 hour of clock delay window
+// we add 1 hour more to be safe
+const ACTIVITY_ACCEPTABLE_DELAY = UnixTime.DAY * 2 + 2 * UnixTime.HOUR
 
 export function checkIfDelayedActivity(
   allProjects: ActivityProjectData[],
