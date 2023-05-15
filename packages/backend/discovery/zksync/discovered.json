@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "blockNumber": 17222077,
-  "configHash": "0x63f299a538cb7db07c1fb4ae4e0850d35690416c0b9ca6b6c20de1cf8097d7ef",
+  "configHash": "0xa36f2c3e87dc1700f62b972b54d369dcb47f584108e872db3a2a030ece26115b",
   "contracts": [
     {
       "name": "ZkSync",
@@ -78,7 +78,7 @@
       "derivedName": "ZkSyncNFTFactory"
     },
     {
-      "name": "ZkSyncMultisig",
+      "name": "ZkSync Multisig",
       "address": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
       "code": "https://etherscan.deth.net/address/0xE24f4870Ab85DE8E356C5fC56138587206c70d99,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {

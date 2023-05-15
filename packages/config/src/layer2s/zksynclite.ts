@@ -169,19 +169,27 @@ export const zksynclite: Layer2 = {
     addresses: [
       discovery.getMainContractDetails(
         'ZkSync',
-        `The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant is currently set to ${upgradeDelay}. ${securityCouncil} Security Council MSig can override the delay period and execute an emergency immediate upgrade.`,
+        `The main Rollup contract. Allows the operator to commit blocks, provide zkProofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.`,
       ),
       discovery.getMainContractDetails(
         'Verifier',
         'Implements zkProof verification logic.',
       ),
       discovery.getMainContractDetails(
-        'UpgradeGatekeeper',
-        'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
-      ),
-      discovery.getMainContractDetails(
         'Governance',
         'Keeps a list of block producers, NFT factories and whitelisted tokens.',
+      ),
+      discovery.getMainContractDetails(
+        'UpgradeGatekeeper',
+        'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
+      ),
+      discovery.getMainContractDetails(
+        'TokenGovernance',
+        'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
+      ),
+      discovery.getMainContractDetails(
+      'NftFactory',
+        'Allows for withdrawing NFTs minted on L2 to L1',
       ),
     ],
     risks: [
@@ -192,8 +200,8 @@ export const zksynclite: Layer2 = {
   },
   permissions: [
     ...discovery.getGnosisSafeDetails(
-      'ZkSyncMultisig',
-      'This MultiSig is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can change the list of active validators.',
+      'ZkSync Multisig',
+      'This Multisig is the owner of Upgrade Gatekeeper contract and therefore is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can also change the list of active validators and appoint the security council (by upgrading the ZkSync contract).',
     ),
     {
       name: 'Security Council',
@@ -201,17 +209,16 @@ export const zksynclite: Layer2 = {
         'ZkSync',
         'securityCouncilMembers',
       ),
-      description:
-        'By default upgradeable contracts can be upgraded only after 3 weeks period. Security council can vote to cut this period to 0 days making the upgrade possible immediately if at least 9 out of 15 counselors agree on this.',
+      description: `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
     },
     {
-      name: 'Active validator',
+      name: 'Active validators',
       accounts: discovery.getPermissionedAccountsList(
         'Governance',
         'validators',
       ),
       description:
-        'This actor is allowed to propose, revert and execute L2 blocks on L1.',
+        'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
     },
     {
       name: 'Token listing beneficiary',
@@ -221,7 +228,7 @@ export const zksynclite: Layer2 = {
         ),
       ],
       description:
-        'Account receiving fees for listing tokens. Can be updated by zkSync Lite MultiSig.',
+        'Account receiving fees for listing tokens. Can be updated by ZkSync Multisig.',
     },
   ],
   milestones: [
