@@ -34,6 +34,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
                 items={items.filter((item) => !item.isArchived)}
                 columns={columns}
                 rows={rows}
+                rerenderIndexes
               />
             ),
             icon: <ActiveIcon />,
@@ -47,6 +48,7 @@ export function BridgesRiskView({ items }: BridgesRiskViewProps) {
                 items={items.filter((item) => item.isArchived)}
                 columns={columns}
                 rows={rows}
+                rerenderIndexes
               />
             ),
             icon: <ArchivedIcon />,

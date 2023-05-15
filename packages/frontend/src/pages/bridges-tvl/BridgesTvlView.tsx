@@ -38,6 +38,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 )}
                 columns={getActiveBridgesTvlColumns()}
                 rows={rows}
+                rerenderIndexes
               />
             ),
             icon: <ActiveIcon />,
@@ -51,6 +52,7 @@ export function BridgesTvlView({ items }: BridgesTvlViewProps) {
                 items={items.filter((item) => item.isArchived)}
                 columns={getArchivedBridgesTvlColumns()}
                 rows={rows}
+                rerenderIndexes
               />
             ),
             icon: <ArchivedIcon />,

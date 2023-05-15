@@ -1,3 +1,28 @@
+/* 
+  If you want to rerender indexes of a table (e.g. when you filter rows and want to re-render indexes),
+  you need to add the following attributes to the table element:
+  - data-role="table"
+  - data-table-index-rerender="true"
+
+  You also need to add the following attributes to the index cell:
+  - data-role="index-cell"
+
+  Example:
+  <table data-role="table" data-table-index-rerender="true">
+    <thead>
+      ...
+    </thead>
+    <tbody>
+      <tr>
+        <td data-role="index-cell">1</td>
+        <td>...</td>
+      </tr>
+      <tr>
+        <td data-role="index-cell">2</td>
+        <td>...</td>
+      </tr>
+    </tbody>
+*/
 export function configureTableIndexRerender() {
   // In the future, as we introduce more elements that require re-rendering of indexes,
   // we will need to include them in this file as well.
@@ -12,12 +37,14 @@ export function configureTableIndexRerender() {
 }
 
 function rerenderNumbers() {
-  const tables = document.querySelectorAll('[data-role="table"]')
+  const tablesToRerenderIndexes = document.querySelectorAll(
+    '[data-role="table"][data-table-index-rerender=true]',
+  )
 
-  tables.forEach((table) => {
-    const visibleRows = Array.from(
-      table.querySelectorAll('[data-table-index-rerender]'),
-    ).filter((r) => !r.classList.contains('hidden'))
+  tablesToRerenderIndexes.forEach((table) => {
+    const visibleRows = Array.from(table.querySelectorAll('tbody tr')).filter(
+      (r) => !r.classList.contains('hidden'),
+    )
 
     visibleRows.forEach((r, index) => {
       const indexCell = r.querySelector('[data-role="index-cell"]')
