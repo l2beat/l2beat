@@ -7,7 +7,7 @@ interface Props<T> {
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
-  rerenderIndexes?: boolean
+  rerenderIndexesOn?: string
 }
 
 export interface ColumnConfig<T> {
@@ -34,7 +34,7 @@ export function TableView<T>({
   items,
   columns,
   rows,
-  rerenderIndexes = false,
+  rerenderIndexesOn,
 }: Props<T>) {
   return (
     <div
@@ -43,7 +43,9 @@ export function TableView<T>({
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
-      data-table-index-rerender={rerenderIndexes}
+      {...(rerenderIndexesOn
+        ? { 'data-table-rerender-indexes-on': rerenderIndexesOn }
+        : {})}
     >
       <table className="w-full border-collapse text-left">
         <thead>

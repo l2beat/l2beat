@@ -696,7 +696,7 @@ export const ActiveWithCanonicalBridges: Story = {
         configureCanonicalBridgesFilter()
         configureTableIndexRerender()
         click('.TabsItem#active')
-        click('#combined-bridges')
+        click('#combined-bridges-checkbox')
       }, [])
       return <Story />
     },
@@ -727,7 +727,7 @@ export const ArchivedWithCanonicalBridges: Story = {
         configureCanonicalBridgesFilter()
         configureTableIndexRerender()
         click('.TabsItem#archived')
-        click('#combined-bridges')
+        click('#combined-bridges-checkbox')
       }, [])
       return <Story />
     },

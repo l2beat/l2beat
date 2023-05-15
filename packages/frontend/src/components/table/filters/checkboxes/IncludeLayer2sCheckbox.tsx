@@ -13,7 +13,7 @@ export function IncludeLayer2sCheckbox({
     <Checkbox
       className={className}
       role="chart-combined"
-      id="combined-bridges"
+      id="combined-bridges-checkbox"
       label="Include canonical bridges to Layer2s"
     />
   )

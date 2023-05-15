@@ -26,19 +26,23 @@
 export function configureTableIndexRerender() {
   // In the future, as we introduce more elements that require re-rendering of indexes,
   // we will need to include them in this file as well.
-  const combinedCheckbox =
-    document.querySelector<HTMLInputElement>('#combined-bridges')
+  const combinedCheckbox = document.querySelector<HTMLInputElement>(
+    '#combined-bridges-checkbox',
+  )
+  console.log(combinedCheckbox)
 
   rerenderNumbers()
 
   combinedCheckbox?.addEventListener('change', () => {
-    rerenderNumbers()
+    rerenderNumbers('combined-bridges-checkbox')
   })
 }
 
-function rerenderNumbers() {
+function rerenderNumbers(rerenderOn?: string) {
   const tablesToRerenderIndexes = document.querySelectorAll(
-    '[data-role="table"][data-table-index-rerender=true]',
+    `[data-role="table"][data-table-rerender-indexes-on${
+      rerenderOn ? `="${rerenderOn}"` : ''
+    }]`,
   )
 
   tablesToRerenderIndexes.forEach((table) => {

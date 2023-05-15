@@ -9,8 +9,9 @@ export function configureCanonicalBridgesFilter() {
     document.querySelectorAll<HTMLElement>('[data-combined-only-cell]'),
   )
 
-  const combinedCheckbox =
-    document.querySelector<HTMLInputElement>('#combined-bridges')
+  const combinedCheckbox = document.querySelector<HTMLInputElement>(
+    '#combined-bridges-checkbox',
+  )
 
   combinedCheckbox?.addEventListener('change', () => {
     bridgesOnlyCells.forEach((x) =>
