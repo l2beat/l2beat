@@ -145,7 +145,7 @@ export const optimism: Layer2 = {
       ...FORCE_TRANSACTIONS.NO_MECHANISM,
       references: [
         {
-          text: ' Chain Contracts - Optimism documentation',
+          text: 'Chain Contracts - Optimism documentation',
           href: 'https://community.optimism.io/docs/protocol/protocol-2.0.html#chain-contracts',
         },
       ],
