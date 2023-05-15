@@ -186,6 +186,13 @@ export const SEQUENCER_NO_MECHANISM: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export const SEQUENCER_QUEUE: ProjectRiskViewEntry = {
+  value: 'Enqueue transactions',
+  description:
+    "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
+  sentiment: 'warning',
+}
+
 // Operator is down
 
 export const VALIDATOR_ESCAPE_MP: ProjectRiskViewEntry = {
@@ -322,6 +329,7 @@ export const RISK_VIEW = {
   SEQUENCER_PROPOSE_BLOCKS,
   SEQUENCER_PROPOSE_BLOCKS_ZKP,
   SEQUENCER_NO_MECHANISM,
+  SEQUENCER_QUEUE,
   VALIDATOR_ESCAPE_MP,
   VALIDATOR_ESCAPE_ZKP,
   VALIDATOR_ESCAPE_STARKEX_PERPETUAL,

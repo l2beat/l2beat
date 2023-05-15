@@ -4,6 +4,7 @@ import {
   ContractValue,
   DiscoveryOutput,
   EthereumAddress,
+  gatherAddressesFromUpgradeability,
   UnixTime,
 } from '@l2beat/shared'
 import { utils } from 'ethers'
@@ -297,6 +298,13 @@ export class ProjectDiscovery {
     )
 
     return result
+  }
+
+  getAllContractAddresses(): EthereumAddress[] {
+    return this.discovery.contracts.flatMap((contract) => [
+      contract.address,
+      ...gatherAddressesFromUpgradeability(contract.upgradeability),
+    ])
   }
 
   private getContractByAddress(address: string): ContractParameters {
