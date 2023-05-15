@@ -21,6 +21,10 @@ const delaySeconds = discovery.getContractValue<number>(
   'PriorityExecutor',
   'getDelay',
 )
+const freezeGracePeriod = discovery.getContractValue<number>(
+  'StarkPerpetual',
+  'FREEZE_GRACE_PERIOD',
+)
 
 export const dydx: Layer2 = {
   type: 'layer2',
@@ -88,7 +92,7 @@ export const dydx: Layer2 = {
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL,
+      ...RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL(freezeGracePeriod),
       references: [
         'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',
       ],
@@ -137,9 +141,10 @@ export const dydx: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
+      ...FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW(freezeGracePeriod),
       references: [
-        ...FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW.references,
+        ...FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW(freezeGracePeriod)
+          .references,
         {
           text: 'ForcedTrades.sol#L46 - Etherscan source code, forcedTradeRequest function',
           href: 'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',

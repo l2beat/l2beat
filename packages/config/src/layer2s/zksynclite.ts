@@ -107,7 +107,7 @@ export const zksynclite: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
+      ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
       references: [
         {
           text: 'Priority queue - zkSync FAQ',
