@@ -29,7 +29,7 @@ const STARKEX_VALIDITY_PROOFS: ProjectTechnologyChoice = {
   references: [
     {
       text: 'Enforcing Consistency on the On-Chain State - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/off-chain-state#enforcing-consistency-on-the-on-chain-state',
+      href: 'https://docs.starkware.co/starkex/spot/shared/README-off-chain-state.html#enforcing_consistency_in_the_on_chain_state_spot',
     },
   ],
 }

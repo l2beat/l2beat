@@ -39,11 +39,11 @@ const STARKEX_PERPETUAL_WITHDRAW: ProjectTechnologyChoice = {
   references: [
     {
       text: 'Censorship Prevention - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/architecture/overview#8-censorship-prevention',
+      href: 'https://docs.starkware.co/starkex/architecture/overview-architecture.html#8_censorship_prevention',
     },
     {
       text: 'Forced Trade - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/forced-operations/perpetual-trading-forced-withdrawal-and-forced-trade#forced-trade',
+      href: 'https://docs.starkware.co/starkex/perpetual/forced-actions-escape-hatch-perpetual.html#forcedtrade',
     },
   ],
   risks: [

@@ -39,7 +39,7 @@ export const dydx: Layer2 = {
         'https://dydx.l2beat.com',
       ],
       documentation: [
-        'https://docs.starkware.co/starkex-docs-v2/',
+        'https://docs.starkware.co/starkex/',
         'https://docs.dydx.exchange/',
       ],
       explorers: ['https://dydx.l2beat.com'],
