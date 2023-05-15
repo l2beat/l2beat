@@ -234,7 +234,6 @@ async function getStarkWareDiamond(
     // no facets found, this is not a StarkWare diamond
     // 1 facet is the implementation itself
     // and could mean that it's a callProxy
-    console.log('No facets found')
     return false
   }
 
