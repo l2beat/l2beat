@@ -142,7 +142,16 @@
       ],
       "ignoreInWatchMode": ["totalSupply"]
     },
-    "ZkSyncMultisig": {
+    "ZkSync Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Multisig 1": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Multisig 2": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Multisig 3": {
       "ignoreInWatchMode": ["nonce"]
     },
     "Dai": {

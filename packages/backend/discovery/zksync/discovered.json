@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "blockNumber": 17222077,
-  "configHash": "0xa36f2c3e87dc1700f62b972b54d369dcb47f584108e872db3a2a030ece26115b",
+  "configHash": "0x28d37afdeb41b5efb02241f972f2294d2df8a653ada71eef754decb8884ba514",
   "contracts": [
     {
       "name": "ZkSync",
