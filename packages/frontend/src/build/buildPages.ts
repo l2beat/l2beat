@@ -1,8 +1,5 @@
 import { bridges, layer2s } from '@l2beat/config'
-import {
-  ActivityApiResponse,
-  TvlApiResponse,
-} from '@l2beat/shared'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
 
 import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
@@ -109,5 +106,3 @@ function printActivityInfo(activityApiResponse: ActivityApiResponse) {
     )
   }
 }
-
-
