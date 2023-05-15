@@ -8,7 +8,7 @@
   - data-role="index-cell"
 
   Example:
-  <table data-role="table" data-table-index-rerender="true">
+  <table data-role="table" data-table-indexes-renderer-on="combined-bridges-checkbox">
     <thead>
       ...
     </thead>
