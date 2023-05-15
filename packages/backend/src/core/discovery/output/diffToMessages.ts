@@ -73,11 +73,11 @@ export function fieldDiffToMessage(diff: FieldDiff): string {
   if (diff.key !== undefined) {
     message += `${diff.key}\n`
   }
-  if (diff.before) {
-    message += `- ${diff.before}\n`
+  if (diff.before || 'before' in diff) {
+    message += `- ${diff.before ?? 'undefined'}\n`
   }
-  if (diff.after) {
-    message += `+ ${diff.after}\n`
+  if (diff.after || 'after' in diff) {
+    message += `+ ${diff.after ?? 'undefined'}\n`
   }
 
   message += '\n'
