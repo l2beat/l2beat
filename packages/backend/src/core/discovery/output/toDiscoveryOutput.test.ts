@@ -228,5 +228,19 @@ describe(processAnalysis.name, () => {
     ])
 
     expect(JSON.stringify(result1)).not.toEqual(JSON.stringify(result2))
-  })
+  }),
+    it('undefined keys in upgradeability are skipped', () => {
+      const resultUndefined = processAnalysis([
+        {
+          ...CONTRACT_A,
+          upgradeability: {
+            type: 'immutable',
+            key: undefined,
+          } as UpgradeabilityParameters,
+        },
+      ])
+      const result = processAnalysis([CONTRACT_A])
+
+      expect(resultUndefined).toEqual(result)
+    })
 })
