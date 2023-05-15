@@ -37,7 +37,7 @@ describe(tvlSanityCheck.name, () => {
   ]
 
   describe(checkIfEmptyTvlCharts.name, () => {
-    it('happy path', () => {
+    it('data fully synced', () => {
       expect(() => checkIfEmptyTvlCharts(allProjects)).not.toThrow()
     })
 
@@ -69,7 +69,7 @@ describe(tvlSanityCheck.name, () => {
   })
 
   describe(checkIfDelayedTvl.name, () => {
-    it('happy path', () => {
+    it('data fully synced', () => {
       expect(() => checkIfDelayedTvl(allProjects, today)).not.toThrow()
     })
 
@@ -120,7 +120,7 @@ describe(activitySanityCheck.name, () => {
   ]
 
   describe(checkIfEmptyActivityCharts.name, () => {
-    it('happy path', () => {
+    it('data fully synced', () => {
       expect(() => checkIfEmptyActivityCharts(allProjects)).not.toThrow()
     })
 
@@ -145,7 +145,7 @@ describe(activitySanityCheck.name, () => {
   describe(checkIfZeroTpsProjects.name, () => {
     const importantProjects = ['projectA', 'projectB']
 
-    it('happy path', () => {
+    it('data fully synced', () => {
       expect(() =>
         checkIfZeroTpsProjects(allProjects, importantProjects),
       ).not.toThrow()
@@ -194,7 +194,7 @@ describe(activitySanityCheck.name, () => {
   })
 
   describe(checkIfDelayedActivity.name, () => {
-    it('happy path', () => {
+    it('data fully synced', () => {
       expect(() => checkIfDelayedActivity(allProjects, today)).not.toThrow()
     })
 
