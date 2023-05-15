@@ -1,80 +1,10 @@
 {
   "name": "optimism",
-  "blockNumber": 16793879,
-  "configHash": "0x4cba6b451a6d213a4fb620897524ddf92c685207c974a50d69a602dafd4dcbb4",
+  "blockNumber": 17244151,
+  "configHash": "0x3b7b9edd0c92050983f086815da9441e1639a055f582345cb156d6931794bc53",
   "contracts": [
     {
-      "name": "CanonicalTransactionChain",
-      "address": "0x5E4e65926BA27467555EB562121fac00D24E9dD2",
-      "code": "https://etherscan.deth.net/address/0x5E4e65926BA27467555EB562121fac00D24E9dD2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
-        "enqueueGasCost": 60000,
-        "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 16793826,
-        "getLastTimestamp": 1678404147,
-        "getNextQueueIndex": 313686,
-        "getNumPendingQueueElements": 12,
-        "getQueueLength": 313698,
-        "getTotalBatches": 604684,
-        "getTotalElements": 79653997,
-        "l2GasDiscountDivisor": 32,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "MAX_ROLLUP_TX_SIZE": 50000,
-        "maxTransactionGasLimit": 15000000,
-        "MIN_ROLLUP_TX_GAS": 100000
-      }
-    },
-    {
-      "name": "ChainStorageContainer",
-      "address": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
-      "code": "https://etherscan.deth.net/address/0xD16463EF9b0338CE3D73309028ef1714D220c024",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getGlobalMetadata": "0x0000000000000000010040e200640a6a33000004c9560004bf6c6d",
-        "length": 604684,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "CanonicalTransactionChain"
-      }
-    },
-    {
-      "name": "StateCommitmentChain",
-      "address": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
-      "code": "https://etherscan.deth.net/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
-        "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1678403891,
-        "getTotalBatches": 85067,
-        "getTotalElements": 79653446,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "SEQUENCER_PUBLISH_WINDOW": 12592000
-      }
-    },
-    {
-      "name": "ChainStorageContainer",
-      "address": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
-      "code": "https://etherscan.deth.net/address/0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000640a69330004bf6a46",
-        "length": 85067,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "StateCommitmentChain"
-      }
-    },
-    {
-      "name": "Lib_AddressManager",
+      "name": "LibAddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "code": "https://etherscan.deth.net/address/0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "upgradeability": {
@@ -101,130 +31,103 @@
         "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "Proxy__OVM_L1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "Proxy__OVM_L1StandardBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      },
+      "derivedName": "Lib_AddressManager"
+    },
+    {
+      "name": "BondManager",
+      "address": "0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1",
+      "code": "https://etherscan.deth.net/address/0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
       }
     },
     {
-      "name": "L1StandardBridge",
-      "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-      "code": "https://etherscan.deth.net/address/0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1,0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB",
+      "name": "mockOVM_BondManager",
+      "address": "0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057",
+      "code": "https://etherscan.deth.net/address/0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057",
       "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB",
-        "admin": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+        "type": "immutable"
       },
       "values": {
-        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
       }
     },
     {
-      "name": "L1CrossDomainMessenger",
-      "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-      "code": "https://etherscan.deth.net/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1,0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5",
+      "name": "CanonicalTransactionChain_OLD",
+      "address": "0x4BF681894abEc828B212C906082B444Ceb2f6cf6",
+      "code": "https://etherscan.deth.net/address/0x4BF681894abEc828B212C906082B444Ceb2f6cf6",
       "upgradeability": {
-        "type": "resolved delegate proxy",
-        "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "implementationName": "OVM_L1CrossDomainMessenger",
-        "implementation": "0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5"
+        "type": "immutable"
       },
       "values": {
+        "appendQueueBatch": [],
+        "batches": "0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE",
+        "forceInclusionPeriodBlocks": 839466,
+        "forceInclusionPeriodSeconds": 12592000,
+        "getLastBlockNumber": 13596338,
+        "getLastTimestamp": 1636653056,
+        "getNextQueueIndex": 126727,
+        "getNumPendingQueueElements": 0,
+        "getQueueLength": 126727,
+        "getTotalBatches": 22954,
+        "getTotalElements": 4073201,
+        "L2_GAS_DISCOUNT_DIVISOR": 32,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-        "paused": false
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-      "code": "https://etherscan.deth.net/address/0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+        "MAX_ROLLUP_TX_SIZE": 50000,
+        "maxTransactionGasLimit": 11000000,
+        "MIN_ROLLUP_TX_GAS": 100000,
+        "queue": "0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039"
       },
-      "values": {
-        "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",
-        "getModules": [],
-        "getOwners": [
-          "0xf2B19529E7e1cA0655493e38093Bf6a51DE7D956",
-          "0x3041BA32f451F5850c147805F5521AC206421623",
-          "0x7904c69A27026A9Ff2CC2C8f5A917c018a46C613",
-          "0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94",
-          "0x6709Ef8aDCEA465f673dEA5b1a774a79BBCb4EAa",
-          "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
-          "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
-        ],
-        "getThreshold": 5,
-        "NAME": "Gnosis Safe",
-        "nonce": 73,
-        "VERSION": "1.1.1"
-      }
+      "derivedName": "OVM_CanonicalTransactionChain"
     },
     {
-      "name": "OVM_StateTransitionerFactory",
-      "address": "0x38A6ed6fd76035684caDef38cF49a2FffA782B67",
-      "code": "https://etherscan.deth.net/address/0x38A6ed6fd76035684caDef38cF49a2FffA782B67",
+      "name": "CTCStorageContainerBatches_OLD",
+      "address": "0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE",
+      "code": "https://etherscan.deth.net/address/0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
-      }
-    },
-    {
-      "name": "OVM_StateManagerFactory",
-      "address": "0xd0e3e318154716BD9d007E1E6B021Eab246ff98d",
-      "code": "https://etherscan.deth.net/address/0xd0e3e318154716BD9d007E1E6B021Eab246ff98d",
-      "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "OVM_StateCommitmentChain",
-      "address": "0xE969C2724d2448F1d1A6189d3e2aA1F37d5998c1",
-      "code": "https://etherscan.deth.net/address/0xE969C2724d2448F1d1A6189d3e2aA1F37d5998c1",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "batches": "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
-        "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1636651217,
-        "getTotalBatches": 4302,
-        "getTotalElements": 4072684,
+        "getGlobalMetadata": "0x000000000000000000cf76b200618d5800000001ef0700003e26f1",
+        "length": 22954,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "SEQUENCER_PUBLISH_WINDOW": 12592000
-      }
+        "owner": "OVM_CanonicalTransactionChain"
+      },
+      "derivedName": "OVM_ChainStorageContainer"
     },
     {
-      "name": "OVM_SafetyChecker",
-      "address": "0xfe1F9Cf28ecDb12110aa8086e6FD343EA06035cC",
-      "code": "https://etherscan.deth.net/address/0xfe1F9Cf28ecDb12110aa8086e6FD343EA06035cC",
-      "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "OVM_L1MultiMessageRelayer",
-      "address": "0xF26391FBB1f77481f80a7d646AC08ba3817eA891",
-      "code": "https://etherscan.deth.net/address/0xF26391FBB1f77481f80a7d646AC08ba3817eA891",
+      "name": "CTCStorageContainerQueue",
+      "address": "0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039",
+      "code": "https://etherscan.deth.net/address/0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
-      }
+        "getGlobalMetadata": "0x000000000000000000000000000000000000000000000000000000",
+        "length": 253454,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "owner": "OVM_CanonicalTransactionChain"
+      },
+      "derivedName": "OVM_ChainStorageContainer"
     },
     {
-      "name": "OVM_FraudVerifier",
-      "address": "0x042065416C5c665dc196076745326Af3Cd840D15",
-      "code": "https://etherscan.deth.net/address/0x042065416C5c665dc196076745326Af3Cd840D15",
+      "name": "SCCStorageContainerBatches_OLD",
+      "address": "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
+      "code": "https://etherscan.deth.net/address/0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
-      }
+        "getGlobalMetadata": "0x000000000000000000000000000000000000618d50d100003e24ec",
+        "length": 4302,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "owner": "OVM_StateCommitmentChain"
+      },
+      "derivedName": "OVM_ChainStorageContainer"
     },
     {
       "name": "OVM_ExecutionManager",
@@ -249,95 +152,222 @@
       }
     },
     {
-      "name": "OVM_ChainStorageContainer",
-      "address": "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
-      "code": "https://etherscan.deth.net/address/0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
+      "name": "OVM_FraudVerifier",
+      "address": "0x042065416C5c665dc196076745326Af3Cd840D15",
+      "code": "https://etherscan.deth.net/address/0x042065416C5c665dc196076745326Af3Cd840D15",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000618d50d100003e24ec",
-        "length": 4302,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "OVM_StateCommitmentChain"
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
       }
     },
     {
-      "name": "OVM_ChainStorageContainer",
-      "address": "0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039",
-      "code": "https://etherscan.deth.net/address/0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039",
+      "name": "OVM_L1MultiMessageRelayer",
+      "address": "0xF26391FBB1f77481f80a7d646AC08ba3817eA891",
+      "code": "https://etherscan.deth.net/address/0xF26391FBB1f77481f80a7d646AC08ba3817eA891",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000000000000000000000",
-        "length": 253454,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "OVM_CanonicalTransactionChain"
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
       }
     },
     {
-      "name": "OVM_ChainStorageContainer",
-      "address": "0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE",
-      "code": "https://etherscan.deth.net/address/0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE",
+      "name": "OVM_SafetyChecker",
+      "address": "0xfe1F9Cf28ecDb12110aa8086e6FD343EA06035cC",
+      "code": "https://etherscan.deth.net/address/0xfe1F9Cf28ecDb12110aa8086e6FD343EA06035cC",
       "upgradeability": {
         "type": "immutable"
-      },
-      "values": {
-        "getGlobalMetadata": "0x000000000000000000cf76b200618d5800000001ef0700003e26f1",
-        "length": 22954,
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "owner": "OVM_CanonicalTransactionChain"
       }
     },
     {
-      "name": "OVM_CanonicalTransactionChain",
-      "address": "0x4BF681894abEc828B212C906082B444Ceb2f6cf6",
-      "code": "https://etherscan.deth.net/address/0x4BF681894abEc828B212C906082B444Ceb2f6cf6",
+      "name": "OVM_StateCommitmentChain",
+      "address": "0xE969C2724d2448F1d1A6189d3e2aA1F37d5998c1",
+      "code": "https://etherscan.deth.net/address/0xE969C2724d2448F1d1A6189d3e2aA1F37d5998c1",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "appendQueueBatch": [],
-        "batches": "0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE",
-        "forceInclusionPeriodBlocks": 839466,
-        "forceInclusionPeriodSeconds": 12592000,
-        "getLastBlockNumber": 13596338,
-        "getLastTimestamp": 1636653056,
-        "getNextQueueIndex": 126727,
-        "getNumPendingQueueElements": 0,
-        "getQueueLength": 126727,
-        "getTotalBatches": 22954,
-        "getTotalElements": 4073201,
-        "L2_GAS_DISCOUNT_DIVISOR": 32,
+        "batches": "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
+        "FRAUD_PROOF_WINDOW": 604800,
+        "getLastSequencerTimestamp": 1636651217,
+        "getTotalBatches": 4302,
+        "getTotalElements": 4072684,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "SEQUENCER_PUBLISH_WINDOW": 12592000
+      }
+    },
+    {
+      "name": "OVM_StateManagerFactory",
+      "address": "0xd0e3e318154716BD9d007E1E6B021Eab246ff98d",
+      "code": "https://etherscan.deth.net/address/0xd0e3e318154716BD9d007E1E6B021Eab246ff98d",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "OVM_StateTransitionerFactory",
+      "address": "0x38A6ed6fd76035684caDef38cF49a2FffA782B67",
+      "code": "https://etherscan.deth.net/address/0x38A6ed6fd76035684caDef38cF49a2FffA782B67",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      }
+    },
+    {
+      "name": "OptimismMultisig",
+      "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+      "code": "https://etherscan.deth.net/address/0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+      },
+      "values": {
+        "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",
+        "getModules": [],
+        "getOwners": [
+          "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
+          "0x3041BA32f451F5850c147805F5521AC206421623",
+          "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+          "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+          "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+          "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
+        ],
+        "getThreshold": 5,
+        "NAME": "Gnosis Safe",
+        "nonce": 81,
+        "VERSION": "1.1.1"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
+      "code": "https://etherscan.deth.net/address/0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xc7edf91fb84ec337ffa25b6f502a8c52c3dd4ea86d452728767d2836fa3819e3",
+        "getChainId": 1,
+        "getOwners": [
+          "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
+          "0x4665374939642965EfD8357D4568D2A77f677429"
+        ],
+        "getThreshold": 2,
+        "nonce": 10,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "L1CrossDomainMessengerProxy",
+      "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+      "code": "https://etherscan.deth.net/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1,0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5",
+      "upgradeability": {
+        "type": "resolved delegate proxy",
+        "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "implementationName": "OVM_L1CrossDomainMessenger",
+        "implementation": "0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5"
+      },
+      "values": {
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "paused": false
+      },
+      "derivedName": "L1CrossDomainMessenger"
+    },
+    {
+      "name": "L1StandardBridge",
+      "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "code": "https://etherscan.deth.net/address/0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1,0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB",
+        "admin": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+      },
+      "values": {
+        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
+        "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      }
+    },
+    {
+      "name": "CanonicalTransactionChain",
+      "address": "0x5E4e65926BA27467555EB562121fac00D24E9dD2",
+      "code": "https://etherscan.deth.net/address/0x5E4e65926BA27467555EB562121fac00D24E9dD2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
+        "enqueueGasCost": 60000,
+        "enqueueL2GasPrepaid": 1920000,
+        "getLastBlockNumber": 17244095,
+        "getLastTimestamp": 1683894683,
+        "getNextQueueIndex": 348556,
+        "getNumPendingQueueElements": 1,
+        "getQueueLength": 348557,
+        "getTotalBatches": 780921,
+        "getTotalElements": 97701954,
+        "l2GasDiscountDivisor": 32,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "MAX_ROLLUP_TX_SIZE": 50000,
-        "maxTransactionGasLimit": 11000000,
-        "MIN_ROLLUP_TX_GAS": 100000,
-        "queue": "0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039"
-      }
+        "maxTransactionGasLimit": 15000000,
+        "MIN_ROLLUP_TX_GAS": 100000
+      },
+      "derivedName": "CanonicalTransactionChain"
     },
     {
-      "name": "mockOVM_BondManager",
-      "address": "0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057",
-      "code": "https://etherscan.deth.net/address/0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057",
+      "name": "CTCStorageContainerBatches",
+      "address": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
+      "code": "https://etherscan.deth.net/address/0xD16463EF9b0338CE3D73309028ef1714D220c024",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
-      }
+        "getGlobalMetadata": "0x000000000000000001071fbf00645e319b000005518c0005d2d042",
+        "length": 780921,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "owner": "CanonicalTransactionChain"
+      },
+      "derivedName": "ChainStorageContainer"
     },
     {
-      "name": "BondManager",
-      "address": "0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1",
-      "code": "https://etherscan.deth.net/address/0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1",
+      "name": "StateCommitmentChain",
+      "address": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
+      "code": "https://etherscan.deth.net/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
-      }
+        "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
+        "FRAUD_PROOF_WINDOW": 604800,
+        "getLastSequencerTimestamp": 1683894527,
+        "getTotalBatches": 103654,
+        "getTotalElements": 97701282,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "SEQUENCER_PUBLISH_WINDOW": 12592000
+      },
+      "derivedName": "StateCommitmentChain"
+    },
+    {
+      "name": "SCCStorageContainerBatches",
+      "address": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
+      "code": "https://etherscan.deth.net/address/0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getGlobalMetadata": "0x000000000000000000000000000000000000645e30ff0005d2cda2",
+        "length": 103654,
+        "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "owner": "StateCommitmentChain"
+      },
+      "derivedName": "ChainStorageContainer"
     }
   ],
   "eoas": [
@@ -345,16 +375,16 @@
     "0x4200000000000000000000000000000000000005",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
+    "0x4665374939642965EfD8357D4568D2A77f677429",
     "0x473300df21D047806A082244b417f96b32f13A33",
     "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-    "0x6709Ef8aDCEA465f673dEA5b1a774a79BBCb4EAa",
     "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
-    "0x7904c69A27026A9Ff2CC2C8f5A917c018a46C613",
     "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
     "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
-    "0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94",
+    "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
+    "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
     "0xdEfa017defA017DeFA017DEfa017DeFA017DeFa0",
-    "0xf2B19529E7e1cA0655493e38093Bf6a51DE7D956"
+    "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
   ],
   "abis": {
     "0x042065416C5c665dc196076745326Af3Cd840D15": [
@@ -488,6 +518,9 @@
       "function initialize(address _l1messenger, address _l2TokenBridge)",
       "function l2TokenBridge() view returns (address)",
       "function messenger() view returns (address)"
+    ],
+    "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": [
+      "constructor(address _singleton)"
     ],
     "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": [
       "constructor(address _libAddressManager, uint256 _forceInclusionPeriodSeconds, uint256 _forceInclusionPeriodBlocks, uint256 _maxTransactionGasLimit)",
@@ -679,6 +712,55 @@
       "function successfulMessages(bytes32) view returns (bool)",
       "function transferOwnership(address newOwner)",
       "function xDomainMessageSender() view returns (address)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": [
       "event AddressSet(string indexed _name, address _newAddress, address _oldAddress)",
