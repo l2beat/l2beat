@@ -271,6 +271,25 @@ describe('Discord message formatting', () => {
 
       expect(result).toEqual('count\n- 1\n+ 2\n\n')
     })
+
+    it('handles undefined before', () => {
+      const undefinedBefore: FieldDiff = {
+        key: 'count',
+        before: undefined,
+      }
+      const result = fieldDiffToMessage(undefinedBefore)
+      expect(result).toEqual('count\n- undefined\n\n')
+    })
+
+    it('handles undefined after', () => {
+      const undefinedAfter: FieldDiff = {
+        key: 'count',
+        after: undefined,
+      }
+
+      const result2 = fieldDiffToMessage(undefinedAfter)
+      expect(result2).toEqual('count\n+ undefined\n\n')
+    })
   })
 
   describe(wrapDiffCodeBlock.name, () => {
