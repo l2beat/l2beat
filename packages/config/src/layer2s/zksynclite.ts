@@ -190,7 +190,7 @@ export const zksynclite: Layer2 = {
       accounts: [
         {
           type: 'MultiSig',
-          address: discovery.getContract('GnosisSafe').address,
+          address: discovery.getContract('ZkSyncMultisig').address,
         },
       ],
       description:
@@ -199,13 +199,14 @@ export const zksynclite: Layer2 = {
     {
       name: 'MultiSig participants',
       accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
+        .getContractValue<string[]>('ZkSyncMultisig', 'getOwners')
         .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
       description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
+        'ZkSyncMultisig',
         'getThreshold',
       )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
+        discovery.getContractValue<string[]>('ZkSyncMultisig', 'getOwners')
+          .length
       } zkSync Lite MultiSig.`,
     },
     {

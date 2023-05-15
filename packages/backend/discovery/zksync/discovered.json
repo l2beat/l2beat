@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "blockNumber": 17222077,
-  "configHash": "0xf8b64465ea00a61d9f05fb21cf284b18021b1dfce0937c6121858db470a4c0c0",
+  "configHash": "0x63f299a538cb7db07c1fb4ae4e0850d35690416c0b9ca6b6c20de1cf8097d7ef",
   "contracts": [
     {
       "name": "ZkSync",
@@ -122,7 +122,7 @@
       "derivedName": "TokenGovernance"
     },
     {
-      "name": "GnosisSafe",
+      "name": "Multisig 1",
       "address": "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346",
       "code": "https://etherscan.deth.net/address/0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
@@ -142,7 +142,8 @@
         "NAME": "Gnosis Safe",
         "nonce": 21,
         "VERSION": "1.1.1"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Proxy",
@@ -153,7 +154,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Multisig 2",
       "address": "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567",
       "code": "https://etherscan.deth.net/address/0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
@@ -176,10 +177,11 @@
         "NAME": "Gnosis Safe",
         "nonce": 10,
         "VERSION": "1.1.1"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
-      "name": "GnosisSafe",
+      "name": "Multisig 3",
       "address": "0x225d3822De44E58eE935440E0c0B829C4232086e",
       "code": "https://etherscan.deth.net/address/0x225d3822De44E58eE935440E0c0B829C4232086e,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -197,7 +199,8 @@
         "getThreshold": 2,
         "nonce": 231,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Verifier",
