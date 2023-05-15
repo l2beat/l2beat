@@ -58,6 +58,12 @@ export class StarkexTransactionCountRepository extends BaseRepository {
 
     return UnixTime.fromDate(row.max)
   }
+
+  async getAll(): Promise<StarkexTransactionCountRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('activity.starkex')
+    return rows.map(toRecord)
+  }
 }
 
 function toRow(
@@ -67,5 +73,15 @@ function toRow(
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
     count: record.count,
+  }
+}
+
+function toRecord(
+  row: StarkexTransactionCountRow,
+): StarkexTransactionCountRecord {
+  return {
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
+    projectId: ProjectId(row.project_id),
+    count: row.count,
   }
 }

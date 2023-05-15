@@ -49,6 +49,12 @@ export class BlockTransactionCountRepository extends BaseRepository {
       .first()
     return row ? UnixTime.fromDate(row.unix_timestamp) : undefined
   }
+
+  async getAll(): Promise<BlockTransactionCountRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('activity.block')
+    return rows.map(toRecord)
+  }
 }
 
 function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
@@ -57,5 +63,14 @@ function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
     project_id: record.projectId.toString(),
     block_number: record.blockNumber,
     count: record.count,
+  }
+}
+
+function toRecord(row: BlockTransactionCountRow): BlockTransactionCountRecord {
+  return {
+    projectId: ProjectId(row.project_id),
+    blockNumber: row.block_number,
+    count: row.count,
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
   }
 }

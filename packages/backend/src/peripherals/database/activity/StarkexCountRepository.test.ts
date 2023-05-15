@@ -41,14 +41,9 @@ describe(StarkexTransactionCountRepository.name, () => {
 
         await repository.addOrUpdateMany(records)
 
-        const latestProjectA = await repository.findLastTimestampByProjectId(
-          PROJECT_A,
-        )
-        const latestProjectB = await repository.findLastTimestampByProjectId(
-          PROJECT_B,
-        )
-        expect(latestProjectA).toEqual(records[0].timestamp)
-        expect(latestProjectB).toEqual(records[1].timestamp)
+        const result = await repository.getAll()
+
+        expect(result).toEqual(records)
       })
 
       it('updates multiple records', async () => {
@@ -62,16 +57,11 @@ describe(StarkexTransactionCountRepository.name, () => {
           mockRecord(PROJECT_A, 0, 1000),
           mockRecord(PROJECT_B, 0, 2000),
         ]
-        await repository.addOrUpdateMany(records)
+        await repository.addOrUpdateMany(updatedRecords)
 
-        const latestProjectA = await repository.findLastTimestampByProjectId(
-          PROJECT_A,
-        )
-        const latestProjectB = await repository.findLastTimestampByProjectId(
-          PROJECT_B,
-        )
-        expect(latestProjectA).toEqual(updatedRecords[0].timestamp)
-        expect(latestProjectB).toEqual(updatedRecords[1].timestamp)
+        const result = await repository.getAll()
+
+        expect(result).toEqual(updatedRecords)
       })
     },
   )
@@ -79,7 +69,6 @@ describe(StarkexTransactionCountRepository.name, () => {
 
 const mockRecord = (projectId: ProjectId, offset: number, count: number) => ({
   projectId,
-  blockNumber: 100 + offset,
   count,
   timestamp: new UnixTime(1000 + offset),
 })

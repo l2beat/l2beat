@@ -23,14 +23,9 @@ describe(BlockTransactionCountRepository.name, () => {
 
     await repository.addMany(records)
 
-    const latestProjectA = await repository.findLastTimestampByProjectId(
-      PROJECT_A,
-    )
-    const latestProjectB = await repository.findLastTimestampByProjectId(
-      PROJECT_B,
-    )
-    expect(latestProjectA).toEqual(records[0].timestamp)
-    expect(latestProjectB).toEqual(records[1].timestamp)
+    const result = await repository.getAll()
+
+    expect(result).toEqual(records)
   })
 })
 
