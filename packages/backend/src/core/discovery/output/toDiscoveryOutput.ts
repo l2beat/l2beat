@@ -60,7 +60,5 @@ function getContracts(results: Analysis[]) {
 }
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {
-  return Object.fromEntries(
-    Object.entries(obj).filter(([, v]) => v !== undefined),
-  ) as T
+  return JSON.parse(JSON.stringify(obj)) as T
 }
