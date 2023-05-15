@@ -4,32 +4,6 @@
   "configHash": "0x8601146b017f7aa381dc85974f0d1c4a7c38cd11499ea9287b3a8c8bbf01aa96",
   "contracts": [
     {
-      "name": "RootChainManager",
-      "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-      "code": "https://etherscan.deth.net/address/0xA0c68C638235ee32657e8f720a23ceC1bFc77C77,0x37D26DC2890b35924b40574BAc10552794771997",
-      "upgradeability": {
-        "type": "EIP897 proxy",
-        "isUpgradable": true,
-        "implementation": "0x37D26DC2890b35924b40574BAc10552794771997"
-      },
-      "values": {
-        "checkpointManagerAddress": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-        "childChainManagerAddress": "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DEPOSIT": "0x87a7811f4bfedea3d341ad165680ae306b01aaeacc205d227629cf157dd9f821",
-        "ERC712_VERSION": "1",
-        "ETHER_ADDRESS": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-        "getChainId": 1,
-        "getDomainSeperator": "0xb5a4cc9a023bd6d02f117aaf6dbd3f253f1f6e35a8497712420cc482df3f73e7",
-        "implementation": "0x37D26DC2890b35924b40574BAc10552794771997",
-        "MAP_TOKEN": "0x2cef46a936bdc5b7e6e8c71aa04560c41cf7d88bb26901a7e7f4936ff02accad",
-        "MAPPER_ROLE": "0x2559c73ad5e64226de134fc607a00e9f0c0b7465b43c2ae69baaca347c607777",
-        "proxyOwner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-        "proxyType": 2,
-        "stateSenderAddress": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
-      }
-    },
-    {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
       "code": "https://etherscan.deth.net/address/0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
@@ -40,80 +14,6 @@
         "counter": 2552561,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-      "code": "https://etherscan.deth.net/address/0xFa7D2a996aC6350f4b56C043112Da0366a59b74c,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
-      },
-      "values": {
-        "domainSeparator": "0x3bc292918071cc597c13d3994268d3c83097b8388d750481c8cbce67a284ed5c",
-        "getModules": [],
-        "getOwners": [
-          "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
-          "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
-          "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03",
-          "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a",
-          "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
-          "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
-          "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
-          "0xFb9af163DF1e54171bC773eb88B46aa1E912489f",
-          "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
-        ],
-        "getThreshold": 5,
-        "NAME": "Gnosis Safe",
-        "nonce": 170,
-        "VERSION": "1.1.1"
-      }
-    },
-    {
-      "name": "Timelock",
-      "address": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-      "code": "https://etherscan.deth.net/address/0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "getMinDelay": 172800,
-        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      }
-    },
-    {
-      "name": "MerklePatriciaProof",
-      "address": "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
-      "code": "https://etherscan.deth.net/address/0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
-      "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "RootChain",
-      "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-      "code": "https://etherscan.deth.net/address/0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287,0x536c55cFe4892E581806e10b38dFE8083551bd03",
-      "upgradeability": {
-        "type": "EIP897 proxy",
-        "isUpgradable": true,
-        "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
-      },
-      "values": {
-        "_nextHeaderBlock": 417110000,
-        "CHAINID": 137,
-        "currentHeaderBlock": 417100000,
-        "getLastChildBlock": 38509477,
-        "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
-        "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
-        "isOwner": false,
-        "networkId": "0x89",
-        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-        "proxyType": 2,
-        "VOTE_TYPE": 2
       }
     },
     {
@@ -152,6 +52,106 @@
         "proxyType": 2,
         "TOKEN_TYPE": "0xa234e09165f88967a714e2a476288e4c6d88b4b69fe7c300a03190b858990bfc",
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+      }
+    },
+    {
+      "name": "RootChain",
+      "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+      "code": "https://etherscan.deth.net/address/0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287,0x536c55cFe4892E581806e10b38dFE8083551bd03",
+      "upgradeability": {
+        "type": "EIP897 proxy",
+        "isUpgradable": true,
+        "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
+      },
+      "values": {
+        "_nextHeaderBlock": 417110000,
+        "CHAINID": 137,
+        "currentHeaderBlock": 417100000,
+        "getLastChildBlock": 38509477,
+        "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
+        "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
+        "isOwner": false,
+        "networkId": "0x89",
+        "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "proxyType": 2,
+        "VOTE_TYPE": 2
+      }
+    },
+    {
+      "name": "RootChainManager",
+      "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+      "code": "https://etherscan.deth.net/address/0xA0c68C638235ee32657e8f720a23ceC1bFc77C77,0x37D26DC2890b35924b40574BAc10552794771997",
+      "upgradeability": {
+        "type": "EIP897 proxy",
+        "isUpgradable": true,
+        "implementation": "0x37D26DC2890b35924b40574BAc10552794771997"
+      },
+      "values": {
+        "checkpointManagerAddress": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+        "childChainManagerAddress": "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DEPOSIT": "0x87a7811f4bfedea3d341ad165680ae306b01aaeacc205d227629cf157dd9f821",
+        "ERC712_VERSION": "1",
+        "ETHER_ADDRESS": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "getChainId": 1,
+        "getDomainSeperator": "0xb5a4cc9a023bd6d02f117aaf6dbd3f253f1f6e35a8497712420cc482df3f73e7",
+        "implementation": "0x37D26DC2890b35924b40574BAc10552794771997",
+        "MAP_TOKEN": "0x2cef46a936bdc5b7e6e8c71aa04560c41cf7d88bb26901a7e7f4936ff02accad",
+        "MAPPER_ROLE": "0x2559c73ad5e64226de134fc607a00e9f0c0b7465b43c2ae69baaca347c607777",
+        "proxyOwner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "proxyType": 2,
+        "stateSenderAddress": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      }
+    },
+    {
+      "name": "MerklePatriciaProof",
+      "address": "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
+      "code": "https://etherscan.deth.net/address/0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "Timelock",
+      "address": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+      "code": "https://etherscan.deth.net/address/0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 172800,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+      "code": "https://etherscan.deth.net/address/0xFa7D2a996aC6350f4b56C043112Da0366a59b74c,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+      },
+      "values": {
+        "domainSeparator": "0x3bc292918071cc597c13d3994268d3c83097b8388d750481c8cbce67a284ed5c",
+        "getModules": [],
+        "getOwners": [
+          "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
+          "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
+          "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03",
+          "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a",
+          "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
+          "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
+          "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
+          "0xFb9af163DF1e54171bC773eb88B46aa1E912489f",
+          "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
+        ],
+        "getThreshold": 5,
+        "NAME": "Gnosis Safe",
+        "nonce": 170,
+        "VERSION": "1.1.1"
       }
     }
   ],

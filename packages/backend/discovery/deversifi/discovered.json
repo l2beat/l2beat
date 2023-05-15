@@ -4,6 +4,44 @@
   "configHash": "0x6c031b922ac35e54545c0a52fa2c2bd4c647f4557cd49a470081f8968e890ac6",
   "contracts": [
     {
+      "name": "Committee",
+      "address": "0x28780349A33eEE56bb92241bAAB8095449e24306",
+      "code": "https://etherscan.deth.net/address/0x28780349A33eEE56bb92241bAAB8095449e24306",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "constructorArgs": [
+          [
+            "0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4",
+            "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36",
+            "0xf872Cf881873029B8955b582c29b66347f3f1326",
+            "0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178",
+            "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
+            "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648",
+            "0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9"
+          ],
+          "4"
+        ],
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_Committee_2019_1",
+        "signaturesRequired": 4
+      },
+      "derivedName": "Committee"
+    },
+    {
+      "name": "OrderRegistry",
+      "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "code": "https://etherscan.deth.net/address/0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_OrderRegistry_2021_1"
+      }
+    },
+    {
       "name": "StarkExchange",
       "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
       "code": "https://etherscan.deth.net/address/0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b,0x4EDD62189732e9fF476ABa880b48c29432A7AC9B,0x62BCA4DB742A99c834e2c24b609656A70EA25379,0x8536850750956c2FEebeCAB786d82271a5467687,0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2,0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1,0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339,0xB3788a88F063B217227E27ae16Ba550db3132bE6",
@@ -57,18 +95,6 @@
       "derivedName": "Proxy"
     },
     {
-      "name": "OrderRegistry",
-      "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
-      "code": "https://etherscan.deth.net/address/0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_OrderRegistry_2021_1"
-      }
-    },
-    {
       "name": "GpsFactRegistryAdapter",
       "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
       "code": "https://etherscan.deth.net/address/0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
@@ -81,32 +107,6 @@
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
         "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556"
       }
-    },
-    {
-      "name": "Committee",
-      "address": "0x28780349A33eEE56bb92241bAAB8095449e24306",
-      "code": "https://etherscan.deth.net/address/0x28780349A33eEE56bb92241bAAB8095449e24306",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "constructorArgs": [
-          [
-            "0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4",
-            "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36",
-            "0xf872Cf881873029B8955b582c29b66347f3f1326",
-            "0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178",
-            "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
-            "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648",
-            "0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9"
-          ],
-          "4"
-        ],
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_Committee_2019_1",
-        "signaturesRequired": 4
-      },
-      "derivedName": "Committee"
     }
   ],
   "eoas": [
