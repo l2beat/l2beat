@@ -1,14 +1,19 @@
 import { Application } from './Application'
 import { handleCli } from './cli/handleCli'
 import { getConfig } from './config'
-import { reportError } from './tools/ErrorReporter'
+import { flushErrors, reportError } from './tools/ErrorReporter'
 
-main().catch((e) => {
-  console.error(e)
-  reportError(e)
+main()
+  .catch((e) => {
+    console.error(e)
+    reportError(e)
 
-  process.exit(1)
-})
+    // Need to flush errors to sentry before exiting otherwise they will be lost
+    return flushErrors()
+  })
+  .finally(() => {
+    process.exit(1)
+  })
 
 async function main() {
   const cli = handleCli()
