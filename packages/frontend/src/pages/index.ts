@@ -1,10 +1,4 @@
-import {
-  ActivityApiResponse,
-  TvlApiResponse,
-  VerificationStatus,
-} from '@l2beat/shared'
 import { Config } from '../build/config'
-import { Page } from './Page'
 import { getBridgeProjectPages } from './bridges-projects'
 import { getBridgesRiskPage } from './bridges-risk'
 import { getBridgesTvlPage } from './bridges-tvl'
@@ -13,16 +7,11 @@ import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
 import { getMetaImagePages } from './meta-images'
 import { outputPages } from './output'
+import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling-activity'
 import { getProjectPages } from './scaling-projects'
 import { getRiskPage } from './scaling-risk'
 import { getTvlPage } from './scaling-tvl'
-
-export interface PagesData {
-  tvlApiResponse: TvlApiResponse
-  activityApiResponse: ActivityApiResponse | undefined
-  verificationStatus: VerificationStatus
-}
 
 export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
