@@ -62,6 +62,12 @@ export const apex: Layer2 = {
         tokens: ['USDC'],
       }),
     ],
+    transactionApi: {
+      type: 'starkex',
+      product: 'apex',
+      sinceTimestamp: new UnixTime(1660252039),
+      resyncLastDays: 7,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
