@@ -67,6 +67,9 @@ export function DashboardPage(props: DashboardPageProps) {
                 {project.discoveredCount !== undefined ? '' : '❌ '}
                 {project.discoveredCount !== undefined ? (
                   <a href={`/status/discovery/${project.name}`}>
+                    {project.diff &&
+                      project.diff.length > 0 &&
+                      'changes detected! '}
                     {project.name}
                   </a>
                 ) : (

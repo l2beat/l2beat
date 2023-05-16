@@ -10,6 +10,7 @@ import {
   BalanceStatusRecord,
   BalanceStatusRepository,
 } from '../../../peripherals/database/BalanceStatusRepository'
+import { UpdateMonitorRepository } from '../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getDashboardContracts } from './discovery/props/getDashboardContracts'
@@ -25,6 +26,7 @@ export class StatusController {
     private readonly priceRepository: PriceRepository,
     private readonly balanceStatusRepository: BalanceStatusRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
+    private readonly updateMonitorRepository: UpdateMonitorRepository,
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly projects: Project[],
@@ -32,7 +34,10 @@ export class StatusController {
   ) {}
 
   async getDiscoveryDashboard(): Promise<string> {
-    const projects = await getDashboardProjects(this.configReader)
+    const projects = await getDashboardProjects(
+      this.configReader,
+      this.updateMonitorRepository,
+    )
     const projectsList = this.projects.map((p) => p.projectId.toString())
 
     return renderDashboardPage({

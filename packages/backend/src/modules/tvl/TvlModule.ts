@@ -21,6 +21,7 @@ import { AggregateReportRepository } from '../../peripherals/database/AggregateR
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
+import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
@@ -54,6 +55,7 @@ export function createTvlModule(
   )
   const reportStatusRepository = new ReportStatusRepository(database, logger)
   const balanceStatusRepository = new BalanceStatusRepository(database, logger)
+  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
   // #endregion
   // #region peripherals
@@ -125,6 +127,7 @@ export function createTvlModule(
     priceRepository,
     balanceStatusRepository,
     reportStatusRepository,
+    updateMonitorRepository,
     clock,
     config.tvl.tokens,
     config.projects,
