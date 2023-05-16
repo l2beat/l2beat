@@ -1,6 +1,6 @@
 {
   "name": "amarok",
-  "blockNumber": 17129635,
+  "blockNumber": 17271437,
   "configHash": "0x0641a339b0e9d920ff3d73f33df35c0658b7afe2e3144760992d20a206507190",
   "contracts": [
     {
@@ -334,7 +334,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 4314,
+        "nonce": 4620,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -374,7 +374,8 @@
           "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
           "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a",
           "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c",
-          "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa"
+          "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
+          "0x9584Eb0356a380b25D7ED2C14c54De58a25f2581"
         ],
         "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c"
@@ -456,13 +457,13 @@
           6450786, 6778479, 1869640809, 1886350457, 6648936, 1634886255
         ],
         "domainsHash": "0xe741ece3f9550e537df05746072d458479dbc21a49fdee7925337f0b7e1a802c",
-        "getPendingInboundRootsCount": 2,
-        "lastPropagatedRoot": "0x14bf6c8bd3113ea38fdfeda63dcc5612ef13256d62d177083e3435282718cca1",
+        "getPendingInboundRootsCount": 0,
+        "lastPropagatedRoot": "0xce049cd1ae757caabb6b10529d9e2171ff367906d1edec43b352c54dea307fd7",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [17467, 17468],
+        "pendingInboundRoots": [20534, 20533],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -483,12 +484,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 17123632,
+        "lastSentBlock": 17271130,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xeb3885e345c902c5ff926108453a594ed3846372059af1edf1654e644156261d",
+        "outboundRoot": "0xaeae243ecff09b0950915ad7c25b2209774ded34f9bea2f59532ac63ba101c98",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -539,6 +540,7 @@
     "0x6FD84ba95525c4cCd218F2f16F646A08B4b0a598",
     "0x7ce49752fFA7055622f444df3c69598748cb2E5f",
     "0x8cb19CE8EEDF740389D428879a876A3B030B9170",
+    "0x9584Eb0356a380b25D7ED2C14c54De58a25f2581",
     "0x975574980a5Da77f5C90bC92431835D91B73669e",
     "0x97b9dcB1AA34fE5F12b728D9166ae353d1e7f5C4",
     "0x9c77788d761ee0347Ab550883237CeD274a0F248",

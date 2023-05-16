@@ -208,7 +208,7 @@ export const pNetwork: Bridge = {
       description: '2/4 MSig - owner of PProxyAdmin',
       accounts: [
         {
-          address: discovery.getContract('GnosisSafe').address,
+          address: discovery.getContract('PProxyAdminOwner').address,
           type: 'MultiSig',
         },
       ],
