@@ -78,7 +78,12 @@ export const bobanetwork: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_QUEUE,
+      references: [
+        'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L219',
+      ],
+    },
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('ETH and BOBA', 'are'),
