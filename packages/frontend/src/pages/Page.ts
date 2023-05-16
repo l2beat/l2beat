@@ -1,3 +1,8 @@
+import {
+  ActivityApiResponse,
+  TvlApiResponse,
+  VerificationStatus,
+} from '@l2beat/shared'
 import { ReactElement } from 'react'
 
 export interface Page {
@@ -21,4 +26,10 @@ export interface PageMetadata {
   description: string
   image: string
   url: string
+}
+
+export interface PagesData {
+  tvlApiResponse: TvlApiResponse
+  activityApiResponse: ActivityApiResponse | undefined
+  verificationStatus: VerificationStatus
 }

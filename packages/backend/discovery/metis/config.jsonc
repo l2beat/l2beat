@@ -2,6 +2,10 @@
   "$schema": "../config.schema.json",
   "name": "metis",
   "initialAddresses": ["0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"],
+  "names": {
+    "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer",
+    "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380": "StateCommitmentChain"
+  },
   "overrides": {
     "0x918778e825747a892b17C66fe7D24C618262867d": {
       "fields": {
@@ -97,7 +101,7 @@
         }
       }
     },
-    "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380": {
+    "StateCommitmentChain": {
       "fields": {
         "getLastSequencerTimestampByChainId": {
           "type": "call",
@@ -124,7 +128,7 @@
         "getTotalElementsByChainId"
       ]
     },
-    "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": {
+    "ChainStorageContainer": {
       "ignoreMethods": ["get"],
       "fields": {
         "getGlobalMetadataByChainId": {

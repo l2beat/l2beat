@@ -1,5 +1,6 @@
 import { ProjectRiskViewEntry } from '../../common'
 import { formatSeconds } from '../../utils/formatSeconds'
+import { roundSeconds } from '../../utils/roundSeconds'
 import { Layer2RiskView } from '../types'
 import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 
@@ -97,11 +98,14 @@ export const UPGRADABLE_YES: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
-export const UPGRADABLE_ARBITRUM: ProjectRiskViewEntry = {
-  value: '13d or no delay',
-  description:
-    'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
-  sentiment: 'warning',
+export function UPGRADABLE_ARBITRUM(delay: number): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  const delayStringRounded = '~' + formatSeconds(roundSeconds(delay, 60 * 60)) // round to nearest hour
+  return {
+    value: `${delayStringRounded} or no delay`,
+    description: `There is a ${delayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
+    sentiment: 'warning',
+  }
 }
 
 export const UPGRADABLE_POLYGON_ZKEVM: ProjectRiskViewEntry = {
@@ -141,11 +145,16 @@ export const SEQUENCER_TRANSACT_L1: ProjectRiskViewEntry = {
     'The user is able to submit a transaction through L1 and force its inclusion on L2.',
 }
 
-export const SEQUENCER_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
-  value: 'Force trade/exit to L1',
-  description:
-    'The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
-  sentiment: 'warning',
+export function SEQUENCER_STARKEX_PERPETUAL(
+  delay: number,
+): ProjectRiskViewEntry {
+  return {
+    value: 'Force trade/exit to L1',
+    description: `The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down for more than ${formatSeconds(
+      delay,
+    )}, the user can use the exit hatch to withdraw funds.`,
+    sentiment: 'warning',
+  }
 }
 
 export const SEQUENCER_STARKEX_SPOT: ProjectRiskViewEntry = {

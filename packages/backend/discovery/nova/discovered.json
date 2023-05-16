@@ -1,6 +1,6 @@
 {
   "name": "nova",
-  "blockNumber": 17079825,
+  "blockNumber": 17271302,
   "configHash": "0x1640230f938149f3499a78101d21551acc017b7138742036a391c318ded82ee9",
   "contracts": [
     {
@@ -21,13 +21,13 @@
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
       "values": {
-        "batchCount": 12359,
+        "batchCount": 13881,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 200245
+        "totalDelayedMessagesRead": 211577
       }
     },
     {
@@ -274,11 +274,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 200251,
+        "delayedMessageCount": 211580,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 12359,
-        "sequencerReportedSubMessageCount": 6136910
+        "sequencerMessageCount": 13881,
+        "sequencerReportedSubMessageCount": 8810625
       }
     },
     {
@@ -409,12 +409,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 6799,
+        "firstUnresolvedNode": 7423,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
-        "lastStakeBlock": 17079333,
-        "latestConfirmed": 6798,
-        "latestNodeCreated": 6955,
+        "lastStakeBlock": 17257726,
+        "latestConfirmed": 7422,
+        "latestNodeCreated": 7574,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",

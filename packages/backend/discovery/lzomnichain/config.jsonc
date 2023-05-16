@@ -5,7 +5,9 @@
     "0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6" // STG
   ],
   "names": {
-    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2"
+    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
+    "0x902F09715B6303d4173037652FA7377e5b98089E": "LayerZero_Relayer",
+    "0x5a54fe5234E811466D5366846283323c954310B2": "LayerZero_Oracle"
   },
   "overrides": {
     "0x65bb797c2B9830d891D87288F029ed8dACc19705": {

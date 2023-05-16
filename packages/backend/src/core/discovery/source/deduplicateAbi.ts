@@ -1,24 +1,21 @@
 import { utils } from 'ethers'
 
 export function deduplicateAbi(abis: string[]) {
-  const signatures = new Set<string>()
-  return abis
-    .filter((entry) => {
-      const signature = getSignature(entry)
-      if (!signature || signatures.has(signature)) {
-        return false
-      }
-      signatures.add(signature)
-      return true
-    })
-    .sort()
+  const result = new Map<string, string>()
+  for (const entry of abis) {
+    const fragment = makeFragment(entry)
+    if (!fragment) {
+      continue
+    }
+    const signature = getSignature(fragment)
+    if (!result.has(signature) || isViewOrPure(fragment)) {
+      result.set(signature, entry)
+    }
+  }
+  return [...result.values()].sort()
 }
 
-function getSignature(entry: string) {
-  const fragment = makeFragment(entry)
-  if (!fragment) {
-    return
-  }
+function getSignature(fragment: utils.Fragment) {
   if (fragment.type === 'constructor') {
     return 'constructor'
   }
@@ -32,4 +29,8 @@ function makeFragment(entry: string) {
   } catch {
     return null
   }
+}
+
+function isViewOrPure(fragment: utils.Fragment) {
+  return fragment instanceof utils.FunctionFragment && fragment.constant
 }

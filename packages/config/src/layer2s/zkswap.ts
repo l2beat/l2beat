@@ -103,7 +103,7 @@ export const zkswap: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
+      ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
       references: [
         {
           text: 'ZkSync.sol#L404 - ZKSwap source code',

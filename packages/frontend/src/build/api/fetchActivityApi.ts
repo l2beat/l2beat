@@ -1,6 +1,6 @@
 import { ActivityApiResponse } from '@l2beat/shared'
 
-import { JsonHttpClient } from './caching/JsonHttpClient'
+import { JsonHttpClient } from '../caching/JsonHttpClient'
 
 export async function fetchActivityApi(
   apiUrl: string,

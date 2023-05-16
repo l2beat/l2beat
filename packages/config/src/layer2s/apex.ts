@@ -36,6 +36,11 @@ const verifierAddress = discovery.getAddressFromValue(
   'gpsContract',
 )
 
+const freezeGracePeriod = discovery.getContractValue<number>(
+  'StarkExchange',
+  'FREEZE_GRACE_PERIOD',
+)
+
 export const apex: Layer2 = {
   type: 'layer2',
   id: ProjectId('apex'),
@@ -81,7 +86,7 @@ export const apex: Layer2 = {
       contracts: ['StarkExchange', 'Committee'],
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
-    sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL,
+    sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL(freezeGracePeriod),
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.CANONICAL_USDC,
@@ -93,7 +98,8 @@ export const apex: Layer2 = {
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
-    forceTransactions: FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW,
+    forceTransactions:
+      FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW(freezeGracePeriod),
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {

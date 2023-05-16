@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "blockNumber": 17222077,
-  "configHash": "0x28d37afdeb41b5efb02241f972f2294d2df8a653ada71eef754decb8884ba514",
+  "configHash": "0xb2c1b214380e339c53ca4af42343b5755f5b4d33a6b99f2559cd8939be64d37c",
   "contracts": [
     {
       "name": "Multisig 1",
@@ -172,8 +172,9 @@
       "values": {
         "approvedUpgradeNoticePeriod": 1814400,
         "exodusMode": false,
+        "getNoticePeriod": 0,
         "governance": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
-        "noticePeriod": 0,
+        "isReadyForUpgrade": true,
         "securityCouncilMembers": [
           "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769",
           "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607",

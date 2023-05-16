@@ -58,11 +58,6 @@
           "slot": 21,
           "returnType": "number"
         },
-        "noticePeriod": {
-          "type": "call",
-          "method": "function getNoticePeriod() pure returns (uint256)",
-          "args": []
-        },
         "UPGRADE_NOTICE_PERIOD": {
           "type": "hardcoded",
           "value": 1814400
