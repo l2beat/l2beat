@@ -8,7 +8,7 @@ import {
 import fsx from 'fs-extra'
 import path from 'path'
 
-import { Config } from './config'
+import { Config } from '../config'
 
 export interface FrontendActivityChart {
   daily: {

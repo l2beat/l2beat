@@ -17,7 +17,8 @@ export function getSystemHandlers(
   const arrayHandlers: Handler[] = []
 
   for (const fn of Object.values(abi.functions)) {
-    if (fn.stateMutability !== 'view' && !fn.constant) {
+    if (!fn.constant) {
+      // function is neither pure nor view
       continue
     } else if (overrides?.ignoreMethods?.includes(fn.name)) {
       logger.log(`  Skipping ${fn.name}`)
