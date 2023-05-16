@@ -1,4 +1,5 @@
 import { ProjectRisk, ProjectTechnologyChoice } from '../../common'
+import { formatSeconds } from '../../utils/formatSeconds'
 
 const EXIT_CENSORSHIP: ProjectRisk = {
   category: 'Users can be censored if',
@@ -13,46 +14,53 @@ const WITHDRAW: ProjectTechnologyChoice = {
   references: [],
 }
 
-const WITHDRAW_OR_HALT: ProjectTechnologyChoice = {
-  name: 'Users can force exit the system',
-  description:
-    'Force exit allows the users to escape censorship by withdrawing their funds. The system allows users to force the withdrawal of funds by submitting a request directly to the contract on-chain.  The request must be served within a defined time period. If this does not happen, the system will halt regular operation and permit trustless withdrawal of funds.',
-  risks: [EXIT_CENSORSHIP],
-  references: [],
+function WITHDRAW_OR_HALT(delay?: number): ProjectTechnologyChoice {
+  return {
+    name: 'Users can force exit the system',
+    description: `Force exit allows the users to escape censorship by withdrawing their funds. The system allows users to force the withdrawal of funds by submitting a request directly to the contract on-chain.  The request must be served within ${
+      delay !== undefined ? formatSeconds(delay) : 'a defined time period'
+    }. If this does not happen, the system will halt regular operation and permit trustless withdrawal of funds.`,
+    risks: [EXIT_CENSORSHIP],
+    references: [],
+  }
 }
 
-const STARKEX_SPOT_WITHDRAW: ProjectTechnologyChoice = {
-  ...WITHDRAW_OR_HALT,
-  references: [
-    {
-      text: 'Censorship Prevention - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/architecture/overview#8-censorship-prevention',
-    },
-  ],
+function STARKEX_SPOT_WITHDRAW(delay?: number): ProjectTechnologyChoice {
+  return {
+    ...WITHDRAW_OR_HALT(delay),
+    references: [
+      {
+        text: 'Censorship Prevention - StarkEx documentation',
+        href: 'https://docs.starkware.co/starkex-v3/architecture/overview#8-censorship-prevention',
+      },
+    ],
+  }
 }
 
-const STARKEX_PERPETUAL_WITHDRAW: ProjectTechnologyChoice = {
-  ...WITHDRAW_OR_HALT,
-  description:
-    WITHDRAW_OR_HALT.description +
-    ' Perpetual positions can also be force closed before withdrawing, however this requires the user to find the counterparty for the trade themselves.',
-  references: [
-    {
-      text: 'Censorship Prevention - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/architecture/overview#8-censorship-prevention',
-    },
-    {
-      text: 'Forced Trade - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/regular-flows/flows-for-off-chain-accounts/forced-operations/perpetual-trading-forced-withdrawal-and-forced-trade#forced-trade',
-    },
-  ],
-  risks: [
-    EXIT_CENSORSHIP,
-    {
-      category: 'Funds can be lost if',
-      text: 'the user is unable to find the counterparty for the force trade.',
-    },
-  ],
+function STARKEX_PERPETUAL_WITHDRAW(delay?: number): ProjectTechnologyChoice {
+  return {
+    ...WITHDRAW_OR_HALT(delay),
+    description:
+      WITHDRAW_OR_HALT(delay).description +
+      ' Perpetual positions can also be force closed before withdrawing, however this requires the user to find the counterparty for the trade themselves.',
+    references: [
+      {
+        text: 'Censorship Prevention - StarkEx documentation',
+        href: 'https://docs.starkware.co/starkex/architecture/overview-architecture.html#8_censorship_prevention',
+      },
+      {
+        text: 'Forced Trade - StarkEx documentation',
+        href: 'https://docs.starkware.co/starkex/perpetual/forced-actions-escape-hatch-perpetual.html#forcedtrade',
+      },
+    ],
+    risks: [
+      EXIT_CENSORSHIP,
+      {
+        category: 'Funds can be lost if',
+        text: 'the user is unable to find the counterparty for the force trade.',
+      },
+    ],
+  }
 }
 
 const CANONICAL_ORDERING: ProjectTechnologyChoice = {
