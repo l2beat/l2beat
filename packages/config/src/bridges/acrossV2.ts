@@ -5,11 +5,12 @@ import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
-const discovery = new ProjectDiscovery('arbitrum')
+const PROJECT_ID = ProjectId('across-v2')
+const discovery = new ProjectDiscovery(PROJECT_ID.toString())
 
 export const acrossV2: Bridge = {
   type: 'bridge',
-  id: ProjectId('across-v2'),
+  id: PROJECT_ID,
   display: {
     name: 'Across V2',
     slug: 'acrossv2',
@@ -160,10 +161,7 @@ export const acrossV2: Bridge = {
         address: EthereumAddress('0x527E872a5c3f0C7c24Fe33F2593cFB890a285084'),
         name: 'Ethereum_Adapter',
       },
-      {
-        address: EthereumAddress('0x4D9079Bb4165aeb4084c526a32695dCfd2F77381'),
-        name: 'Ethereum_SpokePool',
-      },
+      discovery.getMainContractDetails('Ethereum_SpokePool'),
       {
         address: EthereumAddress('0x48d990AbDA20afa1fD1da713AbC041B60a922c65'),
         name: 'PolygonTokenBridger',
