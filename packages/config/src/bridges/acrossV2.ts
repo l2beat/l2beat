@@ -1,8 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('arbitrum')
 
 export const acrossV2: Bridge = {
   type: 'bridge',
@@ -32,8 +35,14 @@ export const acrossV2: Bridge = {
         sinceTimestamp: new UnixTime(1653124620),
         tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
       },
+      discovery.getEscrowDetails({
+        identifier: 'Ethereum_SpokePool',
+        sinceTimestamp: new UnixTime(1682355155),
+        tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
+      }),
       {
-        // Ethereum Spoke pool:
+        // This bridge is inactive, but we keep it
+        // in case we have to gather historic data
         address: EthereumAddress('0x4D9079Bb4165aeb4084c526a32695dCfd2F77381'),
         sinceTimestamp: new UnixTime(1653167083),
         tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
