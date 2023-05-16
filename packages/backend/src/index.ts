@@ -8,6 +8,7 @@ main()
     console.error(e)
     reportError(e)
 
+    // Need to flush errors to sentry before exiting otherwise they will be lost
     return flushErrors()
   })
   .finally(() => {
