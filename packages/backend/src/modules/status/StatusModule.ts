@@ -1,3 +1,4 @@
+import Router from '@koa/router'
 import { Logger } from '@l2beat/shared'
 
 import { StatusController } from '../../api/controllers/status/StatusController'
@@ -18,6 +19,10 @@ export function createStatusModule(
   database: Database,
   clock: Clock,
 ): ApplicationModule | undefined {
+  if (!config.statusEnabled) {
+    logger.info('StatusModule disabled')
+    return
+  }
   const configReader = new ConfigReader()
 
   const priceRepository = new PriceRepository(database, logger)
@@ -37,20 +42,17 @@ export function createStatusModule(
     configReader,
   )
 
-  const statusRouter = createStatusRouter(statusController)
+  const routers: Router[] = [createStatusRouter(statusController)]
 
   const start = () => {
     if (!config.statusEnabled) {
-      logger.info('StatusModule disabled')
-      return
+      logger = logger.for('StatusModule')
+      logger.info('Started')
     }
-
-    logger = logger.for('StatusModule')
-    logger.info('Started')
   }
 
   return {
     start,
-    routers: [statusRouter],
+    routers,
   }
 }
