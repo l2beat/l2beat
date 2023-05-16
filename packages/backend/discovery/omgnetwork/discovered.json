@@ -4,6 +4,22 @@
   "configHash": "0x3010b50b6079955d8967bbe5d5962907dd5bc0bb3e47c04436e516218254ec13",
   "contracts": [
     {
+      "name": "Erc20Vault",
+      "address": "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
+      "code": "https://etherscan.deth.net/address/0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "depositVerifiers": [
+          "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
+          "0x0000000000000000000000000000000000000000"
+        ],
+        "getEffectiveDepositVerifier": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
+        "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968"
+      }
+    },
+    {
       "name": "PlasmaFramework",
       "address": "0x0D4C1222f5e839a911e2053860e45F18921D72ac",
       "code": "https://etherscan.deth.net/address/0x0D4C1222f5e839a911e2053860e45F18921D72ac",
@@ -26,6 +42,23 @@
       }
     },
     {
+      "name": "EthVault",
+      "address": "0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0",
+      "code": "https://etherscan.deth.net/address/0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "depositVerifiers": [
+          "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
+          "0x0000000000000000000000000000000000000000"
+        ],
+        "getEffectiveDepositVerifier": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
+        "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968",
+        "safeGasStipend": 2300
+      }
+    },
+    {
       "name": "PaymentExitGame",
       "address": "0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3",
       "code": "https://etherscan.deth.net/address/0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3",
@@ -44,45 +77,12 @@
       }
     },
     {
-      "name": "EthVault",
-      "address": "0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0",
-      "code": "https://etherscan.deth.net/address/0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "depositVerifiers": [
-          "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
-          "0x0000000000000000000000000000000000000000"
-        ],
-        "getEffectiveDepositVerifier": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
-        "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968",
-        "safeGasStipend": 2300
-      }
-    },
-    {
       "name": "",
       "unverified": true,
       "address": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
       "code": "https://etherscan.deth.net/address/0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
       "upgradeability": {
         "type": "immutable"
-      }
-    },
-    {
-      "name": "Erc20Vault",
-      "address": "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
-      "code": "https://etherscan.deth.net/address/0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "depositVerifiers": [
-          "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
-          "0x0000000000000000000000000000000000000000"
-        ],
-        "getEffectiveDepositVerifier": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
-        "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968"
       }
     },
     {

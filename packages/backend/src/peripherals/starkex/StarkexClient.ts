@@ -15,7 +15,7 @@ interface StarkexClientOpts {
   timeout?: number
 }
 
-const API_URL = 'https://bi-v1-ddper8ah.uc.gateway.dev'
+const API_URL = 'https://bi-cf-v2-gw-ddper8ah.uc.gateway.dev'
 
 export class StarkexClient {
   timeout: number
