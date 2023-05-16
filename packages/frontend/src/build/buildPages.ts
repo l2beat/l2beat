@@ -1,15 +1,13 @@
-import { ActivityApiResponse } from '@l2beat/shared'
-
-import { HttpClient } from '../../../shared/build'
+import { ActivityApiResponse, HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
+import { createApi } from './api/createApi'
+import { fetchActivityApi } from './api/fetchActivityApi'
+import { fetchTvlApi } from './api/fetchTvlApi'
+import { getVerificationStatus } from './api/getVerificationStatus'
+import { printActivityInfo, printApiInfo } from './api/printApiInfo'
+import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
-import { createApi } from './createApi'
-import { fetchActivityApi } from './fetchActivityApi'
-import { fetchTvlApi } from './fetchTvlApi'
-import { getVerificationStatus } from './getVerificationStatus'
-import { printActivityInfo, printApiInfo } from './printApiInfo'
-import { activitySanityCheck, tvlSanityCheck } from './sanityCheck'
 
 main().catch((e) => {
   console.error(e)
