@@ -18,10 +18,16 @@ export class ZksyncTransactionRepository extends BaseRepository {
   }
 
   async addMany(records: ZksyncTransactionRecord[], trx?: Knex.Transaction) {
+    for (const record of records) {
+      await this.add(record, trx)
+    }
+    return records.length
+  }
+
+  async add(record: ZksyncTransactionRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
-    const rows = records.map(toRow)
-    await knex('activity.zksync').insert(rows)
-    return rows.length
+    await knex('activity.zksync').insert(toRow(record))
+    return `zksync-${record.blockNumber})}`
   }
 
   async deleteAll() {
@@ -37,6 +43,12 @@ export class ZksyncTransactionRepository extends BaseRepository {
       .first()
     return row ? UnixTime.fromDate(row.unix_timestamp) : undefined
   }
+
+  async getAll(): Promise<ZksyncTransactionRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('activity.zksync')
+    return rows.map(toRecord)
+  }
 }
 
 function toRow(record: ZksyncTransactionRecord): ZksyncTransactionRow {
@@ -44,5 +56,13 @@ function toRow(record: ZksyncTransactionRecord): ZksyncTransactionRow {
     unix_timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,
     block_index: record.blockIndex,
+  }
+}
+
+function toRecord(row: ZksyncTransactionRow): ZksyncTransactionRecord {
+  return {
+    blockNumber: row.block_number,
+    blockIndex: row.block_index,
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
   }
 }

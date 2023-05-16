@@ -22,13 +22,19 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     records: StarkexTransactionCountRecord[],
     trx?: Knex.Transaction,
   ) {
+    for (const record of records) {
+      await this.add(record, trx)
+    }
+    return records.length
+  }
+
+  async add(record: StarkexTransactionCountRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
-    const rows = records.map(toRow)
     await knex('activity.starkex')
-      .insert(rows)
+      .insert(toRow(record))
       .onConflict(['project_id', 'unix_timestamp'])
       .merge()
-    return rows.length
+    return `${record.projectId.toString()}-${record.timestamp.toString()})}`
   }
 
   async deleteAll() {
@@ -52,6 +58,12 @@ export class StarkexTransactionCountRepository extends BaseRepository {
 
     return UnixTime.fromDate(row.max)
   }
+
+  async getAll(): Promise<StarkexTransactionCountRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('activity.starkex')
+    return rows.map(toRecord)
+  }
 }
 
 function toRow(
@@ -61,5 +73,15 @@ function toRow(
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
     count: record.count,
+  }
+}
+
+function toRecord(
+  row: StarkexTransactionCountRow,
+): StarkexTransactionCountRecord {
+  return {
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
+    projectId: ProjectId(row.project_id),
+    count: row.count,
   }
 }

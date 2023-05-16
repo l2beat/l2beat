@@ -6,8 +6,8 @@ import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { orderByTvl } from '../../utils/orderByTvl'
 import { Wrapped } from '../Page'
 import { BridgesRiskPageProps } from './BridgesRiskPage'
-import { BridgesRiskViewEntry } from './BridgesRiskView'
 import { getPageMetadata } from './getPageMetadata'
+import { BridgesRiskViewEntry } from './types'
 
 export function getProps(
   config: Config,

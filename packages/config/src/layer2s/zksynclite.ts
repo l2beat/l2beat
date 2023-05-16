@@ -1,6 +1,7 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -15,6 +16,22 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync')
+
+const upgradeDelay = formatSeconds(
+  discovery.getContractValue<number>('ZkSync', 'UPGRADE_NOTICE_PERIOD'),
+)
+
+const securityCouncilThreshold = discovery.getContractValue<number>(
+  'ZkSync',
+  'securityCouncilThreshold',
+)
+
+const securityCouncilMembers = discovery.getContractValue<string[]>(
+  'ZkSync',
+  'securityCouncilMembers',
+)
+
+const securityCouncil = `${securityCouncilThreshold} of ${securityCouncilMembers.length}`
 
 export const zksynclite: Layer2 = {
   type: 'layer2',
@@ -43,7 +60,7 @@ export const zksynclite: Layer2 = {
   config: {
     escrows: [
       {
-        address: EthereumAddress('0xaBEA9132b05A70803a4E85094fD0e1800777fBEF'),
+        address: discovery.getContract('ZkSync').address,
         sinceTimestamp: new UnixTime(1592218707),
         tokens: '*',
       },
@@ -57,9 +74,8 @@ export const zksynclite: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: {
-      value: '21d or no delay',
-      description:
-        'There is a 21 days delay unless it is overriden by the 9/15 Security Council multisig.',
+      value: `${upgradeDelay} or no delay`,
+      description: `There is a ${upgradeDelay} delay unless it is overridden by the ${securityCouncil} Security Council.`,
       sentiment: 'warning',
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
@@ -151,183 +167,71 @@ export const zksynclite: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        address: discovery.getContract('ZkSync').address,
-        name: 'ZkSync',
-        description:
-          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant is currently set to 21 days. 9/15 Security Council MSig can override the delay period and execute an emergency immediate upgrade.',
-        upgradeability: discovery.getContract('ZkSync').upgradeability,
-      },
-      {
-        address: discovery.getContract('Verifier').address,
-        name: 'Verifier',
-        description: 'Implements zkProof verification logic.',
-        upgradeability: discovery.getContract('Verifier').upgradeability,
-      },
-      {
-        address: discovery.getContract('UpgradeGatekeeper').address,
-        name: 'UpgradeGatekeeper',
-        description:
-          'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
-      },
-      {
-        address: discovery.getContract('Governance').address,
-        name: 'Governance',
-        description:
-          'Keeps a list of block producers, NFT factories and whitelisted tokens.',
-        upgradeability: discovery.getContract('Governance').upgradeability,
-      },
+      discovery.getMainContractDetails(
+        'ZkSync',
+        `The main Rollup contract. Allows the operator to commit blocks, provide zkProofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.`,
+      ),
+      discovery.getMainContractDetails(
+        'Verifier',
+        'Implements zkProof verification logic.',
+      ),
+      discovery.getMainContractDetails(
+        'Governance',
+        'Keeps a list of block producers, NFT factories and whitelisted tokens.',
+      ),
+      discovery.getMainContractDetails(
+        'UpgradeGatekeeper',
+        'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
+      ),
+      discovery.getMainContractDetails(
+        'TokenGovernance',
+        'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
+      ),
+      discovery.getMainContractDetails(
+        'NftFactory',
+        'Allows for withdrawing NFTs minted on L2 to L1.',
+      ),
     ],
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_RISK(
-        '21 days or 0 if overridden by 9/15 MSig',
+        `${upgradeDelay} or 0 if overridden by ${securityCouncil} Security Council`,
       ),
     ],
   },
   permissions: [
-    {
-      name: 'zkSync MultiSig',
-      accounts: [
-        {
-          type: 'MultiSig',
-          address: discovery.getContract('GnosisSafe').address,
-        },
-      ],
-      description:
-        'This MultiSig is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can change the list of active validators.',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } zkSync Lite MultiSig.`,
-    },
+    ...discovery.getGnosisSafeDetails(
+      'ZkSync Multisig',
+      'This Multisig is the owner of Upgrade Gatekeeper contract and therefore is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can also change the list of active validators and appoint the security council (by upgrading the ZkSync contract).',
+    ),
     {
       name: 'Security Council',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x39415255619783A2E71fcF7d8f708A951d92e1b6',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x399a6a13D298CF3F41a562966C1a450136Ea52C2',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x225d3822De44E58eE935440E0c0B829C4232086e',
-          ),
-          type: 'EOA',
-        },
+      accounts: discovery.getPermissionedAccountsList(
+        'ZkSync',
+        'securityCouncilMembers',
+      ),
+      description: `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
+      references: [
+        'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
       ],
-      description:
-        'By default upgradeable contracts can be upgraded only after 3 weeks period. Security council can vote to cut this period to 0 days making the upgrade possible immediately if at least 9 out of 15 counselors agree on this.',
     },
     {
-      name: 'Active validator',
-      accounts: discovery
-        .getContractValue<string[]>('Governance', 'validators')
-        .map((validator) => ({
-          address: EthereumAddress(validator),
-          type: 'EOA',
-        })),
+      name: 'Active validators',
+      accounts: discovery.getPermissionedAccountsList(
+        'Governance',
+        'validators',
+      ),
       description:
-        'This actor is allowed to propose, revert and execute L2 blocks on L1.',
+        'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
     },
     {
       name: 'Token listing beneficiary',
       accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>('TokenGovernance', 'treasury'),
-          ),
-          type: 'EOA',
-        },
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue<string>('TokenGovernance', 'treasury'),
+        ),
       ],
       description:
-        'Account receiving fees for listing tokens. Can be updated by zkSync Lite MultiSig.',
+        'Account receiving fees for listing tokens. Can be updated by ZkSync Multisig.',
     },
   ],
   milestones: [

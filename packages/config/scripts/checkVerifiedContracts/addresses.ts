@@ -66,6 +66,10 @@ function gatherAddressesFromUpgradeability(
       result.push(item.beacon)
       result.push(item.implementation)
       break
+    case 'zkSync Lite proxy':
+      result.push(item.implementation)
+      result.push(item.additional)
+      break
     case 'Reference':
     case 'immutable':
     case 'gnosis safe':

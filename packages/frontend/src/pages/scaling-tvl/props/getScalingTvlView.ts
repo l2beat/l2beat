@@ -5,10 +5,8 @@ import { Config } from '../../../build/config'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
-import {
-  ScalingTvlViewEntry,
-  ScalingTvlViewProps,
-} from '../view/ScalingTvlView'
+import { ScalingTvlViewEntry } from '../types'
+import { ScalingTvlViewProps } from '../view/ScalingTvlView'
 
 export function getScalingTvlView(
   config: Config,
