@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { Config } from '../../build/config'
-import { PagesData } from '../../build/types'
 import { PageWrapper } from '../../components'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
+import { PagesData } from '../Page'
 import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
 
