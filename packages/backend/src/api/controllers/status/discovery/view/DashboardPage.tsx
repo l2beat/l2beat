@@ -98,9 +98,14 @@ export function DashboardPage(props: DashboardPageProps) {
               />
               <TableData
                 value={
-                  hardcoded[project.name] === 0 ? '' : hardcoded[project.name]
+                  hardcoded[project.name] === 0 ? (
+                    <span style={{ color: DASHBOARD_COLORS.WATCHED }}>0</span>
+                  ) : (
+                    <span style={{ color: DASHBOARD_COLORS.UNVERIFIED }}>
+                      {hardcoded[project.name]}
+                    </span>
+                  )
                 }
-                color={DASHBOARD_COLORS.UNVERIFIED}
               />
               <TableData value={project.discoveredCount} />
               <TableData
