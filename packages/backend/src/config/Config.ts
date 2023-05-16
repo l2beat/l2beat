@@ -7,6 +7,7 @@ import { Project, Token } from '../model'
 export interface Config {
   readonly name: string
   readonly projects: Project[]
+  readonly tokens: Token[]
   readonly syncEnabled: boolean
   readonly logger: LoggerConfig
   readonly logThrottler: LogThrottlerConfig | false
@@ -50,7 +51,6 @@ export interface ClockConfig {
 }
 
 export interface TvlConfig {
-  readonly tokens: Token[]
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
   readonly coingeckoApiKey: string | undefined
