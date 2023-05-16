@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { Page } from '../../view/Page'
 import { reactToHtml } from '../../view/reactToHtml'
@@ -41,44 +41,64 @@ export function DashboardPage(props: DashboardPageProps) {
       <table>
         <thead>
           <tr>
-            <th rowSpan={2}>Project</th>
-            <th rowSpan={2}>Hardcoded</th>
-            <th colSpan={4}>Contracts</th>
-            <th rowSpan={2} />
-            <th colSpan={4}>Values</th>
+            <TableHead rowSpan={2}>🤖</TableHead>
+            <TableHead rowSpan={2}>Project</TableHead>
+            <TableHead rowSpan={2}>Hardcoded</TableHead>
+            <TableHead colSpan={4} style={{ textAlign: 'center' }}>
+              Contracts
+            </TableHead>
+            <TableHead rowSpan={2} />
+            <TableHead colSpan={4} style={{ textAlign: 'center' }}>
+              Values
+            </TableHead>
           </tr>
           <tr>
-            <th>ALL</th>
-            <th style={{ color: DASHBOARD_COLORS.INITIAL }}>Initial</th>
-            <th style={{ color: DASHBOARD_COLORS.DISCOVERED }}>Discovered</th>
-            <th style={{ color: DASHBOARD_COLORS.UNVERIFIED }}>Unverified</th>
-            <th style={{ color: DASHBOARD_COLORS.WATCHED }}>Watched</th>
-            <th style={{ color: DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE }}>
+            <TableHead>ALL</TableHead>
+            <TableHead style={{ color: DASHBOARD_COLORS.INITIAL }}>
+              Initial
+            </TableHead>
+            <TableHead style={{ color: DASHBOARD_COLORS.DISCOVERED }}>
+              Discovered
+            </TableHead>
+            <TableHead style={{ color: DASHBOARD_COLORS.UNVERIFIED }}>
+              Unverified
+            </TableHead>
+            <TableHead style={{ color: DASHBOARD_COLORS.WATCHED }}>
+              Watched
+            </TableHead>
+            <TableHead
+              style={{ color: DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE }}
+            >
               IgnoreInWatchmode
-            </th>
-            <th style={{ color: DASHBOARD_COLORS.IGNORED }}>Ignored</th>
-            <th style={{ color: DASHBOARD_COLORS.NOT_HANDLED }}>Not handled</th>
+            </TableHead>
+            <TableHead style={{ color: DASHBOARD_COLORS.IGNORED }}>
+              Ignored
+            </TableHead>
+            <TableHead style={{ color: DASHBOARD_COLORS.NOT_HANDLED }}>
+              Not handled
+            </TableHead>
           </tr>
         </thead>
         <tbody>
           {projects.map((project, index) => (
-            <tr key={index} style={{ padding: '0px' }}>
-              <td style={{ padding: '1px 2px' }}>
-                {project.discoveredCount !== undefined ? '' : '❌ '}
-                {project.discoveredCount !== undefined ? (
-                  <a href={`/status/discovery/${project.name}`}>
-                    {project.diff &&
-                      project.diff.length > 0 &&
-                      'changes detected! '}
-                    {project.name}
-                  </a>
-                ) : (
-                  <span key={index}>{project.name}</span>
-                )}
-              </td>
+            <tr key={index} style={{ padding: '0px', textAlign: 'left' }}>
+              <TableData
+                value={project.diff && project.diff.length > 0 ? '⚠️' : ''}
+              />
               <TableData
                 value={
-                  hardcoded[project.name] === 0 ? '✅' : hardcoded[project.name]
+                  project.discoveredCount !== undefined ? (
+                    <a href={`/status/discovery/${project.name}`}>
+                      {project.name}
+                    </a>
+                  ) : (
+                    <span key={index}>{project.name}</span>
+                  )
+                }
+              />
+              <TableData
+                value={
+                  hardcoded[project.name] === 0 ? '' : hardcoded[project.name]
                 }
                 color={DASHBOARD_COLORS.UNVERIFIED}
               />
@@ -124,11 +144,37 @@ export function DashboardPage(props: DashboardPageProps) {
   )
 }
 
-function TableData(props: { value?: number | string; color?: string }) {
+function TableData(props: {
+  value?: number | string | ReactNode
+  color?: string
+}) {
   return (
-    <td style={{ padding: '1px 2px', color: props.color ?? '' }}>
+    <td
+      style={{
+        padding: '2px 4px',
+        textAlign: 'left',
+        color: props.color ?? '',
+      }}
+    >
       {props.value !== undefined && props.value}
     </td>
+  )
+}
+
+function TableHead(props: {
+  children?: ReactNode
+  rowSpan?: number
+  colSpan?: number
+  style?: React.CSSProperties
+}) {
+  return (
+    <th
+      rowSpan={props.rowSpan}
+      colSpan={props.colSpan}
+      style={{ padding: '2px 4px', textAlign: 'left', ...props.style }}
+    >
+      {props.children}
+    </th>
   )
 }
 
