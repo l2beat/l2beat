@@ -45,6 +45,7 @@ export type StarkexProduct =
   | 'immutable'
   | 'myria'
   | 'deversifi'
+  | 'apex'
 
 export interface StarkexTransactionApi {
   type: 'starkex'
