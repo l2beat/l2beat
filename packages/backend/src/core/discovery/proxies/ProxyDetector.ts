@@ -12,6 +12,7 @@ import { detectStarkWareProxy } from './auto/StarkWareProxy'
 import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
+import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 
 type Detector = (
   provider: DiscoveryProvider,
@@ -34,6 +35,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
 const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'new Arbitrum proxy': getNewArbitrumProxy,
   'call implementation proxy': getCallImplementationProxy,
+  'zkSync Lite proxy': getZkSyncLiteProxy,
 }
 
 export class ProxyDetector {

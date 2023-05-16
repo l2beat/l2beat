@@ -1,10 +1,8 @@
 import { Layer2 } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared'
 
-import {
-  ScalingRiskViewEntry,
-  ScalingRiskViewProps,
-} from '../view/ScalingRiskView'
+import { ScalingRiskViewProps } from '../view/ScalingRiskView'
+import { ScalingRiskViewEntry } from '../view/types'
 
 export function getRiskView(
   projects: Layer2[],
