@@ -23,6 +23,7 @@ const validatorAfkBlocks = discovery.getContractValue<number>(
   'RollupProxy',
   'VALIDATOR_AFK_BLOCKS',
 )
+const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 const challengeWindow = discovery.getContractValue<number>(
   'RollupProxy',
   'confirmPeriodBlocks',
@@ -32,6 +33,7 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
+const totalDelay = l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
 
 export const arbitrum: Layer2 = {
   type: 'layer2',
@@ -49,7 +51,7 @@ export const arbitrum: Layer2 = {
       The challenge will result in an interactive fraud proof game that will be eventually settled by L1. As long as there is at least one honest Validator, users are guaranteed that\
       eventually correct L2 state root will be published to L1. If Sequencer is censoring users transactions, it is possible to force the transaction via L1 queue. If no Validator publishes\
     L2 state root within ${formatSeconds(
-      validatorAfkBlocks * assumedBlockTime,
+      validatorAfkTime,
     )} (${validatorAfkBlocks} blocks), the Validator whitelist is dropped and anyone can take over as a new Validator.`,
     purpose: 'Universal',
     links: {
@@ -133,7 +135,7 @@ export const arbitrum: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(
-      l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay,
+      totalDelay
     ),
     sequencerFailure: {
       value: 'Transact using L1',
@@ -173,6 +175,10 @@ export const arbitrum: Layer2 = {
         {
           text: 'How is fraud proven - Arbitrum documentation FAQ',
           href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
+        },
+        {
+          text: 'Arbitrum Glossary: Challenge Period',
+          href: 'https://developer.arbitrum.io/intro/glossary#challenge-period',
         },
         {
           text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
