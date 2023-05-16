@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -16,6 +17,20 @@ import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')
+const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+const validatorAfkBlocks = discovery.getContractValue<number>(
+  'ArbitrumProxy',
+  'VALIDATOR_AFK_BLOCKS',
+)
+const challengeWindow = discovery.getContractValue<number>(
+  'ArbitrumProxy',
+  'confirmPeriodBlocks',
+)
+const l1TimelockDelay = discovery.getContractValue<number>(
+  'L1ArbitrumTimelock',
+  'getMinDelay',
+)
+const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
 
 export const nova: Layer2 = {
   type: 'layer2',
@@ -88,12 +103,15 @@ export const nova: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
-    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM,
+    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(
+      l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay,
+    ),
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
     validatorFailure: {
       value: 'Propose blocks',
-      description:
-        'Anyone can become a Validator after 7-days of inactivity from the currently whitelisted Validators.',
+      description: `Anyone can become a Validator after ${formatSeconds(
+        validatorAfkBlocks * assumedBlockTime,
+      )} of inactivity from the currently whitelisted Validators.`,
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -190,7 +208,11 @@ export const nova: Layer2 = {
         },
       ],
     },
-    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO,
+    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO(
+      l1TimelockDelay,
+      challengeWindow * assumedBlockTime,
+      l2TimelockDelay,
+    ),
   },
   contracts: {
     addresses: [
