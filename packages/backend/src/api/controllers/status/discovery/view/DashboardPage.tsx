@@ -99,7 +99,7 @@ export function DashboardPage(props: DashboardPageProps) {
                           .join('')
                       }
                     >
-                      ⚠️
+                      <a href={`/status/discovery/${project.name}`}>⚠️</a>
                     </span>
                   ) : (
                     ''
