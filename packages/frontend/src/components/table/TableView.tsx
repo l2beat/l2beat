@@ -7,6 +7,7 @@ interface Props<T> {
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
+  rerenderIndexesOn?: string
 }
 
 export interface ColumnConfig<T> {
@@ -29,7 +30,12 @@ export interface RowConfig<T> {
     Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 }
 
-export function TableView<T>({ items, columns, rows }: Props<T>) {
+export function TableView<T>({
+  items,
+  columns,
+  rows,
+  rerenderIndexesOn,
+}: Props<T>) {
   return (
     <div
       className={cx(
@@ -37,6 +43,9 @@ export function TableView<T>({ items, columns, rows }: Props<T>) {
         '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
+      {...(rerenderIndexesOn
+        ? { 'data-table-rerender-indexes-on': rerenderIndexesOn }
+        : {})}
     >
       <table className="w-full border-collapse text-left">
         <thead>
