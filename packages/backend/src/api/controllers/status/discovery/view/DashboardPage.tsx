@@ -83,7 +83,28 @@ export function DashboardPage(props: DashboardPageProps) {
           {projects.map((project, index) => (
             <tr key={index} style={{ padding: '0px', textAlign: 'left' }}>
               <TableData
-                value={project.diff && project.diff.length > 0 ? '⚠️' : ''}
+                value={
+                  project.diff && project.diff.length > 0 ? (
+                    <span
+                      data-tooltip={
+                        'Detected changes:\n' +
+                        project.diff
+                          .filter((d) => (d.diff ?? []).length > 0)
+                          .map(
+                            (d) =>
+                              `${d.name} - [${(d.diff ?? [])
+                                .map((a) => a.key ?? '')
+                                .join(', ')}] \n`,
+                          )
+                          .join('')
+                      }
+                    >
+                      ⚠️
+                    </span>
+                  ) : (
+                    ''
+                  )
+                }
               />
               <TableData
                 value={
