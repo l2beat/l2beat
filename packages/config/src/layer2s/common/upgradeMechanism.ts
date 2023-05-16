@@ -19,11 +19,7 @@ function ARBITRUM_DAO(
     )} delay for all L2 --> L1 messages (in total a delay of ${formatSeconds(
       totalDelay,
     )}). The Security Council can upgrade the contracts without any delay. It can also cancel any upgrades initiated by the DAO.`,
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK(
-        formatSeconds(totalDelay),
-      ),
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(formatSeconds(totalDelay))],
     references: [
       {
         text: 'Arbitrum DAO',

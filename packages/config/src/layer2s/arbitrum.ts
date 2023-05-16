@@ -33,7 +33,8 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
-const totalDelay = l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
+const totalDelay =
+  l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
 
 export const arbitrum: Layer2 = {
   type: 'layer2',
@@ -134,9 +135,7 @@ export const arbitrum: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(
-      totalDelay
-    ),
+    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
     sequencerFailure: {
       value: 'Transact using L1',
       description: VALUES.ARBITRUM.getSequencerFailureString(),

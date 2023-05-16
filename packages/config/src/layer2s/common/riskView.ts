@@ -100,7 +100,7 @@ export const UPGRADABLE_YES: ProjectRiskViewEntry = {
 
 export function UPGRADABLE_ARBITRUM(delay: number): ProjectRiskViewEntry {
   const delayString = formatSeconds(delay)
-  const delayStringRounded = '~'+formatSeconds(roundSeconds(delay, 60 * 60)) // round to nearest hour
+  const delayStringRounded = '~' + formatSeconds(roundSeconds(delay, 60 * 60)) // round to nearest hour
   return {
     value: `${delayStringRounded} or no delay`,
     description: `There is a ${delayString} delay for upgrades initiated by the DAO that can be canceled by the Security Council multisig. This multisig can also upgrade with no delay.`,
