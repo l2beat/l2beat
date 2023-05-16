@@ -1,6 +1,7 @@
 import { bridges, layer2s } from '@l2beat/config'
 import { assert, EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earl'
+import { isEqual } from 'lodash'
 
 import { ConfigReader } from './ConfigReader'
 import { DiscoveryConfig } from './DiscoveryConfig'
@@ -87,6 +88,31 @@ describe('discovery config.jsonc', () => {
         )
       }
     }
+  })
+
+  it(`every discovery.json has sorted contracts`, async () => {
+    const notSorted: string[] = []
+
+    for (const config of configs ?? []) {
+      const discovery = await configReader.readDiscovery(config.name)
+
+      if (
+        !isEqual(
+          discovery.contracts,
+          discovery.contracts
+            .slice()
+            .sort((a, b) => a.address.localeCompare(b.address.toString())),
+        )
+      ) {
+        notSorted.push(config.name)
+      }
+    }
+
+    assert(
+      notSorted.length === 0,
+      'Following projects do not have sorted contracts: ' +
+        notSorted.join(', '),
+    )
   })
 
   it('committed discovery config hash matches committed config hash', async () => {

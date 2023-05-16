@@ -4,208 +4,29 @@
   "configHash": "0xea614516defa6835f5df41e5e738cd4ead53de1a260201fbbdec0fe41bc3fdb2",
   "contracts": [
     {
-      "name": "StarkPerpetual",
-      "address": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
-      "code": "https://etherscan.deth.net/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8,0x2C0df87E073755139101b35c0A51e065291cc2d3,0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5,0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545,0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0,0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3",
-      "upgradeability": {
-        "type": "StarkWare diamond",
-        "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
-        "upgradeDelay": 0,
-        "isFinal": false,
-        "facets": {
-          "StarkWare_AllVerifiers_2020_1": "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",
-          "StarkWare_PerpetualTokensAndRamping_2020_1": "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545",
-          "StarkWare_PerpetualState_2020_1": "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0",
-          "StarkWare_PerpetualForcedActions_2020_1": "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
-        },
-        "proxyGovernance": [
-          "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
-          "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
-        ]
-      },
-      "values": {
-        "configurationDelay": 0,
-        "DEPOSIT_CANCEL_DELAY": 604800,
-        "FREEZE_GRACE_PERIOD": 1209600,
-        "getAssetInfo": [],
-        "getEthKey": [],
-        "getLastBatchId": 16318,
-        "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
-        "getOrderTreeHeight": 64,
-        "getRegisteredAvailabilityVerifiers": [
-          "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1"
-        ],
-        "getRegisteredVerifiers": [
-          "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
-        ],
-        "getSequenceNumber": 16025,
-        "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
-        "getUpgradeActivationDelay": 0,
-        "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getVaultTreeHeight": 64,
-        "globalConfigurationHash": "0x03cbd17769430aed60aa8b9a5867b375c3fdca23e56cbbd83e33290577f50449",
-        "identify": "StarkWare_PerpetualTokensAndRamping_2020_1",
-        "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
-        "initializerSize": 384,
-        "isFrozen": false,
-        "isNotFinalized": true,
-        "MAIN_DISPATCHER_SAFEGUARD_SLOT": "0xf3afa5472f846c7817e22b15110d7b184f2d3d6417baee645a1e963b8fac7e24",
-        "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
-        "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
-        "MAX_VERIFIER_COUNT": 64,
-        "OPERATORS": ["0x8129b737912e17212C8693B781928f5D0303390a"],
-        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
-        "UNFREEZE_DELAY": 31536000,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "VERIFIER_REMOVAL_DELAY": 3024000,
-        "VERSION": "1.0.0"
-      },
-      "derivedName": "Proxy"
-    },
-    {
-      "name": "Committee",
-      "address": "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
-      "code": "https://etherscan.deth.net/address/0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
+      "name": "ProxyAdmin",
+      "address": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
+      "code": "https://etherscan.deth.net/address/0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "hasRegisteredFact": false,
-        "identify": "StarkWare_Committee_2019_1",
-        "signaturesRequired": 1
+        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
       }
     },
     {
-      "name": "FinalizableGpsFactAdapter",
-      "address": "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
-      "code": "https://etherscan.deth.net/address/0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
+      "name": "Treasury",
+      "address": "0x639192D54431F8c816368D3FB4107Bc168d0E871",
+      "code": "https://etherscan.deth.net/address/0x639192D54431F8c816368D3FB4107Bc168d0E871,0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
       "upgradeability": {
-        "type": "immutable"
+        "type": "EIP1967 proxy",
+        "implementation": "0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
+        "admin": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
       },
       "values": {
-        "gpsContract": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
-        "isFinalized": true,
-        "programHash": "3022993219738828102988654230098311570191704199468817569337520096526584973032"
-      }
-    },
-    {
-      "name": "GpsStatementVerifier",
-      "address": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
-      "code": "https://etherscan.deth.net/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_GpsStatementVerifier_2020_1"
-      }
-    },
-    {
-      "name": "StarkExRemoverGovernorV2",
-      "address": "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
-      "code": "https://etherscan.deth.net/address/0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "MAIN_GOVERNORS_TO_REMOVE": [
-          "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080"
-        ],
-        "numMainGovernorsToRemove": 1,
-        "numProxyGovernorsToRemove": 1,
-        "owner": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
-        "PROXY_GOVERNORS_TO_REMOVE": [
-          "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
-        ],
-        "STARK_PERPETUAL": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
-      }
-    },
-    {
-      "name": "PriorityExecutor",
-      "address": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
-      "code": "https://etherscan.deth.net/address/0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getAdmin": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
-        "getDelay": 777600,
-        "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityPeriod": 604800,
-        "GRACE_PERIOD": 604800,
-        "MAXIMUM_DELAY": 1814400,
-        "MINIMUM_DELAY": 345600,
-        "MINIMUM_QUORUM": 200,
-        "ONE_HUNDRED_WITH_PRECISION": 10000,
-        "PROPOSITION_THRESHOLD": 50,
-        "VOTE_DIFFERENTIAL": 50,
-        "VOTING_DURATION": 26280
-      },
-      "derivedName": "PriorityExecutor"
-    },
-    {
-      "name": "DydxGovernor",
-      "address": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
-      "code": "https://etherscan.deth.net/address/0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "ADD_EXECUTOR_ROLE": "0x6d7de061afba91040b8f2fa055f62976f5be484e30e6b3eb7e3c831c2f411f09",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
-        "EIP712_DOMAIN_NAME": "dYdX Governance",
-        "getGovernanceStrategy": "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
-        "getProposalsCount": 13,
-        "getVotingDelay": 6570,
-        "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
-        "VOTE_EMITTED_TYPEHASH": "0x4e031542a9553ed1c4e810c54674ab4b984243e335b246aa3de73663bf4c11ee"
-      },
-      "derivedName": "DydxGovernor"
-    },
-    {
-      "name": "GovernanceStrategy",
-      "address": "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
-      "code": "https://etherscan.deth.net/address/0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "DYDX_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
-        "STAKED_DYDX_TOKEN": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
-      },
-      "derivedName": "GovernanceStrategy"
-    },
-    {
-      "name": "DydxToken",
-      "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
-      "code": "https://etherscan.deth.net/address/0x92D6C1e31e14520e676a687F0a93788B716BEff5",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "_mintingRestrictedBefore": 1784041200,
-        "_totalSupplySnapshotsCount": 1,
-        "_transfersRestrictedBefore": 1631113200,
-        "decimals": 18,
-        "DELEGATE_BY_TYPE_TYPEHASH": "0x10d8d059343739efce7dad10d09f0806da52b252b3e6a7951920d2d6ec4102e5",
-        "DELEGATE_TYPEHASH": "0x9a9a49b990ba9bb39f8048c490a40ab25c18f55d208d5fbcf958261a9b48716d",
-        "DOMAIN_SEPARATOR": "0x17e76dd75f3dfe3e50d31322433cc1405e898404a5724da2d4804cab81e0a88a",
-        "EIP712_DOMAIN": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
-        "EIP712_VERSION": "0x31",
-        "INITIAL_SUPPLY": "1000000000000000000000000000",
-        "MINT_MAX_PERCENT": 2,
-        "MINT_MIN_INTERVAL": 31536000,
-        "name": "dYdX",
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "symbol": "DYDX",
-        "totalSupply": "1000000000000000000000000000",
-        "TRANSFER_RESTRICTION_LIFTED_NO_LATER_THAN": 1631977200
-      },
-      "derivedName": "DydxToken"
+        "REVISION": 1
+      }
     },
     {
       "name": "Executor2",
@@ -279,31 +100,6 @@
       "derivedName": "SafetyModuleV2"
     },
     {
-      "name": "Treasury",
-      "address": "0x639192D54431F8c816368D3FB4107Bc168d0E871",
-      "code": "https://etherscan.deth.net/address/0x639192D54431F8c816368D3FB4107Bc168d0E871,0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
-        "admin": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
-      },
-      "values": {
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
-        "REVISION": 1
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
-      "code": "https://etherscan.deth.net/address/0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
-      }
-    },
-    {
       "name": "ProxyAdmin",
       "address": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
       "code": "https://etherscan.deth.net/address/0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
@@ -313,6 +109,175 @@
       "values": {
         "owner": "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
       }
+    },
+    {
+      "name": "DydxGovernor",
+      "address": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
+      "code": "https://etherscan.deth.net/address/0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "ADD_EXECUTOR_ROLE": "0x6d7de061afba91040b8f2fa055f62976f5be484e30e6b3eb7e3c831c2f411f09",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
+        "EIP712_DOMAIN_NAME": "dYdX Governance",
+        "getGovernanceStrategy": "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
+        "getProposalsCount": 13,
+        "getVotingDelay": 6570,
+        "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
+        "VOTE_EMITTED_TYPEHASH": "0x4e031542a9553ed1c4e810c54674ab4b984243e335b246aa3de73663bf4c11ee"
+      },
+      "derivedName": "DydxGovernor"
+    },
+    {
+      "name": "GpsStatementVerifier",
+      "address": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
+      "code": "https://etherscan.deth.net/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_GpsStatementVerifier_2020_1"
+      }
+    },
+    {
+      "name": "Committee",
+      "address": "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
+      "code": "https://etherscan.deth.net/address/0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "hasRegisteredFact": false,
+        "identify": "StarkWare_Committee_2019_1",
+        "signaturesRequired": 1
+      }
+    },
+    {
+      "name": "GovernanceStrategy",
+      "address": "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
+      "code": "https://etherscan.deth.net/address/0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "DYDX_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
+        "STAKED_DYDX_TOKEN": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
+      },
+      "derivedName": "GovernanceStrategy"
+    },
+    {
+      "name": "DydxToken",
+      "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
+      "code": "https://etherscan.deth.net/address/0x92D6C1e31e14520e676a687F0a93788B716BEff5",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "_mintingRestrictedBefore": 1784041200,
+        "_totalSupplySnapshotsCount": 1,
+        "_transfersRestrictedBefore": 1631113200,
+        "decimals": 18,
+        "DELEGATE_BY_TYPE_TYPEHASH": "0x10d8d059343739efce7dad10d09f0806da52b252b3e6a7951920d2d6ec4102e5",
+        "DELEGATE_TYPEHASH": "0x9a9a49b990ba9bb39f8048c490a40ab25c18f55d208d5fbcf958261a9b48716d",
+        "DOMAIN_SEPARATOR": "0x17e76dd75f3dfe3e50d31322433cc1405e898404a5724da2d4804cab81e0a88a",
+        "EIP712_DOMAIN": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+        "EIP712_VERSION": "0x31",
+        "INITIAL_SUPPLY": "1000000000000000000000000000",
+        "MINT_MAX_PERCENT": 2,
+        "MINT_MIN_INTERVAL": 31536000,
+        "name": "dYdX",
+        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "symbol": "DYDX",
+        "totalSupply": "1000000000000000000000000000",
+        "TRANSFER_RESTRICTION_LIFTED_NO_LATER_THAN": 1631977200
+      },
+      "derivedName": "DydxToken"
+    },
+    {
+      "name": "PriorityExecutor",
+      "address": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
+      "code": "https://etherscan.deth.net/address/0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getAdmin": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
+        "getDelay": 777600,
+        "getPendingAdmin": "0x0000000000000000000000000000000000000000",
+        "getPriorityPeriod": 604800,
+        "GRACE_PERIOD": 604800,
+        "MAXIMUM_DELAY": 1814400,
+        "MINIMUM_DELAY": 345600,
+        "MINIMUM_QUORUM": 200,
+        "ONE_HUNDRED_WITH_PRECISION": 10000,
+        "PROPOSITION_THRESHOLD": 50,
+        "VOTE_DIFFERENTIAL": 50,
+        "VOTING_DURATION": 26280
+      },
+      "derivedName": "PriorityExecutor"
+    },
+    {
+      "name": "StarkPerpetual",
+      "address": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
+      "code": "https://etherscan.deth.net/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8,0x2C0df87E073755139101b35c0A51e065291cc2d3,0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5,0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545,0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0,0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3",
+      "upgradeability": {
+        "type": "StarkWare diamond",
+        "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
+        "upgradeDelay": 0,
+        "isFinal": false,
+        "facets": {
+          "StarkWare_AllVerifiers_2020_1": "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",
+          "StarkWare_PerpetualTokensAndRamping_2020_1": "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545",
+          "StarkWare_PerpetualState_2020_1": "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0",
+          "StarkWare_PerpetualForcedActions_2020_1": "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
+        },
+        "proxyGovernance": [
+          "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
+          "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
+        ]
+      },
+      "values": {
+        "configurationDelay": 0,
+        "DEPOSIT_CANCEL_DELAY": 604800,
+        "FREEZE_GRACE_PERIOD": 1209600,
+        "getAssetInfo": [],
+        "getEthKey": [],
+        "getLastBatchId": 16318,
+        "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
+        "getOrderTreeHeight": 64,
+        "getRegisteredAvailabilityVerifiers": [
+          "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1"
+        ],
+        "getRegisteredVerifiers": [
+          "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
+        ],
+        "getSequenceNumber": 16025,
+        "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
+        "getUpgradeActivationDelay": 0,
+        "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
+        "getVaultTreeHeight": 64,
+        "globalConfigurationHash": "0x03cbd17769430aed60aa8b9a5867b375c3fdca23e56cbbd83e33290577f50449",
+        "identify": "StarkWare_PerpetualTokensAndRamping_2020_1",
+        "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
+        "initializerSize": 384,
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAIN_DISPATCHER_SAFEGUARD_SLOT": "0xf3afa5472f846c7817e22b15110d7b184f2d3d6417baee645a1e963b8fac7e24",
+        "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
+        "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
+        "MAX_VERIFIER_COUNT": 64,
+        "OPERATORS": ["0x8129b737912e17212C8693B781928f5D0303390a"],
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "UNFREEZE_DELAY": 31536000,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "VERIFIER_REMOVAL_DELAY": 3024000,
+        "VERSION": "1.0.0"
+      },
+      "derivedName": "Proxy"
     },
     {
       "name": "Executor1",
@@ -335,6 +300,41 @@
         "VOTING_DURATION": 65700
       },
       "derivedName": "Executor"
+    },
+    {
+      "name": "FinalizableGpsFactAdapter",
+      "address": "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
+      "code": "https://etherscan.deth.net/address/0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "gpsContract": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
+        "isFinalized": true,
+        "programHash": "3022993219738828102988654230098311570191704199468817569337520096526584973032"
+      }
+    },
+    {
+      "name": "StarkExRemoverGovernorV2",
+      "address": "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
+      "code": "https://etherscan.deth.net/address/0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "MAIN_GOVERNORS_TO_REMOVE": [
+          "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080"
+        ],
+        "numMainGovernorsToRemove": 1,
+        "numProxyGovernorsToRemove": 1,
+        "owner": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
+        "PROXY_GOVERNORS_TO_REMOVE": [
+          "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
+        ],
+        "STARK_PERPETUAL": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
+      }
     }
   ],
   "eoas": [

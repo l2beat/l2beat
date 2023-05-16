@@ -4,6 +4,77 @@
   "configHash": "0xe82e48dc5029840cee0194c7b922f464f2012203ec8230c5ae680f39244542ad",
   "contracts": [
     {
+      "name": "Governance",
+      "address": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+      "code": "https://etherscan.deth.net/address/0x02ecef526f806f06357659fFD14834fe82Ef4B04,0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
+        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+      },
+      "values": {
+        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
+        "networkGovernor": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
+        "totalTokens": 39,
+        "validators": ["0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"]
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+      "code": "https://etherscan.deth.net/address/0x27C229937745d697d28FC7853d1bFEA7331Edf56,0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
+        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+      },
+      "values": {
+        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"
+      }
+    },
+    {
+      "name": "ZkSyncCommitBlock",
+      "address": "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
+      "code": "https://etherscan.deth.net/address/0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+        "exodusMode": false,
+        "firstPendingWithdrawalIndex": 0,
+        "firstPriorityRequestId": 0,
+        "numberOfPendingWithdrawals": 0,
+        "totalBlocksCommitted": 0,
+        "totalBlocksVerified": 0,
+        "totalCommittedPriorityRequests": 0,
+        "totalOpenPriorityRequests": 0,
+        "totalPairTokens": 0,
+        "upgradePreparationActivationTime": 0,
+        "upgradePreparationActive": false,
+        "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
+        "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "",
+      "unverified": true,
+      "address": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+      "code": "https://etherscan.deth.net/address/0x661121AE41edE3f6FECDed922c59acC19A3ea9B3,0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
+        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+      },
+      "values": {
+        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"
+      }
+    },
+    {
       "name": "UpgradeGatekeeper",
       "address": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
       "code": "https://etherscan.deth.net/address/0x714B2D10210f2A3a7AA614F949259C87613689aB",
@@ -28,63 +99,10 @@
     {
       "name": "",
       "unverified": true,
-      "address": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
-      "code": "https://etherscan.deth.net/address/0x961369d347EF7A6896BDD39cBE2B89e3911f521f,0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
+      "address": "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5",
+      "code": "https://etherscan.deth.net/address/0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5",
       "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
-        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
-      },
-      "values": {
-        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "getTarget": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"
-      }
-    },
-    {
-      "name": "",
-      "unverified": true,
-      "address": "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
-      "code": "https://etherscan.deth.net/address/0x27C229937745d697d28FC7853d1bFEA7331Edf56,0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
-        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
-      },
-      "values": {
-        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "getTarget": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"
-      }
-    },
-    {
-      "name": "",
-      "unverified": true,
-      "address": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
-      "code": "https://etherscan.deth.net/address/0x661121AE41edE3f6FECDed922c59acC19A3ea9B3,0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
-        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
-      },
-      "values": {
-        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "getTarget": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"
-      }
-    },
-    {
-      "name": "Governance",
-      "address": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
-      "code": "https://etherscan.deth.net/address/0x02ecef526f806f06357659fFD14834fe82Ef4B04,0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
-        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
-      },
-      "values": {
-        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "getTarget": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
-        "networkGovernor": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
-        "totalTokens": 39,
-        "validators": ["0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"]
+        "type": "immutable"
       }
     },
     {
@@ -122,34 +140,16 @@
     {
       "name": "",
       "unverified": true,
-      "address": "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5",
-      "code": "https://etherscan.deth.net/address/0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5",
+      "address": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+      "code": "https://etherscan.deth.net/address/0x961369d347EF7A6896BDD39cBE2B89e3911f521f,0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
       "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "ZkSyncCommitBlock",
-      "address": "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
-      "code": "https://etherscan.deth.net/address/0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
-      "upgradeability": {
-        "type": "immutable"
+        "type": "EIP1967 proxy",
+        "implementation": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
+        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
       },
       "values": {
-        "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
-        "exodusMode": false,
-        "firstPendingWithdrawalIndex": 0,
-        "firstPriorityRequestId": 0,
-        "numberOfPendingWithdrawals": 0,
-        "totalBlocksCommitted": 0,
-        "totalBlocksVerified": 0,
-        "totalCommittedPriorityRequests": 0,
-        "totalOpenPriorityRequests": 0,
-        "totalPairTokens": 0,
-        "upgradePreparationActivationTime": 0,
-        "upgradePreparationActive": false,
-        "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
+        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"
       }
     }
   ],

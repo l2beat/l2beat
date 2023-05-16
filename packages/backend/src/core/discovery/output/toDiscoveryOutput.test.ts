@@ -202,14 +202,6 @@ describe(processAnalysis.name, () => {
     expect(JSON.stringify(result)).toMatchSnapshot(this)
   })
 
-  it('contract order matters', () => {
-    // TODO: in the future it shouldn't
-    const result1 = processAnalysis([CONTRACT_A, CONTRACT_B, CONTRACT_C])
-    const result2 = processAnalysis([CONTRACT_B, CONTRACT_C, CONTRACT_A])
-
-    expect(JSON.stringify(result1)).not.toEqual(JSON.stringify(result2))
-  })
-
   it('field order matters', () => {
     // TODO: in the future it shouldn't
     const result1 = processAnalysis([
