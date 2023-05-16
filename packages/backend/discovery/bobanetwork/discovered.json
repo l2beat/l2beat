@@ -4,20 +4,101 @@
   "configHash": "0x97e96bde217106864e5a44a5b22f3ebd850041079e7b2db3149a4ccf53c011f9",
   "contracts": [
     {
-      "name": "L1StandardBridge",
-      "address": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
-      "code": "https://etherscan.deth.net/address/0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00,0xAf41c681143Cb91f218959375f4452A604504833",
+      "name": "L1CrossDomainMessenger_2",
+      "address": "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820",
+      "code": "https://etherscan.deth.net/address/0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820",
       "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xAf41c681143Cb91f218959375f4452A604504833",
-        "admin": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+        "type": "immutable"
       },
       "values": {
-        "currentDepositInfoHash": "0x1d30cb0c7721c29050305a18b2b179a7751cf2297803960bce751928c833565a",
-        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "lastHashUpdateBlock": 17089362,
-        "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
-        "priorDepositInfoHash": "0xe6492d2a29f6d17435cccc19837473c8b676f2d1da9ed96205f4320d7fc3ded2"
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
+        "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
+        "paused": false,
+        "xDomainMessageSender": "EXPECT_REVERT"
+      },
+      "derivedName": "L1CrossDomainMessenger"
+    },
+    {
+      "name": "ChainStorageContainer",
+      "address": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
+      "code": "https://etherscan.deth.net/address/0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getGlobalMetadata": "0x00000000000000000000000000000000000064427fdb00000f5628",
+        "length": 15165,
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
+        "owner": "StateCommitmentChain"
+      }
+    },
+    {
+      "name": "ChainStorageContainer",
+      "address": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
+      "code": "https://etherscan.deth.net/address/0x17148284d2da2f38c96346f1776C1BF7D7691231",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getGlobalMetadata": "0x00000000000000000104d8370064427f030000005ec800000f5628",
+        "length": 16948,
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
+        "owner": "CanonicalTransactionChain"
+      }
+    },
+    {
+      "name": "Proxy__L1LiquidityPoolArguments",
+      "address": "0x1A26ef6575B7BBB864d984D9255C069F6c361a14",
+      "code": "https://etherscan.deth.net/address/0x1A26ef6575B7BBB864d984D9255C069F6c361a14",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "L1MultiMessageRelayerFast",
+      "address": "0x2d6134Ac3e480fBDD263B7163d333dCA285f9622",
+      "code": "https://etherscan.deth.net/address/0x2d6134Ac3e480fBDD263B7163d333dCA285f9622",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+      }
+    },
+    {
+      "name": "ChainStorageContainer",
+      "address": "0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d",
+      "code": "https://etherscan.deth.net/address/0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getGlobalMetadata": "0x000000000000000000000000000000000000000000000000000000",
+        "length": 0,
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
+        "owner": "CanonicalTransactionChain"
+      }
+    },
+    {
+      "name": "L1MultiMessageRelayer",
+      "address": "0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B",
+      "code": "https://etherscan.deth.net/address/0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+      }
+    },
+    {
+      "name": "BondManager",
+      "address": "0x60660e6CDEb423cf847dD11De4C473130D65b627",
+      "code": "https://etherscan.deth.net/address/0x60660e6CDEb423cf847dD11De4C473130D65b627",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
       }
     },
     {
@@ -65,23 +146,6 @@
       }
     },
     {
-      "name": "StateCommitmentChain",
-      "address": "0xdE7355C971A5B733fe2133753Abd7e5441d441Ec",
-      "code": "https://etherscan.deth.net/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "batches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
-        "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1682079707,
-        "getTotalBatches": 15165,
-        "getTotalElements": 1005096,
-        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
-        "SEQUENCER_PUBLISH_WINDOW": 1800
-      }
-    },
-    {
       "name": "L1NFTBridge",
       "address": "0x8DB3B7Db8A0f77e0E21178FcaD0A53E52bfdBA82",
       "code": "https://etherscan.deth.net/address/0x8DB3B7Db8A0f77e0E21178FcaD0A53E52bfdBA82",
@@ -97,25 +161,63 @@
       }
     },
     {
-      "name": "L1MultiMessageRelayerFast",
-      "address": "0x2d6134Ac3e480fBDD263B7163d333dCA285f9622",
-      "code": "https://etherscan.deth.net/address/0x2d6134Ac3e480fBDD263B7163d333dCA285f9622",
+      "name": "Lib_ResolvedDelegateProxy",
+      "address": "0xC891F466e53f40603250837282eAE4e22aD5b088",
+      "code": "https://etherscan.deth.net/address/0xC891F466e53f40603250837282eAE4e22aD5b088",
       "upgradeability": {
         "type": "immutable"
-      },
-      "values": {
-        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
       }
     },
     {
-      "name": "L1MultiMessageRelayer",
-      "address": "0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B",
-      "code": "https://etherscan.deth.net/address/0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B",
+      "name": "L1CrossDomainMessengerFast",
+      "address": "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E",
+      "code": "https://etherscan.deth.net/address/0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E,0x4CD1948de677e6f791B463daaB807645D3460996",
+      "upgradeability": {
+        "type": "resolved delegate proxy",
+        "addressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
+        "implementationName": "OVM_L1CrossDomainMessengerFast",
+        "implementation": "0x4CD1948de677e6f791B463daaB807645D3460996"
+      },
+      "values": {
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
+        "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
+        "paused": false,
+        "xDomainMessageSender": "EXPECT_REVERT"
+      },
+      "derivedName": "L1CrossDomainMessengerFast"
+    },
+    {
+      "name": "L1StandardBridge",
+      "address": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
+      "code": "https://etherscan.deth.net/address/0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00,0xAf41c681143Cb91f218959375f4452A604504833",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xAf41c681143Cb91f218959375f4452A604504833",
+        "admin": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+      },
+      "values": {
+        "currentDepositInfoHash": "0x1d30cb0c7721c29050305a18b2b179a7751cf2297803960bce751928c833565a",
+        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
+        "lastHashUpdateBlock": 17089362,
+        "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
+        "priorDepositInfoHash": "0xe6492d2a29f6d17435cccc19837473c8b676f2d1da9ed96205f4320d7fc3ded2"
+      }
+    },
+    {
+      "name": "StateCommitmentChain",
+      "address": "0xdE7355C971A5B733fe2133753Abd7e5441d441Ec",
+      "code": "https://etherscan.deth.net/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+        "batches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
+        "FRAUD_PROOF_WINDOW": 604800,
+        "getLastSequencerTimestamp": 1682079707,
+        "getTotalBatches": 15165,
+        "getTotalElements": 1005096,
+        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
+        "SEQUENCER_PUBLISH_WINDOW": 1800
       }
     },
     {
@@ -144,67 +246,6 @@
       }
     },
     {
-      "name": "L1CrossDomainMessengerFast",
-      "address": "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E",
-      "code": "https://etherscan.deth.net/address/0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E,0x4CD1948de677e6f791B463daaB807645D3460996",
-      "upgradeability": {
-        "type": "resolved delegate proxy",
-        "addressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
-        "implementationName": "OVM_L1CrossDomainMessengerFast",
-        "implementation": "0x4CD1948de677e6f791B463daaB807645D3460996"
-      },
-      "values": {
-        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
-        "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
-        "paused": false,
-        "xDomainMessageSender": "EXPECT_REVERT"
-      },
-      "derivedName": "L1CrossDomainMessengerFast"
-    },
-    {
-      "name": "L1CrossDomainMessenger_2",
-      "address": "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820",
-      "code": "https://etherscan.deth.net/address/0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
-        "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
-        "paused": false,
-        "xDomainMessageSender": "EXPECT_REVERT"
-      },
-      "derivedName": "L1CrossDomainMessenger"
-    },
-    {
-      "name": "ChainStorageContainer",
-      "address": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
-      "code": "https://etherscan.deth.net/address/0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getGlobalMetadata": "0x00000000000000000000000000000000000064427fdb00000f5628",
-        "length": 15165,
-        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
-        "owner": "StateCommitmentChain"
-      }
-    },
-    {
-      "name": "ChainStorageContainer",
-      "address": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
-      "code": "https://etherscan.deth.net/address/0x17148284d2da2f38c96346f1776C1BF7D7691231",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getGlobalMetadata": "0x00000000000000000104d8370064427f030000005ec800000f5628",
-        "length": 16948,
-        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
-        "owner": "CanonicalTransactionChain"
-      }
-    },
-    {
       "name": "CanonicalTransactionChain",
       "address": "0xfBd2541e316948B259264c02f370eD088E04c3Db",
       "code": "https://etherscan.deth.net/address/0xfBd2541e316948B259264c02f370eD088E04c3Db",
@@ -228,47 +269,6 @@
         "maxTransactionGasLimit": 11000000,
         "MIN_ROLLUP_TX_GAS": 100000,
         "queue": "0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d"
-      }
-    },
-    {
-      "name": "ChainStorageContainer",
-      "address": "0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d",
-      "code": "https://etherscan.deth.net/address/0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000000000000000000000",
-        "length": 0,
-        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
-        "owner": "CanonicalTransactionChain"
-      }
-    },
-    {
-      "name": "BondManager",
-      "address": "0x60660e6CDEb423cf847dD11De4C473130D65b627",
-      "code": "https://etherscan.deth.net/address/0x60660e6CDEb423cf847dD11De4C473130D65b627",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
-      }
-    },
-    {
-      "name": "Proxy__L1LiquidityPoolArguments",
-      "address": "0x1A26ef6575B7BBB864d984D9255C069F6c361a14",
-      "code": "https://etherscan.deth.net/address/0x1A26ef6575B7BBB864d984D9255C069F6c361a14",
-      "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "Lib_ResolvedDelegateProxy",
-      "address": "0xC891F466e53f40603250837282eAE4e22aD5b088",
-      "code": "https://etherscan.deth.net/address/0xC891F466e53f40603250837282eAE4e22aD5b088",
-      "upgradeability": {
-        "type": "immutable"
       }
     }
   ],

@@ -24,18 +24,20 @@ export function processAnalysis(
 
   const { contracts, abis } = getContracts(results)
   return {
-    contracts: contracts.map((x) =>
-      withoutUndefinedKeys({
-        name: x.name,
-        address: x.address,
-        unverified: x.isVerified ? undefined : (true as const),
-        code: x.codeLink,
-        upgradeability: x.upgradeability,
-        values: Object.keys(x.values).length === 0 ? undefined : x.values,
-        errors: Object.keys(x.errors).length === 0 ? undefined : x.errors,
-        derivedName: x.derivedName,
-      }),
-    ),
+    contracts: contracts
+      .sort((a, b) => a.address.localeCompare(b.address.toString()))
+      .map((x) =>
+        withoutUndefinedKeys({
+          name: x.name,
+          address: x.address,
+          unverified: x.isVerified ? undefined : (true as const),
+          code: x.codeLink,
+          upgradeability: x.upgradeability,
+          values: Object.keys(x.values).length === 0 ? undefined : x.values,
+          errors: Object.keys(x.errors).length === 0 ? undefined : x.errors,
+          derivedName: x.derivedName,
+        }),
+      ),
     eoas: results
       .filter((x) => x.type === 'EOA')
       .map((x) => x.address)
