@@ -70,7 +70,12 @@ export const metis: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_QUEUE,
+      references: [
+        'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code#F1#L212',
+      ],
+    },
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('METIS'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
