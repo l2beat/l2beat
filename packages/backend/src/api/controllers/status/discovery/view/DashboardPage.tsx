@@ -156,7 +156,7 @@ function TableData(props: {
   return (
     <td
       style={{
-        padding: '2px 4px',
+        padding: '2px 12px',
         textAlign: 'left',
         color: props.color ?? '',
       }}
@@ -176,7 +176,7 @@ function TableHead(props: {
     <th
       rowSpan={props.rowSpan}
       colSpan={props.colSpan}
-      style={{ padding: '2px 4px', textAlign: 'left', ...props.style }}
+      style={{ padding: '2px 12px', textAlign: 'left', ...props.style }}
     >
       {props.children}
     </th>
