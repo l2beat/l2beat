@@ -1,7 +1,7 @@
 {
   "name": "pNetwork",
-  "blockNumber": 16720297,
-  "configHash": "0xde648f9842593952677381089354cedd2a969bba27b683a8ba8656820297ddbf",
+  "blockNumber": 17271994,
+  "configHash": "0x0eef3574f3087ba2266cdf39ac7a43abb64e66e829c5fd5d07c678b08b637f64",
   "contracts": [
     {
       "name": "Erc20Vault",
@@ -59,7 +59,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "PProxyAdminOwner",
       "address": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB",
       "code": "https://etherscan.deth.net/address/0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -76,9 +76,10 @@
           "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
         ],
         "getThreshold": 2,
-        "nonce": 2,
+        "nonce": 4,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "ProxyAdmin",

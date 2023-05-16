@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
-  "blockNumber": 17031597,
-  "configHash": "0xfe2207a3c2c90f5c245c5e2f86f47dfbe832ee8ff3fcc5bfb9bdb0b3412ac10c",
+  "blockNumber": 17271859,
+  "configHash": "0xdb79a46a46aa77ed706102c6e7a3a47d1558f7364f260c8f22542a760b5d4ed4",
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -61,7 +61,7 @@
         ],
         "CHAIN_IDS": [
           102, 109, 114, 126, 110, 111, 106, 116, 101, 115, 112, 108, 125, 145,
-          151, 150, 138, 12, 2, 153, 155, 156, 154, 149, 166, 158, 165
+          151, 150, 138, 12, 2, 153, 155, 156, 154, 149, 166, 158, 165, 167
         ],
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -116,15 +116,16 @@
       "derivedName": "UltraLightNodeV2"
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "LayerZero_Oracle",
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
-      "code": "https://etherscan.deth.net/address/0x5a54fe5234E811466D5366846283323c954310B2,0xccEf13cFEB6873c167f62A365548A57C9ed29DC5",
+      "unverified": true,
+      "code": "https://etherscan.deth.net/address/0x5a54fe5234E811466D5366846283323c954310B2,0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0xccEf13cFEB6873c167f62A365548A57C9ed29DC5",
+        "implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
         "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "NonceContract",
@@ -157,7 +158,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
-        "nonce": 404,
+        "nonce": 475,
         "VERSION": "1.3.0"
       }
     },
@@ -184,15 +185,16 @@
       }
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "LayerZero_Relayer",
       "address": "0x902F09715B6303d4173037652FA7377e5b98089E",
-      "code": "https://etherscan.deth.net/address/0x902F09715B6303d4173037652FA7377e5b98089E,0xDD55F55CB9a39EF1eed4Ee1a84EE1b7411bE306a",
+      "unverified": true,
+      "code": "https://etherscan.deth.net/address/0x902F09715B6303d4173037652FA7377e5b98089E,0x9512a85438606dEdE54297634dEd7C7C0c231874",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0xDD55F55CB9a39EF1eed4Ee1a84EE1b7411bE306a",
+        "implementation": "0x9512a85438606dEdE54297634dEd7C7C0c231874",
         "admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "ProxyAdmin",
@@ -254,7 +256,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 34,
+        "nonce": 35,
         "VERSION": "1.3.0"
       }
     }
