@@ -1,7 +1,6 @@
 import { default as React } from 'react'
 
 import { DiscoveryDiff } from '../../../../../core/discovery/output/diffDiscovery'
-import { fieldDiffToMessage } from '../../../../../core/discovery/output/diffToMessages'
 import { Page } from '../../view/Page'
 import { reactToHtml } from '../../view/reactToHtml'
 import { DashboardContract } from '../props/getDashboardContracts'
