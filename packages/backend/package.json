@@ -23,6 +23,7 @@
     "@koa/router": "^12.0.0",
     "@l2beat/config": "*",
     "@l2beat/shared": "*",
+    "@sentry/node": "^7.52.1",
     "@types/koa": "^2.13.5",
     "@types/koa__router": "^12.0.0",
     "@types/lodash": "^4.14.191",
@@ -50,7 +51,6 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "rimraf": "^5.0.0",
-    "rollbar": "^2.26.1",
     "source-map-support": "^0.5.21",
     "twitter-api-v2": "^1.14.0",
     "zod": "^3.20.2"

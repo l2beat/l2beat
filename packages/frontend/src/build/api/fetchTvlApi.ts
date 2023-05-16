@@ -1,6 +1,6 @@
 import { TvlApiResponse } from '@l2beat/shared'
 
-import { JsonHttpClient } from './caching/JsonHttpClient'
+import { JsonHttpClient } from '../caching/JsonHttpClient'
 
 export async function fetchTvlApi(
   apiUrl: string,

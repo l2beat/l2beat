@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { Config } from '../../build/config'
-import { PagesData } from '../../build/types'
 import { PageWrapper } from '../../components'
+import { PagesData } from '../Page'
 import { BridgesRiskPage } from './BridgesRiskPage'
 import { getProps } from './getProps'
 
