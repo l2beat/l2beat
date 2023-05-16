@@ -1,7 +1,7 @@
 {
   "name": "metis",
-  "blockNumber": 17272003,
-  "configHash": "0x14dd8e93635f58ad5b5810765e0149d29cc7fbb4d9e8640f2cce332cebdf4993",
+  "blockNumber": 17272120,
+  "configHash": "0x46e05905af2528635e8109b90ad667a1aa8936d9df49d0ecc9770ed76c6e978e",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -28,13 +28,14 @@
       },
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000064635b57000056dc0b",
-        "length": 15256,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000064636c37000056ddb9",
+        "length": 15257,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000064635b57000056dc0b",
-        "lengthByChainId": 15256
-      }
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000064636c37000056ddb9",
+        "lengthByChainId": 15257
+      },
+      "derivedName": "ChainStorageContainer"
     },
     {
       "name": "L1StandardBridge",
@@ -283,15 +284,16 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1684233047,
-        "getTotalBatches": 15256,
-        "getTotalElements": 5692427,
+        "getLastSequencerTimestamp": 1684237367,
+        "getTotalBatches": 15257,
+        "getTotalElements": 5692857,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000,
-        "getLastSequencerTimestampByChainId": 1684233047,
-        "getTotalBatchesByChainId": 15256,
-        "getTotalElementsByChainId": 5692427
-      }
+        "getLastSequencerTimestampByChainId": 1684237367,
+        "getTotalBatchesByChainId": 15257,
+        "getTotalElementsByChainId": 5692857
+      },
+      "derivedName": "StateCommitmentChain"
     },
     {
       "name": "MVM_L2ChainManagerOnL1",
