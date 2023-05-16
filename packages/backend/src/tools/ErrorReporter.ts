@@ -1,23 +1,27 @@
+import Sentry from '@sentry/node'
 import { Context } from 'koa'
-import Rollbar from 'rollbar'
 
-const accessToken = process.env.ROLLBAR_ACCESS_TOKEN
-const rollbar = accessToken
-  ? new Rollbar({
-      accessToken,
-      captureUncaught: true,
-      captureUnhandledRejections: true,
-    })
-  : undefined
+const sentryDsn = process.env.SENTRY_DSN
 
-if (rollbar) {
-  console.log('Rollbar integration enabled')
+if (sentryDsn) {
+  Sentry.init({
+    dsn: sentryDsn,
+
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+  })
+  console.log('Sentry integration enabled')
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function reportError(...args: any[]): void {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  rollbar?.error(...args)
+export function reportError(...args: unknown[]): void {
+  // note: we can't be sure that first arg is an error
+  if (args[0] instanceof Error) {
+    Sentry.captureException(args[0], { extra: { context: args.slice(1) } })
+  } else {
+    Sentry.captureException(new Error('unknown'), { extra: { context: args } })
+  }
 }
 
 export function handleServerError(error: Error, ctx: Context) {
