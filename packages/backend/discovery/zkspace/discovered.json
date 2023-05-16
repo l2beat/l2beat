@@ -4,29 +4,6 @@
   "configHash": "0x5ec7715363bb5f739c381fb4df66f2663218a1657a6fbff15da2c655a7dbd457",
   "contracts": [
     {
-      "name": "UpgradeGatekeeper",
-      "address": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
-      "code": "https://etherscan.deth.net/address/0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getMaster": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be",
-        "mainContract": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
-        "managedContracts": [
-          "0x83Cb1531Ec8447366501aE440478da245EcffB89",
-          "0xc632347cc96A4400653E3514eA148630455295b5",
-          "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-          "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
-          "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
-          "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
-        ],
-        "noticePeriodFinishTimestamp": 0,
-        "upgradeStatus": 0,
-        "versionId": 1
-      }
-    },
-    {
       "name": "VerifierExit",
       "address": "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
       "code": "https://etherscan.deth.net/address/0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81,0x41455808B3109AD0f79672C44D75933D3529FEaE",
@@ -41,110 +18,32 @@
       }
     },
     {
-      "name": "Verifier",
-      "address": "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
-      "code": "https://etherscan.deth.net/address/0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af,0x44DedA2C824458A5DfE1e363c679dea33f1ffA39",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x44DedA2C824458A5DfE1e363c679dea33f1ffA39",
-        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
-      },
-      "values": {
-        "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
-        "getTarget": "0x44DedA2C824458A5DfE1e363c679dea33f1ffA39"
-      }
-    },
-    {
-      "name": "UniswapV2Factory",
-      "address": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-      "code": "https://etherscan.deth.net/address/0xc07f850b60E0EEd49a09E455b01a869C25963735,0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
-        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
-      },
-      "values": {
-        "allPairsLength": 64,
-        "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
-        "getTarget": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
-        "zkSyncAddress": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
-      }
-    },
-    {
-      "name": "ZKSeaNFT",
-      "address": "0xc632347cc96A4400653E3514eA148630455295b5",
-      "code": "https://etherscan.deth.net/address/0xc632347cc96A4400653E3514eA148630455295b5,0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
-        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
-      },
-      "values": {
-        "baseURI": "",
-        "contractURI": "",
-        "firstPendingWithdrawal": 0,
-        "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
-        "getTarget": "0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
-        "isOwner": false,
-        "name": "ZKSeaNFT",
-        "numOfPendingWithdrawals": 0,
-        "owner": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be",
-        "symbol": "ZKSeaNFT",
-        "totalSupply": 2,
-        "zksCore": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
-      }
-    },
-    {
-      "name": "Governance",
-      "address": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
-      "code": "https://etherscan.deth.net/address/0x83Cb1531Ec8447366501aE440478da245EcffB89,0x6659174CdB0c445B897aEd25181f293E468941a5",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x6659174CdB0c445B897aEd25181f293E468941a5",
-        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
-      },
-      "values": {
-        "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
-        "getTarget": "0x6659174CdB0c445B897aEd25181f293E468941a5",
-        "networkGovernor": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be",
-        "tokenLister": "0x8aA2C56dca9d59F4317c2fad632c192b18127709",
-        "totalFeeTokens": 8,
-        "totalUserTokens": 41,
-        "validators": ["0x5bd9404260D2B0D55081E599e4e085BE080141E2"]
-      }
-    },
-    {
-      "name": "ZkSwapListing",
-      "address": "0x8aA2C56dca9d59F4317c2fad632c192b18127709",
-      "code": "https://etherscan.deth.net/address/0x8aA2C56dca9d59F4317c2fad632c192b18127709",
+      "name": "ZkSyncCommitBlock",
+      "address": "0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db",
+      "code": "https://etherscan.deth.net/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "listingCap": 1000,
-        "listingCount": 64,
-        "listingFeeAmount": 0,
-        "listingFeeReceiver": "0x961B513dfD3e363c238E0f98219eE02552A847BD",
-        "listingFeeToken": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
-        "owner": "0x961B513dfD3e363c238E0f98219eE02552A847BD",
-        "paused": false,
-        "tokenDecimalsLimit": 32,
-        "tokenNameLimit": 64,
-        "tokenSymbolLimit": 64
-      }
-    },
-    {
-      "name": "ZksToken",
-      "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
-      "code": "https://etherscan.deth.net/address/0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "decimals": 18,
-        "name": "Zks",
-        "symbol": "ZKS",
-        "totalSupply": "1000000000000000000000000000"
+        "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+        "exodusMode": false,
+        "firstPendingWithdrawalIndex": 0,
+        "firstPriorityRequestId": 0,
+        "maxDepositAmount": 0,
+        "numberOfPendingWithdrawals": 0,
+        "totalBlocksChecked": 0,
+        "totalBlocksCommitted": 0,
+        "totalBlocksVerified": 0,
+        "totalCommittedPriorityRequests": 0,
+        "totalOpenPriorityRequests": 0,
+        "totalPairTokens": 0,
+        "upgradePreparationActivationTime": 0,
+        "upgradePreparationActive": false,
+        "withdrawGasLimit": 0,
+        "withdrawNFTGasLimit": 0,
+        "zkSeaAddress": "0x0000000000000000000000000000000000000000",
+        "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
+        "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
       }
     },
     {
@@ -214,32 +113,22 @@
       }
     },
     {
-      "name": "ZkSyncCommitBlock",
-      "address": "0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db",
-      "code": "https://etherscan.deth.net/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db",
+      "name": "Governance",
+      "address": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
+      "code": "https://etherscan.deth.net/address/0x83Cb1531Ec8447366501aE440478da245EcffB89,0x6659174CdB0c445B897aEd25181f293E468941a5",
       "upgradeability": {
-        "type": "immutable"
+        "type": "EIP1967 proxy",
+        "implementation": "0x6659174CdB0c445B897aEd25181f293E468941a5",
+        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
       },
       "values": {
-        "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
-        "exodusMode": false,
-        "firstPendingWithdrawalIndex": 0,
-        "firstPriorityRequestId": 0,
-        "maxDepositAmount": 0,
-        "numberOfPendingWithdrawals": 0,
-        "totalBlocksChecked": 0,
-        "totalBlocksCommitted": 0,
-        "totalBlocksVerified": 0,
-        "totalCommittedPriorityRequests": 0,
-        "totalOpenPriorityRequests": 0,
-        "totalPairTokens": 0,
-        "upgradePreparationActivationTime": 0,
-        "upgradePreparationActive": false,
-        "withdrawGasLimit": 0,
-        "withdrawNFTGasLimit": 0,
-        "zkSeaAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
+        "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+        "getTarget": "0x6659174CdB0c445B897aEd25181f293E468941a5",
+        "networkGovernor": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be",
+        "tokenLister": "0x8aA2C56dca9d59F4317c2fad632c192b18127709",
+        "totalFeeTokens": 8,
+        "totalUserTokens": 41,
+        "validators": ["0x5bd9404260D2B0D55081E599e4e085BE080141E2"]
       }
     },
     {
@@ -269,6 +158,117 @@
         "zkSeaAddress": "0x0000000000000000000000000000000000000000",
         "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
         "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "ZkSwapListing",
+      "address": "0x8aA2C56dca9d59F4317c2fad632c192b18127709",
+      "code": "https://etherscan.deth.net/address/0x8aA2C56dca9d59F4317c2fad632c192b18127709",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "listingCap": 1000,
+        "listingCount": 64,
+        "listingFeeAmount": 0,
+        "listingFeeReceiver": "0x961B513dfD3e363c238E0f98219eE02552A847BD",
+        "listingFeeToken": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
+        "owner": "0x961B513dfD3e363c238E0f98219eE02552A847BD",
+        "paused": false,
+        "tokenDecimalsLimit": 32,
+        "tokenNameLimit": 64,
+        "tokenSymbolLimit": 64
+      }
+    },
+    {
+      "name": "UpgradeGatekeeper",
+      "address": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+      "code": "https://etherscan.deth.net/address/0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getMaster": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be",
+        "mainContract": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
+        "managedContracts": [
+          "0x83Cb1531Ec8447366501aE440478da245EcffB89",
+          "0xc632347cc96A4400653E3514eA148630455295b5",
+          "0xc07f850b60E0EEd49a09E455b01a869C25963735",
+          "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
+          "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
+          "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
+        ],
+        "noticePeriodFinishTimestamp": 0,
+        "upgradeStatus": 0,
+        "versionId": 1
+      }
+    },
+    {
+      "name": "Verifier",
+      "address": "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
+      "code": "https://etherscan.deth.net/address/0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af,0x44DedA2C824458A5DfE1e363c679dea33f1ffA39",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x44DedA2C824458A5DfE1e363c679dea33f1ffA39",
+        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+      },
+      "values": {
+        "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+        "getTarget": "0x44DedA2C824458A5DfE1e363c679dea33f1ffA39"
+      }
+    },
+    {
+      "name": "UniswapV2Factory",
+      "address": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
+      "code": "https://etherscan.deth.net/address/0xc07f850b60E0EEd49a09E455b01a869C25963735,0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
+        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+      },
+      "values": {
+        "allPairsLength": 64,
+        "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+        "getTarget": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
+        "zkSyncAddress": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
+      }
+    },
+    {
+      "name": "ZKSeaNFT",
+      "address": "0xc632347cc96A4400653E3514eA148630455295b5",
+      "code": "https://etherscan.deth.net/address/0xc632347cc96A4400653E3514eA148630455295b5,0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
+        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+      },
+      "values": {
+        "baseURI": "",
+        "contractURI": "",
+        "firstPendingWithdrawal": 0,
+        "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+        "getTarget": "0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
+        "isOwner": false,
+        "name": "ZKSeaNFT",
+        "numOfPendingWithdrawals": 0,
+        "owner": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be",
+        "symbol": "ZKSeaNFT",
+        "totalSupply": 2,
+        "zksCore": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
+      }
+    },
+    {
+      "name": "ZksToken",
+      "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
+      "code": "https://etherscan.deth.net/address/0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "decimals": 18,
+        "name": "Zks",
+        "symbol": "ZKS",
+        "totalSupply": "1000000000000000000000000000"
       }
     }
   ],

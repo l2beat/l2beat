@@ -4,9 +4,31 @@
   "configHash": "0xad062e310d2995fb4d66c09956c4e6c736a66c0c7457ea6b0bded1fc41a5bd48",
   "contracts": [
     {
+      "name": "GnosisSafe",
+      "address": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
+      "code": "https://etherscan.deth.net/address/0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+      },
+      "values": {
+        "domainSeparator": "0x62766f0ec4bb63fc0cf61622e436018804fdac93d59b3a03e6318b6bf34dd76c",
+        "getModules": [],
+        "getOwners": [
+          "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07",
+          "0x404c2184a4027b0092C5877BC4599099cd63E62D",
+          "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
+        ],
+        "getThreshold": 2,
+        "NAME": "Gnosis Safe",
+        "nonce": 436,
+        "VERSION": "1.1.1"
+      }
+    },
+    {
       "name": "L1_ERC20_Bridge",
-      "address": "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",
-      "code": "https://etherscan.deth.net/address/0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",
+      "address": "0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2",
+      "code": "https://etherscan.deth.net/address/0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -16,7 +38,7 @@
         "challengeResolutionPeriod": 1209600,
         "getChainId": 1,
         "governance": "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7",
-        "l1CanonicalToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "l1CanonicalToken": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
         "minTransferRootBondDelay": 900,
         "TIME_SLOT_SIZE": 14400
       }
@@ -38,25 +60,21 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
-      "code": "https://etherscan.deth.net/address/0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+      "name": "L1_ERC20_Bridge",
+      "address": "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",
+      "code": "https://etherscan.deth.net/address/0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",
       "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+        "type": "immutable"
       },
       "values": {
-        "domainSeparator": "0x62766f0ec4bb63fc0cf61622e436018804fdac93d59b3a03e6318b6bf34dd76c",
-        "getModules": [],
-        "getOwners": [
-          "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07",
-          "0x404c2184a4027b0092C5877BC4599099cd63E62D",
-          "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
-        ],
-        "getThreshold": 2,
-        "NAME": "Gnosis Safe",
-        "nonce": 436,
-        "VERSION": "1.1.1"
+        "CHALLENGE_AMOUNT_DIVISOR": 10,
+        "challengePeriod": 86400,
+        "challengeResolutionPeriod": 1209600,
+        "getChainId": 1,
+        "governance": "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7",
+        "l1CanonicalToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "minTransferRootBondDelay": 900,
+        "TIME_SLOT_SIZE": 14400
       }
     },
     {
@@ -108,24 +126,6 @@
         "challengeResolutionPeriod": 1209600,
         "getChainId": 1,
         "governance": "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7",
-        "minTransferRootBondDelay": 900,
-        "TIME_SLOT_SIZE": 14400
-      }
-    },
-    {
-      "name": "L1_ERC20_Bridge",
-      "address": "0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2",
-      "code": "https://etherscan.deth.net/address/0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "CHALLENGE_AMOUNT_DIVISOR": 10,
-        "challengePeriod": 86400,
-        "challengeResolutionPeriod": 1209600,
-        "getChainId": 1,
-        "governance": "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7",
-        "l1CanonicalToken": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
         "minTransferRootBondDelay": 900,
         "TIME_SLOT_SIZE": 14400
       }

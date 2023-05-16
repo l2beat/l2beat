@@ -311,18 +311,6 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "AllowList",
-      "address": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
-      "code": "https://etherscan.deth.net/address/0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-        "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
       "name": "L1ERC20Bridge",
       "address": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
       "code": "https://etherscan.deth.net/address/0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063,0x7e5E66B01fe43293545eaB98ec4D31784A5Efa84",
@@ -337,6 +325,18 @@
         "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019"
       },
       "derivedName": "L1ERC20Bridge"
+    },
+    {
+      "name": "AllowList",
+      "address": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
+      "code": "https://etherscan.deth.net/address/0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
     }
   ],
   "eoas": [
