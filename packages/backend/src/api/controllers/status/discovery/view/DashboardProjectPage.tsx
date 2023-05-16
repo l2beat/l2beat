@@ -6,6 +6,7 @@ import { Page } from '../../view/Page'
 import { reactToHtml } from '../../view/reactToHtml'
 import { DashboardContract } from '../props/getDashboardContracts'
 import { Contract } from './components/Contract'
+import { Diff } from './components/Diff'
 import { UnverifiedContract } from './components/UnverifiedContract'
 
 interface ConfigPageProps {
@@ -36,7 +37,7 @@ export function DashboardProjectPage(props: ConfigPageProps) {
                 <ul>
                   {(d.diff ?? []).map((x, index2) => (
                     <li key={index2} style={{ marginLeft: '12px' }}>
-                      {fieldDiffToMessage(x)}
+                      <Diff diff={x} />
                     </li>
                   ))}
                 </ul>

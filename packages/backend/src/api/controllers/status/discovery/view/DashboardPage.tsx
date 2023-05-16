@@ -87,16 +87,11 @@ export function DashboardPage(props: DashboardPageProps) {
                   project.diff && project.diff.length > 0 ? (
                     <span
                       data-tooltip={
-                        'Detected changes:\n' +
+                        'Bot has detected changes in the following contracts:\n' +
                         project.diff
                           .filter((d) => (d.diff ?? []).length > 0)
-                          .map(
-                            (d) =>
-                              `${d.name} - [${(d.diff ?? [])
-                                .map((a) => a.key ?? '')
-                                .join(', ')}] \n`,
-                          )
-                          .join('')
+                          .map((d) => `- ${d.name}`)
+                          .join('\n')
                       }
                     >
                       <a href={`/status/discovery/${project.name}`}>⚠️</a>
