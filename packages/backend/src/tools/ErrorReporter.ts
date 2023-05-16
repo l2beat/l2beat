@@ -1,4 +1,4 @@
-import Sentry from '@sentry/node'
+import * as Sentry from '@sentry/node'
 import { Context } from 'koa'
 
 const sentryDsn = process.env.SENTRY_DSN
