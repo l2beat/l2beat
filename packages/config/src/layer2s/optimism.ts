@@ -27,7 +27,7 @@ export const optimism: Layer2 = {
     description:
       'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure. \
     With the Nov 2021 upgrade to "EVM equivalent" OVM 2.0 old fraud proof system has been disabled while the \
-    new fraud-proof system is being built (https://github.com/geohot/cannon).',
+    new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
     purpose: 'Universal',
     links: {
       websites: ['https://optimism.io/'],
@@ -92,7 +92,12 @@ export const optimism: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_QUEUE,
+      references: [
+        'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L201',
+      ],
+    },
     validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -123,12 +128,12 @@ export const optimism: Layer2 = {
       references: [
         {
           text: 'Data Availability Batches - Paradigm Research',
-          href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
+          href: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work#data-availability-batches',
         },
       ],
     },
     operator: {
-      ...OPERATOR.CENTRALIZED_SEQUENCER,
+      ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
           text: 'How will the sequencer be decentralized over time? - Optimism documentation',
@@ -137,10 +142,10 @@ export const optimism: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.NO_MECHANISM,
       references: [
         {
-          text: ' Chain Contracts - Optimism documentation',
+          text: 'Chain Contracts - Optimism documentation',
           href: 'https://community.optimism.io/docs/protocol/protocol-2.0.html#chain-contracts',
         },
       ],
@@ -175,36 +180,17 @@ export const optimism: Layer2 = {
     },
   },
   permissions: [
-    {
-      name: 'Optimism MultiSig',
-      accounts: [
-        {
-          address: discovery.getContract('GnosisSafe').address,
-          type: 'MultiSig',
-        },
-      ],
-      description:
-        'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Optimism MultiSig.`,
-    },
+    ...discovery.getGnosisSafeDetails(
+      'OptimismMultisig',
+      'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+    ),
     {
       name: 'Sequencer',
       accounts: [
         {
           address: EthereumAddress(
             discovery.getContractValue<string>(
-              'Lib_AddressManager',
+              'LibAddressManager',
               'OVM_Sequencer',
             ),
           ),
@@ -219,7 +205,7 @@ export const optimism: Layer2 = {
         {
           address: EthereumAddress(
             discovery.getContractValue<string>(
-              'Lib_AddressManager',
+              'LibAddressManager',
               'OVM_Proposer',
             ),
           ),
@@ -234,7 +220,7 @@ export const optimism: Layer2 = {
       {
         name: 'CanonicalTransactionChain',
         description:
-          'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
+          'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer can append to the rollup state.',
         address: discovery.getContract('CanonicalTransactionChain').address,
       },
       {
@@ -266,17 +252,17 @@ export const optimism: Layer2 = {
       },
       {
         name: 'L1CrossDomainMessenger',
-        address: discovery.getContract('L1CrossDomainMessenger').address,
+        address: discovery.getContract('L1CrossDomainMessengerProxy').address,
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        upgradeability: discovery.getContract('L1CrossDomainMessenger')
+        upgradeability: discovery.getContract('L1CrossDomainMessengerProxy')
           .upgradeability,
       },
       {
         name: 'Lib_AddressManager',
         description:
           'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
-        address: discovery.getContract('Lib_AddressManager').address,
+        address: discovery.getContract('LibAddressManager').address,
       },
       {
         name: 'L1StandardBridge',
@@ -367,7 +353,7 @@ export const optimism: Layer2 = {
     },
     {
       title: 'How does Optimism really work?',
-      url: 'https://research.paradigm.xyz/optimism',
+      url: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work',
       thumbnail: NUGGETS.THUMBNAILS.PARADIGM_01,
     },
     {

@@ -4,19 +4,6 @@
   "configHash": "0x26e015fdb5cadcabedc57f0c9cf419647b864cc7fd2b568fd6d2c29b1bb53008",
   "contracts": [
     {
-      "name": "DefaultDepositContract",
-      "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
-      "code": "https://etherscan.deth.net/address/0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
-        "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
-        "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
       "name": "ExchangeV3",
       "address": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
       "code": "https://etherscan.deth.net/address/0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4,0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
@@ -59,31 +46,6 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
-      "code": "https://etherscan.deth.net/address/0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xf45dfd6bdfe82ca616c58cff61bef38014e7194f65f8d7ba32eb9022170c8d1d",
-        "getChainId": 1,
-        "getOwners": [
-          "0x94D3d916EBe0E34F4CcB2bBc68B893EdA2850114",
-          "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
-          "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
-          "0x4CBbD41a2c057cAb8db00AC60f1AB52F36870185",
-          "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
-          "0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
-          "0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
-        ],
-        "getThreshold": 4,
-        "nonce": 137,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
       "name": "LoopringIOExchangeOwner",
       "address": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
       "code": "https://etherscan.deth.net/address/0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
@@ -107,6 +69,44 @@
       "values": {
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "DefaultDepositContract",
+      "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+      "code": "https://etherscan.deth.net/address/0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
+        "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+      "code": "https://etherscan.deth.net/address/0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xf45dfd6bdfe82ca616c58cff61bef38014e7194f65f8d7ba32eb9022170c8d1d",
+        "getChainId": 1,
+        "getOwners": [
+          "0x94D3d916EBe0E34F4CcB2bBc68B893EdA2850114",
+          "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
+          "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
+          "0x4CBbD41a2c057cAb8db00AC60f1AB52F36870185",
+          "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
+          "0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
+          "0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
+        ],
+        "getThreshold": 4,
+        "nonce": 137,
+        "VERSION": "1.3.0"
       }
     }
   ],

@@ -22,10 +22,16 @@ export class BlockTransactionCountRepository extends BaseRepository {
     records: BlockTransactionCountRecord[],
     trx?: Knex.Transaction,
   ) {
+    for (const record of records) {
+      await this.add(record, trx)
+    }
+    return records.length
+  }
+
+  async add(record: BlockTransactionCountRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
-    const rows = records.map(toRow)
-    await knex('activity.block').insert(rows)
-    return rows.length
+    await knex('activity.block').insert(toRow(record))
+    return `${record.projectId.toString()}-${record.blockNumber})}`
   }
 
   async deleteAll() {
@@ -43,6 +49,12 @@ export class BlockTransactionCountRepository extends BaseRepository {
       .first()
     return row ? UnixTime.fromDate(row.unix_timestamp) : undefined
   }
+
+  async getAll(): Promise<BlockTransactionCountRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('activity.block')
+    return rows.map(toRecord)
+  }
 }
 
 function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
@@ -51,5 +63,14 @@ function toRow(record: BlockTransactionCountRecord): BlockTransactionCountRow {
     project_id: record.projectId.toString(),
     block_number: record.blockNumber,
     count: record.count,
+  }
+}
+
+function toRecord(row: BlockTransactionCountRow): BlockTransactionCountRecord {
+  return {
+    projectId: ProjectId(row.project_id),
+    blockNumber: row.block_number,
+    count: row.count,
+    timestamp: UnixTime.fromDate(row.unix_timestamp),
   }
 }
