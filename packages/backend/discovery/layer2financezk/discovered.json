@@ -4,19 +4,73 @@
   "configHash": "0xaa8ca66a74dd1a33d0a75b1835729ecdf4734d719f3f9292c9a19da34aff2010",
   "contracts": [
     {
-      "name": "Broker",
-      "address": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
-      "code": "https://etherscan.deth.net/address/0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+      "name": "CallProxy",
+      "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
+      "upgradeability": {
+        "type": "StarkWare proxy",
+        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
+        "callImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
+        "upgradeDelay": 2419200,
+        "isFinal": true
+      },
+      "values": {
+        "CALL_PROXY_VERSION": "3.1.0",
+        "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
+        "getUpgradeActivationDelay": 2419200,
+        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.0",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      }
+    },
+    {
+      "name": "OrderRegistry",
+      "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "code": "https://etherscan.deth.net/address/0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "EXP_TIME": 2000000,
-        "nonce": 23,
-        "onchainVaults": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-        "owner": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
-        "PRICE_DECIMALS": "1000000000000000000",
-        "SLIPPAGE_DENOMINATOR": 10000
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_OrderRegistry_2021_1"
+      }
+    },
+    {
+      "name": "GpsStatementVerifier",
+      "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
+      "code": "https://etherscan.deth.net/address/0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getBootloaderConfig": [
+          "2962621603719000361370283216422448934312521782617806945663080079725495842070",
+          "3178097804922730583543126053422762895998573737925004508949311089390705597156"
+        ],
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_GpsStatementVerifier_2022_7",
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1
+      }
+    },
+    {
+      "name": "GpsFactRegistryAdapter",
+      "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
+      "code": "https://etherscan.deth.net/address/0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
+        "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556"
       }
     },
     {
@@ -80,73 +134,19 @@
       }
     },
     {
-      "name": "OrderRegistry",
-      "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
-      "code": "https://etherscan.deth.net/address/0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "name": "Broker",
+      "address": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+      "code": "https://etherscan.deth.net/address/0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_OrderRegistry_2021_1"
-      }
-    },
-    {
-      "name": "GpsFactRegistryAdapter",
-      "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
-      "code": "https://etherscan.deth.net/address/0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
-        "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556"
-      }
-    },
-    {
-      "name": "CallProxy",
-      "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-      "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-      "upgradeability": {
-        "type": "StarkWare proxy",
-        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "callImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-        "upgradeDelay": 2419200,
-        "isFinal": true
-      },
-      "values": {
-        "CALL_PROXY_VERSION": "3.1.0",
-        "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-        "getUpgradeActivationDelay": 2419200,
-        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "isFrozen": false,
-        "isNotFinalized": true,
-        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
-        "PROXY_VERSION": "3.0.0",
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
-      }
-    },
-    {
-      "name": "GpsStatementVerifier",
-      "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "code": "https://etherscan.deth.net/address/0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getBootloaderConfig": [
-          "2962621603719000361370283216422448934312521782617806945663080079725495842070",
-          "3178097804922730583543126053422762895998573737925004508949311089390705597156"
-        ],
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_GpsStatementVerifier_2022_7",
-        "PAGE_INFO_ADDRESS_OFFSET": 0,
-        "PAGE_INFO_HASH_OFFSET": 2,
-        "PAGE_INFO_SIZE": 3,
-        "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1
+        "EXP_TIME": 2000000,
+        "nonce": 23,
+        "onchainVaults": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+        "owner": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+        "PRICE_DECIMALS": "1000000000000000000",
+        "SLIPPAGE_DENOMINATOR": 10000
       }
     },
     {

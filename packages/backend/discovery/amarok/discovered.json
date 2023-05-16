@@ -4,6 +4,109 @@
   "configHash": "0x0641a339b0e9d920ff3d73f33df35c0658b7afe2e3144760992d20a206507190",
   "contracts": [
     {
+      "name": "GnosisHubConnector",
+      "address": "0x245F757d660C3ec65416168690431076d58d6413",
+      "code": "https://etherscan.deth.net/address/0x245F757d660C3ec65416168690431076d58d6413",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "AMB": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+        "delay": 604800,
+        "DOMAIN": 6648936,
+        "MIRROR_CHAIN_ID": 100,
+        "MIRROR_DOMAIN": 6778479,
+        "mirrorConnector": "0x771B2c910D76ecf84B100559CF3Ec4cB2e8D4aC5",
+        "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+        "proposed": "0x0000000000000000000000000000000000000000",
+        "proposedTimestamp": 0,
+        "renounced": false,
+        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
+      },
+      "derivedName": "GnosisHubConnector"
+    },
+    {
+      "name": "UpgradeBeaconProxy",
+      "address": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
+      "code": "https://etherscan.deth.net/address/0x28A9e7bbed277092E2431F186E1aF898962d4E92",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "OptimismHubConnector",
+      "address": "0x4a0126Ee88018393b1AD2455060Bc350eAd9908A",
+      "code": "https://etherscan.deth.net/address/0x4a0126Ee88018393b1AD2455060Bc350eAd9908A",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "AMB": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "delay": 604800,
+        "DOMAIN": 6648936,
+        "MIRROR_DOMAIN": 1869640809,
+        "mirrorConnector": "0x32155C9d39084F040Ba17890fE8134dbE2a0453f",
+        "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+        "proposed": "0x0000000000000000000000000000000000000000",
+        "proposedTimestamp": 0,
+        "renounced": false,
+        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
+        "stateCommitmentChain": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19"
+      },
+      "derivedName": "OptimismHubConnector"
+    },
+    {
+      "name": "ConnextBridgeOwner",
+      "address": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+      "code": "https://etherscan.deth.net/address/0x4d50a469fc788a3c0CdC8Fd67868877dCb246625,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0x60b1292375dabe167590dda781ba4f2d4f046f849a3b9cbcd167e98c3cfd098a",
+        "getChainId": 1,
+        "getOwners": [
+          "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
+          "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
+          "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f"
+        ],
+        "getThreshold": 3,
+        "nonce": 12,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "WatcherManager",
+      "address": "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6",
+      "code": "https://etherscan.deth.net/address/0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "delay": 604800,
+        "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+        "proposed": "0x0000000000000000000000000000000000000000",
+        "proposedTimestamp": 0,
+        "renounced": false,
+        "WATCHERS": [
+          "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
+          "0x9c77788d761ee0347Ab550883237CeD274a0F248",
+          "0x43DB577bB3DD02989Dc3DC8e65E61a27d6914386"
+        ]
+      },
+      "derivedName": "WatcherManager"
+    },
+    {
+      "name": "UpgradeBeaconProxy",
+      "address": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
+      "code": "https://etherscan.deth.net/address/0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
       "name": "ConnextBridge",
       "address": "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6",
       "code": "https://etherscan.deth.net/address/0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6,0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81,0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2,0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295,0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d,0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352,0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769,0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D,0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686,0x6369F971fd1f1f230B8584151Ed7747FF710Cc68,0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b,0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4,0x3Bcf4185443A339517aD4e580067f178d1B68E1D",
@@ -279,57 +382,55 @@
       "derivedName": "ConnextDiamond"
     },
     {
-      "name": "MainnetSpokeConnector",
-      "address": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-      "code": "https://etherscan.deth.net/address/0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
+      "name": "PolygonHubConnector",
+      "address": "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
+      "code": "https://etherscan.deth.net/address/0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "AMB": "0x0000000000000000000000000000000000000000",
+        "AMB": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
+        "checkpointManager": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "delay": 604800,
-        "delayBlocks": 0,
         "DOMAIN": 6648936,
-        "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 17123632,
-        "localDomain": 6648936,
-        "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
-        "MIRROR_DOMAIN": 6648936,
-        "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xeb3885e345c902c5ff926108453a594ed3846372059af1edf1654e644156261d",
+        "fxChildTunnel": "0x96fDDc1A6FBDb232e9adA1fFc1026799F85128e9",
+        "fxRoot": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
+        "MIRROR_DOMAIN": 1886350457,
+        "mirrorConnector": "0x96fDDc1A6FBDb232e9adA1fFc1026799F85128e9",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
-        "paused": false,
-        "PROCESS_GAS": 850000,
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
-        "rateLimitBlocks": 0,
         "renounced": false,
-        "RESERVE_GAS": 15000,
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
-        "watcherManager": "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6"
+        "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036"
       },
-      "derivedName": "MainnetSpokeConnector"
+      "derivedName": "PolygonHubConnector"
     },
     {
-      "name": "WatcherManager",
-      "address": "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6",
-      "code": "https://etherscan.deth.net/address/0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6",
+      "name": "ArbitrumHubConnector",
+      "address": "0xd151C9ef49cE2d30B829a98A07767E3280F70961",
+      "code": "https://etherscan.deth.net/address/0xd151C9ef49cE2d30B829a98A07767E3280F70961",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
+        "AMB": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "delay": 604800,
+        "DOMAIN": 6648936,
+        "gasPriceCap": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxGasCap": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxSubmissionCostCap": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "MIRROR_DOMAIN": 1634886255,
+        "mirrorConnector": "0xFD81392229b6252cF761459d370C239Be3aFc54F",
+        "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
-        "WATCHERS": [
-          "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
-          "0x9c77788d761ee0347Ab550883237CeD274a0F248",
-          "0x43DB577bB3DD02989Dc3DC8e65E61a27d6914386"
-        ]
+        "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
       },
-      "derivedName": "WatcherManager"
+      "derivedName": "ArbitrumHubConnector"
     },
     {
       "name": "RootManager",
@@ -370,107 +471,36 @@
       "derivedName": "RootManager"
     },
     {
-      "name": "UpgradeBeaconProxy",
-      "address": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
-      "code": "https://etherscan.deth.net/address/0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
-      "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "ArbitrumHubConnector",
-      "address": "0xd151C9ef49cE2d30B829a98A07767E3280F70961",
-      "code": "https://etherscan.deth.net/address/0xd151C9ef49cE2d30B829a98A07767E3280F70961",
+      "name": "MainnetSpokeConnector",
+      "address": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
+      "code": "https://etherscan.deth.net/address/0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "AMB": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "AMB": "0x0000000000000000000000000000000000000000",
         "delay": 604800,
+        "delayBlocks": 0,
         "DOMAIN": 6648936,
-        "gasPriceCap": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxGasCap": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxSubmissionCostCap": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "MIRROR_DOMAIN": 1634886255,
-        "mirrorConnector": "0xFD81392229b6252cF761459d370C239Be3aFc54F",
-        "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+        "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
+        "lastSentBlock": 17123632,
+        "localDomain": 6648936,
+        "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
+        "MIRROR_DOMAIN": 6648936,
+        "mirrorConnector": "0x0000000000000000000000000000000000000000",
+        "outboundRoot": "0xeb3885e345c902c5ff926108453a594ed3846372059af1edf1654e644156261d",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+        "paused": false,
+        "PROCESS_GAS": 850000,
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
+        "rateLimitBlocks": 0,
         "renounced": false,
-        "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
-        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
-      },
-      "derivedName": "ArbitrumHubConnector"
-    },
-    {
-      "name": "PolygonHubConnector",
-      "address": "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
-      "code": "https://etherscan.deth.net/address/0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "AMB": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
-        "checkpointManager": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-        "delay": 604800,
-        "DOMAIN": 6648936,
-        "fxChildTunnel": "0x96fDDc1A6FBDb232e9adA1fFc1026799F85128e9",
-        "fxRoot": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
-        "MIRROR_DOMAIN": 1886350457,
-        "mirrorConnector": "0x96fDDc1A6FBDb232e9adA1fFc1026799F85128e9",
-        "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
-        "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedTimestamp": 0,
-        "renounced": false,
+        "RESERVE_GAS": 15000,
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
-        "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036"
+        "watcherManager": "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6"
       },
-      "derivedName": "PolygonHubConnector"
-    },
-    {
-      "name": "OptimismHubConnector",
-      "address": "0x4a0126Ee88018393b1AD2455060Bc350eAd9908A",
-      "code": "https://etherscan.deth.net/address/0x4a0126Ee88018393b1AD2455060Bc350eAd9908A",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "AMB": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "delay": 604800,
-        "DOMAIN": 6648936,
-        "MIRROR_DOMAIN": 1869640809,
-        "mirrorConnector": "0x32155C9d39084F040Ba17890fE8134dbE2a0453f",
-        "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
-        "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedTimestamp": 0,
-        "renounced": false,
-        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
-        "stateCommitmentChain": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19"
-      },
-      "derivedName": "OptimismHubConnector"
-    },
-    {
-      "name": "GnosisHubConnector",
-      "address": "0x245F757d660C3ec65416168690431076d58d6413",
-      "code": "https://etherscan.deth.net/address/0x245F757d660C3ec65416168690431076d58d6413",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "AMB": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-        "delay": 604800,
-        "DOMAIN": 6648936,
-        "MIRROR_CHAIN_ID": 100,
-        "MIRROR_DOMAIN": 6778479,
-        "mirrorConnector": "0x771B2c910D76ecf84B100559CF3Ec4cB2e8D4aC5",
-        "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
-        "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedTimestamp": 0,
-        "renounced": false,
-        "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
-      },
-      "derivedName": "GnosisHubConnector"
+      "derivedName": "MainnetSpokeConnector"
     },
     {
       "name": "MultichainHubConnector",
@@ -492,36 +522,6 @@
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
       },
       "derivedName": "MultichainHubConnector"
-    },
-    {
-      "name": "UpgradeBeaconProxy",
-      "address": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
-      "code": "https://etherscan.deth.net/address/0x28A9e7bbed277092E2431F186E1aF898962d4E92",
-      "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "ConnextBridgeOwner",
-      "address": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
-      "code": "https://etherscan.deth.net/address/0x4d50a469fc788a3c0CdC8Fd67868877dCb246625,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0x60b1292375dabe167590dda781ba4f2d4f046f849a3b9cbcd167e98c3cfd098a",
-        "getChainId": 1,
-        "getOwners": [
-          "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
-          "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
-          "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f"
-        ],
-        "getThreshold": 3,
-        "nonce": 12,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [

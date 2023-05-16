@@ -35,38 +35,6 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
-      "code": "https://etherscan.deth.net/address/0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0x8c2034447704652155262224ded80d817537f663fe2aa23efb2f627783672c6c",
-        "getChainId": 1,
-        "getOwners": [
-          "0xb3DAD3C24A861b84fDF380B212662620627D4e15",
-          "0x42980E3e602178354E065723d9652BEf79Ae3673",
-          "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
-        ],
-        "getThreshold": 2,
-        "nonce": 662,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
-      "code": "https://etherscan.deth.net/address/0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
-      }
-    },
-    {
       "name": "TimelockController",
       "address": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70",
       "code": "https://etherscan.deth.net/address/0x647489df0673E17dB3163c47d5233EBB6F5cAc70",
@@ -96,6 +64,38 @@
           }
         },
         "getMinDelay": 180
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
+      "code": "https://etherscan.deth.net/address/0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0x8c2034447704652155262224ded80d817537f663fe2aa23efb2f627783672c6c",
+        "getChainId": 1,
+        "getOwners": [
+          "0xb3DAD3C24A861b84fDF380B212662620627D4e15",
+          "0x42980E3e602178354E065723d9652BEf79Ae3673",
+          "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
+        ],
+        "getThreshold": 2,
+        "nonce": 662,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
+      "code": "https://etherscan.deth.net/address/0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
       }
     }
   ],

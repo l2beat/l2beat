@@ -4,6 +4,21 @@
   "configHash": "0xf302229b9c0f24151d680b340b1183a259fc33f35a11cd69c2e7116d8b4afaea",
   "contracts": [
     {
+      "name": "PeggedTokenBridge",
+      "address": "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
+      "code": "https://etherscan.deth.net/address/0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "delayPeriod": 1800,
+        "epochLength": 1800,
+        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+        "paused": false,
+        "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      }
+    },
+    {
       "name": "MessageBus",
       "address": "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
       "code": "https://etherscan.deth.net/address/0x4066D196A423b2b3B8B054f4F40efB47a74E200C,0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8",
@@ -37,77 +52,6 @@
       }
     },
     {
-      "name": "OriginalTokenVaultV2",
-      "address": "0x7510792A3B1969F9307F3845CE88e39578f2bAE1",
-      "code": "https://etherscan.deth.net/address/0x7510792A3B1969F9307F3845CE88e39578f2bAE1",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "delayPeriod": 1800,
-        "epochLength": 1800,
-        "nativeWrap": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-        "paused": false,
-        "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      }
-    },
-    {
-      "name": "SimpleGovernance",
-      "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-      "code": "https://etherscan.deth.net/address/0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getVoters": [
-          [
-            "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
-            "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
-            "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
-            "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
-            "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
-          ],
-          [10000, 10000, 10000, 10000, 10000]
-        ],
-        "MAX_ACTIVE_PERIOD": 2419200,
-        "MIN_ACTIVE_PERIOD": 3600,
-        "nextProposalId": 11,
-        "THRESHOLD_DECIMAL": 100
-      },
-      "derivedName": "SimpleGovernance"
-    },
-    {
-      "name": "OriginalTokenVault",
-      "address": "0xB37D31b2A74029B5951a2778F959282E2D518595",
-      "code": "https://etherscan.deth.net/address/0xB37D31b2A74029B5951a2778F959282E2D518595",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "delayPeriod": 1800,
-        "epochLength": 1800,
-        "governors": [
-          "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
-          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
-          "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
-          "0x8e9174ed59eA4b81E70d0aE0DE13242e2329106c"
-        ],
-        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-        "paused": false,
-        "pausers": [
-          "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
-          "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
-          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
-          "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
-          "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
-          "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
-        ],
-        "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      },
-      "derivedName": "OriginalTokenVault"
-    },
-    {
       "name": "PeggedTokenBridgeV2",
       "address": "0x52E4f244f380f8fA51816c8a10A63105dd4De084",
       "code": "https://etherscan.deth.net/address/0x52E4f244f380f8fA51816c8a10A63105dd4De084",
@@ -121,45 +65,6 @@
         "paused": false,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
       }
-    },
-    {
-      "name": "PeggedTokenBridge",
-      "address": "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
-      "code": "https://etherscan.deth.net/address/0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "delayPeriod": 1800,
-        "epochLength": 1800,
-        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-        "paused": false,
-        "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      }
-    },
-    {
-      "name": "MessageBusOwner",
-      "address": "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
-      "code": "https://etherscan.deth.net/address/0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getVoters": [
-          [
-            "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
-            "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
-            "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
-            "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
-            "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
-          ],
-          [10000, 10000, 10000, 10000, 10000]
-        ],
-        "MAX_ACTIVE_PERIOD": 2419200,
-        "MIN_ACTIVE_PERIOD": 3600,
-        "THRESHOLD_DECIMAL": 100
-      },
-      "derivedName": "MessageBusOwner"
     },
     {
       "name": "Bridge",
@@ -198,6 +103,46 @@
       "derivedName": "Bridge"
     },
     {
+      "name": "MessageBusOwner",
+      "address": "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
+      "code": "https://etherscan.deth.net/address/0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getVoters": [
+          [
+            "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+            "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+            "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+            "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+            "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+          ],
+          [10000, 10000, 10000, 10000, 10000]
+        ],
+        "MAX_ACTIVE_PERIOD": 2419200,
+        "MIN_ACTIVE_PERIOD": 3600,
+        "THRESHOLD_DECIMAL": 100
+      },
+      "derivedName": "MessageBusOwner"
+    },
+    {
+      "name": "OriginalTokenVaultV2",
+      "address": "0x7510792A3B1969F9307F3845CE88e39578f2bAE1",
+      "code": "https://etherscan.deth.net/address/0x7510792A3B1969F9307F3845CE88e39578f2bAE1",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "delayPeriod": 1800,
+        "epochLength": 1800,
+        "nativeWrap": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+        "paused": false,
+        "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      }
+    },
+    {
       "name": "TransferAgent",
       "address": "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
       "code": "https://etherscan.deth.net/address/0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
@@ -207,6 +152,61 @@
       "values": {
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
       }
+    },
+    {
+      "name": "OriginalTokenVault",
+      "address": "0xB37D31b2A74029B5951a2778F959282E2D518595",
+      "code": "https://etherscan.deth.net/address/0xB37D31b2A74029B5951a2778F959282E2D518595",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "delayPeriod": 1800,
+        "epochLength": 1800,
+        "governors": [
+          "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+          "0x8e9174ed59eA4b81E70d0aE0DE13242e2329106c"
+        ],
+        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+        "paused": false,
+        "pausers": [
+          "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+          "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+          "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
+          "0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
+        ],
+        "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      },
+      "derivedName": "OriginalTokenVault"
+    },
+    {
+      "name": "SimpleGovernance",
+      "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+      "code": "https://etherscan.deth.net/address/0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getVoters": [
+          [
+            "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+            "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+            "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+            "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
+            "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+          ],
+          [10000, 10000, 10000, 10000, 10000]
+        ],
+        "MAX_ACTIVE_PERIOD": 2419200,
+        "MIN_ACTIVE_PERIOD": 3600,
+        "nextProposalId": 11,
+        "THRESHOLD_DECIMAL": 100
+      },
+      "derivedName": "SimpleGovernance"
     }
   ],
   "eoas": [

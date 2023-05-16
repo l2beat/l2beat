@@ -4,6 +4,24 @@
   "configHash": "0x36e9c5a6d52baa56d4dcd7e01eb71d7c29e0ae4a474ab4fc4fa3d14b5f8d67fe",
   "contracts": [
     {
+      "name": "AztecFeeDistributor",
+      "address": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
+      "code": "https://etherscan.deth.net/address/0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "convertConstant": 3155360,
+        "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+        "owner": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
+        "reimburseConstant": 678600,
+        "rollupProcessor": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
+        "router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        "txFeeBalance": ["1501001343374203885", "55870000000000000000", 19100],
+        "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      }
+    },
+    {
       "name": "RollupProcessor",
       "address": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
       "code": "https://etherscan.deth.net/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
@@ -98,24 +116,6 @@
         "getThreshold": 1,
         "nonce": 237,
         "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "AztecFeeDistributor",
-      "address": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
-      "code": "https://etherscan.deth.net/address/0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "convertConstant": 3155360,
-        "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
-        "owner": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
-        "reimburseConstant": 678600,
-        "rollupProcessor": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
-        "router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        "txFeeBalance": ["1501001343374203885", "55870000000000000000", 19100],
-        "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       }
     }
   ],

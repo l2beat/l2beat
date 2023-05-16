@@ -4,6 +4,245 @@
   "configHash": "0xfdd5a880d2460949ba7f4c94a89eba303434bb6294d285cbfc21ad0a04793a04",
   "contracts": [
     {
+      "name": "VotingToken",
+      "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+      "code": "https://etherscan.deth.net/address/0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "decimals": 18,
+        "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
+        "name": "UMA Voting Token v1",
+        "symbol": "UMA",
+        "totalSupply": "113266095813265034070352815",
+        "totalSupplyAt": []
+      },
+      "derivedName": "VotingToken"
+    },
+    {
+      "name": "Optimism_Adapter",
+      "address": "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
+      "code": "https://etherscan.deth.net/address/0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "daiOptimismBridge": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+        "l1StandardBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2GasLimit": 2000000,
+        "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "snx": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+        "snxOptimismBridge": "0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068"
+      }
+    },
+    {
+      "name": "Arbitrum_Adapter",
+      "address": "0x29528780E29abb8Af95a5e5a125b94766987543F",
+      "code": "https://etherscan.deth.net/address/0x29528780E29abb8Af95a5e5a125b94766987543F",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "l1ERC20GatewayRouter": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+        "l1Inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "l2GasPrice": 5000000000,
+        "l2MaxSubmissionCost": "10000000000000000",
+        "l2RefundL2Address": "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
+        "RELAY_MESSAGE_L2_GAS_LIMIT": 2000000,
+        "RELAY_TOKENS_L2_GAS_LIMIT": 300000
+      }
+    },
+    {
+      "name": "Boba_Adapter",
+      "address": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
+      "code": "https://etherscan.deth.net/address/0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "l1StandardBridge": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
+        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2GasLimit": 2000000,
+        "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e"
+      }
+    },
+    {
+      "name": "Polygon_Adapter",
+      "address": "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A",
+      "code": "https://etherscan.deth.net/address/0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "depositManager": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+        "erc20Predicate": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+        "fxStateSender": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
+        "l1Matic": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "rootChainManager": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      }
+    },
+    {
+      "name": "Finder",
+      "address": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+      "code": "https://etherscan.deth.net/address/0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "isOwner": false,
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      }
+    },
+    {
+      "name": "Ethereum_SpokePool",
+      "address": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+      "code": "https://etherscan.deth.net/address/0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "chainId": 1,
+        "crossDomainAdmin": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
+        "depositQuoteTimeBuffer": 3600,
+        "getCurrentTime": 1681211339,
+        "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+        "numberOfDeposits": 85544,
+        "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+        "timerAddress": "0x0000000000000000000000000000000000000000",
+        "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "derivedName": "Ethereum_SpokePool"
+    },
+    {
+      "name": "ProposerV2",
+      "address": "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+      "code": "https://etherscan.deth.net/address/0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "bond": "5000000000000000000000",
+        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+        "getCurrentTime": 1681211339,
+        "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+        "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+      },
+      "derivedName": "ProposerV2"
+    },
+    {
+      "name": "Ethereum_Adapter",
+      "address": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
+      "code": "https://etherscan.deth.net/address/0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "GovernorV2",
+      "address": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+      "code": "https://etherscan.deth.net/address/0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+        "getCurrentTime": 1681211339,
+        "getMember": [
+          "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+          "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+        ],
+        "numProposals": 192
+      },
+      "derivedName": "GovernorV2"
+    },
+    {
+      "name": "LpTokenFactory",
+      "address": "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
+      "code": "https://etherscan.deth.net/address/0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "EmergencyProposalExecutor",
+      "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
+      "code": "https://etherscan.deth.net/address/0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xc6747c7ca6899274b3575cd632681f9db9a0788dd1b7c7379382739baa6aa665",
+        "getChainId": 1,
+        "getOwners": [
+          "0x9C0BA8Af79a072930Cc41b0F9902ECFaDE8a340d",
+          "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
+          "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
+          "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
+        ],
+        "getThreshold": 2,
+        "nonce": 377,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "EmergencyProposer",
+      "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+      "code": "https://etherscan.deth.net/address/0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "emergencyProposals": [],
+        "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
+        "getCurrentTime": 1681211339,
+        "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+        "minimumWaitTime": 864000,
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+        "quorum": "5000000000000000000000000",
+        "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+      },
+      "derivedName": "EmergencyProposer"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xB524735356985D2f267FA010D681f061DfF03715",
+      "code": "https://etherscan.deth.net/address/0xB524735356985D2f267FA010D681f061DfF03715,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xbb022dfb1fe065f2a2c6ea647af6240343ff4b980bc3c1183ecd630958c3b59e",
+        "getChainId": 1,
+        "getOwners": [
+          "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
+          "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
+          "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
+          "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
+          "0x1f11D8B72fc1B534448436BA60B4B371276DAb33"
+        ],
+        "getThreshold": 3,
+        "nonce": 111,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "CoveredCallFinancialProductLibrary",
+      "address": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
+      "code": "https://etherscan.deth.net/address/0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
       "name": "HubPool",
       "address": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
       "code": "https://etherscan.deth.net/address/0xc186fA914353c44b2E33eBE05f21846F1048bEda",
@@ -55,245 +294,6 @@
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "derivedName": "HubPool"
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0xB524735356985D2f267FA010D681f061DfF03715",
-      "code": "https://etherscan.deth.net/address/0xB524735356985D2f267FA010D681f061DfF03715,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xbb022dfb1fe065f2a2c6ea647af6240343ff4b980bc3c1183ecd630958c3b59e",
-        "getChainId": 1,
-        "getOwners": [
-          "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
-          "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
-          "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
-          "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
-          "0x1f11D8B72fc1B534448436BA60B4B371276DAb33"
-        ],
-        "getThreshold": 3,
-        "nonce": 111,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "LpTokenFactory",
-      "address": "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
-      "code": "https://etherscan.deth.net/address/0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
-      "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "Finder",
-      "address": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-      "code": "https://etherscan.deth.net/address/0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "isOwner": false,
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-      }
-    },
-    {
-      "name": "GovernorV2",
-      "address": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-      "code": "https://etherscan.deth.net/address/0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1681211339,
-        "getMember": [
-          "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-          "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
-          "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
-        ],
-        "numProposals": 192
-      },
-      "derivedName": "GovernorV2"
-    },
-    {
-      "name": "EmergencyProposer",
-      "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
-      "code": "https://etherscan.deth.net/address/0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "emergencyProposals": [],
-        "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1681211339,
-        "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "minimumWaitTime": 864000,
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "quorum": "5000000000000000000000000",
-        "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "derivedName": "EmergencyProposer"
-    },
-    {
-      "name": "VotingToken",
-      "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
-      "code": "https://etherscan.deth.net/address/0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "decimals": 18,
-        "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
-        "name": "UMA Voting Token v1",
-        "symbol": "UMA",
-        "totalSupply": "113266095813265034070352815",
-        "totalSupplyAt": []
-      },
-      "derivedName": "VotingToken"
-    },
-    {
-      "name": "EmergencyProposalExecutor",
-      "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-      "code": "https://etherscan.deth.net/address/0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xc6747c7ca6899274b3575cd632681f9db9a0788dd1b7c7379382739baa6aa665",
-        "getChainId": 1,
-        "getOwners": [
-          "0x9C0BA8Af79a072930Cc41b0F9902ECFaDE8a340d",
-          "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
-          "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
-          "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
-        ],
-        "getThreshold": 2,
-        "nonce": 377,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
-      "name": "ProposerV2",
-      "address": "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
-      "code": "https://etherscan.deth.net/address/0x50efaC9619225d7fB4703C5872da978849B6E7cC",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "bond": "5000000000000000000000",
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1681211339,
-        "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "derivedName": "ProposerV2"
-    },
-    {
-      "name": "Polygon_Adapter",
-      "address": "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A",
-      "code": "https://etherscan.deth.net/address/0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "depositManager": "0x401F6c983eA34274ec46f84D70b31C151321188b",
-        "erc20Predicate": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-        "fxStateSender": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
-        "l1Matic": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "rootChainManager": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
-      }
-    },
-    {
-      "name": "Optimism_Adapter",
-      "address": "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
-      "code": "https://etherscan.deth.net/address/0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "daiOptimismBridge": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
-        "l1StandardBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "l2GasLimit": 2000000,
-        "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "snx": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
-        "snxOptimismBridge": "0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068"
-      }
-    },
-    {
-      "name": "Ethereum_SpokePool",
-      "address": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
-      "code": "https://etherscan.deth.net/address/0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "chainId": 1,
-        "crossDomainAdmin": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
-        "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1681211339,
-        "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-        "numberOfDeposits": 85544,
-        "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "Ethereum_SpokePool"
-    },
-    {
-      "name": "Ethereum_Adapter",
-      "address": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
-      "code": "https://etherscan.deth.net/address/0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
-      "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "CoveredCallFinancialProductLibrary",
-      "address": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
-      "code": "https://etherscan.deth.net/address/0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
-      "upgradeability": {
-        "type": "immutable"
-      }
-    },
-    {
-      "name": "Boba_Adapter",
-      "address": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
-      "code": "https://etherscan.deth.net/address/0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "l1StandardBridge": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
-        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "l2GasLimit": 2000000,
-        "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e"
-      }
-    },
-    {
-      "name": "Arbitrum_Adapter",
-      "address": "0x29528780E29abb8Af95a5e5a125b94766987543F",
-      "code": "https://etherscan.deth.net/address/0x29528780E29abb8Af95a5e5a125b94766987543F",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "l1ERC20GatewayRouter": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
-        "l1Inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
-        "l2GasPrice": 5000000000,
-        "l2MaxSubmissionCost": "10000000000000000",
-        "l2RefundL2Address": "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
-        "RELAY_MESSAGE_L2_GAS_LIMIT": 2000000,
-        "RELAY_TOKENS_L2_GAS_LIMIT": 300000
-      }
     }
   ],
   "eoas": [
