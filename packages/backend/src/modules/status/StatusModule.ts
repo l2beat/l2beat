@@ -39,7 +39,18 @@ export function createStatusModule(
 
   const statusRouter = createStatusRouter(statusController)
 
+  const start = () => {
+    if (!config.statusEnabled) {
+      logger.info('StatusModule disabled')
+      return
+    }
+
+    logger = logger.for('StatusModule')
+    logger.info('Started')
+  }
+
   return {
+    start,
     routers: [statusRouter],
   }
 }

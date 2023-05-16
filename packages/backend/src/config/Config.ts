@@ -19,6 +19,7 @@ export interface Config {
   readonly tvl: TvlConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
+  readonly statusEnabled: boolean
 }
 
 export interface LoggerConfig {

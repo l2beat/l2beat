@@ -102,5 +102,6 @@ export function getLocalConfig(cli: CliParameters): Config {
         internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
       },
     },
+    statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
   }
 }

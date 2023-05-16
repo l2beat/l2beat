@@ -65,11 +65,12 @@ environment variables. One variable per line `KEY=value`.
 - `PUBLIC_DISCORD_CHANNEL_ID` - public channel id the message will be sent to
 - `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
 - `DISCORD_TOKEN` - Bot account authentication token, for more details go to `DiscordClient.ts`
+- `STATUS_ENABLE`(default `true`) - enable/disable status module
 
 #### Optional (local development)
 
 - `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
-- `UPDATE_MONITOR_RUN_ON_START` - Prevent UpdateMonitor from running on start when developing locally
+- `UPDATE_MONITOR_RUN_ON_START` (default `true`) - Prevent UpdateMonitor from running on start when developing locally
 
 #### .env boilerplate:
 
