@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -15,6 +16,9 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('loopring')
+const forcedWithdrawalDelay = formatSeconds(
+  discovery.getContractValue<number[]>('ExchangeV3', 'getConstants')[2],
+)
 
 export const loopring: Layer2 = {
   type: 'layer2',
@@ -76,8 +80,21 @@ export const loopring: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+      description:
+        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1.description +
+        ' The sequencer can censor individual deposits, but in such case users can get their funds back.',
+      references: [
+        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
+      ],
+    },
+    validatorFailure: {
+      ...RISK_VIEW.VALIDATOR_ESCAPE_MP,
+      references: [
+        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
+      ],
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('LRC'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -114,12 +131,12 @@ export const loopring: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ExchangeV3.sol#L315-L322 - Loopring source code',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/contracts/core/impl/ExchangeV3.sol#L315-L322',
+          text: 'ExchangeV3.sol#L315-L322 - Etherscan source code, submitBlocks function',
+          href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8022',
         },
         {
-          text: 'LoopringIOExchangeOwner.sol#L123-L126 - Loopring source code',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/contracts/aux/access/LoopringIOExchangeOwner.sol#L123-L126',
+          text: 'LoopringIOExchangeOwner.sol#L123-L126 - Etherscan source code, hasAccessTo function call',
+          href: 'https://etherscan.io/address/0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512#code#L5539',
         },
       ],
     },
@@ -153,14 +170,26 @@ export const loopring: Layer2 = {
             text: 'Forced Request Handling - Loopring design doc',
             href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
           },
+          {
+            text: 'ExchangeV3.sol#L8118 - Loopring source code, forceWithdraw function',
+            href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8118',
+          },
         ],
       },
       {
-        ...EXITS.EMERGENCY('Withdrawal Mode', 'merkle proof'),
+        ...EXITS.EMERGENCY(
+          'Withdrawal Mode',
+          'merkle proof',
+          forcedWithdrawalDelay,
+        ),
         references: [
           {
             text: 'Forced Request Handling - Loopring design doc',
             href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
+          },
+          {
+            text: 'ExchangeV3.sol#L8159 - Loopring source code, withdrawFromMerkleTree function',
+            href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
           },
         ],
       },
