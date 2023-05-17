@@ -5,7 +5,7 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 
 import { HttpClient } from '@l2beat/shared'
 import { RequestInit } from 'node-fetch'
-import { Gauge } from 'prom-client'
+import { Counter } from 'prom-client'
 
 export const MAX_MESSAGE_LENGTH = 2000
 
@@ -68,13 +68,9 @@ export class DiscordClient {
     callsCount.inc()
     return res.json() as unknown
   }
-
-  resetCallsCount() {
-    callsCount.set(0)
-  }
 }
 
-const callsCount = new Gauge({
+const callsCount = new Counter({
   name: 'discord_client_calls',
   help: 'Value showing amount of calls to DiscordClient',
 })
