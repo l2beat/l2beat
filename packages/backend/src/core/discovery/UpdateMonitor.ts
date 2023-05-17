@@ -40,7 +40,7 @@ export class UpdateMonitor {
   async start() {
     this.logger.info('Started')
     if (this.runOnStart) {
-      await this.notificationManager.notify('Discovery watcher started.')
+      await this.notificationManager.started()
       this.taskQueue.addToFront(UnixTime.now())
     }
     return this.clock.onNewHour((timestamp) => {

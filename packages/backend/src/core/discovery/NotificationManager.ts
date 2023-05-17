@@ -66,6 +66,11 @@ export class NotificationManager {
       )
     }
   }
+
+  async started() {
+    await this.notify('UpdateMonitor started.', 'INTERNAL')
+    await this.notify('UpdateMonitor started.', 'PUBLIC')
+  }
 }
 
 function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
