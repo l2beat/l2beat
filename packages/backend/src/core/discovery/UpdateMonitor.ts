@@ -4,12 +4,12 @@ import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
-import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { NotificationManager } from './NotificationManager'
 import { diffDiscovery, DiscoveryDiff } from './output/diffDiscovery'
 import { diffToMessages } from './output/diffToMessages'
 import { findDependents } from './utils/findDependents'
@@ -25,7 +25,7 @@ export class UpdateMonitor {
   constructor(
     private readonly provider: providers.AlchemyProvider,
     private readonly discoveryRunner: DiscoveryRunner,
-    private readonly discordClient: DiscordClient | undefined,
+    private readonly notificationManager: NotificationManager,
     private readonly configReader: ConfigReader,
     private readonly repository: UpdateMonitorRepository,
     private readonly clock: Clock,
@@ -45,7 +45,7 @@ export class UpdateMonitor {
   async start() {
     this.logger.info('Started')
     if (this.runOnStart) {
-      await this.notify('Discovery watcher started.')
+      await this.notificationManager.notify('Discovery watcher started.')
       this.taskQueue.addToFront(UnixTime.now())
     }
     return this.clock.onNewHour((timestamp) => {
@@ -82,7 +82,10 @@ export class UpdateMonitor {
     }
 
     if (isDailyReminder) {
-      await this.sendDailyReminder(notUpdatedProjects, timestamp)
+      await this.notificationManager.sendDailyReminder(
+        notUpdatedProjects,
+        timestamp,
+      )
     }
 
     metadataDone()
@@ -122,7 +125,7 @@ export class UpdateMonitor {
         dependents,
         diff.changes,
       )
-      await this.notify(messages)
+      await this.notificationManager.notify(messages)
       this.logger.info('Sending messages', { project: projectConfig.name })
       changesDetected.inc()
     }
@@ -188,45 +191,6 @@ export class UpdateMonitor {
     return result
   }
 
-  private async sendDailyReminder(
-    notUpdatedProjects: string[],
-    timestamp: UnixTime,
-  ) {
-    this.logger.info('Sending daily reminder', {
-      projects: notUpdatedProjects,
-    })
-    await this.notify(getDailyReminderMessage(notUpdatedProjects, timestamp), {
-      internalOnly: true,
-    })
-  }
-
-  async notify(
-    messages: string | string[],
-    options?: { internalOnly: boolean },
-  ) {
-    if (!this.discordClient) {
-      // TODO: maybe only once? rethink
-      this.logger.info(
-        'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
-      )
-      return
-    }
-
-    const arrayMessages = Array.isArray(messages) ? messages : [messages]
-    for (const message of arrayMessages) {
-      const channels: Channel[] = options?.internalOnly
-        ? ['INTERNAL']
-        : ['PUBLIC', 'INTERNAL']
-
-      for (const channel of channels) {
-        await this.discordClient.sendMessage(message, channel).then(
-          () => this.logger.info('Notification to Discord has been sent'),
-          (e) => this.logger.error(e),
-        )
-      }
-    }
-  }
-
   // 3rd party APIs are unstable, so we do a sanity check before sending
   // notifications, which makes the same request again and compares the
   // results.
@@ -242,7 +206,7 @@ export class UpdateMonitor {
     )
 
     if (!isEqual(discovery, secondDiscovery)) {
-      await this.notify(
+      await this.notificationManager.notify(
         `⚠️ [${projectConfig.name}]: API error (Alchemy or Etherscan) | ${blockNumber}`,
         { internalOnly: true },
       )
@@ -261,7 +225,6 @@ export class UpdateMonitor {
     const histogramDone = syncHistogram.startTimer()
     changesDetected.set(0)
     errorsCount.set(0)
-    this.discordClient?.resetCallsCount()
 
     return () => {
       histogramDone()
@@ -281,17 +244,6 @@ export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
   return timestamp
     .toStartOf('hour')
     .equals(timestamp.toStartOf('day').add(hour, 'hours'))
-}
-
-function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
-  const dailyReportMessage = `\`\`\`Daily bot report @ ${timestamp.toYYYYMMDD()}\`\`\`\n`
-  if (projects.length > 0) {
-    return `${dailyReportMessage}${projects
-      .map((p) => `:x: ${p}`)
-      .join('\n\n')}`
-  }
-
-  return `${dailyReportMessage}:white_check_mark: everything is up to date`
 }
 
 const latestBlock = new Gauge({

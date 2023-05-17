@@ -13,11 +13,11 @@ import {
   UpdateMonitorRecord,
   UpdateMonitorRepository,
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
-import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { Clock } from '../Clock'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { NotificationManager } from './NotificationManager'
 import { diffDiscovery } from './output/diffDiscovery'
 import { diffToMessages } from './output/diffToMessages'
 import { isNineAM, UpdateMonitor } from './UpdateMonitor'
@@ -54,14 +54,14 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
 }
 
 describe(UpdateMonitor.name, () => {
-  let discordClient = mockObject<DiscordClient>({})
+  let notificationManager = mockObject<NotificationManager>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
   let provider = mockObject<providers.AlchemyProvider>({})
 
   beforeEach(() => {
-    discordClient = mockObject<DiscordClient>({
-      sendMessage: async () => [],
-      resetCallsCount: () => {},
+    notificationManager = mockObject<NotificationManager>({
+      notify: async () => {},
+      sendDailyReminder: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
       run: async () => DISCOVERY_RESULT,
@@ -93,7 +93,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        discordClient,
+        notificationManager,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -127,27 +127,13 @@ describe(UpdateMonitor.name, () => {
       // saves discovery result
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
       //sends notification
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(4)
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        1,
+      expect(notificationManager.notify).toHaveBeenCalledTimes(2)
+      expect(notificationManager.notify).toHaveBeenNthCalledWith(1, [
         mockMessage(PROJECT_A),
-        'PUBLIC',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        mockMessage(PROJECT_A),
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        3,
+      ])
+      expect(notificationManager.notify).toHaveBeenNthCalledWith(2, [
         mockMessage(PROJECT_B),
-        'PUBLIC',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        4,
-        mockMessage(PROJECT_B),
-        'INTERNAL',
-      )
+      ])
     })
 
     it('does not send notification about the same change', async () => {
@@ -168,7 +154,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        discordClient,
+        notificationManager,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -187,7 +173,7 @@ describe(UpdateMonitor.name, () => {
       // runs discovery
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
       // does not send a notification
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
+      expect(notificationManager.notify).toHaveBeenCalledTimes(0)
     })
 
     it('sends daily reminder to internal channel', async () => {
@@ -211,7 +197,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        discordClient,
+        notificationManager,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -247,31 +233,20 @@ describe(UpdateMonitor.name, () => {
       // saves discovery result
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
       //sends notification
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(5)
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+      expect(notificationManager.notify).toHaveBeenCalledTimes(2)
+      expect(notificationManager.sendDailyReminder).toHaveBeenCalledTimes(1)
+      expect(notificationManager.notify).toHaveBeenNthCalledWith(1, [
+        mockMessage(PROJECT_A),
+      ])
+
+      expect(notificationManager.notify).toHaveBeenNthCalledWith(2, [
+        mockMessage(PROJECT_B),
+      ])
+
+      expect(notificationManager.sendDailyReminder).toHaveBeenNthCalledWith(
         1,
-        mockMessage(PROJECT_A),
-        'PUBLIC',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        mockMessage(PROJECT_A),
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        3,
-        mockMessage(PROJECT_B),
-        'PUBLIC',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        4,
-        mockMessage(PROJECT_B),
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        5,
-        mockDailyReminder([PROJECT_A, PROJECT_B], NINE_AM),
-        'INTERNAL',
+        [PROJECT_A, PROJECT_B],
+        NINE_AM,
       )
     })
 
@@ -305,7 +280,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        discordClient,
+        notificationManager,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -324,7 +299,7 @@ describe(UpdateMonitor.name, () => {
       // does not save changes to database
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
+      expect(notificationManager.notify).toHaveBeenCalledTimes(0)
     })
 
     it('does not send notification if sanity check failed', async () => {
@@ -352,7 +327,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        discordClient,
+        notificationManager,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -363,12 +338,12 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(new UnixTime(0))
 
       // send notification about the error of 3rd party API
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
+      expect(notificationManager.notify).toHaveBeenCalledTimes(1)
 
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+      expect(notificationManager.notify).toHaveBeenNthCalledWith(
         1,
         `⚠️ [${PROJECT_A}]: API error (Alchemy or Etherscan) | ${BLOCK_NUMBER}`,
-        'INTERNAL',
+        { internalOnly: true },
       )
     })
 
@@ -392,7 +367,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        discordClient,
+        notificationManager,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -411,7 +386,7 @@ describe(UpdateMonitor.name, () => {
       // does not save changes to database
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
+      expect(notificationManager.notify).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -431,7 +406,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
-        mockObject<DiscordClient>(),
+        mockObject<NotificationManager>(),
         configReader,
         repository,
         mockObject<Clock>(),
@@ -482,7 +457,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
-        mockObject<DiscordClient>(),
+        mockObject<NotificationManager>(),
         configReader,
         repository,
         mockObject<Clock>(),
@@ -536,7 +511,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
-        mockObject<DiscordClient>(),
+        mockObject<NotificationManager>(),
         configReader,
         repository,
         mockObject<Clock>(),
@@ -562,42 +537,6 @@ describe(UpdateMonitor.name, () => {
 
       expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
       expect(repository.findLatest).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  describe(UpdateMonitor.prototype.notify.name, () => {
-    it('sends discord messages', async () => {
-      const updateMonitor = new UpdateMonitor(
-        mockObject<providers.AlchemyProvider>(),
-        mockObject<DiscoveryRunner>(),
-        discordClient,
-        mockObject<ConfigReader>(),
-        mockObject<UpdateMonitorRepository>({}),
-        mockObject<Clock>(),
-        Logger.SILENT,
-        false,
-      )
-
-      const messages = ['a', 'b', 'c']
-
-      await updateMonitor.notify(messages, { internalOnly: true })
-
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(3)
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        1,
-        'a',
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        'b',
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        3,
-        'c',
-        'INTERNAL',
-      )
     })
   })
 
@@ -681,10 +620,4 @@ const mockMessage = (project: string): string => {
       },
     ],
   )[0]
-}
-
-const mockDailyReminder = (projects: string[], timestamp: UnixTime) => {
-  return `\`\`\`Daily bot report @ ${timestamp.toYYYYMMDD()}\`\`\`\n${projects
-    .map((p) => `:x: ${p}`)
-    .join('\n\n')}`
 }
