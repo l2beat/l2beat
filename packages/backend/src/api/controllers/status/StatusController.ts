@@ -3,10 +3,7 @@ import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
 import { ConfigReader } from '../../../core/discovery/config/ConfigReader'
-import {
-  diffDiscovery,
-  DiscoveryDiff,
-} from '../../../core/discovery/output/diffDiscovery'
+import { DiscoveryDiff } from '../../../core/discovery/output/diffDiscovery'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
@@ -19,6 +16,7 @@ import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getDashboardContracts } from './discovery/props/getDashboardContracts'
 import { getDashboardProjects } from './discovery/props/getDashboardProjects'
+import { getDiff } from './discovery/props/utils/getDiff'
 import { renderDashboardPage } from './discovery/view/DashboardPage'
 import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
 import { renderBalancesPage } from './view/BalancesPage'
@@ -55,12 +53,11 @@ export class StatusController {
     const config = await this.configReader.readConfig(project)
     const contracts = getDashboardContracts(discovery, config)
 
-    const db = await this.updateMonitorRepository.findLatest(config.name)
-
-    let diff: DiscoveryDiff[] = []
-    if (db?.discovery.contracts) {
-      diff = diffDiscovery(discovery.contracts, db.discovery.contracts, config)
-    }
+    const diff: DiscoveryDiff[] = await getDiff(
+      this.updateMonitorRepository,
+      discovery,
+      config,
+    )
 
     return renderDashboardProjectPage({
       projectName: project,

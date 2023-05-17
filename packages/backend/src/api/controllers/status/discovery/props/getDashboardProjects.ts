@@ -1,10 +1,8 @@
 import { ConfigReader } from '../../../../../core/discovery/config/ConfigReader'
-import {
-  diffDiscovery,
-  DiscoveryDiff,
-} from '../../../../../core/discovery/output/diffDiscovery'
+import { DiscoveryDiff } from '../../../../../core/discovery/output/diffDiscovery'
 import { UpdateMonitorRepository } from '../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { getDashboardContracts } from './getDashboardContracts'
+import { getDiff } from './utils/getDiff'
 
 export interface DashboardProject {
   name: string
@@ -29,12 +27,11 @@ export async function getDashboardProjects(
   for (const name of names) {
     const config = await configReader.readConfig(name)
     const discovery = await configReader.readDiscovery(name)
-    const db = await updateMonitorRepository.findLatest(name)
-
-    let diff: DiscoveryDiff[] = []
-    if (db?.discovery.contracts) {
-      diff = diffDiscovery(discovery.contracts, db.discovery.contracts, config)
-    }
+    const diff: DiscoveryDiff[] = await getDiff(
+      updateMonitorRepository,
+      discovery,
+      config,
+    )
     const contracts = getDashboardContracts(discovery, config)
 
     const project: DashboardProject = {
