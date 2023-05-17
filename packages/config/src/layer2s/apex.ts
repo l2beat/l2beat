@@ -72,7 +72,6 @@ export const apex: Layer2 = {
       product: 'apex',
       sinceTimestamp: new UnixTime(1660252039),
       resyncLastDays: 7,
-      excludeFromActivityApi: true,
     },
   },
   riskView: makeBridgeCompatible({
