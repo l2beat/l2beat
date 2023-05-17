@@ -29,7 +29,7 @@ const STARKEX_OPERATOR: ProjectTechnologyChoice = {
   references: [
     {
       text: 'Operator - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex-v3/starkex-deep-dive/smart-contracts-1/contract-management#operator',
+      href: 'https://docs.starkware.co/starkex/perpetual/shared/contract-management.html#operator_perpetual',
     },
   ],
 }

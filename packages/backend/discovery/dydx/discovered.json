@@ -1,6 +1,6 @@
 {
   "name": "dydx",
-  "blockNumber": 17242065,
+  "blockNumber": 17263411,
   "configHash": "0xea614516defa6835f5df41e5e738cd4ead53de1a260201fbbdec0fe41bc3fdb2",
   "contracts": [
     {
@@ -95,7 +95,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "4455753190189394228404526"
+        "totalSupply": "4451600684944118707010771"
       },
       "derivedName": "SafetyModuleV2"
     },

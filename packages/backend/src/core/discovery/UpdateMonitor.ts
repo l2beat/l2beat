@@ -64,6 +64,8 @@ export class UpdateMonitor {
     const notUpdatedProjects: string[] = []
 
     for (const projectConfig of projectConfigs) {
+      this.logger.info('Discovery started', { project: projectConfig.name })
+
       try {
         await this.updateProject(
           projectConfig,
@@ -76,6 +78,7 @@ export class UpdateMonitor {
         this.logger.error(error)
         errorsCount.inc()
       }
+      this.logger.info('Discovery finished', { project: projectConfig.name })
     }
 
     if (isDailyReminder) {
@@ -92,15 +95,11 @@ export class UpdateMonitor {
     notUpdatedProjects: string[],
     timestamp: UnixTime,
   ) {
-    this.logger.info('Discovery started', { project: projectConfig.name })
-
     const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
 
     if (discovery.contracts.some((c) => c.errors !== undefined)) {
       notUpdatedProjects.push(projectConfig.name)
-      throw new Error(
-        `Errors occurred during discovery of ${projectConfig.name}`,
-      )
+      return
     }
 
     const diff = await this.findChanges(
@@ -139,8 +138,6 @@ export class UpdateMonitor {
       discovery,
       configHash: projectConfig.hash,
     })
-
-    this.logger.info('Discovery finished', { project: projectConfig.name })
   }
 
   async findChanges(

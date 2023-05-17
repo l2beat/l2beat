@@ -104,7 +104,7 @@ export const rhinofi: Layer2 = {
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
-    forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW,
+    forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW(),
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {

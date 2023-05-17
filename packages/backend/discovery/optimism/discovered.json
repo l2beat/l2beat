@@ -1,6 +1,6 @@
 {
   "name": "optimism",
-  "blockNumber": 17244151,
+  "blockNumber": 17271589,
   "configHash": "0x3b7b9edd0c92050983f086815da9441e1639a055f582345cb156d6931794bc53",
   "contracts": [
     {
@@ -138,13 +138,13 @@
         "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17244095,
-        "getLastTimestamp": 1683894683,
-        "getNextQueueIndex": 348556,
-        "getNumPendingQueueElements": 1,
-        "getQueueLength": 348557,
-        "getTotalBatches": 780921,
-        "getTotalElements": 97701954,
+        "getLastBlockNumber": 17271536,
+        "getLastTimestamp": 1684231796,
+        "getNextQueueIndex": 349747,
+        "getNumPendingQueueElements": 4,
+        "getQueueLength": 349751,
+        "getTotalBatches": 791557,
+        "getTotalElements": 98724314,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -232,8 +232,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000645e30ff0005d2cda2",
-        "length": 103654,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000646356230005e2679b",
+        "length": 104707,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "owner": "StateCommitmentChain"
       },
@@ -249,9 +249,9 @@
       "values": {
         "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1683894527,
-        "getTotalBatches": 103654,
-        "getTotalElements": 97701282,
+        "getLastSequencerTimestamp": 1684231715,
+        "getTotalBatches": 104707,
+        "getTotalElements": 98723739,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -295,8 +295,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000001071fbf00645e319b000005518c0005d2d042",
-        "length": 780921,
+        "getGlobalMetadata": "0x000000000000000001078af0006463567400000556330005e269da",
+        "length": 791557,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "owner": "CanonicalTransactionChain"
       },

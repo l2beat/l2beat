@@ -2,6 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -17,6 +18,23 @@ import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')
+const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+const validatorAfkBlocks = discovery.getContractValue<number>(
+  'RollupProxy',
+  'VALIDATOR_AFK_BLOCKS',
+)
+const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
+const challengeWindow = discovery.getContractValue<number>(
+  'RollupProxy',
+  'confirmPeriodBlocks',
+)
+const l1TimelockDelay = discovery.getContractValue<number>(
+  'L1ArbitrumTimelock',
+  'getMinDelay',
+)
+const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
+const totalDelay =
+  l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
 
 export const arbitrum: Layer2 = {
   type: 'layer2',
@@ -26,13 +44,16 @@ export const arbitrum: Layer2 = {
     slug: 'arbitrum',
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-    description:
-      "Arbitrum One is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.\
+    description: `Arbitrum One is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.\
       Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Validators (currently whitelisted)\
-      read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any other Validator can challenge the state root within the challenge window (7-days). \
+      read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any other Validator can challenge the state root within the challenge window (${formatSeconds(
+        challengeWindow * assumedBlockTime,
+      )}). \
       The challenge will result in an interactive fraud proof game that will be eventually settled by L1. As long as there is at least one honest Validator, users are guaranteed that\
       eventually correct L2 state root will be published to L1. If Sequencer is censoring users transactions, it is possible to force the transaction via L1 queue. If no Validator publishes\
-      L2 state root within 7 days, the Validator whitelist is dropped and anyone can take over as a new Validator.",
+    L2 state root within ${formatSeconds(
+      validatorAfkTime,
+    )} (${validatorAfkBlocks} blocks), the Validator whitelist is dropped and anyone can take over as a new Validator.`,
     purpose: 'Universal',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
@@ -114,7 +135,7 @@ export const arbitrum: Layer2 = {
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM,
+    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
     sequencerFailure: {
       value: 'Transact using L1',
       description: VALUES.ARBITRUM.getSequencerFailureString(),
@@ -126,7 +147,8 @@ export const arbitrum: Layer2 = {
     },
     validatorFailure: {
       value: 'Propose blocks',
-      description: VALUES.ARBITRUM.getValidatorFailureString(),
+      description:
+        VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
       references: [
         'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
       ],
@@ -140,7 +162,7 @@ export const arbitrum: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
-        'After some period of time, the published state root is assumed to be correct. For a certain time period, usually one week, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
+        'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -152,6 +174,10 @@ export const arbitrum: Layer2 = {
         {
           text: 'How is fraud proven - Arbitrum documentation FAQ',
           href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
+        },
+        {
+          text: 'Arbitrum Glossary: Challenge Period',
+          href: 'https://developer.arbitrum.io/intro/glossary#challenge-period',
         },
         {
           text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
@@ -182,7 +208,7 @@ export const arbitrum: Layer2 = {
       description:
         FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
         ' ' +
-        VALUES.ARBITRUM.getValidatorFailureString(),
+        VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
       references: [
         {
           text: 'Smart Contract source code',
@@ -243,7 +269,11 @@ export const arbitrum: Layer2 = {
         },
       ],
     },
-    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO,
+    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO(
+      l1TimelockDelay,
+      challengeWindow * assumedBlockTime,
+      l2TimelockDelay,
+    ),
   },
   permissions: [
     ...discovery.getGnosisSafeDetails(
