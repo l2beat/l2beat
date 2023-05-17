@@ -196,29 +196,10 @@ export const loopring: Layer2 = {
     ],
   },
   permissions: [
-    {
-      name: 'Loopring MultiSig',
-      accounts: [
-        {
-          address: discovery.getContract('GnosisSafe').address,
-          type: 'MultiSig',
-        },
-      ],
-      description:
-        'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy owner), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Loopring MultiSig.`,
-    },
+    ...discovery.getGnosisSafeDetails(
+      'ProxyOwner',
+      'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
+    ),
     {
       name: 'Block Submitters',
       accounts: [
@@ -309,6 +290,19 @@ export const loopring: Layer2 = {
       ],
       description:
         'Actors who can submit new blocks, updating the L2 state on L1.',
+    },
+    {
+      name: 'RollupOwner',
+      accounts: [
+        {
+          address: EthereumAddress(
+            discovery.getContractValue<string>('ExchangeV3', 'owner'),
+          ),
+          type: 'EOA',
+        },
+      ],
+      description:
+        'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
     },
   ],
   contracts: {
