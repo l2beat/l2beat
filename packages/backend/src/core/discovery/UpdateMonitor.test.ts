@@ -20,7 +20,7 @@ import { DiscoveryRunner } from './DiscoveryRunner'
 import { NotificationManager } from './NotificationManager'
 import { diffDiscovery } from './output/diffDiscovery'
 import { diffToMessages } from './output/diffToMessages'
-import { isNineAM, UpdateMonitor } from './UpdateMonitor'
+import { UpdateMonitor } from './UpdateMonitor'
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'
@@ -29,6 +29,7 @@ const ADDRESS_A = EthereumAddress.random()
 const NAME_B = 'contract-b'
 const ADDRESS_B = EthereumAddress.random()
 const BLOCK_NUMBER = 1
+const TIMESTAMP = new UnixTime(0)
 
 const COMMITTED: ContractParameters[] = [
   {
@@ -61,7 +62,7 @@ describe(UpdateMonitor.name, () => {
   beforeEach(() => {
     notificationManager = mockObject<NotificationManager>({
       notify: async () => {},
-      sendDailyReminder: async () => {},
+      notUpdatedProjects: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
       run: async () => DISCOVERY_RESULT,
@@ -100,7 +101,7 @@ describe(UpdateMonitor.name, () => {
         Logger.SILENT,
         false,
       )
-      await updateMonitor.update(new UnixTime(0))
+      await updateMonitor.update(TIMESTAMP)
 
       // gets block number
       expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
@@ -134,6 +135,12 @@ describe(UpdateMonitor.name, () => {
       expect(notificationManager.notify).toHaveBeenNthCalledWith(2, [
         mockMessage(PROJECT_B),
       ])
+      expect(notificationManager.notUpdatedProjects).toHaveBeenCalledTimes(1)
+      expect(notificationManager.notUpdatedProjects).toHaveBeenNthCalledWith(
+        1,
+        [PROJECT_A, PROJECT_B],
+        TIMESTAMP,
+      )
     })
 
     it('does not send notification about the same change', async () => {
@@ -174,80 +181,6 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
       // does not send a notification
       expect(notificationManager.notify).toHaveBeenCalledTimes(0)
-    })
-
-    it('sends daily reminder to internal channel', async () => {
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
-          ...mockProject,
-          contracts: COMMITTED,
-        }),
-
-        readAllConfigs: async () => [
-          mockConfig(PROJECT_A),
-          mockConfig(PROJECT_B),
-        ],
-      })
-
-      const repository = mockObject<UpdateMonitorRepository>({
-        findLatest: async () => undefined,
-        addOrUpdate: async () => '',
-      })
-
-      const updateMonitor = new UpdateMonitor(
-        provider,
-        discoveryRunner,
-        notificationManager,
-        configReader,
-        repository,
-        mockObject<Clock>(),
-        Logger.SILENT,
-        false,
-      )
-
-      const NINE_AM = UnixTime.fromDate(new Date('2023-02-21T07:01:00Z'))
-      await updateMonitor.update(NINE_AM)
-
-      // gets block number
-      expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
-      // reads all the configs
-      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
-      // runs discovery for every project + sanity check
-      expect(discoveryRunner.run).toHaveBeenCalledTimes(2 * 2)
-      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
-        1,
-        mockConfig(PROJECT_A),
-        BLOCK_NUMBER,
-      )
-      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
-        3,
-        mockConfig(PROJECT_B),
-        BLOCK_NUMBER,
-      )
-      // calls repository (and gets undefined)
-      expect(repository.findLatest).toHaveBeenCalledTimes(2)
-      // reads committed discovery.json
-      expect(configReader.readDiscovery).toHaveBeenCalledTimes(2)
-      expect(configReader.readDiscovery).toHaveBeenNthCalledWith(1, PROJECT_A)
-      expect(configReader.readDiscovery).toHaveBeenNthCalledWith(2, PROJECT_B)
-      // saves discovery result
-      expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
-      //sends notification
-      expect(notificationManager.notify).toHaveBeenCalledTimes(2)
-      expect(notificationManager.sendDailyReminder).toHaveBeenCalledTimes(1)
-      expect(notificationManager.notify).toHaveBeenNthCalledWith(1, [
-        mockMessage(PROJECT_A),
-      ])
-
-      expect(notificationManager.notify).toHaveBeenNthCalledWith(2, [
-        mockMessage(PROJECT_B),
-      ])
-
-      expect(notificationManager.sendDailyReminder).toHaveBeenNthCalledWith(
-        1,
-        [PROJECT_A, PROJECT_B],
-        NINE_AM,
-      )
     })
 
     it('does not send notification if error occured', async () => {
@@ -419,7 +352,6 @@ describe(UpdateMonitor.name, () => {
         DISCOVERY_RESULT,
         // repository returns undefined, so config hash does not matter
         Hash256.random(),
-        false,
         mockConfig(PROJECT_A),
       )
 
@@ -428,14 +360,13 @@ describe(UpdateMonitor.name, () => {
       // reads committed file
       expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
       // finds difference between committed and discovery result
-      expect(result).toEqual({
-        changes: diffDiscovery(
+      expect(result).toEqual(
+        diffDiscovery(
           COMMITTED,
           DISCOVERY_RESULT.contracts,
           mockConfig(PROJECT_A),
         ),
-        sendDailyReminder: false,
-      })
+      )
     })
 
     it('finds difference from repository entry', async () => {
@@ -469,21 +400,19 @@ describe(UpdateMonitor.name, () => {
         PROJECT_A,
         DISCOVERY_RESULT,
         mockConfig(PROJECT_A).hash,
-        false,
         mockConfig(PROJECT_A),
       )
 
       // calls repository
       expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // finds difference between repository and discovery result
-      expect(result).toEqual({
-        changes: diffDiscovery(
+      expect(result).toEqual(
+        diffDiscovery(
           dbEntry,
           DISCOVERY_RESULT.contracts,
           mockConfig(PROJECT_A),
         ),
-        sendDailyReminder: false,
-      })
+      )
     })
 
     it('takes config hash into consideration', async () => {
@@ -526,40 +455,13 @@ describe(UpdateMonitor.name, () => {
           contracts: DISCOVERY_RESULT.contracts,
         },
         mockConfig('new-name').hash,
-        false,
         mockConfig(PROJECT_A),
       )
 
-      expect(result).toEqual({
-        changes: [],
-        sendDailyReminder: false,
-      })
+      expect(result).toEqual([])
 
       expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
       expect(repository.findLatest).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  describe(isNineAM.name, () => {
-    it('UTC', () => {
-      const nineUTC = UnixTime.fromDate(
-        new Date('2021-01-01T09:00:00.000+00:00'),
-      )
-      expect(isNineAM(nineUTC, 'UTC')).toEqual(true)
-    })
-
-    it('PL', () => {
-      const sevenUTC = UnixTime.fromDate(
-        new Date('2021-01-01T07:00:00.000+00:00'),
-      )
-      expect(isNineAM(sevenUTC, 'CET')).toEqual(true)
-    })
-
-    it('works for "uneven" hours', () => {
-      const nineUTC = UnixTime.fromDate(
-        new Date('2021-01-01T09:01:10.000+00:00'),
-      )
-      expect(isNineAM(nineUTC, 'UTC')).toEqual(true)
     })
   })
 })

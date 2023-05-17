@@ -10,7 +10,11 @@ export class NotificationManager {
     this.logger = this.logger.for(this)
   }
 
-  async sendDailyReminder(notUpdatedProjects: string[], timestamp: UnixTime) {
+  async notUpdatedProjects(notUpdatedProjects: string[], timestamp: UnixTime) {
+    if (!isNineAM(timestamp, 'CET')) {
+      return
+    }
+
     this.logger.info('Sending daily reminder', {
       projects: notUpdatedProjects,
     })
@@ -56,4 +60,13 @@ function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
   }
 
   return `${dailyReportMessage}:white_check_mark: everything is up to date`
+}
+
+export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
+  const offset = timezone === 'CET' ? 3 : 0
+  const hour = 9 - offset
+
+  return timestamp
+    .toStartOf('hour')
+    .equals(timestamp.toStartOf('day').add(hour, 'hours'))
 }

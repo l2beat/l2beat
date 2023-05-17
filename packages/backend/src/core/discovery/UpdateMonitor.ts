@@ -14,13 +14,9 @@ import { diffDiscovery, DiscoveryDiff } from './output/diffDiscovery'
 import { diffToMessages } from './output/diffToMessages'
 import { findDependents } from './utils/findDependents'
 
-export interface Diff {
-  changes: DiscoveryDiff[]
-  sendDailyReminder: boolean
-}
-
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
+  private notUpdatedProjects: string[] = []
 
   constructor(
     private readonly provider: providers.AlchemyProvider,
@@ -60,48 +56,30 @@ export class UpdateMonitor {
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
-    const isDailyReminder = isNineAM(timestamp, 'CET')
-    const notUpdatedProjects: string[] = []
-
     for (const projectConfig of projectConfigs) {
       this.logger.info('Discovery started', { project: projectConfig.name })
 
       try {
-        await this.updateProject(
-          projectConfig,
-          blockNumber,
-          isDailyReminder,
-          notUpdatedProjects,
-          timestamp,
-        )
+        await this.updateProject(projectConfig, blockNumber, timestamp)
       } catch (error) {
         this.logger.error(error)
         errorsCount.inc()
       }
+
       this.logger.info('Discovery finished', { project: projectConfig.name })
     }
 
-    if (isDailyReminder) {
-      await this.notificationManager.sendDailyReminder(
-        notUpdatedProjects,
-        timestamp,
-      )
-    }
-
-    metadataDone()
+    await metadataDone()
   }
 
   private async updateProject(
     projectConfig: DiscoveryConfig,
     blockNumber: number,
-    isDailyReminder: boolean,
-    notUpdatedProjects: string[],
     timestamp: UnixTime,
   ) {
     const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
 
     if (discovery.contracts.some((c) => c.errors !== undefined)) {
-      notUpdatedProjects.push(projectConfig.name)
       return
     }
 
@@ -109,29 +87,21 @@ export class UpdateMonitor {
       projectConfig.name,
       discovery,
       projectConfig.hash,
-      isDailyReminder,
       projectConfig,
     )
 
-    if (diff.changes.length > 0) {
+    if (diff.length > 0) {
       await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
+      this.notUpdatedProjects.push(projectConfig.name)
 
       const dependents = await findDependents(
         projectConfig.name,
         this.configReader,
       )
-      const messages = diffToMessages(
-        projectConfig.name,
-        dependents,
-        diff.changes,
-      )
+      const messages = diffToMessages(projectConfig.name, dependents, diff)
       await this.notificationManager.notify(messages)
       this.logger.info('Sending messages', { project: projectConfig.name })
       changesDetected.inc()
-    }
-
-    if (diff.sendDailyReminder) {
-      notUpdatedProjects.push(projectConfig.name)
     }
 
     await this.repository.addOrUpdate({
@@ -147,14 +117,8 @@ export class UpdateMonitor {
     name: string,
     discovery: DiscoveryOutput,
     configHash: Hash256,
-    isDailyReminder: boolean,
     config: DiscoveryConfig,
-  ): Promise<Diff> {
-    const result: Diff = {
-      changes: [],
-      sendDailyReminder: false,
-    }
-
+  ): Promise<DiscoveryDiff[]> {
     const committed = await this.configReader.readDiscovery(name)
     const diffFromCommitted = diffDiscovery(
       committed.contracts,
@@ -172,23 +136,16 @@ export class UpdateMonitor {
       )
     }
 
-    if (isDailyReminder && diffFromCommitted.length > 0) {
-      this.logger.debug('Include inside daily reminder', { project: name })
-      result.sendDailyReminder = true
-    }
-
     if (
       databaseEntry === undefined ||
       databaseEntry.configHash !== configHash
     ) {
       this.logger.debug('Using committed file for diff', { project: name })
-      result.changes = diffFromCommitted
+      return diffFromCommitted
     } else {
       this.logger.debug('Using database record for diff', { project: name })
-      result.changes = diffFromDatabase
+      return diffFromDatabase
     }
-
-    return result
   }
 
   // 3rd party APIs are unstable, so we do a sanity check before sending
@@ -196,7 +153,7 @@ export class UpdateMonitor {
   // results.
   async sanityCheck(
     discovery: DiscoveryOutput,
-    diff: Diff,
+    diff: DiscoveryDiff[],
     projectConfig: DiscoveryConfig,
     blockNumber: number,
   ) {
@@ -217,7 +174,7 @@ export class UpdateMonitor {
     }
   }
 
-  initMetadata(blockNumber: number, timestamp: UnixTime): () => void {
+  initMetadata(blockNumber: number, timestamp: UnixTime): () => Promise<void> {
     this.logger.info('Update started', {
       blockNumber,
       timestamp: timestamp.toNumber(),
@@ -225,25 +182,21 @@ export class UpdateMonitor {
     const histogramDone = syncHistogram.startTimer()
     changesDetected.set(0)
     errorsCount.set(0)
+    this.notUpdatedProjects = []
 
-    return () => {
+    return async () => {
       histogramDone()
       latestBlock.set(blockNumber)
+      await this.notificationManager.notUpdatedProjects(
+        this.notUpdatedProjects,
+        timestamp,
+      )
       this.logger.info('Update finished', {
         blockNumber,
         timestamp: timestamp.toNumber(),
       })
     }
   }
-}
-
-export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
-  const offset = timezone === 'CET' ? 2 : 0
-  const hour = 9 - offset
-
-  return timestamp
-    .toStartOf('hour')
-    .equals(timestamp.toStartOf('day').add(hour, 'hours'))
 }
 
 const latestBlock = new Gauge({
