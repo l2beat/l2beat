@@ -10,7 +10,7 @@ export const pulseChain: Bridge = {
   id: ProjectId('pulseChain'),
   display: {
     name: 'PulseChain',
-    slug: 'pulseChain',
+    slug: 'pulsechain',
     description: '',
     links: {
       websites: ['https://pulsechain.com/'],
