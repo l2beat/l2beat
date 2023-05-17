@@ -18,8 +18,7 @@ import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { NotificationManager } from './NotificationManager'
-import { diffDiscovery } from './output/diffDiscovery'
-import { diffToMessages } from './output/diffToMessages'
+import { diffDiscovery, DiscoveryDiff } from './output/diffDiscovery'
 import { UpdateMonitor } from './UpdateMonitor'
 
 const PROJECT_A = 'project-a'
@@ -61,7 +60,7 @@ describe(UpdateMonitor.name, () => {
 
   beforeEach(() => {
     notificationManager = mockObject<NotificationManager>({
-      notify: async () => {},
+      changesDetected: async () => {},
       notUpdatedProjects: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
@@ -128,13 +127,19 @@ describe(UpdateMonitor.name, () => {
       // saves discovery result
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
       //sends notification
-      expect(notificationManager.notify).toHaveBeenCalledTimes(2)
-      expect(notificationManager.notify).toHaveBeenNthCalledWith(1, [
-        mockMessage(PROJECT_A),
-      ])
-      expect(notificationManager.notify).toHaveBeenNthCalledWith(2, [
-        mockMessage(PROJECT_B),
-      ])
+      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(2)
+      expect(notificationManager.changesDetected).toHaveBeenNthCalledWith(
+        1,
+        PROJECT_A,
+        [],
+        mockDiff,
+      )
+      expect(notificationManager.changesDetected).toHaveBeenNthCalledWith(
+        2,
+        PROJECT_B,
+        [],
+        mockDiff,
+      )
       expect(notificationManager.notUpdatedProjects).toHaveBeenCalledTimes(1)
       expect(notificationManager.notUpdatedProjects).toHaveBeenNthCalledWith(
         1,
@@ -180,7 +185,7 @@ describe(UpdateMonitor.name, () => {
       // runs discovery
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
       // does not send a notification
-      expect(notificationManager.notify).toHaveBeenCalledTimes(0)
+      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
     })
 
     it('does not send notification if error occured', async () => {
@@ -232,7 +237,7 @@ describe(UpdateMonitor.name, () => {
       // does not save changes to database
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
-      expect(notificationManager.notify).toHaveBeenCalledTimes(0)
+      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
     })
 
     it('does not send notification if sanity check failed', async () => {
@@ -271,13 +276,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(new UnixTime(0))
 
       // send notification about the error of 3rd party API
-      expect(notificationManager.notify).toHaveBeenCalledTimes(1)
-
-      expect(notificationManager.notify).toHaveBeenNthCalledWith(
-        1,
-        `⚠️ [${PROJECT_A}]: API error (Alchemy or Etherscan) | ${BLOCK_NUMBER}`,
-        { internalOnly: true },
-      )
+      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
     })
 
     it('handles error', async () => {
@@ -319,7 +318,7 @@ describe(UpdateMonitor.name, () => {
       // does not save changes to database
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
-      expect(notificationManager.notify).toHaveBeenCalledTimes(0)
+      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -504,22 +503,16 @@ function mockConfig(name: string): DiscoveryConfig {
   })
 }
 
-const mockMessage = (project: string): string => {
-  return diffToMessages(
-    project,
-    [],
-    [
+const mockDiff: DiscoveryDiff[] = [
+  {
+    address: ADDRESS_A,
+    name: NAME_A,
+    diff: [
       {
-        address: ADDRESS_A,
-        name: NAME_A,
-        diff: [
-          {
-            key: 'values.a',
-            before: 'true',
-            after: 'false',
-          },
-        ],
+        key: 'values.a',
+        before: 'true',
+        after: 'false',
       },
     ],
-  )[0]
-}
+  },
+]

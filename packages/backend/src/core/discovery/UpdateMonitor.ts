@@ -11,7 +11,6 @@ import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { NotificationManager } from './NotificationManager'
 import { diffDiscovery, DiscoveryDiff } from './output/diffDiscovery'
-import { diffToMessages } from './output/diffToMessages'
 import { findDependents } from './utils/findDependents'
 
 export class UpdateMonitor {
@@ -98,9 +97,11 @@ export class UpdateMonitor {
         projectConfig.name,
         this.configReader,
       )
-      const messages = diffToMessages(projectConfig.name, dependents, diff)
-      await this.notificationManager.notify(messages)
-      this.logger.info('Sending messages', { project: projectConfig.name })
+      await this.notificationManager.changesDetected(
+        projectConfig.name,
+        dependents,
+        diff,
+      )
       changesDetected.inc()
     }
 
@@ -163,10 +164,6 @@ export class UpdateMonitor {
     )
 
     if (!isEqual(discovery, secondDiscovery)) {
-      await this.notificationManager.notify(
-        `⚠️ [${projectConfig.name}]: API error (Alchemy or Etherscan) | ${blockNumber}`,
-        { internalOnly: true },
-      )
       throw new Error(
         `[${projectConfig.name}] Sanity check failed | ${blockNumber}\n
         potential-diff ${JSON.stringify(diff)}}`,

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared'
 import { expect } from 'earl'
 
-import { isNineAM } from '../NotificationManager'
+import { isNineAM } from './isNineAM'
 
 describe(isNineAM.name, () => {
   it('UTC', () => {

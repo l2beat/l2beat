@@ -1,6 +1,9 @@
 import { Logger, UnixTime } from '@l2beat/shared'
 
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
+import { DiscoveryDiff } from './output/diffDiscovery'
+import { diffToMessages } from './output/diffToMessages'
+import { isNineAM } from './utils/isNineAM'
 
 export class NotificationManager {
   constructor(
@@ -8,6 +11,15 @@ export class NotificationManager {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+  }
+
+  async changesDetected(
+    name: string,
+    dependents: string[],
+    diff: DiscoveryDiff[],
+  ) {
+    const messages = diffToMessages(name, dependents, diff)
+    await this.notify(messages)
   }
 
   async notUpdatedProjects(notUpdatedProjects: string[], timestamp: UnixTime) {
@@ -60,13 +72,4 @@ function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
   }
 
   return `${dailyReportMessage}:white_check_mark: everything is up to date`
-}
-
-export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
-  const offset = timezone === 'CET' ? 3 : 0
-  const hour = 9 - offset
-
-  return timestamp
-    .toStartOf('hour')
-    .equals(timestamp.toStartOf('day').add(hour, 'hours'))
 }

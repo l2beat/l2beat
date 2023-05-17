@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared'
 
 export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
-  const offset = timezone === 'CET' ? 2 : 0
+  const offset = timezone === 'CET' ? 3 : 0
   const hour = 9 - offset
 
   return timestamp
