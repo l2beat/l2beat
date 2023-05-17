@@ -1,7 +1,7 @@
 {
   "name": "pulseChain",
   "blockNumber": 17278049,
-  "configHash": "0xe39c945e1697073cb8d1f1dbd7447330a4e55b4aa9434240d47a5bc208b6c576",
+  "configHash": "0xbf3e7617f3bc9b704d7425f8e1f9926fe696c0534ff16e76fb2cdc448fe53726",
   "contracts": [
     {
       "name": "EternalStorageProxy",
@@ -46,7 +46,8 @@
         "owner": "0x0000000000000000000000000000000000000000",
         "requestGasLimit": 0,
         "tokenFactory": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "ForeignOmnibridge"
     }
   ],
   "eoas": [
