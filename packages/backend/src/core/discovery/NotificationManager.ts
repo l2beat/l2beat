@@ -19,7 +19,20 @@ export class NotificationManager {
     diff: DiscoveryDiff[],
   ) {
     const messages = diffToMessages(name, dependents, diff)
-    await this.notify(messages)
+    await this.notify(messages, 'INTERNAL')
+
+    const withoutErrors = diff.filter((d) =>
+      d.diff?.every((dd) => dd.key !== 'errors'),
+    )
+    if (withoutErrors.length === 0) {
+      return
+    }
+    const messagesWithoutErrors = diffToMessages(
+      name,
+      dependents,
+      withoutErrors,
+    )
+    await this.notify(messagesWithoutErrors, 'PUBLIC')
   }
 
   async notUpdatedProjects(notUpdatedProjects: string[], timestamp: UnixTime) {
@@ -30,15 +43,13 @@ export class NotificationManager {
     this.logger.info('Sending daily reminder', {
       projects: notUpdatedProjects,
     })
-    await this.notify(getDailyReminderMessage(notUpdatedProjects, timestamp), {
-      internalOnly: true,
-    })
+    await this.notify(
+      getDailyReminderMessage(notUpdatedProjects, timestamp),
+      'INTERNAL',
+    )
   }
 
-  async notify(
-    messages: string | string[],
-    options?: { internalOnly: boolean },
-  ) {
+  async notify(messages: string | string[], channel: Channel) {
     if (!this.discordClient) {
       // TODO: maybe only once? rethink
       this.logger.info(
@@ -49,16 +60,10 @@ export class NotificationManager {
 
     const arrayMessages = Array.isArray(messages) ? messages : [messages]
     for (const message of arrayMessages) {
-      const channels: Channel[] = options?.internalOnly
-        ? ['INTERNAL']
-        : ['PUBLIC', 'INTERNAL']
-
-      for (const channel of channels) {
-        await this.discordClient.sendMessage(message, channel).then(
-          () => this.logger.info('Notification to Discord has been sent'),
-          (e) => this.logger.error(e),
-        )
-      }
+      await this.discordClient.sendMessage(message, channel).then(
+        () => this.logger.info('Notification to Discord has been sent'),
+        (e) => this.logger.error(e),
+      )
     }
   }
 }

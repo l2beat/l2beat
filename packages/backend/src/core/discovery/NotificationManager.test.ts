@@ -1,8 +1,9 @@
-import { Logger, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { NotificationManager } from './NotificationManager'
+import { DiscoveryDiff } from './output/diffDiscovery'
 
 describe(NotificationManager.name, () => {
   describe(NotificationManager.prototype.notify.name, () => {
@@ -18,7 +19,7 @@ describe(NotificationManager.name, () => {
 
       const messages = ['a', 'b', 'c']
 
-      await notificationManager.notify(messages, { internalOnly: true })
+      await notificationManager.notify(messages, 'INTERNAL')
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(3)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -34,6 +35,81 @@ describe(NotificationManager.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         3,
         'c',
+        'INTERNAL',
+      )
+    })
+  })
+
+  describe(NotificationManager.prototype.changesDetected.name, () => {
+    it('sends notifications about the changes', async () => {
+      const discordClient = mockObject<DiscordClient>({
+        sendMessage: async () => {},
+      })
+
+      const notificationManager = new NotificationManager(
+        discordClient,
+        Logger.SILENT,
+      )
+
+      const project = 'project-a'
+      const dependents: string[] = []
+      const address = EthereumAddress.random()
+      const changes: DiscoveryDiff[] = [
+        {
+          name: 'Contract',
+          address,
+          diff: [{ key: 'A', before: '1', after: '2' }],
+        },
+      ]
+
+      await notificationManager.changesDetected(project, dependents, changes)
+
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        '***project-a*** | detected changes```diff\nContract | ' +
+          address.toString() +
+          '\n\nA\n- 1\n+ 2\n\n```',
+        'INTERNAL',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        2,
+        '***project-a*** | detected changes```diff\nContract | ' +
+          address.toString() +
+          '\n\nA\n- 1\n+ 2\n\n```',
+        'PUBLIC',
+      )
+    })
+
+    it('filters errors field changes', async () => {
+      const discordClient = mockObject<DiscordClient>({
+        sendMessage: async () => {},
+      })
+
+      const notificationManager = new NotificationManager(
+        discordClient,
+        Logger.SILENT,
+      )
+
+      const project = 'project-a'
+      const dependents: string[] = []
+      const address = EthereumAddress.random()
+      const changes: DiscoveryDiff[] = [
+        {
+          name: 'Contract',
+          address,
+          diff: [{ key: 'errors', after: 'Execution reverted' }],
+        },
+      ]
+
+      await notificationManager.changesDetected(project, dependents, changes)
+
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        '***project-a*** | detected changes```diff\nContract | ' +
+          address.toString() +
+          '\n\nerrors\n+ Execution reverted\n\n```',
         'INTERNAL',
       )
     })
