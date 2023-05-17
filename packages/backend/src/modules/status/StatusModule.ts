@@ -45,10 +45,8 @@ export function createStatusModule(
   const routers: Router[] = [createStatusRouter(statusController)]
 
   const start = () => {
-    if (!config.statusEnabled) {
-      logger = logger.for('StatusModule')
-      logger.info('Started')
-    }
+    logger = logger.for('StatusModule')
+    logger.info('Started')
   }
 
   return {
