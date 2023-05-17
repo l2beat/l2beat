@@ -20,6 +20,9 @@ export interface ProjectRiskViewEntry {
   value: string
   description: string
   sentiment?: 'warning' | 'bad'
+  // second line in risk view
+  secondLine?: string
+  secondSentiment?: 'warning' | 'bad'
   // list of source code permalinks and useful materials
   references?: string[]
   // list of contract identifiers which this risk relies on
