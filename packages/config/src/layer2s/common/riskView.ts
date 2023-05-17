@@ -108,11 +108,12 @@ export function UPGRADABLE_ARBITRUM(delay: number): ProjectRiskViewEntry {
   }
 }
 
-export const UPGRADABLE_POLYGON_ZKEVM: ProjectRiskViewEntry = {
-  value: '10d or no delay',
-  description:
-    'There is a 10 days delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.',
-  sentiment: 'warning',
+export function UPGRADABLE_POLYGON_ZKEVM(delay: string): ProjectRiskViewEntry {
+  return {
+    value: `${delay} or no delay`,
+    description: `There is a ${delay} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.`,
+    sentiment: 'warning',
+  }
 }
 
 export function UPGRADE_DELAY(delay: string): ProjectRiskViewEntry {
