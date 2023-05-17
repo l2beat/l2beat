@@ -78,10 +78,6 @@ export class UpdateMonitor {
   ) {
     const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
 
-    if (discovery.contracts.some((c) => c.errors !== undefined)) {
-      return
-    }
-
     const diff = await this.findChanges(
       projectConfig.name,
       discovery,
@@ -89,21 +85,7 @@ export class UpdateMonitor {
       projectConfig,
     )
 
-    if (diff.length > 0) {
-      await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
-      this.notUpdatedProjects.push(projectConfig.name)
-
-      const dependents = await findDependents(
-        projectConfig.name,
-        this.configReader,
-      )
-      await this.notificationManager.changesDetected(
-        projectConfig.name,
-        dependents,
-        diff,
-      )
-      changesDetected.inc()
-    }
+    await this.handleDiff(diff, discovery, projectConfig, blockNumber)
 
     await this.repository.addOrUpdate({
       projectName: projectConfig.name,
@@ -120,32 +102,44 @@ export class UpdateMonitor {
     configHash: Hash256,
     config: DiscoveryConfig,
   ): Promise<DiscoveryDiff[]> {
-    const committed = await this.configReader.readDiscovery(name)
-    const diffFromCommitted = diffDiscovery(
-      committed.contracts,
-      discovery.contracts,
-      config,
-    )
-
     const databaseEntry = await this.repository.findLatest(name)
-    let diffFromDatabase: DiscoveryDiff[] = []
-    if (databaseEntry !== undefined) {
-      diffFromDatabase = diffDiscovery(
+
+    if (databaseEntry?.configHash === configHash) {
+      this.logger.debug('Using database record for diff', { project: name })
+
+      return diffDiscovery(
         databaseEntry.discovery.contracts,
         discovery.contracts,
         config,
       )
     }
 
-    if (
-      databaseEntry === undefined ||
-      databaseEntry.configHash !== configHash
-    ) {
-      this.logger.debug('Using committed file for diff', { project: name })
-      return diffFromCommitted
-    } else {
-      this.logger.debug('Using database record for diff', { project: name })
-      return diffFromDatabase
+    const committed = await this.configReader.readDiscovery(name)
+    this.logger.debug('Using committed file for diff', { project: name })
+
+    return diffDiscovery(committed.contracts, discovery.contracts, config)
+  }
+
+  private async handleDiff(
+    diff: DiscoveryDiff[],
+    discovery: DiscoveryOutput,
+    projectConfig: DiscoveryConfig,
+    blockNumber: number,
+  ) {
+    if (diff.length > 0) {
+      await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
+      this.notUpdatedProjects.push(projectConfig.name)
+
+      const dependents = await findDependents(
+        projectConfig.name,
+        this.configReader,
+      )
+      await this.notificationManager.changesDetected(
+        projectConfig.name,
+        dependents,
+        diff,
+      )
+      changesDetected.inc()
     }
   }
 

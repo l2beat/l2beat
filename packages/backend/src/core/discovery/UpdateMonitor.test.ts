@@ -188,58 +188,6 @@ describe(UpdateMonitor.name, () => {
       expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
     })
 
-    it('does not send notification if error occured', async () => {
-      const configReader = mockObject<ConfigReader>({
-        readAllConfigs: async () => [mockConfig(PROJECT_A)],
-        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
-      })
-
-      const repository = mockObject<UpdateMonitorRepository>({
-        findLatest: async () => ({
-          ...mockRecord,
-          discovery: DISCOVERY_RESULT,
-          configHash: mockConfig(PROJECT_A).hash,
-        }),
-        addOrUpdate: async () => '',
-      })
-
-      const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: async () => {
-          return {
-            ...DISCOVERY_RESULT,
-            contracts: DISCOVERY_RESULT.contracts.map((contract) => ({
-              ...contract,
-              errors: { value: 'error' },
-            })),
-          }
-        },
-      })
-
-      const updateMonitor = new UpdateMonitor(
-        provider,
-        discoveryRunner,
-        notificationManager,
-        configReader,
-        repository,
-        mockObject<Clock>(),
-        Logger.SILENT,
-        false,
-      )
-
-      await updateMonitor.update(new UnixTime(0))
-
-      // gets block number
-      expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
-      // reads all the configs
-      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
-      // gets latest from database (with the same config hash)
-      expect(repository.findLatest).toHaveBeenCalledTimes(0)
-      // does not save changes to database
-      expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
-      // does not send a notification
-      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
-    })
-
     it('does not send notification if sanity check failed', async () => {
       const configReader = mockObject<ConfigReader>({
         readAllConfigs: async () => [mockConfig(PROJECT_A)],
