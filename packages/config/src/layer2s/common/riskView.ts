@@ -104,11 +104,10 @@ export const UPGRADABLE_ARBITRUM: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
-export function UPGRADABLE_POLYGON_ZKEVM(delay: number): ProjectRiskViewEntry {
-  const delayString: string = formatSeconds(delay)
+export function UPGRADABLE_POLYGON_ZKEVM(delay: string): ProjectRiskViewEntry {
   return {
-    value: `${delayString} or no delay`,
-    description: `There is a ${delayString} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.`,
+    value: `${delay} or no delay`,
+    description: `There is a ${delay} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.`,
     sentiment: 'warning',
   }
 }

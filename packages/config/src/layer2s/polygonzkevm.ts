@@ -16,16 +16,19 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
-const delay = discovery.getContractValue<number>('Timelock', 'getMinDelay')
-const trustedAggregatorTimeout = discovery.getContractValue<number>(
+const delay = formatSeconds(discovery.getContractValue<number>('Timelock', 'getMinDelay'))
+const trustedAggregatorTimeout = formatSeconds(discovery.getContractValue<number>(
   'PolygonZkEvm',
   'trustedAggregatorTimeout',
-)
-const pendingStateTimeout = discovery.getContractValue<number>(
+))
+const pendingStateTimeout = formatSeconds(discovery.getContractValue<number>(
   'PolygonZkEvm',
   'pendingStateTimeout',
-)
-const _HALT_AGGREGATION_TIMEOUT = 604800 // internal constant
+))
+const _HALT_AGGREGATION_TIMEOUT = formatSeconds(discovery.getContractValue<number>(
+  'PolygonZkEvm',
+  '_HALT_AGGREGATION_TIMEOUT',
+))
 
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
@@ -95,11 +98,9 @@ export const polygonzkevm: Layer2 = {
     },
     validatorFailure: {
       value: 'Submit proofs',
-      description: `If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a ${formatSeconds(
-        trustedAggregatorTimeout,
-      )} delay for proving and a ${formatSeconds(
-        pendingStateTimeout,
-      )} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+      description: `If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a ${
+        trustedAggregatorTimeout} delay for proving and a ${
+        pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
       references: [
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L636',
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L859',
@@ -204,24 +205,22 @@ export const polygonzkevm: Layer2 = {
           type: 'EOA',
         },
       ],
-      description: `The trusted aggregator provides the PolygonZkEvm contract with zk proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${formatSeconds(
-        trustedAggregatorTimeout,
-      )} delay for proving and a ${formatSeconds(
-        pendingStateTimeout,
-      )} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+      description: `The trusted aggregator provides the PolygonZkEvm contract with zk proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${
+        trustedAggregatorTimeout} delay for proving and a ${
+        pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getGnosisSafeDetails(
       'OwnerMultisig',
-      'The OwnerMultisig (Security Council) is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradability delay.',
+      'The OwnerMultisig (Security Council) is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
     ),
   ],
   contracts: {
     addresses: [
       {
         ...discovery.getMainContractDetails('PolygonZkEvm'),
-        description: `The main contract of the Polygon zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${formatSeconds(
-          _HALT_AGGREGATION_TIMEOUT,
-        )} timeout. This contract receives transaction batches, L2 state roots as well as zk proofs.`,
+        description: `The main contract of the Polygon zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${
+          _HALT_AGGREGATION_TIMEOUT
+        } timeout. This contract receives transaction batches, L2 state roots as well as zk proofs.`,
       },
       {
         ...discovery.getMainContractDetails('Bridge'),
@@ -246,7 +245,7 @@ export const polygonzkevm: Layer2 = {
         href: 'https://github.com/0xPolygonHermez/zkevm-contracts/blob/b1cefea1431e59b2121e543b786b93af99e859f4/contracts/PolygonZkEVMGlobalExitRootL2.sol#L17',
       },
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(formatSeconds(delay))],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
   // TODO: new upgradeability section with ProxyAdmin and Timelock
   milestones: [
