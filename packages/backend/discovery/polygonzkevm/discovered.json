@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
-  "blockNumber": 16924768,
-  "configHash": "0x90babd91138b1f268620495a9586a236556d645b875bb342232aa8f34e45e297",
+  "blockNumber": 17277727,
+  "configHash": "0x38952c7fac65655efa82d5eae84f8bfb8261d6e106b5de06769d48685b09b495",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -98,6 +98,7 @@
         "admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
       },
       "values": {
+        "_HALT_AGGREGATION_TIMEOUT": 604800,
         "admin": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "chainID": 1101,

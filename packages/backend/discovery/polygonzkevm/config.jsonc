@@ -31,7 +31,12 @@
         "lastVerifiedBatch",
         "multiplierBatchFee"
       ],
-      "fields": {}
+      "fields": {
+        "_HALT_AGGREGATION_TIMEOUT": {
+          "type": "hardcoded",
+          "value": 604800
+        }
+      }
     },
     "Timelock": {
       "ignoreMethods": [
