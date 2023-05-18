@@ -1,6 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { CONTRACTS } from '../layer2s'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('skale-ima')
 
 export const skaleIMA: Bridge = {
   type: 'bridge',
@@ -87,38 +91,41 @@ export const skaleIMA: Bridge = {
   riskView: {},
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0x49F583d263e4Ef938b9E09772D3394c71605Df94'),
-        name: 'DepositBoxEth',
-        description:
-          'Bridge contract to transfer ETH to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      },
-      {
-        address: EthereumAddress('0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669'),
-        name: 'DepositBoxERC20',
-        description:
-          'Bridge contract to transfer ERC20 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      },
-      {
-        address: EthereumAddress('0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d'),
-        name: 'DepositBoxERC721',
-        description:
-          'Bridge contract to transfer ERC721 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      },
-      {
-        address: EthereumAddress('0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a'),
-        name: 'DepositBoxERC1155',
-        description:
-          'Bridge contract to transfer ERC1155 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      },
-      {
-        address: EthereumAddress('0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986'),
-        name: 'DepositBoxERC721withMetadata',
-        description:
-          'Bridge contract to transfer ERC721 tokens with metadata to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      },
+      discovery.getMainContractDetails(
+        'MessageProxyForMainnet',
+        'Contract responsible for sending and receiving messages. It is used internally by the DepositBox contracts to transfer value between chains.',
+      ),
+      discovery.getMainContractDetails(
+        'DepositBoxEth',
+        'Bridge contract to transfer ETH to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+      ),
+      discovery.getMainContractDetails(
+        'DepositBoxERC721withMetadata',
+        'Bridge contract to transfer ERC721 tokens with metadata to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+      ),
+      discovery.getMainContractDetails(
+        'DepositBoxERC20',
+        'Bridge contract to transfer ERC20 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+      ),
+      discovery.getMainContractDetails(
+        'DepositBoxERC721',
+        'Bridge contract to transfer ERC721 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+      ),
+      discovery.getMainContractDetails(
+        'DepositBoxERC1155',
+        'Bridge contract to transfer ERC1155 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+      ),
+      discovery.getMainContractDetails(
+        'CommunityPool',
+        'CommunityPool is Gas Wallet contract, where users need to deposit Eth, to be able to transfer their assets(Eth, ERC20, NFTs) or messages from SKALE chain to Ethereum. Deposited amount will be spend for gas reimbursement to Agent which will deliver message on Ethereum.',
+      ),
     ],
-    risks: [],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [],
+  permissions: [
+    ...discovery.getGnosisSafeDetails(
+      'ProxyAdminOwner',
+      'This is an owner of DepositBox contracts proxies, can upgrade the implementation of those contracts, which potentially can introduce bug or introduce malicious behaviors.',
+    ),
+  ],
 }
