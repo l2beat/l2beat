@@ -92,7 +92,7 @@ export const skaleIMA: Bridge = {
     validatedBy: {
       value: 'Third Party',
       description:
-        'There are 16 randomly selected validator nodes, 11 of them needs to sign and verify messages',
+        'There are 16 randomly selected validator nodes of the destination chain, 11 of them needs to sign and verify messages',
       sentiment: 'bad',
       references: [
         'https://etherscan.io/address/0xC261084Dc6475d4980548Bd8C323FF825b3D0C38#code#F1#L398',
