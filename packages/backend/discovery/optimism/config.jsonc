@@ -162,7 +162,8 @@
       ]
     },
     "OptimismMultisig": {
-      "ignoreInWatchMode": ["nonce"]
+      "ignoreInWatchMode": ["nonce"],
+      "ignoreRelatives": ["getOwners"]
     }
   }
 }
