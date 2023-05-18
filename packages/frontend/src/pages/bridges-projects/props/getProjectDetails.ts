@@ -59,10 +59,13 @@ export function getProjectDetails(
     props: getDescriptionSection(bridge, verificationStatus),
   })
 
-  items.push({
-    type: 'RiskSection',
-    props: getRiskSection(bridge, verificationStatus),
-  })
+  const riskSection = getRiskSection(bridge, verificationStatus)
+  if (riskSection.riskGroups.length > 0) {
+    items.push({
+      type: 'RiskSection',
+      props: riskSection,
+    })
+  }
 
   if (incomplete) {
     items.push({
@@ -94,10 +97,11 @@ export function getProjectDetails(
     })
   }
 
-  items.push({
-    type: 'ContractsSection',
-    props: getContractSection(bridge, verificationStatus),
-  })
+  if (bridge.contracts)
+    items.push({
+      type: 'ContractsSection',
+      props: getContractSection(bridge, verificationStatus),
+    })
 
   return {
     incomplete,

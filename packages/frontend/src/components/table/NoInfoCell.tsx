@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { Badge } from '../badge/Badge'
-
 export function NoInfoCell() {
   return (
-    <Badge type="gray" title="This item is still under review." oneSize>
+    <span
+      className="Tooltip text-gray-550 dark:text-gray-500"
+      title="This item is still under review."
+    >
       No info
-    </Badge>
+    </span>
   )
 }
