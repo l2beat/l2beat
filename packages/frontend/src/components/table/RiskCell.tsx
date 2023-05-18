@@ -2,7 +2,7 @@ import { ProjectRiskViewEntry } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { Badge } from '../badge/Badge'
+import { sentimentToTextColor } from '../../utils/risks/color'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { NoInfoCell } from './NoInfoCell'
 
@@ -25,22 +25,20 @@ export function RiskCell({ item }: Props) {
       className={cx(item.description !== '' && 'Tooltip')}
       title={item.description !== '' ? item.description : undefined}
     >
-      {item.sentiment !== 'bad' && item.sentiment !== 'warning' ? (
+      <span className={cx('font-medium', sentimentToTextColor(item.sentiment))}>
+        {item.value}
+      </span>
+      {item.secondLine && (
         <span
-          className={cx(item.description !== '' && 'Tooltip')}
-          title={item.description !== '' ? item.description : undefined}
+          className={cx(
+            'block text-xs leading-none',
+            item.secondSentiment
+              ? sentimentToTextColor(item.secondSentiment)
+              : 'text-gray-550 dark:text-gray-500',
+          )}
         >
-          {item.value}
+          {item.secondLine}
         </span>
-      ) : (
-        <Badge
-          className={cx(item.description !== '' && 'Tooltip')}
-          type={item.sentiment === 'bad' ? 'error' : 'warning'}
-          title={item.description !== '' ? item.description : undefined}
-          oneSize
-        >
-          {item.value}
-        </Badge>
       )}
     </div>
   )

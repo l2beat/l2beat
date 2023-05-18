@@ -66,6 +66,7 @@ describe(ProxyDetector.name, () => {
     const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [], {
       'call implementation proxy': async () => FIRST_DETAILS,
       'new Arbitrum proxy': async () => SECOND_DETAILS,
+      'zkSync Lite proxy': async () => undefined,
     })
     const result = await detector.detectProxy(
       EthereumAddress.random(),

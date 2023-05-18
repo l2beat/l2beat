@@ -256,12 +256,14 @@ const meta = {
           value: 'On chain',
           description:
             'All of the data needed for proof construction is published on chain.',
+          secondLine: 'Transactions',
         },
         upgradeability: {
           value: '13d or no delay',
           description:
             'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
           sentiment: 'warning',
+          secondLine: 'by DAO decentralized',
         },
         sequencerFailure: {
           value: 'Transact using L1',
@@ -302,12 +304,14 @@ const meta = {
           value: 'On chain',
           description:
             'All of the data needed for proof construction is published on chain.',
+          secondLine: 'Transactions, compressed',
         },
         upgradeability: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
           sentiment: 'bad',
+          secondLine: 'by DAO centralized',
         },
         sequencerFailure: {
           value: 'Transact using L1',
@@ -450,6 +454,8 @@ const meta = {
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
           sentiment: 'bad',
+          secondLine: 'by private MSig',
+          secondSentiment: 'bad',
         },
         sequencerFailure: {
           value: 'Transact using L1',
@@ -480,12 +486,15 @@ const meta = {
           value: 'On chain',
           description:
             'All of the data needed for proof construction is published on chain.',
+          secondLine: 'Transactions',
         },
         upgradeability: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice.',
           sentiment: 'bad',
+          secondLine: 'by private MSig',
+          secondSentiment: 'bad',
         },
         sequencerFailure: {
           value: 'Force exit to L1',
