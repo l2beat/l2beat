@@ -44,11 +44,6 @@
           "removeEvent": "event LogOperatorRemoved(address operator)",
           "removeKey": "operator"
         },
-        // Responsible for (no delay):
-        //   - appointing operators
-        //   - changing program hash
-        //   - config hash
-        //   - message cancellation delay
         "governors": {
           "type": "starkWareGovernance",
           "filterBy": "starknetIsGovernor"
