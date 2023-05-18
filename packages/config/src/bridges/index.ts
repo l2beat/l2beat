@@ -27,6 +27,7 @@ import { portal } from './portal'
 import { pulseChain } from './pulseChain'
 import { ronin } from './ronin'
 import { satellite } from './satellite'
+import { skaleIMA } from './skaleIMA'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
 import { synapse } from './synapse'
@@ -65,6 +66,7 @@ export const bridges: Bridge[] = [
   pulseChain,
   ronin,
   satellite,
+  skaleIMA,
   sollet,
   stargate,
   synapse,
