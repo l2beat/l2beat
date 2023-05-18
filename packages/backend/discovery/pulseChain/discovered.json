@@ -1,10 +1,10 @@
 {
   "name": "pulseChain",
   "blockNumber": 17284804,
-  "configHash": "0x1724c2bbe8490c4b80c2cf274a5d6fbe5ed81a3741e4b90bbe859056f391f23d",
+  "configHash": "0x6d60b01c006d1757441882c6b5af39df307e8fe484704fb11532342b22abc051",
   "contracts": [
     {
-      "name": "Escrow",
+      "name": "ForeignOmnibridge",
       "address": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
       "code": "https://etherscan.deth.net/address/0x1715a3E4A142d8b698131108995174F37aEBA10D,0xB7DF1E00ae030e966E635ede273625240546B873",
       "upgradeability": {

@@ -20,7 +20,7 @@ export const pulseChain: Bridge = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'Escrow',
+        identifier: 'ForeignOmnibridge',
         sinceTimestamp: new UnixTime(1684137600),
         tokens: '*',
       }),
