@@ -4,7 +4,6 @@ import { BridgesRiskViewEntry } from '../../../pages/bridges-risk/types'
 import { BridgesTvlViewEntry } from '../../../pages/bridges-tvl/types'
 import { TVLBreakdown } from '../../TVLBreakdown'
 import { IndexCell } from '../IndexCell'
-import { NoInfoCell } from '../NoInfoCell'
 import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
@@ -38,12 +37,7 @@ export function getArchivedBridgesTvlColumns() {
     {
       name: 'Validated by',
       tooltip: 'How are the messages sent via this bridge checked?',
-      getValue: (entry) =>
-        entry.validatedBy ? (
-          <RiskCell item={entry.validatedBy} />
-        ) : (
-          <NoInfoCell />
-        ),
+      getValue: (entry) => <RiskCell item={entry.validatedBy} />,
     },
     {
       name: 'Type',
