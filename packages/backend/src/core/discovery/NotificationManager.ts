@@ -35,7 +35,7 @@ export class NotificationManager {
     await this.notify(messagesWithoutErrors, 'PUBLIC')
   }
 
-  async notUpdatedProjects(notUpdatedProjects: string[], timestamp: UnixTime) {
+  async unresolvedProjects(notUpdatedProjects: string[], timestamp: UnixTime) {
     if (!isNineAM(timestamp, 'CET')) {
       return
     }

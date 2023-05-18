@@ -15,6 +15,7 @@ import { findDependents } from './utils/findDependents'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
+  readonly cachedDiscovery = new Map<string, DiscoveryOutput>()
 
   constructor(
     private readonly provider: providers.AlchemyProvider,
@@ -71,6 +72,8 @@ export class UpdateMonitor {
       this.logger.info('Discovery finished', { project: projectConfig.name })
     }
 
+    await this.findUnresolvedProjects(projectConfigs, timestamp)
+
     metricsDone()
     this.logger.info('Update finished', {
       blockNumber,
@@ -84,6 +87,7 @@ export class UpdateMonitor {
     timestamp: UnixTime,
   ) {
     const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
+    this.cachedDiscovery.set(projectConfig.name, discovery)
 
     const diff = await this.findChanges(
       projectConfig.name,
@@ -169,6 +173,44 @@ export class UpdateMonitor {
         potential-diff ${JSON.stringify(diff)}}`,
       )
     }
+    this.cachedDiscovery.set(projectConfig.name, secondDiscovery)
+  }
+
+  // this function gets a diff between current discovery and committed discovery
+  // and checks if there are any changes that are not yet resolved
+  // sends the results to the notification manager
+  async findUnresolvedProjects(
+    projectConfigs: DiscoveryConfig[],
+    timestamp: UnixTime,
+  ) {
+    const notUpdatedProjects: string[] = []
+
+    for (const projectConfig of projectConfigs) {
+      const discovery = this.cachedDiscovery.get(projectConfig.name)
+
+      if (!discovery) {
+        continue
+      }
+
+      const committed = await this.configReader.readDiscovery(
+        projectConfig.name,
+      )
+
+      const diff = diffDiscovery(
+        committed.contracts,
+        discovery.contracts,
+        projectConfig,
+      )
+
+      if (diff.length > 0) {
+        notUpdatedProjects.push(projectConfig.name)
+      }
+    }
+
+    await this.notificationManager.unresolvedProjects(
+      notUpdatedProjects,
+      timestamp,
+    )
   }
 
   initMetrics(blockNumber: number): () => void {

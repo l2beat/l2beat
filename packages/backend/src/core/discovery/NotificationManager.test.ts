@@ -115,7 +115,7 @@ describe(NotificationManager.name, () => {
     })
   })
 
-  describe(NotificationManager.prototype.notUpdatedProjects.name, () => {
+  describe(NotificationManager.prototype.unresolvedProjects.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
@@ -129,7 +129,7 @@ describe(NotificationManager.name, () => {
       const notUpdatedProjects = ['project-a', 'project-b']
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
 
-      await notificationManager.notUpdatedProjects(
+      await notificationManager.unresolvedProjects(
         notUpdatedProjects,
         timestamp,
       )
@@ -137,7 +137,9 @@ describe(NotificationManager.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '```Daily bot report @ 2023-05-17```\n:x: project-a\n\n:x: project-b',
+        '```Daily bot report @ ' +
+          timestamp.toYYYYMMDD() +
+          '```\n:x: project-a\n\n:x: project-b',
         'INTERNAL',
       )
     })
@@ -155,7 +157,7 @@ describe(NotificationManager.name, () => {
       const notUpdatedProjects = ['project-a', 'project-b']
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 
-      await notificationManager.notUpdatedProjects(
+      await notificationManager.unresolvedProjects(
         notUpdatedProjects,
         timestamp,
       )

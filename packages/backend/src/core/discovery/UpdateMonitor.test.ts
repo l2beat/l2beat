@@ -61,6 +61,7 @@ describe(UpdateMonitor.name, () => {
   beforeEach(() => {
     notificationManager = mockObject<NotificationManager>({
       changesDetected: async () => {},
+      unresolvedProjects: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
       run: async () => DISCOVERY_RESULT,
@@ -119,8 +120,10 @@ describe(UpdateMonitor.name, () => {
       )
       // calls repository (and gets undefined)
       expect(repository.findLatest).toHaveBeenCalledTimes(2)
-      // reads committed discovery.json
-      expect(configReader.readDiscovery).toHaveBeenCalledTimes(2)
+      // reads committed discovery.json, 2 + 2 for findUnresolvedProjects()
+      expect(configReader.readDiscovery).toHaveBeenCalledTimes(2 * 2)
+      expect(configReader.readDiscovery).toHaveBeenNthCalledWith(1, PROJECT_A)
+      expect(configReader.readDiscovery).toHaveBeenNthCalledWith(2, PROJECT_B)
       expect(configReader.readDiscovery).toHaveBeenNthCalledWith(1, PROJECT_A)
       expect(configReader.readDiscovery).toHaveBeenNthCalledWith(2, PROJECT_B)
       // saves discovery result
@@ -138,6 +141,12 @@ describe(UpdateMonitor.name, () => {
         PROJECT_B,
         [],
         mockDiff,
+      )
+      expect(notificationManager.unresolvedProjects).toHaveBeenCalledTimes(1)
+      expect(notificationManager.unresolvedProjects).toHaveBeenNthCalledWith(
+        1,
+        [PROJECT_A, PROJECT_B],
+        TIMESTAMP,
       )
     })
 
@@ -179,6 +188,12 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
       // does not send a notification
       expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
+      expect(notificationManager.unresolvedProjects).toHaveBeenCalledTimes(1)
+      expect(notificationManager.unresolvedProjects).toHaveBeenNthCalledWith(
+        1,
+        [PROJECT_A],
+        TIMESTAMP,
+      )
     })
 
     it('does not send notification if sanity check failed', async () => {
@@ -218,6 +233,12 @@ describe(UpdateMonitor.name, () => {
 
       // send notification about the error of 3rd party API
       expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
+      expect(notificationManager.unresolvedProjects).toHaveBeenCalledTimes(1)
+      expect(notificationManager.unresolvedProjects).toHaveBeenNthCalledWith(
+        1,
+        [],
+        TIMESTAMP,
+      )
     })
 
     it('handles error', async () => {
@@ -260,6 +281,12 @@ describe(UpdateMonitor.name, () => {
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
       expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
+      expect(notificationManager.unresolvedProjects).toHaveBeenCalledTimes(1)
+      expect(notificationManager.unresolvedProjects).toHaveBeenNthCalledWith(
+        1,
+        [],
+        TIMESTAMP,
+      )
     })
   })
 
