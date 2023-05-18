@@ -1,21 +1,15 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS } from '../layer2s/common'
-import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 export const skaleIMA: Bridge = {
   type: 'bridge',
-  id: ProjectId('ima'),
+  id: ProjectId('skale-ima'),
   display: {
     name: 'SKALE IMA Bridge',
-    slug: 'ima',
+    slug: 'skale-ima',
     links: {
-      websites: [
-        'https://bridge.skale.network',
-        'https://skale.space',
-      ],
+      websites: ['https://bridge.skale.network', 'https://skale.space'],
       apps: ['https://bridge.skale.network'],
       socialMedia: [
         'https://twitter.com/SkaleNetwork',
@@ -53,15 +47,15 @@ export const skaleIMA: Bridge = {
         address: EthereumAddress('0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669'),
         sinceTimestamp: new UnixTime(1626719900),
         tokens: [
-            // 'RAZOR',
-            'USDP',
-            'USDC',
-            'SKL',
-            'DAI',
-            'USDT',
-            'WBTC',
-            // 'HMT',
-            'LINK'
+          // 'RAZOR',
+          'USDP',
+          'USDC',
+          'SKL',
+          'DAI',
+          'USDT',
+          'WBTC',
+          // 'HMT',
+          'LINK',
         ],
       },
     ],
@@ -69,10 +63,7 @@ export const skaleIMA: Bridge = {
   technology: {
     category: 'Token Bridge',
     //TODO: Originally for SKALE chains, it supports transfers between all SKALE chains and between each SKALE chain and Ethereum, currently there are 20 chains in the network, but the number is increasing
-    destination: [
-      'Ethereum',
-      'SKALE',
-    ],
+    destination: ['Ethereum', 'SKALE'],
     principleOfOperation: {
       name: 'Principle of Operation',
       description:
