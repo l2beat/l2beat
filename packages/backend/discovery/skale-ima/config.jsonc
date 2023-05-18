@@ -14,6 +14,7 @@
     "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d": "DepositBoxERC721",
     "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a": "DepositBoxERC1155",
     "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986": "DepositBoxERC721WithMetadata",
+    "0x588801cA36558310D91234aFC2511502282b1621": "CommunityPool",
     "0x6ef406953bac772C2146389ED37846BA3b6086D1": "Linker",
     "0x8629703a9903515818C2FeB45a6f6fA5df8Da404": "MessageProxyForMainnet",
     "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0": "ProxyAdminOwner",
@@ -21,6 +22,26 @@
     "0xC04A10Fd5e6513242558f47331568aBD6185a310": "ContractManager"
   },
   "overrides": {
+    "MessageProxyForMainnet": {
+      "ignoreInWatchMode": [
+        "gasLimit",
+        "headerMessageGasCost",
+        "messageGasCost",
+        "messageInProgress",
+        "MESSAGES_LENGTH",
+        "REVERT_REASON_LENGTH"
+      ]
+    },
+    "DepositBoxERC20": {
+      "ignoreMethods": ["delayedTransfers", "delayedTransfersSize"]
+    },
+    "CommunityPool": {
+      "ignoreInWatchMode": [
+        "minTransactionGas",
+        "multiplierDivider",
+        "multiplierNumerator"
+      ]
+    },
     "ContractManager": {
       "ignoreDiscovery": true
     },
