@@ -24,6 +24,15 @@ export function reportError(...args: unknown[]): void {
   }
 }
 
+export async function flushErrors(): Promise<void> {
+  if (sentryDsn) {
+    const flushed = await Sentry.flush(5_000)
+    if (!flushed) {
+      console.error('Sentry.flush() timeout')
+    }
+  }
+}
+
 export function handleServerError(error: Error, ctx: Context) {
   reportError(error, ctx)
 }

@@ -108,11 +108,12 @@ export function UPGRADABLE_ARBITRUM(delay: number): ProjectRiskViewEntry {
   }
 }
 
-export const UPGRADABLE_POLYGON_ZKEVM: ProjectRiskViewEntry = {
-  value: '10d or no delay',
-  description:
-    'There is a 10 days delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.',
-  sentiment: 'warning',
+export function UPGRADABLE_POLYGON_ZKEVM(delay: string): ProjectRiskViewEntry {
+  return {
+    value: `${delay} or no delay`,
+    description: `There is a ${delay} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.`,
+    sentiment: 'warning',
+  }
 }
 
 export function UPGRADE_DELAY(delay: string): ProjectRiskViewEntry {
@@ -145,11 +146,16 @@ export const SEQUENCER_TRANSACT_L1: ProjectRiskViewEntry = {
     'The user is able to submit a transaction through L1 and force its inclusion on L2.',
 }
 
-export const SEQUENCER_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
-  value: 'Force trade/exit to L1',
-  description:
-    'The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
-  sentiment: 'warning',
+export function SEQUENCER_STARKEX_PERPETUAL(
+  delay: number,
+): ProjectRiskViewEntry {
+  return {
+    value: 'Force trade/exit to L1',
+    description: `The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down for more than ${formatSeconds(
+      delay,
+    )}, the user can use the exit hatch to withdraw funds.`,
+    sentiment: 'warning',
+  }
 }
 
 export const SEQUENCER_STARKEX_SPOT: ProjectRiskViewEntry = {

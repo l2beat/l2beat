@@ -1,8 +1,12 @@
 import { ConfigReader } from '../../../../../core/discovery/config/ConfigReader'
+import { DiscoveryDiff } from '../../../../../core/discovery/output/diffDiscovery'
+import { UpdateMonitorRepository } from '../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { getDashboardContracts } from './getDashboardContracts'
+import { getDiff } from './utils/getDiff'
 
 export interface DashboardProject {
   name: string
+  diff?: DiscoveryDiff[]
   discoveredCount?: number
   initialAddressesCount?: number
   watchedCount?: number
@@ -14,6 +18,7 @@ export interface DashboardProject {
 
 export async function getDashboardProjects(
   configReader: ConfigReader,
+  updateMonitorRepository: UpdateMonitorRepository,
 ): Promise<DashboardProject[]> {
   const names = (await configReader.readAllConfigs()).map((c) => c.name)
 
@@ -22,10 +27,16 @@ export async function getDashboardProjects(
   for (const name of names) {
     const config = await configReader.readConfig(name)
     const discovery = await configReader.readDiscovery(name)
+    const diff: DiscoveryDiff[] = await getDiff(
+      updateMonitorRepository,
+      discovery,
+      config,
+    )
     const contracts = getDashboardContracts(discovery, config)
 
     const project: DashboardProject = {
       name,
+      diff,
       discoveredCount: contracts.length,
       initialAddressesCount: contracts.filter((c) => c.isInitial).length,
       watchedCount: contracts

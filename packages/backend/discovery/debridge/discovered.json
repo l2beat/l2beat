@@ -1,6 +1,6 @@
 {
   "name": "debridge",
-  "blockNumber": 17094246,
+  "blockNumber": 17273064,
   "configHash": "0x525afe6a04bf5c20e6acb4cdb55c256a225bcec03e3a467d9b7d838d9ded2c5c",
   "contracts": [
     {
@@ -28,7 +28,7 @@
         "globalTransferFeeBps": 10,
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "lockedClaim": 1,
-        "nonce": 11825,
+        "nonce": 11863,
         "paused": false,
         "signatureVerifier": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -73,6 +73,7 @@
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "deBridgeTokenAdmin": "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "implementation": "0xf8A2902c0a5f817F5e22C82f453538d3f0734C2b",
         "tokenImplementation": "0xf8A2902c0a5f817F5e22C82f453538d3f0734C2b",
         "version": 110
       }
@@ -105,7 +106,7 @@
       },
       "values": {
         "confirmationThreshold": 3,
-        "currentBlock": 17087102,
+        "currentBlock": 17262696,
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "excessConfirmations": 3,

@@ -1,0 +1,17 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "pulseChain",
+  "initialAddresses": ["0x8AC4ae65b3656e26dC4e0e69108B392283350f55"],
+  "names": {
+    "0x8AC4ae65b3656e26dC4e0e69108B392283350f55": "WETHOmnibridgeRouter",
+    "0xB7DF1E00ae030e966E635ede273625240546B873": "ForeignOmnibridge"
+  },
+  "overrides": {
+    "WETHOmnibridgeRouter": {
+      "ignoreMethods": ["WETH"]
+    },
+    "ForeignOmnibridge": {
+      "ignoreInWatchMode": ["getCurrentDay"]
+    }
+  }
+}

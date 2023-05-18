@@ -21,6 +21,7 @@ export function getProductionConfig(cli: CliParameters): Config {
   return {
     name: 'Backend/Production',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
+    tokens: tokenList,
     syncEnabled: true,
     logger: {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
@@ -60,7 +61,6 @@ export function getProductionConfig(cli: CliParameters): Config {
       pass: getEnv('METRICS_AUTH_PASS'),
     },
     tvl: {
-      tokens: tokenList,
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
@@ -101,5 +101,6 @@ export function getProductionConfig(cli: CliParameters): Config {
         internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
       },
     },
+    statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
   }
 }

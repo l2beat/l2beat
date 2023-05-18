@@ -23,6 +23,7 @@ export function getLocalConfig(cli: CliParameters): Config {
   return {
     name: 'Backend/Local',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
+    tokens: tokenList,
     syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     logger: {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
@@ -53,7 +54,6 @@ export function getLocalConfig(cli: CliParameters): Config {
     },
 
     tvl: tvlEnabled && {
-      tokens: tokenList,
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
@@ -93,7 +93,7 @@ export function getLocalConfig(cli: CliParameters): Config {
       },
     },
     updateMonitor: updateMonitorEnabled && {
-      runOnStart: true,
+      runOnStart: getEnv.boolean('UPDATE_MONITOR_RUN_ON_START', true),
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {
@@ -102,5 +102,6 @@ export function getLocalConfig(cli: CliParameters): Config {
         internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
       },
     },
+    statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
   }
 }
