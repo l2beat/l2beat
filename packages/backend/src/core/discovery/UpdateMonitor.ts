@@ -60,7 +60,9 @@ export class UpdateMonitor {
     const projectConfigs = await this.configReader.readAllConfigs()
 
     for (const projectConfig of projectConfigs) {
-      this.logger.info('Discovery started', { project: projectConfig.name })
+      this.logger.info('Project update started', {
+        project: projectConfig.name,
+      })
 
       try {
         await this.updateProject(projectConfig, blockNumber, timestamp)
@@ -69,7 +71,9 @@ export class UpdateMonitor {
         errorsCount.inc()
       }
 
-      this.logger.info('Discovery finished', { project: projectConfig.name })
+      this.logger.info('Project update finished', {
+        project: projectConfig.name,
+      })
     }
 
     await this.findUnresolvedProjects(projectConfigs, timestamp)

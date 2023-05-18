@@ -20,6 +20,10 @@ export class NotificationManager {
   ) {
     const messages = diffToMessages(name, dependents, diff)
     await this.notify(messages, 'INTERNAL')
+    this.logger.info('Changes detected sent [INTERNAL]', {
+      name,
+      amount: diff.map((d) => (d.diff ?? []).length).reduce((a, b) => a + b, 0),
+    })
 
     const withoutErrors = diff.filter((d) =>
       d.diff?.every((dd) => dd.key !== 'errors'),
@@ -33,6 +37,12 @@ export class NotificationManager {
       withoutErrors,
     )
     await this.notify(messagesWithoutErrors, 'PUBLIC')
+    this.logger.info('Changes detected sent [PUBLIC]', {
+      name,
+      amount: withoutErrors
+        .map((d) => (d.diff ?? []).length)
+        .reduce((a, b) => a + b, 0),
+    })
   }
 
   async unresolvedProjects(notUpdatedProjects: string[], timestamp: UnixTime) {
@@ -40,13 +50,13 @@ export class NotificationManager {
       return
     }
 
-    this.logger.info('Sending daily reminder', {
-      projects: notUpdatedProjects,
-    })
     await this.notify(
       getDailyReminderMessage(notUpdatedProjects, timestamp),
       'INTERNAL',
     )
+    this.logger.info('Daily reminder sent', {
+      projects: notUpdatedProjects,
+    })
   }
 
   async notify(messages: string | string[], channel: Channel) {
@@ -61,7 +71,7 @@ export class NotificationManager {
     const arrayMessages = Array.isArray(messages) ? messages : [messages]
     for (const message of arrayMessages) {
       await this.discordClient.sendMessage(message, channel).then(
-        () => this.logger.info('Notification to Discord has been sent'),
+        () => this.logger.debug('Notification to Discord has been sent'),
         (e) => this.logger.error(e),
       )
     }
@@ -70,6 +80,7 @@ export class NotificationManager {
   async started() {
     await this.notify('UpdateMonitor started.', 'INTERNAL')
     await this.notify('UpdateMonitor started.', 'PUBLIC')
+    this.logger.info('Initial notifications sent')
   }
 }
 
