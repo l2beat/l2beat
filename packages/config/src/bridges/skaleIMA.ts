@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s'
+import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('skale-ima')
@@ -59,7 +60,6 @@ export const skaleIMA: Bridge = {
   },
   technology: {
     category: 'Token Bridge',
-    //TODO: Originally for SKALE chains, it supports transfers between all SKALE chains and between each SKALE chain and Ethereum, currently there are 20 chains in the network, but the number is increasing
     destination: ['Ethereum', 'SKALE'],
     principleOfOperation: {
       name: 'Principle of Operation',
@@ -88,7 +88,24 @@ export const skaleIMA: Bridge = {
       isIncomplete: true,
     },
   },
-  riskView: {},
+  riskView: {
+    validatedBy: {
+      value: 'Third Party',
+      description: 'Transfers need to be confirmed by the SKALE nodes.',
+      sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: 'Yes',
+      description:
+        'The bridge can be upgraded by the' +
+        discovery.getMultisigStats('ProxyAdminOwner') +
+        'Multisig. There is no delay on the upgrade.',
+      sentiment: 'bad',
+    },
+    destinationToken: {
+      ...RISK_VIEW.CANONICAL_OR_WRAPPED,
+    },
+  },
   contracts: {
     addresses: [
       discovery.getMainContractDetails(
@@ -100,7 +117,7 @@ export const skaleIMA: Bridge = {
         'Bridge contract to transfer ETH to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
       ),
       discovery.getMainContractDetails(
-        'DepositBoxERC721withMetadata',
+        'DepositBoxERC721WithMetadata',
         'Bridge contract to transfer ERC721 tokens with metadata to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
       ),
       discovery.getMainContractDetails(
