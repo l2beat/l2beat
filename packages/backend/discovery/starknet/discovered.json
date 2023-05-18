@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "blockNumber": 17285387,
-  "configHash": "0xccf6544cfcf43ad8166ac97e9c7d77bc9f12f909447a4977ab62d5903665698c",
+  "configHash": "0xbf3a80dcb97f4a25bf2782abb0d511a353a8797fb50e960b1ecc3da65e0c3f66",
   "contracts": [
     {
       "name": "DAI Bridge",
@@ -40,7 +40,7 @@
       "derivedName": "StarknetERC20Bridge"
     },
     {
-      "name": "Starknet Multisig",
+      "name": "Proxy Multisig",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "code": "https://etherscan.deth.net/address/0x83C0A700114101D1283D1405E2c8f21D3F03e988,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -62,7 +62,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "GnosisSafe",
+      "name": "Implementation Multisig",
       "address": "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd",
       "code": "https://etherscan.deth.net/address/0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -80,7 +80,8 @@
         "getThreshold": 2,
         "nonce": 10,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "ETH Bridge",

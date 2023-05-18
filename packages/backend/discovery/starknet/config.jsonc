@@ -18,7 +18,8 @@
     // TODO: Make it possible to use the contract name without overriding it
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Starknet",
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
-    "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "Starknet Multisig"
+    "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "Proxy Multisig",
+    "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "Implementation Multisig"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "l2beat-starkware"
@@ -55,7 +56,10 @@
         "stateRoot"
       ]
     },
-    "Starknet Multisig": {
+    "Proxy Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Implementation Multisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "WBTC Bridge": {
