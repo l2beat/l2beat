@@ -9,31 +9,24 @@ export const skaleIMA: Bridge = {
     name: 'SKALE IMA Bridge',
     slug: 'skale-ima',
     links: {
-      websites: ['https://bridge.skale.network', 'https://skale.space'],
+      websites: ['https://skale.space'],
       apps: ['https://bridge.skale.network'],
       socialMedia: [
         'https://twitter.com/SkaleNetwork',
         'https://t.me/skaleofficial',
-        'https://skale.chat',
         'https://youtube.com/channel/UCpUk0eMmD00C7RXLT0g8SuA',
         'https://www.reddit.com/r/SKALEnetwork/',
         'https://www.linkedin.com/company/skale-labs/',
       ],
       documentation: [
-        'https://docs.skale.network',
         'https://docs.skale.network/ima/1.4.x/',
-      ],
-      repositories: [
-        'https://github.com/skalenetwork/',
-        'https://github.com/skalenetwork/IMA',
-      ],
-      explorers: [
         'https://mainnet.skalenodes.com',
-        'https://elated-tan-skat.explorer.mainnet.skalenodes.com',
       ],
+      repositories: ['https://github.com/skalenetwork/IMA'],
+      explorers: ['https://elated-tan-skat.explorer.mainnet.skalenodes.com'],
     },
     description:
-      'SKALE IMA Bridge is a part of SKALE Network ecosystem. It is a cross-chain BLS threshold bridge that allows users to transfer Eth, ERC20, ERC721, ERC1155 and arbitrary messages between Ethereum and SKALE chains without fees and between SKALE chains without gas fees.',
+      'SKALE IMA Bridge is a part of SKALE Network ecosystem. It is a cross-chain BLS threshold bridge that allows users to transfer tokens and arbitrary messages between supported blockchains.',
   },
   config: {
     associatedTokens: ['SKL'],
