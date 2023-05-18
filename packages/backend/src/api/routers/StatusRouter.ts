@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { stringAs, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, stringAs, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { StatusController } from '../controllers/status/StatusController'
@@ -72,6 +72,26 @@ export function createStatusRouter(statusController: StatusController) {
         const { timestamp } = ctx.params
 
         ctx.body = await statusController.getEscrowsDashboard(timestamp)
+      },
+    ),
+  )
+
+  router.get(
+    '/status/escrows/:escrow/:timestamp',
+    withTypedContext(
+      z.object({
+        params: z.object({
+          escrow: stringAs((s) => EthereumAddress(s)),
+          timestamp: stringAs((s) => new UnixTime(+s)),
+        }),
+      }),
+      async (ctx) => {
+        const { timestamp, escrow } = ctx.params
+
+        ctx.body = await statusController.getSingleEscrowDashboard(
+          timestamp,
+          escrow,
+        )
       },
     ),
   )

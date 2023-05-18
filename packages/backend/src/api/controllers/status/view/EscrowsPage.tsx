@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 import React from 'react'
 
 import { ReportPerEscrow } from '../../../../core/reports/createReports'
@@ -15,11 +15,13 @@ interface Project {
 
 interface EscrowsPageProps {
   projects: Project[]
+  timestamp: UnixTime
 }
 
-function EscrowsPage({ projects }: EscrowsPageProps) {
+function EscrowsPage({ projects, timestamp }: EscrowsPageProps) {
   return (
     <Page title="escrows">
+      {timestamp.toDate().toString()}
       {projects.map(({ projectId, escrows }, i) => (
         <div key={i}>
           <h2>{projectId}</h2>
@@ -37,6 +39,14 @@ function EscrowsPage({ projects }: EscrowsPageProps) {
                   <td>{balance.toString()}</td>
                 </tr>
               ))}
+              <tr>
+                <td>SUM</td>
+                <td>
+                  {escrows
+                    .reduce((acc, escrow) => acc + escrow.balance, 0n)
+                    .toString()}
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -45,12 +55,18 @@ function EscrowsPage({ projects }: EscrowsPageProps) {
   )
 }
 
-export function renderEscrowsPage(reports: ReportPerEscrow[]) {
-  const props = getEscrowPageProps(reports)
+export function renderEscrowsPage(
+  reports: ReportPerEscrow[],
+  timestamp: UnixTime,
+) {
+  const props = getEscrowPageProps(reports, timestamp)
   return reactToHtml(<EscrowsPage {...props} />)
 }
 
-function getEscrowPageProps(reports: ReportPerEscrow[]): EscrowsPageProps {
+function getEscrowPageProps(
+  reports: ReportPerEscrow[],
+  timestamp: UnixTime,
+): EscrowsPageProps {
   const projects = new Map<ProjectId, Project>()
 
   for (const { projectId, escrow, balance } of reports) {
@@ -70,5 +86,6 @@ function getEscrowPageProps(reports: ReportPerEscrow[]): EscrowsPageProps {
 
   return {
     projects: [...projects.values()],
+    timestamp,
   }
 }

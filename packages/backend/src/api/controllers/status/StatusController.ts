@@ -1,9 +1,18 @@
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
-import { ChainId, getTimestamps, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  getTimestamps,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
-import { createReportsPerEscrow } from '../../../core/reports/createReports'
+import {
+  createReportsPerEscrow,
+  getSingleEscrowReports,
+} from '../../../core/reports/createReports'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
@@ -21,6 +30,7 @@ import { getDiff } from './discovery/props/utils/getDiff'
 import { renderDashboardPage } from './discovery/view/DashboardPage'
 import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
 import { renderBalancesPage } from './view/BalancesPage'
+import { renderEscrowPage } from './view/EscrowPage'
 import { renderEscrowsPage } from './view/EscrowsPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderReportsPage } from './view/ReportsPage'
@@ -145,7 +155,26 @@ export class StatusController {
 
     const reports = createReportsPerEscrow(prices, balances, this.projects)
 
-    return renderEscrowsPage(reports)
+    return renderEscrowsPage(reports, timestamp)
+  }
+
+  async getSingleEscrowDashboard(
+    timestamp: UnixTime,
+    escrowAddress: EthereumAddress,
+  ) {
+    const [prices, balances] = await Promise.all([
+      this.priceRepository.getByTimestamp(timestamp),
+      this.balanceRepository.getByTimestamp(ChainId.ETHEREUM, timestamp),
+    ])
+
+    const reports = getSingleEscrowReports(
+      prices,
+      balances,
+      this.projects,
+      escrowAddress,
+    )
+
+    return renderEscrowPage(reports, escrowAddress)
   }
 
   private getFirstHour(from: UnixTime | undefined) {

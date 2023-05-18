@@ -97,6 +97,26 @@ export function createReportsPerEscrow(
   balances: BalanceRecord[],
   projects: ReportProject[],
 ): ReportPerEscrow[] {
+  const reports = createReportsPerEscrowPerToken(prices, balances, projects)
+  return sumTokensPerEscrow(projects, reports)
+}
+
+export function getSingleEscrowReports(
+  prices: PriceRecord[],
+  balances: BalanceRecord[],
+  projects: ReportProject[],
+  escrow: EthereumAddress,
+) {
+  const reports = createReportsPerEscrowPerToken(prices, balances, projects)
+  const escrowReports = reports.filter((report) => report.escrow === escrow)
+  return escrowReports
+}
+
+function createReportsPerEscrowPerToken(
+  prices: PriceRecord[],
+  balances: BalanceRecord[],
+  projects: ReportProject[],
+): ReportPerEscrowPerToken[] {
   const priceMap = new Map(prices.map((p) => [p.assetId, p]))
   const ethPrice = priceMap.get(AssetId.ETH)?.priceUsd
 
@@ -105,7 +125,28 @@ export function createReportsPerEscrow(
   }
 
   const balancesPerEscrow = aggregateBalancesPerEscrow(projects, balances)
+  const reports = aggregateReportsPerEscrow(
+    balancesPerEscrow,
+    priceMap,
+    ethPrice,
+  )
 
+  return reports
+}
+
+export interface BalancePerEscrow {
+  balance: bigint
+  decimals: number
+  projectId: ProjectId
+  assetId: AssetId
+  escrow: EthereumAddress
+}
+
+function aggregateReportsPerEscrow(
+  balancesPerEscrow: BalancePerEscrow[],
+  priceMap: Map<AssetId, PriceRecord>,
+  ethPrice: number,
+) {
   const reports = []
   for (const balance of balancesPerEscrow) {
     const price = priceMap.get(balance.assetId)
@@ -115,34 +156,10 @@ export function createReportsPerEscrow(
     reports.push({
       ...createReport(price, balance, ethPrice),
       escrow: balance.escrow,
+      price: price.priceUsd,
     })
   }
-
-  const escrowBalances = []
-  for (const project of projects) {
-    for (const escrow of project.escrows) {
-      // sum balanceUsd per escrow
-      const escrowBalanceUsd = reports
-        .filter((report) => report.escrow === escrow.address)
-        .reduce((acc, report) => acc + report.balanceUsd, 0n)
-
-      escrowBalances.push({
-        projectId: project.projectId,
-        escrow: escrow.address,
-        balance: escrowBalanceUsd,
-      })
-    }
-  }
-
-  return escrowBalances
-}
-
-export interface BalancePerEscrow {
-  balance: bigint
-  decimals: number
-  projectId: ProjectId
-  assetId: AssetId
-  escrow: EthereumAddress
+  return reports
 }
 
 export function aggregateBalancesPerEscrow(
@@ -193,4 +210,37 @@ export function aggregateBalancesPerEscrow(
   }
 
   return balancesPerEscrow
+}
+
+export interface ReportPerEscrowPerToken {
+  escrow: EthereumAddress
+  timestamp: UnixTime
+  projectId: ProjectId
+  price: number
+  asset: AssetId
+  balanceUsd: bigint
+  balanceEth: bigint
+  balance: bigint
+}
+
+function sumTokensPerEscrow(
+  projects: ReportProject[],
+  reports: ReportPerEscrowPerToken[],
+) {
+  const escrowBalances = []
+  for (const project of projects) {
+    for (const escrow of project.escrows) {
+      // sum balanceUsd per escrow
+      const escrowBalanceUsd = reports
+        .filter((report) => report.escrow === escrow.address)
+        .reduce((acc, report) => acc + report.balanceUsd, 0n)
+
+      escrowBalances.push({
+        projectId: project.projectId,
+        escrow: escrow.address,
+        balance: escrowBalanceUsd,
+      })
+    }
+  }
+  return escrowBalances
 }
