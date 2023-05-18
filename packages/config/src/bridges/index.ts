@@ -24,6 +24,7 @@ import { polygonplasma } from './polygonplasma'
 import { polygonpos } from './polygonpos'
 import { polynetwork } from './polynetwork'
 import { portal } from './portal'
+import { pulseChain } from './pulseChain'
 import { ronin } from './ronin'
 import { satellite } from './satellite'
 import { skaleIMA } from './skaleIMA'
@@ -62,6 +63,7 @@ export const bridges: Bridge[] = [
   polygonpos,
   polynetwork,
   pNetwork,
+  pulseChain,
   ronin,
   satellite,
   skaleIMA,

@@ -3,17 +3,14 @@ import { providers } from 'ethers'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
-import { StatusController } from '../../api/controllers/status/StatusController'
 import { TvlController } from '../../api/controllers/tvl/TvlController'
 import { createBlocksRouter } from '../../api/routers/BlocksRouter'
 import { createDydxRouter } from '../../api/routers/DydxRouter'
-import { createStatusRouter } from '../../api/routers/StatusRouter'
 import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { Config } from '../../config'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
-import { ConfigReader } from '../../core/discovery/config/ConfigReader'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { ReportUpdater } from '../../core/reports/ReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
@@ -43,7 +40,6 @@ export function createTvlModule(
   }
 
   // #region database
-
   const blockNumberRepository = new BlockNumberRepository(database, logger)
   const priceRepository = new PriceRepository(database, logger)
   const balanceRepository = new BalanceRepository(database, logger)
@@ -71,7 +67,6 @@ export function createTvlModule(
     http,
     logger,
   )
-  const configReader = new ConfigReader()
 
   // #endregion
   // #region updaters
@@ -86,7 +81,7 @@ export function createTvlModule(
     coingeckoQueryService,
     priceRepository,
     clock,
-    config.tvl.tokens,
+    config.tokens,
     logger,
   )
   const balanceUpdater = new BalanceUpdater(
@@ -118,23 +113,14 @@ export function createTvlModule(
     aggregateReportRepository,
     reportRepository,
     config.projects,
-    config.tvl.tokens,
+    config.tokens,
     logger,
   )
-  const statusController = new StatusController(
-    priceRepository,
-    balanceStatusRepository,
-    reportStatusRepository,
-    clock,
-    config.tvl.tokens,
-    config.projects,
-    configReader,
-  )
+
   const dydxController = new DydxController(aggregateReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
   const tvlRouter = createTvlRouter(tvlController)
-  const statusRouter = createStatusRouter(statusController)
   const dydxRouter = createDydxRouter(dydxController)
 
   // #endregion
@@ -157,7 +143,7 @@ export function createTvlModule(
   }
 
   return {
-    routers: [blocksRouter, tvlRouter, statusRouter, dydxRouter],
+    routers: [blocksRouter, tvlRouter, dydxRouter],
     start,
   }
 }

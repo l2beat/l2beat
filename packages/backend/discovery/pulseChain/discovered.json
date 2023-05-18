@@ -1,0 +1,150 @@
+{
+  "name": "pulseChain",
+  "blockNumber": 17278049,
+  "configHash": "0xbf3e7617f3bc9b704d7425f8e1f9926fe696c0534ff16e76fb2cdc448fe53726",
+  "contracts": [
+    {
+      "name": "EternalStorageProxy",
+      "address": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+      "code": "https://etherscan.deth.net/address/0x1715a3E4A142d8b698131108995174F37aEBA10D",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "implementation": "0xB7DF1E00ae030e966E635ede273625240546B873",
+        "upgradeabilityOwner": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
+        "version": 1
+      }
+    },
+    {
+      "name": "WETHOmnibridgeRouter",
+      "address": "0x8AC4ae65b3656e26dC4e0e69108B392283350f55",
+      "code": "https://etherscan.deth.net/address/0x8AC4ae65b3656e26dC4e0e69108B392283350f55",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "bridge": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+        "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
+      },
+      "derivedName": "WETHOmnibridgeRouter"
+    },
+    {
+      "name": "ForeignOmnibridge",
+      "address": "0xB7DF1E00ae030e966E635ede273625240546B873",
+      "code": "https://etherscan.deth.net/address/0xB7DF1E00ae030e966E635ede273625240546B873",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "bridgeContract": "0x0000000000000000000000000000000000000000",
+        "getBridgeInterfacesVersion": [3, 3, 0],
+        "getBridgeMode": "0xb1516c26",
+        "getCurrentDay": 19494,
+        "isInitialized": false,
+        "mediatorContractOnOtherSide": "0x0000000000000000000000000000000000000000",
+        "owner": "0x0000000000000000000000000000000000000000",
+        "requestGasLimit": 0,
+        "tokenFactory": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "ForeignOmnibridge"
+    }
+  ],
+  "eoas": [
+    "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
+    "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
+  ],
+  "abis": {
+    "0x1715a3E4A142d8b698131108995174F37aEBA10D": [
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)",
+      "function implementation() view returns (address)",
+      "function transferProxyOwnership(address newOwner)",
+      "function upgradeTo(uint256 version, address implementation)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function upgradeabilityOwner() view returns (address)",
+      "function version() view returns (uint256)"
+    ],
+    "0x8AC4ae65b3656e26dC4e0e69108B392283350f55": [
+      "constructor(address _bridge, address _weth, address _owner)",
+      "function WETH() view returns (address)",
+      "function bridge() view returns (address)",
+      "function claimTokens(address _token, address _to)",
+      "function onTokenBridged(address _token, uint256 _value, bytes _data)",
+      "function owner() view returns (address)",
+      "function transferOwnership(address _newOwner)",
+      "function wrapAndRelayTokens() payable",
+      "function wrapAndRelayTokens(address _receiver) payable"
+    ],
+    "0xB7DF1E00ae030e966E635ede273625240546B873": [
+      "constructor(string _suffix)",
+      "event DailyLimitChanged(address indexed token, uint256 newLimit)",
+      "event ExecutionDailyLimitChanged(address indexed token, uint256 newLimit)",
+      "event FailedMessageFixed(bytes32 indexed messageId, address token, address recipient, uint256 value)",
+      "event NewTokenRegistered(address indexed nativeToken, address indexed bridgedToken)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)",
+      "event TokensBridged(address indexed token, address indexed recipient, uint256 value, bytes32 indexed messageId)",
+      "event TokensBridgingInitiated(address indexed token, address indexed sender, uint256 value, bytes32 indexed messageId)",
+      "function bridgeContract() view returns (address)",
+      "function bridgedTokenAddress(address _nativeToken) view returns (address)",
+      "function claimTokens(address _token, address _to)",
+      "function claimTokensFromTokenContract(address _bridgedToken, address _token, address _to)",
+      "function dailyLimit(address _token) view returns (uint256)",
+      "function deployAndHandleBridgedTokens(address _token, string _name, string _symbol, uint8 _decimals, address _recipient, uint256 _value)",
+      "function deployAndHandleBridgedTokensAndCall(address _token, string _name, string _symbol, uint8 _decimals, address _recipient, uint256 _value, bytes _data)",
+      "function disableInterest(address _token)",
+      "function executionDailyLimit(address _token) view returns (uint256)",
+      "function executionMaxPerTx(address _token) view returns (uint256)",
+      "function fixFailedMessage(bytes32 _messageId)",
+      "function fixMediatorBalance(address _token, address _receiver)",
+      "function getBridgeInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function getBridgeMode() pure returns (bytes4 _data)",
+      "function getCurrentDay() view returns (uint256)",
+      "function handleBridgedTokens(address _token, address _recipient, uint256 _value)",
+      "function handleBridgedTokensAndCall(address _token, address _recipient, uint256 _value, bytes _data)",
+      "function handleNativeTokens(address _token, address _recipient, uint256 _value)",
+      "function handleNativeTokensAndCall(address _token, address _recipient, uint256 _value, bytes _data)",
+      "function initialize(address _bridgeContract, address _mediatorContract, uint256[3] _dailyLimitMaxPerTxMinPerTxArray, uint256[2] _executionDailyLimitExecutionMaxPerTxArray, uint256 _requestGasLimit, address _owner, address _tokenFactory) returns (bool)",
+      "function initializeInterest(address _token, address _impl, uint256 _minCashThreshold)",
+      "function interestImplementation(address _token) view returns (address)",
+      "function invest(address _token)",
+      "function isBridgedTokenDeployAcknowledged(address _token) view returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function isRegisteredAsNativeToken(address _token) view returns (bool)",
+      "function isTokenRegistered(address _token) view returns (bool)",
+      "function maxAvailablePerTx(address _token) view returns (uint256)",
+      "function maxPerTx(address _token) view returns (uint256)",
+      "function mediatorBalance(address _token) view returns (uint256)",
+      "function mediatorContractOnOtherSide() view returns (address)",
+      "function messageFixed(bytes32 _messageId) view returns (bool)",
+      "function minCashThreshold(address _token) view returns (uint256)",
+      "function minPerTx(address _token) view returns (uint256)",
+      "function nativeTokenAddress(address _bridgedToken) view returns (address)",
+      "function onTokenTransfer(address _from, uint256 _value, bytes _data) returns (bool)",
+      "function owner() view returns (address)",
+      "function relayTokens(address token, uint256 _value)",
+      "function relayTokens(address token, address _receiver, uint256 _value)",
+      "function relayTokensAndCall(address token, address _receiver, uint256 _value, bytes _data)",
+      "function requestFailedMessageFix(bytes32 _messageId)",
+      "function requestGasLimit() view returns (uint256)",
+      "function setBridgeContract(address _bridgeContract)",
+      "function setCustomTokenAddressPair(address _nativeToken, address _bridgedToken)",
+      "function setDailyLimit(address _token, uint256 _dailyLimit)",
+      "function setExecutionDailyLimit(address _token, uint256 _dailyLimit)",
+      "function setExecutionMaxPerTx(address _token, uint256 _maxPerTx)",
+      "function setMaxPerTx(address _token, uint256 _maxPerTx)",
+      "function setMediatorContractOnOtherSide(address _mediatorContract)",
+      "function setMinCashThreshold(address _token, uint256 _minCashThreshold)",
+      "function setMinPerTx(address _token, uint256 _minPerTx)",
+      "function setRequestGasLimit(uint256 _gasLimit)",
+      "function setTokenFactory(address _tokenFactory)",
+      "function tokenFactory() view returns (address)",
+      "function totalExecutedPerDay(address _token, uint256 _day) view returns (uint256)",
+      "function totalSpentPerDay(address _token, uint256 _day) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToReverseMode(address _tokenFactory)",
+      "function withinExecutionLimit(address _token, uint256 _amount) view returns (bool)",
+      "function withinLimit(address _token, uint256 _amount) view returns (bool)"
+    ]
+  }
+}

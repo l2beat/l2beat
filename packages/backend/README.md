@@ -61,11 +61,16 @@ environment variables. One variable per line `KEY=value`.
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
 - `ACTIVITY_ENABLED` (default `false`) - When set to `true` activity feature is enabled
 - `TVL_SYNC_ENABLED` (default `true`) - When set to `true` tvl sync is enabled
-- `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
 - `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
 - `PUBLIC_DISCORD_CHANNEL_ID` - public channel id the message will be sent to
 - `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
 - `DISCORD_TOKEN` - Bot account authentication token, for more details go to `DiscordClient.ts`
+- `STATUS_ENABLE`(default `true`) - enable/disable status module
+
+#### Optional (local development)
+
+- `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
+- `UPDATE_MONITOR_RUN_ON_START` (default `true`) - Prevent UpdateMonitor from running on start when developing locally
 
 #### .env boilerplate:
 
@@ -91,6 +96,7 @@ STARKEX_API_KEY=
 #PUBLIC_DISCORD_CHANNEL_ID=
 #INTERNAL_DISCORD_CHANNEL_ID=
 #DISCORD_TOKEN=
+#UPDATE_MONITOR_RUN_ON_START=
 ```
 
 ## Scripts
