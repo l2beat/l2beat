@@ -47,7 +47,7 @@ describe(NotificationManager.name, () => {
       )
     })
 
-    it('filters errors field changes', async () => {
+    it('sends errors only to internal channel', async () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
