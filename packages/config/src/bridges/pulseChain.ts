@@ -34,5 +34,19 @@ export const pulseChain: Bridge = {
     category: 'Token Bridge',
     destination: ['PulseChain'],
   },
-  riskView: {},
+  riskView: {
+    validatedBy: {
+      value: 'Third Party',
+      description:
+        'Transfers need to be signed offchain by a designed list of Validators.',
+      sentiment: 'bad',
+    },
+    sourceUpgradeability: {
+      value: 'Yes',
+      description:
+        'The code that secures the system can be changed arbitrarily and without notice.',
+      sentiment: 'bad',
+    },
+    destinationToken: RISK_VIEW.WRAPPED,
+  },
 }
