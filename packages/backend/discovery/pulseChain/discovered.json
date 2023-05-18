@@ -1,7 +1,7 @@
 {
   "name": "pulseChain",
-  "blockNumber": 17278049,
-  "configHash": "0xbf3e7617f3bc9b704d7425f8e1f9926fe696c0534ff16e76fb2cdc448fe53726",
+  "blockNumber": 17284804,
+  "configHash": "0x429d98d9c70382cb8db33f7a5a184690e9c1e1c5f392260a6d25747dbbaf9ff5",
   "contracts": [
     {
       "name": "EternalStorageProxy",
@@ -30,6 +30,24 @@
       "derivedName": "WETHOmnibridgeRouter"
     },
     {
+      "name": "BridgeValidators",
+      "address": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
+      "code": "https://etherscan.deth.net/address/0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "deployedAtBlock": 17264220,
+        "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+        "getBridgeValidatorsInterfacesVersion": [2, 3, 0],
+        "isInitialized": true,
+        "owner": "0xFc1A4fF1f2a0fd54bA1895DDA33FB7Eb90580F4D",
+        "requiredSignatures": 1,
+        "validatorCount": 1,
+        "validatorList": ["0xFc1A4fF1f2a0fd54bA1895DDA33FB7Eb90580F4D"]
+      }
+    },
+    {
       "name": "ForeignOmnibridge",
       "address": "0xB7DF1E00ae030e966E635ede273625240546B873",
       "code": "https://etherscan.deth.net/address/0xB7DF1E00ae030e966E635ede273625240546B873",
@@ -40,7 +58,7 @@
         "bridgeContract": "0x0000000000000000000000000000000000000000",
         "getBridgeInterfacesVersion": [3, 3, 0],
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 19494,
+        "getCurrentDay": 19495,
         "isInitialized": false,
         "mediatorContractOnOtherSide": "0x0000000000000000000000000000000000000000",
         "owner": "0x0000000000000000000000000000000000000000",
@@ -48,11 +66,55 @@
         "tokenFactory": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "ForeignOmnibridge"
+    },
+    {
+      "name": "EternalStorageProxy",
+      "address": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
+      "code": "https://etherscan.deth.net/address/0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "implementation": "0xe98699957d3504aCD57ffF861E4b77b57eB02467",
+        "upgradeabilityOwner": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
+        "version": 1
+      }
+    },
+    {
+      "name": "ForeignAMB",
+      "address": "0xe98699957d3504aCD57ffF861E4b77b57eB02467",
+      "code": "https://etherscan.deth.net/address/0xe98699957d3504aCD57ffF861E4b77b57eB02467",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "allowReentrantRequests": false,
+        "decimalShift": 0,
+        "deployedAtBlock": 17264373,
+        "destinationChainId": 56,
+        "gasPrice": 1,
+        "getBridgeInterfacesVersion": [6, 2, 0],
+        "getBridgeMode": "0x2544fbb9",
+        "isInitialized": true,
+        "maxGasPerTx": 1000000,
+        "messageId": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "messageSender": "0x0000000000000000000000000000000000000000",
+        "messageSourceChainId": 0,
+        "owner": "0xFc1A4fF1f2a0fd54bA1895DDA33FB7Eb90580F4D",
+        "requiredBlockConfirmations": 1,
+        "requiredSignatures": 1,
+        "sourceChainId": 1,
+        "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "validatorContract": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"
+      }
     }
   ],
   "eoas": [
     "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
-    "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
+    "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
+    "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
+    "0xFc1A4fF1f2a0fd54bA1895DDA33FB7Eb90580F4D",
+    "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
   ],
   "abis": {
     "0x1715a3E4A142d8b698131108995174F37aEBA10D": [
@@ -75,6 +137,28 @@
       "function transferOwnership(address _newOwner)",
       "function wrapAndRelayTokens() payable",
       "function wrapAndRelayTokens(address _receiver) payable"
+    ],
+    "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab": [
+      "function validatorCount() view returns (uint256)",
+      "function getBridgeValidatorsInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function isInitialized() view returns (bool)",
+      "function removeValidator(address _validator)",
+      "function addValidator(address _validator)",
+      "function initialize(uint256 _requiredSignatures, address[] _initialValidators, address _owner) returns (bool)",
+      "function validatorList() view returns (address[])",
+      "function setRequiredSignatures(uint256 _requiredSignatures)",
+      "function requiredSignatures() view returns (uint256)",
+      "function getNextValidator(address _address) view returns (address)",
+      "function owner() view returns (address)",
+      "function isValidatorDuty(address _validator) view returns (bool)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function F_ADDR() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function isValidator(address _validator) view returns (bool)",
+      "event ValidatorAdded(address indexed validator)",
+      "event ValidatorRemoved(address indexed validator)",
+      "event RequiredSignaturesChanged(uint256 requiredSignatures)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
     "0xB7DF1E00ae030e966E635ede273625240546B873": [
       "constructor(string _suffix)",
@@ -145,6 +229,59 @@
       "function upgradeToReverseMode(address _tokenFactory)",
       "function withinExecutionLimit(address _token, uint256 _amount) view returns (bool)",
       "function withinLimit(address _token, uint256 _amount) view returns (bool)"
+    ],
+    "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "0xe98699957d3504aCD57ffF861E4b77b57eB02467": [
+      "function transactionHash() view returns (bytes32)",
+      "function sourceChainId() view returns (uint256)",
+      "function relayedMessages(bytes32 _txHash) view returns (bool)",
+      "function safeExecuteSignaturesWithAutoGasLimit(bytes _data, bytes _signatures)",
+      "function initialize(uint256 _sourceChainId, uint256 _destinationChainId, address _validatorContract, uint256 _maxGasPerTx, uint256 _gasPrice, uint256 _requiredBlockConfirmations, address _owner) returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function requiredBlockConfirmations() view returns (uint256)",
+      "function executeSignatures(bytes _data, bytes _signatures)",
+      "function failedMessageReceiver(bytes32 _messageId) view returns (address)",
+      "function getBridgeMode() pure returns (bytes4 _data)",
+      "function setChainIds(uint256 _sourceChainId, uint256 _destinationChainId)",
+      "function failedMessageSender(bytes32 _messageId) view returns (address)",
+      "function allowReentrantRequests() view returns (bool)",
+      "function messageId() view returns (bytes32 id)",
+      "function claimTokens(address _token, address _to)",
+      "function setMaxGasPerTx(uint256 _maxGasPerTx)",
+      "function requiredSignatures() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function validatorContract() view returns (address)",
+      "function deployedAtBlock() view returns (uint256)",
+      "function getBridgeInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function messageSourceChainId() view returns (uint256 id)",
+      "function setRequiredBlockConfirmations(uint256 _blockConfirmations)",
+      "function destinationChainId() view returns (uint256)",
+      "function setGasPrice(uint256 _gasPrice)",
+      "function setAllowReentrantRequests(bool _enable)",
+      "function messageCallStatus(bytes32 _messageId) view returns (bool)",
+      "function messageSender() view returns (address sender)",
+      "function decimalShift() view returns (int256)",
+      "function requireToPassMessage(address _contract, bytes _data, uint256 _gas) returns (bytes32)",
+      "function failedMessageDataHash(bytes32 _messageId) view returns (bytes32)",
+      "function maxGasPerTx() view returns (uint256)",
+      "function safeExecuteSignaturesWithGasLimit(bytes _data, bytes _signatures, uint32 _gas)",
+      "function safeExecuteSignatures(bytes _data, bytes _signatures)",
+      "function transferOwnership(address newOwner)",
+      "function gasPrice() view returns (uint256)",
+      "event UserRequestForAffirmation(bytes32 indexed messageId, bytes encodedData)",
+      "event RelayedMessage(address indexed sender, address indexed executor, bytes32 indexed messageId, bool status)",
+      "event GasPriceChanged(uint256 gasPrice)",
+      "event RequiredBlockConfirmationChanged(uint256 requiredBlockConfirmations)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
     ]
   }
 }
