@@ -4,28 +4,23 @@ import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
-import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { NotificationManager } from './NotificationManager'
 import { diffDiscovery, DiscoveryDiff } from './output/diffDiscovery'
-import { diffToMessages } from './output/diffToMessages'
 import { findDependents } from './utils/findDependents'
-
-export interface Diff {
-  changes: DiscoveryDiff[]
-  sendDailyReminder: boolean
-}
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
+  readonly cachedDiscovery = new Map<string, DiscoveryOutput>()
 
   constructor(
     private readonly provider: providers.AlchemyProvider,
     private readonly discoveryRunner: DiscoveryRunner,
-    private readonly discordClient: DiscordClient | undefined,
+    private readonly notificationManager: NotificationManager,
     private readonly configReader: ConfigReader,
     private readonly repository: UpdateMonitorRepository,
     private readonly clock: Clock,
@@ -45,7 +40,7 @@ export class UpdateMonitor {
   async start() {
     this.logger.info('Started')
     if (this.runOnStart) {
-      await this.notify('Discovery watcher started.')
+      await this.notificationManager.handleStart()
       this.taskQueue.addToFront(UnixTime.now())
     }
     return this.clock.onNewHour((timestamp) => {
@@ -56,80 +51,56 @@ export class UpdateMonitor {
   async update(timestamp: UnixTime) {
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
-    const metadataDone = this.initMetadata(blockNumber, timestamp)
+    const metricsDone = this.initMetrics(blockNumber)
+    this.logger.info('Update started', {
+      blockNumber,
+      timestamp: timestamp.toNumber(),
+    })
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
-    const isDailyReminder = isNineAM(timestamp, 'CET')
-    const notUpdatedProjects: string[] = []
-
     for (const projectConfig of projectConfigs) {
-      this.logger.info('Discovery started', { project: projectConfig.name })
+      this.logger.info('Project update started', {
+        project: projectConfig.name,
+      })
 
       try {
-        await this.updateProject(
-          projectConfig,
-          blockNumber,
-          isDailyReminder,
-          notUpdatedProjects,
-          timestamp,
-        )
+        await this.updateProject(projectConfig, blockNumber, timestamp)
       } catch (error) {
         this.logger.error(error)
         errorsCount.inc()
       }
-      this.logger.info('Discovery finished', { project: projectConfig.name })
+
+      this.logger.info('Project update finished', {
+        project: projectConfig.name,
+      })
     }
 
-    if (isDailyReminder) {
-      await this.sendDailyReminder(notUpdatedProjects, timestamp)
-    }
+    await this.findUnresolvedProjects(projectConfigs, timestamp)
 
-    metadataDone()
+    metricsDone()
+    this.logger.info('Update finished', {
+      blockNumber,
+      timestamp: timestamp.toNumber(),
+    })
   }
 
   private async updateProject(
     projectConfig: DiscoveryConfig,
     blockNumber: number,
-    isDailyReminder: boolean,
-    notUpdatedProjects: string[],
     timestamp: UnixTime,
   ) {
     const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
-
-    if (discovery.contracts.some((c) => c.errors !== undefined)) {
-      notUpdatedProjects.push(projectConfig.name)
-      return
-    }
+    this.cachedDiscovery.set(projectConfig.name, discovery)
 
     const diff = await this.findChanges(
       projectConfig.name,
       discovery,
       projectConfig.hash,
-      isDailyReminder,
       projectConfig,
     )
 
-    if (diff.changes.length > 0) {
-      await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
-
-      const dependents = await findDependents(
-        projectConfig.name,
-        this.configReader,
-      )
-      const messages = diffToMessages(
-        projectConfig.name,
-        dependents,
-        diff.changes,
-      )
-      await this.notify(messages)
-      this.logger.info('Sending messages', { project: projectConfig.name })
-      changesDetected.inc()
-    }
-
-    if (diff.sendDailyReminder) {
-      notUpdatedProjects.push(projectConfig.name)
-    }
+    await this.handleDiff(diff, discovery, projectConfig, blockNumber)
 
     await this.repository.addOrUpdate({
       projectName: projectConfig.name,
@@ -144,86 +115,45 @@ export class UpdateMonitor {
     name: string,
     discovery: DiscoveryOutput,
     configHash: Hash256,
-    isDailyReminder: boolean,
     config: DiscoveryConfig,
-  ): Promise<Diff> {
-    const result: Diff = {
-      changes: [],
-      sendDailyReminder: false,
-    }
-
-    const committed = await this.configReader.readDiscovery(name)
-    const diffFromCommitted = diffDiscovery(
-      committed.contracts,
-      discovery.contracts,
-      config,
-    )
-
+  ): Promise<DiscoveryDiff[]> {
     const databaseEntry = await this.repository.findLatest(name)
-    let diffFromDatabase: DiscoveryDiff[] = []
-    if (databaseEntry !== undefined) {
-      diffFromDatabase = diffDiscovery(
+
+    if (databaseEntry?.configHash === configHash) {
+      this.logger.debug('Using database record for diff', { project: name })
+
+      return diffDiscovery(
         databaseEntry.discovery.contracts,
         discovery.contracts,
         config,
       )
     }
 
-    if (isDailyReminder && diffFromCommitted.length > 0) {
-      this.logger.debug('Include inside daily reminder', { project: name })
-      result.sendDailyReminder = true
-    }
+    const committed = await this.configReader.readDiscovery(name)
+    this.logger.debug('Using committed file for diff', { project: name })
 
-    if (
-      databaseEntry === undefined ||
-      databaseEntry.configHash !== configHash
-    ) {
-      this.logger.debug('Using committed file for diff', { project: name })
-      result.changes = diffFromCommitted
-    } else {
-      this.logger.debug('Using database record for diff', { project: name })
-      result.changes = diffFromDatabase
-    }
-
-    return result
+    return diffDiscovery(committed.contracts, discovery.contracts, config)
   }
 
-  private async sendDailyReminder(
-    notUpdatedProjects: string[],
-    timestamp: UnixTime,
+  private async handleDiff(
+    diff: DiscoveryDiff[],
+    discovery: DiscoveryOutput,
+    projectConfig: DiscoveryConfig,
+    blockNumber: number,
   ) {
-    this.logger.info('Sending daily reminder', {
-      projects: notUpdatedProjects,
-    })
-    await this.notify(getDailyReminderMessage(notUpdatedProjects, timestamp), {
-      internalOnly: true,
-    })
-  }
+    if (diff.length > 0) {
+      await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
 
-  async notify(
-    messages: string | string[],
-    options?: { internalOnly: boolean },
-  ) {
-    if (!this.discordClient) {
-      // TODO: maybe only once? rethink
-      this.logger.info(
-        'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
+      const dependents = await findDependents(
+        projectConfig.name,
+        this.configReader,
       )
-      return
-    }
-
-    const arrayMessages = Array.isArray(messages) ? messages : [messages]
-    for (const message of arrayMessages) {
-      const channels: Channel[] = options?.internalOnly
-        ? ['INTERNAL']
-        : ['PUBLIC', 'INTERNAL']
-
-      for (const channel of channels) {
-        await this.discordClient.sendMessage(message, channel).then(
-          () => this.logger.info('Notification to Discord has been sent'),
-          (e) => this.logger.error(e),
-        )
-      }
+      await this.notificationManager.handleDiff(
+        projectConfig.name,
+        dependents,
+        diff,
+      )
+      changesDetected.inc()
     }
   }
 
@@ -232,7 +162,7 @@ export class UpdateMonitor {
   // results.
   async sanityCheck(
     discovery: DiscoveryOutput,
-    diff: Diff,
+    diff: DiscoveryDiff[],
     projectConfig: DiscoveryConfig,
     blockNumber: number,
   ) {
@@ -242,56 +172,61 @@ export class UpdateMonitor {
     )
 
     if (!isEqual(discovery, secondDiscovery)) {
-      await this.notify(
-        `⚠️ [${projectConfig.name}]: API error (Alchemy or Etherscan) | ${blockNumber}`,
-        { internalOnly: true },
-      )
       throw new Error(
         `[${projectConfig.name}] Sanity check failed | ${blockNumber}\n
         potential-diff ${JSON.stringify(diff)}}`,
       )
     }
+    this.cachedDiscovery.set(projectConfig.name, secondDiscovery)
   }
 
-  initMetadata(blockNumber: number, timestamp: UnixTime): () => void {
-    this.logger.info('Update started', {
-      blockNumber,
-      timestamp: timestamp.toNumber(),
-    })
+  // this function gets a diff between current discovery and committed discovery
+  // and checks if there are any changes that are not yet resolved
+  // sends the results to the notification manager
+  async findUnresolvedProjects(
+    projectConfigs: DiscoveryConfig[],
+    timestamp: UnixTime,
+  ) {
+    const notUpdatedProjects: string[] = []
+
+    for (const projectConfig of projectConfigs) {
+      const discovery = this.cachedDiscovery.get(projectConfig.name)
+
+      if (!discovery) {
+        continue
+      }
+
+      const committed = await this.configReader.readDiscovery(
+        projectConfig.name,
+      )
+
+      const diff = diffDiscovery(
+        committed.contracts,
+        discovery.contracts,
+        projectConfig,
+      )
+
+      if (diff.length > 0) {
+        notUpdatedProjects.push(projectConfig.name)
+      }
+    }
+
+    await this.notificationManager.handleUnresolved(
+      notUpdatedProjects,
+      timestamp,
+    )
+  }
+
+  initMetrics(blockNumber: number): () => void {
     const histogramDone = syncHistogram.startTimer()
     changesDetected.set(0)
     errorsCount.set(0)
-    this.discordClient?.resetCallsCount()
 
     return () => {
       histogramDone()
       latestBlock.set(blockNumber)
-      this.logger.info('Update finished', {
-        blockNumber,
-        timestamp: timestamp.toNumber(),
-      })
     }
   }
-}
-
-export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
-  const offset = timezone === 'CET' ? 2 : 0
-  const hour = 9 - offset
-
-  return timestamp
-    .toStartOf('hour')
-    .equals(timestamp.toStartOf('day').add(hour, 'hours'))
-}
-
-function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
-  const dailyReportMessage = `\`\`\`Daily bot report @ ${timestamp.toYYYYMMDD()}\`\`\`\n`
-  if (projects.length > 0) {
-    return `${dailyReportMessage}${projects
-      .map((p) => `:x: ${p}`)
-      .join('\n\n')}`
-  }
-
-  return `${dailyReportMessage}:white_check_mark: everything is up to date`
 }
 
 const latestBlock = new Gauge({
