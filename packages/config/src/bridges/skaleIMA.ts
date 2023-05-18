@@ -20,7 +20,7 @@ export const skaleIMA: Bridge = {
         'https://twitter.com/SkaleNetwork',
         'https://t.me/skaleofficial',
         'https://youtube.com/channel/UCpUk0eMmD00C7RXLT0g8SuA',
-        'https://www.reddit.com/r/skalenetwork/',
+        'https://reddit.com/r/skalenetwork/',
         'https://www.linkedin.com/company/skale-labs/',
       ],
       documentation: [
