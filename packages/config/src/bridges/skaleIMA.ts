@@ -91,8 +91,13 @@ export const skaleIMA: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: 'Transfers need to be confirmed by the SKALE nodes.',
+      description:
+        'There are 16 randomly selected validator nodes, 11 of them needs to sign and verify messages',
       sentiment: 'bad',
+      references: [
+        'https://etherscan.io/address/0xC261084Dc6475d4980548Bd8C323FF825b3D0C38#code#F1#L398',
+        'https://etherscan.io/tx/0x2e2a29233aa564c66b99952bf962237c0f4386cc136a7e74ad0d6408ddea4c12',
+      ],
     },
     sourceUpgradeability: {
       value: 'Yes',
