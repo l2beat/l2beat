@@ -15,7 +15,6 @@ import { findDependents } from './utils/findDependents'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
-  private notUpdatedProjects: string[] = []
 
   constructor(
     private readonly provider: providers.AlchemyProvider,
@@ -51,7 +50,11 @@ export class UpdateMonitor {
   async update(timestamp: UnixTime) {
     // TODO: get block number based on clock time
     const blockNumber = await this.provider.getBlockNumber()
-    const metadataDone = this.initMetadata(blockNumber, timestamp)
+    const metricsDone = this.initMetrics(blockNumber)
+    this.logger.info('Update started', {
+      blockNumber,
+      timestamp: timestamp.toNumber(),
+    })
 
     const projectConfigs = await this.configReader.readAllConfigs()
 
@@ -68,7 +71,11 @@ export class UpdateMonitor {
       this.logger.info('Discovery finished', { project: projectConfig.name })
     }
 
-    await metadataDone()
+    metricsDone()
+    this.logger.info('Update finished', {
+      blockNumber,
+      timestamp: timestamp.toNumber(),
+    })
   }
 
   private async updateProject(
@@ -128,7 +135,6 @@ export class UpdateMonitor {
   ) {
     if (diff.length > 0) {
       await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
-      this.notUpdatedProjects.push(projectConfig.name)
 
       const dependents = await findDependents(
         projectConfig.name,
@@ -165,27 +171,14 @@ export class UpdateMonitor {
     }
   }
 
-  initMetadata(blockNumber: number, timestamp: UnixTime): () => Promise<void> {
-    this.logger.info('Update started', {
-      blockNumber,
-      timestamp: timestamp.toNumber(),
-    })
+  initMetrics(blockNumber: number): () => void {
     const histogramDone = syncHistogram.startTimer()
     changesDetected.set(0)
     errorsCount.set(0)
-    this.notUpdatedProjects = []
 
-    return async () => {
+    return () => {
       histogramDone()
       latestBlock.set(blockNumber)
-      await this.notificationManager.notUpdatedProjects(
-        this.notUpdatedProjects,
-        timestamp,
-      )
-      this.logger.info('Update finished', {
-        blockNumber,
-        timestamp: timestamp.toNumber(),
-      })
     }
   }
 }

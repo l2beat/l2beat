@@ -61,7 +61,6 @@ describe(UpdateMonitor.name, () => {
   beforeEach(() => {
     notificationManager = mockObject<NotificationManager>({
       changesDetected: async () => {},
-      notUpdatedProjects: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
       run: async () => DISCOVERY_RESULT,
@@ -139,12 +138,6 @@ describe(UpdateMonitor.name, () => {
         PROJECT_B,
         [],
         mockDiff,
-      )
-      expect(notificationManager.notUpdatedProjects).toHaveBeenCalledTimes(1)
-      expect(notificationManager.notUpdatedProjects).toHaveBeenNthCalledWith(
-        1,
-        [PROJECT_A, PROJECT_B],
-        TIMESTAMP,
       )
     })
 
