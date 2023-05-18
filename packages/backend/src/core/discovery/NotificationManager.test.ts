@@ -6,41 +6,7 @@ import { NotificationManager } from './NotificationManager'
 import { DiscoveryDiff } from './output/diffDiscovery'
 
 describe(NotificationManager.name, () => {
-  describe(NotificationManager.prototype.notify.name, () => {
-    it('sends discord messages', async () => {
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
-      })
-
-      const notificationManager = new NotificationManager(
-        discordClient,
-        Logger.SILENT,
-      )
-
-      const messages = ['a', 'b', 'c']
-
-      await notificationManager.notify(messages, 'INTERNAL')
-
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(3)
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        1,
-        'a',
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        'b',
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        3,
-        'c',
-        'INTERNAL',
-      )
-    })
-  })
-
-  describe(NotificationManager.prototype.changesDetected.name, () => {
+  describe(NotificationManager.prototype.handleDiff.name, () => {
     it('sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
@@ -62,7 +28,7 @@ describe(NotificationManager.name, () => {
         },
       ]
 
-      await notificationManager.changesDetected(project, dependents, changes)
+      await notificationManager.handleDiff(project, dependents, changes)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -102,7 +68,7 @@ describe(NotificationManager.name, () => {
         },
       ]
 
-      await notificationManager.changesDetected(project, dependents, changes)
+      await notificationManager.handleDiff(project, dependents, changes)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -115,7 +81,7 @@ describe(NotificationManager.name, () => {
     })
   })
 
-  describe(NotificationManager.prototype.unresolvedProjects.name, () => {
+  describe(NotificationManager.prototype.handleUnresolved.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
@@ -129,10 +95,7 @@ describe(NotificationManager.name, () => {
       const notUpdatedProjects = ['project-a', 'project-b']
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
 
-      await notificationManager.unresolvedProjects(
-        notUpdatedProjects,
-        timestamp,
-      )
+      await notificationManager.handleUnresolved(notUpdatedProjects, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -157,10 +120,7 @@ describe(NotificationManager.name, () => {
       const notUpdatedProjects = ['project-a', 'project-b']
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 
-      await notificationManager.unresolvedProjects(
-        notUpdatedProjects,
-        timestamp,
-      )
+      await notificationManager.handleUnresolved(notUpdatedProjects, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
     })

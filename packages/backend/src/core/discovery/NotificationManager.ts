@@ -13,11 +13,7 @@ export class NotificationManager {
     this.logger = this.logger.for(this)
   }
 
-  async changesDetected(
-    name: string,
-    dependents: string[],
-    diff: DiscoveryDiff[],
-  ) {
+  async handleDiff(name: string, dependents: string[], diff: DiscoveryDiff[]) {
     const messages = diffToMessages(name, dependents, diff)
     await this.notify(messages, 'INTERNAL')
     this.logger.info('Changes detected sent [INTERNAL]', {
@@ -45,7 +41,7 @@ export class NotificationManager {
     })
   }
 
-  async unresolvedProjects(notUpdatedProjects: string[], timestamp: UnixTime) {
+  async handleUnresolved(notUpdatedProjects: string[], timestamp: UnixTime) {
     if (!isNineAM(timestamp, 'CET')) {
       return
     }
@@ -59,7 +55,7 @@ export class NotificationManager {
     })
   }
 
-  async notify(messages: string | string[], channel: Channel) {
+  private async notify(messages: string | string[], channel: Channel) {
     if (!this.discordClient) {
       // TODO: maybe only once? rethink
       this.logger.info(
@@ -77,7 +73,7 @@ export class NotificationManager {
     }
   }
 
-  async started() {
+  async handleStart() {
     await this.notify('UpdateMonitor started.', 'INTERNAL')
     await this.notify('UpdateMonitor started.', 'PUBLIC')
     this.logger.info('Initial notifications sent')

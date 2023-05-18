@@ -40,7 +40,7 @@ export class UpdateMonitor {
   async start() {
     this.logger.info('Started')
     if (this.runOnStart) {
-      await this.notificationManager.started()
+      await this.notificationManager.handleStart()
       this.taskQueue.addToFront(UnixTime.now())
     }
     return this.clock.onNewHour((timestamp) => {
@@ -148,7 +148,7 @@ export class UpdateMonitor {
         projectConfig.name,
         this.configReader,
       )
-      await this.notificationManager.changesDetected(
+      await this.notificationManager.handleDiff(
         projectConfig.name,
         dependents,
         diff,
@@ -211,7 +211,7 @@ export class UpdateMonitor {
       }
     }
 
-    await this.notificationManager.unresolvedProjects(
+    await this.notificationManager.handleUnresolved(
       notUpdatedProjects,
       timestamp,
     )

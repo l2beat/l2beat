@@ -60,8 +60,8 @@ describe(UpdateMonitor.name, () => {
 
   beforeEach(() => {
     notificationManager = mockObject<NotificationManager>({
-      changesDetected: async () => {},
-      unresolvedProjects: async () => {},
+      handleDiff: async () => {},
+      handleUnresolved: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
       run: async () => DISCOVERY_RESULT,
@@ -129,21 +129,21 @@ describe(UpdateMonitor.name, () => {
       // saves discovery result
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
       //sends notification
-      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(2)
-      expect(notificationManager.changesDetected).toHaveBeenNthCalledWith(
+      expect(notificationManager.handleDiff).toHaveBeenCalledTimes(2)
+      expect(notificationManager.handleDiff).toHaveBeenNthCalledWith(
         1,
         PROJECT_A,
         [],
         mockDiff,
       )
-      expect(notificationManager.changesDetected).toHaveBeenNthCalledWith(
+      expect(notificationManager.handleDiff).toHaveBeenNthCalledWith(
         2,
         PROJECT_B,
         [],
         mockDiff,
       )
-      expect(notificationManager.unresolvedProjects).toHaveBeenCalledTimes(1)
-      expect(notificationManager.unresolvedProjects).toHaveBeenNthCalledWith(
+      expect(notificationManager.handleUnresolved).toHaveBeenCalledTimes(1)
+      expect(notificationManager.handleUnresolved).toHaveBeenNthCalledWith(
         1,
         [PROJECT_A, PROJECT_B],
         TIMESTAMP,
@@ -187,9 +187,9 @@ describe(UpdateMonitor.name, () => {
       // runs discovery
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
       // does not send a notification
-      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
-      expect(notificationManager.unresolvedProjects).toHaveBeenCalledTimes(1)
-      expect(notificationManager.unresolvedProjects).toHaveBeenNthCalledWith(
+      expect(notificationManager.handleDiff).toHaveBeenCalledTimes(0)
+      expect(notificationManager.handleUnresolved).toHaveBeenCalledTimes(1)
+      expect(notificationManager.handleUnresolved).toHaveBeenNthCalledWith(
         1,
         [PROJECT_A],
         TIMESTAMP,
@@ -232,9 +232,9 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(new UnixTime(0))
 
       // send notification about the error of 3rd party API
-      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
-      expect(notificationManager.unresolvedProjects).toHaveBeenCalledTimes(1)
-      expect(notificationManager.unresolvedProjects).toHaveBeenNthCalledWith(
+      expect(notificationManager.handleDiff).toHaveBeenCalledTimes(0)
+      expect(notificationManager.handleUnresolved).toHaveBeenCalledTimes(1)
+      expect(notificationManager.handleUnresolved).toHaveBeenNthCalledWith(
         1,
         [],
         TIMESTAMP,
@@ -280,9 +280,9 @@ describe(UpdateMonitor.name, () => {
       // does not save changes to database
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
-      expect(notificationManager.changesDetected).toHaveBeenCalledTimes(0)
-      expect(notificationManager.unresolvedProjects).toHaveBeenCalledTimes(1)
-      expect(notificationManager.unresolvedProjects).toHaveBeenNthCalledWith(
+      expect(notificationManager.handleDiff).toHaveBeenCalledTimes(0)
+      expect(notificationManager.handleUnresolved).toHaveBeenCalledTimes(1)
+      expect(notificationManager.handleUnresolved).toHaveBeenNthCalledWith(
         1,
         [],
         TIMESTAMP,
