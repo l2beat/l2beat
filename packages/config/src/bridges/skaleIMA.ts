@@ -15,7 +15,7 @@ export const skaleIMA: Bridge = {
         'https://twitter.com/SkaleNetwork',
         'https://t.me/skaleofficial',
         'https://youtube.com/channel/UCpUk0eMmD00C7RXLT0g8SuA',
-        'https://www.reddit.com/r/SKALEnetwork/',
+        'https://www.reddit.com/r/skalenetwork/',
         'https://www.linkedin.com/company/skale-labs/',
       ],
       documentation: [
@@ -60,7 +60,7 @@ export const skaleIMA: Bridge = {
     principleOfOperation: {
       name: 'Principle of Operation',
       description:
-        'It is a cross-chain BLS threshold bridge that allows users to transfer Eth, ERC20, ERC721, ERC1155 and arbitrary messages between Ethereum and SKALE chains without fees and between SKALE chains without gas fees. Locks/Unlocks on main chain(Ethereum or SKALE chain which is origin of the asset), Burns/Mints on target chain',
+        'It is a cross-chain BLS threshold bridge that allows users to transfer Eth, ERC20, ERC721, ERC1155 and arbitrary messages between Ethereum and SKALE chains without fees and between SKALE chains without gas fees. Locks/Unlocks on main chain(Ethereum or SKALE chain which is origin of the asset), Burns/Mints on target chain.',
       references: [
         {
           text: 'Bridging transactions',
