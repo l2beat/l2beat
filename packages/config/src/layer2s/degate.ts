@@ -42,11 +42,11 @@ export const degate: Layer2 = {
   config: {
     associatedTokens: ['DG'],
     escrows: [
-      {
-        address: EthereumAddress('0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA'),
+      discovery.getEscrowDetails({
+        identifier: 'DefaultDepositContract',
         sinceTimestamp: new UnixTime(1681991243),
         tokens: '*',
-      },
+      }),
     ],
   },
   riskView: makeBridgeCompatible({
