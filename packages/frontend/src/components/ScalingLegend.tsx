@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { OptimismIcon, StarkWareIcon, ZkSyncIcon, LoopringIcon } from './icons'
+import { LoopringIcon, OptimismIcon, StarkWareIcon, ZkSyncIcon } from './icons'
 
 export function ScalingLegend() {
   return (

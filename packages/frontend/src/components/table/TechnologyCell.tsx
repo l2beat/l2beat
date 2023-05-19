@@ -2,7 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { OptimismIcon, StarkWareIcon, ZkSyncIcon, LoopringIcon } from '../icons'
+import { LoopringIcon, OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
 
 export interface TechnologyCellProps {
   children: string
