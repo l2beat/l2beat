@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -15,6 +16,15 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('loopring')
+const forcedWithdrawalDelay = formatSeconds(
+  discovery.getContractValue<number[]>('ExchangeV3', 'getConstants')[2],
+)
+const maxAgeDepositUntilWithdrawable = formatSeconds(
+  discovery.getContractValue<number>(
+    'ExchangeV3',
+    'getMaxAgeDepositUntilWithdrawable',
+  ),
+)
 
 export const loopring: Layer2 = {
   type: 'layer2',
@@ -76,8 +86,25 @@ export const loopring: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+      description:
+        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1.description +
+        ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
+      references: [
+        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
+        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195',
+      ],
+    },
+    validatorFailure: {
+      ...RISK_VIEW.VALIDATOR_ESCAPE_MP,
+      description:
+        RISK_VIEW.VALIDATOR_ESCAPE_MP.description +
+        ` There is a ${forcedWithdrawalDelay} delay on this operation.`,
+      references: [
+        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
+      ],
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('LRC'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -114,12 +141,12 @@ export const loopring: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ExchangeV3.sol#L315-L322 - Loopring source code',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/contracts/core/impl/ExchangeV3.sol#L315-L322',
+          text: 'ExchangeV3.sol#L315-L322 - Etherscan source code, submitBlocks function',
+          href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8022',
         },
         {
-          text: 'LoopringIOExchangeOwner.sol#L123-L126 - Loopring source code',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/contracts/aux/access/LoopringIOExchangeOwner.sol#L123-L126',
+          text: 'LoopringIOExchangeOwner.sol#L123-L126 - Etherscan source code, hasAccessTo function call',
+          href: 'https://etherscan.io/address/0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512#code#L5539',
         },
       ],
     },
@@ -153,133 +180,57 @@ export const loopring: Layer2 = {
             text: 'Forced Request Handling - Loopring design doc',
             href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
           },
+          {
+            text: 'ExchangeV3.sol#L8118 - Loopring source code, forceWithdraw function',
+            href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8118',
+          },
         ],
       },
       {
-        ...EXITS.EMERGENCY('Withdrawal Mode', 'merkle proof'),
+        ...EXITS.EMERGENCY(
+          'Withdrawal Mode',
+          'merkle proof',
+          forcedWithdrawalDelay,
+        ),
         references: [
           {
             text: 'Forced Request Handling - Loopring design doc',
             href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
+          },
+          {
+            text: 'ExchangeV3.sol#L8159 - Loopring source code, withdrawFromMerkleTree function',
+            href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
           },
         ],
       },
     ],
   },
   permissions: [
-    {
-      name: 'Loopring MultiSig',
-      accounts: [
-        {
-          address: discovery.getContract('GnosisSafe').address,
-          type: 'MultiSig',
-        },
-      ],
-      description:
-        'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy owner), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Loopring MultiSig.`,
-    },
+    ...discovery.getGnosisSafeDetails(
+      'ProxyOwner',
+      'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
+    ),
     {
       name: 'Block Submitters',
+      accounts: discovery.getPermissionedAccountsList(
+        'LoopringIOExchangeOwner',
+        'blockSubmitters',
+      ),
+      description:
+        'Actors who can submit new blocks, updating the L2 state on L1.',
+    },
+    {
+      name: 'RollupOwner',
       accounts: [
         {
           address: EthereumAddress(
-            '0xdd4b5E28fe55196B8Bf44A040f2c11f85401fdC0',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x7961076f6130092c1C90bd0D2C6F7f54055FA6C7',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x4774d954D20DB98492B0487BC9F91dc401dBA3aE',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x212e75BF264C4FB3133fA5ef6f47A34367020A1A',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x238b649E62a0C383b54060b1625516b489183843',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xeadb3d065f8d15cc05e92594523516aD36d1c834',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5',
+            discovery.getContractValue<string>('ExchangeV3', 'owner'),
           ),
           type: 'EOA',
         },
       ],
       description:
-        'Actors who can submit new blocks, updating the L2 state on L1.',
+        'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
     },
   ],
   contracts: {

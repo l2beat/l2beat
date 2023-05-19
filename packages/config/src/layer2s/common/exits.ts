@@ -29,6 +29,7 @@ const FORCED: ProjectTechnologyChoice = {
 function EMERGENCY(
   state: string,
   proof: 'zero knowledge proof' | 'merkle proof',
+  delay?: string,
 ): ProjectTechnologyChoice {
   const risks: ProjectRisk[] =
     proof === 'zero knowledge proof'
@@ -41,7 +42,9 @@ function EMERGENCY(
       : []
   return {
     name: 'Emergency exit',
-    description: `If enough time passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
+    description: `If ${
+      delay !== undefined ? delay : 'enough time'
+    } passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
     risks,
     references: [],
   }
