@@ -30,6 +30,10 @@ import {
 } from './EventCountHandler'
 import { HardCodedDefinition, HardCodedHandler } from './HardcodedHandler'
 import {
+  StarkWareGovernanceHandler,
+  StarkWareGovernanceHandlerDefinition,
+} from './StarkWareGovernanceHandler'
+import {
   StarkWareNamedStorageHandler,
   StarkWareNamedStorageHandlerDefinition,
 } from './StarkWareNamedStorageHandler'
@@ -48,6 +52,7 @@ export const UserHandlerDefinition = z.union([
   ConstructorArgsDefinition,
   EventCountHandlerDefinition,
   HardCodedDefinition,
+  StarkWareGovernanceHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -79,5 +84,7 @@ export function getUserHandler(
       return new EventCountHandler(field, definition, logger)
     case 'hardcoded':
       return new HardCodedHandler(field, definition, logger)
+    case 'starkWareGovernance':
+      return new StarkWareGovernanceHandler(field, definition, abi, logger)
   }
 }

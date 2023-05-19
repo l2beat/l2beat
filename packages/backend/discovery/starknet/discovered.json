@@ -1,7 +1,7 @@
 {
   "name": "starknet",
-  "blockNumber": 17273059,
-  "configHash": "0x487d9b36afbbc3e4a435e50d08568568cff7833bf77139148aa999cf1e0a61bc",
+  "blockNumber": 17285387,
+  "configHash": "0xbf3a80dcb97f4a25bf2782abb0d511a353a8797fb50e960b1ecc3da65e0c3f66",
   "contracts": [
     {
       "name": "DAI Bridge",
@@ -25,6 +25,7 @@
       },
       "values": {
         "getUpgradeActivationDelay": 604800,
+        "governors": ["0xfdF3E24BD26368512C5F65959BBB668d3338f994"],
         "identify": "StarkWare_StarknetERC20Bridge_2023_1",
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "isActive": true,
@@ -39,7 +40,7 @@
       "derivedName": "StarknetERC20Bridge"
     },
     {
-      "name": "GnosisSafe",
+      "name": "Proxy Multisig",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "code": "https://etherscan.deth.net/address/0x83C0A700114101D1283D1405E2c8f21D3F03e988,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -57,10 +58,33 @@
         "getThreshold": 2,
         "nonce": 9,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
-      "name": "StarknetEthBridge",
+      "name": "Implementation Multisig",
+      "address": "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd",
+      "code": "https://etherscan.deth.net/address/0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xb6cf2054f0384f47744cb3c2cbc3f6a9881e00205c03bf14afc7a6a862a8b9c6",
+        "getChainId": 1,
+        "getOwners": [
+          "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+          "0x59232aC80E6d403b6381393e52f4665ECA328558",
+          "0xCe958D997F4a5824D4d503A128216322C6C223a0"
+        ],
+        "getThreshold": 2,
+        "nonce": 10,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "ETH Bridge",
       "address": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
       "code": "https://etherscan.deth.net/address/0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419,0x455603AD9ae671F6c1f0f746F24d7904cA603581",
       "upgradeability": {
@@ -74,6 +98,7 @@
         "bridgedToken": "0x0000000000000000000000000000000000000000",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
         "getUpgradeActivationDelay": 604800,
+        "governors": ["0x6A03F3F0943eb686a4EF94e7B6f6CA3332580b5C"],
         "identify": "StarkWare_StarknetEthBridge_2023_1",
         "implementation": "0x455603AD9ae671F6c1f0f746F24d7904cA603581",
         "isActive": true,
@@ -86,7 +111,8 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
-      }
+      },
+      "derivedName": "StarknetEthBridge"
     },
     {
       "name": "USDT Bridge",
@@ -101,6 +127,7 @@
       },
       "values": {
         "getUpgradeActivationDelay": 604800,
+        "governors": ["0x3ADfc0aBd0eBD4e61281d991F87134eE3231dB13"],
         "identify": "StarkWare_StarknetERC20Bridge_2023_1",
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "isActive": true,
@@ -132,22 +159,27 @@
         "configHash": "671483050609816861429812414688707376174032882875357307847551691140236175837",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
+        "governedFinalized": 0,
+        "governors": [
+          "0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E",
+          "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd"
+        ],
         "identify": "StarkWare_Starknet_2023_5",
         "implementation": "0x739A654271c565839F0408546706bBea2F1FfE42",
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 551955,
+        "l1ToL2MessageNonce": 556859,
         "messageCancellationDelay": 432100,
-        "OPERATORS": [
+        "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
         ],
         "programHash": "3068850377810731364250169858796291952506855863903938200658516448366463400202",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockNumber": 55176,
-        "stateRoot": "631754277680322098215413716840581039050407181673854658410199996384281949529",
+        "stateBlockNumber": 56815,
+        "stateRoot": "2673295559158507827229795065367131159932895976967636488987295691558476033360",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -166,6 +198,7 @@
       },
       "values": {
         "getUpgradeActivationDelay": 604800,
+        "governors": ["0xe8e9E69511BaaFC826953fC93cdf1ED6d3B63c53"],
         "identify": "StarkWare_StarknetERC20Bridge_2023_1",
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "isActive": true,
@@ -181,16 +214,21 @@
     }
   ],
   "eoas": [
+    "0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E",
     "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
+    "0x3ADfc0aBd0eBD4e61281d991F87134eE3231dB13",
     "0x59232aC80E6d403b6381393e52f4665ECA328558",
     "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+    "0x6A03F3F0943eb686a4EF94e7B6f6CA3332580b5C",
     "0x8dB2469f3355d6769932B853F29e32df06122981",
     "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
     "0xCe958D997F4a5824D4d503A128216322C6C223a0",
     "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
     "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
     "0xdc29f0F7742ec462Af475AceeCECC57601991D23",
+    "0xe8e9E69511BaaFC826953fC93cdf1ED6d3B63c53",
     "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4",
+    "0xfdF3E24BD26368512C5F65959BBB668d3338f994",
     "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591"
   ],
   "abis": {
@@ -346,6 +384,9 @@
       "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)"
     ],
     "0x83C0A700114101D1283D1405E2c8f21D3F03e988": [
+      "constructor(address _singleton)"
+    ],
+    "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": [
       "constructor(address _singleton)"
     ],
     "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": [

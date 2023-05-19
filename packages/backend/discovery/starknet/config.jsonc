@@ -14,9 +14,12 @@
     "0x283751A21eafBFcD52297820D27C1f1963D9b5b4": "WBTC Bridge",
     "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": "USDC Bridge",
     "0xbb3400F107804DFB482565FF1Ec8D8aE66747605": "USDT Bridge",
+    "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": "ETH Bridge",
     // TODO: Make it possible to use the contract name without overriding it
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Starknet",
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy"
+    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
+    "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "Proxy Multisig",
+    "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "Implementation Multisig"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "l2beat-starkware"
@@ -29,12 +32,22 @@
           "tag": "STARKNET_1.0_INIT_VERIFIER_ADDRESS",
           "returnType": "address"
         },
-        "OPERATORS": {
+        "governedFinalized": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKWARE_CONTRACTS_GOVERENED_FINALIZABLE_1.0_TAG",
+          "returnType": "number" // boolean
+        },
+        // Responsible for updating the state
+        "operators": {
           "type": "arrayFromTwoEvents",
           "addEvent": "event LogOperatorAdded(address operator)",
           "addKey": "operator",
           "removeEvent": "event LogOperatorRemoved(address operator)",
           "removeKey": "operator"
+        },
+        "governors": {
+          "type": "starkWareGovernance",
+          "filterBy": "starknetIsGovernor"
         }
       },
       "ignoreInWatchMode": [
@@ -43,8 +56,42 @@
         "stateRoot"
       ]
     },
-    "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": {
+    "Proxy Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Implementation Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "WBTC Bridge": {
       "fields": {
+        "governors": {
+          "type": "starkWareGovernance",
+          "filterBy": "isGovernor"
+        }
+      }
+    },
+    "USDC Bridge": {
+      "fields": {
+        "governors": {
+          "type": "starkWareGovernance",
+          "filterBy": "isGovernor"
+        }
+      }
+    },
+    "USDT Bridge": {
+      "fields": {
+        "governors": {
+          "type": "starkWareGovernance",
+          "filterBy": "isGovernor"
+        }
+      }
+    },
+    "ETH Bridge": {
+      "fields": {
+        "governors": {
+          "type": "starkWareGovernance",
+          "filterBy": "isGovernor"
+        },
         "bridgedToken": {
           "type": "starkWareNamedStorage",
           "tag": "STARKNET_ERC20_TOKEN_BRIDGE_TOKEN_ADDRESS",

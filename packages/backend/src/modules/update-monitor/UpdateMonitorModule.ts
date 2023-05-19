@@ -9,6 +9,7 @@ import { DiscoveryLogger } from '../../core/discovery/DiscoveryLogger'
 import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
 import { DiscoveryEngine } from '../../core/discovery/engine/DiscoveryEngine'
 import { HandlerExecutor } from '../../core/discovery/handlers/HandlerExecutor'
+import { NotificationManager } from '../../core/discovery/NotificationManager'
 import { DiscoveryProvider } from '../../core/discovery/provider/DiscoveryProvider'
 import { ProxyDetector } from '../../core/discovery/proxies/ProxyDetector'
 import { SourceCodeService } from '../../core/discovery/source/SourceCodeService'
@@ -49,6 +50,8 @@ export function createUpdateMonitorModule(
       )
     : undefined
 
+  const notificationManager = new NotificationManager(discordClient, logger)
+
   const configReader = new ConfigReader()
 
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
@@ -74,7 +77,7 @@ export function createUpdateMonitorModule(
   const updateMonitor = new UpdateMonitor(
     provider,
     discoveryRunner,
-    discordClient,
+    notificationManager,
     configReader,
     updateMonitorRepository,
     clock,

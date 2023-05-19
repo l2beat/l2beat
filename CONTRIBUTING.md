@@ -1,6 +1,6 @@
 # Contributing to this repository
 
-🔍 step-by-step guide for creating a Pull Request - [link](https://www.notion.so/l2beat/How-to-add-milestones-0e8684a83c3c48ce8bc7b605d9c9a1bf)
+🔍 step-by-step guide for creating a Pull Request, using the Milestones as an example - [link](https://l2beat.notion.site/How-to-add-milestones-to-L2BEAT-0e8684a83c3c48ce8bc7b605d9c9a1bf)
 
 ## Don't see your issue? Open one
 
