@@ -7,9 +7,8 @@ If you find that something was incorrectly set up in the `up` function you
 should create a new migration file that fixes the issue.
 */
 
+import { ConfigReader } from '@l2beat/discovery'
 import { Knex } from 'knex'
-
-import { ConfigReader } from '../../../core/discovery/config/ConfigReader'
 
 export async function up(knex: Knex) {
   await knex.schema.alterTable('discovery_watcher', function (table) {

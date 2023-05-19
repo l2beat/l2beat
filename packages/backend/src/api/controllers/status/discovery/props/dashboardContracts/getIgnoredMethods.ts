@@ -1,7 +1,7 @@
+import { DiscoveryConfig } from '@l2beat/discovery'
 import { ContractParameters } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
-import { DiscoveryConfig } from '../../../../../../core/discovery/config/DiscoveryConfig'
 import { DashboardContractField } from '../utils/getValues'
 import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'

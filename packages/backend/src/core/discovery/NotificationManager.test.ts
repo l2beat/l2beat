@@ -1,9 +1,9 @@
+import { DiscoveryDiff } from '@l2beat/discovery'
 import { EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { NotificationManager } from './NotificationManager'
-import { DiscoveryDiff } from './output/diffDiscovery'
 
 describe(NotificationManager.name, () => {
   describe(NotificationManager.prototype.handleDiff.name, () => {

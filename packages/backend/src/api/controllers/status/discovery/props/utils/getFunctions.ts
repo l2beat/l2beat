@@ -1,7 +1,7 @@
+import { deduplicateAbi } from '@l2beat/discovery'
 import { ContractParameters } from '@l2beat/shared'
 import { ethers } from 'ethers'
 
-import { deduplicateAbi } from '../../../../../../core/discovery/source/deduplicateAbi'
 import { getAddresses } from './getAddresses'
 
 export function getViewABI(

@@ -1,7 +1,7 @@
 import { MainnetEtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
-import { DiscoveryModuleConfig } from '../../config/config.discovery'
+import { DiscoveryModuleConfig } from '../config/config.discovery'
 import { AddressAnalyzer } from './analysis/AddressAnalyzer'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
@@ -9,13 +9,11 @@ import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryEngine } from './engine/DiscoveryEngine'
 import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { diffDiscovery } from './output/diffDiscovery'
-import { diffToMessages } from './output/diffToMessages'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { ProviderWithCache } from './provider/ProviderWithCache'
 import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
-import { findDependents } from './utils/findDependents'
 
 export async function runDiscovery(
   provider: providers.AlchemyProvider,
@@ -76,14 +74,7 @@ export async function dryRunDiscovery(
   )
 
   if (diff.length > 0) {
-    const messages = diffToMessages(
-      projectConfig.name,
-      await findDependents(projectConfig.name, configReader),
-      diff,
-    )
-    for (const message of messages) {
-      console.log(message)
-    }
+    console.log(diff)
   } else {
     console.log('No changes!')
   }

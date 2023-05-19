@@ -1,9 +1,10 @@
+import {
+  DiscoveryConfig,
+  DiscoveryEngine,
+  toDiscoveryOutput,
+} from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/shared'
 import { Gauge, Histogram } from 'prom-client'
-
-import { DiscoveryConfig } from './config/DiscoveryConfig'
-import { DiscoveryEngine } from './engine/DiscoveryEngine'
-import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 
 export class DiscoveryRunner {
   constructor(private readonly discoveryEngine: DiscoveryEngine) {}
