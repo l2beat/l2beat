@@ -8,7 +8,7 @@ export function diffToMessages(
   diffs: DiscoveryDiff[],
   nonce?: number,
 ): string[] {
-  const header = getHeader(name)
+  const header = getHeader(name, nonce)
   const dependentsMessage = getDependentsMessage(dependents)
   const overheadLength =
     header.length + dependentsMessage.length + wrapDiffCodeBlock('').length
@@ -86,8 +86,13 @@ export function fieldDiffToMessage(diff: FieldDiff): string {
   return message
 }
 
-function getHeader(name: string) {
-  return `${wrapBoldAndItalic(name)} | detected changes`
+function getHeader(name: string, nonce?: number) {
+  if (nonce === undefined) {
+    return `${wrapBoldAndItalic(name)} | detected changes`
+  }
+  return `> ${formatNonce(nonce)}\n\n${wrapBoldAndItalic(
+    name,
+  )} | detected changes`
 }
 
 function getDependentsMessage(dependents: string[]) {
@@ -100,6 +105,13 @@ function getDependentsMessage(dependents: string[]) {
     ' ' +
     wrapBoldAndItalic(dependents.join(', ') + '.')
   )
+}
+
+export function formatNonce(nonce: number): string {
+  const length = 4
+  const zerosToAdd = length - nonce.toString().length
+  const zeros = '0'.repeat(zerosToAdd)
+  return `#${zeros}${nonce}`
 }
 
 export function wrapItalic(content: string) {

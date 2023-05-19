@@ -17,8 +17,11 @@ describe(NotificationManager.name, () => {
 
       const notificationManagerRepository =
         mockObject<NotificationManagerRepository>({
-          add: async () => '',
+          add: async () => 0,
+          findLatestId: async () => undefined,
         })
+      notificationManagerRepository.findLatestId.resolvesToOnce(undefined)
+      notificationManagerRepository.findLatestId.resolvesToOnce(0)
 
       const notificationManager = new NotificationManager(
         notificationManagerRepository,
@@ -42,7 +45,7 @@ describe(NotificationManager.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '***project-a*** | detected changes```diff\nContract | ' +
+        '> #0000\n\n***project-a*** | detected changes```diff\nContract | ' +
           address.toString() +
           '\n\nA\n- 1\n+ 2\n\n```',
         'INTERNAL',
@@ -69,8 +72,10 @@ describe(NotificationManager.name, () => {
 
       const notificationManagerRepository =
         mockObject<NotificationManagerRepository>({
-          add: async () => '',
+          add: async () => 0,
+          findLatestId: async () => 0,
         })
+      notificationManagerRepository.findLatestId.resolvesToOnce(undefined)
 
       const notificationManager = new NotificationManager(
         notificationManagerRepository,
@@ -94,7 +99,7 @@ describe(NotificationManager.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '***project-a*** | detected changes```diff\nContract | ' +
+        '> #0000\n\n***project-a*** | detected changes```diff\nContract | ' +
           address.toString() +
           '\n\nerrors\n+ Execution reverted\n\n```',
         'INTERNAL',
@@ -112,8 +117,9 @@ describe(NotificationManager.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const notificationManagerRepository =
         mockObject<NotificationManagerRepository>({
-          add: async () => '',
+          add: async () => 0,
         })
+
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
@@ -145,7 +151,8 @@ describe(NotificationManager.name, () => {
       })
       const notificationManagerRepository =
         mockObject<NotificationManagerRepository>({
-          add: async () => '',
+          add: async () => 0,
+          findLatestId: async () => undefined,
         })
       const notificationManager = new NotificationManager(
         notificationManagerRepository,

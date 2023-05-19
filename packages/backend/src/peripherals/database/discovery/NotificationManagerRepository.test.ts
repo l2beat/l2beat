@@ -1,4 +1,4 @@
-import { EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, Logger } from '@l2beat/shared'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
@@ -17,38 +17,26 @@ describe(NotificationManagerRepository.name, () => {
     await repository.deleteAll()
   })
 
-  it(NotificationManagerRepository.prototype.findLatest.name, async () => {
+  it(NotificationManagerRepository.prototype.findLatestId.name, async () => {
     const record = mockRecord(PROJECT)
 
     await repository.add(record)
     await repository.add(record)
-    const addResult = await repository.add(record)
-    const [lastId, timestamp] = addResult.split('-')
+    const latestId = await repository.add(record)
 
-    const result = await repository.findLatest()
+    const result = await repository.findLatestId()
 
-    expect(result).toEqual({
-      ...record,
-      id: +lastId,
-      createdAt: new UnixTime(+timestamp),
-      updatedAt: new UnixTime(+timestamp),
-    })
+    expect(result).toEqual(latestId)
   })
 
   it(NotificationManagerRepository.prototype.add.name, async () => {
     const record = mockRecord(PROJECT)
 
-    const addResult = await repository.add(record)
-    const [lastId, timestamp] = addResult.split('-')
+    const latestId = await repository.add(record)
 
-    const latest = await repository.findLatest()
+    const latest = await repository.findLatestId()
 
-    expect(latest).toEqual({
-      ...record,
-      id: +lastId,
-      createdAt: new UnixTime(+timestamp),
-      updatedAt: new UnixTime(+timestamp),
-    })
+    expect(latest).toEqual(latestId)
   })
 })
 

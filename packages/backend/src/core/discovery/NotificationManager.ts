@@ -21,8 +21,8 @@ export class NotificationManager {
     diff: DiscoveryDiff[],
     blockNumber: number,
   ) {
-    const id = await this.getNextId()
-    const messages = diffToMessages(name, dependents, diff, id)
+    const nonce = await this.getInternalMessageNonce()
+    const messages = diffToMessages(name, dependents, diff, nonce)
     await this.notify(messages, 'INTERNAL')
     await this.notificationManagerRepository.add({
       projectName: name,
@@ -68,14 +68,14 @@ export class NotificationManager {
     })
   }
 
-  async getNextId() {
-    const latestRecord = await this.notificationManagerRepository.findLatest()
+  async getInternalMessageNonce() {
+    const latestId = await this.notificationManagerRepository.findLatestId()
 
-    if (latestRecord === undefined) {
+    if (latestId === undefined) {
       return 0
     }
 
-    return latestRecord.id + 1
+    return latestId + 1
   }
 
   private async notify(messages: string | string[], channel: Channel) {

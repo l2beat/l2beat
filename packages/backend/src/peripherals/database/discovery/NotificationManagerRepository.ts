@@ -21,27 +21,27 @@ export class NotificationManagerRepository extends BaseRepository {
     this.autoWrap<CheckConvention<NotificationManagerRepository>>(this)
   }
 
-  async findLatest(): Promise<NotificationManagerRecord | undefined> {
+  async findLatestId(): Promise<number | undefined> {
     const knex = await this.knex()
     const row = await knex('notification_manager')
       .select()
       .orderBy('id', 'desc')
       .first()
 
-    return row ? toRecord(row) : undefined
+    return row ? toRecord(row).id : undefined
   }
 
   async add(
     record: Omit<NotificationManagerRecord, 'id' | 'createdAt' | 'updatedAt'>,
-  ): Promise<string> {
+  ): Promise<number> {
     const knex = await this.knex()
     const row = toRow(record)
 
-    const [inserted] = await knex('notification_manager')
+    const [insertedResult] = await knex('notification_manager')
       .insert(row)
-      .returning('*')
+      .returning('id')
 
-    return `${inserted.id}-${UnixTime.fromDate(inserted.updated_at).toNumber()}`
+    return insertedResult.id
   }
 
   async getAll(): Promise<NotificationManagerRecord[]> {
