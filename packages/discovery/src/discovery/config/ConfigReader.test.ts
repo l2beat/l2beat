@@ -1,8 +1,8 @@
 import { expect } from 'earl'
 import { readdirSync } from 'fs'
+import path from 'path'
 
 import { ConfigReader } from './ConfigReader'
-import path from 'path'
 
 describe(ConfigReader.name, () => {
   // FIXME: This is a temporary hack to make the tests while configs are in backend
