@@ -1,18 +1,13 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { LogLevel, UnixTime } from '@l2beat/shared'
+import { getEnv, LogLevel, UnixTime } from '@l2beat/shared'
 import { config as dotenv } from 'dotenv'
 
-import { CliParameters } from '../cli/getCliParameters'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
-import { getEnv } from './getEnv'
 import { getGitCommitHash } from './getGitCommitHash'
 
-export function getLocalConfig(cli: CliParameters): Config {
+export function getLocalConfig(): Config {
   dotenv()
-  if (cli.mode !== 'server') {
-    throw new Error(`No local config for mode: ${cli.mode}`)
-  }
 
   const tvlEnabled = getEnv.boolean('TVL_SYNC_ENABLED', true)
   const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)

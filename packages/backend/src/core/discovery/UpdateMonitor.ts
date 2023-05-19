@@ -1,3 +1,9 @@
+import {
+  ConfigReader,
+  diffDiscovery,
+  DiscoveryConfig,
+  DiscoveryDiff,
+} from '@l2beat/discovery'
 import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { isEqual } from 'lodash'
@@ -6,12 +12,9 @@ import { Gauge, Histogram } from 'prom-client'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
-import { ConfigReader } from './config/ConfigReader'
-import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { findDependents } from './findDependents'
 import { NotificationManager } from './NotificationManager'
-import { diffDiscovery, DiscoveryDiff } from './output/diffDiscovery'
-import { findDependents } from './utils/findDependents'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>

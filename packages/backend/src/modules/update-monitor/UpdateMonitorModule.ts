@@ -1,18 +1,20 @@
+import {
+  AddressAnalyzer,
+  ConfigReader,
+  DiscoveryEngine,
+  DiscoveryLogger,
+  DiscoveryProvider,
+  HandlerExecutor,
+  ProxyDetector,
+  SourceCodeService,
+} from '@l2beat/discovery'
 import { HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
-import { AddressAnalyzer } from '../../core/discovery/analysis/AddressAnalyzer'
-import { ConfigReader } from '../../core/discovery/config/ConfigReader'
-import { DiscoveryLogger } from '../../core/discovery/DiscoveryLogger'
 import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
-import { DiscoveryEngine } from '../../core/discovery/engine/DiscoveryEngine'
-import { HandlerExecutor } from '../../core/discovery/handlers/HandlerExecutor'
 import { NotificationManager } from '../../core/discovery/NotificationManager'
-import { DiscoveryProvider } from '../../core/discovery/provider/DiscoveryProvider'
-import { ProxyDetector } from '../../core/discovery/proxies/ProxyDetector'
-import { SourceCodeService } from '../../core/discovery/source/SourceCodeService'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Database } from '../../peripherals/database/shared/Database'

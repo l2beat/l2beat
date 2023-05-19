@@ -1,6 +1,5 @@
+import { DiscoveryConfig } from '@l2beat/discovery'
 import { ContractParameters, DiscoveryOutput } from '@l2beat/shared'
-
-import { DiscoveryConfig } from '../../../../../../core/discovery/config/DiscoveryConfig'
 
 export interface DiscoveredByInfo {
   name: string

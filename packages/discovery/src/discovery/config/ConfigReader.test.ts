@@ -1,9 +1,18 @@
 import { expect } from 'earl'
 import { readdirSync } from 'fs'
+import path from 'path'
 
 import { ConfigReader } from './ConfigReader'
 
 describe(ConfigReader.name, () => {
+  // FIXME: This is a temporary hack to make the tests while configs are in backend
+  const dir = process.cwd()
+  process.chdir(path.dirname(require.resolve('@l2beat/backend/package.json')))
+
+  after(() => {
+    process.chdir(dir)
+  })
+
   const configs = readdirSync('discovery', { withFileTypes: true })
     .filter((x) => x.isDirectory())
     .map((x) => x.name)

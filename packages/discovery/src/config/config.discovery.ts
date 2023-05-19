@@ -1,7 +1,7 @@
+import { getEnv } from '@l2beat/shared'
 import { config as dotenv } from 'dotenv'
 
 import { CliParameters } from '../cli/getCliParameters'
-import { getEnv } from './getEnv'
 
 export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   dotenv()
