@@ -2,7 +2,6 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
-  CONTRACTS,
   DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -23,15 +22,13 @@ export const degate: Layer2 = {
     name: 'DeGate',
     slug: 'degate',
     description:
-      "DeGate is an app-specific ZK rollup that enables a Trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy.",
+      'DeGate is an app-specific ZK rollup that enables a Trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy.',
     purpose: 'Exchange',
     links: {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
-      documentation: [
-        'https://docs.degate.com/',
-      ],
-      explorers: [], 
+      documentation: ['https://docs.degate.com/'],
+      explorers: [],
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
         'https://twitter.com/DeGateDex',
@@ -105,12 +102,12 @@ export const degate: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT,
+      ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
       references: [
         {
           text: 'Forced Withdrawals - DeGate design doc',
           href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#force-withdrawal',
-        }
+        },
       ],
     },
     exitMechanisms: [
@@ -164,9 +161,11 @@ export const degate: Layer2 = {
         'MultiSigWallet',
         'required',
       )}/${
-        discovery.getContractValue<string[]>('MultiSigWallet', 'getOwners').length
+        discovery.getContractValue<string[]>('MultiSigWallet', 'getOwners')
+          .length
       } DeGate MultiSig.`,
     },
+    // TODO: get this from discovery, probably same as new handler for loopring
     {
       name: 'Block Submitters',
       accounts: [
@@ -183,34 +182,26 @@ export const degate: Layer2 = {
   ],
   contracts: {
     addresses: [
-      {
-        name: 'ExchangeV3',
-        address: discovery.getContract('ExchangeV3').address,
-        description: 'Main ExchangeV3 contract.',
-      },
-      {
-        name: 'LoopringIOExchangeOwner',
-        address: discovery.getContract('LoopringIOExchangeOwner').address,
-        description:
-          'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
-      },
-      {
-        name: 'DefaultDepositContract',
-        address: discovery.getContract('DefaultDepositContract').address,
-        description:
-          'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
-      },
-      {
-        name: 'LoopringV3',
-        address: EthereumAddress('0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458'),
-        description:
-          'Contract for setting exchange fee parameters.',
-      },
-      {
-        name: 'BlockVerifier',
-        address: EthereumAddress('0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e'),
-        description: 'zkSNARK Verifier based on ethsnarks library.',
-      },
+      discovery.getMainContractDetails(
+        'ExchangeV3',
+        'Main ExchangeV3 contract.',
+      ),
+      discovery.getMainContractDetails(
+        'LoopringIOExchangeOwner',
+        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
+      ),
+      discovery.getMainContractDetails(
+        'DefaultDepositContract',
+        'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
+      ),
+      discovery.getMainContractDetails(
+        'LoopringV3',
+        'Contract for setting exchange fee parameters.',
+      ),
+      discovery.getMainContractDetails(
+        'BlockVerifier',
+        'zkSNARK Verifier based on ethsnarks library.',
+      ),
     ],
     risks: [],
   },
@@ -220,7 +211,7 @@ export const degate: Layer2 = {
       link: 'https://medium.com/degate/degate-dex-launches-mainnet-beta-trade-easy-sleep-easy-603574bd3a46',
       date: '2023-05-03T13:00:00Z',
       description:
-        'The main features of Mainnet Beta include limit orders and grid trading. Deposits are subject to safe deposit limits.',  
+        'The main features of Mainnet Beta include limit orders and grid trading. Deposits are subject to safe deposit limits.',
     },
   ],
 }
