@@ -98,6 +98,9 @@ export const loopring: Layer2 = {
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_ESCAPE_MP,
+      description:
+        RISK_VIEW.VALIDATOR_ESCAPE_MP.description +
+        ` There is a ${forcedWithdrawalDelay} delay on this operation.`,
       references: [
         'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
       ],
