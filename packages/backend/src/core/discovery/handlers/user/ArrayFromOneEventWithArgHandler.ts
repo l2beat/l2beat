@@ -8,12 +8,12 @@ import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
 
-export type ArrayFromOneEventWithArgsHandlerDefinition = z.infer<
-  typeof ArrayFromOneEventWithArgsHandlerDefinition
+export type ArrayFromOneEventWithArgHandlerDefinition = z.infer<
+  typeof ArrayFromOneEventWithArgHandlerDefinition
 >
 
-export const ArrayFromOneEventWithArgsHandlerDefinition = z.strictObject({
-  type: z.literal('arrayFromOneEventWithArgs'),
+export const ArrayFromOneEventWithArgHandlerDefinition = z.strictObject({
+  type: z.literal('arrayFromOneEventWithArg'),
   event: z.string(),
   valueKey: z.string(),
   flagKey: z.optional(z.string()),
@@ -23,14 +23,14 @@ export const ArrayFromOneEventWithArgsHandlerDefinition = z.strictObject({
   argValue: z.string(),
 })
 
-export class ArrayFromOneEventWithArgsHandler implements Handler {
+export class ArrayFromOneEventWithArgHandler implements Handler {
   readonly dependencies: string[] = []
   private readonly fragment: utils.EventFragment
   private readonly abi: utils.Interface
 
   constructor(
     readonly field: string,
-    readonly definition: ArrayFromOneEventWithArgsHandlerDefinition,
+    readonly definition: ArrayFromOneEventWithArgHandlerDefinition,
     abi: string[],
     readonly logger: DiscoveryLogger,
   ) {

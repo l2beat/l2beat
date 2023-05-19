@@ -4,17 +4,17 @@ import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ArrayFromOneEventWithArgsHandler } from './ArrayFromOneEventWithArgHandler'
+import { ArrayFromOneEventWithArgHandler } from './ArrayFromOneEventWithArgHandler'
 
-describe(ArrayFromOneEventWithArgsHandler.name, () => {
+describe(ArrayFromOneEventWithArgHandler.name, () => {
   const BLOCK_NUMBER = 1234
 
   describe('constructor', () => {
     it('finds the specified event by name', () => {
-      const handler = new ArrayFromOneEventWithArgsHandler(
+      const handler = new ArrayFromOneEventWithArgHandler(
         'someName',
         {
-          type: 'arrayFromOneEventWithArgs',
+          type: 'arrayFromOneEventWithArg',
           event: 'PermissionUpdate',
           valueKey: 'user',
           flagKey: 'allowed',
@@ -34,10 +34,10 @@ describe(ArrayFromOneEventWithArgsHandler.name, () => {
     it('throws an error if the value is missing', () => {
       expect(
         () =>
-          new ArrayFromOneEventWithArgsHandler(
+          new ArrayFromOneEventWithArgHandler(
             'someName',
             {
-              type: 'arrayFromOneEventWithArgs',
+              type: 'arrayFromOneEventWithArg',
               event: 'PermissionUpdate',
               valueKey: 'foo',
               flagKey: 'allowed',
@@ -55,10 +55,10 @@ describe(ArrayFromOneEventWithArgsHandler.name, () => {
     it('throws an error if the flag is missing', () => {
       expect(
         () =>
-          new ArrayFromOneEventWithArgsHandler(
+          new ArrayFromOneEventWithArgHandler(
             'someName',
             {
-              type: 'arrayFromOneEventWithArgs',
+              type: 'arrayFromOneEventWithArg',
               event: 'PermissionUpdate',
               valueKey: 'user',
               flagKey: 'foo',
@@ -76,10 +76,10 @@ describe(ArrayFromOneEventWithArgsHandler.name, () => {
     it('throws an error if the arg is missing', () => {
       expect(
         () =>
-          new ArrayFromOneEventWithArgsHandler(
+          new ArrayFromOneEventWithArgHandler(
             'someName',
             {
-              type: 'arrayFromOneEventWithArgs',
+              type: 'arrayFromOneEventWithArg',
               event: 'PermissionUpdate',
               valueKey: 'user',
               flagKey: 'allowed',
@@ -97,10 +97,10 @@ describe(ArrayFromOneEventWithArgsHandler.name, () => {
     it('throws an error if abi has missing fields', () => {
       expect(
         () =>
-          new ArrayFromOneEventWithArgsHandler(
+          new ArrayFromOneEventWithArgHandler(
             'someName',
             {
-              type: 'arrayFromOneEventWithArgs',
+              type: 'arrayFromOneEventWithArg',
               event: 'event PermissionUpdate()',
               valueKey: 'user',
               flagKey: 'allowed',
@@ -143,10 +143,10 @@ describe(ArrayFromOneEventWithArgsHandler.name, () => {
         },
       })
 
-      const handler = new ArrayFromOneEventWithArgsHandler(
+      const handler = new ArrayFromOneEventWithArgHandler(
         'someName',
         {
-          type: 'arrayFromOneEventWithArgs',
+          type: 'arrayFromOneEventWithArg',
           event,
           valueKey: 'user',
           flagKey: 'allowed',
@@ -184,10 +184,10 @@ describe(ArrayFromOneEventWithArgsHandler.name, () => {
         },
       })
 
-      const handler = new ArrayFromOneEventWithArgsHandler(
+      const handler = new ArrayFromOneEventWithArgHandler(
         'someName',
         {
-          type: 'arrayFromOneEventWithArgs',
+          type: 'arrayFromOneEventWithArg',
           event,
           valueKey: 'user',
           flagKey: 'allowed',
@@ -225,10 +225,10 @@ describe(ArrayFromOneEventWithArgsHandler.name, () => {
         },
       })
 
-      const handler = new ArrayFromOneEventWithArgsHandler(
+      const handler = new ArrayFromOneEventWithArgHandler(
         'someName',
         {
-          type: 'arrayFromOneEventWithArgs',
+          type: 'arrayFromOneEventWithArg',
           event,
           valueKey: 'user',
           flagKey: 'allowed',

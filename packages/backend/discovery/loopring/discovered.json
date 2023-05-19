@@ -1,7 +1,7 @@
 {
   "name": "loopring",
-  "blockNumber": 17291803,
-  "configHash": "0x799157961ebf7f2f7128102ce74d025395df770b623c7ae161c2a2465b594ce8",
+  "blockNumber": 17292664,
+  "configHash": "0xfdc3406cc9ab2c76d9d1a5d839bb9f7460e697c328f7537cf45f8d811a8358b0",
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -16,7 +16,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 40925,
+        "getBlockHeight": 40928,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           4096,
@@ -33,7 +33,7 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x3042699ea649fe37c9fef7d7d583b2c0a95a420e5a1f399745e39e7368415aa7",
+        "getMerkleRoot": "0x0a115fed4c7fcbc0c4080edb93656d693864d289c629cac71f75e590df87cf02",
         "getNumAvailableForcedSlots": 4096,
         "getProtocolFeeValues": [1683980303, 0, 0, 0, 0],
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",

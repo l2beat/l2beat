@@ -26,7 +26,7 @@
     "LoopringIOExchangeOwner": {
       "fields": {
         "blockSubmitters": {
-          "type": "arrayFromOneEventWithArgs",
+          "type": "arrayFromOneEventWithArg",
           "event": "PermissionUpdate",
           "valueKey": "user",
           "flagKey": "allowed",
