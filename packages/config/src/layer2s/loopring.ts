@@ -19,6 +19,12 @@ const discovery = new ProjectDiscovery('loopring')
 const forcedWithdrawalDelay = formatSeconds(
   discovery.getContractValue<number[]>('ExchangeV3', 'getConstants')[2],
 )
+const maxAgeDepositUntilWithdrawable = formatSeconds(
+  discovery.getContractValue<number>(
+    'ExchangeV3',
+    'getMaxAgeDepositUntilWithdrawable',
+  ),
+)
 
 export const loopring: Layer2 = {
   type: 'layer2',
@@ -84,9 +90,10 @@ export const loopring: Layer2 = {
       ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
       description:
         RISK_VIEW.SEQUENCER_FORCE_EXIT_L1.description +
-        ' The sequencer can censor individual deposits, but in such case users can get their funds back.',
+        ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
       references: [
         'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
+        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195',
       ],
     },
     validatorFailure: {
