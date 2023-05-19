@@ -109,6 +109,10 @@ function getDependentsMessage(dependents: string[]) {
 
 export function formatNonce(nonce: number): string {
   const length = 4
+  if (nonce.toString().length > length) {
+    return `#${nonce}`
+  }
+
   const zerosToAdd = length - nonce.toString().length
   const zeros = '0'.repeat(zerosToAdd)
   return `#${zeros}${nonce}`

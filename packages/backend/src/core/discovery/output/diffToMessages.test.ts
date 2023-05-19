@@ -303,6 +303,48 @@ describe('Discord message formatting', () => {
     })
   })
 
+  describe(formatNonce.name, () => {
+    it('one digit nonce', () => {
+      const nonce = 1
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#0001')
+    })
+
+    it('two digit nonce', () => {
+      const nonce = 10
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#0010')
+    })
+
+    it('three digit nonce', () => {
+      const nonce = 100
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#0100')
+    })
+
+    it('four digit nonce', () => {
+      const nonce = 1000
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#1000')
+    })
+
+    it('five digit nonce', () => {
+      const nonce = 10000
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#10000')
+    })
+  })
+
   describe(wrapDiffCodeBlock.name, () => {
     it('wraps content correctly', () => {
       const messages = 'a\nb\nc'
