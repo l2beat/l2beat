@@ -2,19 +2,30 @@
   "$schema": "../config.schema.json",
   "name": "degate",
   "initialAddresses": ["0x814d0c1903d69eb1c7ceb8f5190b20a06892d1da"],
+  "names": {
+    "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5": "ExchangeV3",
+    "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": "MultiSig"
+  },
   "overrides": {
-    "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5": {
+    "ExchangeV3": {
       "ignoreMethods": ["getBlockInfo"],
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
         "getProtocolFeeValues",
         "getNumAvailableForcedSlots",
-        "getConstants"
+        "getConstants",
+        "state"
       ]
     },
-    "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": {
-      "ignoreInWatchMode": ["transactionCount"]
+    "MultiSig": {
+      "ignoreMethods": [
+        "getConfirmationCount",
+        "getConfirmations",
+        "isConfirmed",
+        "owners",
+        "transactions"
+      ]
     }
   }
 }
