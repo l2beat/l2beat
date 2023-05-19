@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/shared'
 import { Context, Middleware, Next } from 'koa'
-import { handleServerError } from '../../tools/ErrorReporter'
 
 export function createApiLogger(logger: Logger): Middleware {
   return async function (ctx: Context, next: Next): Promise<void> {

@@ -34,7 +34,7 @@ export class ApiServer {
     this.app.use(router.allowedMethods())
 
     if (handleServerError) {
-      this.app.on('error', (err, ctx) =>
+      this.app.on('error', (err: Error, ctx: Context) =>
         handleServerError(this.logger, err, ctx),
       )
     }
