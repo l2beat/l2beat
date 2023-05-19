@@ -1,7 +1,7 @@
 {
   "name": "optimism",
-  "blockNumber": 17271589,
-  "configHash": "0x3b7b9edd0c92050983f086815da9441e1639a055f582345cb156d6931794bc53",
+  "blockNumber": 17291742,
+  "configHash": "0x569fc69911630a4359feeee784994616453490a3da4b53df54e83fc7bd4d0d93",
   "contracts": [
     {
       "name": "OVM_FraudVerifier",
@@ -95,7 +95,7 @@
           "0x4665374939642965EfD8357D4568D2A77f677429"
         ],
         "getThreshold": 2,
-        "nonce": 10,
+        "nonce": 15,
         "VERSION": "1.3.0"
       }
     },
@@ -138,13 +138,13 @@
         "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17271536,
-        "getLastTimestamp": 1684231796,
-        "getNextQueueIndex": 349747,
-        "getNumPendingQueueElements": 4,
-        "getQueueLength": 349751,
-        "getTotalBatches": 791557,
-        "getTotalElements": 98724314,
+        "getLastBlockNumber": 17291690,
+        "getLastTimestamp": 1684477431,
+        "getNextQueueIndex": 350788,
+        "getNumPendingQueueElements": 1,
+        "getQueueLength": 350789,
+        "getTotalBatches": 799787,
+        "getTotalElements": 99678151,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -232,8 +232,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000646356230005e2679b",
-        "length": 104707,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000646714bb0005f0f442",
+        "length": 105689,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "owner": "StateCommitmentChain"
       },
@@ -249,9 +249,9 @@
       "values": {
         "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1684231715,
-        "getTotalBatches": 104707,
-        "getTotalElements": 98723739,
+        "getLastSequencerTimestamp": 1684477115,
+        "getTotalBatches": 105689,
+        "getTotalElements": 99677250,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -295,8 +295,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000001078af0006463567400000556330005e269da",
-        "length": 791557,
+        "getGlobalMetadata": "0x00000000000000000107d9aa00646715f70000055a440005f0f7c7",
+        "length": 799787,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "owner": "CanonicalTransactionChain"
       },
