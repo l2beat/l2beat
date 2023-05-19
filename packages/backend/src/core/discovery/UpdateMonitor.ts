@@ -96,10 +96,14 @@ export class UpdateMonitor {
     const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
     this.cachedDiscovery.set(projectConfig.name, discovery)
 
-    const diff = await this.findChanges(
+    const previousDiscovery = await this.getPreviousDiscovery(
       projectConfig.name,
-      discovery,
       projectConfig.hash,
+    )
+
+    const diff = diffDiscovery(
+      previousDiscovery.contracts,
+      discovery.contracts,
       projectConfig,
     )
 
@@ -114,28 +118,21 @@ export class UpdateMonitor {
     })
   }
 
-  async findChanges(
+  async getPreviousDiscovery(
     name: string,
-    discovery: DiscoveryOutput,
     configHash: Hash256,
-    config: DiscoveryConfig,
-  ): Promise<DiscoveryDiff[]> {
+  ): Promise<DiscoveryOutput> {
     const databaseEntry = await this.repository.findLatest(name)
-
+    let previousDiscovery: DiscoveryOutput
     if (databaseEntry?.configHash === configHash) {
-      this.logger.debug('Using database record for diff', { project: name })
-
-      return diffDiscovery(
-        databaseEntry.discovery.contracts,
-        discovery.contracts,
-        config,
-      )
+      this.logger.debug('Using database record', { project: name })
+      previousDiscovery = databaseEntry.discovery
+    } else {
+      this.logger.debug('Using committed file', { project: name })
+      previousDiscovery = await this.configReader.readDiscovery(name)
     }
 
-    const committed = await this.configReader.readDiscovery(name)
-    this.logger.debug('Using committed file for diff', { project: name })
-
-    return diffDiscovery(committed.contracts, discovery.contracts, config)
+    return previousDiscovery
   }
 
   private async handleDiff(

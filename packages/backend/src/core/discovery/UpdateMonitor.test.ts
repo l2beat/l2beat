@@ -1,6 +1,5 @@
 import {
   ConfigReader,
-  diffDiscovery,
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
@@ -295,13 +294,14 @@ describe(UpdateMonitor.name, () => {
     })
   })
 
-  describe(UpdateMonitor.prototype.findChanges.name, () => {
-    it('finds difference from committed file', async () => {
+  describe(UpdateMonitor.prototype.getPreviousDiscovery.name, () => {
+    it('gets committed file', async () => {
+      const committed: DiscoveryOutput = {
+        ...mockProject,
+        contracts: COMMITTED,
+      }
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
-          ...mockProject,
-          contracts: COMMITTED,
-        }),
+        readDiscovery: async () => committed,
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -319,42 +319,33 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
-      const result = await updateMonitor.findChanges(
+      const result = await updateMonitor.getPreviousDiscovery(
         PROJECT_A,
-        DISCOVERY_RESULT,
         // repository returns undefined, so config hash does not matter
         Hash256.random(),
-        mockConfig(PROJECT_A),
       )
 
       // calls repository (and gets undefined)
       expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // reads committed file
       expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
-      // finds difference between committed and discovery result
-      expect(result).toEqual(
-        diffDiscovery(
-          COMMITTED,
-          DISCOVERY_RESULT.contracts,
-          mockConfig(PROJECT_A),
-        ),
-      )
+      expect(result).toEqual(committed)
     })
 
-    it('finds difference from repository entry', async () => {
+    it('gets repository entry', async () => {
       // for the sake of simplicity we reuse the same values
-      const dbEntry = COMMITTED
+      const dbEntry = {
+        ...mockRecord,
+        discovery: { ...mockProject, contracts: COMMITTED },
+        configHash: mockConfig(PROJECT_A).hash,
+      }
 
       const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => ({ ...mockProject }),
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
-        findLatest: async () => ({
-          ...mockRecord,
-          discovery: { ...mockProject, contracts: dbEntry },
-          configHash: mockConfig(PROJECT_A).hash,
-        }),
+        findLatest: async () => dbEntry,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -368,33 +359,26 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
-      const result = await updateMonitor.findChanges(
+      const result = await updateMonitor.getPreviousDiscovery(
         PROJECT_A,
-        DISCOVERY_RESULT,
         mockConfig(PROJECT_A).hash,
-        mockConfig(PROJECT_A),
       )
 
       // calls repository
       expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // finds difference between repository and discovery result
-      expect(result).toEqual(
-        diffDiscovery(
-          dbEntry,
-          DISCOVERY_RESULT.contracts,
-          mockConfig(PROJECT_A),
-        ),
-      )
+      expect(result).toEqual(dbEntry.discovery)
     })
 
     it('takes config hash into consideration', async () => {
       const dbEntry = COMMITTED
+      const committed = {
+        ...mockProject,
+        contracts: DISCOVERY_RESULT.contracts,
+      }
 
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
-          ...mockProject,
-          contracts: DISCOVERY_RESULT.contracts,
-        }),
+        readDiscovery: async () => committed,
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -420,20 +404,12 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
-      const result = await updateMonitor.findChanges(
+      const result = await updateMonitor.getPreviousDiscovery(
         PROJECT_A,
-        {
-          ...mockProject,
-          contracts: DISCOVERY_RESULT.contracts,
-        },
         mockConfig('new-name').hash,
-        mockConfig(PROJECT_A),
       )
 
-      expect(result).toEqual([])
-
-      expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
-      expect(repository.findLatest).toHaveBeenCalledTimes(1)
+      expect(result).toEqual(committed)
     })
   })
 })
