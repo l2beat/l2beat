@@ -14,6 +14,7 @@ import { DiscoveryProvider } from '../../core/discovery/provider/DiscoveryProvid
 import { ProxyDetector } from '../../core/discovery/proxies/ProxyDetector'
 import { SourceCodeService } from '../../core/discovery/source/SourceCodeService'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
+import { NotificationManagerRepository } from '../../peripherals/database/discovery/NotificationManagerRepository'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
@@ -50,7 +51,16 @@ export function createUpdateMonitorModule(
       )
     : undefined
 
-  const notificationManager = new NotificationManager(discordClient, logger)
+  const notificationManagerRepository = new NotificationManagerRepository(
+    database,
+    logger,
+  )
+
+  const notificationManager = new NotificationManager(
+    notificationManagerRepository,
+    discordClient,
+    logger,
+  )
 
   const configReader = new ConfigReader()
 

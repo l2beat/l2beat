@@ -152,6 +152,7 @@ export class UpdateMonitor {
         projectConfig.name,
         dependents,
         diff,
+        blockNumber,
       )
       changesDetected.inc()
     }

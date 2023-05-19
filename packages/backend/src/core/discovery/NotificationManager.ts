@@ -1,5 +1,6 @@
 import { Logger, UnixTime } from '@l2beat/shared'
 
+import { NotificationManagerRepository } from '../../peripherals/database/discovery/NotificationManagerRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { DiscoveryDiff } from './output/diffDiscovery'
 import { diffToMessages } from './output/diffToMessages'
@@ -7,15 +8,26 @@ import { isNineAM } from './utils/isNineAM'
 
 export class NotificationManager {
   constructor(
+    private readonly notificationManagerRepository: NotificationManagerRepository,
     private readonly discordClient: DiscordClient | undefined,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
 
-  async handleDiff(name: string, dependents: string[], diff: DiscoveryDiff[]) {
+  async handleDiff(
+    name: string,
+    dependents: string[],
+    diff: DiscoveryDiff[],
+    blockNumber: number,
+  ) {
     const messages = diffToMessages(name, dependents, diff)
     await this.notify(messages, 'INTERNAL')
+    await this.notificationManagerRepository.add({
+      projectName: name,
+      diff,
+      blockNumber,
+    })
     this.logger.info('Changes detected sent [INTERNAL]', {
       name,
       amount: diff.map((d) => (d.diff ?? []).length).reduce((a, b) => a + b, 0),

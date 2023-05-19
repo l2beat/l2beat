@@ -1,9 +1,12 @@
 import { EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
+import { NotificationManagerRepository } from '../../peripherals/database/discovery/NotificationManagerRepository'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { NotificationManager } from './NotificationManager'
 import { DiscoveryDiff } from './output/diffDiscovery'
+
+const BLOCK = 123
 
 describe(NotificationManager.name, () => {
   describe(NotificationManager.prototype.handleDiff.name, () => {
@@ -12,7 +15,13 @@ describe(NotificationManager.name, () => {
         sendMessage: async () => {},
       })
 
+      const notificationManagerRepository =
+        mockObject<NotificationManagerRepository>({
+          add: async () => '',
+        })
+
       const notificationManager = new NotificationManager(
+        notificationManagerRepository,
         discordClient,
         Logger.SILENT,
       )
@@ -28,7 +37,7 @@ describe(NotificationManager.name, () => {
         },
       ]
 
-      await notificationManager.handleDiff(project, dependents, changes)
+      await notificationManager.handleDiff(project, dependents, changes, BLOCK)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -45,6 +54,12 @@ describe(NotificationManager.name, () => {
           '\n\nA\n- 1\n+ 2\n\n```',
         'PUBLIC',
       )
+      expect(notificationManagerRepository.add).toHaveBeenCalledTimes(1)
+      expect(notificationManagerRepository.add).toHaveBeenCalledWith({
+        projectName: project,
+        diff: changes,
+        blockNumber: BLOCK,
+      })
     })
 
     it('sends errors only to internal channel', async () => {
@@ -52,7 +67,13 @@ describe(NotificationManager.name, () => {
         sendMessage: async () => {},
       })
 
+      const notificationManagerRepository =
+        mockObject<NotificationManagerRepository>({
+          add: async () => '',
+        })
+
       const notificationManager = new NotificationManager(
+        notificationManagerRepository,
         discordClient,
         Logger.SILENT,
       )
@@ -68,7 +89,7 @@ describe(NotificationManager.name, () => {
         },
       ]
 
-      await notificationManager.handleDiff(project, dependents, changes)
+      await notificationManager.handleDiff(project, dependents, changes, BLOCK)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -78,16 +99,27 @@ describe(NotificationManager.name, () => {
           '\n\nerrors\n+ Execution reverted\n\n```',
         'INTERNAL',
       )
+      expect(notificationManagerRepository.add).toHaveBeenCalledTimes(1)
+      expect(notificationManagerRepository.add).toHaveBeenCalledWith({
+        projectName: project,
+        diff: changes,
+        blockNumber: BLOCK,
+      })
     })
   })
 
   describe(NotificationManager.prototype.handleUnresolved.name, () => {
     it('sends daily reminder at 9am CET', async () => {
+      const notificationManagerRepository =
+        mockObject<NotificationManagerRepository>({
+          add: async () => '',
+        })
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
 
       const notificationManager = new NotificationManager(
+        notificationManagerRepository,
         discordClient,
         Logger.SILENT,
       )
@@ -111,8 +143,12 @@ describe(NotificationManager.name, () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
-
+      const notificationManagerRepository =
+        mockObject<NotificationManagerRepository>({
+          add: async () => '',
+        })
       const notificationManager = new NotificationManager(
+        notificationManagerRepository,
         discordClient,
         Logger.SILENT,
       )

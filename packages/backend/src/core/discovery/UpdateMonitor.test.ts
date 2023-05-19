@@ -135,12 +135,14 @@ describe(UpdateMonitor.name, () => {
         PROJECT_A,
         [],
         mockDiff,
+        BLOCK_NUMBER,
       )
       expect(notificationManager.handleDiff).toHaveBeenNthCalledWith(
         2,
         PROJECT_B,
         [],
         mockDiff,
+        BLOCK_NUMBER,
       )
       expect(notificationManager.handleUnresolved).toHaveBeenCalledTimes(1)
       expect(notificationManager.handleUnresolved).toHaveBeenNthCalledWith(
