@@ -14,9 +14,9 @@ export function sentimentToFillColor(sentiment?: Sentiment): string {
 export function sentimentToTextColor(sentiment?: Sentiment): string {
   switch (sentiment) {
     case 'bad':
-      return 'text-orange-600'
+      return 'text-red-550 dark:text-orange-600'
     case 'warning':
-      return 'text-yellow-200'
+      return 'text-yellow-700 dark:text-yellow-200'
     case undefined:
       return ''
   }
