@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  formatLargeNumberShared,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -27,15 +22,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
-const bridgeLimitETH =
-  discovery.getContractValue<number>('StarknetEthBridge', 'maxTotalBalance') /
-  1e18
-const bridgeLimitUSDC =
-  discovery.getContractValue<number>('USDC Bridge', 'maxTotalBalance') / 1e6
-const bridgeLimitWBTC =
-  discovery.getContractValue<number>('WBTC Bridge', 'maxTotalBalance') / 1e8
-const bridgeLimitUSDT =
-  discovery.getContractValue<number>('USDT Bridge', 'maxTotalBalance') / 1e6
 
 export const starknet: Layer2 = {
   type: 'layer2',
@@ -72,7 +58,7 @@ export const starknet: Layer2 = {
   config: {
     escrows: [
       {
-        address: discovery.getContract('StarknetEthBridge').address,
+        address: discovery.getContract('ETH Bridge').address,
         sinceTimestamp: new UnixTime(1647857148),
         tokens: ['ETH'],
       },
@@ -150,66 +136,57 @@ export const starknet: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'StarkNet Core Contract',
-        description:
-          'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-        address: discovery.getContract('Starknet').address,
-        upgradeability: discovery.getContract('Starknet').upgradeability,
-      },
+      discovery.getMainContractDetails(
+        'Starknet',
+        'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
+      ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
-      {
-        name: 'Eth Bridge',
-        description: `Starkgate bridge for ETH, currently the limit is ${formatLargeNumberShared(
-          bridgeLimitETH,
-        )} ETH.`,
-        address: discovery.getContract('StarknetEthBridge').address,
-        upgradeability:
-          discovery.getContract('StarknetEthBridge').upgradeability,
-      },
+      discovery.getMainContractDetails(
+        'ETH Bridge',
+        'StarkGate bridge for ETH.',
+      ),
+      discovery.getMainContractDetails(
+        'WBTC Bridge',
+        'StarkGate bridge for WBTC.',
+      ),
+      discovery.getMainContractDetails(
+        'USDC Bridge',
+        'StarkGate bridge for USDC.',
+      ),
+      discovery.getMainContractDetails(
+        'USDT Bridge',
+        'StarkGate bridge for USDT.',
+      ),
       {
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
         address: EthereumAddress('0x9F96fE0633eE838D0298E8b8980E6716bE81388d'),
       },
-      {
-        name: 'L1Escrow',
-        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-        address: discovery.getContract('DAI Bridge').address,
-      },
       discovery.getMainContractDetails(
-        'WBTC Bridge',
-        `StarkGate bridge for WBTC, currently the limit is ${formatLargeNumberShared(
-          bridgeLimitWBTC,
-        )} WBTC.`,
-      ),
-      discovery.getMainContractDetails(
-        'USDC Bridge',
-        `StarkGate bridge for USDC, currently the limit is ${formatLargeNumberShared(
-          bridgeLimitUSDC,
-        )} USDC.`,
-      ),
-      discovery.getMainContractDetails(
-        'USDT Bridge',
-        `StarkGate bridge for USDT, currently the limit is ${formatLargeNumberShared(
-          bridgeLimitUSDT,
-        )} USDT.`,
+        'DAI Bridge',
+        'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {
-      name: 'StarknetCore Governors',
+      name: 'Starknet Proxy Governors',
       accounts: getProxyGovernance(discovery, 'Starknet'),
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
     },
+    {
+      name: 'Starknet Implementation Governors',
+      accounts: discovery.getPermissionedAccountsList('Starknet', 'governors'),
+      description:
+        'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
+    },
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList('Starknet', 'OPERATORS'),
+      accounts: discovery.getPermissionedAccountsList('Starknet', 'operators'),
       description:
         'Allowed to post state updates. When the operator is down the state cannot be updated.',
     },
