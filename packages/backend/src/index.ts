@@ -1,5 +1,4 @@
 import { Application } from './Application'
-import { handleCli } from './cli/handleCli'
 import { getConfig } from './config'
 import { flushErrors, reportError } from './tools/ErrorReporter'
 
@@ -14,8 +13,7 @@ main().catch((e) => {
 })
 
 async function main() {
-  const cli = handleCli()
-  const config = getConfig(cli)
+  const config = getConfig()
   const app = new Application(config)
   await app.start()
 }

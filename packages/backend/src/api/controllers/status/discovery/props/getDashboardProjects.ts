@@ -1,5 +1,5 @@
-import { ConfigReader } from '../../../../../core/discovery/config/ConfigReader'
-import { DiscoveryDiff } from '../../../../../core/discovery/output/diffDiscovery'
+import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
+
 import { UpdateMonitorRepository } from '../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { getDashboardContracts } from './getDashboardContracts'
 import { getDiff } from './utils/getDiff'

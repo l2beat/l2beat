@@ -1,17 +1,11 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { LogLevel, UnixTime } from '@l2beat/shared'
+import { getEnv, LogLevel, UnixTime } from '@l2beat/shared'
 
-import { CliParameters } from '../cli/getCliParameters'
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
-import { getEnv } from './getEnv'
 import { getGitCommitHash } from './getGitCommitHash'
 
-export function getProductionConfig(cli: CliParameters): Config {
-  if (cli.mode !== 'server') {
-    throw new Error(`No production config for mode: ${cli.mode}`)
-  }
-
+export function getProductionConfig(): Config {
   const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     !!process.env.DISCORD_TOKEN &&

@@ -1,7 +1,6 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress, hashJson } from '@l2beat/shared'
 import { expect } from 'earl'
 
-import { hashJson } from '../../../tools/hashJson'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'

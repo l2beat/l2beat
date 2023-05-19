@@ -6,9 +6,9 @@ import {
   DiscoveryCliConfig,
   getDiscoveryCliConfig,
 } from './config/config.discovery'
-import { ConfigReader } from './core/discovery/config/ConfigReader'
-import { dryRunDiscovery, runDiscovery } from './core/discovery/runDiscovery'
-import { runInversion } from './core/inversion/runInversion'
+import { ConfigReader } from './discovery/config/ConfigReader'
+import { dryRunDiscovery, runDiscovery } from './discovery/runDiscovery'
+import { runInversion } from './inversion/runInversion'
 
 main().catch((e) => {
   console.error(e)

@@ -1,6 +1,6 @@
-import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
-import { FieldDiff } from './diffContracts'
-import { DiscoveryDiff } from './diffDiscovery'
+import { DiscoveryDiff, FieldDiff } from '@l2beat/discovery'
+
+import { MAX_MESSAGE_LENGTH } from '../../peripherals/discord/DiscordClient'
 
 export function diffToMessages(
   name: string,

@@ -1,6 +1,6 @@
+import { DiscoveryDiff } from '@l2beat/discovery'
 import { default as React } from 'react'
 
-import { DiscoveryDiff } from '../../../../../core/discovery/output/diffDiscovery'
 import { Page } from '../../view/Page'
 import { reactToHtml } from '../../view/reactToHtml'
 import { DashboardContract } from '../props/getDashboardContracts'
