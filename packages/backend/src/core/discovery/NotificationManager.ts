@@ -21,7 +21,8 @@ export class NotificationManager {
     diff: DiscoveryDiff[],
     blockNumber: number,
   ) {
-    const messages = diffToMessages(name, dependents, diff)
+    const id = await this.getNextId()
+    const messages = diffToMessages(name, dependents, diff, id)
     await this.notify(messages, 'INTERNAL')
     await this.notificationManagerRepository.add({
       projectName: name,
@@ -65,6 +66,16 @@ export class NotificationManager {
     this.logger.info('Daily reminder sent', {
       projects: notUpdatedProjects,
     })
+  }
+
+  async getNextId() {
+    const latestRecord = await this.notificationManagerRepository.findLatest()
+
+    if (latestRecord === undefined) {
+      return 0
+    }
+
+    return latestRecord.id + 1
   }
 
   private async notify(messages: string | string[], channel: Channel) {

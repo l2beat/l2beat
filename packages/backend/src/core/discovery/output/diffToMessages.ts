@@ -6,6 +6,7 @@ export function diffToMessages(
   name: string,
   dependents: string[],
   diffs: DiscoveryDiff[],
+  nonce?: number,
 ): string[] {
   const header = getHeader(name)
   const dependentsMessage = getDependentsMessage(dependents)
