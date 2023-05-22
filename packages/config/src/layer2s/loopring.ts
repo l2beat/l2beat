@@ -25,6 +25,12 @@ const maxAgeDepositUntilWithdrawable = formatSeconds(
     'getMaxAgeDepositUntilWithdrawable',
   ),
 )
+const forcedWithdrawalFee = discovery.getContractValue<number>(
+  'LoopringV3',
+  'forcedWithdrawalFee',
+)
+
+const forcedWithdrawalFeeString = `${forcedWithdrawalFee / 1e18} ETH`
 
 export const loopring: Layer2 = {
   type: 'layer2',
@@ -87,20 +93,20 @@ export const loopring: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString),
       description:
-        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1.description +
+        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString)
+          .description +
         ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
       references: [
         'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
         'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195',
+        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6090',
+        'https://etherscan.io/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71#code#L1825',
       ],
     },
     validatorFailure: {
-      ...RISK_VIEW.VALIDATOR_ESCAPE_MP,
-      description:
-        RISK_VIEW.VALIDATOR_ESCAPE_MP.description +
-        ` There is a ${forcedWithdrawalDelay} delay on this operation.`,
+      ...RISK_VIEW.VALIDATOR_ESCAPE_MP(forcedWithdrawalDelay),
       references: [
         'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
       ],
@@ -208,7 +214,7 @@ export const loopring: Layer2 = {
   permissions: [
     ...discovery.getGnosisSafeDetails(
       'ProxyOwner',
-      'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
+      'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
     ),
     {
       name: 'Block Submitters',
