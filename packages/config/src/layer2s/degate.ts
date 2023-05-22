@@ -194,17 +194,12 @@ export const degate: Layer2 = {
     //       .length
     //   } DeGate MultiSig.`,
     // },
-    // TODO: get this from discovery, probably same as new handler for loopring
     {
       name: 'Block Submitters',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery.getPermissionedAccountsList(
+        'LoopringIOExchangeOwner',
+        'blockSubmitters',
+      ),
       description:
         'Actors who can submit new blocks, updating the L2 state on L1.',
     },
