@@ -93,7 +93,7 @@ export const rhinofi: Layer2 = {
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
+    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP(),
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

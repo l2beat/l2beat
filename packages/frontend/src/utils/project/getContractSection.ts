@@ -90,6 +90,7 @@ function makeTechnologyContract(
         case 'EIP1967 proxy':
         case 'Custom':
         case 'ZeppelinOS proxy':
+        case 'Eternal Storage proxy':
           links.push({
             name: 'Implementation (Upgradable)',
             href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,

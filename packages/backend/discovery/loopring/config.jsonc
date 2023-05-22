@@ -18,7 +18,14 @@
         "getProtocolFeeValues",
         "getNumAvailableForcedSlots",
         "getConstants"
-      ]
+      ],
+      "fields": {
+        "loopringV3": {
+          "type": "storage",
+          "slot": 5,
+          "returnType": "address"
+        }
+      }
     },
     "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": {
       "ignoreInWatchMode": ["nonce"]

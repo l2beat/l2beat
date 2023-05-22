@@ -45,6 +45,7 @@ function gatherAddressesFromUpgradeability(
     case 'resolved delegate proxy':
     case 'call implementation proxy':
     case 'EIP897 proxy':
+    case 'Eternal Storage proxy':
       result.push(item.implementation)
       break
     case 'StarkWare proxy':
