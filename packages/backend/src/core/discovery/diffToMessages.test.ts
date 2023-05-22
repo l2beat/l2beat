@@ -7,6 +7,7 @@ import {
   contractDiffToMessages,
   diffToMessages,
   fieldDiffToMessage,
+  formatNonce,
   wrapBoldAndItalic,
   wrapDiffCodeBlock,
   wrapItalic,
@@ -112,28 +113,33 @@ describe('Discord message formatting', () => {
         type: 'deleted',
       }
       const differences: DiscoveryDiff[] = []
+      const nonce = 1
 
       while (differences.length < 27) {
         differences.push(diff)
       }
 
-      const result = diffToMessages(name, dependents, differences)
+      const result = diffToMessages(name, dependents, differences, nonce)
 
       const firstPart = [
-        `***${name}*** | detected changes\`\`\`diff\n`,
-        differences.slice(0, 26).map(contractDiffToMessages).join(''),
+        `> ${formatNonce(
+          nonce,
+        )}\n\n***${name}*** | detected changes\`\`\`diff\n`,
+        differences.slice(0, 25).map(contractDiffToMessages).join(''),
         '```',
       ]
 
       const secondPart = [
-        `***${name}*** | detected changes\`\`\`diff\n`,
-        differences.slice(26).map(contractDiffToMessages).join(''),
+        `> ${formatNonce(
+          nonce,
+        )}\n\n***${name}*** | detected changes\`\`\`diff\n`,
+        differences.slice(25).map(contractDiffToMessages).join(''),
         '```',
       ]
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
-      expect(firstPart.join('').length).toEqual(1992)
-      expect(secondPart.join('').length).toEqual(117)
+      expect(firstPart.join('').length).toEqual(1926)
+      expect(secondPart.join('').length).toEqual(201)
     })
 
     it('truncates contract with diff larger than 2000 characters', () => {
@@ -152,26 +158,31 @@ describe('Discord message formatting', () => {
         address: ADDRESS,
         diff,
       }
+      const nonce = 1
 
       const firstPart = [
-        `***${PROJECT}*** | detected changes\`\`\`diff\n`,
+        `> ${formatNonce(
+          nonce,
+        )}\n\n***${PROJECT}*** | detected changes\`\`\`diff\n`,
         'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
         diff.slice(0, 105).map(fieldDiffToMessage).join(''),
         '```',
       ]
 
       const secondPart = [
-        `***${PROJECT}*** | detected changes\`\`\`diff\n`,
+        `> ${formatNonce(
+          nonce,
+        )}\n\n***${PROJECT}*** | detected changes\`\`\`diff\n`,
         'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
         diff.slice(105).map(fieldDiffToMessage).join(''),
         '```',
       ]
 
-      const result = diffToMessages(PROJECT, [], [contractDiff])
+      const result = diffToMessages(PROJECT, [], [contractDiff], nonce)
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
-      expect(firstPart.join('').length).toEqual(1987)
-      expect(secondPart.join('').length).toEqual(1807)
+      expect(firstPart.join('').length).toEqual(1996)
+      expect(secondPart.join('').length).toEqual(1816)
     })
   })
 
@@ -288,6 +299,48 @@ describe('Discord message formatting', () => {
 
       const result2 = fieldDiffToMessage(undefinedAfter)
       expect(result2).toEqual('count\n+ undefined\n\n')
+    })
+  })
+
+  describe(formatNonce.name, () => {
+    it('one digit nonce', () => {
+      const nonce = 1
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#0001')
+    })
+
+    it('two digit nonce', () => {
+      const nonce = 10
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#0010')
+    })
+
+    it('three digit nonce', () => {
+      const nonce = 100
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#0100')
+    })
+
+    it('four digit nonce', () => {
+      const nonce = 1000
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#1000')
+    })
+
+    it('five digit nonce', () => {
+      const nonce = 10000
+
+      const result = formatNonce(nonce)
+
+      expect(result).toEqual('#10000')
     })
   })
 

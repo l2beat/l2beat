@@ -14,7 +14,7 @@ import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { findDependents } from './findDependents'
-import { NotificationManager } from './NotificationManager'
+import { UpdateNotifier } from './UpdateNotifier'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -23,7 +23,7 @@ export class UpdateMonitor {
   constructor(
     private readonly provider: providers.AlchemyProvider,
     private readonly discoveryRunner: DiscoveryRunner,
-    private readonly notificationManager: NotificationManager,
+    private readonly updateNotifier: UpdateNotifier,
     private readonly configReader: ConfigReader,
     private readonly repository: UpdateMonitorRepository,
     private readonly clock: Clock,
@@ -43,7 +43,7 @@ export class UpdateMonitor {
   async start() {
     this.logger.info('Started')
     if (this.runOnStart) {
-      await this.notificationManager.handleStart()
+      await this.updateNotifier.handleStart()
       this.taskQueue.addToFront(UnixTime.now())
     }
     return this.clock.onNewHour((timestamp) => {
@@ -151,10 +151,11 @@ export class UpdateMonitor {
         projectConfig.name,
         this.configReader,
       )
-      await this.notificationManager.handleDiff(
+      await this.updateNotifier.handleDiff(
         projectConfig.name,
         dependents,
         diff,
+        blockNumber,
       )
       changesDetected.inc()
     }
@@ -214,10 +215,7 @@ export class UpdateMonitor {
       }
     }
 
-    await this.notificationManager.handleUnresolved(
-      notUpdatedProjects,
-      timestamp,
-    )
+    await this.updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
   }
 
   initMetrics(blockNumber: number): () => void {
