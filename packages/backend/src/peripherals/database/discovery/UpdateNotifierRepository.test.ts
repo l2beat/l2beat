@@ -3,21 +3,21 @@ import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
 import {
-  NotificationManagerRecord,
-  NotificationManagerRepository,
-} from './NotificationManagerRepository'
+  UpdateNotifierRecord,
+  UpdateNotifierRepository,
+} from './UpdateNotifierRepository'
 
 const PROJECT = 'project'
 
-describe(NotificationManagerRepository.name, () => {
+describe(UpdateNotifierRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new NotificationManagerRepository(database, Logger.SILENT)
+  const repository = new UpdateNotifierRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
-  it(NotificationManagerRepository.prototype.findLatestId.name, async () => {
+  it(UpdateNotifierRepository.prototype.findLatestId.name, async () => {
     const record = mockRecord(PROJECT)
 
     await repository.add(record)
@@ -29,7 +29,7 @@ describe(NotificationManagerRepository.name, () => {
     expect(result).toEqual(latestId)
   })
 
-  it(NotificationManagerRepository.prototype.add.name, async () => {
+  it(UpdateNotifierRepository.prototype.add.name, async () => {
     const record = mockRecord(PROJECT)
 
     const latestId = await repository.add(record)
@@ -42,7 +42,7 @@ describe(NotificationManagerRepository.name, () => {
 
 function mockRecord(
   projectName: string,
-): Omit<NotificationManagerRecord, 'id' | 'createdAt' | 'updatedAt'> {
+): Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'> {
   return {
     projectName,
     blockNumber: -1,

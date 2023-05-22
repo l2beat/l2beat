@@ -16,8 +16,8 @@ import { Clock } from '../../core/Clock'
 import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
 import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
-import { NotificationManagerRepository } from '../../peripherals/database/discovery/NotificationManagerRepository'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
+import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'
@@ -53,7 +53,7 @@ export function createUpdateMonitorModule(
       )
     : undefined
 
-  const notificationManagerRepository = new NotificationManagerRepository(
+  const notificationManagerRepository = new UpdateNotifierRepository(
     database,
     logger,
   )

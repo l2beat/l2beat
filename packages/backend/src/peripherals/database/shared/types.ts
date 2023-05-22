@@ -87,7 +87,7 @@ declare module 'knex/types/tables' {
     config_hash: string
   }
 
-  interface NotificationManagerRow {
+  interface UpdateNotifierRow {
     id: number
     created_at: Date
     updated_at: Date
@@ -110,7 +110,7 @@ declare module 'knex/types/tables' {
     'activity.starkex': StarkexTransactionCountRow
     'activity.daily_count_view': DailyTransactionCountRow
     update_monitor: UpdateMonitorRow
-    notification_manager: NotificationManagerRow
+    update_notifier: UpdateNotifierRow
   }
 }
 

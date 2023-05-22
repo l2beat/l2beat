@@ -2,7 +2,7 @@ import { DiscoveryDiff } from '@l2beat/discovery'
 import { EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
-import { NotificationManagerRepository } from '../../peripherals/database/discovery/NotificationManagerRepository'
+import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { UpdateNotifier } from './UpdateNotifier'
 
@@ -16,7 +16,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const notificationManagerRepository =
-        mockObject<NotificationManagerRepository>({
+        mockObject<UpdateNotifierRepository>({
           add: async () => 0,
           findLatestId: async () => undefined,
         })
@@ -71,7 +71,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const notificationManagerRepository =
-        mockObject<NotificationManagerRepository>({
+        mockObject<UpdateNotifierRepository>({
           add: async () => 0,
           findLatestId: async () => 0,
         })
@@ -116,7 +116,7 @@ describe(UpdateNotifier.name, () => {
   describe(UpdateNotifier.prototype.handleUnresolved.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const notificationManagerRepository =
-        mockObject<NotificationManagerRepository>({
+        mockObject<UpdateNotifierRepository>({
           add: async () => 0,
         })
 
@@ -150,7 +150,7 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
       const notificationManagerRepository =
-        mockObject<NotificationManagerRepository>({
+        mockObject<UpdateNotifierRepository>({
           add: async () => 0,
           findLatestId: async () => undefined,
         })

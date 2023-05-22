@@ -14,7 +14,7 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.createTable('notification_manager', function (table) {
+  await knex.schema.createTable('update_notifier', function (table) {
     table.increments('id').primary().unsigned()
     table.timestamps(true, true)
 
@@ -25,5 +25,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.dropTable('notification_manager')
+  await knex.schema.dropTable('update_notifier')
 }
