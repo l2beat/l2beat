@@ -71,37 +71,28 @@ export class ProjectDiscovery {
   }
 
   getEscrowDetails({
-    identifier,
+    address,
+    name,
     description,
-    path,
     sinceTimestamp,
     tokens,
-    hidden,
   }: {
-    identifier: string
+    address: EthereumAddress
+    name?: string
     description?: string
-    path?: string
     sinceTimestamp: UnixTime
     tokens: string[] | '*'
-    hidden?: boolean
   }): ProjectEscrow {
-    let contract: ContractParameters
-    if (path) {
-      const address = this.getAddressFromValue(identifier, path)
-      contract = this.getContractByAddress(address.toString())
-    } else {
-      contract = this.getContract(identifier)
-    }
+    const contract = this.getContractByAddress(address.toString())
 
     return {
       newVersion: true,
-      name: contract.name,
-      address: contract.address,
+      name: name ? name : contract.name,
+      address,
       upgradeability: contract.upgradeability,
       description,
       sinceTimestamp,
       tokens,
-      hidden,
     }
   }
 

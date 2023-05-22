@@ -30,7 +30,7 @@ export function getContractSection(
   })
 
   const escrows = project.config.escrows
-    .filter((escrow) => escrow.newVersion && !escrow.hidden)
+    .filter((escrow) => escrow.newVersion && !escrow.isHistorical)
     .sort(moreTokensFirst)
     .map((escrow) => {
       const isUnverified = isAddressUnverified(
