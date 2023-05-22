@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Bridge } from './types'
 import { RISK_VIEW } from './common'
+import { CONTRACTS } from '../layer2s/common'
 
 const discovery = new ProjectDiscovery('pulseChain')
 
@@ -45,5 +46,26 @@ export const pulseChain: Bridge = {
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.WRAPPED,
+  },
+  contracts: {
+    addresses: [
+      discovery.getMainContractDetails(
+        'ForeignOmnibridge',
+        'The main Bridge contract and the escrow for the PulseChain bridge. It is used to deposit tokens to the bridge.',
+      ),
+      discovery.getMainContractDetails(
+        'ForeignAMB',
+        'The Arbitrary Message Bridge receiving messages from the Foreign Chain. It is used for processing withdrawals from the bridge.',
+      ),
+      discovery.getMainContractDetails(
+        'BridgeValidators',
+        'Contract managing the list of trusted bridge Validators.',
+      ),
+      discovery.getMainContractDetails(
+        'WETHOmnibridgeRouter',
+        'The Auxiliary contract that handles wrapped tokens.',
+      ),
+    ],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }
