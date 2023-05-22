@@ -11,6 +11,7 @@ import { detectResolvedDelegateProxy } from './auto/ResolvedDelegateProxy'
 import { detectStarkWareProxy } from './auto/StarkWareProxy'
 import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
+import { getEternalStorageProxy } from './manual/EthernalStorageProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 
@@ -36,6 +37,7 @@ const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'new Arbitrum proxy': getNewArbitrumProxy,
   'call implementation proxy': getCallImplementationProxy,
   'zkSync Lite proxy': getZkSyncLiteProxy,
+  'Eternal Storage proxy': getEternalStorageProxy,
 }
 
 export class ProxyDetector {
