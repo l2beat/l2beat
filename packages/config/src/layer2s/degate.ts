@@ -155,17 +155,16 @@ export const degate: Layer2 = {
         const owner3 = discovery.getAddressFromValue('LoopringV3', 'owner')
         const owner4 = discovery.getAddressFromValue('BlockVerifier', 'owner')
 
+        // making sure that the description is correct
         assert(owner1 === owner2 && owner2 === owner3 && owner3 === owner4)
 
-        const accountsList = discovery.getPermissionedAccountsList(
-          'DefaultDepositContract',
-          'owner',
+        const permissionedAccount = discovery.formatPermissionedAccount(owner1
         )
 
         // if it was updated, we should add multisig participants
-        assert(accountsList.length === 1 && accountsList[0].type === 'EOA')
+        assert(permissionedAccount.type === 'EOA')
 
-        return accountsList
+        return [permissionedAccount]
       })(),
       description:
         'This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract, BlockVerifier. Can add or remove block submitters. Can change the forced withdrawal fee. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.',
