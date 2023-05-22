@@ -8,7 +8,7 @@ import { isNineAM } from './isNineAM'
 
 export class UpdateNotifier {
   constructor(
-    private readonly notificationManagerRepository: UpdateNotifierRepository,
+    private readonly updateNotifierRepository: UpdateNotifierRepository,
     private readonly discordClient: DiscordClient | undefined,
     private readonly logger: Logger,
   ) {
@@ -24,7 +24,7 @@ export class UpdateNotifier {
     const nonce = await this.getInternalMessageNonce()
     const messages = diffToMessages(name, dependents, diff, nonce)
     await this.notify(messages, 'INTERNAL')
-    await this.notificationManagerRepository.add({
+    await this.updateNotifierRepository.add({
       projectName: name,
       diff,
       blockNumber,
@@ -69,7 +69,7 @@ export class UpdateNotifier {
   }
 
   async getInternalMessageNonce() {
-    const latestId = await this.notificationManagerRepository.findLatestId()
+    const latestId = await this.updateNotifierRepository.findLatestId()
 
     if (latestId === undefined) {
       return 0

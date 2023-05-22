@@ -15,16 +15,15 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
 
-      const notificationManagerRepository =
-        mockObject<UpdateNotifierRepository>({
-          add: async () => 0,
-          findLatestId: async () => undefined,
-        })
-      notificationManagerRepository.findLatestId.resolvesToOnce(undefined)
-      notificationManagerRepository.findLatestId.resolvesToOnce(0)
+      const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
+        add: async () => 0,
+        findLatestId: async () => undefined,
+      })
+      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
+      updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
-      const notificationManager = new UpdateNotifier(
-        notificationManagerRepository,
+      const updateNotifier = new UpdateNotifier(
+        updateNotifierRepository,
         discordClient,
         Logger.SILENT,
       )
@@ -40,7 +39,7 @@ describe(UpdateNotifier.name, () => {
         },
       ]
 
-      await notificationManager.handleDiff(project, dependents, changes, BLOCK)
+      await updateNotifier.handleDiff(project, dependents, changes, BLOCK)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -57,8 +56,8 @@ describe(UpdateNotifier.name, () => {
           '\n\nA\n- 1\n+ 2\n\n```',
         'PUBLIC',
       )
-      expect(notificationManagerRepository.add).toHaveBeenCalledTimes(1)
-      expect(notificationManagerRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -70,15 +69,14 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
 
-      const notificationManagerRepository =
-        mockObject<UpdateNotifierRepository>({
-          add: async () => 0,
-          findLatestId: async () => 0,
-        })
-      notificationManagerRepository.findLatestId.resolvesToOnce(undefined)
+      const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
+        add: async () => 0,
+        findLatestId: async () => 0,
+      })
+      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
 
-      const notificationManager = new UpdateNotifier(
-        notificationManagerRepository,
+      const updateNotifier = new UpdateNotifier(
+        updateNotifierRepository,
         discordClient,
         Logger.SILENT,
       )
@@ -94,7 +92,7 @@ describe(UpdateNotifier.name, () => {
         },
       ]
 
-      await notificationManager.handleDiff(project, dependents, changes, BLOCK)
+      await updateNotifier.handleDiff(project, dependents, changes, BLOCK)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -104,8 +102,8 @@ describe(UpdateNotifier.name, () => {
           '\n\nerrors\n+ Execution reverted\n\n```',
         'INTERNAL',
       )
-      expect(notificationManagerRepository.add).toHaveBeenCalledTimes(1)
-      expect(notificationManagerRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -115,17 +113,16 @@ describe(UpdateNotifier.name, () => {
 
   describe(UpdateNotifier.prototype.handleUnresolved.name, () => {
     it('sends daily reminder at 9am CET', async () => {
-      const notificationManagerRepository =
-        mockObject<UpdateNotifierRepository>({
-          add: async () => 0,
-        })
+      const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
+        add: async () => 0,
+      })
 
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
 
-      const notificationManager = new UpdateNotifier(
-        notificationManagerRepository,
+      const updateNotifier = new UpdateNotifier(
+        updateNotifierRepository,
         discordClient,
         Logger.SILENT,
       )
@@ -133,7 +130,7 @@ describe(UpdateNotifier.name, () => {
       const notUpdatedProjects = ['project-a', 'project-b']
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
 
-      await notificationManager.handleUnresolved(notUpdatedProjects, timestamp)
+      await updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -149,13 +146,12 @@ describe(UpdateNotifier.name, () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
-      const notificationManagerRepository =
-        mockObject<UpdateNotifierRepository>({
-          add: async () => 0,
-          findLatestId: async () => undefined,
-        })
-      const notificationManager = new UpdateNotifier(
-        notificationManagerRepository,
+      const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
+        add: async () => 0,
+        findLatestId: async () => undefined,
+      })
+      const updateNotifier = new UpdateNotifier(
+        updateNotifierRepository,
         discordClient,
         Logger.SILENT,
       )
@@ -163,7 +159,7 @@ describe(UpdateNotifier.name, () => {
       const notUpdatedProjects = ['project-a', 'project-b']
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 
-      await notificationManager.handleUnresolved(notUpdatedProjects, timestamp)
+      await updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(0)
     })

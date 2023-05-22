@@ -53,13 +53,13 @@ export function createUpdateMonitorModule(
       )
     : undefined
 
-  const notificationManagerRepository = new UpdateNotifierRepository(
+  const updateNotifierRepository = new UpdateNotifierRepository(
     database,
     logger,
   )
 
-  const notificationManager = new UpdateNotifier(
-    notificationManagerRepository,
+  const updateNotifier = new UpdateNotifier(
+    updateNotifierRepository,
     discordClient,
     logger,
   )
@@ -89,7 +89,7 @@ export function createUpdateMonitorModule(
   const updateMonitor = new UpdateMonitor(
     provider,
     discoveryRunner,
-    notificationManager,
+    updateNotifier,
     configReader,
     updateMonitorRepository,
     clock,
