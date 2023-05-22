@@ -123,11 +123,11 @@ export const degate: Layer2 = {
       references: [
         {
           text: 'ExchangeV3.sol#L341-L348 - DeGate source code',
-          href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/packages/loopring_v3/contracts/core/impl/ExchangeV3.sol#L341-L348',
+          href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L341',
         },
         {
           text: 'LoopringIOExchangeOwner.sol#L98-L101 - DeGate source code',
-          href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/packages/loopring_v3/contracts/aux/access/LoopringIOExchangeOwner.sol#L98-L101',
+          href: 'https://etherscan.io/address/0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83#code#F78#L98',
         },
       ],
     },
@@ -157,14 +157,27 @@ export const degate: Layer2 = {
             text: 'Forced Request Handling - DeGate design doc',
             href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#force-withdrawal',
           },
+          {
+            text: 'ExchangeV3.sol#L392 - DeGate source code, forceWithdraw function',
+            href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L392',
+          },
         ],
       },
       {
-        ...EXITS.EMERGENCY('Withdrawal Mode', 'merkle proof'),
+        ...EXITS.EMERGENCY(
+          'Withdrawal Mode',
+          'merkle proof',
+          forcedWithdrawalDelay,
+        ),
         references: [
           {
             text: 'Forced Request Handling - DeGate design doc',
             href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#exodus-mode',
+          },
+
+          {
+            text: 'ExchangeV3.sol#L420 - DeGate source code, withdrawFromMerkleTree function',
+            href: 'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
           },
         ],
       },
