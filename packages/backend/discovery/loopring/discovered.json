@@ -1,7 +1,7 @@
 {
   "name": "loopring",
-  "blockNumber": 17292664,
-  "configHash": "0xfdc3406cc9ab2c76d9d1a5d839bb9f7460e697c328f7537cf45f8d811a8358b0",
+  "blockNumber": 17313109,
+  "configHash": "0x6cf0891ffc4585748aeeb73c527bf69cbf36ed2af1d0526ec31a93081fe99d6b",
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -16,7 +16,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 40928,
+        "getBlockHeight": 41010,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           4096,
@@ -33,12 +33,13 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x0a115fed4c7fcbc0c4080edb93656d693864d289c629cac71f75e590df87cf02",
+        "getMerkleRoot": "0x0b271d75ad62968d5e04fec99570d2ca3c3660f956373b71e0db45c001c7be83",
         "getNumAvailableForcedSlots": 4096,
-        "getProtocolFeeValues": [1683980303, 0, 0, 0, 0],
+        "getProtocolFeeValues": [1684585235, 0, 0, 0, 0],
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "isInWithdrawalMode": false,
         "isShutdown": false,
+        "loopringV3": "0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
         "owner": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxyOwner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
@@ -91,6 +92,46 @@
       "derivedName": "AgentRegistry"
     },
     {
+      "name": "ProtocolFeeVault",
+      "address": "0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171",
+      "code": "https://etherscan.deth.net/address/0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "DAO_PERDENTAGE": 20,
+        "daoAddress": "0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907",
+        "getProtocolFeeStats": [
+          "4355094991122463357585188",
+          "435509499112246335758520",
+          "871018998224492671517037",
+          "3048566493785724350309631",
+          0,
+          0,
+          0,
+          0
+        ],
+        "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+        "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "REWARD_PERCENTAGE": 70,
+        "tokenSellerAddress": "0x0000000000000000000000000000000000000000",
+        "userStakingPoolAddress": "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b"
+      }
+    },
+    {
+      "name": "BlockVerifier",
+      "address": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
+      "code": "https://etherscan.deth.net/address/0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
       "name": "DefaultDepositContract",
       "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
       "code": "https://etherscan.deth.net/address/0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
@@ -103,6 +144,21 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "DefaultDepositContract"
+    },
+    {
+      "name": "LRC_v2",
+      "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+      "code": "https://etherscan.deth.net/address/0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "decimals": 18,
+        "name": "LoopringCoin V2",
+        "symbol": "LRC",
+        "totalBurned": "21202657081400454651658000",
+        "totalSupply": "1373873397442457437622945100"
+      }
     },
     {
       "name": "ProxyOwner",
@@ -125,10 +181,51 @@
           "0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
         ],
         "getThreshold": 4,
-        "nonce": 159,
+        "nonce": 160,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "LoopringV3",
+      "address": "0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
+      "code": "https://etherscan.deth.net/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "blockVerifierAddress": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
+        "forcedWithdrawalFee": "20000000000000000",
+        "getProtocolFeeValues": [0, 0],
+        "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+        "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "protocolFeeVault": "0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171",
+        "protocolMakerFeeBips": 0,
+        "protocolTakerFeeBips": 0,
+        "tokenRegistrationFeeLRCBase": 0,
+        "tokenRegistrationFeeLRCDelta": 0,
+        "totalStake": 0
+      }
+    },
+    {
+      "name": "UserStakingPool",
+      "address": "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b",
+      "code": "https://etherscan.deth.net/address/0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getTotalStaking": "607416271716973870704527",
+        "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+        "MIN_CLAIM_DELAY": 7776000,
+        "MIN_WITHDRAW_DELAY": 7776000,
+        "numAddresses": 975,
+        "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "protocolFeeVaultAddress": "0x0000000000000000000000000000000000000000",
+        "total": ["607416271716973870704527", 0, 1615975878]
+      }
     }
   ],
   "eoas": [
@@ -152,6 +249,7 @@
     "0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42",
     "0xdd4b5E28fe55196B8Bf44A040f2c11f85401fdC0",
     "0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095",
+    "0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907",
     "0xeadb3d065f8d15cc05e92594523516aD36d1c834",
     "0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5"
   ],
@@ -288,6 +386,48 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
+    "0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171": [
+      "constructor(address _lrcAddress)",
+      "event DAOFunded(uint256 amountDAO, uint256 amountBurn)",
+      "event LRCClaimed(uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SettingsUpdated(uint256 time)",
+      "event TokenSold(address token, uint256 amount)",
+      "function DAO_PERDENTAGE() view returns (uint256)",
+      "function REWARD_PERCENTAGE() view returns (uint256)",
+      "function claimOwnership()",
+      "function claimStakingReward(uint256 amount)",
+      "function daoAddress() view returns (address)",
+      "function fundDAO()",
+      "function getProtocolFeeStats() view returns (uint256 accumulatedFees, uint256 accumulatedBurn, uint256 accumulatedDAOFund, uint256 accumulatedReward, uint256 remainingFees, uint256 remainingBurn, uint256 remainingDAOFund, uint256 remainingReward)",
+      "function lrcAddress() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function sellTokenForLRC(address token, uint256 amount)",
+      "function tokenSellerAddress() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateSettings(address _userStakingPoolAddress, address _tokenSellerAddress, address _daoAddress)",
+      "function userStakingPoolAddress() view returns (address)"
+    ],
+    "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef": [
+      "constructor()",
+      "event CircuitDisabled(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
+      "event CircuitRegistered(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function circuits(uint8, uint16, uint8) view returns (bool registered, bool enabled)",
+      "function claimOwnership()",
+      "function disableCircuit(uint8 blockType, uint16 blockSize, uint8 blockVersion)",
+      "function getVerificationKey(uint8 blockType, uint16 blockSize, uint8 blockVersion) view returns (uint256[18])",
+      "function isCircuitEnabled(uint8 blockType, uint16 blockSize, uint8 blockVersion) view returns (bool)",
+      "function isCircuitRegistered(uint8 blockType, uint16 blockSize, uint8 blockVersion) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerCircuit(uint8 blockType, uint16 blockSize, uint8 blockVersion, uint256[18] vk)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function verifyProofs(uint8 blockType, uint16 blockSize, uint8 blockVersion, uint256[] publicInputs, uint256[] proofs) view returns (bool)"
+    ],
     "0x674bdf20A0F284D710BC40872100128e2d66Bd3f": [
       "event CheckBalance(address indexed token, bool checkBalance)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -304,6 +444,27 @@
       "function transfer(address from, address to, address token, uint256 amount) payable",
       "function transferOwnership(address newOwner)",
       "function withdraw(address, address to, address token, uint256 amount, bytes) payable"
+    ],
+    "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD": [
+      "function name() view returns (string)",
+      "function approve(address _spender, uint256 _value) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
+      "function decimals() view returns (uint8)",
+      "function burn(uint256 _value) returns (bool)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function burnFrom(address _owner, uint256 _value) returns (bool)",
+      "function batchTransfer(address[] accounts, uint256[] amounts) returns (bool)",
+      "function symbol() view returns (string)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function totalBurned() view returns (uint256)",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "constructor()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Burn(address indexed burner, uint256 value)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -356,6 +517,61 @@
     ],
     "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": [
       "constructor(address _masterCopy)"
+    ],
+    "0xe56D6ccab6551932C0356E4e8d5dAF0630920C71": [
+      "constructor(address _lrcAddress, address _protocolFeeVault, address _blockVerifierAddress)",
+      "event ExchangeStakeBurned(address exchangeAddr, uint256 amount)",
+      "event ExchangeStakeDeposited(address exchangeAddr, uint256 amount)",
+      "event ExchangeStakeWithdrawn(address exchangeAddr, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SettingsUpdated(uint256 time)",
+      "function blockVerifierAddress() view returns (address)",
+      "function burnExchangeStake(uint256 amount) returns (uint256 burnedLRC)",
+      "function claimOwnership()",
+      "function depositExchangeStake(address exchangeAddr, uint256 amountLRC) returns (uint256 stakedLRC)",
+      "function forcedWithdrawalFee() view returns (uint256)",
+      "function getExchangeStake(address exchangeAddr) view returns (uint256)",
+      "function getProtocolFeeValues() view returns (uint8 takerFeeBips, uint8 makerFeeBips)",
+      "function lrcAddress() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function protocolFeeVault() view returns (address)",
+      "function protocolMakerFeeBips() view returns (uint8)",
+      "function protocolTakerFeeBips() view returns (uint8)",
+      "function renounceOwnership()",
+      "function tokenRegistrationFeeLRCBase() view returns (uint256)",
+      "function tokenRegistrationFeeLRCDelta() view returns (uint256)",
+      "function totalStake() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateProtocolFeeSettings(uint8 _protocolTakerFeeBips, uint8 _protocolMakerFeeBips)",
+      "function updateSettings(address _protocolFeeVault, address _blockVerifierAddress, uint256 _forcedWithdrawalFee)",
+      "function withdrawExchangeStake(address recipient, uint256 requestedAmount) returns (uint256 amountLRC)"
+    ],
+    "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b": [
+      "function getUserStaking(address user) view returns (uint256 withdrawalWaitTime, uint256 rewardWaitTime, uint256 balance, uint256 pendingReward)",
+      "function total() view returns (uint256 balance, uint64 depositedAt, uint64 claimedAt)",
+      "function withdraw(uint256 amount)",
+      "function numAddresses() view returns (uint256)",
+      "function lrcAddress() view returns (address)",
+      "function claim() returns (uint256 claimedAmount)",
+      "function claimOwnership()",
+      "function getTotalStaking() view returns (uint256)",
+      "function MIN_CLAIM_DELAY() view returns (uint256)",
+      "function renounceOwnership()",
+      "function setProtocolFeeVault(address _protocolFeeVaultAddress)",
+      "function owner() view returns (address)",
+      "function stake(uint256 amount)",
+      "function MIN_WITHDRAW_DELAY() view returns (uint256)",
+      "function protocolFeeVaultAddress() view returns (address)",
+      "function stakings(address) view returns (uint256 balance, uint64 depositedAt, uint64 claimedAt)",
+      "function pendingOwner() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "constructor(address _lrcAddress)",
+      "event ProtocolFeeVaultChanged(address feeVaultAddress)",
+      "event LRCStaked(address indexed user, uint256 amount)",
+      "event LRCWithdrawn(address indexed user, uint256 amount)",
+      "event LRCRewarded(address indexed user, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
     ]
   }
 }

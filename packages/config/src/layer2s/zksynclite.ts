@@ -78,7 +78,7 @@ export const zksynclite: Layer2 = {
       description: `There is a ${upgradeDelay} delay unless it is overridden by the ${securityCouncil} Security Council.`,
       sentiment: 'warning',
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(),
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
