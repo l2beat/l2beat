@@ -74,6 +74,16 @@ describe('projects', () => {
               expect(description.endsWith('.')).toEqual(true)
             })
           }
+
+          if ('address' in contract) {
+            const upgradableBy = contract.upgradableBy
+            const actors = project.permissions?.map((x) => x.name) ?? []
+            if (upgradableBy) {
+              it(`contracts[${i}].upgradableBy is valid`, () => {
+                expect(actors).toInclude(...upgradableBy)
+              })
+            }
+          }
         }
 
         for (const [i, risk] of project.contracts?.risks.entries() ?? []) {

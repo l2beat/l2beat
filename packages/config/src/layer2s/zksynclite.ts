@@ -33,6 +33,13 @@ const securityCouncilMembers = discovery.getContractValue<string[]>(
 
 const securityCouncil = `${securityCouncilThreshold} of ${securityCouncilMembers.length}`
 
+const upgrades = {
+  upgradableBy: ['ZkSync Multisig'],
+  upgradeDelay: `${upgradeDelay} or 0 if overridden by ${securityCouncil} Security Council`,
+  upgradeConsiderations:
+    'When the upgrade process starts only the address of the new implementation is given. The actual upgrade also requires implementation specific calldata which is only provided after the delay has elapsed. Changing the default upgrade delay or the Security Council requires a ZkSync contract upgrade.',
+}
+
 export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
@@ -167,18 +174,20 @@ export const zksynclite: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
-        'ZkSync',
-        `The main Rollup contract. Allows the operator to commit blocks, provide zkProofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.`,
-      ),
-      discovery.getMainContractDetails(
-        'Verifier',
-        'Implements zkProof verification logic.',
-      ),
-      discovery.getMainContractDetails(
-        'Governance',
-        'Keeps a list of block producers, NFT factories and whitelisted tokens.',
-      ),
+      discovery.getMainContractDetails('ZkSync', {
+        description:
+          'The main Rollup contract. Allows the operator to commit blocks, provide zkProofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
+        ...upgrades,
+      }),
+      discovery.getMainContractDetails('Verifier', {
+        description: 'Implements zkProof verification logic.',
+        ...upgrades,
+      }),
+      discovery.getMainContractDetails('Governance', {
+        description:
+          'Keeps a list of block producers, NFT factories and whitelisted tokens.',
+        ...upgrades,
+      }),
       discovery.getMainContractDetails(
         'UpgradeGatekeeper',
         'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
@@ -192,11 +201,7 @@ export const zksynclite: Layer2 = {
         'Allows for withdrawing NFTs minted on L2 to L1.',
       ),
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK(
-        `${upgradeDelay} or 0 if overridden by ${securityCouncil} Security Council`,
-      ),
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgrades.upgradeDelay)],
   },
   permissions: [
     ...discovery.getGnosisSafeDetails(

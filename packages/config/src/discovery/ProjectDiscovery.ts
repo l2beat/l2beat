@@ -59,14 +59,17 @@ export class ProjectDiscovery {
 
   getMainContractDetails(
     identifier: string,
-    description?: string,
+    descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
   ): ProjectContractSingleAddress {
     const contract = this.getContract(identifier)
+    if (typeof descriptionOrOptions === 'string') {
+      descriptionOrOptions = { description: descriptionOrOptions }
+    }
     return {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
-      description,
+      ...descriptionOrOptions,
     }
   }
 
@@ -130,7 +133,7 @@ export class ProjectDiscovery {
       },
       {
         name: `${identifier} participants`,
-        description: `Those are the participants of the ${identifier}`,
+        description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccountsList(identifier, 'getOwners'),
       },
     ]
