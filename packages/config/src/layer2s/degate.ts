@@ -32,8 +32,8 @@ export const degate: Layer2 = {
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
         'https://twitter.com/DeGateDex',
-        'https://discord.com/invite/RFVDKGemJb',
-        'https://www.youtube.com/@degatedex1718',
+        'https://discord.gg/RFVDKGemJb',
+        'https://youtube.com/@degatedex1718',
         'https://medium.com/degate',
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',
       ],
@@ -158,8 +158,7 @@ export const degate: Layer2 = {
         // making sure that the description is correct
         assert(owner1 === owner2 && owner2 === owner3 && owner3 === owner4)
 
-        const permissionedAccount = discovery.formatPermissionedAccount(owner1
-        )
+        const permissionedAccount = discovery.formatPermissionedAccount(owner1)
 
         // if it was updated, we should add multisig participants
         assert(permissionedAccount.type === 'EOA')
@@ -208,9 +207,8 @@ export const degate: Layer2 = {
     {
       name: 'DeGate DEX Launches Mainnet Beta',
       link: 'https://medium.com/degate/degate-dex-launches-mainnet-beta-trade-easy-sleep-easy-603574bd3a46',
-      date: '2023-05-03T13:00:00Z',
-      description:
-        'The main features of Mainnet Beta include limit orders and grid trading. Deposits are subject to safe deposit limits.',
+      date: '2023-05-03T00:00:00Z',
+      description: 'DeGate DEX launches mainnet beta.',
     },
   ],
 }
