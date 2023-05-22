@@ -21,8 +21,8 @@ import {
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
 import { DiscoveryRunner } from './DiscoveryRunner'
-import { NotificationManager } from './NotificationManager'
 import { UpdateMonitor } from './UpdateMonitor'
+import { UpdateNotifier } from './UpdateNotifier'
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'
@@ -57,12 +57,12 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
 }
 
 describe(UpdateMonitor.name, () => {
-  let notificationManager = mockObject<NotificationManager>({})
+  let updateNotifier = mockObject<UpdateNotifier>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
   let provider = mockObject<providers.AlchemyProvider>({})
 
   beforeEach(() => {
-    notificationManager = mockObject<NotificationManager>({
+    updateNotifier = mockObject<UpdateNotifier>({
       handleDiff: async () => {},
       handleUnresolved: async () => {},
     })
@@ -96,7 +96,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        notificationManager,
+        updateNotifier,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -132,21 +132,23 @@ describe(UpdateMonitor.name, () => {
       // saves discovery result
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
       //sends notification
-      expect(notificationManager.handleDiff).toHaveBeenCalledTimes(2)
-      expect(notificationManager.handleDiff).toHaveBeenNthCalledWith(
+      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(2)
+      expect(updateNotifier.handleDiff).toHaveBeenNthCalledWith(
         1,
         PROJECT_A,
         [],
         mockDiff,
+        BLOCK_NUMBER,
       )
-      expect(notificationManager.handleDiff).toHaveBeenNthCalledWith(
+      expect(updateNotifier.handleDiff).toHaveBeenNthCalledWith(
         2,
         PROJECT_B,
         [],
         mockDiff,
+        BLOCK_NUMBER,
       )
-      expect(notificationManager.handleUnresolved).toHaveBeenCalledTimes(1)
-      expect(notificationManager.handleUnresolved).toHaveBeenNthCalledWith(
+      expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
+      expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
         1,
         [PROJECT_A, PROJECT_B],
         TIMESTAMP,
@@ -171,7 +173,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        notificationManager,
+        updateNotifier,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -190,9 +192,9 @@ describe(UpdateMonitor.name, () => {
       // runs discovery
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
       // does not send a notification
-      expect(notificationManager.handleDiff).toHaveBeenCalledTimes(0)
-      expect(notificationManager.handleUnresolved).toHaveBeenCalledTimes(1)
-      expect(notificationManager.handleUnresolved).toHaveBeenNthCalledWith(
+      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(0)
+      expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
+      expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
         1,
         [PROJECT_A],
         TIMESTAMP,
@@ -224,7 +226,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        notificationManager,
+        updateNotifier,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -235,9 +237,9 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(new UnixTime(0))
 
       // send notification about the error of 3rd party API
-      expect(notificationManager.handleDiff).toHaveBeenCalledTimes(0)
-      expect(notificationManager.handleUnresolved).toHaveBeenCalledTimes(1)
-      expect(notificationManager.handleUnresolved).toHaveBeenNthCalledWith(
+      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(0)
+      expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
+      expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
         1,
         [],
         TIMESTAMP,
@@ -264,7 +266,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         provider,
         discoveryRunner,
-        notificationManager,
+        updateNotifier,
         configReader,
         repository,
         mockObject<Clock>(),
@@ -283,9 +285,9 @@ describe(UpdateMonitor.name, () => {
       // does not save changes to database
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
-      expect(notificationManager.handleDiff).toHaveBeenCalledTimes(0)
-      expect(notificationManager.handleUnresolved).toHaveBeenCalledTimes(1)
-      expect(notificationManager.handleUnresolved).toHaveBeenNthCalledWith(
+      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(0)
+      expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
+      expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
         1,
         [],
         TIMESTAMP,
@@ -309,7 +311,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
-        mockObject<NotificationManager>(),
+        mockObject<UpdateNotifier>(),
         configReader,
         repository,
         mockObject<Clock>(),
@@ -358,7 +360,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
-        mockObject<NotificationManager>(),
+        mockObject<UpdateNotifier>(),
         configReader,
         repository,
         mockObject<Clock>(),
@@ -410,7 +412,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
-        mockObject<NotificationManager>(),
+        mockObject<UpdateNotifier>(),
         configReader,
         repository,
         mockObject<Clock>(),
