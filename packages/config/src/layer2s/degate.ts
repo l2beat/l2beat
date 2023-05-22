@@ -170,30 +170,6 @@ export const degate: Layer2 = {
       description:
         'This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract, BlockVerifier. Can add or remove block submitters. Can change the forced withdrawal fee. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.',
     },
-    // {
-    //   name: 'DeGate MultiSig',
-    //   accounts: [
-    //     {
-    //       address: discovery.getContract('MultiSigWallet').address,
-    //       type: 'MultiSig',
-    //     },
-    //   ],
-    //   description:
-    //     'This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. This allows it to grant access to submitting blocks.',
-    // },
-    // {
-    //   name: 'MultiSig participants',
-    //   accounts: discovery
-    //     .getContractValue<string[]>('MultiSigWallet', 'getOwners')
-    //     .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-    //   description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-    //     'MultiSigWallet',
-    //     'required',
-    //   )}/${
-    //     discovery.getContractValue<string[]>('MultiSigWallet', 'getOwners')
-    //       .length
-    //   } DeGate MultiSig.`,
-    // },
     {
       name: 'Block Submitters',
       accounts: discovery.getPermissionedAccountsList(
