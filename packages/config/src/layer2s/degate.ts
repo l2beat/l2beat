@@ -1,6 +1,7 @@
 import { assert, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -14,6 +15,16 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('degate')
+
+const forcedWithdrawalDelay = formatSeconds(
+  discovery.getContractValue<number[]>('ExchangeV3', 'getConstants')[2],
+)
+const maxAgeDepositUntilWithdrawable = formatSeconds(
+  discovery.getContractValue<number>(
+    'ExchangeV3',
+    'getMaxAgeDepositUntilWithdrawable',
+  ),
+)
 
 export const degate: Layer2 = {
   type: 'layer2',
@@ -53,8 +64,27 @@ export const degate: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_NO,
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+      description:
+        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1.description +
+        ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
+      references: [
+        'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F23#L102',
+        'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F35#L162',
+      ],
+      contracts: ['ExchangeV3'],
+    },
+    validatorFailure: {
+      ...RISK_VIEW.VALIDATOR_ESCAPE_MP,
+      description:
+        RISK_VIEW.VALIDATOR_ESCAPE_MP.description +
+        ` There is a ${forcedWithdrawalDelay} delay on this operation.`,
+      references: [
+        'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
+      ],
+      contracts: ['ExchangeV3'],
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

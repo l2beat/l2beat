@@ -1,7 +1,7 @@
 {
   "name": "degate",
-  "blockNumber": 17315431,
-  "configHash": "0x0c878f0844e8648bbe368abea98ca3e90f87f915e28d5c7a91d6e601765f8827",
+  "blockNumber": 17315712,
+  "configHash": "0xbcbc9ba8eba1abc2735da9d9001aee897ab75685857f1ea438fdc4cd8feffab7",
   "contracts": [
     {
       "name": "BlockVerifier",
@@ -116,7 +116,7 @@
       "values": {
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",
-        "getBlockHeight": 485,
+        "getBlockHeight": 486,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           1000000,
@@ -136,8 +136,8 @@
         "getExchangeStake": 0,
         "getFreeDepositRemained": 4999,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleAssetRoot": "0x0d56c2aaabc62e761d2c09533654a7ba836c0c052c4fd6ec5a821fcbec25d861",
-        "getMerkleRoot": "0x11cdc17f127ceabc1fe5814ff66cc75e55f639940ee7285649a4bf1d9c9d92e5",
+        "getMerkleAssetRoot": "0x223d6ef6f45ac8d1e3f85039e530b1d4e607dbcf7ac2039bdfaa957f50d7983d",
+        "getMerkleRoot": "0x073b0ca3f450924cce02f2c4b9ba7230bedab6ac390fe8fcbf808a6d49159b32",
         "getNumAvailableForcedSlots": 1000000,
         "getProtocolFeeValues": [0, 18, 18, 0, 18],
         "isInWithdrawalMode": false,
@@ -152,9 +152,9 @@
           "0x0000000000000000000000000000000000000000",
           "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
           [5000, 4999, 17286200, 1, 4480000000000000],
-          "0x11cdc17f127ceabc1fe5814ff66cc75e55f639940ee7285649a4bf1d9c9d92e5",
-          "0x0d56c2aaabc62e761d2c09533654a7ba836c0c052c4fd6ec5a821fcbec25d861",
-          485,
+          "0x073b0ca3f450924cce02f2c4b9ba7230bedab6ac390fe8fcbf808a6d49159b32",
+          "0x223d6ef6f45ac8d1e3f85039e530b1d4e607dbcf7ac2039bdfaa957f50d7983d",
+          486,
           0,
           [0, 18, 18, 0, 18],
           [0, 0]
