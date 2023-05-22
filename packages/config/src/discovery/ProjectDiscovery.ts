@@ -298,7 +298,7 @@ export class ProjectDiscovery {
     ])
   }
 
-  private getContractByAddress(address: string): ContractParameters {
+  getContractByAddress(address: string): ContractParameters {
     const contract = this.discovery.contracts.find(
       (contract) => contract.address === EthereumAddress(address),
     )
