@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { utils } from 'ethers'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
@@ -30,7 +31,9 @@ const forcedWithdrawalFee = discovery.getContractValue<number>(
   'forcedWithdrawalFee',
 )
 
-const forcedWithdrawalFeeString = `${forcedWithdrawalFee / 1e18} ETH`
+const forcedWithdrawalFeeString = `${utils.formatEther(
+  forcedWithdrawalFee,
+)} ETH`
 
 export const loopring: Layer2 = {
   type: 'layer2',
