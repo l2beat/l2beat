@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { Bridge } from './types'
-import { RISK_VIEW } from './common'
 import { CONTRACTS } from '../layer2s/common'
+import { RISK_VIEW } from './common'
+import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('pulseChain')
 
