@@ -14,7 +14,7 @@ export class ApiServer {
     private readonly port: number,
     private readonly logger: Logger,
     routers: Router[],
-    handleServerError?: (error: Error, ctx: Context) => void,
+    handleServerError?: (logger: Logger, error: Error, ctx: Context) => void,
   ) {
     this.logger = this.logger.for(this)
     this.app = new Koa()
@@ -34,7 +34,9 @@ export class ApiServer {
     this.app.use(router.allowedMethods())
 
     if (handleServerError) {
-      this.app.on('error', handleServerError)
+      this.app.on('error', (err: Error, ctx: Context) =>
+        handleServerError(this.logger, err, ctx),
+      )
     }
   }
 
