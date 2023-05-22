@@ -53,7 +53,7 @@ export const pulseChain: Bridge = {
       name: 'Validation',
       description:
         'PulseChain Bridge stores a number of Validators which need to sign off every message coming from the PulseChain. Once quorum of signatures is \
-        reached, message (e.g. withdrawal request) can be relayed to a destination contract',
+        reached, message (e.g. withdrawal request) can be relayed to a destination contract.',
       references: [],
       risks: [
         {
