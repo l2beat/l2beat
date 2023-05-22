@@ -87,6 +87,15 @@ declare module 'knex/types/tables' {
     config_hash: string
   }
 
+  interface UpdateNotifierRow {
+    id: number
+    created_at: Date
+    updated_at: Date
+    project_name: string
+    block_number: number
+    diff_json_blob: string
+  }
+
   interface Tables {
     block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
@@ -101,6 +110,7 @@ declare module 'knex/types/tables' {
     'activity.starkex': StarkexTransactionCountRow
     'activity.daily_count_view': DailyTransactionCountRow
     update_monitor: UpdateMonitorRow
+    update_notifier: UpdateNotifierRow
   }
 }
 
