@@ -6,7 +6,7 @@ import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { diffToMessages } from './diffToMessages'
 import { isNineAM } from './isNineAM'
 
-export class NotificationManager {
+export class UpdateNotifier {
   constructor(
     private readonly notificationManagerRepository: NotificationManagerRepository,
     private readonly discordClient: DiscordClient | undefined,

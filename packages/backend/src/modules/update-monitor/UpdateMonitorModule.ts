@@ -14,8 +14,8 @@ import { providers } from 'ethers'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
-import { NotificationManager } from '../../core/discovery/NotificationManager'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
+import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
 import { NotificationManagerRepository } from '../../peripherals/database/discovery/NotificationManagerRepository'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Database } from '../../peripherals/database/shared/Database'
@@ -58,7 +58,7 @@ export function createUpdateMonitorModule(
     logger,
   )
 
-  const notificationManager = new NotificationManager(
+  const notificationManager = new UpdateNotifier(
     notificationManagerRepository,
     discordClient,
     logger,

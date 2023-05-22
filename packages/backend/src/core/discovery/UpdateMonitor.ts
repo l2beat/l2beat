@@ -14,7 +14,7 @@ import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { findDependents } from './findDependents'
-import { NotificationManager } from './NotificationManager'
+import { UpdateNotifier } from './UpdateNotifier'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -23,7 +23,7 @@ export class UpdateMonitor {
   constructor(
     private readonly provider: providers.AlchemyProvider,
     private readonly discoveryRunner: DiscoveryRunner,
-    private readonly notificationManager: NotificationManager,
+    private readonly notificationManager: UpdateNotifier,
     private readonly configReader: ConfigReader,
     private readonly repository: UpdateMonitorRepository,
     private readonly clock: Clock,

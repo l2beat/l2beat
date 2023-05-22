@@ -4,12 +4,12 @@ import { expect, mockObject } from 'earl'
 
 import { NotificationManagerRepository } from '../../peripherals/database/discovery/NotificationManagerRepository'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
-import { NotificationManager } from './NotificationManager'
+import { UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
 
-describe(NotificationManager.name, () => {
-  describe(NotificationManager.prototype.handleDiff.name, () => {
+describe(UpdateNotifier.name, () => {
+  describe(UpdateNotifier.prototype.handleDiff.name, () => {
     it('sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
@@ -23,7 +23,7 @@ describe(NotificationManager.name, () => {
       notificationManagerRepository.findLatestId.resolvesToOnce(undefined)
       notificationManagerRepository.findLatestId.resolvesToOnce(0)
 
-      const notificationManager = new NotificationManager(
+      const notificationManager = new UpdateNotifier(
         notificationManagerRepository,
         discordClient,
         Logger.SILENT,
@@ -77,7 +77,7 @@ describe(NotificationManager.name, () => {
         })
       notificationManagerRepository.findLatestId.resolvesToOnce(undefined)
 
-      const notificationManager = new NotificationManager(
+      const notificationManager = new UpdateNotifier(
         notificationManagerRepository,
         discordClient,
         Logger.SILENT,
@@ -113,7 +113,7 @@ describe(NotificationManager.name, () => {
     })
   })
 
-  describe(NotificationManager.prototype.handleUnresolved.name, () => {
+  describe(UpdateNotifier.prototype.handleUnresolved.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const notificationManagerRepository =
         mockObject<NotificationManagerRepository>({
@@ -124,7 +124,7 @@ describe(NotificationManager.name, () => {
         sendMessage: async () => {},
       })
 
-      const notificationManager = new NotificationManager(
+      const notificationManager = new UpdateNotifier(
         notificationManagerRepository,
         discordClient,
         Logger.SILENT,
@@ -154,7 +154,7 @@ describe(NotificationManager.name, () => {
           add: async () => 0,
           findLatestId: async () => undefined,
         })
-      const notificationManager = new NotificationManager(
+      const notificationManager = new UpdateNotifier(
         notificationManagerRepository,
         discordClient,
         Logger.SILENT,

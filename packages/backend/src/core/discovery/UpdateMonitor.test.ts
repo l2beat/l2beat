@@ -21,8 +21,8 @@ import {
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
 import { DiscoveryRunner } from './DiscoveryRunner'
-import { NotificationManager } from './NotificationManager'
 import { UpdateMonitor } from './UpdateMonitor'
+import { UpdateNotifier } from './UpdateNotifier'
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'
@@ -57,12 +57,12 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
 }
 
 describe(UpdateMonitor.name, () => {
-  let notificationManager = mockObject<NotificationManager>({})
+  let notificationManager = mockObject<UpdateNotifier>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
   let provider = mockObject<providers.AlchemyProvider>({})
 
   beforeEach(() => {
-    notificationManager = mockObject<NotificationManager>({
+    notificationManager = mockObject<UpdateNotifier>({
       handleDiff: async () => {},
       handleUnresolved: async () => {},
     })
@@ -311,7 +311,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
-        mockObject<NotificationManager>(),
+        mockObject<UpdateNotifier>(),
         configReader,
         repository,
         mockObject<Clock>(),
@@ -360,7 +360,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
-        mockObject<NotificationManager>(),
+        mockObject<UpdateNotifier>(),
         configReader,
         repository,
         mockObject<Clock>(),
@@ -412,7 +412,7 @@ describe(UpdateMonitor.name, () => {
       const updateMonitor = new UpdateMonitor(
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
-        mockObject<NotificationManager>(),
+        mockObject<UpdateNotifier>(),
         configReader,
         repository,
         mockObject<Clock>(),
