@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -142,29 +142,58 @@ export const degate: Layer2 = {
   },
   permissions: [
     {
-      name: 'DeGate MultiSig',
-      accounts: [
-        {
-          address: discovery.getContract('MultiSigWallet').address,
-          type: 'MultiSig',
-        },
-      ],
+      name: 'DefaultDepositContract Owner',
+      accounts: (() => {
+        const owner1 = discovery.getAddressFromValue(
+          'DefaultDepositContract',
+          'owner',
+        )
+        const owner2 = discovery.getAddressFromValue(
+          'LoopringIOExchangeOwner',
+          'owner',
+        )
+        const owner3 = discovery.getAddressFromValue('LoopringV3', 'owner')
+        const owner4 = discovery.getAddressFromValue('BlockVerifier', 'owner')
+
+        assert(owner1 === owner2 && owner2 === owner3 && owner3 === owner4)
+
+        const accountsList = discovery.getPermissionedAccountsList(
+          'DefaultDepositContract',
+          'owner',
+        )
+
+        // if it was updated, we should add multisig participants
+        assert(accountsList.length === 1 && accountsList[0].type === 'EOA')
+
+        return accountsList
+      })(),
       description:
-        'This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. This allows it to grant access to submitting blocks.',
+        'This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract, BlockVerifier. Can add or remove block submitters. Can change the forced withdrawal fee. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.',
     },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('MultiSigWallet', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'MultiSigWallet',
-        'required',
-      )}/${
-        discovery.getContractValue<string[]>('MultiSigWallet', 'getOwners')
-          .length
-      } DeGate MultiSig.`,
-    },
+    // {
+    //   name: 'DeGate MultiSig',
+    //   accounts: [
+    //     {
+    //       address: discovery.getContract('MultiSigWallet').address,
+    //       type: 'MultiSig',
+    //     },
+    //   ],
+    //   description:
+    //     'This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. This allows it to grant access to submitting blocks.',
+    // },
+    // {
+    //   name: 'MultiSig participants',
+    //   accounts: discovery
+    //     .getContractValue<string[]>('MultiSigWallet', 'getOwners')
+    //     .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
+    //   description: `These addresses are the participants of the ${discovery.getContractValue<number>(
+    //     'MultiSigWallet',
+    //     'required',
+    //   )}/${
+    //     discovery.getContractValue<string[]>('MultiSigWallet', 'getOwners')
+    //       .length
+    //   } DeGate MultiSig.`,
+    // },
     // TODO: get this from discovery, probably same as new handler for loopring
     {
       name: 'Block Submitters',
