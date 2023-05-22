@@ -254,12 +254,32 @@ function makeTechnologyContract(
     ? [item.address.toString()]
     : [...item.multipleAddresses.map((x) => x.toString())]
 
-  return {
+  const result: TechnologyContract = {
     name: item.name,
     addresses,
     description,
     links,
   }
+
+  if (isSingleAddress(item)) {
+    result.upgradeableBy = languageJoin(item.upgradableBy)
+    result.upgradeDelay = item.upgradeDelay
+    result.upgradeConsiderations = item.upgradeConsiderations
+  }
+
+  return result
+}
+
+function languageJoin(items?: string[]) {
+  if (!items || items.length === 0) {
+    return undefined
+  }
+  if (items.length === 1) {
+    return items[0]
+  }
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const last = items.pop()!
+  return `${items.join(', ')} and ${last}`
 }
 
 function isContractUnverified(
