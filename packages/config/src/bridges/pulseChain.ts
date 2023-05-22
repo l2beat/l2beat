@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s/common'
@@ -39,7 +39,7 @@ export const pulseChain: Bridge = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'ForeignOmnibridge',
+        address: EthereumAddress('0x1715a3E4A142d8b698131108995174F37aEBA10D'),
         sinceTimestamp: new UnixTime(1684137600),
         tokens: '*',
       }),
