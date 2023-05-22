@@ -1,10 +1,10 @@
+import { DiscoveryDiff } from '@l2beat/discovery'
 import { EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 
 import { NotificationManagerRepository } from '../../peripherals/database/discovery/NotificationManagerRepository'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { NotificationManager } from './NotificationManager'
-import { DiscoveryDiff } from './output/diffDiscovery'
 
 const BLOCK = 123
 

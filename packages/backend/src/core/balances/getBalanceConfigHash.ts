@@ -1,6 +1,6 @@
+import { hashJson } from '@l2beat/shared'
 import { sortBy } from 'lodash'
 
-import { hashJson } from '../../tools/hashJson'
 import { BalanceProject } from './BalanceProject'
 
 // Increment this value to change the hash which in turn causes the system to

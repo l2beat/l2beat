@@ -1,9 +1,8 @@
+import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
-import { ConfigReader } from '../../../core/discovery/config/ConfigReader'
-import { DiscoveryDiff } from '../../../core/discovery/output/diffDiscovery'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'

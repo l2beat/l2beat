@@ -1,6 +1,13 @@
 {
   "$schema": "../config.schema.json",
   "name": "loopring",
+  "names": {
+    "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": "ExchangeV3",
+    "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": "LoopringIOExchangeOwner",
+    "0x39B9bf169a7e225ba037C443A40460c77438ea14": "AgentRegistry",
+    "0x674bdf20A0F284D710BC40872100128e2d66Bd3f": "DefaultDepositContract",
+    "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": "ProxyOwner"
+  },
   "initialAddresses": ["0x674bdf20A0F284D710BC40872100128e2d66Bd3f"],
   "overrides": {
     "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": {
@@ -15,6 +22,18 @@
     },
     "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "LoopringIOExchangeOwner": {
+      "fields": {
+        "blockSubmitters": {
+          "type": "arrayFromOneEventWithArg",
+          "event": "PermissionUpdate",
+          "valueKey": "user",
+          "flagKey": "allowed",
+          "arg": "selector",
+          "argValue": "0x53228430"
+        }
+      }
     }
   }
 }

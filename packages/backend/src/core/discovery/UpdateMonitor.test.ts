@@ -1,4 +1,10 @@
 import {
+  ConfigReader,
+  diffDiscovery,
+  DiscoveryConfig,
+  DiscoveryDiff,
+} from '@l2beat/discovery'
+import {
   ContractParameters,
   DiscoveryOutput,
   EthereumAddress,
@@ -14,11 +20,8 @@ import {
   UpdateMonitorRepository,
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
-import { ConfigReader } from './config/ConfigReader'
-import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { NotificationManager } from './NotificationManager'
-import { diffDiscovery, DiscoveryDiff } from './output/diffDiscovery'
 import { UpdateMonitor } from './UpdateMonitor'
 
 const PROJECT_A = 'project-a'

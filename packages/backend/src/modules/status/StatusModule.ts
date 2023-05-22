@@ -1,11 +1,11 @@
 import Router from '@koa/router'
+import { ConfigReader } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
 
 import { StatusController } from '../../api/controllers/status/StatusController'
 import { createStatusRouter } from '../../api/routers/StatusRouter'
 import { Config } from '../../config/Config'
 import { Clock } from '../../core/Clock'
-import { ConfigReader } from '../../core/discovery/config/ConfigReader'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'

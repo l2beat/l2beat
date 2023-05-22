@@ -1,10 +1,10 @@
+import { DiscoveryDiff } from '@l2beat/discovery'
 import { Logger, UnixTime } from '@l2beat/shared'
 
 import { NotificationManagerRepository } from '../../peripherals/database/discovery/NotificationManagerRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
-import { DiscoveryDiff } from './output/diffDiscovery'
-import { diffToMessages } from './output/diffToMessages'
-import { isNineAM } from './utils/isNineAM'
+import { diffToMessages } from './diffToMessages'
+import { isNineAM } from './isNineAM'
 
 export class NotificationManager {
   constructor(

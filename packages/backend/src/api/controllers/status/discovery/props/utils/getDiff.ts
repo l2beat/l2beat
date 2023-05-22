@@ -1,10 +1,10 @@
-import { DiscoveryOutput } from '@l2beat/shared'
-
-import { DiscoveryConfig } from '../../../../../../core/discovery/config/DiscoveryConfig'
 import {
   diffDiscovery,
+  DiscoveryConfig,
   DiscoveryDiff,
-} from '../../../../../../core/discovery/output/diffDiscovery'
+} from '@l2beat/discovery'
+import { DiscoveryOutput } from '@l2beat/shared'
+
 import { UpdateMonitorRepository } from '../../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 
 export async function getDiff(

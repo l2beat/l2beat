@@ -1,8 +1,7 @@
+import { DiscoveryDiff, FieldDiff } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared'
 import { expect } from 'earl'
 
-import { FieldDiff } from './diffContracts'
-import { DiscoveryDiff } from './diffDiscovery'
 import {
   bundleMessages,
   contractDiffToMessages,

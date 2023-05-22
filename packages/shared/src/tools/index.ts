@@ -1,5 +1,7 @@
 export * from './assert'
 export * from './EventTracker'
+export * from './getEnv'
+export * from './hashJson'
 export * from './ILogger'
 export * from './Logger'
 export * from './LogThrottler'
