@@ -41,6 +41,7 @@ export const ManualProxyType = z.enum([
   'new Arbitrum proxy',
   'call implementation proxy',
   'zkSync Lite proxy',
+  'Eternal Storage proxy',
 ])
 
 export type UpgradeabilityParameters =
@@ -57,6 +58,7 @@ export type UpgradeabilityParameters =
   | CallImplementationProxyUpgradeability
   | EIP2535ProxyUpgradeability
   | ZkSyncLiteProxyUpgradeability
+  | EternalStorageProxyUpgradeability
 
 export interface ImmutableUpgradeability {
   type: 'immutable'
@@ -142,4 +144,10 @@ export interface ZkSyncLiteProxyUpgradeability {
   admin: EthereumAddress
   implementation: EthereumAddress
   additional: EthereumAddress
+}
+
+export interface EternalStorageProxyUpgradeability {
+  type: 'Eternal Storage proxy'
+  admin: EthereumAddress
+  implementation: EthereumAddress
 }
