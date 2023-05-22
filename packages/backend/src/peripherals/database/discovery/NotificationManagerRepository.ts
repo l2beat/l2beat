@@ -1,7 +1,7 @@
+import { DiscoveryDiff } from '@l2beat/discovery'
 import { Logger, UnixTime } from '@l2beat/shared'
 import { NotificationManagerRow } from 'knex/types/tables'
 
-import { DiscoveryDiff } from '../../../core/discovery/output/diffDiscovery'
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
