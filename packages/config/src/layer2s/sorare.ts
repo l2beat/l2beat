@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -62,7 +62,7 @@ export const sorare: Layer2 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'StarkExchange',
+        address: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
         sinceTimestamp: new UnixTime(1626352527),
         tokens: ['ETH'],
       }),

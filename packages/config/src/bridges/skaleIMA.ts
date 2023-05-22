@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s'
@@ -37,12 +37,12 @@ export const skaleIMA: Bridge = {
     associatedTokens: ['SKL'],
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'DepositBoxEth',
+        address: EthereumAddress('0x49F583d263e4Ef938b9E09772D3394c71605Df94'),
         sinceTimestamp: new UnixTime(1626719733),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
-        identifier: 'DepositBoxERC20',
+        address: EthereumAddress('0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669'),
         sinceTimestamp: new UnixTime(1626719900),
         tokens: [
           // 'RAZOR',
