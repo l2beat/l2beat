@@ -203,7 +203,7 @@ export const dydx: Layer2 = {
     },
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'StarkPerpetual',
         'OPERATORS',
       ),

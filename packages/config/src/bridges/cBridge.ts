@@ -241,12 +241,12 @@ export const cBridge: Bridge = {
       name: 'Governors',
       description:
         'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
-      accounts: discovery.getPermissionedAccountsList('Bridge', 'pausers'),
+      accounts: discovery.getPermissionedAccounts('Bridge', 'pausers'),
     },
     {
       name: 'Pausers',
       description: 'Can pause and unpause the system.',
-      accounts: discovery.getPermissionedAccountsList('Bridge', 'pausers'),
+      accounts: discovery.getPermissionedAccounts('Bridge', 'pausers'),
     },
   ],
   knowledgeNuggets: [

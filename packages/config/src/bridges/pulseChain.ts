@@ -120,7 +120,7 @@ export const pulseChain: Bridge = {
       name: 'Validators',
       description: `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures\
         are required.`,
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'BridgeValidators',
         'validatorList',
       ),

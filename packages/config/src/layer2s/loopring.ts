@@ -221,7 +221,7 @@ export const loopring: Layer2 = {
     ),
     {
       name: 'Block Submitters',
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'LoopringIOExchangeOwner',
         'blockSubmitters',
       ),

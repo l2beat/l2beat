@@ -134,7 +134,7 @@ export class ProjectDiscovery {
       {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
-        accounts: this.getPermissionedAccountsList(identifier, 'getOwners'),
+        accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
       },
     ]
   }
@@ -203,7 +203,7 @@ export class ProjectDiscovery {
     return this.formatPermissionedAccount(value)
   }
 
-  getPermissionedAccountsList(
+  getPermissionedAccounts(
     contractIdentifier: string,
     key: string,
   ): ProjectPermissionedAccount[] {

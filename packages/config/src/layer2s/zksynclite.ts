@@ -210,7 +210,7 @@ export const zksynclite: Layer2 = {
     ),
     {
       name: 'Security Council',
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'ZkSync',
         'securityCouncilMembers',
       ),
@@ -221,10 +221,7 @@ export const zksynclite: Layer2 = {
     },
     {
       name: 'Active validators',
-      accounts: discovery.getPermissionedAccountsList(
-        'Governance',
-        'validators',
-      ),
+      accounts: discovery.getPermissionedAccounts('Governance', 'validators'),
       description:
         'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
     },

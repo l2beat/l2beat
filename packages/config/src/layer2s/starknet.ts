@@ -167,14 +167,14 @@ export const starknet: Layer2 = {
     },
     {
       name: 'Starknet Implementation Governors',
-      accounts: discovery.getPermissionedAccountsList('Starknet', 'governors'),
+      accounts: discovery.getPermissionedAccounts('Starknet', 'governors'),
       description:
         'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
     },
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList('Starknet', 'operators'),
+      accounts: discovery.getPermissionedAccounts('Starknet', 'operators'),
       description:
         'Allowed to post state updates. When the operator is down the state cannot be updated.',
     },
