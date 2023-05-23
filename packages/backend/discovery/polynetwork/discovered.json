@@ -1,7 +1,7 @@
 {
   "name": "polynetwork",
   "blockNumber": 16910552,
-  "configHash": "0xae93a2566ee5c9f26a394d398160da9421faaa5e9545c6b0f6288e4f8d9ac688",
+  "configHash": "0x900575aca065f8c4819a024172255361a2cb69c60a4a8e44a28b8cafff3513b9",
   "contracts": [
     {
       "name": "EthCrossChainManager",
@@ -20,7 +20,7 @@
       }
     },
     {
-      "name": "LockProxy",
+      "name": "Lock Proxy 1",
       "address": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
       "code": "https://etherscan.deth.net/address/0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
       "upgradeability": {
@@ -30,19 +30,25 @@
         "isOwner": false,
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0x8B35064B158634458Fd53A861d68Eb84152E4106"
-      }
+      },
+      "derivedName": "LockProxy"
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "Lock Proxy 3",
       "address": "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "values": {
+        "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
+      },
+      "derivedName": ""
     },
     {
-      "name": "LockProxy",
+      "name": "Lock Proxy 4",
       "address": "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
       "code": "https://etherscan.deth.net/address/0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
       "upgradeability": {
@@ -52,7 +58,8 @@
         "isOwner": false,
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0xeF86b2c8740518548ae449c4C3892B4be0475d8c"
-      }
+      },
+      "derivedName": "LockProxy"
     },
     {
       "name": "EthCrossChainManagerProxy",
@@ -67,10 +74,11 @@
         "isOwner": false,
         "owner": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
         "paused": false
-      }
+      },
+      "derivedName": "EthCrossChainManagerProxy"
     },
     {
-      "name": "LockProxyWithLP",
+      "name": "Lock Proxy 2",
       "address": "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
       "code": "https://etherscan.deth.net/address/0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
       "upgradeability": {
@@ -81,7 +89,8 @@
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
         "paused": false
-      }
+      },
+      "derivedName": "LockProxyWithLP"
     },
     {
       "name": "PolyWrapper",
@@ -104,7 +113,8 @@
           "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
           "0xf6378141BC900020a438F3914e4C3ceA29907b27"
         ]
-      }
+      },
+      "derivedName": "PolyWrapper"
     },
     {
       "name": "EthCrossChainData",
@@ -119,10 +129,11 @@
         "isOwner": false,
         "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "paused": false
-      }
+      },
+      "derivedName": "EthCrossChainData"
     },
     {
-      "name": "LockProxy",
+      "name": "Lock Proxy 5",
       "address": "0xf6378141BC900020a438F3914e4C3ceA29907b27",
       "code": "https://etherscan.deth.net/address/0xf6378141BC900020a438F3914e4C3ceA29907b27",
       "upgradeability": {
@@ -132,11 +143,13 @@
         "isOwner": false,
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
-      }
+      },
+      "derivedName": "LockProxy"
     }
   ],
   "eoas": [
     "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
+    "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459",
     "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E",
     "0x8B35064B158634458Fd53A861d68Eb84152E4106",
     "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",

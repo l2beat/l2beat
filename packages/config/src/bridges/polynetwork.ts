@@ -144,144 +144,74 @@ export const polynetwork: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: discovery.getContract('PolyWrapper').address,
-        name: 'PolyWrapper',
-        description:
-          'Entrypoint contract for the bridge. It proxies requests to LockProxy.',
-      },
-      {
-        address: EthereumAddress('0x250e76987d838a75310c34bf422ea9f1AC4Cc906'),
-        name: 'LockProxy 0x250e...',
-        description: 'Escrow and proxy contract for the Bridge.',
-        upgradeability: {
-          type: 'Custom',
-          admin: EthereumAddress(
-            discovery.getContractValue<string>(
-              '0x250e76987d838a75310c34bf422ea9f1AC4Cc906',
-              'owner',
-            ),
-          ),
-          implementation: discovery.getContract('EthCrossChainManager').address,
-        },
-      },
-      {
-        address: EthereumAddress('0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54'),
-        name: 'LockProxyWithLP 0x7b9B...',
-        description: 'Proxy contract for the Bridge.',
-        upgradeability: {
-          type: 'Custom',
-          admin: EthereumAddress('0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57'),
-          implementation: discovery.getContract('EthCrossChainManager').address,
-        },
-      },
-      {
-        address: EthereumAddress('0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035'),
-        name: 'LockProxy 0x3Ee7...',
-        description: 'Escrow and proxy contract for the Bridge.',
-        upgradeability: {
-          type: 'Custom',
-          admin: EthereumAddress('0x52D858ef5e0A768C80C38617eB8a7680f4D4d459'),
-          implementation: discovery.getContract('EthCrossChainManager').address,
-        },
-      },
-      {
-        address: EthereumAddress('0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868'),
-        name: 'LockProxy 0x53D2...',
-        description: 'Escrow and proxy contract for the Bridge.',
-        upgradeability: {
-          type: 'Custom',
-          admin: EthereumAddress('0xeF86b2c8740518548ae449c4C3892B4be0475d8c'),
-          implementation: discovery.getContract('EthCrossChainManager').address,
-        },
-      },
-      {
-        address: discovery.getContract('EthCrossChainManager').address,
-        name: 'EthCrossChainManager',
-        description:
-          'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
-      },
+      discovery.getContractDetails(
+        'PolyWrapper',
+        'Entrypoint contract for the bridge. It proxies requests to LockProxy.',
+      ),
+      discovery.getContractDetails(
+        'Lock Proxy 1',
+        'Escrow and proxy contract for the Bridge.',
+      ),
+      discovery.getContractDetails(
+        'Lock Proxy 2',
+        'Escrow and proxy contract for the Bridge.',
+      ),
+      discovery.getContractDetails(
+        'Lock Proxy 3',
+        'Escrow and proxy contract for the Bridge.',
+      ),
+      discovery.getContractDetails(
+        'Lock Proxy 4',
+        'Escrow and proxy contract for the Bridge.',
+      ),
+      discovery.getContractDetails(
+        'Lock Proxy 5',
+        'Escrow and proxy contract for the Bridge.',
+      ),
+      discovery.getContractDetails(
+        'EthCrossChainManager',
+        'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
+      ),
       //DUPLICATES???
-      {
-        address: EthereumAddress('0xcF2afe102057bA5c16f899271045a0A37fCb10f2'),
-        name: 'EthCrossChainData (Unverified source code)',
-        description:
-          "Contract unverified on Etherscan. Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
-      },
-      {
-        address: EthereumAddress('0xcF2afe102057bA5c16f899271045a0A37fCb10f2'),
-        name: 'EthCrossChainManagerProxy (Unverified source code)',
-        description:
-          'Contract unverified on Etherscan. Used to proxy requests from LockProxy to EthCrossChainManager.',
-      },
+      discovery.getContractDetails(
+        'EthCrossChainData',
+        "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
+      ),
+      discovery.getContractDetails(
+        'EthCrossChainData',
+        "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
+      ),
+      discovery.getContractDetails(
+        'EthCrossChainManagerProxy',
+        'Used to proxy requests from LockProxy to EthCrossChainManager.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>('PolyWrapper', 'owner'),
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: [discovery.getPermissionedAccount('PolyWrapper', 'owner')],
       name: 'Owner and Fee Collector at PolyWrapper and owner at LockProxyWithLP',
       description:
         'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the PolyWrapper contract.',
     },
     {
       accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>('EthCrossChainManager', 'owner'),
-          ),
-          type: 'Contract',
-        },
+        discovery.getPermissionedAccount('EthCrossChainManager', 'owner'),
       ],
-      name: 'Owner of EthCrossChainManager (Unverified source code)',
+      name: 'Owner of EthCrossChainManager',
       description:
-        'Unverified contract on Etherscan. Can pause the contracts and update implementation of EthCrossChainData contract.',
+        'Can pause the contracts and update implementation of EthCrossChainData contract.',
     },
     {
       accounts: [
-        {
-          address: EthereumAddress(
-            '0x8B35064B158634458Fd53A861d68Eb84152E4106',
-          ),
-          type: 'EOA',
-        },
+        discovery.getPermissionedAccount('Lock Proxy 1', 'owner'),
+        discovery.getPermissionedAccount('Lock Proxy 2', 'owner'),
+        discovery.getPermissionedAccount('Lock Proxy 3', 'owner'),
+        discovery.getPermissionedAccount('Lock Proxy 4', 'owner'),
+        discovery.getPermissionedAccount('Lock Proxy 5', 'owner'),
       ],
-      name: 'Owner of LockProxy 0x250e',
-      description: 'Can update address of EthCrossChainManagerProxy contract.',
-    },
-    {
-      accounts: [
-        {
-          //Probably possible to extract, couldnt find from where
-          address: EthereumAddress(
-            '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Owner at LockProxy 0x3Ee7...',
-      description: 'Can update address of EthCrossChainManagerProxy contract.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>(
-              '0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868',
-              'owner',
-            ),
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Owner of LockProxy 0x53D2...',
+      name: 'Lock Proxy owners',
       description: 'Can update address of EthCrossChainManagerProxy contract.',
     },
   ],
