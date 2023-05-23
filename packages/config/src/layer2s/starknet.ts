@@ -6,6 +6,8 @@ import {
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
+import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -22,6 +24,11 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
+
+const delaySeconds = discovery.getContractUpgradeabilityParam(
+  'Starknet',
+  'upgradeDelay',
+)
 
 export const starknet: Layer2 = {
   type: 'layer2',
@@ -97,7 +104,7 @@ export const starknet: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
     validatorFailure: RISK_VIEW.PROVER_DOWN,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -141,10 +148,12 @@ export const starknet: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails(
-        'Starknet',
-        'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-      ),
+      discovery.getContractDetails('Starknet', {
+        description:
+          'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
+        upgradeDelay: formatSeconds(delaySeconds),
+        upgradableBy: ['Starknet Proxy Governors'],
+      }),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
       {
         name: 'L1DaiGateway',
@@ -153,14 +162,15 @@ export const starknet: Layer2 = {
         address: EthereumAddress('0x9F96fE0633eE838D0298E8b8980E6716bE81388d'),
       },
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
   },
   permissions: [
     {
       name: 'Starknet Proxy Governors',
       accounts: getProxyGovernance(discovery, 'Starknet'),
       description:
-        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.',
+        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted. ' +
+        delayDescriptionFromSeconds(delaySeconds),
     },
     {
       name: 'Starknet Implementation Governors',
