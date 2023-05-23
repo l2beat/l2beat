@@ -1,6 +1,6 @@
 {
   "name": "amarok",
-  "blockNumber": 17271437,
+  "blockNumber": 17322300,
   "configHash": "0x0641a339b0e9d920ff3d73f33df35c0658b7afe2e3144760992d20a206507190",
   "contracts": [
     {
@@ -72,7 +72,7 @@
           "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f"
         ],
         "getThreshold": 3,
-        "nonce": 12,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -334,12 +334,12 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 4620,
+        "nonce": 5258,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
-        "relayerFeeVault": "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
+        "relayerFeeVault": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "RELAYERS": [
           "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
           "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
@@ -457,13 +457,13 @@
           6450786, 6778479, 1869640809, 1886350457, 6648936, 1634886255
         ],
         "domainsHash": "0xe741ece3f9550e537df05746072d458479dbc21a49fdee7925337f0b7e1a802c",
-        "getPendingInboundRootsCount": 0,
-        "lastPropagatedRoot": "0xce049cd1ae757caabb6b10529d9e2171ff367906d1edec43b352c54dea307fd7",
+        "getPendingInboundRootsCount": 7,
+        "lastPropagatedRoot": "0x30fcf8a3e926cf19fdf33627917b2b6cb96f697ed9304c2ce3cfa0a9107800bc",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [20534, 20533],
+        "pendingInboundRoots": [22459, 22465],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -484,12 +484,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 17271130,
+        "lastSentBlock": 17322293,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0xaeae243ecff09b0950915ad7c25b2209774ded34f9bea2f59532ac63ba101c98",
+        "outboundRoot": "0xbefab16bb497657585059fcda1a67dde750491c29c2b0b1117ecb9cb5ef6c70e",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
