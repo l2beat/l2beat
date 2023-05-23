@@ -51,6 +51,37 @@ SingleAddress.args = {
   },
 }
 
+export const UpgradeDetails: Story<ContractEntryProps> = Template.bind({})
+UpgradeDetails.args = {
+  contract: {
+    name: 'Contract',
+    addresses: [CONTRACT],
+    description: 'This is a smart contract responsible for X in the system Y.',
+    links: [
+      {
+        name: 'Implementation',
+        href: `https://etherscan.io/address/${IMPLEMENTATION}`,
+        address: IMPLEMENTATION,
+        isAdmin: false,
+      },
+      {
+        name: 'Admin',
+        href: `https://etherscan.io/address/${ADMIN}`,
+        address: ADMIN,
+        isAdmin: true,
+      },
+    ],
+    upgradeableBy: 'Tom and Jerry',
+    upgradeDelay: '1 day',
+    upgradeConsiderations:
+      'Upgrading this contract requires the deployer to be dancing.',
+  },
+  verificationStatus: {
+    projects: {},
+    contracts: VERIFICATION_STATUS,
+  },
+}
+
 export const MultipleAddresses: Story<ContractEntryProps> = Template.bind({})
 MultipleAddresses.args = {
   contract: {

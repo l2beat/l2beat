@@ -13,6 +13,9 @@ export interface TechnologyContract {
   addresses?: string[]
   description?: string
   links: TechnologyContractLinks[]
+  upgradeableBy?: string
+  upgradeDelay?: string
+  upgradeConsiderations?: string
 }
 
 export interface TechnologyContractLinks {
@@ -89,11 +92,39 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <div className="mt-2">
-              <p className="text-gray-850 dark:text-gray-400">
-                {contract.description}
+            <p className="mt-2 text-gray-850 dark:text-gray-400">
+              {contract.description}
+            </p>
+          )}
+          {contract.upgradeableBy && (
+            <p className="mt-2 text-gray-850 dark:text-gray-400">
+              <strong className="text-black dark:text-white">
+                Can be upgraded by:
+              </strong>{' '}
+              {contract.upgradeableBy}
+            </p>
+          )}
+          {contract.upgradeDelay && (
+            <p className="mt-2 text-gray-850 dark:text-gray-400">
+              <strong className="text-black dark:text-white">
+                Upgrade delay:
+              </strong>{' '}
+              {contract.upgradeDelay}
+            </p>
+          )}
+          {contract.upgradeConsiderations && (
+            <>
+              <button
+                className="mt-2 text-sm text-link underline"
+                data-component="upgrade-description-button"
+              >
+                Show upgrade details
+              </button>
+              {/* TODO: remove leading once line heights are fixed for all text on the page */}
+              <p className="mt-2 hidden text-sm leading-[15px] text-gray-850 dark:text-gray-400">
+                {contract.upgradeConsiderations}
               </p>
-            </div>
+            </>
           )}
         </>
       }
