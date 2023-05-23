@@ -2,7 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
+import { LoopringIcon, OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
 
 export interface TechnologyCellProps {
   children: string
@@ -38,6 +38,14 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           title="This project is based on zkSync's code base."
         >
           <ZkSyncIcon className={providerIconClassName} />
+        </span>
+      )}
+      {provider === 'loopring' && (
+        <span
+          className={providerClassName}
+          title="This project is based on loopring's code base."
+        >
+          <LoopringIcon className={providerIconClassName} />
         </span>
       )}
     </span>

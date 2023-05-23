@@ -8,6 +8,7 @@ import { canvasconnect } from './canvasconnect'
 import { cartesiHoneypot } from './cartesiHoneypot'
 import { HOMEPAGE_MILESTONES } from './common'
 import { linea } from './consensys'
+import { degate } from './degate'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -46,6 +47,7 @@ export const layer2s: Layer2[] = [
   bobanetwork,
   canvasconnect,
   cartesiHoneypot,
+  degate,
   dydx,
   fuelv1,
   gluon,
