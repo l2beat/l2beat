@@ -87,7 +87,7 @@ export class ProjectDiscovery {
 
     return {
       newVersion: true,
-      name: name ? name : contract.name,
+      name: name ?? contract.name,
       address,
       upgradeability: contract.upgradeability,
       description,
