@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
@@ -80,29 +80,28 @@ export const arbitrum: Layer2 = {
     nativeL2TokensIncludedInTVL: ['ARB'],
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'ArbitrumOneBridge',
+        address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
         sinceTimestamp: new UnixTime(1661450734),
         tokens: ['ETH'],
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
       }),
       discovery.getEscrowDetails({
-        identifier: 'L1CustomGateway',
+        address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
         sinceTimestamp: new UnixTime(1623867835),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
       }),
       discovery.getEscrowDetails({
-        identifier: 'L1ERC20Gateway',
+        address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
         sinceTimestamp: new UnixTime(1623784100),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
       }),
       discovery.getEscrowDetails({
-        identifier: 'L1DaiGateway',
-        path: 'l1Escrow',
+        address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
         sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
         description:
@@ -114,7 +113,7 @@ export const arbitrum: Layer2 = {
         address: VALUES.ARBITRUM.OLD_BRIDGE,
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
-        hidden: true,
+        isHistorical: true,
         newVersion: true,
       },
     ],

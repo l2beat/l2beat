@@ -22,6 +22,28 @@ describe('layer2s', () => {
     })
   })
 
+  describe('escrows', () => {
+    describe('every escrow in new format resolves to discovery entry', () => {
+      for (const layer2 of layer2s) {
+        try {
+          const discovery = new ProjectDiscovery(layer2.id.toString())
+
+          for (const escrow of layer2.config.escrows.filter(
+            (e) => e.newVersion && !e.isHistorical,
+          )) {
+            it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
+              // try to resolve escrow by address
+              // if it does not exist the assert will throw
+              discovery.getContractByAddress(escrow.address.toString())
+            })
+          }
+        } catch {
+          continue
+        }
+      }
+    })
+  })
+
   describe('references', () => {
     describe('every contract has risk view code references', () => {
       for (const layer2 of layer2s) {
