@@ -10,6 +10,7 @@ import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
+import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
 
 configureDarkThemeToggle()
@@ -25,3 +26,4 @@ configureExpandableContainer()
 configureTabs()
 configureCanonicalBridgesFilter()
 configureTableIndexRerender()
+configureUpgradeDescriptions()
