@@ -128,13 +128,10 @@ export const synapse: Bridge = {
           'Entry point for deposits. Acts as a relayer between user and escrow, enabling token swap feature.',
         address: EthereumAddress('0x6571d6be3d8460CF5F7d6711Cd9961860029D85F'),
       },
-      {
-        name: 'SynapseBridge',
-        description:
-          "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
-        address: discovery.getContract('SynapseBridge').address,
-        upgradeability: discovery.getContract('SynapseBridge').upgradeability,
-      },
+      discovery.getContractDetails(
+        'SynapseBridge',
+        "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
+      ),
       {
         name: 'Liquidity Pool',
         description:
@@ -146,34 +143,16 @@ export const synapse: Bridge = {
   },
 
   permissions: [
-    {
-      name: 'Bridge Governance 2/3 MultiSig',
-      description:
-        "Manages the bridge parameters and can upgrade its implementation, in case of malicious upgrade user's funds can be lost. Additionally it manages Liquidity Pool with the permissions to mint new tokens.",
-      accounts: [
-        {
-          address: discovery.getContract('GnosisSafe').address,
-          type: 'MultiSig',
-        },
-      ],
-    },
-    {
-      name: 'Participants in Bridge Governance 2/3 MultiSig',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Bridge Governance MultiSig.`,
-    },
+    ...discovery.getMultisigPermission(
+      'Bridge Multisig',
+      "Manages the bridge parameters and can upgrade its implementation, in case of malicious upgrade user's funds can be lost. Additionally it manages Liquidity Pool with the permissions to mint new tokens.",
+    ),
     {
       name: 'Nodes',
       description: 'Can withdraw funds and mint SynERC20 Wrapped tokens.',
       accounts: [
         {
+          // TODO: add support for deeper queries SynapseBridge.accessControl.NODEGROUP_ROLE.members
           address: EthereumAddress(
             '0x230A1AC45690B9Ae1176389434610B9526d2f21b',
           ),
