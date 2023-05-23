@@ -113,9 +113,18 @@ export function ContractEntry({
             </p>
           )}
           {contract.upgradeConsiderations && (
-            <p className="mt-2 text-gray-850 dark:text-gray-400">
-              {contract.upgradeConsiderations}
-            </p>
+            <>
+              <button
+                className="mt-2 text-sm text-link underline"
+                data-component="upgrade-description-button"
+              >
+                Show upgrade details
+              </button>
+              {/* TODO: remove leading once line heights are fixed for all text on the page */}
+              <p className="mt-2 hidden text-sm leading-[15px] text-gray-850 dark:text-gray-400">
+                {contract.upgradeConsiderations}
+              </p>
+            </>
           )}
         </>
       }
