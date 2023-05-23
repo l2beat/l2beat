@@ -61,26 +61,31 @@ export const starknet: Layer2 = {
         address: EthereumAddress('0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'),
         sinceTimestamp: new UnixTime(1647857148),
         tokens: ['ETH'],
+        description: 'StarkGate bridge for ETH.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
+        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x283751A21eafBFcD52297820D27C1f1963D9b5b4'),
         sinceTimestamp: new UnixTime(1657137600),
         tokens: ['WBTC'],
+        description: 'StarkGate bridge for WBTC.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'),
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
+        description: 'StarkGate bridge for USDC.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xbb3400F107804DFB482565FF1Ec8D8aE66747605'),
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
+        description: 'StarkGate bridge for USDT.',
       }),
     ],
     transactionApi: {
@@ -141,20 +146,12 @@ export const starknet: Layer2 = {
         'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
-      discovery.getContractDetails('ETH Bridge', 'StarkGate bridge for ETH.'),
-      discovery.getContractDetails('WBTC Bridge', 'StarkGate bridge for WBTC.'),
-      discovery.getContractDetails('USDC Bridge', 'StarkGate bridge for USDC.'),
-      discovery.getContractDetails('USDT Bridge', 'StarkGate bridge for USDT.'),
       {
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
         address: EthereumAddress('0x9F96fE0633eE838D0298E8b8980E6716bE81388d'),
       },
-      discovery.getContractDetails(
-        'DAI Bridge',
-        'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
