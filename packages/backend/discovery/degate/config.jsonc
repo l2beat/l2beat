@@ -1,0 +1,50 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "degate",
+  "initialAddresses": ["0x814d0c1903d69eb1c7ceb8f5190b20a06892d1da"],
+  "names": {
+    "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5": "ExchangeV3",
+    "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": "MultiSigWallet",
+    "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83": "LoopringIOExchangeOwner"
+  },
+  "overrides": {
+    "ExchangeV3": {
+      "ignoreMethods": ["getBlockInfo"],
+      "ignoreInWatchMode": [
+        "getBlockHeight",
+        "getMerkleRoot",
+        "getProtocolFeeValues",
+        "getNumAvailableForcedSlots",
+        "state"
+      ],
+      "fields": {
+        "loopringV3": {
+          "type": "storage",
+          "slot": 5,
+          "returnType": "address"
+        }
+      }
+    },
+    "MultiSigWallet": {
+      "ignoreMethods": [
+        "getConfirmationCount",
+        "getConfirmations",
+        "isConfirmed",
+        "owners",
+        "transactions"
+      ]
+    },
+    "LoopringIOExchangeOwner": {
+      "fields": {
+        "blockSubmitters": {
+          "type": "arrayFromOneEventWithArg",
+          "event": "PermissionUpdate",
+          "valueKey": "user",
+          "flagKey": "allowed",
+          "arg": "selector",
+          "argValue": "0x53228430"
+        }
+      }
+    }
+  }
+}
