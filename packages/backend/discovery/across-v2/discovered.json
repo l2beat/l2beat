@@ -1,7 +1,7 @@
 {
   "name": "across-v2",
   "blockNumber": 17271173,
-  "configHash": "0x35f745a53fab7bc103dc900cdd9d994e78aa347a26fd25182443e24e652ea2b7",
+  "configHash": "0x63a34aa4224b2ad321e9840dc00d79d901e68dab09bc50fd90c6d475f42aed8c",
   "contracts": [
     {
       "name": "VotingToken",
@@ -219,7 +219,7 @@
       "derivedName": "EmergencyProposer"
     },
     {
-      "name": "GnosisSafe",
+      "name": "HubPool Multisig",
       "address": "0xB524735356985D2f267FA010D681f061DfF03715",
       "code": "https://etherscan.deth.net/address/0xB524735356985D2f267FA010D681f061DfF03715,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -239,7 +239,8 @@
         "getThreshold": 3,
         "nonce": 133,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "CoveredCallFinancialProductLibrary",
