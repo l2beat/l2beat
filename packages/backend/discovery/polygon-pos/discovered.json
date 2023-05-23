@@ -1,7 +1,7 @@
 {
   "name": "polygon-pos",
   "blockNumber": 16484297,
-  "configHash": "0x8601146b017f7aa381dc85974f0d1c4a7c38cd11499ea9287b3a8c8bbf01aa96",
+  "configHash": "0x069d94db11b772e930645d3b2b4fdb9f1baa26b3b19ad9fdf45af9b6cf760cdb",
   "contracts": [
     {
       "name": "StateSender",
@@ -127,7 +127,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Polygon Multisig",
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
       "code": "https://etherscan.deth.net/address/0xFa7D2a996aC6350f4b56C043112Da0366a59b74c,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
@@ -152,7 +152,8 @@
         "NAME": "Gnosis Safe",
         "nonce": 170,
         "VERSION": "1.1.1"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
