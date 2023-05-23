@@ -1,4 +1,4 @@
-import { assert, ProjectId, UnixTime } from '@l2beat/shared'
+import { assert, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 import { utils } from 'ethers'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -72,7 +72,7 @@ export const degate: Layer2 = {
     associatedTokens: ['DG'],
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'DefaultDepositContract',
+        address: EthereumAddress('0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA'),
         sinceTimestamp: new UnixTime(1681991243),
         tokens: '*',
       }),
