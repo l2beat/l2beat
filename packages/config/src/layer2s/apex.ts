@@ -62,7 +62,7 @@ export const apex: Layer2 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'StarkExchange',
+        address: EthereumAddress('0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb'),
         sinceTimestamp: new UnixTime(1660252039),
         tokens: ['USDC'],
       }),

@@ -30,14 +30,13 @@ export const acrossV2: Bridge = {
   },
   config: {
     escrows: [
-      {
-        // Hub Pool:
+      discovery.getEscrowDetails({
         address: EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda'),
         sinceTimestamp: new UnixTime(1653124620),
         tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
-      },
+      }),
       discovery.getEscrowDetails({
-        identifier: 'Ethereum_SpokePool',
+        address: EthereumAddress('0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5'),
         sinceTimestamp: new UnixTime(1682355155),
         tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
       }),
@@ -47,6 +46,8 @@ export const acrossV2: Bridge = {
         address: EthereumAddress('0x4D9079Bb4165aeb4084c526a32695dCfd2F77381'),
         sinceTimestamp: new UnixTime(1653167083),
         tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
+        newVersion: true,
+        isHistorical: true,
       },
     ],
   },

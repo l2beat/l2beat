@@ -15,7 +15,7 @@ export interface ProjectEscrow {
   name?: string
   description?: string
   /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
-  hidden?: boolean
+  isHistorical?: boolean
   /** Details about upgradeability */
   upgradeability?: ProjectUpgradeability
 }

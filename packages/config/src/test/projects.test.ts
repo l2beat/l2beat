@@ -138,7 +138,7 @@ describe('projects', () => {
           } else if (link.includes('youtube')) {
             if (!link.includes('playlist')) {
               expect(link).toMatchRegex(
-                /^https:\/\/youtube\.com\/(c|channel)\/[\w-]+$/,
+                /^https:\/\/youtube\.com\/((c|channel)\/|@)[\w-]+$/,
               )
             }
           } else if (link.includes('twitch')) {
