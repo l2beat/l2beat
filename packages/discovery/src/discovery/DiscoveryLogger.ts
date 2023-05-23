@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress, Logger } from '@l2beat/shared'
 import chalk from 'chalk'
 
 interface LoggerOptions {
@@ -6,11 +6,28 @@ interface LoggerOptions {
 }
 
 export class DiscoveryLogger {
-  constructor(private readonly options: LoggerOptions) {}
+  private serverLogs = ''
 
-  static SILENT = new DiscoveryLogger({ enabled: false })
+  constructor(
+    private readonly logger: Logger,
+    private readonly options: LoggerOptions,
+  ) {}
+
+  static CLI = new DiscoveryLogger(Logger.SILENT, { enabled: true })
+  static SERVER = (logger: Logger) =>
+    new DiscoveryLogger(logger, { enabled: false })
+
+  flushToServer(service: string, project: string) {
+    this.logger
+      .for(service)
+      .info(`Printing discovery logs for [${project}]:\n` + this.serverLogs)
+
+    this.serverLogs = ''
+  }
 
   log(message: string) {
+    this.serverLogs += message + '\n'
+
     if (!this.options.enabled) {
       return
     }
@@ -19,16 +36,12 @@ export class DiscoveryLogger {
   }
 
   logExecution(field: string, values: string[]) {
-    if (!this.options.enabled) {
-      return
-    }
-
     const dots = '.'.repeat(Math.max(1, 25 - field.length))
     const content = values
       .map((v, i) => (i % 2 === 0 ? v : chalk.blue(v)))
       .join('')
 
-    console.log(`  ${chalk.yellow(field)} ${chalk.gray(dots)} ${content}`)
+    this.log(`  ${chalk.yellow(field)} ${chalk.gray(dots)} ${content}`)
   }
 
   logSkip(address: EthereumAddress, reason: string) {
