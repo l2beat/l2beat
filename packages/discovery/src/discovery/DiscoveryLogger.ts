@@ -13,6 +13,7 @@ export class DiscoveryLogger {
     private readonly options: LoggerOptions,
   ) {}
 
+  static SILENT = new DiscoveryLogger(Logger.SILENT, { enabled: false })
   static CLI = new DiscoveryLogger(Logger.SILENT, { enabled: true })
   static SERVER = (logger: Logger) =>
     new DiscoveryLogger(logger, { enabled: false })
