@@ -13,6 +13,7 @@
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
+        "getMerkleAssetRoot",
         "getProtocolFeeValues",
         "getNumAvailableForcedSlots",
         "state"
