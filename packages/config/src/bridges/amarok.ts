@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s/common'
@@ -47,7 +47,7 @@ export const amarok: Bridge = {
   config: {
     escrows: [
       {
-        address: discovery.getContract('ConnextBridge').address,
+        address: EthereumAddress('0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6'),
         sinceTimestamp: new UnixTime(1671625595),
         tokens: ['USDC', 'WETH'],
       },

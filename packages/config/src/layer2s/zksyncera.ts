@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
@@ -56,13 +56,13 @@ export const zksyncera: Layer2 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'DiamondProxy',
+        address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
         sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
         description: 'Main rollup contract, additionally serving as an escrow.',
       }),
       discovery.getEscrowDetails({
-        identifier: 'L1ERC20Bridge',
+        address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
         sinceTimestamp: new UnixTime(1676367083),
         tokens: ['USDC', 'PERP', 'MUTE'],
         description:

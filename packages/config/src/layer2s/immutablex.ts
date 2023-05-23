@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -61,7 +61,7 @@ export const immutablex: Layer2 = {
     associatedTokens: ['IMX'],
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'StarkExchange',
+        address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
         sinceTimestamp: new UnixTime(1615389188),
         tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
         description: 'Main StarkEx contract, used also as an escrow.',

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
@@ -66,11 +66,11 @@ export const zksynclite: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: discovery.getContract('ZkSync').address,
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xaBEA9132b05A70803a4E85094fD0e1800777fBEF'),
         sinceTimestamp: new UnixTime(1592218707),
         tokens: '*',
-      },
+      }),
     ],
     transactionApi: {
       type: 'zksync',

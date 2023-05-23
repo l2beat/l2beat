@@ -63,11 +63,11 @@ export const polygonzkevm: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: discovery.getContract('Bridge').address,
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
         sinceTimestamp: new UnixTime(1679653127),
         tokens: '*',
-      },
+      }),
     ],
     transactionApi: {
       type: 'rpc',

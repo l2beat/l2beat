@@ -28,7 +28,7 @@ export const allbridge: Bridge = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'TokenBridge',
+        address: EthereumAddress('0xBBbD1BbB4f9b936C3604906D7592A644071dE884'),
         sinceTimestamp: new UnixTime(1636635220),
         tokens: [
           'ETH',
@@ -41,19 +41,19 @@ export const allbridge: Bridge = {
         description: 'Lock-Mint token bridge',
       }),
       discovery.getEscrowDetails({
-        identifier: 'USDT_POOL',
+        address: EthereumAddress('0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e'),
         sinceTimestamp: new UnixTime(1662596190),
         tokens: ['USDT'],
         description: 'USDT liquidity pool',
       }),
       discovery.getEscrowDetails({
-        identifier: 'USDC_POOL',
+        address: EthereumAddress('0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C'),
         sinceTimestamp: new UnixTime(1669206935),
         tokens: ['USDC'],
         description: 'USDC liquidity pool',
       }),
       discovery.getEscrowDetails({
-        identifier: 'DAI_POOL',
+        address: EthereumAddress('0xCe01bc1be28c0784492cB44EbBDa662c3F539172'),
         sinceTimestamp: new UnixTime(1669207319),
         tokens: ['DAI'],
         description: 'DAI liquidity pool',
