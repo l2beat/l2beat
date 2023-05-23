@@ -136,34 +136,22 @@ export const starknet: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'Starknet',
         'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
-      discovery.getMainContractDetails(
-        'ETH Bridge',
-        'StarkGate bridge for ETH.',
-      ),
-      discovery.getMainContractDetails(
-        'WBTC Bridge',
-        'StarkGate bridge for WBTC.',
-      ),
-      discovery.getMainContractDetails(
-        'USDC Bridge',
-        'StarkGate bridge for USDC.',
-      ),
-      discovery.getMainContractDetails(
-        'USDT Bridge',
-        'StarkGate bridge for USDT.',
-      ),
+      discovery.getContractDetails('ETH Bridge', 'StarkGate bridge for ETH.'),
+      discovery.getContractDetails('WBTC Bridge', 'StarkGate bridge for WBTC.'),
+      discovery.getContractDetails('USDC Bridge', 'StarkGate bridge for USDC.'),
+      discovery.getContractDetails('USDT Bridge', 'StarkGate bridge for USDT.'),
       {
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
         address: EthereumAddress('0x9F96fE0633eE838D0298E8b8980E6716bE81388d'),
       },
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'DAI Bridge',
         'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       ),

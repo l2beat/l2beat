@@ -96,19 +96,19 @@ export const pulseChain: Bridge = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'ForeignOmnibridge',
         'The main Bridge contract and the escrow for the PulseChain bridge. It is used to deposit tokens to the bridge.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'ForeignAMB',
         'The Arbitrary Message Bridge receiving messages from the Foreign Chain. It is used for processing withdrawals from the bridge.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'BridgeValidators',
         'Contract managing the list of trusted bridge Validators.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'WETHOmnibridgeRouter',
         'The Auxiliary contract that handles wrapped tokens.',
       ),

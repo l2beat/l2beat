@@ -161,7 +161,7 @@ export const acrossV2: Bridge = {
         address: EthereumAddress('0x527E872a5c3f0C7c24Fe33F2593cFB890a285084'),
         name: 'Ethereum_Adapter',
       },
-      discovery.getMainContractDetails('Ethereum_SpokePool'),
+      discovery.getContractDetails('Ethereum_SpokePool'),
       {
         address: EthereumAddress('0x48d990AbDA20afa1fD1da713AbC041B60a922c65'),
         name: 'PolygonTokenBridger',

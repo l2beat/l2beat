@@ -94,11 +94,11 @@ export const allbridge: Bridge = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'LPBridge',
         'Main liquidity network Allbridge Core bridge contract.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'TokenBridge',
         'Main token bridge contract.',
       ),

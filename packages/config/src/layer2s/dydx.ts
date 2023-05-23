@@ -159,11 +159,11 @@ export const dydx: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'StarkPerpetual',
         'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'GpsStatementVerifier',
         'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
       ),

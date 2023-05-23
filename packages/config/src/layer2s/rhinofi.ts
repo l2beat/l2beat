@@ -109,8 +109,8 @@ export const rhinofi: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails('StarkExchange'),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('StarkExchange'),
+      discovery.getContractDetails(
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),

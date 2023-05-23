@@ -99,49 +99,49 @@ export const amarok: Bridge = {
   contracts: {
     addresses: [
       {
-        ...discovery.getMainContractDetails('ConnextBridge'),
+        ...discovery.getContractDetails('ConnextBridge'),
         description:
           'The main Connext contract. Following Diamond design pattern, it contains multiple Facets that implement\
         various parts of the bridge functionality.',
       },
       {
-        ...discovery.getMainContractDetails('RootManager'),
+        ...discovery.getContractDetails('RootManager'),
         description:
           'Contract responsible for maintaining list of domains and building root-of-roots of messages. It keeps tracks of all hub connectors that connect to specific domain.',
       },
       {
-        ...discovery.getMainContractDetails('WatcherManager'),
+        ...discovery.getContractDetails('WatcherManager'),
         description:
           'Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.',
       },
       {
-        ...discovery.getMainContractDetails('MainnetSpokeConnector'),
+        ...discovery.getContractDetails('MainnetSpokeConnector'),
         description:
           'Contract that receives messages from other Domains on Ethereum.',
       },
       {
-        ...discovery.getMainContractDetails('MultichainHubConnector'),
+        ...discovery.getContractDetails('MultichainHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Binance Smart Chain via Multichain AMB.',
       },
       {
-        ...discovery.getMainContractDetails('PolygonHubConnector'),
+        ...discovery.getContractDetails('PolygonHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Polygon via Polygon FxChannel AMB.',
       },
       {
-        ...discovery.getMainContractDetails('GnosisHubConnector'),
+        ...discovery.getContractDetails('GnosisHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Gnosis via Gnosis AMB.',
       },
       {
-        ...discovery.getMainContractDetails('OptimismHubConnector'),
+        ...discovery.getContractDetails('OptimismHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Optimism via Optimism AMB transport layer. Note that it reads messages from Optimism\
         as soon as Optimism state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
       },
       {
-        ...discovery.getMainContractDetails('ArbitrumHubConnector'),
+        ...discovery.getContractDetails('ArbitrumHubConnector'),
         description:
           'Contract for sending/receiving messages from mainnet to Optimism via Arbitrum AMB transport layer. Note that it reads messages from Arbitrum\
         as soon as Arbitrum state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',

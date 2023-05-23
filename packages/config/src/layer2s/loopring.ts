@@ -215,7 +215,7 @@ export const loopring: Layer2 = {
     ],
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'ProxyOwner',
       'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
     ),

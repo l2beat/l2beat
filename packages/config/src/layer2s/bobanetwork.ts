@@ -226,7 +226,7 @@ export const bobanetwork: Layer2 = {
           ),
         },
       },
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'L1CrossDomainMessengerFast',
         'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
       ),

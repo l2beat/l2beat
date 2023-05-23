@@ -57,7 +57,7 @@ export class ProjectDiscovery {
     return JSON.parse(discoveryFile) as DiscoveryOutput
   }
 
-  getMainContractDetails(
+  getContractDetails(
     identifier: string,
     descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
   ): ProjectContractSingleAddress {
@@ -108,9 +108,9 @@ export class ProjectDiscovery {
     }
   }
 
-  getGnosisSafeDetails(
+  getMultisigPermission(
     identifier: string,
-    descriptionPrefix: string,
+    description: string,
   ): ProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
@@ -121,7 +121,7 @@ export class ProjectDiscovery {
     return [
       {
         name: identifier,
-        description: `${descriptionPrefix} This is a Gnosis Safe with ${this.getMultisigStats(
+        description: `${description} This is a Gnosis Safe with ${this.getMultisigStats(
           identifier,
         )} threshold.`,
         accounts: [
