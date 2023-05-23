@@ -51,7 +51,7 @@ export const degate: Layer2 = {
     name: 'DeGate',
     slug: 'degate',
     description:
-      'DeGate is an app-specific ZK rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy.',
+      'DeGate is an app-specific ZK rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purpose: 'Exchange',
     links: {
       websites: ['https://degate.com/'],
