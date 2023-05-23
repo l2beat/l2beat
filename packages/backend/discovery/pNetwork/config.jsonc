@@ -7,19 +7,22 @@
     "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135"
   ],
   "names": {
-    "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB": "PProxyAdminOwner"
+    "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB": "pNetwork Multisig",
+    "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135": "ERC20 Vault V1",
+    "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8": "ERC20 Vault V2",
+    "0x9f8622b11984AfC8f0a42A394928702017c5968D": "UOS Vault"
   },
   "overrides": {
-    "PProxyAdminOwner": {
+    "pNetwork Multisig": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8": {
+    "ERC20 Vault V2": {
       "ignoreMethods": ["getSupportedTokens", "weth"]
     },
-    "0x9f8622b11984AfC8f0a42A394928702017c5968D": {
+    "UOS Vault": {
       "ignoreMethods": ["getSupportedTokens", "weth"]
     },
-    "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135": {
+    "ERC20 Vault V1": {
       "ignoreMethods": ["getSupportedTokens", "weth"]
     },
     "0xD216153c06E857cD7f72665E0aF1d7D82172F494": {

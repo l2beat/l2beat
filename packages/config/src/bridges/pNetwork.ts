@@ -134,25 +134,16 @@ export const pNetwork: Bridge = {
   contracts: {
     isIncomplete: true,
     addresses: [
-      {
-        address: EthereumAddress('0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8'),
-        name: 'pNetwork ERC20Vault v2',
-        description:
-          'pNetwork ERCVault v2 for ERC20 with special logic for handling inflation of PNT token.',
-        upgradeability: discovery.getContract(
-          '0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8',
-        ).upgradeability,
-      },
-      {
-        address: EthereumAddress('0x9f8622b11984AfC8f0a42A394928702017c5968D'),
-        name: 'pNetwork ERC20Vault v1',
-        description: 'ERC20Vault for UOS token.',
-      },
-      {
-        address: EthereumAddress('0x112334f50Cb6efcff4e35Ae51A022dBE41a48135'),
-        name: 'pNetwork ERC20Vault v1',
-        description: 'ERC20Vault for other ERC20 tokens.',
-      },
+      discovery.getContractDetails(
+        'ERC20 Vault V2',
+        'Has special logic for handling inflation of PNT token.',
+      ),
+      discovery.getContractDetails('ERC20 Vault V1'),
+      discovery.getContractDetails('UOS Vault'),
+      discovery.getContractDetails(
+        'PProxyAdmin',
+        'Proxy owner of ERC20 Vault v2.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -161,58 +152,17 @@ export const pNetwork: Bridge = {
     {
       name: 'PNETWORK',
       description:
-        'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group\
-        of Validator nodes in a MPC network.',
+        'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in a MPC network.',
       accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>(
-              '0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8',
-              'PNETWORK',
-            ),
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>(
-              '0x9f8622b11984AfC8f0a42A394928702017c5968D',
-              'PNETWORK',
-            ),
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>(
-              '0x112334f50Cb6efcff4e35Ae51A022dBE41a48135',
-              'PNETWORK',
-            ),
-          ),
-          type: 'EOA',
-        },
+        discovery.getPermissionedAccount('ERC20 Vault V2', 'PNETWORK'),
+        discovery.getPermissionedAccount('ERC20 Vault V1', 'PNETWORK'),
+        discovery.getPermissionedAccount('UOS Vault', 'PNETWORK'),
       ],
     },
-    {
-      name: 'PProxyAdmin',
-      description: 'Proxy owner of ERC20Vault v2',
-      accounts: [
-        {
-          address: discovery.getContract('PProxyAdmin').address,
-          type: 'EOA',
-        },
-      ],
-    },
-    {
-      name: 'pNetwork MultiSig',
-      description: '2/4 MSig - owner of PProxyAdmin',
-      accounts: [
-        {
-          address: discovery.getContract('PProxyAdminOwner').address,
-          type: 'MultiSig',
-        },
-      ],
-    },
+    ...discovery.getMultisigPermission(
+      'pNetwork Multisig',
+      'Can upgrade ERC20 Vault V2.',
+    ),
   ],
 
   milestones: [
