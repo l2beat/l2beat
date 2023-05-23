@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -69,7 +69,7 @@ export const rhinofi: Layer2 = {
     associatedTokens: ['DVF'],
     escrows: [
       {
-        address: discovery.getContract('StarkExchange').address,
+        address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
         sinceTimestamp: new UnixTime(1590491810),
         tokens: '*',
       },

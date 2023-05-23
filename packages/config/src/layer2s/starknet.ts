@@ -57,31 +57,31 @@ export const starknet: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: discovery.getContract('ETH Bridge').address,
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'),
         sinceTimestamp: new UnixTime(1647857148),
         tokens: ['ETH'],
-      },
-      {
-        address: discovery.getContract('DAI Bridge').address,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
-      },
-      {
-        address: discovery.getContract('WBTC Bridge').address,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x283751A21eafBFcD52297820D27C1f1963D9b5b4'),
         sinceTimestamp: new UnixTime(1657137600),
         tokens: ['WBTC'],
-      },
-      {
-        address: discovery.getContract('USDC Bridge').address,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'),
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
-      },
-      {
-        address: discovery.getContract('USDT Bridge').address,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xbb3400F107804DFB482565FF1Ec8D8aE66747605'),
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
-      },
+      }),
     ],
     transactionApi: {
       type: 'starknet',
