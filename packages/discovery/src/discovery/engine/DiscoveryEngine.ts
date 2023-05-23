@@ -4,6 +4,7 @@ import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryStack } from './DiscoveryStack'
 import { shouldSkip } from './shouldSkip'
 
+export const DISCOVERY_LOGIC_VERSION = 1
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,

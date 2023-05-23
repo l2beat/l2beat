@@ -4,7 +4,7 @@ import {
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
-import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/shared'
+import { DiscoveryOutput, Logger, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
@@ -29,6 +29,7 @@ export class UpdateMonitor {
     private readonly clock: Clock,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
+    private readonly version: number,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -93,13 +94,10 @@ export class UpdateMonitor {
     blockNumber: number,
     timestamp: UnixTime,
   ) {
+    const previousDiscovery = await this.getPreviousDiscovery(projectConfig)
+
     const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
     this.cachedDiscovery.set(projectConfig.name, discovery)
-
-    const previousDiscovery = await this.getPreviousDiscovery(
-      projectConfig.name,
-      projectConfig.hash,
-    )
 
     const diff = diffDiscovery(
       previousDiscovery.contracts,
@@ -114,25 +112,39 @@ export class UpdateMonitor {
       timestamp,
       blockNumber,
       discovery,
+      version: this.version,
       configHash: projectConfig.hash,
     })
   }
 
   async getPreviousDiscovery(
-    name: string,
-    configHash: Hash256,
+    projectConfig: DiscoveryConfig,
   ): Promise<DiscoveryOutput> {
-    const databaseEntry = await this.repository.findLatest(name)
+    const databaseEntry = await this.repository.findLatest(projectConfig.name)
     let previousDiscovery: DiscoveryOutput
-    if (databaseEntry?.configHash === configHash) {
-      this.logger.debug('Using database record', { project: name })
+    if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
+      this.logger.debug('Using database record', {
+        project: projectConfig.name,
+      })
       previousDiscovery = databaseEntry.discovery
     } else {
-      this.logger.debug('Using committed file', { project: name })
-      previousDiscovery = await this.configReader.readDiscovery(name)
+      this.logger.debug('Using committed file', { project: projectConfig.name })
+      previousDiscovery = await this.configReader.readDiscovery(
+        projectConfig.name,
+      )
     }
 
-    return previousDiscovery
+    if (previousDiscovery.version === this.version) {
+      return previousDiscovery
+    }
+
+    this.logger.debug(
+      'Discovery logic version changed, discovering with new logic',
+    )
+    return await this.discoveryRunner.run(
+      projectConfig,
+      previousDiscovery.blockNumber,
+    )
   }
 
   private async handleDiff(

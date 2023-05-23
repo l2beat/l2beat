@@ -1,8 +1,4 @@
-import {
-  ConfigReader,
-  DiscoveryConfig,
-  DiscoveryDiff,
-} from '@l2beat/discovery'
+import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import {
   ContractParameters,
   DiscoveryOutput,
@@ -53,6 +49,7 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
   ],
   eoas: [],
   abis: {},
+  version: 0,
 }
 
 describe(UpdateMonitor.name, () => {
@@ -101,6 +98,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         Logger.SILENT,
         false,
+        0,
       )
       await updateMonitor.update(TIMESTAMP)
 
@@ -178,6 +176,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         Logger.SILENT,
         false,
+        0,
       )
 
       await updateMonitor.update(new UnixTime(0))
@@ -231,6 +230,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         Logger.SILENT,
         false,
+        0,
       )
 
       await updateMonitor.update(new UnixTime(0))
@@ -243,6 +243,60 @@ describe(UpdateMonitor.name, () => {
         [],
         TIMESTAMP,
       )
+    })
+
+    it('runs discovery again if version changes', async () => {
+      const configReader = mockObject<ConfigReader>({
+        readAllConfigs: async () => [mockConfig(PROJECT_A)],
+        readDiscovery: async () => ({
+          ...mockProject,
+          contracts: [],
+          version: 0,
+        }),
+      })
+
+      const repository = mockObject<UpdateMonitorRepository>({
+        findLatest: async () => ({
+          ...mockRecord,
+          discovery: DISCOVERY_RESULT,
+          configHash: mockConfig(PROJECT_A).hash,
+        }),
+        addOrUpdate: async () => '',
+      })
+
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        run: mockFn(),
+      })
+
+      discoveryRunner.run.resolvesToOnce({ ...DISCOVERY_RESULT, version: 1 })
+      discoveryRunner.run.resolvesToOnce({
+        ...DISCOVERY_RESULT,
+        contracts: [],
+        version: 1,
+      })
+      discoveryRunner.run.resolvesToOnce({
+        ...DISCOVERY_RESULT,
+        contracts: [],
+        version: 1,
+      })
+
+      const updateMonitor = new UpdateMonitor(
+        provider,
+        discoveryRunner,
+        updateNotifier,
+        configReader,
+        repository,
+        mockObject<Clock>(),
+        Logger.SILENT,
+        false,
+        1,
+      )
+
+      await updateMonitor.update(new UnixTime(0))
+
+      expect(discoveryRunner.run).toHaveBeenCalledTimes(3)
+      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(1)
+      expect(repository.addOrUpdate).toHaveBeenCalledTimes(1)
     })
 
     it('handles error', async () => {
@@ -271,6 +325,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         Logger.SILENT,
         false,
+        0,
       )
 
       await updateMonitor.update(new UnixTime(0))
@@ -280,7 +335,7 @@ describe(UpdateMonitor.name, () => {
       // reads all the configs
       expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
       // gets latest from database (with the same config hash)
-      expect(repository.findLatest).toHaveBeenCalledTimes(0)
+      expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // does not save changes to database
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
@@ -317,12 +372,11 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         Logger.SILENT,
         false,
+        0,
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
-        PROJECT_A,
-        // repository returns undefined, so config hash does not matter
-        Hash256.random(),
+        mockConfig(PROJECT_A),
       )
 
       // calls repository (and gets undefined)
@@ -357,11 +411,11 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         Logger.SILENT,
         false,
+        0,
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
-        PROJECT_A,
-        mockConfig(PROJECT_A).hash,
+        mockConfig(PROJECT_A),
       )
 
       // calls repository
@@ -402,11 +456,15 @@ describe(UpdateMonitor.name, () => {
         mockObject<Clock>(),
         Logger.SILENT,
         false,
+        0,
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
-        PROJECT_A,
-        mockConfig('new-name').hash,
+        // different config hash
+        new DiscoveryConfig({
+          name: PROJECT_A,
+          initialAddresses: [EthereumAddress.ZERO],
+        }),
       )
 
       expect(result).toEqual(committed)
@@ -420,6 +478,7 @@ const mockRecord: UpdateMonitorRecord = {
   timestamp: UnixTime.now(),
   configHash: Hash256.random(),
   discovery: DISCOVERY_RESULT,
+  version: 0,
 }
 
 const mockProject: DiscoveryOutput = {
@@ -429,6 +488,7 @@ const mockProject: DiscoveryOutput = {
   contracts: COMMITTED,
   eoas: [],
   abis: {},
+  version: 0,
 }
 
 function mockContract(
