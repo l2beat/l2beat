@@ -102,33 +102,15 @@ export const omgnetwork: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'EthVault',
-        address: discovery.getContract('EthVault').address,
-      },
-      {
-        name: 'Erc20Vault',
-        address: discovery.getContract('Erc20Vault').address,
-      },
-      {
-        name: 'ETHDepositVerifier',
-        address: EthereumAddress('0x649f37203c365DE759c8fc8CA35beBF5448F70Be'),
-      },
-      {
-        name: 'ERC20DepositVerifier',
-        address: EthereumAddress('0xD876aeb3a443FBC03B7349AAc115E9054563CD82'),
-      },
-      {
-        name: 'PlasmaFramework',
-        address: discovery.getContract('PlasmaFramework').address,
-      },
-      {
-        name: 'PaymentExitGame',
-        // PaymentExitGame uses unverified libraries https://etherscan.io/address/0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3
-        description:
-          'The source code of the PaymentStartStandardExit library used by this contract is not verified on Etherscan.',
-        address: discovery.getContract('PaymentExitGame').address,
-      },
+      discovery.getContractDetails('EthVault'),
+      discovery.getContractDetails('Erc20Vault'),
+      discovery.getContractDetails('ETHDepositVerifier'),
+      discovery.getContractDetails('ERC20DepositVerifier'),
+      discovery.getContractDetails('PlasmaFramework'),
+      discovery.getContractDetails(
+        'PaymentExitGame',
+        'The source code of the PaymentStartStandardExit library used by this contract is not verified on Etherscan.',
+      ),
     ],
     risks: [],
   },
