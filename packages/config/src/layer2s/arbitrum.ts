@@ -101,7 +101,7 @@ export const arbitrum: Layer2 = {
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xD3B5b60020504bc3489D6949d545893982BA3011'),
+        address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
         sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
         description:
