@@ -228,9 +228,7 @@ export const zksynclite: Layer2 = {
     {
       name: 'Token listing beneficiary',
       accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue<string>('TokenGovernance', 'treasury'),
-        ),
+        discovery.getPermissionedAccount('TokenGovernance', 'treasury'),
       ],
       description:
         'Account receiving fees for listing tokens. Can be updated by ZkSync Multisig.',

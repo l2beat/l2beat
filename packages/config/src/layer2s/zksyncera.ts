@@ -236,9 +236,7 @@ export const zksyncera: Layer2 = {
     {
       name: 'Active validator',
       accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue<string>('ValidatorTimelock', 'validator'),
-        ),
+        discovery.getPermissionedAccount('ValidatorTimelock', 'validator'),
       ],
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1.',
