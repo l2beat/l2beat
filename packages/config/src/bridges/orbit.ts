@@ -166,76 +166,28 @@ export const orbit: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a'),
-        name: 'EthVault',
-        description:
-          'Bridge contract, Proxy, Escrow, Governance. Source code of implementation is not verified on Etherscan.',
-        upgradeability: {
-          type: 'CustomWithoutAdmin',
-          implementation: discovery.getContractUpgradeabilityParam(
-            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-            'implementation',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue<string>(
-            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-            'usdtFarm',
-          ),
-        ),
-        name: 'USDT Compound Farm',
-      },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue<string>(
-            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-            'daiFarm',
-          ),
-        ),
-        name: 'DAI Compound Farm',
-      },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue<string>(
-            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-            'usdcFarm',
-          ),
-        ),
-        name: 'USDC Compound Farm',
-      },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue<string>(
-            '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-            'wbtcFarm',
-          ),
-        ),
-        name: 'WBTC Compound Farm',
-      },
+      discovery.getMainContractDetails(
+        'ETH Vault',
+        'Bridge contract, Proxy, Escrow, Governance. Source code of implementation is not verified on Etherscan.',
+      ),
+      discovery.getMainContractDetails('USDT Farm', 'USDT Compound Farm.'),
+      discovery.getMainContractDetails('DAI Farm', 'DAI Compound Farm.'),
+      discovery.getMainContractDetails('USDC Farm', 'USDC Compound Farm.'),
+      discovery.getMainContractDetails('WBTC Farm', 'WBTC Compound Farm.'),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {
+      // TODO: Better non-gnosis multisig support
       name: 'Bridge contract Governance',
-      accounts: discovery
-        .getContractValue<string[]>(
-          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-          'getOwners',
-        )
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
+      accounts: discovery.getPermissionedAccountsList('ETH Vault', 'getOwners'),
       description: `Participants of Bridge Governance ${discovery.getContractValue<number>(
-        '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
+        'ETH Vault',
         'required',
       )}/${
-        discovery.getContractValue<string[]>(
-          '0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a',
-          'getOwners',
-        ).length
-      } Orbit MultiSig.`,
+        discovery.getContractValue<string[]>('ETH Vault', 'getOwners').length
+      } Orbit Multisig.`,
     },
   ],
 }
