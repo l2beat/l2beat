@@ -195,6 +195,14 @@ export class ProjectDiscovery {
     return { address: address, type }
   }
 
+  getPermissionedAccount(
+    contractIdentifier: string,
+    key: string,
+  ): ProjectPermissionedAccount {
+    const value = this.getContractValue(contractIdentifier, key)
+    return this.formatPermissionedAccount(value)
+  }
+
   getPermissionedAccountsList(
     contractIdentifier: string,
     key: string,
