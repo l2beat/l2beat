@@ -16,7 +16,14 @@
         "getProtocolFeeValues",
         "getNumAvailableForcedSlots",
         "state"
-      ]
+      ],
+      "fields": {
+        "loopringV3": {
+          "type": "storage",
+          "slot": 5,
+          "returnType": "address"
+        }
+      }
     },
     "MultiSigWallet": {
       "ignoreMethods": [

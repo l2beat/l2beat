@@ -1,4 +1,5 @@
 import { assert, ProjectId, UnixTime } from '@l2beat/shared'
+import { utils } from 'ethers'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
@@ -25,6 +26,15 @@ const maxAgeDepositUntilWithdrawable = formatSeconds(
     'getMaxAgeDepositUntilWithdrawable',
   ),
 )
+
+const forcedWithdrawalFee = discovery.getContractValue<number>(
+  'LoopringV3',
+  'forcedWithdrawalFee',
+)
+
+const forcedWithdrawalFeeString = `${utils.formatEther(
+  forcedWithdrawalFee,
+)} ETH`
 
 export const degate: Layer2 = {
   type: 'layer2',
@@ -65,9 +75,10 @@ export const degate: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_NO,
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString),
       description:
-        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1.description +
+        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString)
+          .description +
         ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
       references: [
         'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F23#L102',
@@ -76,10 +87,7 @@ export const degate: Layer2 = {
       contracts: ['ExchangeV3'],
     },
     validatorFailure: {
-      ...RISK_VIEW.VALIDATOR_ESCAPE_MP,
-      description:
-        RISK_VIEW.VALIDATOR_ESCAPE_MP.description +
-        ` There is a ${forcedWithdrawalDelay} delay on this operation.`,
+      ...RISK_VIEW.VALIDATOR_ESCAPE_MP(forcedWithdrawalDelay),
       references: [
         'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
       ],
