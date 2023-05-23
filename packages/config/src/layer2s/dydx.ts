@@ -64,11 +64,11 @@ export const dydx: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: discovery.getContract('StarkPerpetual').address,
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
         sinceTimestamp: new UnixTime(1613033682),
         tokens: ['USDC'],
-      },
+      }),
     ],
     transactionApi: {
       type: 'starkex',
