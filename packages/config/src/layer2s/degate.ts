@@ -36,6 +36,14 @@ const forcedWithdrawalFeeString = `${utils.formatEther(
   forcedWithdrawalFee,
 )} ETH`
 
+const maxForcedWithdrawalFee = discovery.getContractValue<(number | string)[]>(
+  'ExchangeV3',
+  'getConstants',
+)[3]
+const maxForcedWithdrawalFeeString = `${utils.formatEther(
+  maxForcedWithdrawalFee,
+)} ETH`
+
 export const degate: Layer2 = {
   type: 'layer2',
   id: ProjectId('degate'),
@@ -216,8 +224,7 @@ export const degate: Layer2 = {
 
         return [permissionedAccount]
       })(),
-      description:
-        'This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract, BlockVerifier. Can add or remove block submitters. Can change the forced withdrawal fee. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.',
+      description: `This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract, BlockVerifier. Can add or remove block submitters. Can change the forced withdrawal fee up to ${maxForcedWithdrawalFeeString}. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.`,
     },
     {
       name: 'Block Submitters',
