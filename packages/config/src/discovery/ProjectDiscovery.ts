@@ -57,7 +57,7 @@ export class ProjectDiscovery {
     return JSON.parse(discoveryFile) as DiscoveryOutput
   }
 
-  getMainContractDetails(
+  getContractDetails(
     identifier: string,
     descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
   ): ProjectContractSingleAddress {
@@ -99,9 +99,9 @@ export class ProjectDiscovery {
     }
   }
 
-  getGnosisSafeDetails(
+  getMultisigPermission(
     identifier: string,
-    descriptionPrefix: string,
+    description: string,
   ): ProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
@@ -112,7 +112,7 @@ export class ProjectDiscovery {
     return [
       {
         name: identifier,
-        description: `${descriptionPrefix} This is a Gnosis Safe with ${this.getMultisigStats(
+        description: `${description} This is a Gnosis Safe with ${this.getMultisigStats(
           identifier,
         )} threshold.`,
         accounts: [
@@ -125,7 +125,7 @@ export class ProjectDiscovery {
       {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
-        accounts: this.getPermissionedAccountsList(identifier, 'getOwners'),
+        accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
       },
     ]
   }
@@ -186,7 +186,15 @@ export class ProjectDiscovery {
     return { address: address, type }
   }
 
-  getPermissionedAccountsList(
+  getPermissionedAccount(
+    contractIdentifier: string,
+    key: string,
+  ): ProjectPermissionedAccount {
+    const value = this.getContractValue(contractIdentifier, key)
+    return this.formatPermissionedAccount(value)
+  }
+
+  getPermissionedAccounts(
     contractIdentifier: string,
     key: string,
   ): ProjectPermissionedAccount[] {

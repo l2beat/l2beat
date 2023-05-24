@@ -1,7 +1,7 @@
 {
   "name": "allbridge",
-  "blockNumber": 17024527,
-  "configHash": "0x7839cc4069edd41048ed7e3b33fe21ed5cbb0eae7b5dd2e1a8ee9cc7650716a7",
+  "blockNumber": 17321271,
+  "configHash": "0x66fed3959766deaee9440241feb2582ea84a16273e57a8e5dbd689d9ba5a22f5",
   "contracts": [
     {
       "name": "USDC_POOL",
@@ -30,22 +30,30 @@
       "derivedName": "Pool"
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "Allbridge Messenger",
       "address": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "values": {
+        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
+      },
+      "derivedName": ""
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "Validator",
       "address": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "values": {
+        "owner": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"
+      },
+      "derivedName": ""
     },
     {
       "name": "LPBridge",
@@ -92,13 +100,17 @@
       "derivedName": "Pool"
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "Fee Oracle",
       "address": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "values": {
+        "owner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
+      },
+      "derivedName": ""
     },
     {
       "name": "TokenBridge",
@@ -108,12 +120,26 @@
         "type": "immutable"
       },
       "values": {
-        "BRIDGE_MANAGER": "0x77eacfcb6207f26b72edc4f15c48e5518843e7e98ccfd7e0d6c16f92ed1fef8d",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"]
+          },
+          "BRIDGE_MANAGER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"]
+          },
+          "TOKEN_MANAGER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"]
+          },
+          "STOP_MANAGER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"]
+          }
+        },
         "feeCollector": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
         "feeOracle": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
-        "STOP_MANAGER": "0x55ca0725c70a9ecebe86dd2b8b3a414983f6cb638e1a0fa17c64bbdd59b4d4c1",
-        "TOKEN_MANAGER": "0x593fb413ec9f9ad9f53f309300b515310ff474591268ca3cbe9752fd88eb76a0",
         "unlockSigner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
         "validator": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b"
       },
@@ -146,17 +172,22 @@
       "derivedName": "Pool"
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "Wormhole Messenger",
       "address": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "values": {
+        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
+      },
+      "derivedName": ""
     }
   ],
   "eoas": [
     "0x01a494079DCB715f622340301463cE50cd69A4D0",
+    "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074",
     "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
   ],
   "abis": {

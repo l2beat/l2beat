@@ -1,8 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('connext')
 
 export const connext: Bridge = {
   type: 'bridge',
@@ -94,32 +97,24 @@ export const connext: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09'),
-        name: 'TransactionManager',
-        description: 'Escrow and logic for cross-chain transactions.',
-      },
-      {
-        address: EthereumAddress('0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a'),
-        name: 'FulfillInterpreter',
-        description:
-          'Contract enabling execution of arbitrary calldata on a destination chain.',
-      },
+      discovery.getContractDetails(
+        'TransactionManager',
+        'Escrow and logic for cross-chain transactions.',
+      ),
+      discovery.getContractDetails(
+        'FulfillInterpreter',
+        'Contract enabling execution of arbitrary calldata on a destination chain.',
+      ),
     ],
     risks: [],
   },
   permissions: [
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493',
-          ),
-          type: 'EOA',
-        },
-      ],
       name: 'Owner of TransactionManager',
       description: 'Can add and remove Routers and supported assets.',
+      accounts: [
+        discovery.getPermissionedAccount('TransactionManager', 'owner'),
+      ],
     },
   ],
   knowledgeNuggets: [

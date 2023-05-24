@@ -1,7 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('gravity')
 
 export const gravity: Bridge = {
   type: 'bridge',
@@ -82,12 +85,10 @@ export const gravity: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906'),
-        name: 'Gravity',
-        description:
-          'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
-      },
+      discovery.getContractDetails(
+        'Gravity',
+        'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
+      ),
     ],
     risks: [],
     isIncomplete: true,

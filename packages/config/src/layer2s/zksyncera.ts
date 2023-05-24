@@ -210,18 +210,18 @@ export const zksyncera: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'DiamondProxy',
         'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
       and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
       It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
       It is also serves the purpose of ETH bridge.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'Verifier',
         'Implements zkProof verification logic.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'ValidatorTimelock',
         'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
       ),
@@ -229,16 +229,14 @@ export const zksyncera: Layer2 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'zkSync Era MultiSig',
       'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
     ),
     {
       name: 'Active validator',
       accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue<string>('ValidatorTimelock', 'validator'),
-        ),
+        discovery.getPermissionedAccount('ValidatorTimelock', 'validator'),
       ],
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1.',

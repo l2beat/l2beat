@@ -132,9 +132,22 @@ export const arbitrum: Layer2 = {
       description:
         'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
       sentiment: 'warning',
+      references: [
+        'https://etherscan.io/address/0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445#code#F1#L113',
+      ],
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      references: [
+        'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+      ],
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
+      references: [
+        'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
+      ],
+    },
     sequencerFailure: {
       value: 'Transact using L1',
       description: VALUES.ARBITRUM.getSequencerFailureString(),
@@ -191,6 +204,10 @@ export const arbitrum: Layer2 = {
           text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
           href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
         },
+        {
+          text: 'SequencerInbox.sol#206 - Etherscan source code, addSequencerL2BatchFromOrigin function',
+          href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+        },
       ],
     },
     operator: {
@@ -210,7 +227,7 @@ export const arbitrum: Layer2 = {
         VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
       references: [
         {
-          text: 'Smart Contract source code',
+          text: 'SequencerInbox.sol#L125 - Etherscan source code, forceInclusion function',
           href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
         },
         {
@@ -275,7 +292,7 @@ export const arbitrum: Layer2 = {
     ),
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'SecurityCouncil',
       'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
     ),
@@ -306,19 +323,19 @@ export const arbitrum: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'RollupProxy',
         'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'ArbitrumOneBridge',
         'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'SequencerInbox',
         'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'Inbox',
         'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
       ),
@@ -327,15 +344,15 @@ export const arbitrum: Layer2 = {
         'outbox',
         "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'UpgradeExecutor',
         "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'L1ArbitrumTimelock',
         'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'L1GatewayRouter',
         'Router managing token <--> gateway mapping.',
       ),

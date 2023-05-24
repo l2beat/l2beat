@@ -103,11 +103,11 @@ export const apex: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'StarkExchange',
         'Main contract of ApeX exchange. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
@@ -131,10 +131,7 @@ export const apex: Layer2 = {
     },
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
-        'StarkExchange',
-        'OPERATORS',
-      ),
+      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
       description:
         'Allowed to update state of the system and verify DA proofs. When Operator is down the state cannot be updated.',
     },

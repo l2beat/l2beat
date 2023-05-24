@@ -53,6 +53,7 @@
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
+        "stateBlockHash",
         "stateRoot"
       ]
     },

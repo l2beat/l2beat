@@ -1,7 +1,7 @@
 {
   "name": "omgnetwork",
   "blockNumber": 16154924,
-  "configHash": "0x3010b50b6079955d8967bbe5d5962907dd5bc0bb3e47c04436e516218254ec13",
+  "configHash": "0x0c3bcfa66ce09ac47db140bc1c5c82697a39ee216151e692c0d121133ff982ac",
   "contracts": [
     {
       "name": "Erc20Vault",
@@ -77,22 +77,24 @@
       }
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "ETHDepositVerifier",
       "address": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "derivedName": ""
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "ERC20DepositVerifier",
       "address": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "derivedName": ""
     }
   ],
   "eoas": [

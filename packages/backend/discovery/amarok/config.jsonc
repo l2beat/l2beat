@@ -12,7 +12,7 @@
     "0x245F757d660C3ec65416168690431076d58d6413": "GnosisHubConnector",
     "0xFaf539a73659fEAEC96ec7242f075Be0445526A8": "MultichainHubConnector",
     "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "RelayTransit",
-    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "ConnextBridgeOwner"
+    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -123,7 +123,7 @@
     "RelayTransit": {
       "ignoreRelatives": ["gelato"]
     },
-    "ConnextBridgeOwner": {
+    "Connext Multisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     //GelatoRelayerHub

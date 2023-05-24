@@ -2,8 +2,18 @@
   "$schema": "../config.schema.json",
   "name": "polynetwork",
   "initialAddresses": ["0x81910675dbaf69dee0fd77570bfd07f8e436386a"],
+  "names": {
+    "0x81910675DbaF69deE0fD77570BFD07f8E436386A": "PolyWrapper",
+    "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb": "EthCrossChainManagerProxy",
+    "0xcF2afe102057bA5c16f899271045a0A37fCb10f2": "EthCrossChainData",
+    "0x250e76987d838a75310c34bf422ea9f1AC4Cc906": "Lock Proxy 1",
+    "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54": "Lock Proxy 2",
+    "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035": "Lock Proxy 3",
+    "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868": "Lock Proxy 4",
+    "0xf6378141BC900020a438F3914e4C3ceA29907b27": "Lock Proxy 5"
+  },
   "overrides": {
-    "0x81910675DbaF69deE0fD77570BFD07f8E436386A": {
+    "PolyWrapper": {
       "fields": {
         "lockProxyIndexMap": {
           "type": "array",
@@ -11,7 +21,7 @@
         }
       }
     },
-    "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb": {
+    "EthCrossChainManagerProxy": {
       "fields": {
         "ethCrossChainManager": {
           "type": "call",
@@ -20,7 +30,7 @@
         }
       }
     },
-    "0xcF2afe102057bA5c16f899271045a0A37fCb10f2": {
+    "EthCrossChainData": {
       "ignoreInWatchMode": ["getEthTxHashIndex", "EthToPolyTxHashIndex"],
       "ignoreMethods": [
         "EthToPolyTxHashMap",
@@ -30,6 +40,20 @@
         "getCurEpochConPubKeyBytes",
         "getCurEpochStartHeight"
       ]
+    },
+    "Lock Proxy 3": {
+      "fields": {
+        "managerProxyContract": {
+          "type": "call",
+          "method": "function managerProxyContract() view returns (address)",
+          "args": []
+        },
+        "owner": {
+          "type": "call",
+          "method": "function owner() view returns (address)",
+          "args": []
+        }
+      }
     }
   }
 }

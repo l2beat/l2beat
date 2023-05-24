@@ -1,7 +1,7 @@
 {
   "name": "aptos",
   "blockNumber": 16154924,
-  "configHash": "0xbad9d71d720c551e045ee854a7e880722d34ccbf6340a929da894b7424c398aa",
+  "configHash": "0xdd0cabd0e343f17a9d66968708751114a0d969c6e6d54874da61cd9c8554f0d5",
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -98,7 +98,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Aptos Multisig",
       "address": "0x971016EF5Bd9C71fA4ff34D731974d03cEFf5F05",
       "code": "https://etherscan.deth.net/address/0x971016EF5Bd9C71fA4ff34D731974d03cEFf5F05,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -117,10 +117,11 @@
         "getThreshold": 2,
         "nonce": 1,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
-      "name": "GnosisSafe",
+      "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "code": "https://etherscan.deth.net/address/0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -140,7 +141,8 @@
         "getThreshold": 2,
         "nonce": 21,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [

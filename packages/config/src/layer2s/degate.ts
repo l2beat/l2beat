@@ -228,7 +228,7 @@ export const degate: Layer2 = {
     },
     {
       name: 'Block Submitters',
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'LoopringIOExchangeOwner',
         'blockSubmitters',
       ),
@@ -238,23 +238,20 @@ export const degate: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
-        'ExchangeV3',
-        'Main ExchangeV3 contract.',
-      ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('ExchangeV3', 'Main ExchangeV3 contract.'),
+      discovery.getContractDetails(
         'LoopringIOExchangeOwner',
         'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'DefaultDepositContract',
         'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'LoopringV3',
         'Contract for setting exchange fee parameters.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'BlockVerifier',
         'zkSNARK Verifier based on ethsnarks library.',
       ),

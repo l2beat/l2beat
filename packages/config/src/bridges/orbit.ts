@@ -166,14 +166,14 @@ export const orbit: Bridge = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'ETH Vault',
         'Bridge contract, Proxy, Escrow, Governance. Source code of implementation is not verified on Etherscan.',
       ),
-      discovery.getMainContractDetails('USDT Farm', 'USDT Compound Farm.'),
-      discovery.getMainContractDetails('DAI Farm', 'DAI Compound Farm.'),
-      discovery.getMainContractDetails('USDC Farm', 'USDC Compound Farm.'),
-      discovery.getMainContractDetails('WBTC Farm', 'WBTC Compound Farm.'),
+      discovery.getContractDetails('USDT Farm', 'USDT Compound Farm.'),
+      discovery.getContractDetails('DAI Farm', 'DAI Compound Farm.'),
+      discovery.getContractDetails('USDC Farm', 'USDC Compound Farm.'),
+      discovery.getContractDetails('WBTC Farm', 'WBTC Compound Farm.'),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -181,7 +181,7 @@ export const orbit: Bridge = {
     {
       // TODO: Better non-gnosis multisig support
       name: 'Bridge contract Governance',
-      accounts: discovery.getPermissionedAccountsList('ETH Vault', 'getOwners'),
+      accounts: discovery.getPermissionedAccounts('ETH Vault', 'getOwners'),
       description: `Participants of Bridge Governance ${discovery.getContractValue<number>(
         'ETH Vault',
         'required',

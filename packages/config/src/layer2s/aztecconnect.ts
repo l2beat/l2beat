@@ -146,35 +146,24 @@ export const aztecconnect: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        address: discovery.getContract('RollupProcessorV2').address,
-        description:
-          'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
-        name: 'RollupProcessorV2',
-        upgradeability:
-          discovery.getContract('RollupProcessorV2').upgradeability,
-      },
+      discovery.getContractDetails(
+        'RollupProcessorV2',
+        'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
+      ),
       {
         address: EthereumAddress('0x4cf32670a53657596E641DFCC6d40f01e4d64927'),
         description:
           'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
         name: 'AztecFeeDistributor',
       },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue('RollupProcessorV2', 'defiBridgeProxy'),
-        ),
-        description: 'Bridge Connector to various DeFi Bridges.',
-        name: 'DefiBridgeProxy',
-      },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue('RollupProcessorV2', 'verifier'),
-        ),
-        description:
-          'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
-        name: 'Verifier28x32',
-      },
+      discovery.getContractDetails(
+        'DefiBridgeProxy',
+        'Bridge Connector to various DeFi Bridges.',
+      ),
+      discovery.getContractDetails(
+        'Verifier28x32',
+        'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

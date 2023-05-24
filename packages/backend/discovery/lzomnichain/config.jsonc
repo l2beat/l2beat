@@ -7,7 +7,8 @@
   "names": {
     "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
     "0x902F09715B6303d4173037652FA7377e5b98089E": "LayerZero_Relayer",
-    "0x5a54fe5234E811466D5366846283323c954310B2": "LayerZero_Oracle"
+    "0x5a54fe5234E811466D5366846283323c954310B2": "LayerZero_Oracle",
+    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig"
   },
   "overrides": {
     "0x65bb797c2B9830d891D87288F029ed8dACc19705": {
@@ -16,7 +17,7 @@
     "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": {
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
     },
-    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": {
+    "LayerZero Multisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "UltraLightNodeV2": {
