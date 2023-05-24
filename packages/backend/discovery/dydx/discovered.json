@@ -1,7 +1,7 @@
 {
   "name": "dydx",
-  "blockNumber": 17310576,
-  "configHash": "0xd7a90421ca11dc4093c2cee32c253b469e85150e793425fa59d1182f362ec821",
+  "blockNumber": 17331165,
+  "configHash": "0xc6b39d80ca02ad53b0d25d7634b197ef6ace682f56cc07f1eb1361cba597f1e4",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -12,6 +12,18 @@
       },
       "values": {
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      }
+    },
+    {
+      "name": "PerpetualEscapeVerifier",
+      "address": "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD",
+      "code": "https://etherscan.deth.net/address/0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "hasRegisteredFact": false,
+        "identify": "StarkWare_PerpetualEscapeVerifier_2021_2"
       }
     },
     {
@@ -95,7 +107,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "4406223417022586789731584"
+        "totalSupply": "4398111120899551654015648"
       },
       "derivedName": "SafetyModuleV2"
     },
@@ -249,10 +261,11 @@
       "values": {
         "configurationDelay": 0,
         "DEPOSIT_CANCEL_DELAY": 604800,
+        "escapeVerifier": "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD",
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 16450,
+        "getLastBatchId": 16486,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -261,7 +274,7 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 16157,
+        "getSequenceNumber": 16193,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
@@ -628,6 +641,14 @@
       "function removeAvailabilityVerifier(address verifier)",
       "function removeVerifier(address verifier)",
       "function unFreeze()"
+    ],
+    "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD": [
+      "constructor(address[63] tables)",
+      "event LogEscapeVerified(uint256 publicKey, int256 withdrawalAmount, bytes32 sharedStateHash, uint256 positionId)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function verifyEscape(uint256[] merkleProof, uint256 nAssets, uint256[] sharedState)"
     ],
     "0x639192D54431F8c816368D3FB4107Bc168d0E871": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
