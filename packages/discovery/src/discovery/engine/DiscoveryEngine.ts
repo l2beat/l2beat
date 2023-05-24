@@ -36,7 +36,7 @@ export class DiscoveryEngine {
       this.logger.logRelatives(newRelatives)
     }
 
-    this.logger.flushToServer(DiscoveryEngine.name, config.name)
+    this.logger.flush(config.name)
     return resolved
   }
 }
