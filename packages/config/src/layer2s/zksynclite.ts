@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
@@ -33,6 +33,13 @@ const securityCouncilMembers = discovery.getContractValue<string[]>(
 
 const securityCouncil = `${securityCouncilThreshold} of ${securityCouncilMembers.length}`
 
+const upgrades = {
+  upgradableBy: ['ZkSync Multisig'],
+  upgradeDelay: `${upgradeDelay} or 0 if overridden by ${securityCouncil} Security Council`,
+  upgradeConsiderations:
+    'When the upgrade process starts only the address of the new implementation is given. The actual upgrade also requires implementation specific calldata which is only provided after the delay has elapsed. Changing the default upgrade delay or the Security Council requires a ZkSync contract upgrade.',
+}
+
 export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
@@ -59,11 +66,11 @@ export const zksynclite: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: discovery.getContract('ZkSync').address,
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xaBEA9132b05A70803a4E85094fD0e1800777fBEF'),
         sinceTimestamp: new UnixTime(1592218707),
         tokens: '*',
-      },
+      }),
     ],
     transactionApi: {
       type: 'zksync',
@@ -78,7 +85,7 @@ export const zksynclite: Layer2 = {
       description: `There is a ${upgradeDelay} delay unless it is overridden by the ${securityCouncil} Security Council.`,
       sentiment: 'warning',
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(),
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -167,45 +174,43 @@ export const zksynclite: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
-        'ZkSync',
-        `The main Rollup contract. Allows the operator to commit blocks, provide zkProofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.`,
-      ),
-      discovery.getMainContractDetails(
-        'Verifier',
-        'Implements zkProof verification logic.',
-      ),
-      discovery.getMainContractDetails(
-        'Governance',
-        'Keeps a list of block producers, NFT factories and whitelisted tokens.',
-      ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('ZkSync', {
+        description:
+          'The main Rollup contract. Allows the operator to commit blocks, provide zkProofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('Verifier', {
+        description: 'Implements zkProof verification logic.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('Governance', {
+        description:
+          'Keeps a list of block producers, NFT factories and whitelisted tokens.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails(
         'UpgradeGatekeeper',
         'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'TokenGovernance',
         'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'NftFactory',
         'Allows for withdrawing NFTs minted on L2 to L1.',
       ),
     ],
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK(
-        `${upgradeDelay} or 0 if overridden by ${securityCouncil} Security Council`,
-      ),
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgrades.upgradeDelay)],
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'ZkSync Multisig',
       'This Multisig is the owner of Upgrade Gatekeeper contract and therefore is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can also change the list of active validators and appoint the security council (by upgrading the ZkSync contract).',
     ),
     {
       name: 'Security Council',
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'ZkSync',
         'securityCouncilMembers',
       ),
@@ -216,19 +221,14 @@ export const zksynclite: Layer2 = {
     },
     {
       name: 'Active validators',
-      accounts: discovery.getPermissionedAccountsList(
-        'Governance',
-        'validators',
-      ),
+      accounts: discovery.getPermissionedAccounts('Governance', 'validators'),
       description:
         'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
     },
     {
       name: 'Token listing beneficiary',
       accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue<string>('TokenGovernance', 'treasury'),
-        ),
+        discovery.getPermissionedAccount('TokenGovernance', 'treasury'),
       ],
       description:
         'Account receiving fees for listing tokens. Can be updated by ZkSync Multisig.',

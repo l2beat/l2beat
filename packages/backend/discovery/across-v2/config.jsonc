@@ -9,7 +9,8 @@
     "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": "VotingToken",
     "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": "EmergencyProposalExecutor",
     "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
-    "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": "Ethereum_SpokePool"
+    "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": "Ethereum_SpokePool",
+    "0xB524735356985D2f267FA010D681f061DfF03715": "HubPool Multisig"
   },
   "overrides": {
     "HubPool": {

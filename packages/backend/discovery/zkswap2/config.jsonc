@@ -2,6 +2,11 @@
   "$schema": "../config.schema.json",
   "name": "zkswap2",
   "initialAddresses": ["0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"],
+  "names": {
+    "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7": "UpgradeGatekeeper",
+    "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513": "VerifierExit",
+    "0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0": "ZkSyncExit"
+  },
   "overrides": {
     "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7": {
       "fields": {

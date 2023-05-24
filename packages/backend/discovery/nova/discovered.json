@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "blockNumber": 17271302,
-  "configHash": "0x1640230f938149f3499a78101d21551acc017b7138742036a391c318ded82ee9",
+  "configHash": "0x5861f5fb73f38c4e43f9d9c00a8420e7865cd04d6f1bd5e0b21f5061c841e553",
   "contracts": [
     {
       "name": "OneStepProverMath",
@@ -142,7 +142,7 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "ProxyAdmin 2",
       "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
       "code": "https://etherscan.deth.net/address/0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
       "upgradeability": {
@@ -150,7 +150,8 @@
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "ValidatorWallet",
@@ -164,7 +165,7 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "ProxyAdmin 1",
       "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148",
       "code": "https://etherscan.deth.net/address/0x71D78dC7cCC0e037e12de1E50f5470903ce37148",
       "upgradeability": {
@@ -172,7 +173,8 @@
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "OneStepProverMemory",
@@ -230,7 +232,7 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "ProxyAdmin 3",
       "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560",
       "code": "https://etherscan.deth.net/address/0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560",
       "upgradeability": {
@@ -238,7 +240,8 @@
       },
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1ERC20Gateway",

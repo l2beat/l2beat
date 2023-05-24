@@ -6,32 +6,32 @@ import { getProxyGovernance } from './getProxyGovernance'
 
 const discovery = new ProjectDiscovery('l2beat-starkware')
 
-const SHARP_VERIFIER_PROXY = discovery.getMainContractDetails(
+const SHARP_VERIFIER_PROXY = discovery.getContractDetails(
   'SHARPVerifierProxy',
   'CallProxy for GpsStatementVerifier.',
 )
 
-const SHARP_VERIFIER = discovery.getMainContractDetails(
+const SHARP_VERIFIER = discovery.getContractDetails(
   'SHARPVerifier',
   'Starkware SHARP verifier used collectively by StarkNet, Sorare, ImmutableX, Apex, Myria, rhino.fi and Canvas Connect. It receives STARK proofs from the Prover attesting to the integrity of the Execution Trace of these Programs including correctly computed L2 state root which is part of the Program Output.',
 )
 
-const MEMORY_FACT_REGISTRY = discovery.getMainContractDetails(
+const MEMORY_FACT_REGISTRY = discovery.getContractDetails(
   'MemoryPageFactRegistry',
   'MemoryPageFactRegistry is one of the many contracts used by SHARP verifier. This one is important as it registers all necessary on-chain data.',
 )
 
-const CAIRO_BOOTLOADER_PROGRAM = discovery.getMainContractDetails(
+const CAIRO_BOOTLOADER_PROGRAM = discovery.getContractDetails(
   'CairoBootloaderProgram',
   'Part of STARK Verifier.',
 )
 
-const FRI_STATEMENT_CONTRACT = discovery.getMainContractDetails(
+const FRI_STATEMENT_CONTRACT = discovery.getContractDetails(
   'FriStatementContract',
   'Part of STARK Verifier.',
 )
 
-const MERKLE_STATEMENT_CONTRACT = discovery.getMainContractDetails(
+const MERKLE_STATEMENT_CONTRACT = discovery.getContractDetails(
   'MerkleStatementContract',
   'Part of STARK Verifier.',
 )
@@ -77,7 +77,7 @@ export function getSHARPVerifierGovernors(
           'upgradeDelay',
         ),
     },
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'SHARPVerifierGovernorMultisig',
       'SHARP Verifier Governor.',
     ),

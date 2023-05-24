@@ -101,119 +101,30 @@ export const debridge: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'DeBridgeGate',
-        description:
-          'The main point of cross-chain interactions, this contract allows user to send message to other chain and claim funds when bridging back to Ethereum.',
-        address: EthereumAddress('0x43dE2d77BF8027e25dBD179B491e8d64f38398aA'),
-        upgradeability: discovery.getContract(
-          '0x43dE2d77BF8027e25dBD179B491e8d64f38398aA',
-        ).upgradeability,
-      },
-      {
-        name: 'SignatureVerifier',
-        description:
-          'Contract responsible for checking off-chain signatures performed by the oracles, currently there are needed at least 8 confirmations.',
-        address: EthereumAddress('0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c'),
-        upgradeability: discovery.getContract(
-          '0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c',
-        ).upgradeability,
-      },
+      discovery.getContractDetails(
+        'DeBridgeGate',
+        'The main point of cross-chain interactions, this contract allows user to send message to other chain and claim funds when bridging back to Ethereum.',
+      ),
+      discovery.getContractDetails(
+        'SignatureVerifier',
+        'Contract responsible for checking off-chain signatures performed by the oracles, currently there are needed at least 8 confirmations.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    {
-      name: 'ProxyAdmin',
-      description:
-        'Admin for all upgradable proxy smart contracts. It can change the implementations of all proxies. ProxyAdmin is controlled by governance multisig.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xE4427af3555CD9303D728C491364FAdFDD7494Fe',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-    },
+    ...discovery.getMultisigPermission(
+      'Admin Multisig',
+      'Admin for all upgradable proxy smart contracts. It can change the implementations of all proxies through the ProxyAdmin contract.',
+    ),
     {
       name: 'Oracles',
       description:
         'Accounts permitted to sign the message coming from other chain. Currently at least 8 of them are need to sign the message.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x4bC16662A2cE381E7bb54Dc577c05619C5E67526',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x1c0720B124e7251e881a0fbCfe259d085C59f205',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x573F5E2940789B378BA09cf7d3fD010C422a9ff5',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x59CE95b8955F0E7Be128d5Af77161B36f6084214',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x874f46124C1DAaD4749B94f82eD142754826240E',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x83f81E7f9E284AAFFEDED797008663595f7342bF',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery.getPermissionedAccounts(
+        'SignatureVerifier',
+        'oracles',
+      ),
     },
   ],
 }

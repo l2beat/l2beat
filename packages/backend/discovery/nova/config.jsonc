@@ -7,7 +7,10 @@
     "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
   ],
   "names": {
-    "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": "ValidatorUtils"
+    "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": "ValidatorUtils",
+    "0x71D78dC7cCC0e037e12de1E50f5470903ce37148": "ProxyAdmin 1",
+    "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin 2",
+    "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin 3"
   },
   "overrides": {
     "ValidatorUtils": {

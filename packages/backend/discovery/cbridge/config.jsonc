@@ -9,13 +9,13 @@
     "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175": "MessageBusOwner",
     "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": "SimpleGovernance",
     "0xB37D31b2A74029B5951a2778F959282E2D518595": "OriginalTokenVault",
-    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": "Bridge"
+    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": "Liquidity Network"
   },
   "overrides": {
     "MessageBusOwner": {
       "ignoreMethods": ["countVotes", "nextProposalId", "proposals", "voters"]
     },
-    "Bridge": {
+    "Liquidity Network": {
       "fields": {
         "pausers": {
           "type": "arrayFromTwoEvents",

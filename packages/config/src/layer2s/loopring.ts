@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { utils } from 'ethers'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { formatSeconds } from '../utils/formatSeconds'
@@ -25,6 +26,14 @@ const maxAgeDepositUntilWithdrawable = formatSeconds(
     'getMaxAgeDepositUntilWithdrawable',
   ),
 )
+const forcedWithdrawalFee = discovery.getContractValue<number>(
+  'LoopringV3',
+  'forcedWithdrawalFee',
+)
+
+const forcedWithdrawalFeeString = `${utils.formatEther(
+  forcedWithdrawalFee,
+)} ETH`
 
 export const loopring: Layer2 = {
   type: 'layer2',
@@ -87,20 +96,20 @@ export const loopring: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
+      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString),
       description:
-        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1.description +
+        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString)
+          .description +
         ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
       references: [
         'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
         'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195',
+        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6090',
+        'https://etherscan.io/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71#code#L1825',
       ],
     },
     validatorFailure: {
-      ...RISK_VIEW.VALIDATOR_ESCAPE_MP,
-      description:
-        RISK_VIEW.VALIDATOR_ESCAPE_MP.description +
-        ` There is a ${forcedWithdrawalDelay} delay on this operation.`,
+      ...RISK_VIEW.VALIDATOR_ESCAPE_MP(forcedWithdrawalDelay),
       references: [
         'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
       ],
@@ -206,13 +215,13 @@ export const loopring: Layer2 = {
     ],
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'ProxyOwner',
-      'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
+      'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
     ),
     {
       name: 'Block Submitters',
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'LoopringIOExchangeOwner',
         'blockSubmitters',
       ),
@@ -221,56 +230,34 @@ export const loopring: Layer2 = {
     },
     {
       name: 'RollupOwner',
-      accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>('ExchangeV3', 'owner'),
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: [discovery.getPermissionedAccount('ExchangeV3', 'owner')],
       description:
         'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
     },
   ],
   contracts: {
     addresses: [
-      {
-        name: 'ExchangeV3',
-        address: discovery.getContract('ExchangeV3').address,
-        description: 'Main ExchangeV3 contract.',
-        upgradeability: discovery.getContract('ExchangeV3').upgradeability,
-      },
-      {
-        name: 'LoopringIOExchangeOwner',
-        address: discovery.getContract('LoopringIOExchangeOwner').address,
-        description:
-          'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
-      },
-      {
-        name: 'DefaultDepositContract',
-        address: discovery.getContract('DefaultDepositContract').address,
-        description:
-          'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
-      },
-      {
-        name: 'LoopringV3',
-        address: EthereumAddress('0xe56D6ccab6551932C0356E4e8d5dAF0630920C71'),
-        description:
-          'Contract managinging LRC staking for exchanges (One Loopring contract can manage many exchanges).',
-      },
-      {
-        name: 'BlockVerifier',
-        address: EthereumAddress('0x6150343E0F43A17519c0327c41eDd9eBE88D01ef'),
-        description: 'zkSNARK Verifier based on ethsnarks library.',
-      },
-      {
-        name: 'AgentRegistry',
-        address: discovery.getContract('AgentRegistry').address,
-        description:
-          'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, \
-          DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
-      },
+      discovery.getContractDetails('ExchangeV3', 'Main Loopring contract.'),
+      discovery.getContractDetails(
+        'LoopringIOExchangeOwner',
+        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
+      ),
+      discovery.getContractDetails(
+        'DefaultDepositContract',
+        'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
+      ),
+      discovery.getContractDetails(
+        'LoopringV3',
+        'Contract managing LRC staking for exchanges (One Loopring contract can manage many exchanges).',
+      ),
+      discovery.getContractDetails(
+        'BlockVerifier',
+        'zkSNARK Verifier based on ethsnarks library.',
+      ),
+      discovery.getContractDetails(
+        'AgentRegistry',
+        'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

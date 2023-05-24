@@ -1,21 +1,34 @@
 import { DiscoveryDiff } from '@l2beat/discovery'
 import { Logger, UnixTime } from '@l2beat/shared'
 
+import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { diffToMessages } from './diffToMessages'
 import { isNineAM } from './isNineAM'
 
-export class NotificationManager {
+export class UpdateNotifier {
   constructor(
+    private readonly updateNotifierRepository: UpdateNotifierRepository,
     private readonly discordClient: DiscordClient | undefined,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
 
-  async handleDiff(name: string, dependents: string[], diff: DiscoveryDiff[]) {
-    const messages = diffToMessages(name, dependents, diff)
+  async handleDiff(
+    name: string,
+    dependents: string[],
+    diff: DiscoveryDiff[],
+    blockNumber: number,
+  ) {
+    const nonce = await this.getInternalMessageNonce()
+    const messages = diffToMessages(name, dependents, diff, nonce)
     await this.notify(messages, 'INTERNAL')
+    await this.updateNotifierRepository.add({
+      projectName: name,
+      diff,
+      blockNumber,
+    })
     this.logger.info('Changes detected sent [INTERNAL]', {
       name,
       amount: diff.map((d) => (d.diff ?? []).length).reduce((a, b) => a + b, 0),
@@ -53,6 +66,16 @@ export class NotificationManager {
     this.logger.info('Daily reminder sent', {
       projects: notUpdatedProjects,
     })
+  }
+
+  async getInternalMessageNonce() {
+    const latestId = await this.updateNotifierRepository.findLatestId()
+
+    if (latestId === undefined) {
+      return 0
+    }
+
+    return latestId + 1
   }
 
   private async notify(messages: string | string[], channel: Channel) {

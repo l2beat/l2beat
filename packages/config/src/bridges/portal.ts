@@ -1,8 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('portal')
 
 export const portal: Bridge = {
   type: 'bridge',
@@ -136,28 +139,8 @@ export const portal: Bridge = {
   contracts: {
     isIncomplete: true,
     addresses: [
-      {
-        address: EthereumAddress('0x3ee18B2214AFF97000D974cf647E7C347E8fa585'),
-        name: 'Token Bridge',
-        description: '',
-        upgradeability: {
-          type: 'CustomWithoutAdmin',
-          implementation: EthereumAddress(
-            '0x299b4F6066d231521d11FAE8331fb1A4fe794F58',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress('0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B'),
-        name: 'Wormhole',
-        description: '',
-        upgradeability: {
-          type: 'CustomWithoutAdmin',
-          implementation: EthereumAddress(
-            '0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0',
-          ),
-        },
-      },
+      discovery.getContractDetails('BridgeImplementation'),
+      discovery.getContractDetails('Implementation'),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

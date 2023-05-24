@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -60,7 +60,7 @@ export const myria: Layer2 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'StarkExchange',
+        address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
         sinceTimestamp: new UnixTime(1659542607),
         tokens: ['ETH'],
       }),
@@ -100,8 +100,8 @@ export const myria: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails('StarkExchange'),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('StarkExchange'),
+      discovery.getContractDetails(
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
@@ -121,10 +121,7 @@ export const myria: Layer2 = {
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
-        'StarkExchange',
-        'OPERATORS',
-      ),
+      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },

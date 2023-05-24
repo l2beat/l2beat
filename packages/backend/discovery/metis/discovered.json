@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "blockNumber": 17272120,
-  "configHash": "0x46e05905af2528635e8109b90ad667a1aa8936d9df49d0ecc9770ed76c6e978e",
+  "configHash": "0x84caa287885c0a7cc1c5a60bf66c91d8ed10675962232fcdd99582495cf112bd",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -38,6 +38,19 @@
       "derivedName": "ChainStorageContainer"
     },
     {
+      "name": "ChainStorageContainer",
+      "address": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
+      "code": "https://etherscan.deth.net/address/0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "DEFAULT_CHAINID": 1088,
+        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "owner": "CanonicalTransactionChain"
+      }
+    },
+    {
       "name": "L1StandardBridge",
       "address": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
       "code": "https://etherscan.deth.net/address/0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b,0xa0cfE8Af2AB5C9232714647702DbACf862EA4798",
@@ -55,32 +68,7 @@
       }
     },
     {
-      "name": "MVM_CanonicalTransaction",
-      "address": "0x431e877E216714647a4DCcEFFC03d7B4Fd4B825E",
-      "code": "https://etherscan.deth.net/address/0x431e877E216714647a4DCcEFFC03d7B4Fd4B825E",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "CONFIG_OWNER_KEY": "METIS_MANAGER",
-        "getStakeBaseCost": 0,
-        "getStakeSeqSeconds": 0,
-        "getStakeUnitCost": 0,
-        "getTxBatchSize": 0,
-        "getTxDataSliceCount": 0,
-        "getTxDataSliceSize": 0,
-        "libAddressManager": "0x0000000000000000000000000000000000000000",
-        "stakeBaseCost": 0,
-        "stakeSeqSeconds": 0,
-        "stakeUnitCost": 0,
-        "txBatchSize": 0,
-        "TXDATA_SUBMIT_TIMEOUT": 1800,
-        "txDataSliceCount": 0,
-        "txDataSliceSize": 0
-      }
-    },
-    {
-      "name": "GnosisSafe",
+      "name": "Metis Multisig",
       "address": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
       "code": "https://etherscan.deth.net/address/0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -101,6 +89,34 @@
         "getThreshold": 4,
         "nonce": 6,
         "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "CanonicalTransactionChain",
+      "address": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
+      "code": "https://etherscan.deth.net/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "batches": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
+        "DEFAULT_CHAINID": 1088,
+        "enqueueGasCost": 60000,
+        "enqueueL2GasPrepaid": 1920000,
+        "getLastBlockNumber": 17272013,
+        "getLastTimestamp": 1684237176,
+        "getNextQueueIndex": 26507,
+        "getNumPendingQueueElements": 1,
+        "getQueueLength": 26508,
+        "getTotalBatches": 34919,
+        "getTotalElements": 5693533,
+        "l2GasDiscountDivisor": 32,
+        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "MAX_ROLLUP_TX_SIZE": 50000,
+        "maxTransactionGasLimit": 1100000000,
+        "MIN_ROLLUP_TX_GAS": 100000,
+        "queue": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
       }
     },
     {
@@ -168,13 +184,11 @@
         "_1088_MVM_Sequencer": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
         "_1088_MVM_Sequencer_Wrapper": "0xcDf02971871B7736874E20B8487c019D28090019",
         "BondManager": "0xf51B9C9a1c12e7E48BEC15DC358D0C1f0d7Eb3be",
+        "CanonicalTransactionChain": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
         "ChainStorageContainer_CTC_queue": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
         "L2CrossDomainMessenger": "0x4200000000000000000000000000000000000007",
         "METIS_MANAGER": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "MVM_CanonicalTransaction_for_verification_only": "0x431e877E216714647a4DCcEFFC03d7B4Fd4B825E",
         "MVM_DiscountOracle": "0x7f6B0b7589febc40419a8646EFf9801b87397063",
-        "MVM_L2ChainManagerOnL1_for_verification_only": "0x9E2E3be85df5Ca63DE7674BA64ffD564075f3B48",
-        "MVM_Verifier_for_verification_only": "0xB2e2060A179e67cA4299Cc79fA337B98791DE069",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "Proxy__MVM_CanonicalTransaction": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
         "Proxy__MVM_ChainManager": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
@@ -182,19 +196,6 @@
         "Proxy__OVM_L1StandardBridge": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
         "StateCommitmentChain": "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380",
         "undefined_MVM_FraudVerifier": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb"
-      }
-    },
-    {
-      "name": "MVM_L2ChainManagerOnL1",
-      "address": "0x9E2E3be85df5Ca63DE7674BA64ffD564075f3B48",
-      "code": "https://etherscan.deth.net/address/0x9E2E3be85df5Ca63DE7674BA64ffD564075f3B48",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "addressmgr": "0x0000000000000000000000000000000000000000",
-        "CONFIG_OWNER_KEY": "METIS_MANAGER",
-        "messenger": "0x0000000000000000000000000000000000000000"
       }
     },
     {
@@ -229,26 +230,6 @@
         "owner": "CanonicalTransactionChain",
         "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000000000000000000000",
         "lengthByChainId": 0
-      }
-    },
-    {
-      "name": "MVM_Verifier",
-      "address": "0xB2e2060A179e67cA4299Cc79fA337B98791DE069",
-      "code": "https://etherscan.deth.net/address/0xB2e2060A179e67cA4299Cc79fA337B98791DE069",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "activeChallenges": 0,
-        "challenges": [],
-        "CONFIG_OWNER_KEY": "METIS_MANAGER",
-        "libAddressManager": "0x0000000000000000000000000000000000000000",
-        "metis": "0x0000000000000000000000000000000000000000",
-        "minStake": 0,
-        "numQualifiedVerifiers": 0,
-        "seqStake": 0,
-        "verifiers": [],
-        "verifyWindow": 86400
       }
     },
     {
@@ -363,6 +344,30 @@
       "function setGlobalMetadata(bytes27 _globalMetadata)",
       "function setGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)"
     ],
+    "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": [
+      "constructor(address _libAddressManager, string _owner)",
+      "function DEFAULT_CHAINID() view returns (uint256)",
+      "function deleteElementsAfterInclusive(uint256 _index, bytes27 _globalMetadata)",
+      "function deleteElementsAfterInclusive(uint256 _index)",
+      "function deleteElementsAfterInclusiveByChainId(uint256 _chainId, uint256 _index)",
+      "function deleteElementsAfterInclusiveByChainId(uint256 _chainId, uint256 _index, bytes27 _globalMetadata)",
+      "function get(uint256 _index) view returns (bytes32)",
+      "function getByChainId(uint256 _chainId, uint256 _index) view returns (bytes32)",
+      "function getGlobalMetadata() view returns (bytes27)",
+      "function getGlobalMetadataByChainId(uint256 _chainId) view returns (bytes27)",
+      "function length() view returns (uint256)",
+      "function lengthByChainId(uint256 _chainId) view returns (uint256)",
+      "function libAddressManager() view returns (address)",
+      "function owner() view returns (string)",
+      "function push(bytes32 _object, bytes27 _globalMetadata)",
+      "function push(bytes32 _object)",
+      "function pushByChainId(uint256 _chainId, bytes32 _object)",
+      "function pushByChainId(uint256 _chainId, bytes32 _object, bytes27 _globalMetadata)",
+      "function resolve(string _name) view returns (address)",
+      "function setByChainId(uint256 _chainId, uint256 _index, bytes32 _object)",
+      "function setGlobalMetadata(bytes27 _globalMetadata)",
+      "function setGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)"
+    ],
     "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
@@ -370,47 +375,6 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
-    ],
-    "0x431e877E216714647a4DCcEFFC03d7B4Fd4B825E": [
-      "constructor()",
-      "event AppendBatchElement(uint256 _chainId, uint256 _batchIndex, uint40 _shouldStartAtElement, uint24 _totalElementsToAppend, uint256 _txBatchSize, uint256 _txBatchTime, bytes32 _root)",
-      "event SetBatchTxData(address _sender, uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber, uint256 _stakeAmount, bool _verified, bool _sequencer)",
-      "event VerifierStake(address _sender, uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber, uint256 _amount)",
-      "function CONFIG_OWNER_KEY() view returns (string)",
-      "function TXDATA_SUBMIT_TIMEOUT() view returns (uint256)",
-      "function appendSequencerBatchByChainId()",
-      "function checkBatchTxHash(uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber, bytes _data) view returns (bytes32 txHash, bool verified)",
-      "function disableWhiteList()",
-      "function getBatchTxData(uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber) view returns (bytes txData, bool verified)",
-      "function getStakeBaseCost() view returns (uint256)",
-      "function getStakeCostByBatch(uint256 _chainId, uint256 _batchIndex) view returns (uint256)",
-      "function getStakeSeqSeconds() view returns (uint256)",
-      "function getStakeUnitCost() view returns (uint256)",
-      "function getTxBatchSize() view returns (uint256)",
-      "function getTxDataSliceCount() view returns (uint256)",
-      "function getTxDataSliceSize() view returns (uint256)",
-      "function isWhiteListed(address _verifier) view returns (bool)",
-      "function libAddressManager() view returns (address)",
-      "function resolve(string _name) view returns (address)",
-      "function setBatchTxDataForStake(uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber, bytes _data, uint256 _leafIndex, uint256 _totalLeaves, bytes32[] _proof)",
-      "function setBatchTxDataForVerifier(uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber, bytes _data)",
-      "function setBatchTxDataVerified(uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber, bool _verified)",
-      "function setStakeBaseCost(uint256 _stakeBaseCost)",
-      "function setStakeSeqSeconds(uint256 _seconds)",
-      "function setStakeUnitCost(uint256 _stakeUnitCost)",
-      "function setTxBatchSize(uint256 _size)",
-      "function setTxDataSliceCount(uint256 _count)",
-      "function setTxDataSliceSize(uint256 _size)",
-      "function setWhiteList(address _verifier, bool _allowed)",
-      "function stakeBaseCost() view returns (uint256)",
-      "function stakeSeqSeconds() view returns (uint256)",
-      "function stakeUnitCost() view returns (uint256)",
-      "function txBatchSize() view returns (uint256)",
-      "function txDataSliceCount() view returns (uint256)",
-      "function txDataSliceSize() view returns (uint256)",
-      "function verifierStake(uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber) payable",
-      "function whitelist(address) view returns (bool)",
-      "function withdrawStake(uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber)"
     ],
     "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E": [
       "constructor()",
@@ -462,6 +426,63 @@
     ],
     "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": [
       "constructor(address _singleton)"
+    ],
+    "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": [
+      "constructor(address _libAddressManager, uint256 _maxTransactionGasLimit, uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)",
+      "event BatchElementDeleted(address _sender, uint256 _chainId, uint256 _index, bytes27 _globalMetadata)",
+      "event BatchPushed(address _sender, uint256 _chainId, bytes32 _object, bytes27 _globalMetadata)",
+      "event BatchSetted(address _sender, uint256 _chainId, uint256 _index, bytes32 _object)",
+      "event BatchesGlobalMetadataSet(address _sender, uint256 _chainId, bytes27 _globalMetadata)",
+      "event L2GasParamsUpdated(uint256 l2GasDiscountDivisor, uint256 enqueueGasCost, uint256 enqueueL2GasPrepaid)",
+      "event QueueBatchAppended(uint256 _chainId, uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)",
+      "event QueueElementDeleted(address _sender, uint256 _chainId, uint256 _index, bytes27 _globalMetadata)",
+      "event QueueGlobalMetadataSet(address _sender, uint256 _chainId, bytes27 _globalMetadata)",
+      "event QueuePushed(address _sender, uint256 _chainId, tuple(bytes32 transactionHash, uint40 timestamp, uint40 blockNumber) _object)",
+      "event QueueSetted(address _sender, uint256 _chainId, uint256 _index, tuple(bytes32 transactionHash, uint40 timestamp, uint40 blockNumber) _object)",
+      "event SequencerBatchAppended(uint256 _chainId, uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)",
+      "event TransactionBatchAppended(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)",
+      "event TransactionEnqueued(uint256 _chainId, address indexed _l1TxOrigin, address indexed _target, uint256 _gasLimit, bytes _data, uint256 indexed _queueIndex, uint256 _timestamp)",
+      "function DEFAULT_CHAINID() view returns (uint256)",
+      "function MAX_ROLLUP_TX_SIZE() view returns (uint256)",
+      "function MIN_ROLLUP_TX_GAS() view returns (uint256)",
+      "function appendSequencerBatch()",
+      "function appendSequencerBatchByChainId()",
+      "function batches() view returns (address)",
+      "function deleteBatchElementsAfterInclusiveByChainId(uint256 _chainId, uint256 _index, bytes27 _globalMetadata)",
+      "function enqueue(address _target, uint256 _gasLimit, bytes _data)",
+      "function enqueueByChainId(uint256 _chainId, address _target, uint256 _gasLimit, bytes _data)",
+      "function enqueueGasCost() view returns (uint256)",
+      "function enqueueL2GasPrepaid() view returns (uint256)",
+      "function getBatchByChainId(uint256 _chainId, uint256 _index) view returns (bytes32)",
+      "function getBatchGlobalMetadataByChainId(uint256 _chainId) view returns (bytes27)",
+      "function getLastBlockNumber() view returns (uint40)",
+      "function getLastBlockNumberByChainId(uint256 _chainId) view returns (uint40)",
+      "function getLastTimestamp() view returns (uint40)",
+      "function getLastTimestampByChainId(uint256 _chainId) view returns (uint40)",
+      "function getNextQueueIndex() view returns (uint40)",
+      "function getNextQueueIndexByChainId(uint256 _chainId) view returns (uint40)",
+      "function getNumPendingQueueElements() view returns (uint40)",
+      "function getNumPendingQueueElementsByChainId(uint256 _chainId) view returns (uint40)",
+      "function getQueueElement(uint256 _index) view returns (tuple(bytes32 transactionHash, uint40 timestamp, uint40 blockNumber) _element)",
+      "function getQueueElementByChainId(uint256 _chainId, uint256 _index) view returns (tuple(bytes32 transactionHash, uint40 timestamp, uint40 blockNumber) _element)",
+      "function getQueueLength() view returns (uint40)",
+      "function getQueueLengthByChainId(uint256 _chainId) view returns (uint40)",
+      "function getTotalBatches() view returns (uint256 _totalBatches)",
+      "function getTotalBatchesByChainId(uint256 _chainId) view returns (uint256 _totalBatches)",
+      "function getTotalElements() view returns (uint256 _totalElements)",
+      "function getTotalElementsByChainId(uint256 _chainId) view returns (uint256 _totalElements)",
+      "function l2GasDiscountDivisor() view returns (uint256)",
+      "function lengthBatchByChainId(uint256 _chainId) view returns (uint256)",
+      "function libAddressManager() view returns (address)",
+      "function maxTransactionGasLimit() view returns (uint256)",
+      "function pushBatchByChainId(uint256 _chainId, bytes32 _object, bytes27 _globalMetadata)",
+      "function pushQueueByChainId(uint256 _chainId, tuple(bytes32 transactionHash, uint40 timestamp, uint40 blockNumber) _object)",
+      "function queue() view returns (address)",
+      "function resolve(string _name) view returns (address)",
+      "function setBatchByChainId(uint256 _chainId, uint256 _index, bytes32 _object)",
+      "function setBatchGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)",
+      "function setGasParams(uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)",
+      "function setQueueByChainId(uint256 _chainId, uint256 _index, tuple(bytes32 transactionHash, uint40 timestamp, uint40 blockNumber) _object)"
     ],
     "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": [
       "constructor(address _owner)",
@@ -537,16 +558,6 @@
       "function renounceOwnership()",
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
-    ],
-    "0x9E2E3be85df5Ca63DE7674BA64ffD564075f3B48": [
-      "constructor()",
-      "event PushConfig(uint256 chainid, bytes configs)",
-      "event SwitchSeq(uint256 chainid, address wallet, address manager)",
-      "function CONFIG_OWNER_KEY() view returns (string)",
-      "function addressmgr() view returns (address)",
-      "function messenger() view returns (address)",
-      "function pushConfig(uint256 _chainId, bytes _configs) payable",
-      "function switchSequencer(uint256 _chainId, address wallet, address manager) payable"
     ],
     "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": [
       "constructor(address[] minters, uint256 maxSupply)",
@@ -625,54 +636,6 @@
       "function setByChainId(uint256 _chainId, uint256 _index, bytes32 _object)",
       "function setGlobalMetadata(bytes27 _globalMetadata)",
       "function setGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)"
-    ],
-    "0xB2e2060A179e67cA4299Cc79fA337B98791DE069": [
-      "constructor()",
-      "event Claim(address sender, uint256 amount)",
-      "event Finalize(uint256 cIndex, address sender, uint8 result)",
-      "event NewChallenge(uint256 cIndex, uint256 chainID, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) header, uint256 timestamp)",
-      "event Penalize(address sender, uint256 stakeLost)",
-      "event Reward(address target, uint256 amount)",
-      "event SlashSequencer(uint256 chainID, address seq)",
-      "event Stake(address verifier, uint256 amount)",
-      "event Verify1(uint256 cIndex, address verifier)",
-      "event Verify2(uint256 cIndex, address verifier)",
-      "event Withdraw(address sender, uint256 amount)",
-      "function CONFIG_OWNER_KEY() view returns (string)",
-      "function absence_strikes(address) view returns (uint8)",
-      "function activeChallenges() view returns (uint256)",
-      "function chain_under_challenge(uint256) view returns (uint256)",
-      "function challenges(uint256) view returns (address challenger, uint256 chainID, uint256 index, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) header, uint256 timestamp, uint256 numQualifiedVerifiers, uint256 numVerifiers, bool done)",
-      "function claim()",
-      "function consensus_strikes(address) view returns (uint8)",
-      "function decrypt(bytes data, bytes key) pure returns (bytes)",
-      "function depositSeqStake(uint256 amount)",
-      "function disableWhiteList()",
-      "function encrypt(bytes data, bytes key) pure returns (bytes)",
-      "function getMerkleRoot(bytes32[] elements) pure returns (bytes32)",
-      "function isSufficientlyStaked(address target) view returns (bool)",
-      "function isWhiteListed(address verifier) view returns (bool)",
-      "function libAddressManager() view returns (address)",
-      "function metis() view returns (address)",
-      "function minStake() view returns (uint256)",
-      "function newChallenge(uint256 chainID, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) header, bytes proposedHash, bytes keyhash)",
-      "function numQualifiedVerifiers() view returns (uint256)",
-      "function resolve(string _name) view returns (address)",
-      "function rewards(address) view returns (uint256)",
-      "function seqStake() view returns (uint256)",
-      "function setMinStake(uint256 _minStake)",
-      "function setThreshold(uint256 absence_threshold, uint256 fail_threshold)",
-      "function setVerifyWindow(uint256 window)",
-      "function setWhiteList(address verifier, bool allowed)",
-      "function verifierStake(uint256 stake)",
-      "function verifier_stakes(address) view returns (uint256)",
-      "function verifiers(uint256) view returns (address)",
-      "function verify1(uint256 cIndex, bytes hash, bytes keyhash)",
-      "function verify2(uint256 cIndex, bytes key)",
-      "function verifyWindow() view returns (uint256)",
-      "function whitelist(address) view returns (bool)",
-      "function withdraw(uint256 amount)",
-      "function withdrawSeqStake(address to)"
     ],
     "0xC878771A4ff7466B7be8b59FB8766719AEa8d562": [
       "constructor()",

@@ -27,6 +27,12 @@ export interface ProjectContractSingleAddress {
   description?: string
   /** Details about upgradeability */
   upgradeability?: ProjectUpgradeability
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  upgradeDelay?: string
+  /** Which actors from permissions can upgrade */
+  upgradableBy?: string[]
+  /** Other considerations worth mentioning about the upgrade process */
+  upgradeConsiderations?: string
 }
 
 export function isSingleAddress(

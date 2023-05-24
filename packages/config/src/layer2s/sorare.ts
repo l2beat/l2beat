@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -62,7 +62,7 @@ export const sorare: Layer2 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'StarkExchange',
+        address: EthereumAddress('0xF5C9F957705bea56a7e806943f98F7777B995826'),
         sinceTimestamp: new UnixTime(1626352527),
         tokens: ['ETH'],
       }),
@@ -102,8 +102,8 @@ export const sorare: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails('StarkExchange'),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('StarkExchange'),
+      discovery.getContractDetails(
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
@@ -123,10 +123,7 @@ export const sorare: Layer2 = {
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
-        'StarkExchange',
-        'OPERATORS',
-      ),
+      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
       description:
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
     },

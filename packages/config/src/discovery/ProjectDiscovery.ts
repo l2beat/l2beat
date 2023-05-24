@@ -57,57 +57,51 @@ export class ProjectDiscovery {
     return JSON.parse(discoveryFile) as DiscoveryOutput
   }
 
-  getMainContractDetails(
+  getContractDetails(
     identifier: string,
-    description?: string,
+    descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
   ): ProjectContractSingleAddress {
     const contract = this.getContract(identifier)
+    if (typeof descriptionOrOptions === 'string') {
+      descriptionOrOptions = { description: descriptionOrOptions }
+    }
     return {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
-      description,
+      ...descriptionOrOptions,
     }
   }
 
   getEscrowDetails({
-    identifier,
+    address,
+    name,
     description,
-    path,
     sinceTimestamp,
     tokens,
-    hidden,
   }: {
-    identifier: string
+    address: EthereumAddress
+    name?: string
     description?: string
-    path?: string
     sinceTimestamp: UnixTime
     tokens: string[] | '*'
-    hidden?: boolean
   }): ProjectEscrow {
-    let contract: ContractParameters
-    if (path) {
-      const address = this.getAddressFromValue(identifier, path)
-      contract = this.getContractByAddress(address.toString())
-    } else {
-      contract = this.getContract(identifier)
-    }
+    const contract = this.getContractByAddress(address.toString())
 
     return {
       newVersion: true,
-      name: contract.name,
-      address: contract.address,
+      name: name ?? contract.name,
+      address,
       upgradeability: contract.upgradeability,
       description,
       sinceTimestamp,
       tokens,
-      hidden,
     }
   }
 
-  getGnosisSafeDetails(
+  getMultisigPermission(
     identifier: string,
-    descriptionPrefix: string,
+    description: string,
   ): ProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
@@ -118,7 +112,7 @@ export class ProjectDiscovery {
     return [
       {
         name: identifier,
-        description: `${descriptionPrefix} This is a Gnosis Safe with ${this.getMultisigStats(
+        description: `${description} This is a Gnosis Safe with ${this.getMultisigStats(
           identifier,
         )} threshold.`,
         accounts: [
@@ -130,8 +124,8 @@ export class ProjectDiscovery {
       },
       {
         name: `${identifier} participants`,
-        description: `Those are the participants of the ${identifier}`,
-        accounts: this.getPermissionedAccountsList(identifier, 'getOwners'),
+        description: `Those are the participants of the ${identifier}.`,
+        accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
       },
     ]
   }
@@ -192,7 +186,15 @@ export class ProjectDiscovery {
     return { address: address, type }
   }
 
-  getPermissionedAccountsList(
+  getPermissionedAccount(
+    contractIdentifier: string,
+    key: string,
+  ): ProjectPermissionedAccount {
+    const value = this.getContractValue(contractIdentifier, key)
+    return this.formatPermissionedAccount(value)
+  }
+
+  getPermissionedAccounts(
     contractIdentifier: string,
     key: string,
   ): ProjectPermissionedAccount[] {
@@ -307,7 +309,7 @@ export class ProjectDiscovery {
     ])
   }
 
-  private getContractByAddress(address: string): ContractParameters {
+  getContractByAddress(address: string): ContractParameters {
     const contract = this.discovery.contracts.find(
       (contract) => contract.address === EthereumAddress(address),
     )

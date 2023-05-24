@@ -164,10 +164,13 @@ export const SEQUENCER_STARKEX_SPOT: ProjectRiskViewEntry = {
     'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
 }
 
-export const SEQUENCER_FORCE_EXIT_L1: ProjectRiskViewEntry = {
-  value: 'Force exit to L1',
-  description:
-    'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
+export function SEQUENCER_FORCE_EXIT_L1(fee?: string): ProjectRiskViewEntry {
+  return {
+    value: 'Force exit to L1',
+    description: `The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2${
+      fee !== undefined ? ` with a ${fee} fee` : ''
+    }. After that the user exits the system with their funds.`,
+  }
 }
 
 export const SEQUENCER_EXIT_L1: ProjectRiskViewEntry = {
@@ -205,10 +208,13 @@ export const SEQUENCER_QUEUE: ProjectRiskViewEntry = {
 
 // Operator is down
 
-export const VALIDATOR_ESCAPE_MP: ProjectRiskViewEntry = {
-  value: 'Escape hatch (MP)',
-  description:
-    'Users are able to trustlessly exit by submitting a merkle proof of funds.',
+export function VALIDATOR_ESCAPE_MP(delay?: string): ProjectRiskViewEntry {
+  return {
+    value: 'Escape hatch (MP)',
+    description: `Users are able to trustlessly exit by submitting a merkle proof of funds.${
+      delay !== undefined ? ` There is a ${delay} delay on this operation.` : ''
+    }`,
+  }
 }
 
 export const VALIDATOR_ESCAPE_ZKP: ProjectRiskViewEntry = {
@@ -219,7 +225,7 @@ export const VALIDATOR_ESCAPE_ZKP: ProjectRiskViewEntry = {
 }
 
 export const VALIDATOR_ESCAPE_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
-  ...VALIDATOR_ESCAPE_MP,
+  ...VALIDATOR_ESCAPE_MP(),
   description:
     'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
 }

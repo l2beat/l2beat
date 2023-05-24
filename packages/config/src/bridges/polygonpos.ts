@@ -138,101 +138,38 @@ export const polygonpos: Bridge = {
     // TODO: we need all contracts (check roles on escrows) and a diagram
     isIncomplete: true,
     addresses: [
-      {
-        address: discovery.getContract('RootChainManager').address,
-        name: 'RootChainManager',
-        description:
-          'Main contract to manage bridge tokens, deposits and withdrawals.',
-        upgradeability: {
-          type: 'Custom',
-          implementation: discovery.getContractUpgradeabilityParam(
-            'RootChainManager',
-            'implementation',
-          ),
-          admin: EthereumAddress(
-            discovery.getContractValue<string>(
-              'RootChainManager',
-              'proxyOwner',
-            ),
-          ),
-        },
-      },
-      {
-        address: discovery.getContract('StateSender').address,
-        name: 'StateSender',
-        description:
-          'Smart contract containing logic for syncing the state of the bridge.',
-      },
-      {
-        address: discovery.getContract('RootChain').address,
-        name: 'RootChain',
-        description:
-          'Contract storing Polygon sidechain checkpoints. Note that validatity of these checkpoints is not verfied, it is assumed they are valid if signed by 2/3 of the Polygon Validators.',
-        //Shouldn't we get it from discovery?
-        upgradeability: {
-          type: 'Custom',
-          implementation: EthereumAddress(
-            '0x536c55cFe4892E581806e10b38dFE8083551bd03',
-          ),
-          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
-        },
-      },
-      {
-        address: discovery.getContract('Timelock').address,
-        name: 'Timelock',
-        description: 'Contract enforcing delay on code upgrades.',
-      },
-      {
-        address: discovery.getContract('ERC20Predicate').address,
-        name: 'ERC20Predicate',
-        description: 'Escrow contract for ERC20 tokens.',
-        upgradeability: {
-          type: 'Custom',
-          implementation: EthereumAddress(
-            '0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5',
-          ),
-          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
-        },
-      },
-      {
-        address: discovery.getContract('EtherPredicate').address,
-        name: 'EtherPredicate',
-        description: 'Escrow contract for ETH.',
-        upgradeability: {
-          type: 'Custom',
-          implementation: EthereumAddress(
-            '0x54006763154c764da4AF42a8c3cfc25Ea29765D5',
-          ),
-          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
-        },
-      },
+      discovery.getContractDetails(
+        'RootChainManager',
+        'Main contract to manage bridge tokens, deposits and withdrawals.',
+      ),
+      discovery.getContractDetails(
+        'StateSender',
+        'Smart contract containing logic for syncing the state of the bridge.',
+      ),
+      discovery.getContractDetails(
+        'RootChain',
+        'Contract storing Polygon sidechain checkpoints. Note that validity of these checkpoints is not verified, it is assumed they are valid if signed by 2/3 of the Polygon Validators.',
+      ),
+      discovery.getContractDetails(
+        'Timelock',
+        'Contract enforcing delay on code upgrades.',
+      ),
+      discovery.getContractDetails(
+        'ERC20Predicate',
+        'Escrow contract for ERC20 tokens.',
+      ),
+      discovery.getContractDetails(
+        'EtherPredicate',
+        'Escrow contract for ETH.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('48 hours')],
   },
   permissions: [
-    {
-      accounts: [
-        {
-          address: discovery.getContract('GnosisSafe').address,
-          type: 'MultiSig',
-        },
-      ],
-      name: 'Polygon MultiSig',
-      description:
-        'Can propose and execute code upgrades on escrows via Timelock contract.',
-    },
-    {
-      name: 'MultiSig Participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Polygon MultiSig.`,
-    },
+    ...discovery.getMultisigPermission(
+      'Polygon Multisig',
+      'Can propose and execute code upgrades on escrows via Timelock contract.',
+    ),
   ],
   knowledgeNuggets: [
     {

@@ -57,31 +57,31 @@ export const starknet: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: discovery.getContract('ETH Bridge').address,
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'),
         sinceTimestamp: new UnixTime(1647857148),
         tokens: ['ETH'],
-      },
-      {
-        address: discovery.getContract('DAI Bridge').address,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
         sinceTimestamp: new UnixTime(1652101033),
         tokens: ['DAI'],
-      },
-      {
-        address: discovery.getContract('WBTC Bridge').address,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x283751A21eafBFcD52297820D27C1f1963D9b5b4'),
         sinceTimestamp: new UnixTime(1657137600),
         tokens: ['WBTC'],
-      },
-      {
-        address: discovery.getContract('USDC Bridge').address,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'),
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
-      },
-      {
-        address: discovery.getContract('USDT Bridge').address,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xbb3400F107804DFB482565FF1Ec8D8aE66747605'),
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
-      },
+      }),
     ],
     transactionApi: {
       type: 'starknet',
@@ -136,34 +136,22 @@ export const starknet: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'Starknet',
         'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
-      discovery.getMainContractDetails(
-        'ETH Bridge',
-        'StarkGate bridge for ETH.',
-      ),
-      discovery.getMainContractDetails(
-        'WBTC Bridge',
-        'StarkGate bridge for WBTC.',
-      ),
-      discovery.getMainContractDetails(
-        'USDC Bridge',
-        'StarkGate bridge for USDC.',
-      ),
-      discovery.getMainContractDetails(
-        'USDT Bridge',
-        'StarkGate bridge for USDT.',
-      ),
+      discovery.getContractDetails('ETH Bridge', 'StarkGate bridge for ETH.'),
+      discovery.getContractDetails('WBTC Bridge', 'StarkGate bridge for WBTC.'),
+      discovery.getContractDetails('USDC Bridge', 'StarkGate bridge for USDC.'),
+      discovery.getContractDetails('USDT Bridge', 'StarkGate bridge for USDT.'),
       {
         name: 'L1DaiGateway',
         description:
           'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
         address: EthereumAddress('0x9F96fE0633eE838D0298E8b8980E6716bE81388d'),
       },
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'DAI Bridge',
         'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       ),
@@ -179,14 +167,14 @@ export const starknet: Layer2 = {
     },
     {
       name: 'Starknet Implementation Governors',
-      accounts: discovery.getPermissionedAccountsList('Starknet', 'governors'),
+      accounts: discovery.getPermissionedAccounts('Starknet', 'governors'),
       description:
         'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
     },
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList('Starknet', 'operators'),
+      accounts: discovery.getPermissionedAccounts('Starknet', 'operators'),
       description:
         'Allowed to post state updates. When the operator is down the state cannot be updated.',
     },

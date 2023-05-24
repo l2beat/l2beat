@@ -216,104 +216,63 @@ export const nova: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'ProxyAdmin (1)',
-        address: EthereumAddress('0x71D78dC7cCC0e037e12de1E50f5470903ce37148'),
-        description:
-          'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by the Upgrade Executor.',
-      },
-      {
-        address: discovery.getContract('UpgradeExecutor').address,
-        name: 'UpgradeExecutor',
-        description:
-          "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
-        upgradeability: discovery.getContract('UpgradeExecutor').upgradeability,
-      },
-      {
-        address: EthereumAddress('0x5613AF0474EB9c528A34701A5b1662E3C8FA0678'),
-        name: 'ProxyAdmin (2)',
-        description:
-          'This contract is an admin of the Update Executor contract, but is also owned by it.',
-      },
-      {
-        address: discovery.getContract('L1ArbitrumTimelock').address,
-        name: 'L1ArbitrumTimelock',
-        description:
-          'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
-      },
-      {
-        address: discovery.getContract('ArbitrumProxy').address,
-        name: 'Rollup',
-        description:
-          'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-        upgradeability: discovery.getContract('ArbitrumProxy').upgradeability,
-      },
-      {
-        address: discovery.getContract('SequencerInbox').address,
-        name: 'SequencerInbox',
-        description:
-          'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-        upgradeability: discovery.getContract('SequencerInbox').upgradeability,
-      },
-      {
-        address: discovery.getContract('Inbox').address,
-        name: 'Inbox',
-        description:
-          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
-        upgradeability: discovery.getContract('Inbox').upgradeability,
-      },
-      {
-        address: discovery.getContract('Bridge').address,
-        name: 'Bridge',
-        description:
-          'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-        upgradeability: discovery.getContract('Bridge').upgradeability,
-      },
-      {
-        address: discovery.getContract('Outbox').address,
-        name: 'Outbox',
-        upgradeability: discovery.getContract('Outbox').upgradeability,
-      },
-      {
-        address: discovery.getContract('ChallengeManager').address,
-        name: 'ChallengeManager',
-        description:
-          'Contract managing an interactive fraud challenge process.',
-        upgradeability:
-          discovery.getContract('ChallengeManager').upgradeability,
-      },
-      {
-        address: discovery.getContract('OneStepProofEntry').address,
-        name: 'OneStepProofEntry',
-        description:
-          'Contract managing adjudication logic for EVM implementation in WASM used by the fraud proofs.',
-      },
-      {
-        address: EthereumAddress('0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560'),
-        name: 'ProxyAdmin (3)',
-        description:
-          'Yet another proxy admin for the three gateway contracts below. It is also owned by the Upgrade Executor.',
-      },
-      {
-        address: discovery.getContract('L1GatewayRouter').address,
-        name: 'L1GatewayRouter',
-        description: 'Router managing token <--> gateway mapping.',
-        upgradeability: discovery.getContract('L1GatewayRouter').upgradeability,
-      },
-      {
-        address: discovery.getContract('L1ERC20Gateway').address,
-        name: 'L1ERC20Gateway',
-        description:
-          'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-        upgradeability: discovery.getContract('L1ERC20Gateway').upgradeability,
-      },
-      {
-        address: discovery.getContract('L1CustomGateway').address,
-        name: 'L1CustomGateway',
-        description:
-          'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-        upgradeability: discovery.getContract('L1CustomGateway').upgradeability,
-      },
+      discovery.getContractDetails(
+        'ProxyAdmin 1',
+        'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by the Upgrade Executor.',
+      ),
+      discovery.getContractDetails(
+        'UpgradeExecutor',
+        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+      ),
+      discovery.getContractDetails(
+        'ProxyAdmin 2',
+        'This contract is an admin of the Update Executor contract, but is also owned by it.',
+      ),
+      discovery.getContractDetails(
+        'L1ArbitrumTimelock',
+        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+      ),
+      discovery.getContractDetails(
+        'ArbitrumProxy',
+        'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
+      ),
+      discovery.getContractDetails(
+        'SequencerInbox',
+        'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+      ),
+      discovery.getContractDetails(
+        'Inbox',
+        'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
+      ),
+      discovery.getContractDetails(
+        'Bridge',
+        'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+      ),
+      discovery.getContractDetails('Outbox'),
+      discovery.getContractDetails(
+        'ChallengeManager',
+        'Contract managing an interactive fraud challenge process.',
+      ),
+      discovery.getContractDetails(
+        'OneStepProofEntry',
+        'Contract managing adjudication logic for EVM implementation in WASM used by the fraud proofs.',
+      ),
+      discovery.getContractDetails(
+        'ProxyAdmin 3',
+        'Yet another proxy admin for the three gateway contracts below. It is also owned by the Upgrade Executor.',
+      ),
+      discovery.getContractDetails(
+        'L1GatewayRouter',
+        'Router managing token <--> gateway mapping.',
+      ),
+      discovery.getContractDetails(
+        'L1ERC20Gateway',
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+      ),
+      discovery.getContractDetails(
+        'L1CustomGateway',
+        'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
+      ),
       {
         address: EthereumAddress('0x97f63339374fCe157Aa8Ee27830172d2AF76A786'),
         name: 'L1DaiGateway',

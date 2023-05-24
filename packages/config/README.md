@@ -40,6 +40,7 @@ In some tests rpc calls to ethereum network are performed through Alchemy. In or
 | Arbitrum One, Arbitrum Nova       | https://medium.com/offchainlabs                          |
 | Aztec, Aztec Connect              | https://medium.com/aztec-protocol                        |
 | Boba Network                      | https://boba.network/blog/                               |
+| DeGate                            | https://medium.com/degate                                |
 | dYdX                              | https://dydx.exchange/blog                               |
 | Fuel                              | https://fuel-labs.ghost.io/                              |
 | Gluon                             | https://blog.leverj.io/                                  |

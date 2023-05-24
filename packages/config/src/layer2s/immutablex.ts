@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -61,7 +61,7 @@ export const immutablex: Layer2 = {
     associatedTokens: ['IMX'],
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'StarkExchange',
+        address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
         sinceTimestamp: new UnixTime(1615389188),
         tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
         description: 'Main StarkEx contract, used also as an escrow.',
@@ -102,8 +102,8 @@ export const immutablex: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails('StarkExchange'),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('StarkExchange'),
+      discovery.getContractDetails(
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
@@ -123,10 +123,7 @@ export const immutablex: Layer2 = {
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
-        'StarkExchange',
-        'OPERATORS',
-      ),
+      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },

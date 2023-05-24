@@ -64,11 +64,11 @@ export const dydx: Layer2 = {
   },
   config: {
     escrows: [
-      {
-        address: discovery.getContract('StarkPerpetual').address,
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
         sinceTimestamp: new UnixTime(1613033682),
         tokens: ['USDC'],
-      },
+      }),
     ],
     transactionApi: {
       type: 'starkex',
@@ -159,11 +159,11 @@ export const dydx: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'StarkPerpetual',
         'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'GpsStatementVerifier',
         'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
       ),
@@ -190,12 +190,7 @@ export const dydx: Layer2 = {
     {
       name: 'dYdX Governance',
       accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>('PriorityExecutor', 'getAdmin'),
-          ),
-          type: 'Contract',
-        },
+        discovery.getPermissionedAccount('PriorityExecutor', 'getAdmin'),
       ],
       description:
         'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
@@ -203,7 +198,7 @@ export const dydx: Layer2 = {
     },
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'StarkPerpetual',
         'OPERATORS',
       ),
