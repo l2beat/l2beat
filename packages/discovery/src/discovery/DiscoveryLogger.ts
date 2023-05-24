@@ -17,7 +17,7 @@ export class DiscoveryLogger {
 
   flush(project: string) {
     if (!this.options.buffered) {
-      throw new Error('Programmer error: Cannot flush non-buffered logger.')
+      return
     }
     console.log(
       `Printing discovery logs for [${project}]:\n` + this.bufferedLogs,
