@@ -70,7 +70,7 @@ export function DetailsHeader(props: HeaderProps) {
             />
             {!props.isUpcoming && (
               <a
-                href="#risks"
+                href="#risk-analysis"
                 className="mt-3 block text-center text-sm font-bold text-link underline"
               >
                 Learn more about Risks analysis{' '}
