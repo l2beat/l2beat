@@ -1,7 +1,7 @@
 {
   "name": "debridge",
   "blockNumber": 17273064,
-  "configHash": "0x525afe6a04bf5c20e6acb4cdb55c256a225bcec03e3a467d9b7d838d9ded2c5c",
+  "configHash": "0x9ae2dcdfb4b7d5ed7cbf076e5dd20318c538a0cf43747ee8f7dd41f35c21d647",
   "contracts": [
     {
       "name": "DeBridgeGate",
@@ -39,7 +39,7 @@
       "derivedName": "DeBridgeGate"
     },
     {
-      "name": "GnosisSafe",
+      "name": "Admin Multisig",
       "address": "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5",
       "code": "https://etherscan.deth.net/address/0x6bec1faF33183e1Bc316984202eCc09d46AC92D5,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {

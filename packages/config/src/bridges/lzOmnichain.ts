@@ -133,27 +133,19 @@ export const lzOmnichain: Bridge = {
         description:
           'Contract used to validate messages coming from other chains, e.g. Aptos.',
       },
-      {
-        address: discovery.getContract('Endpoint').address,
-        name: 'Endpoint',
-        description:
-          'Layer Zero Enpoint contract used for cross-chain messaging.',
-      },
-      {
-        address: discovery.getContract('UltraLightNodeV2').address,
-        name: 'UltraLightNodeV2',
-        description: 'LayerZero default send and receive library.',
-      },
-      {
-        address: discovery.getContract('TreasuryV2').address,
-        name: 'TreasuryV2',
-        description: 'LayerZero contract responsible for fees mechanism.',
-      },
-      {
-        address: discovery.getContract('NonceContract').address,
-        name: 'NonceContract',
-        description: 'LayerZero nonce contract.',
-      },
+      discovery.getContractDetails(
+        'Endpoint',
+        'Contract used for cross-chain messaging.',
+      ),
+      discovery.getContractDetails(
+        'UltraLightNodeV2',
+        'Default send and receive library.',
+      ),
+      discovery.getContractDetails(
+        'TreasuryV2',
+        'Contract responsible for fee mechanism.',
+      ),
+      discovery.getContractDetails('NonceContract'),
     ],
     risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
@@ -185,37 +177,10 @@ export const lzOmnichain: Bridge = {
       description:
         'Contract that submits source chain block hashes to the destination chain.',
     },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'LayerZero Multisig',
-      description:
-        'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
-    },
-    {
-      name: 'LayerZero MultiSig Participants',
-      accounts: discovery
-        .getContractValue<string[]>(
-          '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-          'getOwners',
-        )
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>(
-          '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-          'getOwners',
-        ).length
-      } LayerZero MultiSig.`,
-    },
+    ...discovery.getMultisigPermission(
+      'LayerZero Multisig',
+      'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
+    ),
   ],
   knowledgeNuggets: [
     {

@@ -180,55 +180,35 @@ export const optimism: Layer2 = {
     },
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'OptimismMultisig',
       'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     {
       name: 'Sequencer',
       accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>(
-              'LibAddressManager',
-              'OVM_Sequencer',
-            ),
-          ),
-          type: 'EOA',
-        },
+        discovery.getPermissionedAccount('LibAddressManager', 'OVM_Sequencer'),
       ],
       description: 'Central actor allowed to commit L2 transactions to L1.',
     },
     {
       name: 'State Root Proposer',
       accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>(
-              'LibAddressManager',
-              'OVM_Proposer',
-            ),
-          ),
-          type: 'EOA',
-        },
+        discovery.getPermissionedAccount('LibAddressManager', 'OVM_Proposer'),
       ],
       description: 'Central actor to post new L2 state roots to L1.',
     },
   ],
   contracts: {
     addresses: [
-      {
-        name: 'CanonicalTransactionChain',
-        description:
-          'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer can append to the rollup state.',
-        address: discovery.getContract('CanonicalTransactionChain').address,
-      },
-      {
-        name: 'StateCommitmentChain',
-        description:
-          'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currenlty olny OVM_Proposer can submit new state roots.',
-        address: discovery.getContract('StateCommitmentChain').address,
-      },
+      discovery.getContractDetails(
+        'CanonicalTransactionChain',
+        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer can append to the rollup state.',
+      ),
+      discovery.getContractDetails(
+        'StateCommitmentChain',
+        'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only OVM_Proposer can submit new state roots.',
+      ),
       {
         name: 'ChainStorageContainer-CTC-batches',
         address: EthereumAddress(
@@ -244,34 +224,22 @@ export const optimism: Layer2 = {
           discovery.getContractValue<string>('StateCommitmentChain', 'batches'),
         ),
       },
-      {
-        name: 'BondManager',
-        description:
-          "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
-        address: discovery.getContract('BondManager').address,
-      },
-      {
-        name: 'L1CrossDomainMessenger',
-        address: discovery.getContract('L1CrossDomainMessengerProxy').address,
-        description:
-          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        upgradeability: discovery.getContract('L1CrossDomainMessengerProxy')
-          .upgradeability,
-      },
-      {
-        name: 'Lib_AddressManager',
-        description:
-          'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
-        address: discovery.getContract('LibAddressManager').address,
-      },
-      {
-        name: 'L1StandardBridge',
-        address: discovery.getContract('L1StandardBridge').address,
-        description:
-          'Main entry point forgetContract users depositing ERC20 tokens and ETH that do not require custom gateway.',
-        upgradeability:
-          discovery.getContract('L1StandardBridge').upgradeability,
-      },
+      discovery.getContractDetails(
+        'BondManager',
+        "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
+      ),
+      discovery.getContractDetails(
+        'L1CrossDomainMessengerProxy',
+        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+      ),
+      discovery.getContractDetails(
+        'LibAddressManager',
+        'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
+      ),
+      discovery.getContractDetails(
+        'L1StandardBridge',
+        'Main entry point forgetContract users depositing ERC20 tokens and ETH that do not require custom gateway.',
+      ),
       {
         name: 'SynthetixBridgeToOptimism',
         description:

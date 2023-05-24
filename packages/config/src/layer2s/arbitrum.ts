@@ -275,7 +275,7 @@ export const arbitrum: Layer2 = {
     ),
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'SecurityCouncil',
       'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
     ),
@@ -306,19 +306,19 @@ export const arbitrum: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'RollupProxy',
         'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'ArbitrumOneBridge',
         'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'SequencerInbox',
         'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'Inbox',
         'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
       ),
@@ -327,15 +327,15 @@ export const arbitrum: Layer2 = {
         'outbox',
         "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'UpgradeExecutor',
         "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'L1ArbitrumTimelock',
         'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'L1GatewayRouter',
         'Router managing token <--> gateway mapping.',
       ),

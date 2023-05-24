@@ -165,48 +165,34 @@ export const cBridge: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'Message Bus',
-        address: EthereumAddress('0x4066D196A423b2b3B8B054f4F40efB47a74E200C'),
-        description:
-          'Contract providing cross-chain AMB facility. It connects with Liquidity Network and Token Bridges to processes certain types of messages.',
-      },
-      {
-        name: 'Liquidity Network',
-        address: EthereumAddress('0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820'),
-        description:
-          'Contract providing cross-chain swaps, allows user to deposit funds and withdraw them. Additionally user can add liquidity to this address to generate yield.',
-      },
-      {
-        name: 'Token Bridge v1',
-        address: EthereumAddress('0xB37D31b2A74029B5951a2778F959282E2D518595'),
-        description:
-          'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
-      },
-      {
-        name: 'Token Bridge v2',
-        address: EthereumAddress('0x7510792A3B1969F9307F3845CE88e39578f2bAE1'),
-        description:
-          'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
-      },
-      {
-        name: 'Pegged Token Bridge v1',
-        address: EthereumAddress('0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB'),
-        description:
-          'Contract minting/burning tokens when receiving a message from Token Bridge.',
-      },
-      {
-        name: 'Pegged Token Bridge v2',
-        address: EthereumAddress('0x52E4f244f380f8fA51816c8a10A63105dd4De084'),
-        description:
-          'Contract minting/burning tokens when receiving a message from Token Bridge.',
-      },
-      {
-        name: 'Transfer Agent',
-        address: EthereumAddress('0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b'),
-        description:
-          'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',
-      },
+      discovery.getContractDetails(
+        'MessageBus',
+        'Contract providing cross-chain AMB facility. It connects with Liquidity Network and Token Bridges to processes certain types of messages.',
+      ),
+      discovery.getContractDetails(
+        'Liquidity Network',
+        'Contract providing cross-chain swaps, allows user to deposit funds and withdraw them. Additionally user can add liquidity to this address to generate yield.',
+      ),
+      discovery.getContractDetails(
+        'OriginalTokenVault',
+        'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
+      ),
+      discovery.getContractDetails(
+        'OriginalTokenVaultV2',
+        'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
+      ),
+      discovery.getContractDetails(
+        'PeggedTokenBridge',
+        'Contract minting/burning tokens when receiving a message from Token Bridge.',
+      ),
+      discovery.getContractDetails(
+        'PeggedTokenBridgeV2',
+        'Contract minting/burning tokens when receiving a message from Token Bridge.',
+      ),
+      discovery.getContractDetails(
+        'TransferAgent',
+        'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',
+      ),
     ],
     references: [],
     risks: [],
@@ -216,37 +202,32 @@ export const cBridge: Bridge = {
       name: 'Bridge Governance',
       description:
         'The owner of the main bridge contract, can update bridge parameters such as Token Bridge and Liquidity Network addresses.',
-      accounts: [
-        {
-          address: discovery.getAddressFromValue('MessageBus', 'owner'),
-          type: 'Contract',
-        },
-      ],
+      accounts: [discovery.getPermissionedAccount('MessageBus', 'owner')],
     },
     {
       name: 'Bridge Governance (2)',
       description:
         'The owner of the Token Bridge, Liquidity Network and Transfer Agent is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
       accounts: [
-        {
-          address: discovery.getAddressFromValue(
-            'OriginalTokenVaultV2',
-            'owner',
-          ),
-          type: 'Contract',
-        },
+        discovery.getPermissionedAccount('OriginalTokenVaultV2', 'owner'),
       ],
     },
     {
       name: 'Governors',
       description:
         'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
-      accounts: discovery.getPermissionedAccountsList('Bridge', 'pausers'),
+      accounts: discovery.getPermissionedAccounts(
+        'Liquidity Network',
+        'pausers',
+      ),
     },
     {
       name: 'Pausers',
       description: 'Can pause and unpause the system.',
-      accounts: discovery.getPermissionedAccountsList('Bridge', 'pausers'),
+      accounts: discovery.getPermissionedAccounts(
+        'Liquidity Network',
+        'pausers',
+      ),
     },
   ],
   knowledgeNuggets: [

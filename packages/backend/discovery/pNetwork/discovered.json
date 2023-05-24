@@ -1,10 +1,10 @@
 {
   "name": "pNetwork",
   "blockNumber": 17288492,
-  "configHash": "0x0eef3574f3087ba2266cdf39ac7a43abb64e66e829c5fd5d07c678b08b637f64",
+  "configHash": "0x1df8a07e293c04127074731ef8d769ba9b1d42c09f7a3a53dfcad723aa7297ca",
   "contracts": [
     {
-      "name": "Erc20Vault",
+      "name": "ERC20 Vault V1",
       "address": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
       "code": "https://etherscan.deth.net/address/0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
       "upgradeability": {
@@ -12,7 +12,8 @@
       },
       "values": {
         "PNETWORK": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
-      }
+      },
+      "derivedName": "Erc20Vault"
     },
     {
       "name": "PNT",
@@ -48,7 +49,7 @@
       }
     },
     {
-      "name": "Erc20Vault",
+      "name": "UOS Vault",
       "address": "0x9f8622b11984AfC8f0a42A394928702017c5968D",
       "code": "https://etherscan.deth.net/address/0x9f8622b11984AfC8f0a42A394928702017c5968D",
       "upgradeability": {
@@ -56,10 +57,11 @@
       },
       "values": {
         "PNETWORK": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
-      }
+      },
+      "derivedName": "Erc20Vault"
     },
     {
-      "name": "PProxyAdminOwner",
+      "name": "pNetwork Multisig",
       "address": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB",
       "code": "https://etherscan.deth.net/address/0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -115,7 +117,7 @@
       }
     },
     {
-      "name": "Erc20Vault",
+      "name": "ERC20 Vault V2",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
       "code": "https://etherscan.deth.net/address/0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8,0x34D085516f9D7794192aDB10C995d9c532E335aF",
       "upgradeability": {
@@ -128,7 +130,8 @@
         "ORIGIN_CHAIN_ID": "0x005fe7f9",
         "PNETWORK": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b",
         "PNT_TOKEN_ADDRESS": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD"
-      }
+      },
+      "derivedName": "Erc20Vault"
     },
     {
       "name": "EthPnt",

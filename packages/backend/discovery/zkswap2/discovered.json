@@ -1,12 +1,12 @@
 {
   "name": "zkswap2",
   "blockNumber": 16767881,
-  "configHash": "0x2a62be5df79e61dbf2e4d92c5e44803f4c4fd9918900f35e17bc2c2c91939a18",
+  "configHash": "0x7f3ccda277a8017e016b8cd920cfddf0bd30352c6a3b27313083173d96866b8d",
   "contracts": [
     {
-      "name": "",
-      "unverified": true,
+      "name": "UpgradeGatekeeper",
       "address": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
       "upgradeability": {
         "type": "immutable"
@@ -21,7 +21,8 @@
           "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513",
           "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
         ]
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "Verifier",
@@ -112,9 +113,9 @@
       }
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "VerifierExit",
       "address": "0xb56878d21F6b101f48bb55f1AA9D3F624f04E513",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0xb56878d21F6b101f48bb55f1AA9D3F624f04E513,0x17e51B3659884d70a306906B5BDD73D1c64a3892",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -124,16 +125,18 @@
       "values": {
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0x17e51B3659884d70a306906B5BDD73D1c64a3892"
-      }
+      },
+      "derivedName": ""
     },
     {
-      "name": "",
-      "unverified": true,
+      "name": "ZkSyncExit",
       "address": "0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "UniswapV2Factory",

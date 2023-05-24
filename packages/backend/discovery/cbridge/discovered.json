@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
   "blockNumber": 17031482,
-  "configHash": "0xf302229b9c0f24151d680b340b1183a259fc33f35a11cd69c2e7116d8b4afaea",
+  "configHash": "0x4be3660c5fe27322487aa373120498caaf82298e62fe28cc807033487998d466",
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -67,7 +67,7 @@
       }
     },
     {
-      "name": "Bridge",
+      "name": "Liquidity Network",
       "address": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
       "code": "https://etherscan.deth.net/address/0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
       "upgradeability": {

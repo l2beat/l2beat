@@ -183,18 +183,14 @@ export const bobanetwork: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'CanonicalTransactionChain',
-        description:
-          'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
-        address: EthereumAddress('0xfBd2541e316948B259264c02f370eD088E04c3Db'),
-      },
-      {
-        name: 'StateCommitmentChain',
-        description:
-          'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currenlty olny OVM_Proposer can submit new state roots.',
-        address: EthereumAddress('0xdE7355C971A5B733fe2133753Abd7e5441d441Ec'),
-      },
+      discovery.getContractDetails(
+        'CanonicalTransactionChain',
+        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
+      ),
+      discovery.getContractDetails(
+        'StateCommitmentChain',
+        'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only OVM_Proposer can submit new state roots.',
+      ),
       {
         name: 'ChainStorageContainer-CTC-batches',
         address: EthereumAddress('0x17148284d2da2f38c96346f1776C1BF7D7691231'),
@@ -207,86 +203,39 @@ export const bobanetwork: Layer2 = {
         name: 'ChainStorageContainer-SCC-batches',
         address: EthereumAddress('0x13992B9f327faCA11568BE18a8ad3E9747e87d93'),
       },
-      {
-        name: 'BondManager',
-        description:
-          "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
-        address: EthereumAddress('0x60660e6CDEb423cf847dD11De4C473130D65b627'),
-      },
-      {
-        name: 'L1CrossDomainMessenger',
-        address: EthereumAddress('0x6D4528d192dB72E282265D6092F4B872f9Dff69e'),
-        description:
-          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
-          implementation: EthereumAddress(
-            '0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820',
-          ),
-        },
-      },
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
+        'BondManager',
+        "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
+      ),
+      discovery.getContractDetails(
+        'L1CrossDomainMessenger_1',
+        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+      ),
+      discovery.getContractDetails(
         'L1CrossDomainMessengerFast',
         'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
       ),
-      {
-        name: 'L1MultiMessageRelayer',
-        description:
-          'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessenger.',
-        address: EthereumAddress('0x5fD2CF99586B9D92f56CbaD0A3Ea4DF256A0070B'),
-      },
-      {
-        name: 'L1MultiMessageRelayerFast',
-        description:
-          'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessengerFast.',
-        address: EthereumAddress('0x2d6134Ac3e480fBDD263B7163d333dCA285f9622'),
-      },
-      {
-        name: 'L1LiquidityPool',
-        address: EthereumAddress('0x1A26ef6575B7BBB864d984D9255C069F6c361a14'),
-        description: 'Liquidity Pool manager for fast withdrawal facility.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
-          implementation: EthereumAddress(
-            '0xEcB03B77Fa399676dC20f21e97c8C0F1476f97a0',
-          ),
-        },
-      },
-      {
-        name: 'Lib_AddressManager',
-        description:
-          'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
-        address: EthereumAddress('0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089'),
-      },
-      // This Proxy is a L1ChugSplashProxy with a typical EIP1967 pattern.
-      {
-        name: 'L1StandardBridge',
-        address: EthereumAddress('0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00'),
-        description:
-          'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          implementation: EthereumAddress(
-            '0xAf41c681143Cb91f218959375f4452A604504833',
-          ),
-          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
-        },
-      },
-      // L1NFTBridge Proxy even though is called ResolvedDelegateProxy it does not use external lib manager
-      {
-        name: 'L1NFTBridge',
-        address: EthereumAddress('0xC891F466e53f40603250837282eAE4e22aD5b088'),
-        description: 'Standard NFT bridge.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          implementation: EthereumAddress(
-            '0x8DB3B7Db8A0f77e0E21178FcaD0A53E52bfdBA82',
-          ),
-          admin: EthereumAddress('0x1f2414D0af8741Bc822dBc2f88069c2b2907a840'),
-        },
-      },
+      discovery.getContractDetails(
+        'L1MultiMessageRelayer',
+        'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessenger.',
+      ),
+      discovery.getContractDetails(
+        'L1MultiMessageRelayerFast',
+        'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessengerFast.',
+      ),
+      discovery.getContractDetails(
+        'Proxy__L1LiquidityPoolArguments',
+        'Liquidity Pool manager for fast withdrawal facility.',
+      ),
+      discovery.getContractDetails(
+        'Lib_AddressManager',
+        'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
+      ),
+      discovery.getContractDetails(
+        'L1StandardBridge',
+        'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
+      ),
+      discovery.getContractDetails('L1NFTBridge', 'Standard NFT bridge.'),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -294,12 +243,7 @@ export const bobanetwork: Layer2 = {
     {
       name: 'Owner',
       accounts: [
-        {
-          address: EthereumAddress(
-            '0x1f2414D0af8741Bc822dBc2f88069c2b2907a840',
-          ),
-          type: 'EOA',
-        },
+        discovery.getPermissionedAccount('Lib_AddressManager', 'owner'),
       ],
       description:
         'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
@@ -307,24 +251,14 @@ export const bobanetwork: Layer2 = {
     {
       name: 'Sequencer',
       accounts: [
-        {
-          address: EthereumAddress(
-            '0xfa46908B587f9102E81CE6C43b7B41b52881c57F',
-          ),
-          type: 'EOA',
-        },
+        discovery.getPermissionedAccount('Lib_AddressManager', 'OVM_Sequencer'),
       ],
       description: 'Central actor allowed to commit L2 transactions to L1.',
     },
     {
       name: 'State Root Proposer',
       accounts: [
-        {
-          address: EthereumAddress(
-            '0x5558c63d5bf229450995adc160c023C9F4d4bE80',
-          ),
-          type: 'EOA',
-        },
+        discovery.getPermissionedAccount('Lib_AddressManager', 'OVM_Proposer'),
       ],
       description: 'Central actor to post new L2 state roots to L1.',
     },

@@ -98,84 +98,63 @@ export const amarok: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        ...discovery.getMainContractDetails('ConnextBridge'),
-        description:
-          'The main Connext contract. Following Diamond design pattern, it contains multiple Facets that implement\
+      discovery.getContractDetails(
+        'ConnextBridge',
+        'The main Connext contract. Following Diamond design pattern, it contains multiple Facets that implement\
         various parts of the bridge functionality.',
-      },
-      {
-        ...discovery.getMainContractDetails('RootManager'),
-        description:
-          'Contract responsible for maintaining list of domains and building root-of-roots of messages. It keeps tracks of all hub connectors that connect to specific domain.',
-      },
-      {
-        ...discovery.getMainContractDetails('WatcherManager'),
-        description:
-          'Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.',
-      },
-      {
-        ...discovery.getMainContractDetails('MainnetSpokeConnector'),
-        description:
-          'Contract that receives messages from other Domains on Ethereum.',
-      },
-      {
-        ...discovery.getMainContractDetails('MultichainHubConnector'),
-        description:
-          'Contract for sending/receiving messages from mainnet to Binance Smart Chain via Multichain AMB.',
-      },
-      {
-        ...discovery.getMainContractDetails('PolygonHubConnector'),
-        description:
-          'Contract for sending/receiving messages from mainnet to Polygon via Polygon FxChannel AMB.',
-      },
-      {
-        ...discovery.getMainContractDetails('GnosisHubConnector'),
-        description:
-          'Contract for sending/receiving messages from mainnet to Gnosis via Gnosis AMB.',
-      },
-      {
-        ...discovery.getMainContractDetails('OptimismHubConnector'),
-        description:
-          'Contract for sending/receiving messages from mainnet to Optimism via Optimism AMB transport layer. Note that it reads messages from Optimism\
+      ),
+      discovery.getContractDetails(
+        'RootManager',
+        'Contract responsible for maintaining list of domains and building root-of-roots of messages. It keeps tracks of all hub connectors that connect to specific domain.',
+      ),
+      discovery.getContractDetails(
+        'WatcherManager',
+        'Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.',
+      ),
+      discovery.getContractDetails(
+        'MainnetSpokeConnector',
+        'Contract that receives messages from other Domains on Ethereum.',
+      ),
+      discovery.getContractDetails(
+        'MultichainHubConnector',
+        'Contract for sending/receiving messages from mainnet to Binance Smart Chain via Multichain AMB.',
+      ),
+      discovery.getContractDetails(
+        'PolygonHubConnector',
+        'Contract for sending/receiving messages from mainnet to Polygon via Polygon FxChannel AMB.',
+      ),
+      discovery.getContractDetails(
+        'GnosisHubConnector',
+        'Contract for sending/receiving messages from mainnet to Gnosis via Gnosis AMB.',
+      ),
+      discovery.getContractDetails(
+        'OptimismHubConnector',
+        'Contract for sending/receiving messages from mainnet to Optimism via Optimism AMB transport layer. Note that it reads messages from Optimism\
         as soon as Optimism state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
-      },
-      {
-        ...discovery.getMainContractDetails('ArbitrumHubConnector'),
-        description:
-          'Contract for sending/receiving messages from mainnet to Optimism via Arbitrum AMB transport layer. Note that it reads messages from Arbitrum\
-        as soon as Arbitrum state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
-      },
+      ),
+      discovery.getContractDetails(
+        'ArbitrumHubConnector',
+        'Contract for sending/receiving messages from mainnet to Optimism via Arbitrum AMB transport layer. Note that it reads messages from Arbitrum as soon as Arbitrum state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    {
-      name: 'Connext MultiSig',
-      description:
-        '3/3 MultiSig. Owner of the main Connext Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
-      accounts: [
-        {
-          address: discovery.getContract('ConnextBridgeOwner').address,
-          type: 'MultiSig',
-        },
-      ],
-    },
+    ...discovery.getMultisigPermission(
+      'Connext Multisig',
+      'Owner of the main Connext Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
+    ),
     {
       name: 'Watchers',
       description:
-        'Permissioned set of actors who can pause certain bridge components. On Ethereum L1 Watchers can pause RootManager and MainnetSpokeConnector, i.e. modules \
-        receiving messages. They can also remove connector from the RootManager. List of watchers is maintained by the Connext MultiSig.',
-      accounts: discovery.getPermissionedAccountsList(
-        'WatcherManager',
-        'WATCHERS',
-      ),
+        'Permissioned set of actors who can pause certain bridge components. On Ethereum L1 Watchers can pause RootManager and MainnetSpokeConnector, i.e. modules receiving messages. They can also remove connector from the RootManager. List of watchers is maintained by the Connext MultiSig.',
+      accounts: discovery.getPermissionedAccounts('WatcherManager', 'WATCHERS'),
     },
     {
       name: 'Sequencers',
       description:
         'Permissioned set of actors that sequence routers request to forward liquidity.',
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'ConnextBridge',
         'SEQUENCERS',
       ),
@@ -184,19 +163,13 @@ export const amarok: Bridge = {
       name: 'Relayers',
       description:
         'Permissioned set of actors who can perform certain bridge operations.',
-      accounts: discovery.getPermissionedAccountsList(
-        'ConnextBridge',
-        'RELAYERS',
-      ),
+      accounts: discovery.getPermissionedAccounts('ConnextBridge', 'RELAYERS'),
     },
     {
       name: 'Routers',
       description:
         'Permissioned set of actors who can forward liquidity and speed-up message delivery.',
-      accounts: discovery.getPermissionedAccountsList(
-        'ConnextBridge',
-        'ROUTERS',
-      ),
+      accounts: discovery.getPermissionedAccounts('ConnextBridge', 'ROUTERS'),
     },
   ],
   riskView: {

@@ -174,29 +174,29 @@ export const zksynclite: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails('ZkSync', {
+      discovery.getContractDetails('ZkSync', {
         description:
           'The main Rollup contract. Allows the operator to commit blocks, provide zkProofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
         ...upgrades,
       }),
-      discovery.getMainContractDetails('Verifier', {
+      discovery.getContractDetails('Verifier', {
         description: 'Implements zkProof verification logic.',
         ...upgrades,
       }),
-      discovery.getMainContractDetails('Governance', {
+      discovery.getContractDetails('Governance', {
         description:
           'Keeps a list of block producers, NFT factories and whitelisted tokens.',
         ...upgrades,
       }),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'UpgradeGatekeeper',
         'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'TokenGovernance',
         'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'NftFactory',
         'Allows for withdrawing NFTs minted on L2 to L1.',
       ),
@@ -204,13 +204,13 @@ export const zksynclite: Layer2 = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgrades.upgradeDelay)],
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'ZkSync Multisig',
       'This Multisig is the owner of Upgrade Gatekeeper contract and therefore is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can also change the list of active validators and appoint the security council (by upgrading the ZkSync contract).',
     ),
     {
       name: 'Security Council',
-      accounts: discovery.getPermissionedAccountsList(
+      accounts: discovery.getPermissionedAccounts(
         'ZkSync',
         'securityCouncilMembers',
       ),
@@ -221,19 +221,14 @@ export const zksynclite: Layer2 = {
     },
     {
       name: 'Active validators',
-      accounts: discovery.getPermissionedAccountsList(
-        'Governance',
-        'validators',
-      ),
+      accounts: discovery.getPermissionedAccounts('Governance', 'validators'),
       description:
         'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
     },
     {
       name: 'Token listing beneficiary',
       accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue<string>('TokenGovernance', 'treasury'),
-        ),
+        discovery.getPermissionedAccount('TokenGovernance', 'treasury'),
       ],
       description:
         'Account receiving fees for listing tokens. Can be updated by ZkSync Multisig.',

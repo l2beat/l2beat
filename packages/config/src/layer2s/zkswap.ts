@@ -143,66 +143,26 @@ export const zkswap: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        address: discovery.getContract('ZkSync').address,
-        name: 'ZkSync',
-        description:
-          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier \
-            contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines \
-            the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-        upgradeability: discovery.getContract('ZkSync').upgradeability,
-      },
-      {
-        address: discovery.getContract('ZkSyncCommitBlock').address,
-        name: 'ZkSyncCommitBlock',
-        description:
-          'Additional contract to store implementation details of the main ZkSync contract.',
-      },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue<string>('ZkSync', 'zkSyncExitAddress'),
-        ),
-        name: 'ZkSyncExit',
-      },
-      {
-        address: discovery.getContract('Governance').address,
-        name: 'Governance',
-        description: 'Keeps a list of block producers and whitelisted tokens.',
-        upgradeability: discovery.getContract('Governance').upgradeability,
-      },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue<string>('ZkSync', 'pairManager'),
-        ),
-        name: 'PairManager',
-        upgradeability: discovery.getContract(
-          discovery.getContractValue<string>('ZkSync', 'pairManager'),
-        ).upgradeability,
-      },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue<string>('ZkSync', 'verifier'),
-        ),
-        name: 'Verifier',
-        upgradeability: discovery.getContract(
-          discovery.getContractValue<string>('ZkSync', 'verifier'),
-        ).upgradeability,
-      },
-      {
-        address: EthereumAddress(
-          discovery.getContractValue<string>('ZkSync', 'verifierExit'),
-        ),
-        name: 'VerifierExit',
-        upgradeability: discovery.getContract(
-          discovery.getContractValue<string>('ZkSync', 'verifierExit'),
-        ).upgradeability,
-      },
-      {
-        address: discovery.getContract('UpgradeGatekeeper').address,
-        name: 'UpgradeGatekeeper',
-        description:
-          'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
-      },
+      discovery.getContractDetails(
+        'ZkSync',
+        'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
+      ),
+      discovery.getContractDetails(
+        'ZkSyncCommitBlock',
+        'Additional contract to store implementation details of the main ZkSync contract.',
+      ),
+      discovery.getContractDetails('ZkSyncExit'),
+      discovery.getContractDetails(
+        'Governance',
+        'Keeps a list of block producers and whitelisted tokens.',
+      ),
+      discovery.getContractDetails('PairManager'),
+      discovery.getContractDetails('Verifier'),
+      discovery.getContractDetails('VerifierExit'),
+      discovery.getContractDetails(
+        'UpgradeGatekeeper',
+        'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days')],
   },
@@ -210,25 +170,14 @@ export const zkswap: Layer2 = {
     {
       name: 'zkSwap 1.0 Admin',
       accounts: [
-        {
-          type: 'EOA',
-          //Governor.networkGovernor or UpgradeGatekeeper.getMaster??
-          address: EthereumAddress(
-            '0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037',
-          ),
-        },
+        discovery.getPermissionedAccount('UpgradeGatekeeper', 'getMaster'),
       ],
       description:
         'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager and ZkSync contracts.',
     },
     {
       name: 'Active validator',
-      accounts: discovery
-        .getContractValue<string[]>('Governance', 'validators')
-        .map((validator) => ({
-          address: EthereumAddress(validator),
-          type: 'EOA',
-        })),
+      accounts: discovery.getPermissionedAccounts('Governance', 'validators'),
       description:
         'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 1.0 Admin.',
     },

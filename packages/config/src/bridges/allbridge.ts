@@ -94,36 +94,30 @@ export const allbridge: Bridge = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'LPBridge',
         'Main liquidity network Allbridge Core bridge contract.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'TokenBridge',
         'Main token bridge contract.',
       ),
-      {
-        address: EthereumAddress('0x93746538D4519C809827205Bd1C2c7a0E15bd74b'),
-        name: 'Validator',
-        description:
-          'This contract is responsible for validating incoming messages to token bridge.',
-      },
-      {
-        address: EthereumAddress('0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6'),
-        name: 'Fee Oracle',
-        description:
-          'This contract is responsible for calculating bridge fees.',
-      },
-      {
-        address: EthereumAddress('0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50'),
-        name: 'Allbridge Messenger',
-        description: 'Contract used to receive messages via allbridge AMB.',
-      },
-      {
-        address: EthereumAddress('0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F'),
-        name: 'Wormhole Messenger',
-        description: 'Contract used to receive messages via Wormhole AMB.',
-      },
+      discovery.getContractDetails(
+        'Validator',
+        'This contract is responsible for validating incoming messages to token bridge.',
+      ),
+      discovery.getContractDetails(
+        'Fee Oracle',
+        'This contract is responsible for calculating bridge fees.',
+      ),
+      discovery.getContractDetails(
+        'Allbridge Messenger',
+        'Contract used to receive messages via allbridge AMB.',
+      ),
+      discovery.getContractDetails(
+        'Wormhole Messenger',
+        'Contract used to receive messages via Wormhole AMB.',
+      ),
     ],
     risks: [],
   },
@@ -131,9 +125,10 @@ export const allbridge: Bridge = {
     {
       name: 'Allbridge EOA.',
       description:
-        'EOA privilidged to process allbridge AMB messages and moved funds from pools.',
+        'EOA privileged to process allbridge AMB messages and moved funds from pools.',
       accounts: [
         {
+          // TODO: What is this?
           address: EthereumAddress(
             '0x7234dB900E907398EdfAdA744d5Bf8A842B335BA',
           ),
@@ -144,15 +139,8 @@ export const allbridge: Bridge = {
     {
       name: 'Allbridge Owner EOA.',
       description:
-        'EOA privilidged to update messengers and other bridge parameters. As a result this account can drain all funds from the pools.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x01a494079DCB715f622340301463cE50cd69A4D0',
-          ),
-          type: 'EOA',
-        },
-      ],
+        'EOA privileged to update messengers and other bridge parameters. As a result this account can drain all funds from the pools.',
+      accounts: [discovery.getPermissionedAccount('LPBridge', 'owner')],
     },
   ],
 }
