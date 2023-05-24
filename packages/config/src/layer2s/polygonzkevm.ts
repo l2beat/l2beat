@@ -89,7 +89,6 @@ export const polygonzkevm: Layer2 = {
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L817',
       ],
     },
-    //include info that txs are posted, not state diffs
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       description:
@@ -228,13 +227,12 @@ export const polygonzkevm: Layer2 = {
     ],
     references: [
       {
-        text: 'State injections - stateRoot and exitRoot are part of the validity proof input .',
+        text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
         href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L806',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
-  // TODO: new upgradeability section with ProxyAdmin and Timelock
   milestones: [
     {
       name: 'Polygon zkEVM Mainnet Beta is Live',
