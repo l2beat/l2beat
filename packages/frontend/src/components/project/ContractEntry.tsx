@@ -7,6 +7,7 @@ import { OutLink } from '../OutLink'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
+import { ReferenceList, TechnologyReference } from './ReferenceList'
 
 export interface TechnologyContract {
   name: string
@@ -16,6 +17,7 @@ export interface TechnologyContract {
   upgradeableBy?: string
   upgradeDelay?: string
   upgradeConsiderations?: string
+  references?: TechnologyReference[]
 }
 
 export interface TechnologyContractLinks {
@@ -125,6 +127,9 @@ export function ContractEntry({
                 {contract.upgradeConsiderations}
               </p>
             </>
+          )}
+          {contract.references && (
+            <ReferenceList references={contract.references} tight />
           )}
         </>
       }
