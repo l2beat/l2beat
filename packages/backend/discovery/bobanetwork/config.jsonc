@@ -9,7 +9,10 @@
   "names": {
     "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E": "L1CrossDomainMessengerFast",
     "0x6D4528d192dB72E282265D6092F4B872f9Dff69e": "L1CrossDomainMessenger_1",
-    "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820": "L1CrossDomainMessenger_2"
+    "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820": "L1CrossDomainMessenger_2",
+    "0x13992B9f327faCA11568BE18a8ad3E9747e87d93": "SCCStorageContainerBatches",
+    "0x17148284d2da2f38c96346f1776C1BF7D7691231": "CTCStorageContainerBatches",
+    "0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d": "CTCQueue"
   },
   "overrides": {
     "L1CrossDomainMessengerFast": {
