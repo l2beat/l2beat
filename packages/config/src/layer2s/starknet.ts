@@ -151,7 +151,7 @@ export const starknet: Layer2 = {
       discovery.getContractDetails('Starknet', {
         description:
           'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-        upgradeDelay: formatSeconds(delaySeconds),
+        upgradeDelay: delaySeconds ? formatSeconds(delaySeconds) : 'No delay',
         upgradableBy: ['Starknet Proxy Governors'],
       }),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
