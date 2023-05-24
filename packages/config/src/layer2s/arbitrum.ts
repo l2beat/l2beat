@@ -132,9 +132,22 @@ export const arbitrum: Layer2 = {
       description:
         'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
       sentiment: 'warning',
+      references: [
+        'https://etherscan.io/address/0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445#code#F1#L113',
+      ],
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      references: [
+        'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+      ],
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
+      references: [
+        'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
+      ],
+    },
     sequencerFailure: {
       value: 'Transact using L1',
       description: VALUES.ARBITRUM.getSequencerFailureString(),
@@ -191,6 +204,10 @@ export const arbitrum: Layer2 = {
           text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
           href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
         },
+        {
+          text: 'SequencerInbox.sol#206 - Etherscan source code, addSequencerL2BatchFromOrigin function',
+          href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+        },
       ],
     },
     operator: {
@@ -210,7 +227,7 @@ export const arbitrum: Layer2 = {
         VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
       references: [
         {
-          text: 'Smart Contract source code',
+          text: 'SequencerInbox.sol#L125 - Etherscan source code, forceInclusion function',
           href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
         },
         {
