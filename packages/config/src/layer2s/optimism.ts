@@ -90,15 +90,30 @@ export const optimism: Layer2 = {
         'Currently the system permits invalid state roots. More details in project overview.',
       sentiment: 'bad',
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      references: [
+        'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L277',
+      ],
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADABLE_YES,
+      references: [
+        'https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1#code',
+      ],
+    },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_QUEUE,
       references: [
         'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L201',
       ],
     },
-    validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    validatorFailure: {
+      ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+      references: [
+        'https://etherscan.io/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19#code#F1#L96',
+      ],
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -130,6 +145,10 @@ export const optimism: Layer2 = {
           text: 'Data Availability Batches - Paradigm Research',
           href: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work#data-availability-batches',
         },
+        {
+          text: 'CanonicalTransactionChain.sol#L277 - Etherscan source code, appendSequencerBatch function',
+          href: 'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L277',
+        },
       ],
     },
     operator: {
@@ -138,6 +157,10 @@ export const optimism: Layer2 = {
         {
           text: 'How will the sequencer be decentralized over time? - Optimism documentation',
           href: 'https://community.optimism.io/docs/protocol/sequencing.html#how-will-the-sequencer-be-decentralized-over-time',
+        },
+        {
+          text: 'CanonicalTransactionChain.sol#L293 - Etherscan source code, "OVM_Sequencer" check',
+          href: 'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L293',
         },
       ],
     },
@@ -159,7 +182,7 @@ export const optimism: Layer2 = {
             href: 'https://help.optimism.io/hc/en-us/articles/4411903283227-Withdrawals-from-Optimism',
           },
           {
-            text: 'mockOVM_BondManager.sol#L71 - Etherscan source code',
+            text: 'mockOVM_BondManager.sol#L71 - Etherscan source code, isCollateralized function',
             href: 'https://etherscan.io/address/0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057#code#F6#L71',
           },
         ],
