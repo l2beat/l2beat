@@ -228,9 +228,8 @@ export const polygonzkevm: Layer2 = {
     ],
     references: [
       {
-        // TODO: do we need to trust the Sequencer to perform injections?
-        text: 'State injections - PolygonZkEvm L2 source code',
-        href: 'https://github.com/0xPolygonHermez/zkevm-contracts/blob/b1cefea1431e59b2121e543b786b93af99e859f4/contracts/PolygonZkEVMGlobalExitRootL2.sol#L17',
+        text: 'State injections - stateRoot and exitRoot are part of the validity proof input .',
+        href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L806',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
