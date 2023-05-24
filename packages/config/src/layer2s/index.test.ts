@@ -5,7 +5,11 @@ import {
 } from '@l2beat/shared'
 import { expect } from 'earl'
 
-import { ProjectReference, ProjectRiskViewEntry, ProjectTechnologyChoice } from '../common'
+import {
+  ProjectReference,
+  ProjectRiskViewEntry,
+  ProjectTechnologyChoice,
+} from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
