@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "blockNumber": 17327360,
-  "configHash": "0xbf3a80dcb97f4a25bf2782abb0d511a353a8797fb50e960b1ecc3da65e0c3f66",
+  "configHash": "0xecbcea97fda4e5ca4ec3e22c78ce6455f65db36203fe27ccdc384c3cf311ba92",
   "contracts": [
     {
       "name": "DAI Bridge",
