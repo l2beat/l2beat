@@ -11,6 +11,7 @@ import {
   makeBridgeCompatible,
   NUGGETS,
   RISK_VIEW,
+  SEQUENCER_RISK_POLYGONZKEVM,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -35,11 +36,29 @@ const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
   ),
 )
 
+const bridgeEmergencyState = discovery.getContractValue<boolean>(
+  'Bridge',
+  'isEmergencyState',
+)
+const rollupEmergencyState = discovery.getContractValue<boolean>(
+  'PolygonZkEvm',
+  'isEmergencyState',
+)
+const upgradeabilityRisk = RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(
+  delay,
+  rollupEmergencyState,
+  bridgeEmergencyState,
+)
 const timelockUpgrades = {
   upgradableBy: ['AdminMultisig'],
-  upgradeDelay: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(delay).value,
-  upgradeConsiderations: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(delay).description,
+  upgradeDelay: upgradeabilityRisk.value,
+  upgradeConsiderations: upgradeabilityRisk.description,
 }
+
+const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
+  'PolygonZkEvm',
+  'isForcedBatchDisallowed',
+)
 
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
@@ -98,10 +117,10 @@ export const polygonzkevm: Layer2 = {
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L186',
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(delay),
+    upgradeability: upgradeabilityRisk,
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM,
+      ...SEQUENCER_RISK_POLYGONZKEVM(isForcedBatchDisallowed),
       references: [
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L243',
       ],
@@ -200,7 +219,7 @@ export const polygonzkevm: Layer2 = {
       description: `The trusted aggregator provides the PolygonZkEvm contract with zk proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getMultisigPermission(
-      'SecurityCounci',
+      'SecurityCouncil',
       'The Security Council is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
     ),
   ],
