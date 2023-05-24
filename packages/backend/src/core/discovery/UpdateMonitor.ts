@@ -122,12 +122,12 @@ export class UpdateMonitor {
     const databaseEntry = await this.repository.findLatest(projectConfig.name)
     let previousDiscovery: DiscoveryOutput
     if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
-      this.logger.debug('Using database record', {
+      this.logger.info('Using database record', {
         project: projectConfig.name,
       })
       previousDiscovery = databaseEntry.discovery
     } else {
-      this.logger.debug('Using committed file', { project: projectConfig.name })
+      this.logger.info('Using committed file', { project: projectConfig.name })
       previousDiscovery = await this.configReader.readDiscovery(
         projectConfig.name,
       )
@@ -137,8 +137,9 @@ export class UpdateMonitor {
       return previousDiscovery
     }
     console.log('Checking previous', previousDiscovery.blockNumber)
-    this.logger.debug(
+    this.logger.info(
       'Discovery logic version changed, discovering with new logic',
+      { project: projectConfig.name },
     )
     return await this.discoveryRunner.run(
       projectConfig,
