@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "blockNumber": 17271859,
-  "configHash": "0xdb79a46a46aa77ed706102c6e7a3a47d1558f7364f260c8f22542a760b5d4ed4",
+  "configHash": "0xdf309a4392e03029cc4a9e6ef67cc62b44a86e1edc7dd7357e9cef11498c84d4",
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -238,7 +238,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "code": "https://etherscan.deth.net/address/0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -258,7 +258,8 @@
         "getThreshold": 2,
         "nonce": 35,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [

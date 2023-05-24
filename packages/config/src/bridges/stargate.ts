@@ -109,18 +109,14 @@ export const stargate: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: discovery.getContract('Router').address,
-        name: 'StarGate Router',
-        description:
-          'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
-      },
-      {
-        address: discovery.getContract('Bridge').address,
-        name: 'StarGate Bridge',
-        description:
-          'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
-      },
+      discovery.getContractDetails(
+        'Router',
+        'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
+      ),
+      discovery.getContractDetails(
+        'Bridge',
+        'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
+      ),
       {
         //Probably outdated
         address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
@@ -144,11 +140,7 @@ export const stargate: Bridge = {
           ),
         },
       },
-      {
-        address: discovery.getContract('Endpoint').address,
-        name: 'Endpoint',
-        description: 'LayerZero Ethereum Endpoint.',
-      },
+      discovery.getContractDetails('Endpoint', 'LayerZero Ethereum Endpoint.'),
       //Probably outdated
       {
         address: EthereumAddress('0x5B19bd330A84c049b62D5B0FC2bA120217a18C1C'),
@@ -156,11 +148,10 @@ export const stargate: Bridge = {
         description:
           'LayerZero UltraLight Node. Used by oracles to checkpoint source chain block hashes.',
       },
-      {
-        address: discovery.getContract('UltraLightNodeV2').address,
-        name: 'UltraLightNodeV2',
-        description: 'LayerZero UltraLight Node.',
-      },
+      discovery.getContractDetails(
+        'UltraLightNodeV2',
+        'LayerZero UltraLight Node.',
+      ),
       {
         address: EthereumAddress('0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56'),
         name: 'USDC Pool',
@@ -181,12 +172,12 @@ export const stargate: Bridge = {
     isIncomplete: true,
   },
   permissions: [
-    discovery.contractAsPermissioned(
-      discovery.getContract('StarGate Multisig'),
+    ...discovery.getMultisigPermission(
+      'StarGate Multisig',
       'Bridge owner, can create new pools, chainpaths, set fees.',
     ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('LayerZero Multisig'),
+    ...discovery.getMultisigPermission(
+      'LayerZero Multisig',
       'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
     ),
     {

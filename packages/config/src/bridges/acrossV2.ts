@@ -120,114 +120,39 @@ export const acrossV2: Bridge = {
   },
   contracts: {
     addresses: [
+      discovery.getContractDetails(
+        'HubPool',
+        'Escrow contract for ERC20 tokens and administration of other contracts.',
+      ),
+      discovery.getContractDetails('LpTokenFactory'),
+      discovery.getContractDetails('Finder'),
+      discovery.getContractDetails('GovernorV2'),
+      discovery.getContractDetails('ProposerV2'),
+      discovery.getContractDetails('VotingToken'),
+      discovery.getContractDetails('Optimism_Adapter'),
+      discovery.getContractDetails('Boba_Adapter'),
+      discovery.getContractDetails('Arbitrum_Adapter'),
+      discovery.getContractDetails('Ethereum_Adapter'),
+      discovery.getContractDetails('Ethereum_SpokePool'),
       {
-        address: EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda'),
-        name: 'HubPool',
-        description:
-          'Escrow contract for ERC20 tokens and administration of other contracts.',
-      },
-      {
-        address: EthereumAddress('0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d'),
-        name: 'LpTokenFactory',
-      },
-      {
-        address: EthereumAddress('0x40f941E48A552bF496B154Af6bf55725f18D77c3'),
-        name: 'Finder',
-      },
-      {
-        address: EthereumAddress('0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc'),
-        name: 'Governor',
-      },
-      {
-        address: EthereumAddress('0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5'),
-        name: 'Proposer',
-      },
-      {
-        address: EthereumAddress('0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828'),
-        name: 'VotingToken',
-      },
-      {
-        address: EthereumAddress('0x22eD83A9eE26236486F57cE8385A247E5bFB71fF'),
-        name: 'Optimism_Adapter',
-      },
-      {
-        address: EthereumAddress('0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3'),
-        name: 'Boba_Adapter',
-      },
-      {
-        address: EthereumAddress('0x937958992799bF4A9a656E6596FD10d7Da5c2216'),
-        name: 'Arbitrum_Adapter',
-      },
-      {
-        address: EthereumAddress('0x527E872a5c3f0C7c24Fe33F2593cFB890a285084'),
-        name: 'Ethereum_Adapter',
-      },
-      discovery.getMainContractDetails('Ethereum_SpokePool'),
-      {
-        address: EthereumAddress('0x48d990AbDA20afa1fD1da713AbC041B60a922c65'),
+        // TODO: What is this?
         name: 'PolygonTokenBridger',
+        address: EthereumAddress('0x48d990AbDA20afa1fD1da713AbC041B60a922c65'),
       },
+      discovery.getContractDetails('Polygon_Adapter'),
       {
-        address: EthereumAddress('0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A'),
-        name: 'Polygon_Adapter',
-      },
-      {
-        address: EthereumAddress('0x3B03509645713718B78951126E0A6de6f10043f5'),
+        // TODO: What is this?
         name: 'AcrossConfigStore',
+        address: EthereumAddress('0x3B03509645713718B78951126E0A6de6f10043f5'),
       },
     ],
     risks: [],
   },
   permissions: [
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xB524735356985D2f267FA010D681f061DfF03715',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'HubPool Owner MultiSig',
-      description:
-        'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x1f11D8B72fc1B534448436BA60B4B371276DAb33',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'MultiSig Participants',
-      description: 'Participants of 3/5 MultiSig',
-    },
+    ...discovery.getMultisigPermission(
+      'HubPool Multisig',
+      'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
+    ),
   ],
   knowledgeNuggets: [
     {

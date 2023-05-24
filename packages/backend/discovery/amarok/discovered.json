@@ -1,7 +1,7 @@
 {
   "name": "amarok",
   "blockNumber": 17322300,
-  "configHash": "0x0641a339b0e9d920ff3d73f33df35c0658b7afe2e3144760992d20a206507190",
+  "configHash": "0xf2422144c129e429d9bfdb7916fa8963bafd603caf32a93bb569a48313d3420d",
   "contracts": [
     {
       "name": "GnosisHubConnector",
@@ -56,7 +56,7 @@
       "derivedName": "OptimismHubConnector"
     },
     {
-      "name": "ConnextBridgeOwner",
+      "name": "Connext Multisig",
       "address": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
       "code": "https://etherscan.deth.net/address/0x4d50a469fc788a3c0CdC8Fd67868877dCb246625,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {

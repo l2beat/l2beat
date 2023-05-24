@@ -4,7 +4,8 @@
   "initialAddresses": ["0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"],
   "names": {
     "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer",
-    "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380": "StateCommitmentChain"
+    "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380": "StateCommitmentChain",
+    "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "Metis Multisig"
   },
   "overrides": {
     "0x918778e825747a892b17C66fe7D24C618262867d": {
@@ -13,6 +14,11 @@
           "type": "call",
           "method": "getAddress",
           "args": ["BondManager"]
+        },
+        "CanonicalTransactionChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["CanonicalTransactionChain"]
         },
         "MVM_DiscountOracle": {
           "type": "call",
@@ -28,16 +34,6 @@
           "type": "call",
           "method": "getAddress",
           "args": ["1088_MVM_Sequencer_Wrapper"]
-        },
-        "MVM_CanonicalTransaction_for_verification_only": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["MVM_CanonicalTransaction_for_verification_only"]
-        },
-        "MVM_Verifier_for_verification_only": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["MVM_Verifier_for_verification_only"]
         },
         "Proxy__MVM_CanonicalTransaction": {
           "type": "call",
@@ -63,11 +59,6 @@
           "type": "call",
           "method": "getAddress",
           "args": ["StateCommitmentChain"]
-        },
-        "MVM_L2ChainManagerOnL1_for_verification_only": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["MVM_L2ChainManagerOnL1_for_verification_only"]
         },
         "Proxy__MVM_ChainManager": {
           "type": "call",
@@ -154,6 +145,38 @@
     },
     "0xB2e2060A179e67cA4299Cc79fA337B98791DE069": {
       "ignoreMethods": ["get", "chain_under_challenge"]
+    },
+    "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": {
+      "ignoreMethods": [
+        "get",
+        "getGlobalMetadata",
+        "getGlobalMetadataByChainId",
+        "length",
+        "lengthByChainId"
+      ]
+    },
+    "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": {
+      "ignoreInWatchMode": [
+        "getLastBlockNumber",
+        "getLastTimestamp",
+        "getNextQueueIndex",
+        "getNumPendingQueueElements",
+        "getQueueLength",
+        "getTotalBatches",
+        "getTotalElements"
+      ],
+      "ignoreMethods": [
+        "getBatchGlobalMetadataByChainId",
+        "getLastBlockNumberByChainId",
+        "getLastTimestampByChainId",
+        "getNextQueueIndexByChainId",
+        "getNumPendingQueueElementsByChainId",
+        "getQueueElement",
+        "getQueueLengthByChainId",
+        "getTotalBatchesByChainId",
+        "getTotalElementsByChainId",
+        "lengthBatchByChainId"
+      ]
     },
     "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": {
       "fields": {

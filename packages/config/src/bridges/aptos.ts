@@ -1,8 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS, NUGGETS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('aptos')
 
 export const aptos: Bridge = {
   type: 'bridge',
@@ -97,11 +100,7 @@ export const aptos: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907'),
-        name: 'TokenBridge',
-        description: 'Aptos Token Bridge.',
-      },
+      discovery.getContractDetails('TokenBridge', 'Aptos Token Bridge.'),
       {
         address: EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
         name: 'LayerZero Relayer',
@@ -124,22 +123,12 @@ export const aptos: Bridge = {
           ),
         },
       },
-      {
-        address: EthereumAddress('0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675'),
-        name: 'Endpoint',
-        description: 'LayerZero Ethereum Endpoint.',
-      },
-      {
-        address: EthereumAddress('0x4D73AdB72bC3DD368966edD0f0b2148401A178E2'),
-        name: 'UltraLightNodeV2',
-        description:
-          'LayerZero UltraLight Node V2. Used by oracles to checkpoint source chain block hashes.',
-      },
-      {
-        address: EthereumAddress('0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d'),
-        name: 'TreasuryV2',
-        description: 'LayerZero Treasury V2.',
-      },
+      discovery.getContractDetails('Endpoint', 'LayerZero Ethereum Endpoint.'),
+      discovery.getContractDetails(
+        'UltraLightNodeV2',
+        'LayerZero UltraLight Node V2. Used by oracles to checkpoint source chain block hashes.',
+      ),
+      discovery.getContractDetails('TreasuryV2', 'LayerZero Treasury.'),
       {
         address: EthereumAddress('0x07245eEa05826F5984c7c3C8F478b04892e4df89'),
         name: 'LayerZero Proof Library',
@@ -149,49 +138,10 @@ export const aptos: Bridge = {
     isIncomplete: true,
   },
   permissions: [
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x971016EF5Bd9C71fA4ff34D731974d03cEFf5F05',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'Aptos Multisig',
-      description:
-        'Bridge owner, can setup tokens, fees, WETH token address (potentially malicious). Can withdraw all the funds from the Escrow after unlocking emergency withdrawal with 1 week delay.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xB9539A3CfeC8B6cE1953245204efDd0d8eF8244e',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x7a69957582661D2e1b0102D00Bc22a44ffe8c5AB',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x0e1B8B9714830DcC8bBA324eDC5D0F500a78f3b7',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x9134Ff6E5F2D42ADf0E8Cb7462616f18A8dEF6DC',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Aptos MultiSig Participants',
-      description: 'Participants of the 2/4 Aptos MultiSig.',
-    },
+    ...discovery.getMultisigPermission(
+      'Aptos Multisig',
+      'Bridge owner, can setup tokens, fees, WETH token address (potentially malicious). Can withdraw all the funds from the Escrow after unlocking emergency withdrawal with 1 week delay.',
+    ),
     {
       accounts: [
         {
@@ -229,55 +179,10 @@ export const aptos: Bridge = {
       name: 'LayerZero Oracle Admin owner',
       description: 'Can upgrade LayerZero oracle contract with no delay.',
     },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'LayerZero Multisig',
-      description:
-        'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xe095F2590eF1Ab39601445025847Ed8E4B40D687',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xBb6633cc267951E938F9B6421E4F54aa5b2c1936',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x67FC8c432448f9a8d541C17579EF7a142378d5aD',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'LayerZero MultiSig Participants',
-      description: 'Participants of the 2/5 LayerZero MultiSig.',
-    },
+    ...discovery.getMultisigPermission(
+      'LayerZero Multisig',
+      'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
+    ),
   ],
   knowledgeNuggets: [
     {
