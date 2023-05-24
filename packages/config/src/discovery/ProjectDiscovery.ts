@@ -62,19 +62,19 @@ export class ProjectDiscovery {
     descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
   ): ProjectContractSingleAddress {
     const contract = this.getContract(identifier)
-    const values = contract.values ?? {}
     if (typeof descriptionOrOptions === 'string') {
       descriptionOrOptions = { description: descriptionOrOptions }
-      const paused = values.paused as boolean | undefined
-      if (typeof paused === 'boolean') {
-        const owner = values.owner as string | undefined
-        if (typeof owner === 'string') {
-          descriptionOrOptions.description += ` The contract is pausable.`
-          if (paused) {
-            descriptionOrOptions.description += ` The contract is currently paused.`
-          }
-        }
+    } else if (descriptionOrOptions?.pausable !== undefined) {
+      const descriptions = [
+        descriptionOrOptions.description,
+        `The contract is pausable by ${descriptionOrOptions.pausable.pausableBy.join(
+          ', ',
+        )}.`,
+      ]
+      if (descriptionOrOptions.pausable.paused) {
+        descriptions.push('The contract is currently paused.')
       }
+      descriptionOrOptions.description = descriptions.filter(isString).join(' ')
     }
     return {
       name: contract.name,
