@@ -28,7 +28,7 @@ const REFERENCES = [
   {
     href: '#',
     text: 'Sequencer - Optimism Documentation',
-  }
+  },
 ]
 
 export const SingleAddress: Story<ContractEntryProps> = Template.bind({})

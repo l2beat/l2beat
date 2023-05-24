@@ -18,8 +18,8 @@ const permissions: TechnologyContract[] = [
       {
         href: '#',
         text: 'Optimism MultiSig',
-      }
-    ]
+      },
+    ],
   },
   {
     name: 'MultiSig participants',
@@ -44,8 +44,8 @@ const permissions: TechnologyContract[] = [
       {
         href: '#',
         text: 'Optimism Multisig participants',
-      }
-    ]
+      },
+    ],
   },
 ]
 

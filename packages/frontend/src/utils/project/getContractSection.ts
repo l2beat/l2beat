@@ -254,8 +254,6 @@ function makeTechnologyContract(
     ? [item.address.toString()]
     : [...item.multipleAddresses.map((x) => x.toString())]
 
-
-
   const result: TechnologyContract = {
     name: item.name,
     addresses,
