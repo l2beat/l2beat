@@ -1,7 +1,7 @@
 {
   "name": "bobanetwork",
-  "blockNumber": 17327459,
-  "configHash": "0x97e96bde217106864e5a44a5b22f3ebd850041079e7b2db3149a4ccf53c011f9",
+  "blockNumber": 17329248,
+  "configHash": "0x5e435c8118931e7895aaab14c6e6659ec2136c102f72edb17448048af86f859a",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger_2",
@@ -19,32 +19,34 @@
       "derivedName": "L1CrossDomainMessenger"
     },
     {
-      "name": "ChainStorageContainer",
+      "name": "SCCStorageContainerBatches",
       "address": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
       "code": "https://etherscan.deth.net/address/0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000646daf7700000f8502",
-        "length": 15932,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000646e0adf00000f855d",
+        "length": 15939,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "StateCommitmentChain"
-      }
+      },
+      "derivedName": "ChainStorageContainer"
     },
     {
-      "name": "ChainStorageContainer",
+      "name": "CTCStorageContainerBatches",
       "address": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
       "code": "https://etherscan.deth.net/address/0x17148284d2da2f38c96346f1776C1BF7D7691231",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x0000000000000000010864cf00646db0ac0000005eff00000f8511",
-        "length": 17722,
+        "getGlobalMetadata": "0x000000000000000001086bef00646e07720000005eff00000f855d",
+        "length": 17728,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "CanonicalTransactionChain"
-      }
+      },
+      "derivedName": "ChainStorageContainer"
     },
     {
       "name": "Proxy__L1LiquidityPoolArguments",
@@ -66,7 +68,7 @@
       }
     },
     {
-      "name": "ChainStorageContainer",
+      "name": "CTCQueue",
       "address": "0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d",
       "code": "https://etherscan.deth.net/address/0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d",
       "upgradeability": {
@@ -77,7 +79,8 @@
         "length": 0,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "CanonicalTransactionChain"
-      }
+      },
+      "derivedName": "ChainStorageContainer"
     },
     {
       "name": "L1MultiMessageRelayer",
@@ -196,11 +199,11 @@
         "admin": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
       },
       "values": {
-        "currentDepositInfoHash": "0x23a7836c7e24439dbcc7a0e8095a1c5a7dd9f29a9558fd2d76af90257c374f50",
+        "currentDepositInfoHash": "0x00dc39f9f8da2ab51a8a0c014f8ff2204817833881276cac5fa916eff52b1118",
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "lastHashUpdateBlock": 17325893,
+        "lastHashUpdateBlock": 17329174,
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
-        "priorDepositInfoHash": "0x2f4d202df3f7c3edcf9e2cf27433f311847410ad77d3aebfe06c6f4b79b3ec9b"
+        "priorDepositInfoHash": "0x23a7836c7e24439dbcc7a0e8095a1c5a7dd9f29a9558fd2d76af90257c374f50"
       }
     },
     {
@@ -213,9 +216,9 @@
       "values": {
         "batches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1684909943,
-        "getTotalBatches": 15932,
-        "getTotalElements": 1017090,
+        "getLastSequencerTimestamp": 1684933343,
+        "getTotalBatches": 15939,
+        "getTotalElements": 1017181,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "SEQUENCER_PUBLISH_WINDOW": 1800
       }
@@ -256,13 +259,13 @@
         "batches": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17327311,
-        "getLastTimestamp": 1684910252,
+        "getLastBlockNumber": 17329135,
+        "getLastTimestamp": 1684932466,
         "getNextQueueIndex": 24319,
-        "getNumPendingQueueElements": 0,
-        "getQueueLength": 24319,
-        "getTotalBatches": 17722,
-        "getTotalElements": 1017105,
+        "getNumPendingQueueElements": 1,
+        "getQueueLength": 24320,
+        "getTotalBatches": 17728,
+        "getTotalElements": 1017181,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "MAX_ROLLUP_TX_SIZE": 50000,
