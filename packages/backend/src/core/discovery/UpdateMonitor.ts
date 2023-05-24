@@ -6,7 +6,6 @@ import {
 } from '@l2beat/discovery'
 import { DiscoveryOutput, Logger, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
-import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
@@ -137,7 +136,7 @@ export class UpdateMonitor {
     if (previousDiscovery.version === this.version) {
       return previousDiscovery
     }
-
+    console.log('Checking previous', previousDiscovery.blockNumber)
     this.logger.debug(
       'Discovery logic version changed, discovering with new logic',
     )
@@ -154,8 +153,6 @@ export class UpdateMonitor {
     blockNumber: number,
   ) {
     if (diff.length > 0) {
-      await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
-
       const dependents = await findDependents(
         projectConfig.name,
         this.configReader,
@@ -168,29 +165,6 @@ export class UpdateMonitor {
       )
       changesDetected.inc()
     }
-  }
-
-  // 3rd party APIs are unstable, so we do a sanity check before sending
-  // notifications, which makes the same request again and compares the
-  // results.
-  async sanityCheck(
-    discovery: DiscoveryOutput,
-    diff: DiscoveryDiff[],
-    projectConfig: DiscoveryConfig,
-    blockNumber: number,
-  ) {
-    const secondDiscovery = await this.discoveryRunner.run(
-      projectConfig,
-      blockNumber,
-    )
-
-    if (!isEqual(discovery, secondDiscovery)) {
-      throw new Error(
-        `[${projectConfig.name}] Sanity check failed | ${blockNumber}\n
-        potential-diff ${JSON.stringify(diff)}}`,
-      )
-    }
-    this.cachedDiscovery.set(projectConfig.name, secondDiscovery)
   }
 
   // this function gets a diff between current discovery and committed discovery
