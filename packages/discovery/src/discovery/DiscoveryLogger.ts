@@ -2,15 +2,34 @@ import { EthereumAddress } from '@l2beat/shared'
 import chalk from 'chalk'
 
 interface LoggerOptions {
+  buffered: boolean
   enabled: boolean
 }
 
 export class DiscoveryLogger {
+  private bufferedLogs = ''
+
   constructor(private readonly options: LoggerOptions) {}
 
-  static SILENT = new DiscoveryLogger({ enabled: false })
+  static SILENT = new DiscoveryLogger({ enabled: false, buffered: false })
+  static CLI = new DiscoveryLogger({ enabled: true, buffered: false })
+  static SERVER = new DiscoveryLogger({ enabled: false, buffered: true })
+
+  flush(project: string) {
+    if (!this.options.buffered) {
+      throw new Error('Programmer error: Cannot flush non-buffered logger.')
+    }
+    console.log(
+      `Printing discovery logs for [${project}]:\n` + this.bufferedLogs,
+    )
+    this.bufferedLogs = ''
+  }
 
   log(message: string) {
+    if (this.options.buffered) {
+      this.bufferedLogs += message + '\n'
+    }
+
     if (!this.options.enabled) {
       return
     }
@@ -19,16 +38,12 @@ export class DiscoveryLogger {
   }
 
   logExecution(field: string, values: string[]) {
-    if (!this.options.enabled) {
-      return
-    }
-
     const dots = '.'.repeat(Math.max(1, 25 - field.length))
     const content = values
       .map((v, i) => (i % 2 === 0 ? v : chalk.blue(v)))
       .join('')
 
-    console.log(`  ${chalk.yellow(field)} ${chalk.gray(dots)} ${content}`)
+    this.log(`  ${chalk.yellow(field)} ${chalk.gray(dots)} ${content}`)
   }
 
   logSkip(address: EthereumAddress, reason: string) {
