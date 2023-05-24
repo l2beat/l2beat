@@ -76,15 +76,30 @@ export const bobanetwork: Layer2 = {
         'Currently the system permits invalid state roots. More details in project overview.',
       sentiment: 'bad',
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      references: [
+        'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L311',
+      ],
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADABLE_YES,
+      references: [
+        'https://etherscan.io/address/0x6D4528d192dB72E282265D6092F4B872f9Dff69e#code',
+      ],
+    },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_QUEUE,
       references: [
         'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L219',
       ],
     },
-    validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    validatorFailure: {
+      ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+      references: [
+        'https://etherscan.io/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec#code#F1#L103',
+      ],
+    },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('ETH and BOBA', 'are'),
   }),
@@ -121,17 +136,21 @@ export const bobanetwork: Layer2 = {
           href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
         },
         {
-          text: 'Canonical Transaction Chain - Boba documentation',
-          href: 'https://docs.boba.network/developer-docs/chain-contracts#ovm-canonicaltransactionchain-ctc',
+          text: 'CanonicalTransactionChain.sol#L219 - Etherscan source code, appendSequencerBatch function',
+          href: 'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L277',
         },
       ],
     },
     operator: {
-      ...OPERATOR.CENTRALIZED_SEQUENCER,
+      ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
           text: 'Boba operates the only "Sequencer" node - Boba FAQ',
-          href: 'https://docs.boba.network/faq#boba-operates-the-only-sequencer-node',
+          href: 'https://docs.boba.network/faq#does-boba-operate-the-only-sequencer-node',
+        },
+        {
+          text: 'CanonicalTransactionChain.sol#L293 - Etherscan source code, "OVM_Sequencer" check',
+          href: 'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L293',
         },
       ],
     },
@@ -151,6 +170,10 @@ export const bobanetwork: Layer2 = {
           {
             text: 'The Standard Bridge - Boba documentation',
             href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge',
+          },
+          {
+            text: 'BondManager.sol#L31 - Etherscan source code, isCollateralized function',
+            href: 'https://etherscan.io/address/0x60660e6CDEb423cf847dD11De4C473130D65b627#code#F1#L31',
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
