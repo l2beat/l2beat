@@ -36,6 +36,15 @@ const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0
 const totalDelay =
   l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
 
+const upgrades = {
+  upgradableBy: ['Arbitrum DAO', 'Security Council'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
+
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
@@ -323,27 +332,31 @@ export const arbitrum: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails(
-        'RollupProxy',
-        'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-      ),
-      discovery.getContractDetails(
-        'ArbitrumOneBridge',
-        'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-      ),
-      discovery.getContractDetails(
-        'SequencerInbox',
-        'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-      ),
-      discovery.getContractDetails(
-        'Inbox',
-        'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
-      ),
-      discovery.getContractFromValue(
-        'RollupProxy',
-        'outbox',
-        "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
-      ),
+      discovery.getContractDetails('RollupProxy', {
+        description:
+          'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('ArbitrumOneBridge', {
+        description:
+          'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('SequencerInbox', {
+        description:
+          'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('Inbox', {
+        description:
+          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
+        ...upgrades,
+      }),
+      discovery.getContractFromValue('RollupProxy', 'outbox', {
+        description:
+          "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
+        ...upgrades,
+      }),
       discovery.getContractDetails(
         'UpgradeExecutor',
         "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
@@ -352,10 +365,10 @@ export const arbitrum: Layer2 = {
         'L1ArbitrumTimelock',
         'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       ),
-      discovery.getContractDetails(
-        'L1GatewayRouter',
-        'Router managing token <--> gateway mapping.',
-      ),
+      discovery.getContractDetails('L1GatewayRouter', {
+        description: 'Router managing token <--> gateway mapping.',
+        ...upgrades,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
