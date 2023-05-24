@@ -50,6 +50,15 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 )
 const selfSequencingDelay = maxTimeVariation[2]
 
+const upgrades = {
+  upgradableBy: ['Arbitrum DAO', 'Security Council'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
+
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
