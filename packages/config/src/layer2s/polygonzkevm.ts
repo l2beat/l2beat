@@ -127,10 +127,10 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(delay),
+    upgradeability: upgradeabilityRisk,
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM,
+      ...SEQUENCER_RISK_POLYGONZKEVM(isForcedBatchDisallowed),
       sourceCodeReferences: [
         {
           contractIdentifier: 'PolygonZkEvm',
