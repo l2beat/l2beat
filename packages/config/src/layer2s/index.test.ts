@@ -294,7 +294,7 @@ describe('layer2s', () => {
   })
 })
 
-function getReferencedAddresses(references: string[] = []) {
+export function getReferencedAddresses(references: string[] = []) {
   return [...references.join(';').matchAll(/0x[a-fA-F0-9]{40}/g)].map((e) =>
     EthereumAddress(e[0]),
   )

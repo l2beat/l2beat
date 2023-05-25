@@ -1,8 +1,11 @@
-import { UnixTime } from '@l2beat/shared'
+import { gatherAddressesFromUpgradeability, UnixTime } from '@l2beat/shared'
 import { expect } from 'earl'
 
+import { ProjectRiskViewEntry } from '../common'
 import { ProjectTechnologyChoice } from '../common/ProjectTechnologyChoice'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
+import { getReferencedAddresses } from '../layer2s/index.test'
 import { checkRisk } from '../test/helpers'
 import { bridges, BridgeTechnology } from './index'
 
@@ -14,6 +17,47 @@ describe('bridges', () => {
         const links = Object.values(bridge.display.links).flat()
         for (const link of links) {
           expect(link).not.toInclude(' ')
+        }
+      }
+    })
+  })
+  describe('references', () => {
+    describe('every contract has risk view code references', () => {
+      for (const bridge of bridges) {
+        try {
+          const discovery = new ProjectDiscovery(bridge.id.toString())
+
+          for (const [riskName, riskEntry] of Object.entries(
+            bridge.riskView ?? {},
+          )) {
+            const risk = riskEntry as ProjectRiskViewEntry
+            if (risk.sourceCodeReferences === undefined) continue
+
+            it(`${bridge.id.toString()} : ${riskName}`, () => {
+              for (const sourceCodeReference of risk.sourceCodeReferences ??
+                []) {
+                const referencedAddresses = getReferencedAddresses(
+                  sourceCodeReference.references,
+                )
+                const contract = discovery.getContract(
+                  sourceCodeReference.contractIdentifier,
+                )
+
+                const contractAddresses = [
+                  contract.address,
+                  ...gatherAddressesFromUpgradeability(contract.upgradeability),
+                ]
+
+                expect(
+                  contractAddresses.some((a) =>
+                    referencedAddresses.includes(a),
+                  ),
+                ).toEqual(true)
+              }
+            })
+          }
+        } catch {
+          continue
         }
       }
     })
