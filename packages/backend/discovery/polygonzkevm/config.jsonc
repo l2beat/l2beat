@@ -6,7 +6,7 @@
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin",
     "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "Timelock",
     "0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9": "FflonkVerifier",
-    "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": "OwnerMultisig",
+    "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": "SecurityCouncil",
     "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0": "MaticToken",
     "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "GlobalExitRoot",
     "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "Bridge",
@@ -52,7 +52,7 @@
         }
       }
     },
-    "OwnerMultisig": {
+    "SecurityCouncil": {
       "ignoreMethods": ["nonce"]
     },
     "GlobalExitRoot": {
@@ -74,6 +74,7 @@
     },
     "AdminMultisig": {
       "ignoreMethods": ["nonce"]
-    }
+    },
+    "MaticToken": { "ignoreDiscovery": true }
   }
 }
