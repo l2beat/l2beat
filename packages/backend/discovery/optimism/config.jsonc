@@ -20,7 +20,8 @@
     "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": "CanonicalTransactionChain_OLD",
     "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": "L1CrossDomainMessengerProxy",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig",
-    "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge"
+    "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge",
+    "0xEb3107117FEAd7de89Cd14D463D340A2E6917769": "SynthetixMultisig"
   },
   "overrides": {
     "LibAddressManager": {
@@ -178,6 +179,9 @@
         "l2Token",
         "messenger"
       ]
+    },
+    "SynthetixMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
