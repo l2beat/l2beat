@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "blockNumber": 17321205,
-  "configHash": "0x87ce1e095d7b51539ec4b4d2fe4f792b35c70eb28b8f6b906c48d5259dd95308",
+  "configHash": "0x771fa832b4dcd7d4990f6060d1b7f05ecfa0531563fb6fdcf5a7975e6708a78f",
   "contracts": [
     {
       "name": "OutboxV2",
@@ -321,19 +321,7 @@
         "l2ToL1Sender": "0x0000000000000000000000000000000000000000",
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 1,
-        "outboxEntries": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "outboxEntryExists": [false, false, false, false, false],
         "rollup": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
-      },
-      "errors": {
-        "outboxEntries": "Too many values. Update configuration explore fully",
-        "outboxEntryExists": "Too many values. Update configuration explore fully"
       },
       "derivedName": "Outbox"
     },

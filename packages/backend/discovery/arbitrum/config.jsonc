@@ -95,7 +95,7 @@
         }
       }
     },
-    "Outbox": {
+    "OutboxV1": {
       "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
     },
     "L1DaiGateway": {
