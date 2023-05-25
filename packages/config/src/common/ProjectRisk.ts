@@ -26,6 +26,6 @@ export interface ProjectRiskViewEntry {
   sourceCodeReferences?: {
     contractIdentifier: string
     references: string[]
-  }
+  }[]
   otherReferences?: string[]
 }

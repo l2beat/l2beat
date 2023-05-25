@@ -79,8 +79,13 @@ export const polygonzkevm: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
-      references: [
-        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L817',
+      sourceCodeReferences: [
+        {
+          contractIdentifier: 'PolygonZkEvm',
+          references: [
+            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L817',
+          ],
+        },
       ],
     },
     //include info that txs are posted, not state diffs
@@ -89,24 +94,39 @@ export const polygonzkevm: Layer2 = {
       description:
         RISK_VIEW.DATA_ON_CHAIN.description +
         ' Unlike most zk rollups transactions are posted instead of state diffs.',
-      references: [
-        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L186',
+      sourceCodeReferences: [
+        {
+          contractIdentifier: 'PolygonZkEvm',
+          references: [
+            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L186',
+          ],
+        },
       ],
     },
     upgradeability: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(delay),
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM,
-      references: [
-        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L243',
+      sourceCodeReferences: [
+        {
+          contractIdentifier: 'PolygonZkEvm',
+          references: [
+            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L243',
+          ],
+        },
       ],
     },
     validatorFailure: {
       value: 'Submit proofs',
       description: `If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-      references: [
-        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L636',
-        'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L859',
+      sourceCodeReferences: [
+        {
+          contractIdentifier: 'PolygonZkEvm',
+          references: [
+            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L636',
+            'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L859',
+          ],
+        },
       ],
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
