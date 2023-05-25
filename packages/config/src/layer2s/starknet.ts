@@ -146,7 +146,7 @@ export const starknet: Layer2 = {
         'https://etherscan.io/address/0x6cb3ee90c50a38a0e4662bb7e7e6e40b91361bf6#code#F6#L153',
       ],
       // we don't have a way to test against shared modules
-      contracts: ['Starknet' /*'GpsStatementVerifier'*/],
+      contracts: ['Starknet' /*, 'GpsStatementVerifier'*/],
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
@@ -214,12 +214,10 @@ export const starknet: Layer2 = {
         upgradableBy: ['Starknet Proxy Governors'],
       }),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
-      {
-        name: 'L1DaiGateway',
-        description:
-          'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-        address: EthereumAddress('0x9F96fE0633eE838D0298E8b8980E6716bE81388d'),
-      },
+      discovery.getContractDetails(
+        'L1DaiGateway',
+        'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },

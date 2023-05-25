@@ -1,7 +1,7 @@
 {
   "name": "starknet",
-  "blockNumber": 17327360,
-  "configHash": "0xecbcea97fda4e5ca4ec3e22c78ce6455f65db36203fe27ccdc384c3cf311ba92",
+  "blockNumber": 17336148,
+  "configHash": "0x2cbdb5c370912bdbc987f12a2b6e6c1f999dd0299e04cb3fae68b45e45b94e4e",
   "contracts": [
     {
       "name": "DAI Bridge",
@@ -82,6 +82,25 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "L1DaiGateway",
+      "address": "0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
+      "code": "https://etherscan.deth.net/address/0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "ceiling": "5000000000000000000000000",
+        "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "escrow": "0x0437465dfb5B79726e35F08559B0cBea55bb585C",
+        "isOpen": 1,
+        "l2Dai": "385291772725090318157700937045086145273563247402457518748197066808155336371",
+        "l2DaiBridge": "3326542335218638260710262166293903627998802370811525948909206799059756478048",
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "starkNet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      },
+      "derivedName": "L1DAIBridge"
     },
     {
       "name": "ETH Bridge",
@@ -169,7 +188,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 575655,
+        "l1ToL2MessageNonce": 580310,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -178,9 +197,9 @@
         "programHash": "1921772108187713503530008849184725638117898887391063185252422808224349294626",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockHash": "3538783770798368498832240721398110283416547080990355204197219877812142041796",
-        "stateBlockNumber": 61633,
-        "stateRoot": "3147481648641002025596255930259746433007853958877207720311721642602558752015",
+        "stateBlockHash": "3254772905235145186453229457661931265241222288927530119990539910380166384007",
+        "stateBlockNumber": 62708,
+        "stateRoot": "588914053912893831693432373009459392874976078464916847511184973641690496721",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -392,6 +411,38 @@
     ],
     "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": [
       "constructor(address _singleton)"
+    ],
+    "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": [
+      "constructor(address _starkNet, address _dai, uint256 _l2Dai, address _escrow, uint256 _l2DaiBridge)",
+      "event Closed()",
+      "event Deny(address indexed usr)",
+      "event LogCancelDeposit(uint256 indexed l2Recipient, address l1Recipient, uint256 amount, uint256 nonce)",
+      "event LogCeiling(uint256 ceiling)",
+      "event LogDeposit(address indexed l1Sender, uint256 amount, uint256 l2Recipient)",
+      "event LogForceWithdrawal(address indexed l1Recipient, uint256 amount, uint256 indexed l2Sender)",
+      "event LogMaxDeposit(uint256 maxDeposit)",
+      "event LogStartDepositCancellation(uint256 indexed l2Receipient, uint256 amount, uint256 nonce)",
+      "event LogWithdrawal(address indexed l1Recipient, uint256 amount)",
+      "event Rely(address indexed usr)",
+      "function cancelDeposit(uint256 amount, uint256 l2Recipient, address l1Recipient, uint256 nonce)",
+      "function ceiling() view returns (uint256)",
+      "function close()",
+      "function dai() view returns (address)",
+      "function deny(address usr)",
+      "function deposit(uint256 amount, uint256 l2Recipient) payable",
+      "function escrow() view returns (address)",
+      "function forceWithdrawal(uint256 amount, uint256 l2Sender) payable",
+      "function isOpen() view returns (uint256)",
+      "function l2Dai() view returns (uint256)",
+      "function l2DaiBridge() view returns (uint256)",
+      "function maxDeposit() view returns (uint256)",
+      "function rely(address usr)",
+      "function setCeiling(uint256 _ceiling)",
+      "function setMaxDeposit(uint256 _maxDeposit)",
+      "function starkNet() view returns (address)",
+      "function startDepositCancellation(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function wards(address) view returns (uint256)",
+      "function withdraw(uint256 amount, address l1Recipient)"
     ],
     "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": [
       "constructor(uint256 upgradeActivationDelay)",
