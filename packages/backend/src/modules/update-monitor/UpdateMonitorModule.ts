@@ -68,7 +68,7 @@ export function createUpdateMonitorModule(
 
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
-  const discoveryLogger = DiscoveryLogger.SILENT
+  const discoveryLogger = DiscoveryLogger.SERVER
 
   const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
   const sourceCodeService = new SourceCodeService(discoveryProvider)
