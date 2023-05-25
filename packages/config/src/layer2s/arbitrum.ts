@@ -114,7 +114,6 @@ export const arbitrum: Layer2 = {
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
         isHistorical: true,
-        newVersion: true,
       },
     ],
     transactionApi: {

@@ -1,7 +1,7 @@
 {
   "name": "nova",
-  "blockNumber": 17271302,
-  "configHash": "0x5861f5fb73f38c4e43f9d9c00a8420e7865cd04d6f1bd5e0b21f5061c841e553",
+  "blockNumber": 17334354,
+  "configHash": "0xfc4a858e2b7762d6759244e76983e04323841e5bba9d0b464385fa7fb33a7aad",
   "contracts": [
     {
       "name": "OneStepProverMath",
@@ -21,13 +21,13 @@
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
       "values": {
-        "batchCount": 13881,
+        "batchCount": 14343,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 211577
+        "totalDelayedMessagesRead": 214866
       }
     },
     {
@@ -207,9 +207,36 @@
       }
     },
     {
+      "name": "L1DaiGateway",
+      "address": "0x97f63339374fCe157Aa8Ee27830172d2AF76A786",
+      "code": "https://etherscan.deth.net/address/0x97f63339374fCe157Aa8Ee27830172d2AF76A786",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "counterpartGateway": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+        "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+        "isOpen": 1,
+        "l1Dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "l1Escrow": "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
+        "l1Router": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
+        "l2Counterpart": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+        "l2Dai": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+      },
+      "derivedName": "L1DaiGateway"
+    },
+    {
       "name": "OneStepProverHostIo",
       "address": "0x9CBC3F14a57CE6eAD0e770F528E2f1E8b8C37613",
       "code": "https://etherscan.deth.net/address/0x9CBC3F14a57CE6eAD0e770F528E2f1E8b8C37613",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    },
+    {
+      "name": "L1Escrow",
+      "address": "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
+      "code": "https://etherscan.deth.net/address/0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
       "upgradeability": {
         "type": "immutable"
       }
@@ -277,11 +304,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 211580,
+        "delayedMessageCount": 214885,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 13881,
-        "sequencerReportedSubMessageCount": 8810625
+        "sequencerMessageCount": 14343,
+        "sequencerReportedSubMessageCount": 9565822
       }
     },
     {
@@ -412,12 +439,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 7423,
+        "firstUnresolvedNode": 7633,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 7422,
-        "latestNodeCreated": 7574,
+        "latestConfirmed": 7632,
+        "latestNodeCreated": 7786,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -905,6 +932,31 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
+    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": [
+      "constructor(address _l2Counterpart, address _l1Router, address _inbox, address _l1Dai, address _l2Dai, address _l1Escrow)",
+      "event Closed()",
+      "event Deny(address indexed usr)",
+      "event DepositInitiated(address l1Token, address indexed from, address indexed to, uint256 indexed sequenceNumber, uint256 amount)",
+      "event Rely(address indexed usr)",
+      "event TxToL2(address indexed from, address indexed to, uint256 indexed seqNum, bytes data)",
+      "event WithdrawalFinalized(address l1Token, address indexed from, address indexed to, uint256 indexed exitNum, uint256 amount)",
+      "function calculateL2TokenAddress(address l1Token) view returns (address)",
+      "function close()",
+      "function counterpartGateway() view returns (address)",
+      "function deny(address usr)",
+      "function finalizeInboundTransfer(address l1Token, address from, address to, uint256 amount, bytes data)",
+      "function getOutboundCalldata(address l1Token, address from, address to, uint256 amount, bytes data) pure returns (bytes outboundCalldata)",
+      "function inbox() view returns (address)",
+      "function isOpen() view returns (uint256)",
+      "function l1Dai() view returns (address)",
+      "function l1Escrow() view returns (address)",
+      "function l1Router() view returns (address)",
+      "function l2Counterpart() view returns (address)",
+      "function l2Dai() view returns (address)",
+      "function outboundTransfer(address l1Token, address to, uint256 amount, uint256 maxGas, uint256 gasPriceBid, bytes data) payable returns (bytes)",
+      "function rely(address usr)",
+      "function wards(address) view returns (uint256)"
+    ],
     "0x9CBC3F14a57CE6eAD0e770F528E2f1E8b8C37613": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
     ],
@@ -990,6 +1042,16 @@
       "function zombieAddress(uint256 zombieNum) view returns (address)",
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
+    ],
+    "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3": [
+      "constructor()",
+      "event Approve(address indexed token, address indexed spender, uint256 value)",
+      "event Deny(address indexed usr)",
+      "event Rely(address indexed usr)",
+      "function approve(address token, address spender, uint256 value)",
+      "function deny(address usr)",
+      "function rely(address usr)",
+      "function wards(address) view returns (uint256)"
     ],
     "0xA59075221b50C598aED0Eae0bB9869639513af0D": [
       "constructor(address _logic, address admin_, bytes _data) payable",
