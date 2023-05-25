@@ -229,6 +229,10 @@ export const starknet: Layer2 = {
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted. ' +
         delayDescriptionFromSeconds(starknetDelaySeconds),
     },
+    ...discovery.getMultisigPermission(
+      'Proxy Multisig',
+      'One of Proxy Governors.',
+    ),
     {
       name: 'Starknet Implementation Governors',
       accounts: discovery.getPermissionedAccounts('Starknet', 'governors'),
