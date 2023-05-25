@@ -24,6 +24,13 @@ const VERIFICATION_STATUS = {
   [IMPLEMENTATION.toString()]: true,
 }
 
+const REFERENCES = [
+  {
+    href: '#',
+    text: 'Sequencer - Optimism Documentation',
+  },
+]
+
 export const SingleAddress: Story<ContractEntryProps> = Template.bind({})
 SingleAddress.args = {
   contract: {
@@ -44,6 +51,7 @@ SingleAddress.args = {
         isAdmin: true,
       },
     ],
+    references: REFERENCES,
   },
   verificationStatus: {
     projects: {},
