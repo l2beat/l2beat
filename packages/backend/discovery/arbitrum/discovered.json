@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "blockNumber": 17321205,
-  "configHash": "0x771fa832b4dcd7d4990f6060d1b7f05ecfa0531563fb6fdcf5a7975e6708a78f",
+  "blockNumber": 17335587,
+  "configHash": "0x324012a3786a79c1391dfc5be611b2311fcd4ea8ab76b849ceb7c33b9dd5cf38",
   "contracts": [
     {
       "name": "OutboxV2",
@@ -47,7 +47,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 208238,
+        "batchCount": 209331,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -55,7 +55,7 @@
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 866344
+        "totalDelayedMessagesRead": 871126
       },
       "derivedName": "SequencerInbox"
     },
@@ -228,12 +228,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 5368,
+        "firstUnresolvedNode": 5417,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 5367,
-        "latestNodeCreated": 5521,
+        "latestConfirmed": 5416,
+        "latestNodeCreated": 5570,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -345,11 +345,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 866362,
+        "delayedMessageCount": 871142,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 208238,
-        "sequencerReportedSubMessageCount": 71359117
+        "sequencerMessageCount": 211352,
+        "sequencerReportedSubMessageCount": 72050168
       },
       "derivedName": "Bridge"
     },
