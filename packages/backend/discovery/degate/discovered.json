@@ -1,7 +1,7 @@
 {
   "name": "degate",
-  "blockNumber": 17321536,
-  "configHash": "0xf36ae22c9f57673ce3ac966de3d5d4090efda4b5ab98818e12160b6d3968ee4f",
+  "blockNumber": 17335687,
+  "configHash": "0x1f04965d06148fcc89da9e5690e466bf75466a9ee4dd93b8eabacd48c8fb5271",
   "contracts": [
     {
       "name": "BlockVerifier",
@@ -16,6 +16,28 @@
       }
     },
     {
+      "name": "LoopringOwner",
+      "address": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+      "code": "https://etherscan.deth.net/address/0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getOwners": [
+          "0xf5020ADf433645c451A4809eac0d6F680709f11B",
+          "0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
+          "0xB7093FC2d926ADdE48122B70991fe68374879adf",
+          "0xC715b8501039d3514787dC55BC09f89c293351e9",
+          "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
+          "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
+        ],
+        "MAX_OWNER_COUNT": 50,
+        "required": 4,
+        "transactionCount": 4
+      },
+      "derivedName": "MultiSigWallet"
+    },
+    {
       "name": "LoopringV3",
       "address": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
       "code": "https://etherscan.deth.net/address/0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
@@ -27,29 +49,11 @@
         "forcedWithdrawalFee": "10000000000000000",
         "getProtocolFeeValues": 18,
         "lrcAddress": "0x53C8395465A84955c95159814461466053DedEDE",
-        "owner": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
-        "pendingOwner": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+        "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
         "protocolFeeBips": 18,
         "protocolFeeVault": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
         "totalStake": 0
-      }
-    },
-    {
-      "name": "DGToken",
-      "address": "0x53C8395465A84955c95159814461466053DedEDE",
-      "code": "https://etherscan.deth.net/address/0x53C8395465A84955c95159814461466053DedEDE",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "decimals": 18,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
-        "name": "DeGate Token",
-        "paused": false,
-        "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
-        "symbol": "DG",
-        "totalSupply": "1000000000000000000000000000"
       }
     },
     {
@@ -65,14 +69,14 @@
           "0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C"
         ],
         "open": false,
-        "owner": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
-        "pendingOwner": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+        "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5"
       },
       "derivedName": "LoopringIOExchangeOwner"
     },
     {
-      "name": "MultiSigWallet",
+      "name": "FeeVault",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
       "code": "https://etherscan.deth.net/address/0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
       "upgradeability": {
@@ -102,8 +106,8 @@
       },
       "values": {
         "exchange": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
-        "owner": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
-        "pendingOwner": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C"
+        "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
       }
     },
     {
@@ -116,7 +120,7 @@
       "values": {
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",
-        "getBlockHeight": 507,
+        "getBlockHeight": 564,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           1000000,
@@ -136,8 +140,8 @@
         "getExchangeStake": 0,
         "getFreeDepositRemained": 4999,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleAssetRoot": "0x076ae92e242455da2326ea61948353b155cbf97b69bb77df675514ab01ffd301",
-        "getMerkleRoot": "0x173581f713068b7fe09e0a52b27ce815587fce5d172db604827f237aec855cbc",
+        "getMerkleAssetRoot": "0x2f1e540e9b9302899034b2622d8883b915d9bbb6f7718223f85fe769b02c2d6c",
+        "getMerkleRoot": "0x2993666b4a8f775b3d2be86fd488fbf8b0e8f30872f36638c499d588c4fa7b45",
         "getNumAvailableForcedSlots": 1000000,
         "getProtocolFeeValues": [0, 18, 18, 0, 18],
         "isInWithdrawalMode": false,
@@ -153,9 +157,9 @@
           "0x0000000000000000000000000000000000000000",
           "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
           [5000, 4999, 17286200, 1, 4480000000000000],
-          "0x173581f713068b7fe09e0a52b27ce815587fce5d172db604827f237aec855cbc",
-          "0x076ae92e242455da2326ea61948353b155cbf97b69bb77df675514ab01ffd301",
-          507,
+          "0x2993666b4a8f775b3d2be86fd488fbf8b0e8f30872f36638c499d588c4fa7b45",
+          "0x2f1e540e9b9302899034b2622d8883b915d9bbb6f7718223f85fe769b02c2d6c",
+          564,
           0,
           [0, 18, 18, 0, 18],
           [0, 0]
@@ -193,6 +197,39 @@
       "function transferOwnership(address newOwner)",
       "function verifyProofs(uint8 blockType, uint16 blockSize, uint8 blockVersion, uint256[] publicInputs, uint256[] proofs) view returns (bool)"
     ],
+    "0x2028834B2c0A36A918c10937EeA71BE4f932da52": [
+      "function owners(uint256) view returns (address)",
+      "function removeOwner(address owner)",
+      "function revokeConfirmation(uint256 transactionId)",
+      "function isOwner(address) view returns (bool)",
+      "function confirmations(uint256, address) view returns (bool)",
+      "function getTransactionCount(bool pending, bool executed) view returns (uint256 count)",
+      "function addOwner(address owner)",
+      "function isConfirmed(uint256 transactionId) view returns (bool)",
+      "function getConfirmationCount(uint256 transactionId) view returns (uint256 count)",
+      "function transactions(uint256) view returns (address destination, uint256 value, bytes data, bool executed)",
+      "function getOwners() view returns (address[])",
+      "function getTransactionIds(uint256 from, uint256 to, bool pending, bool executed) view returns (uint256[] _transactionIds)",
+      "function getConfirmations(uint256 transactionId) view returns (address[] _confirmations)",
+      "function transactionCount() view returns (uint256)",
+      "function changeRequirement(uint256 _required)",
+      "function confirmTransaction(uint256 transactionId)",
+      "function submitTransaction(address destination, uint256 value, bytes data) returns (uint256 transactionId)",
+      "function MAX_OWNER_COUNT() view returns (uint256)",
+      "function required() view returns (uint256)",
+      "function replaceOwner(address owner, address newOwner)",
+      "function executeTransaction(uint256 transactionId)",
+      "constructor(address[] _owners, uint256 _required)",
+      "event Confirmation(address indexed sender, uint256 indexed transactionId)",
+      "event Revocation(address indexed sender, uint256 indexed transactionId)",
+      "event Submission(uint256 indexed transactionId)",
+      "event Execution(uint256 indexed transactionId)",
+      "event ExecutionFailure(uint256 indexed transactionId)",
+      "event Deposit(address indexed sender, uint256 value)",
+      "event OwnerAddition(address indexed owner)",
+      "event OwnerRemoval(address indexed owner)",
+      "event RequirementChange(uint256 required)"
+    ],
     "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458": [
       "constructor(address _lrcAddress, address _protocolFeeVault, address _blockVerifierAddress)",
       "event ExchangeStakeBurned(address exchangeAddr, uint256 amount)",
@@ -218,43 +255,6 @@
       "function updateProtocolFeeSettings(uint16 _protocolFeeBips)",
       "function updateSettings(address _protocolFeeVault, uint256 _forcedWithdrawalFee)",
       "function withdrawExchangeStake(address recipient, uint256 requestedAmount) returns (uint256 amountLRC)"
-    ],
-    "0x53C8395465A84955c95159814461466053DedEDE": [
-      "constructor()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Paused(address account)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Unpaused(address account)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MINTER_ROLE() view returns (bytes32)",
-      "function PAUSER_ROLE() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 amount)",
-      "function burnFrom(address account, uint256 amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function mint(address to, uint256 amount)",
-      "function name() view returns (string)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
-      "function unpause()"
     ],
     "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83": [
       "constructor(address _exchange)",
