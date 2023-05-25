@@ -11,6 +11,7 @@ import {
   makeBridgeCompatible,
   NUGGETS,
   RISK_VIEW,
+  SEQUENCER_RISK_POLYGONZKEVM,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -33,6 +34,30 @@ const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
     'PolygonZkEvm',
     '_HALT_AGGREGATION_TIMEOUT',
   ),
+)
+
+const bridgeEmergencyState = discovery.getContractValue<boolean>(
+  'Bridge',
+  'isEmergencyState',
+)
+const rollupEmergencyState = discovery.getContractValue<boolean>(
+  'PolygonZkEvm',
+  'isEmergencyState',
+)
+const upgradeabilityRisk = RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(
+  delay,
+  rollupEmergencyState,
+  bridgeEmergencyState,
+)
+const timelockUpgrades = {
+  upgradableBy: ['AdminMultisig'],
+  upgradeDelay: upgradeabilityRisk.value,
+  upgradeConsiderations: upgradeabilityRisk.description,
+}
+
+const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
+  'PolygonZkEvm',
+  'isForcedBatchDisallowed',
 )
 
 export const polygonzkevm: Layer2 = {
@@ -83,7 +108,6 @@ export const polygonzkevm: Layer2 = {
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L817',
       ],
     },
-    //include info that txs are posted, not state diffs
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       description:
@@ -93,10 +117,10 @@ export const polygonzkevm: Layer2 = {
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L186',
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADABLE_POLYGON_ZKEVM(delay),
+    upgradeability: upgradeabilityRisk,
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM,
+      ...SEQUENCER_RISK_POLYGONZKEVM(isForcedBatchDisallowed),
       references: [
         'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L243',
       ],
@@ -195,24 +219,26 @@ export const polygonzkevm: Layer2 = {
       description: `The trusted aggregator provides the PolygonZkEvm contract with zk proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getMultisigPermission(
-      'OwnerMultisig',
-      'The OwnerMultisig (Security Council) is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
+      'SecurityCouncil',
+      'The Security Council is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
     ),
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails(
-        'PolygonZkEvm',
-        `The main contract of the Polygon zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives transaction batches, L2 state roots as well as zk proofs.`,
-      ),
-      discovery.getContractDetails(
-        'Bridge',
-        'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
-      ),
-      discovery.getContractDetails(
-        'GlobalExitRoot',
-        'Synchronizes deposit and withdraw merkle trees across L1 and L2. The global root from this contract is injected into the L2 contract.',
-      ),
+      discovery.getContractDetails('PolygonZkEvm', {
+        description: `The main contract of the Polygon zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives transaction batches, L2 state roots as well as zk proofs.`,
+        ...timelockUpgrades,
+      }),
+      discovery.getContractDetails('Bridge', {
+        description:
+          'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
+        ...timelockUpgrades,
+      }),
+      discovery.getContractDetails('GlobalExitRoot', {
+        description:
+          'Synchronizes deposit and withdraw merkle trees across L1 and L2. The global root from this contract is injected into the L2 contract.',
+        ...timelockUpgrades,
+      }),
       discovery.getContractDetails(
         'FflonkVerifier',
         'An autogenerated contract that verifies zk proofs in the PolygonZkEvm system.',
@@ -220,14 +246,12 @@ export const polygonzkevm: Layer2 = {
     ],
     references: [
       {
-        // TODO: do we need to trust the Sequencer to perform injections?
-        text: 'State injections - PolygonZkEvm L2 source code',
-        href: 'https://github.com/0xPolygonHermez/zkevm-contracts/blob/b1cefea1431e59b2121e543b786b93af99e859f4/contracts/PolygonZkEVMGlobalExitRootL2.sol#L17',
+        text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
+        href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L806',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
   },
-  // TODO: new upgradeability section with ProxyAdmin and Timelock
   milestones: [
     {
       name: 'Polygon zkEVM Mainnet Beta is Live',
