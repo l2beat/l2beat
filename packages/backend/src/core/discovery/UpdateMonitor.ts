@@ -136,7 +136,6 @@ export class UpdateMonitor {
     if (previousDiscovery.version === this.version) {
       return previousDiscovery
     }
-    console.log('Checking previous', previousDiscovery.blockNumber)
     this.logger.info(
       'Discovery logic version changed, discovering with new logic',
       { project: projectConfig.name },

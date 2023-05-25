@@ -242,7 +242,7 @@ describe(UpdateMonitor.name, () => {
       )
     })
 
-    it('runs discovery again if version changes', async () => {
+    it('uses discovery on previous block number if version changes', async () => {
       const config = mockConfig(PROJECT_A)
 
       const configReader = mockObject<ConfigReader>({
