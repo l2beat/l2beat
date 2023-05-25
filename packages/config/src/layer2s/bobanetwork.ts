@@ -216,15 +216,27 @@ export const bobanetwork: Layer2 = {
       ),
       {
         name: 'ChainStorageContainer-CTC-batches',
-        address: EthereumAddress('0x17148284d2da2f38c96346f1776C1BF7D7691231'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            'CanonicalTransactionChain',
+            'batches',
+          ),
+        ),
       },
       {
         name: 'ChainStorageContainer-CTC-queue',
-        address: EthereumAddress('0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            'CanonicalTransactionChain',
+            'queue',
+          ),
+        ),
       },
       {
         name: 'ChainStorageContainer-SCC-batches',
-        address: EthereumAddress('0x13992B9f327faCA11568BE18a8ad3E9747e87d93'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>('StateCommitmentChain', 'batches'),
+        ),
       },
       discovery.getContractDetails(
         'BondManager',
