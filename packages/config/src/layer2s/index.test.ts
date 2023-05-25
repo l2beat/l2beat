@@ -52,13 +52,17 @@ describe('layer2s', () => {
 
           for (const [riskName, riskEntry] of Object.entries(layer2.riskView)) {
             const risk = riskEntry as ProjectRiskViewEntry
-            if (risk.contracts === undefined) continue
-
-            const referencedAddresses = getReferencedAddresses(risk.references)
+            if (risk.sourceCodeReferences === undefined) continue
 
             it(`${layer2.id.toString()} : ${riskName}`, () => {
-              for (const contractIdentifier of risk.contracts ?? []) {
-                const contract = discovery.getContract(contractIdentifier)
+              for (const sourceCodeReference of risk.sourceCodeReferences ??
+                []) {
+                const referencedAddresses = getReferencedAddresses(
+                  sourceCodeReference.references,
+                )
+                const contract = discovery.getContract(
+                  sourceCodeReference.contractIdentifier,
+                )
 
                 const contractAddresses = [
                   contract.address,

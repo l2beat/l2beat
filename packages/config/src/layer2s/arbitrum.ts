@@ -156,7 +156,7 @@ export const arbitrum: Layer2 = {
       ...RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
       sourceCodeReferences: [
         {
-          contractIdentifier: 'Outbox',
+          contractIdentifier: 'OutboxV2',
           references: [
             'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
           ],
