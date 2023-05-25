@@ -25,9 +25,39 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
 
-const delaySeconds = discovery.getContractUpgradeabilityParam(
+const starknetDelaySeconds = discovery.getContractUpgradeabilityParam(
   'Starknet',
   'upgradeDelay',
+)
+
+const ESCROW_ETH_ADDRESS = '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'
+const ESCROW_WBTC_ADDRESS = '0x283751A21eafBFcD52297820D27C1f1963D9b5b4'
+const ESCROW_USDC_ADDRESS = '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'
+const ESCROW_USDT_ADDRESS = '0xbb3400F107804DFB482565FF1Ec8D8aE66747605'
+
+const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_ETH_ADDRESS,
+  'upgradeDelay',
+)
+const escrowWBTCDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_WBTC_ADDRESS,
+  'upgradeDelay',
+)
+const escrowUSDCDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_USDC_ADDRESS,
+  'upgradeDelay',
+)
+const escrowUSDTDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_USDT_ADDRESS,
+  'upgradeDelay',
+)
+
+const minDelay = Math.min(
+  escrowETHDelaySeconds,
+  escrowWBTCDelaySeconds,
+  escrowUSDCDelaySeconds,
+  escrowUSDTDelaySeconds,
+  starknetDelaySeconds,
 )
 
 export const starknet: Layer2 = {
@@ -65,10 +95,12 @@ export const starknet: Layer2 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'),
+        address: EthereumAddress(ESCROW_ETH_ADDRESS),
         sinceTimestamp: new UnixTime(1647857148),
         tokens: ['ETH'],
         description: 'StarkGate bridge for ETH.',
+        upgradableBy: ['StarkGate ETH owner'],
+        upgradeDelay: formatSeconds(escrowETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
@@ -77,22 +109,27 @@ export const starknet: Layer2 = {
         description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x283751A21eafBFcD52297820D27C1f1963D9b5b4'),
+        address: EthereumAddress(ESCROW_WBTC_ADDRESS),
         sinceTimestamp: new UnixTime(1657137600),
         tokens: ['WBTC'],
         description: 'StarkGate bridge for WBTC.',
+        upgradableBy: ['StarkGate WBTC owner'],
+        upgradeDelay: formatSeconds(escrowWBTCDelaySeconds),
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'),
+        address: EthereumAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
+        upgradableBy: ['StarkGate USDC owner'],
         description: 'StarkGate bridge for USDC.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xbb3400F107804DFB482565FF1Ec8D8aE66747605'),
+        address: EthereumAddress(ESCROW_USDT_ADDRESS),
         sinceTimestamp: new UnixTime(1657137615),
         tokens: ['USDT'],
         description: 'StarkGate bridge for USDT.',
+        upgradableBy: ['StarkGate USDT owner'],
+        upgradeDelay: formatSeconds(escrowUSDTDelaySeconds),
       }),
     ],
     transactionApi: {
@@ -104,7 +141,7 @@ export const starknet: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
+    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
     validatorFailure: RISK_VIEW.PROVER_DOWN,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -151,7 +188,9 @@ export const starknet: Layer2 = {
       discovery.getContractDetails('Starknet', {
         description:
           'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-        upgradeDelay: delaySeconds ? formatSeconds(delaySeconds) : 'No delay',
+        upgradeDelay: starknetDelaySeconds
+          ? formatSeconds(starknetDelaySeconds)
+          : 'No delay',
         upgradableBy: ['Starknet Proxy Governors'],
       }),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
@@ -162,7 +201,7 @@ export const starknet: Layer2 = {
         address: EthereumAddress('0x9F96fE0633eE838D0298E8b8980E6716bE81388d'),
       },
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
   permissions: [
     {
@@ -170,7 +209,7 @@ export const starknet: Layer2 = {
       accounts: getProxyGovernance(discovery, 'Starknet'),
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted. ' +
-        delayDescriptionFromSeconds(delaySeconds),
+        delayDescriptionFromSeconds(starknetDelaySeconds),
     },
     {
       name: 'Starknet Implementation Governors',
@@ -197,6 +236,34 @@ export const starknet: Layer2 = {
       ],
       description:
         'In DAI bridge it can set max deposit per bridge and per user. In DAI escrow it can approve token transfers.',
+    },
+    {
+      name: 'StarkGate ETH owner',
+      accounts: getProxyGovernance(discovery, ESCROW_ETH_ADDRESS),
+      description:
+        'Can upgrade implementation of the ETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowETHDelaySeconds),
+    },
+    {
+      name: 'StarkGate WBTC owner',
+      accounts: getProxyGovernance(discovery, ESCROW_WBTC_ADDRESS),
+      description:
+        'Can upgrade implementation of the WBTC escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowWBTCDelaySeconds),
+    },
+    {
+      name: 'StarkGate USDC owner',
+      accounts: getProxyGovernance(discovery, ESCROW_USDC_ADDRESS),
+      description:
+        'Can upgrade implementation of the USDC escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
+    },
+    {
+      name: 'StarkGate USDT owner',
+      accounts: getProxyGovernance(discovery, ESCROW_USDT_ADDRESS),
+      description:
+        'Can upgrade implementation of the USDT escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowUSDTDelaySeconds),
     },
   ],
   milestones: [
