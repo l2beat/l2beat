@@ -216,7 +216,10 @@ export const zksynclite: Layer2 = {
       ),
       description: `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
       references: [
-        'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
+        {
+          text: 'Security Council Members - Etherscan source code',
+          href: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
+        },
       ],
     },
     {

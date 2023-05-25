@@ -33,6 +33,8 @@ export interface ProjectContractSingleAddress {
   upgradableBy?: string[]
   /** Other considerations worth mentioning about the upgrade process */
   upgradeConsiderations?: string
+  /** List of references */
+  references?: ProjectReference[]
 }
 
 export function isSingleAddress(

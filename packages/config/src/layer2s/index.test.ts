@@ -5,7 +5,11 @@ import {
 } from '@l2beat/shared'
 import { expect } from 'earl'
 
-import { ProjectRiskViewEntry, ProjectTechnologyChoice } from '../common'
+import {
+  ProjectReference,
+  ProjectRiskViewEntry,
+  ProjectTechnologyChoice,
+} from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { checkRisk } from '../test/helpers'
 import { layer2s, Layer2Technology, milestonesLayer2s, NUGGETS } from './index'
@@ -85,7 +89,7 @@ describe('layer2s', () => {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 
           for (const { name, references } of layer2.permissions ?? []) {
-            const referencedAddresses = getReferencedAddresses(references)
+            const referencedAddresses = getAddressFromReferences(references)
             if (referencedAddresses.length === 0) continue
 
             it(`${layer2.id.toString()} : ${name}`, () => {
@@ -290,8 +294,13 @@ describe('layer2s', () => {
   })
 })
 
-function getReferencedAddresses(references: string[] = []) {
-  return [...references.join(';').matchAll(/0x[a-fA-F0-9]{40}/g)].map((e) =>
+function getAddressFromReferences(references: ProjectReference[] = []) {
+  const addresses = references.map((r) => r.href)
+  return getReferencedAddresses(addresses)
+}
+
+function getReferencedAddresses(addresses: string[] = []) {
+  return [...addresses.join(';').matchAll(/0x[a-fA-F0-9]{40}/g)].map((e) =>
     EthereumAddress(e[0]),
   )
 }
