@@ -265,6 +265,7 @@ function makeTechnologyContract(
     result.upgradeableBy = languageJoin(item.upgradableBy)
     result.upgradeDelay = item.upgradeDelay
     result.upgradeConsiderations = item.upgradeConsiderations
+    result.references = item.references
   }
 
   return result
