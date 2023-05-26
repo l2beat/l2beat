@@ -10,6 +10,7 @@ export interface DiscoveryOutput {
   eoas: EthereumAddress[]
   abis: Record<string, string[]>
   configHash: Hash256
+  version: number
 }
 
 export interface ContractParameters {
