@@ -9,7 +9,6 @@ export interface DiscoveryDiff {
   address: EthereumAddress
   diff?: FieldDiff[]
   type?: 'created' | 'deleted'
-  isUnknown?: boolean
 }
 
 export function diffDiscovery(

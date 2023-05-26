@@ -1,10 +1,11 @@
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { Logger, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
-import { diffToMessages } from './diffToMessages'
-import { isNineAM } from './isNineAM'
+import { diffToMessages } from './utils/diffToMessages'
+import { filterDiff } from './utils/filterDiff'
+import { isNineAM } from './utils/isNineAM'
 
 export class UpdateNotifier {
   constructor(
@@ -20,6 +21,7 @@ export class UpdateNotifier {
     dependents: string[],
     diff: DiscoveryDiff[],
     blockNumber: number,
+    unknownContracts: EthereumAddress[],
   ) {
     const nonce = await this.getInternalMessageNonce()
     const messages = diffToMessages(name, dependents, diff, blockNumber, nonce)
@@ -34,7 +36,7 @@ export class UpdateNotifier {
       amount: countDiff(diff),
     })
 
-    const filteredDiff = filterDiff(diff)
+    const filteredDiff = filterDiff(diff, unknownContracts)
     if (filteredDiff.length === 0) {
       return
     }
@@ -121,16 +123,4 @@ function countDiff(diff: DiscoveryDiff[]): number {
     }
   }
   return count
-}
-
-function filterDiff(diff: DiscoveryDiff[]): DiscoveryDiff[] {
-  return diff.filter((d) => {
-    if (d.type === 'created' || d.type === 'deleted') {
-      return false
-    }
-    if (d.diff?.some((dd) => dd.key === 'errors')) {
-      return false
-    }
-    return true
-  })
 }

@@ -139,6 +139,7 @@ describe(UpdateMonitor.name, () => {
         [],
         mockDiff,
         BLOCK_NUMBER,
+        [],
       )
       expect(updateNotifier.handleDiff).toHaveBeenNthCalledWith(
         2,
@@ -146,6 +147,7 @@ describe(UpdateMonitor.name, () => {
         [],
         mockDiff,
         BLOCK_NUMBER,
+        [],
       )
       expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
       expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(

@@ -39,7 +39,7 @@ describe(UpdateNotifier.name, () => {
         },
       ]
 
-      await updateNotifier.handleDiff(project, dependents, changes, BLOCK)
+      await updateNotifier.handleDiff(project, dependents, changes, BLOCK, [])
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -92,7 +92,7 @@ describe(UpdateNotifier.name, () => {
         },
       ]
 
-      await updateNotifier.handleDiff(project, dependents, changes, BLOCK)
+      await updateNotifier.handleDiff(project, dependents, changes, BLOCK, [])
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(

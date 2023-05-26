@@ -13,8 +13,9 @@ import { UpdateMonitorRepository } from '../../peripherals/database/discovery/Up
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
-import { findDependents } from './findDependents'
 import { UpdateNotifier } from './UpdateNotifier'
+import { findDependents } from './utils/findDependents'
+import { findUnknownContracts } from './utils/findUnknownContracts'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -151,11 +152,17 @@ export class UpdateMonitor {
         projectConfig.name,
         this.configReader,
       )
+      const unknownContracts = await findUnknownContracts(
+        discovery.name,
+        discovery.contracts,
+        this.configReader,
+      )
       await this.updateNotifier.handleDiff(
         projectConfig.name,
         dependents,
         diff,
         blockNumber,
+        unknownContracts,
       )
       changesDetected.inc()
     }
