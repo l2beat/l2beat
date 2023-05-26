@@ -79,23 +79,31 @@ export class ProjectDiscovery {
     description,
     sinceTimestamp,
     tokens,
+    upgradableBy,
+    upgradeDelay,
   }: {
     address: EthereumAddress
     name?: string
     description?: string
     sinceTimestamp: UnixTime
     tokens: string[] | '*'
+    upgradableBy?: string[]
+    upgradeDelay?: string
   }): ProjectEscrow {
     const contract = this.getContractByAddress(address.toString())
 
     return {
-      newVersion: true,
-      name: name ?? contract.name,
       address,
-      upgradeability: contract.upgradeability,
-      description,
+      newVersion: true,
       sinceTimestamp,
       tokens,
+      contract: {
+        name: name ?? contract.name,
+        description,
+        upgradeability: contract.upgradeability,
+        upgradableBy,
+        upgradeDelay,
+      },
     }
   }
 

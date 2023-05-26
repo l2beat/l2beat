@@ -73,12 +73,14 @@ export const loopring: Layer2 = {
         address: EthereumAddress('0x7D3D221A8D8AbDd868E8e88811fFaF033e68E108'),
         sinceTimestamp: new UnixTime(1575539271),
         tokens: ['LRC', 'USDT'],
+        isHistorical: true,
       },
       // WeDEX: Beta 2
       {
         address: EthereumAddress('0xD97D09f3bd931a14382ac60f156C1285a56Bb51B'),
         sinceTimestamp: new UnixTime(1578284114),
         tokens: ['LRC', 'USDT'],
+        isHistorical: true,
       },
       {
         address: EthereumAddress('0x674bdf20A0F284D710BC40872100128e2d66Bd3f'),

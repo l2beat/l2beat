@@ -273,17 +273,14 @@ export const nova: Layer2 = {
         'L1CustomGateway',
         'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
       ),
-      {
-        address: EthereumAddress('0x97f63339374fCe157Aa8Ee27830172d2AF76A786'),
-        name: 'L1DaiGateway',
-        description:
-          'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-      },
-      {
-        address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
-        name: 'L1Escrow',
-        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-      },
+      discovery.getContractDetails(
+        'L1DaiGateway',
+        'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
+      ),
+      discovery.getContractDetails(
+        'L1Escrow',
+        'DAI Vault for custom DAI Gateway managed by MakerDAO.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

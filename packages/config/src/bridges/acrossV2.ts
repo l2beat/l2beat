@@ -46,7 +46,6 @@ export const acrossV2: Bridge = {
         address: EthereumAddress('0x4D9079Bb4165aeb4084c526a32695dCfd2F77381'),
         sinceTimestamp: new UnixTime(1653167083),
         tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
-        newVersion: true,
         isHistorical: true,
       },
     ],

@@ -1,7 +1,7 @@
 {
   "name": "optimism",
-  "blockNumber": 17327314,
-  "configHash": "0x569fc69911630a4359feeee784994616453490a3da4b53df54e83fc7bd4d0d93",
+  "blockNumber": 17336037,
+  "configHash": "0xfd19e5c19876c371735b2225dddef94d8b11e9723ec733a4dee0f67e31845f3d",
   "contracts": [
     {
       "name": "OVM_FraudVerifier",
@@ -13,6 +13,23 @@
       "values": {
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
       }
+    },
+    {
+      "name": "L1DAITokenBridge",
+      "address": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+      "code": "https://etherscan.deth.net/address/0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "escrow": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+        "isOpen": 1,
+        "l1Token": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "l2DAITokenBridge": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+        "l2Token": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+        "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      },
+      "derivedName": "L1DAITokenBridge"
     },
     {
       "name": "L1CrossDomainMessengerProxy",
@@ -95,8 +112,16 @@
           "0x4665374939642965EfD8357D4568D2A77f677429"
         ],
         "getThreshold": 2,
-        "nonce": 15,
+        "nonce": 20,
         "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "L1Escrow",
+      "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+      "code": "https://etherscan.deth.net/address/0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+      "upgradeability": {
+        "type": "immutable"
       }
     },
     {
@@ -138,13 +163,13 @@
         "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17327262,
-        "getLastTimestamp": 1684910208,
-        "getNextQueueIndex": 352066,
-        "getNumPendingQueueElements": 1,
-        "getQueueLength": 352067,
-        "getTotalBatches": 814179,
-        "getTotalElements": 100955038,
+        "getLastBlockNumber": 17335985,
+        "getLastTimestamp": 1685016205,
+        "getNextQueueIndex": 352530,
+        "getNumPendingQueueElements": 2,
+        "getQueueLength": 352532,
+        "getTotalBatches": 817819,
+        "getTotalElements": 101392074,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -152,6 +177,18 @@
         "MIN_ROLLUP_TX_GAS": 100000
       },
       "derivedName": "CanonicalTransactionChain"
+    },
+    {
+      "name": "SynthetixBridgeEscrow",
+      "address": "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
+      "code": "https://etherscan.deth.net/address/0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "nominatedOwner": "0x0000000000000000000000000000000000000000",
+        "owner": "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
+      }
     },
     {
       "name": "SCCStorageContainerBatches_OLD",
@@ -232,8 +269,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000646dafa70006046ff6",
-        "length": 107004,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000646f4e1f00060b1ac8",
+        "length": 107454,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "owner": "StateCommitmentChain"
       },
@@ -249,9 +286,9 @@
       "values": {
         "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1684909991,
-        "getTotalBatches": 107004,
-        "getTotalElements": 100954102,
+        "getLastSequencerTimestamp": 1685016095,
+        "getTotalBatches": 107454,
+        "getTotalElements": 101391048,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -295,8 +332,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x00000000000000000108649e00646db0800000055f42000604739e",
-        "length": 814179,
+        "getGlobalMetadata": "0x0000000000000000010886b100646f4e8d000005611200060b1eca",
+        "length": 817819,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "owner": "CanonicalTransactionChain"
       },
@@ -351,6 +388,38 @@
       }
     },
     {
+      "name": "SynthetixMultisig",
+      "address": "0xEb3107117FEAd7de89Cd14D463D340A2E6917769",
+      "code": "https://etherscan.deth.net/address/0xEb3107117FEAd7de89Cd14D463D340A2E6917769,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0x812bd2187bbdb6f18e0fde445c3e46e10661c15c4af7f51d5795d4dec4fb4caa",
+        "getChainId": 1,
+        "getOwners": [
+          "0x78361eF33B6E8627932f28BC07d84B2f72166C8E",
+          "0x47F43bb6E11624aD886459AF517e16DACd04840F",
+          "0xb44D3a509E71b049449EB7cfF1575742A34aE1De",
+          "0xDADbF33cC2E205610d0f96B26F4DB827Ad5bFF50",
+          "0x8440530AB38f87B72623c42C3AaB3436e8647927",
+          "0xD1F0132c78f0C1FFe9c7065823FFC1D31D41CE5d",
+          "0x79f7ce9DA9D933874fcB5f7deBd78CA3C694D743",
+          "0xB9A914bf898cDA1E889e2d9aeDc1fdcfc5fe2623",
+          "0xd5e23971EC27d26cf5dBa1a7e5fAF8AE9F055d6f",
+          "0x279470Ac4761117ad2f7020942dE4938B90c25cD",
+          "0xb59E66AC953be31C998d9F994c7b05E62845Bc95",
+          "0x56016aBC139EED381Fa35fe1862DBBbDe94a07F6",
+          "0x302d2451d9f47620374B54c521423Bf0403916A2"
+        ],
+        "getThreshold": 5,
+        "nonce": 2898,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "name": "OVM_L1MultiMessageRelayer",
       "address": "0xF26391FBB1f77481f80a7d646AC08ba3817eA891",
       "code": "https://etherscan.deth.net/address/0xF26391FBB1f77481f80a7d646AC08ba3817eA891",
@@ -371,18 +440,31 @@
     }
   ],
   "eoas": [
+    "0x279470Ac4761117ad2f7020942dE4938B90c25cD",
+    "0x302d2451d9f47620374B54c521423Bf0403916A2",
     "0x3041BA32f451F5850c147805F5521AC206421623",
     "0x4200000000000000000000000000000000000005",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
     "0x4665374939642965EfD8357D4568D2A77f677429",
     "0x473300df21D047806A082244b417f96b32f13A33",
+    "0x47F43bb6E11624aD886459AF517e16DACd04840F",
     "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+    "0x56016aBC139EED381Fa35fe1862DBBbDe94a07F6",
     "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
+    "0x78361eF33B6E8627932f28BC07d84B2f72166C8E",
+    "0x79f7ce9DA9D933874fcB5f7deBd78CA3C694D743",
     "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+    "0x8440530AB38f87B72623c42C3AaB3436e8647927",
     "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
     "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
+    "0xb44D3a509E71b049449EB7cfF1575742A34aE1De",
+    "0xb59E66AC953be31C998d9F994c7b05E62845Bc95",
+    "0xB9A914bf898cDA1E889e2d9aeDc1fdcfc5fe2623",
     "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+    "0xD1F0132c78f0C1FFe9c7065823FFC1D31D41CE5d",
+    "0xd5e23971EC27d26cf5dBa1a7e5fAF8AE9F055d6f",
+    "0xDADbF33cC2E205610d0f96B26F4DB827Ad5bFF50",
     "0xdEfa017defA017DeFA017DEfa017DeFA017DeFa0",
     "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
   ],
@@ -396,6 +478,27 @@
       "function initializeFraudVerification(bytes32 _preStateRoot, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _preStateRootBatchHeader, tuple(uint256 index, bytes32[] siblings) _preStateRootProof, tuple(uint256 timestamp, uint256 blockNumber, uint8 l1QueueOrigin, address l1TxOrigin, address entrypoint, uint256 gasLimit, bytes data) _transaction, tuple(bool isSequenced, uint256 queueIndex, uint256 timestamp, uint256 blockNumber, bytes txData) _txChainElement, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _transactionBatchHeader, tuple(uint256 index, bytes32[] siblings) _transactionProof)",
       "function libAddressManager() view returns (address)",
       "function resolve(string _name) view returns (address)"
+    ],
+    "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": [
+      "constructor(address _l1Token, address _l2DAITokenBridge, address _l2Token, address _l1messenger, address _escrow)",
+      "event Closed()",
+      "event Deny(address indexed usr)",
+      "event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event ERC20WithdrawalFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event Rely(address indexed usr)",
+      "function close()",
+      "function deny(address usr)",
+      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _l2Gas, bytes _data)",
+      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _l2Gas, bytes _data)",
+      "function escrow() view returns (address)",
+      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data)",
+      "function isOpen() view returns (uint256)",
+      "function l1Token() view returns (address)",
+      "function l2DAITokenBridge() view returns (address)",
+      "function l2Token() view returns (address)",
+      "function messenger() view returns (address)",
+      "function rely(address usr)",
+      "function wards(address) view returns (uint256)"
     ],
     "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": [
       "constructor(address _libAddressManager, string _implementationName)"
@@ -522,6 +625,16 @@
     "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": [
       "constructor(address _singleton)"
     ],
+    "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": [
+      "constructor()",
+      "event Approve(address indexed token, address indexed spender, uint256 value)",
+      "event Deny(address indexed usr)",
+      "event Rely(address indexed usr)",
+      "function approve(address token, address spender, uint256 value)",
+      "function deny(address usr)",
+      "function rely(address usr)",
+      "function wards(address) view returns (uint256)"
+    ],
     "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": [
       "constructor(address _libAddressManager, uint256 _forceInclusionPeriodSeconds, uint256 _forceInclusionPeriodBlocks, uint256 _maxTransactionGasLimit)",
       "event QueueBatchAppended(uint256 _startingQueueIndex, uint256 _numQueueElements, uint256 _totalElements)",
@@ -578,6 +691,17 @@
       "function maxTransactionGasLimit() view returns (uint256)",
       "function resolve(string _name) view returns (address)",
       "function setGasParams(uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)"
+    ],
+    "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f": [
+      "constructor(address _owner)",
+      "event BridgeApproval(address _token, address indexed spender, uint256 value)",
+      "event OwnerChanged(address oldOwner, address newOwner)",
+      "event OwnerNominated(address newOwner)",
+      "function acceptOwnership()",
+      "function approveBridge(address _token, address _bridge, uint256 _amount)",
+      "function nominateNewOwner(address _owner)",
+      "function nominatedOwner() view returns (address)",
+      "function owner() view returns (address)"
     ],
     "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572": [
       "constructor(address _libAddressManager, string _owner)",
@@ -787,6 +911,9 @@
       "function libAddressManager() view returns (address)",
       "function resolve(string _name) view returns (address)",
       "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
+    ],
+    "0xEb3107117FEAd7de89Cd14D463D340A2E6917769": [
+      "constructor(address _masterCopy)"
     ],
     "0xF26391FBB1f77481f80a7d646AC08ba3817eA891": [
       "constructor(address _libAddressManager)",

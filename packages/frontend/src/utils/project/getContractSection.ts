@@ -313,13 +313,12 @@ function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
   assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
 
   return {
+    ...escrow.contract,
     name:
       escrow.tokens === '*'
         ? 'Generic escrow'
         : 'Escrow for ' + escrow.tokens.join(', '),
     address: escrow.address,
-    description: escrow.description,
-    upgradeability: escrow.upgradeability,
   }
 }
 
