@@ -85,6 +85,7 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
     discovery_json_blob: string
     config_hash: string
+    version: number
   }
 
   interface UpdateNotifierRow {

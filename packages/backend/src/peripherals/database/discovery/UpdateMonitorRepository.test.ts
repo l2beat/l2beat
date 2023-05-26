@@ -31,8 +31,10 @@ describe(UpdateMonitorRepository.name, () => {
         contracts: [],
         eoas: [],
         abis: {},
+        version: 0,
       },
       configHash: CONFIG_HASH,
+      version: 0,
     }
 
     await repository.addOrUpdate(expected)
@@ -55,8 +57,10 @@ describe(UpdateMonitorRepository.name, () => {
         contracts: [],
         eoas: [],
         abis: {},
+        version: 0,
       },
       configHash: CONFIG_HASH,
+      version: 0,
     }
     await repository.addOrUpdate(discovery)
 
