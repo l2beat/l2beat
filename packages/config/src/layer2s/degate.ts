@@ -88,18 +88,26 @@ export const degate: Layer2 = {
         RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString)
           .description +
         ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
-      references: [
-        'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F23#L102',
-        'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F35#L162',
+      sources: [
+        {
+          contract: 'ExchangeV3',
+          references: [
+            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F23#L102',
+            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F35#L162',
+          ],
+        },
       ],
-      contracts: ['ExchangeV3'],
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_ESCAPE_MP(forcedWithdrawalDelay),
-      references: [
-        'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
+      sources: [
+        {
+          contract: 'ExchangeV3',
+          references: [
+            'https://etherscan.io/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5#code#F1#L420',
+          ],
+        },
       ],
-      contracts: ['ExchangeV3'],
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,

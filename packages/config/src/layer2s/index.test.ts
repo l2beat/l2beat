@@ -49,31 +49,38 @@ describe('layer2s', () => {
   })
 
   describe('references', () => {
-    describe('every contract has risk view code references', () => {
+    describe('points to an existing implementation', () => {
       for (const layer2 of layer2s) {
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 
           for (const [riskName, riskEntry] of Object.entries(layer2.riskView)) {
             const risk = riskEntry as ProjectRiskViewEntry
-            if (risk.contracts === undefined) continue
+            if (risk.sources === undefined) continue
 
-            const referencedAddresses = getReferencedAddresses(risk.references)
+            describe(`${layer2.id.toString()} : ${riskName}`, () => {
+              for (const sourceCodeReference of risk.sources ?? []) {
+                it(sourceCodeReference.contract, () => {
+                  const referencedAddresses = getReferencedAddresses(
+                    sourceCodeReference.references,
+                  )
+                  const contract = discovery.getContract(
+                    sourceCodeReference.contract,
+                  )
 
-            it(`${layer2.id.toString()} : ${riskName}`, () => {
-              for (const contractIdentifier of risk.contracts ?? []) {
-                const contract = discovery.getContract(contractIdentifier)
+                  const contractAddresses = [
+                    contract.address,
+                    ...gatherAddressesFromUpgradeability(
+                      contract.upgradeability,
+                    ),
+                  ]
 
-                const contractAddresses = [
-                  contract.address,
-                  ...gatherAddressesFromUpgradeability(contract.upgradeability),
-                ]
-
-                expect(
-                  contractAddresses.some((a) =>
-                    referencedAddresses.includes(a),
-                  ),
-                ).toEqual(true)
+                  expect(
+                    contractAddresses.some((a) =>
+                      referencedAddresses.includes(a),
+                    ),
+                  ).toEqual(true)
+                })
               }
             })
           }
@@ -299,7 +306,7 @@ function getAddressFromReferences(references: ProjectReference[] = []) {
   return getReferencedAddresses(addresses)
 }
 
-function getReferencedAddresses(addresses: string[] = []) {
+export function getReferencedAddresses(addresses: string[] = []) {
   return [...addresses.join(';').matchAll(/0x[a-fA-F0-9]{40}/g)].map((e) =>
     EthereumAddress(e[0]),
   )

@@ -78,26 +78,46 @@ export const bobanetwork: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      references: [
-        'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L311',
+      sources: [
+        {
+          contract: 'CanonicalTransactionChain',
+          references: [
+            'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L311',
+          ],
+        },
       ],
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
-      references: [
-        'https://etherscan.io/address/0x6D4528d192dB72E282265D6092F4B872f9Dff69e#code',
+      sources: [
+        {
+          contract: 'L1CrossDomainMessenger_1',
+          references: [
+            'https://etherscan.io/address/0x6D4528d192dB72E282265D6092F4B872f9Dff69e#code',
+          ],
+        },
       ],
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_QUEUE,
-      references: [
-        'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L219',
+      sources: [
+        {
+          contract: 'CanonicalTransactionChain',
+          references: [
+            'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L219',
+          ],
+        },
       ],
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-      references: [
-        'https://etherscan.io/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec#code#F1#L103',
+      sources: [
+        {
+          contract: 'StateCommitmentChain',
+          references: [
+            'https://etherscan.io/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec#code#F1#L103',
+          ],
+        },
       ],
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,

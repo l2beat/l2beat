@@ -131,39 +131,62 @@ export const arbitrum: Layer2 = {
       description:
         'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
       sentiment: 'warning',
-      references: [
-        'https://etherscan.io/address/0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445#code#F1#L113',
+      sources: [
+        {
+          contract: 'ChallengeManager',
+          references: [
+            'https://etherscan.io/address/0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445#code#F1#L113',
+          ],
+        },
       ],
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      references: [
-        'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+      sources: [
+        {
+          contract: 'SequencerInbox',
+          references: [
+            'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+          ],
+        },
       ],
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
-      references: [
-        'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
+      sources: [
+        {
+          contract: 'OutboxV2',
+          references: [
+            'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
+          ],
+        },
       ],
     },
     sequencerFailure: {
       value: 'Transact using L1',
       description: VALUES.ARBITRUM.getSequencerFailureString(),
-      references: [
-        'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
-        'https://developer.arbitrum.io/sequencer',
+      sources: [
+        {
+          contract: 'SequencerInbox',
+          references: [
+            'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
+            'https://developer.arbitrum.io/sequencer',
+          ],
+        },
       ],
-      contracts: ['SequencerInbox'],
     },
     validatorFailure: {
       value: 'Propose blocks',
       description:
         VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
-      references: [
-        'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
+      sources: [
+        {
+          contract: 'RollupProxy',
+          references: [
+            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
+          ],
+        },
       ],
-      contracts: ['RollupProxy'],
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),

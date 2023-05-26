@@ -269,20 +269,11 @@ const meta = {
           value: 'Transact using L1',
           description:
             'In the event of sequencer failure, after 1d (5760 blocks) user can force the transaction to be included in the L2 chain by sending it to the L1.',
-          references: [
-            'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
-            'https://developer.arbitrum.io/sequencer',
-          ],
-          contracts: ['SequencerInbox'],
         },
         validatorFailure: {
           value: 'Propose blocks',
           description:
             'Anyone can become a Validator after approximately 7 days (45818 blocks) of inactivity from the currently whitelisted Validators.',
-          references: [
-            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
-          ],
-          contracts: ['RollupProxy'],
         },
       },
       {
@@ -374,52 +365,23 @@ const meta = {
           value: 'ZK proofs',
           description:
             'Uses PLONK zero-knowledge proof system with KZG commitments.',
-          references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F5#L89',
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L254',
-            'https://etherscan.io/address/0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc#code#F7#L24',
-            'https://etherscan.io/address/0x473b1887d45d61efd87731a1d8ec3590b93c565d#code#F5#L227',
-            'https://era.zksync.io/docs/dev/developer-guides/transactions/transactions.html#transaction-types',
-            'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
-          ],
-          contracts: ['ValidatorTimelock', 'DiamondProxy', 'Verifier'],
         },
         dataAvailability: {
           value: 'On chain (SD)',
           description:
             'All of the data (SD = state diffs) needed for proof construction is published on chain.',
-          references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F5#L71',
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L149',
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F11#L41',
-            'https://etherscan.io/tx/0xef9ad50d9b6a30365e4cc6709a5b7479fb67b8948138149597c49ef614782e1b',
-            'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
-          ],
-          contracts: ['ValidatorTimelock', 'DiamondProxy'],
         },
         upgradeability: {
           value: 'Yes',
           description:
             'The code that secures the system can be changed arbitrarily and without notice by the governor, that currently is a 4 / 7 Multisig.',
           sentiment: 'bad',
-          references: [
-            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F8#L121',
-            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51',
-          ],
-          contracts: ['DiamondProxy'],
         },
         sequencerFailure: {
           value: 'Transact using L1',
           description:
             'L2 transactions can be forced through L1 by adding them to append only queue on L1, which is processed sequentially by Sequencer, meaning that the individual user cannot be censored. At the moment there is no mechanism that forces L2 Sequencer to empty the L1 queue.',
           sentiment: 'warning',
-          references: [
-            'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
-            'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-mode',
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L56',
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L73',
-          ],
-          contracts: ['DiamondProxy'],
         },
         validatorFailure: {
           value: 'No mechanism',
@@ -525,11 +487,6 @@ const meta = {
           description:
             'Proof construction relies fully on data that is NOT published on chain. There exists a data availability committee (DAC) that is tasked with protecting and supplying the data.',
           sentiment: 'warning',
-          references: [
-            'https://etherscan.io/address/0x86d8f977C9cEC503ad4E6805802cEf62Cde13773#code#F34#L180',
-            'https://etherscan.io/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295#code#F1#L63',
-          ],
-          contracts: ['StarkExchange', 'Committee'],
         },
         upgradeability: {
           value: '14d delay',
