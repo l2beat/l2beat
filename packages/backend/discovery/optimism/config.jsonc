@@ -4,7 +4,9 @@
   "initialAddresses": [
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
     "0x5E4e65926BA27467555EB562121fac00D24E9dD2",
-    "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19"
+    "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
+    "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
+    "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F"
   ],
   "names": {
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "LibAddressManager",
@@ -17,7 +19,9 @@
     "0xb0ddFf09c4019e31960de11bD845E836078E8EbE": "SCCStorageContainerBatches",
     "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": "CanonicalTransactionChain_OLD",
     "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": "L1CrossDomainMessengerProxy",
-    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig"
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig",
+    "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge",
+    "0xEb3107117FEAd7de89Cd14D463D340A2E6917769": "SynthetixMultisig"
   },
   "overrides": {
     "LibAddressManager": {
@@ -165,6 +169,18 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "L1DAITokenBridge": {
+      "ignoreRelatives": [
+        "l1Token",
+        "l2DAITokenBridge",
+        "l2Token",
+        "l2Token",
+        "messenger"
+      ]
+    },
+    "SynthetixMultisig": {
       "ignoreInWatchMode": ["nonce"]
     }
   }

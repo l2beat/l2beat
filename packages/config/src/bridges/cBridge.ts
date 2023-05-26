@@ -218,7 +218,7 @@ export const cBridge: Bridge = {
         'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
       accounts: discovery.getPermissionedAccounts(
         'Liquidity Network',
-        'pausers',
+        'governors',
       ),
     },
     {

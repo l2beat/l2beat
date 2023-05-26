@@ -1,3 +1,4 @@
+import { ProjectReference } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared'
 import React from 'react'
 
@@ -9,6 +10,7 @@ export interface PermissionsSectionProps {
   title: string
   permissions: TechnologyContract[]
   verificationStatus: VerificationStatus
+  references?: ProjectReference[]
 }
 
 export function PermissionsSection({
