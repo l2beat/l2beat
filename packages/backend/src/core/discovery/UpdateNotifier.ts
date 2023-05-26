@@ -22,7 +22,7 @@ export class UpdateNotifier {
     blockNumber: number,
   ) {
     const nonce = await this.getInternalMessageNonce()
-    const messages = diffToMessages(name, dependents, diff, nonce)
+    const messages = diffToMessages(name, dependents, diff, blockNumber, nonce)
     await this.notify(messages, 'INTERNAL')
     await this.updateNotifierRepository.add({
       projectName: name,
@@ -38,7 +38,12 @@ export class UpdateNotifier {
     if (filteredDiff.length === 0) {
       return
     }
-    const filteredMessages = diffToMessages(name, dependents, filteredDiff)
+    const filteredMessages = diffToMessages(
+      name,
+      dependents,
+      filteredDiff,
+      blockNumber,
+    )
     await this.notify(filteredMessages, 'PUBLIC')
     this.logger.info('Updates detected, notification sent [PUBLIC]', {
       name,

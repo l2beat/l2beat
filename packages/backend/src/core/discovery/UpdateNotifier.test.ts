@@ -44,7 +44,7 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '> #0000\n\n***project-a*** | detected changes```diff\nContract | ' +
+        '> #0000 (block_number=123)\n\n***project-a*** | detected changes```diff\nContract | ' +
           address.toString() +
           '\n\nA\n- 1\n+ 2\n\n```',
         'INTERNAL',
@@ -97,7 +97,7 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '> #0000\n\n***project-a*** | detected changes```diff\nContract | ' +
+        '> #0000 (block_number=123)\n\n***project-a*** | detected changes```diff\nContract | ' +
           address.toString() +
           '\n\nerrors\n+ Execution reverted\n\n```',
         'INTERNAL',
