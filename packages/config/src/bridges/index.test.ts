@@ -22,7 +22,7 @@ describe('bridges', () => {
     })
   })
   describe('references', () => {
-    describe('every contract has risk view code references', () => {
+    describe('point to an existing implementation', () => {
       for (const bridge of bridges) {
         try {
           const discovery = new ProjectDiscovery(bridge.id.toString())
