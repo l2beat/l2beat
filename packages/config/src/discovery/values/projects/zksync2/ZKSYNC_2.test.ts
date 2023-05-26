@@ -51,4 +51,17 @@ describe('HARDCODED: zksync2', () => {
       'Governor changed, upgrade returned value and upgradeability risk.',
     )
   })
+
+  it('upgrade by', () => {
+    const multisig = discovery.getContract('zkSync Era Multisig').address
+    assert(
+      discovery.getContractValue('DiamondProxy', 'getGovernor') === multisig,
+      'DiamondProxy governor changed, upgradeBy in contract.',
+    )
+    assert(
+      discovery.getContractUpgradeabilityParam('L1ERC20Bridge', 'admin') ===
+        multisig,
+      'L1ERC20Bridge admin changed, upgradeBy in contract.',
+    )
+  })
 })
