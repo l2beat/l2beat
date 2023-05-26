@@ -22,7 +22,7 @@ describe('bridges', () => {
     })
   })
   describe('references', () => {
-    describe('point to an existing implementation', () => {
+    describe('points to an existing implementation', () => {
       for (const bridge of bridges) {
         try {
           const discovery = new ProjectDiscovery(bridge.id.toString())
@@ -33,25 +33,29 @@ describe('bridges', () => {
             const risk = riskEntry as ProjectRiskViewEntry
             if (risk.sources === undefined) continue
 
-            it(`${bridge.id.toString()} : ${riskName}`, () => {
+            describe(`${bridge.id.toString()} : ${riskName}`, () => {
               for (const sourceCodeReference of risk.sources ?? []) {
-                const referencedAddresses = getReferencedAddresses(
-                  sourceCodeReference.references,
-                )
-                const contract = discovery.getContract(
-                  sourceCodeReference.contract,
-                )
+                it(sourceCodeReference.contract, () => {
+                  const referencedAddresses = getReferencedAddresses(
+                    sourceCodeReference.references,
+                  )
+                  const contract = discovery.getContract(
+                    sourceCodeReference.contract,
+                  )
 
-                const contractAddresses = [
-                  contract.address,
-                  ...gatherAddressesFromUpgradeability(contract.upgradeability),
-                ]
+                  const contractAddresses = [
+                    contract.address,
+                    ...gatherAddressesFromUpgradeability(
+                      contract.upgradeability,
+                    ),
+                  ]
 
-                expect(
-                  contractAddresses.some((a) =>
-                    referencedAddresses.includes(a),
-                  ),
-                ).toEqual(true)
+                  expect(
+                    contractAddresses.some((a) =>
+                      referencedAddresses.includes(a),
+                    ),
+                  ).toEqual(true)
+                })
               }
             })
           }

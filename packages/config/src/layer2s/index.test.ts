@@ -49,7 +49,7 @@ describe('layer2s', () => {
   })
 
   describe('references', () => {
-    describe('every contract has risk view code references', () => {
+    describe('points to an existing implementation', () => {
       for (const layer2 of layer2s) {
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
@@ -58,25 +58,29 @@ describe('layer2s', () => {
             const risk = riskEntry as ProjectRiskViewEntry
             if (risk.sources === undefined) continue
 
-            it(`${layer2.id.toString()} : ${riskName}`, () => {
+            describe(`${layer2.id.toString()} : ${riskName}`, () => {
               for (const sourceCodeReference of risk.sources ?? []) {
-                const referencedAddresses = getReferencedAddresses(
-                  sourceCodeReference.references,
-                )
-                const contract = discovery.getContract(
-                  sourceCodeReference.contract,
-                )
+                it(sourceCodeReference.contract, () => {
+                  const referencedAddresses = getReferencedAddresses(
+                    sourceCodeReference.references,
+                  )
+                  const contract = discovery.getContract(
+                    sourceCodeReference.contract,
+                  )
 
-                const contractAddresses = [
-                  contract.address,
-                  ...gatherAddressesFromUpgradeability(contract.upgradeability),
-                ]
+                  const contractAddresses = [
+                    contract.address,
+                    ...gatherAddressesFromUpgradeability(
+                      contract.upgradeability,
+                    ),
+                  ]
 
-                expect(
-                  contractAddresses.some((a) =>
-                    referencedAddresses.includes(a),
-                  ),
-                ).toEqual(true)
+                  expect(
+                    contractAddresses.some((a) =>
+                      referencedAddresses.includes(a),
+                    ),
+                  ).toEqual(true)
+                })
               }
             })
           }
