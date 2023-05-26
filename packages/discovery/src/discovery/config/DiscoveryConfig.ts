@@ -23,6 +23,10 @@ export class DiscoveryConfig {
     return this.config.initialAddresses
   }
 
+  set initialAddresses(initialAddresses: EthereumAddress[]) {
+    this.config.initialAddresses = initialAddresses
+  }
+
   get maxAddresses() {
     return this.config.maxAddresses ?? 100
   }
