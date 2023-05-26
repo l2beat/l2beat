@@ -45,7 +45,7 @@ export const skaleIMA: Bridge = {
         address: EthereumAddress('0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669'),
         sinceTimestamp: new UnixTime(1626719900),
         tokens: [
-          // 'RAZOR',
+          'RAZOR',
           'USDP',
           'USDC',
           'SKL',
@@ -90,10 +90,10 @@ export const skaleIMA: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
+      value: 'Destination Chain',
       description:
         'There are 16 randomly selected validator nodes of the destination chain, 11 of them needs to sign and verify messages',
-      sentiment: 'bad',
+      sentiment: 'warning',
       sources: [
         {
           contract: 'MessageProxyForMainnet',
