@@ -29,28 +29,20 @@ export class UpdateNotifier {
       diff,
       blockNumber,
     })
-    this.logger.info('Changes detected sent [INTERNAL]', {
+    this.logger.info('Updates detected, notification sent [INTERNAL]', {
       name,
-      amount: diff.map((d) => (d.diff ?? []).length).reduce((a, b) => a + b, 0),
+      amount: countDiff(diff),
     })
 
-    const withoutErrors = diff.filter((d) =>
-      d.diff?.every((dd) => dd.key !== 'errors'),
-    )
-    if (withoutErrors.length === 0) {
+    const filteredDiff = filterDiff(diff)
+    if (filteredDiff.length === 0) {
       return
     }
-    const messagesWithoutErrors = diffToMessages(
+    const filteredMessages = diffToMessages(name, dependents, filteredDiff)
+    await this.notify(filteredMessages, 'PUBLIC')
+    this.logger.info('Updates detected, notification sent [PUBLIC]', {
       name,
-      dependents,
-      withoutErrors,
-    )
-    await this.notify(messagesWithoutErrors, 'PUBLIC')
-    this.logger.info('Changes detected sent [PUBLIC]', {
-      name,
-      amount: withoutErrors
-        .map((d) => (d.diff ?? []).length)
-        .reduce((a, b) => a + b, 0),
+      amount: countDiff(filteredDiff),
     })
   }
 
@@ -112,4 +104,28 @@ function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
   }
 
   return `${dailyReportMessage}:white_check_mark: everything is up to date`
+}
+function countDiff(diff: DiscoveryDiff[]): number {
+  let count = 0
+
+  for (const d of diff) {
+    if (d.type === 'created' || d.type === 'deleted') {
+      count++
+    } else {
+      count += (d.diff ?? []).length
+    }
+  }
+  return count
+}
+
+function filterDiff(diff: DiscoveryDiff[]): DiscoveryDiff[] {
+  return diff.filter((d) => {
+    if (d.type === 'created' || d.type === 'deleted') {
+      return false
+    }
+    if (d.diff?.some((dd) => dd.key === 'errors')) {
+      return false
+    }
+    return true
+  })
 }
