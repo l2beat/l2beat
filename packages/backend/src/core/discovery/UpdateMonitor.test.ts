@@ -483,6 +483,7 @@ describe(UpdateMonitor.name, () => {
           discovery: {
             ...mockProject,
             contracts: dbEntry,
+            blockNumber: BLOCK_NUMBER - 1,
           },
           configHash: mockConfig(PROJECT_A).hash,
           version: 0,
@@ -508,6 +509,10 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.getPreviousDiscovery(mockConfig(PROJECT_A))
 
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
+      expect(discoveryRunner.run).toHaveBeenCalledWith(
+        mockConfig(PROJECT_A),
+        BLOCK_NUMBER - 1,
+      )
     })
   })
 })
