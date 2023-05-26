@@ -1,10 +1,10 @@
 {
   "name": "zksync2",
   "blockNumber": 17341504,
-  "configHash": "0x8115ffa66d85a1c6892f370d0618b2304125cf6627bbc03cce00d93eb38faa8e",
+  "configHash": "0x1720f3c89dcbc0fc6b6cdeb076051bd49e8b661a1288de4810f30a49ccc2f67d",
   "contracts": [
     {
-      "name": "DiamondProxy",
+      "name": "zkSync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
       "code": "https://etherscan.deth.net/address/0x32400084C286CF3E17e7B677ea9583e60a000324,0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc,0x6df4A6D71622860dcc64C1FD9645d9a5BE96f088,0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE,0x389a081BCf20e5803288183b929F08458F1d863D,0xb2097DBe4410B538a45574B1FCD767E2303c7867",
       "upgradeability": {

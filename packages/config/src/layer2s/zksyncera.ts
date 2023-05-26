@@ -171,6 +171,14 @@ export const zksyncera: Layer2 = {
       description:
         'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked.',
       sentiment: 'bad',
+      sources: [
+        {
+          contract: 'zkSync',
+          references: [
+            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L149',
+          ],
+        },
+      ],
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -251,7 +259,7 @@ export const zksyncera: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails('DiamondProxy', {
+      discovery.getContractDetails('zkSync', {
         description:
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
           and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
