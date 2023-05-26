@@ -60,6 +60,8 @@ export const zksyncera: Layer2 = {
         sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
         description: 'Main rollup contract, additionally serving as an escrow.',
+        upgradableBy: ['zkSync Era Multisig'],
+        upgradeDelay: 'No delay',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
@@ -67,6 +69,8 @@ export const zksyncera: Layer2 = {
         tokens: ['USDC', 'PERP', 'MUTE'],
         description:
           'Standard bridge for depositing ERC20 tokens to zkSync Era.',
+        upgradableBy: ['zkSync Era Multisig'],
+        upgradeDelay: 'No delay',
       }),
     ],
     transactionApi: {
@@ -247,13 +251,15 @@ export const zksyncera: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails(
-        'DiamondProxy',
-        'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
-      and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
-      It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
-      It is also serves the purpose of ETH bridge.',
-      ),
+      discovery.getContractDetails('DiamondProxy', {
+        description:
+          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
+          and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
+          It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
+          It is also serves the purpose of ETH bridge.',
+        upgradableBy: ['zkSync Era Multisig'],
+        upgradeDelay: 'No delay',
+      }),
       discovery.getContractDetails(
         'Verifier',
         'Implements zkProof verification logic.',
@@ -267,7 +273,7 @@ export const zksyncera: Layer2 = {
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'zkSync Era MultiSig',
+      'zkSync Era Multisig',
       'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
     ),
     {
