@@ -170,6 +170,10 @@ export class UpdateMonitor {
     projectConfig: DiscoveryConfig,
     blockNumber: number,
   ) {
+    this.logger.info('Sanity check started', {
+      project: projectConfig.name,
+    })
+
     const secondDiscovery = await this.discoveryRunner.run(
       projectConfig,
       blockNumber,
@@ -182,6 +186,10 @@ export class UpdateMonitor {
       )
     }
     this.cachedDiscovery.set(projectConfig.name, secondDiscovery)
+
+    this.logger.info('Sanity check finished', {
+      project: projectConfig.name,
+    })
   }
 
   // this function gets a diff between current discovery and committed discovery
