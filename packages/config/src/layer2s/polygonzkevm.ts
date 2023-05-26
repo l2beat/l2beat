@@ -104,9 +104,9 @@ export const polygonzkevm: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'PolygonZkEvm',
+          contract: 'PolygonZkEvm',
           references: [
             'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L817',
           ],
@@ -118,9 +118,9 @@ export const polygonzkevm: Layer2 = {
       description:
         RISK_VIEW.DATA_ON_CHAIN.description +
         ' Unlike most zk rollups transactions are posted instead of state diffs.',
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'PolygonZkEvm',
+          contract: 'PolygonZkEvm',
           references: [
             'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L186',
           ],
@@ -131,9 +131,9 @@ export const polygonzkevm: Layer2 = {
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: {
       ...SEQUENCER_RISK_POLYGONZKEVM(isForcedBatchDisallowed),
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'PolygonZkEvm',
+          contract: 'PolygonZkEvm',
           references: [
             'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L243',
           ],
@@ -143,9 +143,9 @@ export const polygonzkevm: Layer2 = {
     validatorFailure: {
       value: 'Submit proofs',
       description: `If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'PolygonZkEvm',
+          contract: 'PolygonZkEvm',
           references: [
             'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L636',
             'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F14#L859',

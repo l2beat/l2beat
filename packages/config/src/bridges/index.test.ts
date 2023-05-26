@@ -31,16 +31,15 @@ describe('bridges', () => {
             bridge.riskView ?? {},
           )) {
             const risk = riskEntry as ProjectRiskViewEntry
-            if (risk.sourceCodeReferences === undefined) continue
+            if (risk.sources === undefined) continue
 
             it(`${bridge.id.toString()} : ${riskName}`, () => {
-              for (const sourceCodeReference of risk.sourceCodeReferences ??
-                []) {
+              for (const sourceCodeReference of risk.sources ?? []) {
                 const referencedAddresses = getReferencedAddresses(
                   sourceCodeReference.references,
                 )
                 const contract = discovery.getContract(
-                  sourceCodeReference.contractIdentifier,
+                  sourceCodeReference.contract,
                 )
 
                 const contractAddresses = [

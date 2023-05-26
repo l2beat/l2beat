@@ -92,9 +92,9 @@ export const optimism: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'CanonicalTransactionChain',
+          contract: 'CanonicalTransactionChain',
           references: [
             'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L277',
           ],
@@ -103,9 +103,9 @@ export const optimism: Layer2 = {
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'L1CrossDomainMessengerProxy',
+          contract: 'L1CrossDomainMessengerProxy',
           references: [
             'https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1#code',
           ],
@@ -114,9 +114,9 @@ export const optimism: Layer2 = {
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_QUEUE,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'CanonicalTransactionChain',
+          contract: 'CanonicalTransactionChain',
           references: [
             'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L201',
           ],
@@ -125,9 +125,9 @@ export const optimism: Layer2 = {
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'StateCommitmentChain',
+          contract: 'StateCommitmentChain',
           references: [
             'https://etherscan.io/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19#code#F1#L96',
           ],

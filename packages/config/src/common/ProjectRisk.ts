@@ -23,8 +23,8 @@ export interface ProjectRiskViewEntry {
   // second line in risk view
   secondLine?: string
   secondSentiment?: 'warning' | 'bad'
-  sourceCodeReferences?: {
-    contractIdentifier: string
+  sources?: {
+    contract: string
     references: string[]
   }[]
   otherReferences?: string[]

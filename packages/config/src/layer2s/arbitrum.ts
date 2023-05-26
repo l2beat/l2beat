@@ -132,9 +132,9 @@ export const arbitrum: Layer2 = {
       description:
         'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
       sentiment: 'warning',
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'ChallengeManager',
+          contract: 'ChallengeManager',
           references: [
             'https://etherscan.io/address/0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445#code#F1#L113',
           ],
@@ -143,9 +143,9 @@ export const arbitrum: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'SequencerInbox',
+          contract: 'SequencerInbox',
           references: [
             'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
           ],
@@ -154,9 +154,9 @@ export const arbitrum: Layer2 = {
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'OutboxV2',
+          contract: 'OutboxV2',
           references: [
             'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
           ],
@@ -166,9 +166,9 @@ export const arbitrum: Layer2 = {
     sequencerFailure: {
       value: 'Transact using L1',
       description: VALUES.ARBITRUM.getSequencerFailureString(),
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'SequencerInbox',
+          contract: 'SequencerInbox',
           references: [
             'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
             'https://developer.arbitrum.io/sequencer',
@@ -180,9 +180,9 @@ export const arbitrum: Layer2 = {
       value: 'Propose blocks',
       description:
         VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'RollupProxy',
+          contract: 'RollupProxy',
           references: [
             'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
           ],

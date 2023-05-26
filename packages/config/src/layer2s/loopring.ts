@@ -101,9 +101,9 @@ export const loopring: Layer2 = {
         RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString)
           .description +
         ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'ExchangeV3',
+          contract: 'ExchangeV3',
           references: [
             'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
             'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195',
@@ -111,7 +111,7 @@ export const loopring: Layer2 = {
           ],
         },
         {
-          contractIdentifier: 'LoopringV3',
+          contract: 'LoopringV3',
           references: [
             'https://etherscan.io/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71#code#L1825',
           ],
@@ -120,9 +120,9 @@ export const loopring: Layer2 = {
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_ESCAPE_MP(forcedWithdrawalDelay),
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'ExchangeV3',
+          contract: 'ExchangeV3',
           references: [
             'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
           ],

@@ -78,9 +78,9 @@ export const bobanetwork: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'CanonicalTransactionChain',
+          contract: 'CanonicalTransactionChain',
           references: [
             'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L311',
           ],
@@ -89,9 +89,9 @@ export const bobanetwork: Layer2 = {
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'L1CrossDomainMessenger_1',
+          contract: 'L1CrossDomainMessenger_1',
           references: [
             'https://etherscan.io/address/0x6D4528d192dB72E282265D6092F4B872f9Dff69e#code',
           ],
@@ -100,9 +100,9 @@ export const bobanetwork: Layer2 = {
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_QUEUE,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'CanonicalTransactionChain',
+          contract: 'CanonicalTransactionChain',
           references: [
             'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L219',
           ],
@@ -111,9 +111,9 @@ export const bobanetwork: Layer2 = {
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'StateCommitmentChain',
+          contract: 'StateCommitmentChain',
           references: [
             'https://etherscan.io/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec#code#F1#L103',
           ],

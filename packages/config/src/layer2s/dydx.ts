@@ -80,9 +80,9 @@ export const dydx: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'StarkPerpetual',
+          contract: 'StarkPerpetual',
           references: [
             'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
           ],
@@ -91,9 +91,9 @@ export const dydx: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'StarkPerpetual',
+          contract: 'StarkPerpetual',
           references: [
             'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',
           ],
@@ -103,9 +103,9 @@ export const dydx: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL(freezeGracePeriod),
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'StarkPerpetual',
+          contract: 'StarkPerpetual',
           references: [
             'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',
           ],
@@ -114,9 +114,9 @@ export const dydx: Layer2 = {
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
-      sourceCodeReferences: [
+      sources: [
         {
-          contractIdentifier: 'StarkPerpetual',
+          contract: 'StarkPerpetual',
           references: [
             'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F6#L32',
           ],
