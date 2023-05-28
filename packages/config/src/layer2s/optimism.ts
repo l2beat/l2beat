@@ -16,6 +16,11 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('optimism')
 
+const upgrades = {
+  upgradableBy: ['OptimismMultisig'],
+  upgradeDelay: 'No delay',
+}
+
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
@@ -55,6 +60,7 @@ export const optimism: Layer2 = {
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
+        ...upgrades,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
@@ -277,10 +283,11 @@ export const optimism: Layer2 = {
         'BondManager',
         "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
       ),
-      discovery.getContractDetails(
-        'L1CrossDomainMessengerProxy',
-        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-      ),
+      discovery.getContractDetails('L1CrossDomainMessengerProxy', {
+        description:
+          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+        ...upgrades,
+      }),
       discovery.getContractDetails(
         'LibAddressManager',
         'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
