@@ -262,14 +262,28 @@ export const bobanetwork: Layer2 = {
         'BondManager',
         "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
       ),
-      discovery.getContractDetails(
-        'L1CrossDomainMessenger_1',
-        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-      ),
-      discovery.getContractDetails(
-        'L1CrossDomainMessengerFast',
-        'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
-      ),
+      discovery.getContractDetails('L1CrossDomainMessenger_1', {
+        description:
+          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+        pausable: {
+          paused: discovery.getContractValue<boolean>(
+            'L1CrossDomainMessenger_1',
+            'paused',
+          ),
+          pausableBy: ['Owner'],
+        },
+      }),
+      discovery.getContractDetails('L1CrossDomainMessengerFast', {
+        description:
+          'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
+        pausable: {
+          paused: discovery.getContractValue<boolean>(
+            'L1CrossDomainMessengerFast',
+            'paused',
+          ),
+          pausableBy: ['Owner'],
+        },
+      }),
       discovery.getContractDetails(
         'L1MultiMessageRelayer',
         'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessenger.',
@@ -290,7 +304,13 @@ export const bobanetwork: Layer2 = {
         'L1StandardBridge',
         'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
       ),
-      discovery.getContractDetails('L1NFTBridge', 'Standard NFT bridge.'),
+      discovery.getContractDetails('L1NFTBridge', {
+        description: 'Standard NFT bridge.',
+        pausable: {
+          paused: discovery.getContractValue<boolean>('L1NFTBridge', 'paused'),
+          pausableBy: ['Owner'],
+        },
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
