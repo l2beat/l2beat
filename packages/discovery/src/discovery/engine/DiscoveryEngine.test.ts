@@ -20,6 +20,13 @@ describe(DiscoveryEngine.name, () => {
       overrides: { [B.toString()]: { ignoreDiscovery: true } },
     })
 
+    const discoveryLogger = mockObject<DiscoveryLogger>({
+      flush: () => {},
+      log: () => {},
+      logSkip: () => {},
+      logRelatives: () => {},
+    })
+
     const addressAnalyzer = mockObject<AddressAnalyzer>({
       analyze: mockFn(),
     })
@@ -40,7 +47,7 @@ describe(DiscoveryEngine.name, () => {
         relatives: [],
       })
 
-    const engine = new DiscoveryEngine(addressAnalyzer, DiscoveryLogger.SILENT)
+    const engine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
     const result = await engine.discover(config, BLOCK_NUMBER)
 
     expect(result).toEqual([
@@ -48,5 +55,10 @@ describe(DiscoveryEngine.name, () => {
       { type: 'EOA', address: C },
       { type: 'EOA', address: D },
     ])
+
+    expect(discoveryLogger.log).toHaveBeenCalledTimes(3)
+    expect(discoveryLogger.logSkip).toHaveBeenCalledTimes(1)
+    expect(discoveryLogger.logRelatives).toHaveBeenCalledTimes(3)
+    expect(discoveryLogger.flush).toHaveBeenCalledTimes(1)
   })
 })

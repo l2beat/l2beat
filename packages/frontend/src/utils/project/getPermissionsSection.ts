@@ -18,7 +18,7 @@ export function getPermissionsSection(
   )
 }
 
-export function toTechnologyContract(
+function toTechnologyContract(
   permission: ProjectPermission,
 ): TechnologyContract {
   const links = permission.accounts.slice(1).map((account) => {
@@ -41,5 +41,6 @@ export function toTechnologyContract(
     addresses,
     description: permission.description,
     links,
+    references: permission.references,
   }
 }

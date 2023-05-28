@@ -78,26 +78,46 @@ export const bobanetwork: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      references: [
-        'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L311',
+      sources: [
+        {
+          contract: 'CanonicalTransactionChain',
+          references: [
+            'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L311',
+          ],
+        },
       ],
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
-      references: [
-        'https://etherscan.io/address/0x6D4528d192dB72E282265D6092F4B872f9Dff69e#code',
+      sources: [
+        {
+          contract: 'L1CrossDomainMessenger_1',
+          references: [
+            'https://etherscan.io/address/0x6D4528d192dB72E282265D6092F4B872f9Dff69e#code',
+          ],
+        },
       ],
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_QUEUE,
-      references: [
-        'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L219',
+      sources: [
+        {
+          contract: 'CanonicalTransactionChain',
+          references: [
+            'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L219',
+          ],
+        },
       ],
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-      references: [
-        'https://etherscan.io/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec#code#F1#L103',
+      sources: [
+        {
+          contract: 'StateCommitmentChain',
+          references: [
+            'https://etherscan.io/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec#code#F1#L103',
+          ],
+        },
       ],
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -216,15 +236,27 @@ export const bobanetwork: Layer2 = {
       ),
       {
         name: 'ChainStorageContainer-CTC-batches',
-        address: EthereumAddress('0x17148284d2da2f38c96346f1776C1BF7D7691231'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            'CanonicalTransactionChain',
+            'batches',
+          ),
+        ),
       },
       {
         name: 'ChainStorageContainer-CTC-queue',
-        address: EthereumAddress('0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            'CanonicalTransactionChain',
+            'queue',
+          ),
+        ),
       },
       {
         name: 'ChainStorageContainer-SCC-batches',
-        address: EthereumAddress('0x13992B9f327faCA11568BE18a8ad3E9747e87d93'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>('StateCommitmentChain', 'batches'),
+        ),
       },
       discovery.getContractDetails(
         'BondManager',

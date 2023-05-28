@@ -4,13 +4,15 @@
   "initialAddresses": [
     "0xFb209827c58283535b744575e11953DCC4bEAD88",
     "0xc840838bc438d73c16c2f8b22d2ce3669963cd48",
-    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
+    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786"
   ],
   "names": {
     "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": "ValidatorUtils",
     "0x71D78dC7cCC0e037e12de1E50f5470903ce37148": "ProxyAdmin 1",
     "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin 2",
-    "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin 3"
+    "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin 3",
+    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": "L1DaiGateway"
   },
   "overrides": {
     "ValidatorUtils": {
@@ -79,6 +81,16 @@
     // Arbitrum One Bridge
     "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
       "ignoreDiscovery": true
+    },
+    "L1DaiGateway": {
+      "ignoreRelatives": [
+        "counterpartGateway",
+        "inbox",
+        "l1Dai",
+        "l1Router",
+        "l2Counterpart",
+        "l2Dai"
+      ]
     }
   }
 }

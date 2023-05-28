@@ -49,33 +49,39 @@ export const optimism: Layer2 = {
     associatedTokens: ['OP'],
     nativeL2TokensIncludedInTVL: ['OP'],
     escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1'),
+        sinceTimestamp: new UnixTime(1624401464),
+        tokens: '*',
+        description:
+          'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
+        sinceTimestamp: new UnixTime(1625675779),
+        tokens: ['DAI'],
+        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
+      }),
+      discovery.getEscrowDetails({
+        // current SNX bridge escrow
+        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
+        sinceTimestamp: new UnixTime(1620680982),
+        tokens: ['SNX'],
+        description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
+      }),
       {
         // old snx bridge
         address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
         sinceTimestamp: new UnixTime(1610668212),
         tokens: ['SNX'],
+        isHistorical: true,
       },
       {
-        // current SNX bridge escrow
-        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
-        sinceTimestamp: new UnixTime(1620680982),
-        tokens: ['SNX'],
-      },
-      {
-        // new snx bridge
+        // also old snx bridge
         address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
         sinceTimestamp: new UnixTime(1620680934),
         tokens: ['SNX'],
-      },
-      {
-        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
-        sinceTimestamp: new UnixTime(1625675779),
-        tokens: ['DAI'],
-      },
-      {
-        address: EthereumAddress('0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1'),
-        sinceTimestamp: new UnixTime(1624401464),
-        tokens: '*',
+        isHistorical: true,
       },
     ],
     transactionApi: {
@@ -92,26 +98,46 @@ export const optimism: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      references: [
-        'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L277',
+      sources: [
+        {
+          contract: 'CanonicalTransactionChain',
+          references: [
+            'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L277',
+          ],
+        },
       ],
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
-      references: [
-        'https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1#code',
+      sources: [
+        {
+          contract: 'L1CrossDomainMessengerProxy',
+          references: [
+            'https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1#code',
+          ],
+        },
       ],
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_QUEUE,
-      references: [
-        'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L201',
+      sources: [
+        {
+          contract: 'CanonicalTransactionChain',
+          references: [
+            'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L201',
+          ],
+        },
       ],
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-      references: [
-        'https://etherscan.io/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19#code#F1#L96',
+      sources: [
+        {
+          contract: 'StateCommitmentChain',
+          references: [
+            'https://etherscan.io/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19#code#F1#L96',
+          ],
+        },
       ],
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -260,30 +286,14 @@ export const optimism: Layer2 = {
         'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
       ),
       discovery.getContractDetails(
-        'L1StandardBridge',
-        'Main entry point forgetContract users depositing ERC20 tokens and ETH that do not require custom gateway.',
+        'L1DAITokenBridge',
+        'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
       ),
       {
         name: 'SynthetixBridgeToOptimism',
         description:
           'Custom SNX Gateway, main entry point for users depositing SNX to L2 where "canonical" L2 SNX token managed by Synthetix will be minted. Managed by Synthetix.',
         address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
-      },
-      {
-        name: 'SynthetixBridgeEscrow',
-        description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
-        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
-      },
-      {
-        name: 'L1DaiGateway',
-        description:
-          'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-        address: EthereumAddress('0x10E6593CDda8c58a1d0f14C5164B376352a55f2F'),
-      },
-      {
-        name: 'L1Escrow',
-        description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
       },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

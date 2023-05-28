@@ -40,6 +40,8 @@ export interface ProjectContractSingleAddress {
     /** Who can pause/unpause the contract */
     pausableBy: string[]
   }
+  /** List of references */
+  references?: ProjectReference[]
 }
 
 export function isSingleAddress(

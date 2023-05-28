@@ -29,7 +29,7 @@ export async function runDiscovery(
       ? (await configReader.readDiscovery(config.project)).blockNumber
       : await provider.getBlockNumber())
 
-  const logger = new DiscoveryLogger({ enabled: true })
+  const logger = DiscoveryLogger.CLI
   const result = await discover(
     provider,
     etherscanClient,
@@ -74,7 +74,7 @@ export async function dryRunDiscovery(
   )
 
   if (diff.length > 0) {
-    console.log(diff)
+    console.log(JSON.stringify(diff))
   } else {
     console.log('No changes!')
   }
@@ -90,7 +90,7 @@ async function justDiscover(
     provider,
     etherscanClient,
     config,
-    DiscoveryLogger.SILENT,
+    DiscoveryLogger.CLI,
     blockNumber,
   )
   return toDiscoveryOutput(config.name, config.hash, blockNumber, result)
