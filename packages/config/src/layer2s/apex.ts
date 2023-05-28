@@ -78,11 +78,20 @@ export const apex: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC,
-      references: [
-        'https://etherscan.io/address/0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859#code#F36#L174',
-        'https://etherscan.io/address/0x23cab3cf1aa7b929df5e9f3712aca3a6fb9494e4#code#F1#L84',
+      sources: [
+        {
+          contract: 'StarkExchange',
+          references: [
+            'https://etherscan.io/address/0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859#code#F36#L174',
+          ],
+        },
+        {
+          contract: 'Committee',
+          references: [
+            'https://etherscan.io/address/0x23cab3cf1aa7b929df5e9f3712aca3a6fb9494e4#code#F1#L84',
+          ],
+        },
       ],
-      contracts: ['StarkExchange', 'Committee'],
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL(freezeGracePeriod),

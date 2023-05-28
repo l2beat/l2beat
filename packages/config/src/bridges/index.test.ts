@@ -1,8 +1,11 @@
-import { UnixTime } from '@l2beat/shared'
+import { gatherAddressesFromUpgradeability, UnixTime } from '@l2beat/shared'
 import { expect } from 'earl'
 
+import { ProjectRiskViewEntry } from '../common'
 import { ProjectTechnologyChoice } from '../common/ProjectTechnologyChoice'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
+import { getReferencedAddresses } from '../layer2s/index.test'
 import { checkRisk } from '../test/helpers'
 import { bridges, BridgeTechnology } from './index'
 
@@ -14,6 +17,50 @@ describe('bridges', () => {
         const links = Object.values(bridge.display.links).flat()
         for (const link of links) {
           expect(link).not.toInclude(' ')
+        }
+      }
+    })
+  })
+  describe('references', () => {
+    describe('points to an existing implementation', () => {
+      for (const bridge of bridges) {
+        try {
+          const discovery = new ProjectDiscovery(bridge.id.toString())
+
+          for (const [riskName, riskEntry] of Object.entries(
+            bridge.riskView ?? {},
+          )) {
+            const risk = riskEntry as ProjectRiskViewEntry
+            if (risk.sources === undefined) continue
+
+            describe(`${bridge.id.toString()} : ${riskName}`, () => {
+              for (const sourceCodeReference of risk.sources ?? []) {
+                it(sourceCodeReference.contract, () => {
+                  const referencedAddresses = getReferencedAddresses(
+                    sourceCodeReference.references,
+                  )
+                  const contract = discovery.getContract(
+                    sourceCodeReference.contract,
+                  )
+
+                  const contractAddresses = [
+                    contract.address,
+                    ...gatherAddressesFromUpgradeability(
+                      contract.upgradeability,
+                    ),
+                  ]
+
+                  expect(
+                    contractAddresses.some((a) =>
+                      referencedAddresses.includes(a),
+                    ),
+                  ).toEqual(true)
+                })
+              }
+            })
+          }
+        } catch {
+          continue
         }
       }
     })

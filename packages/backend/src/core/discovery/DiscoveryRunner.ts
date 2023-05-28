@@ -1,15 +1,23 @@
 import {
+  diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/shared'
+import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 export class DiscoveryRunner {
   constructor(private readonly discoveryEngine: DiscoveryEngine) {}
 
-  async run(
+  async run(config: DiscoveryConfig, blockNumber: number) {
+    const discovery = await this.discover(config, blockNumber)
+    await this.sanityCheck(discovery, config, blockNumber)
+    return discovery
+  }
+
+  async discover(
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<DiscoveryOutput> {
@@ -21,6 +29,29 @@ export class DiscoveryRunner {
     latestBlock.set({ project: config.name }, blockNumber)
 
     return toDiscoveryOutput(config.name, config.hash, blockNumber, result)
+  }
+
+  // 3rd party APIs are unstable, so we do a sanity check before sending
+  // notifications, which makes the same request again and compares the
+  // results.
+  async sanityCheck(
+    discovery: DiscoveryOutput,
+    projectConfig: DiscoveryConfig,
+    blockNumber: number,
+  ) {
+    const secondDiscovery = await this.discover(projectConfig, blockNumber)
+
+    if (!isEqual(discovery, secondDiscovery)) {
+      const diff = diffDiscovery(
+        discovery.contracts,
+        secondDiscovery.contracts,
+        projectConfig,
+      )
+      throw new Error(
+        `[${projectConfig.name}] Sanity check failed | ${blockNumber}\n
+        potential-diff ${JSON.stringify(diff)}}`,
+      )
+    }
   }
 }
 

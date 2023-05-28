@@ -1,10 +1,10 @@
 {
   "name": "arbitrum",
-  "blockNumber": 17327185,
-  "configHash": "0x324012a3786a79c1391dfc5be611b2311fcd4ea8ab76b849ceb7c33b9dd5cf38",
+  "blockNumber": 17335930,
+  "configHash": "0x771fa832b4dcd7d4990f6060d1b7f05ecfa0531563fb6fdcf5a7975e6708a78f",
   "contracts": [
     {
-      "name": "Outbox",
+      "name": "OutboxV2",
       "address": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
       "code": "https://etherscan.deth.net/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840,0x0eA7372338a589e7f0b00E463a53AA464ef04e17",
       "upgradeability": {
@@ -22,7 +22,8 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
-      }
+      },
+      "derivedName": "Outbox"
     },
     {
       "name": "UpgradeableBeacon",
@@ -46,7 +47,7 @@
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
       "values": {
-        "batchCount": 209331,
+        "batchCount": 211462,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -54,7 +55,7 @@
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 868096
+        "totalDelayedMessagesRead": 871281
       },
       "derivedName": "SequencerInbox"
     },
@@ -227,12 +228,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 5388,
+        "firstUnresolvedNode": 5418,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 5387,
-        "latestNodeCreated": 5541,
+        "latestConfirmed": 5417,
+        "latestNodeCreated": 5571,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -259,7 +260,7 @@
       "derivedName": "RollupProxy"
     },
     {
-      "name": "OldOutbox",
+      "name": "OutboxV0",
       "address": "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
       "code": "https://etherscan.deth.net/address/0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a,0x263a68002876E307804168795519da0B32CC62fE",
       "upgradeability": {
@@ -279,7 +280,8 @@
         "OUTBOX_VERSION": 0,
         "outboxesLength": 30,
         "rollup": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
-      }
+      },
+      "derivedName": "OldOutbox"
     },
     {
       "name": "L1GatewayRouter",
@@ -300,7 +302,7 @@
       }
     },
     {
-      "name": "Outbox",
+      "name": "OutboxV1",
       "address": "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40",
       "code": "https://etherscan.deth.net/address/0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40,0x360861b7b245c968128F0a53d281aDb1Df760711",
       "upgradeability": {
@@ -343,11 +345,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 868110,
+        "delayedMessageCount": 871295,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 209331,
-        "sequencerReportedSubMessageCount": 71643601
+        "sequencerMessageCount": 211462,
+        "sequencerReportedSubMessageCount": 72066817
       },
       "derivedName": "Bridge"
     },

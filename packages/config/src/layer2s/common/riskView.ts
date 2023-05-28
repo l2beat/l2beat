@@ -1,3 +1,5 @@
+import { assert } from '@l2beat/shared'
+
 import { ProjectRiskViewEntry } from '../../common'
 import { formatSeconds } from '../../utils/formatSeconds'
 import { roundSeconds } from '../../utils/roundSeconds'
@@ -108,10 +110,14 @@ export function UPGRADABLE_ARBITRUM(delay: number): ProjectRiskViewEntry {
   }
 }
 
-export function UPGRADABLE_POLYGON_ZKEVM(delay: string): ProjectRiskViewEntry {
+export function UPGRADABLE_POLYGON_ZKEVM(
+  delay: string,
+  rollupEmergencyState: boolean,
+  bridgeEmergencyState: boolean,
+): ProjectRiskViewEntry {
   return {
     value: `${delay} or no delay`,
-    description: `There is a ${delay} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.`,
+    description: `There is a ${delay} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay. Currently rollup emergency state is set to ${rollupEmergencyState.toString()}, bridge emergency state is set to ${bridgeEmergencyState.toString()}.`,
     sentiment: 'warning',
   }
 }
@@ -204,6 +210,21 @@ export const SEQUENCER_QUEUE: ProjectRiskViewEntry = {
   description:
     "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
   sentiment: 'warning',
+}
+
+export const SEQUENCER_RISK_POLYGONZKEVM: (
+  isForcedBatchDisallowed: boolean,
+) => ProjectRiskViewEntry = (isForcedBatchDisallowed: boolean) => {
+  assert(
+    isForcedBatchDisallowed,
+    'Polygon zkEVM sequencer risk has changed. Update the config after research',
+  )
+  return {
+    ...SEQUENCER_NO_MECHANISM,
+    description:
+      SEQUENCER_NO_MECHANISM.description +
+      ' Although the functionality exists in the code, but it is disabled.',
+  }
 }
 
 // Operator is down

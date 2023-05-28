@@ -78,26 +78,46 @@ export const bobanetwork: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      references: [
-        'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L311',
+      sources: [
+        {
+          contract: 'CanonicalTransactionChain',
+          references: [
+            'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L311',
+          ],
+        },
       ],
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
-      references: [
-        'https://etherscan.io/address/0x6D4528d192dB72E282265D6092F4B872f9Dff69e#code',
+      sources: [
+        {
+          contract: 'L1CrossDomainMessenger_1',
+          references: [
+            'https://etherscan.io/address/0x6D4528d192dB72E282265D6092F4B872f9Dff69e#code',
+          ],
+        },
       ],
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_QUEUE,
-      references: [
-        'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L219',
+      sources: [
+        {
+          contract: 'CanonicalTransactionChain',
+          references: [
+            'https://etherscan.io/address/0xfBd2541e316948B259264c02f370eD088E04c3Db#code#F1#L219',
+          ],
+        },
       ],
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
-      references: [
-        'https://etherscan.io/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec#code#F1#L103',
+      sources: [
+        {
+          contract: 'StateCommitmentChain',
+          references: [
+            'https://etherscan.io/address/0xdE7355C971A5B733fe2133753Abd7e5441d441Ec#code#F1#L103',
+          ],
+        },
       ],
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -216,28 +236,54 @@ export const bobanetwork: Layer2 = {
       ),
       {
         name: 'ChainStorageContainer-CTC-batches',
-        address: EthereumAddress('0x17148284d2da2f38c96346f1776C1BF7D7691231'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            'CanonicalTransactionChain',
+            'batches',
+          ),
+        ),
       },
       {
         name: 'ChainStorageContainer-CTC-queue',
-        address: EthereumAddress('0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>(
+            'CanonicalTransactionChain',
+            'queue',
+          ),
+        ),
       },
       {
         name: 'ChainStorageContainer-SCC-batches',
-        address: EthereumAddress('0x13992B9f327faCA11568BE18a8ad3E9747e87d93'),
+        address: EthereumAddress(
+          discovery.getContractValue<string>('StateCommitmentChain', 'batches'),
+        ),
       },
       discovery.getContractDetails(
         'BondManager',
         "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
       ),
-      discovery.getContractDetails(
-        'L1CrossDomainMessenger_1',
-        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-      ),
-      discovery.getContractDetails(
-        'L1CrossDomainMessengerFast',
-        'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
-      ),
+      discovery.getContractDetails('L1CrossDomainMessenger_1', {
+        description:
+          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+        pausable: {
+          paused: discovery.getContractValue<boolean>(
+            'L1CrossDomainMessenger_1',
+            'paused',
+          ),
+          pausableBy: ['Owner'],
+        },
+      }),
+      discovery.getContractDetails('L1CrossDomainMessengerFast', {
+        description:
+          'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
+        pausable: {
+          paused: discovery.getContractValue<boolean>(
+            'L1CrossDomainMessengerFast',
+            'paused',
+          ),
+          pausableBy: ['Owner'],
+        },
+      }),
       discovery.getContractDetails(
         'L1MultiMessageRelayer',
         'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessenger.',
@@ -258,7 +304,13 @@ export const bobanetwork: Layer2 = {
         'L1StandardBridge',
         'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
       ),
-      discovery.getContractDetails('L1NFTBridge', 'Standard NFT bridge.'),
+      discovery.getContractDetails('L1NFTBridge', {
+        description: 'Standard NFT bridge.',
+        pausable: {
+          paused: discovery.getContractValue<boolean>('L1NFTBridge', 'paused'),
+          pausableBy: ['Owner'],
+        },
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

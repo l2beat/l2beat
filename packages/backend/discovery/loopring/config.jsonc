@@ -6,7 +6,8 @@
     "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": "LoopringIOExchangeOwner",
     "0x39B9bf169a7e225ba037C443A40460c77438ea14": "AgentRegistry",
     "0x674bdf20A0F284D710BC40872100128e2d66Bd3f": "DefaultDepositContract",
-    "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": "ProxyOwner"
+    "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": "ProxyOwner",
+    "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b": "UserStakingPool"
   },
   "initialAddresses": ["0x674bdf20A0F284D710BC40872100128e2d66Bd3f"],
   "overrides": {
@@ -41,6 +42,9 @@
           "argValue": "0x53228430"
         }
       }
+    },
+    "UserStakingPool": {
+      "ignoreInWatchMode": ["total", "getTotalStaking", "numAddresses"]
     }
   }
 }

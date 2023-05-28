@@ -1,6 +1,7 @@
 import {
   AddressAnalyzer,
   ConfigReader,
+  DISCOVERY_LOGIC_VERSION,
   DiscoveryEngine,
   DiscoveryLogger,
   DiscoveryProvider,
@@ -68,7 +69,7 @@ export function createUpdateMonitorModule(
 
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
-  const discoveryLogger = DiscoveryLogger.SILENT
+  const discoveryLogger = DiscoveryLogger.SERVER
 
   const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
   const sourceCodeService = new SourceCodeService(discoveryProvider)
@@ -95,6 +96,7 @@ export function createUpdateMonitorModule(
     clock,
     logger,
     !!config.updateMonitor.runOnStart,
+    DISCOVERY_LOGIC_VERSION,
   )
 
   const start = async () => {
