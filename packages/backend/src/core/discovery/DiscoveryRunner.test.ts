@@ -34,7 +34,7 @@ describe(DiscoveryRunner.name, () => {
 
       await runner.run(config, 1, {
         runSanityCheck: false,
-        injectInitialAddresses: false,
+        injectInitialAddresses: true,
       })
 
       expect(engine.discover).toHaveBeenNthCalledWith(
