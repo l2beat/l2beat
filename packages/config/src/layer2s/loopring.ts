@@ -35,6 +35,11 @@ const forcedWithdrawalFeeString = `${utils.formatEther(
   forcedWithdrawalFee,
 )} ETH`
 
+const upgrades = {
+  upgradableBy: ['ProxyOwner'],
+  upgradeDelay: 'No delay',
+}
+
 export const loopring: Layer2 = {
   type: 'layer2',
   id: ProjectId('loopring'),
@@ -254,7 +259,10 @@ export const loopring: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('ExchangeV3', 'Main Loopring contract.'),
+      discovery.getContractDetails('ExchangeV3', {
+        description: 'Main Loopring contract.',
+        ...upgrades,
+      }),
       discovery.getContractDetails(
         'LoopringIOExchangeOwner',
         'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
@@ -267,10 +275,12 @@ export const loopring: Layer2 = {
         'LoopringV3',
         'Contract managing LRC staking for exchanges (One Loopring contract can manage many exchanges).',
       ),
-      discovery.getContractDetails(
-        'BlockVerifier',
-        'zkSNARK Verifier based on ethsnarks library.',
-      ),
+      discovery.getContractDetails('BlockVerifier', {
+        description: 'zkSNARK Verifier based on ethsnarks library.',
+        ...upgrades,
+        upgradeConsiderations:
+          'The Verifier contract address can be changed by the AdminMultisig.',
+      }),
       discovery.getContractDetails(
         'AgentRegistry',
         'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
