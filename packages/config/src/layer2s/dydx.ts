@@ -80,27 +80,47 @@ export const dydx: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
-      references: [
-        'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
+      sources: [
+        {
+          contract: 'StarkPerpetual',
+          references: [
+            'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
+          ],
+        },
       ],
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      references: [
-        'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',
+      sources: [
+        {
+          contract: 'StarkPerpetual',
+          references: [
+            'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',
+          ],
+        },
       ],
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL(freezeGracePeriod),
-      references: [
-        'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',
+      sources: [
+        {
+          contract: 'StarkPerpetual',
+          references: [
+            'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',
+          ],
+        },
       ],
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
-      references: [
-        'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F6#L32',
+      sources: [
+        {
+          contract: 'StarkPerpetual',
+          references: [
+            'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F6#L32',
+          ],
+        },
       ],
     },
     destinationToken: RISK_VIEW.CANONICAL_USDC,

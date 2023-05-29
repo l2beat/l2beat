@@ -18,7 +18,9 @@
     "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35": "RollupProxy",
     "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": "SequencerInbox",
     "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "Inbox",
-    "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": "Outbox",
+    "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a": "OutboxV0",
+    "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": "OutboxV1",
+    "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": "OutboxV2",
     "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "GatewaysAdmin",
     "0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway",
     "0x9E40625F52829Cf04bC4839F186D621ee33b0E67": "ValidatorUtils"
@@ -93,7 +95,7 @@
         }
       }
     },
-    "Outbox": {
+    "OutboxV1": {
       "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
     },
     "L1DaiGateway": {

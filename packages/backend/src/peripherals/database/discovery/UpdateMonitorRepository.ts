@@ -10,6 +10,7 @@ export interface UpdateMonitorRecord {
   timestamp: UnixTime
   discovery: DiscoveryOutput
   configHash: Hash256
+  version: number
 }
 
 export class UpdateMonitorRepository extends BaseRepository {
@@ -57,6 +58,7 @@ function toRecord(row: UpdateMonitorRow): UpdateMonitorRecord {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     discovery: row.discovery_json_blob as unknown as DiscoveryOutput,
     configHash: Hash256(row.config_hash),
+    version: row.version,
   }
 }
 
@@ -67,5 +69,6 @@ function toRow(record: UpdateMonitorRecord): UpdateMonitorRow {
     unix_timestamp: record.timestamp.toDate(),
     discovery_json_blob: JSON.stringify(record.discovery),
     config_hash: record.configHash.toString(),
+    version: record.version,
   }
 }
