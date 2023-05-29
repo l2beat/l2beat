@@ -25,6 +25,11 @@ const executionDelay = discovery.getContractValue<number>(
 )
 const delay = executionDelay > 0 && formatSeconds(executionDelay)
 
+const upgrades = {
+  upgradableBy: ['zkSync Era Multisig'],
+  upgradeDelay: 'No delay',
+}
+
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
@@ -60,8 +65,7 @@ export const zksyncera: Layer2 = {
         sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
         description: 'Main rollup contract, additionally serving as an escrow.',
-        upgradableBy: ['zkSync Era Multisig'],
-        upgradeDelay: 'No delay',
+        ...upgrades,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
@@ -69,8 +73,7 @@ export const zksyncera: Layer2 = {
         tokens: ['USDC', 'PERP', 'MUTE'],
         description:
           'Standard bridge for depositing ERC20 tokens to zkSync Era.',
-        upgradableBy: ['zkSync Era Multisig'],
-        upgradeDelay: 'No delay',
+        ...upgrades,
       }),
     ],
     transactionApi: {
@@ -265,13 +268,14 @@ export const zksyncera: Layer2 = {
           and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
           It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
           It is also serves the purpose of ETH bridge.',
-        upgradableBy: ['zkSync Era Multisig'],
-        upgradeDelay: 'No delay',
+        ...upgrades,
       }),
-      discovery.getContractDetails(
-        'Verifier',
-        'Implements zkProof verification logic.',
-      ),
+      discovery.getContractDetails('Verifier', {
+        description: 'Implements zkProof verification logic.',
+        ...upgrades,
+        upgradeConsiderations:
+          'Multisig can change the verifier with no delay.',
+      }),
       discovery.getContractDetails(
         'ValidatorTimelock',
         'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
