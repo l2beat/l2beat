@@ -15,7 +15,7 @@ import {
   UpdateMonitorRepository,
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
-import { DiscoveryRunner } from './DiscoveryRunner'
+import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateNotifier } from './UpdateNotifier'
 
@@ -112,11 +112,13 @@ describe(UpdateMonitor.name, () => {
         1,
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
+        OPTIONS,
       )
       expect(discoveryRunner.run).toHaveBeenNthCalledWith(
         2,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
+        OPTIONS,
       )
       // calls repository (and gets undefined)
       expect(repository.findLatest).toHaveBeenCalledTimes(2)
@@ -298,11 +300,13 @@ describe(UpdateMonitor.name, () => {
         1,
         config,
         BLOCK_NUMBER - 1,
+        OPTIONS,
       )
       expect(discoveryRunner.run).toHaveBeenNthCalledWith(
         2,
         config,
         BLOCK_NUMBER,
+        OPTIONS,
       )
       expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(1)
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(1)
@@ -510,6 +514,7 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.run).toHaveBeenCalledWith(
         mockConfig(PROJECT_A),
         BLOCK_NUMBER - 1,
+        OPTIONS,
       )
     })
   })
@@ -568,3 +573,8 @@ const mockDiff: DiscoveryDiff[] = [
     ],
   },
 ]
+
+const OPTIONS: DiscoveryRunnerOptions = {
+  runSanityCheck: true,
+  injectInitialAddresses: true,
+}
