@@ -1,7 +1,8 @@
 {
   "name": "bobanetwork",
-  "blockNumber": 17329248,
-  "configHash": "0x5e435c8118931e7895aaab14c6e6659ec2136c102f72edb17448048af86f859a",
+  "blockNumber": 17363887,
+  "configHash": "0x34c3c8743506efd9ef6d9d2cc8d951227fc2ed773ea512a0369434043fc0c70a",
+  "version": 1,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger_2",
@@ -26,8 +27,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000646e0adf00000f855d",
-        "length": 15939,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000064746ca700000f8b61",
+        "length": 16052,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "StateCommitmentChain"
       },
@@ -41,8 +42,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000001086bef00646e07720000005eff00000f855d",
-        "length": 17728,
+        "getGlobalMetadata": "0x00000000000000000108f36b00647473710000005f0800000f8b6b",
+        "length": 17845,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "owner": "CanonicalTransactionChain"
       },
@@ -123,7 +124,7 @@
       "derivedName": "L1CrossDomainMessenger"
     },
     {
-      "name": "Lib_AddressManager",
+      "name": "AddressManager",
       "address": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
       "code": "https://etherscan.deth.net/address/0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
       "upgradeability": {
@@ -146,7 +147,8 @@
         "owner": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840",
         "StateCommitmentChain": "0xdE7355C971A5B733fe2133753Abd7e5441d441Ec",
         "Timelock": "0xCc72f566Fd5C7EDeB8dAA4Fe394967f5546eC5B8"
-      }
+      },
+      "derivedName": "Lib_AddressManager"
     },
     {
       "name": "L1NFTBridge",
@@ -199,12 +201,13 @@
         "admin": "0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
       },
       "values": {
-        "currentDepositInfoHash": "0x00dc39f9f8da2ab51a8a0c014f8ff2204817833881276cac5fa916eff52b1118",
+        "currentDepositInfoHash": "0x82f5e3c18e11463eab9a3366f426153e0902765b6429e213911ea96fa3a504df",
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "lastHashUpdateBlock": 17329174,
+        "lastHashUpdateBlock": 17363051,
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e",
-        "priorDepositInfoHash": "0x23a7836c7e24439dbcc7a0e8095a1c5a7dd9f29a9558fd2d76af90257c374f50"
-      }
+        "priorDepositInfoHash": "0xa73c1cf047682efda21316c6d160ccfe50dd15194c41ed62be2760fbf5f2ea29"
+      },
+      "derivedName": "L1StandardBridge"
     },
     {
       "name": "StateCommitmentChain",
@@ -216,12 +219,13 @@
       "values": {
         "batches": "0x13992B9f327faCA11568BE18a8ad3E9747e87d93",
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1684933343,
-        "getTotalBatches": 15939,
-        "getTotalElements": 1017181,
+        "getLastSequencerTimestamp": 1685351591,
+        "getTotalBatches": 16052,
+        "getTotalElements": 1018721,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "SEQUENCER_PUBLISH_WINDOW": 1800
-      }
+      },
+      "derivedName": "StateCommitmentChain"
     },
     {
       "name": "L1LiquidityPool",
@@ -259,20 +263,21 @@
         "batches": "0x17148284d2da2f38c96346f1776C1BF7D7691231",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17329135,
-        "getLastTimestamp": 1684932466,
-        "getNextQueueIndex": 24319,
-        "getNumPendingQueueElements": 1,
-        "getQueueLength": 24320,
-        "getTotalBatches": 17728,
-        "getTotalElements": 1017181,
+        "getLastBlockNumber": 17363819,
+        "getLastTimestamp": 1685353329,
+        "getNextQueueIndex": 24328,
+        "getNumPendingQueueElements": 0,
+        "getQueueLength": 24328,
+        "getTotalBatches": 17845,
+        "getTotalElements": 1018731,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089",
         "MAX_ROLLUP_TX_SIZE": 50000,
         "maxTransactionGasLimit": 11000000,
         "MIN_ROLLUP_TX_GAS": 100000,
         "queue": "0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d"
-      }
+      },
+      "derivedName": "CanonicalTransactionChain"
     }
   ],
   "eoas": [

@@ -25,6 +25,11 @@ const executionDelay = discovery.getContractValue<number>(
 )
 const delay = executionDelay > 0 && formatSeconds(executionDelay)
 
+const upgrades = {
+  upgradableBy: ['zkSync Era Multisig'],
+  upgradeDelay: 'No delay',
+}
+
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
@@ -60,6 +65,7 @@ export const zksyncera: Layer2 = {
         sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
         description: 'Main rollup contract, additionally serving as an escrow.',
+        ...upgrades,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
@@ -67,6 +73,7 @@ export const zksyncera: Layer2 = {
         tokens: ['USDC', 'PERP', 'MUTE'],
         description:
           'Standard bridge for depositing ERC20 tokens to zkSync Era.',
+        ...upgrades,
       }),
     ],
     transactionApi: {
@@ -89,7 +96,7 @@ export const zksyncera: Layer2 = {
           ],
         },
         {
-          contract: 'DiamondProxy',
+          contract: 'zkSync',
           references: [
             'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L254',
             'https://etherscan.io/address/0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc#code#F7#L24',
@@ -120,7 +127,7 @@ export const zksyncera: Layer2 = {
           ],
         },
         {
-          contract: 'DiamondProxy',
+          contract: 'zkSync',
           references: [
             'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L149',
             'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F11#L41',
@@ -135,7 +142,7 @@ export const zksyncera: Layer2 = {
       ...VALUES.ZKSYNC_2.UPGRADEABILITY,
       sources: [
         {
-          contract: 'DiamondProxy',
+          contract: 'zkSync',
           references: [
             'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F8#L121',
             'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51',
@@ -150,7 +157,7 @@ export const zksyncera: Layer2 = {
       sentiment: 'warning',
       sources: [
         {
-          contract: 'DiamondProxy',
+          contract: 'zkSync',
           references: [
             'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L56',
             'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L73',
@@ -167,6 +174,14 @@ export const zksyncera: Layer2 = {
       description:
         'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked.',
       sentiment: 'bad',
+      sources: [
+        {
+          contract: 'zkSync',
+          references: [
+            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L149',
+          ],
+        },
+      ],
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -247,17 +262,20 @@ export const zksyncera: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails(
-        'DiamondProxy',
-        'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
-      and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
-      It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
-      It is also serves the purpose of ETH bridge.',
-      ),
-      discovery.getContractDetails(
-        'Verifier',
-        'Implements zkProof verification logic.',
-      ),
+      discovery.getContractDetails('zkSync', {
+        description:
+          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract \
+          and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
+          It uses separate Verifier to validate zkProofs. Governance manages list of Validators and can set basic rollup parameters.\
+          It is also serves the purpose of ETH bridge.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('Verifier', {
+        description: 'Implements zkProof verification logic.',
+        ...upgrades,
+        upgradeConsiderations:
+          'Multisig can change the verifier with no delay.',
+      }),
       discovery.getContractDetails(
         'ValidatorTimelock',
         'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
@@ -267,7 +285,7 @@ export const zksyncera: Layer2 = {
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'zkSync Era MultiSig',
+      'zkSync Era Multisig',
       'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
     ),
     {
