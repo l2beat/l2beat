@@ -9,7 +9,7 @@
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F"
   ],
   "names": {
-    "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "LibAddressManager",
+    "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "AddressManager",
     "0x5E4e65926BA27467555EB562121fac00D24E9dD2": "CanonicalTransactionChain",
     "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19": "StateCommitmentChain",
     "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572": "SCCStorageContainerBatches_OLD",
@@ -24,7 +24,7 @@
     "0xEb3107117FEAd7de89Cd14D463D340A2E6917769": "SynthetixMultisig"
   },
   "overrides": {
-    "LibAddressManager": {
+    "AddressManager": {
       "fields": {
         "BondManager": {
           "type": "call",

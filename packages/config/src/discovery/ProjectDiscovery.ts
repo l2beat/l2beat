@@ -16,6 +16,7 @@ import {
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissionedAccount,
+  ProjectReference,
 } from '../common'
 import {
   ProjectContractSingleAddress,
@@ -121,6 +122,7 @@ export class ProjectDiscovery {
   getMultisigPermission(
     identifier: string,
     description: string,
+    references?: ProjectReference[],
   ): ProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
@@ -145,6 +147,7 @@ export class ProjectDiscovery {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
+        references,
       },
     ]
   }
