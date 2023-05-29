@@ -174,13 +174,11 @@ export class UpdateMonitor {
         discovery.contracts,
         this.configReader,
       )
-      await this.updateNotifier.handleDiff(
-        projectConfig.name,
+      await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
         dependents,
-        diff,
         blockNumber,
         unknownContracts,
-      )
+      })
       changesDetected.inc()
     }
   }

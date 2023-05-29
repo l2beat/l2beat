@@ -17,7 +17,7 @@ import {
 import { Clock } from '../Clock'
 import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'
-import { UpdateNotifier } from './UpdateNotifier'
+import { UpdateMetadata, UpdateNotifier } from './UpdateNotifier'
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'
@@ -59,7 +59,7 @@ describe(UpdateMonitor.name, () => {
 
   beforeEach(() => {
     updateNotifier = mockObject<UpdateNotifier>({
-      handleDiff: async () => {},
+      handleUpdate: async () => {},
       handleUnresolved: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
@@ -127,22 +127,18 @@ describe(UpdateMonitor.name, () => {
       // saves discovery result
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
       //sends notification
-      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(2)
-      expect(updateNotifier.handleDiff).toHaveBeenNthCalledWith(
+      expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(2)
+      expect(updateNotifier.handleUpdate).toHaveBeenNthCalledWith(
         1,
         PROJECT_A,
-        [],
         mockDiff,
-        BLOCK_NUMBER,
-        [],
+        UPDATE_METADATA,
       )
-      expect(updateNotifier.handleDiff).toHaveBeenNthCalledWith(
+      expect(updateNotifier.handleUpdate).toHaveBeenNthCalledWith(
         2,
         PROJECT_B,
-        [],
         mockDiff,
-        BLOCK_NUMBER,
-        [],
+        UPDATE_METADATA,
       )
       expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
       expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
@@ -190,7 +186,7 @@ describe(UpdateMonitor.name, () => {
       // runs discovery
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
       // does not send a notification
-      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(0)
+      expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
       expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
       expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
         1,
@@ -233,7 +229,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(new UnixTime(0))
 
       // send notification about the error of discovery
-      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(0)
+      expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
       expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
       expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
         1,
@@ -308,7 +304,7 @@ describe(UpdateMonitor.name, () => {
         BLOCK_NUMBER,
         OPTIONS,
       )
-      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(1)
+      expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(1)
     })
 
@@ -352,7 +348,7 @@ describe(UpdateMonitor.name, () => {
       // does not save changes to database
       expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
       // does not send a notification
-      expect(updateNotifier.handleDiff).toHaveBeenCalledTimes(0)
+      expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
       expect(updateNotifier.handleUnresolved).toHaveBeenCalledTimes(1)
       expect(updateNotifier.handleUnresolved).toHaveBeenNthCalledWith(
         1,
@@ -577,4 +573,10 @@ const mockDiff: DiscoveryDiff[] = [
 const OPTIONS: DiscoveryRunnerOptions = {
   runSanityCheck: true,
   injectInitialAddresses: true,
+}
+
+const UPDATE_METADATA: UpdateMetadata = {
+  unknownContracts: [],
+  blockNumber: BLOCK_NUMBER,
+  dependents: [],
 }

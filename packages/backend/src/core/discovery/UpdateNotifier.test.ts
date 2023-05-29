@@ -9,7 +9,7 @@ import { UpdateNotifier } from './UpdateNotifier'
 const BLOCK = 123
 
 describe(UpdateNotifier.name, () => {
-  describe(UpdateNotifier.prototype.handleDiff.name, () => {
+  describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
@@ -39,7 +39,11 @@ describe(UpdateNotifier.name, () => {
         },
       ]
 
-      await updateNotifier.handleDiff(project, dependents, changes, BLOCK, [])
+      await updateNotifier.handleUpdate(project, changes, {
+        dependents,
+        blockNumber: BLOCK,
+        unknownContracts: [],
+      })
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -92,7 +96,11 @@ describe(UpdateNotifier.name, () => {
         },
       ]
 
-      await updateNotifier.handleDiff(project, dependents, changes, BLOCK, [])
+      await updateNotifier.handleUpdate(project, changes, {
+        dependents,
+        blockNumber: BLOCK,
+        unknownContracts: [],
+      })
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(

@@ -2,15 +2,19 @@ import { DiscoveryDiff, FieldDiff } from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
+export interface DiffMetadata {
+  blockNumber: number
+  dependents: string[]
+  nonce?: number
+}
+
 export function diffToMessages(
   name: string,
-  dependents: string[],
   diffs: DiscoveryDiff[],
-  blockNumber: number,
-  nonce?: number,
+  metadata: DiffMetadata,
 ): string[] {
-  const header = getHeader(name, blockNumber, nonce)
-  const dependentsMessage = getDependentsMessage(dependents)
+  const header = getHeader(name, metadata.blockNumber, metadata.nonce)
+  const dependentsMessage = getDependentsMessage(metadata.dependents)
   const overheadLength =
     header.length + dependentsMessage.length + wrapDiffCodeBlock('').length
 

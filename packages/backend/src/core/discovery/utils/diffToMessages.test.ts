@@ -46,7 +46,10 @@ describe('Discord message formatting', () => {
         },
       ]
 
-      const result = diffToMessages(name, dependents, diff, BLOCK_NUMBER)
+      const result = diffToMessages(name, diff, {
+        dependents,
+        blockNumber: BLOCK_NUMBER,
+      })
 
       const expected = [
         `***${name}*** | detected changes\`\`\`diff`,
@@ -87,7 +90,10 @@ describe('Discord message formatting', () => {
         },
       ]
 
-      const result = diffToMessages(name, dependents, diff, BLOCK_NUMBER)
+      const result = diffToMessages(name, diff, {
+        dependents,
+        blockNumber: BLOCK_NUMBER,
+      })
 
       const expected = [
         `***${name}*** | detected changes\n`,
@@ -120,13 +126,11 @@ describe('Discord message formatting', () => {
         differences.push(diff)
       }
 
-      const result = diffToMessages(
-        name,
+      const result = diffToMessages(name, differences, {
         dependents,
-        differences,
-        BLOCK_NUMBER,
+        blockNumber: BLOCK_NUMBER,
         nonce,
-      )
+      })
 
       const firstPart = [
         `> ${formatNonce(
@@ -185,13 +189,11 @@ describe('Discord message formatting', () => {
         '```',
       ]
 
-      const result = diffToMessages(
-        PROJECT,
-        [],
-        [contractDiff],
-        BLOCK_NUMBER,
+      const result = diffToMessages(PROJECT, [contractDiff], {
+        dependents: [],
+        blockNumber: BLOCK_NUMBER,
         nonce,
-      )
+      })
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
       expect(firstPart.join('').length).toEqual(1985)

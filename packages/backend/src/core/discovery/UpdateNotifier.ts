@@ -7,6 +7,12 @@ import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
 
+export interface UpdateMetadata {
+  blockNumber: number
+  dependents: string[]
+  unknownContracts: EthereumAddress[]
+}
+
 export class UpdateNotifier {
   constructor(
     private readonly updateNotifierRepository: UpdateNotifierRepository,
@@ -16,36 +22,36 @@ export class UpdateNotifier {
     this.logger = this.logger.for(this)
   }
 
-  async handleDiff(
+  async handleUpdate(
     name: string,
-    dependents: string[],
     diff: DiscoveryDiff[],
-    blockNumber: number,
-    unknownContracts: EthereumAddress[],
+    metadata: UpdateMetadata,
   ) {
     const nonce = await this.getInternalMessageNonce()
-    const messages = diffToMessages(name, dependents, diff, blockNumber, nonce)
+    const messages = diffToMessages(name, diff, {
+      dependents: metadata.dependents,
+      blockNumber: metadata.blockNumber,
+      nonce,
+    })
     await this.notify(messages, 'INTERNAL')
     await this.updateNotifierRepository.add({
       projectName: name,
       diff,
-      blockNumber,
+      blockNumber: metadata.blockNumber,
     })
     this.logger.info('Updates detected, notification sent [INTERNAL]', {
       name,
       amount: countDiff(diff),
     })
 
-    const filteredDiff = filterDiff(diff, unknownContracts)
+    const filteredDiff = filterDiff(diff, metadata.unknownContracts)
     if (filteredDiff.length === 0) {
       return
     }
-    const filteredMessages = diffToMessages(
-      name,
-      dependents,
-      filteredDiff,
-      blockNumber,
-    )
+    const filteredMessages = diffToMessages(name, filteredDiff, {
+      dependents: metadata.dependents,
+      blockNumber: metadata.blockNumber,
+    })
     await this.notify(filteredMessages, 'PUBLIC')
     this.logger.info('Updates detected, notification sent [PUBLIC]', {
       name,
