@@ -1,7 +1,8 @@
 {
   "name": "optimism",
-  "blockNumber": 17336037,
-  "configHash": "0xfd19e5c19876c371735b2225dddef94d8b11e9723ec733a4dee0f67e31845f3d",
+  "blockNumber": 17364702,
+  "configHash": "0xc6d7e2aa3c98f44d250051efb838b4926af8818ae851906f592a92f8eaddcc0e",
+  "version": 1,
   "contracts": [
     {
       "name": "OVM_FraudVerifier",
@@ -163,13 +164,13 @@
         "batches": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17335985,
-        "getLastTimestamp": 1685016205,
-        "getNextQueueIndex": 352530,
-        "getNumPendingQueueElements": 2,
-        "getQueueLength": 352532,
-        "getTotalBatches": 817819,
-        "getTotalElements": 101392074,
+        "getLastBlockNumber": 17364650,
+        "getLastTimestamp": 1685364015,
+        "getNextQueueIndex": 353827,
+        "getNumPendingQueueElements": 3,
+        "getQueueLength": 353830,
+        "getTotalBatches": 829803,
+        "getTotalElements": 102603827,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -269,8 +270,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x000000000000000000000000000000000000646f4e1f00060b1ac8",
-        "length": 107454,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000064749c5300061d9856",
+        "length": 108702,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "owner": "StateCommitmentChain"
       },
@@ -286,9 +287,9 @@
       "values": {
         "batches": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1685016095,
-        "getTotalBatches": 107454,
-        "getTotalElements": 101391048,
+        "getLastSequencerTimestamp": 1685363795,
+        "getTotalBatches": 108702,
+        "getTotalElements": 102602838,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -332,15 +333,15 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x0000000000000000010886b100646f4e8d000005611200060b1eca",
-        "length": 817819,
+        "getGlobalMetadata": "0x00000000000000000108f6aa0064749d2f000005662300061d9c33",
+        "length": 829803,
         "libAddressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "owner": "CanonicalTransactionChain"
       },
       "derivedName": "ChainStorageContainer"
     },
     {
-      "name": "LibAddressManager",
+      "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "code": "https://etherscan.deth.net/address/0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "upgradeability": {
@@ -414,7 +415,7 @@
           "0x302d2451d9f47620374B54c521423Bf0403916A2"
         ],
         "getThreshold": 5,
-        "nonce": 2898,
+        "nonce": 2900,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
