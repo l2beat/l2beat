@@ -15,6 +15,18 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
+const upgradesProxy = {
+  upgradableBy: ['Owner'],
+  upgradeDelay: 'No delay',
+}
+
+const upgradesAddressManager = {
+  upgradableBy: ['Owner'],
+  upgradeDelay: 'No delay',
+  upgradeConsiderations:
+    'The AddressManager can be used to replace this contract.',
+}
+
 export const bobanetwork: Layer2 = {
   type: 'layer2',
   id: ProjectId('bobanetwork'),
@@ -54,12 +66,14 @@ export const bobanetwork: Layer2 = {
         address: EthereumAddress('0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00'),
         sinceTimestamp: new UnixTime(1628793901),
         tokens: '*',
+        ...upgradesProxy,
       },
       {
         // Proxy__L1LiquidityPool
         address: EthereumAddress('0x1A26ef6575B7BBB864d984D9255C069F6c361a14'),
         sinceTimestamp: new UnixTime(1628818577),
         tokens: '*',
+        ...upgradesAddressManager,
       },
     ],
     transactionApi: {
@@ -226,14 +240,16 @@ export const bobanetwork: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails(
-        'CanonicalTransactionChain',
-        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
-      ),
-      discovery.getContractDetails(
-        'StateCommitmentChain',
-        'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only OVM_Proposer can submit new state roots.',
-      ),
+      discovery.getContractDetails('CanonicalTransactionChain', {
+        description:
+          'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
+        ...upgradesAddressManager,
+      }),
+      discovery.getContractDetails('StateCommitmentChain', {
+        description:
+          'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only OVM_Proposer can submit new state roots.',
+        ...upgradesAddressManager,
+      }),
       {
         name: 'ChainStorageContainer-CTC-batches',
         address: EthereumAddress(
@@ -242,6 +258,7 @@ export const bobanetwork: Layer2 = {
             'batches',
           ),
         ),
+        ...upgradesAddressManager,
       },
       {
         name: 'ChainStorageContainer-CTC-queue',
@@ -251,17 +268,20 @@ export const bobanetwork: Layer2 = {
             'queue',
           ),
         ),
+        ...upgradesAddressManager,
       },
       {
         name: 'ChainStorageContainer-SCC-batches',
         address: EthereumAddress(
           discovery.getContractValue<string>('StateCommitmentChain', 'batches'),
         ),
+        ...upgradesAddressManager,
       },
-      discovery.getContractDetails(
-        'BondManager',
-        "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
-      ),
+      discovery.getContractDetails('BondManager', {
+        description:
+          "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
+        ...upgradesAddressManager,
+      }),
       discovery.getContractDetails('L1CrossDomainMessenger_1', {
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
@@ -272,6 +292,7 @@ export const bobanetwork: Layer2 = {
           ),
           pausableBy: ['Owner'],
         },
+        ...upgradesProxy,
       }),
       discovery.getContractDetails('L1CrossDomainMessengerFast', {
         description:
@@ -283,33 +304,38 @@ export const bobanetwork: Layer2 = {
           ),
           pausableBy: ['Owner'],
         },
+        ...upgradesProxy,
       }),
-      discovery.getContractDetails(
-        'L1MultiMessageRelayer',
-        'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessenger.',
-      ),
-      discovery.getContractDetails(
-        'L1MultiMessageRelayerFast',
-        'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessengerFast.',
-      ),
+      discovery.getContractDetails('L1MultiMessageRelayer', {
+        description:
+          'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessenger.',
+        ...upgradesAddressManager,
+      }),
+      discovery.getContractDetails('L1MultiMessageRelayerFast', {
+        description:
+          'Helper contract that allows for relaying a batch of messages using L1CrossDomainMessengerFast.',
+        ...upgradesAddressManager,
+      }),
       discovery.getContractDetails(
         'Proxy__L1LiquidityPoolArguments',
         'Liquidity Pool manager for fast withdrawal facility.',
       ),
       discovery.getContractDetails(
-        'Lib_AddressManager',
+        'AddressManager',
         'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
       ),
-      discovery.getContractDetails(
-        'L1StandardBridge',
-        'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
-      ),
+      discovery.getContractDetails('L1StandardBridge', {
+        description:
+          'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
+        ...upgradesProxy,
+      }),
       discovery.getContractDetails('L1NFTBridge', {
         description: 'Standard NFT bridge.',
         pausable: {
           paused: discovery.getContractValue<boolean>('L1NFTBridge', 'paused'),
           pausableBy: ['Owner'],
         },
+        ...upgradesAddressManager,
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -317,23 +343,21 @@ export const bobanetwork: Layer2 = {
   permissions: [
     {
       name: 'Owner',
-      accounts: [
-        discovery.getPermissionedAccount('Lib_AddressManager', 'owner'),
-      ],
+      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
       description:
-        'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+        'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, AddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     },
     {
       name: 'Sequencer',
       accounts: [
-        discovery.getPermissionedAccount('Lib_AddressManager', 'OVM_Sequencer'),
+        discovery.getPermissionedAccount('AddressManager', 'OVM_Sequencer'),
       ],
       description: 'Central actor allowed to commit L2 transactions to L1.',
     },
     {
       name: 'State Root Proposer',
       accounts: [
-        discovery.getPermissionedAccount('Lib_AddressManager', 'OVM_Proposer'),
+        discovery.getPermissionedAccount('AddressManager', 'OVM_Proposer'),
       ],
       description: 'Central actor to post new L2 state roots to L1.',
     },
