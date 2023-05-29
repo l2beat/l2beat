@@ -102,7 +102,7 @@ module.exports = {
       xs: '400px',
       sm: '550px',
       md: '750px',
-      lg: '1000px',
+      lg: '1120px',
     },
     zIndex: {
       1: '1',
