@@ -6,12 +6,13 @@
     "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063"
   ],
   "names": {
-    "0x32400084C286CF3E17e7B677ea9583e60a000324": "DiamondProxy",
+    "0x32400084C286CF3E17e7B677ea9583e60a000324": "zkSync",
     "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": "L1ERC20Bridge",
-    "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "zkSync Era MultiSig"
+    "0x3dB52cE065f728011Ac6732222270b3F2360d919": "ValidatorTimelock",
+    "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "zkSync Era Multisig"
   },
   "overrides": {
-    "DiamondProxy": {
+    "zkSync": {
       "ignoreMethods": ["l2LogsRootHash", "storedBlockHash"],
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -31,10 +32,10 @@
         }
       }
     },
-    "0x3dB52cE065f728011Ac6732222270b3F2360d919": {
+    "ValidatorTimelock": {
       "ignoreMethods": ["committedBlockTimestamp"]
     },
-    "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
+    "zkSync Era Multisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "L1ERC20Bridge": {
