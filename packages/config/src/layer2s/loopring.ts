@@ -265,7 +265,7 @@ export const loopring: Layer2 = {
       }),
       discovery.getContractDetails(
         'LoopringIOExchangeOwner',
-        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
+        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract. Its owner (ProxyOwner) can use this contract to give or revoke permissions to submit blocks and to open block submission to everyone.',
       ),
       discovery.getContractDetails(
         'DefaultDepositContract',
@@ -273,13 +273,13 @@ export const loopring: Layer2 = {
       ),
       discovery.getContractDetails(
         'LoopringV3',
-        'Contract managing LRC staking for exchanges (One Loopring contract can manage many exchanges).',
+        'Contract managing LRC staking for exchanges (one Loopring contract can manage many exchanges). Its owner (ProxyOwner) can use this contract to set the forced withdrawal fee and change the Verifier address.',
       ),
       discovery.getContractDetails('BlockVerifier', {
         description: 'zkSNARK Verifier based on ethsnarks library.',
         ...upgrades,
         upgradeConsiderations:
-          'The Verifier contract address can be changed by the AdminMultisig.',
+          'The Verifier contract address can be changed by the ProxyOwner.',
       }),
       discovery.getContractDetails(
         'AgentRegistry',
