@@ -21,13 +21,13 @@ export class DiscoveryRunner {
   ) {}
 
   async run(
-    config: DiscoveryConfig,
+    projectConfig: DiscoveryConfig,
     blockNumber: number,
     options: DiscoveryRunnerOptions,
   ) {
-    if (options.injectInitialAddresses) {
-      await this.updateInitialAddresses(config)
-    }
+    const config = options.injectInitialAddresses
+      ? await this.updateInitialAddresses(projectConfig)
+      : projectConfig
 
     const discovery = await this.discover(config, blockNumber)
 
@@ -84,7 +84,10 @@ export class DiscoveryRunner {
   async updateInitialAddresses(config: DiscoveryConfig) {
     const discovery = await this.configReader.readDiscovery(config.name)
     const initialAddresses = discovery.contracts.map((c) => c.address)
-    config.initialAddresses = initialAddresses
+    return new DiscoveryConfig({
+      ...config.raw,
+      initialAddresses,
+    })
   }
 }
 

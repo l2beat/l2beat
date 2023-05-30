@@ -15,7 +15,7 @@ describe(DiscoveryRunner.name, () => {
     it('runs discovery twice', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
       const runner = new DiscoveryRunner(engine, mockObject<ConfigReader>({}))
-      await runner.run(config, 1, {
+      await runner.run(getMockConfig(), 1, {
         runSanityCheck: true,
         injectInitialAddresses: false,
       })
@@ -32,7 +32,7 @@ describe(DiscoveryRunner.name, () => {
       })
       const runner = new DiscoveryRunner(engine, configReader)
 
-      await runner.run(config, 1, {
+      await runner.run(getMockConfig(), 1, {
         runSanityCheck: false,
         injectInitialAddresses: true,
       })
@@ -40,16 +40,37 @@ describe(DiscoveryRunner.name, () => {
       expect(engine.discover).toHaveBeenNthCalledWith(
         1,
         new DiscoveryConfig({
-          ...config.raw,
+          ...getMockConfig().raw,
           initialAddresses: [ADDRESS],
         }),
         1,
       )
     })
+
+    it('does not modify the source config', async () => {
+      const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
+      const sourceConfig: DiscoveryConfig = new DiscoveryConfig({
+        ...getMockConfig().raw,
+      })
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: mockFn().resolvesTo({
+          contracts: [{ address: ADDRESS }],
+        }),
+      })
+      const runner = new DiscoveryRunner(engine, configReader)
+      await runner.run(sourceConfig, 1, {
+        runSanityCheck: true,
+        injectInitialAddresses: true,
+      })
+
+      expect(sourceConfig).toEqual(getMockConfig())
+    })
   })
 })
 
-const config: DiscoveryConfig = new DiscoveryConfig({
-  name: 'project-a',
-  initialAddresses: [],
-})
+const getMockConfig = () => {
+  return new DiscoveryConfig({
+    name: 'project-a',
+    initialAddresses: [],
+  })
+}
