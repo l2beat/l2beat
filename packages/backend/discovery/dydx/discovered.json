@@ -1,7 +1,7 @@
 {
   "name": "dydx",
-  "blockNumber": 17263411,
-  "configHash": "0xea614516defa6835f5df41e5e738cd4ead53de1a260201fbbdec0fe41bc3fdb2",
+  "blockNumber": 17331165,
+  "configHash": "0xc6b39d80ca02ad53b0d25d7634b197ef6ace682f56cc07f1eb1361cba597f1e4",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -12,6 +12,18 @@
       },
       "values": {
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      }
+    },
+    {
+      "name": "PerpetualEscapeVerifier",
+      "address": "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD",
+      "code": "https://etherscan.deth.net/address/0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "hasRegisteredFact": false,
+        "identify": "StarkWare_PerpetualEscapeVerifier_2021_2"
       }
     },
     {
@@ -29,7 +41,7 @@
       }
     },
     {
-      "name": "Executor2",
+      "name": "ShortTimelockExecutor",
       "address": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
       "code": "https://etherscan.deth.net/address/0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
       "upgradeability": {
@@ -95,7 +107,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "4451600684944118707010771"
+        "totalSupply": "4398111120899551654015648"
       },
       "derivedName": "SafetyModuleV2"
     },
@@ -122,6 +134,12 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
         "EIP712_DOMAIN_NAME": "dYdX Governance",
+        "EXECUTORS": [
+          "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B",
+          "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
+          "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52",
+          "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
+        ],
         "getGovernanceStrategy": "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
         "getProposalsCount": 13,
         "getVotingDelay": 6570,
@@ -243,10 +261,11 @@
       "values": {
         "configurationDelay": 0,
         "DEPOSIT_CANCEL_DELAY": 604800,
+        "escapeVerifier": "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD",
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 16318,
+        "getLastBatchId": 16486,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -255,7 +274,7 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 16025,
+        "getSequenceNumber": 16193,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
@@ -280,7 +299,29 @@
       "derivedName": "Proxy"
     },
     {
-      "name": "Executor1",
+      "name": "MerklePauserExecutor",
+      "address": "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52",
+      "code": "https://etherscan.deth.net/address/0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getAdmin": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
+        "getDelay": 0,
+        "getPendingAdmin": "0x0000000000000000000000000000000000000000",
+        "GRACE_PERIOD": 604800,
+        "MAXIMUM_DELAY": 86400,
+        "MINIMUM_DELAY": 0,
+        "MINIMUM_QUORUM": 100,
+        "ONE_HUNDRED_WITH_PRECISION": 10000,
+        "PROPOSITION_THRESHOLD": 50,
+        "VOTE_DIFFERENTIAL": 50,
+        "VOTING_DURATION": 13140
+      },
+      "derivedName": "Executor"
+    },
+    {
+      "name": "LongTimelockExecutor",
       "address": "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B",
       "code": "https://etherscan.deth.net/address/0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B",
       "upgradeability": {
@@ -601,6 +642,14 @@
       "function removeVerifier(address verifier)",
       "function unFreeze()"
     ],
+    "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD": [
+      "constructor(address[63] tables)",
+      "event LogEscapeVerified(uint256 publicKey, int256 withdrawalAmount, bytes32 sharedStateHash, uint256 positionId)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function verifyEscape(uint256[] merkleProof, uint256 nAssets, uint256[] sharedState)"
+    ],
     "0x639192D54431F8c816368D3FB4107Bc168d0E871": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -905,6 +954,42 @@
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function removeImplementation(address newImplementation)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52": [
+      "constructor(address admin, uint256 delay, uint256 gracePeriod, uint256 minimumDelay, uint256 maximumDelay, uint256 propositionThreshold, uint256 voteDuration, uint256 voteDifferential, uint256 minimumQuorum)",
+      "event CancelledAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall)",
+      "event ExecutedAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall, bytes resultData)",
+      "event NewAdmin(address newAdmin)",
+      "event NewDelay(uint256 delay)",
+      "event NewPendingAdmin(address newPendingAdmin)",
+      "event QueuedAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall)",
+      "function GRACE_PERIOD() view returns (uint256)",
+      "function MAXIMUM_DELAY() view returns (uint256)",
+      "function MINIMUM_DELAY() view returns (uint256)",
+      "function MINIMUM_QUORUM() view returns (uint256)",
+      "function ONE_HUNDRED_WITH_PRECISION() view returns (uint256)",
+      "function PROPOSITION_THRESHOLD() view returns (uint256)",
+      "function VOTE_DIFFERENTIAL() view returns (uint256)",
+      "function VOTING_DURATION() view returns (uint256)",
+      "function acceptAdmin()",
+      "function cancelTransaction(address target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall) returns (bytes32)",
+      "function executeTransaction(address target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall) payable returns (bytes)",
+      "function getAdmin() view returns (address)",
+      "function getDelay() view returns (uint256)",
+      "function getMinimumPropositionPowerNeeded(address governance, uint256 blockNumber) view returns (uint256)",
+      "function getMinimumVotingPowerNeeded(uint256 votingSupply) view returns (uint256)",
+      "function getPendingAdmin() view returns (address)",
+      "function isActionQueued(bytes32 actionHash) view returns (bool)",
+      "function isProposalOverGracePeriod(address governance, uint256 proposalId) view returns (bool)",
+      "function isProposalPassed(address governance, uint256 proposalId) view returns (bool)",
+      "function isPropositionPowerEnough(address governance, address user, uint256 blockNumber) view returns (bool)",
+      "function isQuorumValid(address governance, uint256 proposalId) view returns (bool)",
+      "function isVoteDifferentialValid(address governance, uint256 proposalId) view returns (bool)",
+      "function queueTransaction(address target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall) returns (bytes32)",
+      "function setDelay(uint256 delay)",
+      "function setPendingAdmin(address newPendingAdmin)",
+      "function validateCreatorOfProposal(address governance, address user, uint256 blockNumber) view returns (bool)",
+      "function validateProposalCancellation(address governance, address user, uint256 blockNumber) view returns (bool)"
     ],
     "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0": [
       "event LogAssetConfigurationApplied(uint256 assetId, bytes32 configHash)",

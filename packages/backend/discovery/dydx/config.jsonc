@@ -10,8 +10,9 @@
     "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": "SafetyModuleV2",
     "0x92D6C1e31e14520e676a687F0a93788B716BEff5": "DydxToken",
     "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": "PriorityExecutor",
-    "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": "Executor1",
-    "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc": "Executor2"
+    "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": "LongTimelockExecutor",
+    "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc": "ShortTimelockExecutor",
+    "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52": "MerklePauserExecutor"
   },
   "overrides": {
     "StarkPerpetual": {
@@ -24,13 +25,27 @@
           "addKey": "operator",
           "removeEvent": "event LogOperatorRemoved(address operator)",
           "removeKey": "operator"
+        },
+        "escapeVerifier": {
+          "type": "storage",
+          "slot": 4,
+          "returnType": "address"
         }
       }
     },
 
     "DydxGovernor": {
       "ignoreMethods": ["getProposalById", "getProposalState"],
-      "ignoreInWatchMode": ["getProposalsCount"]
+      "ignoreInWatchMode": ["getProposalsCount"],
+      "fields": {
+        "EXECUTORS": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event ExecutorAuthorized(address executor)",
+          "addKey": "executor",
+          "removeEvent": "event ExecutorUnauthorized(address executor)",
+          "removeKey": "executor"
+        }
+      }
     },
     "GovernanceStrategy": {
       "ignoreMethods": ["getTotalPropositionSupplyAt", "getTotalVotingSupplyAt"]
@@ -55,10 +70,13 @@
     "PriorityExecutor": {
       "ignoreMethods": ["getMinimumVotingPowerNeeded"]
     },
-    "Executor1": {
+    "LongTimelockExecutor": {
       "ignoreMethods": ["getMinimumVotingPowerNeeded"]
     },
-    "Executor2": {
+    "ShortTimelockExecutor": {
+      "ignoreMethods": ["getMinimumVotingPowerNeeded"]
+    },
+    "MerklePauserExecutor": {
       "ignoreMethods": ["getMinimumVotingPowerNeeded"]
     }
   }
