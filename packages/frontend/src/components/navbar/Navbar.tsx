@@ -106,6 +106,11 @@ export function Navbar(props: NavbarProps) {
                 </PageLink>
               </li>
               <li className="h-full">
+                <PageLink href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
+                  Governance
+                </PageLink>
+              </li>
+              <li className="h-full">
                 <PageLink selected={props.selectedPage === 'faq'} href="/faq">
                   FAQ
                 </PageLink>
