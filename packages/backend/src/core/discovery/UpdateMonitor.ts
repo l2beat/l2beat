@@ -4,9 +4,8 @@ import {
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
-import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/shared'
+import { DiscoveryOutput, Logger, UnixTime } from '@l2beat/shared'
 import { providers } from 'ethers'
-import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
@@ -29,6 +28,7 @@ export class UpdateMonitor {
     private readonly clock: Clock,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
+    private readonly version: number,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -93,13 +93,14 @@ export class UpdateMonitor {
     blockNumber: number,
     timestamp: UnixTime,
   ) {
+    const previousDiscovery = await this.getPreviousDiscovery(projectConfig)
+
     const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
     this.cachedDiscovery.set(projectConfig.name, discovery)
 
-    const diff = await this.findChanges(
-      projectConfig.name,
-      discovery,
-      projectConfig.hash,
+    const diff = diffDiscovery(
+      previousDiscovery.contracts,
+      discovery.contracts,
       projectConfig,
     )
 
@@ -110,32 +111,39 @@ export class UpdateMonitor {
       timestamp,
       blockNumber,
       discovery,
+      version: this.version,
       configHash: projectConfig.hash,
     })
   }
 
-  async findChanges(
-    name: string,
-    discovery: DiscoveryOutput,
-    configHash: Hash256,
-    config: DiscoveryConfig,
-  ): Promise<DiscoveryDiff[]> {
-    const databaseEntry = await this.repository.findLatest(name)
-
-    if (databaseEntry?.configHash === configHash) {
-      this.logger.debug('Using database record for diff', { project: name })
-
-      return diffDiscovery(
-        databaseEntry.discovery.contracts,
-        discovery.contracts,
-        config,
+  async getPreviousDiscovery(
+    projectConfig: DiscoveryConfig,
+  ): Promise<DiscoveryOutput> {
+    const databaseEntry = await this.repository.findLatest(projectConfig.name)
+    let previousDiscovery: DiscoveryOutput
+    if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
+      this.logger.info('Using database record', {
+        project: projectConfig.name,
+      })
+      previousDiscovery = databaseEntry.discovery
+    } else {
+      this.logger.info('Using committed file', { project: projectConfig.name })
+      previousDiscovery = await this.configReader.readDiscovery(
+        projectConfig.name,
       )
     }
 
-    const committed = await this.configReader.readDiscovery(name)
-    this.logger.debug('Using committed file for diff', { project: name })
-
-    return diffDiscovery(committed.contracts, discovery.contracts, config)
+    if (previousDiscovery.version === this.version) {
+      return previousDiscovery
+    }
+    this.logger.info(
+      'Discovery logic version changed, discovering with new logic',
+      { project: projectConfig.name },
+    )
+    return await this.discoveryRunner.run(
+      projectConfig,
+      previousDiscovery.blockNumber,
+    )
   }
 
   private async handleDiff(
@@ -145,8 +153,6 @@ export class UpdateMonitor {
     blockNumber: number,
   ) {
     if (diff.length > 0) {
-      await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
-
       const dependents = await findDependents(
         projectConfig.name,
         this.configReader,
@@ -159,29 +165,6 @@ export class UpdateMonitor {
       )
       changesDetected.inc()
     }
-  }
-
-  // 3rd party APIs are unstable, so we do a sanity check before sending
-  // notifications, which makes the same request again and compares the
-  // results.
-  async sanityCheck(
-    discovery: DiscoveryOutput,
-    diff: DiscoveryDiff[],
-    projectConfig: DiscoveryConfig,
-    blockNumber: number,
-  ) {
-    const secondDiscovery = await this.discoveryRunner.run(
-      projectConfig,
-      blockNumber,
-    )
-
-    if (!isEqual(discovery, secondDiscovery)) {
-      throw new Error(
-        `[${projectConfig.name}] Sanity check failed | ${blockNumber}\n
-        potential-diff ${JSON.stringify(diff)}}`,
-      )
-    }
-    this.cachedDiscovery.set(projectConfig.name, secondDiscovery)
   }
 
   // this function gets a diff between current discovery and committed discovery

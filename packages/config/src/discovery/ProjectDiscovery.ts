@@ -16,6 +16,7 @@ import {
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissionedAccount,
+  ProjectReference,
 } from '../common'
 import {
   ProjectContractSingleAddress,
@@ -64,6 +65,17 @@ export class ProjectDiscovery {
     const contract = this.getContract(identifier)
     if (typeof descriptionOrOptions === 'string') {
       descriptionOrOptions = { description: descriptionOrOptions }
+    } else if (descriptionOrOptions?.pausable !== undefined) {
+      const descriptions = [
+        descriptionOrOptions.description,
+        `The contract is pausable by ${descriptionOrOptions.pausable.pausableBy.join(
+          ', ',
+        )}.`,
+      ]
+      if (descriptionOrOptions.pausable.paused) {
+        descriptions.push('The contract is currently paused.')
+      }
+      descriptionOrOptions.description = descriptions.filter(isString).join(' ')
     }
     return {
       name: contract.name,
@@ -79,29 +91,38 @@ export class ProjectDiscovery {
     description,
     sinceTimestamp,
     tokens,
+    upgradableBy,
+    upgradeDelay,
   }: {
     address: EthereumAddress
     name?: string
     description?: string
     sinceTimestamp: UnixTime
     tokens: string[] | '*'
+    upgradableBy?: string[]
+    upgradeDelay?: string
   }): ProjectEscrow {
     const contract = this.getContractByAddress(address.toString())
 
     return {
-      newVersion: true,
-      name: name ?? contract.name,
       address,
-      upgradeability: contract.upgradeability,
-      description,
+      newVersion: true,
       sinceTimestamp,
       tokens,
+      contract: {
+        name: name ?? contract.name,
+        description,
+        upgradeability: contract.upgradeability,
+        upgradableBy,
+        upgradeDelay,
+      },
     }
   }
 
   getMultisigPermission(
     identifier: string,
     description: string,
+    references?: ProjectReference[],
   ): ProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
@@ -126,6 +147,7 @@ export class ProjectDiscovery {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
+        references,
       },
     ]
   }

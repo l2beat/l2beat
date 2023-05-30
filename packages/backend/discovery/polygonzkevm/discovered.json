@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
-  "blockNumber": 17277727,
-  "configHash": "0x38952c7fac65655efa82d5eae84f8bfb8261d6e106b5de06769d48685b09b495",
+  "blockNumber": 17321205,
+  "configHash": "0xc6b0d3a532d2e382ce8cbf776c9449e721c67b2ef54cfc152e2d7a1f265cd13d",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -54,7 +54,7 @@
       "derivedName": "PolygonZkEVMBridge"
     },
     {
-      "name": "OwnerMultisig",
+      "name": "SecurityCouncil",
       "address": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
       "code": "https://etherscan.deth.net/address/0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -135,22 +135,6 @@
         "rollupAddress": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRoot"
-    },
-    {
-      "name": "MaticToken",
-      "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-      "code": "https://etherscan.deth.net/address/0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "decimals": 18,
-        "name": "Matic Token",
-        "paused": false,
-        "symbol": "MATIC",
-        "totalSupply": "10000000000000000000000000000"
-      },
-      "derivedName": "MaticToken"
     },
     {
       "name": "Timelock",
@@ -305,32 +289,6 @@
       "function updateGlobalExitRoot()",
       "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
       "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
-    ],
-    "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0": [
-      "function name() view returns (string)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function decimals() view returns (uint8)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool success)",
-      "function unpause()",
-      "function isPauser(address account) view returns (bool)",
-      "function paused() view returns (bool)",
-      "function renouncePauser()",
-      "function balanceOf(address owner) view returns (uint256)",
-      "function addPauser(address account)",
-      "function pause()",
-      "function symbol() view returns (string)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool success)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "constructor(string name, string symbol, uint8 decimals, uint256 totalSupply)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "event PauserAdded(address indexed account)",
-      "event PauserRemoved(address indexed account)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)"
     ],
     "0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3": [
       "constructor(address _rollupAddress, address _bridgeAddress)",

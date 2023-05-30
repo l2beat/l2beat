@@ -240,7 +240,7 @@ function makeTechnologyContract(
     if (tokens && !isEscrow) {
       const tokenText =
         tokens === '*'
-          ? 'This contract can store any token'
+          ? 'This contract can store any token.'
           : `This contract stores the following tokens: ${tokens.join(', ')}.`
       if (!description) {
         description = tokenText
@@ -265,6 +265,7 @@ function makeTechnologyContract(
     result.upgradeableBy = languageJoin(item.upgradableBy)
     result.upgradeDelay = item.upgradeDelay
     result.upgradeConsiderations = item.upgradeConsiderations
+    result.references = item.references
   }
 
   return result
@@ -312,13 +313,12 @@ function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
   assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
 
   return {
+    ...escrow.contract,
     name:
       escrow.tokens === '*'
         ? 'Generic escrow'
         : 'Escrow for ' + escrow.tokens.join(', '),
     address: escrow.address,
-    description: escrow.description,
-    upgradeability: escrow.upgradeability,
   }
 }
 

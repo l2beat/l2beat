@@ -1,6 +1,7 @@
 import { DiscoveryOutput, Hash256 } from '@l2beat/shared'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
+import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
 
 export function toDiscoveryOutput(
   configName: string,
@@ -12,13 +13,14 @@ export function toDiscoveryOutput(
     name: configName,
     blockNumber,
     configHash,
+    version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
   }
 }
 
 export function processAnalysis(
   results: Analysis[],
-): Omit<DiscoveryOutput, 'name' | 'blockNumber' | 'configHash'> {
+): Omit<DiscoveryOutput, 'name' | 'blockNumber' | 'configHash' | 'version'> {
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
 
