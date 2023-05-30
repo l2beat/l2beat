@@ -78,11 +78,20 @@ export const immutablex: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC,
-      references: [
-        'https://etherscan.io/address/0x86d8f977C9cEC503ad4E6805802cEf62Cde13773#code#F34#L180',
-        'https://etherscan.io/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295#code#F1#L63',
+      sources: [
+        {
+          contract: 'StarkExchange',
+          references: [
+            'https://etherscan.io/address/0x86d8f977C9cEC503ad4E6805802cEf62Cde13773#code#F34#L180',
+          ],
+        },
+        {
+          contract: 'Committee',
+          references: [
+            'https://etherscan.io/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295#code#F1#L63',
+          ],
+        },
       ],
-      contracts: ['StarkExchange', 'Committee'],
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,

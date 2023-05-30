@@ -35,6 +35,11 @@ const forcedWithdrawalFeeString = `${utils.formatEther(
   forcedWithdrawalFee,
 )} ETH`
 
+const upgrades = {
+  upgradableBy: ['ProxyOwner'],
+  upgradeDelay: 'No delay',
+}
+
 export const loopring: Layer2 = {
   type: 'layer2',
   id: ProjectId('loopring'),
@@ -103,17 +108,32 @@ export const loopring: Layer2 = {
         RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString)
           .description +
         ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
-      references: [
-        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
-        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195',
-        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6090',
-        'https://etherscan.io/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71#code#L1825',
+      sources: [
+        {
+          contract: 'ExchangeV3',
+          references: [
+            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
+            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195',
+            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6090',
+          ],
+        },
+        {
+          contract: 'LoopringV3',
+          references: [
+            'https://etherscan.io/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71#code#L1825',
+          ],
+        },
       ],
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_ESCAPE_MP(forcedWithdrawalDelay),
-      references: [
-        'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
+      sources: [
+        {
+          contract: 'ExchangeV3',
+          references: [
+            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
+          ],
+        },
       ],
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('LRC'),
@@ -239,7 +259,10 @@ export const loopring: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('ExchangeV3', 'Main Loopring contract.'),
+      discovery.getContractDetails('ExchangeV3', {
+        description: 'Main Loopring contract.',
+        ...upgrades,
+      }),
       discovery.getContractDetails(
         'LoopringIOExchangeOwner',
         'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
@@ -252,10 +275,12 @@ export const loopring: Layer2 = {
         'LoopringV3',
         'Contract managing LRC staking for exchanges (One Loopring contract can manage many exchanges).',
       ),
-      discovery.getContractDetails(
-        'BlockVerifier',
-        'zkSNARK Verifier based on ethsnarks library.',
-      ),
+      discovery.getContractDetails('BlockVerifier', {
+        description: 'zkSNARK Verifier based on ethsnarks library.',
+        ...upgrades,
+        upgradeConsiderations:
+          'The Verifier contract address can be changed by the AdminMultisig.',
+      }),
       discovery.getContractDetails(
         'AgentRegistry',
         'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, DestroyableWalletAgent and a number of LoopringAmmPool contracts.',

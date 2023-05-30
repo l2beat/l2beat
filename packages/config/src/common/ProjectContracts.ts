@@ -33,6 +33,13 @@ export interface ProjectContractSingleAddress {
   upgradableBy?: string[]
   /** Other considerations worth mentioning about the upgrade process */
   upgradeConsiderations?: string
+  /** Pasuable contract */
+  pausable?: {
+    /** Is it paused? **/
+    paused: boolean
+    /** Who can pause/unpause the contract */
+    pausableBy: string[]
+  }
   /** List of references */
   references?: ProjectReference[]
 }

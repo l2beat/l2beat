@@ -240,7 +240,7 @@ function makeTechnologyContract(
     if (tokens && !isEscrow) {
       const tokenText =
         tokens === '*'
-          ? 'This contract can store any token'
+          ? 'This contract can store any token.'
           : `This contract stores the following tokens: ${tokens.join(', ')}.`
       if (!description) {
         description = tokenText

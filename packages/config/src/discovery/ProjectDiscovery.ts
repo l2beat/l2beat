@@ -16,6 +16,7 @@ import {
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissionedAccount,
+  ProjectReference,
 } from '../common'
 import {
   ProjectContractSingleAddress,
@@ -64,6 +65,17 @@ export class ProjectDiscovery {
     const contract = this.getContract(identifier)
     if (typeof descriptionOrOptions === 'string') {
       descriptionOrOptions = { description: descriptionOrOptions }
+    } else if (descriptionOrOptions?.pausable !== undefined) {
+      const descriptions = [
+        descriptionOrOptions.description,
+        `The contract is pausable by ${descriptionOrOptions.pausable.pausableBy.join(
+          ', ',
+        )}.`,
+      ]
+      if (descriptionOrOptions.pausable.paused) {
+        descriptions.push('The contract is currently paused.')
+      }
+      descriptionOrOptions.description = descriptions.filter(isString).join(' ')
     }
     return {
       name: contract.name,
@@ -110,6 +122,7 @@ export class ProjectDiscovery {
   getMultisigPermission(
     identifier: string,
     description: string,
+    references?: ProjectReference[],
   ): ProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
@@ -134,6 +147,7 @@ export class ProjectDiscovery {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
+        references,
       },
     ]
   }
