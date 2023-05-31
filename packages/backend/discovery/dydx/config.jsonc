@@ -7,13 +7,18 @@
     "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": "StarkPerpetual",
     "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2": "DydxGovernor",
     "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9": "GovernanceStrategy",
-    "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": "SafetyModuleV2",
+    "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": "SafetyModule",
     "0x92D6C1e31e14520e676a687F0a93788B716BEff5": "DydxToken",
     "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": "PriorityExecutor",
     "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": "LongTimelockExecutor",
     "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc": "ShortTimelockExecutor",
     "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52": "MerklePauserExecutor",
-    "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C": "SafetyModuleV2ProxyOwner"
+    "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C": "SafetyModuleProxyAdmin",
+    "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d": "TreasuryProxyAdmin",
+    "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0": "MerkleDistributorProxyAdmin",
+    "0xAc5D8bCD13da463bea96c75f9085c4e40037F790": "LiquidityStakingProxyAdmin",
+    "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941": "LiquidityStaking",
+    "0x01d3348601968aB85b4bb028979006eac235a588": "MerkleDistributor"
   },
   "overrides": {
     "StarkPerpetual": {
@@ -54,7 +59,7 @@
     "GovernanceStrategy": {
       "ignoreMethods": ["getTotalPropositionSupplyAt", "getTotalVotingSupplyAt"]
     },
-    "SafetyModuleV2": {
+    "SafetyModule": {
       "ignoreMethods": [
         "getExchangeRateSnapshot",
         "getStartOfEpoch",
@@ -67,6 +72,13 @@
         "getTotalInactiveBalanceNextEpoch"
       ],
       "ignoreInWatchMode": ["totalSupply"],
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "LiquidityStaking": {
       "fields": {
         "accessControl": {
           "type": "accessControl"
