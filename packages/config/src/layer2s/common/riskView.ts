@@ -340,6 +340,17 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   validatedBy: UPCOMING_RISK,
 })
 
+/* New risks for stages */
+
+export function SELF_SEQUENCE(delay?: string): ProjectRiskViewEntry {
+  const delayString =
+    delay !== undefined ? ` There is a ${delay} delay on this operation.` : ''
+  return {
+    value: 'Self sequence',
+    description: `In the event of a sequencer failure, users can force transactions to be included in the L2 chain by sending them to L1.${delayString}`,
+  }
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -381,4 +392,5 @@ export const RISK_VIEW = {
   NATIVE_AND_CANONICAL,
   CANONICAL,
   CANONICAL_USDC,
+  SELF_SEQUENCE,
 }
