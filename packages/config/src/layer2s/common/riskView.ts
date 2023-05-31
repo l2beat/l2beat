@@ -292,7 +292,7 @@ export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
 export const PROVER_DOWN: ProjectRiskViewEntry = {
   value: 'No mechanism',
   description:
-    'There is no generic escape hatch as Starknet cannot be frozen. Application-specific escape hatches can be built.',
+    'There is no generic escape hatch mechanism as Starknet cannot be forced by users into a frozen state. Note that a freezing mechanism on L2, to be secure, requires anti-censorship protection.',
   sentiment: 'bad',
 }
 
