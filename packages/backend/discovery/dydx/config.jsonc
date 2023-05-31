@@ -2,7 +2,7 @@
   "$schema": "../config.schema.json",
   "name": "dydx",
   "initialAddresses": ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"],
-  "maxDepth": 7,
+  "maxDepth": 10,
   "names": {
     "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": "StarkPerpetual",
     "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2": "DydxGovernor",
@@ -18,7 +18,17 @@
     "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0": "MerkleDistributorProxyAdmin",
     "0xAc5D8bCD13da463bea96c75f9085c4e40037F790": "LiquidityStakingProxyAdmin",
     "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941": "LiquidityStaking",
-    "0x01d3348601968aB85b4bb028979006eac235a588": "MerkleDistributor"
+    "0x01d3348601968aB85b4bb028979006eac235a588": "MerkleDistributor",
+    "0x0b2B08AC98a1568A34208121c26F4F41a9e0FbB6": "StarkProxy[0]",
+    "0x3e6E9EFb0A677a24F47093a22044dc5451A028cF": "StarkProxy[1]",
+    "0xCB7fa3a2F47b62293Cc2E1a4C7752fC72E49FCe2": "StarkProxy[2]",
+    "0x16BEC2D9A010e7D8b2D576d17893C52Ddbfe4C06": "StarkProxy[3]",
+    "0x531F3BE462F10386D01FBeD7fAD1d20A61Ce7874": "StarkProxy[4]",
+    "0xE16718eace44e0CB06b9cd164490A69A6425D1e3": "StarkProxyAdmin[0]",
+    "0x78e899e576C3565C3219dbC9Ea5042A9DBed36d3": "StarkProxyAdmin[1]",
+    "0x15774D4555fEfD57C9Fc8b11C8beba993eafcc13": "StarkProxyAdmin[2]",
+    "0x4d9460e5C958f46a1Fe129954A069a37972f16EA": "StarkProxyAdmin[3]",
+    "0xfa45DCDbEc82C94082d283B62506320DB8632054": "StarkProxyAdmin[4]"
   },
   "overrides": {
     "StarkPerpetual": {
@@ -82,6 +92,11 @@
       "fields": {
         "accessControl": {
           "type": "accessControl"
+        },
+        "BORROWERS_LIST": {
+          "type": "arrayFromOneEvent",
+          "event": "event ScheduledBorrowerAllocationChange(address indexed borrower,uint256 oldAllocation,uint256 newAllocation,uint256 epochNumber);",
+          "valueKey": "borrower"
         }
       }
     },
