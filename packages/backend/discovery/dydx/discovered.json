@@ -1,7 +1,7 @@
 {
   "name": "dydx",
-  "blockNumber": 17377189,
-  "configHash": "0x01c885ce91633fabfaa8f849f84970d177ce8d4c9fd7b120fdd631fe9d67bbab",
+  "blockNumber": 17379301,
+  "configHash": "0x9b403d0319e1fd53c27327d558b498cb5c786d7a2b1a6f95aa2606aec18e9a9d",
   "version": 1,
   "contracts": [
     {
@@ -113,7 +113,7 @@
       "derivedName": "SafetyModuleV2"
     },
     {
-      "name": "SafetyModuleV2Proxy",
+      "name": "SafetyModuleV2ProxyOwner",
       "address": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
       "code": "https://etherscan.deth.net/address/0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
       "upgradeability": {
@@ -132,6 +132,20 @@
         "type": "immutable"
       },
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "OWNER_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": ["0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"]
+          },
+          "ADD_EXECUTOR_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": ["0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"]
+          }
+        },
         "ADD_EXECUTOR_ROLE": "0x6d7de061afba91040b8f2fa055f62976f5be484e30e6b3eb7e3c831c2f411f09",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -267,7 +281,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 16563,
+        "getLastBatchId": 16570,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -276,7 +290,7 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 16270,
+        "getSequenceNumber": 16277,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
