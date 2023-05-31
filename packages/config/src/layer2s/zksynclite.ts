@@ -40,6 +40,8 @@ const upgrades = {
     'When the upgrade process starts only the address of the new implementation is given. The actual upgrade also requires implementation specific calldata which is only provided after the delay has elapsed. Changing the default upgrade delay or the Security Council requires a ZkSync contract upgrade.',
 }
 
+const forcedWithdrawalDelay = 1209600 // 14 days, TODO: get from contract!
+
 export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
@@ -85,7 +87,7 @@ export const zksynclite: Layer2 = {
       description: `There is a ${upgradeDelay} delay unless it is overridden by the ${securityCouncil} Security Council.`,
       sentiment: 'warning',
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(),
+    sequencerFailure: RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
