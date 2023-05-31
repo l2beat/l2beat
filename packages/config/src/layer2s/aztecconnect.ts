@@ -190,10 +190,16 @@ export const aztecconnect: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails(
-        'RollupProcessorV2',
-        'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
-      ),
+      discovery.getContractDetails('RollupProcessorV2', {
+        description:
+          'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
+        pausable: {
+          paused: discovery.getContractValue('RollupProcessorV2', 'paused'),
+          pausableBy: ['Emergency Multisig'],
+        },
+        upgradeDelay: 'No delay',
+        upgradableBy: ['Aztec Multisig'],
+      }),
       // rollupBeneficiary is encoded in proofData. Can be set arbitrarily for each rollup.
       // https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L704
       {
@@ -206,10 +212,14 @@ export const aztecconnect: Layer2 = {
         'DefiBridgeProxy',
         'Bridge Connector to various DeFi Bridges.',
       ),
-      discovery.getContractDetails(
-        'Verifier28x32',
-        'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
-      ),
+      discovery.getContractDetails('Verifier28x32', {
+        description:
+          'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
+        upgradeDelay: 'No delay',
+        upgradableBy: ['Aztec Multisig'],
+        upgradeConsiderations:
+          'The verifier can be changed in the RollupProcessor contract with no delay.',
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
