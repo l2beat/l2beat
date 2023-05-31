@@ -12,33 +12,33 @@ export interface DiscoveryDiff {
 }
 
 export function diffDiscovery(
-  committed: ContractParameters[],
-  discovered: ContractParameters[],
+  previous: ContractParameters[],
+  current: ContractParameters[],
   config: DiscoveryConfig,
 ): DiscoveryDiff[] {
   const modifiedOrDeleted: DiscoveryDiff[] = []
 
-  for (const committedContract of committed) {
-    const discoveredContract = discovered.find(
-      (d) => d.address === committedContract.address,
+  for (const previousContract of previous) {
+    const currentContract = current.find(
+      (d) => d.address === previousContract.address,
     )
-    if (discoveredContract === undefined) {
+    if (currentContract === undefined) {
       modifiedOrDeleted.push({
-        name: committedContract.name,
-        address: committedContract.address,
+        name: previousContract.name,
+        address: previousContract.address,
         type: 'deleted',
       })
       continue
     }
 
-    const ignored = getIgnored(committedContract.address, config.overrides)
+    const ignored = getIgnored(previousContract.address, config.overrides)
 
-    const diff = diffContracts(committedContract, discoveredContract, ignored)
+    const diff = diffContracts(previousContract, currentContract, ignored)
 
     if (diff.length > 0) {
       modifiedOrDeleted.push({
-        name: committedContract.name,
-        address: committedContract.address,
+        name: previousContract.name,
+        address: previousContract.address,
         diff,
       })
     }
@@ -46,14 +46,14 @@ export function diffDiscovery(
 
   const created: DiscoveryDiff[] = []
 
-  for (const discoveredContract of discovered) {
-    const committedContract = committed.find(
-      (c) => c.address === discoveredContract.address,
+  for (const currentContract of current) {
+    const previousContract = previous.find(
+      (c) => c.address === currentContract.address,
     )
-    if (committedContract === undefined) {
+    if (previousContract === undefined) {
       created.push({
-        name: discoveredContract.name,
-        address: discoveredContract.address,
+        name: currentContract.name,
+        address: currentContract.address,
         type: 'created',
       })
     }

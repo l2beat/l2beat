@@ -1,10 +1,17 @@
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { Logger, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
-import { diffToMessages } from './diffToMessages'
-import { isNineAM } from './isNineAM'
+import { diffToMessages } from './utils/diffToMessages'
+import { filterDiff } from './utils/filterDiff'
+import { isNineAM } from './utils/isNineAM'
+
+export interface UpdateMetadata {
+  blockNumber: number
+  dependents: string[]
+  unknownContracts: EthereumAddress[]
+}
 
 export class UpdateNotifier {
   constructor(
@@ -15,42 +22,40 @@ export class UpdateNotifier {
     this.logger = this.logger.for(this)
   }
 
-  async handleDiff(
+  async handleUpdate(
     name: string,
-    dependents: string[],
     diff: DiscoveryDiff[],
-    blockNumber: number,
+    metadata: UpdateMetadata,
   ) {
     const nonce = await this.getInternalMessageNonce()
-    const messages = diffToMessages(name, dependents, diff, nonce)
+    const messages = diffToMessages(name, diff, {
+      dependents: metadata.dependents,
+      blockNumber: metadata.blockNumber,
+      nonce,
+    })
     await this.notify(messages, 'INTERNAL')
     await this.updateNotifierRepository.add({
       projectName: name,
       diff,
-      blockNumber,
+      blockNumber: metadata.blockNumber,
     })
-    this.logger.info('Changes detected sent [INTERNAL]', {
+    this.logger.info('Updates detected, notification sent [INTERNAL]', {
       name,
-      amount: diff.map((d) => (d.diff ?? []).length).reduce((a, b) => a + b, 0),
+      amount: countDiff(diff),
     })
 
-    const withoutErrors = diff.filter((d) =>
-      d.diff?.every((dd) => dd.key !== 'errors'),
-    )
-    if (withoutErrors.length === 0) {
+    const filteredDiff = filterDiff(diff, metadata.unknownContracts)
+    if (filteredDiff.length === 0) {
       return
     }
-    const messagesWithoutErrors = diffToMessages(
+    const filteredMessages = diffToMessages(name, filteredDiff, {
+      dependents: metadata.dependents,
+      blockNumber: metadata.blockNumber,
+    })
+    await this.notify(filteredMessages, 'PUBLIC')
+    this.logger.info('Updates detected, notification sent [PUBLIC]', {
       name,
-      dependents,
-      withoutErrors,
-    )
-    await this.notify(messagesWithoutErrors, 'PUBLIC')
-    this.logger.info('Changes detected sent [PUBLIC]', {
-      name,
-      amount: withoutErrors
-        .map((d) => (d.diff ?? []).length)
-        .reduce((a, b) => a + b, 0),
+      amount: countDiff(filteredDiff),
     })
   }
 
@@ -112,4 +117,16 @@ function getDailyReminderMessage(projects: string[], timestamp: UnixTime) {
   }
 
   return `${dailyReportMessage}:white_check_mark: everything is up to date`
+}
+function countDiff(diff: DiscoveryDiff[]): number {
+  let count = 0
+
+  for (const d of diff) {
+    if (d.type === 'created' || d.type === 'deleted') {
+      count++
+    } else {
+      count += (d.diff ?? []).length
+    }
+  }
+  return count
 }
