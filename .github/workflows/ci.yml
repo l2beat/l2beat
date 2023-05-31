@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  merge_group:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: 'yarn'
+      - run: yarn --frozen-lockfile
+      - run: yarn build
+      - run: yarn typecheck
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: 'yarn'
+      - run: yarn --frozen-lockfile
+      - run: yarn build
+      - run: yarn test
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: 'yarn'
+      - run: yarn --frozen-lockfile
+      - run: yarn build
+      - run: yarn lint
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: 'yarn'
+      - run: yarn --frozen-lockfile
+      - run: yarn build
+      - run: yarn format

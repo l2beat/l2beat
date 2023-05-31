@@ -1,0 +1,20 @@
+{
+  "name": "@l0-monitoring/uif",
+  "version": "0.1.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "test": "mocha",
+    "clean": "rm -rf build",
+    "prebuild": "yarn clean",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node -r esbuild-register src/",
+    "format:fix": "prettier --write .",
+    "format": "prettier --check .",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
