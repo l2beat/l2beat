@@ -293,7 +293,7 @@ export const PROVER_DOWN: ProjectRiskViewEntry = {
   value: 'No mechanism',
   description:
     'There is no generic escape hatch as Starknet cannot be frozen. Application-specific escape hatches can be built.',
-  sentiment: 'warning',
+  sentiment: 'bad',
 }
 
 // bridges
