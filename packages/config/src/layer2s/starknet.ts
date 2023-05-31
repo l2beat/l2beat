@@ -141,27 +141,45 @@ export const starknet: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
-      references: [
-        'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F17#L218',
-        'https://etherscan.io/address/0x6cb3ee90c50a38a0e4662bb7e7e6e40b91361bf6#code#F6#L153',
+      sources: [
+        {
+          contract: 'Starknet',
+          references: [
+            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F17#L218',
+          ],
+        },
+        // we don't have a way to test against shared modules
+        // {
+        //   contract: 'GpsStatementVerifier',
+        //   references: [
+        //     'https://etherscan.io/address/0x6cb3ee90c50a38a0e4662bb7e7e6e40b91361bf6#code#F6#L153',
+        //   ],
+        // },
       ],
-      // we don't have a way to test against shared modules
-      contracts: ['Starknet' /*, 'GpsStatementVerifier'*/],
     },
+
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      references: [
-        'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F17#L213',
+      sources: [
+        {
+          contract: 'Starknet',
+          references: [
+            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F17#L213',
+          ],
+        },
       ],
-      contracts: ['Starknet'],
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM,
-      references: [
-        'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F17#L199',
+      sources: [
+        {
+          contract: 'Starknet',
+          references: [
+            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F17#L199',
+          ],
+        },
       ],
-      contracts: ['Starknet'],
     },
     validatorFailure: RISK_VIEW.PROVER_DOWN,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
