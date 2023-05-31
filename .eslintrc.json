@@ -60,7 +60,14 @@
     "simple-import-sort/exports": "error",
     "unused-imports/no-unused-imports": "error",
     "eqeqeq": "error",
-    "react/self-closing-comp": "error"
+    "react/self-closing-comp": "error",
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "MethodDefinition[kind='set']",
+        "message": "Property setters are not allowed"
+      }
+    ]
   },
   "overrides": [
     {
