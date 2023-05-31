@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { assert } from 'console'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -15,6 +16,49 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aztecconnect')
+
+function getAccessControl() {
+  const accessControl = discovery.getContractValue<
+    Record<string, { adminRole: string; members: string[] } | undefined>
+  >('RollupProcessorV2', 'accessControl')
+
+  const check = (contract: string, role: string) => {
+    assert(Object.hasOwn(accessControl, role))
+    assert(
+      accessControl[role]?.members.length === 1,
+      `${role} has more than one member. Add this member to the permissions section.`,
+    )
+    assert(
+      accessControl[role]?.members[0] ===
+        discovery.getContract(contract).address.toString(),
+      `${contract} may not have role:${role} anymore. Update the permissions section.`,
+    )
+  }
+
+  check('Aztec Multisig', 'DEFAULT_ADMIN_ROLE')
+  check('Emergency Multisig', 'EMERGENCY_ROLE')
+  check('Resume Multisig', 'RESUME_ROLE')
+  check('Lister Multisig', 'LISTER_ROLE')
+
+  return [
+    ...discovery.getMultisigPermission(
+      'Aztec Multisig',
+      'Owner of ProxyAdmin contract, which is used to upgrade RollupProcessorV2. OWNER_ROLE on RollupProcessorV2: can enable capped deposit/withdrawals, can add rollupProviders (sequencers), can change delay before escape hatch, can change the verifier contract with no delay, can change defiBridgeProxy',
+    ),
+    ...discovery.getMultisigPermission(
+      'Emergency Multisig',
+      'EMERGENCY_ROLE on RollupProcessorV2: Can pause the rollup.',
+    ),
+    ...discovery.getMultisigPermission(
+      'Resume Multisig',
+      'RESUME_ROLE on RollupProcessorV2: Can resume the rollup.',
+    ),
+    ...discovery.getMultisigPermission(
+      'Lister Multisig',
+      "LISTER_ROLE on RollupProcessorV2: Can add new tokens and bridges to the rollup. Can't remove tokens or bridges.",
+    ),
+  ]
+}
 
 export const aztecconnect: Layer2 = {
   type: 'layer2',
@@ -150,6 +194,8 @@ export const aztecconnect: Layer2 = {
         'RollupProcessorV2',
         'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
       ),
+      // rollupBeneficiary is encoded in proofData. Can be set arbitrarily for each rollup.
+      // https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L704
       {
         address: EthereumAddress('0x4cf32670a53657596E641DFCC6d40f01e4d64927'),
         description:
@@ -167,6 +213,7 @@ export const aztecconnect: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  permissions: [...getAccessControl()],
   milestones: [
     {
       name: 'Mainnet Launch',
