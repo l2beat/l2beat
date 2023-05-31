@@ -96,16 +96,61 @@ export const aztecconnect: Layer2 = {
     ],
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: {
-      value: 'Yes',
-      description:
-        '1/2 MSig can upgrade or change Validator. 2/15 MSig can pause.',
-      sentiment: 'bad',
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+
+      sources: [
+        {
+          contract: 'RollupProcessorV2',
+          references: [
+            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L706',
+            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L1041',
+            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L1054',
+            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L1135',
+          ],
+        },
+        {
+          contract: 'Verifier28x32',
+          references: [
+            'https://etherscan.io/address/0xB656f4219f565b93DF57D531B574E17FE0F25939#code#F2#L150',
+          ],
+        },
+      ],
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
-    validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      sources: [
+        {
+          contract: 'RollupProcessorV2',
+          references: [
+            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L686',
+          ],
+        },
+      ],
+    },
+    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
+      sources: [
+        {
+          contract: 'RollupProcessorV2',
+          references: [
+            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L697',
+          ],
+        },
+      ],
+    },
+    validatorFailure: {
+      ...RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
+      sources: [
+        {
+          contract: 'RollupProcessorV2',
+          references: [
+            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L697',
+          ],
+        },
+      ],
+    },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
@@ -115,8 +160,8 @@ export const aztecconnect: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'RollupProcessor.sol#L395 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L986',
+          text: 'RollupProcessorV2.sol#L706 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L706',
         },
       ],
     },
@@ -124,8 +169,8 @@ export const aztecconnect: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'StandardVerifier.sol#L37 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x07528c46a34d16e4fb7cfa9db7333c521bec8ea2#code#F1#L144',
+          text: 'Verifier28x32.sol#L150 - Etherscan source code',
+          href: 'https://etherscan.io/address/0xB656f4219f565b93DF57D531B574E17FE0F25939#code#F2#L150',
         },
       ],
     },
@@ -133,8 +178,8 @@ export const aztecconnect: Layer2 = {
       ...DATA_AVAILABILITY.ON_CHAIN,
       references: [
         {
-          text: 'RollupProcessor.sol#L359 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L980',
+          text: 'RollupProcessorV2.sol#L686 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L686',
         },
       ],
     },
@@ -144,8 +189,8 @@ export const aztecconnect: Layer2 = {
         'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operation. Periodically a special window is open during which anyone can propose new blocks.',
       references: [
         {
-          text: 'RollupProcessor.sol#L97 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L586',
+          text: 'RollupProcessorV2.sol#L692 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L692',
         },
       ],
     },
@@ -156,8 +201,12 @@ export const aztecconnect: Layer2 = {
         ' Periodically the rollup opens a special window during which anyone can propose new blocks.',
       references: [
         {
-          text: 'RollupProcessor.sol#L347 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L1433',
+          text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L697',
+        },
+        {
+          text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L1491',
         },
       ],
     },
@@ -169,8 +218,12 @@ export const aztecconnect: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'RollupProcessor.sol#LL396 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x3f972e325cecd99a6be267fd36ceb46dca7c3f28#code#F18#L987',
+            text: 'RollupProcessorV2.sol#L1042 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L1042',
+          },
+          {
+            text: 'RollupProcessorV2.sol#L1206 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F20#L1206',
           },
         ],
       },
