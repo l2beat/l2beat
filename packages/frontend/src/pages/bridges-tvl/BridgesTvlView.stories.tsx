@@ -203,7 +203,7 @@ const meta = {
       },
       {
         type: 'layer2',
-        name: 'StarkNet',
+        name: 'Starknet',
         slug: 'starknet',
         warning: undefined,
         isArchived: undefined,
