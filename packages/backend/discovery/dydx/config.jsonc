@@ -12,7 +12,8 @@
     "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": "PriorityExecutor",
     "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": "LongTimelockExecutor",
     "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc": "ShortTimelockExecutor",
-    "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52": "MerklePauserExecutor"
+    "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52": "MerklePauserExecutor",
+    "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C": "SafetyModuleV2Proxy"
   },
   "overrides": {
     "StarkPerpetual": {

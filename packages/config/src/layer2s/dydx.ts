@@ -225,6 +225,28 @@ export const dydx: Layer2 = {
       description:
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },
+    {
+      name: 'Short Timelock Executor',
+      accounts: [discovery.getPermissionedAccount('Treasury', 'owner')],
+      description:
+        "Owner of the dYdX token and the Treasury. It validates and executes proposals affecting protocol parameters. It's controlled by the dYdX Governance.",
+    },
+    {
+      name: 'Long Timelock Executor',
+      accounts: [
+        discovery.getPermissionedAccount('SafetyModuleV2Proxy', 'owner'),
+      ],
+      description:
+        "Owner of the Safety Module. It validates and executes proposals affecting the governance consensus. It's controlled by the dYdX Governance.",
+    },
+    {
+      name: 'Starkware Priority Timelock Executor',
+      accounts: [
+        discovery.getPermissionedAccount('StarkExRemoverGovernorV2', 'owner'),
+      ],
+      description:
+        "It can execute proposals that control the configuration of the exchange. It's controlled by the dYdX Governance.",
+    },
   ],
   milestones: [
     {

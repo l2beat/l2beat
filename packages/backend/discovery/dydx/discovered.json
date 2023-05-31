@@ -1,7 +1,8 @@
 {
   "name": "dydx",
-  "blockNumber": 17331165,
-  "configHash": "0xc6b39d80ca02ad53b0d25d7634b197ef6ace682f56cc07f1eb1361cba597f1e4",
+  "blockNumber": 17377189,
+  "configHash": "0x01c885ce91633fabfaa8f849f84970d177ce8d4c9fd7b120fdd631fe9d67bbab",
+  "version": 1,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -107,12 +108,12 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "4398111120899551654015648"
+        "totalSupply": "4312455115956165902558131"
       },
       "derivedName": "SafetyModuleV2"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "SafetyModuleV2Proxy",
       "address": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
       "code": "https://etherscan.deth.net/address/0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
       "upgradeability": {
@@ -120,7 +121,8 @@
       },
       "values": {
         "owner": "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "DydxGovernor",
@@ -265,7 +267,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 16486,
+        "getLastBatchId": 16563,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -274,7 +276,7 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 16193,
+        "getSequenceNumber": 16270,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
