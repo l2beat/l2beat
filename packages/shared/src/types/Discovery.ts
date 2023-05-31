@@ -29,7 +29,7 @@ export type ContractValue =
   | number
   | boolean
   | ContractValue[]
-  | { [key: string]: ContractValue }
+  | { [key: string]: ContractValue | undefined }
 
 export interface ProxyDetails {
   upgradeability: UpgradeabilityParameters
