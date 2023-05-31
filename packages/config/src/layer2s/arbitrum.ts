@@ -40,7 +40,7 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
   'SequencerInbox',
   'maxTimeVariation',
 )
-const selfSequencingDelay = formatSeconds(maxTimeVariation[2])
+const selfSequencingDelay = maxTimeVariation[2]
 
 export const arbitrum: Layer2 = {
   type: 'layer2',

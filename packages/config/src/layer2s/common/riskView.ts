@@ -152,18 +152,6 @@ export const SEQUENCER_TRANSACT_L1: ProjectRiskViewEntry = {
     'The user is able to submit a transaction through L1 and force its inclusion on L2.',
 }
 
-export function SEQUENCER_STARKEX_PERPETUAL(
-  delay: number,
-): ProjectRiskViewEntry {
-  return {
-    value: 'Force trade/exit to L1',
-    description: `The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down for more than ${formatSeconds(
-      delay,
-    )}, the user can use the exit hatch to withdraw funds.`,
-    sentiment: 'warning',
-  }
-}
-
 export const SEQUENCER_STARKEX_SPOT: ProjectRiskViewEntry = {
   value: 'Force exit to L1',
   description:
@@ -335,12 +323,32 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
 
 /* New risks for stages */
 
-export function SELF_SEQUENCE(delay?: string): ProjectRiskViewEntry {
+export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   const delayString =
-    delay !== undefined ? ` There is a ${delay} delay on this operation.` : ''
+    delay !== undefined ? ` There is a ${formatSeconds(delay)} delay on this operation.` : ''
   return {
     value: 'Self sequence',
     description: `In the event of a sequencer failure, users can force transactions to be included in the L2 chain by sending them to L1.${delayString}`,
+  }
+}
+
+export function FORCE_VIA_L1(
+  delay: number,
+): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Force via L1',
+    description: `Users can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds.`,
+  }
+}
+
+export function FORCE_VIA_L1_STARKEX_PERPETUAL(
+  delay: number,
+): ProjectRiskViewEntry {
+  const base = FORCE_VIA_L1(delay)
+  return {
+    ...base,
+    description: `${base.description} Users are required to find a counterparty for the trade by out of system means.`
   }
 }
 
@@ -370,14 +378,12 @@ export const RISK_VIEW = {
   UPGRADE_DELAY_SECONDS,
   UPGRADABLE_NO,
   SEQUENCER_TRANSACT_L1,
-  SEQUENCER_STARKEX_PERPETUAL,
   SEQUENCER_STARKEX_SPOT,
   SEQUENCER_FORCE_EXIT_L1,
   SEQUENCER_EXIT_L1,
   SEQUENCER_PROPOSE_BLOCKS,
   SEQUENCER_PROPOSE_BLOCKS_ZKP,
   SEQUENCER_NO_MECHANISM,
-  ENQUEUE_VIA_L1,
   VALIDATOR_ESCAPE_MP,
   VALIDATOR_ESCAPE_ZKP,
   VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
@@ -393,4 +399,7 @@ export const RISK_VIEW = {
   CANONICAL,
   CANONICAL_USDC,
   SELF_SEQUENCE,
+  FORCE_VIA_L1,
+  FORCE_VIA_L1_STARKEX_PERPETUAL,
+  ENQUEUE_VIA_L1,
 }
