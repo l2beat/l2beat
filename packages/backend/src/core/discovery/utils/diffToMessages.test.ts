@@ -15,6 +15,7 @@ import {
 
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
 const PROJECT = 'system'
+const BLOCK_NUMBER = 123456789
 
 describe('Discord message formatting', () => {
   describe(diffToMessages.name, () => {
@@ -45,7 +46,10 @@ describe('Discord message formatting', () => {
         },
       ]
 
-      const result = diffToMessages(name, dependents, diff)
+      const result = diffToMessages(name, diff, {
+        dependents,
+        blockNumber: BLOCK_NUMBER,
+      })
 
       const expected = [
         `***${name}*** | detected changes\`\`\`diff`,
@@ -86,7 +90,10 @@ describe('Discord message formatting', () => {
         },
       ]
 
-      const result = diffToMessages(name, dependents, diff)
+      const result = diffToMessages(name, diff, {
+        dependents,
+        blockNumber: BLOCK_NUMBER,
+      })
 
       const expected = [
         `***${name}*** | detected changes\n`,
@@ -119,12 +126,16 @@ describe('Discord message formatting', () => {
         differences.push(diff)
       }
 
-      const result = diffToMessages(name, dependents, differences, nonce)
+      const result = diffToMessages(name, differences, {
+        dependents,
+        blockNumber: BLOCK_NUMBER,
+        nonce,
+      })
 
       const firstPart = [
         `> ${formatNonce(
           nonce,
-        )}\n\n***${name}*** | detected changes\`\`\`diff\n`,
+        )} (block_number=${BLOCK_NUMBER})\n\n***${name}*** | detected changes\`\`\`diff\n`,
         differences.slice(0, 25).map(contractDiffToMessages).join(''),
         '```',
       ]
@@ -132,14 +143,14 @@ describe('Discord message formatting', () => {
       const secondPart = [
         `> ${formatNonce(
           nonce,
-        )}\n\n***${name}*** | detected changes\`\`\`diff\n`,
+        )} (block_number=${BLOCK_NUMBER})\n\n***${name}*** | detected changes\`\`\`diff\n`,
         differences.slice(25).map(contractDiffToMessages).join(''),
         '```',
       ]
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
-      expect(firstPart.join('').length).toEqual(1926)
-      expect(secondPart.join('').length).toEqual(201)
+      expect(firstPart.join('').length).toEqual(1951)
+      expect(secondPart.join('').length).toEqual(226)
     })
 
     it('truncates contract with diff larger than 2000 characters', () => {
@@ -163,26 +174,30 @@ describe('Discord message formatting', () => {
       const firstPart = [
         `> ${formatNonce(
           nonce,
-        )}\n\n***${PROJECT}*** | detected changes\`\`\`diff\n`,
+        )} (block_number=${BLOCK_NUMBER})\n\n***${PROJECT}*** | detected changes\`\`\`diff\n`,
         'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
-        diff.slice(0, 105).map(fieldDiffToMessage).join(''),
+        diff.slice(0, 103).map(fieldDiffToMessage).join(''),
         '```',
       ]
 
       const secondPart = [
         `> ${formatNonce(
           nonce,
-        )}\n\n***${PROJECT}*** | detected changes\`\`\`diff\n`,
+        )} (block_number=${BLOCK_NUMBER})\n\n***${PROJECT}*** | detected changes\`\`\`diff\n`,
         'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
-        diff.slice(105).map(fieldDiffToMessage).join(''),
+        diff.slice(103).map(fieldDiffToMessage).join(''),
         '```',
       ]
 
-      const result = diffToMessages(PROJECT, [], [contractDiff], nonce)
+      const result = diffToMessages(PROJECT, [contractDiff], {
+        dependents: [],
+        blockNumber: BLOCK_NUMBER,
+        nonce,
+      })
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
-      expect(firstPart.join('').length).toEqual(1996)
-      expect(secondPart.join('').length).toEqual(1816)
+      expect(firstPart.join('').length).toEqual(1985)
+      expect(secondPart.join('').length).toEqual(1877)
     })
   })
 

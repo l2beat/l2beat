@@ -11,13 +11,14 @@ import { bridges, BridgeTechnology } from './index'
 
 describe('bridges', () => {
   describe('links', () => {
-    it('all links do not contain spaces', () => {
+    describe('all links do not contain spaces', () => {
       for (const bridge of bridges) {
-        bridge.display.links
-        const links = Object.values(bridge.display.links).flat()
-        for (const link of links) {
-          expect(link).not.toInclude(' ')
-        }
+        it(bridge.display.name, () => {
+          const links = Object.values(bridge.display.links).flat()
+          for (const link of links) {
+            expect(link).not.toInclude(' ')
+          }
+        })
       }
     })
   })

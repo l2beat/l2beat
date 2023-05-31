@@ -85,7 +85,7 @@ export function createUpdateMonitorModule(
     discoveryLogger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
-  const discoveryRunner = new DiscoveryRunner(discoveryEngine)
+  const discoveryRunner = new DiscoveryRunner(discoveryEngine, configReader)
 
   const updateMonitor = new UpdateMonitor(
     provider,
