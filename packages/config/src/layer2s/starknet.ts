@@ -64,11 +64,11 @@ export const starknet: Layer2 = {
   type: 'layer2',
   id: ProjectId('starknet'),
   display: {
-    name: 'StarkNet',
+    name: 'Starknet',
     slug: 'starknet',
     description:
-      'StarkNet is a general purpose ZK-Rollup built using STARK cryptographic proof system. StarkNet uses the Cairo programming language both for its \
-      infrastructure and for writing StarkNet contracts. L2 <--> L1 messaging infrastructure \
+      'Starknet is a general purpose ZK-Rollup built using STARK cryptographic proof system. Starknet uses the Cairo programming language both for its \
+      infrastructure and for writing Starknet contracts. L2 <--> L1 messaging infrastructure \
       is available and contracts are fully composable. It is currently launched \
       with a single Sequencer.',
     purpose: 'Universal',
@@ -191,7 +191,7 @@ export const starknet: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'What is StarkNet',
+          text: 'What is Starknet',
           href: 'https://starkware.co/starknet/',
         },
       ],
@@ -202,10 +202,10 @@ export const starknet: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       description:
         OPERATOR.CENTRALIZED_OPERATOR.description +
-        ' Typically, the Operator is the hot wallet of the StarkNet service submitting state updates for which proofs have been already submitted and verified.',
+        ' Typically, the Operator is the hot wallet of the Starknet service submitting state updates for which proofs have been already submitted and verified.',
       references: [
         {
-          text: 'StarkNet operator Etherscan address',
+          text: 'Starknet operator Etherscan address',
           href: 'https://etherscan.io/address/0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
         },
       ],
@@ -214,7 +214,7 @@ export const starknet: Layer2 = {
       ...FORCE_TRANSACTIONS.NO_MECHANISM,
       references: [
         {
-          text: 'Censorship resistance of StarkNet - Forum Discussion',
+          text: 'Censorship resistance of Starknet - Forum Discussion',
           href: 'https://community.starknet.io/t/censorship-resistance/196',
         },
       ],
@@ -225,7 +225,7 @@ export const starknet: Layer2 = {
     addresses: [
       discovery.getContractDetails('Starknet', {
         description:
-          'StarkNet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
+          'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
         upgradeDelay: starknetDelaySeconds
           ? formatSeconds(starknetDelaySeconds)
           : 'No delay',
@@ -308,7 +308,7 @@ export const starknet: Layer2 = {
   ],
   milestones: [
     {
-      name: 'StarkNet Alpha',
+      name: 'Starknet Alpha',
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
       date: '2021-11-29T00:00:00Z',
       description:
@@ -319,7 +319,7 @@ export const starknet: Layer2 = {
       link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
       date: '2022-05-09T00:00:00Z',
       description:
-        'Bridge is live on mainnet, serving as gateway between Ethereum and StarkNet.',
+        'Bridge is live on mainnet, serving as gateway between Ethereum and Starknet.',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],

@@ -127,7 +127,7 @@ const STARKNET_REGULAR: ProjectTechnologyChoice = {
     ' Note that the withdrawal request can be censored by the Sequencer.',
   references: [
     {
-      text: ' Withdrawing is based on l2 to l1 messages - StarkNet documentation',
+      text: ' Withdrawing is based on l2 to l1 messages - Starknet documentation',
       href: 'https://www.cairo-lang.org/docs/hello_starknet/l1l2.html',
     },
   ],
@@ -138,7 +138,7 @@ const STARKNET_EMERGENCY: ProjectTechnologyChoice = {
   name: 'Emergency exit',
   risks: [],
   description:
-    'There is no generic escape hatch mechanism as StarkNet cannot be forced by users into a frozen state. Note that a freezing mechanism on L2, to be secure, requires anti-censorship protection.',
+    'There is no generic escape hatch mechanism as Starknet cannot be forced by users into a frozen state. Note that a freezing mechanism on L2, to be secure, requires anti-censorship protection.',
   references: [],
 }
 
