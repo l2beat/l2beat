@@ -77,7 +77,7 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
     date: '2021-11-29T00:00:00Z',
     description:
-      'StarkNet Alpha is live, bringing first universal rollup based on zkRollup technology.',
+      'Starknet Alpha is live, bringing first universal rollup based on zkRollup technology.',
   },
   {
     name: 'Hybrid Computation introduced',

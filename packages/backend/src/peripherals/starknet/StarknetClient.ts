@@ -1,17 +1,17 @@
 import { assert, HttpClient, RateLimiter, UnixTime } from '@l2beat/shared'
 
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
-import { StarkNetGetBlockResponseBodySchema } from './schemas'
+import { StarknetGetBlockResponseBodySchema } from './schemas'
 
-interface StarkNetClientOpts {
+interface StarknetClientOpts {
   callsPerMinute?: number
 }
 
-export class StarkNetClient {
+export class StarknetClient {
   constructor(
     readonly url: string,
     private readonly httpClient: HttpClient,
-    opts?: StarkNetClientOpts,
+    opts?: StarknetClientOpts,
   ) {
     if (opts?.callsPerMinute) {
       const rateLimiter = new RateLimiter({
@@ -44,10 +44,10 @@ export class StarkNetClient {
     )
     assert(
       response.ok,
-      `StarkNet getBlock request failed with status: ${response.status}`,
+      `Starknet getBlock request failed with status: ${response.status}`,
     )
     const data: unknown = await response.json()
-    const block = StarkNetGetBlockResponseBodySchema.parse(data)
+    const block = StarknetGetBlockResponseBodySchema.parse(data)
     return {
       number: block.block_number,
       timestamp: block.timestamp,
