@@ -1,4 +1,5 @@
 import { assert } from '@l2beat/shared'
+import { utils } from 'ethers'
 
 import { ProjectRiskViewEntry } from '../../common'
 import { formatSeconds } from '../../utils/formatSeconds'
@@ -210,12 +211,11 @@ export const SEQUENCER_RISK_POLYGONZKEVM: (
 
 // Operator is down
 
-export function VALIDATOR_ESCAPE_MP(delay?: string): ProjectRiskViewEntry {
+export function VALIDATOR_ESCAPE_MP(delay?: number): ProjectRiskViewEntry {
+  const delayString = delay !== undefined ? ` There is a ${formatSeconds(delay)} delay on this operation.` : ''
   return {
     value: 'Escape hatch (MP)',
-    description: `Users are able to trustlessly exit by submitting a merkle proof of funds.${
-      delay !== undefined ? ` There is a ${delay} delay on this operation.` : ''
-    }`,
+    description: `Users are able to trustlessly exit by submitting a merkle proof of funds.${delayString}`,
   }
 }
 
@@ -338,17 +338,33 @@ export function FORCE_VIA_L1(
   const delayString = formatSeconds(delay)
   return {
     value: 'Force via L1',
-    description: `Users can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds.`,
+    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds.`,
   }
 }
 
 export function FORCE_VIA_L1_STARKEX_PERPETUAL(
   delay: number,
 ): ProjectRiskViewEntry {
-  const base = FORCE_VIA_L1(delay)
+  const delayString = formatSeconds(delay)
   return {
-    ...base,
-    description: `${base.description} Users are required to find a counterparty for the trade by out of system means.`
+    value: 'Force via L1',
+    description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`
+  }
+}
+
+export function FORCE_VIA_L1_LOOPRING(
+  delay: number,
+  forcedWithdrawalFee: number,
+  maxAgeDepositUntilWithdrawable: number,
+): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  const maxAgeDepositUntilWithdrawableString = formatSeconds(maxAgeDepositUntilWithdrawable)
+  const forcedWithdrawalFeeString = `${utils.formatEther(
+  forcedWithdrawalFee,
+)} ETH`
+  return {
+    value: 'Force via L1',
+    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1 with a ${forcedWithdrawalFeeString} fee. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawableString} users can get their funds back.`,
   }
 }
 
@@ -401,5 +417,6 @@ export const RISK_VIEW = {
   SELF_SEQUENCE,
   FORCE_VIA_L1,
   FORCE_VIA_L1_STARKEX_PERPETUAL,
+  FORCE_VIA_L1_LOOPRING,
   ENQUEUE_VIA_L1,
 }
