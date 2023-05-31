@@ -1,3 +1,11 @@
+# How to run discovery?
+
+- `yarn discover [project]` run discovery for the project
+- `DISCOVERY_BLOCK_NUMBER=<block_number> yarn discover [project]` run discovery on a specific block number
+- `yarn discover [project] --dry-run` check simulated update-monitor output
+- `yarn discover [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
+- `yarn invert [file]` print addresses and their functions
+
 # Discovery documentation
 
 NOTE: We use a pseudo-TS syntax to simplify parameter types here:
