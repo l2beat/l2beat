@@ -233,7 +233,7 @@ export const dydx: Layer2 = {
       ),
       discovery.getContractDetails(
         'MerkleDistributor',
-        'The Merkle Distributor smart contract distributes DYDX token rewards according to a Merkle tree of balances. ',
+        'The Merkle Distributor smart contract distributes DYDX token rewards according to a Merkle tree of balances.',
       ),
       discovery.getContractDetails(
         'LiquidityStaking',
