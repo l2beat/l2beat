@@ -187,13 +187,6 @@ export const SEQUENCER_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
-export const SEQUENCER_NO_MECHANISM: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'There is no mechanism to have transactions be included if the sequencer is down or censoring.',
-  sentiment: 'bad',
-}
-
 export const SEQUENCER_RISK_POLYGONZKEVM: (
   isForcedBatchDisallowed: boolean,
 ) => ProjectRiskViewEntry = (isForcedBatchDisallowed: boolean) => {
@@ -202,9 +195,9 @@ export const SEQUENCER_RISK_POLYGONZKEVM: (
     'Polygon zkEVM sequencer risk has changed. Update the config after research',
   )
   return {
-    ...SEQUENCER_NO_MECHANISM,
+    ...NO_MECHANISM,
     description:
-      SEQUENCER_NO_MECHANISM.description +
+      NO_MECHANISM.description +
       ' Although the functionality exists in the code, but it is disabled.',
   }
 }
@@ -375,6 +368,13 @@ export const ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
+export const NO_MECHANISM: ProjectRiskViewEntry = {
+  value: 'No mechanism',
+  description:
+    'There is no mechanism to have transactions be included if the sequencer is down or censoring.',
+  sentiment: 'bad',
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -399,7 +399,6 @@ export const RISK_VIEW = {
   SEQUENCER_EXIT_L1,
   SEQUENCER_PROPOSE_BLOCKS,
   SEQUENCER_PROPOSE_BLOCKS_ZKP,
-  SEQUENCER_NO_MECHANISM,
   VALIDATOR_ESCAPE_MP,
   VALIDATOR_ESCAPE_ZKP,
   VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
@@ -419,4 +418,5 @@ export const RISK_VIEW = {
   FORCE_VIA_L1_STARKEX_PERPETUAL,
   FORCE_VIA_L1_LOOPRING,
   ENQUEUE_VIA_L1,
+  NO_MECHANISM,
 }
