@@ -164,7 +164,15 @@
       "ignoreMethods": ["_totalSupplySnapshots"]
     },
     "PriorityExecutor": {
-      "ignoreMethods": ["getMinimumVotingPowerNeeded"]
+      "ignoreMethods": ["getMinimumVotingPowerNeeded"],
+      "fields": {
+        "PRIORITY_CONTROLLERS": {
+          "type": "arrayFromOneEvent",
+          "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
+          "valueKey": "account",
+          "flagKey": "isPriorityController"
+        }
+      }
     },
     "LongTimelockExecutor": {
       "ignoreMethods": ["getMinimumVotingPowerNeeded"]

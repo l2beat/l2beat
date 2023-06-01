@@ -1,7 +1,7 @@
 {
   "name": "dydx",
   "blockNumber": 17384903,
-  "configHash": "0xf98d3d471e87724875d647323044c4e929a9247f8f6043bca13949f949f64852",
+  "configHash": "0xffc8a8b771db03f69739b2583c147da89435bc25e8bc77ab1de202e8bc6da156",
   "version": 1,
   "contracts": [
     {
@@ -813,6 +813,7 @@
         "MINIMUM_DELAY": 345600,
         "MINIMUM_QUORUM": 200,
         "ONE_HUNDRED_WITH_PRECISION": 10000,
+        "PRIORITY_CONTROLLERS": ["0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"],
         "PROPOSITION_THRESHOLD": 50,
         "VOTE_DIFFERENTIAL": 50,
         "VOTING_DURATION": 26280

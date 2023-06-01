@@ -1,8 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
+import { ProjectRiskViewEntry } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getCommittee } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -18,16 +20,37 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('dydx')
-const priorityDelay = discovery.getContractValue<number>(
+const maxPriorityDelay = discovery.getContractValue<number>(
   'PriorityExecutor',
   'getDelay',
 )
+const priorityPeriod = discovery.getContractValue<number>(
+  'PriorityExecutor',
+  'getPriorityPeriod',
+)
+const minPriorityDelay = maxPriorityDelay - priorityPeriod
+
+const upgradeRisk: ProjectRiskViewEntry = {
+  value: `${formatSeconds(maxPriorityDelay)} or ${formatSeconds(
+    minPriorityDelay,
+  )} delay`,
+  description: `There is a ${formatSeconds(
+    maxPriorityDelay,
+  )}, although this time can be shortened to ${formatSeconds(
+    minPriorityDelay,
+  )} by Priority Controller.`,
+  sentiment: 'warning',
+}
 const shortTimelockDelay = discovery.getContractValue<number>(
   'ShortTimelockExecutor',
   'getDelay',
 )
 const longTimelockDelay = discovery.getContractValue<number>(
   'LongTimelockExecutor',
+  'getDelay',
+)
+const merklePauserDelay = discovery.getContractValue<number>(
+  'MerklePauserExecutor',
   'getDelay',
 )
 const freezeGracePeriod = discovery.getContractValue<number>(
@@ -109,7 +132,7 @@ export const dydx: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(priorityDelay),
+    upgradeability: upgradeRisk,
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL(freezeGracePeriod),
       sources: [
@@ -221,10 +244,29 @@ export const dydx: Layer2 = {
         'The Safety Module is a staking pool that offers DYDX rewards to users who stake DYDX towards the security of the Protocol.',
       ),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(priorityDelay)],
+    risks: [
+      {
+        ...CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(maxPriorityDelay),
+        text:
+          CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(maxPriorityDelay).text +
+          `The delay can be decreased by the Priority Controller to ${formatSeconds(
+            minPriorityDelay,
+          )}.`,
+      },
+    ],
   },
   permissions: [
     // TODO: detailed breakdown of permissions
+    {
+      name: 'Operators',
+      accounts: discovery.getPermissionedAccounts(
+        'StarkPerpetual',
+        'OPERATORS',
+      ),
+      description:
+        'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+    },
+    getCommittee(discovery),
     {
       name: 'Rollup Admin',
       accounts: [
@@ -232,11 +274,35 @@ export const dydx: Layer2 = {
       ],
       description:
         'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromSeconds(priorityDelay),
+        delayDescriptionFromSeconds(maxPriorityDelay),
       references: [
         {
-          text: 'dYdX Governance documentation',
-          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process',
+          text: 'Rollup Admin documentation',
+          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+        },
+      ],
+    },
+    {
+      name: 'Rollup Priority Controller',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue<string[]>(
+            'PriorityExecutor',
+            'PRIORITY_CONTROLLERS',
+          )[0],
+        ),
+      ],
+      description: `Can decrease the delay required for the Rollup upgrade to ${formatSeconds(
+        minPriorityDelay,
+      )}.`,
+      references: [
+        {
+          text: 'dYdX governance documentation',
+          href: 'https://docs.dydx.community/dydx-governance/',
+        },
+        {
+          text: 'Priority Controller documentation',
+          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
         },
       ],
     },
@@ -250,8 +316,8 @@ export const dydx: Layer2 = {
         delayDescriptionFromSeconds(shortTimelockDelay),
       references: [
         {
-          text: 'dYdX Governance documentation',
-          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process',
+          text: 'Treasury Admin documentation',
+          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
         },
       ],
     },
@@ -265,21 +331,26 @@ export const dydx: Layer2 = {
         delayDescriptionFromSeconds(longTimelockDelay),
       references: [
         {
-          text: 'dYdX Governance documentation',
-          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process',
+          text: 'Safety Module Admin',
+          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
         },
       ],
     },
     {
-      name: 'Operators',
-      accounts: discovery.getPermissionedAccounts(
-        'StarkPerpetual',
-        'OPERATORS',
-      ),
+      name: 'Merkle Pauser',
+      accounts: [
+        discovery.getPermissionedAccount('MerklePauserExecutor', 'getAdmin'),
+      ],
       description:
-        'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+        'The Merkle-pauser executor can freeze the Merkle root, which is updated periodically with each user cumulative reward balance, in case the proposed root is incorrect or malicious. It can also veto forced trade requests by any of the stark proxy contracts.' +
+        delayDescriptionFromSeconds(merklePauserDelay),
+      references: [
+        {
+          text: 'Merkle Pauser documentation',
+          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#merkle-pauser-executor',
+        },
+      ],
     },
-    getCommittee(discovery),
   ],
   milestones: [
     {
