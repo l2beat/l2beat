@@ -65,7 +65,7 @@ export const orbiter: Bridge = {
       'Metis',
       'dYdX',
       'Boba',
-      'StarkNet',
+      'Starknet',
       'BNB Chain',
     ],
     principleOfOperation: {

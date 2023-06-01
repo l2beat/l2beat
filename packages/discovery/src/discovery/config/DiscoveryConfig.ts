@@ -4,6 +4,8 @@ import { DiscoveryOverrides } from './DiscoveryOverrides'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
+// values inside this class should not be modified during the runtime
+// this will result in the hash being different and break the update mechanism
 export class DiscoveryConfig {
   readonly overrides: DiscoveryOverrides
 

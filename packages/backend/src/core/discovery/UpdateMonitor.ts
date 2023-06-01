@@ -12,8 +12,9 @@ import { UpdateMonitorRepository } from '../../peripherals/database/discovery/Up
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
-import { findDependents } from './findDependents'
 import { UpdateNotifier } from './UpdateNotifier'
+import { findDependents } from './utils/findDependents'
+import { findUnknownContracts } from './utils/findUnknownContracts'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -95,7 +96,14 @@ export class UpdateMonitor {
   ) {
     const previousDiscovery = await this.getPreviousDiscovery(projectConfig)
 
-    const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
+    const discovery = await this.discoveryRunner.run(
+      projectConfig,
+      blockNumber,
+      {
+        runSanityCheck: true,
+        injectInitialAddresses: true,
+      },
+    )
     this.cachedDiscovery.set(projectConfig.name, discovery)
 
     const diff = diffDiscovery(
@@ -143,6 +151,10 @@ export class UpdateMonitor {
     return await this.discoveryRunner.run(
       projectConfig,
       previousDiscovery.blockNumber,
+      {
+        runSanityCheck: true,
+        injectInitialAddresses: true,
+      },
     )
   }
 
@@ -157,12 +169,16 @@ export class UpdateMonitor {
         projectConfig.name,
         this.configReader,
       )
-      await this.updateNotifier.handleDiff(
-        projectConfig.name,
-        dependents,
-        diff,
-        blockNumber,
+      const unknownContracts = await findUnknownContracts(
+        discovery.name,
+        discovery.contracts,
+        this.configReader,
       )
+      await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
+        dependents,
+        blockNumber,
+        unknownContracts,
+      })
       changesDetected.inc()
     }
   }
