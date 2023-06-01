@@ -1,7 +1,7 @@
 {
   "name": "dydx",
   "blockNumber": 17384903,
-  "configHash": "0x24ab94cd888065d43333a658984008d582d31d71355daef5fb49d379a1300b88",
+  "configHash": "0xf98d3d471e87724875d647323044c4e929a9247f8f6043bca13949f949f64852",
   "version": 1,
   "contracts": [
     {
@@ -716,10 +716,18 @@
         "type": "immutable"
       },
       "values": {
+        "constructorArgs": [
+          [
+            "0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68",
+            "0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9"
+          ],
+          "1"
+        ],
         "hasRegisteredFact": false,
         "identify": "StarkWare_Committee_2019_1",
         "signaturesRequired": 1
-      }
+      },
+      "derivedName": "Committee"
     },
     {
       "name": "GovernanceStrategy",
@@ -1022,6 +1030,8 @@
   "eoas": [
     "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080",
     "0x8129b737912e17212C8693B781928f5D0303390a",
+    "0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9",
+    "0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68",
     "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
   ],
   "abis": {

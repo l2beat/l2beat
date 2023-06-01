@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { getCommittee } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import {
   CONTRACTS,
@@ -17,8 +18,16 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('dydx')
-const delaySeconds = discovery.getContractValue<number>(
+const priorityDelay = discovery.getContractValue<number>(
   'PriorityExecutor',
+  'getDelay',
+)
+const shortTimelockDelay = discovery.getContractValue<number>(
+  'ShortTimelockExecutor',
+  'getDelay',
+)
+const longTimelockDelay = discovery.getContractValue<number>(
+  'LongTimelockExecutor',
   'getDelay',
 )
 const freezeGracePeriod = discovery.getContractValue<number>(
@@ -100,7 +109,7 @@ export const dydx: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
+    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(priorityDelay),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL(freezeGracePeriod),
       sources: [
@@ -187,34 +196,79 @@ export const dydx: Layer2 = {
         'GpsStatementVerifier',
         'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
       ),
-      {
-        name: 'MemoryPageFactRegistry',
-        description:
-          'Contract storing CAIRO Program Output, in case of dYdX, it stores state diffs of dYdX Exchange.',
-        address: EthereumAddress('0xEfbCcE4659db72eC6897F46783303708cf9ACef8'),
-      },
-      {
-        name: 'FriStatementContract',
-        description: 'Part of STARK Verifier.',
-        address: EthereumAddress('0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1'),
-      },
-      {
-        name: 'MerkleStatementContract',
-        description: 'Part of STARK Verifier.',
-        address: EthereumAddress('0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830'),
-      },
+      discovery.getContractDetails(
+        'MemoryPageFactRegistry',
+        'Contract storing CAIRO Program Output, in case of dYdX, it stores state diffs of dYdX Exchange.',
+      ),
+      discovery.getContractDetails(
+        'FriStatementContract',
+        'Part of STARK Verifier.',
+      ),
+      discovery.getContractDetails(
+        'MerkleStatementContract',
+        'Part of STARK Verifier.',
+      ),
+      discovery.getContractDetails(
+        'MerkleDistributor',
+        'The Merkle Distributor smart contract distributes DYDX token rewards according to a Merkle tree of balances. ',
+      ),
+      discovery.getContractDetails(
+        'LiquidityStaking',
+        'The Liquidity Module is a collection of smart contracts for staking and borrowing, which incentivize the allocation of USDC funds for market making purposes on the dYdX layer 2 exchange.',
+      ),
+      discovery.getContractDetails(
+        'SafetyModule',
+        'The Safety Module is a staking pool that offers DYDX rewards to users who stake DYDX towards the security of the Protocol.',
+      ),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(priorityDelay)],
   },
   permissions: [
+    // TODO: detailed breakdown of permissions
     {
-      name: 'dYdX Governance',
+      name: 'Rollup Admin',
       accounts: [
         discovery.getPermissionedAccount('PriorityExecutor', 'getAdmin'),
       ],
       description:
         'Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromSeconds(delaySeconds),
+        delayDescriptionFromSeconds(priorityDelay),
+      references: [
+        {
+          text: 'dYdX Governance documentation',
+          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process',
+        },
+      ],
+    },
+    {
+      name: 'Treasury Admin',
+      accounts: [
+        discovery.getPermissionedAccount('ShortTimelockExecutor', 'getAdmin'),
+      ],
+      description:
+        'Owner of dYdX token. Can upgrade Treasury, Liquidity Module and Merkle Distributor. ' +
+        delayDescriptionFromSeconds(shortTimelockDelay),
+      references: [
+        {
+          text: 'dYdX Governance documentation',
+          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process',
+        },
+      ],
+    },
+    {
+      name: 'Safety Module Admin',
+      accounts: [
+        discovery.getPermissionedAccount('LongTimelockExecutor', 'getAdmin'),
+      ],
+      description:
+        'Can upgrade Safety Module. ' +
+        delayDescriptionFromSeconds(longTimelockDelay),
+      references: [
+        {
+          text: 'dYdX Governance documentation',
+          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process',
+        },
+      ],
     },
     {
       name: 'Operators',
@@ -225,28 +279,7 @@ export const dydx: Layer2 = {
       description:
         'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
     },
-    {
-      name: 'Short Timelock Executor',
-      accounts: [discovery.getPermissionedAccount('Treasury', 'owner')],
-      description:
-        "Owner of the dYdX token and the Treasury. It validates and executes proposals affecting protocol parameters. It's controlled by the dYdX Governance.",
-    },
-    {
-      name: 'Long Timelock Executor',
-      accounts: [
-        discovery.getPermissionedAccount('SafetyModuleV2Proxy', 'owner'),
-      ],
-      description:
-        "Owner of the Safety Module. It validates and executes proposals affecting the governance consensus. It's controlled by the dYdX Governance.",
-    },
-    {
-      name: 'Starkware Priority Timelock Executor',
-      accounts: [
-        discovery.getPermissionedAccount('StarkExRemoverGovernorV2', 'owner'),
-      ],
-      description:
-        "It can execute proposals that control the configuration of the exchange. It's controlled by the dYdX Governance.",
-    },
+    getCommittee(discovery),
   ],
   milestones: [
     {
