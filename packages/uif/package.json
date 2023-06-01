@@ -15,6 +15,13 @@
     "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
     "typecheck": "tsc --noEmit"
   },
-  "devDependencies": {},
-  "dependencies": {}
+  "devDependencies": {
+    "@sinonjs/fake-timers": "^10.2.0",
+    "@types/sinonjs__fake-timers": "^8.1.2",
+    "wait-for-expect": "^3.0.2"
+  },
+  "dependencies": {
+    "@types/chalk": "^2.2.0",
+    "chalk": "^5.2.0"
+  }
 }
