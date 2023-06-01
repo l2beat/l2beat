@@ -60,7 +60,7 @@ export const aztecconnect: Layer2 = {
         '1/2 MSig can upgrade or change Validator. 2/15 MSig can pause.',
       sentiment: 'bad',
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
+    sequencerFailure: RISK_VIEW.SELF_SEQUENCE_ZK(),
     validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),

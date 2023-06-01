@@ -325,6 +325,13 @@ export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   }
 }
 
+export function SELF_SEQUENCE_ZK(delay?: number): ProjectRiskViewEntry {
+  return {
+    ...SELF_SEQUENCE(delay),
+    description: SELF_SEQUENCE(delay).description + ' Proposing new blocks requires creating ZK proofs.',
+  }
+}
+
 export function FORCE_VIA_L1(
   delay: number,
 ): ProjectRiskViewEntry {
@@ -414,6 +421,7 @@ export const RISK_VIEW = {
   CANONICAL,
   CANONICAL_USDC,
   SELF_SEQUENCE,
+  SELF_SEQUENCE_ZK,
   FORCE_VIA_L1,
   FORCE_VIA_L1_STARKEX_PERPETUAL,
   FORCE_VIA_L1_LOOPRING,
