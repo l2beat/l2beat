@@ -187,21 +187,6 @@ export const SEQUENCER_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
-export const SEQUENCER_RISK_POLYGONZKEVM: (
-  isForcedBatchDisallowed: boolean,
-) => ProjectRiskViewEntry = (isForcedBatchDisallowed: boolean) => {
-  assert(
-    isForcedBatchDisallowed,
-    'Polygon zkEVM sequencer risk has changed. Update the config after research',
-  )
-  return {
-    ...NO_MECHANISM,
-    description:
-      NO_MECHANISM.description +
-      ' Although the functionality exists in the code, but it is disabled.',
-  }
-}
-
 // Operator is down
 
 export function VALIDATOR_ESCAPE_MP(delay?: number): ProjectRiskViewEntry {
@@ -375,11 +360,14 @@ export const ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
-export const NO_MECHANISM: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'There is no mechanism to have transactions be included if the sequencer is down or censoring.',
-  sentiment: 'bad',
+export function NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
+  const additional = disabled === true ? ' Although the functionality exists in the code, it is currently disabled.' : ''
+  return {
+    value: 'No mechanism',
+    description:
+      'There is no mechanism to have transactions be included if the sequencer is down or censoring.' + additional,
+    sentiment: 'bad',
+  }
 }
 
 export const RISK_VIEW = {
