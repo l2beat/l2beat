@@ -12,6 +12,8 @@ import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkspace')
 
+const forcedWithdrawalDelay = 259200; // 3 days, TODO: get from contract!
+
 export const zkspace: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkspace'),
@@ -50,7 +52,7 @@ export const zkspace: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(),
+    sequencerFailure: RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
