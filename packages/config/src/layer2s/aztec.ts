@@ -64,7 +64,7 @@ export const aztec: Layer2 = {
       description: '1/2 MSig can change Validator.',
       sentiment: 'bad',
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
+    sequencerFailure: RISK_VIEW.SELF_SEQUENCE_ZK(),
     validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
