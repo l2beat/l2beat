@@ -1,24 +1,9 @@
 {
   "name": "dydx",
-  "blockNumber": 17379711,
-  "configHash": "0x8d04db13c3c5dad157ac7c7a6c66620d87f6782851e3ed5e341662f290816dc4",
+  "blockNumber": 17384663,
+  "configHash": "0x3bbfb6ce6ce27a324cc60fedd0b1747bb2a64f2fba3fe88a5d36618db2dfe1c7",
   "version": 1,
   "contracts": [
-    {
-      "name": "OracleSweeper",
-      "address": "0x00e3A83FDFD5328476A2e677c01D06E7f6fbC3F9",
-      "code": "https://etherscan.deth.net/address/0x00e3A83FDFD5328476A2e677c01D06E7f6fbC3F9",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "contracts": ["0x240BaE5A27233Fd3aC5440B5a598467725F7D1cd"],
-        "getContracts": ["0x240BaE5A27233Fd3aC5440B5a598467725F7D1cd"],
-        "minToWithdraw": "20000000000000000000",
-        "owner": "0x7b1660682078fe0eFD9310e8EFe32Cb93a0417bc",
-        "withdrawable": ["145933333333333333211"]
-      }
-    },
     {
       "name": "MerkleDistributor",
       "address": "0x01d3348601968aB85b4bb028979006eac235a588",
@@ -29,33 +14,43 @@
         "admin": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
       },
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "OWNER_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": ["0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"]
+          },
+          "CONFIG_UPDATER_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": ["0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": ["0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52"]
+          },
+          "UNPAUSER_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": ["0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"]
+          },
+          "CLAIM_OPERATOR_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": ["0x0fd829C3365A225FB9226e75c97c3A114bD3199e"]
+          }
+        },
         "canUpdateRoot": false,
         "CLAIM_OPERATOR_ROLE": "0x36dc7495d0ae0bc2a620bf292049e4d4e5f800043895b13c08a1977d3a3297f5",
         "CONFIG_UPDATER_ROLE": "0x1ab0187632b3cb5ac848b647a9edd463e705607328ab29602e80fc3fa8001918",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getActiveRoot": [
-          "0x9d4dcfe8a810527dcc079e9f4a7bf45b31231c421cbc06c1c89ce61f1d244628",
-          22,
-          "0x6261667962656961707a6d6c7973696b3372676133626a33777562636f74326a796c7171756f7a6c7a3477326a63727037626b6862337233733461"
-        ],
         "getAreRootUpdatesPaused": false,
         "getCurrentEpoch": 23,
         "getEpochParameters": [2419200, 1628002800],
         "getIpfsEpoch": 23,
         "getIpfsUpdatePeriod": 180,
         "getIpnsName": "rewards-data.dydx.foundation",
-        "getNextRootEpoch": 23,
-        "getProposedRoot": [
-          "0x9d4dcfe8a810527dcc079e9f4a7bf45b31231c421cbc06c1c89ce61f1d244628",
-          22,
-          "0x6261667962656961707a6d6c7973696b3372676133626a33777562636f74326a796c7171756f7a6c7a3477326a63727037626b6862337233733461"
-        ],
         "getRewardsOracle": "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
-        "getRewardsParameters": [
-          "1150685000000000000000000",
-          "1582192000000000000000000",
-          0
-        ],
         "getWaitingPeriodEnd": 1684266227,
         "hasPendingRoot": false,
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
@@ -67,46 +62,6 @@
         "WAITING_PERIOD": 604800
       },
       "derivedName": "MerkleDistributorV1"
-    },
-    {
-      "name": "StarkProxy[0]",
-      "address": "0x0b2B08AC98a1568A34208121c26F4F41a9e0FbB6",
-      "code": "https://etherscan.deth.net/address/0x0b2B08AC98a1568A34208121c26F4F41a9e0FbB6,0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-        "admin": "0xE16718eace44e0CB06b9cd164490A69A6425D1e3"
-      },
-      "values": {
-        "BORROWER_ROLE": "0x2344277e405079ec07749d374ba0b5862a4e45a6a05ac889dbb4a991c6f9354d",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DELEGATION_ADMIN_ROLE": "0xa434a7eae4dc33d33707b4ea79a4d2f6f2fde6108bbe8f120bc12699e152e91e",
-        "EXCHANGE_OPERATOR_ROLE": "0x03d64837e30f3bde14c47536cffb1dc441abfcf02e886b676a4ef6c83c39f980",
-        "FORCED_TRADE_GRACE_PERIOD": 604800,
-        "FORCED_TRADE_WAITING_PERIOD": 604800,
-        "getAllocatedBalanceCurrentEpoch": 81327662219,
-        "getAllocatedBalanceNextEpoch": 80954879773,
-        "getApprovedAmountForExternalWithdrawal": 0,
-        "getBorrowableAmount": 81327662219,
-        "getBorrowedAndDebtBalance": 0,
-        "getBorrowedBalance": 0,
-        "getDebtBalance": 0,
-        "getTokenBalance": 0,
-        "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
-        "isBorrowingRestricted": false,
-        "isStarkKeyAllowed": [false, false, false, false, false],
-        "LIQUIDITY_STAKING": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941",
-        "MERKLE_DISTRIBUTOR": "0x01d3348601968aB85b4bb028979006eac235a588",
-        "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
-        "STARK_PERPETUAL": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
-        "TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "VETO_GUARDIAN_ROLE": "0x41f69eec3ae0a88a429dd80e56128f5db215a5b5dd0900d4998a2f6516c09355",
-        "WITHDRAWAL_OPERATOR_ROLE": "0x6663d80d1ddaf7af549b98207d87c23d06e0a662c0bc9bd97a9b07d71e130fe6"
-      },
-      "errors": {
-        "isStarkKeyAllowed": "Too many values. Update configuration explore fully"
-      },
-      "derivedName": "StarkProxyV2"
     },
     {
       "name": "ClaimsProxy",
@@ -123,113 +78,6 @@
       }
     },
     {
-      "name": "StarkProxyAdmin[2]",
-      "address": "0x15774D4555fEfD57C9Fc8b11C8beba993eafcc13",
-      "code": "https://etherscan.deth.net/address/0x15774D4555fEfD57C9Fc8b11C8beba993eafcc13",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
-      },
-      "derivedName": "ProxyAdmin"
-    },
-    {
-      "name": "StarkProxy[3]",
-      "address": "0x16BEC2D9A010e7D8b2D576d17893C52Ddbfe4C06",
-      "code": "https://etherscan.deth.net/address/0x16BEC2D9A010e7D8b2D576d17893C52Ddbfe4C06,0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-        "admin": "0x4d9460e5C958f46a1Fe129954A069a37972f16EA"
-      },
-      "values": {
-        "BORROWER_ROLE": "0x2344277e405079ec07749d374ba0b5862a4e45a6a05ac889dbb4a991c6f9354d",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DELEGATION_ADMIN_ROLE": "0xa434a7eae4dc33d33707b4ea79a4d2f6f2fde6108bbe8f120bc12699e152e91e",
-        "EXCHANGE_OPERATOR_ROLE": "0x03d64837e30f3bde14c47536cffb1dc441abfcf02e886b676a4ef6c83c39f980",
-        "FORCED_TRADE_GRACE_PERIOD": 604800,
-        "FORCED_TRADE_WAITING_PERIOD": 604800,
-        "getAllocatedBalanceCurrentEpoch": 65062129775,
-        "getAllocatedBalanceNextEpoch": 64763903818,
-        "getApprovedAmountForExternalWithdrawal": 0,
-        "getBorrowableAmount": 65062125527,
-        "getBorrowedAndDebtBalance": 4248,
-        "getBorrowedBalance": 4248,
-        "getDebtBalance": 0,
-        "getTokenBalance": 1000000,
-        "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
-        "isBorrowingRestricted": false,
-        "isStarkKeyAllowed": [false, false, false, false, false],
-        "LIQUIDITY_STAKING": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941",
-        "MERKLE_DISTRIBUTOR": "0x01d3348601968aB85b4bb028979006eac235a588",
-        "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
-        "STARK_PERPETUAL": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
-        "TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "VETO_GUARDIAN_ROLE": "0x41f69eec3ae0a88a429dd80e56128f5db215a5b5dd0900d4998a2f6516c09355",
-        "WITHDRAWAL_OPERATOR_ROLE": "0x6663d80d1ddaf7af549b98207d87c23d06e0a662c0bc9bd97a9b07d71e130fe6"
-      },
-      "errors": {
-        "isStarkKeyAllowed": "Too many values. Update configuration explore fully"
-      },
-      "derivedName": "StarkProxyV2"
-    },
-    {
-      "name": "Oracle",
-      "address": "0x240BaE5A27233Fd3aC5440B5a598467725F7D1cd",
-      "code": "https://etherscan.deth.net/address/0x240BaE5A27233Fd3aC5440B5a598467725F7D1cd",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "EXPIRY_TIME": 300,
-        "owner": "0x00e3A83FDFD5328476A2e677c01D06E7f6fbC3F9"
-      },
-      "errors": {
-        "withdrawable": "Execution reverted"
-      }
-    },
-    {
-      "name": "StarkProxy[1]",
-      "address": "0x3e6E9EFb0A677a24F47093a22044dc5451A028cF",
-      "code": "https://etherscan.deth.net/address/0x3e6E9EFb0A677a24F47093a22044dc5451A028cF,0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-        "admin": "0x78e899e576C3565C3219dbC9Ea5042A9DBed36d3"
-      },
-      "values": {
-        "BORROWER_ROLE": "0x2344277e405079ec07749d374ba0b5862a4e45a6a05ac889dbb4a991c6f9354d",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DELEGATION_ADMIN_ROLE": "0xa434a7eae4dc33d33707b4ea79a4d2f6f2fde6108bbe8f120bc12699e152e91e",
-        "EXCHANGE_OPERATOR_ROLE": "0x03d64837e30f3bde14c47536cffb1dc441abfcf02e886b676a4ef6c83c39f980",
-        "FORCED_TRADE_GRACE_PERIOD": 604800,
-        "FORCED_TRADE_WAITING_PERIOD": 604800,
-        "getAllocatedBalanceCurrentEpoch": 81327662219,
-        "getAllocatedBalanceNextEpoch": 80954879773,
-        "getApprovedAmountForExternalWithdrawal": 0,
-        "getBorrowableAmount": 81327662219,
-        "getBorrowedAndDebtBalance": 0,
-        "getBorrowedBalance": 0,
-        "getDebtBalance": 0,
-        "getTokenBalance": 150010632,
-        "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
-        "isBorrowingRestricted": false,
-        "isStarkKeyAllowed": [false, false, false, false, false],
-        "LIQUIDITY_STAKING": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941",
-        "MERKLE_DISTRIBUTOR": "0x01d3348601968aB85b4bb028979006eac235a588",
-        "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
-        "STARK_PERPETUAL": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
-        "TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "VETO_GUARDIAN_ROLE": "0x41f69eec3ae0a88a429dd80e56128f5db215a5b5dd0900d4998a2f6516c09355",
-        "WITHDRAWAL_OPERATOR_ROLE": "0x6663d80d1ddaf7af549b98207d87c23d06e0a662c0bc9bd97a9b07d71e130fe6"
-      },
-      "errors": {
-        "isStarkKeyAllowed": "Too many values. Update configuration explore fully"
-      },
-      "derivedName": "StarkProxyV2"
-    },
-    {
       "name": "TreasuryProxyAdmin",
       "address": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
       "code": "https://etherscan.deth.net/address/0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
@@ -240,74 +88,6 @@
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
       },
       "derivedName": "ProxyAdmin"
-    },
-    {
-      "name": "StarkProxyAdmin[3]",
-      "address": "0x4d9460e5C958f46a1Fe129954A069a37972f16EA",
-      "code": "https://etherscan.deth.net/address/0x4d9460e5C958f46a1Fe129954A069a37972f16EA",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
-      },
-      "derivedName": "ProxyAdmin"
-    },
-    {
-      "name": "LinkToken",
-      "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
-      "code": "https://etherscan.deth.net/address/0x514910771AF9Ca656af840dff83E8264EcF986CA",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "decimals": 18,
-        "symbol": "LINK",
-        "totalSupply": "1000000000000000000000000000"
-      },
-      "errors": {
-        "name": "Execution reverted"
-      }
-    },
-    {
-      "name": "StarkProxy[4]",
-      "address": "0x531F3BE462F10386D01FBeD7fAD1d20A61Ce7874",
-      "code": "https://etherscan.deth.net/address/0x531F3BE462F10386D01FBeD7fAD1d20A61Ce7874,0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-        "admin": "0xfa45DCDbEc82C94082d283B62506320DB8632054"
-      },
-      "values": {
-        "BORROWER_ROLE": "0x2344277e405079ec07749d374ba0b5862a4e45a6a05ac889dbb4a991c6f9354d",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DELEGATION_ADMIN_ROLE": "0xa434a7eae4dc33d33707b4ea79a4d2f6f2fde6108bbe8f120bc12699e152e91e",
-        "EXCHANGE_OPERATOR_ROLE": "0x03d64837e30f3bde14c47536cffb1dc441abfcf02e886b676a4ef6c83c39f980",
-        "FORCED_TRADE_GRACE_PERIOD": 604800,
-        "FORCED_TRADE_WAITING_PERIOD": 604800,
-        "getAllocatedBalanceCurrentEpoch": 32531064887,
-        "getAllocatedBalanceNextEpoch": 32381951909,
-        "getApprovedAmountForExternalWithdrawal": 0,
-        "getBorrowableAmount": 32531064887,
-        "getBorrowedAndDebtBalance": 0,
-        "getBorrowedBalance": 0,
-        "getDebtBalance": 0,
-        "getTokenBalance": 0,
-        "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
-        "isBorrowingRestricted": false,
-        "isStarkKeyAllowed": [false, false, false, false, false],
-        "LIQUIDITY_STAKING": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941",
-        "MERKLE_DISTRIBUTOR": "0x01d3348601968aB85b4bb028979006eac235a588",
-        "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
-        "STARK_PERPETUAL": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
-        "TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "VETO_GUARDIAN_ROLE": "0x41f69eec3ae0a88a429dd80e56128f5db215a5b5dd0900d4998a2f6516c09355",
-        "WITHDRAWAL_OPERATOR_ROLE": "0x6663d80d1ddaf7af549b98207d87c23d06e0a662c0bc9bd97a9b07d71e130fe6"
-      },
-      "errors": {
-        "isStarkKeyAllowed": "Too many values. Update configuration explore fully"
-      },
-      "derivedName": "StarkProxyV2"
     },
     {
       "name": "LiquidityStaking",
@@ -377,17 +157,14 @@
         "getRewardsPerSecond": 0,
         "getShortfall": [],
         "getShortfallCount": 0,
-        "getStartOfEpoch": [
-          1628002800, 1630422000, 1632841200, 1635260400, 1637679600
-        ],
-        "getTimeRemainingInCurrentEpoch": 517105,
+        "getTimeRemainingInCurrentEpoch": 456865,
         "getTotalActiveBalanceCurrentEpoch": 325310648879,
-        "getTotalActiveBalanceNextEpoch": 323819519094,
+        "getTotalActiveBalanceNextEpoch": 322819519094,
         "getTotalBorrowedBalance": 4248,
         "getTotalBorrowerDebtBalance": 0,
         "getTotalDebtAvailableToWithdraw": 0,
         "getTotalInactiveBalanceCurrentEpoch": 232137743645,
-        "getTotalInactiveBalanceNextEpoch": 233628873430,
+        "getTotalInactiveBalanceNextEpoch": 234628873430,
         "hasEpochZeroStarted": true,
         "inBlackoutWindow": false,
         "name": "dYdX Staked USDC",
@@ -400,9 +177,6 @@
         "symbol": "stkUSDC",
         "TOTAL_ALLOCATION": 10000,
         "totalSupply": 557448392524
-      },
-      "errors": {
-        "getStartOfEpoch": "Too many values. Update configuration explore fully"
       },
       "derivedName": "LiquidityStakingV1"
     },
@@ -558,18 +332,6 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "name": "StarkProxyAdmin[1]",
-      "address": "0x78e899e576C3565C3219dbC9Ea5042A9DBed36d3",
-      "code": "https://etherscan.deth.net/address/0x78e899e576C3565C3219dbC9Ea5042A9DBed36d3",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
-      },
-      "derivedName": "ProxyAdmin"
-    },
-    {
       "name": "DydxGovernor",
       "address": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
       "code": "https://etherscan.deth.net/address/0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
@@ -677,7 +439,7 @@
       "derivedName": "DydxToken"
     },
     {
-      "name": "MD1ChainlinkAdapter",
+      "name": "ChainlinkAdapter",
       "address": "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
       "code": "https://etherscan.deth.net/address/0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
       "upgradeability": {
@@ -688,46 +450,9 @@
         "JOB_ID": "0x6365366562393532363736373431666438323462626636643132313163313031",
         "MERKLE_DISTRIBUTOR": "0x01d3348601968aB85b4bb028979006eac235a588",
         "ORACLE_CONTRACT": "0x240BaE5A27233Fd3aC5440B5a598467725F7D1cd",
-        "ORACLE_EXTERNAL_ADAPTER": "0xD26d233b5e444117d93CdbC676357b9C7Ff55906",
-        "read": [
-          "0x9d4dcfe8a810527dcc079e9f4a7bf45b31231c421cbc06c1c89ce61f1d244628",
-          22,
-          "0x6261667962656961707a6d6c7973696b3372676133626a33777562636f74326a796c7171756f7a6c7a3477326a63727037626b6862337233733461"
-        ]
-      }
-    },
-    {
-      "name": "FiatTokenV2_1",
-      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "code": "https://etherscan.deth.net/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48,0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF",
-      "upgradeability": {
-        "type": "ZeppelinOS proxy",
-        "implementation": "0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF",
-        "admin": "0x807a96288A1A408dBC13DE2b1d087d10356395d2"
+        "ORACLE_EXTERNAL_ADAPTER": "0xD26d233b5e444117d93CdbC676357b9C7Ff55906"
       },
-      "values": {
-        "blacklister": "0x5dB0115f3B72d19cEa34dD697cf412Ff86dc7E1b",
-        "CANCEL_AUTHORIZATION_TYPEHASH": "0x158b0a9edf7a828aad02f63cd515c68ef2f50ba807396f6d12842833a1597429",
-        "currency": "USD",
-        "decimals": 6,
-        "DOMAIN_SEPARATOR": "0x06c37168a7db5138defc7866392bb87a741f9b3d104deb5094588ce041cae335",
-        "masterMinter": "0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-        "name": "USD Coin",
-        "owner": "0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
-        "paused": false,
-        "pauser": "0xf0d160DEC1749aFaF5A831668093B1431f7C8527",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
-        "rescuer": "0x0000000000000000000000000000000000000000",
-        "symbol": "USDC",
-        "totalSupply": "27249324393992718",
-        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
-        "version": "2"
-      },
-      "errors": {
-        "admin": "Execution reverted",
-        "implementation": "Execution reverted"
-      }
+      "derivedName": "MD1ChainlinkAdapter"
     },
     {
       "name": "PriorityExecutor",
@@ -782,46 +507,6 @@
       }
     },
     {
-      "name": "StarkProxy[2]",
-      "address": "0xCB7fa3a2F47b62293Cc2E1a4C7752fC72E49FCe2",
-      "code": "https://etherscan.deth.net/address/0xCB7fa3a2F47b62293Cc2E1a4C7752fC72E49FCe2,0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6",
-        "admin": "0x15774D4555fEfD57C9Fc8b11C8beba993eafcc13"
-      },
-      "values": {
-        "BORROWER_ROLE": "0x2344277e405079ec07749d374ba0b5862a4e45a6a05ac889dbb4a991c6f9354d",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DELEGATION_ADMIN_ROLE": "0xa434a7eae4dc33d33707b4ea79a4d2f6f2fde6108bbe8f120bc12699e152e91e",
-        "EXCHANGE_OPERATOR_ROLE": "0x03d64837e30f3bde14c47536cffb1dc441abfcf02e886b676a4ef6c83c39f980",
-        "FORCED_TRADE_GRACE_PERIOD": 604800,
-        "FORCED_TRADE_WAITING_PERIOD": 604800,
-        "getAllocatedBalanceCurrentEpoch": 65062129775,
-        "getAllocatedBalanceNextEpoch": 64763903818,
-        "getApprovedAmountForExternalWithdrawal": 0,
-        "getBorrowableAmount": 65062129775,
-        "getBorrowedAndDebtBalance": 0,
-        "getBorrowedBalance": 0,
-        "getDebtBalance": 0,
-        "getTokenBalance": 0,
-        "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
-        "isBorrowingRestricted": false,
-        "isStarkKeyAllowed": [false, false, false, false, false],
-        "LIQUIDITY_STAKING": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941",
-        "MERKLE_DISTRIBUTOR": "0x01d3348601968aB85b4bb028979006eac235a588",
-        "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
-        "STARK_PERPETUAL": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
-        "TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "VETO_GUARDIAN_ROLE": "0x41f69eec3ae0a88a429dd80e56128f5db215a5b5dd0900d4998a2f6516c09355",
-        "WITHDRAWAL_OPERATOR_ROLE": "0x6663d80d1ddaf7af549b98207d87c23d06e0a662c0bc9bd97a9b07d71e130fe6"
-      },
-      "errors": {
-        "isStarkKeyAllowed": "Too many values. Update configuration explore fully"
-      },
-      "derivedName": "StarkProxyV2"
-    },
-    {
       "name": "StarkPerpetual",
       "address": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
       "code": "https://etherscan.deth.net/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8,0x2C0df87E073755139101b35c0A51e065291cc2d3,0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5,0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545,0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0,0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3",
@@ -848,7 +533,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 16571,
+        "getLastBatchId": 16580,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -857,7 +542,7 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 16278,
+        "getSequenceNumber": 16287,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
@@ -904,30 +589,6 @@
       "derivedName": "Executor"
     },
     {
-      "name": "StarkProxyAdmin[0]",
-      "address": "0xE16718eace44e0CB06b9cd164490A69A6425D1e3",
-      "code": "https://etherscan.deth.net/address/0xE16718eace44e0CB06b9cd164490A69A6425D1e3",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
-      },
-      "derivedName": "ProxyAdmin"
-    },
-    {
-      "name": "MasterMinter",
-      "address": "0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-      "code": "https://etherscan.deth.net/address/0xE982615d461DD5cD06575BbeA87624fda4e3de17",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getMinterManager": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "owner": "0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
-      }
-    },
-    {
       "name": "LongTimelockExecutor",
       "address": "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B",
       "code": "https://etherscan.deth.net/address/0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B",
@@ -965,18 +626,6 @@
       }
     },
     {
-      "name": "StarkProxyAdmin[4]",
-      "address": "0xfa45DCDbEc82C94082d283B62506320DB8632054",
-      "code": "https://etherscan.deth.net/address/0xfa45DCDbEc82C94082d283B62506320DB8632054",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
-      },
-      "derivedName": "ProxyAdmin"
-    },
-    {
       "name": "StarkExRemoverGovernorV2",
       "address": "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
       "code": "https://etherscan.deth.net/address/0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
@@ -999,34 +648,10 @@
   ],
   "eoas": [
     "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080",
-    "0x5dB0115f3B72d19cEa34dD697cf412Ff86dc7E1b",
-    "0x7b1660682078fe0eFD9310e8EFe32Cb93a0417bc",
-    "0x807a96288A1A408dBC13DE2b1d087d10356395d2",
     "0x8129b737912e17212C8693B781928f5D0303390a",
-    "0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
-    "0xD26d233b5e444117d93CdbC676357b9C7Ff55906",
-    "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0",
-    "0xf0d160DEC1749aFaF5A831668093B1431f7C8527",
-    "0xFcb19e6a322b27c06842A71e8c725399f049AE3a"
+    "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
   ],
   "abis": {
-    "0x00e3A83FDFD5328476A2e677c01D06E7f6fbC3F9": [
-      "constructor(address _nodeRewards, uint256 _minToWithdraw)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function acceptAdmin(uint256[] _contractIdxs)",
-      "function addContracts(address[] _contracts)",
-      "function contracts(uint256) view returns (address)",
-      "function getContracts() view returns (address[])",
-      "function minToWithdraw() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function removeContract(uint256 _index)",
-      "function renounceOwnership()",
-      "function setMinToWithdraw(uint256 _minToWithdraw)",
-      "function transferAdmin(uint256[] _contractIdxs, address _newAdmin)",
-      "function transferOwnership(address newOwner)",
-      "function withdraw(uint256[] _contractIdxs)",
-      "function withdrawable() view returns (uint256[])"
-    ],
     "0x01d3348601968aB85b4bb028979006eac235a588": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1048,17 +673,6 @@
       "function transfer(address token, address recipient, uint256 amount)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x0b2B08AC98a1568A34208121c26F4F41a9e0FbB6": [
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address)",
-      "function initialize(address _logic, address _admin, bytes _data) payable",
-      "function initialize(address _logic, bytes _data) payable",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x0fd829C3365A225FB9226e75c97c3A114bD3199e": [
       "constructor(address safetyModule, address liquidityStaking, address merkleDistributor, address rewardsTreasuryVester)",
       "function LIQUIDITY_STAKING() view returns (address)",
@@ -1066,47 +680,6 @@
       "function REWARDS_TREASURY_VESTER() view returns (address)",
       "function SAFETY_MODULE() view returns (address)",
       "function claimRewards(bool claimSafetyRewards, bool claimLiquidityRewards, uint256 merkleCumulativeAmount, bytes32[] merkleProof, bool vestFromTreasuryVester) returns (uint256)"
-    ],
-    "0x15774D4555fEfD57C9Fc8b11C8beba993eafcc13": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x16BEC2D9A010e7D8b2D576d17893C52Ddbfe4C06": [
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address)",
-      "function initialize(address _logic, address _admin, bytes _data) payable",
-      "function initialize(address _logic, bytes _data) payable",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x240BaE5A27233Fd3aC5440B5a598467725F7D1cd": [
-      "function oracleRequest(address _sender, uint256 _payment, bytes32 _specId, address _callbackAddress, bytes4 _callbackFunctionId, uint256 _nonce, uint256 _dataVersion, bytes _data)",
-      "function fulfillOracleRequest(bytes32 _requestId, uint256 _payment, address _callbackAddress, bytes4 _callbackFunctionId, uint256 _expiration, bytes32 _data) returns (bool)",
-      "function EXPIRY_TIME() view returns (uint256)",
-      "function withdrawable() view returns (uint256)",
-      "function cancelOracleRequest(bytes32 _requestId, uint256 _payment, bytes4 _callbackFunc, uint256 _expiration)",
-      "function renounceOwnership()",
-      "function setFulfillmentPermission(address _node, bool _allowed)",
-      "function owner() view returns (address)",
-      "function onTokenTransfer(address _sender, uint256 _amount, bytes _data)",
-      "function getAuthorizationStatus(address _node) view returns (bool)",
-      "function transferOwnership(address _newOwner)",
-      "function withdraw(address _recipient, uint256 _amount)",
-      "constructor(address _link)",
-      "event OracleRequest(bytes32 indexed specId, address requester, bytes32 requestId, uint256 payment, address callbackAddr, bytes4 callbackFunctionId, uint256 cancelExpiration, uint256 dataVersion, bytes data)",
-      "event CancelOracleRequest(bytes32 indexed requestId)",
-      "event OwnershipRenounced(address indexed previousOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
     ],
     "0x2C0df87E073755139101b35c0A51e065291cc2d3": [
       "function VERSION() view returns (string)",
@@ -1226,17 +799,6 @@
       "function withdrawStake(address recipient, uint256 stakeAmount)",
       "function withdrawStakeFor(address staker, address recipient, uint256 stakeAmount)"
     ],
-    "0x3e6E9EFb0A677a24F47093a22044dc5451A028cF": [
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address)",
-      "function initialize(address _logic, address _admin, bytes _data) payable",
-      "function initialize(address _logic, bytes _data) payable",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545": [
       "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
       "event LogDepositCancel(uint256 starkKey, uint256 vaultId, uint256 assetId)",
@@ -1328,45 +890,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x4d9460e5C958f46a1Fe129954A069a37972f16EA": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x514910771AF9Ca656af840dff83E8264EcF986CA": [
-      "function name() view returns (string)",
-      "function approve(address _spender, uint256 _value) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
-      "function decimals() view returns (uint8)",
-      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool success)",
-      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool success)",
-      "function balanceOf(address _owner) view returns (uint256 balance)",
-      "function symbol() view returns (string)",
-      "function transfer(address _to, uint256 _value) returns (bool success)",
-      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool success)",
-      "function allowance(address _owner, address _spender) view returns (uint256 remaining)",
-      "constructor()",
-      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)"
-    ],
-    "0x531F3BE462F10386D01FBeD7fAD1d20A61Ce7874": [
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address)",
-      "function initialize(address _logic, address _admin, bytes _data) payable",
-      "function initialize(address _logic, bytes _data) payable",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1495,17 +1018,6 @@
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x78e899e576C3565C3219dbC9Ea5042A9DBed36d3": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1662,85 +1174,6 @@
       "function requestOracleData(uint256 fee)",
       "function transferAndRequestOracleData(uint256 fee)",
       "function writeOracleData(bytes32 merkleRoot, uint256 epoch, bytes ipfsCid)"
-    ],
-    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": [
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function implementation() view returns (address)",
-      "function changeAdmin(address newAdmin)",
-      "function admin() view returns (address)",
-      "constructor(address _implementation)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address implementation)"
-    ],
-    "0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF": [
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event AuthorizationCanceled(address indexed authorizer, bytes32 indexed nonce)",
-      "event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce)",
-      "event Blacklisted(address indexed _account)",
-      "event BlacklisterChanged(address indexed newBlacklister)",
-      "event Burn(address indexed burner, uint256 amount)",
-      "event MasterMinterChanged(address indexed newMasterMinter)",
-      "event Mint(address indexed minter, address indexed to, uint256 amount)",
-      "event MinterConfigured(address indexed minter, uint256 minterAllowedAmount)",
-      "event MinterRemoved(address indexed oldMinter)",
-      "event OwnershipTransferred(address previousOwner, address newOwner)",
-      "event Pause()",
-      "event PauserChanged(address indexed newAddress)",
-      "event RescuerChanged(address indexed newRescuer)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event UnBlacklisted(address indexed _account)",
-      "event Unpause()",
-      "function CANCEL_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function RECEIVE_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
-      "function TRANSFER_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function authorizationState(address authorizer, bytes32 nonce) view returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function blacklist(address _account)",
-      "function blacklister() view returns (address)",
-      "function burn(uint256 _amount)",
-      "function cancelAuthorization(address authorizer, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
-      "function configureMinter(address minter, uint256 minterAllowedAmount) returns (bool)",
-      "function currency() view returns (string)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 decrement) returns (bool)",
-      "function increaseAllowance(address spender, uint256 increment) returns (bool)",
-      "function initialize(string tokenName, string tokenSymbol, string tokenCurrency, uint8 tokenDecimals, address newMasterMinter, address newPauser, address newBlacklister, address newOwner)",
-      "function initializeV2(string newName)",
-      "function initializeV2_1(address lostAndFound)",
-      "function isBlacklisted(address _account) view returns (bool)",
-      "function isMinter(address account) view returns (bool)",
-      "function masterMinter() view returns (address)",
-      "function mint(address _to, uint256 _amount) returns (bool)",
-      "function minterAllowance(address minter) view returns (uint256)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pauser() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function receiveWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
-      "function removeMinter(address minter) returns (bool)",
-      "function rescueERC20(address tokenContract, address to, uint256 amount)",
-      "function rescuer() view returns (address)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
-      "function unBlacklist(address _account)",
-      "function unpause()",
-      "function updateBlacklister(address _newBlacklister)",
-      "function updateMasterMinter(address _newMasterMinter)",
-      "function updatePauser(address _newPauser)",
-      "function updateRescuer(address newRescuer)",
-      "function version() view returns (string)"
     ],
     "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": [
       "constructor(address admin, uint256 delay, uint256 gracePeriod, uint256 minimumDelay, uint256 maximumDelay, uint256 priorityPeriod, uint256 propositionThreshold, uint256 voteDuration, uint256 voteDifferential, uint256 minimumQuorum, address priorityExecutor)",
@@ -1972,106 +1405,6 @@
       "function mainRemoveGovernor(address governorForRemoval)",
       "function unFreeze()"
     ],
-    "0xc77F93fF1f743801FA668c9bea0346d0A29Ff2f6": [
-      "constructor(address liquidityStaking, address starkPerpetual, address token, address merkleDistributor)",
-      "event Borrowed(uint256 amount, uint256 newBorrowedBalance)",
-      "event BorrowingRestrictionChanged(bool isBorrowingRestricted)",
-      "event DepositCanceled(uint256 starkKey, uint256 starkAssetType, uint256 vaultId, bool isGuardianAction)",
-      "event DepositReclaimed(uint256 starkKey, uint256 starkAssetType, uint256 vaultId, uint256 fundsReclaimed, bool isGuardianAction)",
-      "event DepositedToExchange(uint256 starkKey, uint256 starkAssetType, uint256 starkVaultId, uint256 tokenAmount)",
-      "event ExternalWithdrewEther(address recipient, uint256 amount)",
-      "event ExternalWithdrewOtherToken(address token, address recipient, uint256 amount)",
-      "event ExternalWithdrewToken(address recipient, uint256 amount)",
-      "event GuardianUpdateApprovedAmountForExternalWithdrawal(uint256 amount)",
-      "event GuardianVetoedForcedTradeRequest(bytes32 argsHash)",
-      "event QueuedForcedTradeRequest(uint256[12] args, bytes32 argsHash)",
-      "event RepaidBorrow(uint256 amount, uint256 newBorrowedBalance, bool isGuardianAction)",
-      "event RepaidDebt(uint256 amount, uint256 newDebtBalance, bool isGuardianAction)",
-      "event RequestedForcedTrade(uint256 starkKey, uint256 vaultId, bool isGuardianAction)",
-      "event RequestedForcedWithdrawal(uint256 starkKey, uint256 vaultId, bool isGuardianAction)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event UpdatedExternalRecipient(address recipient, bool isAllowed)",
-      "event UpdatedStarkKey(uint256 starkKey, bool isAllowed)",
-      "event WithdrewFromExchange(uint256 starkKey, uint256 starkAssetType, uint256 tokenAmount, bool isGuardianAction)",
-      "function BORROWER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DELEGATION_ADMIN_ROLE() view returns (bytes32)",
-      "function EXCHANGE_OPERATOR_ROLE() view returns (bytes32)",
-      "function FORCED_TRADE_GRACE_PERIOD() view returns (uint256)",
-      "function FORCED_TRADE_WAITING_PERIOD() view returns (uint256)",
-      "function GUARDIAN_ROLE() view returns (bytes32)",
-      "function LIQUIDITY_STAKING() view returns (address)",
-      "function MERKLE_DISTRIBUTOR() view returns (address)",
-      "function OWNER_ROLE() view returns (bytes32)",
-      "function STARK_PERPETUAL() view returns (address)",
-      "function TOKEN() view returns (address)",
-      "function VETO_GUARDIAN_ROLE() view returns (bytes32)",
-      "function WITHDRAWAL_OPERATOR_ROLE() view returns (bytes32)",
-      "function allowExternalRecipient(address recipient)",
-      "function allowStarkKey(uint256 starkKey)",
-      "function autoPayOrBorrow() returns (uint256, uint256, uint256)",
-      "function borrow(uint256 amount)",
-      "function claimRewardsFromMerkleDistributor(uint256 cumulativeAmount, bytes32[] merkleProof) returns (uint256)",
-      "function depositCancel(uint256 starkKey, uint256 assetType, uint256 vaultId)",
-      "function depositReclaim(uint256 starkKey, uint256 assetType, uint256 vaultId)",
-      "function depositToExchange(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 quantizedAmount) returns (uint256)",
-      "function disallowExternalRecipient(address recipient)",
-      "function disallowStarkKey(uint256 starkKey)",
-      "function externalWithdrawEther(address recipient, uint256 amount)",
-      "function externalWithdrawOtherToken(address token, address recipient, uint256 amount)",
-      "function externalWithdrawToken(address recipient, uint256 amount)",
-      "function forcedTradeRequest(uint256[12] args, bytes signature)",
-      "function forcedWithdrawalRequest(uint256 starkKey, uint256 vaultId, uint256 quantizedAmount, bool premiumCost)",
-      "function getAllocatedBalanceCurrentEpoch() view returns (uint256)",
-      "function getAllocatedBalanceNextEpoch() view returns (uint256)",
-      "function getApprovedAmountForExternalWithdrawal() view returns (uint256)",
-      "function getBorrowableAmount() view returns (uint256)",
-      "function getBorrowedAndDebtBalance() view returns (uint256)",
-      "function getBorrowedBalance() view returns (uint256)",
-      "function getDebtBalance() view returns (uint256)",
-      "function getQueuedForcedTradeTimestamp(bytes32 argsHash) view returns (uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getTokenBalance() view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function guardianDepositCancel(uint256 starkKey, uint256 assetType, uint256 vaultId)",
-      "function guardianDepositReclaim(uint256 starkKey, uint256 assetType, uint256 vaultId)",
-      "function guardianForcedTradeRequest(uint256[12] args, bytes signature)",
-      "function guardianForcedWithdrawalRequest(uint256 starkKey, uint256 vaultId, uint256 quantizedAmount, bool premiumCost)",
-      "function guardianRepayBorrow(uint256 amount)",
-      "function guardianRepayDebt(uint256 amount)",
-      "function guardianSetBorrowingRestriction(bool isBorrowingRestricted)",
-      "function guardianVetoForcedTradeRequests(bytes32[] argsHashes)",
-      "function guardianWithdrawFromExchange(uint256 starkKey, uint256 assetType) returns (uint256)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseApprovedAmountForExternalWithdrawal(uint256 amount) returns (uint256)",
-      "function initialize()",
-      "function isBorrowingRestricted() view returns (bool)",
-      "function isRecipientAllowed(address recipient) view returns (bool)",
-      "function isStarkKeyAllowed(uint256 starkKey) view returns (bool)",
-      "function queueForcedTradeRequest(uint256[12] args)",
-      "function renounceRole(bytes32 role, address account)",
-      "function repayBorrow(uint256 amount)",
-      "function repayDebt(uint256 amount)",
-      "function resetApprovedAmountForExternalWithdrawal() returns (uint256)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setExchangeContractAllowance(address token, uint256 amount)",
-      "function setStakingContractAllowance(address token, uint256 amount)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function withdrawFromExchange(uint256 starkKey, uint256 assetType) returns (uint256)"
-    ],
-    "0xCB7fa3a2F47b62293Cc2E1a4C7752fC72E49FCe2": [
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address)",
-      "function initialize(address _logic, address _admin, bytes _data) payable",
-      "function initialize(address _logic, bytes _data) payable",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
@@ -2196,39 +1529,6 @@
       "function unregisterOperator(address removedOperator)",
       "function updateState(uint256[] programOutput, uint256[] applicationData)"
     ],
-    "0xE16718eace44e0CB06b9cd164490A69A6425D1e3": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0xE982615d461DD5cD06575BbeA87624fda4e3de17": [
-      "function incrementMinterAllowance(uint256 _allowanceIncrement) returns (bool)",
-      "function setMinterManager(address _newMinterManager)",
-      "function decrementMinterAllowance(uint256 _allowanceDecrement) returns (bool)",
-      "function owner() view returns (address)",
-      "function getMinterManager() view returns (address)",
-      "function getWorker(address _controller) view returns (address)",
-      "function configureController(address _controller, address _worker)",
-      "function configureMinter(uint256 _newAllowance) returns (bool)",
-      "function removeMinter() returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function removeController(address _controller)",
-      "constructor(address _minterManager)",
-      "event MinterManagerSet(address indexed _oldMinterManager, address indexed _newMinterManager)",
-      "event MinterConfigured(address indexed _msgSender, address indexed _minter, uint256 _allowance)",
-      "event MinterRemoved(address indexed _msgSender, address indexed _minter)",
-      "event MinterAllowanceIncremented(address indexed _msgSender, address indexed _minter, uint256 _increment, uint256 _newAllowance)",
-      "event MinterAllowanceDecremented(address indexed msgSender, address indexed minter, uint256 decrement, uint256 newAllowance)",
-      "event ControllerConfigured(address indexed _controller, address indexed _worker)",
-      "event ControllerRemoved(address indexed _controller)",
-      "event OwnershipTransferred(address previousOwner, address newOwner)"
-    ],
     "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": [
       "constructor(address admin, uint256 delay, uint256 gracePeriod, uint256 minimumDelay, uint256 maximumDelay, uint256 propositionThreshold, uint256 voteDuration, uint256 voteDifferential, uint256 minimumQuorum)",
       "event CancelledAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall)",
@@ -2282,17 +1582,6 @@
       "function registerAdmin(address newAdmin)",
       "function removeAdmin(address removedAdmin)",
       "function setProgramHash(uint256 newProgramHash)"
-    ],
-    "0xfa45DCDbEc82C94082d283B62506320DB8632054": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0": [
       "constructor(address starkPerpetual, address[] mainGovernorsToRemove, address[] proxyGovernorsToRemove)",

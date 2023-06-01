@@ -73,6 +73,20 @@
                   }
                 }
               }
+            },
+            "description": {
+              "description": "Description for the contract ",
+              "type": "string"
+            },
+            "methods": {
+              "type": "object",
+              "description": "Key-Value store for description <Method>: <Description>",
+              "unevaluatedProperties": false,
+              "patternProperties": {
+                "^.+$": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
