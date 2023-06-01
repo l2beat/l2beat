@@ -198,20 +198,12 @@ export class ProjectDiscovery {
     )
     const address = EthereumAddress(account)
     const isEOA = this.discovery.eoas.includes(address)
-    if (isEOA) {
-      return {
-        address,
-        type: 'EOA',
-      }
-    }
     const contract = this.discovery.contracts.find(
       (contract) => contract.address === address,
     )
-    assert(contract, `Contract ${account} not found in discovery file`)
+    const isMultisig = contract?.upgradeability.type === 'gnosis safe'
 
-    const isMultisig = contract.upgradeability.type === 'gnosis safe'
-
-    const type = isMultisig ? 'MultiSig' : 'Contract'
+    const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
 
     return { address: address, type }
   }
