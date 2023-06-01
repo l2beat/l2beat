@@ -1,7 +1,8 @@
 {
   "name": "aztec",
-  "blockNumber": 16534856,
-  "configHash": "0x36e9c5a6d52baa56d4dcd7e01eb71d7c29e0ae4a474ab4fc4fa3d14b5f8d67fe",
+  "blockNumber": 17378164,
+  "configHash": "0x720637461afbd787d4bb2bde1369867f0f851758002d1bfad5bcf8b225a3176a",
+  "version": 1,
   "contracts": [
     {
       "name": "AztecFeeDistributor",
@@ -17,9 +18,10 @@
         "reimburseConstant": 678600,
         "rollupProcessor": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
         "router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        "txFeeBalance": ["1501001343374203885", "55870000000000000000", 19100],
+        "txFeeBalance": ["6699119958928983258", 0, 19100],
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "AztecFeeDistributor"
     },
     {
       "name": "RollupProcessor",
@@ -29,66 +31,69 @@
         "type": "immutable"
       },
       "values": {
-        "dataRoot": "0x0017ff53668d1a4674f1602d7791b016dd1a07c9ee7cb9b029f2bc08ed474e39",
-        "dataSize": 846848,
+        "dataRoot": "0x14c2a9b5b41a31c6926b4bdcf9cec77e72c0559f0f9b0bd9044c0bce0000d406",
+        "dataSize": 914176,
         "escapeBlockLowerBound": 4560,
         "escapeBlockUpperBound": 4800,
         "ethAssetId": 0,
         "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
         "getAssetPermitSupport": [false, false, false],
-        "getEscapeHatchStatus": [false, 1636],
+        "getEscapeHatchStatus": [false, 2396],
         "getTotalDeposited": [
-          "35673935477451296404343",
-          "19435785991265097315675826",
+          "35760448420451296404343",
+          "19481078867265097315675826",
           6576737691
         ],
         "getTotalFees": [
-          "298872944007583421000",
-          "51774656335015158356924",
+          "306631927007583421000",
+          "52139932335015158356924",
           4519622
         ],
         "getTotalPendingDeposit": [
-          "77356796733427981245",
-          "9036510745687623743968",
+          "75341637733427981245",
+          "9030790745687623743968",
           300
         ],
         "getTotalWithdrawn": [
-          "33815266992720911319526",
-          "19183370459776049374020383",
+          "34162496693720911319526",
+          "19275024459776049374020383",
           6516224113
         ],
-        "nextRollupId": 3972,
-        "nullRoot": "0x1080d224e72019ec964235cd11656224914afcbe287a903e3778271d84555c22",
+        "nextRollupId": 4235,
+        "nullRoot": "0x05d4297745f8fc89c40d427a7925d7c3428f2e4affc8a42902a703963342e26e",
         "numberOfAssets": 4,
         "owner": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
         "paused": false,
+        "removedRollupProviders": [],
         "rollupNumPubInputs": 14,
+        "rollupProviders": [],
         "rollupPubInputLength": 448,
-        "rootRoot": "0x27a12e84085c47d8dd02aa5a115a050ac976807b05dea74c3b75f98a2e0a22a5",
+        "rootRoot": "0x2597fc68d8074b755afbc58dbba91e4e573223a730c7b484654061793a7c332a",
         "totalDeposited": [
-          "35673935477451296404343",
-          "19435785991265097315675826",
+          "35760448420451296404343",
+          "19481078867265097315675826",
           6576737691
         ],
         "totalFees": [
-          "298872944007583421000",
-          "51774656335015158356924",
+          "306631927007583421000",
+          "52139932335015158356924",
           4519622
         ],
         "totalPendingDeposit": [
-          "77356796733427981245",
-          "9036510745687623743968",
+          "75341637733427981245",
+          "9030790745687623743968",
           300
         ],
         "totalWithdrawn": [
-          "33815266992720911319526",
-          "19183370459776049374020383",
+          "34162496693720911319526",
+          "19275024459776049374020383",
           6516224113
         ],
         "txNumPubInputs": 12,
         "txPubInputLength": 384,
         "verifier": "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1"
-      }
+      },
+      "derivedName": "RollupProcessor"
     },
     {
       "name": "TurboVerifier",
@@ -99,7 +104,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Aztec Multisig",
       "address": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
       "code": "https://etherscan.deth.net/address/0xE298a76986336686CC3566469e3520d23D1a8aaD,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -114,9 +119,10 @@
           "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
         ],
         "getThreshold": 1,
-        "nonce": 237,
+        "nonce": 266,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
