@@ -25,7 +25,7 @@ export const cartesiHoneypot: Layer2 = {
       socialMedia: [
         'https://twitter.com/cartesiproject',
         'https://medium.com/cartesi',
-        'https://discord.gg/uxYE5YNv3N',
+        'https://discord.gg/G2tCH5KkcM',
       ],
     },
   },
