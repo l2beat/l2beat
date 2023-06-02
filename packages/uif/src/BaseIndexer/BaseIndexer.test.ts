@@ -31,6 +31,7 @@ describe(BaseIndexer.name, () => {
     await time.nextAsync()
 
     expect(indexer.update).toHaveBeenOnlyCalledWith(0, 2) // called with the lowest height
+    expect(indexer.getHeight()).toEqual(2)
   })
 })
 

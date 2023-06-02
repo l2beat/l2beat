@@ -54,6 +54,28 @@ describe(baseIndexerReducer.name, () => {
       })
       expect(effects).toEqual([{ type: 'Update', to: 1 }])
     })
+
+    it('should prevent an update that would lower current height', () => {
+      const initialState = getInitialState(['a'])
+
+      const fn = () =>
+        reduceWithBaseIndexerReducer(initialState, [
+          {
+            type: 'DependencyUpdated',
+            index: 0,
+            height: 2,
+          },
+          {
+            type: 'DependencyUpdated',
+            index: 0,
+            height: 1,
+          },
+        ])
+
+      expect(fn).toThrow(
+        "Attempting to update dependency height to a lower value than it's current height",
+      )
+    })
   })
 
   describe('UpdateStarted', () => {
@@ -63,7 +85,8 @@ describe(baseIndexerReducer.name, () => {
       const [state, effects] = reduceWithBaseIndexerReducer(initialState, [
         {
           type: 'UpdateStarted',
-          height: 1,
+          from: 0,
+          to: 1,
         },
       ])
 
@@ -72,6 +95,60 @@ describe(baseIndexerReducer.name, () => {
         batchSize: expect.a(Number),
         dependencyHeights: [],
         status: 'updating',
+      })
+      expect(effects).toEqual([])
+    })
+  })
+
+  describe('UpdateSucceeded', () => {
+    it('should update height and change state to idle', () => {
+      const initialState = getInitialState()
+
+      const [state, effects] = reduceWithBaseIndexerReducer(initialState, [
+        {
+          type: 'UpdateStarted',
+          from: 0,
+          to: 1,
+        },
+        {
+          type: 'UpdateSucceeded',
+          from: 0,
+          to: 1,
+        },
+      ])
+
+      expect(state).toEqual({
+        height: 1,
+        batchSize: expect.a(Number),
+        dependencyHeights: [],
+        status: 'idle',
+      })
+      expect(effects).toEqual([])
+    })
+  })
+
+  describe('UpdateFailed', () => {
+    it('should change state to errored', () => {
+      const initialState = getInitialState()
+
+      const [state, effects] = reduceWithBaseIndexerReducer(initialState, [
+        {
+          type: 'UpdateStarted',
+          from: 1,
+          to: 2,
+        },
+        {
+          type: 'UpdateFailed',
+          from: 1,
+          to: 2,
+        },
+      ])
+
+      expect(state).toEqual({
+        height: 0,
+        batchSize: expect.a(Number),
+        dependencyHeights: [],
+        status: 'errored',
       })
       expect(effects).toEqual([])
     })

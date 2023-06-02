@@ -1,8 +1,10 @@
+import assert from 'node:assert'
+
 export interface BaseIndexerState {
   height: number
   dependencyHeights: number[]
   batchSize: number
-  status: 'idle' | 'updating' | 'invalidating'
+  status: 'idle' | 'updating' | 'invalidating' | 'errored'
 }
 
 interface DependencyUpdated {
@@ -13,7 +15,8 @@ interface DependencyUpdated {
 
 interface UpdateStarted {
   type: 'UpdateStarted'
-  height: number
+  from: number
+  to: number
 }
 
 interface UpdateSucceeded {
@@ -65,6 +68,10 @@ export function baseIndexerReducer(
         ...state,
         dependencyHeights: state.dependencyHeights.map((height, index) => {
           if (index === action.index) {
+            assert(
+              height < action.height,
+              "Attempting to update dependency height to a lower value than it's current height",
+            )
             return action.height
           }
           return height
@@ -87,6 +94,14 @@ export function baseIndexerReducer(
         },
         [],
       ]
+
+    case 'UpdateSucceeded':
+      assert(state.status === 'updating')
+      return [{ ...state, status: 'idle', height: action.to }, []]
+
+    case 'UpdateFailed':
+      assert(state.status === 'updating')
+      return [{ ...state, status: 'errored' }, []]
 
     default:
       throw new Error('unreachable')

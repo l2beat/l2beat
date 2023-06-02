@@ -1,4 +1,4 @@
-import { Indexer } from '../Indexer'
+import { Indexer, Subscription, UpdateEvent } from '../Indexer'
 import { JobQueue } from '../tools/JobQueue'
 import { json } from '../tools/json'
 import { Logger } from '../tools/Logger'
@@ -9,7 +9,7 @@ import {
   getInitialState,
 } from './reducer'
 
-export abstract class BaseIndexer {
+export abstract class BaseIndexer implements Indexer {
   abstract update(from: number, to: number): Promise<void>
 
   private state: BaseIndexerState
@@ -33,6 +33,18 @@ export abstract class BaseIndexer {
     this.effectsQueue = new JobQueue({ maxConcurrentJobs: 1 }, this.logger)
   }
 
+  subscribe(callback: (event: UpdateEvent) => void): Subscription {
+    throw new Error('Method not implemented.')
+  }
+
+  start(): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
+
+  getHeight(): number {
+    return this.state.height
+  }
+
   private dispatch(action: BaseIndexerAction): void {
     const [newState, effects] = baseIndexerReducer(this.state, action)
 
@@ -47,7 +59,12 @@ export abstract class BaseIndexer {
         case 'Update':
           this.effectsQueue.add({
             name: 'Update',
-            execute: () => this.update(this.state.height, effect.to),
+            execute: async () => {
+              const from = this.state.height
+              this.dispatch({ type: 'UpdateStarted', from, to: effect.to })
+              await this.update(from, effect.to)
+              this.dispatch({ type: 'UpdateSucceeded', from, to: effect.to })
+            },
           })
           break
         default:
