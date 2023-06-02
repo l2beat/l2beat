@@ -250,11 +250,6 @@ export const aztec: Layer2 = {
         upgradeConsiderations:
           'Verifier field in RollupProcessor can be changed with no delay.',
       }),
-      {
-        address: EthereumAddress('0x7FaE73Be814d94318fa0756a5D73ae9cf3BA7530'),
-        description: 'Verification Keys for the Verifier.',
-        name: 'VerificationKeys',
-      },
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
