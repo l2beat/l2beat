@@ -105,7 +105,7 @@ describe(EtherscanClient.name, () => {
       expect(httpClient.fetch.calls.length).toEqual(3)
     })
 
-    it('retries on erros, then fetches the result', async () => {
+    it('retries on errors, then fetches the result', async () => {
       const response = { status: '1' as const, message: 'OK', result: [1, 2] }
       const httpClient = mockObject<HttpClient>({
         async fetch() {
