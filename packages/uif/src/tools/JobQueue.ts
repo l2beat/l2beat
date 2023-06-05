@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Logger } from './Logger'
 
 export interface Job {
@@ -19,7 +20,10 @@ export class JobQueue {
   private readonly inProgress: JobInQueue[] = []
   private lastUpdatedAt = new Date().toISOString()
 
-  constructor(private readonly options: JobQueueOptions, private readonly logger: Logger) {
+  constructor(
+    private readonly options: JobQueueOptions,
+    private readonly logger: Logger,
+  ) {
     this.logger = logger.for(this)
   }
 
@@ -68,12 +72,12 @@ export class JobQueue {
         this.queue.unshift({ ...job, failureCount: job.failureCount + 1 })
       }
 
-      if (shouldRetry && job.maxRetries != null) {
+      if (shouldRetry && job.maxRetries) {
         const { message, stack = '' } = makeError(error)
         this.logger.debug(
           `Retrying job "${job.name}" due to ${message}${
             stack ? ' ' + stack : ''
-          }`
+          }`,
         )
       } else {
         this.logger.error(`Job "${job.name}" failed with:`, error)

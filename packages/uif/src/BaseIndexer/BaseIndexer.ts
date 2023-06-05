@@ -33,7 +33,7 @@ export abstract class BaseIndexer implements Indexer {
     this.effectsQueue = new JobQueue({ maxConcurrentJobs: 1 }, this.logger)
   }
 
-  subscribe(callback: (event: UpdateEvent) => void): Subscription {
+  subscribe(_callback: (event: UpdateEvent) => void): Subscription {
     throw new Error('Method not implemented.')
   }
 
@@ -51,7 +51,9 @@ export abstract class BaseIndexer implements Indexer {
     this.state = newState
 
     this.logger.debug('Dispatching', {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
       action: action as any,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
       effects: effects as any,
     })
     effects.forEach((effect) => {

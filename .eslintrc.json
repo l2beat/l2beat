@@ -19,10 +19,14 @@
   },
   "plugins": ["simple-import-sort", "no-only-tests", "unused-imports", "react"],
   "rules": {
+    "no-case-declarations": "off",
     "prefer-arrow-callback": "error",
     "@typescript-eslint/prefer-readonly": ["error"],
     "@typescript-eslint/ban-tslint-comment": "off",
-    "@typescript-eslint/explicit-function-return-type": "error",
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      { "allowExpressions": true, "allowTypedFunctionExpressions": true }
+    ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-extra-semi": "off",
     "@typescript-eslint/no-empty-function": "off",
@@ -37,7 +41,10 @@
       "error",
       { "devDependencies": false }
     ],
-    "import/no-unresolved": ["error", { "ignore": ["^viem/.*", "^drizzle-orm/.*"] }],
+    "import/no-unresolved": [
+      "error",
+      { "ignore": ["^viem/.*", "^drizzle-orm/.*"] }
+    ],
     "import/no-internal-modules": [
       "error",
       {

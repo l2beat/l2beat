@@ -58,7 +58,7 @@ describe(baseIndexerReducer.name, () => {
     it('should prevent an update that would lower current height', () => {
       const initialState = getInitialState(['a'])
 
-      const fn = () =>
+      const fn = (): StateAndEffects =>
         reduceWithBaseIndexerReducer(initialState, [
           {
             type: 'DependencyUpdated',

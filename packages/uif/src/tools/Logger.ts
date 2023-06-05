@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import chalk from 'chalk'
 import { inspect } from 'util'
 
@@ -25,7 +26,7 @@ export class Logger {
   static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })
   static DEBUG = new Logger({ logLevel: LogLevel.DEBUG, format: 'pretty' })
 
-  configure(options: Partial<LoggerOptions>) {
+  configure(options: Partial<LoggerOptions>): Logger {
     return new Logger({ ...this.options, ...options })
   }
 

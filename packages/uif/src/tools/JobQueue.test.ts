@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { expect } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
