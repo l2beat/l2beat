@@ -102,7 +102,7 @@ export const dydx: Layer2 = {
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_STARKEX_PERPETUAL(freezeGracePeriod),
+      ...RISK_VIEW.FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),
       sources: [
         {
           contract: 'StarkPerpetual',

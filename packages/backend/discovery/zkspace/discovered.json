@@ -1,7 +1,8 @@
 {
   "name": "zkspace",
-  "blockNumber": 16733944,
+  "blockNumber": 17413799,
   "configHash": "0x5ec7715363bb5f739c381fb4df66f2663218a1657a6fbff15da2c655a7dbd457",
+  "version": 1,
   "contracts": [
     {
       "name": "VerifierExit",
@@ -58,17 +59,17 @@
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 423,
-        "firstPriorityRequestId": 1205,
+        "firstPendingWithdrawalIndex": 489,
+        "firstPriorityRequestId": 1256,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
         "governance": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
         "maxDepositAmount": "38685626227668133590597632",
         "numberOfPendingWithdrawals": 0,
         "pairManager": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-        "totalBlocksChecked": 33227,
-        "totalBlocksCommitted": 33230,
-        "totalBlocksVerified": 33227,
+        "totalBlocksChecked": 36322,
+        "totalBlocksCommitted": 36370,
+        "totalBlocksVerified": 36369,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 64,

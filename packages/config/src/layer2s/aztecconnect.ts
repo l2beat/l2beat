@@ -130,7 +130,7 @@ export const aztecconnect: Layer2 = {
     },
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
+      ...RISK_VIEW.SELF_SEQUENCE_ZK(),
       sources: [
         {
           contract: 'RollupProcessorV2',

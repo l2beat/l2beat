@@ -44,6 +44,11 @@ const upgrades = {
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
+const maxTimeVariation = discovery.getContractValue<number[]>(
+  'SequencerInbox',
+  'maxTimeVariation',
+)
+const selfSequencingDelay = maxTimeVariation[2]
 
 export const arbitrum: Layer2 = {
   type: 'layer2',
@@ -172,8 +177,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     sequencerFailure: {
-      value: 'Transact using L1',
-      description: VALUES.ARBITRUM.getSequencerFailureString(),
+      ...RISK_VIEW.SELF_SEQUENCE(selfSequencingDelay),
       sources: [
         {
           contract: 'SequencerInbox',

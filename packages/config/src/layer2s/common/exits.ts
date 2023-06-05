@@ -1,4 +1,5 @@
 import { ProjectRisk, ProjectTechnologyChoice } from '../../common'
+import { formatSeconds } from '../../utils/formatSeconds'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
@@ -29,7 +30,7 @@ const FORCED: ProjectTechnologyChoice = {
 function EMERGENCY(
   state: string,
   proof: 'zero knowledge proof' | 'merkle proof',
-  delay?: string,
+  delay?: number,
 ): ProjectTechnologyChoice {
   const risks: ProjectRisk[] =
     proof === 'zero knowledge proof'
@@ -40,11 +41,10 @@ function EMERGENCY(
           },
         ]
       : []
+  const delayString = delay !== undefined ? formatSeconds(delay) : 'enough time'
   return {
     name: 'Emergency exit',
-    description: `If ${
-      delay !== undefined ? delay : 'enough time'
-    } passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
+    description: `If ${delayString} passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
     risks,
     references: [],
   }

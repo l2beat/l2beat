@@ -1,7 +1,8 @@
 {
   "name": "sorare",
-  "blockNumber": 17039300,
+  "blockNumber": 17412704,
   "configHash": "0xc5609fb2313ae70f4986e03ef939312ea92f1666e52a40cfd2bb02dc64a90b76",
+  "version": 1,
   "contracts": [
     {
       "name": "OrderRegistry",
@@ -100,8 +101,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 7760,
-        "getOrderRoot": "2898506270672160968624390328770243908192256469911963778677726254025135262226",
+        "getLastBatchId": 8372,
+        "getOrderRoot": "341206017474472502674023085681026487661325027526880483468525310409630058417",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x879cD57975d596004863D30c59d579ef78BBbe32"
@@ -111,10 +112,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 7653,
+        "getSequenceNumber": 8252,
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "107951178007413057145236536620677357997503526902087877782931292728402638788",
+        "getValidiumVaultRoot": "931049140785450802966353819391675855867620637346249965504103009093249992158",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
