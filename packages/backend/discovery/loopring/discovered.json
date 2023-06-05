@@ -1,7 +1,8 @@
 {
   "name": "loopring",
-  "blockNumber": 17335836,
+  "blockNumber": 17364926,
   "configHash": "0xd71e73598331ce8dc4aa84fbdcff9470f4609bd71d0b61b5727d0aa79bd0cdd9",
+  "version": 1,
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -16,7 +17,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 41101,
+        "getBlockHeight": 41210,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           4096,
@@ -33,9 +34,9 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x04ecd503d2d551ead84e00c9a5b8a77a1419a0b748af9cec5cea7e30f0b3c690",
+        "getMerkleRoot": "0x2844a913ed7ca242538206b5357429a9eb0fbfc93ac8b0671d469cc57b20d25f",
         "getNumAvailableForcedSlots": 4096,
-        "getProtocolFeeValues": [1684585235, 0, 0, 0, 0],
+        "getProtocolFeeValues": [1685191319, 0, 0, 0, 0],
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "isInWithdrawalMode": false,
         "isShutdown": false,

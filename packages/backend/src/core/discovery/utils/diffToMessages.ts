@@ -1,15 +1,20 @@
 import { DiscoveryDiff, FieldDiff } from '@l2beat/discovery'
 
-import { MAX_MESSAGE_LENGTH } from '../../peripherals/discord/DiscordClient'
+import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
+
+export interface DiffMetadata {
+  blockNumber: number
+  dependents: string[]
+  nonce?: number
+}
 
 export function diffToMessages(
   name: string,
-  dependents: string[],
   diffs: DiscoveryDiff[],
-  nonce?: number,
+  metadata: DiffMetadata,
 ): string[] {
-  const header = getHeader(name, nonce)
-  const dependentsMessage = getDependentsMessage(dependents)
+  const header = getHeader(name, metadata.blockNumber, metadata.nonce)
+  const dependentsMessage = getDependentsMessage(metadata.dependents)
   const overheadLength =
     header.length + dependentsMessage.length + wrapDiffCodeBlock('').length
 
@@ -86,11 +91,13 @@ export function fieldDiffToMessage(diff: FieldDiff): string {
   return message
 }
 
-function getHeader(name: string, nonce?: number) {
+function getHeader(name: string, blockNumber: number, nonce?: number) {
   if (nonce === undefined) {
     return `${wrapBoldAndItalic(name)} | detected changes`
   }
-  return `> ${formatNonce(nonce)}\n\n${wrapBoldAndItalic(
+  return `> ${formatNonce(
+    nonce,
+  )} (block_number=${blockNumber})\n\n${wrapBoldAndItalic(
     name,
   )} | detected changes`
 }

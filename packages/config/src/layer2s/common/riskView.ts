@@ -73,7 +73,7 @@ export const DATA_EXTERNAL_MEMO: ProjectRiskViewEntry = {
   value: 'Optimistic (MEMO)',
   description:
     'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
-    Challange mechanizm is not yet fully implemented.',
+    Challenge mechanizm is not yet fully implemented.',
   sentiment: 'warning',
 }
 
@@ -292,8 +292,8 @@ export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
 export const PROVER_DOWN: ProjectRiskViewEntry = {
   value: 'No mechanism',
   description:
-    'There is no generic escape hatch as StarkNet cannot be frozen. Application-specific escape hatches can be built.',
-  sentiment: 'warning',
+    'There is no generic escape hatch mechanism as Starknet cannot be forced by users into a frozen state. Note that a freezing mechanism on L2, to be secure, requires anti-censorship protection.',
+  sentiment: 'bad',
 }
 
 // bridges

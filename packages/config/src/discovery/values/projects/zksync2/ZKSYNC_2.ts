@@ -4,12 +4,12 @@ import { ProjectDiscovery } from '../../../ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('zksync2')
 const stats = discovery.getMultisigStats(
-  discovery.getAddressFromValue('DiamondProxy', 'getGovernor').toString(),
+  discovery.getAddressFromValue('zkSync', 'getGovernor').toString(),
 )
 
 const UPGRADEABILITY: ProjectRiskViewEntry = {
   ...RISK_VIEW.UPGRADABLE_YES,
-  description: `The code that secures the system can be changed arbitrarily and without notice by the governor, that currently is a ${stats} Multisig.`,
+  description: `The code that secures the system can be changed arbitrarily and without notice by the governor, that currently is a ${stats} Multisig. The governor can also change the Verifier contract without notice.`,
 }
 
 const SECURITY_COUNCIL: ProjectPermission = {
