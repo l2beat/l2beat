@@ -57,7 +57,7 @@ export const omgnetwork: Layer2 = {
     stateValidation: RISK_VIEW.STATE_EXITS_ONLY,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_EXIT_L1,
+    sequencerFailure: RISK_VIEW.FORCE_VIA_L1(),
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_U,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('OMG'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,

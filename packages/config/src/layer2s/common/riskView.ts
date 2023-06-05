@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared'
+import { utils } from 'ethers'
 
 import { ProjectRiskViewEntry } from '../../common'
 import { formatSeconds } from '../../utils/formatSeconds'
@@ -144,97 +144,16 @@ export const UPGRADABLE_NO: ProjectRiskViewEntry = {
   description: 'The code that secures the system can never change.',
 }
 
-// Operator is censoring
-
-export const SEQUENCER_TRANSACT_L1: ProjectRiskViewEntry = {
-  value: 'Transact using L1',
-  description:
-    'The user is able to submit a transaction through L1 and force its inclusion on L2.',
-}
-
-export function SEQUENCER_STARKEX_PERPETUAL(
-  delay: number,
-): ProjectRiskViewEntry {
-  return {
-    value: 'Force trade/exit to L1',
-    description: `The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down for more than ${formatSeconds(
-      delay,
-    )}, the user can use the exit hatch to withdraw funds.`,
-    sentiment: 'warning',
-  }
-}
-
-export const SEQUENCER_STARKEX_SPOT: ProjectRiskViewEntry = {
-  value: 'Force exit to L1',
-  description:
-    'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
-}
-
-export function SEQUENCER_FORCE_EXIT_L1(fee?: string): ProjectRiskViewEntry {
-  return {
-    value: 'Force exit to L1',
-    description: `The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2${
-      fee !== undefined ? ` with a ${fee} fee` : ''
-    }. After that the user exits the system with their funds.`,
-  }
-}
-
-export const SEQUENCER_EXIT_L1: ProjectRiskViewEntry = {
-  value: 'Exit to L1',
-  description:
-    'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
-}
-
-export const SEQUENCER_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
-  value: 'Propose blocks',
-  description:
-    'The user needs to run their own node and use it to propose new blocks that include otherwise censored transactions.',
-}
-
-export const SEQUENCER_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
-  value: 'Propose blocks (ZK)',
-  description:
-    'The user needs to run their own node and use it to propose new blocks that include otherwise censored transactions. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
-  sentiment: 'warning',
-}
-
-export const SEQUENCER_NO_MECHANISM: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'There is no mechanism to have transactions be included if the sequencer is down or censoring.',
-  sentiment: 'bad',
-}
-
-export const SEQUENCER_QUEUE: ProjectRiskViewEntry = {
-  value: 'Enqueue transactions',
-  description:
-    "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
-  sentiment: 'warning',
-}
-
-export const SEQUENCER_RISK_POLYGONZKEVM: (
-  isForcedBatchDisallowed: boolean,
-) => ProjectRiskViewEntry = (isForcedBatchDisallowed: boolean) => {
-  assert(
-    isForcedBatchDisallowed,
-    'Polygon zkEVM sequencer risk has changed. Update the config after research',
-  )
-  return {
-    ...SEQUENCER_NO_MECHANISM,
-    description:
-      SEQUENCER_NO_MECHANISM.description +
-      ' Although the functionality exists in the code, but it is disabled.',
-  }
-}
-
 // Operator is down
 
-export function VALIDATOR_ESCAPE_MP(delay?: string): ProjectRiskViewEntry {
+export function VALIDATOR_ESCAPE_MP(delay?: number): ProjectRiskViewEntry {
+  const delayString =
+    delay !== undefined
+      ? ` There is a ${formatSeconds(delay)} delay on this operation.`
+      : ''
   return {
     value: 'Escape hatch (MP)',
-    description: `Users are able to trustlessly exit by submitting a merkle proof of funds.${
-      delay !== undefined ? ` There is a ${delay} delay on this operation.` : ''
-    }`,
+    description: `Users are able to trustlessly exit by submitting a merkle proof of funds.${delayString}`,
   }
 }
 
@@ -340,6 +259,86 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   validatedBy: UPCOMING_RISK,
 })
 
+/* New risks for stages */
+
+export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
+  const delayString =
+    delay !== undefined
+      ? ` There is a ${formatSeconds(delay)} delay on this operation.`
+      : ''
+  return {
+    value: 'Self sequence',
+    description: `In the event of a sequencer failure, users can force transactions to be included in the L2 chain by sending them to L1.${delayString}`,
+  }
+}
+
+export function SELF_SEQUENCE_ZK(delay?: number): ProjectRiskViewEntry {
+  return {
+    ...SELF_SEQUENCE(delay),
+    description:
+      SELF_SEQUENCE(delay).description +
+      ' Proposing new blocks requires creating ZK proofs.',
+  }
+}
+
+export function FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
+  const delayString =
+    delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
+  return {
+    value: 'Force via L1',
+    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
+  }
+}
+
+export function FORCE_VIA_L1_STARKEX_PERPETUAL(
+  delay: number,
+): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Force via L1',
+    description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`,
+  }
+}
+
+export function FORCE_VIA_L1_LOOPRING(
+  delay: number,
+  forcedWithdrawalFee: number,
+  maxAgeDepositUntilWithdrawable: number,
+): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  const maxAgeDepositUntilWithdrawableString = formatSeconds(
+    maxAgeDepositUntilWithdrawable,
+  )
+  const forcedWithdrawalFeeString = `${utils.formatEther(
+    forcedWithdrawalFee,
+  )} ETH`
+  return {
+    value: 'Force via L1',
+    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1 with a ${forcedWithdrawalFeeString} fee. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawableString} users can get their funds back.`,
+  }
+}
+
+export const ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
+  value: 'Enqueue via L1',
+  description:
+    "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
+  sentiment: 'warning',
+}
+
+export function NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
+  const additional =
+    disabled === true
+      ? ' Although the functionality exists in the code, it is currently disabled.'
+      : ''
+  return {
+    value: 'No mechanism',
+    description:
+      'There is no mechanism to have transactions be included if the sequencer is down or censoring.' +
+      additional,
+    sentiment: 'bad',
+  }
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -358,15 +357,6 @@ export const RISK_VIEW = {
   UPGRADE_DELAY,
   UPGRADE_DELAY_SECONDS,
   UPGRADABLE_NO,
-  SEQUENCER_TRANSACT_L1,
-  SEQUENCER_STARKEX_PERPETUAL,
-  SEQUENCER_STARKEX_SPOT,
-  SEQUENCER_FORCE_EXIT_L1,
-  SEQUENCER_EXIT_L1,
-  SEQUENCER_PROPOSE_BLOCKS,
-  SEQUENCER_PROPOSE_BLOCKS_ZKP,
-  SEQUENCER_NO_MECHANISM,
-  SEQUENCER_QUEUE,
   VALIDATOR_ESCAPE_MP,
   VALIDATOR_ESCAPE_ZKP,
   VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
@@ -381,4 +371,11 @@ export const RISK_VIEW = {
   NATIVE_AND_CANONICAL,
   CANONICAL,
   CANONICAL_USDC,
+  SELF_SEQUENCE,
+  SELF_SEQUENCE_ZK,
+  FORCE_VIA_L1,
+  FORCE_VIA_L1_STARKEX_PERPETUAL,
+  FORCE_VIA_L1_LOOPRING,
+  ENQUEUE_VIA_L1,
+  NO_MECHANISM,
 }
