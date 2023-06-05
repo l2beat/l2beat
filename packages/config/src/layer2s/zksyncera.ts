@@ -151,10 +151,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     sequencerFailure: {
-      value: 'Transact using L1',
-      description:
-        'L2 transactions can be forced through L1 by adding them to append only queue on L1, which is processed sequentially by Sequencer, meaning that the individual user cannot be censored. At the moment there is no mechanism that forces L2 Sequencer to empty the L1 queue.',
-      sentiment: 'warning',
+      ...RISK_VIEW.ENQUEUE_VIA_L1,
       sources: [
         {
           contract: 'zkSync',

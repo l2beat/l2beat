@@ -32,6 +32,12 @@ const l1TimelockDelay = discovery.getContractValue<number>(
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
 
+const maxTimeVariation = discovery.getContractValue<number[]>(
+  'SequencerInbox',
+  'maxTimeVariation',
+)
+const selfSequencingDelay = maxTimeVariation[2]
+
 export const nova: Layer2 = {
   type: 'layer2',
   id: ProjectId('nova'),
@@ -106,7 +112,7 @@ export const nova: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(
       l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay,
     ),
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
+    sequencerFailure: RISK_VIEW.SELF_SEQUENCE(selfSequencingDelay),
     validatorFailure: {
       value: 'Propose blocks',
       description: `Anyone can become a Validator after ${formatSeconds(

@@ -11,15 +11,15 @@ export const taiko: Layer2 = {
     name: 'Taiko',
     slug: 'taiko',
     description:
-      'Taiko is an Ethereum-equivalent ZK Rollup that has been developed on the Ethereum network. At present, Taiko is deployed on the Sepolia testnet for further testing and optimization.',
+      'Taiko is a decentralized, Ethereum-equivalent ZK Rollup that has been developed on the Ethereum network. At present, Taiko is deployed on the Sepolia testnet for further testing and optimization.',
     purpose: 'Universal',
     links: {
       websites: ['https://taiko.xyz'],
-      apps: ['https://bridge.a2.taiko.xyz'],
+      apps: ['https://bridge.test.taiko.xyz'],
       documentation: ['https://taiko.xyz/docs'],
       explorers: [
-        'https://explorer.a2.taiko.xyz',
-        'https://status.a2.taiko.xyz',
+        'https://explorer.test.taiko.xyz',
+        'https://status.test.taiko.xyz',
       ],
       repositories: ['https://github.com/taikoxyz'],
       socialMedia: [

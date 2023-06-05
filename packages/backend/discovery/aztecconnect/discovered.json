@@ -1,8 +1,99 @@
 {
   "name": "aztecconnect",
-  "blockNumber": 17271639,
-  "configHash": "0x1efcf6ca88a8b1f1301d857dd5eb2b2d744db88007645802e2819e70324d3c68",
+  "blockNumber": 17378044,
+  "configHash": "0x4350584ccbcccac634fd3f0bc3838dc5212ceb7c1429e8c9317e8648616c49af",
+  "version": 1,
   "contracts": [
+    {
+      "name": "Emergency Multisig",
+      "address": "0x23f8008159C0427458b948c3DD7795c6DBE8236F",
+      "code": "https://etherscan.deth.net/address/0x23f8008159C0427458b948c3DD7795c6DBE8236F,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xbb4c14311b94437fa30194d9467b3c7f175456bf8c6bc27bf3b2b2770c5dac19",
+        "getChainId": 1,
+        "getOwners": [
+          "0x7345B1F517E8C73F283807CF0f932E801f9586E4",
+          "0x332f0c737232D42f6eDA59CB29dd133bA249F001",
+          "0x107931F48357508198E190c2466Dc2978aaa4aB0",
+          "0x957917c4A958e1D6F00d6FEF54b4C400d57d0208",
+          "0x1e11a0A62b88C0c78361280bd3BBF5cCcC0B0C93",
+          "0xcA8827C1fb9D8303941C2cec5Ae5cF6dBB3ef07a",
+          "0x77b49dc62E2Bbbf6aad42ee0AC5B5eeDd7883bB2",
+          "0xFEE6D8EebC4330c51ef37bc5779c9490F66cFa85",
+          "0x0C0C742154aD3632E75dD011C37EDe0AF677A543",
+          "0x39688E9B290096960604422DA6556BD1C521659B",
+          "0x483Bbf9431681A13b6A65e3D161Bd2fF609Aca48",
+          "0x53495Acd57ED93089149ae7D96b9899b710C1F9e",
+          "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
+          "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
+          "0xDFca360F22b7f3aA13270A9cDeb09d485294a027"
+        ],
+        "getThreshold": 2,
+        "nonce": 24,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "Resume Multisig",
+      "address": "0x62415C92528C7d86Fd3f82D3fc75c2F66Bb9389a",
+      "code": "https://etherscan.deth.net/address/0x62415C92528C7d86Fd3f82D3fc75c2F66Bb9389a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0x29b99d4dc1bacc29c16bb544f33927846f031d20c47063cabf7042d4912df697",
+        "getChainId": 1,
+        "getOwners": [
+          "0xDFca360F22b7f3aA13270A9cDeb09d485294a027",
+          "0x7345B1F517E8C73F283807CF0f932E801f9586E4",
+          "0x332f0c737232D42f6eDA59CB29dd133bA249F001",
+          "0x107931F48357508198E190c2466Dc2978aaa4aB0",
+          "0x957917c4A958e1D6F00d6FEF54b4C400d57d0208",
+          "0x1e11a0A62b88C0c78361280bd3BBF5cCcC0B0C93",
+          "0xcA8827C1fb9D8303941C2cec5Ae5cF6dBB3ef07a",
+          "0x77b49dc62E2Bbbf6aad42ee0AC5B5eeDd7883bB2",
+          "0xFEE6D8EebC4330c51ef37bc5779c9490F66cFa85",
+          "0x0C0C742154aD3632E75dD011C37EDe0AF677A543",
+          "0x39688E9B290096960604422DA6556BD1C521659B",
+          "0x483Bbf9431681A13b6A65e3D161Bd2fF609Aca48",
+          "0x53495Acd57ED93089149ae7D96b9899b710C1F9e",
+          "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
+          "0x1D93fE338A035f297819EA867275661a4f5B4fdD"
+        ],
+        "getThreshold": 10,
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "Lister Multisig",
+      "address": "0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e",
+      "code": "https://etherscan.deth.net/address/0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xc211ddb07f51d4255fd887fac104189ce72ce524985eb9914e66bb9dc5b058c0",
+        "getChainId": 1,
+        "getOwners": [
+          "0xb143AE98179753CCB6F592a14F8357D2f8388bC6",
+          "0x6fF2ea344696731003a1d4AAc4A0B2a4e24Bc7C5",
+          "0x83F20E0d612aE260442ca26cEE5474f4750F791d"
+        ],
+        "getThreshold": 2,
+        "nonce": 5,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
     {
       "name": "DefiBridgeProxy",
       "address": "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487",
@@ -34,7 +125,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Aztec Multisig",
       "address": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
       "code": "https://etherscan.deth.net/address/0xE298a76986336686CC3566469e3520d23D1a8aaD,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -49,9 +140,10 @@
           "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
         ],
         "getThreshold": 1,
-        "nonce": 265,
+        "nonce": 266,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "RollupProcessorV2",
@@ -63,6 +155,28 @@
         "admin": "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
       },
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xE298a76986336686CC3566469e3520d23D1a8aaD"]
+          },
+          "OWNER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xE298a76986336686CC3566469e3520d23D1a8aaD"]
+          },
+          "EMERGENCY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x23f8008159C0427458b948c3DD7795c6DBE8236F"]
+          },
+          "LISTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e"]
+          },
+          "RESUME_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x62415C92528C7d86Fd3f82D3fc75c2F66Bb9389a"]
+          }
+        },
         "allowThirdPartyContracts": false,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defiBridgeProxy": "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487",
@@ -72,24 +186,24 @@
         "escapeBlockUpperBound": 2400,
         "getAsyncDefiInteractionHashesLength": 0,
         "getCapped": true,
-        "getDataSize": 23535616,
-        "getDefiInteractionHashesLength": 1,
-        "getEscapeHatchStatus": [false, 921],
+        "getDataSize": 23736320,
+        "getDefiInteractionHashesLength": 0,
+        "getEscapeHatchStatus": [false, 116],
         "getImplementationVersion": 2,
-        "getPendingDefiInteractionHashesLength": 1,
+        "getPendingDefiInteractionHashesLength": 0,
         "getSupportedAssetsLength": 15,
         "getSupportedBridgesLength": 18,
-        "lastRollupTimeStamp": 1684224971,
+        "lastRollupTimeStamp": 1685520659,
         "LISTER_ROLE": "0xf94103142c1baabe9ac2b5d1487bf783de9e69cfeea9a72f5c9c94afd7877b8c",
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "paused": false,
-        "prevDefiInteractionsHash": "0x28378ef84aa5f1150c4f64aa86421dc6e0247767c671dcc08f100fda2bdb79d0",
+        "prevDefiInteractionsHash": "0x14e0f351ade4ba10438e9b15f66ab2e6389eea5ae870d6e8b2df1418b2e6fd5b",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "rollupProviders": [
           "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
           "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
         ],
-        "rollupStateHash": "0x4475e2d3ac0361fab02c60ac1cb4a4f1db17ed7b86440a8a922cf058d692c5af",
+        "rollupStateHash": "0x3fe4d2d5186c8f55274e4b974095a52d5c8893a2ad81d8c85de74cd9400b4fca",
         "verifier": "0xB656f4219f565b93DF57D531B574E17FE0F25939",
         "getSupportedAsset": [
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -126,16 +240,42 @@
           "0x5594808e8A7b44da9D2382E6d72ad50a3e2571E0",
           "0x5594808e8A7b44da9D2382E6d72ad50a3e2571E0"
         ]
-      }
+      },
+      "derivedName": "RollupProcessorV2"
     }
   ],
   "eoas": [
+    "0x0C0C742154aD3632E75dD011C37EDe0AF677A543",
+    "0x107931F48357508198E190c2466Dc2978aaa4aB0",
     "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
+    "0x1e11a0A62b88C0c78361280bd3BBF5cCcC0B0C93",
+    "0x332f0c737232D42f6eDA59CB29dd133bA249F001",
+    "0x39688E9B290096960604422DA6556BD1C521659B",
+    "0x483Bbf9431681A13b6A65e3D161Bd2fF609Aca48",
+    "0x53495Acd57ED93089149ae7D96b9899b710C1F9e",
+    "0x6fF2ea344696731003a1d4AAc4A0B2a4e24Bc7C5",
+    "0x7345B1F517E8C73F283807CF0f932E801f9586E4",
+    "0x77b49dc62E2Bbbf6aad42ee0AC5B5eeDd7883bB2",
     "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
+    "0x83F20E0d612aE260442ca26cEE5474f4750F791d",
+    "0x957917c4A958e1D6F00d6FEF54b4C400d57d0208",
     "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
-    "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
+    "0xb143AE98179753CCB6F592a14F8357D2f8388bC6",
+    "0xcA8827C1fb9D8303941C2cec5Ae5cF6dBB3ef07a",
+    "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321",
+    "0xDFca360F22b7f3aA13270A9cDeb09d485294a027",
+    "0xFEE6D8EebC4330c51ef37bc5779c9490F66cFa85"
   ],
   "abis": {
+    "0x23f8008159C0427458b948c3DD7795c6DBE8236F": [
+      "constructor(address _singleton)"
+    ],
+    "0x62415C92528C7d86Fd3f82D3fc75c2F66Bb9389a": [
+      "constructor(address _singleton)"
+    ],
+    "0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e": [
+      "constructor(address _singleton)"
+    ],
     "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09": [
       "constructor(uint256 _escapeBlockLowerBound, uint256 _escapeBlockUpperBound)",
       "error ARRAY_OVERFLOW()",

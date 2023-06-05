@@ -1,4 +1,5 @@
 import {
+  ConfigReader,
   diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
@@ -8,12 +9,32 @@ import { DiscoveryOutput } from '@l2beat/shared'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
-export class DiscoveryRunner {
-  constructor(private readonly discoveryEngine: DiscoveryEngine) {}
+export interface DiscoveryRunnerOptions {
+  injectInitialAddresses: boolean
+  runSanityCheck: boolean
+}
 
-  async run(config: DiscoveryConfig, blockNumber: number) {
+export class DiscoveryRunner {
+  constructor(
+    private readonly discoveryEngine: DiscoveryEngine,
+    private readonly configReader: ConfigReader,
+  ) {}
+
+  async run(
+    projectConfig: DiscoveryConfig,
+    blockNumber: number,
+    options: DiscoveryRunnerOptions,
+  ) {
+    const config = options.injectInitialAddresses
+      ? await this.updateInitialAddresses(projectConfig)
+      : projectConfig
+
     const discovery = await this.discover(config, blockNumber)
-    await this.sanityCheck(discovery, config, blockNumber)
+
+    if (options.runSanityCheck) {
+      await this.sanityCheck(discovery, config, blockNumber)
+    }
+
     return discovery
   }
 
@@ -52,6 +73,21 @@ export class DiscoveryRunner {
         potential-diff ${JSON.stringify(diff)}}`,
       )
     }
+  }
+
+  // There was a case connected with Amarok (better described in L2B-1521)
+  // the problem was with stack too deep in the discovery caused by misconfigured new contract
+  // that had a lot of relatives (e.g. Uniswap, DAI)
+  // unfortunately, it resulted in not discovering important contracts because they cannot be put on the stack
+  // this function ensures that initial addresses are taken from discovered.json
+  // so this way we will always discover "known" contracts
+  async updateInitialAddresses(config: DiscoveryConfig) {
+    const discovery = await this.configReader.readDiscovery(config.name)
+    const initialAddresses = discovery.contracts.map((c) => c.address)
+    return new DiscoveryConfig({
+      ...config.raw,
+      initialAddresses,
+    })
   }
 }
 

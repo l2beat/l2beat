@@ -29,7 +29,7 @@ describe('HARDCODED: zksync2', () => {
 
   // currently the security council is set as ZERO address
   // when this test fails it means that the security council changed
-  // update the permissons section and updgradeability risk
+  // update the permissions section and updgradeability risk
   it('security council', () => {
     const address = discovery.getAddressFromValue(
       'zkSync',
@@ -43,7 +43,7 @@ describe('HARDCODED: zksync2', () => {
 
   // currently the governor is set as a multisig
   // when this test fails it means that the governor changed
-  // update the permissons section and updgradeability risk
+  // update the permissions section and updgradeability risk
   it('governor', () => {
     const address = discovery.getAddressFromValue('zkSync', 'getGovernor')
     assert(
