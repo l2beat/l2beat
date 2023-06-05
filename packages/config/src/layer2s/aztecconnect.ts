@@ -276,7 +276,17 @@ export const aztecconnect: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [...getAccessControl()],
+  permissions: [
+    ...getAccessControl(),
+    {
+      name: 'Rollup Providers',
+      description:
+        'Actors allowed to call the processRollup function on the RollupProcessorvV2 contract.',
+      accounts: discovery
+        .getContractValue<string[]>('RollupProcessorV2', 'rollupProviders')
+        .map((account) => discovery.formatPermissionedAccount(account)),
+    },
+  ],
   milestones: [
     {
       name: 'Mainnet Launch',
