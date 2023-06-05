@@ -232,7 +232,7 @@ export const loopring: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'ProxyOwner',
-      'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
+      'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee, change the Verifier address and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
     ),
     {
       name: 'Block Submitters',
@@ -258,7 +258,7 @@ export const loopring: Layer2 = {
       }),
       discovery.getContractDetails(
         'LoopringIOExchangeOwner',
-        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
+        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract. It allows to give or revoke permissions to submit blocks and to open block submission to everyone.',
       ),
       discovery.getContractDetails(
         'DefaultDepositContract',
@@ -266,13 +266,13 @@ export const loopring: Layer2 = {
       ),
       discovery.getContractDetails(
         'LoopringV3',
-        'Contract managing LRC staking for exchanges (One Loopring contract can manage many exchanges).',
+        'Contract managing LRC staking for exchanges (one Loopring contract can manage many exchanges). It also allows to change the forced withdrawl fee and the Verifier address.',
       ),
       discovery.getContractDetails('BlockVerifier', {
         description: 'zkSNARK Verifier based on ethsnarks library.',
         ...upgrades,
         upgradeConsiderations:
-          'The Verifier contract address can be changed by the AdminMultisig.',
+          'The Verifier contract address can be changed by the ProxyOwner.',
       }),
       discovery.getContractDetails(
         'AgentRegistry',
