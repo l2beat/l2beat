@@ -281,8 +281,9 @@ export function SELF_SEQUENCE_ZK(delay?: number): ProjectRiskViewEntry {
   }
 }
 
-export function FORCE_VIA_L1(delay: number): ProjectRiskViewEntry {
-  const delayString = formatSeconds(delay)
+export function FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
+  const delayString =
+    delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
   return {
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds.`,
