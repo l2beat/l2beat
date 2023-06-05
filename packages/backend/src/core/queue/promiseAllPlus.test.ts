@@ -123,7 +123,7 @@ describe(promiseAllPlus.name, () => {
   })
 })
 
-// note: sinon doesnt work with promisified style functions from timers/promises so we roll out our own
+// note: sinon does not work with promisified style functions from timers/promises so we roll out our own
 async function delay(timeout: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, timeout)
