@@ -38,7 +38,7 @@ export const pNetwork: Bridge = {
       {
         address: EthereumAddress('0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8'), // Proxy to ERC20 Vault V2
         sinceTimestamp: new UnixTime(1640867581),
-        tokens: ['GALA', 'PNT', 'USDT', 'USDC'], // BIST, CGG due to almost non-existant volume
+        tokens: ['GALA', 'PNT', 'USDT', 'USDC'], // BIST, CGG due to almost non-existent volume
       },
       {
         address: EthereumAddress('0x9f8622b11984AfC8f0a42A394928702017c5968D'), // ERC20 Vault V1
