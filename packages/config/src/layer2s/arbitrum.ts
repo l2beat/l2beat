@@ -36,6 +36,12 @@ const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0
 const totalDelay =
   l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
 
+const maxTimeVariation = discovery.getContractValue<number[]>(
+  'SequencerInbox',
+  'maxTimeVariation',
+)
+const selfSequencingDelay = maxTimeVariation[2]
+
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
@@ -163,8 +169,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     sequencerFailure: {
-      value: 'Transact using L1',
-      description: VALUES.ARBITRUM.getSequencerFailureString(),
+      ...RISK_VIEW.SELF_SEQUENCE(selfSequencingDelay),
       sources: [
         {
           contract: 'SequencerInbox',

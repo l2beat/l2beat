@@ -9,9 +9,9 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  NO_MECHANISM,
   NUGGETS,
   RISK_VIEW,
-  SEQUENCER_RISK_POLYGONZKEVM,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -130,7 +130,7 @@ export const polygonzkevm: Layer2 = {
     upgradeability: upgradeabilityRisk,
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: {
-      ...SEQUENCER_RISK_POLYGONZKEVM(isForcedBatchDisallowed),
+      ...NO_MECHANISM(isForcedBatchDisallowed),
       sources: [
         {
           contract: 'PolygonZkEvm',

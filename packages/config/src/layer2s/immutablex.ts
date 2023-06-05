@@ -35,6 +35,11 @@ const verifierAddress = discovery.getAddressFromValue(
   'gpsContract',
 )
 
+const freezeGracePeriod = discovery.getContractValue<number>(
+  'StarkExchange',
+  'FREEZE_GRACE_PERIOD',
+)
+
 export const immutablex: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablex'),
@@ -94,7 +99,7 @@ export const immutablex: Layer2 = {
       ],
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
-    sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
+    sequencerFailure: RISK_VIEW.FORCE_VIA_L1(freezeGracePeriod),
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,

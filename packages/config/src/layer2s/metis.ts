@@ -71,7 +71,7 @@ export const metis: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_QUEUE,
+      ...RISK_VIEW.ENQUEUE_VIA_L1,
       sources: [
         {
           contract: 'CanonicalTransactionChain',
