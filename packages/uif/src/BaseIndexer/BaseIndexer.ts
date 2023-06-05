@@ -45,6 +45,10 @@ export abstract class BaseIndexer implements Indexer {
     return this.state.height
   }
 
+  getState(): BaseIndexerState {
+    return this.state
+  }
+
   private dispatch(action: BaseIndexerAction): void {
     const [newState, effects] = baseIndexerReducer(this.state, action)
 
@@ -64,8 +68,13 @@ export abstract class BaseIndexer implements Indexer {
             execute: async () => {
               const from = this.state.height
               this.dispatch({ type: 'UpdateStarted', from, to: effect.to })
-              await this.update(from, effect.to)
-              this.dispatch({ type: 'UpdateSucceeded', from, to: effect.to })
+              try {
+                await this.update(from, effect.to)
+                this.dispatch({ type: 'UpdateSucceeded', from, to: effect.to })
+              } catch (e) {
+                // @todo: proper error handling: we need retries, backoff and proper support for error on invalidated state
+                this.dispatch({ type: 'UpdateFailed', from, to: effect.to })
+              }
             },
           })
           break
