@@ -279,7 +279,7 @@ function languageJoin(items?: string[]) {
     return items[0]
   }
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const last = items.pop()!
+  const last = items.at(-1)!
   return `${items.join(', ')} and ${last}`
 }
 
