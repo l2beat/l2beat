@@ -94,6 +94,7 @@ export const dydx: Layer2 = {
       documentation: [
         'https://docs.starkware.co/starkex/',
         'https://docs.dydx.exchange/',
+        'https://docs.dydx.community/dydx-governance/',
       ],
       explorers: ['https://dydx.l2beat.com'],
       repositories: [
@@ -227,8 +228,6 @@ export const dydx: Layer2 = {
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {
-    //PerpetualEscapeVerifier
-
     addresses: [
       discovery.getContractDetails('StarkPerpetual', {
         description:
@@ -261,6 +260,10 @@ export const dydx: Layer2 = {
         'CairoBootloaderProgram',
         'Part of STARK Verifier.',
       ),
+      discovery.getContractDetails('PerpetualEscapeVerifier', {
+        description:
+          'Contract responsible for validating force withdrawal requests.',
+      }),
       discovery.getContractDetails('MerkleDistributor', {
         description:
           'The Merkle Distributor smart contract distributes DYDX token rewards according to a Merkle tree of balances.',
