@@ -286,7 +286,7 @@ export function FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
     delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
   return {
     value: 'Force via L1',
-    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds.`,
+    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
   }
 }
 
@@ -296,7 +296,7 @@ export function FORCE_VIA_L1_STARKEX_PERPETUAL(
   const delayString = formatSeconds(delay)
   return {
     value: 'Force via L1',
-    description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`,
+    description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`,
   }
 }
 
