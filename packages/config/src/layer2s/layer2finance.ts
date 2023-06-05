@@ -49,7 +49,7 @@ export const layer2finance: Layer2 = {
     stateValidation: RISK_VIEW.STATE_FP_1R,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_NO,
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM,
+    sequencerFailure: RISK_VIEW.NO_MECHANISM(),
     validatorFailure: RISK_VIEW.VALIDATOR_NO_MECHANISM,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,

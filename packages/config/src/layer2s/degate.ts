@@ -2,7 +2,6 @@ import { assert, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 import { utils } from 'ethers'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -17,24 +16,20 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('degate')
 
-const forcedWithdrawalDelay = formatSeconds(
-  discovery.getContractValue<number[]>('ExchangeV3', 'getConstants')[2],
-)
-const maxAgeDepositUntilWithdrawable = formatSeconds(
-  discovery.getContractValue<number>(
-    'ExchangeV3',
-    'getMaxAgeDepositUntilWithdrawable',
-  ),
+const forcedWithdrawalDelay = discovery.getContractValue<number[]>(
+  'ExchangeV3',
+  'getConstants',
+)[2]
+
+const maxAgeDepositUntilWithdrawable = discovery.getContractValue<number>(
+  'ExchangeV3',
+  'getMaxAgeDepositUntilWithdrawable',
 )
 
 const forcedWithdrawalFee = discovery.getContractValue<number>(
   'LoopringV3',
   'forcedWithdrawalFee',
 )
-
-const forcedWithdrawalFeeString = `${utils.formatEther(
-  forcedWithdrawalFee,
-)} ETH`
 
 const maxForcedWithdrawalFee = discovery.getContractValue<(number | string)[]>(
   'ExchangeV3',
@@ -83,11 +78,11 @@ export const degate: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_NO,
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString),
-      description:
-        RISK_VIEW.SEQUENCER_FORCE_EXIT_L1(forcedWithdrawalFeeString)
-          .description +
-        ` The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawable} users can get their funds back.`,
+      ...RISK_VIEW.FORCE_VIA_L1_LOOPRING(
+        forcedWithdrawalDelay,
+        forcedWithdrawalFee,
+        maxAgeDepositUntilWithdrawable,
+      ),
       sources: [
         {
           contract: 'ExchangeV3',

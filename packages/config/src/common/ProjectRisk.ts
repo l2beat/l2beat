@@ -1,7 +1,7 @@
 export interface ProjectRisk {
   /** Category of this risk */
   category: ProjectRiskCategory
-  /** Description of te risk. Should form a sentence with the category */
+  /** Description of the risk. Should form a sentence with the category */
   text: string
   /** If the risk is particularly bad */
   isCritical?: boolean

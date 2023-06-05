@@ -1,4 +1,5 @@
 import { ProjectRisk, ProjectTechnologyChoice } from '../../common'
+import { formatSeconds } from '../../utils/formatSeconds'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
@@ -29,7 +30,7 @@ const FORCED: ProjectTechnologyChoice = {
 function EMERGENCY(
   state: string,
   proof: 'zero knowledge proof' | 'merkle proof',
-  delay?: string,
+  delay?: number,
 ): ProjectTechnologyChoice {
   const risks: ProjectRisk[] =
     proof === 'zero knowledge proof'
@@ -40,11 +41,10 @@ function EMERGENCY(
           },
         ]
       : []
+  const delayString = delay !== undefined ? formatSeconds(delay) : 'enough time'
   return {
     name: 'Emergency exit',
-    description: `If ${
-      delay !== undefined ? delay : 'enough time'
-    } passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
+    description: `If ${delayString} passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
     risks,
     references: [],
   }
@@ -127,7 +127,7 @@ const STARKNET_REGULAR: ProjectTechnologyChoice = {
     ' Note that the withdrawal request can be censored by the Sequencer.',
   references: [
     {
-      text: ' Withdrawing is based on l2 to l1 messages - StarkNet documentation',
+      text: ' Withdrawing is based on l2 to l1 messages - Starknet documentation',
       href: 'https://www.cairo-lang.org/docs/hello_starknet/l1l2.html',
     },
   ],
@@ -138,14 +138,8 @@ const STARKNET_EMERGENCY: ProjectTechnologyChoice = {
   name: 'Emergency exit',
   risks: [],
   description:
-    'There is no generic escape hatch mechanism as StarkNet cannot be frozen. Application developers can develp app-specific escape hatches that\
-    could allow users to exit funds when L2 app is frozen. Note that freezing mechanizm on L2, to be secure, requires anti-censorship protection.',
-  references: [
-    {
-      text: ' StarkNet code',
-      href: 'https://etherscan.io/address/0xd8cd77206fcb239bddaaddda8c87cbfe7d67ca2b#code',
-    },
-  ],
+    'There is no generic escape hatch mechanism as Starknet cannot be forced by users into a frozen state. Note that a freezing mechanism on L2, to be secure, requires anti-censorship protection.',
+  references: [],
 }
 
 const PLASMA: ProjectTechnologyChoice = {

@@ -1,7 +1,8 @@
 {
   "name": "zksync",
-  "blockNumber": 17222077,
+  "blockNumber": 17378730,
   "configHash": "0xb2c1b214380e339c53ca4af42343b5755f5b4d33a6b99f2559cd8939be64d37c",
+  "version": 1,
   "contracts": [
     {
       "name": "Multisig 1",
@@ -71,7 +72,7 @@
           "0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
         ],
         "getThreshold": 2,
-        "nonce": 231,
+        "nonce": 256,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -89,7 +90,7 @@
         "defaultFactory": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
         "networkGovernor": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
         "tokenGovernance": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
-        "totalTokens": 181,
+        "totalTokens": 183,
         "validators": ["0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"]
       },
       "derivedName": "Governance"
@@ -155,7 +156,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 15091
+        "totalSupply": 15275
       },
       "derivedName": "ZkSyncNFTFactory"
     },

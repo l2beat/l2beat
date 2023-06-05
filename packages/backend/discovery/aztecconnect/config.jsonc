@@ -2,8 +2,15 @@
   "$schema": "../config.schema.json",
   "name": "aztecconnect",
   "initialAddresses": ["0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"],
+  "names": {
+    "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455": "RollupProcessorV2",
+    "0xE298a76986336686CC3566469e3520d23D1a8aaD": "Aztec Multisig",
+    "0x23f8008159C0427458b948c3DD7795c6DBE8236F": "Emergency Multisig",
+    "0x62415C92528C7d86Fd3f82D3fc75c2F66Bb9389a": "Resume Multisig",
+    "0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e": "Lister Multisig"
+  },
   "overrides": {
-    "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455": {
+    "RollupProcessorV2": {
       "fields": {
         "getSupportedBridge": {
           "type": "array",
@@ -24,6 +31,9 @@
           "event": "RollupProviderUpdated",
           "valueKey": "providerAddress",
           "flagKey": "valid"
+        },
+        "accessControl": {
+          "type": "accessControl"
         }
       },
       "ignoreMethods": [
@@ -46,7 +56,13 @@
         "rollupStateHash"
       ]
     },
-    "0xE298a76986336686CC3566469e3520d23D1a8aaD": {
+    "Aztec Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Emergency Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "Resume Multisig": {
       "ignoreInWatchMode": ["nonce"]
     }
   }

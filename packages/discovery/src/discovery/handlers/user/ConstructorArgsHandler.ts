@@ -30,7 +30,7 @@ export class ConstructorArgsHandler implements Handler {
     const constructorFragment = new ethers.utils.Interface(abi).fragments.find(
       (f) => f.type === 'constructor',
     )
-    assert(constructorFragment, 'Constructor doesnt exist in abi')
+    assert(constructorFragment, 'Constructor does not exist in abi')
     this.constructorFragment = constructorFragment
   }
 
@@ -58,7 +58,7 @@ export class ConstructorArgsHandler implements Handler {
  * We use the following heuristic to decode constructor args:
  * 1. Iterate over the bytecode in reverse order in 32 byte chunks.
  * 2. Each chunk starting location should be encoded in the bytecode as a hex string because args have to be loaded from the bytecode into memory by init code.
- *    So if the index doesnt exist in the bytecode, for sure it is not a starting point of a constructor args.
+ *    So if the index does not exist in the bytecode, for sure it is not a starting point of a constructor args.
  * 3. Try to decode the chunk as constructor args. Unfortunately, shorter chunks that actual args can be decoded as well (with some zero values).
  *    So we just pick the longest decoded chunk that works.
  *  */
@@ -66,7 +66,7 @@ export function decodeConstructorArgs(
   constructor: ethers.utils.Fragment,
   txData: string,
 ): ethers.utils.Result {
-  assert(constructor, 'Constructor doesnt exist in abi')
+  assert(constructor, 'Constructor does not exist in abi')
 
   let longestDecodedArgs: ethers.utils.Result | undefined = undefined
   const offset = 64

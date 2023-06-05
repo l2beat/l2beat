@@ -420,7 +420,7 @@ describe(pickPrices.name, () => {
     ])
   })
 
-  it('discards unecessary data', () => {
+  it('discards unnecessary data', () => {
     const prices = [
       { price: 1100, date: START.add(-2, 'minutes').toDate() },
       { price: 1200, date: START.add(1, 'minutes').toDate() },
