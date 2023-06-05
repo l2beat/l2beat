@@ -16,14 +16,15 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('degate')
 
-const forcedWithdrawalDelay = 
-  discovery.getContractValue<number[]>('ExchangeV3', 'getConstants')[2]
+const forcedWithdrawalDelay = discovery.getContractValue<number[]>(
+  'ExchangeV3',
+  'getConstants',
+)[2]
 
-const maxAgeDepositUntilWithdrawable = 
-  discovery.getContractValue<number>(
-    'ExchangeV3',
-    'getMaxAgeDepositUntilWithdrawable',
-  )
+const maxAgeDepositUntilWithdrawable = discovery.getContractValue<number>(
+  'ExchangeV3',
+  'getMaxAgeDepositUntilWithdrawable',
+)
 
 const forcedWithdrawalFee = discovery.getContractValue<number>(
   'LoopringV3',
@@ -77,7 +78,11 @@ export const degate: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_NO,
     sequencerFailure: {
-      ...RISK_VIEW.FORCE_VIA_L1_LOOPRING(forcedWithdrawalDelay, forcedWithdrawalFee, maxAgeDepositUntilWithdrawable),
+      ...RISK_VIEW.FORCE_VIA_L1_LOOPRING(
+        forcedWithdrawalDelay,
+        forcedWithdrawalFee,
+        maxAgeDepositUntilWithdrawable,
+      ),
       sources: [
         {
           contract: 'ExchangeV3',

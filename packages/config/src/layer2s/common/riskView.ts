@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/shared'
 import { utils } from 'ethers'
 
 import { ProjectRiskViewEntry } from '../../common'
@@ -190,7 +189,10 @@ export const SEQUENCER_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
 // Operator is down
 
 export function VALIDATOR_ESCAPE_MP(delay?: number): ProjectRiskViewEntry {
-  const delayString = delay !== undefined ? ` There is a ${formatSeconds(delay)} delay on this operation.` : ''
+  const delayString =
+    delay !== undefined
+      ? ` There is a ${formatSeconds(delay)} delay on this operation.`
+      : ''
   return {
     value: 'Escape hatch (MP)',
     description: `Users are able to trustlessly exit by submitting a merkle proof of funds.${delayString}`,
@@ -303,7 +305,9 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
 
 export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   const delayString =
-    delay !== undefined ? ` There is a ${formatSeconds(delay)} delay on this operation.` : ''
+    delay !== undefined
+      ? ` There is a ${formatSeconds(delay)} delay on this operation.`
+      : ''
   return {
     value: 'Self sequence',
     description: `In the event of a sequencer failure, users can force transactions to be included in the L2 chain by sending them to L1.${delayString}`,
@@ -313,13 +317,13 @@ export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
 export function SELF_SEQUENCE_ZK(delay?: number): ProjectRiskViewEntry {
   return {
     ...SELF_SEQUENCE(delay),
-    description: SELF_SEQUENCE(delay).description + ' Proposing new blocks requires creating ZK proofs.',
+    description:
+      SELF_SEQUENCE(delay).description +
+      ' Proposing new blocks requires creating ZK proofs.',
   }
 }
 
-export function FORCE_VIA_L1(
-  delay: number,
-): ProjectRiskViewEntry {
+export function FORCE_VIA_L1(delay: number): ProjectRiskViewEntry {
   const delayString = formatSeconds(delay)
   return {
     value: 'Force via L1',
@@ -333,7 +337,7 @@ export function FORCE_VIA_L1_STARKEX_PERPETUAL(
   const delayString = formatSeconds(delay)
   return {
     value: 'Force via L1',
-    description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`
+    description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`,
   }
 }
 
@@ -343,10 +347,12 @@ export function FORCE_VIA_L1_LOOPRING(
   maxAgeDepositUntilWithdrawable: number,
 ): ProjectRiskViewEntry {
   const delayString = formatSeconds(delay)
-  const maxAgeDepositUntilWithdrawableString = formatSeconds(maxAgeDepositUntilWithdrawable)
+  const maxAgeDepositUntilWithdrawableString = formatSeconds(
+    maxAgeDepositUntilWithdrawable,
+  )
   const forcedWithdrawalFeeString = `${utils.formatEther(
-  forcedWithdrawalFee,
-)} ETH`
+    forcedWithdrawalFee,
+  )} ETH`
   return {
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1 with a ${forcedWithdrawalFeeString} fee. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawableString} users can get their funds back.`,
@@ -361,11 +367,15 @@ export const ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
 }
 
 export function NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
-  const additional = disabled === true ? ' Although the functionality exists in the code, it is currently disabled.' : ''
+  const additional =
+    disabled === true
+      ? ' Although the functionality exists in the code, it is currently disabled.'
+      : ''
   return {
     value: 'No mechanism',
     description:
-      'There is no mechanism to have transactions be included if the sequencer is down or censoring.' + additional,
+      'There is no mechanism to have transactions be included if the sequencer is down or censoring.' +
+      additional,
     sentiment: 'bad',
   }
 }

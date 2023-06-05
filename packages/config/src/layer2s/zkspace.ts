@@ -12,7 +12,7 @@ import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkspace')
 
-const forcedWithdrawalDelay = 259200; // 3 days, TODO: get from contract!
+const forcedWithdrawalDelay = 259200 // 3 days, TODO: get from contract!
 
 export const zkspace: Layer2 = {
   type: 'layer2',

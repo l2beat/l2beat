@@ -151,7 +151,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.ENQUEUE_VIA_L1, 
+      ...RISK_VIEW.ENQUEUE_VIA_L1,
       sources: [
         {
           contract: 'zkSync',

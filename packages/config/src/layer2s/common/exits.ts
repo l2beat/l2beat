@@ -41,12 +41,10 @@ function EMERGENCY(
           },
         ]
       : []
-    const delayString = delay !== undefined ? formatSeconds(delay) : 'enough time'
+  const delayString = delay !== undefined ? formatSeconds(delay) : 'enough time'
   return {
     name: 'Emergency exit',
-    description: `If ${
-      delayString
-    } passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
+    description: `If ${delayString} passes and the forced exit is still ignored the user can put the system into ${state}, disallowing further state updates. In that case everybody can withdraw by submitting a ${proof} of their funds with their L1 transaction.`,
     risks,
     references: [],
   }

@@ -15,12 +15,14 @@ import {
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('loopring')
-const forcedWithdrawalDelay = discovery.getContractValue<number[]>('ExchangeV3', 'getConstants')[2]
-const maxAgeDepositUntilWithdrawable = 
-  discovery.getContractValue<number>(
-    'ExchangeV3',
-    'getMaxAgeDepositUntilWithdrawable',
-  )
+const forcedWithdrawalDelay = discovery.getContractValue<number[]>(
+  'ExchangeV3',
+  'getConstants',
+)[2]
+const maxAgeDepositUntilWithdrawable = discovery.getContractValue<number>(
+  'ExchangeV3',
+  'getMaxAgeDepositUntilWithdrawable',
+)
 const forcedWithdrawalFee = discovery.getContractValue<number>(
   'LoopringV3',
   'forcedWithdrawalFee',
@@ -94,7 +96,11 @@ export const loopring: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: {
-      ...RISK_VIEW.FORCE_VIA_L1_LOOPRING(forcedWithdrawalDelay, forcedWithdrawalFee, maxAgeDepositUntilWithdrawable),
+      ...RISK_VIEW.FORCE_VIA_L1_LOOPRING(
+        forcedWithdrawalDelay,
+        forcedWithdrawalFee,
+        maxAgeDepositUntilWithdrawable,
+      ),
       sources: [
         {
           contract: 'ExchangeV3',
