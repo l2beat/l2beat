@@ -129,7 +129,7 @@ const meta = {
         slug: 'gluon',
         provider: undefined,
         warning:
-          'LeverJ trading platform appears to be in a maintanance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
+          'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
         isArchived: true,
         isVerified: true,
         isUpcoming: undefined,
@@ -408,7 +408,7 @@ const meta = {
         dataAvailability: {
           value: 'Optimistic (MEMO)',
           description:
-            'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO.     Challange mechanizm is not yet fully implemented.',
+            'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO.     Challenge mechanizm is not yet fully implemented.',
           sentiment: 'warning',
         },
         upgradeability: {

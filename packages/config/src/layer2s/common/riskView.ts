@@ -73,7 +73,7 @@ export const DATA_EXTERNAL_MEMO: ProjectRiskViewEntry = {
   value: 'Optimistic (MEMO)',
   description:
     'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
-    Challange mechanizm is not yet fully implemented.',
+    Challenge mechanizm is not yet fully implemented.',
   sentiment: 'warning',
 }
 

@@ -479,7 +479,7 @@ const meta = {
         name: 'Gluon',
         slug: 'gluon',
         warning:
-          'LeverJ trading platform appears to be in a maintanance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
+          'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
         isArchived: true,
         isVerified: true,
         tvl: '$65.60 K',
