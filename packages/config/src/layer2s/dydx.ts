@@ -118,6 +118,7 @@ export const dydx: Layer2 = {
         address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
         sinceTimestamp: new UnixTime(1613033682),
         tokens: ['USDC'],
+        ...priorityExecutorUpgradeability,
       }),
     ],
     transactionApi: {
@@ -238,7 +239,7 @@ export const dydx: Layer2 = {
         description:
           'Contract serving as an adapter for STARK Verifier. It holds the address of the STARK Verifier and CAIRO program hash needed for verification.',
         upgradeConsiderations:
-          'This contract is not upgradeable, although the program hash can be changed by the owner.',
+          'This contract is not upgradeable and the program hash cannot be updated because it is in the finalized state.',
       }),
       discovery.getContractDetails(
         'GpsStatementVerifier',
