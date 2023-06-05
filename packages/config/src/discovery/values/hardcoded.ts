@@ -32,5 +32,8 @@ export const HARDCODED = {
   },
   ZKSYNC: {
     PRIORITY_EXPIRATION_PERIOD: 1209600, // 14 days
-  }
+  },
+  ZKSPACE: {
+    PRIORITY_EXPIRATION_PERIOD: 259200, // 3 days
+  },
 }

@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import {
   CONTRACTS,
   makeBridgeCompatible,
@@ -12,7 +13,7 @@ import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkspace')
 
-const forcedWithdrawalDelay = 259200 // 3 days, TODO: get from contract!
+const forcedWithdrawalDelay = HARDCODED.ZKSPACE.PRIORITY_EXPIRATION_PERIOD
 
 export const zkspace: Layer2 = {
   type: 'layer2',
