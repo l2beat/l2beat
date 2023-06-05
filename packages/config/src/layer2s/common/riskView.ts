@@ -144,48 +144,6 @@ export const UPGRADABLE_NO: ProjectRiskViewEntry = {
   description: 'The code that secures the system can never change.',
 }
 
-// Operator is censoring
-
-export const SEQUENCER_TRANSACT_L1: ProjectRiskViewEntry = {
-  value: 'Transact using L1',
-  description:
-    'The user is able to submit a transaction through L1 and force its inclusion on L2.',
-}
-
-export const SEQUENCER_STARKEX_SPOT: ProjectRiskViewEntry = {
-  value: 'Force exit to L1',
-  description:
-    'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
-}
-
-export function SEQUENCER_FORCE_EXIT_L1(fee?: string): ProjectRiskViewEntry {
-  return {
-    value: 'Force exit to L1',
-    description: `The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2${
-      fee !== undefined ? ` with a ${fee} fee` : ''
-    }. After that the user exits the system with their funds.`,
-  }
-}
-
-export const SEQUENCER_EXIT_L1: ProjectRiskViewEntry = {
-  value: 'Exit to L1',
-  description:
-    'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
-}
-
-export const SEQUENCER_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
-  value: 'Propose blocks',
-  description:
-    'The user needs to run their own node and use it to propose new blocks that include otherwise censored transactions.',
-}
-
-export const SEQUENCER_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
-  value: 'Propose blocks (ZK)',
-  description:
-    'The user needs to run their own node and use it to propose new blocks that include otherwise censored transactions. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
-  sentiment: 'warning',
-}
-
 // Operator is down
 
 export function VALIDATOR_ESCAPE_MP(delay?: number): ProjectRiskViewEntry {
@@ -398,12 +356,6 @@ export const RISK_VIEW = {
   UPGRADE_DELAY,
   UPGRADE_DELAY_SECONDS,
   UPGRADABLE_NO,
-  SEQUENCER_TRANSACT_L1,
-  SEQUENCER_STARKEX_SPOT,
-  SEQUENCER_FORCE_EXIT_L1,
-  SEQUENCER_EXIT_L1,
-  SEQUENCER_PROPOSE_BLOCKS,
-  SEQUENCER_PROPOSE_BLOCKS_ZKP,
   VALIDATOR_ESCAPE_MP,
   VALIDATOR_ESCAPE_ZKP,
   VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
