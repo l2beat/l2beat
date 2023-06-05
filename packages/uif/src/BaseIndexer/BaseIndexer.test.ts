@@ -16,13 +16,13 @@ describe(BaseIndexer.name, () => {
     time.uninstall()
   })
 
-  it('should update when dependencies are updated', async () => {
+  it('updates when dependencies are updated', async () => {
     const [dep1, dep2] = [new SpyDependency(), new SpyDependency()]
     const indexer = new SpyIndexer(
       Logger.SILENT,
       [dep1, dep2],
       {},
-      { batchSize: 1 },
+      { batchSize: 5 },
     )
 
     dep1.progress(3)
@@ -30,11 +30,23 @@ describe(BaseIndexer.name, () => {
     dep2.progress(2)
     await time.nextAsync()
 
-    expect(indexer.update).toHaveBeenOnlyCalledWith(0, 2) // called with the lowest height
+    expect(indexer.update).toHaveBeenCalledWith(0, 2) // called with the lowest height
     expect(indexer.getHeight()).toEqual(2)
   })
 
-  it('should enter error state when fails to update', async () => {
+  it('updates in batches', async () => {
+    const [dep1] = [new SpyDependency(), new SpyDependency()]
+    const indexer = new SpyIndexer(Logger.SILENT, [dep1], {}, { batchSize: 5 })
+
+    dep1.progress(6)
+    await time.nextAsync()
+
+    expect(indexer.update).toHaveBeenCalledWith(0, 5)
+    expect(indexer.update).toHaveBeenCalledWith(6, 6)
+    expect(indexer.getHeight()).toEqual(6)
+  })
+
+  it('enters error state when failed to update', async () => {
     const [dep1] = [new SpyDependency(), new SpyDependency()]
     const indexer = new SpyIndexer(Logger.SILENT, [dep1], {}, { batchSize: 1 })
     indexer.update.rejectsWithOnce(new Error('Failed to update'))

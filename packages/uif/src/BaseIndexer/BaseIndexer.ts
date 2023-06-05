@@ -10,6 +10,11 @@ import {
 } from './reducer'
 
 export abstract class BaseIndexer implements Indexer {
+  /**
+   *
+   * @param from - inclusive
+   * @param to - inclusive
+   */
   abstract update(from: number, to: number): Promise<void>
 
   private state: BaseIndexerState
@@ -66,14 +71,27 @@ export abstract class BaseIndexer implements Indexer {
           this.effectsQueue.add({
             name: 'Update',
             execute: async () => {
-              const from = this.state.height
-              this.dispatch({ type: 'UpdateStarted', from, to: effect.to })
-              try {
-                await this.update(from, effect.to)
-                this.dispatch({ type: 'UpdateSucceeded', from, to: effect.to })
-              } catch (e) {
-                // @todo: proper error handling: we need retries, backoff and proper support for error on invalidated state
-                this.dispatch({ type: 'UpdateFailed', from, to: effect.to })
+              const finalFrom = this.state.height
+              const finalTo = effect.to
+              for (
+                let from = finalFrom;
+                from <= finalTo;
+                from += this.state.batchSize + 1
+              ) {
+                const to = Math.min(from + this.state.batchSize, finalTo)
+
+                this.dispatch({ type: 'UpdateStarted', from, to })
+                try {
+                  await this.update(from, to)
+                  this.dispatch({
+                    type: 'UpdateSucceeded',
+                    from,
+                    to,
+                  })
+                } catch (e) {
+                  // @todo: proper error handling: we need retries, backoff and proper support for error on invalidated state
+                  this.dispatch({ type: 'UpdateFailed', from, to })
+                }
               }
             },
           })
