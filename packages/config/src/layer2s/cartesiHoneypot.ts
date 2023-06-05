@@ -21,11 +21,11 @@ export const cartesiHoneypot: Layer2 = {
       apps: [],
       documentation: ['https://docs.cartesi.io/cartesi-rollups/'],
       explorers: [],
-      repositories: [],
+      repositories: ['https://github.com/cartesi/honeypot'],
       socialMedia: [
         'https://twitter.com/cartesiproject',
         'https://medium.com/cartesi',
-        'https://discord.gg/uxYE5YNv3N',
+        'https://discord.gg/G2tCH5KkcM',
       ],
     },
   },
