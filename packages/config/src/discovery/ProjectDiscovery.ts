@@ -230,7 +230,7 @@ export class ProjectDiscovery {
   getContractFromValue(
     contractIdentifier: string,
     key: string,
-    description?: string,
+    descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
   ): ProjectContractSingleAddress {
     const address = this.getContractValue(contractIdentifier, key)
     assert(
@@ -238,12 +238,15 @@ export class ProjectDiscovery {
       `Value of ${key} must be an Ethereum address`,
     )
     const contract = this.getContract(address)
+    if (typeof descriptionOrOptions === 'string') {
+      descriptionOrOptions = { description: descriptionOrOptions }
+    }
 
     return {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
-      description,
+      ...descriptionOrOptions,
     }
   }
 
