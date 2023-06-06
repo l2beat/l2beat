@@ -123,7 +123,7 @@ export const getStage = createGetStage({
     items: {
       proofSystemOverriddenOnlyInCaseOfABug: {
         positive:
-          'Proof system can only be overridden if a bug is detected by the Ethereum L1 contracts.',
+          'Proof system can be overridden only if a bug is detected by the Ethereum L1 contracts.',
         negative:
           'Proof system can be overridden for reasons other than a bug detected by the Ethereum L1 contracts.',
       },
