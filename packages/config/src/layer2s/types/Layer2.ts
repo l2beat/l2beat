@@ -40,8 +40,6 @@ export interface Layer2 {
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
-  /** Rollup maturity data */
-  maturity?: Layer2Maturity
 }
 
 export interface Layer2Display {

@@ -1,4 +1,4 @@
-import { Layer2Maturity } from '@l2beat/config'
+import { StageConfig } from '@l2beat/config'
 import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
@@ -17,19 +17,13 @@ export function MaturityTooltip() {
     hoverOver('.Tooltip')
   }, [])
 
-  const item: Layer2Maturity = {
-    category: {
-      score: 'B',
-      requirements: ['There is an existing fraud proof system'],
+  const item: StageConfig = {
+    stage: 'Stage 1',
+    missing: {
+      nextStage: 'Stage 2',
+      requirements: ['A requirement'],
     },
-    modifier: {
-      score: '-',
-      items: ['Validators are behind a whitelist'],
-    },
-    thingsToImprove: {
-      improvedScore: 'A',
-      requirements: ['There should be no instant upgradeability'],
-    },
+    summary: [],
   }
 
   return (

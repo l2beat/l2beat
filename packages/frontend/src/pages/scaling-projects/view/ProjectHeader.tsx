@@ -1,4 +1,4 @@
-import { Layer2Maturity } from '@l2beat/config'
+import { StageConfig } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
@@ -30,7 +30,7 @@ export interface ProjectHeaderProps {
   tvlBreakdown: TVLBreakdownProps
   risks: RiskValues
   links: ProjectLink[]
-  maturityEntry?: false | Layer2Maturity
+  stage?: false | StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
 }
@@ -74,14 +74,16 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: '30D tx count',
       value: props.transactionMonthlyCount ?? <UpcomingBadge />,
     },
-    ...(props.maturityEntry
+    ...(props.stage
       ? [
           {
             title: 'Maturity',
             value: (
               <span
                 className="Tooltip"
-                title={renderToStaticMarkup(<MaturityTooltipPopup />)}
+                title={renderToStaticMarkup(
+                  <MaturityTooltipPopup item={props.stage} />,
+                )}
               >
                 <MaturityBadge category={'Stage 1'} small />
               </span>

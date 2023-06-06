@@ -1,4 +1,4 @@
-import { Layer2, Layer2Maturity } from '@l2beat/config'
+import { Layer2, StageConfig } from '@l2beat/config'
 
 import { TVLBreakdownProps } from '../../components/TVLBreakdown'
 import { RiskValues } from '../../utils/risks/types'
@@ -19,5 +19,5 @@ export interface ScalingTvlViewEntry {
   marketShare?: string
   purpose: string
   technology: string
-  maturityEntry?: Layer2Maturity
+  stage?: StageConfig
 }

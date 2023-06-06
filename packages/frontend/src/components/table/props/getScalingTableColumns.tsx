@@ -50,7 +50,7 @@ export function getActiveScalingTvlColumns(maturityEnabled: boolean) {
             tooltip: 'Maturity of this Layer 2 based on its features.',
             alignCenter: true as const,
             getValue: (project: ScalingTvlViewEntry) => (
-              <MaturityCell item={project.maturityEntry} />
+              <MaturityCell item={project.stage} />
             ),
           },
         ]

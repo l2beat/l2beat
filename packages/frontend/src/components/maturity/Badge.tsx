@@ -4,7 +4,7 @@ import React from 'react'
 import { Badge } from '../badge/Badge'
 
 interface MaturityBadgeProps {
-  category: 'Stage 0' | 'Stage 1' | 'Stage 2' | undefined
+  category: string | undefined
   small?: boolean
 }
 
@@ -23,9 +23,7 @@ export function MaturityBadge({ category, small }: MaturityBadgeProps) {
   )
 }
 
-function getColorClassName(
-  maturity: 'Stage 0' | 'Stage 1' | 'Stage 2' | undefined,
-): string {
+function getColorClassName(maturity: string | undefined): string {
   switch (maturity) {
     case 'Stage 2':
       return 'bg-green-500 text-black'
@@ -35,5 +33,7 @@ function getColorClassName(
       return 'bg-orange-500 text-black'
     case undefined:
       return 'bg-red-900 text-white'
+    default:
+      return ''
   }
 }

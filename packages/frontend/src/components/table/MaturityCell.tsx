@@ -16,7 +16,7 @@ export function MaturityCell({ item }: MaturityProps) {
       title={renderToStaticMarkup(<MaturityTooltipPopup item={item} />)}
       data-tooltip-big
     >
-      <MaturityBadge category={'Stage 1'} />
+      <MaturityBadge category={item.stage} />
     </div>
   )
 }

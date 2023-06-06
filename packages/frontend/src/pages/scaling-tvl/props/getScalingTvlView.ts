@@ -64,6 +64,6 @@ function getScalingTvlViewEntry(
     marketShare: stats ? formatPercent(stats.tvl / aggregateTvl) : undefined,
     purpose: project.display.purpose,
     technology: project.technology.category,
-    maturityEntry: project.maturity,
+    stage: project.stage,
   }
 }

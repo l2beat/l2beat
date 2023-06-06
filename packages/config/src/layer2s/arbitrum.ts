@@ -14,6 +14,7 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
@@ -461,20 +462,39 @@ export const arbitrum: Layer2 = {
       date: '2021-08-31T00:00:00Z',
     },
   ],
-  maturity: {
-    category: {
-      score: 'B',
-      requirements: ['There is an existing fraud proof system'],
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      txsOrStateDiffsPostedToL1: true,
+      rollupNodeExists: true,
+      nodeSoftwareProgram: true,
+      nodeOpenSource: true,
+      nodeComputesStateBasedOnL1: true,
+      nodeDetectsDisagreement: true,
     },
-    modifier: {
-      score: '-',
-      items: ['Validators are behind a whitelist'],
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemWhitelistedOutsideOrganization: true,
+      fraudProofSystemAllowsRejecting: true,
+      validityProofRequiresAccepting: true,
+      validityProofChecksTransactions: true,
+      proofSystemOverriddenOnlyBySecurityCouncil: true,
+      upgradeCannotInterveneInProofSystem: true,
+      upgradeDelayLongerThenFraudProofWindow: true,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilMultisig: true,
+      securityCouncilAtLeast8: true,
+      securityCouncilMultisigThreshold: true,
+      securityCouncilMembersOutsideOrganization: true,
+      securityCouncilMembersOutsideOrganizationPseudonymous: true,
     },
-    thingsToImprove: {
-      improvedScore: 'A',
-      requirements: ['There should be no instant upgradeability'],
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemMustBePermissionless: false,
+      delayWith30DExitWindow: false,
     },
-  },
+  }),
   knowledgeNuggets: [
     {
       title: 'Arbitrum update boosts decentralization',

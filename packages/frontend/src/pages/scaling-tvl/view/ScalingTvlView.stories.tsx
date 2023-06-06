@@ -59,7 +59,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'Optimistic Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Linea',
@@ -107,7 +107,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Mantle',
@@ -155,7 +155,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'Optimistic Chain',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Scroll',
@@ -203,7 +203,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Taiko',
@@ -251,7 +251,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'ZKSwap 1.0',
@@ -308,7 +308,7 @@ const meta = {
         marketShare: '0.02%',
         purpose: 'Payments, AMM',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Polygon Hermez',
@@ -364,7 +364,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'ZKSwap 2.0',
@@ -422,7 +422,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments, AMM',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Gluon',
@@ -480,7 +480,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Exchange',
         technology: 'Plasma',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'OMG Network',
@@ -538,7 +538,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments',
         technology: 'Plasma',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'L2.Finance-zk',
@@ -594,7 +594,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'DeFi protocols',
         technology: 'Validium',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Arbitrum One',
@@ -652,20 +652,7 @@ const meta = {
         marketShare: '66.75%',
         purpose: 'Universal',
         technology: 'Optimistic Rollup',
-        maturityEntry: {
-          category: {
-            score: 'B',
-            requirements: ['There is an existing fraud proof system'],
-          },
-          modifier: {
-            score: '-',
-            items: ['Validators are behind a whitelist'],
-          },
-          thingsToImprove: {
-            improvedScore: 'A',
-            requirements: ['There should be no instant upgradeability'],
-          },
-        },
+        //TODO: add stage
       },
       {
         name: 'Optimism',
@@ -724,7 +711,7 @@ const meta = {
         marketShare: '19.46%',
         purpose: 'Universal',
         technology: 'Optimistic Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'dYdX',
@@ -779,7 +766,7 @@ const meta = {
         marketShare: '4.08%',
         purpose: 'Exchange',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'zkSync Era',
@@ -836,7 +823,7 @@ const meta = {
         marketShare: '2.77%',
         purpose: 'Universal',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Metis Andromeda',
@@ -896,7 +883,7 @@ const meta = {
         marketShare: '1.27%',
         purpose: 'Universal',
         technology: 'Optimistic Chain',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Loopring',
@@ -952,7 +939,7 @@ const meta = {
         marketShare: '1.25%',
         purpose: 'Tokens, NFTs, AMM',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Immutable X',
@@ -1009,7 +996,7 @@ const meta = {
         marketShare: '1.12%',
         purpose: 'NFT, Exchange',
         technology: 'Validium',
-        maturityEntry: undefined,
+        stage: undefined,
       },
     ],
   },
