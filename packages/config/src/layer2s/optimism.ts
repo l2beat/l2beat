@@ -38,8 +38,8 @@ export const optimism: Layer2 = {
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Optimistic Ethereum is an EVM-compatible Optimistic Rollup chain. It aims to be fast, simple, and secure. \
-    With the Nov 2021 upgrade to "EVM equivalent" OVM 2.0 old fraud proof system has been disabled while the \
+      'Optimism Bedrock is an EVM-equivalent Optimistic Rollup chain. It aims to be fast, simple, and secure. \
+    With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
     new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
     purpose: 'Universal',
     links: {
@@ -119,23 +119,42 @@ export const optimism: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [],
+      sources: [
+        {
+          contract: 'BatchInbox',
+          references: [
+            'https://etherscan.io/address/0xff00000000000000000000000000000000000010',
+          ],
+        },
+        {
+          contract: 'OptimismPortal',
+          references: [
+            'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
+          ],
+        },
+      ],
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
       sources: [
         {
-          contract: 'L1CrossDomainMessengerProxy',
+          contract: 'OptimismPortalProxy',
           references: [
-            'https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1#code',
+            'https://etherscan.io/address/0xbEb5Fc579115071764c7423A4f12eDde41f106Ed',
           ],
         },
       ],
     },
-    // Window size in L1 blocks can be found here: https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/packages/contracts-bedrock/deploy-config/mainnet.json#LL10C26-L10C30
     sequencerFailure: {
       ...RISK_VIEW.SELF_SEQUENCE(HARDCODED.OPTIMISM.SEQUENCER_WINDOW_SECONDS),
-      sources: [],
+      sources: [
+        {
+          contract: 'OptimismPortal',
+          references: [
+            'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
+          ],
+        },
+      ],
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
@@ -167,8 +186,8 @@ export const optimism: Layer2 = {
       ],
       references: [
         {
-          text: 'Introducing EVM Equivalence',
-          href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+          text: 'L2OutputOracle.sol#L141 - Etherscan source code, deleteL2Outputs function',
+          href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L141',
         },
       ],
     },
@@ -176,12 +195,16 @@ export const optimism: Layer2 = {
       ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'Data Availability Batches - Paradigm Research',
-          href: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work#data-availability-batches',
+          text: 'Derivation: Batch submission - Optimism specs',
+          href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
         },
         {
-          text: 'BatchInbox',
+          text: 'BatchInbox - Etherscan address',
           href: 'https://etherscan.io/address/0xff00000000000000000000000000000000000010',
+        },
+        {
+          text: 'OptimismPortal.sol#L434 - Etherscan source code, depositTransaction function',
+          href: 'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
         },
       ],
     },
@@ -189,8 +212,16 @@ export const optimism: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'How will the sequencer be decentralized over time? - Optimism documentation',
-          href: 'https://community.optimism.io/docs/protocol/sequencing.html#how-will-the-sequencer-be-decentralized-over-time',
+          text: 'L2OutputOracle.sol#L30 - Etherscan source code, CHALLENGER address',
+          href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L30',
+        },
+        {
+          text: 'L2OutputOracle.sol#L35 - Etherscan source code, PROPOSER address',
+          href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L35',
+        },
+        {
+          text: 'Decentralizing the sequencer - Optimism docs',
+          href: 'https://community.optimism.io/docs/protocol/#decentralizing-the-sequencer',
         },
       ],
     },
@@ -201,6 +232,10 @@ export const optimism: Layer2 = {
           text: 'Sequencing Window - Optimism Specs',
           href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
         },
+        {
+          text: 'OptimismPortal.sol#L434 - Etherscan source code, depositTransaction function',
+          href: 'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
+        },
       ],
     },
     exitMechanisms: [
@@ -210,6 +245,14 @@ export const optimism: Layer2 = {
           {
             text: 'Withdrawing back to L1 - Optimism Help Center',
             href: 'https://help.optimism.io/hc/en-us/articles/4411903283227-Withdrawals-from-Optimism',
+          },
+          {
+            text: 'OptimismPortal.sol#L242 - Etherscan source code, proveWithdrawalTransaction function',
+            href: 'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L242',
+          },
+          {
+            text: 'OptimismPortal.sol#325 - Etherscan source code, finalizeWithdrawalTransaction function',
+            href: 'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L325',
           },
           {
             text: 'L2OutputOracle.sol#L185 - Etherscan source code, PROPOSER check',
@@ -240,16 +283,25 @@ export const optimism: Layer2 = {
     {
       name: 'Sequencer',
       accounts: [
-        discovery.getPermissionedAccount('AddressManager', 'OVM_Sequencer'),
+        discovery.formatPermissionedAccount(
+          '0x6887246668a3b87F54DeB3b94Ba47a6f63F32985',
+        ), // TODO: hardcoded, see if we can get it from somewhere
       ],
       description: 'Central actor allowed to commit L2 transactions to L1.',
     },
     {
-      name: 'State Root Proposer',
+      name: 'Proposer',
       accounts: [
-        discovery.getPermissionedAccount('AddressManager', 'OVM_Proposer'),
+        discovery.getPermissionedAccount('L2OutputOracleProxy', 'PROPOSER'),
       ],
       description: 'Central actor to post new L2 state roots to L1.',
+    },
+    {
+      name: 'Challenger',
+      accounts: [
+        discovery.getPermissionedAccount('L2OutputOracleProxy', 'CHALLENGER'),
+      ],
+      description: 'Central actor to challenge L2 state roots.',
     },
   ],
   contracts: {
@@ -282,6 +334,12 @@ export const optimism: Layer2 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [
+    {
+      name: 'Optimism’s mainnet migration to Bedrock',
+      link: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
+      date: '2023-06-06T00:00:00Z',
+      description: 'OP mainnet, since Jun 2023 is running Bedrock.',
+    },
     {
       name: 'Optimism’s Goerli Testnet migrated to Bedrock',
       link: 'https://twitter.com/OPLabsPBC/status/1613684377124327424',
@@ -336,9 +394,9 @@ export const optimism: Layer2 = {
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
     {
-      title: 'How does Optimism really work?',
-      url: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work',
-      thumbnail: NUGGETS.THUMBNAILS.PARADIGM_01,
+      title: 'Bedrock Explainer',
+      url: 'https://community.optimism.io/docs/developers/bedrock/explainer/',
+      thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_04,
     },
     {
       title: 'Modular Rollup Theory',
