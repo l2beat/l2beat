@@ -127,7 +127,7 @@ export const optimism: Layer2 = {
           ],
         },
         {
-          contract: 'OptimismPortal',
+          contract: 'OptimismPortalProxy',
           references: [
             'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
           ],
@@ -149,7 +149,7 @@ export const optimism: Layer2 = {
       ...RISK_VIEW.SELF_SEQUENCE(HARDCODED.OPTIMISM.SEQUENCER_WINDOW_SECONDS),
       sources: [
         {
-          contract: 'OptimismPortal',
+          contract: 'OptimismPortalProxy',
           references: [
             'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
           ],
