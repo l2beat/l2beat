@@ -121,12 +121,6 @@ export const optimism: Layer2 = {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
-          contract: 'BatchInbox',
-          references: [
-            'https://etherscan.io/address/0xff00000000000000000000000000000000000010',
-          ],
-        },
-        {
           contract: 'OptimismPortalProxy',
           references: [
             'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
