@@ -4,7 +4,7 @@ import { expect } from 'earl'
 const getTestStage = createGetStage({
   stage0: {
     name: 'Stage 0',
-    keys: {
+    items: {
       callsItselfRollup: {
         positive: 'The project calls itself a rollup.',
         negative: "The project doesn't call itself a rollup.",
@@ -13,7 +13,7 @@ const getTestStage = createGetStage({
   },
   stage1: {
     name: 'Stage 1',
-    keys: {
+    items: {
       hasEscapeHatch: {
         positive: 'The project has an escape hatch.',
         negative: "The project doesn't have an escape hatch.",
@@ -39,13 +39,38 @@ describe(createGetStage.name, () => {
     })
 
     expect(result).toEqual({
-      stage: 'No stage',
+      stage: undefined,
       missing: {
         nextStage: 'Stage 0',
         requirements: [
           "The project doesn't call itself a rollup. It calls itself a chicken.",
         ],
       },
+      summary: [
+        {
+          stage: 'Stage 0',
+          requirements: [
+            {
+              satisfied: false,
+              description:
+                "The project doesn't call itself a rollup. It calls itself a chicken.",
+            },
+          ],
+        },
+        {
+          stage: 'Stage 1',
+          requirements: [
+            {
+              satisfied: false,
+              description: "The project doesn't have an escape hatch.",
+            },
+            {
+              satisfied: false,
+              description: "The project doesn't have 8 council members.",
+            },
+          ],
+        },
+      ],
     })
   })
 
@@ -66,6 +91,30 @@ describe(createGetStage.name, () => {
         nextStage: 'Stage 1',
         requirements: ["The project doesn't have 8 council members."],
       },
+      summary: [
+        {
+          stage: 'Stage 0',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'The project calls itself a rollup.',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 1',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'The project has an escape hatch.',
+            },
+            {
+              satisfied: false,
+              description: "The project doesn't have 8 council members.",
+            },
+          ],
+        },
+      ],
     })
   })
 
@@ -80,6 +129,33 @@ describe(createGetStage.name, () => {
       },
     })
 
-    expect(result).toEqual({ stage: 'Stage 1', missing: undefined })
+    expect(result).toEqual({
+      stage: 'Stage 1',
+      missing: undefined,
+      summary: [
+        {
+          stage: 'Stage 0',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'The project calls itself a rollup.',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 1',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'The project has an escape hatch.',
+            },
+            {
+              satisfied: true,
+              description: 'The project has at least 8 council members.',
+            },
+          ],
+        },
+      ],
+    })
   })
 })
