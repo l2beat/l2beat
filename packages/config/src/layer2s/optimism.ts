@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -34,10 +35,6 @@ export const optimism: Layer2 = {
   display: {
     name: 'Optimism',
     slug: 'optimism',
-    headerWarning: {
-      text: 'The upgrade of Optimism to the Bedrock release is currently underway, starting from June 6, 2023, at 16:00. Once the upgrade is complete, the project will be under review by our team. For more information, click here.',
-      href: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
-    },
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
@@ -66,11 +63,18 @@ export const optimism: Layer2 = {
     nativeL2TokensIncludedInTVL: ['OP'],
     escrows: [
       discovery.getEscrowDetails({
+        address: EthereumAddress('0xbEb5Fc579115071764c7423A4f12eDde41f106Ed'),
+        sinceTimestamp: new UnixTime(1686068903),
+        tokens: ['ETH'],
+        description: 'Main entry point for users depositing ETH.',
+        ...upgradesProxy,
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1'),
         sinceTimestamp: new UnixTime(1624401464),
         tokens: '*',
         description:
-          'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
+          'Main entry point for users depositing ERC20 tokens that do not require custom gateway.',
         ...upgradesProxy,
       }),
       discovery.getEscrowDetails({
@@ -115,14 +119,7 @@ export const optimism: Layer2 = {
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'CanonicalTransactionChain',
-          references: [
-            'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L277',
-          ],
-        },
-      ],
+      sources: [],
     },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
@@ -135,24 +132,18 @@ export const optimism: Layer2 = {
         },
       ],
     },
+    // Window size in L1 blocks can be found here: https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/packages/contracts-bedrock/deploy-config/mainnet.json#LL10C26-L10C30
     sequencerFailure: {
-      ...RISK_VIEW.ENQUEUE_VIA_L1,
-      sources: [
-        {
-          contract: 'CanonicalTransactionChain',
-          references: [
-            'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L201',
-          ],
-        },
-      ],
+      ...RISK_VIEW.SELF_SEQUENCE(HARDCODED.OPTIMISM.SEQUENCER_WINDOW_SECONDS),
+      sources: [],
     },
     validatorFailure: {
       ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
       sources: [
         {
-          contract: 'StateCommitmentChain',
+          contract: 'L2OutputOracleProxy',
           references: [
-            'https://etherscan.io/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19#code#F1#L96',
+            'https://etherscan.io/address/0xdfe97868233d1aa22e815a266982f2cf17685a27#code#F1#L96',
           ],
         },
       ],
@@ -189,8 +180,8 @@ export const optimism: Layer2 = {
           href: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work#data-availability-batches',
         },
         {
-          text: 'CanonicalTransactionChain.sol#L277 - Etherscan source code, appendSequencerBatch function',
-          href: 'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L277',
+          text: 'BatchInbox',
+          href: 'https://etherscan.io/address/0xff00000000000000000000000000000000000010',
         },
       ],
     },
@@ -201,18 +192,14 @@ export const optimism: Layer2 = {
           text: 'How will the sequencer be decentralized over time? - Optimism documentation',
           href: 'https://community.optimism.io/docs/protocol/sequencing.html#how-will-the-sequencer-be-decentralized-over-time',
         },
-        {
-          text: 'CanonicalTransactionChain.sol#L293 - Etherscan source code, "OVM_Sequencer" check',
-          href: 'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L293',
-        },
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.NO_MECHANISM,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
       references: [
         {
-          text: 'Chain Contracts - Optimism documentation',
-          href: 'https://community.optimism.io/docs/protocol/protocol-2.0.html#chain-contracts',
+          text: 'Sequencing Window - Optimism Specs',
+          href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
         },
       ],
     },
@@ -225,8 +212,8 @@ export const optimism: Layer2 = {
             href: 'https://help.optimism.io/hc/en-us/articles/4411903283227-Withdrawals-from-Optimism',
           },
           {
-            text: 'mockOVM_BondManager.sol#L71 - Etherscan source code, isCollateralized function',
-            href: 'https://etherscan.io/address/0xCd76de5C57004d47d0216ec7dAbd3c72D8c49057#code#F6#L71',
+            text: 'L2OutputOracle.sol#L185 - Etherscan source code, PROPOSER check',
+            href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L185',
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
@@ -248,7 +235,7 @@ export const optimism: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'OptimismMultisig',
-      'This address is the owner of the following contracts: OVM_L1CrossDomainMessenger, L1StandardBridge, AddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+      'This address is the owner of the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     {
       name: 'Sequencer',
@@ -267,36 +254,9 @@ export const optimism: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('CanonicalTransactionChain', {
+      discovery.getContractDetails('L2OutputOracleProxy', {
         description:
-          'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer can append to the rollup state.',
-        ...upgradesAddressManager,
-      }),
-      discovery.getContractDetails('StateCommitmentChain', {
-        description:
-          'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only OVM_Proposer can submit new state roots.',
-        ...upgradesAddressManager,
-      }),
-      {
-        name: 'ChainStorageContainer-CTC-batches',
-        address: EthereumAddress(
-          discovery.getContractValue<string>(
-            'CanonicalTransactionChain',
-            'batches',
-          ),
-        ),
-        ...upgradesAddressManager,
-      },
-      {
-        name: 'ChainStorageContainer-SCC-batches',
-        address: EthereumAddress(
-          discovery.getContractValue<string>('StateCommitmentChain', 'batches'),
-        ),
-        ...upgradesAddressManager,
-      },
-      discovery.getContractDetails('BondManager', {
-        description:
-          "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
+          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only the PROPOSER address can submit new state roots.',
         ...upgradesAddressManager,
       }),
       discovery.getContractDetails('L1CrossDomainMessengerProxy', {
