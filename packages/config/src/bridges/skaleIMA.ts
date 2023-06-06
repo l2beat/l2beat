@@ -64,7 +64,7 @@ export const skaleIMA: Bridge = {
     principleOfOperation: {
       name: 'Principle of Operation',
       description:
-        'It is a cross-chain BLS threshold bridge that allows users to transfer Eth, ERC20, ERC721, ERC1155 and arbitrary messages between Ethereum and SKALE chains without fees and between SKALE chains without gas fees. Locks/Unlocks on main chain(Ethereum or SKALE chain which is origin of the asset), Burns/Mints on target chain.',
+        'It is a cross-chain BLS threshold bridge that allows users to transfer Eth, ERC20, ERC721, ERC1155 and arbitrary messages between Ethereum and SKALE chains without fees and between SKALE chains without gas fees. Locks/Unlocks on main chain (Ethereum or SKALE chain which is origin of the asset), Burns/Mints on target chain.',
       references: [
         {
           text: 'Bridging transactions',
@@ -77,7 +77,7 @@ export const skaleIMA: Bridge = {
     validation: {
       name: 'Validation',
       description:
-        'SKALE IMA Bridge operates on SKALE Network nodes for connected SKALE chain. Each node validates a tx and sign tx by BLS secret key and one of the node send tx to the SKALE chain or Ethereum when 11 out of 16 nodes validated and signed the tx.',
+        'SKALE IMA Bridge operates on SKALE Network nodes for connected SKALE chain. Messages are signed by BLS secret key with a 11 out of 16 threshold, then sent and validated on Ethereum. The validator set signing the message is the same one that is used for the consensus of the SKALE chain, making the bridge as secure as the chain itself. Since the state root is not sent to L1, the bridge and the chain state can diverge.',
       references: [
         {
           text: 'SKALE IMA Bridge - Overview',
