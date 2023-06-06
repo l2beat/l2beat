@@ -83,7 +83,7 @@ export const getStage = createGetStage({
       },
       upgradeDelayLongerThenFraudProofWindow: {
         positive:
-          'User have time to exit the system because the upgrade delay is longer than the fraud proof window.',
+          'Users have time to exit the system because the upgrade delay is longer than the fraud proof window.',
         negative:
           'Users do not have time to exit the system because the upgrade delay is shorter than the fraud proof window.',
       },
