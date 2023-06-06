@@ -161,7 +161,7 @@ export const zksynclite: Layer2 = {
           href: 'https://zksync.io/faq/security.html#validity-proofs',
         },
         {
-          text: 'ZkSync.sol#L549 - zkSync source code',
+          text: 'ZkSync.sol#L549 - Etherscan source code, proveBlocks function',
           href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
         },
       ],
@@ -174,7 +174,7 @@ export const zksynclite: Layer2 = {
           href: 'https://zksync.io/faq/security.html#cryptography-used',
         },
         {
-          text: 'PlonkCore.sol#L1193 - zkSync source code',
+          text: 'PlonkCore.sol#L1193 - Etherscan source code',
           href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F21#L1193',
         },
       ],
@@ -186,13 +186,10 @@ export const zksynclite: Layer2 = {
           text: 'Overview - zkSync documentation',
           href: 'https://zksync.io/dev/#overview',
         },
+
         {
-          text: 'ZkSync.sol#L44 - zkSync source code',
+          text: 'ZkSync.sol#L44 - Etherscan source code, commitBlockInfo struct',
           href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
-        },
-        {
-          text: 'ZkSync.sol#L422 - zkSync source code',
-          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L422',
         },
       ],
     },
@@ -202,6 +199,10 @@ export const zksynclite: Layer2 = {
         {
           text: 'How decentralized is zkSync - zkSync FAQ',
           href: 'https://zksync.io/faq/decentralization.html#how-decentralized-is-zksync',
+        },
+        {
+          text: 'ZkSync.sol#L422 - Etherscan source code, requireActiveValidator in commitBlock function',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L427',
         },
       ],
     },
@@ -213,11 +214,11 @@ export const zksynclite: Layer2 = {
           href: 'https://zksync.io/faq/security.html#priority-queue',
         },
         {
-          text: 'ZkSync.sol#L977 - zkSync source code',
+          text: 'ZkSync.sol#L977 - Etherscan source code, addPriorityRequest function',
           href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L977',
         },
         {
-          text: 'ZkSync.sol#L600 - zkSync source code',
+          text: 'ZkSync.sol#L600 - Etherscan source code, activateExodusMode function',
           href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
         },
       ],
@@ -240,11 +241,11 @@ export const zksynclite: Layer2 = {
             href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
-            text: 'ZkSync.sol#L325 - zkSync source code',
+            text: 'ZkSync.sol#L325 - Etherscan source code, requestFullExit function',
             href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
           },
           {
-            text: 'ZkSync.sol#L360 - zkSync source code',
+            text: 'ZkSync.sol#L360 - Etherscan source code, requestFullExitNFT function',
             href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
           },
         ],
@@ -261,7 +262,7 @@ export const zksynclite: Layer2 = {
             href: 'https://github.com/matter-labs/zksync/tree/master/infrastructure/exit-tool',
           },
           {
-            text: 'ZkSync.sol#L622 - zkSync source code',
+            text: 'ZkSync.sol#L622 - Etherscan source code, performExodus function',
             href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
           },
         ],
@@ -295,7 +296,7 @@ export const zksynclite: Layer2 = {
         upgradeDelay: 'No delay',
         references: [
           {
-            text: 'Governance.sol#L93 - zkSync source code',
+            text: 'Governance.sol#L93 - Etherscan source code',
             href: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
           },
         ],
@@ -306,7 +307,7 @@ export const zksynclite: Layer2 = {
         upgradeDelay: 'No delay',
         references: [
           {
-            text: 'Governance.sol#L205 - zkSync source code',
+            text: 'Governance.sol#L205 - Etherscan source code',
             href: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L',
           },
         ],
