@@ -8,7 +8,7 @@ import {
   ProjectLinks,
   ProjectPermission,
 } from '../../common'
-import { StageConfig } from '../common/stages/stage'
+import { StageConfig } from '../common/stages/types'
 import { Layer2Maturity } from './Layer2Maturity'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
