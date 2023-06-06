@@ -16,7 +16,7 @@ export const getStage = createGetStage({
       },
       txsOrStateDiffsPostedToL1: {
         positive: 'L2 transactions or L2 state diffs are posted to L1.',
-        negative: 'No data is posted to L1.',
+        negative: 'Not enough data is posted to L1.',
       },
       rollupNodeExists: {
         positive: 'There exists a rollup node for the project.',
