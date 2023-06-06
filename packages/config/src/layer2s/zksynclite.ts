@@ -160,6 +160,10 @@ export const zksynclite: Layer2 = {
           text: 'Validity proofs - zkSync FAQ',
           href: 'https://zksync.io/faq/security.html#validity-proofs',
         },
+        {
+          text: 'ZkSync.sol#L549 - zkSync source code',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
+        },
       ],
     },
     newCryptography: {
@@ -169,6 +173,10 @@ export const zksynclite: Layer2 = {
           text: 'Cryptography used - zkSync FAQ',
           href: 'https://zksync.io/faq/security.html#cryptography-used',
         },
+        {
+          text: 'PlonkCore.sol#L1193 - zkSync source code',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F21#L1193',
+        },
       ],
     },
     dataAvailability: {
@@ -177,6 +185,14 @@ export const zksynclite: Layer2 = {
         {
           text: 'Overview - zkSync documentation',
           href: 'https://zksync.io/dev/#overview',
+        },
+        {
+          text: 'ZkSync.sol#L44 - zkSync source code',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
+        },
+        {
+          text: 'ZkSync.sol#L422 - zkSync source code',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L422',
         },
       ],
     },
@@ -196,6 +212,14 @@ export const zksynclite: Layer2 = {
           text: 'Priority queue - zkSync FAQ',
           href: 'https://zksync.io/faq/security.html#priority-queue',
         },
+        {
+          text: 'ZkSync.sol#L977 - zkSync source code',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L977',
+        },
+        {
+          text: 'ZkSync.sol#L600 - zkSync source code',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
+        },
       ],
     },
     exitMechanisms: [
@@ -204,7 +228,7 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://zksync.io/dev/payments/basic.html#flow',
+            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
         ],
       },
@@ -213,7 +237,15 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://zksync.io/dev/payments/basic.html#flow',
+            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+          },
+          {
+            text: 'ZkSync.sol#L325 - zkSync source code',
+            href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
+          },
+          {
+            text: 'ZkSync.sol#L360 - zkSync source code',
+            href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
           },
         ],
       },
@@ -222,11 +254,15 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://zksync.io/dev/payments/basic.html#flow',
+            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
             text: 'README.md - zkSync Exit Tool',
             href: 'https://github.com/matter-labs/zksync/tree/master/infrastructure/exit-tool',
+          },
+          {
+            text: 'ZkSync.sol#L622 - zkSync source code',
+            href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
           },
         ],
       },
