@@ -81,15 +81,9 @@ export function ProjectHeader(props: ProjectHeaderProps) {
             value: (
               <span
                 className="Tooltip"
-                title={renderToStaticMarkup(
-                  <MaturityTooltipPopup item={props.maturityEntry} />,
-                )}
+                title={renderToStaticMarkup(<MaturityTooltipPopup />)}
               >
-                <MaturityBadge
-                  category={props.maturityEntry.category.score}
-                  modifier={props.maturityEntry.modifier?.score}
-                  small
-                />
+                <MaturityBadge category={'Stage 1'} small />
               </span>
             ),
           },

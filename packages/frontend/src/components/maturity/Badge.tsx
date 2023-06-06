@@ -1,20 +1,14 @@
-import { MaturityCategory, MaturityModifier } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
 import { Badge } from '../badge/Badge'
 
 interface MaturityBadgeProps {
-  category: MaturityCategory
-  modifier?: MaturityModifier
+  category: 'Stage 0' | 'Stage 1' | 'Stage 2' | undefined
   small?: boolean
 }
 
-export function MaturityBadge({
-  category,
-  modifier,
-  small,
-}: MaturityBadgeProps) {
+export function MaturityBadge({ category, small }: MaturityBadgeProps) {
   return (
     <Badge
       className={cx(
@@ -25,22 +19,21 @@ export function MaturityBadge({
       oneSize
     >
       {category}
-      {modifier}
     </Badge>
   )
 }
 
-function getColorClassName(maturity: MaturityCategory): string {
+function getColorClassName(
+  maturity: 'Stage 0' | 'Stage 1' | 'Stage 2' | undefined,
+): string {
   switch (maturity) {
-    case 'A':
+    case 'Stage 2':
       return 'bg-green-500 text-black'
-    case 'B':
+    case 'Stage 1':
       return 'bg-yellow-100 text-black'
-    case 'C':
+    case 'Stage 0':
       return 'bg-orange-500 text-black'
-    case 'D':
-      return 'bg-red-400 text-white'
-    case '-':
+    case undefined:
       return 'bg-red-900 text-white'
   }
 }
