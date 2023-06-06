@@ -3,7 +3,7 @@ import {
   gatherAddressesFromUpgradeability,
   UnixTime,
 } from '@l2beat/shared'
-import { expect } from 'earl' 
+import { expect } from 'earl'
 
 import {
   ProjectReference,

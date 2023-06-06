@@ -1,39 +1,20 @@
-export const getStage = createGetStage({
-  stage0: {
-    name: 'Stage 0',
-    items: {
-      callsItselfRollup: {
-        positive: 'The project calls itself a rollup',
-        negative: "The project doesn't call itself a rollup",
-      },
-    },
-  },
-  stage1: {
-    name: 'Stage 1',
-    items: {
-      isCouncil8Members: {
-        positive: 'The project has at least 8 council members',
-        negative: "The project doesn't have 8 council members",
-      },
-    },
-  },
-})
-
-export type StageChecklist<T extends StageBlueprint> = {
-  [K in keyof T]: {
-    [L in keyof T[K]['items']]: boolean | null | [boolean, string]
-  }
-}
-
-export interface StageBlueprint {
-  [key: string]: {
+export type StageBlueprint = Record<
+  string,
+  {
     name: string
-    items: {
-      [key: string]: {
+    items: Record<
+      string,
+      {
         positive: string
         negative: string
       }
-    }
+    >
+  }
+>
+
+export type ChecklistTemplate<T extends StageBlueprint> = {
+  [K in keyof T]: {
+    [L in keyof T[K]['items']]: boolean | null | [boolean, string]
   }
 }
 
@@ -58,7 +39,7 @@ export interface StageConfig {
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
-): (checklist: StageChecklist<T>) => StageConfig {
+): (checklist: ChecklistTemplate<T>) => StageConfig {
   return function getStage(checklist) {
     let lastStage: string | undefined = undefined
     let missing: MissingStageRequirements | undefined = undefined
@@ -101,14 +82,6 @@ export function createGetStage<T extends StageBlueprint>(
   }
 }
 
-function isSatisfied(stageKeyChecklist: boolean | [boolean, string] | null) {
-  return (
-    stageKeyChecklist === true ||
-    stageKeyChecklist === null ||
-    (Array.isArray(stageKeyChecklist) && stageKeyChecklist[0] === true)
-  )
-}
-
 function normalizeKeyChecklist(
   stageKeyBlueprint: { positive: string; negative: string },
   stageKeyChecklist: boolean | [boolean, string] | null,
@@ -124,4 +97,12 @@ function normalizeKeyChecklist(
   }
 
   return [satisfied, description]
+}
+
+function isSatisfied(stageKeyChecklist: boolean | [boolean, string] | null) {
+  return (
+    stageKeyChecklist === true ||
+    stageKeyChecklist === null ||
+    (Array.isArray(stageKeyChecklist) && stageKeyChecklist[0])
+  )
 }

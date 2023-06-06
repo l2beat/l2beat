@@ -1,5 +1,6 @@
-import { createGetStage } from './stage'
 import { expect } from 'earl'
+
+import { createGetStage } from './stage'
 
 const getTestStage = createGetStage({
   stage0: {
