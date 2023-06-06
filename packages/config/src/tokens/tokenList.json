@@ -1511,6 +1511,16 @@
       "category": "other"
     },
     {
+      "id": "razor-razor",
+      "name": "RAZOR",
+      "coingeckoId": "razor-network",
+      "address": "0x50DE6856358Cc35f3A9a57eAAA34BD4cB707d2cd",
+      "symbol": "RAZOR",
+      "decimals": 18,
+      "sinceTimestamp": 1611070839,
+      "category": "other"
+    },
+    {
       "id": "reef-reef",
       "name": "Reef.finance",
       "coingeckoId": "reef",
