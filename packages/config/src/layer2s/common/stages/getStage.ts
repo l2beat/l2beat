@@ -49,7 +49,7 @@ export const getStage = createGetStage({
       },
       fraudProofSystemWhitelistedOutsideOrganization: {
         positive:
-          'There is a whitelist of validators, but they come outside the organization.',
+          'There is a whitelist of validators, but they come from outside the organization.',
         negative:
           'All validators from the whitelist are from the organization.',
       },
