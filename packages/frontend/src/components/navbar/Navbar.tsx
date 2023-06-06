@@ -36,7 +36,7 @@ export function getNavbarProps(
     forumLink: config.links.forum,
     showHiring: config.features.hiring,
     showActivity: config.features.activity,
-    showDefinitions: config.features.maturity,
+    showDefinitions: config.features.stages,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }

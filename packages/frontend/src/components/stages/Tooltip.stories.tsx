@@ -5,13 +5,13 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { configureTooltips } from '../../scripts/configureTooltips'
 import { hoverOver } from '../../utils/storybook/hoverOver'
 import { Tooltip as TooltipComponent } from '../Tooltip'
-import { MaturityTooltipPopup } from './TooltipPopup'
+import { StageTooltipPopup } from './TooltipPopup'
 
 export default {
   title: 'Components/Tooltip',
 }
 
-export function MaturityTooltip() {
+export function StageTooltip() {
   useEffect(() => {
     configureTooltips()
     hoverOver('.Tooltip')
@@ -30,7 +30,7 @@ export function MaturityTooltip() {
     <div className="m-4 ml-32">
       <span
         className="Tooltip inline-block"
-        title={renderToStaticMarkup(<MaturityTooltipPopup item={item} />)}
+        title={renderToStaticMarkup(<StageTooltipPopup item={item} />)}
         data-tooltip-big
       >
         <span>Element with tooltip</span>

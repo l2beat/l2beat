@@ -16,14 +16,11 @@ import { ScalingTvlViewEntry } from '../types'
 
 export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
-  maturityEnabled: boolean
+  stagesEnabled: boolean
   upcomingEnabled?: boolean
 }
 
-export function ScalingTvlView({
-  items,
-  maturityEnabled,
-}: ScalingTvlViewProps) {
+export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
   const rows: RowConfig<ScalingTvlViewEntry> = {
     getProps: getScalingRowProps,
   }
@@ -42,7 +39,7 @@ export function ScalingTvlView({
                   (item) => !item.isArchived && !item.isUpcoming,
                 )}
                 rows={rows}
-                columns={getActiveScalingTvlColumns(maturityEnabled)}
+                columns={getActiveScalingTvlColumns(stagesEnabled)}
               />
             ),
             icon: <ActiveIcon />,

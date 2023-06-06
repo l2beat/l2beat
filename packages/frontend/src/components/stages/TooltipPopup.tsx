@@ -1,17 +1,17 @@
 import { StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { MaturityBadge } from './Badge'
+import { StageBadge } from './Badge'
 
-export interface MaturityProps {
+export interface StageTooltipProps {
   item?: StageConfig
 }
 
-export function MaturityTooltipPopup({ item }: MaturityProps) {
+export function StageTooltipPopup({ item }: StageTooltipProps) {
   return (
     <div className="w-88 flex flex-col gap-4">
       <span className="font-bold">
-        <MaturityBadge category={'Stage 1'} />
+        <StageBadge category={'Stage 1'} />
       </span>
       <hr className="border-gray-650" />
       <div>

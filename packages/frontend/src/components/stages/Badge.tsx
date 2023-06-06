@@ -3,12 +3,12 @@ import React from 'react'
 
 import { Badge } from '../badge/Badge'
 
-interface MaturityBadgeProps {
+interface StageBadgeProps {
   category: string | undefined
   small?: boolean
 }
 
-export function MaturityBadge({ category, small }: MaturityBadgeProps) {
+export function StageBadge({ category, small }: StageBadgeProps) {
   return (
     <Badge
       className={cx(
@@ -23,8 +23,8 @@ export function MaturityBadge({ category, small }: MaturityBadgeProps) {
   )
 }
 
-function getColorClassName(maturity: string | undefined): string {
-  switch (maturity) {
+function getColorClassName(stage: string | undefined): string {
+  switch (stage) {
     case 'Stage 2':
       return 'bg-green-500 text-black'
     case 'Stage 1':
