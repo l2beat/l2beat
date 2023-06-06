@@ -46,7 +46,9 @@ export interface Layer2Display {
   name: string
   /** Url friendly layer2 name, will be used in website urls */
   slug: string
-  /** A warning displayed at the top of the layer2 page */
+  /** A warning displayed in the header of the project */
+  headerWarning?: string
+  /** A warning displayed above the description of the project */
   warning?: string
   /** A few sentences describing the layer2 */
   description: string
