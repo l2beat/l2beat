@@ -19,6 +19,9 @@ export const HARDCODED = {
     SET_VALIDATOR_COUNT: 7,
     SET_SEQUENCER_COUNT: 3,
   },
+  OPTIMISM: {
+    SEQUENCER_WINDOW_SECONDS: 43200, // Window size in L1 blocks can be found here: https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/packages/contracts-bedrock/deploy-config/mainnet.json#LL10C26-L10C30
+  },
   ZKSYNC_2: {
     FACETS: [
       '0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc',
