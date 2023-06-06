@@ -27,8 +27,8 @@ export const getStage = createGetStage({
         negative: 'The rollup node is not a software program.',
       },
       nodeOpenSource: {
-        positive: 'The rollup node source code is open source.',
-        negative: 'The rollup node source code is not open source.',
+        positive: 'The rollup node is open source.',
+        negative: 'The rollup node is not open source.',
       },
       nodeComputesStateBasedOnL1: {
         positive: 'Computes the L2 state based on Ethereum L1 data.',
