@@ -8,6 +8,7 @@ import {
   ProjectLinks,
   ProjectPermission,
 } from '../../common'
+import { StageConfig } from '../common/stages/types'
 import { Layer2Maturity } from './Layer2Maturity'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
@@ -27,6 +28,8 @@ export interface Layer2 {
   config: Layer2Config
   /** Risk view values for this layer2 */
   riskView: Layer2RiskView
+  /** Rollup stage */
+  stage?: StageConfig
   /** Deep dive into layer2 technology */
   technology: Layer2Technology
   /** List of smart contracts used in the layer2 */
