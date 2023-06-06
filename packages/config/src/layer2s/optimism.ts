@@ -35,8 +35,8 @@ export const optimism: Layer2 = {
     name: 'Optimism',
     slug: 'optimism',
     headerWarning: {
-      text: 'Optimism is currently undergoing a major upgrade.',
-      href: 'https://community.optimism.io/docs/protocol/protocol.html#optimism-2-0',
+      text: 'The Optimism upgrade to the Bedrock release will start on June 6, 2023, at 16:00 UTC. For more information, click here.',
+      href: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
     },
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
