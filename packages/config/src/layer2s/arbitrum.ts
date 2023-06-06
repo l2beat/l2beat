@@ -36,8 +36,26 @@ const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0
 const totalDelay =
   l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
 
-const upgrades = {
-  upgradableBy: ['Arbitrum DAO', 'Security Council'],
+const upgradesExecutor = {
+  upgradableBy: ['UpgradeExecutorAdmin'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
+
+const upgradesProxyAdmin = {
+  upgradableBy: ['ArbitrumProxyAdmin'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
+
+const upgradesGatewaysAdmin = {
+  upgradableBy: ['GatewaysAdmin'],
   upgradeDelay: `${formatSeconds(
     totalDelay,
   )} or 0 if overridden by Security Council`,
@@ -100,6 +118,7 @@ export const arbitrum: Layer2 = {
         tokens: ['ETH'],
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+          ...upgradesProxyAdmin,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
@@ -107,6 +126,7 @@ export const arbitrum: Layer2 = {
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
+          ...upgradesGatewaysAdmin,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
@@ -114,6 +134,7 @@ export const arbitrum: Layer2 = {
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+          ...upgradesGatewaysAdmin,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
@@ -344,7 +365,7 @@ export const arbitrum: Layer2 = {
     ),
     discovery.contractAsPermissioned(
       discovery.getContractFromUpgradeability('UpgradeExecutor', 'admin'),
-      'This contract is an admin of the Update Executor contract, but is also owned by it.',
+      'This contract is an admin of the UpgradeExecutor contract, but is also owned by it.',
     ),
     discovery.contractAsPermissioned(
       discovery.getContractFromUpgradeability('L1GatewayRouter', 'admin'),
@@ -368,39 +389,45 @@ export const arbitrum: Layer2 = {
       discovery.getContractDetails('RollupProxy', {
         description:
           'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-        ...upgrades,
+        ...upgradesExecutor,
       }),
       discovery.getContractDetails('ArbitrumOneBridge', {
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-        ...upgrades,
+        ...upgradesProxyAdmin,
       }),
       discovery.getContractDetails('SequencerInbox', {
         description:
           'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-        ...upgrades,
+        ...upgradesProxyAdmin,
       }),
       discovery.getContractDetails('Inbox', {
         description:
           'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
-        ...upgrades,
+        ...upgradesProxyAdmin,
       }),
       discovery.getContractFromValue('RollupProxy', 'outbox', {
         description:
           "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
-        ...upgrades,
+        ...upgradesProxyAdmin,
       }),
       discovery.getContractDetails(
         'UpgradeExecutor',
-        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+        {
+          description: "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+        ...upgradesExecutor,
+        },
       ),
       discovery.getContractDetails(
         'L1ArbitrumTimelock',
-        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+        {
+          description: 'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+          ...upgradesExecutor,
+        },
       ),
       discovery.getContractDetails('L1GatewayRouter', {
         description: 'Router managing token <--> gateway mapping.',
-        ...upgrades,
+        ...upgradesGatewaysAdmin,
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
