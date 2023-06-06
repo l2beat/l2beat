@@ -84,9 +84,17 @@ export const zksynclite: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: {
-      value: `${upgradeDelay} or no delay`,
-      description: `There is a ${upgradeDelay} delay unless it is overridden by the ${securityCouncil} Security Council.`,
-      sentiment: 'warning',
+      ...RISK_VIEW.UPGRADABLE_YES,
+      description: 'Some system components can be upgraded with no delay.',
+      sources: [
+        {
+          contract: 'Governance',
+          references: [
+            'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
+            'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L205',
+          ],
+        },
+      ],
     },
     sequencerFailure: RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
     validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
@@ -195,16 +203,31 @@ export const zksynclite: Layer2 = {
         'UpgradeGatekeeper',
         'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
       ),
-      discovery.getContractDetails(
-        'TokenGovernance',
-        'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
-      ),
-      discovery.getContractDetails(
-        'NftFactory',
-        'Allows for withdrawing NFTs minted on L2 to L1.',
-      ),
+      discovery.getContractDetails('TokenGovernance', {
+        description:
+          'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
+        upgradableBy: ['ZkSync Multisig'],
+        upgradeDelay: 'No delay',
+        references: [
+          {
+            text: 'Governance.sol#L93 - zkSync source code',
+            href: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
+          },
+        ],
+      }),
+      discovery.getContractDetails('NftFactory', {
+        description: 'Allows for withdrawing NFTs minted on L2 to L1.',
+        upgradableBy: ['ZkSync Multisig'],
+        upgradeDelay: 'No delay',
+        references: [
+          {
+            text: 'Governance.sol#L205 - zkSync source code',
+            href: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L',
+          },
+        ],
+      }),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgrades.upgradeDelay)],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...discovery.getMultisigPermission(
