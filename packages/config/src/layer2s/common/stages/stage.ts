@@ -30,9 +30,11 @@ export function createGetStage<T extends StageBlueprint>(
           checklistItem,
         )
 
-        summaryStage.requirements.push({ satisfied, description })
+        if (satisfied !== null) {
+          summaryStage.requirements.push({ satisfied, description })
+        }
 
-        if (!satisfied) {
+        if (!satisfied && satisfied !== null) {
           if (missing === undefined) {
             missing = { nextStage: blueprintStage.name, requirements: [] }
           }
@@ -54,7 +56,7 @@ export function createGetStage<T extends StageBlueprint>(
 function normalizeKeyChecklist(
   stageKeyBlueprint: { positive: string; negative: string },
   stageKeyChecklist: boolean | [boolean, string] | null,
-): [boolean, string] {
+): [boolean | null, string] {
   const satisfied = isSatisfied(stageKeyChecklist)
 
   let description = satisfied
@@ -69,9 +71,10 @@ function normalizeKeyChecklist(
 }
 
 function isSatisfied(stageKeyChecklist: boolean | [boolean, string] | null) {
+  if (stageKeyChecklist === null) return null
+
   return (
     stageKeyChecklist === true ||
-    stageKeyChecklist === null ||
     (Array.isArray(stageKeyChecklist) && stageKeyChecklist[0])
   )
 }

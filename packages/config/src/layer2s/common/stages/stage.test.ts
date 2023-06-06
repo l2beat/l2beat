@@ -159,4 +159,41 @@ describe(createGetStage.name, () => {
       ],
     })
   })
+
+  it('Removes null from missing and summary', () => {
+    const result = getTestStage({
+      stage0: {
+        callsItselfRollup: true,
+      },
+      stage1: {
+        hasEscapeHatch: true,
+        isCouncil8Members: null,
+      },
+    })
+
+    expect(result).toEqual({
+      stage: 'Stage 1',
+      missing: undefined,
+      summary: [
+        {
+          stage: 'Stage 0',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'The project calls itself a rollup.',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 1',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'The project has an escape hatch.',
+            },
+          ],
+        },
+      ],
+    })
+  })
 })
