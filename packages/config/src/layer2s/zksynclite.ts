@@ -81,8 +81,33 @@ export const zksynclite: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      sources: [
+        {
+          contract: 'zkSync',
+          references: [
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L575',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F16#L22',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F16#L36',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F21#L1193',
+          ],
+        },
+      ],
+    },
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      sources: [
+        {
+          contract: 'zkSync',
+          references: [
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L422',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
+          ],
+        },
+      ],
+    },
     upgradeability: {
       ...RISK_VIEW.UPGRADABLE_YES,
       description: 'Some system components can be upgraded with no delay.',
@@ -96,8 +121,32 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    sequencerFailure: RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
+    sequencerFailure: {
+      ...RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
+      sources: [
+        {
+          contract: 'zkSync',
+          references: [
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L977',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
+          ],
+        },
+      ],
+    },
+    validatorFailure: {
+      ...RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
+      sources: [
+        {
+          contract: 'zkSync',
+          references: [
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
+          ],
+        },
+      ],
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
