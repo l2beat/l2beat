@@ -331,6 +331,10 @@ export const zksynclite: Layer2 = {
           text: 'Security Council Members - Etherscan source code',
           href: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
         },
+        {
+          text: 'Security Council 2.0 - Matter Labs blog post',
+          href: 'https://blog.matter-labs.io/security-council-2-0-2337a555f17a',
+        },
       ],
     },
     {
