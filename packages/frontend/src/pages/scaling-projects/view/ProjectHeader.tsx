@@ -33,7 +33,7 @@ export interface ProjectHeaderProps {
   maturityEntry?: false | Layer2Maturity
   isArchived?: boolean
   isUpcoming?: boolean
-  warning?: string
+  warning?: string | { text: string; href: string }
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {

@@ -25,6 +25,7 @@ export function getProjectHeader(
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
     links: getLinks(project.display.links),
+    warning: project.display.warning,
   }
 }
 

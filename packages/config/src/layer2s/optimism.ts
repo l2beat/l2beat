@@ -34,7 +34,10 @@ export const optimism: Layer2 = {
   display: {
     name: 'Optimism',
     slug: 'optimism',
-    headerWarning: 'Optimism is currently undergoing a major upgrade.',
+    headerWarning: {
+      text: 'Optimism is currently undergoing a major upgrade.',
+      href: 'https://community.optimism.io/docs/protocol/protocol.html#optimism-2-0',
+    },
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:

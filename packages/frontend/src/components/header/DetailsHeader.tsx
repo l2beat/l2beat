@@ -21,7 +21,7 @@ export interface HeaderProps {
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2'
-  warning?: string
+  warning?: string | { text: string; href: string }
 }
 
 export function DetailsHeader(props: HeaderProps) {
@@ -59,7 +59,16 @@ export function DetailsHeader(props: HeaderProps) {
           {props.isUpcoming && <UpcomingBar />}
           {props.warning && (
             <WarningBar
-              text={props.warning}
+              text={
+                typeof props.warning === 'string'
+                  ? props.warning
+                  : props.warning.text
+              }
+              href={
+                typeof props.warning !== 'string'
+                  ? props.warning.href
+                  : undefined
+              }
               color="yellow"
               isCritical={false}
               className="mb-4 items-center justify-center py-2.5 px-2.5 text-xs md:px-4 md:text-base"
