@@ -45,7 +45,7 @@ export const getStage = createGetStage({
     items: {
       stateVerificationOnL1: {
         positive: 'The project uses a fraud proof or validity proof system.',
-        negative: 'The project does not verify L2 state on L1.',
+        negative: 'The project does not verify the L2 state on L1.',
       },
       fraudProofSystemWhitelistedOutsideOrganization: {
         positive:
