@@ -107,9 +107,9 @@ export const getStage = createGetStage({
       },
       securityCouncilMembersOutsideOrganization: {
         positive:
-          'At least 50% of the security council members are outside the organization.',
+          'At least 50% of the security council members are from outside the organization.',
         negative:
-          'Less than 50% of the security council members are outside the organization.',
+          'Less than 50% of the security council members are from outside the organization.',
       },
       securityCouncilMembersOutsideOrganizationPseudonymous: {
         positive:
