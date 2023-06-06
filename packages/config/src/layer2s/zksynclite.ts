@@ -85,7 +85,7 @@ export const zksynclite: Layer2 = {
       ...RISK_VIEW.STATE_ZKP_SN,
       sources: [
         {
-          contract: 'zkSync',
+          contract: 'ZkSync',
           references: [
             'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
             'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L575',
@@ -100,7 +100,7 @@ export const zksynclite: Layer2 = {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
-          contract: 'zkSync',
+          contract: 'ZkSync',
           references: [
             'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L422',
             'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
@@ -125,7 +125,7 @@ export const zksynclite: Layer2 = {
       ...RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
       sources: [
         {
-          contract: 'zkSync',
+          contract: 'ZkSync',
           references: [
             'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
             'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
@@ -139,7 +139,7 @@ export const zksynclite: Layer2 = {
       ...RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
       sources: [
         {
-          contract: 'zkSync',
+          contract: 'ZkSync',
           references: [
             'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
             'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
