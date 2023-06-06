@@ -32,7 +32,7 @@ export const getStage = createGetStage({
       },
       nodeComputesStateBasedOnL1: {
         positive: 'Computes the L2 state based on Ethereum L1 data.',
-        negative: 'Does not compute the L2 state based on Ethereum L1 data.',
+        negative: 'Computes the L2 state not based on Ethereum L1 data.',
       },
       nodeDetectsDisagreement: {
         positive: 'Detects when L2 state disagrees with Ethereum L1.',
