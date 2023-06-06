@@ -87,6 +87,9 @@ function Template(props: HeaderProps) {
   )
 }
 
+const warning =
+  'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.'
+
 export const DetailsHeader: Story<HeaderProps> = Template.bind({})
 DetailsHeader.args = {
   title: project.display.name,
@@ -94,6 +97,7 @@ DetailsHeader.args = {
   stats,
   links,
   isArchived: false,
+  warning,
 }
 
 export const ArchivedHeader: Story<HeaderProps> = Template.bind({})
@@ -103,6 +107,7 @@ ArchivedHeader.args = {
   stats,
   links,
   isArchived: true,
+  warning,
 }
 
 export const UpcomingHeader: Story<HeaderProps> = Template.bind({})

@@ -34,6 +34,10 @@ export const optimism: Layer2 = {
   display: {
     name: 'Optimism',
     slug: 'optimism',
+    headerWarning: {
+      text: 'The Optimism upgrade to the Bedrock release will start on June 6, 2023, at 16:00 UTC. For more information, click here.',
+      href: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
+    },
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:

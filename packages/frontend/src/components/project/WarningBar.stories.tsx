@@ -40,3 +40,11 @@ Critical.args = {
   isCritical: true,
   text,
 }
+
+export const YellowWithLink: Story<WarningBarProps> = Template.bind({})
+YellowWithLink.args = {
+  color: 'yellow',
+  isCritical: false,
+  text,
+  href: 'https://example.com',
+}
