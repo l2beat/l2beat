@@ -158,9 +158,6 @@
         "getTotalElements"
       ]
     },
-    "L1CrossDomainMessengerProxy": {
-      "ignoreMethods": ["xDomainMessageSender"]
-    },
     "StateCommitmentChain": {
       "ignoreInWatchMode": [
         "getLastSequencerTimestamp",
@@ -187,7 +184,21 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "L2OutputOracleProxy": {
-      "ignoreMethods": ["getL2OutputAfter", "getL2OutputIndexAfter"]
+      "ignoreMethods": ["getL2OutputAfter", "getL2OutputIndexAfter"],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex",
+        "getL2Output"
+      ]
+    },
+    "OptimismPortalProxy": {
+      "ignoreInWatchMode": ["params"]
+    },
+    "L1CrossDomainMessengerProxy": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
     }
   }
 }
