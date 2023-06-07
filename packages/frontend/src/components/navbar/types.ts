@@ -1,6 +1,1 @@
-export type NavbarPage =
-  | 'scaling'
-  | 'bridges'
-  | 'donate'
-  | 'faq'
-  | 'definitions'
+export type NavbarPage = 'scaling' | 'bridges' | 'donate' | 'faq'
