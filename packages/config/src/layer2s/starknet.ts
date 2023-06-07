@@ -181,7 +181,7 @@ export const starknet: Layer2 = {
         },
       ],
     },
-    validatorFailure: RISK_VIEW.PROVER_DOWN,
+    validatorFailure: RISK_VIEW.CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
