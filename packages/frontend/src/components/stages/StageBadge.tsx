@@ -13,12 +13,12 @@ export function StageBadge({ category, small }: StageBadgeProps) {
     <Badge
       className={cx(
         getColorClassName(category),
-        'inline-block py-0.5 text-center text-lg leading-none',
-        small ? 'w-9' : 'w-10',
+        'inline-block text-center text-lg leading-none',
+        small ? 'w-20' : 'w-40',
       )}
       oneSize
     >
-      {category}
+      {category ?? '-'}
     </Badge>
   )
 }
