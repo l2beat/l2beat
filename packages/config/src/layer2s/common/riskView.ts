@@ -260,6 +260,8 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
 
 /* New risks for stages */
 
+// SEQUENCER COLUMN
+
 export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   const delayString =
     delay !== undefined
@@ -340,6 +342,15 @@ export function NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
   }
 }
 
+// PROPOSER COLUMN
+
+export const CANNOT_WITHDRAW: ProjectRiskViewEntry = {
+  value: 'Cannot withdraw',
+  description:
+    'Only the whitelisted proposers can publish L2 state roots on L1, so in the event of failure the withdrawals are frozen.',
+  sentiment: 'bad',
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -379,4 +390,5 @@ export const RISK_VIEW = {
   FORCE_VIA_L1_LOOPRING,
   ENQUEUE_VIA_L1,
   NO_MECHANISM,
+  CANNOT_WITHDRAW,
 }
