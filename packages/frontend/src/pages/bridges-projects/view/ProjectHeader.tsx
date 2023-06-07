@@ -20,6 +20,7 @@ export interface ProjectHeaderProps {
   links: ProjectLink[]
   isArchived?: boolean
   isUpcoming?: boolean
+  warning?: string
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
@@ -56,6 +57,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       links={props.links}
       stats={stats}
       isArchived={props.isArchived}
+      warning={props.warning}
     />
   )
 }

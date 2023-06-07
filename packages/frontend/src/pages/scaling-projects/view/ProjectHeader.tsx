@@ -33,6 +33,7 @@ export interface ProjectHeaderProps {
   stage?: false | StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
+  warning?: string | { text: string; href: string }
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
@@ -111,6 +112,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       links={props.links}
       isUpcoming={props.isUpcoming}
       isArchived={props.isArchived}
+      warning={props.warning}
     />
   )
 }

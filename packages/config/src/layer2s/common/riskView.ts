@@ -161,7 +161,6 @@ export const VALIDATOR_ESCAPE_ZKP: ProjectRiskViewEntry = {
   value: 'Escape hatch (ZK)',
   description:
     'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
-  sentiment: 'warning',
 }
 
 export const VALIDATOR_ESCAPE_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
@@ -264,7 +263,9 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
 export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   const delayString =
     delay !== undefined
-      ? ` There is a ${formatSeconds(delay)} delay on this operation.`
+      ? delay === 0
+        ? ' There is no delay on this operation.'
+        : ` There is a ${formatSeconds(delay)} delay on this operation.`
       : ''
   return {
     value: 'Self sequence',
