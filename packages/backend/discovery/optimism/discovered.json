@@ -1,6 +1,6 @@
 {
   "name": "optimism",
-  "blockNumber": 17427615,
+  "blockNumber": 17427667,
   "configHash": "0x148d1a22cf98fcc3403be529fc3019307123278044020b583661b766a9f63757",
   "version": 1,
   "contracts": [
@@ -63,7 +63,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619947",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619949",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -262,7 +262,7 @@
         "isOutputFinalized": [false, false, false, false, false],
         "L2_ORACLE": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 3333707, 17427608],
+        "params": [1000000000, 491822, 17427660],
         "paused": false,
         "SYSTEM_CONFIG": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "1.6.0"

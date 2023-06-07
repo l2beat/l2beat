@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -139,7 +140,7 @@ export const optimism: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.SELF_SEQUENCE(0),
+      ...RISK_VIEW.SELF_SEQUENCE(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
       sources: [
         {
           contract: 'OptimismPortal',
