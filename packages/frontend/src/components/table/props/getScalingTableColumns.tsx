@@ -2,12 +2,12 @@ import React from 'react'
 
 import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
+import { StageCell } from '../../stages/StageCell'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
-import { StageCell } from '../../stages/StageCell'
 import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 

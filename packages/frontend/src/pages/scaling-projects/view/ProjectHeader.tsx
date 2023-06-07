@@ -85,7 +85,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
                   <StageTooltip item={props.stage} />,
                 )}
               >
-                <StageBadge category={'Stage 1'} small />
+                <StageBadge category={'Stage 1'} />
               </span>
             ),
           },
