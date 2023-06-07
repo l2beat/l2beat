@@ -36,6 +36,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return <DescriptionSection key={item.props.id} {...item.props} />
           case 'RiskSection':
             return <RiskSection key={item.props.id} {...item.props} />
+
           case 'TechnologyIncompleteNote':
             return (
               <TechnologyIncomplete
