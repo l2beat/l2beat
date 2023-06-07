@@ -2,6 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared'
 import { isEmpty } from 'lodash'
 
+import { Config } from '../../../build/config'
 import { ChartProps } from '../../../components'
 import { ChartSectionProps } from '../../../components/project/ChartSection'
 import { ContractsSectionProps } from '../../../components/project/ContractsSection'
@@ -10,6 +11,7 @@ import { KnowledgeNuggetsProps } from '../../../components/project/KnowledgeNugg
 import { MilestonesSectionProps } from '../../../components/project/MilestonesSection'
 import { PermissionsSectionProps } from '../../../components/project/PermissionsSection'
 import { RiskAnalysisProps } from '../../../components/project/RiskAnalysis'
+import { StageSectionProps } from '../../../components/project/StageSection'
 import { TechnologyIncompleteProps } from '../../../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../../../components/project/TechnologySection'
 import { getContractSection } from '../../../utils/project/getContractSection'
@@ -20,6 +22,7 @@ import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
   project: Layer2,
+  config: Config,
   verificationStatus: VerificationStatus,
   chart: ChartProps,
 ) {
@@ -74,6 +77,17 @@ export function getProjectDetails(
         title: 'Risk Analysis',
       },
     })
+
+    if (config.features.stages) {
+      items.push({
+        type: 'StageSection',
+        props: {
+          stage: project.stage,
+          id: 'stage',
+          title: 'Stage',
+        },
+      })
+    }
 
     if (incomplete) {
       items.push({
@@ -133,6 +147,7 @@ export type ScalingDetailsSection =
   | TechnologySection
   | PermissionsSection
   | ContractsSection
+  | StageSection
 
 type NonSectionElement = TechnologyIncompleteNote | UpcomingDisclaimer
 
@@ -158,6 +173,11 @@ interface KnowledgeNuggetsSection {
 interface RiskAnalysisSection {
   type: 'RiskAnalysisSection'
   props: RiskAnalysisProps
+}
+
+interface StageSection {
+  type: 'StageSection'
+  props: StageSectionProps
 }
 
 interface TechnologyIncompleteNote {

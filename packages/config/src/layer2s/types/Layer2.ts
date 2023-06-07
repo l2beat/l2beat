@@ -9,7 +9,6 @@ import {
   ProjectPermission,
 } from '../../common'
 import { StageConfig } from '../common/stages/types'
-import { Layer2Maturity } from './Layer2Maturity'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
@@ -40,8 +39,6 @@ export interface Layer2 {
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
-  /** Rollup maturity data */
-  maturity?: Layer2Maturity
 }
 
 export interface Layer2Display {

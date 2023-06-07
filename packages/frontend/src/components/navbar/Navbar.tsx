@@ -21,7 +21,6 @@ export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
   showHiring: boolean
-  showDefinitions: boolean
   forumLink: string
   socialLinks: SocialLinksProps
   selectedPage: NavbarPage
@@ -36,7 +35,6 @@ export function getNavbarProps(
     forumLink: config.links.forum,
     showHiring: config.features.hiring,
     showActivity: config.features.activity,
-    showDefinitions: config.features.maturity,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }
@@ -115,16 +113,6 @@ export function Navbar(props: NavbarProps) {
                   FAQ
                 </PageLink>
               </li>
-              {props.showDefinitions && (
-                <li className="h-full">
-                  <PageLink
-                    selected={props.selectedPage === 'definitions'}
-                    href="/definitions"
-                  >
-                    Definitions
-                  </PageLink>
-                </li>
-              )}
               {props.showHiring && (
                 <li className="h-full">
                   <OutLink

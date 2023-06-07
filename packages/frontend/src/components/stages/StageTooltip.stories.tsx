@@ -1,42 +1,36 @@
-import { Layer2Maturity } from '@l2beat/config'
+import { StageConfig } from '@l2beat/config'
 import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { configureTooltips } from '../../scripts/configureTooltips'
 import { hoverOver } from '../../utils/storybook/hoverOver'
 import { Tooltip as TooltipComponent } from '../Tooltip'
-import { MaturityTooltipPopup } from './TooltipPopup'
+import { StageTooltip as StageTooltipComponent } from './StageTooltip'
 
 export default {
-  title: 'Components/Tooltip',
+  title: 'Components/Stages',
 }
 
-export function MaturityTooltip() {
+export function Tooltip() {
   useEffect(() => {
     configureTooltips()
     hoverOver('.Tooltip')
   }, [])
 
-  const item: Layer2Maturity = {
-    category: {
-      score: 'B',
-      requirements: ['There is an existing fraud proof system'],
+  const item: StageConfig = {
+    stage: 'Stage 1',
+    missing: {
+      nextStage: 'Stage 2',
+      requirements: ['A requirement'],
     },
-    modifier: {
-      score: '-',
-      items: ['Validators are behind a whitelist'],
-    },
-    thingsToImprove: {
-      improvedScore: 'A',
-      requirements: ['There should be no instant upgradeability'],
-    },
+    summary: [],
   }
 
   return (
     <div className="m-4 ml-32">
       <span
         className="Tooltip inline-block"
-        title={renderToStaticMarkup(<MaturityTooltipPopup item={item} />)}
+        title={renderToStaticMarkup(<StageTooltipComponent item={item} />)}
         data-tooltip-big
       >
         <span>Element with tooltip</span>

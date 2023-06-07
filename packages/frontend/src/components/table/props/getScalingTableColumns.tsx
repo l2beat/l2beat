@@ -2,8 +2,8 @@ import React from 'react'
 
 import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
+import { StageCell } from '../../stages/StageCell'
 import { IndexCell } from '../IndexCell'
-import { MaturityCell } from '../MaturityCell'
 import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
@@ -11,7 +11,7 @@ import { RosetteCell } from '../RosetteCell'
 import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 
-export function getActiveScalingTvlColumns(maturityEnabled: boolean) {
+export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -43,14 +43,14 @@ export function getActiveScalingTvlColumns(maturityEnabled: boolean) {
         </TechnologyCell>
       ),
     },
-    ...(maturityEnabled
+    ...(stagesEnabled
       ? [
           {
-            name: 'Maturity',
-            tooltip: 'Maturity of this Layer 2 based on its features.',
+            name: 'Stages',
+            tooltip: 'Stage of this Layer 2 based on its features.',
             alignCenter: true as const,
             getValue: (project: ScalingTvlViewEntry) => (
-              <MaturityCell item={project.maturityEntry} />
+              <StageCell item={project.stage} />
             ),
           },
         ]

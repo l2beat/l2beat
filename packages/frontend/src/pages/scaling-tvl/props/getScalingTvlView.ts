@@ -24,7 +24,7 @@ export function getScalingTvlView(
         verificationStatus.projects[project.id.toString()],
       ),
     ),
-    maturityEnabled: config.features.maturity,
+    stagesEnabled: config.features.stages,
     upcomingEnabled: config.features.upcomingRollups,
   }
 }
@@ -64,6 +64,6 @@ function getScalingTvlViewEntry(
     marketShare: stats ? formatPercent(stats.tvl / aggregateTvl) : undefined,
     purpose: project.display.purpose,
     technology: project.technology.category,
-    maturityEntry: project.maturity,
+    stage: project.stage,
   }
 }

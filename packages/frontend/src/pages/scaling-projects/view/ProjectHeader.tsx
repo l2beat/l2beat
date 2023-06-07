@@ -1,4 +1,4 @@
-import { Layer2Maturity } from '@l2beat/config'
+import { StageConfig } from '@l2beat/config'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
@@ -6,8 +6,8 @@ import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { ProjectLink } from '../../../components/icons'
-import { MaturityBadge } from '../../../components/maturity/Badge'
-import { MaturityTooltipPopup } from '../../../components/maturity/TooltipPopup'
+import { StageBadge } from '../../../components/stages/StageBadge'
+import { StageTooltip } from '../../../components/stages/StageTooltip'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
   TVLBreakdown,
@@ -30,7 +30,7 @@ export interface ProjectHeaderProps {
   tvlBreakdown: TVLBreakdownProps
   risks: RiskValues
   links: ProjectLink[]
-  maturityEntry?: false | Layer2Maturity
+  stage?: false | StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
   warning?: string | { text: string; href: string }
@@ -75,22 +75,18 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: '30D tx count',
       value: props.transactionMonthlyCount ?? <UpcomingBadge />,
     },
-    ...(props.maturityEntry
+    ...(props.stage
       ? [
           {
-            title: 'Maturity',
+            title: 'Stages',
             value: (
               <span
                 className="Tooltip"
                 title={renderToStaticMarkup(
-                  <MaturityTooltipPopup item={props.maturityEntry} />,
+                  <StageTooltip item={props.stage} />,
                 )}
               >
-                <MaturityBadge
-                  category={props.maturityEntry.category.score}
-                  modifier={props.maturityEntry.modifier?.score}
-                  small
-                />
+                <StageBadge category={'Stage 1'} />
               </span>
             ),
           },
