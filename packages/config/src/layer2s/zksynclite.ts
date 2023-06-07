@@ -136,7 +136,7 @@ export const zksynclite: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
+      ...RISK_VIEW.USE_ESCAPE_HATCH_ZK,
       sources: [
         {
           contract: 'ZkSync',

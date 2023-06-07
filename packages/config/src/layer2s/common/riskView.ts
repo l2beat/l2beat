@@ -351,6 +351,12 @@ export const CANNOT_WITHDRAW: ProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export const USE_ESCAPE_HATCH_ZK: ProjectRiskViewEntry = {
+  value: 'Use escape hatch',
+  description:
+    'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.'
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -391,4 +397,5 @@ export const RISK_VIEW = {
   ENQUEUE_VIA_L1,
   NO_MECHANISM,
   CANNOT_WITHDRAW,
+  USE_ESCAPE_HATCH_ZK,
 }
