@@ -50,7 +50,7 @@ export const layer2finance: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_NO,
     sequencerFailure: RISK_VIEW.NO_MECHANISM(),
-    validatorFailure: RISK_VIEW.CANNOT_WITHDRAW,
+    proposerFailure: RISK_VIEW.CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

@@ -163,7 +163,7 @@ export const dydx: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
+    proposerFailure: {
       ...RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
       sources: [
         {

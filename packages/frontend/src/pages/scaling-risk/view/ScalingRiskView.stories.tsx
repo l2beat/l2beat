@@ -43,7 +43,7 @@ const meta = {
           description:
             'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Escape hatch (ZK)',
           description:
             'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
@@ -80,7 +80,7 @@ const meta = {
           description:
             'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Propose blocks (ZK)',
           description:
             'The user needs to run their own node and use it to propose new blocks to replace the validator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
@@ -117,7 +117,7 @@ const meta = {
           description:
             'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Escape hatch (ZK)',
           description:
             'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
@@ -156,7 +156,7 @@ const meta = {
           description:
             'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit by submitting a merkle proof of funds.',
@@ -193,7 +193,7 @@ const meta = {
           description:
             'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Escape hatch (?)',
           description:
             'Users are able to exit the system. The details are unknown.',
@@ -231,7 +231,7 @@ const meta = {
           description:
             'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit by submitting a merkle proof of funds.',
@@ -270,7 +270,7 @@ const meta = {
           description:
             'In the event of sequencer failure, after 1d (5760 blocks) user can force the transaction to be included in the L2 chain by sending it to the L1.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Propose blocks',
           description:
             'Anyone can become a Validator after approximately 7 days (45818 blocks) of inactivity from the currently whitelisted Validators.',
@@ -309,7 +309,7 @@ const meta = {
           description:
             'The user is able to submit a transaction through L1 and force its inclusion on L2.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'No mechanism',
           description:
             'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
@@ -346,7 +346,7 @@ const meta = {
             'The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
           sentiment: 'warning',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
@@ -383,7 +383,7 @@ const meta = {
             'L2 transactions can be forced through L1 by adding them to append only queue on L1, which is processed sequentially by Sequencer, meaning that the individual user cannot be censored. At the moment there is no mechanism that forces L2 Sequencer to empty the L1 queue.',
           sentiment: 'warning',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'No mechanism',
           description:
             'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked.',
@@ -424,7 +424,7 @@ const meta = {
           description:
             'The user is able to submit a transaction through L1 and force its inclusion on L2.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'No mechanism',
           description:
             'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
@@ -463,7 +463,7 @@ const meta = {
           description:
             'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit by submitting a merkle proof of funds.',
@@ -499,7 +499,7 @@ const meta = {
           description:
             'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
         },
-        validatorFailure: {
+        proposerFailure: {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',

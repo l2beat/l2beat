@@ -113,7 +113,7 @@ export const nova: Layer2 = {
       l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay,
     ),
     sequencerFailure: RISK_VIEW.SELF_SEQUENCE(selfSequencingDelay),
-    validatorFailure: {
+    proposerFailure: {
       value: 'Propose blocks',
       description: `Anyone can become a Validator after ${formatSeconds(
         validatorAfkBlocks * assumedBlockTime,

@@ -140,7 +140,7 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
+    proposerFailure: {
       value: 'Submit proofs',
       description: `If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
       sources: [

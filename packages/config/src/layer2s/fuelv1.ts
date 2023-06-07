@@ -47,7 +47,7 @@ export const fuelv1: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_NO,
     sequencerFailure: RISK_VIEW.SELF_SEQUENCE(),
-    validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS,
+    proposerFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

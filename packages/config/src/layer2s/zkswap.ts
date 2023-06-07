@@ -59,7 +59,7 @@ export const zkswap: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
     sequencerFailure: RISK_VIEW.FORCE_VIA_L1(),
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
+    proposerFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

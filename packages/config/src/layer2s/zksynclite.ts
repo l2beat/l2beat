@@ -135,7 +135,7 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
+    proposerFailure: {
       ...RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
       sources: [
         {

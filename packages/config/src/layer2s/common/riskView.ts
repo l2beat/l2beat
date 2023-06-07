@@ -253,7 +253,7 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   dataAvailability: UPCOMING_RISK,
   upgradeability: UPCOMING_RISK,
   sequencerFailure: UPCOMING_RISK,
-  validatorFailure: UPCOMING_RISK,
+  proposerFailure: UPCOMING_RISK,
   destinationToken: UPCOMING_RISK,
   validatedBy: UPCOMING_RISK,
 })

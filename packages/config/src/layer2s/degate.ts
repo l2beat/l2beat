@@ -93,7 +93,7 @@ export const degate: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
+    proposerFailure: {
       ...RISK_VIEW.VALIDATOR_ESCAPE_MP(forcedWithdrawalDelay),
       sources: [
         {

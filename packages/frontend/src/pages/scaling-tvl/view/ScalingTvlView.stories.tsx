@@ -34,7 +34,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -82,7 +82,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -130,7 +130,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -178,7 +178,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -226,7 +226,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -279,7 +279,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (ZK)',
             description:
               'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
@@ -336,7 +336,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Propose blocks (ZK)',
             description:
               'The user needs to run their own node and use it to propose new blocks to replace the validator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
@@ -392,7 +392,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (ZK)',
             description:
               'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
@@ -452,7 +452,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of funds.',
@@ -510,7 +510,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (?)',
             description:
               'Users are able to exit the system. The details are unknown.',
@@ -567,7 +567,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of funds.',
@@ -623,7 +623,7 @@ const meta = {
               'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Propose blocks',
             description:
               'Anyone can become a Validator after approximately 7 days (45818 blocks) of inactivity from the currently whitelisted Validators.',
@@ -699,7 +699,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'No mechanism',
             description:
               'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
@@ -758,7 +758,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
@@ -813,7 +813,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice by the governor, that currently is a 4 / 7 Multisig.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'No mechanism',
             description:
               'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked.',
@@ -871,7 +871,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'No mechanism',
             description:
               'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
@@ -929,7 +929,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of funds.',
@@ -986,7 +986,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',

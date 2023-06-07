@@ -131,7 +131,7 @@ export const aztec: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
+    proposerFailure: {
       ...RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
       sources: [
         {

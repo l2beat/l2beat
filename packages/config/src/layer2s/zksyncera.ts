@@ -166,7 +166,7 @@ export const zksyncera: Layer2 = {
         'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-mode',
       ],
     },
-    validatorFailure: {
+    proposerFailure: {
       ...RISK_VIEW.CANNOT_WITHDRAW,
       sources: [
         {

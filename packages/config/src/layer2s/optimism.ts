@@ -150,7 +150,7 @@ export const optimism: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
+    proposerFailure: {
       ...RISK_VIEW.CANNOT_WITHDRAW,
       sources: [
         {

@@ -123,7 +123,7 @@ export const bobanetwork: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
+    proposerFailure: {
       ...RISK_VIEW.CANNOT_WITHDRAW,
       sources: [
         {

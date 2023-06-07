@@ -8,7 +8,7 @@ export function getRiskValues(riskView: Layer2RiskView): RiskValues {
     sequencerFailure: riskView.sequencerFailure,
     stateValidation: riskView.stateValidation,
     upgradeability: riskView.upgradeability,
-    validatorFailure: riskView.validatorFailure,
+    proposerFailure: riskView.proposerFailure,
   }
 }
 
@@ -20,6 +20,6 @@ export function getRiskSentiments(
     stateValidation: riskView.stateValidation.sentiment,
     dataAvailability: riskView.dataAvailability.sentiment,
     upgradeability: riskView.upgradeability.sentiment,
-    validatorFailure: riskView.validatorFailure.sentiment,
+    proposerFailure: riskView.proposerFailure.sentiment,
   }
 }

@@ -47,7 +47,7 @@ export function SmallRosette({ risks, className, isUpcoming }: RosetteProps) {
       />
       <path
         d="M17.3002 16.6253C16.8151 16.4727 16.322 16.8369 16.3251 17.3454L16.3994 29.2735C16.4022 29.716 16.7835 30.055 17.2196 29.9796C18.6927 29.7252 21.8742 28.9963 24.339 27.1759C27.0205 25.1954 28.5428 22.4596 29.1518 21.1742C29.3357 20.7862 29.1226 20.344 28.713 20.2151L17.3002 16.6253Z"
-        className={sentimentToFillColor(risks.validatorFailure)}
+        className={sentimentToFillColor(risks.proposerFailure)}
       />
     </Icon>
   )
@@ -70,7 +70,7 @@ export function MediumRosette({ risks }: RosetteProps) {
         Upgradeability
       </span>
       <span className="absolute bottom-[20px] right-[19px] w-[10ch] -rotate-[36deg] text-center text-[10px] font-medium uppercase leading-tight">
-        Validator failure
+        Proposer failure
       </span>
     </div>
   )
@@ -118,7 +118,7 @@ export function BigRosette({ risks, className, isUpcoming }: BigRosetteProps) {
         className="Rosette-Text absolute bottom-[32px] right-[23px] w-[10ch] -rotate-[36deg] text-center text-xs font-medium uppercase leading-tight"
         data-rosette="validator-failure"
       >
-        Validator failure
+        Proposer failure
       </span>
       <OverlayBox
         className="absolute bottom-40 left-0"
@@ -128,7 +128,7 @@ export function BigRosette({ risks, className, isUpcoming }: BigRosetteProps) {
       <OverlayBox
         className="absolute bottom-40 left-0"
         data-rosette="validator-failure"
-        risk={risks.validatorFailure}
+        risk={risks.proposerFailure}
       />
       <OverlayBox
         className="absolute top-44 left-0"
@@ -200,7 +200,7 @@ function BigRosetteIcon({ risks, className, isUpcoming }: RosetteProps) {
         <path
           d="M95.5409 102.181C95.5486 99.428 98.2361 97.4805 100.855 98.3304L162.282 118.265C164.561 119.005 165.685 121.528 164.581 123.655C160.854 130.839 151.878 146.061 138.445 155.795C123.83 166.385 107.218 169.756 99.5872 170.792C97.2836 171.105 95.3511 169.28 95.3577 166.956L95.5409 102.181Z"
           className={cx(
-            sentimentToFillColor(risks.validatorFailure),
+            sentimentToFillColor(risks.proposerFailure),
             'Rosette-Slice focus:outline-none',
           )}
           data-rosette="validator-failure"
