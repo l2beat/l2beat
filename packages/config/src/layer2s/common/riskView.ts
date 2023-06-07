@@ -357,6 +357,17 @@ export const USE_ESCAPE_HATCH_ZK: ProjectRiskViewEntry = {
     'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.'
 }
 
+export const USE_ESCAPE_HATCH_MP: ProjectRiskViewEntry = {
+  value: 'Use escape hatch',
+  description:
+    'Users are able to trustlessly exit by submitting a Merkle proof of funds.',
+}
+
+export const USE_ESCAPE_HATCH_MP_NFT: ProjectRiskViewEntry = {
+  ...USE_ESCAPE_HATCH_MP,
+  description: USE_ESCAPE_HATCH_MP.description + ' NFTs will be minted on L1 to exit.',
+}
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -398,4 +409,6 @@ export const RISK_VIEW = {
   NO_MECHANISM,
   CANNOT_WITHDRAW,
   USE_ESCAPE_HATCH_ZK,
+  USE_ESCAPE_HATCH_MP,
+  USE_ESCAPE_HATCH_MP_NFT,
 }
