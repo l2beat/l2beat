@@ -184,16 +184,20 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "L2OutputOracle": {
-      "ignoreMethods": ["getL2OutputAfter", "getL2OutputIndexAfter"],
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output"
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
         "latestBlockNumber",
-        "latestOutputIndex",
-        "getL2Output"
+        "latestOutputIndex"
       ]
     },
     "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
       "ignoreInWatchMode": ["params"]
     },
     "L1CrossDomainMessengerProxy": {
