@@ -8,6 +8,7 @@ import {
   ProjectLinks,
   ProjectPermission,
 } from '../../common'
+import { StageConfig } from '../common/stages/types'
 import { Layer2Maturity } from './Layer2Maturity'
 import { Layer2RiskView } from './Layer2RiskView'
 import { Layer2Technology } from './Layer2Technology'
@@ -27,6 +28,8 @@ export interface Layer2 {
   config: Layer2Config
   /** Risk view values for this layer2 */
   riskView: Layer2RiskView
+  /** Rollup stage */
+  stage?: StageConfig
   /** Deep dive into layer2 technology */
   technology: Layer2Technology
   /** List of smart contracts used in the layer2 */
@@ -46,7 +49,16 @@ export interface Layer2Display {
   name: string
   /** Url friendly layer2 name, will be used in website urls */
   slug: string
-  /** A warning displayed at the top of the layer2 page */
+  /** A warning displayed in the header of the project */
+  headerWarning?:
+    | {
+        /** Warning text */
+        text: string
+        /** Link to the warning source */
+        href: string
+      }
+    | string
+  /** A warning displayed above the description of the project */
   warning?: string
   /** A few sentences describing the layer2 */
   description: string
