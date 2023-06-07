@@ -20,11 +20,11 @@
     "0xb0ddFf09c4019e31960de11bD845E836078E8EbE": "SCCStorageContainerBatches",
     "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": "CanonicalTransactionChain_OLD",
     "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": "L1CrossDomainMessengerProxy",
-    "0xdfe97868233d1aa22e815a266982f2cf17685a27": "L2OutputOracleProxy",
+    "0xdfe97868233d1aa22e815a266982f2cf17685a27": "L2OutputOracle",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig",
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge",
     "0xEb3107117FEAd7de89Cd14D463D340A2E6917769": "SynthetixMultisig",
-    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "OptimismPortalProxy"
+    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "OptimismPortal"
   },
   "overrides": {
     "AddressManager": {
@@ -158,9 +158,6 @@
         "getTotalElements"
       ]
     },
-    "L1CrossDomainMessengerProxy": {
-      "ignoreMethods": ["xDomainMessageSender"]
-    },
     "StateCommitmentChain": {
       "ignoreInWatchMode": [
         "getLastSequencerTimestamp",
@@ -186,8 +183,26 @@
     "SynthetixMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "L2OutputOracleProxy": {
-      "ignoreMethods": ["getL2OutputAfter", "getL2OutputIndexAfter"]
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ]
+    },
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "L1CrossDomainMessengerProxy": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
     }
   }
 }

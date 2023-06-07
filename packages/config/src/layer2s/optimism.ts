@@ -14,20 +14,20 @@ import {
   RISK_VIEW,
 } from './common'
 import { Layer2 } from './types'
-
 const discovery = new ProjectDiscovery('optimism')
 
 const upgradesProxy = {
-  upgradableBy: ['OptimismMultisig'],
+  upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
 
-const upgradesAddressManager = {
-  upgradableBy: ['OptimismMultisig'],
-  upgradeDelay: 'No delay',
-  upgradeConsiderations:
-    'The AddressManager can be used to replace this contract.',
-}
+const sequencer = (() => {
+  const paddedAddr = discovery
+    .getContractValue<string>('SystemConfig', 'batcherHash')
+    .slice(2)
+  const unpaddedAddr = paddedAddr.substring(paddedAddr.length - 40)
+  return EthereumAddress('0x' + unpaddedAddr)
+})()
 
 export const optimism: Layer2 = {
   type: 'layer2',
@@ -121,7 +121,7 @@ export const optimism: Layer2 = {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
-          contract: 'OptimismPortalProxy',
+          contract: 'OptimismPortal',
           references: [
             'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
           ],
@@ -132,7 +132,7 @@ export const optimism: Layer2 = {
       ...RISK_VIEW.UPGRADABLE_YES,
       sources: [
         {
-          contract: 'OptimismPortalProxy',
+          contract: 'OptimismPortal',
           references: [
             'https://etherscan.io/address/0xbEb5Fc579115071764c7423A4f12eDde41f106Ed',
           ],
@@ -140,10 +140,10 @@ export const optimism: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.SELF_SEQUENCE(HARDCODED.OPTIMISM.SEQUENCER_WINDOW_SECONDS),
+      ...RISK_VIEW.SELF_SEQUENCE(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
       sources: [
         {
-          contract: 'OptimismPortalProxy',
+          contract: 'OptimismPortal',
           references: [
             'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
           ],
@@ -154,7 +154,7 @@ export const optimism: Layer2 = {
       ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
       sources: [
         {
-          contract: 'L2OutputOracleProxy',
+          contract: 'L2OutputOracle',
           references: [
             'https://etherscan.io/address/0xdfe97868233d1aa22e815a266982f2cf17685a27#code#F1#L96',
           ],
@@ -272,58 +272,56 @@ export const optimism: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'OptimismMultisig',
-      'This address is the owner of the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     {
+      name: 'ProxyAdmin',
+      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
+      description:
+        'Admin of the OptimismPortal, L2OutputOracle, SystemConfig contract, L1StandardBridge, AddressManager proxies. It’s controlled by the OptimismMultisig.',
+    },
+    {
       name: 'Sequencer',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          '0x6887246668a3b87F54DeB3b94Ba47a6f63F32985',
-        ), // TODO: hardcoded, see if we can get it from somewhere
-      ],
+      accounts: [discovery.formatPermissionedAccount(sequencer)],
       description: 'Central actor allowed to commit L2 transactions to L1.',
     },
     {
       name: 'Proposer',
       accounts: [
-        discovery.getPermissionedAccount('L2OutputOracleProxy', 'PROPOSER'),
+        discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
       ],
       description: 'Central actor to post new L2 state roots to L1.',
     },
     {
       name: 'Challenger',
       accounts: [
-        discovery.getPermissionedAccount('L2OutputOracleProxy', 'CHALLENGER'),
+        discovery.getPermissionedAccount('L2OutputOracle', 'CHALLENGER'),
       ],
       description: 'Central actor to challenge L2 state roots.',
     },
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('L2OutputOracleProxy', {
+      discovery.getContractDetails('L2OutputOracle', {
         description:
           'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only the PROPOSER address can submit new state roots.',
-        ...upgradesAddressManager,
+        ...upgradesProxy,
+      }),
+      discovery.getContractDetails('OptimismPortal', {
+        description:
+          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
+        ...upgradesProxy,
       }),
       discovery.getContractDetails('L1CrossDomainMessengerProxy', {
         description:
           "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
         ...upgradesProxy,
       }),
-      discovery.getContractDetails(
-        'AddressManager',
-        'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
-      ),
-      discovery.getContractDetails(
-        'L1DAITokenBridge',
-        'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-      ),
-      {
-        name: 'SynthetixBridgeToOptimism',
+      discovery.getContractDetails('SystemConfig', {
         description:
-          'Custom SNX Gateway, main entry point for users depositing SNX to L2 where "canonical" L2 SNX token managed by Synthetix will be minted. Managed by Synthetix.',
-        address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
-      },
+          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
+        ...upgradesProxy,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

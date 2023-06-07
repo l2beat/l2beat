@@ -1,7 +1,7 @@
 {
   "name": "optimism",
-  "blockNumber": 17424037,
-  "configHash": "0xd5730ca982a9ec6d64cb23e47ed7e9b321584613557622b525f24f3e07f84730",
+  "blockNumber": 17427858,
+  "configHash": "0x0ef23794bbeae683906b4b0dff52caa444bae305a5206e77b437f5619b9a7efe",
   "version": 1,
   "contracts": [
     {
@@ -63,7 +63,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619795",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619958",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -249,7 +249,7 @@
       "derivedName": "StateCommitmentChain"
     },
     {
-      "name": "OptimismPortalProxy",
+      "name": "OptimismPortal",
       "address": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
       "code": "https://etherscan.deth.net/address/0xbEb5Fc579115071764c7423A4f12eDde41f106Ed,0x28a55488fef40005309e2DA0040DbE9D300a64AB",
       "upgradeability": {
@@ -259,10 +259,9 @@
       },
       "values": {
         "GUARDIAN": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-        "isOutputFinalized": [false, false, false, false],
         "L2_ORACLE": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 2317834, 17423983],
+        "params": [1000000000, 440516, 17427846],
         "paused": false,
         "SYSTEM_CONFIG": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "1.6.0"
@@ -316,7 +315,7 @@
       "derivedName": "Lib_AddressManager"
     },
     {
-      "name": "L2OutputOracleProxy",
+      "name": "L2OutputOracle",
       "address": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
       "code": "https://etherscan.deth.net/address/0xdfe97868233d1aa22e815a266982f2cf17685a27,0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00",
       "upgradeability": {
@@ -328,33 +327,11 @@
         "CHALLENGER": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "computeL2Timestamp": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
-        "getL2Output": [
-          [
-            "0x21438336768f296ddf0fecd74ee1d4e56e66d937b3d9a3e964c9a5bf8eba63c3",
-            1686075935,
-            105236863
-          ],
-          [
-            "0x051d3a95aef15113b3460d05eab6e4cb6c18d7161fcdcd1fcaa006d6293646f4",
-            1686077699,
-            105238663
-          ],
-          [
-            "0x0aaae29752019105141408ade45883ea64974024e64a9ee478e50c7a3d95009e",
-            1686081167,
-            105240463
-          ],
-          [
-            "0x9b5482216a077163ed533a7f5a0379500f720583a07ec25e8deaa62a88aa4956",
-            1686084995,
-            105242263
-          ]
-        ],
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 105242263,
-        "latestOutputIndex": 3,
-        "nextBlockNumber": 105244063,
-        "nextOutputIndex": 4,
+        "latestBlockNumber": 105265663,
+        "latestOutputIndex": 16,
+        "nextBlockNumber": 105267463,
+        "nextOutputIndex": 17,
         "PROPOSER": "0x473300df21D047806A082244b417f96b32f13A33",
         "startingBlockNumber": 105235063,
         "startingTimestamp": 1686068903,
@@ -390,7 +367,7 @@
           "0x302d2451d9f47620374B54c521423Bf0403916A2"
         ],
         "getThreshold": 5,
-        "nonce": 2906,
+        "nonce": 2916,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

@@ -263,7 +263,9 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
 export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   const delayString =
     delay !== undefined
-      ? ` There is a ${formatSeconds(delay)} delay on this operation.`
+      ? delay === 0
+        ? ' There is no delay on this operation.'
+        : ` There is a ${formatSeconds(delay)} delay on this operation.`
       : ''
   return {
     value: 'Self sequence',
