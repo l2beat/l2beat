@@ -1,13 +1,13 @@
 import { StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { StageBadge } from './Badge'
+import { StageBadge } from './StageBadge'
 
-export interface StageTooltipProps {
+export interface StageTooltip {
   item?: StageConfig
 }
 
-export function StageTooltipPopup({ item }: StageTooltipProps) {
+export function StageTooltip({ item }: StageTooltip) {
   return (
     <div className="w-88 flex flex-col gap-4">
       <span className="font-bold">

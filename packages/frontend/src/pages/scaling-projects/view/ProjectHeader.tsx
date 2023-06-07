@@ -6,8 +6,8 @@ import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { ProjectLink } from '../../../components/icons'
-import { StageBadge } from '../../../components/stages/Badge'
-import { StageTooltipPopup } from '../../../components/stages/TooltipPopup'
+import { StageBadge } from '../../../components/stages/StageBadge'
+import { StageTooltip } from '../../../components/stages/StageTooltip'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
 import {
   TVLBreakdown,
@@ -82,7 +82,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
               <span
                 className="Tooltip"
                 title={renderToStaticMarkup(
-                  <StageTooltipPopup item={props.stage} />,
+                  <StageTooltip item={props.stage} />,
                 )}
               >
                 <StageBadge category={'Stage 1'} small />
