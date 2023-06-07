@@ -81,15 +81,72 @@ export const zksynclite: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: {
-      value: `${upgradeDelay} or no delay`,
-      description: `There is a ${upgradeDelay} delay unless it is overridden by the ${securityCouncil} Security Council.`,
-      sentiment: 'warning',
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L575',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F16#L22',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F16#L36',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F21#L1193',
+          ],
+        },
+      ],
     },
-    sequencerFailure: RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L422',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
+          ],
+        },
+      ],
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADABLE_YES,
+      description: 'Some system components can be upgraded with no delay.',
+      sources: [
+        {
+          contract: 'Governance',
+          references: [
+            'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
+            'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L205',
+          ],
+        },
+      ],
+    },
+    sequencerFailure: {
+      ...RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L977',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
+          ],
+        },
+      ],
+    },
+    validatorFailure: {
+      ...RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
+            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
+          ],
+        },
+      ],
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -103,6 +160,10 @@ export const zksynclite: Layer2 = {
           text: 'Validity proofs - zkSync FAQ',
           href: 'https://zksync.io/faq/security.html#validity-proofs',
         },
+        {
+          text: 'ZkSync.sol#L549 - Etherscan source code, proveBlocks function',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
+        },
       ],
     },
     newCryptography: {
@@ -111,6 +172,10 @@ export const zksynclite: Layer2 = {
         {
           text: 'Cryptography used - zkSync FAQ',
           href: 'https://zksync.io/faq/security.html#cryptography-used',
+        },
+        {
+          text: 'PlonkCore.sol#L1193 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F21#L1193',
         },
       ],
     },
@@ -121,6 +186,11 @@ export const zksynclite: Layer2 = {
           text: 'Overview - zkSync documentation',
           href: 'https://zksync.io/dev/#overview',
         },
+
+        {
+          text: 'ZkSync.sol#L44 - Etherscan source code, commitBlockInfo struct',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
+        },
       ],
     },
     operator: {
@@ -129,6 +199,10 @@ export const zksynclite: Layer2 = {
         {
           text: 'How decentralized is zkSync - zkSync FAQ',
           href: 'https://zksync.io/faq/decentralization.html#how-decentralized-is-zksync',
+        },
+        {
+          text: 'ZkSync.sol#L422 - Etherscan source code, requireActiveValidator in commitBlock function',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L427',
         },
       ],
     },
@@ -139,6 +213,14 @@ export const zksynclite: Layer2 = {
           text: 'Priority queue - zkSync FAQ',
           href: 'https://zksync.io/faq/security.html#priority-queue',
         },
+        {
+          text: 'ZkSync.sol#L977 - Etherscan source code, addPriorityRequest function',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L977',
+        },
+        {
+          text: 'ZkSync.sol#L600 - Etherscan source code, activateExodusMode function',
+          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
+        },
       ],
     },
     exitMechanisms: [
@@ -147,7 +229,7 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://zksync.io/dev/payments/basic.html#flow',
+            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
         ],
       },
@@ -156,7 +238,15 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://zksync.io/dev/payments/basic.html#flow',
+            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+          },
+          {
+            text: 'ZkSync.sol#L325 - Etherscan source code, requestFullExit function',
+            href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
+          },
+          {
+            text: 'ZkSync.sol#L360 - Etherscan source code, requestFullExitNFT function',
+            href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
           },
         ],
       },
@@ -165,11 +255,15 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://zksync.io/dev/payments/basic.html#flow',
+            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
             text: 'README.md - zkSync Exit Tool',
             href: 'https://github.com/matter-labs/zksync/tree/master/infrastructure/exit-tool',
+          },
+          {
+            text: 'ZkSync.sol#L622 - Etherscan source code, performExodus function',
+            href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
           },
         ],
       },
@@ -195,16 +289,31 @@ export const zksynclite: Layer2 = {
         'UpgradeGatekeeper',
         'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
       ),
-      discovery.getContractDetails(
-        'TokenGovernance',
-        'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
-      ),
-      discovery.getContractDetails(
-        'NftFactory',
-        'Allows for withdrawing NFTs minted on L2 to L1.',
-      ),
+      discovery.getContractDetails('TokenGovernance', {
+        description:
+          'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
+        upgradableBy: ['ZkSync Multisig'],
+        upgradeDelay: 'No delay',
+        references: [
+          {
+            text: 'Governance.sol#L93 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
+          },
+        ],
+      }),
+      discovery.getContractDetails('NftFactory', {
+        description: 'Allows for withdrawing NFTs minted on L2 to L1.',
+        upgradableBy: ['ZkSync Multisig'],
+        upgradeDelay: 'No delay',
+        references: [
+          {
+            text: 'Governance.sol#L205 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L',
+          },
+        ],
+      }),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgrades.upgradeDelay)],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...discovery.getMultisigPermission(
@@ -222,6 +331,10 @@ export const zksynclite: Layer2 = {
         {
           text: 'Security Council Members - Etherscan source code',
           href: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
+        },
+        {
+          text: 'Security Council 2.0 - Matter Labs blog post',
+          href: 'https://blog.matter-labs.io/security-council-2-0-2337a555f17a',
         },
       ],
     },

@@ -161,7 +161,6 @@ export const VALIDATOR_ESCAPE_ZKP: ProjectRiskViewEntry = {
   value: 'Escape hatch (ZK)',
   description:
     'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
-  sentiment: 'warning',
 }
 
 export const VALIDATOR_ESCAPE_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
