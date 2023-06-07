@@ -81,7 +81,7 @@ export const metis: Layer2 = {
         },
       ],
     },
-    validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    validatorFailure: RISK_VIEW.CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('METIS'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
