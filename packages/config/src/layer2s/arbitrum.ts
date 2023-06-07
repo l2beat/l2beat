@@ -462,9 +462,14 @@ export const arbitrum: Layer2 = {
       date: '2021-08-31T00:00:00Z',
     },
   ],
+  // in this config you can:
+  // - specify that the requirement is not met (false)
+  // - specify that the requirement is met (true)
+  // - specify that the requirement is not applicable (null)
+  // - provide additional description ([boolean, string])
   stage: getStage({
     stage0: {
-      callsItselfRollup: true,
+      callsItselfRollup: [true, 'Here you can specify additional description.'],
       stateRootsPostedToL1: true,
       txsOrStateDiffsPostedToL1: true,
       rollupNodeExists: true,
@@ -477,9 +482,9 @@ export const arbitrum: Layer2 = {
       stateVerificationOnL1: true,
       fraudProofSystemWhitelistedOutsideOrganization: true,
       fraudProofSystemAllowsRejecting: true,
-      validityProofRequiresAccepting: true,
-      validityProofChecksTransactions: true,
-      proofSystemOverriddenOnlyBySecurityCouncil: true,
+      validityProofRequiresAccepting: null,
+      validityProofChecksTransactions: null,
+      proofSystemOverriddenOnlyBySecurityCouncil: null,
       upgradeCannotInterveneInProofSystem: true,
       upgradeDelayLongerThenFraudProofWindow: true,
       usersCanExitWithoutCooperation: true,
@@ -490,8 +495,11 @@ export const arbitrum: Layer2 = {
       securityCouncilMembersOutsideOrganizationPseudonymous: true,
     },
     stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemMustBePermissionless: false,
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemMustBePermissionless: [
+        false,
+        'Here you can specify additional text to explain why this is not the case.',
+      ],
       delayWith30DExitWindow: false,
     },
   }),
