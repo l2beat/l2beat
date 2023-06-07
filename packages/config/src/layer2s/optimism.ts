@@ -151,7 +151,7 @@ export const optimism: Layer2 = {
       ],
     },
     validatorFailure: {
-      ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+      ...RISK_VIEW.CANNOT_WITHDRAW,
       sources: [
         {
           contract: 'L2OutputOracle',
