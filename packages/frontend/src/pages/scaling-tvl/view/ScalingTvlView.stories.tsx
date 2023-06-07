@@ -652,7 +652,25 @@ const meta = {
         marketShare: '66.75%',
         purpose: 'Universal',
         technology: 'Optimistic Rollup',
-        //TODO: add stage
+        stage: {
+          stage: 'Stage 0',
+          missing: {
+            nextStage: 'Stage 1',
+            requirements: ['B requirement'],
+          },
+          summary: [
+            {
+              stage: 'Stage 0',
+              requirements: [{ satisfied: true, description: 'A requirement' }],
+            },
+            {
+              stage: 'Stage 1',
+              requirements: [
+                { satisfied: false, description: 'B requirement' },
+              ],
+            },
+          ],
+        },
       },
       {
         name: 'Optimism',
@@ -999,6 +1017,7 @@ const meta = {
         stage: undefined,
       },
     ],
+    stagesEnabled: true,
   },
   decorators: [
     (Story) => (

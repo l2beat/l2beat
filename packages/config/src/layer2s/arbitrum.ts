@@ -462,11 +462,6 @@ export const arbitrum: Layer2 = {
       date: '2021-08-31T00:00:00Z',
     },
   ],
-  // in this config you can:
-  // - specify that the requirement is not met (false)
-  // - specify that the requirement is met (true)
-  // - specify that the requirement is not applicable (null)
-  // - provide additional description ([boolean, string])
   stage: getStage({
     stage0: {
       callsItselfRollup: [true, 'Here you can specify additional description.'],

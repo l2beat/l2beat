@@ -8,6 +8,7 @@ export interface StageTooltipProps {
 }
 
 export function StageTooltip({ item }: StageTooltipProps) {
+  if (!item) return null
   return (
     <div className="w-88 flex flex-col gap-4">
       <span className="font-bold">
