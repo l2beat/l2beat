@@ -105,7 +105,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'Verifier',
           references: [
-            'https://etherscan.io/address/0x473b1887d45d61efd87731a1d8ec3590b93c565d#code#F5#L227',
+            'https://etherscan.io/address/0x020b26826C23142f2582733b2E6428EE31eAaB49#code#F1#L227',
           ],
         },
       ],

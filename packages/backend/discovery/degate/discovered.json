@@ -1,7 +1,8 @@
 {
   "name": "degate",
-  "blockNumber": 17335687,
-  "configHash": "0x1f04965d06148fcc89da9e5690e466bf75466a9ee4dd93b8eabacd48c8fb5271",
+  "blockNumber": 17434695,
+  "configHash": "0x4280477e52571f3c175c0bd26e20238d408ca124e72e62ebe8b12eb61ad589d5",
+  "version": 1,
   "contracts": [
     {
       "name": "BlockVerifier",
@@ -93,7 +94,7 @@
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
-        "transactionCount": 90
+        "transactionCount": 91
       },
       "derivedName": "MultiSigWallet"
     },
@@ -120,7 +121,7 @@
       "values": {
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",
-        "getBlockHeight": 564,
+        "getBlockHeight": 937,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           1000000,
@@ -140,8 +141,8 @@
         "getExchangeStake": 0,
         "getFreeDepositRemained": 4999,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleAssetRoot": "0x2f1e540e9b9302899034b2622d8883b915d9bbb6f7718223f85fe769b02c2d6c",
-        "getMerkleRoot": "0x2993666b4a8f775b3d2be86fd488fbf8b0e8f30872f36638c499d588c4fa7b45",
+        "getMerkleAssetRoot": "0x2e88ccd11b444094be16bd83c9aaf90875716c0618368f34a7587b1ef05676d1",
+        "getMerkleRoot": "0x066d0c79ec44a463f267d0dc60814b71a6a2b3b383b4869bbf8f58e1c8be9637",
         "getNumAvailableForcedSlots": 1000000,
         "getProtocolFeeValues": [0, 18, 18, 0, 18],
         "isInWithdrawalMode": false,
@@ -156,10 +157,10 @@
           "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
           "0x0000000000000000000000000000000000000000",
           "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
-          [5000, 4999, 17286200, 1, 4480000000000000],
-          "0x2993666b4a8f775b3d2be86fd488fbf8b0e8f30872f36638c499d588c4fa7b45",
-          "0x2f1e540e9b9302899034b2622d8883b915d9bbb6f7718223f85fe769b02c2d6c",
-          564,
+          [5000, 4999, 17429470, 1, 4480000000000000],
+          "0x066d0c79ec44a463f267d0dc60814b71a6a2b3b383b4869bbf8f58e1c8be9637",
+          "0x2e88ccd11b444094be16bd83c9aaf90875716c0618368f34a7587b1ef05676d1",
+          937,
           0,
           [0, 18, 18, 0, 18],
           [0, 0]
