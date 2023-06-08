@@ -212,8 +212,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     proposerFailure: {
-      value: 'Propose blocks',
-      description: VALUES.ARBITRUM.getProposerFailureString(validatorAfkBlocks),
+      ...RISK_VIEW.SELF_PROPOSE_WHITELIST_DROPPED(validatorAfkBlocks * assumedBlockTime),
       sources: [
         {
           contract: 'RollupProxy',
