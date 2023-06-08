@@ -35,7 +35,8 @@
         "isConfirmed",
         "owners",
         "transactions"
-      ]
+      ],
+      "ignoreInWatchMode": ["transactionCount"]
     },
     "LoopringIOExchangeOwner": {
       "fields": {

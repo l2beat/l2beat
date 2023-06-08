@@ -1,7 +1,8 @@
 {
   "name": "apex",
-  "blockNumber": 17039292,
+  "blockNumber": 17434683,
   "configHash": "0x556f2f4286902cdef27ee30c733ce23f48cc885a76868b92f2b54c5de423292d",
+  "version": 1,
   "contracts": [
     {
       "name": "Committee",
@@ -53,7 +54,7 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 2839,
+        "getLastBatchId": 3416,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -64,7 +65,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 2728,
+        "getSequenceNumber": 3296,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -123,7 +124,7 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
-        "programHash": "556785481802467929590619840760513266995775527772618096876399067378333266185"
+        "programHash": "3114724292040200590153042023978438629733352741898912919152162079752811928849"
       }
     }
   ],
