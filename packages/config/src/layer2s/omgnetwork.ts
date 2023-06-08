@@ -57,7 +57,7 @@ export const omgnetwork: Layer2 = {
     stateValidation: RISK_VIEW.STATE_EXITS_ONLY,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.FORCE_VIA_L1(),
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
       description:

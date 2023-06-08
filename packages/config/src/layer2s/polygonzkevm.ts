@@ -9,7 +9,7 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  NO_MECHANISM,
+  SEQUENCER_NO_MECHANISM,
   NUGGETS,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -130,7 +130,7 @@ export const polygonzkevm: Layer2 = {
     upgradeability: upgradeabilityRisk,
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: {
-      ...NO_MECHANISM(isForcedBatchDisallowed),
+      ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
       sources: [
         {
           contract: 'PolygonZkEvm',
@@ -197,7 +197,7 @@ export const polygonzkevm: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.NO_MECHANISM,
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       description:
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [

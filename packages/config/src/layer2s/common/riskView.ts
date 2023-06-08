@@ -192,7 +192,7 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
 
 // SEQUENCER COLUMN
 
-export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
+export function SEQUENCER_SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   const delayString =
     delay !== undefined
       ? delay === 0
@@ -205,16 +205,16 @@ export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   }
 }
 
-export function SELF_SEQUENCE_ZK(delay?: number): ProjectRiskViewEntry {
+export function SEQUENCER_SELF_SEQUENCE_ZK(delay?: number): ProjectRiskViewEntry {
   return {
-    ...SELF_SEQUENCE(delay),
+    ...SEQUENCER_SELF_SEQUENCE(delay),
     description:
-      SELF_SEQUENCE(delay).description +
+      SEQUENCER_SELF_SEQUENCE(delay).description +
       ' Proposing new blocks requires creating ZK proofs.',
   }
 }
 
-export function FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
+export function SEQUENCER_FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
   const delayString =
     delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
   return {
@@ -223,7 +223,7 @@ export function FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
   }
 }
 
-export function FORCE_VIA_L1_STARKEX_PERPETUAL(
+export function SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(
   delay: number,
 ): ProjectRiskViewEntry {
   const delayString = formatSeconds(delay)
@@ -233,7 +233,7 @@ export function FORCE_VIA_L1_STARKEX_PERPETUAL(
   }
 }
 
-export function FORCE_VIA_L1_LOOPRING(
+export function SEQUENCER_FORCE_VIA_L1_LOOPRING(
   delay: number,
   forcedWithdrawalFee: number,
   maxAgeDepositUntilWithdrawable: number,
@@ -251,14 +251,14 @@ export function FORCE_VIA_L1_LOOPRING(
   }
 }
 
-export const ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
+export const SEQUENCER_ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
   value: 'Enqueue via L1',
   description:
     "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
   sentiment: 'warning',
 }
 
-export function NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
+export function SEQUENCER_NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
   const additional =
     disabled === true
       ? ' Although the functionality exists in the code, it is currently disabled.'
@@ -351,13 +351,13 @@ export const RISK_VIEW = {
   NATIVE_AND_CANONICAL,
   CANONICAL,
   CANONICAL_USDC,
-  SELF_SEQUENCE,
-  SELF_SEQUENCE_ZK,
-  FORCE_VIA_L1,
-  FORCE_VIA_L1_STARKEX_PERPETUAL,
-  FORCE_VIA_L1_LOOPRING,
-  ENQUEUE_VIA_L1,
-  NO_MECHANISM,
+  SEQUENCER_SELF_SEQUENCE,
+  SEQUENCER_SELF_SEQUENCE_ZK,
+  SEQUENCER_FORCE_VIA_L1,
+  SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
+  SEQUENCER_FORCE_VIA_L1_LOOPRING,
+  SEQUENCER_ENQUEUE_VIA_L1,
+  SEQUENCER_NO_MECHANISM,
   PROPOSER_CANNOT_WITHDRAW,
   PROPOSER_USE_ESCAPE_HATCH_ZK,
   PROPOSER_USE_ESCAPE_HATCH_MP,

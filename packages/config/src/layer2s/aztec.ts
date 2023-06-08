@@ -120,7 +120,7 @@ export const aztec: Layer2 = {
     },
 
     sequencerFailure: {
-      ...RISK_VIEW.SELF_SEQUENCE_ZK(),
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
       sources: [
         {
           contract: 'RollupProcessor',

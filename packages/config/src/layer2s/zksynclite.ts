@@ -122,7 +122,7 @@ export const zksynclite: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
       sources: [
         {
           contract: 'ZkSync',

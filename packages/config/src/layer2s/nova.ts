@@ -111,7 +111,7 @@ export const nova: Layer2 = {
     upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(
       l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay,
     ),
-    sequencerFailure: RISK_VIEW.SELF_SEQUENCE(selfSequencingDelay),
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
       validatorAfkBlocks * assumedBlockTime,
     ),

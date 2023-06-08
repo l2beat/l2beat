@@ -200,7 +200,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.SELF_SEQUENCE(selfSequencingDelay),
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       sources: [
         {
           contract: 'SequencerInbox',

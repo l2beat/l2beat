@@ -113,7 +113,7 @@ export const bobanetwork: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.ENQUEUE_VIA_L1,
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
       sources: [
         {
           contract: 'CanonicalTransactionChain',
