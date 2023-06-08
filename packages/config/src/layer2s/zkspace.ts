@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   makeBridgeCompatible,
@@ -13,6 +14,7 @@ import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkspace')
 
+const upgradeDelay = formatSeconds(HARDCODED.ZKSPACE.UPGRADE_NOTICE_PERIOD)
 const forcedWithdrawalDelay = HARDCODED.ZKSPACE.PRIORITY_EXPIRATION_PERIOD
 
 export const zkspace: Layer2 = {
@@ -50,21 +52,30 @@ export const zkspace: Layer2 = {
     ],
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x44DedA2C824458A5DfE1e363c679dea33f1ffA39#code#F1#L26',
+          ],
+        },
+      ],
+    },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
           contract: 'ZkSync',
           references: [
-            'https://etherscan.io/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db#code#F1#L37',
             'https://etherscan.io/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db#code#F1#L79',
           ],
         },
       ],
     },
     upgradeability: {
-      ...RISK_VIEW.UPGRADE_DELAY('8 days'),
+      ...RISK_VIEW.UPGRADE_DELAY(upgradeDelay),
       sources: [
         {
           contract: 'ZkSync',
@@ -74,8 +85,30 @@ export const zkspace: Layer2 = {
         },
       ],
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
-    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x467a2B91f231D930F5eeB6B982C7666E81DA8626#code#F1#L511',
+            'https://etherscan.io/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db#code#F1#L219',
+          ],
+        },
+      ],
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db#code#F1#L219',
+            'https://etherscan.io/address/0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7#code#F1#L26',
+          ],
+        },
+      ],
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
