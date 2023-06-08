@@ -1,7 +1,8 @@
 {
   "name": "debridge",
-  "blockNumber": 17273064,
+  "blockNumber": 17434719,
   "configHash": "0x9ae2dcdfb4b7d5ed7cbf076e5dd20318c538a0cf43747ee8f7dd41f35c21d647",
+  "version": 1,
   "contracts": [
     {
       "name": "DeBridgeGate",
@@ -28,7 +29,7 @@
         "globalTransferFeeBps": 10,
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "lockedClaim": 1,
-        "nonce": 11863,
+        "nonce": 11903,
         "paused": false,
         "signatureVerifier": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -50,12 +51,14 @@
         "domainSeparator": "0x1e756d21e24d2471c566451e17756f6febc40c36cb31d6437730beb1c93c306c",
         "getChainId": 1,
         "getOwners": [
+          "0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1",
+          "0xE9666D80e5617bA1470E2cA09F2D9B0C8CCd56B7",
           "0x6f572a24c5C009fC8C844Fab5352edf79F132FBD",
           "0xd725E456D5beD8275E297C4Dd11135e3C5cDe544",
           "0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
         ],
-        "getThreshold": 2,
-        "nonce": 32,
+        "getThreshold": 3,
+        "nonce": 34,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -106,7 +109,7 @@
       },
       "values": {
         "confirmationThreshold": 3,
-        "currentBlock": 17262696,
+        "currentBlock": 17428933,
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "excessConfirmations": 3,
@@ -213,10 +216,12 @@
     "0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426",
     "0x6f572a24c5C009fC8C844Fab5352edf79F132FBD",
     "0x83f81E7f9E284AAFFEDED797008663595f7342bF",
+    "0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1",
     "0x874f46124C1DAaD4749B94f82eD142754826240E",
     "0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC",
     "0xd725E456D5beD8275E297C4Dd11135e3C5cDe544",
     "0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0",
+    "0xE9666D80e5617bA1470E2cA09F2D9B0C8CCd56B7",
     "0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54",
     "0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8"
   ],
