@@ -368,6 +368,32 @@ export const USE_ESCAPE_HATCH_MP_NFT: ProjectRiskViewEntry = {
   description: USE_ESCAPE_HATCH_MP.description + ' NFTs will be minted on L1 to exit.',
 }
 
+export const USE_ESCAPE_HATCH_MP_AVGPRICE: ProjectRiskViewEntry = {
+  ...USE_ESCAPE_HATCH_MP,
+  description: USE_ESCAPE_HATCH_MP.description + ' Positions will be closed using the average price from the last batch state update.',
+}
+
+export function SELF_PROPOSE_WHITELIST_DROPPED(delay: number): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Self propose',
+    description: `Anyone can become a Proposer after ${delayString} of inactivity from the currently whitelisted Proposers.`,
+  }
+}
+
+export const SELF_PROPOSE_ZK: ProjectRiskViewEntry = {
+  value: 'Self propose',
+  description:
+    'If the Proposer fails, users can leverage the open source prover to submit proofs to the L1 bridge.',
+}
+
+export const SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
+  value: 'Self propose',
+  description:
+    'Anyone can be a Proposer and propose new roots to the L1 bridge.',
+}
+
+
 export const RISK_VIEW = {
   STATE_FP,
   STATE_FP_1R,
@@ -411,4 +437,8 @@ export const RISK_VIEW = {
   USE_ESCAPE_HATCH_ZK,
   USE_ESCAPE_HATCH_MP,
   USE_ESCAPE_HATCH_MP_NFT,
+  USE_ESCAPE_HATCH_MP_AVGPRICE,
+  SELF_PROPOSE_WHITELIST_DROPPED,
+  SELF_PROPOSE_ZK,
+  SELF_PROPOSE_ROOTS,
 }
