@@ -1,8 +1,137 @@
 {
   "name": "zksync2",
-  "blockNumber": 17341504,
+  "blockNumber": 17434053,
   "configHash": "0x1720f3c89dcbc0fc6b6cdeb076051bd49e8b661a1288de4810f30a49ccc2f67d",
+  "version": 1,
   "contracts": [
+    {
+      "name": "Verifier",
+      "address": "0x020b26826C23142f2582733b2E6428EE31eAaB49",
+      "code": "https://etherscan.deth.net/address/0x020b26826C23142f2582733b2E6428EE31eAaB49",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "get_verification_key": [
+          67108864,
+          1,
+          [
+            "13446667982376394161563610564587413125564757801019538732601045199901075958935"
+          ],
+          [
+            [
+              "18521199778233464058441345797875994300579445309857616270068093819065883090109",
+              "6204046810010391805002568401073351462861581534216530845947773547776951520773"
+            ],
+            [
+              "9138917269230693704924165774215927631566598728551070912722023888354577427646",
+              "18999933125943033262100317328198548414270835815508452422121731595305352632881"
+            ]
+          ],
+          [
+            [
+              "9389976645335817974600254848490982357261475693770108343377418649413785545255",
+              "21430933478240265270619523464449984529620038990004037000657297130601369943105"
+            ],
+            [
+              "14946399697904679552259733001241440766910203436451820373008101487723530054284",
+              "2602639529130716536095858797888370038002188100065607953054802508973410600753"
+            ],
+            [
+              "18920842852942832240365875512769281924356892966542020206469502979359589700764",
+              "140331972652276904261295805381189184726855141781161846826167019229719293799"
+            ],
+            [
+              "3083724502293981007909362457813377345254691631777952307050399180789678448730",
+              "15781869154188940690386716419661892979678976275408343472769728909605128803830"
+            ],
+            [
+              "17771655583589308229884953648614760666643144591080494225561937329230268827691",
+              "9932741288717386497095916630628986755956474837051196553792419651824755935846"
+            ],
+            [
+              "5267384907800955232943314359800882999438647242071028603259044515016501829191",
+              "3224220482738825566001187962265714378212080429839762540073960876336111095951"
+            ],
+            [
+              "21075694667720293307707430670895710151216708132815519119411719383555504997507",
+              "9650198005169929639329999976567272043948472094159090347990723091674654640984"
+            ],
+            [
+              "4137221371299132785041700032199288298051847912401430443317344133410040320635",
+              "19580662014676489709953531485884792269870770471116798791394080697119978890087"
+            ]
+          ],
+          [
+            [
+              "9109825583907074661957961510925242199170665726335501361782987268395501270201",
+              "6780808451226194332466834744550352509679806768854129441387495059713398867684"
+            ],
+            [
+              "6606869739731973141805363556147754433457617266150994234883970457551919967397",
+              "14424313850812816332898217761937684515563979501688586057229960610249978649173"
+            ],
+            [
+              "17105999584874810826355159065477449563741543096063214190214121165138408057262",
+              "3851071843960173338630671341221947991228342081516420546074437366529504843432"
+            ],
+            [
+              "21369783417420496113280007113642222518167015027163479334299249131309783420760",
+              "10651970989795646339741186878772121764821489582030210433689287146905936178316"
+            ]
+          ],
+          [
+            "14250161141147778838209929682572852630136831758806558190188392047799723650864",
+            "11501007861939694619049134168234471188274786153104138781173757641602009804514"
+          ],
+          [
+            [
+              "6668176709204780318831228289292561573381906923895007894241817412739819253052",
+              "8429852198767744735038019516126265305201248379491287082531292991584154308107"
+            ],
+            [
+              "12433889228275381870700929211500459064515680630192745428635030708045356547065",
+              "20045005043995659084408606933738964885314786167807303533095589280258879292618"
+            ],
+            [
+              "552051612712391943824412220760315869358198510906558907063042687643425520708",
+              "17463392914531947928024669493971089938504106917882207673346504991448893425509"
+            ],
+            [
+              "12261747153911989546900109691306309393995885629749684675580116806429001135918",
+              "2481652619177724242439499181286868225444023330901896449394232998340734118926"
+            ]
+          ],
+          [
+            "21495234856012943728765060935116788951593676607014718181245040095123326637411",
+            "3869601732574151841157561239867186137083671673160935496396782052886536562540"
+          ],
+          [[5], [7], [10]],
+          [
+            [
+              [
+                "11559732032986387107991004021392285783925812861821192530917403151452391805634",
+                "10857046999023057135944570762232829481370756359578518086990519993285655852781"
+              ],
+              [
+                "4082367875863433681332203403145435568316851327593401208105741076214120093531",
+                "8495653923123431417604973247489272438418190587263600148770280649306958101930"
+              ]
+            ],
+            [
+              [
+                "17212635814319756364507010169094758005397460366678210664966334781961899574209",
+                "496075682290949347282619629729389528669750910289829251317610107342504362928"
+              ],
+              [
+                "2255182984359105691812395885056400739448730162863181907784180250290003009508",
+                "15828724851114720558251891430452666121603726704878231219287131634746610441813"
+              ]
+            ]
+          ]
+        ]
+      }
+    },
     {
       "name": "zkSync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -109,32 +238,32 @@
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
         "getCurrentProposalId": 4,
-        "getFirstUnprocessedPriorityTx": 778717,
+        "getFirstUnprocessedPriorityTx": 968186,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x010007794e73f682ad6d27e86b6f71bbee875fc26f5708d1713e7cfd476098d3",
         "getL2DefaultAccountBytecodeHash": "0x0100067d861e2f5717a12c3e869cfb657793b86bbb0caa05cc1421f16c5217bc",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 11925,
+        "getPriorityQueueSize": 10615,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 42075,
-        "getTotalBlocksExecuted": 41105,
-        "getTotalBlocksVerified": 41698,
-        "getTotalPriorityTxs": 790642,
+        "getTotalBlocksCommitted": 58443,
+        "getTotalBlocksExecuted": 57449,
+        "getTotalBlocksVerified": 58135,
+        "getTotalPriorityTxs": 978801,
         "getUpgradeProposalState": 0,
-        "getVerifier": "0x473b1887D45D61EfD87731a1D8eC3590b93c565d",
+        "getVerifier": "0x020b26826C23142f2582733b2E6428EE31eAaB49",
         "getVerifierParams": [
           "0x1186ec268d49f1905f8d9c1e9d39fc33e98c74f91d91a21b8f7ef78bd09a8db8",
           "0x101e08b00193e529145ee09823378ef51a3bc8966504064f1f6ba3f1ba863210",
-          "0x142a364ef2073132eaf07aa7f3d8495065be5b92a2dc14fda09b4216affed9c0"
+          "0x0a3657f884af32d3a573c5fdb3440c9ac45271ede8c982faeaae7434d032ab3e"
         ],
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x0c56456cb8eb3f841e612eabab0303d43cd8eaf147a992aa4f0af23c19815577",
-          1685004527,
+          "0xf8b3bd241127309f9af4e58875e0f88266b69284d01256f4f73f2b8a6bd7eb52",
+          1686129947,
           0
         ],
         "validators": ["0x3dB52cE065f728011Ac6732222270b3F2360d919"]
@@ -158,134 +287,6 @@
       "derivedName": "ValidatorTimelock"
     },
     {
-      "name": "Verifier",
-      "address": "0x473b1887D45D61EfD87731a1D8eC3590b93c565d",
-      "code": "https://etherscan.deth.net/address/0x473b1887D45D61EfD87731a1D8eC3590b93c565d",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "get_verification_key": [
-          67108864,
-          1,
-          [
-            "13446667982376394161563610564587413125564757801019538732601045199901075958935"
-          ],
-          [
-            [
-              "12854536043569353257897264278040881127997226485171299080065025915769929527985",
-              "6960496331630167340183739741659034013177668409904638413287532134994166339870"
-            ],
-            [
-              "6330043424855215334608819401382257575056223395304914145890468111302008114636",
-              "426249451924247669946312175014733376121990566748733210960224419890109829235"
-            ]
-          ],
-          [
-            [
-              "4061301123048624220904985149899710787296462804647341921769472156298125522927",
-              "11501819129010267027641548436507822219915483982484207355393081669836788975796"
-            ],
-            [
-              "206134184483890001411960336231620762572481306154702163177739125425300415555",
-              "20423607964666230004680697773967446625311957046239543059817264066301191833788"
-            ],
-            [
-              "18317079236399578056015949113493301508607517755510311843956978400522082511951",
-              "21710018225851676229780475013130048850433469871477276669563727077809202008810"
-            ],
-            [
-              "1597298608718535342855606957952001126027123244341416093275207830205848833212",
-              "16851380258464576900414228427125224543867652413469565418751072240306768316289"
-            ],
-            [
-              "2434349390514504374694056720918459308664589615631604359325420586440782223424",
-              "18531478860479260056352692541933950561756405009313057304377803342642564491843"
-            ],
-            [
-              "18037184992983157972192303275924755117563044467683742611616368041644571174033",
-              "13403305492629930817468710248781095102388427006341182728237787021025917387815"
-            ],
-            [
-              "19979140779832692497032646108321296353850350778933145462604891493017673325079",
-              "18803606461711627766817178585274073090839894292420063183238784808337280595539"
-            ],
-            [
-              "5275506113511637776660861498748704715235369867484514789163584863975107755763",
-              "14076358645958895471893294325589276984651573765345448787469583325134007746533"
-            ]
-          ],
-          [
-            [
-              "13541919862758487642189962065812903541712323573720875248039102670318702488557",
-              "19361401073676820117988796098173028849821766588932794398334563307124204561611"
-            ],
-            [
-              "2872096235301626484383562736816357766417009033250545790900084788297634787147",
-              "9403403794320186752203181581727707749195583715565955982322827647981640142475"
-            ],
-            [
-              "693695722537597041988717888531831903295090009079598833715992292478709376266",
-              "4150603114979221738488094169397226761483154654004231154652680032665260761371"
-            ],
-            [
-              "6264459237870968544983119986356052578354074971908586491204972037352828857692",
-              "2920687361445375029803258307015944648212051711537766814272681084951707030619"
-            ]
-          ],
-          [
-            "21387879722472031773458013412451298040307838080786542288886776829891066828221",
-            "15887311612891437997745146048880810100267400684530679786810161463646496796023"
-          ],
-          [
-            [
-              "6668176709204780318831228289292561573381906923895007894241817412739819253052",
-              "8429852198767744735038019516126265305201248379491287082531292991584154308107"
-            ],
-            [
-              "12433889228275381870700929211500459064515680630192745428635030708045356547065",
-              "20045005043995659084408606933738964885314786167807303533095589280258879292618"
-            ],
-            [
-              "552051612712391943824412220760315869358198510906558907063042687643425520708",
-              "17463392914531947928024669493971089938504106917882207673346504991448893425509"
-            ],
-            [
-              "12261747153911989546900109691306309393995885629749684675580116806429001135918",
-              "2481652619177724242439499181286868225444023330901896449394232998340734118926"
-            ]
-          ],
-          [
-            "8504768233911889178794629864669691776402976396507954690705795985142132734809",
-            "11549967197012514524151342681113661285037753873321163909564039270381810839761"
-          ],
-          [[5], [7], [10]],
-          [
-            [
-              [
-                "11559732032986387107991004021392285783925812861821192530917403151452391805634",
-                "10857046999023057135944570762232829481370756359578518086990519993285655852781"
-              ],
-              [
-                "4082367875863433681332203403145435568316851327593401208105741076214120093531",
-                "8495653923123431417604973247489272438418190587263600148770280649306958101930"
-              ]
-            ],
-            [
-              [
-                "17212635814319756364507010169094758005397460366678210664966334781961899574209",
-                "496075682290949347282619629729389528669750910289829251317610107342504362928"
-              ],
-              [
-                "2255182984359105691812395885056400739448730162863181907784180250290003009508",
-                "15828724851114720558251891430452666121603726704878231219287131634746610441813"
-              ]
-            ]
-          ]
-        ]
-      }
-    },
-    {
       "name": "zkSync Era Multisig",
       "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
       "code": "https://etherscan.deth.net/address/0x4e4943346848c4867F81dFb37c4cA9C5715A7828,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -306,7 +307,7 @@
           "0xa265146cA40F52cfC439888D0b4291b5440e6769"
         ],
         "getThreshold": 4,
-        "nonce": 55,
+        "nonce": 57,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -351,6 +352,13 @@
     "0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F"
   ],
   "abis": {
+    "0x020b26826C23142f2582733b2E6428EE31eAaB49": [
+      "function compute_powers_of_alpha(tuple(tuple(uint256 value) zero, tuple(uint256 value) alpha, tuple(uint256 value) beta, tuple(uint256 value) gamma, tuple(uint256 value)[9] alpha_values, tuple(uint256 value) eta, tuple(uint256 value) beta_lookup, tuple(uint256 value) gamma_lookup, tuple(uint256 value) beta_plus_one, tuple(uint256 value) beta_gamma, tuple(uint256 value) v, tuple(uint256 value) u, tuple(uint256 value) z, tuple(uint256 value) z_omega, tuple(uint256 value) z_minus_last_omega, tuple(uint256 value) l_0_at_z, tuple(uint256 value) l_n_minus_one_at_z, tuple(uint256 value) t, tuple(uint256 X, uint256 Y) tp) state) pure",
+      "function get_verification_key() pure returns (tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[2] gate_selectors_commitments, tuple(uint256 X, uint256 Y)[8] gate_setup_commitments, tuple(uint256 X, uint256 Y)[4] permutation_commitments, tuple(uint256 X, uint256 Y) lookup_selector_commitment, tuple(uint256 X, uint256 Y)[4] lookup_tables_commitments, tuple(uint256 X, uint256 Y) lookup_table_type_commitment, tuple(uint256 value)[3] non_residues, tuple(uint256[2] X, uint256[2] Y)[2] g2_elements) vk)",
+      "function prepare_queries(tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[2] gate_selectors_commitments, tuple(uint256 X, uint256 Y)[8] gate_setup_commitments, tuple(uint256 X, uint256 Y)[4] permutation_commitments, tuple(uint256 X, uint256 Y) lookup_selector_commitment, tuple(uint256 X, uint256 Y)[4] lookup_tables_commitments, tuple(uint256 X, uint256 Y) lookup_table_type_commitment, tuple(uint256 value)[3] non_residues, tuple(uint256[2] X, uint256[2] Y)[2] g2_elements) vk, tuple(uint256[] input_values, tuple(uint256 X, uint256 Y)[4] state_polys_commitments, tuple(uint256 X, uint256 Y) copy_permutation_grand_product_commitment, tuple(uint256 X, uint256 Y)[4] quotient_poly_parts_commitments, tuple(uint256 value)[4] state_polys_openings_at_z, tuple(uint256 value)[1] state_polys_openings_at_z_omega, tuple(uint256 value)[1] gate_selectors_openings_at_z, tuple(uint256 value)[3] copy_permutation_polys_openings_at_z, tuple(uint256 value) copy_permutation_grand_product_opening_at_z_omega, tuple(uint256 value) quotient_poly_opening_at_z, tuple(uint256 value) linearization_poly_opening_at_z, tuple(uint256 X, uint256 Y) lookup_s_poly_commitment, tuple(uint256 X, uint256 Y) lookup_grand_product_commitment, tuple(uint256 value) lookup_s_poly_opening_at_z_omega, tuple(uint256 value) lookup_grand_product_opening_at_z_omega, tuple(uint256 value) lookup_t_poly_opening_at_z, tuple(uint256 value) lookup_t_poly_opening_at_z_omega, tuple(uint256 value) lookup_selector_poly_opening_at_z, tuple(uint256 value) lookup_table_type_poly_opening_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z_omega) proof, tuple(tuple(uint256 value) zero, tuple(uint256 value) alpha, tuple(uint256 value) beta, tuple(uint256 value) gamma, tuple(uint256 value)[9] alpha_values, tuple(uint256 value) eta, tuple(uint256 value) beta_lookup, tuple(uint256 value) gamma_lookup, tuple(uint256 value) beta_plus_one, tuple(uint256 value) beta_gamma, tuple(uint256 value) v, tuple(uint256 value) u, tuple(uint256 value) z, tuple(uint256 value) z_omega, tuple(uint256 value) z_minus_last_omega, tuple(uint256 value) l_0_at_z, tuple(uint256 value) l_n_minus_one_at_z, tuple(uint256 value) t, tuple(uint256 X, uint256 Y) tp) state) view returns (tuple(tuple(uint256 X, uint256 Y)[13] commitments_at_z, tuple(uint256 value)[13] values_at_z, tuple(uint256 X, uint256 Y)[6] commitments_at_z_omega, tuple(uint256 value)[6] values_at_z_omega) queries)",
+      "function rescue_custom_gate_linearization_contribution(tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[2] gate_selectors_commitments, tuple(uint256 X, uint256 Y)[8] gate_setup_commitments, tuple(uint256 X, uint256 Y)[4] permutation_commitments, tuple(uint256 X, uint256 Y) lookup_selector_commitment, tuple(uint256 X, uint256 Y)[4] lookup_tables_commitments, tuple(uint256 X, uint256 Y) lookup_table_type_commitment, tuple(uint256 value)[3] non_residues, tuple(uint256[2] X, uint256[2] Y)[2] g2_elements) vk, tuple(uint256[] input_values, tuple(uint256 X, uint256 Y)[4] state_polys_commitments, tuple(uint256 X, uint256 Y) copy_permutation_grand_product_commitment, tuple(uint256 X, uint256 Y)[4] quotient_poly_parts_commitments, tuple(uint256 value)[4] state_polys_openings_at_z, tuple(uint256 value)[1] state_polys_openings_at_z_omega, tuple(uint256 value)[1] gate_selectors_openings_at_z, tuple(uint256 value)[3] copy_permutation_polys_openings_at_z, tuple(uint256 value) copy_permutation_grand_product_opening_at_z_omega, tuple(uint256 value) quotient_poly_opening_at_z, tuple(uint256 value) linearization_poly_opening_at_z, tuple(uint256 X, uint256 Y) lookup_s_poly_commitment, tuple(uint256 X, uint256 Y) lookup_grand_product_commitment, tuple(uint256 value) lookup_s_poly_opening_at_z_omega, tuple(uint256 value) lookup_grand_product_opening_at_z_omega, tuple(uint256 value) lookup_t_poly_opening_at_z, tuple(uint256 value) lookup_t_poly_opening_at_z_omega, tuple(uint256 value) lookup_selector_poly_opening_at_z, tuple(uint256 value) lookup_table_type_poly_opening_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z_omega) proof, tuple(tuple(uint256 value) zero, tuple(uint256 value) alpha, tuple(uint256 value) beta, tuple(uint256 value) gamma, tuple(uint256 value)[9] alpha_values, tuple(uint256 value) eta, tuple(uint256 value) beta_lookup, tuple(uint256 value) gamma_lookup, tuple(uint256 value) beta_plus_one, tuple(uint256 value) beta_gamma, tuple(uint256 value) v, tuple(uint256 value) u, tuple(uint256 value) z, tuple(uint256 value) z_omega, tuple(uint256 value) z_minus_last_omega, tuple(uint256 value) l_0_at_z, tuple(uint256 value) l_n_minus_one_at_z, tuple(uint256 value) t, tuple(uint256 X, uint256 Y) tp) state) view returns (tuple(uint256 X, uint256 Y) result)",
+      "function verify_serialized_proof(uint256[] public_inputs, uint256[] serialized_proof) view returns (bool)"
+    ],
     "0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE": [
       "event CancelUpgradeProposal(uint256 indexed proposalId, bytes32 indexed proposalHash)",
       "event ExecuteUpgrade(uint256 indexed proposalId, bytes32 indexed proposalHash, bytes32 proposalSalt)",
@@ -425,13 +433,6 @@
       "function transferOwnership(address newOwner)",
       "function validator() view returns (address)",
       "function zkSyncContract() view returns (address)"
-    ],
-    "0x473b1887D45D61EfD87731a1D8eC3590b93c565d": [
-      "function compute_powers_of_alpha(tuple(tuple(uint256 value) zero, tuple(uint256 value) alpha, tuple(uint256 value) beta, tuple(uint256 value) gamma, tuple(uint256 value)[9] alpha_values, tuple(uint256 value) eta, tuple(uint256 value) beta_lookup, tuple(uint256 value) gamma_lookup, tuple(uint256 value) beta_plus_one, tuple(uint256 value) beta_gamma, tuple(uint256 value) v, tuple(uint256 value) u, tuple(uint256 value) z, tuple(uint256 value) z_omega, tuple(uint256 value) z_minus_last_omega, tuple(uint256 value) l_0_at_z, tuple(uint256 value) l_n_minus_one_at_z, tuple(uint256 value) t, tuple(uint256 X, uint256 Y) tp) state) pure",
-      "function get_verification_key() pure returns (tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[2] gate_selectors_commitments, tuple(uint256 X, uint256 Y)[8] gate_setup_commitments, tuple(uint256 X, uint256 Y)[4] permutation_commitments, tuple(uint256 X, uint256 Y) lookup_selector_commitment, tuple(uint256 X, uint256 Y)[4] lookup_tables_commitments, tuple(uint256 X, uint256 Y) lookup_table_type_commitment, tuple(uint256 value)[3] non_residues, tuple(uint256[2] X, uint256[2] Y)[2] g2_elements) vk)",
-      "function prepare_queries(tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[2] gate_selectors_commitments, tuple(uint256 X, uint256 Y)[8] gate_setup_commitments, tuple(uint256 X, uint256 Y)[4] permutation_commitments, tuple(uint256 X, uint256 Y) lookup_selector_commitment, tuple(uint256 X, uint256 Y)[4] lookup_tables_commitments, tuple(uint256 X, uint256 Y) lookup_table_type_commitment, tuple(uint256 value)[3] non_residues, tuple(uint256[2] X, uint256[2] Y)[2] g2_elements) vk, tuple(uint256[] input_values, tuple(uint256 X, uint256 Y)[4] state_polys_commitments, tuple(uint256 X, uint256 Y) copy_permutation_grand_product_commitment, tuple(uint256 X, uint256 Y)[4] quotient_poly_parts_commitments, tuple(uint256 value)[4] state_polys_openings_at_z, tuple(uint256 value)[1] state_polys_openings_at_z_omega, tuple(uint256 value)[1] gate_selectors_openings_at_z, tuple(uint256 value)[3] copy_permutation_polys_openings_at_z, tuple(uint256 value) copy_permutation_grand_product_opening_at_z_omega, tuple(uint256 value) quotient_poly_opening_at_z, tuple(uint256 value) linearization_poly_opening_at_z, tuple(uint256 X, uint256 Y) lookup_s_poly_commitment, tuple(uint256 X, uint256 Y) lookup_grand_product_commitment, tuple(uint256 value) lookup_s_poly_opening_at_z_omega, tuple(uint256 value) lookup_grand_product_opening_at_z_omega, tuple(uint256 value) lookup_t_poly_opening_at_z, tuple(uint256 value) lookup_t_poly_opening_at_z_omega, tuple(uint256 value) lookup_selector_poly_opening_at_z, tuple(uint256 value) lookup_table_type_poly_opening_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z_omega) proof, tuple(tuple(uint256 value) zero, tuple(uint256 value) alpha, tuple(uint256 value) beta, tuple(uint256 value) gamma, tuple(uint256 value)[9] alpha_values, tuple(uint256 value) eta, tuple(uint256 value) beta_lookup, tuple(uint256 value) gamma_lookup, tuple(uint256 value) beta_plus_one, tuple(uint256 value) beta_gamma, tuple(uint256 value) v, tuple(uint256 value) u, tuple(uint256 value) z, tuple(uint256 value) z_omega, tuple(uint256 value) z_minus_last_omega, tuple(uint256 value) l_0_at_z, tuple(uint256 value) l_n_minus_one_at_z, tuple(uint256 value) t, tuple(uint256 X, uint256 Y) tp) state) view returns (tuple(tuple(uint256 X, uint256 Y)[13] commitments_at_z, tuple(uint256 value)[13] values_at_z, tuple(uint256 X, uint256 Y)[6] commitments_at_z_omega, tuple(uint256 value)[6] values_at_z_omega) queries)",
-      "function rescue_custom_gate_linearization_contribution(tuple(uint256 domain_size, uint256 num_inputs, tuple(uint256 value) omega, tuple(uint256 X, uint256 Y)[2] gate_selectors_commitments, tuple(uint256 X, uint256 Y)[8] gate_setup_commitments, tuple(uint256 X, uint256 Y)[4] permutation_commitments, tuple(uint256 X, uint256 Y) lookup_selector_commitment, tuple(uint256 X, uint256 Y)[4] lookup_tables_commitments, tuple(uint256 X, uint256 Y) lookup_table_type_commitment, tuple(uint256 value)[3] non_residues, tuple(uint256[2] X, uint256[2] Y)[2] g2_elements) vk, tuple(uint256[] input_values, tuple(uint256 X, uint256 Y)[4] state_polys_commitments, tuple(uint256 X, uint256 Y) copy_permutation_grand_product_commitment, tuple(uint256 X, uint256 Y)[4] quotient_poly_parts_commitments, tuple(uint256 value)[4] state_polys_openings_at_z, tuple(uint256 value)[1] state_polys_openings_at_z_omega, tuple(uint256 value)[1] gate_selectors_openings_at_z, tuple(uint256 value)[3] copy_permutation_polys_openings_at_z, tuple(uint256 value) copy_permutation_grand_product_opening_at_z_omega, tuple(uint256 value) quotient_poly_opening_at_z, tuple(uint256 value) linearization_poly_opening_at_z, tuple(uint256 X, uint256 Y) lookup_s_poly_commitment, tuple(uint256 X, uint256 Y) lookup_grand_product_commitment, tuple(uint256 value) lookup_s_poly_opening_at_z_omega, tuple(uint256 value) lookup_grand_product_opening_at_z_omega, tuple(uint256 value) lookup_t_poly_opening_at_z, tuple(uint256 value) lookup_t_poly_opening_at_z_omega, tuple(uint256 value) lookup_selector_poly_opening_at_z, tuple(uint256 value) lookup_table_type_poly_opening_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z, tuple(uint256 X, uint256 Y) opening_proof_at_z_omega) proof, tuple(tuple(uint256 value) zero, tuple(uint256 value) alpha, tuple(uint256 value) beta, tuple(uint256 value) gamma, tuple(uint256 value)[9] alpha_values, tuple(uint256 value) eta, tuple(uint256 value) beta_lookup, tuple(uint256 value) gamma_lookup, tuple(uint256 value) beta_plus_one, tuple(uint256 value) beta_gamma, tuple(uint256 value) v, tuple(uint256 value) u, tuple(uint256 value) z, tuple(uint256 value) z_omega, tuple(uint256 value) z_minus_last_omega, tuple(uint256 value) l_0_at_z, tuple(uint256 value) l_n_minus_one_at_z, tuple(uint256 value) t, tuple(uint256 X, uint256 Y) tp) state) view returns (tuple(uint256 X, uint256 Y) result)",
-      "function verify_serialized_proof(uint256[] public_inputs, uint256[] serialized_proof) view returns (bool)"
     ],
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": [
       "constructor(address _singleton)"
