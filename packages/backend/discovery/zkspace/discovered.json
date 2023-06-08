@@ -1,7 +1,7 @@
 {
   "name": "zkspace",
-  "blockNumber": 17428634,
-  "configHash": "0x3dc06b471669250d06211deaae9f4b5269399c704e81a89f6ff73b1eb670da05",
+  "blockNumber": 17428875,
+  "configHash": "0x40e313a3862d107305fc6644115766a14f6cad4dba6776a987f1e0f0247ca65b",
   "version": 1,
   "contracts": [
     {
@@ -46,7 +46,7 @@
         "pairManager": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
         "totalBlocksChecked": 36322,
         "totalBlocksCommitted": 36428,
-        "totalBlocksVerified": 36425,
+        "totalBlocksVerified": 36427,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 64,
@@ -155,10 +155,11 @@
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
         "zkSyncAddress": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
-      }
+      },
+      "derivedName": "UniswapV2Factory"
     },
     {
-      "name": "ZKSeaNFT",
+      "name": "zkSeaNFT",
       "address": "0xc632347cc96A4400653E3514eA148630455295b5",
       "code": "https://etherscan.deth.net/address/0xc632347cc96A4400653E3514eA148630455295b5,0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
       "upgradeability": {
@@ -179,7 +180,8 @@
         "symbol": "ZKSeaNFT",
         "totalSupply": 2,
         "zksCore": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
-      }
+      },
+      "derivedName": "ZKSeaNFT"
     },
     {
       "name": "ZksToken",

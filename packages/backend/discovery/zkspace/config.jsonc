@@ -5,7 +5,10 @@
   "names": {
     "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390": "UpgradeGatekeeper",
     "0x83Cb1531Ec8447366501aE440478da245EcffB89": "Governance",
-    "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8": "zkSync"
+    "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8": "zkSync",
+    "0xc07f850b60E0EEd49a09E455b01a869C25963735": "UniswapV2Factory",
+    "0x899A605a3B7A11eA5D928958b77014e763c53426": "zkSea",
+    "0xc632347cc96A4400653E3514eA148630455295b5": "zkSeaNFT"
   },
   "overrides": {
     "UpgradeGatekeeper": {
@@ -65,13 +68,14 @@
         "totalOpenPriorityRequests"
       ]
     },
-    "0xc07f850b60E0EEd49a09E455b01a869C25963735": {
+
+    "UniswapV2Factory": {
       "ignoreMethods": ["allPairs"]
     },
-    "0x899A605a3B7A11eA5D928958b77014e763c53426": {
+    "zkSea": {
       "ignoreMethods": ["numOfPendingWithdrawalsNFT"]
     },
-    "0xc632347cc96A4400653E3514eA148630455295b5": {
+    "zkSeaNFT": {
       "ignoreMethods": [
         "externSeqIdMap",
         "getApproved",

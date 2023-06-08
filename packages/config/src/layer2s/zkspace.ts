@@ -42,17 +42,38 @@ export const zkspace: Layer2 = {
   config: {
     associatedTokens: ['ZKS'],
     escrows: [
-      {
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
         sinceTimestamp: new UnixTime(1639569183),
         tokens: '*',
-      },
+      }),
     ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db#code#F1#L37',
+            'https://etherscan.io/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db#code#F1#L79',
+          ],
+        },
+      ],
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADE_DELAY('8 days'),
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x467a2B91f231D930F5eeB6B982C7666E81DA8626#code#F8#L115',
+          ],
+        },
+      ],
+    },
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
