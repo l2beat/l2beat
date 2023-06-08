@@ -354,7 +354,7 @@ export const CANNOT_WITHDRAW: ProjectRiskViewEntry = {
 export const USE_ESCAPE_HATCH_ZK: ProjectRiskViewEntry = {
   value: 'Use escape hatch',
   description:
-    'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.'
+    'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
 }
 
 export const USE_ESCAPE_HATCH_MP: ProjectRiskViewEntry = {
@@ -365,15 +365,20 @@ export const USE_ESCAPE_HATCH_MP: ProjectRiskViewEntry = {
 
 export const USE_ESCAPE_HATCH_MP_NFT: ProjectRiskViewEntry = {
   ...USE_ESCAPE_HATCH_MP,
-  description: USE_ESCAPE_HATCH_MP.description + ' NFTs will be minted on L1 to exit.',
+  description:
+    USE_ESCAPE_HATCH_MP.description + ' NFTs will be minted on L1 to exit.',
 }
 
 export const USE_ESCAPE_HATCH_MP_AVGPRICE: ProjectRiskViewEntry = {
   ...USE_ESCAPE_HATCH_MP,
-  description: USE_ESCAPE_HATCH_MP.description + ' Positions will be closed using the average price from the last batch state update.',
+  description:
+    USE_ESCAPE_HATCH_MP.description +
+    ' Positions will be closed using the average price from the last batch state update.',
 }
 
-export function SELF_PROPOSE_WHITELIST_DROPPED(delay: number): ProjectRiskViewEntry {
+export function SELF_PROPOSE_WHITELIST_DROPPED(
+  delay: number,
+): ProjectRiskViewEntry {
   const delayString = formatSeconds(delay)
   return {
     value: 'Self propose',
@@ -392,7 +397,6 @@ export const SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
   description:
     'Anyone can be a Proposer and propose new roots to the L1 bridge.',
 }
-
 
 export const RISK_VIEW = {
   STATE_FP,
