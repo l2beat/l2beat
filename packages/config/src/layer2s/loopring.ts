@@ -119,7 +119,7 @@ export const loopring: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.VALIDATOR_ESCAPE_MP(forcedWithdrawalDelay),
+      ...RISK_VIEW.USE_ESCAPE_HATCH_MP,
       sources: [
         {
           contract: 'ExchangeV3',
