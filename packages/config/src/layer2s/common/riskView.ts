@@ -144,76 +144,6 @@ export const UPGRADABLE_NO: ProjectRiskViewEntry = {
   description: 'The code that secures the system can never change.',
 }
 
-// Operator is down
-
-export function VALIDATOR_ESCAPE_MP(delay?: number): ProjectRiskViewEntry {
-  const delayString =
-    delay !== undefined
-      ? ` There is a ${formatSeconds(delay)} delay on this operation.`
-      : ''
-  return {
-    value: 'Escape hatch (MP)',
-    description: `Users are able to trustlessly exit by submitting a merkle proof of funds.${delayString}`,
-  }
-}
-
-export const VALIDATOR_ESCAPE_ZKP: ProjectRiskViewEntry = {
-  value: 'Escape hatch (ZK)',
-  description:
-    'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
-}
-
-export const VALIDATOR_ESCAPE_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
-  ...VALIDATOR_ESCAPE_MP(),
-  description:
-    'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
-}
-
-export const VALIDATOR_ESCAPE_STARKEX_NFT: ProjectRiskViewEntry = {
-  value: 'Escape hatch (MP)',
-  description:
-    'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',
-}
-
-export const VALIDATOR_ESCAPE_U: ProjectRiskViewEntry = {
-  value: 'Escape hatch (?)',
-  description: 'Users are able to exit the system. The details are unknown.',
-  sentiment: 'warning',
-}
-
-export const VALIDATOR_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
-  value: 'Propose blocks',
-  description:
-    'The user needs to run their own node and use it to propose new blocks to replace the validator.',
-}
-
-export const VALIDATOR_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
-  value: 'Propose blocks (ZK)',
-  description:
-    'The user needs to run their own node and use it to propose new blocks to replace the validator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
-  sentiment: 'warning',
-}
-
-export const VALIDATOR_NO_MECHANISM: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description: 'There is no mechanism to handle the validator going down.',
-  sentiment: 'bad',
-}
-
-export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
-  sentiment: 'bad',
-}
-
-export const PROVER_DOWN: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'There is no generic escape hatch mechanism as Starknet cannot be forced by users into a frozen state. Note that a freezing mechanism on L2, to be secure, requires anti-censorship protection.',
-  sentiment: 'bad',
-}
-
 // bridges
 
 export const VALIDATED_BY_ETHEREUM: ProjectRiskViewEntry = {
@@ -344,39 +274,40 @@ export function NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
 
 // PROPOSER COLUMN
 
-export const CANNOT_WITHDRAW: ProjectRiskViewEntry = {
+export const PROPOSER_CANNOT_WITHDRAW: ProjectRiskViewEntry = {
   value: 'Cannot withdraw',
   description:
     'Only the whitelisted proposers can publish L2 state roots on L1, so in the event of failure the withdrawals are frozen.',
   sentiment: 'bad',
 }
 
-export const USE_ESCAPE_HATCH_ZK: ProjectRiskViewEntry = {
+export const PROPOSER_USE_ESCAPE_HATCH_ZK: ProjectRiskViewEntry = {
   value: 'Use escape hatch',
   description:
     'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
 }
 
-export const USE_ESCAPE_HATCH_MP: ProjectRiskViewEntry = {
+export const PROPOSER_USE_ESCAPE_HATCH_MP: ProjectRiskViewEntry = {
   value: 'Use escape hatch',
   description:
     'Users are able to trustlessly exit by submitting a Merkle proof of funds.',
 }
 
-export const USE_ESCAPE_HATCH_MP_NFT: ProjectRiskViewEntry = {
-  ...USE_ESCAPE_HATCH_MP,
+export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: ProjectRiskViewEntry = {
+  ...PROPOSER_USE_ESCAPE_HATCH_MP,
   description:
-    USE_ESCAPE_HATCH_MP.description + ' NFTs will be minted on L1 to exit.',
+    PROPOSER_USE_ESCAPE_HATCH_MP.description +
+    ' NFTs will be minted on L1 to exit.',
 }
 
-export const USE_ESCAPE_HATCH_MP_AVGPRICE: ProjectRiskViewEntry = {
-  ...USE_ESCAPE_HATCH_MP,
+export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: ProjectRiskViewEntry = {
+  ...PROPOSER_USE_ESCAPE_HATCH_MP,
   description:
-    USE_ESCAPE_HATCH_MP.description +
+    PROPOSER_USE_ESCAPE_HATCH_MP.description +
     ' Positions will be closed using the average price from the last batch state update.',
 }
 
-export function SELF_PROPOSE_WHITELIST_DROPPED(
+export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
   delay: number,
 ): ProjectRiskViewEntry {
   const delayString = formatSeconds(delay)
@@ -386,13 +317,13 @@ export function SELF_PROPOSE_WHITELIST_DROPPED(
   }
 }
 
-export const SELF_PROPOSE_ZK: ProjectRiskViewEntry = {
+export const PROPOSER_SELF_PROPOSE_ZK: ProjectRiskViewEntry = {
   value: 'Self propose',
   description:
     'If the Proposer fails, users can leverage the open source prover to submit proofs to the L1 bridge.',
 }
 
-export const SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
+export const PROPOSER_SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
   value: 'Self propose',
   description:
     'Anyone can be a Proposer and propose new roots to the L1 bridge.',
@@ -416,16 +347,6 @@ export const RISK_VIEW = {
   UPGRADE_DELAY,
   UPGRADE_DELAY_SECONDS,
   UPGRADABLE_NO,
-  VALIDATOR_ESCAPE_MP,
-  VALIDATOR_ESCAPE_ZKP,
-  VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
-  VALIDATOR_ESCAPE_STARKEX_NFT,
-  VALIDATOR_ESCAPE_U,
-  VALIDATOR_PROPOSE_BLOCKS,
-  VALIDATOR_PROPOSE_BLOCKS_ZKP,
-  VALIDATOR_NO_MECHANISM,
-  VALIDATOR_WHITELISTED_BLOCKS,
-  PROVER_DOWN,
   VALIDATED_BY_ETHEREUM,
   NATIVE_AND_CANONICAL,
   CANONICAL,
@@ -437,12 +358,12 @@ export const RISK_VIEW = {
   FORCE_VIA_L1_LOOPRING,
   ENQUEUE_VIA_L1,
   NO_MECHANISM,
-  CANNOT_WITHDRAW,
-  USE_ESCAPE_HATCH_ZK,
-  USE_ESCAPE_HATCH_MP,
-  USE_ESCAPE_HATCH_MP_NFT,
-  USE_ESCAPE_HATCH_MP_AVGPRICE,
-  SELF_PROPOSE_WHITELIST_DROPPED,
-  SELF_PROPOSE_ZK,
-  SELF_PROPOSE_ROOTS,
+  PROPOSER_CANNOT_WITHDRAW,
+  PROPOSER_USE_ESCAPE_HATCH_ZK,
+  PROPOSER_USE_ESCAPE_HATCH_MP,
+  PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
+  PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
+  PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+  PROPOSER_SELF_PROPOSE_ZK,
+  PROPOSER_SELF_PROPOSE_ROOTS,
 }

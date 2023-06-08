@@ -151,7 +151,7 @@ export const optimism: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.CANNOT_WITHDRAW,
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
       sources: [
         {
           contract: 'L2OutputOracle',

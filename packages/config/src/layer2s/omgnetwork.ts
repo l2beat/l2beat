@@ -58,7 +58,12 @@ export const omgnetwork: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.FORCE_VIA_L1(),
-    proposerFailure: RISK_VIEW.VALIDATOR_ESCAPE_U,
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
+      description:
+        RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP.description +
+        ' The details are unknown.',
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('OMG'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

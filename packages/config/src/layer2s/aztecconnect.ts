@@ -141,7 +141,7 @@ export const aztecconnect: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.SELF_PROPOSE_ZK,
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
       sources: [
         {
           contract: 'RollupProcessorV2',

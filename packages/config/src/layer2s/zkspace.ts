@@ -54,7 +54,7 @@ export const zkspace: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
     sequencerFailure: RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
-    proposerFailure: RISK_VIEW.USE_ESCAPE_HATCH_ZK,
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

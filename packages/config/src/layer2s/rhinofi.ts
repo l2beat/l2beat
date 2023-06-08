@@ -107,7 +107,7 @@ export const rhinofi: Layer2 = {
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
     sequencerFailure: RISK_VIEW.FORCE_VIA_L1(freezeGracePeriod),
-    proposerFailure: RISK_VIEW.USE_ESCAPE_HATCH_MP,
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

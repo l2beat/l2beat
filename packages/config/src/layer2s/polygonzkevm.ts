@@ -141,9 +141,9 @@ export const polygonzkevm: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.SELF_PROPOSE_ZK,
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
       description:
-        RISK_VIEW.SELF_PROPOSE_ZK.description +
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
         ` There is a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
       sources: [
         {

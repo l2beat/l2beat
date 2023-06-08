@@ -164,7 +164,7 @@ export const dydx: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.USE_ESCAPE_HATCH_MP_AVGPRICE,
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
       sources: [
         {
           contract: 'StarkPerpetual',

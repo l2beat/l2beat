@@ -56,7 +56,7 @@ export const hermez: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADE_DELAY('7 days'),
     sequencerFailure: RISK_VIEW.FORCE_VIA_L1(),
-    proposerFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
     // NOTE: I have no clue what token are fees paid in. There are fees but
     // the explorer shows them in USD and there is no documentation around it
     destinationToken: RISK_VIEW.CANONICAL,

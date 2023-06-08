@@ -112,7 +112,7 @@ export const nova: Layer2 = {
       l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay,
     ),
     sequencerFailure: RISK_VIEW.SELF_SEQUENCE(selfSequencingDelay),
-    proposerFailure: RISK_VIEW.SELF_PROPOSE_WHITELIST_DROPPED(
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
       validatorAfkBlocks * assumedBlockTime,
     ),
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),

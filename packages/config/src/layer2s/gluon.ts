@@ -65,7 +65,7 @@ export const gluon: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.FORCE_VIA_L1(),
-    proposerFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP(),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

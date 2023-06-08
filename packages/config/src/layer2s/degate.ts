@@ -94,7 +94,7 @@ export const degate: Layer2 = {
       ],
     },
     proposerFailure: {
-      ...RISK_VIEW.USE_ESCAPE_HATCH_MP,
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
       sources: [
         {
           contract: 'ExchangeV3',
