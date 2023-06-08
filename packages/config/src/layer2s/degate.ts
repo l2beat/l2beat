@@ -273,7 +273,7 @@ export const degate: Layer2 = {
       link: 'https://medium.com/degate/degate-dex-launches-mainnet-beta-trade-easy-sleep-easy-603574bd3a46',
       date: '2023-05-03T00:00:00Z',
       description:
-        'DeGate DEX launches mainnet beta with a deposit cap. Moreover, DeGate DAO announces a program to guarantee part of users’ funds in case of loss.',
+        'DeGate launches mainnet beta with a deposit cap and a program to partially recover eventual user losses.',
     },
   ],
 }
