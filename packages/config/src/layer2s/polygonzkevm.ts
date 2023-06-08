@@ -9,9 +9,9 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  SEQUENCER_NO_MECHANISM,
   NUGGETS,
   RISK_VIEW,
+  SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'

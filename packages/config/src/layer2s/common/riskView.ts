@@ -205,7 +205,9 @@ export function SEQUENCER_SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   }
 }
 
-export function SEQUENCER_SELF_SEQUENCE_ZK(delay?: number): ProjectRiskViewEntry {
+export function SEQUENCER_SELF_SEQUENCE_ZK(
+  delay?: number,
+): ProjectRiskViewEntry {
   return {
     ...SEQUENCER_SELF_SEQUENCE(delay),
     description:
@@ -258,7 +260,9 @@ export const SEQUENCER_ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
   sentiment: 'warning',
 }
 
-export function SEQUENCER_NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
+export function SEQUENCER_NO_MECHANISM(
+  disabled?: boolean,
+): ProjectRiskViewEntry {
   const additional =
     disabled === true
       ? ' Although the functionality exists in the code, it is currently disabled.'
