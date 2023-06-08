@@ -79,15 +79,15 @@ export const arbitrum: Layer2 = {
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     description: `Arbitrum One is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.\
-      Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Validators (currently whitelisted)\
-      read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any other Validator can challenge the state root within the challenge window (${formatSeconds(
+      Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Proposers (currently whitelisted)\
+      read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any Validator (currently whitelisted) can challenge the state root within the challenge window (${formatSeconds(
         challengeWindow * assumedBlockTime,
       )}). \
       The challenge will result in an interactive fraud proof game that will be eventually settled by L1. As long as there is at least one honest Validator, users are guaranteed that\
-      eventually correct L2 state root will be published to L1. If Sequencer is censoring users transactions, it is possible to force the transaction via L1 queue. If no Validator publishes\
+      eventually correct L2 state root will be published to L1. If Sequencer is censoring users transactions, it is possible to force the transaction via L1 queue. If no Proposer publishes\
     L2 state root within ${formatSeconds(
       validatorAfkTime,
-    )} (${validatorAfkBlocks} blocks), the Validator whitelist is dropped and anyone can take over as a new Validator.`,
+    )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
@@ -200,7 +200,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.SELF_SEQUENCE(selfSequencingDelay),
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       sources: [
         {
           contract: 'SequencerInbox',
@@ -211,10 +211,10 @@ export const arbitrum: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
-      value: 'Propose blocks',
-      description:
-        VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+        validatorAfkBlocks * assumedBlockTime,
+      ),
       sources: [
         {
           contract: 'RollupProxy',
@@ -282,7 +282,7 @@ export const arbitrum: Layer2 = {
       description:
         FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
         ' ' +
-        VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
+        VALUES.ARBITRUM.getProposerFailureString(validatorAfkBlocks),
       references: [
         {
           text: 'SequencerInbox.sol#L125 - Etherscan source code, forceInclusion function',
@@ -379,10 +379,10 @@ export const arbitrum: Layer2 = {
         'Central actor allowed to set the order in which L2 transactions are executed.',
     },
     {
-      name: 'Validators',
+      name: 'Validators/Proposers',
       accounts: VALUES.ARBITRUM.VALIDATORS,
       description:
-        'They can submit new state roots and challenge state roots. Some of the validators perform their duties through special purpose smart contracts.',
+        'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     },
   ],
   contracts: {

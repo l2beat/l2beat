@@ -36,7 +36,7 @@ export const layer2aWithDups: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    proposerFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_YES,

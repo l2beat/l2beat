@@ -113,7 +113,7 @@ export const bobanetwork: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.ENQUEUE_VIA_L1,
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
       sources: [
         {
           contract: 'CanonicalTransactionChain',
@@ -123,8 +123,8 @@ export const bobanetwork: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
-      ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
       sources: [
         {
           contract: 'StateCommitmentChain',

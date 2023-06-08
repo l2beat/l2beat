@@ -71,7 +71,7 @@ export const metis: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: {
-      ...RISK_VIEW.ENQUEUE_VIA_L1,
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
       sources: [
         {
           contract: 'CanonicalTransactionChain',
@@ -81,7 +81,7 @@ export const metis: Layer2 = {
         },
       ],
     },
-    validatorFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('METIS'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),

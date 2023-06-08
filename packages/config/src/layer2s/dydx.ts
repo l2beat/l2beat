@@ -153,7 +153,7 @@ export const dydx: Layer2 = {
     },
     upgradeability: upgradeRisk,
     sequencerFailure: {
-      ...RISK_VIEW.FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),
       sources: [
         {
           contract: 'StarkPerpetual',
@@ -163,8 +163,8 @@ export const dydx: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
-      ...RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
       sources: [
         {
           contract: 'StarkPerpetual',

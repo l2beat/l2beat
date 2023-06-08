@@ -9,9 +9,9 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  NO_MECHANISM,
   NUGGETS,
   RISK_VIEW,
+  SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
 } from './common'
 import { Layer2 } from './types'
@@ -130,7 +130,7 @@ export const polygonzkevm: Layer2 = {
     upgradeability: upgradeabilityRisk,
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
     sequencerFailure: {
-      ...NO_MECHANISM(isForcedBatchDisallowed),
+      ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
       sources: [
         {
           contract: 'PolygonZkEvm',
@@ -140,9 +140,11 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
-      value: 'Submit proofs',
-      description: `If the validator fails, users can leverage open source prover to submit proofs to the smart contract. There is a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
+      description:
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
+        ` There is a ${trustedAggregatorTimeout} delay for proving and a ${pendingStateTimeout} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
       sources: [
         {
           contract: 'PolygonZkEvm',
@@ -195,7 +197,7 @@ export const polygonzkevm: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.NO_MECHANISM,
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       description:
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [
