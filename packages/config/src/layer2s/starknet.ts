@@ -171,7 +171,7 @@ export const starknet: Layer2 = {
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(minDelay),
     sequencerFailure: {
-      ...RISK_VIEW.NO_MECHANISM(),
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
       sources: [
         {
           contract: 'Starknet',
@@ -181,7 +181,7 @@ export const starknet: Layer2 = {
         },
       ],
     },
-    validatorFailure: RISK_VIEW.PROVER_DOWN,
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -211,7 +211,7 @@ export const starknet: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.NO_MECHANISM,
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
           text: 'Censorship resistance of Starknet - Forum Discussion',

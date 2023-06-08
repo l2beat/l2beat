@@ -6,5 +6,5 @@ export interface Layer2RiskView extends Required<BridgeRiskView> {
   dataAvailability: ProjectRiskViewEntry
   upgradeability: ProjectRiskViewEntry
   sequencerFailure: ProjectRiskViewEntry
-  validatorFailure: ProjectRiskViewEntry
+  proposerFailure: ProjectRiskViewEntry
 }

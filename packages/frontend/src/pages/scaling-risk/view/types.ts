@@ -12,5 +12,5 @@ export interface ScalingRiskViewEntry {
   dataAvailability: ProjectRiskViewEntry
   upgradeability: ProjectRiskViewEntry
   sequencerFailure: ProjectRiskViewEntry
-  validatorFailure: ProjectRiskViewEntry
+  proposerFailure: ProjectRiskViewEntry
 }

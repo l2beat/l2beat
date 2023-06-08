@@ -14,7 +14,7 @@ describe('HARDCODED: zksync2', () => {
   // https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51
   // if this asset is throwing it means that the zkSync zkSync facets changed
   // read the source code and figure out whether the upgradeability risk is different
-  it('upgradeability + validator failure', () => {
+  it('upgradeability + proposer failure', () => {
     const upgradeability = discovery.getContract('zkSync').upgradeability
     const facetAddresses = gatherAddressesFromUpgradeability(upgradeability)
 
@@ -23,7 +23,7 @@ describe('HARDCODED: zksync2', () => {
         HARDCODED.ZKSYNC_2.FACETS.includes(f.toString()),
       ) && facetAddresses.length === HARDCODED.ZKSYNC_2.FACETS.length,
       `Upgrade facet changed, see the source code for the new upgradeability risk. 
-      Additionally, the validator failure risk might have changed.`,
+      Additionally, the proposer failure risk might have changed.`,
     )
   })
 

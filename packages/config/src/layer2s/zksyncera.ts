@@ -151,7 +151,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.ENQUEUE_VIA_L1,
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
       sources: [
         {
           contract: 'zkSync',
@@ -166,11 +166,8 @@ export const zksyncera: Layer2 = {
         'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-mode',
       ],
     },
-    validatorFailure: {
-      value: 'No mechanism',
-      description:
-        'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked.',
-      sentiment: 'bad',
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
       sources: [
         {
           contract: 'zkSync',
@@ -217,7 +214,7 @@ export const zksyncera: Layer2 = {
       description:
         'If a user is censored by L2 Sequencer, they can try to force transaction via L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
         transactions from L1 queue in an L1 block.',
-      risks: FORCE_TRANSACTIONS.NO_MECHANISM.risks,
+      risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
       references: [
         {
           text: "L1 - L2 interoperability - Developer's documentation'",

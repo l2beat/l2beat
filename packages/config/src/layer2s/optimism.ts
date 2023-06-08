@@ -140,7 +140,9 @@ export const optimism: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.SELF_SEQUENCE(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      ),
       sources: [
         {
           contract: 'OptimismPortal',
@@ -150,8 +152,8 @@ export const optimism: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
-      ...RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
       sources: [
         {
           contract: 'L2OutputOracle',

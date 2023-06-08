@@ -4,7 +4,7 @@ type Risk =
   | 'stateValidation'
   | 'dataAvailability'
   | 'upgradeability'
-  | 'validatorFailure'
+  | 'proposerFailure'
 export type RiskSentiments = Partial<Record<Risk, Sentiment>>
 
 export interface RiskValue {

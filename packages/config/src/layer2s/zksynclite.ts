@@ -122,7 +122,7 @@ export const zksynclite: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.FORCE_VIA_L1(forcedWithdrawalDelay),
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
       sources: [
         {
           contract: 'ZkSync',
@@ -135,8 +135,8 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
-      ...RISK_VIEW.VALIDATOR_ESCAPE_ZKP,
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
       sources: [
         {
           contract: 'ZkSync',

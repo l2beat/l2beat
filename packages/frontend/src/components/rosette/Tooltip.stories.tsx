@@ -18,7 +18,7 @@ export function RosetteTooltip() {
 
   const project: RosetteTooltipProps = {
     riskSentiments: {
-      validatorFailure: 'bad',
+      proposerFailure: 'bad',
       upgradeability: 'bad',
       sequencerFailure: undefined,
       dataAvailability: 'warning',
@@ -29,7 +29,7 @@ export function RosetteTooltip() {
         value: 'Fraud proofs',
         sentiment: undefined,
       },
-      validatorFailure: {
+      proposerFailure: {
         value: 'No mechanism',
         sentiment: 'bad',
       },

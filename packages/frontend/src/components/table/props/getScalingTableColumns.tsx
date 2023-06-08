@@ -226,10 +226,10 @@ export function getScalingRiskColumns() {
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
     },
     {
-      name: 'Validator failure',
+      name: 'Proposer failure',
       tooltip:
-        'Validator is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
-      getValue: (project) => <RiskCell item={project.validatorFailure} />,
+        'Proposer is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
+      getValue: (project) => <RiskCell item={project.proposerFailure} />,
     },
   ]
   return columns

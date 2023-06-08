@@ -144,76 +144,6 @@ export const UPGRADABLE_NO: ProjectRiskViewEntry = {
   description: 'The code that secures the system can never change.',
 }
 
-// Operator is down
-
-export function VALIDATOR_ESCAPE_MP(delay?: number): ProjectRiskViewEntry {
-  const delayString =
-    delay !== undefined
-      ? ` There is a ${formatSeconds(delay)} delay on this operation.`
-      : ''
-  return {
-    value: 'Escape hatch (MP)',
-    description: `Users are able to trustlessly exit by submitting a merkle proof of funds.${delayString}`,
-  }
-}
-
-export const VALIDATOR_ESCAPE_ZKP: ProjectRiskViewEntry = {
-  value: 'Escape hatch (ZK)',
-  description:
-    'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
-}
-
-export const VALIDATOR_ESCAPE_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
-  ...VALIDATOR_ESCAPE_MP(),
-  description:
-    'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
-}
-
-export const VALIDATOR_ESCAPE_STARKEX_NFT: ProjectRiskViewEntry = {
-  value: 'Escape hatch (MP)',
-  description:
-    'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',
-}
-
-export const VALIDATOR_ESCAPE_U: ProjectRiskViewEntry = {
-  value: 'Escape hatch (?)',
-  description: 'Users are able to exit the system. The details are unknown.',
-  sentiment: 'warning',
-}
-
-export const VALIDATOR_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
-  value: 'Propose blocks',
-  description:
-    'The user needs to run their own node and use it to propose new blocks to replace the validator.',
-}
-
-export const VALIDATOR_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
-  value: 'Propose blocks (ZK)',
-  description:
-    'The user needs to run their own node and use it to propose new blocks to replace the validator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
-  sentiment: 'warning',
-}
-
-export const VALIDATOR_NO_MECHANISM: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description: 'There is no mechanism to handle the validator going down.',
-  sentiment: 'bad',
-}
-
-export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
-  sentiment: 'bad',
-}
-
-export const PROVER_DOWN: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'There is no generic escape hatch mechanism as Starknet cannot be forced by users into a frozen state. Note that a freezing mechanism on L2, to be secure, requires anti-censorship protection.',
-  sentiment: 'bad',
-}
-
 // bridges
 
 export const VALIDATED_BY_ETHEREUM: ProjectRiskViewEntry = {
@@ -253,14 +183,16 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   dataAvailability: UPCOMING_RISK,
   upgradeability: UPCOMING_RISK,
   sequencerFailure: UPCOMING_RISK,
-  validatorFailure: UPCOMING_RISK,
+  proposerFailure: UPCOMING_RISK,
   destinationToken: UPCOMING_RISK,
   validatedBy: UPCOMING_RISK,
 })
 
 /* New risks for stages */
 
-export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
+// SEQUENCER COLUMN
+
+export function SEQUENCER_SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   const delayString =
     delay !== undefined
       ? delay === 0
@@ -273,16 +205,18 @@ export function SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   }
 }
 
-export function SELF_SEQUENCE_ZK(delay?: number): ProjectRiskViewEntry {
+export function SEQUENCER_SELF_SEQUENCE_ZK(
+  delay?: number,
+): ProjectRiskViewEntry {
   return {
-    ...SELF_SEQUENCE(delay),
+    ...SEQUENCER_SELF_SEQUENCE(delay),
     description:
-      SELF_SEQUENCE(delay).description +
+      SEQUENCER_SELF_SEQUENCE(delay).description +
       ' Proposing new blocks requires creating ZK proofs.',
   }
 }
 
-export function FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
+export function SEQUENCER_FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
   const delayString =
     delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
   return {
@@ -291,7 +225,7 @@ export function FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
   }
 }
 
-export function FORCE_VIA_L1_STARKEX_PERPETUAL(
+export function SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(
   delay: number,
 ): ProjectRiskViewEntry {
   const delayString = formatSeconds(delay)
@@ -301,7 +235,7 @@ export function FORCE_VIA_L1_STARKEX_PERPETUAL(
   }
 }
 
-export function FORCE_VIA_L1_LOOPRING(
+export function SEQUENCER_FORCE_VIA_L1_LOOPRING(
   delay: number,
   forcedWithdrawalFee: number,
   maxAgeDepositUntilWithdrawable: number,
@@ -319,14 +253,16 @@ export function FORCE_VIA_L1_LOOPRING(
   }
 }
 
-export const ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
+export const SEQUENCER_ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
   value: 'Enqueue via L1',
   description:
     "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
   sentiment: 'warning',
 }
 
-export function NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
+export function SEQUENCER_NO_MECHANISM(
+  disabled?: boolean,
+): ProjectRiskViewEntry {
   const additional =
     disabled === true
       ? ' Although the functionality exists in the code, it is currently disabled.'
@@ -338,6 +274,63 @@ export function NO_MECHANISM(disabled?: boolean): ProjectRiskViewEntry {
       additional,
     sentiment: 'bad',
   }
+}
+
+// PROPOSER COLUMN
+
+export const PROPOSER_CANNOT_WITHDRAW: ProjectRiskViewEntry = {
+  value: 'Cannot withdraw',
+  description:
+    'Only the whitelisted proposers can publish L2 state roots on L1, so in the event of failure the withdrawals are frozen.',
+  sentiment: 'bad',
+}
+
+export const PROPOSER_USE_ESCAPE_HATCH_ZK: ProjectRiskViewEntry = {
+  value: 'Use escape hatch',
+  description:
+    'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
+}
+
+export const PROPOSER_USE_ESCAPE_HATCH_MP: ProjectRiskViewEntry = {
+  value: 'Use escape hatch',
+  description:
+    'Users are able to trustlessly exit by submitting a Merkle proof of funds.',
+}
+
+export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: ProjectRiskViewEntry = {
+  ...PROPOSER_USE_ESCAPE_HATCH_MP,
+  description:
+    PROPOSER_USE_ESCAPE_HATCH_MP.description +
+    ' NFTs will be minted on L1 to exit.',
+}
+
+export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: ProjectRiskViewEntry = {
+  ...PROPOSER_USE_ESCAPE_HATCH_MP,
+  description:
+    PROPOSER_USE_ESCAPE_HATCH_MP.description +
+    ' Positions will be closed using the average price from the last batch state update.',
+}
+
+export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+  delay: number,
+): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Self propose',
+    description: `Anyone can become a Proposer after ${delayString} of inactivity from the currently whitelisted Proposers.`,
+  }
+}
+
+export const PROPOSER_SELF_PROPOSE_ZK: ProjectRiskViewEntry = {
+  value: 'Self propose',
+  description:
+    'If the Proposer fails, users can leverage the open source prover to submit proofs to the L1 bridge.',
+}
+
+export const PROPOSER_SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
+  value: 'Self propose',
+  description:
+    'Anyone can be a Proposer and propose new roots to the L1 bridge.',
 }
 
 export const RISK_VIEW = {
@@ -358,25 +351,23 @@ export const RISK_VIEW = {
   UPGRADE_DELAY,
   UPGRADE_DELAY_SECONDS,
   UPGRADABLE_NO,
-  VALIDATOR_ESCAPE_MP,
-  VALIDATOR_ESCAPE_ZKP,
-  VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
-  VALIDATOR_ESCAPE_STARKEX_NFT,
-  VALIDATOR_ESCAPE_U,
-  VALIDATOR_PROPOSE_BLOCKS,
-  VALIDATOR_PROPOSE_BLOCKS_ZKP,
-  VALIDATOR_NO_MECHANISM,
-  VALIDATOR_WHITELISTED_BLOCKS,
-  PROVER_DOWN,
   VALIDATED_BY_ETHEREUM,
   NATIVE_AND_CANONICAL,
   CANONICAL,
   CANONICAL_USDC,
-  SELF_SEQUENCE,
-  SELF_SEQUENCE_ZK,
-  FORCE_VIA_L1,
-  FORCE_VIA_L1_STARKEX_PERPETUAL,
-  FORCE_VIA_L1_LOOPRING,
-  ENQUEUE_VIA_L1,
-  NO_MECHANISM,
+  SEQUENCER_SELF_SEQUENCE,
+  SEQUENCER_SELF_SEQUENCE_ZK,
+  SEQUENCER_FORCE_VIA_L1,
+  SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
+  SEQUENCER_FORCE_VIA_L1_LOOPRING,
+  SEQUENCER_ENQUEUE_VIA_L1,
+  SEQUENCER_NO_MECHANISM,
+  PROPOSER_CANNOT_WITHDRAW,
+  PROPOSER_USE_ESCAPE_HATCH_ZK,
+  PROPOSER_USE_ESCAPE_HATCH_MP,
+  PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
+  PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
+  PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+  PROPOSER_SELF_PROPOSE_ZK,
+  PROPOSER_SELF_PROPOSE_ROOTS,
 }

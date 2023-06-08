@@ -96,7 +96,7 @@ export const loopring: Layer2 = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: {
-      ...RISK_VIEW.FORCE_VIA_L1_LOOPRING(
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
         forcedWithdrawalDelay,
         forcedWithdrawalFee,
         maxAgeDepositUntilWithdrawable,
@@ -118,8 +118,8 @@ export const loopring: Layer2 = {
         },
       ],
     },
-    validatorFailure: {
-      ...RISK_VIEW.VALIDATOR_ESCAPE_MP(forcedWithdrawalDelay),
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
       sources: [
         {
           contract: 'ExchangeV3',
