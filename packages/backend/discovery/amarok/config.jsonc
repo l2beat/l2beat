@@ -8,7 +8,7 @@
     "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE": "PolygonHubConnector",
     "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1": "RootManager",
     "0xd151C9ef49cE2d30B829a98A07767E3280F70961": "ArbitrumHubConnector",
-    "0x4a0126Ee88018393b1AD2455060Bc350eAd9908A": "OptimismHubConnector",
+    "0x66a425f09cfd613d40A986B3ef800AA7604C8eeE": "OptimismHubConnector",
     "0x245F757d660C3ec65416168690431076d58d6413": "GnosisHubConnector",
     "0xFaf539a73659fEAEC96ec7242f075Be0445526A8": "MultichainHubConnector",
     "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "RelayTransit",
@@ -109,7 +109,7 @@
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "OptimismHubConnector": {
-      "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
+      "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "GnosisHubConnector": {
