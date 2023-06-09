@@ -45,6 +45,8 @@ export const degate: Layer2 = {
   display: {
     name: 'DeGate',
     slug: 'degate',
+    warning:
+      'Even though the exchange is immutable, we haven’t verified the program whose computation is being proven. In the case of bugs or backdoors, funds could be lost.',
     description:
       'DeGate is an app-specific ZK rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purpose: 'Exchange',
@@ -270,7 +272,8 @@ export const degate: Layer2 = {
       name: 'DeGate DEX Launches Mainnet Beta',
       link: 'https://medium.com/degate/degate-dex-launches-mainnet-beta-trade-easy-sleep-easy-603574bd3a46',
       date: '2023-05-03T00:00:00Z',
-      description: 'DeGate DEX launches mainnet beta.',
+      description:
+        'DeGate launches mainnet beta with a deposit cap and a program to recover eventual user losses.',
     },
   ],
 }
