@@ -109,8 +109,7 @@ export const zksynclite: Layer2 = {
       ],
     },
     upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
-      description: 'Some system components can be upgraded with no delay.',
+      ...RISK_VIEW.UPGRADABLE_ZKSYNC(upgradeDelay, securityCouncil),
       sources: [
         {
           contract: 'Governance',
