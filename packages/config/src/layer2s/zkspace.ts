@@ -142,18 +142,6 @@ export const zkspace: Layer2 = {
           'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
         ...upgradeability,
       }),
-      discovery.getContractDetails(
-        'ZkSyncCommitBlock',
-        'Additional contract to store implementation details of the main ZkSync contract.',
-      ),
-      discovery.getContractDetails(
-        'ZkSyncExit',
-        'Additional contract to store implementation details of the main ZkSync contract.',
-      ),
-      discovery.getContractDetails(
-        'ZKSea',
-        'Additional contract to store implementation details of the main ZkSync contract.',
-      ),
       discovery.getContractDetails('Governance', {
         description: 'Keeps a list of block producers and whitelisted tokens.',
         ...upgradeability,
@@ -162,7 +150,7 @@ export const zkspace: Layer2 = {
         description: 'Manages trading pairs.',
         ...upgradeability,
       }),
-      discovery.getContractDetails('ZKSeaNFT', {
+      discovery.getContractDetails('ZkSeaNFT', {
         description:
           'Contract managing deposits and withdrawals of NFTs to Layer2.',
         ...upgradeability,

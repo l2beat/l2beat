@@ -1,7 +1,7 @@
 {
   "name": "zkspace",
-  "blockNumber": 17428875,
-  "configHash": "0x40e313a3862d107305fc6644115766a14f6cad4dba6776a987f1e0f0247ca65b",
+  "blockNumber": 17442401,
+  "configHash": "0x5f681b354f3c3db9093fc37b195e251f719581acf280adc9d5b2deecb273f8a3",
   "version": 1,
   "contracts": [
     {
@@ -19,7 +19,7 @@
       }
     },
     {
-      "name": "zkSync",
+      "name": "ZkSync",
       "address": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
       "code": "https://etherscan.deth.net/address/0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8,0x467a2B91f231D930F5eeB6B982C7666E81DA8626,0x899A605a3B7A11eA5D928958b77014e763c53426,0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db,0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7",
       "upgradeability": {
@@ -35,18 +35,17 @@
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 489,
-        "firstPriorityRequestId": 1256,
+        "firstPendingWithdrawalIndex": 490,
+        "firstPriorityRequestId": 1257,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
         "governance": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
         "maxDepositAmount": "38685626227668133590597632",
         "numberOfPendingWithdrawals": 0,
-        "numOfPendingWithdrawalsNFT": 0,
         "pairManager": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-        "totalBlocksChecked": 36322,
-        "totalBlocksCommitted": 36428,
-        "totalBlocksVerified": 36427,
+        "totalBlocksChecked": 36432,
+        "totalBlocksCommitted": 36458,
+        "totalBlocksVerified": 36458,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 64,
@@ -159,7 +158,7 @@
       "derivedName": "UniswapV2Factory"
     },
     {
-      "name": "zkSeaNFT",
+      "name": "ZkSeaNFT",
       "address": "0xc632347cc96A4400653E3514eA148630455295b5",
       "code": "https://etherscan.deth.net/address/0xc632347cc96A4400653E3514eA148630455295b5,0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
       "upgradeability": {
