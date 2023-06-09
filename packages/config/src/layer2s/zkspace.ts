@@ -61,7 +61,7 @@ export const zkspace: Layer2 = {
       ...RISK_VIEW.STATE_ZKP_SN,
       sources: [
         {
-          contract: 'ZkSync',
+          contract: 'Verifier',
           references: [
             'https://etherscan.io/address/0x44DedA2C824458A5DfE1e363c679dea33f1ffA39#code#F1#L26',
           ],
