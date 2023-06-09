@@ -216,7 +216,8 @@ export function getScalingRiskColumns() {
     },
     {
       name: 'Upgradeability',
-      tooltip: 'Are the Ethereum contracts upgradeable?',
+      tooltip:
+        'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
     {
