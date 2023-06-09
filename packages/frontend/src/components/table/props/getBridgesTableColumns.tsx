@@ -131,7 +131,8 @@ export function getBridgesRiskColumns() {
     },
     {
       name: 'Source\nUpgradeability',
-      tooltip: 'Are the Ethereum contracts upgradeable?',
+      tooltip:
+        'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
       getValue: (entry) => <RiskCell item={entry.sourceUpgradeability} />,
     },
     {

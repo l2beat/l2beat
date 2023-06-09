@@ -122,6 +122,17 @@ export function UPGRADABLE_POLYGON_ZKEVM(
   }
 }
 
+export function UPGRADABLE_ZKSYNC(
+  delay: string,
+  securityCouncil: string,
+): ProjectRiskViewEntry {
+  return {
+    value: `${delay} or no delay`,
+    description: `There is ${delay} for upgrades initiated by ZkSync Multisig. The ${securityCouncil} Security Council can override the delay and allow instant upgrade. Some system components can be changed with no delay but that do not impede the ability for users to withdraw permissionlessly.`,
+    sentiment: 'warning',
+  }
+}
+
 export function UPGRADE_DELAY(delay: string): ProjectRiskViewEntry {
   return {
     value: `${delay} delay`,
@@ -348,6 +359,7 @@ export const RISK_VIEW = {
   UPGRADABLE_YES,
   UPGRADABLE_ARBITRUM,
   UPGRADABLE_POLYGON_ZKEVM,
+  UPGRADABLE_ZKSYNC,
   UPGRADE_DELAY,
   UPGRADE_DELAY_SECONDS,
   UPGRADABLE_NO,
