@@ -1,7 +1,8 @@
 {
   "name": "stargate",
   "blockNumber": 17464005,
-  "configHash": "0xcbbc7fc1181b7ed3c706916f88aae16df80ab0389e1b26bcc378de0e87f08fe4",
+  "configHash": "0xed8e9fb2f34d02b08c79db1f13a6f1b4383b582f0eee40adb86942f5346785b7",
+  "version": 1,
   "contracts": [
     {
       "name": "Factory",
@@ -457,7 +458,7 @@
       }
     },
     {
-      "name": "StarGateMultisig",
+      "name": "StarGate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "code": "https://etherscan.deth.net/address/0x65bb797c2B9830d891D87288F029ed8dACc19705,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -671,7 +672,7 @@
       "derivedName": "Pool"
     },
     {
-      "name": "LayerZeroMultisig",
+      "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "code": "https://etherscan.deth.net/address/0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
