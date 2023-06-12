@@ -20,7 +20,7 @@ export function RangeControls({
         { value: '30D' },
         { value: '90D', className: '!hidden sm:!block' },
         { value: '180D', className: '!hidden sm:!block' },
-        { value: '1Y' },
+        { value: '1Y', checked: true },
         { value: 'MAX' },
       ]}
     />

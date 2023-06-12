@@ -3,7 +3,6 @@ import { toDays } from './controls/toDays'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
 import { InitMessage, Message } from './messages'
-import { isMobile } from './render/isMobile'
 import { render } from './render/render'
 import { EMPTY_STATE } from './state/empty'
 import { Milestones, State } from './state/State'
@@ -45,10 +44,7 @@ function configureChart(chart: HTMLElement) {
 function getInitMessage(elements: ChartElements): InitMessage {
   const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
 
-  const initialRange = isMobile() ? '30D' : '180D'
-
-  const daysValue =
-    elements.controls.days.find((x) => x.checked)?.value ?? initialRange
+  const daysValue = elements.controls.days.find((x) => x.checked)?.value ?? '1Y'
   const days = toDays(daysValue)
 
   const showEthereum = !!elements.controls.showEthereum?.checked
