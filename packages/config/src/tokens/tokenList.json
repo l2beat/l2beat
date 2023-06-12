@@ -602,6 +602,16 @@
       "category": "other"
     },
     {
+      "id": "usd-decentralized-usd",
+      "name": "Decentralized USD",
+      "coingeckoId": "usdd",
+      "address": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+      "symbol": "USDD",
+      "decimals": 18,
+      "sinceTimestamp": 1533324504,
+      "category": "stablecoin"
+    },
+    {
       "id": "dg-degate token",
       "name": "DeGate Token",
       "coingeckoId": "degate",
@@ -1897,16 +1907,6 @@
       "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "symbol": "USDC",
       "decimals": 6,
-      "sinceTimestamp": 1533324504,
-      "category": "stablecoin"
-    },
-    {
-      "id": "usd-decentralized-usd",
-      "name": "Decentralized USD",
-      "coingeckoId": "usdd",
-      "address": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
-      "symbol": "USDD",
-      "decimals": 18,
       "sinceTimestamp": 1533324504,
       "category": "stablecoin"
     },
