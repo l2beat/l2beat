@@ -71,6 +71,10 @@ function gatherAddressesFromUpgradeability(
       result.push(item.implementation)
       result.push(item.additional)
       break
+    case 'zkSpace proxy':
+      result.push(item.implementation)
+      result.push(...item.additional)
+      break
     case 'Reference':
     case 'immutable':
     case 'gnosis safe':

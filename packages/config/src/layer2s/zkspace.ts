@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   makeBridgeCompatible,
@@ -13,7 +14,13 @@ import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkspace')
 
+const upgradeDelay = formatSeconds(HARDCODED.ZKSPACE.UPGRADE_NOTICE_PERIOD)
 const forcedWithdrawalDelay = HARDCODED.ZKSPACE.PRIORITY_EXPIRATION_PERIOD
+
+const upgradeability = {
+  upgradableBy: ['zkSpace Admin'],
+  upgradeDelay,
+}
 
 export const zkspace: Layer2 = {
   type: 'layer2',
@@ -42,19 +49,71 @@ export const zkspace: Layer2 = {
   config: {
     associatedTokens: ['ZKS'],
     escrows: [
-      {
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
         sinceTimestamp: new UnixTime(1639569183),
         tokens: '*',
-      },
+      }),
     ],
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY('8 days'),
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
-    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      sources: [
+        {
+          contract: 'Verifier',
+          references: [
+            'https://etherscan.io/address/0x44DedA2C824458A5DfE1e363c679dea33f1ffA39#code#F1#L26',
+          ],
+        },
+      ],
+    },
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db#code#F1#L79',
+          ],
+        },
+      ],
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADE_DELAY(upgradeDelay),
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x467a2B91f231D930F5eeB6B982C7666E81DA8626#code#F8#L115',
+          ],
+        },
+      ],
+    },
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x467a2B91f231D930F5eeB6B982C7666E81DA8626#code#F1#L511',
+            'https://etherscan.io/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db#code#F1#L219',
+          ],
+        },
+      ],
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
+      sources: [
+        {
+          contract: 'ZkSync',
+          references: [
+            'https://etherscan.io/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db#code#F1#L219',
+            'https://etherscan.io/address/0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7#code#F1#L26',
+          ],
+        },
+      ],
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -78,45 +137,38 @@ export const zkspace: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails(
-        'ZkSync',
-        'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-      ),
-      discovery.getContractDetails(
-        'ZkSyncCommitBlock',
-        'Additional contract to store implementation details of the main ZkSync contract.',
-      ),
-      discovery.getContractDetails(
-        'ZkSyncExit',
-        'Additional contract to store implementation details of the main ZkSync contract.',
-      ),
-      discovery.getContractDetails(
-        'ZKSea',
-        'Additional contract to store implementation details of the main ZkSync contract.',
-      ),
-      discovery.getContractDetails(
-        'Governance',
-        'Keeps a list of block producers and whitelisted tokens.',
-      ),
-      discovery.getContractDetails(
-        'UniswapV2Factory',
-        'Manages trading pairs.',
-      ),
-      discovery.getContractDetails(
-        'ZKSeaNFT',
-        'Contract managing deposits and withdrawals of NFTs to Layer2.',
-      ),
-      discovery.getContractDetails('Verifier', 'zk-SNARK Plonk Verifier.'),
-      discovery.getContractDetails(
-        'VerifierExit',
-        'zk-SNARK Verifier for the escape hatch.',
-      ),
+      discovery.getContractDetails('ZkSync', {
+        description:
+          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
+        ...upgradeability,
+      }),
+      discovery.getContractDetails('Governance', {
+        description: 'Keeps a list of block producers and whitelisted tokens.',
+        ...upgradeability,
+      }),
+      discovery.getContractDetails('UniswapV2Factory', {
+        description: 'Manages trading pairs.',
+        ...upgradeability,
+      }),
+      discovery.getContractDetails('ZkSeaNFT', {
+        description:
+          'Contract managing deposits and withdrawals of NFTs to Layer2.',
+        ...upgradeability,
+      }),
+      discovery.getContractDetails('Verifier', {
+        description: 'zk-SNARK Plonk Verifier.',
+        ...upgradeability,
+      }),
+      discovery.getContractDetails('VerifierExit', {
+        description: 'zk-SNARK Verifier for the escape hatch.',
+        ...upgradeability,
+      }),
       discovery.getContractDetails(
         'UpgradeGatekeeper',
         'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
       ),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days')],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelay)],
   },
   permissions: [
     {

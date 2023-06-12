@@ -209,6 +209,28 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
+        case 'zkSpace proxy':
+          links.push({
+            name: 'Implementation (Upgradable)',
+            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            address: item.upgradeability.implementation.toString(),
+            isAdmin: false,
+          })
+          links.push(
+            ...item.upgradeability.additional.map((additional) => ({
+              name: 'Additional implementation (Upgradable)',
+              href: `https://etherscan.io/address/${additional.toString()}#code`,
+              address: additional.toString(),
+              isAdmin: false,
+            })),
+          )
+          links.push({
+            name: 'Admin',
+            href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
+            address: item.upgradeability.admin.toString(),
+            isAdmin: true,
+          })
+          break
 
         // Ignore types
         case 'immutable':
