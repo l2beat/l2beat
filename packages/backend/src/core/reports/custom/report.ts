@@ -15,12 +15,15 @@ function createCustomTokenReport({
 }: {
   tokenPriceUsd: number
   tokenDecimals: number
-  tokenBalance: bigint
+  tokenBalance: bigint | ((t: UnixTime) => bigint)
   tokenId: AssetId
   projectId: ProjectId
   ethPriceUsd: number
   timestamp: UnixTime
 }): ReportRecord {
+  tokenBalance =
+    tokenBalance instanceof Function ? tokenBalance(timestamp) : tokenBalance
+
   const { balanceUsd, balanceEth } = convertBalance(
     tokenPriceUsd,
     tokenDecimals,
@@ -41,7 +44,7 @@ export function createAddCustomTokenReport(
   tokenId: AssetId,
   sinceTimestamp: UnixTime,
   projectId: ProjectId,
-  tokenBalance: bigint,
+  tokenBalance: bigint | ((t: UnixTime) => bigint),
   tokenDecimals: number,
 ) {
   return function (
