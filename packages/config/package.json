@@ -17,7 +17,8 @@
     "get-lz-data": "node -r esbuild-register scripts/omnichain",
     "update-multichain": "node -r esbuild-register scripts/multichain",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
-    "tokens:add": "node -r esbuild-register scripts/tokens/add"
+    "tokens:add": "node -r esbuild-register scripts/tokens/add",
+    "typecheck:ci": "tsc --noEmit"
   },
   "dependencies": {
     "@l2beat/shared": "*",

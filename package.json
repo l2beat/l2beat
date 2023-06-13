@@ -26,7 +26,6 @@
     "lint": "wsrun -ecam lint",
     "start": "cd packages/backend && yarn start",
     "test": "wsrun -ecam test",
-    "typecheck:ci": "wsrun -ecam typecheck:ci",
     "typecheck": "wsrun -ecam typecheck"
   },
   "devDependencies": {
