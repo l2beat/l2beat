@@ -13,6 +13,7 @@ import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getEternalStorageProxy } from './manual/EthernalStorageProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
+import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 
 type Detector = (
@@ -37,6 +38,7 @@ const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'new Arbitrum proxy': getNewArbitrumProxy,
   'call implementation proxy': getCallImplementationProxy,
   'zkSync Lite proxy': getZkSyncLiteProxy,
+  'zkSpace proxy': getZkSpaceProxy,
   'Eternal Storage proxy': getEternalStorageProxy,
 }
 

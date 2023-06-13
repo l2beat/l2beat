@@ -40,5 +40,7 @@ export const HARDCODED = {
   },
   ZKSPACE: {
     PRIORITY_EXPIRATION_PERIOD: 259200, // 3 days
+    //https://etherscan.io/address/0x467a2B91f231D930F5eeB6B982C7666E81DA8626#code#F8#L115
+    UPGRADE_NOTICE_PERIOD: 691200, // 8 days
   },
 }

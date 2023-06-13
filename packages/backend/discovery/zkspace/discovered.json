@@ -1,7 +1,7 @@
 {
   "name": "zkspace",
-  "blockNumber": 17413799,
-  "configHash": "0x5ec7715363bb5f739c381fb4df66f2663218a1657a6fbff15da2c655a7dbd457",
+  "blockNumber": 17442401,
+  "configHash": "0x5f681b354f3c3db9093fc37b195e251f719581acf280adc9d5b2deecb273f8a3",
   "version": 1,
   "contracts": [
     {
@@ -19,57 +19,33 @@
       }
     },
     {
-      "name": "ZkSyncCommitBlock",
-      "address": "0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db",
-      "code": "https://etherscan.deth.net/address/0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
-        "exodusMode": false,
-        "firstPendingWithdrawalIndex": 0,
-        "firstPriorityRequestId": 0,
-        "maxDepositAmount": 0,
-        "numberOfPendingWithdrawals": 0,
-        "totalBlocksChecked": 0,
-        "totalBlocksCommitted": 0,
-        "totalBlocksVerified": 0,
-        "totalCommittedPriorityRequests": 0,
-        "totalOpenPriorityRequests": 0,
-        "totalPairTokens": 0,
-        "upgradePreparationActivationTime": 0,
-        "upgradePreparationActive": false,
-        "withdrawGasLimit": 0,
-        "withdrawNFTGasLimit": 0,
-        "zkSeaAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
       "name": "ZkSync",
       "address": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
-      "code": "https://etherscan.deth.net/address/0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8,0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
+      "code": "https://etherscan.deth.net/address/0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8,0x467a2B91f231D930F5eeB6B982C7666E81DA8626,0x899A605a3B7A11eA5D928958b77014e763c53426,0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db,0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "zkSpace proxy",
+        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "implementation": "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
-        "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+        "additional": [
+          "0x899A605a3B7A11eA5D928958b77014e763c53426",
+          "0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db",
+          "0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7"
+        ]
       },
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 489,
-        "firstPriorityRequestId": 1256,
+        "firstPendingWithdrawalIndex": 490,
+        "firstPriorityRequestId": 1257,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
         "governance": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
         "maxDepositAmount": "38685626227668133590597632",
         "numberOfPendingWithdrawals": 0,
         "pairManager": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-        "totalBlocksChecked": 36322,
-        "totalBlocksCommitted": 36370,
-        "totalBlocksVerified": 36369,
+        "totalBlocksChecked": 36432,
+        "totalBlocksCommitted": 36458,
+        "totalBlocksVerified": 36458,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 64,
@@ -83,35 +59,8 @@
         "zkSeaNFT": "0xc632347cc96A4400653E3514eA148630455295b5",
         "zkSyncCommitBlockAddress": "0x49dCe53faeAD4538F77c3b8Bae8347f1644101Db",
         "zkSyncExitAddress": "0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7"
-      }
-    },
-    {
-      "name": "ZkSyncExit",
-      "address": "0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7",
-      "code": "https://etherscan.deth.net/address/0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7",
-      "upgradeability": {
-        "type": "immutable"
       },
-      "values": {
-        "exodusMode": false,
-        "firstPendingWithdrawalIndex": 0,
-        "firstPriorityRequestId": 0,
-        "maxDepositAmount": 0,
-        "numberOfPendingWithdrawals": 0,
-        "totalBlocksChecked": 0,
-        "totalBlocksCommitted": 0,
-        "totalBlocksVerified": 0,
-        "totalCommittedPriorityRequests": 0,
-        "totalOpenPriorityRequests": 0,
-        "totalPairTokens": 0,
-        "upgradePreparationActivationTime": 0,
-        "upgradePreparationActive": false,
-        "withdrawGasLimit": 0,
-        "withdrawNFTGasLimit": 0,
-        "zkSeaAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
-      }
+      "derivedName": "Proxy"
     },
     {
       "name": "Governance",
@@ -130,36 +79,8 @@
         "totalFeeTokens": 8,
         "totalUserTokens": 41,
         "validators": ["0x5bd9404260D2B0D55081E599e4e085BE080141E2"]
-      }
-    },
-    {
-      "name": "ZKSea",
-      "address": "0x899A605a3B7A11eA5D928958b77014e763c53426",
-      "code": "https://etherscan.deth.net/address/0x899A605a3B7A11eA5D928958b77014e763c53426",
-      "upgradeability": {
-        "type": "immutable"
       },
-      "values": {
-        "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
-        "exodusMode": false,
-        "firstPendingWithdrawalIndex": 0,
-        "firstPriorityRequestId": 0,
-        "maxDepositAmount": 0,
-        "numberOfPendingWithdrawals": 0,
-        "totalBlocksChecked": 0,
-        "totalBlocksCommitted": 0,
-        "totalBlocksVerified": 0,
-        "totalCommittedPriorityRequests": 0,
-        "totalOpenPriorityRequests": 0,
-        "totalPairTokens": 0,
-        "upgradePreparationActivationTime": 0,
-        "upgradePreparationActive": false,
-        "withdrawGasLimit": 0,
-        "withdrawNFTGasLimit": 0,
-        "zkSeaAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
-      }
+      "derivedName": "Governance"
     },
     {
       "name": "ZkSwapListing",
@@ -202,7 +123,8 @@
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
         "versionId": 1
-      }
+      },
+      "derivedName": "UpgradeGatekeeper"
     },
     {
       "name": "Verifier",
@@ -232,10 +154,11 @@
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
         "zkSyncAddress": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
-      }
+      },
+      "derivedName": "UniswapV2Factory"
     },
     {
-      "name": "ZKSeaNFT",
+      "name": "ZkSeaNFT",
       "address": "0xc632347cc96A4400653E3514eA148630455295b5",
       "code": "https://etherscan.deth.net/address/0xc632347cc96A4400653E3514eA148630455295b5,0xD06986022EFE62A5BC8258299e4495Bb27567BE0",
       "upgradeability": {
@@ -256,7 +179,8 @@
         "symbol": "ZKSeaNFT",
         "totalSupply": 2,
         "zksCore": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
-      }
+      },
+      "derivedName": "ZKSeaNFT"
     },
     {
       "name": "ZksToken",

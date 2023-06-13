@@ -1,3 +1,4 @@
+import { isMobile } from '../components/chart/configure/render/isMobile'
 import { makeQuery } from './query'
 
 export function configureTooltips() {
@@ -17,7 +18,7 @@ export function configureTooltips() {
   let visible = false
 
   function show(element: HTMLElement, title: string) {
-    if (element.dataset.tooltipBig && window.innerWidth < 750) return
+    if (element.dataset.tooltipBig && isMobile()) return
     visible = true
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)

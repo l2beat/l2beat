@@ -46,6 +46,10 @@ export function gatherAddressesFromUpgradeability(
       result.push(item.implementation)
       result.push(item.additional)
       break
+    case 'zkSpace proxy':
+      result.push(item.implementation)
+      result.push(...item.additional)
+      break
     case 'immutable':
       // Ignoring types because no (admin/user)implementation included in them
       break

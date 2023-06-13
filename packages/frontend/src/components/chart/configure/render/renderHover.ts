@@ -2,6 +2,7 @@ import { formatTps } from '../../../../utils/formatTps'
 import { ChartElements } from '../elements'
 import { State } from '../state/State'
 import { formatCurrencyExactValue } from '../update/view/format'
+import { isMobile } from './isMobile'
 
 export function renderHover(
   elements: ChartElements,
@@ -93,7 +94,7 @@ export function renderHover(
       if (point.milestone.description) {
         rows.push(renderDescriptionRow(point.milestone.description))
       }
-      if (window.innerWidth < 750) {
+      if (isMobile()) {
         rows.push(
           `<div class="text-link"><a href="${point.milestone.link}" target="blank">Learn more</a></div>`,
         )
