@@ -1,7 +1,7 @@
 {
   "name": "stargate",
-  "blockNumber": 17464005,
-  "configHash": "0xed8e9fb2f34d02b08c79db1f13a6f1b4383b582f0eee40adb86942f5346785b7",
+  "blockNumber": 17473229,
+  "configHash": "0xcf30a5a5f5c5a670f4ce4b3cf3e7077d09b9842c22f5116dedcb0aa6e0e7b550",
   "version": 1,
   "contracts": [
     {
@@ -47,8 +47,8 @@
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 1,
-        "eqFeePool": 723564412,
+        "deltaCredit": 26179408587,
+        "eqFeePool": 692669398,
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 2,
         "localDecimals": 18,
@@ -64,21 +64,12 @@
         "swapDeltaBP": 500,
         "symbol": "S*DAI",
         "token": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "totalLiquidity": 804481766302,
-        "totalSupply": 804464748177,
+        "totalLiquidity": 804591945924,
+        "totalSupply": 804574925467,
         "totalWeight": 10000,
         "chainPaths": [
-          [true, 111, 3, 6000, 176614580565, 32095201458, 0, 176351188845],
-          [
-            true,
-            109,
-            3,
-            4000,
-            192906607314,
-            145342421383,
-            16363490367,
-            190618687040
-          ]
+          [true, 111, 3, 6000, 156607882525, 32095201458, 0, 176351188845],
+          [true, 109, 3, 4000, 186844076390, 161705911750, 0, 190618687040]
         ]
       },
       "derivedName": "Pool"
@@ -97,8 +88,8 @@
         "decimals": 18,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": "46191629529725479243",
-        "eqFeePool": "1809726257359628593",
+        "deltaCredit": "134008368975658309569",
+        "eqFeePool": "1858048926030766539",
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 4,
         "localDecimals": 18,
@@ -107,15 +98,15 @@
         "mintFeeBP": 0,
         "name": "Stargate Ether Vault-LP",
         "poolId": 13,
-        "protocolFeeBalance": "2617189764839339682",
+        "protocolFeeBalance": "3157425680778298969",
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 18,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*SGETH",
         "token": "0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c",
-        "totalLiquidity": "4543399689240391103084",
-        "totalSupply": "4543028878902591602127",
+        "totalLiquidity": "4551178259505099955586",
+        "totalSupply": "4550806814317966312913",
         "totalWeight": 2,
         "chainPaths": [
           [true, 11, 13, 0, 0, 0, 0, 0],
@@ -125,20 +116,20 @@
             111,
             13,
             1,
-            "672217514879666688930",
-            "1702560760561997685992",
+            "680965845292379859814",
+            "1691130634364535903601",
             0,
-            "686139658103414878171"
+            "684609031590722035636"
           ],
           [
             true,
             110,
             13,
             1,
-            "2264807252339087195769",
-            "719966087125500769561",
+            "2254931254468435914084",
+            "765264456547939188481",
             0,
-            "2265620972686838497226"
+            "2254943513855065919779"
           ]
         ]
       },
@@ -159,7 +150,7 @@
         "defaultLPMode": true,
         "defaultSwapMode": true,
         "deltaCredit": 1,
-        "eqFeePool": "17217610728157378634",
+        "eqFeePool": "17235364197328344180",
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 6,
         "localDecimals": 18,
@@ -168,14 +159,14 @@
         "mintFeeBP": 0,
         "name": "Wootrade Network-LP",
         "poolId": 20,
-        "protocolFeeBalance": "10230448957840292564",
+        "protocolFeeBalance": "10508586641518752804",
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 18,
         "stopSwap": false,
         "swapDeltaBP": 0,
         "symbol": "S*WOO",
         "token": "0x4691937a7508860F876c9c0a2a617E7d9E945D4B",
-        "totalLiquidity": "1119674628701140920174586",
+        "totalLiquidity": "1119674687879371490059742",
         "totalSupply": "1119638403607691454649527",
         "totalWeight": 6,
         "chainPaths": [
@@ -214,10 +205,10 @@
             110,
             20,
             1,
-            "170884397898901808179983",
-            "211749197262889172561522",
+            "173048997855798526445045",
+            "211748190143964343153750",
             0,
-            "185355601323154814586418"
+            "185360924106725001347970"
           ],
           [
             true,
@@ -235,9 +226,9 @@
             20,
             1,
             "268519483344533046722684",
-            "300777457899271993195904",
+            "300186741890728540915436",
             "33708702227312539841",
-            "183640219307902778786567"
+            "183658018225549492119650"
           ]
         ]
       },
@@ -287,8 +278,8 @@
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 2199624714049,
-        "eqFeePool": 5505476980,
+        "deltaCredit": 2547514040495,
+        "eqFeePool": 11245458594,
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 22,
         "localDecimals": 6,
@@ -297,15 +288,15 @@
         "mintFeeBP": 0,
         "name": "Tether USD-LP",
         "poolId": 2,
-        "protocolFeeBalance": 5762476392,
+        "protocolFeeBalance": 7530042774,
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*USDT",
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "totalLiquidity": 57490230625196,
-        "totalSupply": 57429550508625,
+        "totalLiquidity": 55082777449036,
+        "totalSupply": 55024638364865,
         "totalWeight": 9799,
         "chainPaths": [
           [true, 6, 1, 0, 0, 0, 0, 0],
@@ -321,24 +312,24 @@
           [true, 1, 1, 0, 0, 0, 0, 0],
           [true, 112, 1, 0, 265494442890, 377620659, 0, 0],
           [true, 101, 1, 0, 0, 0, 0, 0],
-          [true, 111, 1, 200, 521833457185, 629135357929, 0, 322810477615],
-          [true, 106, 1, 355, 1140098083978, 1173353145270, 0, 975133595834],
-          [true, 106, 2, 1645, 3997032047979, 9205713325500, 0, 6070115657421],
-          [true, 102, 5, 526, 493527555343, 2622915511004, 0, 456562375410],
+          [true, 111, 1, 200, 504871813849, 606311515316, 0, 325199069845],
+          [true, 106, 1, 355, 1071958189517, 1173353145270, 0, 970431582041],
+          [true, 106, 2, 1645, 5124633718228, 6711150803745, 0, 6088262406268],
+          [true, 102, 5, 526, 484958505782, 2288447858693, 0, 452679538531],
           [
             true,
             102,
             2,
             4280,
-            31676374537602,
-            5598561339662,
+            31084260496647,
+            3731696018275,
             0,
-            31225151801631
+            30955555712951
           ],
-          [true, 109, 1, 200, 578121931526, 673768812967, 0, 392092089920],
-          [true, 109, 2, 442, 1722974683020, 2063056071225, 0, 3219832301122],
-          [true, 110, 1, 200, 2799685991253, 1405605422420, 0, 732027244001],
-          [true, 110, 2, 1951, 6070029292067, 5566737086674, 0, 6125268215515]
+          [true, 109, 1, 200, 576017786578, 673768812967, 0, 392092089920],
+          [true, 109, 2, 442, 2095789120418, 2055155249118, 0, 3208465486347],
+          [true, 110, 1, 200, 2729437009290, 1383037193545, 0, 718232193742],
+          [true, 110, 2, 1951, 5585046324915, 5385068616146, 0, 5968524070230]
         ]
       },
       "derivedName": "Pool"
@@ -357,8 +348,8 @@
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 34854801398,
-        "eqFeePool": 3307900488,
+        "deltaCredit": 116474579581,
+        "eqFeePool": 3403822119,
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 1,
         "localDecimals": 6,
@@ -367,18 +358,18 @@
         "mintFeeBP": 0,
         "name": "Tether USD-LP",
         "poolId": 19,
-        "protocolFeeBalance": 8247777,
+        "protocolFeeBalance": 24644951,
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*USDT",
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "totalLiquidity": 2648471418278,
-        "totalSupply": 2648374425321,
+        "totalLiquidity": 2720088037848,
+        "totalSupply": 2719985150563,
         "totalWeight": 1,
         "chainPaths": [
-          [true, 151, 19, 1, 952887224313, 544724873256, 0, 906036538209]
+          [true, 151, 19, 1, 952881165136, 501933424109, 0, 905655472027]
         ]
       },
       "derivedName": "Pool"
@@ -420,8 +411,8 @@
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 0,
-        "eqFeePool": 22003861,
+        "deltaCredit": 22455017253,
+        "eqFeePool": 178012,
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 1,
         "localDecimals": 18,
@@ -430,7 +421,7 @@
         "mintFeeBP": 0,
         "name": "Synth sUSD-LP",
         "poolId": 14,
-        "protocolFeeBalance": 23733316,
+        "protocolFeeBalance": 46378490,
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
@@ -441,7 +432,7 @@
         "totalSupply": 79312425287,
         "totalWeight": 1,
         "chainPaths": [
-          [true, 111, 14, 1, 41746202680, 56707130597, 0, 41746202680]
+          [true, 111, 14, 1, 16482456932, 79328161878, 0, 41484881381]
         ]
       },
       "derivedName": "Pool"
@@ -518,7 +509,7 @@
         "decimals": 18,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": "4864133747374854030949",
+        "deltaCredit": "4896278428667046030949",
         "eqFeePool": "327803808813928466",
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 2,
@@ -545,7 +536,7 @@
             102,
             11,
             1,
-            "995720135830624377153679",
+            "995687994363800314372879",
             "999120024818603260087005",
             0,
             "1000360274140611526142254"
@@ -709,8 +700,8 @@
         "decimals": 18,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": "2421514038123077496315",
-        "eqFeePool": "522261540486706242",
+        "deltaCredit": "2517818462484482122033",
+        "eqFeePool": "522533544486706242",
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 2,
         "localDecimals": 18,
@@ -719,15 +710,15 @@
         "mintFeeBP": 0,
         "name": "Metis Token-LP",
         "poolId": 17,
-        "protocolFeeBalance": "71826207324941486",
+        "protocolFeeBalance": "76087603324941486",
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 18,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*Metis",
         "token": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
-        "totalLiquidity": "10828941400037904977321",
-        "totalSupply": "10826943075698288268121",
+        "totalLiquidity": "10857582747156580017575",
+        "totalSupply": "10855578228560825335740",
         "totalWeight": 2,
         "chainPaths": [
           [
@@ -735,20 +726,20 @@
             102,
             17,
             1,
-            "5334263530416197358711",
-            "5275126957258712179858",
-            "139342242760240308802",
-            "5330944163590243240706"
+            "5226908959603950325139",
+            "5428791373578290008787",
+            0,
+            "5361443283885604853683"
           ],
           [
             true,
             151,
             17,
             1,
-            "7895566314518983284507",
-            "5384472200018952488660",
+            "7894752945561702880632",
+            "5428791373578290008787",
             0,
-            "8693557522770324734970"
+            "8702527463375857701323"
           ]
         ]
       },
@@ -768,8 +759,8 @@
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 2245000667203,
-        "eqFeePool": 3921582491,
+        "deltaCredit": 1843638641019,
+        "eqFeePool": 4685079319,
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 22,
         "localDecimals": 6,
@@ -778,15 +769,15 @@
         "mintFeeBP": 0,
         "name": "USD Coin-LP",
         "poolId": 1,
-        "protocolFeeBalance": 6578009730,
+        "protocolFeeBalance": 10633845893,
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*USDC",
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "totalLiquidity": 52093152573719,
-        "totalSupply": 52053684609905,
+        "totalLiquidity": 53164041424616,
+        "totalSupply": 53123762110345,
         "totalWeight": 9227,
         "chainPaths": [
           [true, 6, 1, 0, 0, 0, 0, 0],
@@ -802,24 +793,24 @@
           [true, 1, 2, 0, 0, 0, 0, 0],
           [true, 112, 1, 0, 177126942520, 403302227, 0, 0],
           [true, 101, 2, 0, 0, 0, 0, 0],
-          [true, 111, 1, 1480, 4213997188281, 7600681914802, 0, 3059617170134],
+          [true, 111, 1, 1480, 3546958603240, 6569233158485, 0, 3085033671723],
           [
             true,
             106,
             1,
             2416,
-            15329059361404,
-            7498842720095,
+            15343363413455,
+            8090819906243,
             0,
-            15454645709794
+            15377701098081
           ],
-          [true, 106, 2, 461, 4829953235446, 2702393229166, 0, 5495474681357],
-          [true, 102, 5, 567, 4521426139599, 2996860233111, 0, 4533956264761],
-          [true, 102, 2, 405, 8901735346539, 2092651278943, 0, 8781068659537],
-          [true, 109, 1, 805, 4224810000977, 4446614658637, 0, 4484926018743],
-          [true, 109, 2, 218, 1918156998292, 1337741919932, 0, 3496578192583],
-          [true, 110, 1, 2560, 32695774157250, 1371893115225, 0, 9597890914465],
-          [true, 110, 2, 315, 3983074162521, 2086344146101, 0, 3949464790509]
+          [true, 106, 2, 461, 5196598463060, 1497557394966, 0, 5579209284844],
+          [true, 102, 5, 567, 4453066599744, 2904273176263, 0, 4493471589343],
+          [true, 102, 2, 405, 8866968653642, 1768225065617, 0, 8709411444087],
+          [true, 109, 1, 805, 4446477705888, 4441472853283, 0, 4596829905605],
+          [true, 109, 2, 218, 2330040620733, 887023004878, 0, 3479525453948],
+          [true, 110, 1, 2560, 31995521376965, 3020244413155, 0, 9419845712609],
+          [true, 110, 2, 315, 3979500348004, 1346647814745, 0, 3849143008530]
         ]
       },
       "derivedName": "Pool"
@@ -838,8 +829,8 @@
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 163441858,
-        "eqFeePool": 146051223,
+        "deltaCredit": 1866649138,
+        "eqFeePool": 143045191,
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 2,
         "localDecimals": 18,
@@ -848,19 +839,19 @@
         "mintFeeBP": 0,
         "name": "LUSD Stablecoin-LP",
         "poolId": 15,
-        "protocolFeeBalance": 5,
+        "protocolFeeBalance": 505,
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*LUSD",
         "token": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-        "totalLiquidity": 116630608184,
-        "totalSupply": 116613406401,
+        "totalLiquidity": 116584264764,
+        "totalSupply": 116567069716,
         "totalWeight": 2,
         "chainPaths": [
           [true, 111, 15, 1, 764690316, 17799986446, 0, 15190726387],
-          [true, 110, 15, 1, 12441301628, 13737787262, 0, 248448609]
+          [true, 110, 15, 1, 57077002976, 13736787362, 0, 251304567]
         ]
       },
       "derivedName": "Pool"
@@ -879,8 +870,8 @@
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 1407923571283,
-        "eqFeePool": 108849626,
+        "deltaCredit": 1336571000967,
+        "eqFeePool": 229723938,
         "feeLibrary": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 3,
         "localDecimals": 18,
@@ -889,7 +880,7 @@
         "mintFeeBP": 0,
         "name": "Frax-LP",
         "poolId": 7,
-        "protocolFeeBalance": 21960629,
+        "protocolFeeBalance": 76572212,
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
@@ -900,18 +891,9 @@
         "totalSupply": 419088049652,
         "totalWeight": 10000,
         "chainPaths": [
-          [true, 111, 7, 1829, 376987376953, 76652294285, 0, 584674814851],
+          [true, 111, 7, 1829, 347187847979, 76652294285, 0, 573125600821],
           [true, 106, 7, 4489, 457923612471, 188131300736, 0, 678907993464],
-          [
-            true,
-            110,
-            7,
-            3682,
-            291992467450,
-            93138905784,
-            61171508408,
-            410619933191
-          ]
+          [true, 110, 7, 3682, 322018574385, 134309462431, 0, 409960526538]
         ]
       },
       "derivedName": "Pool"
