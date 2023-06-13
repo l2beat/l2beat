@@ -4,7 +4,7 @@ import {
   TvlApiCharts,
   TvlApiResponse,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import fsx from 'fs-extra'
 import path from 'path'
 

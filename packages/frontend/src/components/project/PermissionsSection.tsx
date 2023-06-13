@@ -1,5 +1,5 @@
 import { ProjectReference } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
+import { VerificationStatus } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'

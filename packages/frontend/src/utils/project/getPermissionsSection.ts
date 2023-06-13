@@ -1,5 +1,5 @@
 import { Bridge, Layer2, ProjectPermission } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
+import { VerificationStatus } from '@l2beat/shared-pure'
 
 import { TechnologyContract } from '../../components/project/ContractEntry'
 import { PermissionsSectionProps } from '../../components/project/PermissionsSection'
