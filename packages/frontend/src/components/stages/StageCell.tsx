@@ -21,7 +21,7 @@ export function StageCell({ item }: StageCellProps) {
       title={renderToStaticMarkup(<StageTooltip item={item} />)}
       data-tooltip-big
     >
-      <StageBadge category={item.stage} small={true} />
+      <StageBadge stage={item.stage} small={true} />
     </div>
   )
 }

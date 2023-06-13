@@ -4,21 +4,21 @@ import React from 'react'
 import { Badge } from '../badge/Badge'
 
 interface StageBadgeProps {
-  category: string | undefined
+  stage: string | undefined
   small?: boolean
 }
 
-export function StageBadge({ category, small }: StageBadgeProps) {
+export function StageBadge({ stage, small }: StageBadgeProps) {
   return (
     <Badge
       className={cx(
-        getColorClassName(category),
+        getColorClassName(stage),
         'inline-block text-center  leading-none',
         small ? 'w-15 text-base' : 'w-40  text-lg',
       )}
       oneSize
     >
-      {category ?? '-'}
+      {stage ?? '-'}
     </Badge>
   )
 }

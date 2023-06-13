@@ -90,7 +90,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
                   />,
                 )}
               >
-                <StageBadge category={'Stage 1'} />
+                <StageBadge stage={'Stage 1'} />
               </span>
             ),
           },
