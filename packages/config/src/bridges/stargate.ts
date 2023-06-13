@@ -27,7 +27,8 @@ export const stargate: Bridge = {
       ],
     },
     description:
-      'StarGate is built on top of LayerZero protocol and is a liquidity network for cross-chain transfer for assets. It leverages an oracle and relayer for cross-chain security for the protocol.',
+      'StarGate is built on top of LayerZero protocol and is a liquidity network for cross-chain transfer for assets. It leverages an oracle and relayer for cross-chain security for the protocol. \
+      Note that StarGate UI also supports omnichain tokens built directly on top of LayerZero protocol, e.g. JOE.',
   },
   riskView: {
     validatedBy: {
@@ -85,26 +86,67 @@ export const stargate: Bridge = {
     // In StarkGate these are pools, there is a separate Pool contract for each supported token. The list of all the pools can be obtained
     // from the pool factory: 0x06d538690af257da524f25d0cd52fd85b1c2173e. For Ether pool (SGETH) there is additional Escrow contract
     escrows: [
-      {
+      discovery.getEscrowDetails({
         address: EthereumAddress('0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56'),
         sinceTimestamp: new UnixTime(1647511732),
         tokens: ['USDC'],
-      },
-      {
+        description: 'USDC Escrow',
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x38EA452219524Bb87e18dE1C24D3bB59510BD783'),
-        sinceTimestamp: new UnixTime(1647511860),
+        sinceTimestamp: new UnixTime(1647511732),
         tokens: ['USDT'],
-      },
-      //   {
-      //     address: EthereumAddress('0x692953e758c3669290cb1677180c64183cEe374e'),
-      //     sinceTimestamp: new UnixTime(1656354769),
-      //     tokens: ['USDD'],
-      //   },
+        description: 'USDT Escrow',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x692953e758c3669290cb1677180c64183cEe374e'),
+        sinceTimestamp: new UnixTime(1656354769),
+        tokens: ['USDD'],
+        description: 'USDD Escrow',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d'),
+        sinceTimestamp: new UnixTime(1668459527),
+        tokens: ['DAI'],
+        description: 'DAI Escrow',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xfA0F307783AC21C39E939ACFF795e27b650F6e68'),
+        sinceTimestamp: new UnixTime(1668459527),
+        tokens: ['FRAX'],
+        description: 'FRAX Escrow',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2'),
+        sinceTimestamp: new UnixTime(1668459587),
+        tokens: ['LUSD'],
+        description: 'LUSD Escrow',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xd8772edBF88bBa2667ed011542343b0eDDaCDa47'),
+        sinceTimestamp: new UnixTime(1673830559),
+        tokens: ['Metis'],
+        description: 'METIS Escrow',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d'),
+        sinceTimestamp: new UnixTime(1673830559),
+        tokens: ['USDT'],
+        description: 'USDT Pool 2',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09'),
+        sinceTimestamp: new UnixTime(1677032255),
+        tokens: ['WOO'],
+        description: 'WOO Pool',
+      }),
       {
         address: EthereumAddress('0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c'),
         sinceTimestamp: new UnixTime(1656108257),
         tokens: ['ETH'],
       },
+      //      "0x590d4f8A68583639f215f675F3a259Ed84790580": "sUSD Pool",
+      //      "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8": "MAI Pool",
     ],
   },
   contracts: {
@@ -116,6 +158,10 @@ export const stargate: Bridge = {
       discovery.getContractDetails(
         'Bridge',
         'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
+      ),
+      discovery.getContractDetails(
+        'Factory',
+        'Factory contract managing all liquidity pools.',
       ),
       {
         //Probably outdated
@@ -152,21 +198,6 @@ export const stargate: Bridge = {
         'UltraLightNodeV2',
         'LayerZero UltraLight Node.',
       ),
-      {
-        address: EthereumAddress('0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56'),
-        name: 'USDC Pool',
-        description: 'USDC Pool.',
-      },
-      {
-        address: EthereumAddress('0x38EA452219524Bb87e18dE1C24D3bB59510BD783'),
-        name: 'USDT Pool',
-        description: 'USDT Pool.',
-      },
-      {
-        address: EthereumAddress('0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c'),
-        name: 'StargateEthVault',
-        description: 'ETH Pool.',
-      },
     ],
     risks: [],
     isIncomplete: true,
