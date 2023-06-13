@@ -8,7 +8,7 @@ import { getProps } from './getProps'
 export function getDefinitionsPage(config: Config) {
   const { props, wrapper } = getProps(config)
   return {
-    slug: '/Definitions',
+    slug: '/definitions',
     page: (
       <PageWrapper {...wrapper}>
         <DefinitionsPage {...props} />
