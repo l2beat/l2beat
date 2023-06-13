@@ -12,16 +12,22 @@ export type StageBlueprint = Record<
   }
 >
 
+export type ChecklistValue =
+  | boolean
+  | null
+  | [boolean, string]
+  | ['UnderReview', string]
+
 export type ChecklistTemplate<T extends StageBlueprint> = {
   [K in keyof T]: {
-    [L in keyof T[K]['items']]: boolean | null | [boolean, string]
+    [L in keyof T[K]['items']]: ChecklistValue
   }
 }
 
 export interface StageSummary {
   stage: string
   requirements: {
-    satisfied: boolean
+    satisfied: boolean | 'UnderReview'
     description: string
   }[]
 }
