@@ -8,6 +8,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 import { zkswap } from './zkswap'
 
@@ -57,6 +58,26 @@ export const zkspace: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: false,
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave14DaysToExit: false,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
   }),
   technology: {
     provider: 'zkSync',
