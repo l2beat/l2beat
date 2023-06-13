@@ -19,5 +19,5 @@ export interface ScalingTvlViewEntry {
   marketShare?: string
   purpose: string
   technology: string
-  stage?: StageConfig
+  stage?: StageConfig | 'UnderReview'
 }
