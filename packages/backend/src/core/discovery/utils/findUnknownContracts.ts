@@ -1,5 +1,5 @@
 import { ConfigReader } from '@l2beat/discovery'
-import { ContractParameters, EthereumAddress } from '@l2beat/shared'
+import { ContractParameters, EthereumAddress } from '@l2beat/shared-pure'
 
 export async function findUnknownContracts(
   name: string,

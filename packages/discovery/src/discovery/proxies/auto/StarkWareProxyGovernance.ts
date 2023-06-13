@@ -1,4 +1,4 @@
-import { assert, EthereumAddress } from '@l2beat/shared'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'

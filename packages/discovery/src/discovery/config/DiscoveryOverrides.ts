@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
 

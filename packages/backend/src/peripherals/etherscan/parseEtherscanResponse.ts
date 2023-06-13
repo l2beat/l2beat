@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export type EtherscanSuccessResponse = z.infer<typeof EtherscanSuccessResponse>

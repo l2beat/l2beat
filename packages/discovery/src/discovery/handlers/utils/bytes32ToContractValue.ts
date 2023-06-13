@@ -1,4 +1,4 @@
-import { Bytes, ContractValue, EthereumAddress } from '@l2beat/shared'
+import { Bytes, ContractValue, EthereumAddress } from '@l2beat/shared-pure'
 
 export function bytes32ToContractValue(
   value: Bytes,

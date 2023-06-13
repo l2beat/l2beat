@@ -1,4 +1,4 @@
-import { EthereumAddress, ProxyDetails } from '@l2beat/shared'
+import { EthereumAddress, ProxyDetails } from '@l2beat/shared-pure'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'

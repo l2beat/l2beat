@@ -1,4 +1,4 @@
-import { ContractParameters, EthereumAddress } from '@l2beat/shared'
+import { ContractParameters, EthereumAddress } from '@l2beat/shared-pure'
 
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryOverrides } from '../config/DiscoveryOverrides'
