@@ -44,8 +44,7 @@ function configureChart(chart: HTMLElement) {
 function getInitMessage(elements: ChartElements): InitMessage {
   const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
 
-  const daysValue =
-    elements.controls.days.find((x) => x.checked)?.value ?? '30D'
+  const daysValue = elements.controls.days.find((x) => x.checked)?.value ?? '1Y'
   const days = toDays(daysValue)
 
   const showEthereum = !!elements.controls.showEthereum?.checked
