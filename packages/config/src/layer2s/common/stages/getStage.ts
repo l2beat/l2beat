@@ -39,7 +39,7 @@ export const getStage = createGetStage({
       },
       usersHave14DaysToExit: {
         positive:
-          'In case of an unwanted upgrade by actors more centralized than a Security Council, users have at least 30d to exit.',
+          'In case of an unwanted upgrade by actors more centralized than a Security Council, users have at least 14d to exit.',
         negative:
           'Upgrades executed by actors with more centralized control than a Security Council provide less than 14 days for user exit following an unwanted upgrade.',
       },
