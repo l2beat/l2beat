@@ -201,7 +201,7 @@ export const starknet: Layer2 = {
       securityCouncilProperlySetUp: null,
     },
     stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
+      proofSystemOverriddenOnlyInCaseOfABug: null,
       fraudProofSystemIsPermissionless: null,
       delayWith30DExitWindow: false,
     },

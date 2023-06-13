@@ -15,8 +15,9 @@ export const getStage = createGetStage({
         negative: 'L2 state roots are not posted to Ethereum L1.',
       },
       dataAvailabilityOnL1: {
-        positive: 'Inputs for state transition function are posted to L1.',
-        negative: 'Inputs for state transition function are not posted to L1.',
+        positive: 'Inputs for the state transition function are posted to L1.',
+        negative:
+          'Inputs for the state transition function are not posted to L1.',
       },
       rollupNodeOpenSource: {
         positive: 'The rollup node software is open source.',
@@ -38,13 +39,13 @@ export const getStage = createGetStage({
       },
       usersHave14DaysToExit: {
         positive:
-          'Users have at least 14 days to exit the system in case of unwanted upgrades',
+          'In case of an unwanted upgrade by actors more centralized than a Security Council, users have at least 30d to exit.',
         negative:
-          'Users do not have at least 14 days to exit the system in case of unwanted upgrades',
+          'Upgrades executed by actors with more centralized control than a Security Council provide less than 14 days for user exit following an unwanted upgrade.',
       },
       usersCanExitWithoutCooperation: {
-        positive: `Withdrawals cannot be censored by the permissioned operators.`,
-        negative: `Withdrawals can be censored by the permissioned operators.`,
+        positive: `Users are able to exit without the help of the permissioned operators.`,
+        negative: `Users' withdrawals can be censored by the permissioned operators.`,
       },
       securityCouncilProperlySetUp: {
         positive: 'The Security Council is properly set up.',
@@ -57,17 +58,18 @@ export const getStage = createGetStage({
     items: {
       proofSystemOverriddenOnlyInCaseOfABug: {
         positive:
-          'Proof system can be overridden only if a bug is detected by the Ethereum L1 contracts.',
-        negative:
-          'Proof system can be overridden for reasons other than a bug detected by the Ethereum L1 contracts.',
+          'The Security Council is limited to acting solely on adjudicable soundness errors.',
+        negative: `The Security Council's actions are not confined to adjudicable soundness errors.`,
       },
       fraudProofSystemIsPermissionless: {
         positive: 'The fraud proof system is permissionless.',
-        negative: 'The fraud proof system is permissioned.',
+        negative: 'Fraud proof submission is open to everyone.',
       },
       delayWith30DExitWindow: {
-        positive: 'Users have at least 30 days to exit the system.',
-        negative: 'Users have less than 30 days to exit the system.',
+        positive:
+          'In case of an unwanted upgrade by actors more centralized than a Security Council, users have at least 30d to exit.',
+        negative:
+          'Upgrades executed by actors more centralized than a Security Council provide less than 30d to exit following an unwanted upgrade.',
       },
     },
   },

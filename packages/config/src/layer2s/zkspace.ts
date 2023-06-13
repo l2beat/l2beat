@@ -123,7 +123,7 @@ export const zkspace: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: false,
+      rollupNodeOpenSource: ['UnderReview', ''],
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -133,7 +133,7 @@ export const zkspace: Layer2 = {
       securityCouncilProperlySetUp: null,
     },
     stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
+      proofSystemOverriddenOnlyInCaseOfABug: null,
       fraudProofSystemIsPermissionless: null,
       delayWith30DExitWindow: false,
     },

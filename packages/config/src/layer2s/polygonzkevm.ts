@@ -177,7 +177,7 @@ export const polygonzkevm: Layer2 = {
       ],
     },
     stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: true,
+      proofSystemOverriddenOnlyInCaseOfABug: false,
       fraudProofSystemIsPermissionless: null,
       delayWith30DExitWindow: false,
     },

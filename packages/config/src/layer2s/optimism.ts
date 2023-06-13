@@ -182,7 +182,7 @@ export const optimism: Layer2 = {
       securityCouncilProperlySetUp: null,
     },
     stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
+      proofSystemOverriddenOnlyInCaseOfABug: null,
       fraudProofSystemIsPermissionless: false,
       delayWith30DExitWindow: false,
     },

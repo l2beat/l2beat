@@ -239,14 +239,14 @@ export const dydx: Layer2 = {
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: false,
+      usersHave14DaysToExit: true,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: null,
     },
     stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
+      proofSystemOverriddenOnlyInCaseOfABug: null,
       fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
+      delayWith30DExitWindow: true,
     },
   }),
   contracts: {
