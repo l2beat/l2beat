@@ -1,0 +1,81 @@
+{
+  "name": "symbiosis",
+  "blockNumber": 17471508,
+  "configHash": "0x5d6be1eae0fbb685de4bf85dda7604064f34cc1e2e4cddc10cd4083ba65e529f",
+  "contracts": [
+    {
+      "name": "Bridge",
+      "address": "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
+      "code": "https://etherscan.io/address/0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0#code",
+      "upgradeability": {
+        "type": "gnosis safe"
+      },
+      "values": {
+        "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
+      }
+    },
+    {
+      "name": "Portal",
+      "address": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
+      "code": "https://etherscan.io/address/0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0#code",
+      "upgradeability": {
+        "type": "gnosis safe"
+      },
+      "values": {
+        "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
+      }
+    },
+    {
+      "name": "MetaRouter",
+      "address": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
+      "code": "https://etherscan.io/address/0xE75C7E85FE6ADd07077467064aD15847E6ba9877#code",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "metaRouterGateway": "0x25bEE8C21D1d0ec2852302fd7E674196EA298eC6"
+      }
+    },
+    {
+      "name": "MetaRouterGateway",
+      "address": "0x25bEE8C21D1d0ec2852302fd7E674196EA298eC6",
+      "code": "https://etherscan.io/address/0x25bEE8C21D1d0ec2852302fd7E674196EA298eC6#code",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "metaRouter": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877"
+      }
+    }
+  ],
+  "eoas": [],
+  "abis": {
+    "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0": [
+      "constructor(address _layerZeroEndpoint, address _router)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SendMsg(uint8 msgType, uint64 nonce)",
+      "function approveTokenSpender(address token, address spender, uint256 amount)",
+      "function bridgeLookup(uint16) view returns (bytes)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function gasLookup(uint16, uint8) view returns (uint256)",
+      "function layerZeroEndpoint() view returns (address)",
+      "function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function owner() view returns (address)",
+      "function quoteLayerZeroFee(uint16 _chainId, uint8 _functionType, bytes _toAddress, bytes _transferAndCallPayload, tuple(uint256 dstGasForCall, uint256 dstNativeAmount, bytes dstNativeAddr) _lzTxParams) view returns (uint256, uint256)",
+      "function redeemLocal(uint16 _chainId, uint256 _srcPoolId, uint256 _dstPoolId, address _refundAddress, tuple(uint256 credits, uint256 idealBalance) _c, uint256 _amountSD, bytes _to, tuple(uint256 dstGasForCall, uint256 dstNativeAmount, bytes dstNativeAddr) _lzTxParams) payable",
+      "function redeemLocalCallback(uint16 _chainId, address _refundAddress, tuple(uint256 credits, uint256 idealBalance) _c, tuple(uint256 dstGasForCall, uint256 dstNativeAmount, bytes dstNativeAddr) _lzTxParams, bytes _payload) payable",
+      "function renounceOwnership()",
+      "function router() view returns (address)",
+      "function sendCredits(uint16 _chainId, uint256 _srcPoolId, uint256 _dstPoolId, address _refundAddress, tuple(uint256 credits, uint256 idealBalance) _c) payable",
+      "function setBridge(uint16 _chainId, bytes _bridgeAddress)",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setGasAmount(uint16 _chainId, uint8 _functionType, uint256 _gasAmount)",
+      "function setReceiveVersion(uint16 version)",
+      "function setSendVersion(uint16 version)",
+      "function setUseLayerZeroToken(bool enable)",
+      "function swap(uint16 _chainId, uint256 _srcPoolId, uint256 _dstPoolId, address _refundAddress, tuple(uint256 credits, uint256 idealBalance) _c, tuple(uint256 amount, uint256 eqFee, uint256 eqReward, uint256 lpFee, uint256 protocolFee, uint256 lkbRemove) _s, tuple(uint256 dstGasForCall, uint256 dstNativeAmount, bytes dstNativeAddr) _lzTxParams, bytes _to, bytes _payload) payable",
+      "function transferOwnership(address newOwner)",
+      "function useLayerZeroToken() view returns (bool)"
+    ]
+  }
+}

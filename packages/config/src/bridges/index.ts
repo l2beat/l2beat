@@ -34,6 +34,7 @@ import { synapse } from './synapse'
 import { Bridge } from './types'
 import { wormholeV1 } from './wormholeV1'
 import { xdai } from './xdai'
+import { symbiosis } from './symbiosis'
 
 export * from './types'
 
@@ -73,4 +74,5 @@ export const bridges: Bridge[] = [
   portal,
   wormholeV1,
   xdai,
+  symbiosis,
 ]

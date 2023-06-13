@@ -3,3 +3,4 @@ node_modules
 **/yarn-error.log
 packages/frontend/__screenshots__
 **/.DS_Store
+.idea
