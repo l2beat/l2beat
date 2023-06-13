@@ -4,7 +4,7 @@ import {
   CoingeckoId,
   EthereumAddress,
   HttpClient,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
