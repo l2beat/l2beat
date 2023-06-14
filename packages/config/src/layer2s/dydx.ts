@@ -246,7 +246,7 @@ export const dydx: Layer2 = {
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,
       fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: true,
+      delayWith30DExitWindow: false,
     },
   }),
   contracts: {

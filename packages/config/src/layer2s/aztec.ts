@@ -162,7 +162,7 @@ export const aztec: Layer2 = {
       securityCouncilProperlySetUp: null,
     },
     stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
+      proofSystemOverriddenOnlyInCaseOfABug: false,
       fraudProofSystemIsPermissionless: null,
       delayWith30DExitWindow: false,
     },
