@@ -18,10 +18,10 @@ export function StageTooltip({ item }: StageTooltipProps) {
       {item.missing && (
         <div>
           <p className="mb-2 text-[13px] uppercase leading-tight text-gray-50">
-            Items missing for {item.missing?.nextStage}:
+            Items missing for {item.missing.nextStage}:
           </p>
           <ul className="ml-2 list-none space-y-2">
-            {item.missing?.requirements.map((requirement, i) => (
+            {item.missing.requirements.map((requirement, i) => (
               <li className="w-60" key={i}>
                 ❌ {requirement}
               </li>
