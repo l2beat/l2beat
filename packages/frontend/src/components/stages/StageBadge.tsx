@@ -1,38 +1,41 @@
+import { Stage } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { Badge } from '../badge/Badge'
-
 interface StageBadgeProps {
-  stage: string | undefined
-  small?: boolean
+  stage: Stage | 'UnderReview' | undefined
+  oneSize?: boolean
+  big?: boolean
 }
 
-export function StageBadge({ stage, small }: StageBadgeProps) {
+export function StageBadge({ stage, oneSize, big }: StageBadgeProps) {
+  const value = stage === 'UnderReview' ? 'In review' : stage
   return (
-    <Badge
+    <span
       className={cx(
         getColorClassName(stage),
-        'inline-block text-center  leading-none',
-        small ? 'w-15 text-base' : 'w-40  text-lg',
+        'inline-block rounded  px-1.5 text-center uppercase leading-none',
+        oneSize && 'w-20',
+        big ? 'text-md py-0.5 font-medium' : 'py-[3px] text-xs',
       )}
-      oneSize
     >
-      {stage ?? '-'}
-    </Badge>
+      {value ?? '-'}
+    </span>
   )
 }
 
-function getColorClassName(stage: string | undefined): string {
+function getColorClassName(stage: Stage | 'UnderReview' | undefined): string {
   switch (stage) {
     case 'Stage 2':
-      return 'bg-green-500 text-black'
+      return 'bg-green-800 text-black'
     case 'Stage 1':
-      return 'bg-yellow-100 text-black'
+      return 'bg-yellow-250 text-black'
     case 'Stage 0':
-      return 'bg-orange-500 text-black'
+      return 'bg-orange-400 text-black'
+    case 'UnderReview':
+      return 'bg-gray-750 text-yellow-200'
     case undefined:
-      return 'bg-red-900 text-white'
+      return 'bg-gray-750 text-white'
     default:
       return ''
   }

@@ -31,7 +31,7 @@ export interface ProjectHeaderProps {
   risks: RiskValues
   links: ProjectLink[]
   stagesEnabled?: boolean
-  stage?: StageConfig | 'UnderReview'
+  stage?: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
   warning?: string | { text: string; href: string }
@@ -79,19 +79,15 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     ...(props.stage
       ? [
           {
-            title: 'Stages',
+            title: 'Stage',
             value: (
               <span
-                className="Tooltip"
+                className="Tooltip font-normal"
                 title={renderToStaticMarkup(
-                  <StageTooltip
-                    item={
-                      props.stage !== 'UnderReview' ? props.stage : undefined
-                    }
-                  />,
+                  <StageTooltip item={props.stage} />,
                 )}
               >
-                <StageBadge stage={'Stage 1'} />
+                <StageBadge stage={props.stage.stage} big />
               </span>
             ),
           },

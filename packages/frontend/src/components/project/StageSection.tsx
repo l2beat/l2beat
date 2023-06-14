@@ -6,15 +6,15 @@ import { ProjectDetailsSection } from './ProjectDetailsSection'
 export interface StageSectionProps {
   title: string
   id: string
-  stage?: StageConfig | 'UnderReview'
+  stage?: StageConfig
 }
 
 export function StageSection({ title, id, stage }: StageSectionProps) {
   if (stage === undefined) {
     return null
   }
-  //TODO: implement under review
-  if (stage === 'UnderReview') {
+
+  if (stage.stage === 'UnderReview') {
     return <span>Under Review 🕵️‍♀️</span>
   }
   return (
