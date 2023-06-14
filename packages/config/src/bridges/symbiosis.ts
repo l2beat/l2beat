@@ -128,7 +128,7 @@ export const symbiosis: Bridge = {
   },
   permissions: [
     discovery.contractAsPermissioned(
-      discovery.getContract('Symbiosis Multisig'),
+      discovery.getContract('Multisig'),
       'Owner and ProxyAdmin of all upgradable contracts.', 
     ),
   ],

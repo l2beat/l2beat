@@ -1,7 +1,7 @@
 {
   "name": "symbiosis",
-  "blockNumber": 17476516,
-  "configHash": "0xa25adb60115e6386e90c37d29b00a9ea14d685baa465ad8a7b02bf5cacbf9992",
+  "blockNumber": 17477268,
+  "configHash": "0xf9bdae7f4cd6d3f46fe547ee787fc883d1ec99105d39654717c28612fdd13053",
   "version": 1,
   "contracts": [
     {
@@ -38,7 +38,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Multisig",
       "address": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
       "code": "https://etherscan.deth.net/address/0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -58,7 +58,8 @@
         "getThreshold": 3,
         "nonce": 10,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "BridgeV2",
@@ -92,7 +93,7 @@
         "metaRouter": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
         "paused": false,
-        "requestCount": 1668,
+        "requestCount": 1672,
         "versionRecipient": "2.0.1",
         "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
@@ -109,7 +110,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "3489152002188417779723917"
+        "totalSupply": "3487217679673273221842216"
       }
     },
     {
