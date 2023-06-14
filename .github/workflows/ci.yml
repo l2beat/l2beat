@@ -65,16 +65,6 @@ jobs:
           cache: "yarn"
       - run: yarn --frozen-lockfile
       - run: yarn build
-
-  type-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-          cache: "yarn"
-      - run: yarn --frozen-lockfile
       - run: yarn typecheck
 
   format:
