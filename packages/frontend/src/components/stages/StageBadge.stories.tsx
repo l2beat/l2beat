@@ -15,7 +15,7 @@ interface TemplateProps {
 function Template(props: TemplateProps) {
   return (
     <div className="m-4 ml-32">
-      <StageBadge category={props.category} small={props.small} />
+      <StageBadge stage={props.category} small={props.small} />
     </div>
   )
 }
