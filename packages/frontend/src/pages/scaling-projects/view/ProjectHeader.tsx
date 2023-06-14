@@ -30,7 +30,8 @@ export interface ProjectHeaderProps {
   tvlBreakdown: TVLBreakdownProps
   risks: RiskValues
   links: ProjectLink[]
-  stage?: false | StageConfig | 'UnderReview'
+  stagesEnabled?: boolean
+  stage?: StageConfig | 'UnderReview'
   isArchived?: boolean
   isUpcoming?: boolean
   warning?: string | { text: string; href: string }
@@ -109,6 +110,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
   return (
     <DetailsHeader
       type="layer2"
+      stagesEnabled={props.stagesEnabled}
       title={props.title}
       icon={props.icon}
       stats={stats}

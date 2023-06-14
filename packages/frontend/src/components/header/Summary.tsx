@@ -11,6 +11,7 @@ interface SummaryProps {
   type: 'bridge' | 'layer2'
   stats: SummaryStat[]
   links: ProjectLink[]
+  stagesEnabled?: boolean
   isUpcoming?: boolean
 }
 
@@ -21,7 +22,7 @@ export interface SummaryStat {
 }
 
 export function Summary(props: SummaryProps) {
-  const cols = props.type === 'bridge' ? 4 : 3
+  const cols = props.type === 'bridge' || props.stagesEnabled ? 4 : 3
   const groupedStats = chunk(props.stats, cols)
 
   return (

@@ -21,6 +21,7 @@ export interface HeaderProps {
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2'
+  stagesEnabled?: boolean
   warning?: string | { text: string; href: string }
 }
 
@@ -79,6 +80,7 @@ export function DetailsHeader(props: HeaderProps) {
             stats={props.stats}
             links={props.links}
             isUpcoming={props.isUpcoming}
+            stagesEnabled={props.stagesEnabled}
           />
         </div>
         {props.risks && (
