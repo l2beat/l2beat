@@ -1,4 +1,4 @@
-import { ContractParameters, DiscoveryOutput } from '@l2beat/shared'
+import { ContractParameters, DiscoveryOutput } from '@l2beat/shared-pure'
 import { isArray, isObject } from 'lodash'
 
 import { getDiscoveryChild } from './getDiscoveryChild'

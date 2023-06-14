@@ -1,7 +1,7 @@
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
-import { EthereumAddress, Hash256 } from '../../types'
 import { HttpClient } from '../HttpClient'
 import { EtherscanClient } from './EtherscanClient'
 

@@ -1,4 +1,4 @@
-import { DiscoveryOutput, Hash256 } from '@l2beat/shared'
+import { DiscoveryOutput, Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'

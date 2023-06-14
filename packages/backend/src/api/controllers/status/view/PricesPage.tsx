@@ -1,4 +1,4 @@
-import { AssetId, UnixTime } from '@l2beat/shared'
+import { AssetId, UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { Page } from './Page'

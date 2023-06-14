@@ -3,7 +3,7 @@ import {
   DiscoveryConfig,
   DiscoveryEngine,
 } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryRunner } from './DiscoveryRunner'

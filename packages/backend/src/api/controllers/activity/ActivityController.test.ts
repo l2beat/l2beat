@@ -3,7 +3,7 @@ import {
   ActivityApiResponse,
   ProjectId,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'

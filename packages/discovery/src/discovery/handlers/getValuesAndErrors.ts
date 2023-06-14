@@ -1,4 +1,4 @@
-import { ContractParameters } from '@l2beat/shared'
+import { ContractParameters } from '@l2beat/shared-pure'
 
 import { HandlerResult } from './Handler'
 

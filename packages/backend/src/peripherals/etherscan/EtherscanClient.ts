@@ -1,10 +1,5 @@
-import {
-  getErrorMessage,
-  HttpClient,
-  Logger,
-  RateLimiter,
-  UnixTime,
-} from '@l2beat/shared'
+import { HttpClient, Logger } from '@l2beat/shared'
+import { getErrorMessage, RateLimiter, UnixTime } from '@l2beat/shared-pure'
 
 import { stringAsInt } from '../../tools/types'
 import { parseEtherscanResponse } from './parseEtherscanResponse'

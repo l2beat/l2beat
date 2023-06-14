@@ -4,7 +4,7 @@ import {
   TvlApiChartPoint,
   TvlApiCharts,
   TvlApiResponse,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'

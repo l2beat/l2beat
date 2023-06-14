@@ -1,4 +1,4 @@
-import { VerificationStatus } from '@l2beat/shared'
+import { VerificationStatus } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React from 'react'
 

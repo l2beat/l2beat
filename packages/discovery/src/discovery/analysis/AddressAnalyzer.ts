@@ -2,7 +2,7 @@ import {
   ContractValue,
   EthereumAddress,
   UpgradeabilityParameters,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
