@@ -14,7 +14,7 @@ export const symbiosis: Bridge = {
     name: 'Symbiosis',
     slug: 'symbiosis',
     description:
-        'Symbiosis is a cross-chain liquidity aggregation protocol. Best rates for any to any token swaps regardless of the blockchain network: Avalanche, BNB, Boba, Ethereum, Polygon, ZkSync and Arbitrum supported.',
+        'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks. Best rates for any to any token swaps regardless of the blockchain network: Avalanche, BNB, Boba, Ethereum, Polygon, ZkSync and Arbitrum supported.',
     links: {
       websites: ['https://symbiosis.finance/'],
       repositories: ['https://github.com/symbiosis-finance'],
@@ -29,13 +29,13 @@ export const symbiosis: Bridge = {
     validatedBy: { 
       value: 'Validation network',
       description:
-          'Consensus of MPC group (relayers network) is needed to create crosschain message with MPC signature.',
+          'Consensus of the MPC group (the Symbiosis relayers network) is required to create a cross-chain message with the MPC signature.',
       sentiment: 'warning',
     },
     sourceUpgradeability: { 
       value: 'Yes',
       description:
-          'Contracts could be upgraded. Upgrade is possible with 3/5 thereshold  in gnosis safe.',
+          'Contracts could be upgraded. Upgrade is possible with 3/5 threshold in gnosis safe.',
       sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.CANONICAL, 
@@ -70,7 +70,7 @@ export const symbiosis: Bridge = {
     validation: { 
       name: 'Oracles and relayers',
       description:
-        'Oracle request from one network to another could me transfered only when majority of relayers will reach consensus about request correctness',
+        'An Oracle request from one network to another could only be transfered when majority of relayers reach a consensus about the correctness of the request.',
       references: [],
       risks: [
         {
@@ -80,7 +80,7 @@ export const symbiosis: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'In case of majority of relayers network are compromised.  In case of majority of multi signature participants are compromised.',
+          text: 'The majority of the Symbiosis relayers network is compromised, or the majority of multi-signatutore participants are compromised.',
           isCritical: true,
         },
       ],
@@ -102,25 +102,25 @@ export const symbiosis: Bridge = {
         address: discovery.getContract('MetaRouter').address,
         name: 'Symbiosis MetaRouter',
         description:
-          'Upgradeable contract to process funds by provided route.',
+          'An upgradeable contract to process funds by provided route.',
       },
       {
         address: discovery.getContract('MetaRouterGateway').address,
         name: 'Symbiosis MetaRouter Gateway',
         description:
-          'Detached contract for secure isolation of user\'s assets.',
+          'A detached contract for secure isolation of users\' assets.',
       },
       {
         address: discovery.getContract('Bridge').address,
         name: 'Symbiosis Bridge',
         description:
-          'Contract that generates orcle request for relayers network',
+          'A contract that generates Orcle requests for the Symbiosis relayers network.',
       },
       {
         address: discovery.getContract('Portal').address,
         name: 'Symbiosis Portal',
         description:
-          'Contract that stores "bridged" liquidity',
+          'A contract that stores "bridged" liquidity.',
       },
     ],
     risks: [],
