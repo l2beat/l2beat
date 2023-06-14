@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import React from 'react'
+import { renderToString } from 'react-dom/server'
 
 import { ArrowRightIcon } from './icons'
 
