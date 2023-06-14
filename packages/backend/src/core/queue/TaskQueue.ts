@@ -1,13 +1,12 @@
+import { EventTracker, Logger } from '@l2beat/shared'
 import {
-  EventTracker,
   getErrorMessage,
   getErrorStackTrace,
   json,
-  Logger,
   Retries,
   ShouldRetry,
   wrapAndMeasure,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import assert from 'assert'
 import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'

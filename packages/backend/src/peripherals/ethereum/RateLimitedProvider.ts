@@ -1,4 +1,4 @@
-import { RateLimiter } from '@l2beat/shared'
+import { RateLimiter } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 export class RateLimitedProvider {

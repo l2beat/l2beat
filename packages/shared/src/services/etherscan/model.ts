@@ -1,6 +1,5 @@
+import { EthereumAddress, Hash256, stringAs } from '@l2beat/shared-pure'
 import { z } from 'zod'
-
-import { EthereumAddress, Hash256, stringAs } from '../../types'
 
 export type EtherscanResponse = z.infer<typeof EtherscanResponse>
 export const EtherscanResponse = z.object({

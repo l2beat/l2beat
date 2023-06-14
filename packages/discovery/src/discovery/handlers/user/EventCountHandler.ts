@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'

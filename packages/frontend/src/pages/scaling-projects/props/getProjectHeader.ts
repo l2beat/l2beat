@@ -1,5 +1,5 @@
 import { Layer2, ProjectLinks } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
 import { formatLargeNumber } from '../../../utils'

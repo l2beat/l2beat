@@ -4,7 +4,8 @@ import {
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
-import { DiscoveryOutput, Logger, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { Gauge, Histogram } from 'prom-client'
 

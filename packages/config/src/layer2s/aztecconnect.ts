@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { assert } from 'console'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'

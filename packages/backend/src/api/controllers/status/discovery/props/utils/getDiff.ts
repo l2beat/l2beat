@@ -3,7 +3,7 @@ import {
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
-import { DiscoveryOutput } from '@l2beat/shared'
+import { DiscoveryOutput } from '@l2beat/shared-pure'
 
 import { UpdateMonitorRepository } from '../../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 

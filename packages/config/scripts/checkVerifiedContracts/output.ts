@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { existsSync } from 'fs'
 import { readFile, writeFile } from 'fs/promises'
 import z from 'zod'
