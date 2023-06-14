@@ -26,19 +26,19 @@ export const symbiosis: Bridge = {
     },
   },
   riskView: {
-    validatedBy: { // TODO sourceUpgradeability
-      value: 'Various AMBs',
+    validatedBy: { 
+      value: 'Validation network',
       description:
-          'For BNB Multichain is used, for other chains their native AMBs are used.',
+          'Consensus of MPC group (relayers network) is needed to create crosschain message with MPC signature.',
       sentiment: 'warning',
     },
-    sourceUpgradeability: { // TODO sourceUpgradeability
+    sourceUpgradeability: { 
       value: 'Yes',
       description:
-          'Bridge cannot be upgraded but 3/6 Admin Multisig can move all funds out of the bridge via admin functions with no warning.',
+          'Contracts could be upgraded. Upgrade is possible with 3/5 thereshold  in gnosis safe.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL, // TODO
+    destinationToken: RISK_VIEW.CANONICAL, 
   },
   technology: {
     destination: [
@@ -57,29 +57,30 @@ export const symbiosis: Bridge = {
       'Polygon zkEVM',
     ],
     category: 'Hybrid',
-    principleOfOperation: { // TODO whole principleOfOperation section
+    principleOfOperation: { 
       name: 'Principle of operation',
       description:
-        'StarGate is a Liquidity Network. It relies on liquidity providers to supply tokens to liquidity pools on each chain. \
-        Users can swap tokens between chains by transferring their tokens to a pool and receive token from the pool on the destination chain.',
+        'Symbiosis is a decentralized exchange that pools together liquidity from different blockchains, whether they use EVM technology or not. \
+        With Symbiosis, users can effortlessly trade any token and transfer their assets across blockchains. No need to worry about which network a \
+        token is on or how to move funds between different blockchains. All cross-chain operations are done in a single click (one transaction) at \ 
+        competitive exchange rates and transaction costs.',
       references: [],
       risks: [],
     },
-    validation: { // TODO whole validation section
+    validation: { 
       name: 'Oracles and relayers',
       description:
-        'StarGate is built on top of LayerZero protocol. LayerZero relies on oracles to periodically submit source chain block hashes to the destination chain.\
-        Once block hash is submitted, relayers can provide the merkle proof for the transfers / swaps.',
+        'Oracle request from one network to another could me transfered only when majority of relayers will reach consensus about request correctness',
       references: [],
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'oracles or relayers fail to facilitate the transfer.',
+          text: 'Relayers fail to facilitate the transfer.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'oracles and relayers collude to submit fraudulent block hash and relay fraudulent transfer .',
+          text: 'In case of majority of relayers network are compromised.  In case of majority of multi signature participants are compromised.',
           isCritical: true,
         },
       ],
@@ -101,25 +102,25 @@ export const symbiosis: Bridge = {
         address: discovery.getContract('MetaRouter').address,
         name: 'Symbiosis MetaRouter',
         description:
-          '', // TODO
+          'Upgradeable contract to process funds by provided route.',
       },
       {
         address: discovery.getContract('MetaRouterGateway').address,
         name: 'Symbiosis MetaRouter Gateway',
         description:
-          '', // TODO
+          'Detached contract for secure isolation of user\'s assets.',
       },
       {
         address: discovery.getContract('Bridge').address,
         name: 'Symbiosis Bridge',
         description:
-          '', // TODO
+          'Contract that generates orcle request for relayers network',
       },
       {
         address: discovery.getContract('Portal').address,
         name: 'Symbiosis Portal',
         description:
-          '', // TODO
+          'Contract that stores "bridged" liquidity',
       },
     ],
     risks: [],
@@ -128,19 +129,25 @@ export const symbiosis: Bridge = {
   permissions: [
     discovery.contractAsPermissioned(
       discovery.getContract('Symbiosis Multisig'),
-      'Bridge owner, can create new pools, chainpaths, set fees.', // TODO
+      'Owner and ProxyAdmin of all upgradable contracts.', 
     ),
   ],
-  knowledgeNuggets: [ // TODO update links to useful resources
+  knowledgeNuggets: [ 
     {
-      title: 'Security models: isolated vs shared',
-      url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
+      title: 'Bridging contracts explained',
+      url: 'https://docs.symbiosis.finance/crosschain-liquidity-engine/bridge-contracts',
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
     },
     {
-      title: 'StarGate Bridge architecture',
-      url: 'https://twitter.com/bkiepuszewski/status/1518568490147450880',
+      title: 'Relayers network explained',
+      url: 'https://docs.symbiosis.finance/relayers-network/pos-relayers-network',
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
+   {
+      title: 'Audits',
+      url: 'https://docs.symbiosis.finance/main-concepts/security-audits-of-symbiosis',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
+    },
+    
   ],
 }
