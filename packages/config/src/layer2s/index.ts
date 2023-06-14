@@ -30,6 +30,7 @@ import { sorare } from './sorare'
 import { starknet } from './starknet'
 import { taiko } from './taiko'
 import { Layer2 } from './types'
+import { zkex } from './zkex'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
@@ -69,6 +70,7 @@ export const layer2s: Layer2[] = [
   sorare,
   starknet,
   taiko,
+  zkex,
   zkspace,
   zkswap,
   zkswap2,

@@ -2,7 +2,7 @@ import { ProjectTechnologyChoice } from '../../common/ProjectTechnologyChoice'
 
 export interface Layer2Technology {
   /** Technology provider */
-  provider?: 'StarkEx' | 'Optimism' | 'zkSync' | 'loopring'
+  provider?: 'StarkEx' | 'Optimism' | 'zkSync' | 'loopring' | 'zkLink'
   /** Name of the category the layer2 belongs to */
   category: Layer2Category
   /** What state correctness mechanism is used in the layer2 */

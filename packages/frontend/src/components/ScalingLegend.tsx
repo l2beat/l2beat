@@ -1,6 +1,12 @@
 import React from 'react'
 
-import { LoopringIcon, OptimismIcon, StarkWareIcon, ZkSyncIcon } from './icons'
+import {
+  LoopringIcon,
+  OptimismIcon,
+  StarkWareIcon,
+  ZkLinkIcon,
+  ZkSyncIcon,
+} from './icons'
 
 export function ScalingLegend() {
   return (
@@ -25,6 +31,11 @@ export function ScalingLegend() {
           <LoopringIcon className="relative -top-0.5 min-w-[24px]" />
           <span>&ndash;</span>
           <span>This project is based on loopring&apos;s code base.</span>
+        </p>
+        <p className="flex gap-1">
+          <ZkLinkIcon className="relative -top-0.5 min-w-[24px]" />
+          <span>&ndash;</span>
+          <span>This project is built using zkLink.</span>
         </p>
       </div>
     </div>
