@@ -6,9 +6,15 @@ interface StageBadgeProps {
   stage: Stage | 'UnderReview' | undefined
   oneSize?: boolean
   big?: boolean
+  className?: string
 }
 
-export function StageBadge({ stage, oneSize, big }: StageBadgeProps) {
+export function StageBadge({
+  stage,
+  oneSize,
+  big,
+  className,
+}: StageBadgeProps) {
   const value = stage === 'UnderReview' ? 'In review' : stage
   return (
     <span
@@ -17,6 +23,7 @@ export function StageBadge({ stage, oneSize, big }: StageBadgeProps) {
         'inline-block rounded  px-1.5 text-center uppercase leading-none',
         oneSize && 'w-20',
         big ? 'text-md py-0.5 font-medium' : 'py-[3px] text-xs',
+        className,
       )}
     >
       {value ?? '-'}

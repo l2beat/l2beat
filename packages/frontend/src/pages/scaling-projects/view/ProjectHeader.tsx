@@ -5,7 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { ProjectLink } from '../../../components/icons'
+import { InfoIcon, ProjectLink } from '../../../components/icons'
 import { StageBadge } from '../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../components/stages/StageTooltip'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
@@ -81,13 +81,16 @@ export function ProjectHeader(props: ProjectHeaderProps) {
           {
             title: 'Stage',
             value: (
-              <span
-                className="Tooltip font-normal"
-                title={renderToStaticMarkup(
-                  <StageTooltip item={props.stage} />,
-                )}
-              >
+              <span className="flex items-center font-normal">
                 <StageBadge stage={props.stage.stage} big />
+                <span
+                  className="Tooltip inline-block px-2"
+                  title={renderToStaticMarkup(
+                    <StageTooltip item={props.stage} />,
+                  )}
+                >
+                  <InfoIcon />
+                </span>
               </span>
             ),
           },

@@ -1,6 +1,8 @@
-import { StageConfig } from '@l2beat/config'
+import { Stage, StageConfig } from '@l2beat/config'
 import React from 'react'
 
+import { InfoIcon } from '../icons'
+import { MissingIcon } from '../icons/symbols/MissingIcon'
 import { StageBadge } from './StageBadge'
 
 export interface StageTooltipProps {
@@ -9,26 +11,50 @@ export interface StageTooltipProps {
 
 export function StageTooltip({ item }: StageTooltipProps) {
   if (!item) return null
+
+  // TODO: implement under review tooltip
+  if (item.stage === 'UnderReview') {
+    return <span>Under Review 🕵️‍♀️</span>
+  }
+
   return (
-    <div className="w-88 flex flex-col gap-4">
-      <span className="font-bold">
-        <StageBadge stage={item.stage} />
+    <div className="flex flex-col gap-4 py-1">
+      <span>
+        <StageBadge stage={item.stage} className="font-medium" />
       </span>
-      <hr className="border-gray-650" />
       {item.missing && (
-        <div>
-          <p className="mb-2 text-[13px] uppercase leading-tight text-gray-50">
-            Items missing for {item.missing.nextStage}:
-          </p>
-          <ul className="ml-2 list-none space-y-2">
+        <div className="text-sm">
+          <span className="mb-2 block leading-tight">
+            Items missing for{' '}
+            <span className={getColorClassName(item.missing.nextStage)}>
+              {item.missing.nextStage}
+            </span>
+          </span>
+          <ul className="list-none space-y-2">
             {item.missing.requirements.map((requirement, i) => (
-              <li className="w-60" key={i}>
-                ❌ {requirement}
+              <li className="flex gap-1.5" key={i}>
+                <MissingIcon className="relative top-0.5 inline-block shrink-0" />
+                {requirement}
               </li>
             ))}
           </ul>
         </div>
       )}
+      <div className="flex gap-2 rounded-[4px] bg-blue-700/20 p-3 text-sm font-medium">
+        <InfoIcon className="shrink-0 fill-blue-500" />
+        <span>Please mind, stages do not reflect rollup security</span>
+      </div>
     </div>
   )
+}
+
+function getColorClassName(stage: Stage) {
+  switch (stage) {
+    case 'Stage 1':
+      return 'text-yellow-250'
+    case 'Stage 2':
+      return 'text-green-400'
+    default:
+      return ''
+  }
 }
