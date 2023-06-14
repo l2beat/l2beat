@@ -52,7 +52,9 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
             getValue: (project: ScalingTvlViewEntry) => (
               <StageCell
                 item={
-                  project.stage !== 'UnderReview' ? project.stage : undefined
+                  project.stage === 'UnderReview'
+                    ? 'UnderReview'
+                    : project.stage
                 }
               />
             ),

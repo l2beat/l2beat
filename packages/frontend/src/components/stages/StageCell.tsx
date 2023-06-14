@@ -7,12 +7,17 @@ import { StageBadge } from './StageBadge'
 import { StageTooltip } from './StageTooltip'
 
 export interface StageCellProps {
-  item?: StageConfig
+  item?: StageConfig | 'UnderReview'
 }
 
 export function StageCell({ item }: StageCellProps) {
   if (!item) {
     return <NoInfoCell />
+  }
+
+  //TODO: implement under review
+  if (item === 'UnderReview') {
+    return <span>Under Review</span>
   }
 
   return (
