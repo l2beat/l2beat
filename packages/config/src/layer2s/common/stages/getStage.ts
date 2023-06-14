@@ -62,7 +62,7 @@ export const getStage = createGetStage({
         negative: `The Security Council's actions are not confined to adjudicable soundness errors.`,
       },
       fraudProofSystemIsPermissionless: {
-        positive: 'The fraud proof system is permissionless.',
+        positive: 'Fraud proof submission is open to everyone.',
         negative: 'Fraud proof submission is open to everyone.',
       },
       delayWith30DExitWindow: {
