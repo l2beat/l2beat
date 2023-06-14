@@ -60,10 +60,7 @@ export const symbiosis: Bridge = {
     principleOfOperation: { 
       name: 'Principle of operation',
       description:
-        'Symbiosis is a decentralized exchange that pools together liquidity from different blockchains, whether they use EVM technology or not. \
-        With Symbiosis, users can effortlessly trade any token and transfer their assets across blockchains. No need to worry about which network a \
-        token is on or how to move funds between different blockchains. All cross-chain operations are done in a single click (one transaction) at \ 
-        competitive exchange rates and transaction costs.',
+        'Symbiosis is a decentralized exchange that pools together liquidity from different blockchains, whether they use EVM technology or not. With Symbiosis, users can effortlessly trade any token and transfer their assets across blockchains. No need to worry about which network a token is on or how to move funds between different blockchains. All cross-chain operations are done in a single click (one transaction) at competitive exchange rates and transaction costs.',
       references: [],
       risks: [],
     },
