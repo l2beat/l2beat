@@ -7,6 +7,7 @@ import { ProjectLink } from '../icons'
 import { Link } from '../Link'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { UpcomingBar } from '../project/UpcomingBar'
+import { WarningBar } from '../project/WarningBar'
 import { BigRosette } from '../rosette'
 import { Summary, SummaryStat } from './Summary'
 
@@ -21,6 +22,7 @@ export interface HeaderProps {
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2'
+  warning?: string | { text: string; href: string }
 }
 
 export function DetailsHeader(props: HeaderProps) {
@@ -56,6 +58,23 @@ export function DetailsHeader(props: HeaderProps) {
           </h1>
           {props.isArchived && <ArchivedBar />}
           {props.isUpcoming && <UpcomingBar />}
+          {props.warning && (
+            <WarningBar
+              text={
+                typeof props.warning === 'string'
+                  ? props.warning
+                  : props.warning.text
+              }
+              href={
+                typeof props.warning !== 'string'
+                  ? props.warning.href
+                  : undefined
+              }
+              color="yellow"
+              isCritical={false}
+              className="mb-4 items-center justify-center py-2.5 px-2.5 text-xs md:px-4 md:text-base"
+            />
+          )}
           <Summary
             type={props.type}
             stats={props.stats}
@@ -71,7 +90,7 @@ export function DetailsHeader(props: HeaderProps) {
             />
             {!props.isUpcoming && (
               <Link
-                href="#risks"
+                href="#risk-analysis"
                 className="mt-3 block text-center text-sm"
                 showArrow
               >

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -35,6 +35,12 @@ const verifierAddress = discovery.getAddressFromValue(
   'GpsFactRegistryAdapter',
   'gpsContract',
 )
+
+const freezeGracePeriod = discovery.getContractValue<number>(
+  'StarkExchange',
+  'FREEZE_GRACE_PERIOD',
+)
+
 export const myria: Layer2 = {
   type: 'layer2',
   id: ProjectId('myria'),
@@ -60,7 +66,7 @@ export const myria: Layer2 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'StarkExchange',
+        address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
         sinceTimestamp: new UnixTime(1659542607),
         tokens: ['ETH'],
       }),
@@ -76,15 +82,24 @@ export const myria: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC,
-      references: [
-        'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F13#L188',
-        'https://etherscan.io/address/0x1e601435E181423e7A8430813d7500012a6169cB#code#F1#L60',
+      sources: [
+        {
+          contract: 'StarkExchange',
+          references: [
+            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F13#L188',
+          ],
+        },
+        {
+          contract: 'Committee',
+          references: [
+            'https://etherscan.io/address/0x1e601435E181423e7A8430813d7500012a6169cB#code#F1#L60',
+          ],
+        },
       ],
-      contracts: ['StarkExchange', 'Committee'],
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
-    sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_NFT,
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -100,8 +115,8 @@ export const myria: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails('StarkExchange'),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('StarkExchange'),
+      discovery.getContractDetails(
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
@@ -121,10 +136,7 @@ export const myria: Layer2 = {
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
-        'StarkExchange',
-        'OPERATORS',
-      ),
+      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },

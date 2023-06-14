@@ -6,7 +6,7 @@ import {
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import fs from 'fs'
 import { isArray, isString } from 'lodash'
@@ -16,6 +16,7 @@ import {
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissionedAccount,
+  ProjectReference,
 } from '../common'
 import {
   ProjectContractSingleAddress,
@@ -57,57 +58,71 @@ export class ProjectDiscovery {
     return JSON.parse(discoveryFile) as DiscoveryOutput
   }
 
-  getMainContractDetails(
+  getContractDetails(
     identifier: string,
-    description?: string,
+    descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
   ): ProjectContractSingleAddress {
     const contract = this.getContract(identifier)
+    if (typeof descriptionOrOptions === 'string') {
+      descriptionOrOptions = { description: descriptionOrOptions }
+    } else if (descriptionOrOptions?.pausable !== undefined) {
+      const descriptions = [
+        descriptionOrOptions.description,
+        `The contract is pausable by ${descriptionOrOptions.pausable.pausableBy.join(
+          ', ',
+        )}.`,
+      ]
+      if (descriptionOrOptions.pausable.paused) {
+        descriptions.push('The contract is currently paused.')
+      }
+      descriptionOrOptions.description = descriptions.filter(isString).join(' ')
+    }
     return {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
-      description,
+      ...descriptionOrOptions,
     }
   }
 
   getEscrowDetails({
-    identifier,
+    address,
+    name,
     description,
-    path,
     sinceTimestamp,
     tokens,
-    hidden,
+    upgradableBy,
+    upgradeDelay,
   }: {
-    identifier: string
+    address: EthereumAddress
+    name?: string
     description?: string
-    path?: string
     sinceTimestamp: UnixTime
     tokens: string[] | '*'
-    hidden?: boolean
+    upgradableBy?: string[]
+    upgradeDelay?: string
   }): ProjectEscrow {
-    let contract: ContractParameters
-    if (path) {
-      const address = this.getAddressFromValue(identifier, path)
-      contract = this.getContractByAddress(address.toString())
-    } else {
-      contract = this.getContract(identifier)
-    }
+    const contract = this.getContractByAddress(address.toString())
 
     return {
+      address,
       newVersion: true,
-      name: contract.name,
-      address: contract.address,
-      upgradeability: contract.upgradeability,
-      description,
       sinceTimestamp,
       tokens,
-      hidden,
+      contract: {
+        name: name ?? contract.name,
+        description,
+        upgradeability: contract.upgradeability,
+        upgradableBy,
+        upgradeDelay,
+      },
     }
   }
 
-  getGnosisSafeDetails(
+  getMultisigPermission(
     identifier: string,
-    descriptionPrefix: string,
+    description: string,
+    references?: ProjectReference[],
   ): ProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
@@ -118,7 +133,7 @@ export class ProjectDiscovery {
     return [
       {
         name: identifier,
-        description: `${descriptionPrefix} This is a Gnosis Safe with ${this.getMultisigStats(
+        description: `${description} This is a Gnosis Safe with ${this.getMultisigStats(
           identifier,
         )} threshold.`,
         accounts: [
@@ -130,8 +145,9 @@ export class ProjectDiscovery {
       },
       {
         name: `${identifier} participants`,
-        description: `Those are the participants of the ${identifier}`,
-        accounts: this.getPermissionedAccountsList(identifier, 'getOwners'),
+        description: `Those are the participants of the ${identifier}.`,
+        accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
+        references,
       },
     ]
   }
@@ -192,7 +208,15 @@ export class ProjectDiscovery {
     return { address: address, type }
   }
 
-  getPermissionedAccountsList(
+  getPermissionedAccount(
+    contractIdentifier: string,
+    key: string,
+  ): ProjectPermissionedAccount {
+    const value = this.getContractValue(contractIdentifier, key)
+    return this.formatPermissionedAccount(value)
+  }
+
+  getPermissionedAccounts(
     contractIdentifier: string,
     key: string,
   ): ProjectPermissionedAccount[] {
@@ -206,7 +230,7 @@ export class ProjectDiscovery {
   getContractFromValue(
     contractIdentifier: string,
     key: string,
-    description?: string,
+    descriptionOrOptions?: string | Partial<ProjectContractSingleAddress>,
   ): ProjectContractSingleAddress {
     const address = this.getContractValue(contractIdentifier, key)
     assert(
@@ -214,12 +238,15 @@ export class ProjectDiscovery {
       `Value of ${key} must be an Ethereum address`,
     )
     const contract = this.getContract(address)
+    if (typeof descriptionOrOptions === 'string') {
+      descriptionOrOptions = { description: descriptionOrOptions }
+    }
 
     return {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
-      description,
+      ...descriptionOrOptions,
     }
   }
 
@@ -307,7 +334,7 @@ export class ProjectDiscovery {
     ])
   }
 
-  private getContractByAddress(address: string): ContractParameters {
+  getContractByAddress(address: string): ContractParameters {
     const contract = this.discovery.contracts.find(
       (contract) => contract.address === EthereumAddress(address),
     )

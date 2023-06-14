@@ -2,7 +2,6 @@ import { Config } from '../build/config'
 import { getBridgeProjectPages } from './bridges-projects'
 import { getBridgesRiskPage } from './bridges-risk'
 import { getBridgesTvlPage } from './bridges-tvl'
-import { getDefinitionsPage } from './definitions'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
 import { getMetaImagePages } from './meta-images'
@@ -36,9 +35,6 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         verificationStatus,
       }),
     )
-  }
-  if (config.features.maturity) {
-    pages.push(getDefinitionsPage(config))
   }
 
   outputPages(pages)

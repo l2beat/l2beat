@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared'
+import { ProjectId } from '@l2beat/shared-pure'
 
 import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
 import { asNumber } from './tvl/asNumber'

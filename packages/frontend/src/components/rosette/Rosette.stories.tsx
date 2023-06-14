@@ -27,7 +27,7 @@ export default {
       options: ['bad', 'warning', undefined],
       control: { type: 'select' },
     },
-    validatorFailure: {
+    proposerFailure: {
       options: ['bad', 'warning', undefined],
       control: { type: 'select' },
     },
@@ -39,7 +39,7 @@ const args: RiskSentiments = {
   stateValidation: 'warning',
   dataAvailability: undefined,
   upgradeability: 'bad',
-  validatorFailure: 'warning',
+  proposerFailure: 'warning',
 }
 
 function SmallTemplate(risks: RiskSentiments) {
@@ -86,9 +86,9 @@ function BigTemplate(risks: RiskSentiments) {
       value: 'State validation',
       description: 'If the sequencer fails, the network will halt.',
     },
-    validatorFailure: {
-      sentiment: risks.validatorFailure,
-      value: 'Validator failure',
+    proposerFailure: {
+      sentiment: risks.proposerFailure,
+      value: 'Proposer failure',
       description: 'If the sequencer fails, the network will halt.',
     },
   }
@@ -125,7 +125,7 @@ UpcomingRosette.args = {
   stateValidation: {
     value: 'State validation',
   },
-  validatorFailure: {
-    value: 'Validator failure',
+  proposerFailure: {
+    value: 'Proposer failure',
   },
 }

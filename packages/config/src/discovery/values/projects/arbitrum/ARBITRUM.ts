@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ProjectPermissionedAccount } from '../../../../common'
 import { formatSeconds } from '../../../../utils/formatSeconds'
@@ -18,10 +18,10 @@ const getSequencerFailureString = () => {
   )} users can force transactions to be included in the L2 chain by sending it to the L1.`
 }
 
-const getValidatorFailureString = (delayBlocks: number) => {
+const getProposerFailureString = (delayBlocks: number) => {
   const delay = formatSeconds(delayBlocks * 12)
 
-  return `Anyone can become a Validator after approximately ${delay} (${delayBlocks} blocks) of inactivity from the currently whitelisted Validators.`
+  return `Anyone can become a Proposer after approximately ${delay} (${delayBlocks} blocks) of inactivity from the currently whitelisted Proposers.`
 }
 
 // HARDCODED
@@ -94,5 +94,5 @@ export const ARBITRUM = {
   SEQUENCER,
   VALIDATORS,
   getSequencerFailureString,
-  getValidatorFailureString,
+  getProposerFailureString,
 }

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -55,8 +55,8 @@ export const hermez: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADE_DELAY('7 days'),
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
     // NOTE: I have no clue what token are fees paid in. There are fees but
     // the explorer shows them in USD and there is no documentation around it
     destinationToken: RISK_VIEW.CANONICAL,

@@ -1,3 +1,5 @@
+import { utils } from 'ethers'
+
 import { ProjectRiskViewEntry } from '../../common'
 import { formatSeconds } from '../../utils/formatSeconds'
 import { roundSeconds } from '../../utils/roundSeconds'
@@ -71,7 +73,7 @@ export const DATA_EXTERNAL_MEMO: ProjectRiskViewEntry = {
   value: 'Optimistic (MEMO)',
   description:
     'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
-    Challange mechanizm is not yet fully implemented.',
+    Challenge mechanizm is not yet fully implemented.',
   sentiment: 'warning',
 }
 
@@ -108,10 +110,25 @@ export function UPGRADABLE_ARBITRUM(delay: number): ProjectRiskViewEntry {
   }
 }
 
-export function UPGRADABLE_POLYGON_ZKEVM(delay: string): ProjectRiskViewEntry {
+export function UPGRADABLE_POLYGON_ZKEVM(
+  delay: string,
+  rollupEmergencyState: boolean,
+  bridgeEmergencyState: boolean,
+): ProjectRiskViewEntry {
   return {
     value: `${delay} or no delay`,
-    description: `There is a ${delay} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay.`,
+    description: `There is a ${delay} delay for upgrades initiated by the Admin. The Security Council can switch on EmergencyState in which there is no upgrade delay. Currently rollup emergency state is set to ${rollupEmergencyState.toString()}, bridge emergency state is set to ${bridgeEmergencyState.toString()}.`,
+    sentiment: 'warning',
+  }
+}
+
+export function UPGRADABLE_ZKSYNC(
+  delay: string,
+  securityCouncil: string,
+): ProjectRiskViewEntry {
+  return {
+    value: `${delay} or no delay`,
+    description: `There is ${delay} for upgrades initiated by ZkSync Multisig. The ${securityCouncil} Security Council can override the delay and allow instant upgrade. Some system components can be changed with no delay but that do not impede the ability for users to withdraw permissionlessly.`,
     sentiment: 'warning',
   }
 }
@@ -136,137 +153,6 @@ function UPGRADE_DELAY_SECONDS(delay: number): ProjectRiskViewEntry {
 export const UPGRADABLE_NO: ProjectRiskViewEntry = {
   value: 'No',
   description: 'The code that secures the system can never change.',
-}
-
-// Operator is censoring
-
-export const SEQUENCER_TRANSACT_L1: ProjectRiskViewEntry = {
-  value: 'Transact using L1',
-  description:
-    'The user is able to submit a transaction through L1 and force its inclusion on L2.',
-}
-
-export function SEQUENCER_STARKEX_PERPETUAL(
-  delay: number,
-): ProjectRiskViewEntry {
-  return {
-    value: 'Force trade/exit to L1',
-    description: `The user can force the sequencer to include a trade or withdrawal transaction by submitting a request through L1. The user is required to find a counterparty for the trade by out of system means. If the sequencer is down for more than ${formatSeconds(
-      delay,
-    )}, the user can use the exit hatch to withdraw funds.`,
-    sentiment: 'warning',
-  }
-}
-
-export const SEQUENCER_STARKEX_SPOT: ProjectRiskViewEntry = {
-  value: 'Force exit to L1',
-  description:
-    'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
-}
-
-export const SEQUENCER_FORCE_EXIT_L1: ProjectRiskViewEntry = {
-  value: 'Force exit to L1',
-  description:
-    'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
-}
-
-export const SEQUENCER_EXIT_L1: ProjectRiskViewEntry = {
-  value: 'Exit to L1',
-  description:
-    'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
-}
-
-export const SEQUENCER_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
-  value: 'Propose blocks',
-  description:
-    'The user needs to run their own node and use it to propose new blocks that include otherwise censored transactions.',
-}
-
-export const SEQUENCER_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
-  value: 'Propose blocks (ZK)',
-  description:
-    'The user needs to run their own node and use it to propose new blocks that include otherwise censored transactions. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
-  sentiment: 'warning',
-}
-
-export const SEQUENCER_NO_MECHANISM: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'There is no mechanism to have transactions be included if the sequencer is down or censoring.',
-  sentiment: 'bad',
-}
-
-export const SEQUENCER_QUEUE: ProjectRiskViewEntry = {
-  value: 'Enqueue transactions',
-  description:
-    "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
-  sentiment: 'warning',
-}
-
-// Operator is down
-
-export const VALIDATOR_ESCAPE_MP: ProjectRiskViewEntry = {
-  value: 'Escape hatch (MP)',
-  description:
-    'Users are able to trustlessly exit by submitting a merkle proof of funds.',
-}
-
-export const VALIDATOR_ESCAPE_ZKP: ProjectRiskViewEntry = {
-  value: 'Escape hatch (ZK)',
-  description:
-    'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
-  sentiment: 'warning',
-}
-
-export const VALIDATOR_ESCAPE_STARKEX_PERPETUAL: ProjectRiskViewEntry = {
-  ...VALIDATOR_ESCAPE_MP,
-  description:
-    'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
-}
-
-export const VALIDATOR_ESCAPE_STARKEX_NFT: ProjectRiskViewEntry = {
-  value: 'Escape hatch (MP)',
-  description:
-    'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',
-}
-
-export const VALIDATOR_ESCAPE_U: ProjectRiskViewEntry = {
-  value: 'Escape hatch (?)',
-  description: 'Users are able to exit the system. The details are unknown.',
-  sentiment: 'warning',
-}
-
-export const VALIDATOR_PROPOSE_BLOCKS: ProjectRiskViewEntry = {
-  value: 'Propose blocks',
-  description:
-    'The user needs to run their own node and use it to propose new blocks to replace the validator.',
-}
-
-export const VALIDATOR_PROPOSE_BLOCKS_ZKP: ProjectRiskViewEntry = {
-  value: 'Propose blocks (ZK)',
-  description:
-    'The user needs to run their own node and use it to propose new blocks to replace the validator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
-  sentiment: 'warning',
-}
-
-export const VALIDATOR_NO_MECHANISM: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description: 'There is no mechanism to handle the validator going down.',
-  sentiment: 'bad',
-}
-
-export const VALIDATOR_WHITELISTED_BLOCKS: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
-  sentiment: 'bad',
-}
-
-export const PROVER_DOWN: ProjectRiskViewEntry = {
-  value: 'No mechanism',
-  description:
-    'There is no generic escape hatch as StarkNet cannot be frozen. Application-specific escape hatches can be built.',
-  sentiment: 'warning',
 }
 
 // bridges
@@ -308,10 +194,155 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   dataAvailability: UPCOMING_RISK,
   upgradeability: UPCOMING_RISK,
   sequencerFailure: UPCOMING_RISK,
-  validatorFailure: UPCOMING_RISK,
+  proposerFailure: UPCOMING_RISK,
   destinationToken: UPCOMING_RISK,
   validatedBy: UPCOMING_RISK,
 })
+
+/* New risks for stages */
+
+// SEQUENCER COLUMN
+
+export function SEQUENCER_SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
+  const delayString =
+    delay !== undefined
+      ? delay === 0
+        ? ' There is no delay on this operation.'
+        : ` There is a ${formatSeconds(delay)} delay on this operation.`
+      : ''
+  return {
+    value: 'Self sequence',
+    description: `In the event of a sequencer failure, users can force transactions to be included in the L2 chain by sending them to L1.${delayString}`,
+  }
+}
+
+export function SEQUENCER_SELF_SEQUENCE_ZK(
+  delay?: number,
+): ProjectRiskViewEntry {
+  return {
+    ...SEQUENCER_SELF_SEQUENCE(delay),
+    description:
+      SEQUENCER_SELF_SEQUENCE(delay).description +
+      ' Proposing new blocks requires creating ZK proofs.',
+  }
+}
+
+export function SEQUENCER_FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
+  const delayString =
+    delay !== undefined ? ' for more than ' + formatSeconds(delay) : ''
+  return {
+    value: 'Force via L1',
+    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
+  }
+}
+
+export function SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(
+  delay: number,
+): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Force via L1',
+    description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`,
+  }
+}
+
+export function SEQUENCER_FORCE_VIA_L1_LOOPRING(
+  delay: number,
+  forcedWithdrawalFee: number,
+  maxAgeDepositUntilWithdrawable: number,
+): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  const maxAgeDepositUntilWithdrawableString = formatSeconds(
+    maxAgeDepositUntilWithdrawable,
+  )
+  const forcedWithdrawalFeeString = `${utils.formatEther(
+    forcedWithdrawalFee,
+  )} ETH`
+  return {
+    value: 'Force via L1',
+    description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1 with a ${forcedWithdrawalFeeString} fee. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawableString} users can get their funds back.`,
+  }
+}
+
+export const SEQUENCER_ENQUEUE_VIA_L1: ProjectRiskViewEntry = {
+  value: 'Enqueue via L1',
+  description:
+    "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
+  sentiment: 'warning',
+}
+
+export function SEQUENCER_NO_MECHANISM(
+  disabled?: boolean,
+): ProjectRiskViewEntry {
+  const additional =
+    disabled === true
+      ? ' Although the functionality exists in the code, it is currently disabled.'
+      : ''
+  return {
+    value: 'No mechanism',
+    description:
+      'There is no mechanism to have transactions be included if the sequencer is down or censoring.' +
+      additional,
+    sentiment: 'bad',
+  }
+}
+
+// PROPOSER COLUMN
+
+export const PROPOSER_CANNOT_WITHDRAW: ProjectRiskViewEntry = {
+  value: 'Cannot withdraw',
+  description:
+    'Only the whitelisted proposers can publish L2 state roots on L1, so in the event of failure the withdrawals are frozen.',
+  sentiment: 'bad',
+}
+
+export const PROPOSER_USE_ESCAPE_HATCH_ZK: ProjectRiskViewEntry = {
+  value: 'Use escape hatch',
+  description:
+    'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
+}
+
+export const PROPOSER_USE_ESCAPE_HATCH_MP: ProjectRiskViewEntry = {
+  value: 'Use escape hatch',
+  description:
+    'Users are able to trustlessly exit by submitting a Merkle proof of funds.',
+}
+
+export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: ProjectRiskViewEntry = {
+  ...PROPOSER_USE_ESCAPE_HATCH_MP,
+  description:
+    PROPOSER_USE_ESCAPE_HATCH_MP.description +
+    ' NFTs will be minted on L1 to exit.',
+}
+
+export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: ProjectRiskViewEntry = {
+  ...PROPOSER_USE_ESCAPE_HATCH_MP,
+  description:
+    PROPOSER_USE_ESCAPE_HATCH_MP.description +
+    ' Positions will be closed using the average price from the last batch state update.',
+}
+
+export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+  delay: number,
+): ProjectRiskViewEntry {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Self propose',
+    description: `Anyone can become a Proposer after ${delayString} of inactivity from the currently whitelisted Proposers.`,
+  }
+}
+
+export const PROPOSER_SELF_PROPOSE_ZK: ProjectRiskViewEntry = {
+  value: 'Self propose',
+  description:
+    'If the Proposer fails, users can leverage the open source prover to submit proofs to the L1 bridge.',
+}
+
+export const PROPOSER_SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
+  value: 'Self propose',
+  description:
+    'Anyone can be a Proposer and propose new roots to the L1 bridge.',
+}
 
 export const RISK_VIEW = {
   STATE_FP,
@@ -328,30 +359,27 @@ export const RISK_VIEW = {
   UPGRADABLE_YES,
   UPGRADABLE_ARBITRUM,
   UPGRADABLE_POLYGON_ZKEVM,
+  UPGRADABLE_ZKSYNC,
   UPGRADE_DELAY,
   UPGRADE_DELAY_SECONDS,
   UPGRADABLE_NO,
-  SEQUENCER_TRANSACT_L1,
-  SEQUENCER_STARKEX_PERPETUAL,
-  SEQUENCER_STARKEX_SPOT,
-  SEQUENCER_FORCE_EXIT_L1,
-  SEQUENCER_EXIT_L1,
-  SEQUENCER_PROPOSE_BLOCKS,
-  SEQUENCER_PROPOSE_BLOCKS_ZKP,
-  SEQUENCER_NO_MECHANISM,
-  SEQUENCER_QUEUE,
-  VALIDATOR_ESCAPE_MP,
-  VALIDATOR_ESCAPE_ZKP,
-  VALIDATOR_ESCAPE_STARKEX_PERPETUAL,
-  VALIDATOR_ESCAPE_STARKEX_NFT,
-  VALIDATOR_ESCAPE_U,
-  VALIDATOR_PROPOSE_BLOCKS,
-  VALIDATOR_PROPOSE_BLOCKS_ZKP,
-  VALIDATOR_NO_MECHANISM,
-  VALIDATOR_WHITELISTED_BLOCKS,
-  PROVER_DOWN,
   VALIDATED_BY_ETHEREUM,
   NATIVE_AND_CANONICAL,
   CANONICAL,
   CANONICAL_USDC,
+  SEQUENCER_SELF_SEQUENCE,
+  SEQUENCER_SELF_SEQUENCE_ZK,
+  SEQUENCER_FORCE_VIA_L1,
+  SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
+  SEQUENCER_FORCE_VIA_L1_LOOPRING,
+  SEQUENCER_ENQUEUE_VIA_L1,
+  SEQUENCER_NO_MECHANISM,
+  PROPOSER_CANNOT_WITHDRAW,
+  PROPOSER_USE_ESCAPE_HATCH_ZK,
+  PROPOSER_USE_ESCAPE_HATCH_MP,
+  PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
+  PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
+  PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+  PROPOSER_SELF_PROPOSE_ZK,
+  PROPOSER_SELF_PROPOSE_ROOTS,
 }

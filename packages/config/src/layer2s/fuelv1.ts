@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   DATA_AVAILABILITY,
@@ -10,6 +10,7 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 export const fuelv1: Layer2 = {
@@ -46,10 +47,34 @@ export const fuelv1: Layer2 = {
     stateValidation: RISK_VIEW.STATE_FP_1R,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_NO,
-    sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS,
-    validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS,
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: true,
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      //TODO: check if this is true
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave14DaysToExit: null,
+      usersCanExitWithoutCooperation: [
+        'UnderReview',
+        `It is under review whether users can exit without operator's cooperation.`,
+      ],
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: true,
+      delayWith30DExitWindow: true,
+    },
   }),
   technology: {
     category: 'Optimistic Rollup',

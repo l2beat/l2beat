@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -34,6 +34,11 @@ const verifierAddress = discovery.getAddressFromValue(
   'gpsContract',
 )
 
+const freezeGracePeriod = discovery.getContractValue<number>(
+  'StarkExchange',
+  'FREEZE_GRACE_PERIOD',
+)
+
 export const canvasconnect: Layer2 = {
   type: 'layer2',
   id: ProjectId('canvasconnect'),
@@ -62,7 +67,7 @@ export const canvasconnect: Layer2 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'StarkExchange',
+        address: EthereumAddress('0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d'),
         sinceTimestamp: new UnixTime(1675209600),
         tokens: ['ETH', 'USDC'],
       }),
@@ -72,8 +77,8 @@ export const canvasconnect: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
-    sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_NFT,
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -89,8 +94,8 @@ export const canvasconnect: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails('StarkExchange'),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('StarkExchange'),
+      discovery.getContractDetails(
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
@@ -110,10 +115,7 @@ export const canvasconnect: Layer2 = {
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
-        'StarkExchange',
-        'OPERATORS',
-      ),
+      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
       description:
         'Allowed to update state of the system. When Operator is down the state cannot be updated.',
     },

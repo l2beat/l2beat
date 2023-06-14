@@ -11,7 +11,7 @@ import {
   assertUnreachable,
   EthereumAddress,
   VerificationStatus,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 import {
   TechnologyContract,
@@ -30,7 +30,7 @@ export function getContractSection(
   })
 
   const escrows = project.config.escrows
-    .filter((escrow) => escrow.newVersion && !escrow.hidden)
+    .filter((escrow) => escrow.newVersion && !escrow.isHistorical)
     .sort(moreTokensFirst)
     .map((escrow) => {
       const isUnverified = isAddressUnverified(
@@ -90,6 +90,7 @@ function makeTechnologyContract(
         case 'EIP1967 proxy':
         case 'Custom':
         case 'ZeppelinOS proxy':
+        case 'Eternal Storage proxy':
           links.push({
             name: 'Implementation (Upgradable)',
             href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
@@ -208,6 +209,28 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
+        case 'zkSpace proxy':
+          links.push({
+            name: 'Implementation (Upgradable)',
+            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            address: item.upgradeability.implementation.toString(),
+            isAdmin: false,
+          })
+          links.push(
+            ...item.upgradeability.additional.map((additional) => ({
+              name: 'Additional implementation (Upgradable)',
+              href: `https://etherscan.io/address/${additional.toString()}#code`,
+              address: additional.toString(),
+              isAdmin: false,
+            })),
+          )
+          links.push({
+            name: 'Admin',
+            href: `https://etherscan.io/address/${item.upgradeability.admin.toString()}#code`,
+            address: item.upgradeability.admin.toString(),
+            isAdmin: true,
+          })
+          break
 
         // Ignore types
         case 'immutable':
@@ -239,7 +262,7 @@ function makeTechnologyContract(
     if (tokens && !isEscrow) {
       const tokenText =
         tokens === '*'
-          ? 'This contract can store any token'
+          ? 'This contract can store any token.'
           : `This contract stores the following tokens: ${tokens.join(', ')}.`
       if (!description) {
         description = tokenText
@@ -253,12 +276,34 @@ function makeTechnologyContract(
     ? [item.address.toString()]
     : [...item.multipleAddresses.map((x) => x.toString())]
 
-  return {
+  const result: TechnologyContract = {
     name: item.name,
     addresses,
     description,
     links,
   }
+
+  if (isSingleAddress(item)) {
+    result.upgradeableBy = languageJoin(item.upgradableBy)
+    result.upgradeDelay = item.upgradeDelay
+    result.upgradeConsiderations = item.upgradeConsiderations
+    result.references = item.references
+  }
+
+  return result
+}
+
+function languageJoin(items?: string[]) {
+  if (!items || items.length === 0) {
+    return undefined
+  }
+  if (items.length === 1) {
+    return items[0]
+  }
+  items = [...items]
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const last = items.pop()!
+  return `${items.join(', ')} and ${last}`
 }
 
 function isContractUnverified(
@@ -291,13 +336,12 @@ function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
   assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
 
   return {
+    ...escrow.contract,
     name:
       escrow.tokens === '*'
         ? 'Generic escrow'
         : 'Escrow for ' + escrow.tokens.join(', '),
     address: escrow.address,
-    description: escrow.description,
-    upgradeability: escrow.upgradeability,
   }
 }
 

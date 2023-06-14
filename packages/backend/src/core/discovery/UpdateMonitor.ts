@@ -1,17 +1,21 @@
-import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/shared'
+import {
+  ConfigReader,
+  diffDiscovery,
+  DiscoveryConfig,
+  DiscoveryDiff,
+} from '@l2beat/discovery'
+import { Logger } from '@l2beat/shared'
+import { DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
-import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
-import { ConfigReader } from './config/ConfigReader'
-import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryRunner } from './DiscoveryRunner'
-import { NotificationManager } from './NotificationManager'
-import { diffDiscovery, DiscoveryDiff } from './output/diffDiscovery'
+import { UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
+import { findUnknownContracts } from './utils/findUnknownContracts'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -20,12 +24,13 @@ export class UpdateMonitor {
   constructor(
     private readonly provider: providers.AlchemyProvider,
     private readonly discoveryRunner: DiscoveryRunner,
-    private readonly notificationManager: NotificationManager,
+    private readonly updateNotifier: UpdateNotifier,
     private readonly configReader: ConfigReader,
     private readonly repository: UpdateMonitorRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
+    private readonly version: number,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -40,7 +45,7 @@ export class UpdateMonitor {
   async start() {
     this.logger.info('Started')
     if (this.runOnStart) {
-      await this.notificationManager.handleStart()
+      await this.updateNotifier.handleStart()
       this.taskQueue.addToFront(UnixTime.now())
     }
     return this.clock.onNewHour((timestamp) => {
@@ -90,13 +95,21 @@ export class UpdateMonitor {
     blockNumber: number,
     timestamp: UnixTime,
   ) {
-    const discovery = await this.discoveryRunner.run(projectConfig, blockNumber)
+    const previousDiscovery = await this.getPreviousDiscovery(projectConfig)
+
+    const discovery = await this.discoveryRunner.run(
+      projectConfig,
+      blockNumber,
+      {
+        runSanityCheck: true,
+        injectInitialAddresses: true,
+      },
+    )
     this.cachedDiscovery.set(projectConfig.name, discovery)
 
-    const diff = await this.findChanges(
-      projectConfig.name,
-      discovery,
-      projectConfig.hash,
+    const diff = diffDiscovery(
+      previousDiscovery.contracts,
+      discovery.contracts,
       projectConfig,
     )
 
@@ -107,32 +120,43 @@ export class UpdateMonitor {
       timestamp,
       blockNumber,
       discovery,
+      version: this.version,
       configHash: projectConfig.hash,
     })
   }
 
-  async findChanges(
-    name: string,
-    discovery: DiscoveryOutput,
-    configHash: Hash256,
-    config: DiscoveryConfig,
-  ): Promise<DiscoveryDiff[]> {
-    const databaseEntry = await this.repository.findLatest(name)
-
-    if (databaseEntry?.configHash === configHash) {
-      this.logger.debug('Using database record for diff', { project: name })
-
-      return diffDiscovery(
-        databaseEntry.discovery.contracts,
-        discovery.contracts,
-        config,
+  async getPreviousDiscovery(
+    projectConfig: DiscoveryConfig,
+  ): Promise<DiscoveryOutput> {
+    const databaseEntry = await this.repository.findLatest(projectConfig.name)
+    let previousDiscovery: DiscoveryOutput
+    if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
+      this.logger.info('Using database record', {
+        project: projectConfig.name,
+      })
+      previousDiscovery = databaseEntry.discovery
+    } else {
+      this.logger.info('Using committed file', { project: projectConfig.name })
+      previousDiscovery = await this.configReader.readDiscovery(
+        projectConfig.name,
       )
     }
 
-    const committed = await this.configReader.readDiscovery(name)
-    this.logger.debug('Using committed file for diff', { project: name })
-
-    return diffDiscovery(committed.contracts, discovery.contracts, config)
+    if (previousDiscovery.version === this.version) {
+      return previousDiscovery
+    }
+    this.logger.info(
+      'Discovery logic version changed, discovering with new logic',
+      { project: projectConfig.name },
+    )
+    return await this.discoveryRunner.run(
+      projectConfig,
+      previousDiscovery.blockNumber,
+      {
+        runSanityCheck: true,
+        injectInitialAddresses: true,
+      },
+    )
   }
 
   private async handleDiff(
@@ -142,42 +166,22 @@ export class UpdateMonitor {
     blockNumber: number,
   ) {
     if (diff.length > 0) {
-      await this.sanityCheck(discovery, diff, projectConfig, blockNumber)
-
       const dependents = await findDependents(
         projectConfig.name,
         this.configReader,
       )
-      await this.notificationManager.handleDiff(
-        projectConfig.name,
-        dependents,
-        diff,
+      const unknownContracts = await findUnknownContracts(
+        discovery.name,
+        discovery.contracts,
+        this.configReader,
       )
+      await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
+        dependents,
+        blockNumber,
+        unknownContracts,
+      })
       changesDetected.inc()
     }
-  }
-
-  // 3rd party APIs are unstable, so we do a sanity check before sending
-  // notifications, which makes the same request again and compares the
-  // results.
-  async sanityCheck(
-    discovery: DiscoveryOutput,
-    diff: DiscoveryDiff[],
-    projectConfig: DiscoveryConfig,
-    blockNumber: number,
-  ) {
-    const secondDiscovery = await this.discoveryRunner.run(
-      projectConfig,
-      blockNumber,
-    )
-
-    if (!isEqual(discovery, secondDiscovery)) {
-      throw new Error(
-        `[${projectConfig.name}] Sanity check failed | ${blockNumber}\n
-        potential-diff ${JSON.stringify(diff)}}`,
-      )
-    }
-    this.cachedDiscovery.set(projectConfig.name, secondDiscovery)
   }
 
   // this function gets a diff between current discovery and committed discovery
@@ -211,10 +215,7 @@ export class UpdateMonitor {
       }
     }
 
-    await this.notificationManager.handleUnresolved(
-      notUpdatedProjects,
-      timestamp,
-    )
+    await this.updateNotifier.handleUnresolved(notUpdatedProjects, timestamp)
   }
 
   initMetrics(blockNumber: number): () => void {

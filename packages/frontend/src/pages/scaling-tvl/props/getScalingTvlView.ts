@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
+import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
 import { getRiskValues } from '../../../utils/risks/values'
@@ -24,7 +24,7 @@ export function getScalingTvlView(
         verificationStatus.projects[project.id.toString()],
       ),
     ),
-    maturityEnabled: config.features.maturity,
+    stagesEnabled: config.features.stages,
     upcomingEnabled: config.features.upcomingRollups,
   }
 }
@@ -64,6 +64,6 @@ function getScalingTvlViewEntry(
     marketShare: stats ? formatPercent(stats.tvl / aggregateTvl) : undefined,
     purpose: project.display.purpose,
     technology: project.technology.category,
-    maturityEntry: project.maturity,
+    stage: project.stage,
   }
 }

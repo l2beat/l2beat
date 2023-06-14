@@ -1,4 +1,5 @@
-import { Hash256, Logger, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
@@ -31,8 +32,10 @@ describe(UpdateMonitorRepository.name, () => {
         contracts: [],
         eoas: [],
         abis: {},
+        version: 0,
       },
       configHash: CONFIG_HASH,
+      version: 0,
     }
 
     await repository.addOrUpdate(expected)
@@ -55,8 +58,10 @@ describe(UpdateMonitorRepository.name, () => {
         contracts: [],
         eoas: [],
         abis: {},
+        version: 0,
       },
       configHash: CONFIG_HASH,
+      version: 0,
     }
     await repository.addOrUpdate(discovery)
 

@@ -8,7 +8,7 @@ export function getLocalConfig(): Config {
       ...common.features,
       // The local backend doesn't support activity
       activity: false,
-      maturity: false,
+      stages: false,
       buildAllProjectPages: true,
     },
     backend: {

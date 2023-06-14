@@ -1,4 +1,5 @@
-import { DiscoveryOutput, Hash256, Logger, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { DiscoveryOutput, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { UpdateMonitorRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
@@ -10,6 +11,7 @@ export interface UpdateMonitorRecord {
   timestamp: UnixTime
   discovery: DiscoveryOutput
   configHash: Hash256
+  version: number
 }
 
 export class UpdateMonitorRepository extends BaseRepository {
@@ -57,6 +59,7 @@ function toRecord(row: UpdateMonitorRow): UpdateMonitorRecord {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     discovery: row.discovery_json_blob as unknown as DiscoveryOutput,
     configHash: Hash256(row.config_hash),
+    version: row.version,
   }
 }
 
@@ -67,5 +70,6 @@ function toRow(record: UpdateMonitorRecord): UpdateMonitorRow {
     unix_timestamp: record.timestamp.toDate(),
     discovery_json_blob: JSON.stringify(record.discovery),
     config_hash: record.configHash.toString(),
+    version: record.version,
   }
 }

@@ -1,5 +1,5 @@
 import { Bridge, Layer2, ProjectPermission } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
+import { VerificationStatus } from '@l2beat/shared-pure'
 
 import { TechnologyContract } from '../../components/project/ContractEntry'
 import { PermissionsSectionProps } from '../../components/project/PermissionsSection'
@@ -18,7 +18,7 @@ export function getPermissionsSection(
   )
 }
 
-export function toTechnologyContract(
+function toTechnologyContract(
   permission: ProjectPermission,
 ): TechnologyContract {
   const links = permission.accounts.slice(1).map((account) => {
@@ -41,5 +41,6 @@ export function toTechnologyContract(
     addresses,
     description: permission.description,
     links,
+    references: permission.references,
   }
 }

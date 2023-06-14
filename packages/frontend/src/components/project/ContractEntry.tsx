@@ -1,4 +1,4 @@
-import { VerificationStatus } from '@l2beat/shared'
+import { VerificationStatus } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React from 'react'
 
@@ -7,12 +7,17 @@ import { Link } from '../Link'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
+import { ReferenceList, TechnologyReference } from './ReferenceList'
 
 export interface TechnologyContract {
   name: string
   addresses?: string[]
   description?: string
   links: TechnologyContractLinks[]
+  upgradeableBy?: string
+  upgradeDelay?: string
+  upgradeConsiderations?: string
+  references?: TechnologyReference[]
 }
 
 export interface TechnologyContractLinks {
@@ -88,11 +93,42 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <div className="mt-2">
-              <p className="text-gray-850 dark:text-gray-400">
-                {contract.description}
+            <p className="mt-2 text-gray-850 dark:text-gray-400">
+              {contract.description}
+            </p>
+          )}
+          {contract.upgradeableBy && (
+            <p className="mt-2 text-gray-850 dark:text-gray-400">
+              <strong className="text-black dark:text-white">
+                Can be upgraded by:
+              </strong>{' '}
+              {contract.upgradeableBy}
+            </p>
+          )}
+          {contract.upgradeDelay && (
+            <p className="mt-2 text-gray-850 dark:text-gray-400">
+              <strong className="text-black dark:text-white">
+                Upgrade delay:
+              </strong>{' '}
+              {contract.upgradeDelay}
+            </p>
+          )}
+          {contract.upgradeConsiderations && (
+            <>
+              <button
+                className="mt-2 text-sm text-link underline"
+                data-component="upgrade-description-button"
+              >
+                Show upgrade details
+              </button>
+              {/* TODO: remove leading once line heights are fixed for all text on the page */}
+              <p className="mt-2 hidden text-sm leading-[15px] text-gray-850 dark:text-gray-400">
+                {contract.upgradeConsiderations}
               </p>
-            </div>
+            </>
+          )}
+          {contract.references && (
+            <ReferenceList references={contract.references} tight />
           )}
         </>
       }

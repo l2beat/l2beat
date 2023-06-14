@@ -82,18 +82,18 @@ export function RiskAnalysis({ id, title, riskValues }: RiskAnalysisProps) {
       </div>
       <div>
         <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
-          Validator failure
+          Proposer failure
         </h3>
         <span
           className={cx(
-            sentimentToTextColor(riskValues.validatorFailure.sentiment),
+            sentimentToTextColor(riskValues.proposerFailure.sentiment),
             'mt-2 block text-xl font-bold md:text-2xl',
           )}
         >
-          {riskValues.validatorFailure.value}
+          {riskValues.proposerFailure.value}
         </span>
         <p className="mt-2 text-gray-850 dark:text-gray-400">
-          {riskValues.validatorFailure.description}
+          {riskValues.proposerFailure.description}
         </p>
       </div>
     </ProjectDetailsSection>

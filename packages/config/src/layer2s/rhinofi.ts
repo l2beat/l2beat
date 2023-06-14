@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -32,6 +32,11 @@ const delay = formatSeconds(delaySeconds)
 const verifierAddress = discovery.getAddressFromValue(
   'GpsFactRegistryAdapter',
   'gpsContract',
+)
+
+const freezeGracePeriod = discovery.getContractValue<number>(
+  'StarkExchange',
+  'FREEZE_GRACE_PERIOD',
 )
 
 export const rhinofi: Layer2 = {
@@ -69,7 +74,7 @@ export const rhinofi: Layer2 = {
     associatedTokens: ['DVF'],
     escrows: [
       {
-        address: discovery.getContract('StarkExchange').address,
+        address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
         sinceTimestamp: new UnixTime(1590491810),
         tokens: '*',
       },
@@ -85,15 +90,24 @@ export const rhinofi: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC,
-      references: [
-        'https://etherscan.io/address/0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2#code#F34#L183',
-        'https://etherscan.io/address/0x28780349A33eEE56bb92241bAAB8095449e24306#code#F1#L63',
+      sources: [
+        {
+          contract: 'StarkExchange',
+          references: [
+            'https://etherscan.io/address/0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2#code#F34#L183',
+          ],
+        },
+        {
+          contract: 'Committee',
+          references: [
+            'https://etherscan.io/address/0x28780349A33eEE56bb92241bAAB8095449e24306#code#F1#L63',
+          ],
+        },
       ],
-      contracts: ['StarkExchange', 'Committee'],
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
-    sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -109,8 +123,8 @@ export const rhinofi: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails('StarkExchange'),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('StarkExchange'),
+      discovery.getContractDetails(
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
@@ -130,10 +144,7 @@ export const rhinofi: Layer2 = {
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
-        'StarkExchange',
-        'OPERATORS',
-      ),
+      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
       description:
         'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
     },

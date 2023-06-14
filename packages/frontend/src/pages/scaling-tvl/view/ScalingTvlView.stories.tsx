@@ -34,7 +34,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -59,7 +59,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'Optimistic Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Linea',
@@ -82,7 +82,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -107,7 +107,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Mantle',
@@ -130,7 +130,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -155,7 +155,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'Optimistic Chain',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Scroll',
@@ -178,7 +178,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -203,7 +203,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Taiko',
@@ -226,7 +226,7 @@ const meta = {
             value: '',
             description: 'No information available.',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: '',
             description: 'No information available.',
           },
@@ -251,7 +251,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Universal',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'ZKSwap 1.0',
@@ -279,7 +279,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (ZK)',
             description:
               'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
@@ -308,7 +308,7 @@ const meta = {
         marketShare: '0.02%',
         purpose: 'Payments, AMM',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Polygon Hermez',
@@ -336,7 +336,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Propose blocks (ZK)',
             description:
               'The user needs to run their own node and use it to propose new blocks to replace the validator. Proposing new blocks requires creating ZK proofs which are very computationally expensive.',
@@ -364,7 +364,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'ZKSwap 2.0',
@@ -392,7 +392,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (ZK)',
             description:
               'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
@@ -422,7 +422,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments, AMM',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Gluon',
@@ -452,14 +452,14 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of funds.',
           },
         },
         warning:
-          'LeverJ trading platform appears to be in a maintanance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
+          'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
         isVerified: true,
         isArchived: true,
         isUpcoming: undefined,
@@ -480,7 +480,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Exchange',
         technology: 'Plasma',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'OMG Network',
@@ -510,7 +510,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (?)',
             description:
               'Users are able to exit the system. The details are unknown.',
@@ -538,7 +538,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'Payments',
         technology: 'Plasma',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'L2.Finance-zk',
@@ -567,7 +567,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of funds.',
@@ -594,7 +594,7 @@ const meta = {
         marketShare: '0.00%',
         purpose: 'DeFi protocols',
         technology: 'Validium',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Arbitrum One',
@@ -623,7 +623,7 @@ const meta = {
               'There is a 13 days delay for upgrades initiated by the DAO that can be canceled by the 9/12 Security Council multisig. This multisig can also upgrade with no delay',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Propose blocks',
             description:
               'Anyone can become a Validator after approximately 7 days (45818 blocks) of inactivity from the currently whitelisted Validators.',
@@ -652,19 +652,24 @@ const meta = {
         marketShare: '66.75%',
         purpose: 'Universal',
         technology: 'Optimistic Rollup',
-        maturityEntry: {
-          category: {
-            score: 'B',
-            requirements: ['There is an existing fraud proof system'],
+        stage: {
+          stage: 'Stage 0',
+          missing: {
+            nextStage: 'Stage 1',
+            requirements: ['B requirement'],
           },
-          modifier: {
-            score: '-',
-            items: ['Validators are behind a whitelist'],
-          },
-          thingsToImprove: {
-            improvedScore: 'A',
-            requirements: ['There should be no instant upgradeability'],
-          },
+          summary: [
+            {
+              stage: 'Stage 0',
+              requirements: [{ satisfied: true, description: 'A requirement' }],
+            },
+            {
+              stage: 'Stage 1',
+              requirements: [
+                { satisfied: false, description: 'B requirement' },
+              ],
+            },
+          ],
         },
       },
       {
@@ -694,7 +699,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'No mechanism',
             description:
               'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
@@ -724,7 +729,7 @@ const meta = {
         marketShare: '19.46%',
         purpose: 'Universal',
         technology: 'Optimistic Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'dYdX',
@@ -753,7 +758,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
@@ -779,7 +784,7 @@ const meta = {
         marketShare: '4.08%',
         purpose: 'Exchange',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'zkSync Era',
@@ -808,7 +813,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice by the governor, that currently is a 4 / 7 Multisig.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'No mechanism',
             description:
               'Only whitelisted validators can update the state on L1, so in the event of failure the withdrawals are blocked.',
@@ -836,7 +841,7 @@ const meta = {
         marketShare: '2.77%',
         purpose: 'Universal',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Metis Andromeda',
@@ -846,7 +851,7 @@ const meta = {
           dataAvailability: {
             value: 'Optimistic (MEMO)',
             description:
-              'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO.     Challange mechanizm is not yet fully implemented.',
+              'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO.     Challenge mechanizm is not yet fully implemented.',
             sentiment: 'warning',
           },
           sequencerFailure: {
@@ -866,7 +871,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'No mechanism',
             description:
               'If the whitelisted validator goes down, withdrawals cannot be processed. Users can still transact on L2.',
@@ -896,7 +901,7 @@ const meta = {
         marketShare: '1.27%',
         purpose: 'Universal',
         technology: 'Optimistic Chain',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Loopring',
@@ -924,7 +929,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily and without notice.',
             sentiment: 'bad',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of funds.',
@@ -952,7 +957,7 @@ const meta = {
         marketShare: '1.25%',
         purpose: 'Tokens, NFTs, AMM',
         technology: 'ZK Rollup',
-        maturityEntry: undefined,
+        stage: undefined,
       },
       {
         name: 'Immutable X',
@@ -981,7 +986,7 @@ const meta = {
               'The code that secures the system can be changed arbitrarily but users have some time to react.',
             sentiment: 'warning',
           },
-          validatorFailure: {
+          proposerFailure: {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',
@@ -1009,9 +1014,10 @@ const meta = {
         marketShare: '1.12%',
         purpose: 'NFT, Exchange',
         technology: 'Validium',
-        maturityEntry: undefined,
+        stage: undefined,
       },
     ],
+    stagesEnabled: true,
   },
   decorators: [
     (Story) => (

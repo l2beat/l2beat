@@ -1,10 +1,10 @@
 {
   "name": "pNetwork",
-  "blockNumber": 17271994,
-  "configHash": "0x0eef3574f3087ba2266cdf39ac7a43abb64e66e829c5fd5d07c678b08b637f64",
+  "blockNumber": 17288492,
+  "configHash": "0x1df8a07e293c04127074731ef8d769ba9b1d42c09f7a3a53dfcad723aa7297ca",
   "contracts": [
     {
-      "name": "Erc20Vault",
+      "name": "ERC20 Vault V1",
       "address": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
       "code": "https://etherscan.deth.net/address/0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
       "upgradeability": {
@@ -12,7 +12,8 @@
       },
       "values": {
         "PNETWORK": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
-      }
+      },
+      "derivedName": "Erc20Vault"
     },
     {
       "name": "PNT",
@@ -48,7 +49,7 @@
       }
     },
     {
-      "name": "Erc20Vault",
+      "name": "UOS Vault",
       "address": "0x9f8622b11984AfC8f0a42A394928702017c5968D",
       "code": "https://etherscan.deth.net/address/0x9f8622b11984AfC8f0a42A394928702017c5968D",
       "upgradeability": {
@@ -56,10 +57,11 @@
       },
       "values": {
         "PNETWORK": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
-      }
+      },
+      "derivedName": "Erc20Vault"
     },
     {
-      "name": "PProxyAdminOwner",
+      "name": "pNetwork Multisig",
       "address": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB",
       "code": "https://etherscan.deth.net/address/0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -76,7 +78,7 @@
           "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
         ],
         "getThreshold": 2,
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -115,12 +117,12 @@
       }
     },
     {
-      "name": "Erc20Vault",
+      "name": "ERC20 Vault V2",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
-      "code": "https://etherscan.deth.net/address/0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8,0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b",
+      "code": "https://etherscan.deth.net/address/0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8,0x34D085516f9D7794192aDB10C995d9c532E335aF",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b",
+        "implementation": "0x34D085516f9D7794192aDB10C995d9c532E335aF",
         "admin": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a"
       },
       "values": {
@@ -128,7 +130,8 @@
         "ORIGIN_CHAIN_ID": "0x005fe7f9",
         "PNETWORK": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b",
         "PNT_TOKEN_ADDRESS": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD"
-      }
+      },
+      "derivedName": "Erc20Vault"
     },
     {
       "name": "EthPnt",
@@ -181,6 +184,33 @@
       "function pegOut(address _tokenRecipient, address _tokenAddress, uint256 _tokenAmount) returns (bool)",
       "function removeSupportedToken(address _tokenAddress) returns (bool SUCCESS)",
       "function setPNetwork(address _pnetwork)",
+      "function setWeth(address _weth)",
+      "function tokensReceived(address, address from, address to, uint256 amount, bytes userData, bytes)",
+      "function weth() view returns (address)"
+    ],
+    "0x34D085516f9D7794192aDB10C995d9c532E335aF": [
+      "event Initialized(uint8 version)",
+      "event LogWithdrawToken(address indexed _from, address indexed _token, uint256 amount)",
+      "event PegIn(address _tokenAddress, address _tokenSender, uint256 _tokenAmount, string _destinationAddress, bytes _userData, bytes4 _originChainId, bytes4 _destinationChainId)",
+      "function ETHPNT_TOKEN_ADDRESS() view returns (address)",
+      "function ORIGIN_CHAIN_ID() view returns (bytes4)",
+      "function PNETWORK() view returns (address)",
+      "function PNT_TOKEN_ADDRESS() view returns (address)",
+      "function addSupportedToken(address _tokenAddress) returns (bool SUCCESS)",
+      "function adminWithdraw(address asset)",
+      "function changeOriginChainId(bytes4 _newOriginChainId) returns (bool success)",
+      "function getSupportedTokens() view returns (address[] res)",
+      "function initialize(address _weth, address[] _tokensToSupport, bytes4 _originChainId)",
+      "function isTokenSupported(address _token) view returns (bool)",
+      "function pegIn(uint256 _tokenAmount, address _tokenAddress, string _destinationAddress, bytes4 _destinationChainId) returns (bool)",
+      "function pegIn(uint256 _tokenAmount, address _tokenAddress, string _destinationAddress, bytes _userData, bytes4 _destinationChainId) returns (bool)",
+      "function pegInEth(string _destinationAddress, bytes4 _destinationChainId, bytes _userData) payable returns (bool)",
+      "function pegInEth(string _destinationAddress, bytes4 _destinationChainId) payable returns (bool)",
+      "function pegOut(address _tokenRecipient, address _tokenAddress, uint256 _tokenAmount, bytes _userData) returns (bool success)",
+      "function pegOut(address _tokenRecipient, address _tokenAddress, uint256 _tokenAmount) returns (bool success)",
+      "function removeSupportedToken(address _tokenAddress) returns (bool SUCCESS)",
+      "function setPNetwork(address _pnetwork)",
+      "function setWEthUnwrapperAddress(address _address)",
       "function setWeth(address _weth)",
       "function tokensReceived(address, address from, address to, uint256 amount, bytes userData, bytes)",
       "function weth() view returns (address)"
@@ -337,33 +367,6 @@
       "event CanRelayFailed(address indexed relay, address indexed from, address indexed to, bytes4 selector, uint256 reason)",
       "event TransactionRelayed(address indexed relay, address indexed from, address indexed to, bytes4 selector, uint8 status, uint256 charge)",
       "event Penalized(address indexed relay, address sender, uint256 amount)"
-    ],
-    "0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b": [
-      "event Initialized(uint8 version)",
-      "event LogWithdrawToken(address indexed _from, address indexed _token, uint256 amount)",
-      "event PegIn(address _tokenAddress, address _tokenSender, uint256 _tokenAmount, string _destinationAddress, bytes _userData, bytes4 _originChainId, bytes4 _destinationChainId)",
-      "function ETHPNT_TOKEN_ADDRESS() view returns (address)",
-      "function ORIGIN_CHAIN_ID() view returns (bytes4)",
-      "function PNETWORK() view returns (address)",
-      "function PNT_TOKEN_ADDRESS() view returns (address)",
-      "function addSupportedToken(address _tokenAddress) returns (bool SUCCESS)",
-      "function adminWithdraw(address asset)",
-      "function changeOriginChainId(bytes4 _newOriginChainId) returns (bool success)",
-      "function getSupportedTokens() view returns (address[] res)",
-      "function initialize(address _weth, address[] _tokensToSupport, bytes4 _originChainId)",
-      "function isTokenSupported(address _token) view returns (bool)",
-      "function pegIn(uint256 _tokenAmount, address _tokenAddress, string _destinationAddress, bytes4 _destinationChainId) returns (bool)",
-      "function pegIn(uint256 _tokenAmount, address _tokenAddress, string _destinationAddress, bytes _userData, bytes4 _destinationChainId) returns (bool)",
-      "function pegInEth(string _destinationAddress, bytes4 _destinationChainId, bytes _userData) payable returns (bool)",
-      "function pegInEth(string _destinationAddress, bytes4 _destinationChainId) payable returns (bool)",
-      "function pegOut(address _tokenRecipient, address _tokenAddress, uint256 _tokenAmount, bytes _userData) returns (bool success)",
-      "function pegOut(address _tokenRecipient, address _tokenAddress, uint256 _tokenAmount) returns (bool success)",
-      "function removeSupportedToken(address _tokenAddress) returns (bool SUCCESS)",
-      "function setPNetwork(address _pnetwork)",
-      "function setWEthUnwrapperAddress(address _address)",
-      "function setWeth(address _weth)",
-      "function tokensReceived(address, address from, address to, uint256 amount, bytes userData, bytes)",
-      "function weth() view returns (address)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",

@@ -1,12 +1,12 @@
 import { tokenList } from '@l2beat/config'
+import { Logger } from '@l2beat/shared'
 import {
   AssetId,
   EthereumAddress,
-  Logger,
   ProjectId,
   TvlApiChart,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { ReportProject } from '../../../core/reports/ReportProject'

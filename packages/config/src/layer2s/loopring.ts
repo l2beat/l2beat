@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -12,9 +12,27 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('loopring')
+const forcedWithdrawalDelay = discovery.getContractValue<number[]>(
+  'ExchangeV3',
+  'getConstants',
+)[2]
+const maxAgeDepositUntilWithdrawable = discovery.getContractValue<number>(
+  'ExchangeV3',
+  'getMaxAgeDepositUntilWithdrawable',
+)
+const forcedWithdrawalFee = discovery.getContractValue<number>(
+  'LoopringV3',
+  'forcedWithdrawalFee',
+)
+
+const upgrades = {
+  upgradableBy: ['ProxyOwner'],
+  upgradeDelay: 'No delay',
+}
 
 export const loopring: Layer2 = {
   type: 'layer2',
@@ -54,12 +72,14 @@ export const loopring: Layer2 = {
         address: EthereumAddress('0x7D3D221A8D8AbDd868E8e88811fFaF033e68E108'),
         sinceTimestamp: new UnixTime(1575539271),
         tokens: ['LRC', 'USDT'],
+        isHistorical: true,
       },
       // WeDEX: Beta 2
       {
         address: EthereumAddress('0xD97D09f3bd931a14382ac60f156C1285a56Bb51B'),
         sinceTimestamp: new UnixTime(1578284114),
         tokens: ['LRC', 'USDT'],
+        isHistorical: true,
       },
       {
         address: EthereumAddress('0x674bdf20A0F284D710BC40872100128e2d66Bd3f'),
@@ -76,10 +96,62 @@ export const loopring: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_EXIT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_MP,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
+        forcedWithdrawalDelay,
+        forcedWithdrawalFee,
+        maxAgeDepositUntilWithdrawable,
+      ),
+      sources: [
+        {
+          contract: 'ExchangeV3',
+          references: [
+            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
+            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195',
+            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6090',
+          ],
+        },
+        {
+          contract: 'LoopringV3',
+          references: [
+            'https://etherscan.io/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71#code#L1825',
+          ],
+        },
+      ],
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
+      sources: [
+        {
+          contract: 'ExchangeV3',
+          references: [
+            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
+          ],
+        },
+      ],
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('LRC'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: true,
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave14DaysToExit: false,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
   }),
   technology: {
     category: 'ZK Rollup',
@@ -114,12 +186,12 @@ export const loopring: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ExchangeV3.sol#L315-L322 - Loopring source code',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/contracts/core/impl/ExchangeV3.sol#L315-L322',
+          text: 'ExchangeV3.sol#L315-L322 - Etherscan source code, submitBlocks function',
+          href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8022',
         },
         {
-          text: 'LoopringIOExchangeOwner.sol#L123-L126 - Loopring source code',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/contracts/aux/access/LoopringIOExchangeOwner.sol#L123-L126',
+          text: 'LoopringIOExchangeOwner.sol#L123-L126 - Etherscan source code, hasAccessTo function call',
+          href: 'https://etherscan.io/address/0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512#code#L5539',
         },
       ],
     },
@@ -153,173 +225,80 @@ export const loopring: Layer2 = {
             text: 'Forced Request Handling - Loopring design doc',
             href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
           },
+          {
+            text: 'ExchangeV3.sol#L8118 - Loopring source code, forceWithdraw function',
+            href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8118',
+          },
         ],
       },
       {
-        ...EXITS.EMERGENCY('Withdrawal Mode', 'merkle proof'),
+        ...EXITS.EMERGENCY(
+          'Withdrawal Mode',
+          'merkle proof',
+          forcedWithdrawalDelay,
+        ),
         references: [
           {
             text: 'Forced Request Handling - Loopring design doc',
             href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
+          },
+          {
+            text: 'ExchangeV3.sol#L8159 - Loopring source code, withdrawFromMerkleTree function',
+            href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
           },
         ],
       },
     ],
   },
   permissions: [
-    {
-      name: 'Loopring MultiSig',
-      accounts: [
-        {
-          address: discovery.getContract('GnosisSafe').address,
-          type: 'MultiSig',
-        },
-      ],
-      description:
-        'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy owner), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: discovery
-        .getContractValue<string[]>('GnosisSafe', 'getOwners')
-        .map((owner) => ({ address: EthereumAddress(owner), type: 'EOA' })),
-      description: `These addresses are the participants of the ${discovery.getContractValue<number>(
-        'GnosisSafe',
-        'getThreshold',
-      )}/${
-        discovery.getContractValue<string[]>('GnosisSafe', 'getOwners').length
-      } Loopring MultiSig.`,
-    },
+    ...discovery.getMultisigPermission(
+      'ProxyOwner',
+      'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee, change the Verifier address and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
+    ),
     {
       name: 'Block Submitters',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xdd4b5E28fe55196B8Bf44A040f2c11f85401fdC0',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x7961076f6130092c1C90bd0D2C6F7f54055FA6C7',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x4774d954D20DB98492B0487BC9F91dc401dBA3aE',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x212e75BF264C4FB3133fA5ef6f47A34367020A1A',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x238b649E62a0C383b54060b1625516b489183843',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xeadb3d065f8d15cc05e92594523516aD36d1c834',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery.getPermissionedAccounts(
+        'LoopringIOExchangeOwner',
+        'blockSubmitters',
+      ),
       description:
         'Actors who can submit new blocks, updating the L2 state on L1.',
+    },
+    {
+      name: 'RollupOwner',
+      accounts: [discovery.getPermissionedAccount('ExchangeV3', 'owner')],
+      description:
+        'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
     },
   ],
   contracts: {
     addresses: [
-      {
-        name: 'ExchangeV3',
-        address: discovery.getContract('ExchangeV3').address,
-        description: 'Main ExchangeV3 contract.',
-        upgradeability: discovery.getContract('ExchangeV3').upgradeability,
-      },
-      {
-        name: 'LoopringIOExchangeOwner',
-        address: discovery.getContract('LoopringIOExchangeOwner').address,
-        description:
-          'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
-      },
-      {
-        name: 'DefaultDepositContract',
-        address: discovery.getContract('DefaultDepositContract').address,
-        description:
-          'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
-      },
-      {
-        name: 'LoopringV3',
-        address: EthereumAddress('0xe56D6ccab6551932C0356E4e8d5dAF0630920C71'),
-        description:
-          'Contract managinging LRC staking for exchanges (One Loopring contract can manage many exchanges).',
-      },
-      {
-        name: 'BlockVerifier',
-        address: EthereumAddress('0x6150343E0F43A17519c0327c41eDd9eBE88D01ef'),
+      discovery.getContractDetails('ExchangeV3', {
+        description: 'Main Loopring contract.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails(
+        'LoopringIOExchangeOwner',
+        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract. It allows to give or revoke permissions to submit blocks and to open block submission to everyone.',
+      ),
+      discovery.getContractDetails(
+        'DefaultDepositContract',
+        'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
+      ),
+      discovery.getContractDetails(
+        'LoopringV3',
+        'Contract managing LRC staking for exchanges (one Loopring contract can manage many exchanges). It also allows to change the forced withdrawl fee and the Verifier address.',
+      ),
+      discovery.getContractDetails('BlockVerifier', {
         description: 'zkSNARK Verifier based on ethsnarks library.',
-      },
-      {
-        name: 'AgentRegistry',
-        address: discovery.getContract('AgentRegistry').address,
-        description:
-          'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, \
-          DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
-      },
+        ...upgrades,
+        upgradeConsiderations:
+          'The Verifier contract address can be changed by the ProxyOwner.',
+      }),
+      discovery.getContractDetails(
+        'AgentRegistry',
+        'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

@@ -1,4 +1,4 @@
-import { assertUnreachable } from '@l2beat/shared'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ChartSection } from '../../../components/project/ChartSection'
@@ -8,6 +8,7 @@ import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNu
 import { MilestonesSection } from '../../../components/project/MilestonesSection'
 import { PermissionsSection } from '../../../components/project/PermissionsSection'
 import { RiskAnalysis } from '../../../components/project/RiskAnalysis'
+import { StageSection } from '../../../components/project/StageSection'
 import {
   TechnologyIncomplete,
   TechnologyIncompleteProps,
@@ -39,6 +40,8 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             return <DescriptionSection key={item.props.id} {...item.props} />
           case 'RiskAnalysisSection':
             return <RiskAnalysis key={item.props.id} {...item.props} />
+          case 'StageSection':
+            return <StageSection key={item.props.id} {...item.props} />
           case 'TechnologyIncompleteNote':
             return (
               <TechnologyIncomplete

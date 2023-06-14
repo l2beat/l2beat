@@ -2,8 +2,15 @@
   "$schema": "../config.schema.json",
   "name": "orbit",
   "initialAddresses": ["0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"],
+  "names": {
+    "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a": "ETH Vault",
+    "0x830433dE03ABedE062660CC629e1A2c714272474": "USDC Farm",
+    "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9": "USDT Farm",
+    "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da": "WBTC Farm",
+    "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0": "DAI Farm"
+  },
   "overrides": {
-    "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a": {
+    "ETH Vault": {
       "proxyType": "call implementation proxy",
       "ignoreMethods": [
         "owners",
@@ -45,11 +52,11 @@
       "ignoreDiscovery": true
     },
     "0xdb3516D4C062180e5e947F21C9476FF24D4A0900": {
-      //DAI proxy
+      // DAI proxy
       "ignoreDiscovery": true
     },
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
-      //DAI
+      // DAI
       "ignoreDiscovery": true
     }
   }

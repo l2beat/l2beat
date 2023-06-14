@@ -1,7 +1,7 @@
 export interface ProjectRisk {
   /** Category of this risk */
   category: ProjectRiskCategory
-  /** Description of te risk. Should form a sentence with the category */
+  /** Description of the risk. Should form a sentence with the category */
   text: string
   /** If the risk is particularly bad */
   isCritical?: boolean
@@ -23,8 +23,9 @@ export interface ProjectRiskViewEntry {
   // second line in risk view
   secondLine?: string
   secondSentiment?: 'warning' | 'bad'
-  // list of source code permalinks and useful materials
-  references?: string[]
-  // list of contract identifiers which this risk relies on
-  contracts?: string[]
+  sources?: {
+    contract: string
+    references: string[]
+  }[]
+  otherReferences?: string[]
 }

@@ -85,6 +85,16 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
     discovery_json_blob: string
     config_hash: string
+    version: number
+  }
+
+  interface UpdateNotifierRow {
+    id: number
+    created_at: Date
+    updated_at: Date
+    project_name: string
+    block_number: number
+    diff_json_blob: string
   }
 
   interface Tables {
@@ -101,6 +111,7 @@ declare module 'knex/types/tables' {
     'activity.starkex': StarkexTransactionCountRow
     'activity.daily_count_view': DailyTransactionCountRow
     update_monitor: UpdateMonitorRow
+    update_notifier: UpdateNotifierRow
   }
 }
 

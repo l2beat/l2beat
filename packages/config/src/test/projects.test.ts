@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { bridges, getTokenBySymbol, layer2s } from '../'
@@ -74,6 +74,16 @@ describe('projects', () => {
               expect(description.endsWith('.')).toEqual(true)
             })
           }
+
+          if ('address' in contract) {
+            const upgradableBy = contract.upgradableBy
+            const actors = project.permissions?.map((x) => x.name) ?? []
+            if (upgradableBy) {
+              it(`contracts[${i}].upgradableBy is valid`, () => {
+                expect(actors).toInclude(...upgradableBy)
+              })
+            }
+          }
         }
 
         for (const [i, risk] of project.contracts?.risks.entries() ?? []) {
@@ -128,7 +138,7 @@ describe('projects', () => {
           } else if (link.includes('youtube')) {
             if (!link.includes('playlist')) {
               expect(link).toMatchRegex(
-                /^https:\/\/youtube\.com\/(c|channel)\/[\w-]+$/,
+                /^https:\/\/youtube\.com\/((c|channel)\/|@)[\w-]+$/,
               )
             }
           } else if (link.includes('twitch')) {

@@ -27,6 +27,7 @@
   "dependencies": {
     "@l2beat/config": "*",
     "@l2beat/shared": "*",
+    "@l2beat/shared-pure": "*",
     "@types/express": "^4.17.16",
     "@types/fs-extra": "^9.0.13",
     "@types/lodash": "^4.14.191",

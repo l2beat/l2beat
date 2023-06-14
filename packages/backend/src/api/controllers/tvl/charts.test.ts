@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { addMissingTimestamps } from './charts'

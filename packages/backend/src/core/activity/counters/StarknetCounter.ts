@@ -1,10 +1,11 @@
 import { StarknetTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger, ProjectId, UnixTime } from '@l2beat/shared'
+import { HttpClient, Logger } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { StarkNetClient } from '../../../peripherals/starknet/StarkNetClient'
+import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
@@ -23,7 +24,7 @@ export function createStarknetCounter(
 ): TransactionCounter {
   const callsPerMinute = transactionApi.callsPerMinute ?? 60
   const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const client = new StarkNetClient(transactionApi.url, http, {
+  const client = new StarknetClient(transactionApi.url, http, {
     callsPerMinute,
   })
 

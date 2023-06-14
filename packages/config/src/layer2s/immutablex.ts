@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -35,6 +35,11 @@ const verifierAddress = discovery.getAddressFromValue(
   'gpsContract',
 )
 
+const freezeGracePeriod = discovery.getContractValue<number>(
+  'StarkExchange',
+  'FREEZE_GRACE_PERIOD',
+)
+
 export const immutablex: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablex'),
@@ -61,7 +66,7 @@ export const immutablex: Layer2 = {
     associatedTokens: ['IMX'],
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'StarkExchange',
+        address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
         sinceTimestamp: new UnixTime(1615389188),
         tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
         description: 'Main StarkEx contract, used also as an escrow.',
@@ -78,15 +83,24 @@ export const immutablex: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC,
-      references: [
-        'https://etherscan.io/address/0x86d8f977C9cEC503ad4E6805802cEf62Cde13773#code#F34#L180',
-        'https://etherscan.io/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295#code#F1#L63',
+      sources: [
+        {
+          contract: 'StarkExchange',
+          references: [
+            'https://etherscan.io/address/0x86d8f977C9cEC503ad4E6805802cEf62Cde13773#code#F34#L180',
+          ],
+        },
+        {
+          contract: 'Committee',
+          references: [
+            'https://etherscan.io/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295#code#F1#L63',
+          ],
+        },
       ],
-      contracts: ['StarkExchange', 'Committee'],
     },
     upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
-    sequencerFailure: RISK_VIEW.SEQUENCER_STARKEX_SPOT,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_STARKEX_NFT,
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -102,8 +116,8 @@ export const immutablex: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails('StarkExchange'),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails('StarkExchange'),
+      discovery.getContractDetails(
         'Committee',
         'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
       ),
@@ -123,10 +137,7 @@ export const immutablex: Layer2 = {
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccountsList(
-        'StarkExchange',
-        'OPERATORS',
-      ),
+      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
       description:
         'Allowed to update the state. When the Operator is down the state cannot be updated.',
     },

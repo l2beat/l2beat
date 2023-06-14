@@ -1,4 +1,4 @@
-import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared'
+import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { Config } from '../../build/config'

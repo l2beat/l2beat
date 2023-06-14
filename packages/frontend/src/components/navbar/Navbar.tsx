@@ -21,7 +21,6 @@ export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
   showHiring: boolean
-  showDefinitions: boolean
   forumLink: string
   socialLinks: SocialLinksProps
   selectedPage: NavbarPage
@@ -36,7 +35,6 @@ export function getNavbarProps(
     forumLink: config.links.forum,
     showHiring: config.features.hiring,
     showActivity: config.features.activity,
-    showDefinitions: config.features.maturity,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }
@@ -106,20 +104,15 @@ export function Navbar(props: NavbarProps) {
                 </PageLink>
               </li>
               <li className="h-full">
+                <PageLink href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
+                  Governance
+                </PageLink>
+              </li>
+              <li className="h-full">
                 <PageLink selected={props.selectedPage === 'faq'} href="/faq">
                   FAQ
                 </PageLink>
               </li>
-              {props.showDefinitions && (
-                <li className="h-full">
-                  <PageLink
-                    selected={props.selectedPage === 'definitions'}
-                    href="/definitions"
-                  >
-                    Definitions
-                  </PageLink>
-                </li>
-              )}
               {props.showHiring && (
                 <li className="h-full">
                   <OutLink

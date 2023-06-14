@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -57,8 +57,13 @@ export const omgnetwork: Layer2 = {
     stateValidation: RISK_VIEW.STATE_EXITS_ONLY,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_EXIT_L1,
-    validatorFailure: RISK_VIEW.VALIDATOR_ESCAPE_U,
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
+      description:
+        RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP.description +
+        ' The details are unknown.',
+    },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('OMG'),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
@@ -102,33 +107,15 @@ export const omgnetwork: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'EthVault',
-        address: discovery.getContract('EthVault').address,
-      },
-      {
-        name: 'Erc20Vault',
-        address: discovery.getContract('Erc20Vault').address,
-      },
-      {
-        name: 'ETHDepositVerifier',
-        address: EthereumAddress('0x649f37203c365DE759c8fc8CA35beBF5448F70Be'),
-      },
-      {
-        name: 'ERC20DepositVerifier',
-        address: EthereumAddress('0xD876aeb3a443FBC03B7349AAc115E9054563CD82'),
-      },
-      {
-        name: 'PlasmaFramework',
-        address: discovery.getContract('PlasmaFramework').address,
-      },
-      {
-        name: 'PaymentExitGame',
-        // PaymentExitGame uses unverified libraries https://etherscan.io/address/0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3
-        description:
-          'The source code of the PaymentStartStandardExit library used by this contract is not verified on Etherscan.',
-        address: discovery.getContract('PaymentExitGame').address,
-      },
+      discovery.getContractDetails('EthVault'),
+      discovery.getContractDetails('Erc20Vault'),
+      discovery.getContractDetails('ETHDepositVerifier'),
+      discovery.getContractDetails('ERC20DepositVerifier'),
+      discovery.getContractDetails('PlasmaFramework'),
+      discovery.getContractDetails(
+        'PaymentExitGame',
+        'The source code of the PaymentStartStandardExit library used by this contract is not verified on Etherscan.',
+      ),
     ],
     risks: [],
   },

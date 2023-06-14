@@ -1,5 +1,6 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -10,7 +11,31 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('aztec')
+
+function getRollupProviders() {
+  // not getting this from the discovery, because it's the deployer
+  // https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L88
+  const deployer = '0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895'
+  const removedProviders = discovery.getContractValue<string[]>(
+    'RollupProcessor',
+    'removedRollupProviders',
+  )
+
+  const providers = discovery.getContractValue<string[]>(
+    'RollupProcessor',
+    'removedRollupProviders',
+  )
+
+  if (removedProviders.includes(deployer)) {
+    return providers
+  }
+
+  return [...providers, deployer]
+}
 
 export const aztec: Layer2 = {
   type: 'layer2',
@@ -54,17 +79,93 @@ export const aztec: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: {
-      value: 'Yes',
-      description: '1/2 MSig can change Validator.',
-      sentiment: 'bad',
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      sources: [
+        {
+          contract: 'RollupProcessor',
+          references: [
+            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395',
+          ],
+        },
+        {
+          contract: 'TurboVerifier',
+          references: [
+            'https://etherscan.io/address/0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1#code#F1#L37',
+          ],
+        },
+      ],
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_PROPOSE_BLOCKS_ZKP,
-    validatorFailure: RISK_VIEW.VALIDATOR_PROPOSE_BLOCKS_ZKP,
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      sources: [
+        {
+          contract: 'RollupProcessor',
+          references: [
+            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
+          ],
+        },
+      ],
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADABLE_YES,
+      description: '1/2 MSig can change Validator.',
+      sources: [
+        {
+          contract: 'RollupProcessor',
+          references: [
+            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L101',
+          ],
+        },
+      ],
+    },
+
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
+      sources: [
+        {
+          contract: 'RollupProcessor',
+          references: [
+            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
+            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L168',
+          ],
+        },
+      ],
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
+      sources: [
+        {
+          contract: 'RollupProcessor',
+          references: [
+            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
+            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L168',
+          ],
+        },
+      ],
+    },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+  }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: true,
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave14DaysToExit: false,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
   }),
   technology: {
     category: 'ZK Rollup',
@@ -120,6 +221,10 @@ export const aztec: Layer2 = {
           text: 'RollupProcessor.sol#L347 - Etherscan source code',
           href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
         },
+        {
+          text: 'RollupProcessor.sol#L168 - Etherscan source code',
+          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L168',
+        },
       ],
     },
     exitMechanisms: [
@@ -151,32 +256,38 @@ export const aztec: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
-        description:
-          'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
-        name: 'RollupProcessor',
-      },
-      {
-        address: EthereumAddress('0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734'),
-        description:
-          'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
-        name: 'AztecFeeDistributor',
-      },
-      {
-        address: EthereumAddress('0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1'),
-        description:
-          'Turbo Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
-        name: 'TurboVerifier',
-      },
-      {
-        address: EthereumAddress('0x7FaE73Be814d94318fa0756a5D73ae9cf3BA7530'),
-        description: 'Verification Keys for the Verifier.',
-        name: 'VerificationKeys',
-      },
+      discovery.getContractDetails(
+        'RollupProcessor',
+        'Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside zkProof.',
+      ),
+      discovery.getContractDetails(
+        'AztecFeeDistributor',
+        'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
+      ),
+      discovery.getContractDetails('TurboVerifier', {
+        description: 'Turbo Plonk zkSNARK Verifier.',
+        upgradableBy: ['Aztec Multisig'],
+        upgradeDelay: 'No delay',
+        upgradeConsiderations:
+          'Verifier field in RollupProcessor can be changed with no delay.',
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  permissions: [
+    ...discovery.getMultisigPermission(
+      'Aztec Multisig',
+      'Owner of RollupProcessor and AztecFeeDistributor contracts. Can add or delete rollup providers. Can change the verifier contract.',
+    ),
+    {
+      name: 'Rollup Providers',
+      description:
+        'Addresses that can propose new blocks during regular rollup operation.',
+      accounts: getRollupProviders().map((account) =>
+        discovery.formatPermissionedAccount(account),
+      ),
+    },
+  ],
   milestones: [
     {
       name: 'Aztec 2.0',

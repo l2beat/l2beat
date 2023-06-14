@@ -1,7 +1,7 @@
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
-import { CoingeckoId, EthereumAddress, UnixTime } from '../../types'
 import { HttpClient } from '../HttpClient'
 import { CoingeckoClient } from './CoingeckoClient'
 import { CoinMarketChartRangeData, CoinMarketChartRangeResult } from './model'

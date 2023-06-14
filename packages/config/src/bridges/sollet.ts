@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
@@ -85,24 +85,13 @@ export const sollet: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: discovery.getContract('SplTokenSwap').address,
-        name: 'SplTokenSwap',
-        description: 'Sollet Bridge Contract.',
-      },
+      discovery.getContractDetails('SplTokenSwap', 'Sollet Bridge Contract.'),
     ],
     risks: [],
   },
   permissions: [
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            discovery.getContractValue<string>('SplTokenSwap', 'owner'),
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: [discovery.getPermissionedAccount('SplTokenSwap', 'owner')],
       name: 'Sollet Bridge Owner (EOA)',
       description: 'Can withdraw funds from the bridge',
     },

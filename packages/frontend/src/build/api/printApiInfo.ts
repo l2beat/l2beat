@@ -1,5 +1,5 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
 export function printApiInfo(tvlApiResponse: TvlApiResponse) {
   console.debug('\n', 'TVL')

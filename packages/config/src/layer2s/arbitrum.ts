@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
@@ -14,6 +14,7 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
 
@@ -36,6 +37,39 @@ const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0
 const totalDelay =
   l1TimelockDelay + challengeWindow * assumedBlockTime + l2TimelockDelay
 
+const upgradesExecutor = {
+  upgradableBy: ['UpgradeExecutorAdmin'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
+
+const upgradesProxyAdmin = {
+  upgradableBy: ['ArbitrumProxyAdmin'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
+
+const upgradesGatewaysAdmin = {
+  upgradableBy: ['GatewaysAdmin'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
+
+const maxTimeVariation = discovery.getContractValue<number[]>(
+  'SequencerInbox',
+  'maxTimeVariation',
+)
+const selfSequencingDelay = maxTimeVariation[2]
+
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
@@ -45,15 +79,15 @@ export const arbitrum: Layer2 = {
     warning:
       'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     description: `Arbitrum One is an Optimistic Rollup that aims to feel exactly like interacting with Ethereum, but with transactions costing a fraction of what they do on L1.\
-      Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Validators (currently whitelisted)\
-      read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any other Validator can challenge the state root within the challenge window (${formatSeconds(
+      Centralized Sequencer receives users' transactions and regularly sends the transaction batch to mainnet Ethereum. Independent Proposers (currently whitelisted)\
+      read transaction batches from L1, execute them and submit a resulting L2 state root to L1. Any Validator (currently whitelisted) can challenge the state root within the challenge window (${formatSeconds(
         challengeWindow * assumedBlockTime,
       )}). \
       The challenge will result in an interactive fraud proof game that will be eventually settled by L1. As long as there is at least one honest Validator, users are guaranteed that\
-      eventually correct L2 state root will be published to L1. If Sequencer is censoring users transactions, it is possible to force the transaction via L1 queue. If no Validator publishes\
+      eventually correct L2 state root will be published to L1. If Sequencer is censoring users transactions, it is possible to force the transaction via L1 queue. If no Proposer publishes\
     L2 state root within ${formatSeconds(
       validatorAfkTime,
-    )} (${validatorAfkBlocks} blocks), the Validator whitelist is dropped and anyone can take over as a new Validator.`,
+    )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
@@ -80,29 +114,31 @@ export const arbitrum: Layer2 = {
     nativeL2TokensIncludedInTVL: ['ARB'],
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'ArbitrumOneBridge',
+        address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
         sinceTimestamp: new UnixTime(1661450734),
         tokens: ['ETH'],
         description:
           'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+        ...upgradesProxyAdmin,
       }),
       discovery.getEscrowDetails({
-        identifier: 'L1CustomGateway',
+        address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
         sinceTimestamp: new UnixTime(1623867835),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
+        ...upgradesGatewaysAdmin,
       }),
       discovery.getEscrowDetails({
-        identifier: 'L1ERC20Gateway',
+        address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
         sinceTimestamp: new UnixTime(1623784100),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+        ...upgradesGatewaysAdmin,
       }),
       discovery.getEscrowDetails({
-        identifier: 'L1DaiGateway',
-        path: 'l1Escrow',
+        address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
         sinceTimestamp: new UnixTime(1632133470),
         tokens: ['DAI'],
         description:
@@ -114,8 +150,7 @@ export const arbitrum: Layer2 = {
         address: VALUES.ARBITRUM.OLD_BRIDGE,
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
-        hidden: true,
-        newVersion: true,
+        isHistorical: true,
       },
     ],
     transactionApi: {
@@ -133,26 +168,61 @@ export const arbitrum: Layer2 = {
       description:
         'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
       sentiment: 'warning',
+      sources: [
+        {
+          contract: 'ChallengeManager',
+          references: [
+            'https://etherscan.io/address/0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445#code#F1#L113',
+          ],
+        },
+      ],
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      sources: [
+        {
+          contract: 'SequencerInbox',
+          references: [
+            'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+          ],
+        },
+      ],
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADABLE_ARBITRUM(totalDelay),
+      sources: [
+        {
+          contract: 'OutboxV2',
+          references: [
+            'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
+          ],
+        },
+      ],
+    },
     sequencerFailure: {
-      value: 'Transact using L1',
-      description: VALUES.ARBITRUM.getSequencerFailureString(),
-      references: [
-        'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
-        'https://developer.arbitrum.io/sequencer',
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
+      sources: [
+        {
+          contract: 'SequencerInbox',
+          references: [
+            'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
+            'https://developer.arbitrum.io/sequencer',
+          ],
+        },
       ],
-      contracts: ['SequencerInbox'],
     },
-    validatorFailure: {
-      value: 'Propose blocks',
-      description:
-        VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
-      references: [
-        'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+        validatorAfkBlocks * assumedBlockTime,
+      ),
+      sources: [
+        {
+          contract: 'RollupProxy',
+          references: [
+            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
+          ],
+        },
       ],
-      contracts: ['RollupProxy'],
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -192,6 +262,10 @@ export const arbitrum: Layer2 = {
           text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
           href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
         },
+        {
+          text: 'SequencerInbox.sol#206 - Etherscan source code, addSequencerL2BatchFromOrigin function',
+          href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+        },
       ],
     },
     operator: {
@@ -208,10 +282,10 @@ export const arbitrum: Layer2 = {
       description:
         FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
         ' ' +
-        VALUES.ARBITRUM.getValidatorFailureString(validatorAfkBlocks),
+        VALUES.ARBITRUM.getProposerFailureString(validatorAfkBlocks),
       references: [
         {
-          text: 'Smart Contract source code',
+          text: 'SequencerInbox.sol#L125 - Etherscan source code, forceInclusion function',
           href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
         },
         {
@@ -276,9 +350,15 @@ export const arbitrum: Layer2 = {
     ),
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'SecurityCouncil',
       'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
+      [
+        {
+          text: 'Security Council members - Arbitrum DAO Governance Docs',
+          href: 'https://docs.arbitrum.foundation/foundational-documents/transparency-report-initial-foundation-setup',
+        },
+      ],
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('ArbitrumProxyAdmin'),
@@ -286,7 +366,7 @@ export const arbitrum: Layer2 = {
     ),
     discovery.contractAsPermissioned(
       discovery.getContractFromUpgradeability('UpgradeExecutor', 'admin'),
-      'This contract is an admin of the Update Executor contract, but is also owned by it.',
+      'This contract is an admin of the UpgradeExecutor contract, but is also owned by it.',
     ),
     discovery.contractAsPermissioned(
       discovery.getContractFromUpgradeability('L1GatewayRouter', 'admin'),
@@ -299,47 +379,53 @@ export const arbitrum: Layer2 = {
         'Central actor allowed to set the order in which L2 transactions are executed.',
     },
     {
-      name: 'Validators',
+      name: 'Validators/Proposers',
       accounts: VALUES.ARBITRUM.VALIDATORS,
       description:
-        'They can submit new state roots and challenge state roots. Some of the validators perform their duties through special purpose smart contracts.',
+        'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     },
   ],
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
-        'RollupProxy',
-        'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-      ),
-      discovery.getMainContractDetails(
-        'ArbitrumOneBridge',
-        'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-      ),
-      discovery.getMainContractDetails(
-        'SequencerInbox',
-        'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-      ),
-      discovery.getMainContractDetails(
-        'Inbox',
-        'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
-      ),
-      discovery.getContractFromValue(
-        'RollupProxy',
-        'outbox',
-        "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
-      ),
-      discovery.getMainContractDetails(
-        'UpgradeExecutor',
-        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
-      ),
-      discovery.getMainContractDetails(
-        'L1ArbitrumTimelock',
-        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
-      ),
-      discovery.getMainContractDetails(
-        'L1GatewayRouter',
-        'Router managing token <--> gateway mapping.',
-      ),
+      discovery.getContractDetails('RollupProxy', {
+        description:
+          'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
+        ...upgradesExecutor,
+      }),
+      discovery.getContractDetails('ArbitrumOneBridge', {
+        description:
+          'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+        ...upgradesProxyAdmin,
+      }),
+      discovery.getContractDetails('SequencerInbox', {
+        description:
+          'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+        ...upgradesProxyAdmin,
+      }),
+      discovery.getContractDetails('Inbox', {
+        description:
+          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
+        ...upgradesProxyAdmin,
+      }),
+      discovery.getContractFromValue('RollupProxy', 'outbox', {
+        description:
+          "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
+        ...upgradesProxyAdmin,
+      }),
+      discovery.getContractDetails('UpgradeExecutor', {
+        description:
+          "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+        ...upgradesExecutor,
+      }),
+      discovery.getContractDetails('L1ArbitrumTimelock', {
+        description:
+          'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+        ...upgradesExecutor,
+      }),
+      discovery.getContractDetails('L1GatewayRouter', {
+        description: 'Router managing token <--> gateway mapping.',
+        ...upgradesGatewaysAdmin,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -376,20 +462,26 @@ export const arbitrum: Layer2 = {
       date: '2021-08-31T00:00:00Z',
     },
   ],
-  maturity: {
-    category: {
-      score: 'B',
-      requirements: ['There is an existing fraud proof system'],
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: true,
     },
-    modifier: {
-      score: '-',
-      items: ['Validators are behind a whitelist'],
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: true,
+      usersHave14DaysToExit: true,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: true,
     },
-    thingsToImprove: {
-      improvedScore: 'A',
-      requirements: ['There should be no instant upgradeability'],
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: false,
+      delayWith30DExitWindow: false,
     },
-  },
+  }),
   knowledgeNuggets: [
     {
       title: 'Arbitrum update boosts decentralization',

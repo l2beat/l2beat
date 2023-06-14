@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -65,7 +65,7 @@ export const orbiter: Bridge = {
       'Metis',
       'dYdX',
       'Boba',
-      'StarkNet',
+      'Starknet',
       'BNB Chain',
     ],
     principleOfOperation: {

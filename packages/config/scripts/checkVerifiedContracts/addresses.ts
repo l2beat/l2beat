@@ -1,4 +1,4 @@
-import { assertUnreachable, EthereumAddress } from '@l2beat/shared'
+import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
 
 import {
   Bridge,
@@ -45,6 +45,7 @@ function gatherAddressesFromUpgradeability(
     case 'resolved delegate proxy':
     case 'call implementation proxy':
     case 'EIP897 proxy':
+    case 'Eternal Storage proxy':
       result.push(item.implementation)
       break
     case 'StarkWare proxy':
@@ -69,6 +70,10 @@ function gatherAddressesFromUpgradeability(
     case 'zkSync Lite proxy':
       result.push(item.implementation)
       result.push(item.additional)
+      break
+    case 'zkSpace proxy':
+      result.push(item.implementation)
+      result.push(...item.additional)
       break
     case 'Reference':
     case 'immutable':

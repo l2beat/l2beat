@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s'
@@ -37,15 +37,15 @@ export const skaleIMA: Bridge = {
     associatedTokens: ['SKL'],
     escrows: [
       discovery.getEscrowDetails({
-        identifier: 'DepositBoxEth',
+        address: EthereumAddress('0x49F583d263e4Ef938b9E09772D3394c71605Df94'),
         sinceTimestamp: new UnixTime(1626719733),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
-        identifier: 'DepositBoxERC20',
+        address: EthereumAddress('0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669'),
         sinceTimestamp: new UnixTime(1626719900),
         tokens: [
-          // 'RAZOR',
+          'RAZOR',
           'USDP',
           'USDC',
           'SKL',
@@ -64,7 +64,7 @@ export const skaleIMA: Bridge = {
     principleOfOperation: {
       name: 'Principle of Operation',
       description:
-        'It is a cross-chain BLS threshold bridge that allows users to transfer Eth, ERC20, ERC721, ERC1155 and arbitrary messages between Ethereum and SKALE chains without fees and between SKALE chains without gas fees. Locks/Unlocks on main chain(Ethereum or SKALE chain which is origin of the asset), Burns/Mints on target chain.',
+        'It is a cross-chain BLS threshold bridge that allows users to transfer Eth, ERC20, ERC721, ERC1155 and arbitrary messages between Ethereum and SKALE chains without fees and between SKALE chains without gas fees. Locks/Unlocks on main chain (Ethereum or SKALE chain which is origin of the asset), Burns/Mints on target chain.',
       references: [
         {
           text: 'Bridging transactions',
@@ -77,7 +77,7 @@ export const skaleIMA: Bridge = {
     validation: {
       name: 'Validation',
       description:
-        'SKALE IMA Bridge operates on SKALE Network nodes for connected SKALE chain. Each node validates a tx and sign tx by BLS secret key and one of the node send tx to the SKALE chain or Ethereum when 11 out of 16 nodes validated and signed the tx.',
+        'SKALE IMA Bridge operates on SKALE Network nodes for connected SKALE chain. Messages are signed by BLS secret key with a 11 out of 16 threshold, then sent and validated on Ethereum. The validator set signing the message is the same one that is used for the consensus of the SKALE chain, making the bridge as secure as the chain itself. Since the state root is not sent to L1, the bridge and the chain state can diverge.',
       references: [
         {
           text: 'SKALE IMA Bridge - Overview',
@@ -90,13 +90,18 @@ export const skaleIMA: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third Party',
+      value: 'Destination Chain',
       description:
         'There are 16 randomly selected validator nodes of the destination chain, 11 of them needs to sign and verify messages',
-      sentiment: 'bad',
-      references: [
-        'https://etherscan.io/address/0xC261084Dc6475d4980548Bd8C323FF825b3D0C38#code#F1#L398',
-        'https://etherscan.io/tx/0x2e2a29233aa564c66b99952bf962237c0f4386cc136a7e74ad0d6408ddea4c12',
+      sentiment: 'warning',
+      sources: [
+        {
+          contract: 'MessageProxyForMainnet',
+          references: [
+            'https://etherscan.io/address/0xC261084Dc6475d4980548Bd8C323FF825b3D0C38#code#F1#L398',
+            'https://etherscan.io/tx/0x2e2a29233aa564c66b99952bf962237c0f4386cc136a7e74ad0d6408ddea4c12',
+          ],
+        },
       ],
     },
     sourceUpgradeability: {
@@ -113,31 +118,31 @@ export const skaleIMA: Bridge = {
   },
   contracts: {
     addresses: [
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'MessageProxyForMainnet',
         'Contract responsible for sending and receiving messages. It is used internally by the DepositBox contracts to transfer value between chains.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'DepositBoxEth',
         'Bridge contract to transfer ETH to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'DepositBoxERC721WithMetadata',
         'Bridge contract to transfer ERC721 tokens with metadata to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'DepositBoxERC20',
         'Bridge contract to transfer ERC20 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'DepositBoxERC721',
         'Bridge contract to transfer ERC721 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'DepositBoxERC1155',
         'Bridge contract to transfer ERC1155 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
       ),
-      discovery.getMainContractDetails(
+      discovery.getContractDetails(
         'CommunityPool',
         'CommunityPool is Gas Wallet contract, where users need to deposit Eth, to be able to transfer their assets(Eth, ERC20, NFTs) or messages from SKALE chain to Ethereum. Deposited amount will be spend for gas reimbursement to Agent which will deliver message on Ethereum.',
       ),
@@ -145,7 +150,7 @@ export const skaleIMA: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    ...discovery.getGnosisSafeDetails(
+    ...discovery.getMultisigPermission(
       'ProxyAdminOwner',
       'This is an owner of DepositBox contracts proxies, can upgrade the implementation of those contracts, which potentially can introduce bug or introduce malicious behaviors.',
     ),

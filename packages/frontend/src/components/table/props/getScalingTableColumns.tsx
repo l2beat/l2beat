@@ -2,8 +2,8 @@ import React from 'react'
 
 import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
+import { StageCell } from '../../stages/StageCell'
 import { IndexCell } from '../IndexCell'
-import { MaturityCell } from '../MaturityCell'
 import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
@@ -11,7 +11,7 @@ import { RosetteCell } from '../RosetteCell'
 import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 
-export function getActiveScalingTvlColumns(maturityEnabled: boolean) {
+export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -43,14 +43,20 @@ export function getActiveScalingTvlColumns(maturityEnabled: boolean) {
         </TechnologyCell>
       ),
     },
-    ...(maturityEnabled
+    ...(stagesEnabled
       ? [
           {
-            name: 'Maturity',
-            tooltip: 'Maturity of this Layer 2 based on its features.',
+            name: 'Stages',
+            tooltip: 'Stage of this Layer 2 based on its features.',
             alignCenter: true as const,
             getValue: (project: ScalingTvlViewEntry) => (
-              <MaturityCell item={project.maturityEntry} />
+              <StageCell
+                item={
+                  project.stage === 'UnderReview'
+                    ? 'UnderReview'
+                    : project.stage
+                }
+              />
             ),
           },
         ]
@@ -216,7 +222,8 @@ export function getScalingRiskColumns() {
     },
     {
       name: 'Upgradeability',
-      tooltip: 'Are the Ethereum contracts upgradeable?',
+      tooltip:
+        'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
     {
@@ -226,10 +233,10 @@ export function getScalingRiskColumns() {
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
     },
     {
-      name: 'Validator failure',
+      name: 'Proposer failure',
       tooltip:
-        'Validator is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
-      getValue: (project) => <RiskCell item={project.validatorFailure} />,
+        'Proposer is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
+      getValue: (project) => <RiskCell item={project.proposerFailure} />,
     },
   ]
   return columns

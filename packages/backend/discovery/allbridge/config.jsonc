@@ -9,14 +9,19 @@
     "0xA314330482f325D38A83B492EF6B006224a3bea9": "LPBridge",
     "0xBBbD1BbB4f9b936C3604906D7592A644071dE884": "TokenBridge",
     "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e": "USDT_POOL",
-    "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
     "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C": "USDC_POOL",
-    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0xCe01bc1be28c0784492cB44EbBDa662c3F539172": "DAI_POOL",
+    "0x93746538D4519C809827205Bd1C2c7a0E15bd74b": "Validator",
+    "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6": "Fee Oracle",
+    "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50": "Allbridge Messenger",
+    "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F": "Wormhole Messenger",
+    // Other
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
-    "0xCe01bc1be28c0784492cB44EbBDa662c3F539172": "DAI_POOL"
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT"
   },
   "overrides": {
-    "0xA314330482f325D38A83B492EF6B006224a3bea9": {
+    "LPBridge": {
       "fields": {
         "DAI_POOL": {
           "type": "call",
@@ -38,6 +43,60 @@
           "args": [
             "0x000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7"
           ]
+        }
+      }
+    },
+    "TokenBridge": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x77eacfcb6207f26b72edc4f15c48e5518843e7e98ccfd7e0d6c16f92ed1fef8d": "BRIDGE_MANAGER",
+            "0x55ca0725c70a9ecebe86dd2b8b3a414983f6cb638e1a0fa17c64bbdd59b4d4c1": "STOP_MANAGER",
+            "0x593fb413ec9f9ad9f53f309300b515310ff474591268ca3cbe9752fd88eb76a0": "TOKEN_MANAGER"
+          }
+        }
+      },
+      "ignoreMethods": [
+        "DEFAULT_ADMIN_ROLE",
+        "BRIDGE_MANAGER",
+        "STOP_MANAGER",
+        "TOKEN_MANAGER"
+      ]
+    },
+    "Allbridge Messenger": {
+      "fields": {
+        "owner": {
+          "type": "call",
+          "method": "function owner() view returns (address)",
+          "args": []
+        }
+      }
+    },
+    "Wormhole Messenger": {
+      "fields": {
+        "owner": {
+          "type": "call",
+          "method": "function owner() view returns (address)",
+          "args": []
+        }
+      }
+    },
+    "Validator": {
+      "fields": {
+        "owner": {
+          "type": "call",
+          "method": "function owner() view returns (address)",
+          "args": []
+        }
+      }
+    },
+    "Fee Oracle": {
+      "fields": {
+        "owner": {
+          "type": "call",
+          "method": "function owner() view returns (address)",
+          "args": []
         }
       }
     },

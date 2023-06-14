@@ -1,20 +1,24 @@
+import {
+  AddressAnalyzer,
+  ConfigReader,
+  DISCOVERY_LOGIC_VERSION,
+  DiscoveryEngine,
+  DiscoveryLogger,
+  DiscoveryProvider,
+  HandlerExecutor,
+  ProxyDetector,
+  SourceCodeService,
+} from '@l2beat/discovery'
 import { HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
-import { AddressAnalyzer } from '../../core/discovery/analysis/AddressAnalyzer'
-import { ConfigReader } from '../../core/discovery/config/ConfigReader'
-import { DiscoveryLogger } from '../../core/discovery/DiscoveryLogger'
 import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
-import { DiscoveryEngine } from '../../core/discovery/engine/DiscoveryEngine'
-import { HandlerExecutor } from '../../core/discovery/handlers/HandlerExecutor'
-import { NotificationManager } from '../../core/discovery/NotificationManager'
-import { DiscoveryProvider } from '../../core/discovery/provider/DiscoveryProvider'
-import { ProxyDetector } from '../../core/discovery/proxies/ProxyDetector'
-import { SourceCodeService } from '../../core/discovery/source/SourceCodeService'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
+import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
+import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'
@@ -50,13 +54,22 @@ export function createUpdateMonitorModule(
       )
     : undefined
 
-  const notificationManager = new NotificationManager(discordClient, logger)
+  const updateNotifierRepository = new UpdateNotifierRepository(
+    database,
+    logger,
+  )
+
+  const updateNotifier = new UpdateNotifier(
+    updateNotifierRepository,
+    discordClient,
+    logger,
+  )
 
   const configReader = new ConfigReader()
 
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
-  const discoveryLogger = DiscoveryLogger.SILENT
+  const discoveryLogger = DiscoveryLogger.SERVER
 
   const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
   const sourceCodeService = new SourceCodeService(discoveryProvider)
@@ -72,17 +85,18 @@ export function createUpdateMonitorModule(
     discoveryLogger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
-  const discoveryRunner = new DiscoveryRunner(discoveryEngine)
+  const discoveryRunner = new DiscoveryRunner(discoveryEngine, configReader)
 
   const updateMonitor = new UpdateMonitor(
     provider,
     discoveryRunner,
-    notificationManager,
+    updateNotifier,
     configReader,
     updateMonitorRepository,
     clock,
     logger,
     !!config.updateMonitor.runOnStart,
+    DISCOVERY_LOGIC_VERSION,
   )
 
   const start = async () => {
