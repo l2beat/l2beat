@@ -1,6 +1,7 @@
 import { renderToString } from 'react-dom/server'
+
 import { formatTps } from '../../../../utils/formatTps'
-import { Link, linkComponentToString } from '../../../Link'
+import { Link } from '../../../Link'
 import { ChartElements } from '../elements'
 import { State } from '../state/State'
 import { formatCurrencyExactValue } from '../update/view/format'
