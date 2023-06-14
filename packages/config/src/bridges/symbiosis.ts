@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
@@ -89,12 +89,7 @@ export const symbiosis: Bridge = {
   config: {
     escrows: [
       {
-        address: EthereumAddress('0xb80fDAA74dDA763a8A158ba85798d373A5E84d84'), // Portal v1
-        sinceTimestamp: new UnixTime(1643922000),
-        tokens: ['USDC', 'SIS'],
-      },
-      {
-        address: EthereumAddress('0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8'), // Portal v2
+        address: discovery.getContract('Portal').address, // Portal v2
         sinceTimestamp: new UnixTime(1668373200),
         tokens: ['USDC', 'SIS', 'WETH'],
       },
