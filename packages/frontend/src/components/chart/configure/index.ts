@@ -3,6 +3,7 @@ import { toDays } from './controls/toDays'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
 import { InitMessage, Message } from './messages'
+import { getPersistedSettings } from './persistedSettings'
 import { render } from './render/render'
 import { EMPTY_STATE } from './state/empty'
 import { Milestones, State } from './state/State'
@@ -42,6 +43,9 @@ function configureChart(chart: HTMLElement) {
 }
 
 function getInitMessage(elements: ChartElements): InitMessage {
+  const chartId = new URL(elements.chart.baseURI).pathname
+  const persistedSetting = getPersistedSettings(chartId)
+
   const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
 
   const daysValue = elements.controls.days.find((x) => x.checked)?.value ?? '1Y'
@@ -56,6 +60,7 @@ function getInitMessage(elements: ChartElements): InitMessage {
   return {
     type: 'Init',
     initialView,
+    chartId,
     days,
     showEthereum,
     aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
@@ -63,5 +68,6 @@ function getInitMessage(elements: ChartElements): InitMessage {
     activityEndpoint: elements.chart.dataset.activityEndpoint,
     labelCount: elements.view.labels.length,
     milestones,
+    ...persistedSetting,
   }
 }

@@ -33,6 +33,13 @@ export function render(
     }
   }
 
+  if (state.controls.isLogScale !== previousState.controls.isLogScale) {
+    const scaleValue = state.controls.isLogScale ? 'LOG' : 'LIN'
+    for (const input of elements.controls.scale) {
+      input.checked = input.value === scaleValue
+    }
+  }
+
   if (state.controls.days !== previousState.controls.days) {
     for (const input of elements.controls.days) {
       input.checked = toDays(input.value) === state.controls.days

@@ -46,9 +46,10 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         milestones: milestonesToRecord(message.milestones),
       },
       controls: {
+        chartId: message.chartId,
         view: message.initialView,
         days: message.days,
-        isLogScale: false,
+        isLogScale: message.isLogScale,
         currency: 'usd',
         token: undefined,
         showEthereum: !!message.showEthereum,

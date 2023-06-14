@@ -9,6 +9,7 @@ import {
 export interface InitMessage {
   type: 'Init'
   initialView: 'tvl' | 'activity'
+  chartId: string
   days: number
   aggregateTvlEndpoint?: string
   alternativeTvlEndpoint?: string
@@ -16,6 +17,7 @@ export interface InitMessage {
   showEthereum?: boolean
   labelCount: number
   milestones: Milestone[]
+  isLogScale: boolean
 }
 
 export interface ViewChangedMessage {
