@@ -63,7 +63,7 @@ export const getStage = createGetStage({
       },
       fraudProofSystemIsPermissionless: {
         positive: 'Fraud proof submission is open to everyone.',
-        negative: 'Fraud proof submission is open to everyone.',
+        negative: 'Fraud proof submission is open only to whitelisted actors.',
       },
       delayWith30DExitWindow: {
         positive:
