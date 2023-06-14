@@ -14,7 +14,7 @@ export const symbiosis: Bridge = {
     name: 'Symbiosis',
     slug: 'symbiosis',
     description:
-        'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks. Best rates for any to any token swaps regardless of the blockchain network: Avalanche, BNB, Boba, Ethereum, Polygon, ZkSync and Arbitrum supported.',
+      'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks. Best rates for any to any token swaps regardless of the blockchain network: Avalanche, BNB, Boba, Ethereum, Polygon, ZkSync and Arbitrum supported.',
     links: {
       websites: ['https://symbiosis.finance/'],
       repositories: ['https://github.com/symbiosis-finance'],
@@ -26,19 +26,19 @@ export const symbiosis: Bridge = {
     },
   },
   riskView: {
-    validatedBy: { 
+    validatedBy: {
       value: 'Validation network',
       description:
-          'Consensus of the MPC group (the Symbiosis relayers network) is required to create a cross-chain message with the MPC signature.',
+        'Consensus of the MPC group (the Symbiosis relayers network) is required to create a cross-chain message with the MPC signature.',
       sentiment: 'warning',
     },
-    sourceUpgradeability: { 
+    sourceUpgradeability: {
       value: 'Yes',
       description:
-          'Contracts could be upgraded. Upgrade is possible with 3/5 threshold in gnosis safe.',
+        'Contracts could be upgraded. Upgrade is possible with 3/5 threshold in gnosis safe.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL, 
+    destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
     destination: [
@@ -57,14 +57,14 @@ export const symbiosis: Bridge = {
       'Polygon zkEVM',
     ],
     category: 'Hybrid',
-    principleOfOperation: { 
+    principleOfOperation: {
       name: 'Principle of operation',
       description:
         'Symbiosis is a decentralized exchange that pools together liquidity from different blockchains, whether they use EVM technology or not. With Symbiosis, users can effortlessly trade any token and transfer their assets across blockchains. No need to worry about which network a token is on or how to move funds between different blockchains. All cross-chain operations are done in a single click (one transaction) at competitive exchange rates and transaction costs.',
       references: [],
       risks: [],
     },
-    validation: { 
+    validation: {
       name: 'Oracles and relayers',
       description:
         'An Oracle request from one network to another could only be transfered when majority of relayers reach a consensus about the correctness of the request.',
@@ -105,7 +105,7 @@ export const symbiosis: Bridge = {
         address: discovery.getContract('MetaRouterGateway').address,
         name: 'Symbiosis MetaRouter Gateway',
         description:
-          'A detached contract for secure isolation of users\' assets.',
+          "A detached contract for secure isolation of users' assets.",
       },
       {
         address: discovery.getContract('Bridge').address,
@@ -116,8 +116,7 @@ export const symbiosis: Bridge = {
       {
         address: discovery.getContract('Portal').address,
         name: 'Symbiosis Portal',
-        description:
-          'A contract that stores "bridged" liquidity.',
+        description: 'A contract that stores "bridged" liquidity.',
       },
     ],
     risks: [],
@@ -126,10 +125,10 @@ export const symbiosis: Bridge = {
   permissions: [
     discovery.contractAsPermissioned(
       discovery.getContract('Multisig'),
-      'Owner and ProxyAdmin of all upgradable contracts.', 
+      'Owner and ProxyAdmin of all upgradable contracts.',
     ),
   ],
-  knowledgeNuggets: [ 
+  knowledgeNuggets: [
     {
       title: 'Bridging contracts explained',
       url: 'https://docs.symbiosis.finance/crosschain-liquidity-engine/bridge-contracts',
@@ -140,11 +139,10 @@ export const symbiosis: Bridge = {
       url: 'https://docs.symbiosis.finance/relayers-network/pos-relayers-network',
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
-   {
+    {
       title: 'Audits',
       url: 'https://docs.symbiosis.finance/main-concepts/security-audits-of-symbiosis',
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
-    
   ],
 }

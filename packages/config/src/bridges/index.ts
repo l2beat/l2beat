@@ -30,11 +30,11 @@ import { satellite } from './satellite'
 import { skaleIMA } from './skaleIMA'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
+import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
 import { Bridge } from './types'
 import { wormholeV1 } from './wormholeV1'
 import { xdai } from './xdai'
-import { symbiosis } from './symbiosis'
 
 export * from './types'
 
