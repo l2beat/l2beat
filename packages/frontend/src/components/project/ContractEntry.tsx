@@ -2,6 +2,7 @@ import { VerificationStatus } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React from 'react'
 
+import { HoverableDropdown } from '../HoverableDropdown'
 import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
@@ -28,12 +29,17 @@ export interface TechnologyContractLinks {
 }
 export interface ContractEntryProps {
   contract: TechnologyContract
+  additionalAddresses?: {
+    dropdownTitle: string
+    addresses: string[]
+  }
   verificationStatus: VerificationStatus
   className?: string
 }
 
 export function ContractEntry({
   contract,
+  additionalAddresses,
   verificationStatus,
   className,
 }: ContractEntryProps) {
@@ -91,6 +97,23 @@ export function ContractEntry({
                 {x.name}
               </Link>
             ))}
+            {additionalAddresses && (
+              <HoverableDropdown
+                className="mt-[-8px]"
+                title={additionalAddresses.dropdownTitle}
+                children={additionalAddresses.addresses.map((address, i) => (
+                  <EtherscanLink
+                    address={address}
+                    key={i}
+                    className={cx(
+                      verificationStatus.contracts[address] === false
+                        ? 'text-red-300'
+                        : '',
+                    )}
+                  />
+                ))}
+              />
+            )}
           </div>
           {contract.description && (
             <p className="mt-2 text-gray-850 dark:text-gray-400">
