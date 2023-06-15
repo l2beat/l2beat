@@ -20,13 +20,13 @@ export function StageBadge({
     <span
       className={cx(
         getColorClassName(stage),
-        'inline-block rounded  px-1.5 text-center font-medium uppercase leading-none',
+        'inline-block rounded px-1.5 text-center font-medium uppercase leading-none',
         oneSize && 'w-20',
         big ? 'text-md py-0.5' : 'py-[3px] text-xs',
         className,
       )}
     >
-      {value ?? '-'}
+      <span className="relative top-px">{value ?? '-'}</span>
     </span>
   )
 }
