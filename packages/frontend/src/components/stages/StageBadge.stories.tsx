@@ -1,37 +1,36 @@
 import { Story } from '@storybook/react'
 import React from 'react'
 
-import { StageBadge } from './StageBadge'
+import { StageBadge, StageBadgeProps } from './StageBadge'
 
 export default {
   title: 'Components/Stages',
 }
 
-interface TemplateProps {
-  category: 'Stage 0' | 'Stage 1' | 'Stage 2' | undefined
-  small?: boolean
-}
-
-function Template(props: TemplateProps) {
+function Template(props: StageBadgeProps) {
   return (
     <div className="m-4 ml-32">
-      <StageBadge stage={props.category} small={props.small} />
+      <StageBadge stage={props.stage} big={props.big} />
     </div>
   )
 }
 
-export const Badge: Story<TemplateProps> = Template.bind({})
+export const Badge: Story<StageBadgeProps> = Template.bind({})
 Badge.argTypes = {
-  category: {
+  stage: {
     control: 'radio',
     options: ['Stage 0', 'Stage 1', 'Stage 2', undefined],
   },
-  small: {
+  big: {
+    control: 'radio',
+    options: [true, false],
+  },
+  oneSize: {
     control: 'radio',
     options: [true, false],
   },
 }
 Badge.args = {
-  category: 'Stage 0',
-  small: false,
+  stage: 'Stage 0',
+  big: false,
 }
