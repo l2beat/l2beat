@@ -11,7 +11,7 @@ export const zkex: Layer2 = {
     name: 'ZKEX',
     slug: 'zkex',
     description:
-      'ZKEX: Multi-chain order book DEX, secured with zero-knowledge proofs.',
+      'ZKEX is a multi-chain order book DEX, secured with zero-knowledge proofs.',
     purpose: 'Exchange',
     links: {
       websites: ['https://zkex.com/'],
