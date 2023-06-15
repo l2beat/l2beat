@@ -34,7 +34,8 @@ export function StageSection(props: StageSectionProps) {
             alt={props.name}
             className="relative -top-0.5 mr-2 inline-block h-6 w-6"
           />
-          {props.name} is currently <StageBadge stage={props.stage.stage} big />{' '}
+          {props.name} is currently
+          <StageBadge stage={props.stage.stage} big className="mx-2" />
           for stage assignment.
         </div>
         <div className="flex flex-col items-center gap-4 rounded-lg bg-yellow-800 p-8">
@@ -63,7 +64,8 @@ export function StageSection(props: StageSectionProps) {
           alt={props.name}
           className="relative -top-0.5 mr-2 inline-block h-6 w-6"
         />
-        {props.name} is a <StageBadge stage={props.stage.stage} big />{' '}
+        {props.name} is a
+        <StageBadge stage={props.stage.stage} big className="mx-2" />
         <span className="lowercase">{props.type}</span>.
       </div>
       {props.stage.summary.map((stage) => {
@@ -78,44 +80,37 @@ export function StageSection(props: StageSectionProps) {
             key={stage.stage}
             className="Dropdown mb-4 rounded-lg bg-neutral-700 "
           >
-            <label className="flex cursor-pointer justify-between p-4">
+            <label className="flex cursor-pointer items-center justify-between p-4">
               <input
                 type="checkbox"
                 autoComplete="off"
                 className=" Dropdown-Button peer hidden"
               />
-              <div>
+              <div className="flex items-center gap-3">
                 <StageBadge stage={stage.stage} big />
-                <span className="ml-2 inline-block">
-                  {missing.length === 0 ? (
-                    <>
-                      <SatisfiedIcon className="relative -top-0.5 inline-block" />
-                      <span className="ml-2 inline-block">
-                        {reqText(satisfied.length, 'met')}
-                      </span>
-
-                      {underReview.length > 0 && (
-                        <>
-                          <UnderReviewIcon className=" relative -top-0.5 ml-3 inline-block" />
-                          <span className="ml-2 inline-block">
-                            {underReview.length} under review
-                          </span>
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <MissingIcon className="relative -top-0.5 inline-block" />
-                      <span className="ml-3 inline-block">
-                        {reqText(missing.length, 'missing')}
-                      </span>
-                    </>
-                  )}
-                </span>
+                {missing.length === 0 ? (
+                  <div className="flex flex-col gap-3 md:flex-row">
+                    <div className="flex items-center gap-2">
+                      <SatisfiedIcon className="shrink-0" />
+                      <span>{reqText(satisfied.length, 'met')}</span>
+                    </div>
+                    {underReview.length > 0 && (
+                      <div className="flex items-center gap-2">
+                        <UnderReviewIcon className="shrink-0" />
+                        <span>{underReview.length} under review</span>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <MissingIcon className="shrink-0" />
+                    <span>{reqText(missing.length, 'missing')}</span>
+                  </div>
+                )}
               </div>
               <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
             </label>
-            <ul className="Dropdown-Item pointer-events-none mx-4 hidden space-y-2 pb-6">
+            <ul className="Dropdown-Item pointer-events-none mx-4 hidden space-y-2 pb-4 md:pb-6">
               {satisfied.map((req, i) => (
                 <li key={i} className="flex">
                   <SatisfiedIcon className="shrink-0" />
