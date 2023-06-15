@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 
 export function getBatchSizeFromCallsPerMinute(
   callsPerMinute: number,

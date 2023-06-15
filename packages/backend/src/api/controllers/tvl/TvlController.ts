@@ -1,11 +1,11 @@
+import { Logger } from '@l2beat/shared'
 import {
   AssetId,
-  Logger,
   ProjectId,
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { Token } from '../../../model'

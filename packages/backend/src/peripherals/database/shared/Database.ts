@@ -1,4 +1,5 @@
-import { assert, Logger, LogLevel } from '@l2beat/shared'
+import { Logger, LogLevel } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
 

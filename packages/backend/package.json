@@ -24,6 +24,7 @@
     "@l2beat/config": "*",
     "@l2beat/discovery": "*",
     "@l2beat/shared": "*",
+    "@l2beat/shared-pure": "*",
     "@sentry/node": "^7.52.1",
     "@types/koa": "^2.13.5",
     "@types/koa__router": "^12.0.0",

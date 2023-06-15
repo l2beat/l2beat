@@ -1,4 +1,7 @@
-import { gatherAddressesFromUpgradeability, UnixTime } from '@l2beat/shared'
+import {
+  gatherAddressesFromUpgradeability,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { ProjectRiskViewEntry } from '../common'

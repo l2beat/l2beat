@@ -1,12 +1,12 @@
 import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import { Logger } from '@l2beat/shared'
 import {
   ContractParameters,
   DiscoveryOutput,
   EthereumAddress,
   Hash256,
-  Logger,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers } from 'ethers'
 

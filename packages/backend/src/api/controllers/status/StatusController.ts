@@ -1,5 +1,5 @@
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
-import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared'
+import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'

@@ -1,10 +1,5 @@
-import {
-  assert,
-  AssetId,
-  EthereumAddress,
-  Logger,
-  UnixTime,
-} from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { assert, AssetId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { Token } from '../model'
