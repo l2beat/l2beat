@@ -103,3 +103,21 @@ MultipleAddresses.args = {
     contracts: VERIFICATION_STATUS,
   },
 }
+
+export const ShowMoreAddresses: Story<ContractEntryProps> = Template.bind({})
+ShowMoreAddresses.args = {
+  contract: {
+    name: 'SecurityCouncil',
+    addresses: [CONTRACT],
+    additionalAddresses: {
+      dropdownTitle: 'Show more addresses',
+      addresses: [ADMIN, IMPLEMENTATION],
+    },
+    description: 'This is a smart contract responsible for X in the system Y.',
+    links: [],
+  },
+  verificationStatus: {
+    projects: {},
+    contracts: VERIFICATION_STATUS,
+  },
+}

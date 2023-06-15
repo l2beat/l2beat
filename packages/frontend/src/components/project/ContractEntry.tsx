@@ -13,6 +13,10 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 export interface TechnologyContract {
   name: string
   addresses?: string[]
+  additionalAddresses?: {
+    dropdownTitle: string
+    addresses: string[]
+  }
   description?: string
   links: TechnologyContractLinks[]
   upgradeableBy?: string
@@ -29,17 +33,13 @@ export interface TechnologyContractLinks {
 }
 export interface ContractEntryProps {
   contract: TechnologyContract
-  additionalAddresses?: {
-    dropdownTitle: string
-    addresses: string[]
-  }
+
   verificationStatus: VerificationStatus
   className?: string
 }
 
 export function ContractEntry({
   contract,
-  additionalAddresses,
   verificationStatus,
   className,
 }: ContractEntryProps) {
@@ -97,21 +97,23 @@ export function ContractEntry({
                 {x.name}
               </Link>
             ))}
-            {additionalAddresses && (
+            {contract.additionalAddresses && (
               <HoverableDropdown
                 className="mt-[-8px]"
-                title={additionalAddresses.dropdownTitle}
-                children={additionalAddresses.addresses.map((address, i) => (
-                  <EtherscanLink
-                    address={address}
-                    key={i}
-                    className={cx(
-                      verificationStatus.contracts[address] === false
-                        ? 'text-red-300'
-                        : '',
-                    )}
-                  />
-                ))}
+                title={contract.additionalAddresses.dropdownTitle}
+                children={contract.additionalAddresses.addresses.map(
+                  (address, i) => (
+                    <EtherscanLink
+                      address={address}
+                      key={i}
+                      className={cx(
+                        verificationStatus.contracts[address] === false
+                          ? 'text-red-300'
+                          : '',
+                      )}
+                    />
+                  ),
+                )}
               />
             )}
           </div>
