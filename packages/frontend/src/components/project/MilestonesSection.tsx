@@ -2,9 +2,8 @@ import { Milestone } from '@l2beat/config'
 import React from 'react'
 
 import { ExpandableContainer } from '../ExpandableContainer'
-import { ArrowRightIcon } from '../icons'
 import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
-import { OutLink } from '../OutLink'
+import { Link } from '../Link'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 
 export interface MilestonesSectionProps {
@@ -45,13 +44,9 @@ export function MilestonesSection({
                       {milestone.description}
                     </p>
                   )}
-                  <OutLink
-                    className="flex flex-wrap items-center gap-1 text-sm font-bold text-link underline"
-                    href={milestone.link}
-                  >
+                  <Link className="text-sm" href={milestone.link} showArrow>
                     Learn more
-                    <ArrowRightIcon className="fill-link" />
-                  </OutLink>
+                  </Link>
                 </div>
               </div>
             ))}
