@@ -1,7 +1,7 @@
 import { Stage, StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { MissingIcon } from '../icons/symbols/MissingIcon'
+import { MissingIcon } from '../icons'
 import { StageBadge } from './StageBadge'
 import { StageDisclaimer } from './StageDisclaimer'
 
@@ -18,7 +18,7 @@ export function StageTooltip({ item }: StageTooltipProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 py-1">
+    <div className="flex max-w-[300px] flex-col gap-4 py-1">
       <span>
         <StageBadge stage={item.stage} className="font-medium" />
       </span>

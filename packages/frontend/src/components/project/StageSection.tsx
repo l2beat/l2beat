@@ -1,9 +1,12 @@
 import { StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { ChevronDownIcon } from '../icons'
-import { MissingIcon } from '../icons/symbols/MissingIcon'
-import { SatisfiedIcon } from '../icons/symbols/SatisfiedIcon'
+import {
+  ChevronDownIcon,
+  MissingIcon,
+  SatisfiedIcon,
+  UnderReviewIcon,
+} from '../icons'
 import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
@@ -64,11 +67,20 @@ export function StageSection(props: StageSectionProps) {
                       <span className="ml-2 inline-block">
                         {reqText(satisfied.length, 'met')}
                       </span>
+
+                      {underReview.length > 0 && (
+                        <>
+                          <UnderReviewIcon className=" relative -top-0.5 ml-3 inline-block" />
+                          <span className="ml-2 inline-block">
+                            {underReview.length} under review
+                          </span>
+                        </>
+                      )}
                     </>
                   ) : (
                     <>
                       <MissingIcon className="relative -top-0.5 inline-block" />
-                      <span className="ml-2 inline-block">
+                      <span className="ml-3 inline-block">
                         {reqText(missing.length, 'missing')}
                       </span>
                     </>
@@ -81,6 +93,12 @@ export function StageSection(props: StageSectionProps) {
               {satisfied.map((req, i) => (
                 <li key={i} className="flex">
                   <SatisfiedIcon className="shrink-0" />
+                  <span className="ml-2 inline-block">{req.description}</span>
+                </li>
+              ))}
+              {underReview.map((req, i) => (
+                <li key={i} className="flex">
+                  <UnderReviewIcon className="shrink-0" />
                   <span className="ml-2 inline-block">{req.description}</span>
                 </li>
               ))}
