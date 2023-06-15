@@ -25,10 +25,36 @@ export function StageSection(props: StageSectionProps) {
     return null
   }
 
-  // TODO: implement under review section
   if (props.stage.stage === 'UnderReview') {
-    return <span>Under Review 🕵️‍♀️</span>
+    return (
+      <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
+        <div className="mb-6 font-medium">
+          <img
+            src={props.icon}
+            alt={props.name}
+            className="relative -top-0.5 mr-2 inline-block h-6 w-6"
+          />
+          {props.name} is currently <StageBadge stage={props.stage.stage} big />{' '}
+          for stage assignment.
+        </div>
+        <div className="flex flex-col items-center gap-4 rounded-lg bg-yellow-800 p-8">
+          <div>
+            <UnderReviewIcon className="relative -top-0.5 inline-block h-6 w-6" />
+            <span className="ml-2 inline-block text-2xl font-medium">
+              Project Under Review
+            </span>
+          </div>
+          <p className="text-center text-sm">
+            Projects under review might present uncompleted information & data.
+            <br />
+            L2BEAT Team is working to research & validate content before
+            publishing.
+          </p>
+        </div>
+      </ProjectDetailsSection>
+    )
   }
+
   return (
     <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
       <div className="mb-6 font-medium">
