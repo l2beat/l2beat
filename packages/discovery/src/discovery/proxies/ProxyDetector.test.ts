@@ -1,4 +1,4 @@
-import { EthereumAddress, ProxyDetails } from '@l2beat/shared'
+import { EthereumAddress, ProxyDetails } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'

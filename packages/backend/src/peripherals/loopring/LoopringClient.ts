@@ -1,9 +1,5 @@
-import {
-  getErrorMessage,
-  HttpClient,
-  Logger,
-  RateLimiter,
-} from '@l2beat/shared'
+import { HttpClient, Logger } from '@l2beat/shared'
+import { getErrorMessage, RateLimiter } from '@l2beat/shared-pure'
 
 import { LoopringResponse } from './schemas'
 

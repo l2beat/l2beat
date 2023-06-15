@@ -1,5 +1,5 @@
 import { Bridge } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
+import { VerificationStatus } from '@l2beat/shared-pure'
 
 import { DescriptionSectionProps } from '../../../components/project/DescriptionSection'
 import { getEditLink, getIssueLink } from './links'

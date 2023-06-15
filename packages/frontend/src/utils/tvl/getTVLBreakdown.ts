@@ -1,5 +1,5 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
-import { TvlApiToken } from '@l2beat/shared'
+import { TvlApiToken } from '@l2beat/shared-pure'
 
 import { TVLBreakdownProps } from '../../components/TVLBreakdown'
 import { formatPercent } from '../utils'

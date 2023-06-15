@@ -1,5 +1,6 @@
 import {
   ChecklistTemplate,
+  ChecklistValue,
   MissingStageRequirements,
   StageBlueprint,
   StageConfig,
@@ -55,23 +56,41 @@ export function createGetStage<T extends StageBlueprint>(
 
 function normalizeKeyChecklist(
   stageKeyBlueprint: { positive: string; negative: string },
-  stageKeyChecklist: boolean | [boolean, string] | null,
-): [boolean | null, string] {
+  stageKeyChecklist: ChecklistValue,
+): [boolean | null | 'UnderReview', string] {
   const satisfied = isSatisfied(stageKeyChecklist)
 
-  let description = satisfied
-    ? stageKeyBlueprint.positive
-    : stageKeyBlueprint.negative
-
-  if (Array.isArray(stageKeyChecklist)) {
-    description += ' ' + stageKeyChecklist[1]
-  }
+  const description = getDescription(
+    satisfied,
+    stageKeyBlueprint,
+    stageKeyChecklist,
+  )
 
   return [satisfied, description]
 }
 
-function isSatisfied(stageKeyChecklist: boolean | [boolean, string] | null) {
+function getDescription(
+  satisfied: 'UnderReview' | boolean | null,
+  stageKeyBlueprint: { positive: string; negative: string },
+  stageKeyChecklist: ChecklistValue,
+) {
+  if (Array.isArray(stageKeyChecklist)) {
+    return stageKeyChecklist[1]
+  }
+
+  return satisfied ? stageKeyBlueprint.positive : stageKeyBlueprint.negative
+}
+
+function isSatisfied(
+  stageKeyChecklist: ChecklistValue,
+): boolean | null | 'UnderReview' {
   if (stageKeyChecklist === null) return null
+
+  if (
+    Array.isArray(stageKeyChecklist) &&
+    stageKeyChecklist[0] === 'UnderReview'
+  )
+    return 'UnderReview'
 
   return (
     stageKeyChecklist === true ||

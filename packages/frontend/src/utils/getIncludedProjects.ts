@@ -1,4 +1,4 @@
-import { ProjectId, TvlApiResponse } from '@l2beat/shared'
+import { ProjectId, TvlApiResponse } from '@l2beat/shared-pure'
 
 export function getIncludedProjects<
   T extends { id: ProjectId; isUpcoming?: boolean; type: 'bridge' | 'layer2' },

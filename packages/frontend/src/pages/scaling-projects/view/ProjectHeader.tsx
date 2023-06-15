@@ -30,7 +30,7 @@ export interface ProjectHeaderProps {
   tvlBreakdown: TVLBreakdownProps
   risks: RiskValues
   links: ProjectLink[]
-  stage?: false | StageConfig
+  stage?: false | StageConfig | 'UnderReview'
   isArchived?: boolean
   isUpcoming?: boolean
   warning?: string | { text: string; href: string }
@@ -83,10 +83,14 @@ export function ProjectHeader(props: ProjectHeaderProps) {
               <span
                 className="Tooltip"
                 title={renderToStaticMarkup(
-                  <StageTooltip item={props.stage} />,
+                  <StageTooltip
+                    item={
+                      props.stage !== 'UnderReview' ? props.stage : undefined
+                    }
+                  />,
                 )}
               >
-                <StageBadge category={'Stage 1'} />
+                <StageBadge stage={'Stage 1'} />
               </span>
             ),
           },

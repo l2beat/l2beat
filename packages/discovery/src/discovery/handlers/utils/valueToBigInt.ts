@@ -1,4 +1,4 @@
-import { Bytes, ContractValue } from '@l2beat/shared'
+import { Bytes, ContractValue } from '@l2beat/shared-pure'
 
 export function valueToBigInt(value: bigint | Bytes | ContractValue) {
   if (value instanceof Bytes) {

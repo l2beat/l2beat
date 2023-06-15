@@ -1,4 +1,4 @@
-import { branded } from '@l2beat/shared'
+import { branded } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export function stringAsInt(fallback?: number) {

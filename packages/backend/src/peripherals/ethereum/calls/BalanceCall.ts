@@ -1,5 +1,5 @@
 import { getTokenByAssetId } from '@l2beat/config'
-import { AssetId, Bytes, EthereumAddress } from '@l2beat/shared'
+import { AssetId, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
 import {

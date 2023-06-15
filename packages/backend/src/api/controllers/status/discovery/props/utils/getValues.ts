@@ -2,7 +2,7 @@ import {
   ContractParameters,
   ContractValue,
   DiscoveryOutput,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { isArray } from 'lodash'
 
 import { getDiscoveryChild } from './getDiscoveryChild'

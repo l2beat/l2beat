@@ -1,13 +1,13 @@
 import { TokenInfo } from '@l2beat/config'
+import { Logger } from '@l2beat/shared'
 import {
   AssetId,
   Bytes,
   CoingeckoId,
   EthereumAddress,
-  Logger,
   ProjectId,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 

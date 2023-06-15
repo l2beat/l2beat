@@ -6,7 +6,7 @@ import {
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import fs from 'fs'
 import { isArray, isString } from 'lodash'

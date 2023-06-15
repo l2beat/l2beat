@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../build/config'
+import { Link } from './Link'
 import {
   getSocialLinksProps,
   SocialLinks,
@@ -28,11 +29,7 @@ export function Footer(props: FooterProps) {
         <p className="text-center text-sm font-medium md:text-left">
           Made with 💗 by the L2BEAT research team.{' '}
           <br className="hidden lg:inline" />
-          Support us by{' '}
-          <a className="text-link underline" href="/donate">
-            donating
-          </a>
-          .
+          Support us by <Link href="/donate">donating</Link>.
         </p>
         <ul className="flex w-full justify-center gap-4">
           <SocialLinks {...props} />

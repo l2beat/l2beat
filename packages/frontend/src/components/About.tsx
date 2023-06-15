@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Link } from './Link'
+
 export function About() {
   return (
     <section className="mt-8 text-base">
@@ -35,11 +37,9 @@ export function About() {
           </p>
           <p>
             We have also compiled a list of{' '}
-            <a className="text-link underline" href="/faq">
-              Frequently Asked Questions
-            </a>{' '}
-            that will help explain some of the decisions we made for our site.
-            We hope you find L2BEAT a valuable resource.
+            <Link href="/faq">Frequently Asked Questions</Link> that will help
+            explain some of the decisions we made for our site. We hope you find
+            L2BEAT a valuable resource.
           </p>
         </div>
       </div>
