@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { OutLink } from '../OutLink'
+import { Link } from '../Link'
 
 export interface TechnologyIncompleteProps {
   editLink: string
@@ -16,17 +16,13 @@ export function TechnologyIncomplete(props: TechnologyIncompleteProps) {
     >
       <strong>Note:</strong> This project&apos;s overview requires more research
       and might not present accurate information. If you want to contribute you
-      can{' '}
-      <OutLink className="text-link underline" href={props.editLink}>
-        edit the information on Github
-      </OutLink>
-      .{' '}
+      can <Link href={props.editLink}>edit the information on Github</Link>.{' '}
       {props.twitterLink && (
         <>
           Alternatively you{' '}
-          <OutLink className="text-link underline" href={props.twitterLink}>
+          <Link href={props.twitterLink}>
             contact the project team on Twitter
-          </OutLink>{' '}
+          </Link>{' '}
           and encourage them to contribute a PR.
         </>
       )}

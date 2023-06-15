@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { OutLink } from '../../components'
+import { Link } from '../../components/Link'
 
 export interface DonationDetailsProps {
   ethereumAddress: string
@@ -27,9 +27,7 @@ export function DonateDetails(props: DonationDetailsProps) {
         <ul className="DonateDetails-Networks">
           {props.networks.map((network, i) => (
             <li key={i}>
-              <OutLink className="text-link underline" href={network.linkURL}>
-                {network.name}
-              </OutLink>
+              <Link href={network.linkURL}>{network.name}</Link>
             </li>
           ))}
         </ul>
