@@ -110,7 +110,7 @@ export function StageSection(props: StageSectionProps) {
               </div>
               <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
             </label>
-            <ul className="Dropdown-Item pointer-events-none mx-4 hidden space-y-2 pb-4 md:pb-6">
+            <ul className="Dropdown-Item pointer-events-none mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6">
               {satisfied.map((req, i) => (
                 <li key={i} className="flex">
                   <SatisfiedIcon className="shrink-0" />
