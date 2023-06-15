@@ -1,7 +1,5 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { OutLink } from '../OutLink'
 import { Link } from '../Link'
 
 interface EtherscanLinkProps {

@@ -116,7 +116,7 @@ export function ContractEntry({
           {contract.upgradeConsiderations && (
             <>
               <button
-                className="mt-2 text-sm text-link underline"
+                className="text-link mt-2 text-sm underline"
                 data-component="upgrade-description-button"
               >
                 Show upgrade details

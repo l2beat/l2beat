@@ -1,6 +1,5 @@
 import classNames from 'classnames'
 import React from 'react'
-import { renderToString } from 'react-dom/server'
 
 import { ArrowRightIcon } from './icons'
 
@@ -46,10 +45,6 @@ export function Link({
         >
           {children}
         </span>
-        {/* TODO: Wait for a Janek's decision about the outlink icon */}
-        {/* {isOutLink && (
-          <OutLinkIcon className="ml-1 inline-block fill-current" />
-        )} */}
         {showArrow && (
           <ArrowRightIcon className="ml-1 inline-block fill-current transition-transform group-hover:translate-x-px group-hover:fill-blue-550 dark:fill-blue-500" />
         )}
