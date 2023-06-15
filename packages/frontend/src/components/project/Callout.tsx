@@ -2,11 +2,12 @@ import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 export interface CalloutProps {
-  color?: 'red' | 'yellow'
+  color?: 'red' | 'yellow' | 'blue'
   icon: ReactNode
   body: ReactNode
   className?: string
   hoverable?: boolean
+  small?: boolean
 }
 
 export function Callout({
@@ -15,6 +16,7 @@ export function Callout({
   body,
   className,
   hoverable,
+  small,
 }: CalloutProps) {
   let background: string
   if (hoverable && color === 'red') {
@@ -25,6 +27,8 @@ export function Callout({
     background = 'bg-red-600'
   } else if (color === 'yellow') {
     background = 'bg-yellow-700'
+  } else if (color === 'blue') {
+    background = 'bg-blue-700'
   } else {
     background = ''
   }
@@ -32,10 +36,11 @@ export function Callout({
   return (
     <div
       className={cx(
-        'flex gap-3 first:mt-0',
+        'flex first:mt-0',
         'rounded-lg bg-opacity-20',
         background,
         className,
+        small ? 'gap-2 rounded-[4px] text-sm' : 'gap-3',
       )}
     >
       <span>{icon}</span>

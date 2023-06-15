@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { InfoIcon } from '../icons'
+import { Callout } from '../project/Callout'
 
 export function StageDisclaimer({
   text,
@@ -13,15 +14,15 @@ export function StageDisclaimer({
   className?: string
 }) {
   return (
-    <div
-      className={cx(
-        'flex bg-blue-700/20 p-4 font-medium',
-        small ? 'gap-2 rounded-[4px] text-sm' : 'gap-3 rounded-lg',
-        className,
-      )}
-    >
-      <InfoIcon className={cx('shrink-0 fill-blue-500', !small && 'h-5 w-5')} />
-      <span>{text}</span>
-    </div>
+    <Callout
+      color="blue"
+      icon={
+        <InfoIcon
+          className={cx(' fill-blue-500', small ? 'h-4 w-4' : 'h-5 w-5')}
+        />
+      }
+      body={text}
+      className={cx('p-4 font-medium', className)}
+    />
   )
 }
