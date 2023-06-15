@@ -47,7 +47,7 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
       ? [
           {
             name: 'Stage',
-            tooltip: 'Stage of this Layer 2 based on its features.',
+            tooltip: `Rollup stage based on it's features and maturity.`,
             alignCenter: true as const,
             getValue: (project: ScalingTvlViewEntry) => (
               <StageCell item={project.stage} />
