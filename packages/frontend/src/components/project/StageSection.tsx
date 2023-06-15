@@ -78,7 +78,7 @@ export function StageSection(props: StageSectionProps) {
         return (
           <div
             key={stage.stage}
-            className="Dropdown mb-4 rounded-lg bg-neutral-700 "
+            className="Dropdown mb-4 rounded-lg bg-gray-100 dark:bg-neutral-700"
           >
             <label className="flex cursor-pointer items-center justify-between p-4">
               <input
