@@ -28,7 +28,6 @@ export function Link({
       rel={rel}
       {...rest}
     >
-      {/* TODO: Revisit why nesting that div is needed in order to let hover work  */}
       <span
         className={classNames(
           'inline-flex items-center font-semibold transition-colors',
