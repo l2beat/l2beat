@@ -4,6 +4,10 @@ import { ProjectReference } from './ProjectReference'
 
 export interface ProjectPermission {
   accounts: ProjectPermissionedAccount[]
+  additionalAddresses?: {
+    dropdownTitle: string
+    addresses: EthereumAddress[]
+  }
   name: string
   description: string
   // list of source code permalinks and useful materials

@@ -142,11 +142,12 @@ export class ProjectDiscovery {
             type: 'MultiSig',
           },
         ],
-      },
-      {
-        name: `${identifier} participants`,
-        description: `Those are the participants of the ${identifier}.`,
-        accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
+        additionalAddresses: {
+          dropdownTitle: `${identifier} participants`,
+          addresses: this.getPermissionedAccounts(identifier, 'getOwners').map(
+            (address) => address.address,
+          ),
+        },
         references,
       },
     ]

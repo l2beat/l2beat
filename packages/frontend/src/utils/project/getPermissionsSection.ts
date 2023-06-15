@@ -41,6 +41,14 @@ function toTechnologyContract(
     addresses,
     description: permission.description,
     links,
+    additionalAddresses: permission.additionalAddresses
+      ? {
+          dropdownTitle: permission.additionalAddresses.dropdownTitle,
+          addresses: permission.additionalAddresses.addresses.map((address) =>
+            address.toString(),
+          ),
+        }
+      : undefined,
     references: permission.references,
   }
 }

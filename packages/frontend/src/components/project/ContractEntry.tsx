@@ -101,19 +101,24 @@ export function ContractEntry({
               <HoverableDropdown
                 className="mt-[-8px]"
                 title={contract.additionalAddresses.dropdownTitle}
-                children={contract.additionalAddresses.addresses.map(
-                  (address, i) => (
-                    <EtherscanLink
-                      address={address}
-                      key={i}
-                      className={cx(
-                        verificationStatus.contracts[address] === false
-                          ? 'text-red-300'
-                          : '',
-                      )}
-                    />
-                  ),
-                )}
+                children={
+                  <div className="flex flex-col">
+                    {contract.additionalAddresses.addresses.map(
+                      (address, i) => (
+                        //TODO: fix styling
+                        <EtherscanLink
+                          address={address}
+                          key={i}
+                          className={cx(
+                            verificationStatus.contracts[address] === false
+                              ? 'text-red-300'
+                              : '',
+                          )}
+                        />
+                      ),
+                    )}
+                  </div>
+                }
               />
             )}
           </div>
