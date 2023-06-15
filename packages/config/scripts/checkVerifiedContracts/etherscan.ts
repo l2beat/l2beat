@@ -1,4 +1,5 @@
-import { EthereumAddress, EtherscanClient, HttpClient } from '@l2beat/shared'
+import { EtherscanClient, HttpClient } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { getEnv } from './utils'
 

@@ -1,4 +1,4 @@
-import { EthereumAddress, getErrorMessage } from '@l2beat/shared'
+import { EthereumAddress, getErrorMessage } from '@l2beat/shared-pure'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from './Handler'

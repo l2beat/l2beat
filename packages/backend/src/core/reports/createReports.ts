@@ -1,4 +1,4 @@
-import { AssetId, UnixTime } from '@l2beat/shared'
+import { AssetId, UnixTime } from '@l2beat/shared-pure'
 
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'

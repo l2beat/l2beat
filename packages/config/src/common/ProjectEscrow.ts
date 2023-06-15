@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectContractSingleAddress } from './ProjectContracts'
 

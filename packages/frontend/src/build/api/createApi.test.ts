@@ -1,4 +1,4 @@
-import { ActivityApiChart, UnixTime } from '@l2beat/shared'
+import { ActivityApiChart, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { alignActivityData } from './createApi'

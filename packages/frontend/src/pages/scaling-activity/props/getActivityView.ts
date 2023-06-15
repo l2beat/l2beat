@@ -4,7 +4,7 @@ import {
   ActivityApiResponse,
   ProjectId,
   VerificationStatus,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 import { getMaxTps } from '../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'

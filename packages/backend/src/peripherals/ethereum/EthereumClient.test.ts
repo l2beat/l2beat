@@ -1,4 +1,5 @@
-import { EthereumAddress, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers } from 'ethers'
 

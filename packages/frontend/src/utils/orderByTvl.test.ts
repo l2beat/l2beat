@@ -1,4 +1,4 @@
-import { ProjectId, TvlApiProject, UnixTime } from '@l2beat/shared'
+import { ProjectId, TvlApiProject, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { orderByTvl } from '../../src/utils/orderByTvl'

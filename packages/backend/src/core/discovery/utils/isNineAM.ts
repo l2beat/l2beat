@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export function isNineAM(timestamp: UnixTime, timezone: 'CET' | 'UTC') {
   const offset = timezone === 'CET' ? 3 : 0

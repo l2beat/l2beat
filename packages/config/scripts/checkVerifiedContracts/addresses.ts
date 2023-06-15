@@ -1,4 +1,4 @@
-import { assertUnreachable, EthereumAddress } from '@l2beat/shared'
+import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
 
 import {
   Bridge,

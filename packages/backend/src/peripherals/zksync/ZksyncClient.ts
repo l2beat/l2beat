@@ -1,11 +1,10 @@
+import { HttpClient, Logger } from '@l2beat/shared'
 import {
   assert,
   getErrorMessage,
-  HttpClient,
-  Logger,
   RateLimiter,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 import {
   ZksyncBlocksResultSchema,

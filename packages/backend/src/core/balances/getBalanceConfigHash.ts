@@ -1,4 +1,4 @@
-import { hashJson } from '@l2beat/shared'
+import { hashJson } from '@l2beat/shared-pure'
 import { sortBy } from 'lodash'
 
 import { BalanceProject } from './BalanceProject'

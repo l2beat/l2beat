@@ -1,4 +1,4 @@
-import { AssetId, ProjectId, UnixTime } from '@l2beat/shared'
+import { AssetId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { convertBalance, createReport, getBigIntPrice } from './createReport'
