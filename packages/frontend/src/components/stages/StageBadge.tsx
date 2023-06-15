@@ -2,7 +2,7 @@ import { Stage } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-interface StageBadgeProps {
+export interface StageBadgeProps {
   stage: Stage | 'UnderReview' | undefined
   oneSize?: boolean
   big?: boolean

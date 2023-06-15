@@ -1,9 +1,9 @@
 import { Stage, StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { InfoIcon } from '../icons'
 import { MissingIcon } from '../icons/symbols/MissingIcon'
 import { StageBadge } from './StageBadge'
+import { StageDisclaimer } from './StageDisclaimer'
 
 export interface StageTooltipProps {
   item?: StageConfig
@@ -40,10 +40,10 @@ export function StageTooltip({ item }: StageTooltipProps) {
           </ul>
         </div>
       )}
-      <div className="flex gap-2 rounded-[4px] bg-blue-700/20 p-3 text-sm font-medium">
-        <InfoIcon className="shrink-0 fill-blue-500" />
-        <span>Please mind, stages do not reflect rollup security</span>
-      </div>
+      <StageDisclaimer
+        text="Please mind, stages do not reflect rollup security"
+        small
+      />
     </div>
   )
 }
