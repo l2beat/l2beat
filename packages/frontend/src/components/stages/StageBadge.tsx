@@ -34,7 +34,7 @@ export function StageBadge({
 function getColorClassName(stage: Stage | 'UnderReview' | undefined): string {
   switch (stage) {
     case 'Stage 2':
-      return 'bg-green-800 text-black'
+      return 'bg-green-800 text-white'
     case 'Stage 1':
       return 'bg-yellow-250 text-black'
     case 'Stage 0':
