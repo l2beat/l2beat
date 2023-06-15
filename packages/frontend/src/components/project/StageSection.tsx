@@ -35,10 +35,14 @@ export function StageSection(props: StageSectionProps) {
             className="relative -top-0.5 mr-2 inline-block h-6 w-6"
           />
           {props.name} is currently
-          <StageBadge stage={props.stage.stage} big className="mx-2" />
+          <StageBadge
+            stage={props.stage.stage}
+            big
+            className="mx-1 md:mx-1.5"
+          />
           for stage assignment.
         </div>
-        <div className="flex flex-col items-center gap-4 rounded-lg bg-yellow-800 p-8">
+        <div className="flex flex-col items-center gap-4 rounded-lg bg-yellow-700/20 p-8">
           <div>
             <UnderReviewIcon className="relative -top-0.5 inline-block h-6 w-6" />
             <span className="ml-2 inline-block text-2xl font-medium">

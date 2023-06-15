@@ -74,7 +74,7 @@ function getStageName(stage: Stage | 'UnderReview') {
 function getColorClassName(stage: Stage) {
   switch (stage) {
     case 'Stage 1':
-      return 'text-yellow-250'
+      return 'text-yellow-200'
     case 'Stage 2':
       return 'text-green-400'
     default:

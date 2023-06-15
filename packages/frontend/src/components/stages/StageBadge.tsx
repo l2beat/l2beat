@@ -20,13 +20,13 @@ export function StageBadge({
     <span
       className={cx(
         getColorClassName(stage),
-        'inline-block rounded px-1.5 text-center font-medium uppercase leading-none',
+        'inline-block rounded px-1.5 text-center font-medium uppercase !leading-none',
         oneSize && 'w-20',
-        big ? 'text-md py-0.5' : 'py-[3px] text-xs',
+        big ? 'py-0.5 text-base md:text-lg' : 'py-[3px] text-xs',
         className,
       )}
     >
-      <span className="relative top-px">{value ?? '-'}</span>
+      <span className="relative top-[0.5px]">{value ?? '-'}</span>
     </span>
   )
 }
@@ -34,13 +34,13 @@ export function StageBadge({
 function getColorClassName(stage: Stage | 'UnderReview' | undefined): string {
   switch (stage) {
     case 'Stage 2':
-      return 'bg-green-200 dark:bg-green-800'
+      return 'bg-green-800 text-white'
     case 'Stage 1':
       return 'bg-yellow-250 text-black'
     case 'Stage 0':
       return 'bg-orange-400 text-black'
     case 'UnderReview':
-      return 'bg-gray-200 dark:bg-gray-750  text-yellow-700 dark:text-yellow-200'
+      return 'bg-gray-750 text-yellow-700 text-yellow-200'
     case undefined:
       return 'bg-gray-200 dark:bg-gray-750'
     default:

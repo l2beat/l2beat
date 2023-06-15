@@ -81,7 +81,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
           {
             title: 'Stage',
             value: (
-              <span className="flex items-center font-normal">
+              <span className="relative -top-0.5 flex items-center">
                 <StageBadge stage={props.stage.stage} big />
                 <span
                   className="Tooltip inline-block px-2"

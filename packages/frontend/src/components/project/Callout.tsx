@@ -20,11 +20,11 @@ export function Callout({
   if (hoverable && color === 'red') {
     background = 'bg-red-600 hover:bg-red-500'
   } else if (hoverable && color === 'yellow') {
-    background = 'bg-yellow-300 hover:bg-opacity-40'
+    background = 'bg-yellow-700 hover:bg-opacity-40'
   } else if (color === 'red') {
     background = 'bg-red-600'
   } else if (color === 'yellow') {
-    background = 'bg-yellow-300'
+    background = 'bg-yellow-700'
   } else {
     background = ''
   }
