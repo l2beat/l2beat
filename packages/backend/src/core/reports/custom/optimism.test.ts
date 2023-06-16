@@ -7,6 +7,7 @@ import {
   OP_TOKEN_ID,
   OP_TOKEN_SINCE_TIMESTAMP,
   OPTIMISM_PROJECT_ID,
+  UPDATE_TIMESTAMP,
 } from './optimism'
 
 describe(addOpTokenReport.name, () => {
@@ -41,8 +42,8 @@ describe(addOpTokenReport.name, () => {
     expect(reports).toEqual([])
   })
 
-  it('updates balances if op report present already', () => {
-    const timestamp = UnixTime.now()
+  describe('updates balances if op report present already', () => {
+    const timestamp = UPDATE_TIMESTAMP.add(-1, 'hours')
     const prices = [
       { timestamp, priceUsd: 1, assetId: AssetId.ETH },
       { timestamp, priceUsd: 2, assetId: OP_TOKEN_ID },
@@ -87,7 +88,7 @@ describe(addOpTokenReport.name, () => {
   })
 
   it('adds op report if not present', () => {
-    const timestamp = UnixTime.now()
+    const timestamp = UPDATE_TIMESTAMP.add(-1, 'hours')
     const prices = [
       { timestamp, priceUsd: 1, assetId: AssetId.ETH },
       { timestamp, priceUsd: 2, assetId: OP_TOKEN_ID },
@@ -102,6 +103,26 @@ describe(addOpTokenReport.name, () => {
         balance: 214748364000000000000000000n,
         balanceEth: 429496728000000n,
         balanceUsd: 42949672800n,
+      },
+    ])
+  })
+
+  it('numbers match after the update', () => {
+    const timestamp = UPDATE_TIMESTAMP
+    const prices = [
+      { timestamp, priceUsd: 1, assetId: AssetId.ETH },
+      { timestamp, priceUsd: 2, assetId: OP_TOKEN_ID },
+    ]
+    const reports: ReportRecord[] = []
+    addOpTokenReport(reports, prices, timestamp)
+    expect(reports).toEqual([
+      {
+        asset: OP_TOKEN_ID,
+        projectId: OPTIMISM_PROJECT_ID,
+        timestamp,
+        balance: 644594782000000000000000000n,
+        balanceEth: 1289189564000000n,
+        balanceUsd: 128918956400n,
       },
     ])
   })

@@ -17,7 +17,7 @@ const OP_TOKEN_DECIMALS = 18
 const OP_TOKEN_BALANCE = 214_748_364n * 10n ** BigInt(OP_TOKEN_DECIMALS)
 
 const OP_TOKEN_BALANCE_UPDATED = 644_594_782n * 10n ** BigInt(OP_TOKEN_DECIMALS)
-const UPDATE_TIMESTAMP = new UnixTime(1685502000)
+export const UPDATE_TIMESTAMP = new UnixTime(1685502000)
 
 function opTokenBalance(timestamp: UnixTime) {
   if (timestamp.lt(UPDATE_TIMESTAMP)) {
