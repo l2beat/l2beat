@@ -123,7 +123,10 @@ export const zkspace: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: ['UnderReview', 'The rollup node is open source.'],
+      rollupNodeOpenSource: [
+        'UnderReview',
+        'An open-source node exists that can recreate the state from L1 data.',
+      ],
     },
     stage1: {
       stateVerificationOnL1: true,
