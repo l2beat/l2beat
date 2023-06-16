@@ -107,15 +107,22 @@ export function ContractEntry({
                     {contract.additionalAddresses.addresses.map(
                       (address, i) => (
                         //TODO: fix styling
-                        <EtherscanLink
-                          address={address}
+                        <div
                           key={i}
-                          className={cx(
-                            verificationStatus.contracts[address] === false
-                              ? 'text-red-300'
-                              : '',
-                          )}
-                        />
+                          className="rounded-lg px-2 py-2 hover:bg-gray-200 dark:hover:bg-gray-750"
+                        >
+                          <span className="w-40 text-right">#{i + 1} </span>
+                          <EtherscanLink
+                            address={address}
+                            key={i}
+                            className={cx(
+                              verificationStatus.contracts[address] === false
+                                ? 'text-red-300'
+                                : '',
+                              'rounded-lg px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-750',
+                            )}
+                          />
+                        </div>
                       ),
                     )}
                   </div>
