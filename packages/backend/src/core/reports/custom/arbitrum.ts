@@ -14,7 +14,7 @@ const ARB_TOKEN_DECIMALS = 18
 // https://www.coingecko.com/en/coins/arbitrum
 // https://docs.arbitrum.foundation/airdrop-eligibility-distribution#initial-token-allocation--airdrop-distribution
 
-export const ARB_TOKEN_BALANCE =
+export const ARB_TOKEN_BALANCE = () =>
   1_275_000_000n * 10n ** BigInt(ARB_TOKEN_DECIMALS)
 
 export const addArbTokenReport = createAddCustomTokenReport(
