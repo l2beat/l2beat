@@ -76,7 +76,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: '30D tx count',
       value: props.transactionMonthlyCount ?? <UpcomingBadge />,
     },
-    ...(props.stage
+    ...(props.stagesEnabled && props.stage
       ? [
           {
             title: 'Stage',
