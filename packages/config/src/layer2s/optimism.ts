@@ -183,7 +183,7 @@ export const optimism: Layer2 = {
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: false,
+      fraudProofSystemIsPermissionless: null,
       delayWith30DExitWindow: false,
     },
   }),
