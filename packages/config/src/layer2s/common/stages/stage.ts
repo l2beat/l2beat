@@ -2,16 +2,17 @@ import {
   ChecklistTemplate,
   ChecklistValue,
   MissingStageRequirements,
+  Stage,
   StageBlueprint,
-  StageConfig,
+  StageConfigured,
   StageSummary,
 } from './types'
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
-): (checklist: ChecklistTemplate<T>) => StageConfig {
+): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
-    let lastStage: string | undefined = undefined
+    let lastStage: Stage | undefined = undefined
     let missing: MissingStageRequirements | undefined = undefined
     const summary: StageSummary[] = []
 

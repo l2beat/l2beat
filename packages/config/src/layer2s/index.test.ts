@@ -301,6 +301,26 @@ describe('layer2s', () => {
       })
     })
   })
+
+  describe('stages', () => {
+    describe('every description ends with a dot', () => {
+      for (const layer2 of layer2s) {
+        if (
+          layer2.stage === undefined ||
+          layer2.stage.stage === 'UnderReview'
+        ) {
+          continue
+        }
+        for (const item of layer2.stage.summary) {
+          for (const req of item.requirements) {
+            it(req.description, () => {
+              expect(req.description.endsWith('.')).toEqual(true)
+            })
+          }
+        }
+      }
+    })
+  })
 })
 
 function getAddressFromReferences(references: ProjectReference[] = []) {

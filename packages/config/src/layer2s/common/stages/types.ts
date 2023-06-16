@@ -1,7 +1,7 @@
 export type StageBlueprint = Record<
   string,
   {
-    name: string
+    name: Stage
     items: Record<
       string,
       {
@@ -20,8 +20,11 @@ export type ChecklistTemplate<T extends StageBlueprint> = {
   }
 }
 
+// TODO: maybe it shouldn't be undefined
+export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2' | undefined
+
 export interface StageSummary {
-  stage: string
+  stage: Stage
   requirements: {
     satisfied: boolean | 'UnderReview'
     description: string
@@ -29,12 +32,18 @@ export interface StageSummary {
 }
 
 export interface MissingStageRequirements {
-  nextStage: string
+  nextStage: Stage
   requirements: string[]
 }
 
-export interface StageConfig {
-  stage: string | undefined
+export type StageConfig = StageUnderReview | StageConfigured
+
+export interface StageConfigured {
+  stage: Stage
   missing?: MissingStageRequirements
   summary: StageSummary[]
+}
+
+interface StageUnderReview {
+  stage: 'UnderReview'
 }
