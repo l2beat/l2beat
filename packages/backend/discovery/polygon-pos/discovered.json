@@ -1,7 +1,8 @@
 {
   "name": "polygon-pos",
-  "blockNumber": 16484297,
+  "blockNumber": 17491415,
   "configHash": "0x069d94db11b772e930645d3b2b4fdb9f1baa26b3b19ad9fdf45af9b6cf760cdb",
+  "version": 1,
   "contracts": [
     {
       "name": "StateSender",
@@ -11,7 +12,7 @@
         "type": "immutable"
       },
       "values": {
-        "counter": 2552561,
+        "counter": 2698645,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
       }
@@ -64,10 +65,10 @@
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
       },
       "values": {
-        "_nextHeaderBlock": 417110000,
+        "_nextHeaderBlock": 471780000,
         "CHAINID": 137,
-        "currentHeaderBlock": 417100000,
-        "getLastChildBlock": 38509477,
+        "currentHeaderBlock": 471770000,
+        "getLastChildBlock": 43969445,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -145,12 +146,12 @@
           "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
           "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
           "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
-          "0xFb9af163DF1e54171bC773eb88B46aa1E912489f",
+          "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a",
           "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 170,
+        "nonce": 178,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -161,12 +162,12 @@
     "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
     "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
     "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
+    "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a",
     "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602",
     "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
     "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
     "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a",
-    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-    "0xFb9af163DF1e54171bC773eb88B46aa1E912489f"
+    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
   ],
   "abis": {
     "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": [
