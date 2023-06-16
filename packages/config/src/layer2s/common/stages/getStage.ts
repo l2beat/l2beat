@@ -49,7 +49,7 @@ export const getStage = createGetStage({
       },
       securityCouncilProperlySetUp: {
         positive: 'The Security Council is properly set up.',
-        negative: 'A proper Security Council is not set up.',
+        negative: 'The Security Council is not properly set up.',
       },
     },
   },

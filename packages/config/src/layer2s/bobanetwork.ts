@@ -150,7 +150,7 @@ export const bobanetwork: Layer2 = {
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: false,
+      securityCouncilProperlySetUp: null,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,

@@ -159,7 +159,7 @@ export const aztec: Layer2 = {
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: false,
+      securityCouncilProperlySetUp: null,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,
