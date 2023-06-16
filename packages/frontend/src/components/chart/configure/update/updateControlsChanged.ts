@@ -7,7 +7,7 @@ import {
   ShowEthereumChangedMessage,
   TokenChangedMessage,
 } from '../messages'
-import { persistSettings } from '../persistedSettings'
+import { persistUserChartSettings } from '../userChartSettings'
 import { State } from '../state/State'
 import { calculateView } from './view/calculateView'
 
@@ -49,7 +49,7 @@ export function updateControlsChanged(
   }
 
   if (PERSISTABLE_CHANGES.includes(message.type)) {
-    persistSettings(newState)
+    persistUserChartSettings(newState)
   }
 
   return [newState, []]
