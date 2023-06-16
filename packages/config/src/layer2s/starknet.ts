@@ -263,7 +263,13 @@ export const starknet: Layer2 = {
   permissions: [
     {
       name: 'Starknet Proxy Governors',
-      accounts: getProxyGovernance(discovery, 'Starknet'),
+      accounts: [],
+      additionalAddresses: {
+        dropdownTitle: 'Governors',
+        addresses: getProxyGovernance(discovery, 'Starknet').map(
+          (g) => g.address,
+        ),
+      },
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted. ' +
         delayDescriptionFromSeconds(starknetDelaySeconds),
@@ -274,14 +280,26 @@ export const starknet: Layer2 = {
     ),
     {
       name: 'Starknet Implementation Governors',
-      accounts: discovery.getPermissionedAccounts('Starknet', 'governors'),
+      accounts: [],
+      additionalAddresses: {
+        dropdownTitle: 'Governors',
+        addresses: discovery
+          .getPermissionedAccounts('Starknet', 'governors')
+          .map((g) => g.address),
+      },
       description:
         'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
     },
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',
-      accounts: discovery.getPermissionedAccounts('Starknet', 'operators'),
+      accounts: [],
+      additionalAddresses: {
+        dropdownTitle: 'View addresses',
+        addresses: discovery
+          .getPermissionedAccounts('Starknet', 'operators')
+          .map((a) => a.address),
+      },
       description:
         'Allowed to post state updates. When the operator is down the state cannot be updated.',
     },

@@ -135,7 +135,13 @@ export const rhinofi: Layer2 = {
   permissions: [
     {
       name: 'Governors',
-      accounts: getProxyGovernance(discovery, 'StarkExchange'),
+      accounts: [],
+      additionalAddresses: {
+        dropdownTitle: 'Governors',
+        addresses: getProxyGovernance(discovery, 'StarkExchange').map(
+          (a) => a.address,
+        ),
+      },
       description:
         'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromString(delay),
