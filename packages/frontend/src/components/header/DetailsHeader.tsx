@@ -3,7 +3,8 @@ import React from 'react'
 
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ArrowRightIcon, ProjectLink } from '../icons'
+import { ProjectLink } from '../icons'
+import { Link } from '../Link'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { WarningBar } from '../project/WarningBar'
@@ -21,6 +22,7 @@ export interface HeaderProps {
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2'
+  stagesEnabled?: boolean
   warning?: string | { text: string; href: string }
 }
 
@@ -79,6 +81,7 @@ export function DetailsHeader(props: HeaderProps) {
             stats={props.stats}
             links={props.links}
             isUpcoming={props.isUpcoming}
+            stagesEnabled={props.stagesEnabled}
           />
         </div>
         {props.risks && (
@@ -88,13 +91,13 @@ export function DetailsHeader(props: HeaderProps) {
               isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
             />
             {!props.isUpcoming && (
-              <a
+              <Link
                 href="#risk-analysis"
-                className="mt-3 block text-center text-sm font-bold text-link underline"
+                className="mt-3 block text-center text-sm"
+                showArrow
               >
-                Learn more about Risks analysis{' '}
-                <ArrowRightIcon className="inline-block fill-current" />
-              </a>
+                Learn more about Risks analysis
+              </Link>
             )}
           </div>
         )}

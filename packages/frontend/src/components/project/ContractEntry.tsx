@@ -3,7 +3,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { BulletIcon } from '../icons/symbols/BulletIcon'
-import { OutLink } from '../OutLink'
+import { Link } from '../Link'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
@@ -78,10 +78,9 @@ export function ContractEntry({
               />
             ))}
             {contract.links.map((x, i) => (
-              <OutLink
+              <Link
                 key={i}
                 className={cx(
-                  'text-link underline',
                   verificationStatus.contracts[x.address] === false &&
                     !x.isAdmin
                     ? 'text-red-300'
@@ -90,7 +89,7 @@ export function ContractEntry({
                 href={x.href}
               >
                 {x.name}
-              </OutLink>
+              </Link>
             ))}
           </div>
           {contract.description && (
@@ -117,7 +116,7 @@ export function ContractEntry({
           {contract.upgradeConsiderations && (
             <>
               <button
-                className="mt-2 text-sm text-link underline"
+                className="text-link mt-2 text-sm underline"
                 data-component="upgrade-description-button"
               >
                 Show upgrade details

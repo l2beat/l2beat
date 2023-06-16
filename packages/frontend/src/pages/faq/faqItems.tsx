@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react'
 
+import { Link } from '../../components/Link'
+
 export interface FaqItem {
   question: string
   answer: React.ReactNode
@@ -12,12 +14,9 @@ export const faqItems: FaqItem[] = [
       <span>
         L2BEAT was created to provide transparent and verifiable insights into
         emerging layer two (L2) technologies which, in line with the{' '}
-        <a
-          className="text-link underline"
-          href="https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698"
-        >
+        <Link href="https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698">
           rollup-centric Ethereum scaling roadmap
-        </a>{' '}
+        </Link>{' '}
         are aimed at scaling Ethereum.
       </span>
     ),
@@ -68,16 +67,10 @@ export const faqItems: FaqItem[] = [
         its security from L1 Ethereum so that users do not have to rely on the
         honesty of L2 validators for the security of their funds. This is in
         line with the current view of{' '}
-        <a className="text-link underline" href="https://ethereum.org">
-          ethereum.org
-        </a>{' '}
-        on what{' '}
-        <a
-          className="text-link underline"
-          href="https://ethereum.org/en/developers/docs/scaling/"
-        >
+        <Link href="https://ethereum.org">ethereum.org</Link> on what{' '}
+        <Link href="https://ethereum.org/en/developers/docs/scaling/">
           layer 2 scaling
-        </a>{' '}
+        </Link>{' '}
         is.
       </span>
     ),
@@ -165,12 +158,9 @@ export const faqItems: FaqItem[] = [
         <p className="mt-4">
           For more details on data availability and its importance in security
           of scaling protocols, see Ethereum.org's{' '}
-          <a
-            className="text-link underline"
-            href="https://ethereum.org/en/developers/docs/data-availability/"
-          >
+          <Link href="https://ethereum.org/en/developers/docs/data-availability/">
             page on the topic
-          </a>
+          </Link>
           .
         </p>
       </div>
@@ -252,12 +242,9 @@ export const faqItems: FaqItem[] = [
         </p>
         <p className="mt-4">
           For more details see our{' '}
-          <a
-            className="text-link underline"
-            href="https://github.com/l2beat/l2beat/tree/master/packages/config/src"
-          >
+          <Link href="https://github.com/l2beat/l2beat/tree/master/packages/config/src">
             project definitions
-          </a>
+          </Link>
           .
         </p>
       </div>
@@ -295,12 +282,9 @@ export const faqItems: FaqItem[] = [
           Nahmii was actually listed on L2BEAT for a time, but was removed for
           the reason stated above. If you want to check TVL for Nahmii you can
           do that{' '}
-          <a
-            className="text-link underline"
-            href="https://etherscan.io/address/0xCc8D82f6ba952966E63001c7B320EEF2Ae729099"
-          >
+          <Link href="https://etherscan.io/address/0xCc8D82f6ba952966E63001c7B320EEF2Ae729099">
             on etherscan
-          </a>
+          </Link>
           .
         </p>
       </div>
@@ -312,31 +296,20 @@ export const faqItems: FaqItem[] = [
       <div>
         <p className="mt-4">
           Everything is{' '}
-          <a
-            className="text-link underline"
-            href="https://github.com/l2beat/l2beat"
-          >
-            open source
-          </a>{' '}
+          <Link href="https://github.com/l2beat/l2beat">open source</Link>{' '}
           &ndash; just create a PR. If you want to add a new project you should
           read our {''}
-          <a
-            className="text-link underline"
-            href="https://github.com/l2beat/l2beat/tree/master/CONTRIBUTING.md"
-          >
+          <Link href="https://github.com/l2beat/l2beat/tree/master/CONTRIBUTING.md">
             contributing guidelines
-          </a>
+          </Link>
           .
         </p>
         <p className="mt-4">
           🔍 Here is also a visual step-by-step guide for creating a Pull
           Request -{' '}
-          <a
-            className="text-link underline"
-            href="https://www.notion.so/l2beat/How-to-add-milestones-0e8684a83c3c48ce8bc7b605d9c9a1bf"
-          >
+          <Link href="https://www.notion.so/l2beat/How-to-add-milestones-0e8684a83c3c48ce8bc7b605d9c9a1bf">
             link
-          </a>
+          </Link>
         </p>
       </div>
     ),

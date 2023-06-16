@@ -25,9 +25,9 @@ export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
         <p className="text-lg font-bold leading-tight">
           {knowledgeNugget.title}
         </p>
-        <p className="flex flex-wrap items-center gap-1 text-sm font-bold text-link underline">
+        <p className="flex flex-wrap items-center gap-1 text-sm font-semibold text-blue-700 underline transition-colors group-hover:text-blue-550 dark:text-blue-500">
           Learn more
-          <ArrowRightIcon className="fill-link" />
+          <ArrowRightIcon className="fill-current" />
         </p>
       </div>
     </OutLink>

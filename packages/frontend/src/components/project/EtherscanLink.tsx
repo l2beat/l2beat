@@ -1,7 +1,6 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-import { OutLink } from '../OutLink'
+import { Link } from '../Link'
 
 interface EtherscanLinkProps {
   address: string
@@ -12,9 +11,9 @@ interface EtherscanLinkProps {
 export function EtherscanLink(props: EtherscanLinkProps) {
   const link = `https://etherscan.io/address/${props.address}`
   return (
-    <OutLink href={link} className={cx('text-link underline', props.className)}>
+    <Link href={link} className={props.className}>
       {props.address.slice(0, 6)}…{props.address.slice(38, 42)}
       {props.children}
-    </OutLink>
+    </Link>
   )
 }

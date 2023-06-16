@@ -31,7 +31,7 @@ describe(createGetStage.name, () => {
   it('No stage', () => {
     const result = getTestStage({
       stage0: {
-        callsItselfRollup: [false, 'It calls itself a chicken.'],
+        callsItselfRollup: [false, 'The project calls itself a chicken.'],
       },
       stage1: {
         hasEscapeHatch: false,
@@ -43,9 +43,7 @@ describe(createGetStage.name, () => {
       stage: undefined,
       missing: {
         nextStage: 'Stage 0',
-        requirements: [
-          "The project doesn't call itself a rollup. It calls itself a chicken.",
-        ],
+        requirements: ['The project calls itself a chicken.'],
       },
       summary: [
         {
@@ -53,8 +51,7 @@ describe(createGetStage.name, () => {
           requirements: [
             {
               satisfied: false,
-              description:
-                "The project doesn't call itself a rollup. It calls itself a chicken.",
+              description: 'The project calls itself a chicken.',
             },
           ],
         },
@@ -190,6 +187,50 @@ describe(createGetStage.name, () => {
             {
               satisfied: true,
               description: 'The project has an escape hatch.',
+            },
+          ],
+        },
+      ],
+    })
+  })
+
+  it('Under review works', () => {
+    const result = getTestStage({
+      stage0: {
+        callsItselfRollup: true,
+      },
+      stage1: {
+        hasEscapeHatch: [
+          'UnderReview',
+          'Escape hatch requirement is under review.',
+        ],
+        isCouncil8Members: true,
+      },
+    })
+
+    expect(result).toEqual({
+      stage: 'Stage 1',
+      missing: undefined,
+      summary: [
+        {
+          stage: 'Stage 0',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'The project calls itself a rollup.',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 1',
+          requirements: [
+            {
+              satisfied: 'UnderReview',
+              description: 'Escape hatch requirement is under review.',
+            },
+            {
+              satisfied: true,
+              description: 'The project has at least 8 council members.',
             },
           ],
         },

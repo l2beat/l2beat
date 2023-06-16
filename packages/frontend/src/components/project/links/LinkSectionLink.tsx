@@ -7,7 +7,7 @@ import {
   ProductIconType,
   ProjectLink,
 } from '../../icons'
-import { OutLink } from '../../OutLink'
+import { Link } from '../../Link'
 
 interface Props {
   name: ProjectLink['name']
@@ -18,26 +18,23 @@ export function LinkSectionLink({ href, name }: Props) {
   if (name === 'Social') {
     const parsed = parseSocial(href)
     return (
-      <OutLink
-        className="mt-1 flex items-center gap-1 text-link first:mt-0"
-        href={href}
-      >
+      <Link className="mt-1 block first:mt-0" href={href}>
         {parsed.platform ? (
           <ProductIcon
-            className="h-[1em] w-[1em] shrink-0 fill-link"
+            className="h-[1em] w-[1em] shrink-0 fill-current"
             product={parsed.platform}
           />
         ) : (
-          <GlobeIcon className="h-[1em] w-[1em] shrink-0 fill-link" />
+          <GlobeIcon className="h-[1em] w-[1em] shrink-0 fill-current" />
         )}
         <span className="truncate">{parsed.text}</span>
-      </OutLink>
+      </Link>
     )
   }
   return (
-    <OutLink className="block truncate text-link underline" href={href}>
+    <Link className="block truncate" href={href}>
       {formatLink(href)}
-    </OutLink>
+    </Link>
   )
 }
 

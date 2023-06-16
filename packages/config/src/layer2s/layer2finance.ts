@@ -54,6 +54,9 @@ export const layer2finance: Layer2 = {
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
+  stage: {
+    stage: 'UnderReview',
+  },
   technology: {
     category: 'Optimistic Rollup',
     stateCorrectness: {
