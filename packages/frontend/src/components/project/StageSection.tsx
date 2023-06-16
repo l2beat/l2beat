@@ -117,19 +117,19 @@ export function StageSection(props: StageSectionProps) {
             <ul className="Dropdown-Item pointer-events-none mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6">
               {satisfied.map((req, i) => (
                 <li key={i} className="flex">
-                  <SatisfiedIcon className="shrink-0" />
+                  <SatisfiedIcon className="relative top-0.5 shrink-0" />
                   <span className="ml-2 inline-block">{req.description}</span>
                 </li>
               ))}
               {underReview.map((req, i) => (
                 <li key={i} className="flex">
-                  <UnderReviewIcon className="shrink-0" />
+                  <UnderReviewIcon className="relative top-0.5 shrink-0 " />
                   <span className="ml-2 inline-block">{req.description}</span>
                 </li>
               ))}
               {missing.map((req, i) => (
                 <li key={i} className="flex">
-                  <MissingIcon className=" shrink-0" />
+                  <MissingIcon className=" relative top-0.5 shrink-0" />
                   <span className="ml-2 inline-block">{req.description}</span>
                 </li>
               ))}
