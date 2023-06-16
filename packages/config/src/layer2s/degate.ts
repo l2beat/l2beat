@@ -120,7 +120,7 @@ export const degate: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeOpenSource: ['UnderReview', 'The rollup node is open source.'],
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -132,7 +132,7 @@ export const degate: Layer2 = {
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,
       fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: true,
+      delayWith30DExitWindow: [true, 'The system cannot be upgraded.'],
     },
   }),
   technology: {

@@ -160,14 +160,14 @@ export const aztecconnect: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeOpenSource: ['UnderReview', 'The rollup node is open source.'],
     },
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+      securityCouncilProperlySetUp: false,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,

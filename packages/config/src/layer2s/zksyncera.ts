@@ -193,7 +193,7 @@ export const zksyncera: Layer2 = {
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+      securityCouncilProperlySetUp: false,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,
