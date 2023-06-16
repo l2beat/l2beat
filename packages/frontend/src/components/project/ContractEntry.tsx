@@ -101,7 +101,10 @@ export function ContractEntry({
               <HoverableDropdown
                 isInContractEntry={true}
                 className="mt-[-8px]"
-                title={contract.additionalAddresses.dropdownTitle}
+                title={
+                  contract.additionalAddresses.dropdownTitle +
+                  ` (${contract.additionalAddresses.addresses.length})`
+                }
                 children={
                   <div className="flex flex-col">
                     {contract.additionalAddresses.addresses.map(
