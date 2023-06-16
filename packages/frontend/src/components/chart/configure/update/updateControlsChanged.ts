@@ -7,8 +7,8 @@ import {
   ShowEthereumChangedMessage,
   TokenChangedMessage,
 } from '../messages'
-import { persistUserChartSettings } from '../userChartSettings'
 import { State } from '../state/State'
+import { persistUserChartSettings } from '../userChartSettings'
 import { calculateView } from './view/calculateView'
 
 export function updateControlsChanged(
@@ -57,4 +57,4 @@ export function updateControlsChanged(
 
 const PERSISTABLE_CHANGES: Parameters<
   typeof updateControlsChanged
->[1]['type'][] = ['ScaleChanged', 'DaysChanged']
+>[1]['type'][] = ['ScaleChanged', 'DaysChanged', 'CurrencyChanged']

@@ -1,9 +1,9 @@
 import { State } from './state/State'
 
-interface UserChartSettings {
-  isLogScale?: boolean
-  days?: number
-}
+type UserChartSettings = Partial<
+  Pick<State['controls'], 'isLogScale' | 'days' | 'currency'>
+>
+
 interface SerializedChartSettings extends Omit<UserChartSettings, 'days'> {
   days?: string
 }
@@ -11,12 +11,14 @@ interface SerializedChartSettings extends Omit<UserChartSettings, 'days'> {
 const DEFAULT_CHART_SETTINGS = {
   isLogScale: false,
   days: 365,
-}
+  currency: 'usd',
+} as const
 
 export function persistUserChartSettings(state: State) {
   const chartSettings: SerializedChartSettings = {
     isLogScale: state.controls.isLogScale,
     days: String(state.controls.days),
+    currency: state.controls.currency,
   }
 
   localStorage.setItem(
@@ -32,8 +34,11 @@ export function getUserChartSettings(chartId: string) {
     : {}
 
   const userChartSettings: UserChartSettings = {
-    ...(serialized.isLogScale ? { isLogScale: serialized.isLogScale } : {}),
-    ...(serialized.days ? { days: Number(serialized.days) } : {}),
+    ...('isLogScale' in serialized
+      ? { isLogScale: serialized.isLogScale }
+      : {}),
+    ...('days' in serialized ? { days: Number(serialized.days) } : {}),
+    ...('currency' in serialized ? { currency: serialized.currency } : {}),
   }
 
   return { ...DEFAULT_CHART_SETTINGS, ...userChartSettings }

@@ -11,6 +11,7 @@ export interface InitMessage {
   initialView: 'tvl' | 'activity'
   chartId: string
   days: number
+  currency: 'usd' | 'eth'
   aggregateTvlEndpoint?: string
   alternativeTvlEndpoint?: string
   activityEndpoint?: string

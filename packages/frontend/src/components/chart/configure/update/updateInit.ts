@@ -50,7 +50,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         view: message.initialView,
         days: message.days,
         isLogScale: message.isLogScale,
-        currency: 'usd',
+        currency: message.currency,
         token: undefined,
         showEthereum: !!message.showEthereum,
         showAlternativeTvl: false,

@@ -1,13 +1,12 @@
 import { setupControls } from './controls/setupControls'
-import { toDays } from './controls/toDays'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
 import { InitMessage, Message } from './messages'
-import { getUserChartSettings } from './userChartSettings'
 import { render } from './render/render'
 import { EMPTY_STATE } from './state/empty'
 import { Milestones, State } from './state/State'
 import { update } from './update/update'
+import { getUserChartSettings } from './userChartSettings'
 
 export function configureCharts() {
   document
