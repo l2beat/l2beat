@@ -63,7 +63,7 @@ export const fuelv1: Layer2 = {
       stateVerificationOnL1: true,
       //TODO: check if this is true
       fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: null,
+      usersHave7DaysToExit: null,
       usersCanExitWithoutCooperation: [
         'UnderReview',
         `It is under review whether users can exit without operator's cooperation.`,

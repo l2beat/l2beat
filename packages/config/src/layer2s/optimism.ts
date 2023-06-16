@@ -177,7 +177,7 @@ export const optimism: Layer2 = {
     stage1: {
       stateVerificationOnL1: false,
       fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: false,
+      usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: null,
     },

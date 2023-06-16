@@ -125,7 +125,7 @@ export const degate: Layer2 = {
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: null,
+      usersHave7DaysToExit: null,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: null,
     },

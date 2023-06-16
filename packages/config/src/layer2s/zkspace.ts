@@ -131,7 +131,7 @@ export const zkspace: Layer2 = {
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: false,
+      usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: null,
     },

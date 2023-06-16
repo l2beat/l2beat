@@ -160,7 +160,7 @@ export const zksynclite: Layer2 = {
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: [
+      usersHave7DaysToExit: [
         'UnderReview',
         'It is under review how much time do users have to exit the system.',
       ],
