@@ -99,6 +99,7 @@ export function ContractEntry({
             ))}
             {contract.additionalAddresses && (
               <HoverableDropdown
+                isInContractEntry={true}
                 className="mt-[-8px]"
                 title={contract.additionalAddresses.dropdownTitle}
                 children={

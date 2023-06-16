@@ -7,6 +7,7 @@ interface HoverableDropdownProps {
   className?: string
   title: ReactNode
   children: ReactNode
+  isInContractEntry?: boolean
 }
 
 export const HoverableDropdown = forwardRef<
@@ -20,7 +21,10 @@ export const HoverableDropdown = forwardRef<
         props.className,
       )}
     >
-      <HoverableDropdownToggle toggleRef={ref}>
+      <HoverableDropdownToggle
+        toggleRef={ref}
+        isInContractEntry={props.isInContractEntry}
+      >
         {props.title}
       </HoverableDropdownToggle>
       <HoverableDropdownMenu>{props.children}</HoverableDropdownMenu>
@@ -31,13 +35,18 @@ export const HoverableDropdown = forwardRef<
 interface HoverableDropdownToggleProps {
   children: ReactNode
   toggleRef?: React.Ref<HTMLDivElement>
+  isInContractEntry?: boolean
 }
 
 function HoverableDropdownToggle(props: HoverableDropdownToggleProps) {
   return (
     <div
       ref={props.toggleRef}
-      className="HoverableDropdownToggle flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium transition-colors group-hover:bg-gray-200 dark:bg-neutral-700 dark:group-hover:bg-gray-750"
+      className={classNames(
+        'HoverableDropdownToggle flex cursor-pointer flex-row items-center gap-1.5 rounded-lg',
+        'py-1.5 px-2 text-xs font-medium transition-colors',
+        getToggleStyle(props.isInContractEntry),
+      )}
     >
       {props.children}
       <ChevronDownIcon className="HoverableDropdownToggleIcon m-auto scale-75 transition-transform duration-300 group-hover:-rotate-180" />
@@ -64,4 +73,10 @@ function HoverableDropdownMenu(props: HoverableDropdownMenuProps) {
       </div>
     </div>
   )
+}
+
+function getToggleStyle(isInContractEntry?: boolean) {
+  return isInContractEntry
+    ? 'border border-pink-900 hover:bg-pink-900 hover:bg-opacity-25'
+    : 'bg-gray-100 group-hover:bg-gray-200 dark:bg-neutral-700 dark:group-hover:bg-gray-750'
 }
