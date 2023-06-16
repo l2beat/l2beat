@@ -257,10 +257,13 @@ export const loopring: Layer2 = {
     ),
     {
       name: 'Block Submitters',
-      accounts: discovery.getPermissionedAccounts(
-        'LoopringIOExchangeOwner',
-        'blockSubmitters',
-      ),
+      accounts: [],
+      additionalAddresses: {
+        dropdownTitle: 'View addresses',
+        addresses: discovery
+          .getPermissionedAccounts('LoopringIOExchangeOwner', 'blockSubmitters')
+          .map((account) => account.address),
+      },
       description:
         'Actors who can submit new blocks, updating the L2 state on L1.',
     },

@@ -345,10 +345,13 @@ export const zksynclite: Layer2 = {
     ),
     {
       name: 'Security Council',
-      accounts: discovery.getPermissionedAccounts(
-        'ZkSync',
-        'securityCouncilMembers',
-      ),
+      accounts: [],
+      additionalAddresses: {
+        dropdownTitle: 'Security Council members',
+        addresses: discovery
+          .getPermissionedAccounts('ZkSync', 'securityCouncilMembers')
+          .map((a) => a.address),
+      },
       description: `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
       references: [
         {
@@ -363,7 +366,13 @@ export const zksynclite: Layer2 = {
     },
     {
       name: 'Active validators',
-      accounts: discovery.getPermissionedAccounts('Governance', 'validators'),
+      accounts: [],
+      additionalAddresses: {
+        dropdownTitle: 'View addresses',
+        addresses: discovery
+          .getPermissionedAccounts('Governance', 'validators')
+          .map((a) => a.address),
+      },
       description:
         'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
     },

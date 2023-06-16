@@ -380,7 +380,11 @@ export const arbitrum: Layer2 = {
     },
     {
       name: 'Validators/Proposers',
-      accounts: VALUES.ARBITRUM.VALIDATORS,
+      accounts: [],
+      additionalAddresses: {
+        dropdownTitle: 'View addresses',
+        addresses: VALUES.ARBITRUM.VALIDATORS.map((v) => v.address),
+      },
       description:
         'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
     },
