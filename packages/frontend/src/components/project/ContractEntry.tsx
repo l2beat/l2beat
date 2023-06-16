@@ -114,7 +114,7 @@ export function ContractEntry({
                           key={i}
                           className="rounded-lg px-2 py-2 hover:bg-gray-200 dark:hover:bg-gray-750"
                         >
-                          <span className="w-40 text-right">#{i + 1} </span>
+                          <span className="text-base">#{i + 1} </span>
                           <EtherscanLink
                             address={address}
                             key={i}
@@ -122,7 +122,7 @@ export function ContractEntry({
                               verificationStatus.contracts[address] === false
                                 ? 'text-red-300'
                                 : '',
-                              'rounded-lg px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-750',
+                              'rounded-lg px-2 py-2 text-base hover:bg-gray-200 dark:hover:bg-gray-750',
                             )}
                           />
                         </div>
