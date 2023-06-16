@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { Story } from '@storybook/react'
 import React from 'react'
 
@@ -18,10 +19,12 @@ function Template(props: ContractEntryProps) {
 const CONTRACT = '0x65432133f54e0E8A33A975908C5BA1c14e5BbbDf'
 const IMPLEMENTATION = '0x99932133f54e0E8A33A975908C5BA1c14e5BbbDf'
 const ADMIN = '0x12345633f54e0E8A33A975908C5BA1c14e5BbbDf'
+const UNVERIFIED = EthereumAddress.random()
 const VERIFICATION_STATUS = {
-  [CONTRACT.toString()]: false,
-  [ADMIN.toString()]: false,
+  [CONTRACT.toString()]: true,
+  [ADMIN.toString()]: true,
   [IMPLEMENTATION.toString()]: true,
+  [UNVERIFIED.toString()]: false,
 }
 
 const REFERENCES = [
@@ -115,6 +118,21 @@ ShowMoreAddresses.args = {
     },
     description: 'This is a smart contract responsible for X in the system Y.',
     links: [],
+  },
+  verificationStatus: {
+    projects: {},
+    contracts: VERIFICATION_STATUS,
+  },
+}
+
+export const Unverified: Story<ContractEntryProps> = Template.bind({})
+Unverified.args = {
+  contract: {
+    name: 'Contract',
+    addresses: [UNVERIFIED.toString()],
+    description: 'This is a smart contract responsible for X in the system Y.',
+    links: [],
+    references: REFERENCES,
   },
   verificationStatus: {
     projects: {},
