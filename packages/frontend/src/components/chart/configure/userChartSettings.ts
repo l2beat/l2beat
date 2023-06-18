@@ -8,12 +8,6 @@ interface SerializedChartSettings extends Omit<UserChartSettings, 'days'> {
   days?: string
 }
 
-const DEFAULT_CHART_SETTINGS = {
-  isLogScale: false,
-  days: 365,
-  currency: 'usd',
-} as const
-
 export function persistUserChartSettings(state: State) {
   const chartSettings: SerializedChartSettings = {
     isLogScale: state.controls.isLogScale,
@@ -41,7 +35,7 @@ export function getUserChartSettings(chartId: string) {
     ...('currency' in serialized ? { currency: serialized.currency } : {}),
   }
 
-  return { ...DEFAULT_CHART_SETTINGS, ...userChartSettings }
+  return userChartSettings
 }
 
 function userChartSettingsKey(chartId: string) {

@@ -43,7 +43,10 @@ function configureChart(chart: HTMLElement) {
 
 function getInitMessage(elements: ChartElements): InitMessage {
   const chartId = new URL(elements.chart.baseURI).pathname
-  const userChartSettings = getUserChartSettings(chartId)
+  const chartSettings = {
+    ...DEFAULT_CHART_SETTINGS,
+    ...getUserChartSettings(chartId),
+  }
 
   const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
 
@@ -63,6 +66,12 @@ function getInitMessage(elements: ChartElements): InitMessage {
     activityEndpoint: elements.chart.dataset.activityEndpoint,
     labelCount: elements.view.labels.length,
     milestones,
-    ...userChartSettings,
+    ...chartSettings,
   }
 }
+
+const DEFAULT_CHART_SETTINGS = {
+  isLogScale: false,
+  days: 365,
+  currency: 'usd',
+} as const
