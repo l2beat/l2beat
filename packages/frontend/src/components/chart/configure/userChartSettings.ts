@@ -16,13 +16,13 @@ export function persistUserChartSettings(state: State) {
   }
 
   localStorage.setItem(
-    userChartSettingsKey(state.controls.chartId),
+    userChartSettingsKey(state.controls.pagePathname),
     JSON.stringify(chartSettings),
   )
 }
 
-export function getUserChartSettings(chartId: string) {
-  const raw = localStorage.getItem(userChartSettingsKey(chartId))
+export function getUserChartSettings(pagePathname: string) {
+  const raw = localStorage.getItem(userChartSettingsKey(pagePathname))
   const serialized: SerializedChartSettings = raw
     ? (JSON.parse(raw) as SerializedChartSettings)
     : {}
@@ -38,6 +38,6 @@ export function getUserChartSettings(chartId: string) {
   return userChartSettings
 }
 
-function userChartSettingsKey(chartId: string) {
-  return `${chartId}chartSettings`
+function userChartSettingsKey(pagePathname: string) {
+  return `${pagePathname}chartSettings`
 }

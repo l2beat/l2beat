@@ -19,11 +19,11 @@ describe('UserChartSettings', () => {
   })
 
   describe(getUserChartSettings.name, () => {
-    const chartId = 'scaling/tvl'
+    const pagePathname = 'scaling/tvl'
 
     describe('with no UserSettings', () => {
       it('return empty object', () => {
-        expect(getUserChartSettings(chartId)).toEqual({})
+        expect(getUserChartSettings(pagePathname)).toEqual({})
       })
     })
 
@@ -35,20 +35,20 @@ describe('UserChartSettings', () => {
       } as const
 
       beforeEach(() => {
-        const controls: Pick<State['controls'], 'chartId' | 'isLogScale'> = {
-          chartId,
+        const controls: Pick<State['controls'], 'pagePathname' | 'isLogScale'> = {
+          pagePathname,
           ...chartSettings,
         }
         persistUserChartSettings({ controls } as State)
       })
 
-      describe('For the same chartId', () => {
+      describe('For the same pagePathname', () => {
         it('return returns previous settings', () => {
-          expect(getUserChartSettings(chartId)).toEqual(chartSettings)
+          expect(getUserChartSettings(pagePathname)).toEqual(chartSettings)
         })
       })
 
-      describe('For different chartId', () => {
+      describe('For different pagePathname', () => {
         it('return returns empty settings', () => {
           expect(getUserChartSettings('bridges/tvl')).toEqual({})
         })

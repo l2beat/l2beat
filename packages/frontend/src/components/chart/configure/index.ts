@@ -42,10 +42,10 @@ function configureChart(chart: HTMLElement) {
 }
 
 function getInitMessage(elements: ChartElements): InitMessage {
-  const chartId = new URL(elements.chart.baseURI).pathname
+  const pagePathname = new URL(elements.chart.baseURI).pathname
   const chartSettings = {
     ...DEFAULT_CHART_SETTINGS,
-    ...getUserChartSettings(chartId),
+    ...getUserChartSettings(pagePathname),
   }
 
   const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
@@ -59,7 +59,7 @@ function getInitMessage(elements: ChartElements): InitMessage {
   return {
     type: 'Init',
     initialView,
-    chartId,
+    pagePathname,
     showEthereum,
     aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
     alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props

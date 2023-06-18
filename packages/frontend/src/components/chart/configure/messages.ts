@@ -9,7 +9,7 @@ import {
 export interface InitMessage {
   type: 'Init'
   initialView: 'tvl' | 'activity'
-  chartId: string
+  pagePathname: string
   days: number
   currency: 'usd' | 'eth'
   aggregateTvlEndpoint?: string

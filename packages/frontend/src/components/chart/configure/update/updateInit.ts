@@ -46,7 +46,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         milestones: milestonesToRecord(message.milestones),
       },
       controls: {
-        chartId: message.chartId,
+        pagePathname: message.pagePathname,
         view: message.initialView,
         days: message.days,
         isLogScale: message.isLogScale,

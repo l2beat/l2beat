@@ -20,7 +20,7 @@ export interface State {
     milestones: Record<number, Milestone>
   }
   controls: {
-    chartId: string
+    pagePathname: string
     view: 'tvl' | 'activity'
     days: number
     isLogScale: boolean
