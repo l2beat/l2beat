@@ -138,7 +138,11 @@ export function StageSection(props: StageSectionProps) {
           </div>
         )
       })}
-      <Link href="https://example.com" className="mt-3 block text-sm" showArrow>
+      <Link
+        href="https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe "
+        className="mt-3 block text-sm"
+        showArrow
+      >
         Learn more about Rollup stages
       </Link>
       <StageDisclaimer
