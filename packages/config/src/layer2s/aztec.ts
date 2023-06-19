@@ -152,10 +152,7 @@ export const aztec: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: [
-        'UnderReview',
-        'An open-source node exists that can recreate the state from L1 data.',
-      ],
+      rollupNodeOpenSource: 'UnderReview',
     },
     stage1: {
       stateVerificationOnL1: true,
