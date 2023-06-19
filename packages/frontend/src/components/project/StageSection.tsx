@@ -19,14 +19,10 @@ export interface StageSectionProps {
   icon: string
   name: string
   type: string
-  stage?: StageConfig
+  stage: StageConfig
 }
 
 export function StageSection(props: StageSectionProps) {
-  if (props.stage === undefined) {
-    return null
-  }
-
   if (props.stage.stage === 'UnderReview') {
     return (
       <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
