@@ -17,11 +17,13 @@ export const getStage = createGetStage({
       dataAvailabilityOnL1: {
         positive: 'Inputs for the state transition function are posted to L1.',
         negative:
-          'Inputs for the state transition function are not posted to L1.',
+          'All the data to reconstruct the L2 state is not available on L1.',
       },
       rollupNodeOpenSource: {
-        positive: 'The rollup node software is open source.',
-        negative: 'The rollup node software is not open source.',
+        positive:
+          'An open-source node exists that can recreate the state from L1 data.',
+        negative:
+          'No open-source node exists that can recreate the state from L1 data.',
       },
     },
   },
@@ -37,15 +39,15 @@ export const getStage = createGetStage({
           'There are at least 5 external actors who can submit fraud proofs.',
         negative: 'Fraud proof submission is not sufficiently decentralized.',
       },
-      usersHave14DaysToExit: {
-        positive:
-          'In case of an unwanted upgrade by actors more centralized than a Security Council, users have at least 14d to exit.',
-        negative:
-          'Upgrades executed by actors with more centralized control than a Security Council provide less than 14 days for user exit.',
-      },
       usersCanExitWithoutCooperation: {
         positive: `Users are able to exit without the help of the permissioned operators.`,
         negative: `Users' withdrawals can be censored by the permissioned operators.`,
+      },
+      usersHave7DaysToExit: {
+        positive:
+          'In case of an unwanted upgrade by actors more centralized than a Security Council, users have at least 7d to exit.',
+        negative:
+          'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit.',
       },
       securityCouncilProperlySetUp: {
         positive: 'The Security Council is properly set up.',
@@ -56,20 +58,20 @@ export const getStage = createGetStage({
   stage2: {
     name: 'Stage 2',
     items: {
-      proofSystemOverriddenOnlyInCaseOfABug: {
-        positive:
-          'The Security Council is limited to acting solely on adjudicable soundness errors.',
-        negative: `The Security Council's actions are not confined to adjudicable soundness errors.`,
-      },
       fraudProofSystemIsPermissionless: {
         positive: 'Fraud proof submission is open to everyone.',
         negative: 'Fraud proof submission is open only to whitelisted actors.',
       },
       delayWith30DExitWindow: {
         positive:
-          'In case of an unwanted upgrade by actors more centralized than a Security Council, users have at least 30d to exit.',
+          'Upgrades unrelated to adjudicable soundness errors provide at least 30d to exit.',
         negative:
-          'Upgrades executed by actors more centralized than a Security Council provide less than 30d to exit following an unwanted upgrade.',
+          'Upgrades unrelated to adjudicable soundness errors provide less than 30d to exit.',
+      },
+      proofSystemOverriddenOnlyInCaseOfABug: {
+        positive:
+          'The Security Council is limited to acting solely on adjudicable soundness errors.',
+        negative: `The Security Council's actions are not confined to adjudicable soundness errors.`,
       },
     },
   },

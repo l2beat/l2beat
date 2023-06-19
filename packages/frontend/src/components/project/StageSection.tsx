@@ -96,7 +96,7 @@ export function StageSection(props: StageSectionProps) {
                   <div className="flex flex-col gap-3 md:flex-row">
                     <div className="flex items-center gap-2">
                       <SatisfiedIcon className="shrink-0" />
-                      <span>{reqText(satisfied.length, 'met')}</span>
+                      <span>{reqTextSatisfied(satisfied.length)}</span>
                     </div>
                     {underReview.length > 0 && (
                       <div className="flex items-center gap-2">
@@ -108,7 +108,7 @@ export function StageSection(props: StageSectionProps) {
                 ) : (
                   <div className="flex items-center gap-2">
                     <MissingIcon className="shrink-0" />
-                    <span>{reqText(missing.length, 'missing')}</span>
+                    <span>{reqTextMissing(missing.length)}</span>
                   </div>
                 )}
               </div>
@@ -145,9 +145,17 @@ export function StageSection(props: StageSectionProps) {
   )
 }
 
-function reqText(amount: number, suffix: string) {
+function reqTextSatisfied(amount: number) {
   if (amount === 1) {
-    return `1 requirement ${suffix}`
+    return '1 requirement met'
   }
-  return `${amount} requirements ${suffix}`
+  return `${amount} requirements met`
+}
+
+function reqTextMissing(amount: number) {
+  if (amount === 1) {
+    return '1 issue needs fixing'
+  }
+
+  return `${amount} issues need fixing`
 }

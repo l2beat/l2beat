@@ -120,19 +120,22 @@ export const degate: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeOpenSource: 'UnderReview',
     },
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: null,
+      usersHave7DaysToExit: null,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: null,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,
       fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: true,
+      delayWith30DExitWindow: [
+        true,
+        'Users can exit at any time as the system cannot be upgraded.',
+      ],
     },
   }),
   technology: {
