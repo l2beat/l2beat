@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../icons'
+import { SectionId } from '../project/sectionId'
 
 interface Props<T> {
   items: T[]
@@ -18,7 +19,7 @@ export interface ColumnConfig<T> {
   minimalWidth?: true
   headClassName?: string
   noPaddingRight?: true
-  idHref?: string
+  idHref?: SectionId
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
 }

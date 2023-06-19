@@ -13,7 +13,7 @@ export default {
 const sections: ScalingDetailsSection[] = range(10).map(() => ({
   type: 'DescriptionSection',
   props: {
-    id: 'example',
+    id: 'description',
     title: 'Example',
     issueLink:
       'https://github.com/l2beat/l2beat/issues/new?title=Problem: zkSync Era project page&labels=website',

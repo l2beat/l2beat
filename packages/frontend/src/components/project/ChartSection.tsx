@@ -1,9 +1,10 @@
 import React from 'react'
 
 import { Chart, ChartProps } from '../chart/Chart'
+import { SectionId } from './sectionId'
 
 export interface ChartSectionProps extends ChartProps {
-  id: string
+  id: SectionId
   title: string
 }
 

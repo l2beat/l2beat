@@ -5,9 +5,10 @@ import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValues } from '../../utils/risks/types'
 import { BigRosette } from '../rosette'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
+import { SectionId } from './sectionId'
 
 export interface RiskAnalysisProps {
-  id: string
+  id: SectionId
   title: string
   riskValues: RiskValues
 }

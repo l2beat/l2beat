@@ -48,7 +48,7 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
       ? [
           {
             name: 'Stage',
-            idHref: 'stage',
+            idHref: 'stage' as const,
             tooltip: 'Rollup stage based on its features and maturity.',
             alignCenter: true as const,
             getValue: (project: ScalingTvlViewEntry) => (

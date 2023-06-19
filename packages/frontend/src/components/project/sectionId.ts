@@ -1,0 +1,13 @@
+export type SectionId =
+  | 'chart'
+  | 'description'
+  | 'milestones'
+  | 'knowledge-nuggets'
+  | 'risk-analysis'
+  | 'technology'
+  | 'operator'
+  | 'withdrawals'
+  | 'other-considerations'
+  | 'permissions'
+  | 'contracts'
+  | 'stage'
