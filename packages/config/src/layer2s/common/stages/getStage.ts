@@ -64,9 +64,9 @@ export const getStage = createGetStage({
       },
       delayWith30DExitWindow: {
         positive:
-          'Upgrades unrelated to adjudicable soundness errors provide at least 30d to exit.',
+          'Upgrades unrelated to on-chain provable bugs provide at least 30d to exit.',
         negative:
-          'Upgrades unrelated to adjudicable soundness errors provide less than 30d to exit.',
+          'Upgrades unrelated to on-chain provable bugs provide less than 30d to exit.',
       },
       proofSystemOverriddenOnlyInCaseOfABug: {
         positive:
