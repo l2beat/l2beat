@@ -239,7 +239,7 @@ export const dydx: Layer2 = {
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: true,
+      usersHave7DaysToExit: true,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: null,
     },
