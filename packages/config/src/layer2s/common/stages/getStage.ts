@@ -70,8 +70,8 @@ export const getStage = createGetStage({
       },
       proofSystemOverriddenOnlyInCaseOfABug: {
         positive:
-          'The Security Council is limited to acting solely on adjudicable soundness errors.',
-        negative: `The Security Council's actions are not confined to adjudicable soundness errors.`,
+          'The Security Council is limited to acting solely on on-chain provable bugs.',
+        negative: `The Security Council's actions are not confined to on-chain provable bugs.`,
       },
     },
   },
