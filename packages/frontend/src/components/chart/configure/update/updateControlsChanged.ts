@@ -57,4 +57,9 @@ export function updateControlsChanged(
 
 const PERSISTABLE_CHANGES: Parameters<
   typeof updateControlsChanged
->[1]['type'][] = ['ScaleChanged', 'DaysChanged', 'CurrencyChanged']
+>[1]['type'][] = [
+  'ScaleChanged',
+  'DaysChanged',
+  'CurrencyChanged',
+  'ShowEthereumChanged',
+]

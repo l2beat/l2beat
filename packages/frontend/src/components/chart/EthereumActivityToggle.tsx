@@ -21,7 +21,6 @@ export function EthereumActivityToggle(props: EthereumActivityToggleProps) {
           ETH Mainnet Transactions
         </span>
       }
-      defaultChecked={props.showToggle}
     />
   )
 }

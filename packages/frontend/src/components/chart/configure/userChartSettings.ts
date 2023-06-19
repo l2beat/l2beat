@@ -1,7 +1,7 @@
 import { State } from './state/State'
 
 type UserChartSettings = Partial<
-  Pick<State['controls'], 'isLogScale' | 'days' | 'currency'>
+  Pick<State['controls'], 'isLogScale' | 'days' | 'currency' | 'showEthereum'>
 >
 
 interface SerializedChartSettings extends Omit<UserChartSettings, 'days'> {
@@ -13,6 +13,7 @@ export function persistUserChartSettings(state: State) {
     isLogScale: state.controls.isLogScale,
     days: String(state.controls.days),
     currency: state.controls.currency,
+    showEthereum: state.controls.showEthereum,
   }
 
   localStorage.setItem(
@@ -33,6 +34,9 @@ export function getUserChartSettings(pagePathname: string) {
       : {}),
     ...('days' in serialized ? { days: Number(serialized.days) } : {}),
     ...('currency' in serialized ? { currency: serialized.currency } : {}),
+    ...('showEthereum' in serialized
+      ? { showEthereum: serialized.showEthereum }
+      : {}),
   }
 
   return userChartSettings

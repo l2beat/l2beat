@@ -46,6 +46,12 @@ export function render(
     }
   }
 
+  if (state.controls.showEthereum !== previousState.controls.showEthereum) {
+    if (elements.controls.showEthereum) {
+      elements.controls.showEthereum.checked = state.controls.showEthereum
+    }
+  }
+
   if (state.controls.view !== previousState.controls.view) {
     const isTvl = state.controls.view === 'tvl'
     const sevenDayRadio = elements.controls.days.find(

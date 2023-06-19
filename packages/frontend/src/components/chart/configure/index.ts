@@ -50,8 +50,6 @@ function getInitMessage(elements: ChartElements): InitMessage {
 
   const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
 
-  const showEthereum = !!elements.controls.showEthereum?.checked
-
   const milestones = elements.chart.dataset.milestones
     ? Milestones.parse(JSON.parse(elements.chart.dataset.milestones))
     : []
@@ -60,7 +58,6 @@ function getInitMessage(elements: ChartElements): InitMessage {
     type: 'Init',
     initialView,
     pagePathname,
-    showEthereum,
     aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
     alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
     activityEndpoint: elements.chart.dataset.activityEndpoint,
@@ -74,4 +71,5 @@ const DEFAULT_CHART_SETTINGS = {
   isLogScale: false,
   days: 365,
   currency: 'usd',
+  showEthereum: true,
 } as const
