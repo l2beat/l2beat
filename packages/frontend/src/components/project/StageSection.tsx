@@ -10,10 +10,11 @@ import {
 import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
+import { SectionId } from './sectionId'
 
 export interface StageSectionProps {
   title: string
-  id: string
+  id: SectionId
   icon: string
   name: string
   type: string
