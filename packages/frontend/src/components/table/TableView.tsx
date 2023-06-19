@@ -18,6 +18,7 @@ export interface ColumnConfig<T> {
   minimalWidth?: true
   headClassName?: string
   noPaddingRight?: true
+  idHref?: string
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
 }
@@ -107,6 +108,8 @@ export function TableView<T>({
                   const isLastColumn = j === columns.length - 1
                   const hasPaddingRight =
                     !column.noPaddingRight && !isLastColumn
+                  const idHref =
+                    column.idHref && href ? `${href}#${column.idHref}` : href
                   return (
                     <td
                       key={j}
@@ -116,7 +119,7 @@ export function TableView<T>({
                       )}
                     >
                       <a
-                        href={href}
+                        href={idHref}
                         className={cx(
                           'flex h-full w-full items-center',
                           column.alignRight && 'justify-end',
