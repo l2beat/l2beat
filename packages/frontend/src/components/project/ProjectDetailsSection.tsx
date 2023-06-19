@@ -1,9 +1,11 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { SectionId } from './sectionId'
+
 interface Props {
   title: string
-  id: string
+  id: SectionId
   className?: string
   children: ReactNode
 }

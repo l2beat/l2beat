@@ -34,5 +34,9 @@ export function getRiskSection(
     }
   }
 
-  return { id: 'risks', title: 'Risk summary', riskGroups: groupRisks(risks) }
+  return {
+    id: 'risk-analysis',
+    title: 'Risk summary',
+    riskGroups: groupRisks(risks),
+  }
 }
