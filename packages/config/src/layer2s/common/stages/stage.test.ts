@@ -194,47 +194,90 @@ describe(createGetStage.name, () => {
     })
   })
 
-  it('Under review works', () => {
-    const result = getTestStage({
-      stage0: {
-        callsItselfRollup: true,
-      },
-      stage1: {
-        hasEscapeHatch: [
-          'UnderReview',
-          'Escape hatch requirement is under review.',
+  describe('Under review', () => {
+    it('Custom description works', () => {
+      const result = getTestStage({
+        stage0: {
+          callsItselfRollup: true,
+        },
+        stage1: {
+          hasEscapeHatch: [
+            'UnderReview',
+            'Escape hatch requirement is under review.',
+          ],
+          isCouncil8Members: true,
+        },
+      })
+
+      expect(result).toEqual({
+        stage: 'Stage 1',
+        missing: undefined,
+        summary: [
+          {
+            stage: 'Stage 0',
+            requirements: [
+              {
+                satisfied: true,
+                description: 'The project calls itself a rollup.',
+              },
+            ],
+          },
+          {
+            stage: 'Stage 1',
+            requirements: [
+              {
+                satisfied: 'UnderReview',
+                description: 'Escape hatch requirement is under review.',
+              },
+              {
+                satisfied: true,
+                description: 'The project has at least 8 council members.',
+              },
+            ],
+          },
         ],
-        isCouncil8Members: true,
-      },
+      })
     })
 
-    expect(result).toEqual({
-      stage: 'Stage 1',
-      missing: undefined,
-      summary: [
-        {
-          stage: 'Stage 0',
-          requirements: [
-            {
-              satisfied: true,
-              description: 'The project calls itself a rollup.',
-            },
-          ],
+    it('If no description provided, uses the positive description', () => {
+      const result = getTestStage({
+        stage0: {
+          callsItselfRollup: true,
         },
-        {
-          stage: 'Stage 1',
-          requirements: [
-            {
-              satisfied: 'UnderReview',
-              description: 'Escape hatch requirement is under review.',
-            },
-            {
-              satisfied: true,
-              description: 'The project has at least 8 council members.',
-            },
-          ],
+        stage1: {
+          hasEscapeHatch: 'UnderReview',
+          isCouncil8Members: true,
         },
-      ],
+      })
+
+      expect(result).toEqual({
+        stage: 'Stage 1',
+        missing: undefined,
+        summary: [
+          {
+            stage: 'Stage 0',
+            requirements: [
+              {
+                satisfied: true,
+                description: 'The project calls itself a rollup.',
+              },
+            ],
+          },
+          {
+            stage: 'Stage 1',
+            requirements: [
+              {
+                satisfied: 'UnderReview',
+                description: 'The project has an escape hatch.',
+              },
+              {
+                satisfied: true,
+                description: 'The project has at least 8 council members.',
+              },
+            ],
+          },
+        ],
+      })
     })
   })
 })
