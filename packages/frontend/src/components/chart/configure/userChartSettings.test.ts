@@ -55,5 +55,22 @@ describe('UserChartSettings', () => {
         })
       })
     })
+
+    describe('with incomplete UserSettings being stored', () => {
+      const chartSettings = {
+        isLogScale: true,
+      } as const
+
+      beforeEach(() => {
+        localStorage.setItem(
+          `${pagePathname}chartSettings`,
+          JSON.stringify(chartSettings),
+        )
+      })
+
+      it('returns only stored settings', () => {
+        expect(getUserChartSettings(pagePathname)).toEqual(chartSettings)
+      })
+    })
   })
 })
