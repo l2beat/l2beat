@@ -2,16 +2,18 @@ import {
   ChecklistTemplate,
   ChecklistValue,
   MissingStageRequirements,
+  Satisfied,
+  Stage,
   StageBlueprint,
-  StageConfig,
+  StageConfigured,
   StageSummary,
 } from './types'
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
-): (checklist: ChecklistTemplate<T>) => StageConfig {
+): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
-    let lastStage: string | undefined = undefined
+    let lastStage: Stage | undefined = undefined
     let missing: MissingStageRequirements | undefined = undefined
     const summary: StageSummary[] = []
 
@@ -57,7 +59,7 @@ export function createGetStage<T extends StageBlueprint>(
 function normalizeKeyChecklist(
   stageKeyBlueprint: { positive: string; negative: string },
   stageKeyChecklist: ChecklistValue,
-): [boolean | null | 'UnderReview', string] {
+): [Satisfied | null, string] {
   const satisfied = isSatisfied(stageKeyChecklist)
 
   const description = getDescription(
@@ -70,7 +72,7 @@ function normalizeKeyChecklist(
 }
 
 function getDescription(
-  satisfied: 'UnderReview' | boolean | null,
+  satisfied: Satisfied | null,
   stageKeyBlueprint: { positive: string; negative: string },
   stageKeyChecklist: ChecklistValue,
 ) {
@@ -78,17 +80,17 @@ function getDescription(
     return stageKeyChecklist[1]
   }
 
-  return satisfied ? stageKeyBlueprint.positive : stageKeyBlueprint.negative
+  return satisfied === 'UnderReview' || satisfied
+    ? stageKeyBlueprint.positive
+    : stageKeyBlueprint.negative
 }
 
-function isSatisfied(
-  stageKeyChecklist: ChecklistValue,
-): boolean | null | 'UnderReview' {
+function isSatisfied(stageKeyChecklist: ChecklistValue): Satisfied | null {
   if (stageKeyChecklist === null) return null
 
   if (
-    Array.isArray(stageKeyChecklist) &&
-    stageKeyChecklist[0] === 'UnderReview'
+    stageKeyChecklist === 'UnderReview' ||
+    (Array.isArray(stageKeyChecklist) && stageKeyChecklist[0] === 'UnderReview')
   )
     return 'UnderReview'
 

@@ -2,7 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { InfoIcon } from '../icons'
-import { OutLink } from '../OutLink'
+import { Link } from '../Link'
 import { Callout } from './Callout'
 
 export interface UpcomingDisclaimerProps {
@@ -28,13 +28,9 @@ export function UpcomingDisclaimer({ className }: UpcomingDisclaimerProps) {
           </p>
           <br />
           Follow us on{' '}
-          <OutLink
-            href={'https://twitter.com/l2beat'}
-            title="Twitter"
-            className="text-link"
-          >
+          <Link href={'https://twitter.com/l2beat'} title="Twitter">
             Twitter
-          </OutLink>{' '}
+          </Link>{' '}
           to stay updated on the latest news regarding this and other Layer 2
           projects.
         </>

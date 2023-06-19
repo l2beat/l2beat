@@ -18,7 +18,6 @@ module.exports = {
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
-      link: 'rgb(var(--link-rgb) / <alpha-value>)',
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
@@ -47,11 +46,13 @@ module.exports = {
       yellow: {
         100: '#FFDD28',
         200: '#FFC107',
+        250: '#FFEC44',
         300: '#FDCF44',
         500: '#E5C227',
         700: '#CB9800',
+        800: '#382D11',
       },
-      orange: { 500: '#FF7D1F', 600: '#F94A24' },
+      orange: { 400: '#FF8B36', 500: '#FF7D1F', 600: '#F94A24' },
       purple: {
         100: '#7E41CC',
         300: '#F1D6FF',
@@ -92,6 +93,7 @@ module.exports = {
         400: '#BADAFF',
         450: '#96C0F7',
         500: '#53A2FF',
+        550: '#1F87FF',
         600: '#2B5CD9',
         700: '#005DD7',
         800: '#083575',

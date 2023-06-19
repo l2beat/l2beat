@@ -83,8 +83,11 @@ export function getProjectDetails(
         type: 'StageSection',
         props: {
           stage: project.stage,
+          name: project.display.name,
+          icon: `/icons/${project.display.slug}.png`,
+          type: project.technology.category,
           id: 'stage',
-          title: 'Stage',
+          title: 'Rollup stage',
         },
       })
     }

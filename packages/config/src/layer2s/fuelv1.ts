@@ -61,19 +61,18 @@ export const fuelv1: Layer2 = {
     },
     stage1: {
       stateVerificationOnL1: true,
-      //TODO: check if this is true
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: null,
-      usersCanExitWithoutCooperation: [
-        'UnderReview',
-        `It is under review whether users can exit without operator's cooperation.`,
-      ],
+      fraudProofSystemAtLeast5Outsiders: true,
+      usersHave7DaysToExit: null,
+      usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: null,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,
       fraudProofSystemIsPermissionless: true,
-      delayWith30DExitWindow: true,
+      delayWith30DExitWindow: [
+        true,
+        'Users can exit at any time as the system cannot be upgraded.',
+      ],
     },
   }),
   technology: {
