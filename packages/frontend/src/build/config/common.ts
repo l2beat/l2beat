@@ -20,7 +20,7 @@ export const common: Omit<Config, 'backend'> = {
     hiring: true,
     activity: true,
     milestones: true,
-    stages: false,
+    stages: true,
     buildAllProjectPages: false,
     upcomingRollups: true,
   },
