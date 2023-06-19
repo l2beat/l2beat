@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
 import { InfoIcon } from '../icons'
+import { SectionId } from '../project/sectionId'
 
 interface Props<T> {
   items: T[]
@@ -18,6 +19,7 @@ export interface ColumnConfig<T> {
   minimalWidth?: true
   headClassName?: string
   noPaddingRight?: true
+  idHref?: SectionId
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
 }
@@ -107,6 +109,8 @@ export function TableView<T>({
                   const isLastColumn = j === columns.length - 1
                   const hasPaddingRight =
                     !column.noPaddingRight && !isLastColumn
+                  const idHref =
+                    column.idHref && href ? `${href}#${column.idHref}` : href
                   return (
                     <td
                       key={j}
@@ -116,7 +120,7 @@ export function TableView<T>({
                       )}
                     >
                       <a
-                        href={href}
+                        href={idHref}
                         className={cx(
                           'flex h-full w-full items-center',
                           column.alignRight && 'justify-end',

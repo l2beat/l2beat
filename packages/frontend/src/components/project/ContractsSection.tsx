@@ -5,11 +5,12 @@ import { ContractEntry, TechnologyContract } from './ContractEntry'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
+import { SectionId } from './sectionId'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
 import { TokenEntry } from './TokenEntry'
 
 export interface ContractsSectionProps {
-  id: string
+  id: SectionId
   title: string
   contracts: TechnologyContract[]
   escrows: TechnologyContract[]
