@@ -1,9 +1,10 @@
-import { Logger } from '@l2beat/shared'
+import { EventTracker, Logger } from '@l2beat/shared'
 import { Retries } from '@l2beat/shared-pure'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { TaskQueue } from './TaskQueue'
+import waitForExpect from 'wait-for-expect'
 
 describe(TaskQueue.name, () => {
   let time: InstalledClock
@@ -60,6 +61,39 @@ describe(TaskQueue.name, () => {
     await time.runAllAsync()
 
     expect(completed).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+  })
+
+  it('can handle permanent failure', async () => {
+    const eventTracker = mockObject<EventTracker<string>>({
+      record: mockFn().returns(undefined),
+    })
+
+    const completed: number[] = []
+
+    async function execute(i: number) {
+      await wait(1)
+      if (i === 1) {
+        throw new Error('oops')
+      }
+
+      completed.push(i)
+    }
+
+    const queue = new TaskQueue(execute, Logger.SILENT, {
+      shouldRetry: Retries.maxAttempts(1),
+      metricsId: 'test',
+      eventTracker,
+    })
+
+    for (let i = 0; i < 3; i++) {
+      queue.addToBack(i)
+    }
+
+    await time.runAllAsync()
+    await queue.waitTillEmpty()
+
+    expect(completed).toEqual([0, 2]) // 1 was dropped
+    expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 
   it('can add jobs to front', async () => {

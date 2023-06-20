@@ -29,10 +29,14 @@ const taskQueueHistogram = new Histogram<string>({
   labelNames: ['id'],
 })
 
+export type TaskQueueEventTracker = EventTracker<
+  'started' | 'success' | 'error' | 'retry'
+>
+
 export interface TaskQueueOpts<T> {
   workers?: number
   shouldRetry?: ShouldRetry<T>
-  trackEvents?: boolean
+  eventTracker?: TaskQueueEventTracker
   metricsId: string
 }
 /**
@@ -44,9 +48,7 @@ export class TaskQueue<T> {
   private busyWorkers = 0
   private readonly workers: number
   private readonly shouldRetry: ShouldRetry<T>
-  private readonly eventTracker?: EventTracker<
-    'started' | 'success' | 'error' | 'retry'
-  >
+  private readonly eventTracker?: TaskQueueEventTracker
 
   constructor(
     executeTask: Task<T>,
@@ -59,8 +61,8 @@ export class TaskQueue<T> {
       'workers needs to be a positive integer',
     )
     this.shouldRetry = opts.shouldRetry ?? DEFAULT_RETRY
-    if (opts.trackEvents) {
-      this.eventTracker = new EventTracker()
+    if (opts.eventTracker) {
+      this.eventTracker = opts.eventTracker
     }
 
     this.executeTask = wrapAndMeasure(executeTask, {
