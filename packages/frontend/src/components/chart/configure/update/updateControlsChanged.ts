@@ -42,18 +42,7 @@ export function updateControlsChanged(
     view: calculateView(state.data, controls) ?? state.view,
   }
 
-  if (PERSISTABLE_CHANGES.includes(message.type)) {
-    persistUserChartSettings(newState)
-  }
+  persistUserChartSettings(newState)
 
   return [newState, []]
 }
-
-const PERSISTABLE_CHANGES: Parameters<
-  typeof updateControlsChanged
->[1]['type'][] = [
-  'ScaleChanged',
-  'DaysChanged',
-  'CurrencyChanged',
-  'ShowEthereumChanged',
-]
