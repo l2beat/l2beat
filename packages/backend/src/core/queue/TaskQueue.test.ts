@@ -96,6 +96,40 @@ describe(TaskQueue.name, () => {
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 
+  it('can halt on permanent failure', async () => {
+    const eventTracker = mockObject<EventTracker<string>>({
+      record: mockFn().returns(undefined),
+    })
+
+    const completed: number[] = []
+
+    async function execute(i: number) {
+      await wait(1)
+      if (i === 1) {
+        throw new Error('oops')
+      }
+
+      completed.push(i)
+    }
+
+    const queue = new TaskQueue(execute, Logger.DEBUG, {
+      shouldRetry: Retries.maxAttempts(1),
+      metricsId: 'test',
+      eventTracker,
+      shouldHaltAfterFailedRetries: true,
+    })
+
+    for (let i = 0; i < 3; i++) {
+      queue.addToBack(i)
+    }
+
+    await time.runAllAsync()
+
+    expect(queue.isHalted()).toEqual(true)
+    expect(completed).toEqual([0]) // everything after task '1' was dropped
+    expect(eventTracker.record).toHaveBeenCalledWith('error')
+  })
+
   it('can add jobs to front', async () => {
     const completed: number[] = []
 

@@ -38,9 +38,11 @@ export interface TaskQueueOpts<T> {
   shouldRetry?: ShouldRetry<T>
   eventTracker?: TaskQueueEventTracker
   metricsId: string
+  shouldHaltAfterFailedRetries?: boolean
 }
 /**
- * Note: by default, queue will retry tasks using exponential back off strategy (failing tasks won't be dropped).
+ * Note: by default, queue will indefinitely retry failing tasks using exponential back off strategy (failing tasks won't be dropped).
+ * This can be customized by changing `shouldRetry` function and `shouldHaltAfterFailedRetries` parameter.
  */
 export class TaskQueue<T> {
   private readonly executeTask: Task<T>
@@ -49,6 +51,8 @@ export class TaskQueue<T> {
   private readonly workers: number
   private readonly shouldRetry: ShouldRetry<T>
   private readonly eventTracker?: TaskQueueEventTracker
+  private readonly shouldHaltAfterFailedRetries
+  private halted = false
 
   constructor(
     executeTask: Task<T>,
@@ -64,6 +68,8 @@ export class TaskQueue<T> {
     if (opts.eventTracker) {
       this.eventTracker = opts.eventTracker
     }
+    this.shouldHaltAfterFailedRetries =
+      opts.shouldHaltAfterFailedRetries ?? false
 
     this.executeTask = wrapAndMeasure(executeTask, {
       histogram: taskQueueHistogram,
@@ -108,6 +114,10 @@ export class TaskQueue<T> {
     }
   }
 
+  isHalted(): boolean {
+    return this.halted
+  }
+
   isEmpty(): boolean {
     return this.queue.length === 0 && this.busyWorkers === 0
   }
@@ -117,6 +127,11 @@ export class TaskQueue<T> {
   }
 
   private execute() {
+    if (this.halted) {
+      this.logger.debug("Queue is halted, won't execute")
+      return
+    }
+
     this.executeUnchecked().catch((e) => {
       // this should never happen
       this.logger.error(
@@ -142,6 +157,10 @@ export class TaskQueue<T> {
         error,
       )
       this.eventTracker?.record('error')
+      if (this.shouldHaltAfterFailedRetries) {
+        this.logger.info('Halting queue because of error')
+        this.halted = true
+      }
       return
     }
     job.executeAt = Date.now() + (result.executeAfter ?? 0)
