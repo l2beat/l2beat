@@ -10,12 +10,17 @@ export interface CopyToClipboardProps {
 
 export function CopyToClipboard(props: CopyToClipboardProps) {
   return (
-    <ClipboardIcon
-      data-value-to-copy={props.valueToCopy}
-      className={cx(
-        'CopyToClipboard fill-gray-800 dark:fill-white',
-        props.className,
-      )}
-    />
+    <div>
+      <ClipboardIcon
+        data-value-to-copy={props.valueToCopy}
+        className={cx(
+          'CopyToClipboard',
+          ' fill-gray-800 opacity-80 dark:fill-white',
+          'cursor-pointer hover:opacity-100 dark:hover:opacity-100',
+          'active:opacity-50 dark:active:opacity-50',
+          props.className,
+        )}
+      />
+    </div>
   )
 }
