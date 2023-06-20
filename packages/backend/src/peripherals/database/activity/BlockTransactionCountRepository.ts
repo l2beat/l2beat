@@ -31,7 +31,10 @@ export class BlockTransactionCountRepository extends BaseRepository {
 
   async add(record: BlockTransactionCountRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
-    await knex('activity.block').insert(toRow(record))
+    await knex('activity.block')
+      .insert(toRow(record))
+      .onConflict(['project_id', 'block_number'])
+      .merge()
     return `${record.projectId.toString()}-${record.blockNumber})}`
   }
 

@@ -28,6 +28,17 @@ describe(BlockTransactionCountRepository.name, () => {
 
     expect(result).toEqual(records)
   })
+
+  describe(BlockTransactionCountRepository.prototype.add.name, () => {
+    it('merges on conflict', async () => {
+      await repository.add(mockRecord(PROJECT_A, 0))
+      await repository.add(mockRecord(PROJECT_A, 0))
+
+      const result = await repository.getAll()
+
+      expect(result).toEqual([mockRecord(PROJECT_A, 0)])
+    })
+  })
 })
 
 const mockRecord = (projectId: ProjectId, offset: number) => ({
