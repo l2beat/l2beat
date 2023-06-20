@@ -78,13 +78,16 @@ export function getProjectDetails(
       },
     })
 
-    if (config.features.stages) {
+    if (config.features.stages && project.stage) {
       items.push({
         type: 'StageSection',
         props: {
           stage: project.stage,
+          name: project.display.name,
+          icon: `/icons/${project.display.slug}.png`,
+          type: project.technology.category,
           id: 'stage',
-          title: 'Stage',
+          title: 'Rollup stage',
         },
       })
     }

@@ -476,7 +476,7 @@ export const arbitrum: Layer2 = {
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: true,
-      usersHave14DaysToExit: true,
+      usersHave7DaysToExit: true,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: true,
     },

@@ -27,7 +27,8 @@
     "0x9Bcf13C6b68450B427bfa86698D61901A8a3456D": "PedersenHashPointsXColumn",
     "0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5": "EcdsaPointsXColumn",
     "0xD14fd39630Ec941C3bA6C791E3af9E0027013A15": "EcdsaPointsYColumn",
-    "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1": "Committee"
+    "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1": "Committee",
+    "0xb9431E19B29B952d9358025f680077C3Fd37292f": "TreasuryVester"
   },
   "overrides": {
     "StarkPerpetual": {
@@ -214,6 +215,9 @@
       ],
       "ignoreMethods": ["read"]
     },
-    "USDC": { "ignoreDiscovery": true }
+    "USDC": { "ignoreDiscovery": true },
+    "TreasuryVester": {
+      "ignoreInWatchMode": ["lastUpdate"]
+    }
   }
 }

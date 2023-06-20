@@ -155,17 +155,14 @@ export const zksynclite: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeOpenSource: true,
+      rollupNodeOpenSource: 'UnderReview',
     },
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
-      usersHave14DaysToExit: [
-        'UnderReview',
-        'It is under review how much time do users have to exit the system.',
-      ],
+      usersHave7DaysToExit: true,
       usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+      securityCouncilProperlySetUp: true,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,

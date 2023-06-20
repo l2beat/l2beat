@@ -13,14 +13,33 @@ describe(ZksyncTransactionRepository.name, () => {
     await repository.deleteAll()
   })
 
-  it(ZksyncTransactionRepository.prototype.addMany.name, async () => {
+  it(ZksyncTransactionRepository.prototype.addOrUpdateMany.name, async () => {
     const records = [mockRecord(0), mockRecord(1)]
 
-    await repository.addMany(records)
+    await repository.addOrUpdateMany(records)
 
     const rows = await repository.getAll()
 
     expect(rows).toEqual(records)
+  })
+
+  describe(ZksyncTransactionRepository.prototype.addOrUpdate.name, () => {
+    it('merges on conflict', async () => {
+      await repository.addOrUpdate(mockRecord(0))
+      await repository.addOrUpdate({
+        ...mockRecord(0),
+        timestamp: new UnixTime(2000),
+      })
+
+      const rows = await repository.getAll()
+
+      expect(rows).toEqual([
+        {
+          ...mockRecord(0),
+          timestamp: new UnixTime(2000),
+        },
+      ])
+    })
   })
 })
 
