@@ -47,7 +47,7 @@ export function createLoopringCounter(
         const blocks = await promiseAllPlus(queries, logger, {
           metricsId: 'LoopringBlockCounter',
         })
-        await blockRepository.addMany(blocks, trx)
+        await blockRepository.addOrUpdateMany(blocks, trx)
       },
     },
   )
