@@ -106,15 +106,38 @@ export function ContractEntry({
                   ` (${contract.additionalAddresses.addresses.length})`
                 }
                 children={
-                  <div className="flex flex-col">
+                  <div className="ml-3 mt-3 flex flex-col">
+                    {contract.addresses && contract.addresses.length > 0 && (
+                      <>
+                        <div className="text-sm font-semibold">
+                          {contract.name}
+                          {':'}
+                        </div>
+                        <div className="flex rounded-lg  py-2 hover:bg-gray-200 dark:hover:bg-gray-750">
+                          <EtherscanLink
+                            address={contract.addresses[0]}
+                            fullAddress={true}
+                            className={cx(
+                              verificationStatus.contracts[
+                                contract.addresses[0]
+                              ] === false
+                                ? 'text-red-300'
+                                : '',
+                            )}
+                          />
+                        </div>
+                      </>
+                    )}
+                    <div className="py-1 text-sm font-semibold">
+                      {contract.additionalAddresses.dropdownTitle}:
+                    </div>
                     {contract.additionalAddresses.addresses.map(
                       (address, i) => (
-                        //TODO: fix styling
                         <div
                           key={i}
-                          className="flex rounded-lg px-2 py-2 hover:bg-gray-200 dark:hover:bg-gray-750"
+                          className="flex rounded-lg py-2 hover:bg-gray-200 dark:hover:bg-gray-750"
                         >
-                          <div className="mr-2 w-8 text-center text-base opacity-50">
+                          <div className="ml-1 w-8 text-left text-base opacity-50">
                             {i + 1}.
                           </div>
                           <EtherscanLink
@@ -125,6 +148,7 @@ export function ContractEntry({
                               verificationStatus.contracts[address] === false
                                 ? 'text-red-300'
                                 : '',
+                              'mt-[1px]',
                             )}
                           />
                         </div>
