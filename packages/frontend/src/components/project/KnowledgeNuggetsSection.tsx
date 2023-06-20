@@ -3,10 +3,11 @@ import React from 'react'
 
 import { KnowledgeNuggetItem } from './KnowledgeNuggetItem'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
+import { SectionId } from './sectionId'
 
 export interface KnowledgeNuggetsProps {
   title: string
-  id: string
+  id: SectionId
   knowledgeNuggets: KnowledgeNugget[]
 }
 

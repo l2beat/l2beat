@@ -5,10 +5,11 @@ import { ExpandableContainer } from '../ExpandableContainer'
 import { MilestoneIcon } from '../icons/symbols/MilestoneIcon'
 import { Link } from '../Link'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
+import { SectionId } from './sectionId'
 
 export interface MilestonesSectionProps {
   title: string
-  id: string
+  id: SectionId
   milestones: Milestone[]
 }
 

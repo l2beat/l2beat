@@ -7,24 +7,22 @@ import {
   SatisfiedIcon,
   UnderReviewIcon,
 } from '../icons'
+import { Link } from '../Link'
 import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
+import { SectionId } from './sectionId'
 
 export interface StageSectionProps {
   title: string
-  id: string
+  id: SectionId
   icon: string
   name: string
   type: string
-  stage?: StageConfig
+  stage: StageConfig
 }
 
 export function StageSection(props: StageSectionProps) {
-  if (props.stage === undefined) {
-    return null
-  }
-
   if (props.stage.stage === 'UnderReview') {
     return (
       <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
@@ -96,7 +94,7 @@ export function StageSection(props: StageSectionProps) {
                   <div className="flex flex-col gap-3 md:flex-row">
                     <div className="flex items-center gap-2">
                       <SatisfiedIcon className="shrink-0" />
-                      <span>{reqText(satisfied.length, 'met')}</span>
+                      <span>{reqTextSatisfied(satisfied.length)}</span>
                     </div>
                     {underReview.length > 0 && (
                       <div className="flex items-center gap-2">
@@ -108,7 +106,7 @@ export function StageSection(props: StageSectionProps) {
                 ) : (
                   <div className="flex items-center gap-2">
                     <MissingIcon className="shrink-0" />
-                    <span>{reqText(missing.length, 'missing')}</span>
+                    <span>{reqTextMissing(missing.length)}</span>
                   </div>
                 )}
               </div>
@@ -137,6 +135,13 @@ export function StageSection(props: StageSectionProps) {
           </div>
         )
       })}
+      <Link
+        href="https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe "
+        className="mt-3 block text-sm"
+        showArrow
+      >
+        Learn more about Rollup stages
+      </Link>
       <StageDisclaimer
         className="mt-6"
         text="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
@@ -145,9 +150,17 @@ export function StageSection(props: StageSectionProps) {
   )
 }
 
-function reqText(amount: number, suffix: string) {
+function reqTextSatisfied(amount: number) {
   if (amount === 1) {
-    return `1 requirement ${suffix}`
+    return '1 requirement met'
   }
-  return `${amount} requirements ${suffix}`
+  return `${amount} requirements met`
+}
+
+function reqTextMissing(amount: number) {
+  if (amount === 1) {
+    return '1 issue needs fixing'
+  }
+
+  return `${amount} issues need fixing`
 }
