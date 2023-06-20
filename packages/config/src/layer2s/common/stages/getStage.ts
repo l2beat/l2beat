@@ -64,14 +64,14 @@ export const getStage = createGetStage({
       },
       delayWith30DExitWindow: {
         positive:
-          'Upgrades unrelated to adjudicable soundness errors provide at least 30d to exit.',
+          'Upgrades unrelated to on-chain provable bugs provide at least 30d to exit.',
         negative:
-          'Upgrades unrelated to adjudicable soundness errors provide less than 30d to exit.',
+          'Upgrades unrelated to on-chain provable bugs provide less than 30d to exit.',
       },
       proofSystemOverriddenOnlyInCaseOfABug: {
         positive:
-          'The Security Council is limited to acting solely on adjudicable soundness errors.',
-        negative: `The Security Council's actions are not confined to adjudicable soundness errors.`,
+          'The Security Council is limited to acting solely on on-chain provable bugs.',
+        negative: `The Security Council's actions are not confined to on-chain provable bugs.`,
       },
     },
   },
