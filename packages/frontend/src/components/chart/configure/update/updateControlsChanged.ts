@@ -29,17 +29,11 @@ export function updateControlsChanged(
     controls.currency = message.currency
     controls.token = undefined
   }
-  if (message.type === 'TokenChanged') {
-    controls.token = message.token
-  }
   if (message.type === 'ShowEthereumChanged') {
     controls.showEthereum = message.showEthereum
   }
   if (message.type === 'ScaleChanged') {
     controls.isLogScale = message.isLogScale
-  }
-  if (message.type === 'ShowAlternativeTvlChanged') {
-    controls.showAlternativeTvl = message.showAlternativeTvl
   }
 
   const newState: State = {
