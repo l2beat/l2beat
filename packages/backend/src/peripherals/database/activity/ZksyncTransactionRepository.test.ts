@@ -26,11 +26,19 @@ describe(ZksyncTransactionRepository.name, () => {
   describe(ZksyncTransactionRepository.prototype.addOrUpdate.name, () => {
     it('merges on conflict', async () => {
       await repository.addOrUpdate(mockRecord(0))
-      await repository.addOrUpdate(mockRecord(0))
+      await repository.addOrUpdate({
+        ...mockRecord(0),
+        timestamp: new UnixTime(2000),
+      })
 
       const rows = await repository.getAll()
 
-      expect(rows).toEqual([mockRecord(0)])
+      expect(rows).toEqual([
+        {
+          ...mockRecord(0),
+          timestamp: new UnixTime(2000),
+        },
+      ])
     })
   })
 })
