@@ -26,6 +26,14 @@ function UPGRADE_WITH_DELAY_RISK(delay: string): ProjectRisk {
   }
 }
 
+function UPGRADE_WITH_DELAY_RISK_WITH_SC(delay: string): ProjectRisk {
+  return {
+    category: 'Funds can be stolen if',
+    text: `a contract receives a malicious code upgrade. There is a ${delay} days delay on code upgrades unless upgrade is initiated by the \
+    Security Council in which case there is no delay.`,
+  }
+}
+
 function UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds: number): ProjectRisk {
   if (delaySeconds < DANGER_DELAY_THRESHOLD_SECONDS) {
     return UPGRADE_NO_DELAY_RISK
@@ -50,5 +58,6 @@ export const CONTRACTS = {
   UPGRADE_NO_DELAY_RISK,
   UPGRADE_WITH_DELAY_RISK,
   UPGRADE_WITH_DELAY_SECONDS_RISK,
+  UPGRADE_WITH_DELAY_RISK_WITH_SC,
   ARBITRUM_OLD_BRIDGE,
 }
