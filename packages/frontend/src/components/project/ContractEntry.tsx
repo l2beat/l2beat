@@ -2,6 +2,7 @@ import { VerificationStatus } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React from 'react'
 
+import { CopyToClipboard } from '../CopyToClipboard'
 import { HoverableDropdown } from '../HoverableDropdown'
 import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
@@ -9,7 +10,6 @@ import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
-import { ClipboardIcon } from '../icons/symbols/ClipboardIcon'
 
 export interface TechnologyContract {
   name: string
@@ -98,65 +98,7 @@ export function ContractEntry({
                 {x.name}
               </Link>
             ))}
-            {contract.additionalAddresses && (
-              <HoverableDropdown
-                isInContractEntry={true}
-                className="mt-[-8px]"
-                title={
-                  contract.additionalAddresses.dropdownTitle +
-                  ` (${contract.additionalAddresses.addresses.length})`
-                }
-                children={
-                  <div className="ml-3 mt-2 flex flex-col">
-                    {contract.addresses && contract.addresses.length > 0 && (
-                      <>
-                        <div className="text-sm font-semibold">
-                          {contract.name}
-                          {':'}
-                        </div>
-                        <div className="flex rounded-lg py-2  text-xs ">
-                          <EtherscanLink
-                            address={contract.addresses[0]}
-                            fullAddress={true}
-                            className={cx(
-                              verificationStatus.contracts[
-                                contract.addresses[0]
-                              ] === false
-                                ? 'text-red-300'
-                                : '',
-                            )}
-                          />
-                          <ClipboardIcon className="ml-2 mt-[2px] fill-gray-800 dark:fill-white" />
-                        </div>
-                      </>
-                    )}
-                    <div className="py-1 text-sm font-semibold">
-                      {contract.additionalAddresses.dropdownTitle}:
-                    </div>
-                    {contract.additionalAddresses.addresses.map(
-                      (address, i) => (
-                        <div key={i} className=" flex rounded-lg py-2 text-xs ">
-                          <div className="ml-1 w-8 text-left  opacity-50">
-                            {i + 1}.
-                          </div>
-                          <EtherscanLink
-                            address={address}
-                            key={i}
-                            fullAddress={true}
-                            className={cx(
-                              verificationStatus.contracts[address] === false
-                                ? 'text-red-300'
-                                : '',
-                              'mt-[1px]',
-                            )}
-                          />
-                        </div>
-                      ),
-                    )}
-                  </div>
-                }
-              />
-            )}
+            {getAdditionalAddressesDropdown(contract, verificationStatus)}
           </div>
           {contract.description && (
             <p className="mt-2 text-gray-850 dark:text-gray-400">
@@ -197,6 +139,77 @@ export function ContractEntry({
             <ReferenceList references={contract.references} tight />
           )}
         </>
+      }
+    />
+  )
+}
+
+function getAdditionalAddressesDropdown(
+  contract: TechnologyContract,
+  verificationStatus: {
+    projects: Record<string, boolean | undefined>
+    contracts: Record<string, boolean | undefined>
+  },
+): React.ReactNode {
+  if (contract.additionalAddresses === undefined) return null
+
+  return (
+    <HoverableDropdown
+      isInContractEntry={true}
+      className="mt-[-8px]"
+      title={
+        contract.additionalAddresses.dropdownTitle +
+        ` (${contract.additionalAddresses.addresses.length})`
+      }
+      children={
+        <div className="ml-3 mt-2 flex flex-col">
+          {contract.addresses && contract.addresses.length > 0 && (
+            <>
+              <div className="text-sm font-semibold">
+                {contract.name}
+                {':'}
+              </div>
+              <div className="flex rounded-lg py-2  text-xs ">
+                <EtherscanLink
+                  address={contract.addresses[0]}
+                  fullAddress={true}
+                  className={cx(
+                    verificationStatus.contracts[contract.addresses[0]] ===
+                      false
+                      ? 'text-red-300'
+                      : '',
+                  )}
+                />
+                <CopyToClipboard
+                  valueToCopy={contract.addresses[0]}
+                  className={'ml-2 mt-[2px]'}
+                />
+              </div>
+            </>
+          )}
+          <div className="py-1 text-sm font-semibold">
+            {contract.additionalAddresses.dropdownTitle}:
+          </div>
+          {contract.additionalAddresses.addresses.map((address, i) => (
+            <div key={i} className=" flex rounded-lg py-2 text-xs ">
+              <div className="w-8 text-left opacity-50">{i + 1}.</div>
+              <EtherscanLink
+                address={address}
+                key={i}
+                fullAddress={true}
+                className={cx(
+                  verificationStatus.contracts[address] === false
+                    ? 'text-red-300'
+                    : '',
+                )}
+              />
+              <CopyToClipboard
+                valueToCopy={address}
+                className={'ml-2 mt-[2px]'}
+              />
+            </div>
+          ))}
+        </div>
       }
     />
   )

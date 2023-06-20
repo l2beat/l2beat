@@ -3,6 +3,7 @@ import { configureTvlActivity } from '../components/header/configureTvlActivity'
 import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
 import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureCanonicalBridgesFilter } from './configureCanonicalBridgesFilter'
+import { configureCopyToClipboard } from './configureCopyToClipboard'
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
@@ -27,3 +28,4 @@ configureTabs()
 configureCanonicalBridgesFilter()
 configureTableIndexRerender()
 configureUpgradeDescriptions()
+configureCopyToClipboard()
