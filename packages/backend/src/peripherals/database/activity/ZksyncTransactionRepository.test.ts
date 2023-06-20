@@ -22,6 +22,17 @@ describe(ZksyncTransactionRepository.name, () => {
 
     expect(rows).toEqual(records)
   })
+
+  describe(ZksyncTransactionRepository.prototype.add.name, () => {
+    it('merges on conflict', async () => {
+      await repository.add(mockRecord(0))
+      await repository.add(mockRecord(0))
+
+      const rows = await repository.getAll()
+
+      expect(rows).toEqual([mockRecord(0)])
+    })
+  })
 })
 
 const mockRecord = (offset: number) => ({

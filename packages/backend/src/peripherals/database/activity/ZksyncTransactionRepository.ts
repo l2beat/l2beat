@@ -27,7 +27,10 @@ export class ZksyncTransactionRepository extends BaseRepository {
 
   async add(record: ZksyncTransactionRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
-    await knex('activity.zksync').insert(toRow(record))
+    await knex('activity.zksync')
+      .insert(toRow(record))
+      .onConflict(['block_number', 'block_index'])
+      .merge()
     return `zksync-${record.blockNumber})}`
   }
 
