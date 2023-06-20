@@ -24,12 +24,15 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     trx?: Knex.Transaction,
   ) {
     for (const record of records) {
-      await this.add(record, trx)
+      await this.addOrUpdate(record, trx)
     }
     return records.length
   }
 
-  async add(record: StarkexTransactionCountRecord, trx?: Knex.Transaction) {
+  async addOrUpdate(
+    record: StarkexTransactionCountRecord,
+    trx?: Knex.Transaction,
+  ) {
     const knex = await this.knex(trx)
     await knex('activity.starkex')
       .insert(toRow(record))
