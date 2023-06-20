@@ -9,6 +9,7 @@ import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
+import { ClipboardIcon } from '../icons/symbols/ClipboardIcon'
 
 export interface TechnologyContract {
   name: string
@@ -106,14 +107,14 @@ export function ContractEntry({
                   ` (${contract.additionalAddresses.addresses.length})`
                 }
                 children={
-                  <div className="ml-3 mt-3 flex flex-col">
+                  <div className="ml-3 mt-2 flex flex-col">
                     {contract.addresses && contract.addresses.length > 0 && (
                       <>
                         <div className="text-sm font-semibold">
                           {contract.name}
                           {':'}
                         </div>
-                        <div className="flex rounded-lg  py-2 hover:bg-gray-200 dark:hover:bg-gray-750">
+                        <div className="flex rounded-lg py-2  text-xs ">
                           <EtherscanLink
                             address={contract.addresses[0]}
                             fullAddress={true}
@@ -125,6 +126,7 @@ export function ContractEntry({
                                 : '',
                             )}
                           />
+                          <ClipboardIcon className="ml-2 mt-[2px] fill-gray-800 dark:fill-white" />
                         </div>
                       </>
                     )}
@@ -133,11 +135,8 @@ export function ContractEntry({
                     </div>
                     {contract.additionalAddresses.addresses.map(
                       (address, i) => (
-                        <div
-                          key={i}
-                          className="flex rounded-lg py-2 hover:bg-gray-200 dark:hover:bg-gray-750"
-                        >
-                          <div className="ml-1 w-8 text-left text-base opacity-50">
+                        <div key={i} className=" flex rounded-lg py-2 text-xs ">
+                          <div className="ml-1 w-8 text-left  opacity-50">
                             {i + 1}.
                           </div>
                           <EtherscanLink
