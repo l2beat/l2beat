@@ -134,7 +134,7 @@ export const degate: Layer2 = {
       fraudProofSystemIsPermissionless: null,
       delayWith30DExitWindow: [
         true,
-        'Users can exit at any time as the system cannot be upgraded.',
+        'Users have at least 30d to exit as the system cannot be upgraded.',
       ],
     },
   }),
