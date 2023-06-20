@@ -112,17 +112,19 @@ export function ContractEntry({
                         //TODO: fix styling
                         <div
                           key={i}
-                          className="rounded-lg px-2 py-2 hover:bg-gray-200 dark:hover:bg-gray-750"
+                          className="flex rounded-lg px-2 py-2 hover:bg-gray-200 dark:hover:bg-gray-750"
                         >
-                          <span className="text-base">#{i + 1} </span>
+                          <div className="mr-2 w-8 text-center text-base opacity-50">
+                            {i + 1}.
+                          </div>
                           <EtherscanLink
                             address={address}
                             key={i}
+                            fullAddress={true}
                             className={cx(
                               verificationStatus.contracts[address] === false
                                 ? 'text-red-300'
                                 : '',
-                              'rounded-lg px-2 py-2 text-base hover:bg-gray-200 dark:hover:bg-gray-750',
                             )}
                           />
                         </div>
