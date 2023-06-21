@@ -1,7 +1,8 @@
 {
   "name": "across-v2",
   "blockNumber": 17494607,
-  "configHash": "0xc6220d7bb14dad496a8f9f4019d7a86f7a24dae9bb63d599fa695ad2a5f9f2c4",
+  "configHash": "0x67a046c4f50802b3c2b0bec71f55eb082ddfdcfa456b79f073c1a85721948abb",
+  "version": 1,
   "contracts": [
     {
       "name": "VotingToken",
@@ -259,7 +260,7 @@
       "values": {
         "bondAmount": "450000000000000000",
         "bondToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "CrossChainContractsFromEmittedEvents": {
+        "CrossChainContracts": {
           "1": {
             "l2ChainId": 1,
             "adapter": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",

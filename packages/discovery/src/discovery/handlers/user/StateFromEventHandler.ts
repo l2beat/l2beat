@@ -1,4 +1,4 @@
-import { ContractValue, EthereumAddress } from '@l2beat/shared'
+import { ContractValue, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { pick, reduce } from 'lodash'
 import * as z from 'zod'
@@ -65,17 +65,20 @@ export class StateFromEventHandler implements Handler {
       values.add(params)
     }
 
-    if (typeof this.definition.groupBy !== 'undefined') {
+    if (this.definition.groupBy !== undefined) {
       const result = reduce(
         [...values],
-        (acc, value) => {
-          const groupByKey = String(
-            value[this.definition.groupBy as keyof typeof value],
-          )
-          acc[groupByKey] = value
-          return acc
+        (grouping: Record<string, ContractValue>, item) => {
+          if (typeof item === 'object' && this.definition.groupBy) {
+            const key: unknown = Reflect.get(item, this.definition.groupBy)
+            if (typeof key === 'string' || typeof key === 'number') {
+              grouping[key] = item
+              return grouping
+            }
+          }
+          throw new Error('Cannot group')
         },
-        {} as Record<string, ContractValue>,
+        {},
       )
 
       return {

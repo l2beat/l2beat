@@ -16,7 +16,7 @@
     "HubPool": {
       "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
       "fields": {
-        "CrossChainContractsFromEmittedEvents": {
+        "CrossChainContracts": {
           "type": "stateFromEvent",
           "event": "CrossChainContractsSet",
           "returnParams": ["l2ChainId", "adapter", "spokePool"],
