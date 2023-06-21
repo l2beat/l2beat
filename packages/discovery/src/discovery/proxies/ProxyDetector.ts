@@ -20,7 +20,7 @@ import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 
-type Detector = (
+export type Detector = (
   provider: DiscoveryProvider,
   address: EthereumAddress,
   blockNumber: number,

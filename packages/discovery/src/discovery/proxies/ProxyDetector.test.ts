@@ -1,9 +1,13 @@
-import { EthereumAddress, ProxyDetails } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ManualProxyType,
+  ProxyDetails,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { ProxyDetector } from './ProxyDetector'
+import { Detector, ProxyDetector } from './ProxyDetector'
 
 describe(ProxyDetector.name, () => {
   const BLOCK_NUMBER = 1234
@@ -67,7 +71,9 @@ describe(ProxyDetector.name, () => {
       'call implementation proxy': async () => FIRST_DETAILS,
       'new Arbitrum proxy': async () => SECOND_DETAILS,
       'zkSync Lite proxy': async () => undefined,
-    })
+      'zkSpace proxy': async () => undefined,
+      'Eternal Storage proxy': async () => undefined,
+    } as Record<ManualProxyType, Detector>)
     const result = await detector.detectProxy(
       EthereumAddress.random(),
       BLOCK_NUMBER,
