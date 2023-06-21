@@ -1,5 +1,7 @@
 import { Milestone } from '@l2beat/config'
 
+import { isMobile } from '../../render/isMobile'
+
 const ICON_HEIGHT = 25
 const MAX_TRIGGER_PROXIMITY = 0.014
 
@@ -11,7 +13,7 @@ export function getMilestoneHoverIndex(
   if (points === undefined) {
     return undefined
   }
-  if (mouseY <= ICON_HEIGHT) {
+  if (mouseY <= getYTriggerValue()) {
     let minProximity = Infinity
     let indexMinProximity = 0
 
@@ -31,4 +33,12 @@ export function getMilestoneHoverIndex(
   }
 
   return undefined
+}
+
+function getYTriggerValue() {
+  if (isMobile()) {
+    return ICON_HEIGHT + 5
+  }
+
+  return ICON_HEIGHT
 }
