@@ -34,12 +34,12 @@ export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
   display: {
-    name: 'Optimism',
+    name: 'OP Mainnet',
     slug: 'optimism',
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Optimism Bedrock is an EVM-equivalent Optimistic Rollup chain. It aims to be fast, simple, and secure. \
+      'OP Mainnet is an EVM-equivalent Optimistic Rollup chain. It aims to be fast, simple, and secure. \
     With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
     new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
     purpose: 'Universal',
@@ -193,7 +193,7 @@ export const optimism: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, Optimism will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, OP Mainnet will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -350,16 +350,16 @@ export const optimism: Layer2 = {
   },
   milestones: [
     {
-      name: 'Optimism’s mainnet migration to Bedrock',
+      name: 'Mainnet migration to Bedrock',
       link: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
       date: '2023-06-06T00:00:00Z',
-      description: 'OP mainnet, since Jun 2023 is running Bedrock.',
+      description: 'OP Mainnet, since Jun 2023 is running Bedrock.',
     },
     {
-      name: 'Optimism’s Goerli Testnet migrated to Bedrock',
+      name: 'Goerli testnet migration to Bedrock',
       link: 'https://twitter.com/OPLabsPBC/status/1613684377124327424',
       date: '2023-01-13T00:00:00Z',
-      description: 'OP on Goerli, since Jan 2023 is running Bedrock.',
+      description: 'OP Mainnet on Goerli, since Jan 2023 is running Bedrock.',
     },
     {
       name: 'OP Stack Introduced',
