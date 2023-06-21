@@ -78,7 +78,7 @@ export function getProjectDetails(
       },
     })
 
-    if (config.features.stages) {
+    if (config.features.stages && project.stage) {
       items.push({
         type: 'StageSection',
         props: {

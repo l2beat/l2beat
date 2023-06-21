@@ -2,10 +2,11 @@ import React from 'react'
 
 import { Link } from '../Link'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
+import { SectionId } from './sectionId'
 import { WarningBar } from './WarningBar'
 
 export interface DescriptionSectionProps {
-  id: string
+  id: SectionId
   title: string
   editLink: string
   issueLink: string

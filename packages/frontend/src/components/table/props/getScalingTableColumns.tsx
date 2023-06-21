@@ -28,6 +28,7 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
     {
       name: 'Risks',
       tooltip: 'Risks associated with this project.',
+      idHref: 'risk-analysis',
       minimalWidth: true,
       alignCenter: true,
       getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
@@ -47,7 +48,8 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
       ? [
           {
             name: 'Stage',
-            tooltip: `Rollup stage based on it's features and maturity.`,
+            idHref: 'stage' as const,
+            tooltip: 'Rollup stage based on its features and maturity.',
             alignCenter: true as const,
             getValue: (project: ScalingTvlViewEntry) => (
               <StageCell item={project.stage} />
