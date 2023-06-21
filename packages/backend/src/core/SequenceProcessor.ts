@@ -5,7 +5,7 @@ import { Gauge } from 'prom-client'
 import { EventEmitter } from 'stream'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
-import { TaskQueue } from './queue/TaskQueue'
+import { DEFAULT_RETRY_CONFINED, TaskQueue } from './queue/TaskQueue'
 
 const activityLast = new Gauge({
   name: 'activity_last_synced',
@@ -91,10 +91,8 @@ export class SequenceProcessor extends EventEmitter {
       () => this.process(),
       this.logger.for('updateQueue'),
       {
-        shouldRetry: Retries.exponentialBackOff(100, {
-          maxDistanceMs: 3_000,
-          maxAttempts: 10,
-        }),
+        shouldRetry: DEFAULT_RETRY_CONFINED,
+        shouldHaltAfterFailedRetries: true,
         metricsId: `${SequenceProcessor.name}_${id}`,
       },
     )
