@@ -10,7 +10,7 @@ import {
   PriceRepository,
 } from '../peripherals/database/PriceRepository'
 import { Clock } from './Clock'
-import { DEFAULT_RETRY_CONFINED, TaskQueue } from './queue/TaskQueue'
+import { TaskQueue } from './queue/TaskQueue'
 
 export class PriceUpdater {
   private readonly knownSet = new Set<number>()
@@ -29,8 +29,6 @@ export class PriceUpdater {
       this.logger.for('taskQueue'),
       {
         metricsId: PriceUpdater.name,
-        shouldRetry: DEFAULT_RETRY_CONFINED,
-        shouldHaltAfterFailedRetries: true,
       },
     )
   }

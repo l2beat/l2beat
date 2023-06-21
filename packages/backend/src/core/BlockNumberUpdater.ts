@@ -5,7 +5,7 @@ import { setTimeout } from 'timers/promises'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { EtherscanClient } from '../peripherals/etherscan'
 import { Clock } from './Clock'
-import { DEFAULT_RETRY_CONFINED, TaskQueue } from './queue/TaskQueue'
+import { TaskQueue } from './queue/TaskQueue'
 
 export class BlockNumberUpdater {
   private readonly blocksByTimestamp = new Map<number, number>()
@@ -23,8 +23,6 @@ export class BlockNumberUpdater {
       this.logger.for('taskQueue'),
       {
         metricsId: BlockNumberUpdater.name,
-        shouldRetry: DEFAULT_RETRY_CONFINED,
-        shouldHaltAfterFailedRetries: true,
       },
     )
   }

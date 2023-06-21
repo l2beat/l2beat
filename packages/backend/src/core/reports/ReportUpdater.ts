@@ -7,7 +7,7 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import { DEFAULT_RETRY_CONFINED, TaskQueue } from '../queue/TaskQueue'
+import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
 import { addArbTokenReport } from './custom/arbitrum'
@@ -36,8 +36,6 @@ export class ReportUpdater {
       this.logger.for('taskQueue'),
       {
         metricsId: ReportUpdater.name,
-        shouldRetry: DEFAULT_RETRY_CONFINED,
-        shouldHaltAfterFailedRetries: true,
       },
     )
   }

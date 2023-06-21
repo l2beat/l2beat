@@ -17,7 +17,7 @@ import { BalanceCall } from '../../peripherals/ethereum/calls/BalanceCall'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
-import { DEFAULT_RETRY_CONFINED, TaskQueue } from '../queue/TaskQueue'
+import { TaskQueue } from '../queue/TaskQueue'
 import { BalanceProject } from './BalanceProject'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
 
@@ -47,8 +47,6 @@ export class BalanceUpdater {
       this.logger.for('taskQueue'),
       {
         metricsId: BalanceUpdater.name,
-        shouldRetry: DEFAULT_RETRY_CONFINED,
-        shouldHaltAfterFailedRetries: true,
       },
     )
   }

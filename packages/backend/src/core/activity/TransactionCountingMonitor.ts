@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/shared'
 import { json, UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../Clock'
-import { DEFAULT_RETRY_CONFINED, TaskQueue } from '../queue/TaskQueue'
+import { TaskQueue } from '../queue/TaskQueue'
 import { TransactionCounter } from './TransactionCounter'
 
 interface TransactionCountingMonitorOpts {
@@ -34,11 +34,7 @@ export class TransactionCountingMonitor {
         await this.checkIfSynced()
       },
       this.logger.for('checkQueue'),
-      {
-        metricsId: TransactionCountingMonitor.name,
-        shouldRetry: DEFAULT_RETRY_CONFINED,
-        shouldHaltAfterFailedRetries: true,
-      },
+      { metricsId: TransactionCountingMonitor.name },
     )
   }
 

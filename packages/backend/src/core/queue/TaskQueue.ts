@@ -11,12 +11,8 @@ import assert from 'assert'
 import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
-export const DEFAULT_RETRY_INDEFINITELY = Retries.exponentialBackOff(100, {
+const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
   maxDistanceMs: 3_000,
-})
-export const DEFAULT_RETRY_CONFINED = Retries.exponentialBackOff(100, {
-  maxDistanceMs: 3_000,
-  maxAttempts: 10,
 })
 
 type Task<T> = (task: T) => Promise<void>
@@ -68,7 +64,7 @@ export class TaskQueue<T> {
       this.workers > 0 && Number.isInteger(this.workers),
       'workers needs to be a positive integer',
     )
-    this.shouldRetry = opts.shouldRetry ?? DEFAULT_RETRY_INDEFINITELY
+    this.shouldRetry = opts.shouldRetry ?? DEFAULT_RETRY
     if (opts.eventTracker) {
       this.eventTracker = opts.eventTracker
     }

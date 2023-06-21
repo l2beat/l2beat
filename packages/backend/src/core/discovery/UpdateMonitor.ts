@@ -11,7 +11,7 @@ import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
-import { DEFAULT_RETRY_CONFINED, TaskQueue } from '../queue/TaskQueue'
+import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
@@ -38,8 +38,6 @@ export class UpdateMonitor {
       this.logger.for('taskQueue'),
       {
         metricsId: UpdateMonitor.name,
-        shouldRetry: DEFAULT_RETRY_CONFINED,
-        shouldHaltAfterFailedRetries: true,
       },
     )
   }

@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/shared'
 
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { Clock } from '../Clock'
-import { DEFAULT_RETRY_CONFINED, TaskQueue } from '../queue/TaskQueue'
+import { TaskQueue } from '../queue/TaskQueue'
 import { TransactionCounter } from './TransactionCounter'
 
 export class DailyTransactionCountViewRefresher {
@@ -21,10 +21,7 @@ export class DailyTransactionCountViewRefresher {
         this.logger.info('Refresh finished')
       },
       this.logger.for('refreshQueue'),
-      {
-        metricsId: DailyTransactionCountViewRefresher.name,
-        shouldRetry: DEFAULT_RETRY_CONFINED,
-      },
+      { metricsId: DailyTransactionCountViewRefresher.name },
     )
   }
 
