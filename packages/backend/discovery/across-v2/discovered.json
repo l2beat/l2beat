@@ -1,7 +1,7 @@
 {
   "name": "across-v2",
-  "blockNumber": 17434741,
-  "configHash": "0x63a34aa4224b2ad321e9840dc00d79d901e68dab09bc50fd90c6d475f42aed8c",
+  "blockNumber": 17494607,
+  "configHash": "0x67a046c4f50802b3c2b0bec71f55eb082ddfdcfa456b79f073c1a85721948abb",
   "version": 1,
   "contracts": [
     {
@@ -16,7 +16,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "114221650293426632711086426",
+        "totalSupply": "114268961144392825049024765",
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
@@ -108,7 +108,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1686216923,
+        "getCurrentTime": 1686945311,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -136,10 +136,10 @@
         "chainId": 1,
         "crossDomainAdmin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1686216923,
+        "getCurrentTime": 1686945311,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1004928,
+        "numberOfDeposits": 1006065,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -159,7 +159,7 @@
       },
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1686216923,
+        "getCurrentTime": 1686945311,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -194,7 +194,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 408,
+        "nonce": 419,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -209,7 +209,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1686216923,
+        "getCurrentTime": 1686945311,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -237,7 +237,7 @@
           "0x1f11D8B72fc1B534448436BA60B4B371276DAb33"
         ],
         "getThreshold": 3,
-        "nonce": 134,
+        "nonce": 136,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -260,26 +260,33 @@
       "values": {
         "bondAmount": "450000000000000000",
         "bondToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "crossChainArbitrum": [
-          "0x29528780E29abb8Af95a5e5a125b94766987543F",
-          "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"
-        ],
-        "crossChainBoba": [
-          "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
-          "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"
-        ],
-        "crossChainMainnet": [
-          "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
-          "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
-        ],
-        "crossChainOptimism": [
-          "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
-          "0x6f26Bf09B1C792e3228e5467807a900A503c0281"
-        ],
-        "crossChainPolygon": [
-          "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A",
-          "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
-        ],
+        "CrossChainContracts": {
+          "1": {
+            "l2ChainId": 1,
+            "adapter": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
+            "spokePool": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+          },
+          "10": {
+            "l2ChainId": 10,
+            "adapter": "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
+            "spokePool": "0x6f26Bf09B1C792e3228e5467807a900A503c0281"
+          },
+          "137": {
+            "l2ChainId": 137,
+            "adapter": "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A",
+            "spokePool": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
+          },
+          "288": {
+            "l2ChainId": 288,
+            "adapter": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
+            "spokePool": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"
+          },
+          "42161": {
+            "l2ChainId": 42161,
+            "adapter": "0x29528780E29abb8Af95a5e5a125b94766987543F",
+            "spokePool": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"
+          }
+        },
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "identifier": "0x4143524f53532d56320000000000000000000000000000000000000000000000",
         "liveness": 7200,
@@ -290,13 +297,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0x200d8ff72961a1ca520c675d20326e1ccbac6f1d751a4aff998274f7c9db0eca",
-          "0x8f5a29d6d2f8b94d1041460ffaaa3d9d52da386721c92af914a83b8bc6f5d241",
+          "0xa30552ac4c29e9bccc0f45c9c616c792f02dc93ea1b0ba5d7e7d95f09bec9fce",
+          "0x1ba4b16369d40315325758006aa8ca2cae578b6ffd24dd4039240d97409dfb4d",
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           0,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           4,
-          1686222143
+          1686949319
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
