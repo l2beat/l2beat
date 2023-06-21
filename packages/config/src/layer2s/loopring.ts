@@ -154,6 +154,7 @@ export const loopring: Layer2 = {
     },
   }),
   technology: {
+    provider: 'loopring',
     category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
