@@ -10,6 +10,7 @@ import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
 import { Callout } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
+import { ChevronDownIcon } from '../icons'
 
 export interface TechnologyContract {
   name: string
@@ -154,63 +155,128 @@ function getAdditionalAddressesDropdown(
   if (contract.additionalAddresses === undefined) return null
 
   return (
-    <HoverableDropdown
-      isInContractEntry={true}
-      className="mt-[-8px]"
-      title={
-        contract.additionalAddresses.dropdownTitle +
-        ` (${contract.additionalAddresses.addresses.length})`
-      }
-      children={
-        <div className="ml-3 mt-2 flex flex-col">
-          {contract.addresses && contract.addresses.length > 0 && (
-            <>
-              <div className="text-sm font-semibold">
-                {contract.name}
-                {':'}
-              </div>
-              <div className="flex rounded-lg py-2  text-xs ">
+    <>
+      <div className="Dropdown lg:hidden">
+        <label className="flex cursor-pointer items-center justify-between rounded-lg border border-pink-900 p-2">
+          <input
+            type="checkbox"
+            autoComplete="off"
+            className=" Dropdown-Button peer hidden"
+          />
+          <div className="flex items-center gap-3 ">
+            {contract.additionalAddresses.dropdownTitle}
+          </div>
+          <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
+        </label>
+        <div className="Dropdown-Item">
+          <div className="mt-2 flex flex-col">
+            {contract.addresses && contract.addresses.length > 0 && (
+              <>
+                <div className="text-sm font-semibold">
+                  {contract.name}
+                  {':'}
+                </div>
+                <div className="flex rounded-lg py-2  text-xs ">
+                  <EtherscanLink
+                    address={contract.addresses[0]}
+                    fullAddress={true}
+                    className={cx(
+                      verificationStatus.contracts[contract.addresses[0]] ===
+                        false
+                        ? 'text-red-300'
+                        : '',
+                    )}
+                  />
+                  <CopyToClipboard
+                    valueToCopy={contract.addresses[0]}
+                    className={'ml-2 mt-[2px]'}
+                  />
+                </div>
+              </>
+            )}
+            <div className="py-1 text-sm font-semibold">
+              {contract.additionalAddresses.dropdownTitle}:
+            </div>
+            {contract.additionalAddresses.addresses.map((address, i) => (
+              <div key={i} className=" flex rounded-lg py-2 text-xs ">
+                <div className="w-8 text-left opacity-50">{i + 1}.</div>
                 <EtherscanLink
-                  address={contract.addresses[0]}
+                  address={address}
+                  key={i}
                   fullAddress={true}
                   className={cx(
-                    verificationStatus.contracts[contract.addresses[0]] ===
-                      false
+                    verificationStatus.contracts[address] === false
                       ? 'text-red-300'
                       : '',
                   )}
                 />
                 <CopyToClipboard
-                  valueToCopy={contract.addresses[0]}
+                  valueToCopy={address}
                   className={'ml-2 mt-[2px]'}
                 />
               </div>
-            </>
-          )}
-          <div className="py-1 text-sm font-semibold">
-            {contract.additionalAddresses.dropdownTitle}:
+            ))}
           </div>
-          {contract.additionalAddresses.addresses.map((address, i) => (
-            <div key={i} className=" flex rounded-lg py-2 text-xs ">
-              <div className="w-8 text-left opacity-50">{i + 1}.</div>
-              <EtherscanLink
-                address={address}
-                key={i}
-                fullAddress={true}
-                className={cx(
-                  verificationStatus.contracts[address] === false
-                    ? 'text-red-300'
-                    : '',
-                )}
-              />
-              <CopyToClipboard
-                valueToCopy={address}
-                className={'ml-2 mt-[2px]'}
-              />
-            </div>
-          ))}
         </div>
-      }
-    />
+      </div>
+      <HoverableDropdown
+        isInContractEntry={true}
+        className="mt-[-8px] hidden lg:block"
+        title={
+          contract.additionalAddresses.dropdownTitle +
+          ` (${contract.additionalAddresses.addresses.length})`
+        }
+        children={
+          <div className="ml-3 mt-2 flex flex-col">
+            {contract.addresses && contract.addresses.length > 0 && (
+              <>
+                <div className="text-sm font-semibold">
+                  {contract.name}
+                  {':'}
+                </div>
+                <div className="flex rounded-lg py-2  text-xs ">
+                  <EtherscanLink
+                    address={contract.addresses[0]}
+                    fullAddress={true}
+                    className={cx(
+                      verificationStatus.contracts[contract.addresses[0]] ===
+                        false
+                        ? 'text-red-300'
+                        : '',
+                    )}
+                  />
+                  <CopyToClipboard
+                    valueToCopy={contract.addresses[0]}
+                    className={'ml-2 mt-[2px]'}
+                  />
+                </div>
+              </>
+            )}
+            <div className="py-1 text-sm font-semibold">
+              {contract.additionalAddresses.dropdownTitle}:
+            </div>
+            {contract.additionalAddresses.addresses.map((address, i) => (
+              <div key={i} className=" flex rounded-lg py-2 text-xs ">
+                <div className="w-8 text-left opacity-50">{i + 1}.</div>
+                <EtherscanLink
+                  address={address}
+                  key={i}
+                  fullAddress={true}
+                  className={cx(
+                    verificationStatus.contracts[address] === false
+                      ? 'text-red-300'
+                      : '',
+                  )}
+                />
+                <CopyToClipboard
+                  valueToCopy={address}
+                  className={'ml-2 mt-[2px]'}
+                />
+              </div>
+            ))}
+          </div>
+        }
+      />
+    </>
   )
 }
