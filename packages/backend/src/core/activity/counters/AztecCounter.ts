@@ -50,7 +50,7 @@ export function createAztecCounter(
         const blocks = await promiseAllPlus(queries, logger, {
           metricsId: 'AztecBlockCounter',
         })
-        await blockRepository.addMany(blocks, trx)
+        await blockRepository.addOrUpdateMany(blocks, trx)
       },
     },
   )
