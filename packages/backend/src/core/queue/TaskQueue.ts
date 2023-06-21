@@ -13,6 +13,7 @@ import { setTimeout as wait } from 'timers/promises'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
   maxDistanceMs: 3_000,
+  maxAttempts: 10,
 })
 
 type Task<T> = (task: T) => Promise<void>
@@ -41,7 +42,7 @@ export interface TaskQueueOpts<T> {
   shouldHaltAfterFailedRetries?: boolean
 }
 /**
- * Note: by default, queue will indefinitely retry failing tasks using exponential back off strategy (failing tasks won't be dropped).
+ * Note: by default, queue will retry failing tasks finite number of times using exponential back off strategy and halt if error persists.
  * This can be customized by changing `shouldRetry` function and `shouldHaltAfterFailedRetries` parameter.
  */
 export class TaskQueue<T> {
@@ -69,7 +70,7 @@ export class TaskQueue<T> {
       this.eventTracker = opts.eventTracker
     }
     this.shouldHaltAfterFailedRetries =
-      opts.shouldHaltAfterFailedRetries ?? false
+      opts.shouldHaltAfterFailedRetries ?? true
 
     this.executeTask = wrapAndMeasure(executeTask, {
       histogram: taskQueueHistogram,

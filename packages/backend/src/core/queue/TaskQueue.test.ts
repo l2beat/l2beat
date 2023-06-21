@@ -4,7 +4,6 @@ import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { TaskQueue } from './TaskQueue'
-import waitForExpect from 'wait-for-expect'
 
 describe(TaskQueue.name, () => {
   let time: InstalledClock
@@ -83,6 +82,7 @@ describe(TaskQueue.name, () => {
       shouldRetry: Retries.maxAttempts(1),
       metricsId: 'test',
       eventTracker,
+      shouldHaltAfterFailedRetries: false,
     })
 
     for (let i = 0; i < 3; i++) {
@@ -112,7 +112,7 @@ describe(TaskQueue.name, () => {
       completed.push(i)
     }
 
-    const queue = new TaskQueue(execute, Logger.DEBUG, {
+    const queue = new TaskQueue(execute, Logger.SILENT, {
       shouldRetry: Retries.maxAttempts(1),
       metricsId: 'test',
       eventTracker,

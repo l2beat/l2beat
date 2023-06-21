@@ -91,10 +91,6 @@ export class SequenceProcessor extends EventEmitter {
       () => this.process(),
       this.logger.for('updateQueue'),
       {
-        shouldRetry: Retries.exponentialBackOff(100, {
-          maxDistanceMs: 3_000,
-          maxAttempts: 10,
-        }),
         metricsId: `${SequenceProcessor.name}_${id}`,
       },
     )
