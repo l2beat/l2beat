@@ -1,5 +1,6 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { getEnv, LogLevel, UnixTime } from '@l2beat/shared'
+import { getEnv, LogLevel } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'

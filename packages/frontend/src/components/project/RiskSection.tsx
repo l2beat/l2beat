@@ -2,10 +2,11 @@ import { ProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
 
 import { ProjectDetailsSection } from './ProjectDetailsSection'
+import { SectionId } from './sectionId'
 
 export interface RiskSectionProps {
   title: string
-  id: string
+  id: SectionId
   riskGroups: RiskGroup[]
 }
 

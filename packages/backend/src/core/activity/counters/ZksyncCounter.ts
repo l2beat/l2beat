@@ -1,5 +1,6 @@
 import { ZksyncTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger, ProjectId } from '@l2beat/shared'
+import { HttpClient, Logger } from '@l2beat/shared'
+import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
 import { ZksyncTransactionRepository } from '../../../peripherals/database/activity/ZksyncTransactionRepository'
@@ -50,7 +51,7 @@ export function createZksyncCounter(
         const blockTransactions = await promiseAllPlus(queries, logger, {
           metricsId: 'ZksyncBlockCounter',
         })
-        await zksyncRepository.addMany(blockTransactions.flat(), trx)
+        await zksyncRepository.addOrUpdateMany(blockTransactions.flat(), trx)
       },
     },
   )

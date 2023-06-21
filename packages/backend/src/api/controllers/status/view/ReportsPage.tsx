@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { Page } from './Page'

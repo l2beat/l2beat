@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectRiskViewEntry } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -17,6 +17,7 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('dydx')
@@ -228,6 +229,26 @@ export const dydx: Layer2 = {
     },
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: true,
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave7DaysToExit: true,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
+  }),
   contracts: {
     addresses: [
       discovery.getContractDetails('StarkPerpetual', {

@@ -1,11 +1,10 @@
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
-  CoingeckoClient,
   CoingeckoId,
   EthereumAddress,
   getTimestamps,
-  HttpClient,
   UnixTime,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import {

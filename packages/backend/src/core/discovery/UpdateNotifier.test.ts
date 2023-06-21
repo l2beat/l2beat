@@ -1,5 +1,6 @@
 import { DiscoveryDiff } from '@l2beat/discovery'
-import { EthereumAddress, Logger, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'

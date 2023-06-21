@@ -5,7 +5,7 @@ import {
   DiscoveryEngine,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
-import { DiscoveryOutput } from '@l2beat/shared'
+import { DiscoveryOutput } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 

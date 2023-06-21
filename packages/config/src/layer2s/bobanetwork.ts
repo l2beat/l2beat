@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -11,6 +11,7 @@ import {
   OPERATOR,
   RISK_VIEW,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bobanetwork')
@@ -136,6 +137,26 @@ export const bobanetwork: Layer2 = {
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('ETH and BOBA', 'are'),
+  }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: true,
+    },
+    stage1: {
+      stateVerificationOnL1: false,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave7DaysToExit: false,
+      usersCanExitWithoutCooperation: false,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: false,
+      delayWith30DExitWindow: false,
+    },
   }),
   technology: {
     provider: 'Optimism',

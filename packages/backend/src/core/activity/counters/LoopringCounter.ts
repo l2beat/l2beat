@@ -1,5 +1,6 @@
 import { LoopringTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger, ProjectId } from '@l2beat/shared'
+import { HttpClient, Logger } from '@l2beat/shared'
+import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
@@ -46,7 +47,7 @@ export function createLoopringCounter(
         const blocks = await promiseAllPlus(queries, logger, {
           metricsId: 'LoopringBlockCounter',
         })
-        await blockRepository.addMany(blocks, trx)
+        await blockRepository.addOrUpdateMany(blocks, trx)
       },
     },
   )

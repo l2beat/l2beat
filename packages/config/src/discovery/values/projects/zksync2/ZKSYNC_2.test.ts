@@ -2,7 +2,7 @@ import {
   assert,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../ProjectDiscovery'
 import { HARDCODED } from '../../hardcoded'

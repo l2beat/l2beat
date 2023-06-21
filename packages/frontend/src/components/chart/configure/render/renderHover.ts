@@ -1,4 +1,7 @@
+import { renderToString } from 'react-dom/server'
+
 import { formatTps } from '../../../../utils/formatTps'
+import { Link } from '../../../Link'
 import { ChartElements } from '../elements'
 import { State } from '../state/State'
 import { formatCurrencyExactValue } from '../update/view/format'
@@ -95,9 +98,7 @@ export function renderHover(
         rows.push(renderDescriptionRow(point.milestone.description))
       }
       if (isMobile()) {
-        rows.push(
-          `<div class="text-link"><a href="${point.milestone.link}" target="blank">Learn more</a></div>`,
-        )
+        rows.push(renderLearnMoreLink('Learn more', point.milestone.link))
       }
     } else {
       rows.push(renderDateRow(point.date))
@@ -179,4 +180,8 @@ function renderNameRow(name: string) {
 
 function renderDescriptionRow(description: string) {
   return `<div class="max-w-[216px] mb-1 text-left">${description}</div>`
+}
+
+function renderLearnMoreLink(text: string, href: string) {
+  return renderToString(Link({ href, showArrow: true, children: text }))
 }

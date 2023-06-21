@@ -19,7 +19,7 @@ const config: StorybookConfig = {
   async viteFinal(config) {
     return mergeConfig(config, {
       optimizeDeps: {
-        include: ['@l2beat/config', '@l2beat/shared'],
+        include: ['@l2beat/config', '@l2beat/shared-pure'],
       },
     })
   },

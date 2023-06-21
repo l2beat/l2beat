@@ -1,5 +1,6 @@
 import { RpcTransactionApi } from '@l2beat/config'
-import { assert, Logger, ProjectId, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { range } from 'lodash'
 
@@ -65,7 +66,7 @@ export function createRpcCounter(
         const blocks = await promiseAllPlus(queries, logger, {
           metricsId: `RpcBlockCounter_${projectId.toString()}`,
         })
-        await blockRepository.addMany(blocks, trx)
+        await blockRepository.addOrUpdateMany(blocks, trx)
       },
     },
   )

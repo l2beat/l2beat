@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   DATA_AVAILABILITY,
@@ -10,6 +10,7 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 export const fuelv1: Layer2 = {
@@ -50,6 +51,29 @@ export const fuelv1: Layer2 = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: true,
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: true,
+      usersHave7DaysToExit: null,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: true,
+      delayWith30DExitWindow: [
+        true,
+        'Users have at least 30d to exit as the system cannot be upgraded.',
+      ],
+    },
   }),
   technology: {
     category: 'Optimistic Rollup',

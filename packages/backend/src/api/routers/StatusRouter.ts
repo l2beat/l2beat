@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { UnixTime } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { stringAs } from '../../tools/types'

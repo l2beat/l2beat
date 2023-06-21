@@ -1,4 +1,4 @@
-import { ContractValue } from '@l2beat/shared'
+import { ContractValue } from '@l2beat/shared-pure'
 import { BigNumber } from 'ethers'
 
 export function toContractValue(value: unknown): ContractValue {

@@ -1,5 +1,5 @@
 import { Layer2, ProjectLinks } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
 import { formatLargeNumber } from '../../../utils'
@@ -51,7 +51,8 @@ export function getProjectHeader(
     technology: project.technology.category,
     tvlBreakdown,
     links: getLinks(project.display.links),
-    stage: config.features.stages && project.stage,
+    stagesEnabled: config.features.stages,
+    stage: project.stage,
     // TODO: will need to be riskValues when rosette has hover
     risks: getRiskValues(project.riskView),
     isArchived: project.isArchived,

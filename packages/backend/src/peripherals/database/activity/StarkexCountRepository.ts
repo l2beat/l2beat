@@ -1,4 +1,5 @@
-import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { StarkexTransactionCountRow } from 'knex/types/tables'
 
@@ -23,12 +24,15 @@ export class StarkexTransactionCountRepository extends BaseRepository {
     trx?: Knex.Transaction,
   ) {
     for (const record of records) {
-      await this.add(record, trx)
+      await this.addOrUpdate(record, trx)
     }
     return records.length
   }
 
-  async add(record: StarkexTransactionCountRecord, trx?: Knex.Transaction) {
+  async addOrUpdate(
+    record: StarkexTransactionCountRecord,
+    trx?: Knex.Transaction,
+  ) {
     const knex = await this.knex(trx)
     await knex('activity.starkex')
       .insert(toRow(record))

@@ -1,16 +1,19 @@
 import {
   ChecklistTemplate,
+  ChecklistValue,
   MissingStageRequirements,
+  Satisfied,
+  Stage,
   StageBlueprint,
-  StageConfig,
+  StageConfigured,
   StageSummary,
 } from './types'
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
-): (checklist: ChecklistTemplate<T>) => StageConfig {
+): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
-    let lastStage: string | undefined = undefined
+    let lastStage: Stage | undefined = undefined
     let missing: MissingStageRequirements | undefined = undefined
     const summary: StageSummary[] = []
 
@@ -55,23 +58,41 @@ export function createGetStage<T extends StageBlueprint>(
 
 function normalizeKeyChecklist(
   stageKeyBlueprint: { positive: string; negative: string },
-  stageKeyChecklist: boolean | [boolean, string] | null,
-): [boolean | null, string] {
+  stageKeyChecklist: ChecklistValue,
+): [Satisfied | null, string] {
   const satisfied = isSatisfied(stageKeyChecklist)
 
-  let description = satisfied
-    ? stageKeyBlueprint.positive
-    : stageKeyBlueprint.negative
-
-  if (Array.isArray(stageKeyChecklist)) {
-    description += ' ' + stageKeyChecklist[1]
-  }
+  const description = getDescription(
+    satisfied,
+    stageKeyBlueprint,
+    stageKeyChecklist,
+  )
 
   return [satisfied, description]
 }
 
-function isSatisfied(stageKeyChecklist: boolean | [boolean, string] | null) {
+function getDescription(
+  satisfied: Satisfied | null,
+  stageKeyBlueprint: { positive: string; negative: string },
+  stageKeyChecklist: ChecklistValue,
+) {
+  if (Array.isArray(stageKeyChecklist)) {
+    return stageKeyChecklist[1]
+  }
+
+  return satisfied === 'UnderReview' || satisfied
+    ? stageKeyBlueprint.positive
+    : stageKeyBlueprint.negative
+}
+
+function isSatisfied(stageKeyChecklist: ChecklistValue): Satisfied | null {
   if (stageKeyChecklist === null) return null
+
+  if (
+    stageKeyChecklist === 'UnderReview' ||
+    (Array.isArray(stageKeyChecklist) && stageKeyChecklist[0] === 'UnderReview')
+  )
+    return 'UnderReview'
 
   return (
     stageKeyChecklist === true ||

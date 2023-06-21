@@ -11,7 +11,7 @@ import {
   assertUnreachable,
   EthereumAddress,
   VerificationStatus,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 import {
   TechnologyContract,

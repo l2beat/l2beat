@@ -2,7 +2,7 @@ import {
   ContractParameters,
   ContractValue,
   DiscoveryOutput,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 export function getDiscoveryChild(
   discovery: DiscoveryOutput,

@@ -1,4 +1,4 @@
-import { Bytes, HEX_REGEX } from '@l2beat/shared'
+import { Bytes, HEX_REGEX } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 export const BytesFromString = z

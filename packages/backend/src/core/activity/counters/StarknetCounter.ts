@@ -1,5 +1,6 @@
 import { StarknetTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger, ProjectId, UnixTime } from '@l2beat/shared'
+import { HttpClient, Logger } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
@@ -56,7 +57,7 @@ export function createStarknetCounter(
         const blocks = await promiseAllPlus(queries, logger, {
           metricsId: 'StarkNetBlockCounter',
         })
-        await blockRepository.addMany(blocks, trx)
+        await blockRepository.addOrUpdateMany(blocks, trx)
       },
     },
   )

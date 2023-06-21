@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { OutLink } from '../OutLink'
+import { Link } from '../Link'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
+import { SectionId } from './sectionId'
 import { WarningBar } from './WarningBar'
 
 export interface DescriptionSectionProps {
-  id: string
+  id: SectionId
   title: string
   editLink: string
   issueLink: string
@@ -38,14 +39,9 @@ export function DescriptionSection(props: DescriptionSectionProps) {
       </p>
       <p className="mt-4 text-gray-850 dark:text-gray-400">
         If you find something wrong on this page you can{' '}
-        <OutLink className="text-link underline" href={props.issueLink}>
-          submit an issue
-        </OutLink>
+        <Link href={props.issueLink}>submit an issue</Link>
         {' or '}
-        <OutLink className="text-link underline" href={props.editLink}>
-          edit the information
-        </OutLink>
-        .
+        <Link href={props.editLink}>edit the information</Link>.
       </p>
     </ProjectDetailsSection>
   )

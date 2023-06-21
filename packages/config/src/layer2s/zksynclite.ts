@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -14,6 +14,7 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync')
@@ -148,6 +149,26 @@ export const zksynclite: Layer2 = {
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: 'UnderReview',
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave7DaysToExit: true,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: true,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
   }),
   technology: {
     provider: 'zkSync',

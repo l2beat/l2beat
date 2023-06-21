@@ -1,6 +1,7 @@
 import { StageConfig } from '@l2beat/config'
-import React from 'react'
+import React, { useEffect } from 'react'
 
+import { configureDropdowns } from '../../scripts/configureDropdowns'
 import { StageSection as StageSectionComponent } from './StageSection'
 
 export default {
@@ -53,9 +54,19 @@ const item: StageConfig = {
 }
 
 export function StageSection() {
+  useEffect(() => {
+    configureDropdowns()
+  }, [])
   return (
     <div className="p-4 leading-normal">
-      <StageSectionComponent title="Stage" id="stage" stage={item} />
+      <StageSectionComponent
+        title="Rollup stage"
+        id="stage"
+        stage={item}
+        icon="/icons/arbitrum.png"
+        name="Arbitrum One"
+        type="Optimistic Rollup"
+      />
     </div>
   )
 }

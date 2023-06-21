@@ -1,12 +1,12 @@
-import { hashJson } from '@l2beat/shared'
+import { hashJson } from '@l2beat/shared-pure'
 import { sortBy } from 'lodash'
 
 import { ReportProject } from './ReportProject'
 
 // Increment this value to change the hash which in turn causes the system to
 // recalculate reports
-// Last updated because: added arbitrum token
-const REPORT_LOGIC_VERSION = 2
+// Last updated because: updated OP token balance
+const REPORT_LOGIC_VERSION = 3
 
 export function getReportConfigHash(projects: ReportProject[]) {
   return hashJson([getEntries(projects), REPORT_LOGIC_VERSION])

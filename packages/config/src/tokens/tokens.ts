@@ -36,7 +36,7 @@ you are out of luck. We will fix this in the future.
 
 */
 
-import { AssetId } from '@l2beat/shared'
+import { AssetId } from '@l2beat/shared-pure'
 
 import { tokens } from './tokenList.json'
 import { TokenInfo } from './types'

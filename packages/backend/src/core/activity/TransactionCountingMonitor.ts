@@ -1,4 +1,5 @@
-import { json, Logger, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { json, UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
