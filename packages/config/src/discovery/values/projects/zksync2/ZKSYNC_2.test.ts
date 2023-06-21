@@ -55,7 +55,8 @@ describe('HARDCODED: zksync2', () => {
   it('upgrade by', () => {
     const multisig = discovery.getContract('zkSync Era Multisig').address
     assert(
-      discovery.getContractValue('zkSync', 'getGovernor') === multisig,
+      discovery.getContractValue('zkSync', 'getGovernor') ===
+        multisig.toString(),
       'zkSync governor changed, upgradeBy in contract.',
     )
     assert(
@@ -72,7 +73,7 @@ describe('HARDCODED: zksync2', () => {
     )
 
     assert(
-      securityCouncil === EthereumAddress.ZERO,
+      securityCouncil === EthereumAddress.ZERO.toString(),
       'Security council changed. Update the upgradeability risk and permissions section (also probably remove this test). https://www.notion.so/l2beat/Zksync-Era-526c899e319e4b2690ec23eb7336e35b?pvs=4 can be useful.',
     )
   })

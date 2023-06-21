@@ -18,7 +18,6 @@
     "start:staging": "DEPLOYMENT_ENV=staging gulp watch",
     "start:production": "gulp watch",
     "test": "mocha",
-    "typecheck:ci": "yarn typecheck",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared,config} -recsm build --module es6) && storybook build",
