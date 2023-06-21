@@ -1,14 +1,21 @@
 import { State } from './state/State'
 
+interface PersistableState {
+  controls: Pick<
+    State['controls'],
+    'pagePathname' | 'isLogScale' | 'days' | 'currency' | 'showEthereum'
+  >
+}
+
 type UserChartSettings = Partial<
-  Pick<State['controls'], 'isLogScale' | 'days' | 'currency' | 'showEthereum'>
+  Exclude<PersistableState['controls'], 'pagePathname'>
 >
 
 interface SerializedChartSettings extends Omit<UserChartSettings, 'days'> {
   days?: string
 }
 
-export function persistUserChartSettings(state: State) {
+export function persistUserChartSettings(state: PersistableState) {
   const chartSettings: SerializedChartSettings = {
     isLogScale: state.controls.isLogScale,
     days: String(state.controls.days),
@@ -39,9 +46,16 @@ export function getUserChartSettings(pagePathname: string) {
       : {}),
   }
 
-  return userChartSettings
+  return { ...DEFAULT_CHART_SETTINGS, ...userChartSettings }
 }
 
 function userChartSettingsKey(pagePathname: string) {
   return `${pagePathname}chartSettings`
 }
+
+const DEFAULT_CHART_SETTINGS = {
+  isLogScale: false,
+  days: 365,
+  currency: 'usd',
+  showEthereum: true,
+} as const

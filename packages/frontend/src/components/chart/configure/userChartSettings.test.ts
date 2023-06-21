@@ -1,7 +1,6 @@
 import { expect } from 'earl'
 
 import { LocalStorageMock } from '../../../test/localStorageMock'
-import { State } from './state/State'
 import {
   getUserChartSettings,
   persistUserChartSettings,
@@ -21,42 +20,53 @@ describe('UserChartSettings', () => {
   describe(getUserChartSettings.name, () => {
     const pagePathname = 'scaling/tvl'
 
-    describe('with no UserSettings', () => {
-      it('returns empty settings', () => {
-        expect(getUserChartSettings(pagePathname)).toEqual({})
+    describe('with no persisted ChartSettings', () => {
+      it('returns default ChartSettings', () => {
+        expect(getUserChartSettings(pagePathname)).toEqual({
+          isLogScale: false,
+          days: 365,
+          currency: 'usd',
+          showEthereum: true,
+        })
       })
     })
 
-    describe('with stored UserSettings', () => {
+    describe('with persisted ChartSettings', () => {
       const chartSettings = {
         isLogScale: true,
         days: 30,
-        currency: 'usd',
+        currency: 'eth',
+        showEthereum: false,
       } as const
 
       beforeEach(() => {
-        const controls: Pick<State['controls'], 'pagePathname' | 'isLogScale'> =
-          {
+        persistUserChartSettings({
+          controls: {
             pagePathname,
             ...chartSettings,
-          }
-        persistUserChartSettings({ controls } as State)
+          },
+        })
       })
 
       describe('For the same pagePathname', () => {
-        it('returns previous settings', () => {
+        it('returns persisted ChartSettings', () => {
           expect(getUserChartSettings(pagePathname)).toEqual(chartSettings)
         })
       })
 
       describe('For different pagePathname', () => {
-        it('returns empty settings', () => {
-          expect(getUserChartSettings('bridges/tvl')).toEqual({})
+        it('returns default ChartSettings', () => {
+          expect(getUserChartSettings('bridges/tvl')).toEqual({
+            isLogScale: false,
+            days: 365,
+            currency: 'usd',
+            showEthereum: true,
+          })
         })
       })
     })
 
-    describe('with incomplete UserSettings being stored', () => {
+    describe('with incomplete ChartSettings being stored', () => {
       const chartSettings = {
         isLogScale: true,
       } as const
@@ -68,8 +78,13 @@ describe('UserChartSettings', () => {
         )
       })
 
-      it('returns only stored settings', () => {
-        expect(getUserChartSettings(pagePathname)).toEqual(chartSettings)
+      it('returns persisted ChartSettings supplemented with defaults', () => {
+        expect(getUserChartSettings(pagePathname)).toEqual({
+          ...chartSettings,
+          days: 365,
+          currency: 'usd',
+          showEthereum: true,
+        })
       })
     })
   })

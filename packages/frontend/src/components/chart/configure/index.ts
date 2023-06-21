@@ -43,10 +43,7 @@ function configureChart(chart: HTMLElement) {
 
 function getInitMessage(elements: ChartElements): InitMessage {
   const pagePathname = new URL(elements.chart.baseURI).pathname
-  const chartSettings = {
-    ...DEFAULT_CHART_SETTINGS,
-    ...getUserChartSettings(pagePathname),
-  }
+  const chartSettings = getUserChartSettings(pagePathname)
 
   const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
 
@@ -66,10 +63,3 @@ function getInitMessage(elements: ChartElements): InitMessage {
     ...chartSettings,
   }
 }
-
-const DEFAULT_CHART_SETTINGS = {
-  isLogScale: false,
-  days: 365,
-  currency: 'usd',
-  showEthereum: true,
-} as const
