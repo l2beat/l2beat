@@ -51,8 +51,6 @@ export const degate: Layer2 = {
   display: {
     name: 'DeGate',
     slug: 'degate',
-    warning:
-      'Even though the exchange is immutable, we haven’t verified the program whose computation is being proven. In the case of bugs or backdoors, funds could be lost.',
     description:
       'DeGate is an app-specific ZK rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purpose: 'Exchange',
