@@ -11,7 +11,8 @@ import assert from 'assert'
 import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
-const DEFAULT_RETRY = Retries.exponentialBackOff(100, {
+const DEFAULT_RETRY = Retries.exponentialBackOff({
+  stepMs: 100,
   maxDistanceMs: 3_000,
   maxAttempts: 10,
 })
