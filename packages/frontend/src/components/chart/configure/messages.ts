@@ -9,13 +9,16 @@ import {
 export interface InitMessage {
   type: 'Init'
   initialView: 'tvl' | 'activity'
+  pagePathname: string
   days: number
+  currency: 'usd' | 'eth'
   aggregateTvlEndpoint?: string
   alternativeTvlEndpoint?: string
   activityEndpoint?: string
   showEthereum?: boolean
   labelCount: number
   milestones: Milestone[]
+  isLogScale: boolean
 }
 
 export interface ViewChangedMessage {
