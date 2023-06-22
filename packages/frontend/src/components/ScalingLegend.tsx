@@ -14,7 +14,7 @@ export function ScalingLegend() {
         <p className="flex gap-1">
           <OptimismIcon className="relative -top-0.5 min-w-[24px]" />
           <span>&ndash;</span>
-          <span>This project is based on OP stack&apos;s code base.</span>
+          <span>This project is based on OP Stack&apos;s code base.</span>
         </p>
         <p className="flex gap-1">
           <ZkSyncIcon className="relative -top-0.5 min-w-[24px]" />
