@@ -16,6 +16,7 @@ module.exports = {
       '4xl': ['40px', '60px'],
     },
     colors: {
+      inherit: 'inherit',
       current: 'currentColor',
       transparent: 'transparent',
       white: '#FAFAFA',
