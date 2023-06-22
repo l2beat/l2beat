@@ -1,7 +1,14 @@
 {
   "$schema": "../config.schema.json",
   "name": "zora",
-  "initialAddresses": ["0x1a0ad011913A150f69f6A19DF447A0CfD9551054"],
+  "initialAddresses": [
+    "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
+    "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
+    "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
+    "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf",
+    "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3",
+    "0x89336159Edd615260a95309e46343602D6b6489e"
+  ],
   "names": {
     "0x1a0ad011913A150f69f6A19DF447A0CfD9551054": "OptimismPortal",
     "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c": "L2OutputOracle",
@@ -11,28 +18,118 @@
     "OptimismPortal": {
       "ignoreMethods": ["isOutputFinalized"],
       "ignoreInWatchMode": ["params"]
-    }
-  },
-  "L2OutputOracle": {
-    "ignoreMethods": [
-      "getL2OutputAfter",
-      "getL2OutputIndexAfter",
-      "getL2Output"
-    ],
-    "ignoreInWatchMode": [
-      "nextBlockNumber",
-      "nextOutputIndex",
-      "latestBlockNumber",
-      "latestOutputIndex"
-    ]
-  },
-  "AddressManager": {
-    "fields": {
-      "OVM_L1CrossDomainMessenger": {
-        "type": "call",
-        "method": "getAddress",
-        "args": ["OVM_L1CrossDomainMessenger"]
+    },
+    "AddressManager": {
+      "fields": {
+        "BondManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BondManager"]
+        },
+        "OVM_L2CrossDomainMessenger": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_L2CrossDomainMessenger"]
+        },
+        "OVM_DecompressionPrecompileAddress": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_DecompressionPrecompileAddress"]
+        },
+        "OVM_Sequencer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_Sequencer"]
+        },
+        "OVM_Proposer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_Proposer"]
+        },
+        "OVM_ChainStorageContainer_CTC_batches": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_ChainStorageContainer-CTC-batches"]
+        },
+        "OVM_ChainStorageContainer_CTC_queue": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_ChainStorageContainer-CTC-queue"]
+        },
+        "OVM_ChainStorageContainer_SCC_batches": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_ChainStorageContainer-SCC-batches"]
+        },
+        "OVM_CanonicalTransactionChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_CanonicalTransactionChain"]
+        },
+        "OVM_StateCommitmentChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_StateCommitmentChain"]
+        },
+        "OVM_BondManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_BondManager"]
+        },
+        "Proxy__OVM_L1CrossDomainMessenger": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__OVM_L1CrossDomainMessenger"]
+        },
+        "OVM_ExecutionManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_ExecutionManager"]
+        },
+        "OVM_FraudVerifier": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_FraudVerifier"]
+        },
+        "OVM_StateManagerFactory": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_StateManagerFactory"]
+        },
+        "OVM_StateTransitionerFactory": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_StateTransitionerFactory"]
+        },
+        "OVM_SafetyChecker": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_SafetyChecker"]
+        },
+        "OVM_L1MultiMessageRelayer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["OVM_L1MultiMessageRelayer"]
+        },
+        "Proxy__OVM_L1StandardBridge": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__OVM_L1StandardBridge"]
+        }
       }
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ]
     }
-  }
+  } 
 }
