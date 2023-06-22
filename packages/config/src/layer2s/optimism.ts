@@ -34,12 +34,12 @@ export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
   display: {
-    name: 'Optimism',
+    name: 'OP Mainnet',
     slug: 'optimism',
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Optimism Bedrock is an EVM-equivalent Optimistic Rollup chain. It aims to be fast, simple, and secure. \
+      'OP Mainnet is an EVM-equivalent Optimistic Rollup chain. It aims to be fast, simple, and secure. \
     With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
     new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
     purpose: 'Universal',
@@ -193,7 +193,7 @@ export const optimism: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, Optimism will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, OP Mainnet will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -212,7 +212,7 @@ export const optimism: Layer2 = {
       ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'Derivation: Batch submission - Optimism specs',
+          text: 'Derivation: Batch submission - OP Mainnet specs',
           href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
         },
         {
@@ -237,7 +237,7 @@ export const optimism: Layer2 = {
           href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L35',
         },
         {
-          text: 'Decentralizing the sequencer - Optimism docs',
+          text: 'Decentralizing the sequencer - OP Mainnet docs',
           href: 'https://community.optimism.io/docs/protocol/#decentralizing-the-sequencer',
         },
       ],
@@ -246,7 +246,7 @@ export const optimism: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
       references: [
         {
-          text: 'Sequencing Window - Optimism Specs',
+          text: 'Sequencing Window - OP Mainnet Specs',
           href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
         },
         {
@@ -260,7 +260,7 @@ export const optimism: Layer2 = {
         ...EXITS.REGULAR('optimistic', 'merkle proof'),
         references: [
           {
-            text: 'Withdrawing back to L1 - Optimism Help Center',
+            text: 'Withdrawing back to L1 - OP Mainnet Help Center',
             href: 'https://help.optimism.io/hc/en-us/articles/4411903283227-Withdrawals-from-Optimism',
           },
           {
@@ -282,7 +282,7 @@ export const optimism: Layer2 = {
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
       description:
-        'Optimism is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Optimism.',
+        'OP Mainnet is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on OP Mainnet.',
       risks: [],
       references: [
         {
@@ -350,16 +350,16 @@ export const optimism: Layer2 = {
   },
   milestones: [
     {
-      name: 'Optimism’s mainnet migration to Bedrock',
+      name: 'Mainnet migration to Bedrock',
       link: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
       date: '2023-06-06T00:00:00Z',
-      description: 'OP mainnet, since Jun 2023 is running Bedrock.',
+      description: 'OP Mainnet, since Jun 2023 is running Bedrock.',
     },
     {
-      name: 'Optimism’s Goerli Testnet migrated to Bedrock',
+      name: 'Goerli testnet migration to Bedrock',
       link: 'https://twitter.com/OPLabsPBC/status/1613684377124327424',
       date: '2023-01-13T00:00:00Z',
-      description: 'OP on Goerli, since Jan 2023 is running Bedrock.',
+      description: 'OP Mainnet on Goerli, since Jan 2023 is running Bedrock.',
     },
     {
       name: 'OP Stack Introduced',
@@ -404,7 +404,7 @@ export const optimism: Layer2 = {
   ],
   knowledgeNuggets: [
     {
-      title: 'How Optimism compresses data',
+      title: 'How OP Mainnet compresses data',
       url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
