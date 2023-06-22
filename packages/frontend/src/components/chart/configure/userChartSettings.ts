@@ -7,11 +7,9 @@ interface PersistableState {
   >
 }
 
-type UserChartSettings = Partial<
-  Exclude<PersistableState['controls'], 'pagePathname'>
->
+type UserChartSettings = Omit<PersistableState['controls'], 'pagePathname'>
 
-interface SerializedChartSettings extends Omit<UserChartSettings, 'days'> {
+type SerializedChartSettings = Partial<Omit<UserChartSettings, 'days'>> & {
   days?: string
 }
 
@@ -35,7 +33,7 @@ export function getUserChartSettings(pagePathname: string): UserChartSettings {
     ? (JSON.parse(raw) as SerializedChartSettings)
     : {}
 
-  const userChartSettings: UserChartSettings = {
+  const userChartSettings: Partial<UserChartSettings> = {
     ...('isLogScale' in serialized
       ? { isLogScale: serialized.isLogScale }
       : {}),
