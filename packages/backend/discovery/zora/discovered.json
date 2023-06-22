@@ -1,7 +1,7 @@
 {
   "name": "zora",
-  "blockNumber": 17534416,
-  "configHash": "0x275db34437596afe74837db55ff0b860e04b30189737622db05e640370cb974f",
+  "blockNumber": 17534552,
+  "configHash": "0x797294a2d2404a2dbc60d7a159497797393ac54e5b75d1277ac4d99950206baf",
   "version": 1,
   "contracts": [
     {
@@ -17,7 +17,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 300000, 17534416],
+        "params": [1000000000, 300000, 17534552],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
