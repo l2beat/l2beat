@@ -59,7 +59,7 @@ export function TableView<T>({
                 <th
                   key={i}
                   className={cx(
-                    'whitespace-pre py-2 text-sm font-medium uppercase text-gray-50',
+                    'whitespace-pre py-2 text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
                     column.minimalWidth && 'w-0',
                     hasPaddingRight && 'pr-3 md:pr-4',
                     column.headClassName,
