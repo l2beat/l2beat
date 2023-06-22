@@ -212,7 +212,7 @@ export const optimism: Layer2 = {
       ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'Derivation: Batch submission - Optimism specs',
+          text: 'Derivation: Batch submission - OP Mainnet specs',
           href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
         },
         {
@@ -237,7 +237,7 @@ export const optimism: Layer2 = {
           href: 'https://etherscan.io/address/0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00#code#F1#L35',
         },
         {
-          text: 'Decentralizing the sequencer - Optimism docs',
+          text: 'Decentralizing the sequencer - OP Mainnet docs',
           href: 'https://community.optimism.io/docs/protocol/#decentralizing-the-sequencer',
         },
       ],
@@ -246,7 +246,7 @@ export const optimism: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
       references: [
         {
-          text: 'Sequencing Window - Optimism Specs',
+          text: 'Sequencing Window - OP Mainnet Specs',
           href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
         },
         {
@@ -260,7 +260,7 @@ export const optimism: Layer2 = {
         ...EXITS.REGULAR('optimistic', 'merkle proof'),
         references: [
           {
-            text: 'Withdrawing back to L1 - Optimism Help Center',
+            text: 'Withdrawing back to L1 - OP Mainnet Help Center',
             href: 'https://help.optimism.io/hc/en-us/articles/4411903283227-Withdrawals-from-Optimism',
           },
           {
@@ -404,7 +404,7 @@ export const optimism: Layer2 = {
   ],
   knowledgeNuggets: [
     {
-      title: 'How Optimism compresses data',
+      title: 'How OP Mainnet compresses data',
       url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
