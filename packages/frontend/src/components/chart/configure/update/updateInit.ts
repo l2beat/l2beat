@@ -46,10 +46,11 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         milestones: milestonesToRecord(message.milestones),
       },
       controls: {
+        pagePathname: message.pagePathname,
         view: message.initialView,
         days: message.days,
-        isLogScale: false,
-        currency: 'usd',
+        isLogScale: message.isLogScale,
+        currency: message.currency,
         token: undefined,
         showEthereum: !!message.showEthereum,
         showAlternativeTvl: false,
