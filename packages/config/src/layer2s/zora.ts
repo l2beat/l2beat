@@ -295,6 +295,11 @@ export const zora: Layer2 = {
           'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
         ...upgradesProxy,
       }),
+      discovery.getContractDetails('L1ERC721Bridge', {
+        description:
+          'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
+        ...upgradesProxy,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

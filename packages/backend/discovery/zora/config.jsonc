@@ -41,6 +41,9 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ]
+    },
+    "ZoraMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
