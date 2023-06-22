@@ -1,7 +1,7 @@
 {
   "name": "zora",
-  "blockNumber": 17534552,
-  "configHash": "0x797294a2d2404a2dbc60d7a159497797393ac54e5b75d1277ac4d99950206baf",
+  "blockNumber": 17535292,
+  "configHash": "0x0ce35778a096d0fc5ccb9edf242f308a0f59567ed9a77658a6e21d3db36bb788",
   "version": 1,
   "contracts": [
     {
@@ -17,12 +17,37 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 300000, 17534552],
+        "params": [1000000000, 100000, 17535292],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
       },
       "derivedName": "OptimismPortal"
+    },
+    {
+      "name": "L1CrossDomainMessenger",
+      "address": "0x363B4B1ADa52E50353f746999bd9E94395190d2C",
+      "code": "https://etherscan.deth.net/address/0x363B4B1ADa52E50353f746999bd9E94395190d2C",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619776",
+        "MIN_GAS_CALLDATA_OVERHEAD": 16,
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
+        "OTHER_MESSENGER": "0x4200000000000000000000000000000000000007",
+        "PORTAL": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
+        "RELAY_CALL_OVERHEAD": 40000,
+        "RELAY_CONSTANT_OVERHEAD": 200000,
+        "RELAY_GAS_CHECK_BUFFER": 5000,
+        "RELAY_RESERVED_GAS": 40000,
+        "version": "1.4.0"
+      },
+      "errors": {
+        "xDomainMessageSender": "Execution reverted"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -39,7 +64,8 @@
         "MESSENGER": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "L1StandardBridge"
     },
     {
       "name": "L1ERC721Bridge",
@@ -56,36 +82,8 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "version": "1.1.1"
-      }
-    },
-    {
-      "name": "L2OutputOracle",
-      "address": "0x89336159Edd615260a95309e46343602D6b6489e",
-      "code": "https://etherscan.deth.net/address/0x89336159Edd615260a95309e46343602D6b6489e",
-      "upgradeability": {
-        "type": "immutable"
       },
-      "values": {
-        "CHALLENGER": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
-        "computeL2Timestamp": [0, 2, 4, 6, 8],
-        "FINALIZATION_PERIOD_SECONDS": 604800,
-        "getL2Output": [],
-        "getL2OutputAfter": [],
-        "getL2OutputIndexAfter": [],
-        "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 0,
-        "nextBlockNumber": 180,
-        "nextOutputIndex": 0,
-        "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
-        "startingBlockNumber": 0,
-        "startingTimestamp": 0,
-        "SUBMISSION_INTERVAL": 180,
-        "version": "1.3.0"
-      },
-      "errors": {
-        "computeL2Timestamp": "Too many values. Update configuration explore fully",
-        "latestOutputIndex": "Execution reverted"
-      }
+      "derivedName": "L1ERC721Bridge"
     },
     {
       "name": "L2OutputOracle",
@@ -103,10 +101,10 @@
         ],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 365580,
-        "latestOutputIndex": 427,
-        "nextBlockNumber": 367380,
-        "nextOutputIndex": 428,
+        "latestBlockNumber": 370980,
+        "latestOutputIndex": 430,
+        "nextBlockNumber": 372780,
+        "nextOutputIndex": 431,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -160,7 +158,8 @@
       "values": {
         "BRIDGE": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "GnosisSafe",
@@ -260,26 +259,8 @@
         "type": "immutable"
       },
       "values": {
-        "BondManager": "0x0000000000000000000000000000000000000000",
-        "OVM_BondManager": "0x0000000000000000000000000000000000000000",
-        "OVM_CanonicalTransactionChain": "0x0000000000000000000000000000000000000000",
-        "OVM_ChainStorageContainer_CTC_batches": "0x0000000000000000000000000000000000000000",
-        "OVM_ChainStorageContainer_CTC_queue": "0x0000000000000000000000000000000000000000",
-        "OVM_ChainStorageContainer_SCC_batches": "0x0000000000000000000000000000000000000000",
-        "OVM_DecompressionPrecompileAddress": "0x0000000000000000000000000000000000000000",
-        "OVM_ExecutionManager": "0x0000000000000000000000000000000000000000",
-        "OVM_FraudVerifier": "0x0000000000000000000000000000000000000000",
-        "OVM_L1MultiMessageRelayer": "0x0000000000000000000000000000000000000000",
-        "OVM_L2CrossDomainMessenger": "0x0000000000000000000000000000000000000000",
-        "OVM_Proposer": "0x0000000000000000000000000000000000000000",
-        "OVM_SafetyChecker": "0x0000000000000000000000000000000000000000",
-        "OVM_Sequencer": "0x0000000000000000000000000000000000000000",
-        "OVM_StateCommitmentChain": "0x0000000000000000000000000000000000000000",
-        "OVM_StateManagerFactory": "0x0000000000000000000000000000000000000000",
-        "OVM_StateTransitionerFactory": "0x0000000000000000000000000000000000000000",
-        "owner": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
-        "Proxy__OVM_L1CrossDomainMessenger": "0x0000000000000000000000000000000000000000",
-        "Proxy__OVM_L1StandardBridge": "0x0000000000000000000000000000000000000000"
+        "OVM_L1CrossDomainMessenger": "0x363B4B1ADa52E50353f746999bd9E94395190d2C",
+        "owner": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
       "derivedName": "AddressManager"
     }
@@ -413,31 +394,6 @@
       "function BRIDGE() view returns (address)",
       "function createOptimismMintableERC20(address _remoteToken, string _name, string _symbol) returns (address)",
       "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
-      "function version() view returns (string)"
-    ],
-    "0x89336159Edd615260a95309e46343602D6b6489e": [
-      "constructor(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
-      "event Initialized(uint8 version)",
-      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
-      "function CHALLENGER() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function PROPOSER() view returns (address)",
-      "function SUBMISSION_INTERVAL() view returns (uint256)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function deleteL2Outputs(uint256 _l2OutputIndex)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function initialize(uint256 _startingBlockNumber, uint256 _startingTimestamp)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
       "function version() view returns (string)"
     ],
     "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c": [
