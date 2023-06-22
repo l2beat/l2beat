@@ -1,7 +1,7 @@
 {
   "name": "zora",
-  "blockNumber": 17535292,
-  "configHash": "0x0ce35778a096d0fc5ccb9edf242f308a0f59567ed9a77658a6e21d3db36bb788",
+  "blockNumber": 17535398,
+  "configHash": "0x203a697771bbadf26bfd9d0a23ec2aff00ffb716449ac1cbd6e5f1021213ff6b",
   "version": 1,
   "contracts": [
     {
@@ -17,7 +17,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 17535292],
+        "params": [1000000000, 100000, 17535395],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -82,8 +82,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "version": "1.1.1"
-      },
-      "derivedName": "L1ERC721Bridge"
+      }
     },
     {
       "name": "L2OutputOracle",
@@ -162,7 +161,7 @@
       "derivedName": "OptimismMintableERC20Factory"
     },
     {
-      "name": "GnosisSafe",
+      "name": "ZoraMultisig",
       "address": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
       "code": "https://etherscan.deth.net/address/0xC72aE5c7cc9a332699305E29F68Be66c73b60542,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -183,10 +182,11 @@
         "getThreshold": 4,
         "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
-      "name": "GnosisSafe",
+      "name": "ChallengerMultisig",
       "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
       "code": "https://etherscan.deth.net/address/0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -207,7 +207,8 @@
         "getThreshold": 4,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "ProxyAdmin",
