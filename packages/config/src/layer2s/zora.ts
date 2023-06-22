@@ -81,7 +81,7 @@ export const zora: Layer2 = {
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
+            'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8FEcC650BA4A#code#F1#L434',
           ],
         },
       ],
@@ -105,7 +105,7 @@ export const zora: Layer2 = {
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
+            'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8FEcC650BA4A#code#F1#L434',
           ],
         },
       ],
