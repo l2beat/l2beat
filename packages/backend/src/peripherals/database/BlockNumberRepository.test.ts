@@ -13,7 +13,7 @@ describe(BlockNumberRepository.name, () => {
     await repository.deleteAll()
   })
 
-  it('can add new records', async () => {
+  it(BlockNumberRepository.prototype.add.name, async () => {
     const itemA = {
       blockNumber: 1234,
       timestamp: new UnixTime(5678),
@@ -35,7 +35,7 @@ describe(BlockNumberRepository.name, () => {
     expect(resultsArb).toEqualUnsorted([itemB])
   })
 
-  it('can find by timestamp', async () => {
+  it(BlockNumberRepository.prototype.findByTimestamp.name, async () => {
     const itemA = {
       blockNumber: 1234,
       timestamp: new UnixTime(5678),
@@ -69,7 +69,35 @@ describe(BlockNumberRepository.name, () => {
     expect(resultArb).toEqual(itemC)
   })
 
-  it('can delete all records', async () => {
+  it(BlockNumberRepository.prototype.getAll.name, async () => {
+    const itemA = {
+      blockNumber: 1234,
+      timestamp: new UnixTime(5678),
+      chainId: ChainId.ETHEREUM,
+    }
+    const itemB = {
+      blockNumber: 7777,
+      timestamp: new UnixTime(222222),
+      chainId: ChainId.ETHEREUM,
+    }
+    const itemC = {
+      blockNumber: 7777,
+      timestamp: new UnixTime(222222),
+      chainId: ChainId.ARBITRUM,
+    }
+
+    await repository.add(itemA)
+    await repository.add(itemB)
+    await repository.add(itemC)
+
+    const resultsEth = await repository.getAll(ChainId.ETHEREUM)
+    expect(resultsEth).toEqualUnsorted([itemA, itemB])
+
+    const resultsArb = await repository.getAll(ChainId.ARBITRUM)
+    expect(resultsArb).toEqualUnsorted([itemC])
+  })
+
+  it(BlockNumberRepository.prototype.deleteAll.name, async () => {
     await repository.add({
       blockNumber: 1,
       timestamp: new UnixTime(1),
