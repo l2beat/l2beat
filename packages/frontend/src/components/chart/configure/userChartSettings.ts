@@ -29,7 +29,7 @@ export function persistUserChartSettings(state: PersistableState) {
   )
 }
 
-export function getUserChartSettings(pagePathname: string) {
+export function getUserChartSettings(pagePathname: string): UserChartSettings {
   const raw = localStorage.getItem(userChartSettingsKey(pagePathname))
   const serialized: SerializedChartSettings = raw
     ? (JSON.parse(raw) as SerializedChartSettings)
@@ -53,9 +53,9 @@ function userChartSettingsKey(pagePathname: string) {
   return `${pagePathname}chartSettings`
 }
 
-const DEFAULT_CHART_SETTINGS = {
+const DEFAULT_CHART_SETTINGS: UserChartSettings = {
   isLogScale: false,
   days: 365,
   currency: 'usd',
   showEthereum: true,
-} as const
+}
