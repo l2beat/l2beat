@@ -115,6 +115,7 @@ module.exports = {
       40: '40', // Milestones, Chart hover line point (squares and circles)
       50: '50', // Chart hover content
       60: '60', // Tooltip, Hoverable dropdown menu, Chart "Coming soon" disclaimer
+      70: '70', // Navbar
       100: '100', // Mobile project navigation
       999: '999', // Mobile side menu
     },
