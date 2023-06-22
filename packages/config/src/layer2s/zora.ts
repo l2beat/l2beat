@@ -81,7 +81,7 @@ export const zora: Layer2 = {
         {
           contract: 'OptimismPortal',
           references: [
-            'https://etherscan.io/address/0x43260ee547c3965bb2a0174763bb8fecc650ba4a#code#F1#L434',
+            'https://etherscan.io/address/0x28a55488fef40005309e2DA0040DbE9D300a64AB#code#F1#L434',
           ],
         },
       ],
@@ -315,7 +315,7 @@ export const zora: Layer2 = {
       name: 'Zora Network Launch',
       link: 'https://twitter.com/ourZORA/status/1671602234994622464',
       date: '2023-06-21T00:00:00Z',
-      description: 'Zora Network is live on mainnet',
+      description: 'Zora Network is live on mainnet.',
     },
   ],
   knowledgeNuggets: [
