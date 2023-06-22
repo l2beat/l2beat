@@ -28,9 +28,11 @@ describe(BlockNumberRepository.name, () => {
     await repository.add(itemA)
     await repository.add(itemB)
 
-    const results = await repository.getAll()
+    const resultsEth = await repository.getAll(ChainId.ETHEREUM)
+    expect(resultsEth).toEqualUnsorted([itemA])
 
-    expect(results).toEqualUnsorted([itemA, itemB])
+    const resultsArb = await repository.getAll(ChainId.ARBITRUM)
+    expect(resultsArb).toEqualUnsorted([itemB])
   })
 
   it('can find by timestamp', async () => {
@@ -75,7 +77,7 @@ describe(BlockNumberRepository.name, () => {
     })
     await repository.deleteAll()
 
-    const results = await repository.getAll()
+    const results = await repository.getAll(ChainId.ETHEREUM)
     expect(results).toEqual([])
   })
 })
