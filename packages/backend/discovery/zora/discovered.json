@@ -1,6 +1,6 @@
 {
   "name": "zora",
-  "blockNumber": 17533821,
+  "blockNumber": 17534464,
   "configHash": "0x6d4feaaca7abdaea146aec1c56cf9613b647920c71bd3c088fb6ba9778287c0f",
   "version": 1,
   "contracts": [
@@ -17,7 +17,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 500000, 17533821],
+        "params": [1000000000, 200000, 17534463],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -95,10 +95,10 @@
         ],
         "getL2OutputIndexAfter": [0, 0, 0, 0, 0],
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 361980,
-        "latestOutputIndex": 425,
-        "nextBlockNumber": 363780,
-        "nextOutputIndex": 426,
+        "latestBlockNumber": 365580,
+        "latestOutputIndex": 427,
+        "nextBlockNumber": 367380,
+        "nextOutputIndex": 428,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,

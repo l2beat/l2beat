@@ -25,5 +25,14 @@
       "latestBlockNumber",
       "latestOutputIndex"
     ]
+  },
+  "AddressManager": {
+    "fields": {
+      "OVM_L1CrossDomainMessenger": {
+        "type": "call",
+        "method": "getAddress",
+        "args": ["OVM_L1CrossDomainMessenger"]
+      }
+    }
   }
 }
