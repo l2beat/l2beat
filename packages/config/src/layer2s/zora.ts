@@ -64,6 +64,8 @@ export const zora: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
+      url: 'https://rpc.zora.co',
+      callsPerMinute: 1500,
     },
   },
   riskView: makeBridgeCompatible({
@@ -298,6 +300,11 @@ export const zora: Layer2 = {
       discovery.getContractDetails('L1ERC721Bridge', {
         description:
           'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
+        ...upgradesProxy,
+      }),
+      discovery.getContractDetails('L1CrossDomainMessenger', {
+        description:
+          "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
         ...upgradesProxy,
       }),
     ],

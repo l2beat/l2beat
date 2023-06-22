@@ -1,7 +1,7 @@
 {
   "name": "zora",
-  "blockNumber": 17535398,
-  "configHash": "0x203a697771bbadf26bfd9d0a23ec2aff00ffb716449ac1cbd6e5f1021213ff6b",
+  "blockNumber": 17535627,
+  "configHash": "0xc986ebc31e504db228089b21a399dab4850a9fe4ed70dfd2b7dca7f6dba9df6d",
   "version": 1,
   "contracts": [
     {
@@ -17,37 +17,12 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 17535395],
+        "params": [1000000000, 200000, 17535627],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
       },
       "derivedName": "OptimismPortal"
-    },
-    {
-      "name": "L1CrossDomainMessenger",
-      "address": "0x363B4B1ADa52E50353f746999bd9E94395190d2C",
-      "code": "https://etherscan.deth.net/address/0x363B4B1ADa52E50353f746999bd9E94395190d2C",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619776",
-        "MIN_GAS_CALLDATA_OVERHEAD": 16,
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "0x4200000000000000000000000000000000000007",
-        "PORTAL": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
-        "RELAY_CALL_OVERHEAD": 40000,
-        "RELAY_CONSTANT_OVERHEAD": 200000,
-        "RELAY_GAS_CHECK_BUFFER": 5000,
-        "RELAY_RESERVED_GAS": 40000,
-        "version": "1.4.0"
-      },
-      "errors": {
-        "xDomainMessageSender": "Execution reverted"
-      }
     },
     {
       "name": "L1StandardBridge",
@@ -95,23 +70,17 @@
       },
       "values": {
         "CHALLENGER": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
-        "computeL2Timestamp": [
-          1686693839, 1686693841, 1686693843, 1686693845, 1686693847
-        ],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 370980,
-        "latestOutputIndex": 430,
-        "nextBlockNumber": 372780,
-        "nextOutputIndex": 431,
+        "latestBlockNumber": 372780,
+        "latestOutputIndex": 431,
+        "nextBlockNumber": 374580,
+        "nextOutputIndex": 432,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
         "SUBMISSION_INTERVAL": 1800,
         "version": "1.3.0"
-      },
-      "errors": {
-        "computeL2Timestamp": "Too many values. Update configuration explore fully"
       },
       "derivedName": "L2OutputOracle"
     },
@@ -157,8 +126,7 @@
       "values": {
         "BRIDGE": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
         "version": "1.1.0"
-      },
-      "derivedName": "OptimismMintableERC20Factory"
+      }
     },
     {
       "name": "ZoraMultisig",
@@ -260,7 +228,6 @@
         "type": "immutable"
       },
       "values": {
-        "OVM_L1CrossDomainMessenger": "0x363B4B1ADa52E50353f746999bd9E94395190d2C",
         "owner": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
       "derivedName": "AddressManager"

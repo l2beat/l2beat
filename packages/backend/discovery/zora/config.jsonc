@@ -20,20 +20,12 @@
       "ignoreMethods": ["isOutputFinalized"],
       "ignoreInWatchMode": ["params"]
     },
-    "AddressManager": {
-      "fields": {
-        "OVM_L1CrossDomainMessenger": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_L1CrossDomainMessenger"]
-        }
-      }
-    },
     "L2OutputOracle": {
       "ignoreMethods": [
         "getL2OutputAfter",
         "getL2OutputIndexAfter",
-        "getL2Output"
+        "getL2Output",
+        "computeL2Timestamp"
       ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
@@ -44,6 +36,10 @@
     },
     "ZoraMultisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "L1CrossDomainMessengerProxy": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
     }
   }
 }
