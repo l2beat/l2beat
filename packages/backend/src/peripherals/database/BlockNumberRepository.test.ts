@@ -5,9 +5,6 @@ import { expect } from 'earl'
 import { setupDatabaseTestSuite } from '../../test/database'
 import { BlockNumberRepository } from './BlockNumberRepository'
 
-const ETH = ChainId.ETHEREUM
-const ARB = ChainId.ARBITRUM
-
 describe(BlockNumberRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
   const repository = new BlockNumberRepository(database, Logger.SILENT)
@@ -20,12 +17,12 @@ describe(BlockNumberRepository.name, () => {
     const itemA = {
       blockNumber: 1234,
       timestamp: new UnixTime(5678),
-      chainId: ETH,
+      chainId: ChainId.ETHEREUM,
     }
     const itemB = {
       blockNumber: 7777,
       timestamp: new UnixTime(222222),
-      chainId: ARB,
+      chainId: ChainId.ARBITRUM,
     }
 
     await repository.add(itemA)
@@ -40,17 +37,17 @@ describe(BlockNumberRepository.name, () => {
     const itemA = {
       blockNumber: 1234,
       timestamp: new UnixTime(5678),
-      chainId: ETH,
+      chainId: ChainId.ETHEREUM,
     }
     const itemB = {
       blockNumber: 7777,
       timestamp: new UnixTime(222222),
-      chainId: ETH,
+      chainId: ChainId.ETHEREUM,
     }
     const itemC = {
       blockNumber: 7777,
       timestamp: new UnixTime(222222),
-      chainId: ARB,
+      chainId: ChainId.ARBITRUM,
     }
 
     await repository.add(itemA)
@@ -58,13 +55,13 @@ describe(BlockNumberRepository.name, () => {
     await repository.add(itemC)
 
     const resultEth = await repository.findByTimestamp(
-      ETH,
+      ChainId.ETHEREUM,
       new UnixTime(222222),
     )
     expect(resultEth).toEqual(itemB)
 
     const resultArb = await repository.findByTimestamp(
-      ARB,
+      ChainId.ARBITRUM,
       new UnixTime(222222),
     )
     expect(resultArb).toEqual(itemC)
@@ -74,7 +71,7 @@ describe(BlockNumberRepository.name, () => {
     await repository.add({
       blockNumber: 1,
       timestamp: new UnixTime(1),
-      chainId: ETH,
+      chainId: ChainId.ETHEREUM,
     })
     await repository.deleteAll()
 

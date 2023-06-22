@@ -4,7 +4,7 @@ declare module 'knex/types/tables' {
   interface BlockNumberRow {
     unix_timestamp: Date
     block_number: number
-    chain_id: string
+    chain_id: number
   }
 
   interface PriceRow {

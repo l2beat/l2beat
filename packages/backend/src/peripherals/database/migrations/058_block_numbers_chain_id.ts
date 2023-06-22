@@ -16,10 +16,7 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.alterTable('block_numbers', function (table) {
-    table
-      .string('chain_id')
-      .notNullable()
-      .defaultTo(ChainId.ETHEREUM.toString())
+    table.integer('chain_id').notNullable().defaultTo(Number(ChainId.ETHEREUM))
 
     table.dropIndex(['unix_timestamp'])
 

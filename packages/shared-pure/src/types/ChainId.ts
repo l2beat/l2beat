@@ -1,8 +1,8 @@
-export interface ChainId extends String {
-  _ChainIdBrand: string
+export interface ChainId extends Number {
+  _ChainIdBrand: number
 }
 
-export function ChainId(value: string): ChainId {
+export function ChainId(value: number): ChainId {
   if (!CHAIN_IDS.includes(value)) {
     throw new TypeError('Invalid ChainId')
   }
@@ -10,8 +10,8 @@ export function ChainId(value: string): ChainId {
 }
 
 const CHAIN_IDS = [
-  '0x1', // Ethereum Mainnet
-  '0xa4b1', // Arbitrum One
+  1, // Ethereum Mainnet
+  42161, // Arbitrum One
 ]
 
 ChainId.ETHEREUM = ChainId(CHAIN_IDS[0])

@@ -1,4 +1,5 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
+import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
@@ -26,7 +27,6 @@ import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { EtherscanClient } from '../../peripherals/etherscan'
 import { ApplicationModule } from '../ApplicationModule'
-import { ChainId } from '@l2beat/shared-pure'
 
 export function createTvlModule(
   config: Config,

@@ -56,7 +56,7 @@ function toRow(record: BlockNumberRecord): BlockNumberRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,
-    chain_id: record.chainId.toString(),
+    chain_id: Number(record.chainId),
   }
 }
 
