@@ -82,7 +82,9 @@ export function ProjectHeader(props: ProjectHeaderProps) {
             title: 'Stage',
             value: (
               <span className="relative -top-0.5 flex items-center">
-                <StageBadge stage={props.stage.stage} big />
+                <a href="#stage">
+                  <StageBadge stage={props.stage.stage} big />
+                </a>
                 <span
                   className="Tooltip inline-block px-2"
                   title={renderToStaticMarkup(

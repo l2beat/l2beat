@@ -71,7 +71,17 @@ export const zksyncera: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
         sinceTimestamp: new UnixTime(1676367083),
-        tokens: ['USDC', 'PERP', 'MUTE'],
+        tokens: [
+          'USDC',
+          'PERP',
+          'MUTE',
+          'USDT',
+          'WBTC',
+          'LUSD',
+          'rETH',
+          'RPL',
+          '1INCH',
+        ],
         description:
           'Standard bridge for depositing ERC20 tokens to zkSync Era.',
         ...upgrades,
