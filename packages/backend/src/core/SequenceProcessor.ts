@@ -1,5 +1,5 @@
 import { EventTracker, Logger } from '@l2beat/shared'
-import { assert, json, Retries } from '@l2beat/shared-pure'
+import { assert, json } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 import { EventEmitter } from 'stream'
@@ -91,10 +91,6 @@ export class SequenceProcessor extends EventEmitter {
       () => this.process(),
       this.logger.for('updateQueue'),
       {
-        shouldRetry: Retries.exponentialBackOff(100, {
-          maxDistanceMs: 3_000,
-          maxAttempts: 10,
-        }),
         metricsId: `${SequenceProcessor.name}_${id}`,
       },
     )
