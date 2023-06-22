@@ -1,0 +1,29 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "zora",
+  "initialAddresses": ["0x1a0ad011913A150f69f6A19DF447A0CfD9551054"],
+  "names": {
+    "0x1a0ad011913A150f69f6A19DF447A0CfD9551054": "OptimismPortal",
+    "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c": "L2OutputOracle",
+    "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef": "AddressManager"
+  },
+  "overrides": {
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    }
+  },
+  "L2OutputOracle": {
+    "ignoreMethods": [
+      "getL2OutputAfter",
+      "getL2OutputIndexAfter",
+      "getL2Output"
+    ],
+    "ignoreInWatchMode": [
+      "nextBlockNumber",
+      "nextOutputIndex",
+      "latestBlockNumber",
+      "latestOutputIndex"
+    ]
+  }
+}
