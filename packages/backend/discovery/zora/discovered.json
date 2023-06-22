@@ -1,7 +1,7 @@
 {
   "name": "zora",
-  "blockNumber": 17535627,
-  "configHash": "0xc986ebc31e504db228089b21a399dab4850a9fe4ed70dfd2b7dca7f6dba9df6d",
+  "blockNumber": 17535698,
+  "configHash": "0xda8b953a57a3a4def126e4e0125be1838650bd9ac13a698e98435c94735e65a8",
   "version": 1,
   "contracts": [
     {
@@ -17,7 +17,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 200000, 17535627],
+        "params": [1000000000, 200000, 17535697],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -216,9 +216,7 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "1.4.0"
       },
-      "errors": {
-        "xDomainMessageSender": "Execution reverted"
-      }
+      "derivedName": "L1CrossDomainMessenger"
     },
     {
       "name": "AddressManager",

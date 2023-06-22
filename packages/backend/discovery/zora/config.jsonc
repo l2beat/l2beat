@@ -13,7 +13,8 @@
     "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c": "L2OutputOracle",
     "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef": "AddressManager",
     "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": "ChallengerMultisig",
-    "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "ZoraMultisig"
+    "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "ZoraMultisig",
+    "0xdC40a14d9abd6F410226f1E6de71aE03441ca506": "L1CrossDomainMessenger"
   },
   "overrides": {
     "OptimismPortal": {
@@ -37,7 +38,7 @@
     "ZoraMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "L1CrossDomainMessengerProxy": {
+    "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
       "ignoreInWatchMode": ["messageNonce"]
     }
