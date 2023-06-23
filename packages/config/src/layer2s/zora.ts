@@ -34,7 +34,7 @@ export const zora: Layer2 = {
   type: 'layer2',
   id: ProjectId('zora'),
   display: {
-    name: 'Zora',
+    name: 'Zora Network',
     slug: 'zora',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
@@ -158,7 +158,7 @@ export const zora: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, Zora will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, Zora Network will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -243,7 +243,7 @@ export const zora: Layer2 = {
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
       description:
-        'Zora is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Zora.',
+        'Zora Network is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Zora Network.',
       risks: [],
       references: [
         {
