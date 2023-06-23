@@ -22,6 +22,14 @@ const upgradesProxy = {
   upgradeDelay: 'No Delay',
 }
 
+const sequencer = (() => {
+  const paddedAddr = discovery
+    .getContractValue<string>('SystemConfig', 'batcherHash')
+    .slice(2)
+  const unpaddedAddr = paddedAddr.substring(paddedAddr.length - 40)
+  return EthereumAddress('0x' + unpaddedAddr)
+})()
+
 export const zora: Layer2 = {
   type: 'layer2',
   id: ProjectId('zora'),
@@ -174,7 +182,7 @@ export const zora: Layer2 = {
         },
         {
           text: 'BatchInbox - Etherscan address',
-          href: '', //TODO: find address
+          href: 'https://etherscan.io/address/0x6f54ca6f6ede96662024ffd61bfd18f3f4e34dff',
         },
         {
           text: 'OptimismPortal.sol#L434 - Etherscan source code, depositTransaction function',
@@ -262,7 +270,7 @@ export const zora: Layer2 = {
     },
     {
       name: 'Sequencer',
-      accounts: [], //TODO: find account after finding the BatchInbox address
+      accounts: [discovery.formatPermissionedAccount(sequencer)],
       description: 'Central actor allowed to commit L2 transactions to L1',
     },
     {
