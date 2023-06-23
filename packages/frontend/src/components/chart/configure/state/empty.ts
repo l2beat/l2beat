@@ -20,6 +20,7 @@ export const EMPTY_STATE: State = {
   },
   controls: {
     view: 'tvl',
+    pagePathname: '',
     days: 0,
     isLogScale: false,
     currency: 'usd',
