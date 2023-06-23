@@ -22,11 +22,19 @@ const upgradesProxy = {
   upgradeDelay: 'No Delay',
 }
 
+const sequencer = (() => {
+  const paddedAddr = discovery
+    .getContractValue<string>('SystemConfig', 'batcherHash')
+    .slice(2)
+  const unpaddedAddr = paddedAddr.substring(paddedAddr.length - 40)
+  return EthereumAddress('0x' + unpaddedAddr)
+})()
+
 export const zora: Layer2 = {
   type: 'layer2',
   id: ProjectId('zora'),
   display: {
-    name: 'Zora',
+    name: 'Zora Network',
     slug: 'zora',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
@@ -150,7 +158,7 @@ export const zora: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, Zora will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, Zora Network will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -174,7 +182,7 @@ export const zora: Layer2 = {
         },
         {
           text: 'BatchInbox - Etherscan address',
-          href: '', //TODO: find address
+          href: 'https://etherscan.io/address/0x6f54ca6f6ede96662024ffd61bfd18f3f4e34dff',
         },
         {
           text: 'OptimismPortal.sol#L434 - Etherscan source code, depositTransaction function',
@@ -235,7 +243,7 @@ export const zora: Layer2 = {
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
       description:
-        'Zora is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Zora.',
+        'Zora Network is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Zora Network.',
       risks: [],
       references: [
         {
@@ -262,7 +270,7 @@ export const zora: Layer2 = {
     },
     {
       name: 'Sequencer',
-      accounts: [], //TODO: find account after finding the BatchInbox address
+      accounts: [discovery.formatPermissionedAccount(sequencer)],
       description: 'Central actor allowed to commit L2 transactions to L1',
     },
     {
