@@ -21,7 +21,7 @@ export async function up(knex: Knex) {
     table.dropIndex(['unix_timestamp'])
 
     table.dropPrimary()
-    table.primary(['unix_timestamp', 'chain_id'])
+    table.primary(['chain_id', 'unix_timestamp'])
   })
 }
 
