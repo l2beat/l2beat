@@ -58,6 +58,7 @@ export const apex: Layer2 = {
       repositories: ['https://github.com/ApeX-Protocol/core'],
       socialMedia: ['https://twitter.com/OfficialApeXdex'],
     },
+    activityDataSource: 'Closed API',
   },
   config: {
     escrows: [
