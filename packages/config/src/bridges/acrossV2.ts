@@ -54,7 +54,7 @@ export const acrossV2: Bridge = {
     validatedBy: {
       value: 'Optimistically',
       description:
-        'Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain.',
+        'Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain. The timeout used here is 2hrs.',
       sentiment: 'warning',
     },
     sourceUpgradeability: {
