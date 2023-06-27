@@ -15,7 +15,7 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   return {
     invert: invertEnabled && {
       file: cli.file,
-      useMermaidMarkup: false,
+      useMermaidMarkup: true,
     },
     discovery: discoveryEnabled && {
       project: cli.project,
