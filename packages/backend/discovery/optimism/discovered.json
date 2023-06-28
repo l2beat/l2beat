@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "blockNumber": 17427858,
-  "configHash": "0x0ef23794bbeae683906b4b0dff52caa444bae305a5206e77b437f5619b9a7efe",
+  "configHash": "0x68c24f4ae10dbb6d1c1f482807b26c79cfc8362d6a4583cb39cbf37402a18a86",
   "version": 1,
   "contracts": [
     {
@@ -31,7 +31,7 @@
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
       "values": {
-        "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
+        "batcherHash": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "overhead": 188,
@@ -49,7 +49,8 @@
         "unsafeBlockSigner": "0xAAAA45d9549EDA09E70937013520214382Ffc4A2",
         "version": "1.3.0",
         "VERSION": 0
-      }
+      },
+      "derivedName": "SystemConfig"
     },
     {
       "name": "L1CrossDomainMessengerProxy",
@@ -385,6 +386,7 @@
     "0x47F43bb6E11624aD886459AF517e16DACd04840F",
     "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
     "0x56016aBC139EED381Fa35fe1862DBBbDe94a07F6",
+    "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
     "0x78361eF33B6E8627932f28BC07d84B2f72166C8E",
     "0x79f7ce9DA9D933874fcB5f7deBd78CA3C694D743",
     "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
