@@ -50,6 +50,10 @@ export class DiscoveryLogger {
     this.log(`  ${chalk.red(prefix)} ${dots(25 - prefix.length)} ${error}`)
   }
 
+  logError(error: string) {
+    this.log(`${chalk.red(error)}`)
+  }
+
   logSkip(address: EthereumAddress, reason: string) {
     this.log(`Skipping ${address.toString()}`)
     if (reason.startsWith('Error: ')) {
