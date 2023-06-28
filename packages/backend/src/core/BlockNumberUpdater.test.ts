@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
@@ -43,6 +43,7 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         clock,
         Logger.SILENT,
+        ChainId.ETHEREUM,
       )
 
       await blockNumberUpdater.start()
@@ -75,6 +76,7 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         mockObject<Clock>(),
         Logger.SILENT,
+        ChainId.ETHEREUM,
       )
 
       await blockNumberUpdater.update(timestamp)
@@ -95,6 +97,7 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         mockObject<Clock>(),
         Logger.SILENT,
+        ChainId.ETHEREUM,
       )
 
       let result: unknown = undefined
@@ -131,6 +134,7 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         mockObject<Clock>(),
         Logger.SILENT,
+        ChainId.ETHEREUM,
       )
 
       await blockNumberUpdater.update(from)
@@ -170,6 +174,7 @@ describe(BlockNumberUpdater.name, () => {
         blockNumberRepository,
         mockObject<Clock>(),
         Logger.SILENT,
+        ChainId.ETHEREUM,
       )
       await blockNumberUpdater.update(from)
       await blockNumberUpdater.update(from.add(1, 'hours'))

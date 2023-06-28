@@ -1,4 +1,5 @@
 import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
+import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
@@ -76,6 +77,7 @@ export function createTvlModule(
     blockNumberRepository,
     clock,
     logger,
+    ChainId.ETHEREUM,
   )
   const priceUpdater = new PriceUpdater(
     coingeckoQueryService,
