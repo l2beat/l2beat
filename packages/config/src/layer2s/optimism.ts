@@ -159,7 +159,7 @@ export const optimism: Layer2 = {
         {
           contract: 'L2OutputOracle',
           references: [
-            'https://etherscan.io/address/0xdfe97868233d1aa22e815a266982f2cf17685a27#code#F1#L96',
+            'https://etherscan.io/address/0xd2e67b6a032f0a9b1f569e63ad6c38f7342c2e00#code#F1#L186',
           ],
         },
       ],
@@ -295,7 +295,7 @@ export const optimism: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'OptimismMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     {
       name: 'ProxyAdmin',
@@ -313,21 +313,21 @@ export const optimism: Layer2 = {
       accounts: [
         discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
       ],
-      description: 'Central actor to post new L2 state roots to L1.',
+      description: 'Central actor allowed to post new L2 state roots to L1.',
     },
     {
       name: 'Challenger',
       accounts: [
         discovery.getPermissionedAccount('L2OutputOracle', 'CHALLENGER'),
       ],
-      description: 'Central actor to challenge L2 state roots.',
+      description: 'Central actor allowed to challenge L2 state roots.',
     },
   ],
   contracts: {
     addresses: [
       discovery.getContractDetails('L2OutputOracle', {
         description:
-          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only the PROPOSER address can submit new state roots.',
+          'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
         ...upgradesProxy,
       }),
       discovery.getContractDetails('OptimismPortal', {
