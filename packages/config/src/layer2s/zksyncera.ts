@@ -267,7 +267,7 @@ export const zksyncera: Layer2 = {
         name: 'Forced exit',
         description:
           'If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. \
-          The system is then obliged to service this request. Once the force operation is submitted if the request is serviced the operation \
+          The system is then obliged to service this request. Once the force operation is submitted and if the request is serviced, the operation \
           follows the flow of a regular exit. Note that this mechanism is not implemented yet.',
         risks: [
           {
