@@ -22,14 +22,6 @@ const upgradesProxy = {
   upgradeDelay: 'No delay',
 }
 
-const sequencer = (() => {
-  const paddedAddr = discovery
-    .getContractValue<string>('SystemConfig', 'batcherHash')
-    .slice(2)
-  const unpaddedAddr = paddedAddr.substring(paddedAddr.length - 40)
-  return EthereumAddress('0x' + unpaddedAddr)
-})()
-
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
@@ -305,7 +297,9 @@ export const optimism: Layer2 = {
     },
     {
       name: 'Sequencer',
-      accounts: [discovery.formatPermissionedAccount(sequencer)],
+      accounts: [
+        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
+      ],
       description: 'Central actor allowed to commit L2 transactions to L1.',
     },
     {
