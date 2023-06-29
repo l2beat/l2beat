@@ -5,7 +5,8 @@ const usage = `Usage:
     yarn discover [project] ................. run discovery on a specific system
     yarn discover [project] --dry-run ..... check simulated discovery bot output
     yarn discover [project] --dev ..... run on the same block number as in .json
-    yarn invert [file] ..................... print addresses and their functions
+    yarn invert [project] ..................... print addresses and their functions
+    yarn invert [project] --mermaid .................... print mermaid graph markup
     yarn <start|discover> --help .......................... display this message
 `
 const colorUsage = usage

@@ -65,8 +65,10 @@ async function invert(config: DiscoveryCliConfig, logger: Logger) {
 
   const { file, useMermaidMarkup } = config.invert
 
+  const configReader = new ConfigReader()
+
   logger = logger.for('Inversion')
   logger.info('Starting')
 
-  await runInversion(file, useMermaidMarkup)
+  await runInversion(file, configReader, useMermaidMarkup)
 }
