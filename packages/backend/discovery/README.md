@@ -4,7 +4,8 @@
 - `DISCOVERY_BLOCK_NUMBER=<block_number> yarn discover [project]` run discovery on a specific block number
 - `yarn discover [project] --dry-run` check simulated update-monitor output
 - `yarn discover [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
-- `yarn invert [file]` print addresses and their functions
+- `yarn invert [project]` print addresses and their functions
+- `yarn invert [project] --mermaid` builds a mermaid graph of the project
 
 # Discovery documentation
 
