@@ -48,6 +48,7 @@ export const aztec: Layer2 = {
     description:
       'Aztec is an open source layer 2 network that aims to bring scalability and privacy to Ethereum. It strives to enable affordable, private crypto payments via zero-knowledge proofs.',
     purpose: 'Private payments',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://old.zk.money'],
@@ -168,7 +169,6 @@ export const aztec: Layer2 = {
     },
   }),
   technology: {
-    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

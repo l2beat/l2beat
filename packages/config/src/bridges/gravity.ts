@@ -12,6 +12,7 @@ export const gravity: Bridge = {
   display: {
     name: 'Gravity',
     slug: 'gravity',
+    category: 'Token Bridge',
     links: {
       websites: ['https://www.gravitybridge.net/'],
       explorers: [
@@ -60,7 +61,6 @@ export const gravity: Bridge = {
   technology: {
     destination: ['Cosmos'],
     canonical: false,
-    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

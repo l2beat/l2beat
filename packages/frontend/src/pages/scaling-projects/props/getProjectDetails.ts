@@ -85,7 +85,7 @@ export function getProjectDetails(
           stage: project.stage,
           name: project.display.name,
           icon: `/icons/${project.display.slug}.png`,
-          type: project.technology.category,
+          type: project.display.category,
           id: 'stage',
           title: 'Rollup stage',
         },

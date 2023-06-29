@@ -10,6 +10,7 @@ export const omni: Bridge = {
   display: {
     name: 'Omni Bridge',
     slug: 'omni',
+    category: 'Token Bridge',
     links: {
       websites: ['https://omni.gnosischain.com/'],
       apps: ['https://omni.gnosischain.com/'],
@@ -65,7 +66,6 @@ export const omni: Bridge = {
     },
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Gnosis Chain'],
     canonical: true,
     principleOfOperation: {

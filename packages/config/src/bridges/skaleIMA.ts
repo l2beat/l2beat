@@ -32,6 +32,7 @@ export const skaleIMA: Bridge = {
     },
     description:
       'SKALE IMA Bridge is a part of SKALE Network ecosystem. It is a cross-chain BLS threshold bridge that allows users to transfer tokens and arbitrary messages between supported blockchains.',
+    category: 'Token Bridge',
   },
   config: {
     associatedTokens: ['SKL'],
@@ -59,7 +60,6 @@ export const skaleIMA: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Ethereum', 'SKALE'],
     principleOfOperation: {
       name: 'Principle of Operation',

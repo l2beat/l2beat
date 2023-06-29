@@ -50,6 +50,8 @@ export const myria: Layer2 = {
     description:
       'Myria is an expansive blockchain gaming ecosystem, comprised of a blockchain gaming hub and Myriaverse metaverse, underpinned by a full suite of Myria infrastructure. Myria will also offer B2B services to enable third-party studios and developers to onboard onto the Myria chain.',
     purpose: 'NFT, Exchange',
+    provider: 'StarkEx',
+    category: 'Validium',
     links: {
       websites: ['https://myria.com/'],
       apps: ['https://market.x.immutable.com/'],
@@ -104,8 +106,6 @@ export const myria: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    provider: 'StarkEx',
-    category: 'Validium',
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

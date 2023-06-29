@@ -29,6 +29,8 @@ export const layer2financezk: Layer2 = {
     description:
       'Celer’s Layer2.finance in ZK Proofs Mode Built with StarkEx from StarkWare.',
     purpose: 'DeFi protocols',
+    provider: 'StarkEx',
+    category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],
       apps: [],
@@ -79,8 +81,6 @@ export const layer2financezk: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    provider: 'StarkEx',
-    category: 'Validium',
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

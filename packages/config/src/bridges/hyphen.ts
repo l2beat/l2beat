@@ -13,6 +13,7 @@ export const hyphen: Bridge = {
   display: {
     name: 'Hyphen',
     slug: 'hyphen',
+    category: 'Liquidity Network',
     links: {
       websites: ['https://hyphen.biconomy.io/'],
       documentation: [
@@ -41,7 +42,6 @@ export const hyphen: Bridge = {
     ],
   },
   technology: {
-    category: 'Liquidity Network',
     destination: [
       'Polygon',
       'Avalanche',

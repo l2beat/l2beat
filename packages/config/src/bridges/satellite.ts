@@ -9,6 +9,7 @@ export const satellite: Bridge = {
     name: 'Satellite (Axelar)',
     slug: 'satellite',
     description: 'Satellite is a token bridge powered by Axelar network',
+    category: 'Liquidity Network',
     links: {
       websites: ['https://satellite.money/'],
     },
@@ -34,7 +35,6 @@ export const satellite: Bridge = {
   },
   technology: {
     canonical: true,
-    category: 'Liquidity Network',
     destination: ['Various'], // TODO: list the chains
   },
   riskView: {

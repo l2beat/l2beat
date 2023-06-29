@@ -19,6 +19,7 @@ export const near: Bridge = {
     },
     description:
       'Rainbow bridge is a light client based bridge between NEAR/AURORA and Ethereum that allows for asset and data movement between these chains. For better gas efficiency from NEAR to Ethereum, it leverages optimistic validation, which adds some trust assumption and latency.',
+    category: 'Token Bridge',
   },
   config: {
     associatedTokens: ['AURORA'],
@@ -69,7 +70,6 @@ export const near: Bridge = {
   },
   technology: {
     canonical: true,
-    category: 'Token Bridge',
     destination: ['Near', 'Aurora'],
     principleOfOperation: {
       name: 'Principle of operation',
