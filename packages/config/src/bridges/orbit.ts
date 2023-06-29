@@ -13,6 +13,7 @@ export const orbit: Bridge = {
   display: {
     name: 'Orbit Bridge',
     slug: 'orbit',
+    category: 'Token Bridge',
     links: {
       websites: [
         'https://bridge.orbitchain.io/',
@@ -74,7 +75,6 @@ export const orbit: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     //TODO: Originally for KLAYTN, Orbit Bridge now supports multiple chains and has Liquidity Network
     destination: [
       'Orbit',

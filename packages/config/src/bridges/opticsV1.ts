@@ -10,6 +10,7 @@ export const opticsV1: Bridge = {
   display: {
     name: 'Optics V1',
     slug: 'opticsv1',
+    category: 'Token Bridge',
     links: {
       websites: ['https://old.optics.app/'],
       repositories: ['https://github.com/celo-org/optics-monorepo'],
@@ -40,7 +41,6 @@ export const opticsV1: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Celo', 'Polygon'],
     principleOfOperation: {
       name: 'Principle of operation',

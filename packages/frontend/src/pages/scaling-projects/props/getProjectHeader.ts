@@ -48,7 +48,7 @@ export function getProjectHeader(
         ? formatLargeNumber(transactionMonthlyCount)
         : undefined,
     purpose: project.display.purpose,
-    technology: project.technology.category,
+    technology: project.display.category,
     tvlBreakdown,
     links: getLinks(project.display.links),
     stagesEnabled: config.features.stages,

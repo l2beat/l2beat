@@ -16,6 +16,8 @@ export const layer2aWithDups: Layer2 = {
     slug: 'layer2a',
     description: '',
     purpose: 'Universal',
+    provider: 'Optimism',
+    category: 'Optimistic Rollup',
     links: {
       websites: [],
       apps: [],
@@ -42,8 +44,6 @@ export const layer2aWithDups: Layer2 = {
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_YES,
   },
   technology: {
-    provider: 'Optimism',
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:

@@ -14,6 +14,7 @@ export const acrossV2: Bridge = {
   display: {
     name: 'Across V2',
     slug: 'acrossv2',
+    category: 'Liquidity Network',
     links: {
       websites: ['https://across.to/'],
       apps: ['https://across.to/'],
@@ -64,7 +65,6 @@ export const acrossV2: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
-    category: 'Liquidity Network',
     destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum'],
     principleOfOperation: {
       name: 'Principle of operation',

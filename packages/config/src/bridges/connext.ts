@@ -14,6 +14,7 @@ export const connext: Bridge = {
   display: {
     name: 'Connext (Legacy)',
     slug: 'connext-legacy',
+    category: 'Liquidity Network',
     links: {
       websites: [
         'https://bridge.connext.network/',
@@ -41,7 +42,6 @@ export const connext: Bridge = {
     ],
   },
   technology: {
-    category: 'Liquidity Network',
     destination: [
       'Avalanche',
       'BNB Chain',

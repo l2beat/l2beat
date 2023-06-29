@@ -17,6 +17,7 @@ export const multichain: Bridge = {
       As a result there is more tokens minted (e.g. DAI on Fantom) than there are tokens directly backing them in escrow.',
     description:
       'Multichain is an externally validated bridge. It uses a network of nodes running SMPC (Secure Multi Party Computation) protocol. It supports dozens of blockchains and thousands of tokens with both Token Bridge and Liquidity Network.',
+    category: 'Hybrid',
     links: {
       websites: ['https://multichain.xyz/'],
       repositories: ['https://github.com/anyswap'],
@@ -35,7 +36,6 @@ export const multichain: Bridge = {
     })),
   },
   technology: {
-    category: 'Hybrid',
     destination: config.destinations,
     principleOfOperation: {
       name: 'Principle of operation',

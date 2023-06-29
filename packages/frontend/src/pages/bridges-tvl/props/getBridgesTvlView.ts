@@ -61,6 +61,6 @@ function getBridgesTvlViewEntry(
       ? formatPercent(stats.tvl / combinedTvl)
       : undefined,
     validatedBy: project.riskView?.validatedBy,
-    category: project.technology.category,
+    category: project.display.category,
   }
 }

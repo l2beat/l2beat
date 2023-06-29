@@ -49,6 +49,8 @@ export const immutablex: Layer2 = {
     description:
       'Immutable X claims to be the first Layer 2 for NFTs on Ethereum. It promises zero gas fees, instant trades and scalability for games, applications, marketplaces, without compromise.',
     purpose: 'NFT, Exchange',
+    provider: 'StarkEx',
+    category: 'Validium',
     links: {
       websites: ['https://www.immutable.com/'],
       apps: ['https://market.x.immutable.com/'],
@@ -105,8 +107,6 @@ export const immutablex: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    provider: 'StarkEx',
-    category: 'Validium',
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
