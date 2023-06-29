@@ -2,7 +2,7 @@ import { ContractValue, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { constants, utils } from 'ethers'
-import { writeFile } from 'fs/promises'
+import { mkdir, writeFile } from 'fs/promises'
 
 import { ConfigReader } from '../discovery/config/ConfigReader'
 
@@ -102,10 +102,12 @@ export async function runInversion(
       </body>
     </html>`
 
-    const filePath = `discovery/${project}/mermaid.html`
-
-    await writeFile(filePath, mermaidPage)
-    execSync(`open ${filePath}`)
+    const root = `discovery/${project}`
+    const htmlFilePath = `${root}/mermaid/index.html`
+    await mkdir(`${root}/mermaid`, { recursive: true })
+    await writeFile(htmlFilePath, mermaidPage)
+    await writeFile(`${root}/mermaid/graph`, mermaid)
+    execSync(`open ${htmlFilePath}`)
   } else {
     print(addresses)
   }
