@@ -35,6 +35,8 @@ export const optimism: Layer2 = {
     With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
     new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
     purpose: 'Universal',
+    provider: 'Optimism',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://optimism.io/'],
       apps: [],
@@ -180,8 +182,6 @@ export const optimism: Layer2 = {
     },
   }),
   technology: {
-    provider: 'Optimism',
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:

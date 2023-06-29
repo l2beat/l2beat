@@ -13,6 +13,7 @@ export const mantle: Layer2 = {
     description:
       'Mantle is an EVM compatible zkRollup that has been designed for use on the Ethereum network. At present, it is undergoing further testing and optimization on the Goerli testnet before deployment.',
     purpose: 'Universal',
+    category: 'Optimistic Chain',
     links: {
       websites: ['https://www.mantle.xyz/'],
       apps: ['https://bridge.testnet.mantle.xyz'],
@@ -31,6 +32,6 @@ export const mantle: Layer2 = {
     escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: { ...TECHNOLOGY.UPCOMING, category: 'Optimistic Chain' },
+  technology: TECHNOLOGY.UPCOMING,
   contracts: CONTRACTS.EMPTY,
 }

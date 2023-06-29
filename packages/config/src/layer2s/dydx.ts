@@ -85,6 +85,8 @@ export const dydx: Layer2 = {
     description:
       'dYdX aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purpose: 'Exchange',
+    provider: 'StarkEx',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://dydx.exchange/'],
       apps: [
@@ -179,8 +181,6 @@ export const dydx: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    provider: 'StarkEx',
-    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
       references: [

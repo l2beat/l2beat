@@ -13,6 +13,7 @@ export const wormholeV1: Bridge = {
     links: {
       websites: ['https://wormhole.com/'],
     },
+    category: 'Token Bridge',
   },
   config: {
     escrows: [
@@ -34,7 +35,6 @@ export const wormholeV1: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Various'], // TODO: list the chains
     canonical: true,
   },

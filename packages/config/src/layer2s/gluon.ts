@@ -24,6 +24,7 @@ export const gluon: Layer2 = {
     warning:
       'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
     purpose: 'Exchange',
+    category: 'Plasma',
     links: {
       websites: ['https://gluon.network/', 'https://leverj.io/'],
       apps: ['https://live.leverj.io/'],
@@ -70,7 +71,6 @@ export const gluon: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    category: 'Plasma',
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
       isIncomplete: true,

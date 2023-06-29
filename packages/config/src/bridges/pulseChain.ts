@@ -25,6 +25,8 @@ export const pulseChain: Bridge = {
     slug: 'pulsechain',
     description:
       'Bridge used to transfer assets from Ethereum to PulseChain. Transfers are validated by set of trusted Validators.',
+    // not sure about this
+    category: 'Token Bridge',
     links: {
       websites: [
         'https://pulsechain.com/',
@@ -46,8 +48,6 @@ export const pulseChain: Bridge = {
     ],
   },
   technology: {
-    // not sure about this
-    category: 'Token Bridge',
     destination: ['PulseChain'],
     validation: {
       name: 'Validation',

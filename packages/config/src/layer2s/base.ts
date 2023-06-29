@@ -13,6 +13,8 @@ export const base: Layer2 = {
     description:
       'Base is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology. It is currently in the incubation phase at Coinbase and intends to gradually transition towards a more decentralized model over the coming years. At present, Base is deployed on the Goerli testnet for further testing and optimization.',
     purpose: 'Universal',
+    category: 'Optimistic Rollup',
+    provider: 'Optimism',
     links: {
       websites: ['https://base.org/'],
       apps: ['https://bridge.base.org/'],
@@ -30,10 +32,6 @@ export const base: Layer2 = {
     escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: {
-    ...TECHNOLOGY.UPCOMING,
-    category: 'Optimistic Rollup',
-    provider: 'Optimism',
-  },
+  technology: TECHNOLOGY.UPCOMING,
   contracts: CONTRACTS.EMPTY,
 }

@@ -89,6 +89,7 @@ export const arbitrum: Layer2 = {
       validatorAfkTime,
     )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
@@ -228,7 +229,6 @@ export const arbitrum: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
   technology: {
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
