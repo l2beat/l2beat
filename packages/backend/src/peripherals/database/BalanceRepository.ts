@@ -32,19 +32,6 @@ export class BalanceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByHolderAndAsset(
-    holder: EthereumAddress,
-    asset: AssetId,
-  ): Promise<BalanceRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex
-      .from('asset_balances')
-      .where('holder_address', holder.toString())
-      .where('asset_id', asset.toString())
-
-    return rows.map(toRecord)
-  }
-
   async addOrUpdateMany(balances: BalanceRecord[]) {
     const rows = balances.map(toRow)
     const knex = await this.knex()
@@ -53,17 +40,6 @@ export class BalanceRepository extends BaseRepository {
       .onConflict(['unix_timestamp', 'holder_address', 'asset_id'])
       .merge()
     return rows.length
-  }
-
-  async getAll(): Promise<BalanceRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('asset_balances')
-    return rows.map(toRecord)
-  }
-
-  async deleteAll() {
-    const knex = await this.knex()
-    return await knex('asset_balances').delete()
   }
 }
 
