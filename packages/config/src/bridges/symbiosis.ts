@@ -13,7 +13,7 @@ export const symbiosis: Bridge = {
   display: {
     name: 'Symbiosis',
     slug: 'symbiosis',
-    category: 'Liquidity Network',
+    category: 'Hybrid',
     description:
       'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks. The following blockchain networks are supported: Avalanche, BNB, Boba, Ethereum, Polygon, ZkSync and Arbitrum.',
     links: {
@@ -66,7 +66,7 @@ export const symbiosis: Bridge = {
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'Requests are watched by a relayer network that - utilizing MPC - sign off swaps and or token minting.',
+        'Requests are watched by a relayer network that, utilizing MPC, signs off swaps and token minting.',
       references: [],
       risks: [
         {
@@ -116,25 +116,25 @@ export const symbiosis: Bridge = {
     addresses: [
       {
         address: discovery.getContract('MetaRouter').address,
-        name: 'Symbiosis MetaRouter',
+        name: 'MetaRouter',
         description:
           'An upgradeable contract to process funds by provided route.',
       },
       {
         address: discovery.getContract('MetaRouterGateway').address,
-        name: 'Symbiosis MetaRouter Gateway',
+        name: 'MetaRouter Gateway',
         description:
           "A detached contract for secure isolation of users' assets.",
       },
       {
         address: discovery.getContract('Bridge').address,
-        name: 'Symbiosis Bridge',
+        name: 'Bridge',
         description:
           'A contract that generates Orcle requests for the Symbiosis relayers network.',
       },
       {
         address: discovery.getContract('Portal').address,
-        name: 'Symbiosis Portal',
+        name: 'Portal',
         description: 'A contract that stores "bridged" liquidity.',
       },
     ],
