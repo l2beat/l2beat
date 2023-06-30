@@ -15,7 +15,7 @@ export const symbiosis: Bridge = {
     slug: 'symbiosis',
     category: 'Hybrid',
     description:
-      'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks. The following blockchain networks are supported: Avalanche, BNB, Boba, Ethereum, Polygon, ZkSync and Arbitrum.',
+      'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks, whether they use EVM technology or not.',
     links: {
       websites: ['https://symbiosis.finance/'],
       repositories: ['https://github.com/symbiosis-finance'],
