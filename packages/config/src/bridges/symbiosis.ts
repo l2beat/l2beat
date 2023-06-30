@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
@@ -13,6 +13,7 @@ export const symbiosis: Bridge = {
   display: {
     name: 'Symbiosis',
     slug: 'symbiosis',
+    category: 'Liquidity Network',
     description:
       'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks. The following blockchain networks are supported: Avalanche, BNB, Boba, Ethereum, Polygon, ZkSync and Arbitrum.',
     links: {
@@ -27,18 +28,17 @@ export const symbiosis: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Validation network',
+      value: 'Third party',
       description:
-        'Consensus of the MPC group (the Symbiosis relayers network) is required to create a cross-chain message with the MPC signature.',
-      sentiment: 'warning',
+        '2/3 of the MPC group (the Symbiosis relayers network) is required to create a cross-chain message with the MPC signature.',
+      sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description:
-        'Contracts could be upgraded. Upgrade is possible with 3/5 threshold in gnosis safe.',
+      description: 'Contracts are upgradable using a Multisig.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL,
+    destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   technology: {
     destination: [
@@ -56,32 +56,51 @@ export const symbiosis: Bridge = {
       'Arbitrum Nova',
       'Polygon zkEVM',
     ],
-    category: 'Hybrid',
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Symbiosis is a decentralized exchange that pools together liquidity from different blockchains, whether they use EVM technology or not. With Symbiosis, users can effortlessly trade any token and transfer their assets across blockchains. No need to worry about which network a token is on or how to move funds between different blockchains. All cross-chain operations are done in a single click (one transaction) at competitive exchange rates and transaction costs.',
+        'Symbiosis uses a MPC relayer network to facilitate cross-chain transfers. An AMM on BOBA BNB is used to perform swaps. ',
       references: [],
       risks: [],
     },
     validation: {
-      name: 'Oracles and relayers',
+      name: 'Transfers are externally verified',
       description:
-        'An Oracle request from one network to another could only be transfered when majority of relayers reach a consensus about the correctness of the request.',
+        'Requests are watched by a relayer network that - utilizing MPC - sign off swaps and or token minting.',
       references: [],
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'Relayers fail to facilitate the transfer.',
+          text: 'MPC nodes decide to censor certain transactions.',
           isCritical: true,
+          _ignoreTextFormatting: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'The majority of the Symbiosis relayers network is compromised, or the majority of multi-signatutore participants are compromised.',
+          text: 'MPC nodes decide to maliciously takeover them or there is an external exploit which will result in signing malicious transaction.',
+          isCritical: true,
+          _ignoreTextFormatting: true,
+        },
+        {
+          category: 'Funds can be lost if',
+          text: 'MPC nodes lose their private keys.',
+          isCritical: true,
+          _ignoreTextFormatting: true,
+        },
+      ],
+    },
+    destinationToken: {
+      name: 'Destination tokens',
+      description:
+        'Received tokens can be wrapped tokens or native tokens depending on the destination network.',
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'destination token contract is maliciously upgraded or not securely implemented.',
           isCritical: true,
         },
       ],
-      isIncomplete: true,
+      references: [],
     },
   },
   config: {
@@ -125,7 +144,7 @@ export const symbiosis: Bridge = {
   permissions: [
     discovery.contractAsPermissioned(
       discovery.getContract('Multisig'),
-      'Owner and ProxyAdmin of all upgradable contracts.',
+      'This multisig can upgrade the BridgeV2 and Portal contracts.',
     ),
   ],
   knowledgeNuggets: [
