@@ -1,11 +1,11 @@
 {
   "name": "symbiosis",
-  "blockNumber": 17477268,
-  "configHash": "0xf9bdae7f4cd6d3f46fe547ee787fc883d1ec99105d39654717c28612fdd13053",
+  "blockNumber": 17591702,
+  "configHash": "0x62d6f63adb151f1afb4be5faa7548c043199b3a28b6f9f0f2a570c146c8331bd",
   "version": 1,
   "contracts": [
     {
-      "name": "ProxyAdmin",
+      "name": "ProxyAdminBridgeV2",
       "address": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
       "code": "https://etherscan.deth.net/address/0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
       "upgradeability": {
@@ -13,7 +13,8 @@
       },
       "values": {
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "MetaRouterGateway",
@@ -27,7 +28,7 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "ProxyAdminBridge",
       "address": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
       "code": "https://etherscan.deth.net/address/0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
       "upgradeability": {
@@ -35,7 +36,8 @@
       },
       "values": {
         "owner": "0x0ee552336134B6f8F0a72927b6124f8A81865928"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "Multisig",
@@ -93,25 +95,11 @@
         "metaRouter": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
         "paused": false,
-        "requestCount": 1672,
+        "requestCount": 1982,
         "versionRecipient": "2.0.1",
         "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "derivedName": "Portal"
-    },
-    {
-      "name": "WETH9",
-      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "code": "https://etherscan.deth.net/address/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "3487217679673273221842216"
-      }
     },
     {
       "name": "Bridge",
@@ -269,23 +257,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
     ],
     "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0": [
       "constructor(address _logic, address admin_, bytes _data) payable",
