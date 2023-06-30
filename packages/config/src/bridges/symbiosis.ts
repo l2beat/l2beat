@@ -14,7 +14,7 @@ export const symbiosis: Bridge = {
     name: 'Symbiosis',
     slug: 'symbiosis',
     description:
-      'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks. Best rates for any to any token swaps regardless of the blockchain network: Avalanche, BNB, Boba, Ethereum, Polygon, ZkSync and Arbitrum supported.',
+      'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks. The following blockchain networks are supported: Avalanche, BNB, Boba, Ethereum, Polygon, ZkSync and Arbitrum.',
     links: {
       websites: ['https://symbiosis.finance/'],
       repositories: ['https://github.com/symbiosis-finance'],
