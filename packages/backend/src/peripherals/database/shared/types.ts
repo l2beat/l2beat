@@ -1,5 +1,3 @@
-import { ChainId } from '@l2beat/shared-pure'
-
 export {}
 
 declare module 'knex/types/tables' {

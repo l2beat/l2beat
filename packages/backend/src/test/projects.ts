@@ -1,6 +1,7 @@
 import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
+  ChainId,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
@@ -27,24 +28,28 @@ export const BALANCES: BalanceRecord[] = [
     assetId: AssetId.DAI,
     holderAddress: ARBITRUM_ESCROW_ONE,
     balance: 2_000n * 10n ** 18n,
+    chainId: ChainId.ETHEREUM,
   },
   {
     timestamp: NOW,
     assetId: AssetId.DAI,
     holderAddress: ARBITRUM_ESCROW_TWO,
     balance: 3_000n * 10n ** 18n,
+    chainId: ChainId.ETHEREUM,
   },
   {
     timestamp: NOW,
     assetId: AssetId.ETH,
     holderAddress: ARBITRUM_ESCROW_TWO,
     balance: 30n * 10n ** 18n,
+    chainId: ChainId.ETHEREUM,
   },
   {
     timestamp: NOW,
     assetId: AssetId.ETH,
     holderAddress: OPTIMISM_ESCROW,
     balance: 20n * 10n ** 18n,
+    chainId: ChainId.ETHEREUM,
   },
 ]
 
