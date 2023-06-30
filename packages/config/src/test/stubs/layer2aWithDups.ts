@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import {
   DATA_AVAILABILITY,
@@ -16,6 +16,8 @@ export const layer2aWithDups: Layer2 = {
     slug: 'layer2a',
     description: '',
     purpose: 'Universal',
+    provider: 'Optimism',
+    category: 'Optimistic Rollup',
     links: {
       websites: [],
       apps: [],
@@ -35,15 +37,13 @@ export const layer2aWithDups: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_TRANSACT_L1,
-    proposerFailure: RISK_VIEW.VALIDATOR_WHITELISTED_BLOCKS,
+    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_YES,
   },
   technology: {
-    provider: 'Optimism',
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:

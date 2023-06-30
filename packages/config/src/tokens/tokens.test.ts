@@ -1,10 +1,5 @@
-import {
-  AssetId,
-  CoingeckoClient,
-  CoingeckoId,
-  EthereumAddress,
-  HttpClient,
-} from '@l2beat/shared'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
+import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 

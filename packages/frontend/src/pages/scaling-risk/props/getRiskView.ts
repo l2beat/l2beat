@@ -1,5 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
+import { VerificationStatus } from '@l2beat/shared-pure'
 
 import { ScalingRiskViewProps } from '../view/ScalingRiskView'
 import { ScalingRiskViewEntry } from '../view/types'
@@ -24,7 +24,7 @@ export function getRiskViewEntry(
   return {
     name: project.display.name,
     slug: project.display.slug,
-    provider: project.technology.provider,
+    provider: project.display.provider,
     warning: project.display.warning,
     isArchived: project.isArchived,
     isVerified,

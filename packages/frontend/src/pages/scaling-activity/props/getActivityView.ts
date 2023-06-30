@@ -4,7 +4,7 @@ import {
   ActivityApiResponse,
   ProjectId,
   VerificationStatus,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 import { getMaxTps } from '../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
@@ -38,7 +38,7 @@ export function getActivityViewEntry(
   return {
     name: project.display.name,
     slug: project.display.slug,
-    provider: project.technology.provider,
+    provider: project.display.provider,
     warning: project.display.warning,
     isVerified,
     dataSource: project.display.activityDataSource,

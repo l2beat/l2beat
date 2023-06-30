@@ -1,5 +1,5 @@
 import { Bridge, ProjectLinks } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/shared'
+import { TvlApiResponse } from '@l2beat/shared-pure'
 
 import { ProjectLink } from '../../../components/icons'
 import { getDestination } from '../../../utils/getDestination'
@@ -21,7 +21,7 @@ export function getProjectHeader(
     tvlWeeklyChange,
     destination: getDestination(project.technology.destination),
     validatedBy: project.riskView?.validatedBy,
-    type: project.technology.category,
+    type: project.display.category,
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
     links: getLinks(project.display.links),

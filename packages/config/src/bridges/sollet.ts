@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
@@ -17,6 +17,7 @@ export const sollet: Bridge = {
       'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead.',
     description:
       'Externally Validated bridge to Solana that is now being phased out - users are encouraged to use Wormhole instead.',
+    category: 'Token Bridge',
     links: {
       websites: ['https://www.sollet.io/'],
       socialMedia: ['https://projectserum.medium.com/'],
@@ -35,7 +36,6 @@ export const sollet: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Solana'],
     principleOfOperation: {
       name: 'Principle of Operation',

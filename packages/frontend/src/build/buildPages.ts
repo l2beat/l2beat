@@ -1,4 +1,6 @@
-import { ActivityApiResponse, HttpClient } from '../../../shared/build'
+import { ActivityApiResponse } from '@l2beat/shared-pure'
+
+import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'

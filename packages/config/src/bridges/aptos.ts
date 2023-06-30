@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS, NUGGETS } from '../layer2s/common'
@@ -26,6 +26,7 @@ export const aptos: Bridge = {
     },
     description:
       'Aptos Bridge is built on top of LayerZero protocol and is a token bridge for transferring assets from Ethereum to Aptos. It leverages an oracle and relayer for cross-chain security for the protocol.',
+    category: 'Token Bridge',
   },
   riskView: {
     validatedBy: {
@@ -44,7 +45,6 @@ export const aptos: Bridge = {
   },
   technology: {
     destination: ['Aptos'],
-    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

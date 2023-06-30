@@ -1,4 +1,5 @@
-import { Logger, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { ZksyncTransactionRow } from 'knex/types/tables'
 
@@ -17,16 +18,22 @@ export class ZksyncTransactionRepository extends BaseRepository {
     this.autoWrap<CheckConvention<ZksyncTransactionRepository>>(this)
   }
 
-  async addMany(records: ZksyncTransactionRecord[], trx?: Knex.Transaction) {
+  async addOrUpdateMany(
+    records: ZksyncTransactionRecord[],
+    trx?: Knex.Transaction,
+  ) {
     for (const record of records) {
-      await this.add(record, trx)
+      await this.addOrUpdate(record, trx)
     }
     return records.length
   }
 
-  async add(record: ZksyncTransactionRecord, trx?: Knex.Transaction) {
+  async addOrUpdate(record: ZksyncTransactionRecord, trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
-    await knex('activity.zksync').insert(toRow(record))
+    await knex('activity.zksync')
+      .insert(toRow(record))
+      .onConflict(['block_number', 'block_index'])
+      .merge()
     return `zksync-${record.blockNumber})}`
   }
 

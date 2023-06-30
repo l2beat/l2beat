@@ -32,7 +32,7 @@ export function getProps(
             warning: project.display.warning,
             isArchived: project.isArchived,
             isVerified: verificationStatus.projects[project.id.toString()],
-            category: project.technology.category,
+            category: project.display.category,
             destination: getDestination(
               project.type === 'bridge'
                 ? project.technology.destination

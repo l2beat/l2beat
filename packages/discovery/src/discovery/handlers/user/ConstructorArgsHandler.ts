@@ -1,4 +1,4 @@
-import { assert, ContractValue, EthereumAddress } from '@l2beat/shared'
+import { assert, ContractValue, EthereumAddress } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 import { z } from 'zod'
 

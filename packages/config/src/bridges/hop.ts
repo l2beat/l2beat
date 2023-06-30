@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
@@ -12,6 +12,7 @@ export const hop: Bridge = {
   display: {
     name: 'Hop',
     slug: 'hop',
+    category: 'Liquidity Network',
     links: {
       websites: ['https://hop.exchange/'],
       repositories: ['https://github.com/hop-protocol'],
@@ -63,7 +64,6 @@ export const hop: Bridge = {
     ],
   },
   technology: {
-    category: 'Liquidity Network',
     destination: ['Polygon', 'Gnosis', 'Optimism', 'Arbitrum'],
     principleOfOperation: {
       name: 'Principle of operation',

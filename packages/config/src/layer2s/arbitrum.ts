@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
@@ -89,6 +89,7 @@ export const arbitrum: Layer2 = {
       validatorAfkTime,
     )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
@@ -228,7 +229,6 @@ export const arbitrum: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
   technology: {
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
@@ -427,7 +427,11 @@ export const arbitrum: Layer2 = {
         ...upgradesGatewaysAdmin,
       }),
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [
+      CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_SC(
+        Math.round(totalDelay / 86400).toString(), // delay in days
+      ),
+    ],
   },
   milestones: [
     {
@@ -464,37 +468,21 @@ export const arbitrum: Layer2 = {
   ],
   stage: getStage({
     stage0: {
-      callsItselfRollup: [true, 'Here you can specify additional description.'],
+      callsItselfRollup: true,
       stateRootsPostedToL1: true,
-      txsOrStateDiffsPostedToL1: true,
-      rollupNodeExists: true,
-      nodeSoftwareProgram: true,
-      nodeOpenSource: true,
-      nodeComputesStateBasedOnL1: true,
-      nodeDetectsDisagreement: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: true,
     },
     stage1: {
       stateVerificationOnL1: true,
-      fraudProofSystemWhitelistedOutsideOrganization: true,
-      fraudProofSystemAllowsRejecting: true,
-      validityProofRequiresAccepting: null,
-      validityProofChecksTransactions: null,
-      proofSystemOverriddenOnlyBySecurityCouncil: null,
-      upgradeCannotInterveneInProofSystem: true,
-      upgradeDelayLongerThenFraudProofWindow: true,
+      fraudProofSystemAtLeast5Outsiders: true,
+      usersHave7DaysToExit: true,
       usersCanExitWithoutCooperation: true,
-      securityCouncilMultisig: true,
-      securityCouncilAtLeast8: true,
-      securityCouncilMultisigThreshold: true,
-      securityCouncilMembersOutsideOrganization: true,
-      securityCouncilMembersOutsideOrganizationPseudonymous: true,
+      securityCouncilProperlySetUp: true,
     },
     stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemMustBePermissionless: [
-        false,
-        'Here you can specify additional text to explain why this is not the case.',
-      ],
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: false,
       delayWith30DExitWindow: false,
     },
   }),

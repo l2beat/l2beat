@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -9,6 +9,7 @@ export const orbiter: Bridge = {
   display: {
     name: 'Orbiter',
     slug: 'orbiter',
+    category: 'Liquidity Network',
     links: {
       websites: ['https://orbiter.finance/'],
       documentation: ['https://docs.orbiter.finance/'],
@@ -52,7 +53,6 @@ export const orbiter: Bridge = {
     ],
   },
   technology: {
-    category: 'Liquidity Network',
     destination: [
       'zkSync',
       'Polygon',

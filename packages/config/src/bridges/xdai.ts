@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../layer2s/common'
 import { Bridge } from './types'
@@ -9,6 +9,7 @@ export const xdai: Bridge = {
   display: {
     name: 'xDai Bridge',
     slug: 'xdai',
+    category: 'Token Bridge',
     links: {
       websites: ['https://bridge.gnosischain.com/'],
       apps: ['https://bridge.gnosischain.com/'],
@@ -42,7 +43,6 @@ export const xdai: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Gnosis Chain'],
     principleOfOperation: {
       name: 'Principle of operation',

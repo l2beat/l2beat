@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -50,6 +50,8 @@ export const apex: Layer2 = {
     description:
       'ApeX Pro is a non-custodial trading platform that delivers limitless cross-margined perpetual contracts trading.',
     purpose: 'Exchange',
+    provider: 'StarkEx',
+    category: 'Validium',
     links: {
       websites: ['https://apex.exchange/'],
       apps: ['https://pro.apex.exchange/'],
@@ -58,6 +60,7 @@ export const apex: Layer2 = {
       repositories: ['https://github.com/ApeX-Protocol/core'],
       socialMedia: ['https://twitter.com/OfficialApeXdex'],
     },
+    activityDataSource: 'Closed API',
   },
   config: {
     escrows: [
@@ -101,8 +104,6 @@ export const apex: Layer2 = {
     destinationToken: RISK_VIEW.CANONICAL_USDC,
   }),
   technology: {
-    provider: 'StarkEx',
-    category: 'Validium',
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

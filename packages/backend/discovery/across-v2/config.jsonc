@@ -16,30 +16,11 @@
     "HubPool": {
       "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
       "fields": {
-        "crossChainMainnet": {
-          "type": "call",
-          "method": "crossChainContracts",
-          "args": [1]
-        },
-        "crossChainOptimism": {
-          "type": "call",
-          "method": "crossChainContracts",
-          "args": [10]
-        },
-        "crossChainPolygon": {
-          "type": "call",
-          "method": "crossChainContracts",
-          "args": [137]
-        },
-        "crossChainBoba": {
-          "type": "call",
-          "method": "crossChainContracts",
-          "args": [288]
-        },
-        "crossChainArbitrum": {
-          "type": "call",
-          "method": "crossChainContracts",
-          "args": [42161]
+        "CrossChainContracts": {
+          "type": "stateFromEvent",
+          "event": "CrossChainContractsSet",
+          "returnParams": ["l2ChainId", "adapter", "spokePool"],
+          "groupBy": "l2ChainId"
         }
       },
       "ignoreInWatchMode": ["rootBundleProposal"]

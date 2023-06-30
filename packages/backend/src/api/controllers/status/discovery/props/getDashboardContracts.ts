@@ -3,7 +3,7 @@ import {
   ContractParameters,
   DiscoveryOutput,
   EthereumAddress,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { abiToArray } from './dashboardContracts/abiToArray'

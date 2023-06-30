@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s'
@@ -13,6 +13,7 @@ export const debridge: Bridge = {
   display: {
     name: 'deBridge',
     slug: 'debridge',
+    category: 'Token Bridge',
     links: {
       websites: ['https://debridge.finance'],
       documentation: ['https://docs.debridge.finance'],
@@ -51,7 +52,6 @@ export const debridge: Bridge = {
   },
   technology: {
     destination: ['Arbitrum', 'Avalanche', 'BNB Chain', 'Polygon'],
-    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -9,6 +9,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 import { zkswap } from './zkswap'
 
@@ -31,6 +32,8 @@ export const zkspace: Layer2 = {
     description:
       'The ZKSpace platform consists of three main parts: a Layer 2 AMM DEX utilizing ZK-Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
     purpose: 'Tokens, NFTs, AMM',
+    provider: 'zkSync',
+    category: zkswap.display.category,
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -117,9 +120,27 @@ export const zkspace: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: 'UnderReview',
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave7DaysToExit: false,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
+  }),
   technology: {
-    provider: 'zkSync',
-    category: zkswap.technology.category,
     stateCorrectness: zkswap.technology.stateCorrectness,
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,

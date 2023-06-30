@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   DATA_AVAILABILITY,
@@ -21,6 +21,7 @@ export const layer2finance: Layer2 = {
     description:
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purpose: 'DeFi aggregation',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://layer2.finance/'],
       apps: ['https://app.l2.finance/'],
@@ -54,8 +55,10 @@ export const layer2finance: Layer2 = {
     destinationToken: RISK_VIEW.CANONICAL,
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
+  stage: {
+    stage: 'UnderReview',
+  },
   technology: {
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
       description:

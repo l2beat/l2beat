@@ -25,7 +25,7 @@ export function MobileProjectLinks(props: MobileProjectLinksProps) {
             Website, Docs, etc.
           </span>
         </div>
-        <ChevronDownIcon className="peer-checked:rotate-180" />
+        <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
       </label>
       <div className="Dropdown-Item hidden">
         <table className="w-full table-fixed border-collapse text-left text-xs">

@@ -1,4 +1,5 @@
-import { Logger, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
@@ -15,6 +16,7 @@ export class BlockNumberUpdater {
     private readonly blockNumberRepository: BlockNumberRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
+    private readonly chainId: ChainId,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -74,7 +76,7 @@ export class BlockNumberUpdater {
   }
 
   async start() {
-    const known = await this.blockNumberRepository.getAll()
+    const known = await this.blockNumberRepository.getAll(this.chainId)
     for (const { timestamp, blockNumber } of known) {
       this.blocksByTimestamp.set(timestamp.toNumber(), blockNumber)
     }
@@ -93,7 +95,7 @@ export class BlockNumberUpdater {
     const blockNumber = await this.etherscanClient.getBlockNumberAtOrBefore(
       timestamp,
     )
-    const block = { timestamp, blockNumber }
+    const block = { timestamp, blockNumber, chainId: this.chainId }
     await this.blockNumberRepository.add(block)
     this.blocksByTimestamp.set(timestamp.toNumber(), blockNumber)
     this.logger.info('Update completed', {

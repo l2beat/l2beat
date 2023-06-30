@@ -37,6 +37,10 @@ import {
   StarkWareNamedStorageHandler,
   StarkWareNamedStorageHandlerDefinition,
 } from './StarkWareNamedStorageHandler'
+import {
+  StateFromEventDefinition,
+  StateFromEventHandler,
+} from './StateFromEventHandler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 
 export type UserHandlerDefinition = z.infer<typeof UserHandlerDefinition>
@@ -51,6 +55,7 @@ export const UserHandlerDefinition = z.union([
   ArrayFromTwoEventsHandlerDefinition,
   ConstructorArgsDefinition,
   EventCountHandlerDefinition,
+  StateFromEventDefinition,
   HardCodedDefinition,
   StarkWareGovernanceHandlerDefinition,
 ])
@@ -86,5 +91,7 @@ export function getUserHandler(
       return new HardCodedHandler(field, definition, logger)
     case 'starkWareGovernance':
       return new StarkWareGovernanceHandler(field, definition, abi, logger)
+    case 'stateFromEvent':
+      return new StateFromEventHandler(field, definition, abi, logger)
   }
 }

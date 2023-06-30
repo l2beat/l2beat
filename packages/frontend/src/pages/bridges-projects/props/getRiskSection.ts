@@ -1,5 +1,5 @@
 import { Bridge, CONTRACTS, ProjectRisk } from '@l2beat/config'
-import { VerificationStatus } from '@l2beat/shared'
+import { VerificationStatus } from '@l2beat/shared-pure'
 
 import { RiskSectionProps } from '../../../components/project/RiskSection'
 import { groupRisks } from '../../../utils/project/groupRisks'
@@ -34,5 +34,9 @@ export function getRiskSection(
     }
   }
 
-  return { id: 'risks', title: 'Risk summary', riskGroups: groupRisks(risks) }
+  return {
+    id: 'risk-analysis',
+    title: 'Risk summary',
+    riskGroups: groupRisks(risks),
+  }
 }

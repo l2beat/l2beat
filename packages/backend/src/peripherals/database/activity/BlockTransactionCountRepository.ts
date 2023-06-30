@@ -1,4 +1,5 @@
-import { Logger, ProjectId, UnixTime } from '@l2beat/shared'
+import { Logger } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { BlockTransactionCountRow } from 'knex/types/tables'
 
@@ -18,19 +19,25 @@ export class BlockTransactionCountRepository extends BaseRepository {
     this.autoWrap<CheckConvention<BlockTransactionCountRepository>>(this)
   }
 
-  async addMany(
+  async addOrUpdateMany(
     records: BlockTransactionCountRecord[],
     trx?: Knex.Transaction,
   ) {
     for (const record of records) {
-      await this.add(record, trx)
+      await this.addOrUpdate(record, trx)
     }
     return records.length
   }
 
-  async add(record: BlockTransactionCountRecord, trx?: Knex.Transaction) {
+  async addOrUpdate(
+    record: BlockTransactionCountRecord,
+    trx?: Knex.Transaction,
+  ) {
     const knex = await this.knex(trx)
-    await knex('activity.block').insert(toRow(record))
+    await knex('activity.block')
+      .insert(toRow(record))
+      .onConflict(['project_id', 'block_number'])
+      .merge()
     return `${record.projectId.toString()}-${record.blockNumber})}`
   }
 

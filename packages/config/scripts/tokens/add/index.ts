@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { config as dotenv } from 'dotenv'
 import { providers } from 'ethers'

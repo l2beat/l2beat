@@ -2,7 +2,7 @@
 // https://eips.ethereum.org/EIPS/eip-2535#a-note-on-implementing-interfaces
 // every contract implementing this standard needs to have facetAddresses() view function
 
-import { EthereumAddress, ProxyDetails } from '@l2beat/shared'
+import { EthereumAddress, ProxyDetails } from '@l2beat/shared-pure'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { getCallResult } from '../../utils/getCallResult'

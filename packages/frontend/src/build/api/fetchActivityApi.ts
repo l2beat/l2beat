@@ -1,4 +1,4 @@
-import { ActivityApiResponse } from '@l2beat/shared'
+import { ActivityApiResponse } from '@l2beat/shared-pure'
 
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 

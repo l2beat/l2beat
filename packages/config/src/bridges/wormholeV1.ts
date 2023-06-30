@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -13,6 +13,7 @@ export const wormholeV1: Bridge = {
     links: {
       websites: ['https://wormhole.com/'],
     },
+    category: 'Token Bridge',
   },
   config: {
     escrows: [
@@ -34,7 +35,6 @@ export const wormholeV1: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Various'], // TODO: list the chains
     canonical: true,
   },

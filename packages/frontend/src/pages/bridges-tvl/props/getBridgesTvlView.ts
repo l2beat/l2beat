@@ -1,5 +1,5 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/shared'
+import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
@@ -61,6 +61,6 @@ function getBridgesTvlViewEntry(
       ? formatPercent(stats.tvl / combinedTvl)
       : undefined,
     validatedBy: project.riskView?.validatedBy,
-    category: project.technology.category,
+    category: project.display.category,
   }
 }

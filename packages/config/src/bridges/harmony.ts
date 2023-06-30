@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { Bridge } from './types'
 
@@ -9,6 +9,7 @@ export const harmony: Bridge = {
     name: 'Harmony',
     slug: 'harmony',
     description: 'Externally Validated Token Bridge secured by a multisig.',
+    category: 'Token Bridge',
     links: {
       websites: ['https://bridge.harmony.one/erc20'],
     },
@@ -46,7 +47,6 @@ export const harmony: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Harmony'],
   },
   riskView: {

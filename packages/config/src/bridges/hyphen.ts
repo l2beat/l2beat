@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS, NUGGETS } from '../layer2s'
@@ -13,6 +13,7 @@ export const hyphen: Bridge = {
   display: {
     name: 'Hyphen',
     slug: 'hyphen',
+    category: 'Liquidity Network',
     links: {
       websites: ['https://hyphen.biconomy.io/'],
       documentation: [
@@ -41,7 +42,6 @@ export const hyphen: Bridge = {
     ],
   },
   technology: {
-    category: 'Liquidity Network',
     destination: [
       'Polygon',
       'Avalanche',

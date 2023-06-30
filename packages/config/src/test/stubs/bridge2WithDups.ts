@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { Bridge } from '../../bridges/types'
 
@@ -8,13 +8,13 @@ export const bridge2WithDups: Bridge = {
   display: {
     name: 'Bridge2',
     slug: 'bridge2',
+    category: 'Token Bridge',
     links: {},
   },
   config: {
     escrows: [],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Dest Chain'],
   },
   contracts: {

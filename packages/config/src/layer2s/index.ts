@@ -14,6 +14,7 @@ import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
+import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { loopring } from './loopring'
@@ -35,6 +36,7 @@ import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
 import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
+import { zora } from './zora'
 export * from './common'
 export * from './types'
 
@@ -53,6 +55,7 @@ export const layer2s: Layer2[] = [
   gluon,
   hermez,
   immutablex,
+  kroma,
   layer2finance,
   layer2financezk,
   linea,
@@ -74,6 +77,7 @@ export const layer2s: Layer2[] = [
   zkswap2,
   zksyncera,
   zksynclite,
+  zora,
 ]
 
 export const milestonesLayer2s = HOMEPAGE_MILESTONES

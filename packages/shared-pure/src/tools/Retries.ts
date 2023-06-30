@@ -13,17 +13,15 @@ function always() {
 }
 
 interface ExponentialBackOffOpts {
-  maxAttempts?: number
+  stepMs: number
+  maxAttempts: number // use Infinity for indefinite retries
   maxDistanceMs?: number
 }
 
-export function exponentialBackOff(
-  stepMs: number,
-  opts?: ExponentialBackOffOpts,
-) {
-  const maxAttempts = opts?.maxAttempts ?? Infinity
+export function exponentialBackOff(opts: ExponentialBackOffOpts) {
+  const maxAttempts = opts.maxAttempts
   assert(maxAttempts > 0)
-  const maxDistanceMs = opts?.maxDistanceMs ?? Infinity
+  const maxDistanceMs = opts.maxDistanceMs ?? Infinity
   assert(maxDistanceMs > 0)
 
   return ({ attempts }: { attempts: number }) => {
@@ -32,7 +30,7 @@ export function exponentialBackOff(
         retry: false,
       }
     }
-    const distance = Math.pow(2, attempts) * stepMs
+    const distance = Math.pow(2, attempts) * opts.stepMs
     return {
       retry: true,
       executeAfter: Math.min(distance, maxDistanceMs),

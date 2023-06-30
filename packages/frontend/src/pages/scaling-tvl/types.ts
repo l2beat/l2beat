@@ -7,7 +7,7 @@ export interface ScalingTvlViewEntry {
   name: string
   slug: string
   riskValues: RiskValues
-  provider?: Layer2['technology']['provider']
+  provider?: Layer2['display']['provider']
   warning?: string
   isArchived?: boolean
   isVerified?: boolean

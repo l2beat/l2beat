@@ -5,7 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { ProjectLink } from '../../../components/icons'
+import { InfoIcon, ProjectLink } from '../../../components/icons'
 import { StageBadge } from '../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../components/stages/StageTooltip'
 import { TechnologyCell } from '../../../components/table/TechnologyCell'
@@ -30,7 +30,8 @@ export interface ProjectHeaderProps {
   tvlBreakdown: TVLBreakdownProps
   risks: RiskValues
   links: ProjectLink[]
-  stage?: false | StageConfig
+  stagesEnabled?: boolean
+  stage?: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
   warning?: string | { text: string; href: string }
@@ -75,18 +76,23 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: '30D tx count',
       value: props.transactionMonthlyCount ?? <UpcomingBadge />,
     },
-    ...(props.stage
+    ...(props.stagesEnabled && props.stage
       ? [
           {
-            title: 'Stages',
+            title: 'Stage',
             value: (
-              <span
-                className="Tooltip"
-                title={renderToStaticMarkup(
-                  <StageTooltip item={props.stage} />,
-                )}
-              >
-                <StageBadge category={'Stage 1'} />
+              <span className="relative -top-0.5 flex items-center">
+                <a href="#stage">
+                  <StageBadge stage={props.stage.stage} big />
+                </a>
+                <span
+                  className="Tooltip inline-block px-2"
+                  title={renderToStaticMarkup(
+                    <StageTooltip item={props.stage} />,
+                  )}
+                >
+                  <InfoIcon />
+                </span>
               </span>
             ),
           },
@@ -105,6 +111,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
   return (
     <DetailsHeader
       type="layer2"
+      stagesEnabled={props.stagesEnabled}
       title={props.title}
       icon={props.icon}
       stats={stats}

@@ -1,4 +1,9 @@
-import { assert, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -12,6 +17,7 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('degate')
@@ -45,11 +51,11 @@ export const degate: Layer2 = {
   display: {
     name: 'DeGate',
     slug: 'degate',
-    warning:
-      'Even though the exchange is immutable, we haven’t verified the program whose computation is being proven. In the case of bugs or backdoors, funds could be lost.',
     description:
       'DeGate is an app-specific ZK rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purpose: 'Exchange',
+    provider: 'loopring',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
@@ -109,9 +115,30 @@ export const degate: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: 'UnderReview',
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave7DaysToExit: null,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: [
+        true,
+        'Users have at least 30d to exit as the system cannot be upgraded.',
+      ],
+    },
+  }),
   technology: {
-    provider: 'loopring',
-    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

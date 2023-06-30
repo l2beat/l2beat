@@ -2,7 +2,7 @@ import {
   ActivityApiResponse,
   TvlApiResponse,
   VerificationStatus,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 import { ReactElement } from 'react'
 
 export interface Page {

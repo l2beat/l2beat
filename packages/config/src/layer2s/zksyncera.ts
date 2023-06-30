@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
@@ -15,6 +15,7 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
 } from './common'
+import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync2')
@@ -43,6 +44,8 @@ export const zksyncera: Layer2 = {
       'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.\
       It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.',
     purpose: 'Universal',
+    provider: 'zkSync',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
       apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
@@ -70,7 +73,17 @@ export const zksyncera: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
         sinceTimestamp: new UnixTime(1676367083),
-        tokens: ['USDC', 'PERP', 'MUTE'],
+        tokens: [
+          'USDC',
+          'PERP',
+          'MUTE',
+          'USDT',
+          'WBTC',
+          'LUSD',
+          'rETH',
+          'RPL',
+          '1INCH',
+        ],
         description:
           'Standard bridge for depositing ERC20 tokens to zkSync Era.',
         ...upgrades,
@@ -180,9 +193,27 @@ export const zksyncera: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeOpenSource: 'UnderReview',
+    },
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
+      usersHave7DaysToExit: false,
+      usersCanExitWithoutCooperation: false,
+      securityCouncilProperlySetUp: null,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: null,
+      fraudProofSystemIsPermissionless: null,
+      delayWith30DExitWindow: false,
+    },
+  }),
   technology: {
-    provider: 'zkSync',
-    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
