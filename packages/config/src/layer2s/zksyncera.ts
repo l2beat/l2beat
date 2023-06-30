@@ -101,6 +101,7 @@ export const zksyncera: Layer2 = {
       value: 'ZK proofs',
       description:
         'Uses PLONK zero-knowledge proof system with KZG commitments.',
+      sentiment: 'good',
       sources: [
         {
           contract: 'ValidatorTimelock',
@@ -131,6 +132,7 @@ export const zksyncera: Layer2 = {
       value: 'On chain (SD)',
       description:
         'All of the data (SD = state diffs) needed for proof construction is published on chain.',
+      sentiment: 'good',
       sources: [
         {
           contract: 'ValidatorTimelock',

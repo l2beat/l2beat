@@ -31,10 +31,7 @@ export const layer2aWithDups: Layer2 = {
     escrows: [],
   },
   riskView: {
-    stateValidation: {
-      value: '',
-      description: '',
-    },
+    stateValidation: RISK_VIEW.STATE_FP,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     upgradeability: RISK_VIEW.UPGRADABLE_YES,
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
