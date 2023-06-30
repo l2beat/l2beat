@@ -26,7 +26,8 @@
     "test": "wsrun -ecam test",
     "typecheck": "wsrun -ecam typecheck",
     "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck && yarn test",
-    "heroku-postbuild": "yarn build:backend"
+    "heroku-postbuild": "yarn build:backend",
+    "checkout": "yarn clean && yarn && yarn build"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^10.0.2",
