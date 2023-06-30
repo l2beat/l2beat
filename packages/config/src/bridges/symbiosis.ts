@@ -59,7 +59,7 @@ export const symbiosis: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Symbiosis uses a MPC relayer network to facilitate cross-chain transfers. An AMM on BOBA BNB is used to perform swaps. ',
+        'Symbiosis uses a MPC relayer network to facilitate cross-chain transfers. An AMM on BOBA BNB is used to perform swaps.',
       references: [],
       risks: [],
     },
