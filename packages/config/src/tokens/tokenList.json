@@ -1761,6 +1761,16 @@
       "category": "other"
     },
     {
+      "id": "sis-symbiosis",
+      "name": "Symbiosis",
+      "coingeckoId": "symbiosis-finance",
+      "address": "0xd38BB40815d2B0c2d2c866e0c72c5728ffC76dd9",
+      "symbol": "SIS",
+      "decimals": 18,
+      "sinceTimestamp": 1637265271,
+      "category": "other"
+    },
+    {
       "id": "syn-synapse",
       "name": "Synapse",
       "coingeckoId": "synapse-2",
