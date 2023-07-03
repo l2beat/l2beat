@@ -7,7 +7,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "NODE_ENV=production gulp build",
-    "build:dependencies": "cd ../.. && yarn build:dependencies && cd -",
+    "build:dependencies": "cd ../.. && yarn build:dependencies",
     "clean": "rm -rf build",
     "format:fix": "prettier --write .",
     "format": "prettier --check .",
