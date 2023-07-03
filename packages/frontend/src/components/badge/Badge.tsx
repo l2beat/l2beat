@@ -1,7 +1,13 @@
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
-type BadgeType = 'error' | 'warning' | 'brightYellow' | 'gray' | 'purple'
+type BadgeType =
+  | 'error'
+  | 'warning'
+  | 'brightYellow'
+  | 'gray'
+  | 'purple'
+  | 'UnderReview'
 
 export interface BadgeProps {
   type?: BadgeType
@@ -17,6 +23,7 @@ const badgeClassnames: Record<BadgeType, string> = {
   warning: 'text-black bg-yellow-500',
   brightYellow: 'bg-yellow-200 text-purple-700',
   purple: 'bg-pink-900 text-white',
+  UnderReview: 'bg-gray-750 text-yellow-200',
 }
 
 export function Badge({

@@ -1,4 +1,5 @@
 import { StageConfig } from '@l2beat/config'
+import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
 import { configureDropdowns } from '../../scripts/configureDropdowns'
@@ -52,8 +53,7 @@ const item: StageConfig = {
     },
   ],
 }
-
-export function StageSection() {
+function Template(stage: StageConfig) {
   useEffect(() => {
     configureDropdowns()
   }, [])
@@ -62,7 +62,7 @@ export function StageSection() {
       <StageSectionComponent
         title="Rollup stage"
         id="stage"
-        stage={item}
+        stage={stage}
         icon="/icons/arbitrum.png"
         name="Arbitrum One"
         type="Optimistic Rollup"
@@ -70,3 +70,9 @@ export function StageSection() {
     </div>
   )
 }
+
+export const StageSection: Story<StageConfig> = Template.bind({})
+StageSection.args = item
+
+export const StageSectionUnderReview: Story<StageConfig> = Template.bind({})
+StageSectionUnderReview.args = { stage: 'UnderReview' }

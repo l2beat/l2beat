@@ -2,7 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { sentimentToTextColor } from '../../utils/risks/color'
-import { RiskValues } from '../../utils/risks/types'
+import { RiskValue, RiskValues } from '../../utils/risks/types'
 import { BigRosette } from '../rosette'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { SectionId } from './sectionId'
@@ -14,89 +14,63 @@ export interface RiskAnalysisProps {
 }
 
 export function RiskAnalysis({ id, title, riskValues }: RiskAnalysisProps) {
+  const underReview = Object.values(riskValues).every(
+    ({ sentiment }) => sentiment === 'UnderReview',
+  )
   return (
-    <ProjectDetailsSection title={title} id={id} className="mt-4">
+    <ProjectDetailsSection
+      title={title}
+      id={id}
+      className="mt-4"
+      underReview={underReview}
+    >
       <BigRosette risks={riskValues} className="mx-auto my-6 lg:hidden" />
-      <div>
-        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
-          State validation
-        </h3>
-        <span
-          className={cx(
-            sentimentToTextColor(riskValues.stateValidation.sentiment),
-            'mt-2 block text-xl font-bold md:text-2xl',
-          )}
-        >
-          {riskValues.stateValidation.value}
-        </span>
-        <p className="mt-2 text-gray-850 dark:text-gray-400">
-          {riskValues.stateValidation.description}
-        </p>
-      </div>
-      <div>
-        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
-          Data availability
-        </h3>
-        <span
-          className={cx(
-            sentimentToTextColor(riskValues.dataAvailability.sentiment),
-            'mt-2 block text-xl font-bold md:text-2xl',
-          )}
-        >
-          {riskValues.dataAvailability.value}
-        </span>
-        <p className="mt-2 text-gray-850 dark:text-gray-400">
-          {riskValues.dataAvailability.description}
-        </p>
-      </div>
-      <div>
-        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
-          Upgradeability
-        </h3>
-        <span
-          className={cx(
-            sentimentToTextColor(riskValues.upgradeability.sentiment),
-            'mt-2 block text-xl font-bold md:text-2xl',
-          )}
-        >
-          {riskValues.upgradeability.value}
-        </span>
-        <p className="mt-2 text-gray-850 dark:text-gray-400">
-          {riskValues.upgradeability.description}
-        </p>
-      </div>
-      <div>
-        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
-          Sequencer failure
-        </h3>
-        <span
-          className={cx(
-            sentimentToTextColor(riskValues.sequencerFailure.sentiment),
-            'mt-2 block text-xl font-bold md:text-2xl',
-          )}
-        >
-          {riskValues.sequencerFailure.value}
-        </span>
-        <p className="mt-2 text-gray-850 dark:text-gray-400">
-          {riskValues.sequencerFailure.description}
-        </p>
-      </div>
-      <div>
-        <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
-          Proposer failure
-        </h3>
-        <span
-          className={cx(
-            sentimentToTextColor(riskValues.proposerFailure.sentiment),
-            'mt-2 block text-xl font-bold md:text-2xl',
-          )}
-        >
-          {riskValues.proposerFailure.value}
-        </span>
-        <p className="mt-2 text-gray-850 dark:text-gray-400">
-          {riskValues.proposerFailure.description}
-        </p>
-      </div>
+      <SingleRisk
+        name="State validation"
+        riskValue={riskValues.stateValidation}
+      />
+      <SingleRisk
+        name="Data availability"
+        riskValue={riskValues.dataAvailability}
+      />
+      <SingleRisk name="Upgradeability" riskValue={riskValues.upgradeability} />
+      <SingleRisk
+        name="Sequencer failure"
+        riskValue={riskValues.sequencerFailure}
+      />
+      <SingleRisk
+        name="Proposer failure"
+        riskValue={riskValues.proposerFailure}
+      />
     </ProjectDetailsSection>
+  )
+}
+function SingleRisk({
+  name,
+  riskValue,
+}: {
+  name: string
+  riskValue: RiskValue
+}) {
+  if (riskValue.sentiment === 'UnderReview') {
+    return null
+  }
+
+  return (
+    <div>
+      <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">{name}</h3>
+
+      <span
+        className={cx(
+          sentimentToTextColor(riskValue.sentiment),
+          'mt-2 block text-xl font-bold md:text-2xl',
+        )}
+      >
+        {riskValue.value}
+      </span>
+      <p className="mt-2 text-gray-850 dark:text-gray-400">
+        {riskValue.description}
+      </p>
+    </div>
   )
 }
