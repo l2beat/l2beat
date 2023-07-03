@@ -8,6 +8,7 @@ export function sentimentToFillColor(sentiment: Sentiment): string {
       return 'fill-yellow-200'
     case 'good':
     case 'neutral':
+    case 'UnderReview':
       return 'fill-gray-400 dark:fill-gray-750'
   }
 }
@@ -20,6 +21,7 @@ export function sentimentToTextColor(sentiment: Sentiment): string {
       return 'text-yellow-700 dark:text-yellow-200'
     case 'good':
     case 'neutral':
+    case 'UnderReview':
       return ''
   }
 }
