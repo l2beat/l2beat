@@ -16,6 +16,7 @@ export function getTechnologyOverview(project: Bridge): TechnologyOverview {
     const technology: TechnologySectionProps = {
       id: 'technology',
       title: 'Technology',
+      isUnderReview: project.isUnderReview,
       items: [
         project.technology.principleOfOperation &&
           makeTechnologyChoice(

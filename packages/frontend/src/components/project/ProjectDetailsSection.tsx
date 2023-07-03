@@ -9,7 +9,7 @@ interface Props {
   id: SectionId
   className?: string
   children: ReactNode
-  underReview?: boolean
+  isUnderReview?: boolean
 }
 
 export function ProjectDetailsSection(props: Props) {
@@ -18,7 +18,7 @@ export function ProjectDetailsSection(props: Props) {
       <h2 className="mb-6 text-2xl font-bold md:text-4xl md:leading-normal">
         <a href={`#${props.id}`}>{props.title}</a>
       </h2>
-      {props.underReview ? <UnderReviewCallout /> : props.children}
+      {props.isUnderReview ? <UnderReviewCallout /> : props.children}
     </section>
   )
 }

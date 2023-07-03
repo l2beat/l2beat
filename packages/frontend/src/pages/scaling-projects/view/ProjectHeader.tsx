@@ -124,6 +124,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       risks={props.risks}
       links={props.links}
       isUpcoming={props.isUpcoming}
+      isUnderReview={props.isUnderReview}
       isArchived={props.isArchived}
       warning={props.warning}
     />

@@ -11,18 +11,26 @@ export interface RiskAnalysisProps {
   id: SectionId
   title: string
   riskValues: RiskValues
+  isUnderReview?: boolean
 }
 
-export function RiskAnalysis({ id, title, riskValues }: RiskAnalysisProps) {
-  const underReview = Object.values(riskValues).every(
-    ({ sentiment }) => sentiment === 'UnderReview',
-  )
+export function RiskAnalysis({
+  id,
+  title,
+  riskValues,
+  isUnderReview,
+}: RiskAnalysisProps) {
+  isUnderReview =
+    isUnderReview ??
+    Object.values(riskValues).every(
+      ({ sentiment }) => sentiment === 'UnderReview',
+    )
   return (
     <ProjectDetailsSection
       title={title}
       id={id}
       className="mt-4"
-      underReview={underReview}
+      isUnderReview={isUnderReview}
     >
       <BigRosette risks={riskValues} className="mx-auto my-6 lg:hidden" />
       <SingleRisk

@@ -16,6 +16,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const technology: TechnologySectionProps = {
       id: 'technology',
       title: 'Technology',
+      isUnderReview: project.isUnderReview,
       items: [
         makeTechnologyChoice(
           'state-correctness',
@@ -36,6 +37,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const operator: TechnologySectionProps = {
       id: 'operator',
       title: 'Operator',
+      isUnderReview: project.isUnderReview,
       items: [
         makeTechnologyChoice('operator', project.technology.operator),
         makeTechnologyChoice(
@@ -48,6 +50,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const withdrawals: TechnologySectionProps = {
       id: 'withdrawals',
       title: 'Withdrawals',
+      isUnderReview: project.isUnderReview,
       items: [
         ...project.technology.exitMechanisms.map((x, i) =>
           makeTechnologyChoice(`exit-mechanisms-${i + 1}`, x),
@@ -60,6 +63,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const other: TechnologySectionProps = {
       id: 'other-considerations',
       title: 'Other considerations',
+      isUnderReview: project.isUnderReview,
       items: [
         project.technology.additionalPrivacy &&
           makeTechnologyChoice(

@@ -14,7 +14,17 @@ export function getRiskValues(riskView: Layer2RiskView): RiskValues {
 
 export function getRiskSentiments(
   riskView: Layer2RiskView | RiskValues,
+  isUnderReview?: boolean,
 ): RiskSentiments {
+  if (isUnderReview) {
+    return {
+      sequencerFailure: 'UnderReview',
+      stateValidation: 'UnderReview',
+      dataAvailability: 'UnderReview',
+      upgradeability: 'UnderReview',
+      proposerFailure: 'UnderReview',
+    }
+  }
   return {
     sequencerFailure: riskView.sequencerFailure.sentiment,
     stateValidation: riskView.stateValidation.sentiment,

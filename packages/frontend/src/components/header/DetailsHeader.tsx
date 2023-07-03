@@ -19,6 +19,7 @@ export interface HeaderProps {
   stats: SummaryStat[]
   isArchived?: boolean
   isUpcoming?: boolean
+  isUnderReview?: boolean
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2'
@@ -89,8 +90,9 @@ export function DetailsHeader(props: HeaderProps) {
             <BigRosette
               risks={props.risks}
               isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
+              isUnderReview={props.isUnderReview}
             />
-            {!props.isUpcoming && (
+            {!props.isUpcoming && !props.isUnderReview && (
               <Link
                 href="#risk-analysis"
                 className="mt-3 block text-center text-sm"

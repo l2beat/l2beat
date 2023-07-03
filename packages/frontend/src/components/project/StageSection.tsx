@@ -21,10 +21,11 @@ export interface StageSectionProps {
   name: string
   type: string
   stage: StageConfig
+  isUnderReview?: boolean
 }
 
 export function StageSection(props: StageSectionProps) {
-  if (props.stage.stage === 'UnderReview') {
+  if (props.stage.stage === 'UnderReview' || props.isUnderReview) {
     return (
       <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
         <div className="mb-6 font-medium">

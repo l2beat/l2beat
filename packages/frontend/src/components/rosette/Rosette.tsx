@@ -14,6 +14,7 @@ export interface RosetteProps {
   risks: RiskSentiments
   isUpcoming?: boolean
   className?: string
+  isUnderReview?: boolean
 }
 
 export function SmallRosette({ risks, className, isUpcoming }: RosetteProps) {
@@ -79,20 +80,31 @@ export function MediumRosette({ risks }: RosetteProps) {
 interface BigRosetteProps {
   risks: RiskValues
   isUpcoming?: boolean
+  isUnderReview?: boolean
   className?: string
 }
 
-export function BigRosette({ risks, className, isUpcoming }: BigRosetteProps) {
-  const riskSentiments = getRiskSentiments(risks)
-  const isAllUnderReview = Object.values(risks).every(
-    ({ sentiment }) => sentiment === 'UnderReview',
-  )
+export function BigRosette({
+  risks,
+  className,
+  isUpcoming,
+  isUnderReview,
+}: BigRosetteProps) {
+  isUnderReview =
+    isUnderReview ??
+    Object.values(risks).every(({ sentiment }) => sentiment === 'UnderReview')
+  const riskSentiments = getRiskSentiments(risks, isUnderReview)
+
   return (
     <div
       className={cx('Rosette relative w-[272px] py-12 px-12', className)}
-      data-rosette-hover-disabled={(isUpcoming ?? false) || isAllUnderReview}
+      data-rosette-hover-disabled={isUnderReview || (isUpcoming ?? false)}
     >
-      <BigRosetteIcon risks={riskSentiments} isUpcoming={isUpcoming} />
+      <BigRosetteIcon
+        risks={riskSentiments}
+        isUpcoming={isUpcoming}
+        isUnderReview={isUnderReview}
+      />
       <span
         className="Rosette-Text absolute bottom-[30px] left-[31px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight"
         data-rosette="sequencer-failure"
@@ -152,10 +164,12 @@ export function BigRosette({ risks, className, isUpcoming }: BigRosetteProps) {
   )
 }
 
-function BigRosetteIcon({ risks, className, isUpcoming }: RosetteProps) {
-  const isAllUnderReview = Object.values(risks).every(
-    (risk) => risk === 'UnderReview',
-  )
+function BigRosetteIcon({
+  risks,
+  className,
+  isUpcoming,
+  isUnderReview,
+}: RosetteProps) {
   return (
     <>
       <Icon
@@ -214,7 +228,7 @@ function BigRosetteIcon({ risks, className, isUpcoming }: RosetteProps) {
         {
           // #region question marks */
         }
-        {isAllUnderReview ? (
+        {isUnderReview ? (
           <>
             <path
               d="M85.1534 102.444C84.9184 102.443 84.686 102.395 84.4694 102.304C84.2528 102.213 84.0564 102.08 83.8913 101.912C83.7262 101.745 83.5956 101.547 83.5072 101.329C83.4187 101.112 83.374 100.879 83.3756 100.644C83.3987 95.8436 83.5534 93.9093 84.5152 91.5769C85.7821 88.7447 87.6764 86.2377 90.0547 84.2453C91.7971 82.8194 93.3351 81.1606 94.6254 79.3156C95.3259 78.2612 95.7367 77.0411 95.8165 75.7778C95.9002 75.0572 95.8198 74.327 95.5813 73.6418C95.3429 72.9567 94.9526 72.3343 94.4396 71.8214C93.9266 71.3084 93.3043 70.9181 92.6191 70.6796C91.934 70.4412 91.2038 70.3608 90.4832 70.4444C86.8743 70.4444 85.5445 73.2107 85.2014 75.9431C85.1557 76.3817 84.9504 76.7883 84.6247 77.0856C84.2989 77.3828 83.8753 77.5501 83.4343 77.5556H72.7196C72.4793 77.5536 72.2418 77.5034 72.0213 77.4079C71.8008 77.3123 71.6017 77.1735 71.4359 76.9995C71.27 76.8256 71.1409 76.6201 71.056 76.3952C70.9711 76.1704 70.9323 75.9308 70.9418 75.6907C71.1907 68.6293 72.9276 65.5396 76.309 62.4196C79.733 59.2604 84.0281 58 90.4832 58C97.0716 58 101.312 59.2444 104.659 62.1849C106.471 63.8453 107.892 65.8858 108.822 68.1602C109.752 70.4346 110.168 72.8866 110.039 75.3404C110.045 77.8948 109.449 80.4145 108.298 82.6951C106.781 85.4308 104.83 87.902 102.521 90.0124L99.205 93.168C97.1396 95.1834 95.9456 97.9275 95.8787 100.812C95.8418 101.255 95.6403 101.669 95.3138 101.97C94.9874 102.272 94.5597 102.441 94.1152 102.443L85.1534 102.444Z"
