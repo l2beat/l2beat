@@ -27,6 +27,7 @@ export function getRiskViewEntry(
     provider: project.display.provider,
     warning: project.display.warning,
     isArchived: project.isArchived,
+    isUnderReview: project.isUnderReview,
     isVerified,
     isUpcoming: project.isUpcoming,
     ...project.riskView,

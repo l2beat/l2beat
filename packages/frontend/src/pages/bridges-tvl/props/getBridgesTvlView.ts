@@ -50,6 +50,7 @@ function getBridgesTvlViewEntry(
     warning: project.display.warning,
     isArchived: project.isArchived,
     isVerified,
+    isUnderReview: project.isUnderReview,
     tvl: stats ? formatUSD(stats.tvl) : undefined,
     tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
     oneDayChange: stats ? stats.oneDayChange : undefined,

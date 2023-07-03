@@ -31,6 +31,7 @@ export function getProps(
             slug: project.display.slug,
             warning: project.display.warning,
             isArchived: project.isArchived,
+            isUnderReview: project.isUnderReview,
             isVerified: verificationStatus.projects[project.id.toString()],
             category: project.display.category,
             destination: getDestination(

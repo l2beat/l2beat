@@ -35,12 +35,14 @@ export function getActivityViewEntry(
 ): ActivityViewEntry {
   const data = activityApiResponse.projects[project.id.toString()]?.data
   const isVerified = verificationStatus.projects[project.id.toString()]
+
   return {
     name: project.display.name,
     slug: project.display.slug,
     provider: project.display.provider,
     warning: project.display.warning,
     isVerified,
+    isUnderReview: project.isUnderReview,
     dataSource: project.display.activityDataSource,
     ...getActivityViewEntryDetails(data),
   }

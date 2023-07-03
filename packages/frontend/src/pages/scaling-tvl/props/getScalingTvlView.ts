@@ -56,6 +56,7 @@ function getScalingTvlViewEntry(
     warning: project.display.warning,
     isVerified,
     isArchived: project.isArchived,
+    isUnderReview: project.isUnderReview,
     isUpcoming: project.isUpcoming,
     tvl: stats ? formatUSD(stats.tvl) : undefined,
     tvlBreakdown: stats ? stats.tvlBreakdown : undefined,

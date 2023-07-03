@@ -16,6 +16,7 @@ export interface Bridge {
   id: ProjectId
   isArchived?: boolean
   isUpcoming?: boolean
+  isUnderReview?: boolean
   display: BridgeDisplay
   config: BridgeConfig
   riskView?: BridgeRiskView
