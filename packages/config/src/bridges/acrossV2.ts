@@ -58,10 +58,7 @@ export const acrossV2: Bridge = {
         'Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain. The timeout used here is 2hrs.',
       sentiment: 'warning',
     },
-    sourceUpgradeability: {
-      value: 'No',
-      description: 'The code that secures the system can never change.',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {

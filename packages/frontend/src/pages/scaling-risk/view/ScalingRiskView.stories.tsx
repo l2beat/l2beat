@@ -26,11 +26,13 @@ const meta = {
           value: 'ZK proofs (SN)',
           description:
             'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+          sentiment: 'good',
         },
         dataAvailability: {
           value: 'On chain',
           description:
             'All of the data needed for proof construction is published on chain.',
+          sentiment: 'good',
         },
         upgradeability: {
           value: '8 days delay',
@@ -42,6 +44,7 @@ const meta = {
           value: 'Force exit to L1',
           description:
             'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'Escape hatch (ZK)',
@@ -63,11 +66,13 @@ const meta = {
           value: 'ZK proofs (SN)',
           description:
             'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+          sentiment: 'good',
         },
         dataAvailability: {
           value: 'On chain',
           description:
             'All of the data needed for proof construction is published on chain.',
+          sentiment: 'good',
         },
         upgradeability: {
           value: '7 days delay',
@@ -79,6 +84,7 @@ const meta = {
           value: 'Force exit to L1',
           description:
             'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'Propose blocks (ZK)',
@@ -100,11 +106,13 @@ const meta = {
           value: 'ZK proofs (SN)',
           description:
             'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+          sentiment: 'good',
         },
         dataAvailability: {
           value: 'On chain',
           description:
             'All of the data needed for proof construction is published on chain.',
+          sentiment: 'good',
         },
         upgradeability: {
           value: '8 days delay',
@@ -116,6 +124,7 @@ const meta = {
           value: 'Force exit to L1',
           description:
             'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'Escape hatch (ZK)',
@@ -155,11 +164,13 @@ const meta = {
           value: 'Exit to L1',
           description:
             'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit by submitting a merkle proof of funds.',
+          sentiment: 'good',
         },
       },
       {
@@ -192,6 +203,7 @@ const meta = {
           value: 'Exit to L1',
           description:
             'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'Escape hatch (?)',
@@ -213,6 +225,7 @@ const meta = {
           value: 'ZK proofs (ST)',
           description:
             'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
+          sentiment: 'good',
         },
         dataAvailability: {
           value: 'External (DAC)',
@@ -230,11 +243,13 @@ const meta = {
           value: 'Force exit to L1',
           description:
             'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit by submitting a merkle proof of funds.',
+          sentiment: 'good',
         },
       },
       {
@@ -257,6 +272,7 @@ const meta = {
           description:
             'All of the data needed for proof construction is published on chain.',
           secondLine: 'Transactions',
+          sentiment: 'good',
         },
         upgradeability: {
           value: '13d or no delay',
@@ -269,11 +285,13 @@ const meta = {
           value: 'Transact using L1',
           description:
             'In the event of sequencer failure, after 1d (5760 blocks) user can force the transaction to be included in the L2 chain by sending it to the L1.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'Propose blocks',
           description:
             'Anyone can become a Validator after approximately 7 days (45818 blocks) of inactivity from the currently whitelisted Validators.',
+          sentiment: 'good',
         },
       },
       {
@@ -296,6 +314,7 @@ const meta = {
           description:
             'All of the data needed for proof construction is published on chain.',
           secondLine: 'Transactions, compressed',
+          sentiment: 'good',
         },
         upgradeability: {
           value: 'Yes',
@@ -308,6 +327,7 @@ const meta = {
           value: 'Transact using L1',
           description:
             'The user is able to submit a transaction through L1 and force its inclusion on L2.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'No mechanism',
@@ -328,11 +348,13 @@ const meta = {
           value: 'ZK proofs (ST)',
           description:
             'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
+          sentiment: 'good',
         },
         dataAvailability: {
           value: 'On chain',
           description:
             'All of the data needed for proof construction is published on chain.',
+          sentiment: 'good',
         },
         upgradeability: {
           value: 'Yes',
@@ -350,6 +372,7 @@ const meta = {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
+          sentiment: 'good',
         },
       },
       {
@@ -365,11 +388,13 @@ const meta = {
           value: 'ZK proofs',
           description:
             'Uses PLONK zero-knowledge proof system with KZG commitments.',
+          sentiment: 'good',
         },
         dataAvailability: {
           value: 'On chain (SD)',
           description:
             'All of the data (SD = state diffs) needed for proof construction is published on chain.',
+          sentiment: 'good',
         },
         upgradeability: {
           value: 'Yes',
@@ -423,6 +448,7 @@ const meta = {
           value: 'Transact using L1',
           description:
             'The user is able to submit a transaction through L1 and force its inclusion on L2.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'No mechanism',
@@ -443,12 +469,14 @@ const meta = {
           value: 'ZK proofs (SN)',
           description:
             'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+          sentiment: 'good',
         },
         dataAvailability: {
           value: 'On chain',
           description:
             'All of the data needed for proof construction is published on chain.',
           secondLine: 'Transactions',
+          sentiment: 'good',
         },
         upgradeability: {
           value: 'Yes',
@@ -462,11 +490,13 @@ const meta = {
           value: 'Force exit to L1',
           description:
             'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit by submitting a merkle proof of funds.',
+          sentiment: 'good',
         },
       },
       {
@@ -481,6 +511,7 @@ const meta = {
           value: 'ZK proofs (ST)',
           description:
             'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
+          sentiment: 'good',
         },
         dataAvailability: {
           value: 'External (DAC)',
@@ -498,11 +529,13 @@ const meta = {
           value: 'Force exit to L1',
           description:
             'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
+          sentiment: 'good',
         },
         proposerFailure: {
           value: 'Escape hatch (MP)',
           description:
             'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',
+          sentiment: 'good',
         },
       },
     ],

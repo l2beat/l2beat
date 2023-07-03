@@ -21,30 +21,35 @@ export const STATE_FP: ProjectRiskViewEntry = {
   value: 'Fraud proofs',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect.',
+  sentiment: 'good',
 }
 
 export const STATE_FP_1R: ProjectRiskViewEntry = {
   value: 'Fraud proofs (1R)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve.',
+  sentiment: 'good',
 }
 
 export const STATE_FP_INT: ProjectRiskViewEntry = {
   value: 'Fraud proofs (INT)',
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
+  sentiment: 'good',
 }
 
 export const STATE_ZKP_SN: ProjectRiskViewEntry = {
   value: 'ZK proofs (SN)',
   description:
     'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+  sentiment: 'good',
 }
 
 export const STATE_ZKP_ST: ProjectRiskViewEntry = {
   value: 'ZK proofs (ST)',
   description:
     'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
+  sentiment: 'good',
 }
 
 export const STATE_EXITS_ONLY: ProjectRiskViewEntry = {
@@ -60,6 +65,7 @@ export const DATA_ON_CHAIN: ProjectRiskViewEntry = {
   value: 'On chain',
   description:
     'All of the data needed for proof construction is published on chain.',
+  sentiment: 'good',
 }
 
 export const DATA_MIXED: ProjectRiskViewEntry = {
@@ -153,6 +159,7 @@ function UPGRADE_DELAY_SECONDS(delay: number): ProjectRiskViewEntry {
 export const UPGRADABLE_NO: ProjectRiskViewEntry = {
   value: 'No',
   description: 'The code that secures the system can never change.',
+  sentiment: 'good',
 }
 
 // bridges
@@ -160,6 +167,7 @@ export const UPGRADABLE_NO: ProjectRiskViewEntry = {
 export const VALIDATED_BY_ETHEREUM: ProjectRiskViewEntry = {
   value: 'Ethereum',
   description: 'Smart contracts on Ethereum validate all bridge transfers.',
+  sentiment: 'good',
 }
 
 export function NATIVE_AND_CANONICAL(
@@ -169,6 +177,7 @@ export function NATIVE_AND_CANONICAL(
   return {
     value: 'Native & Canonical',
     description: `${nativeTokens} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
+    sentiment: 'good',
   }
 }
 
@@ -176,17 +185,20 @@ export const CANONICAL: ProjectRiskViewEntry = {
   value: 'Canonical',
   description:
     'Tokens transferred are considered canonical on the destination chain.',
+  sentiment: 'good',
 }
 
 export const CANONICAL_USDC: ProjectRiskViewEntry = {
   value: 'Canonical',
   description:
     'USDC transferred is considered canonical as it is the basis of the perpetual protocol on the chain.',
+  sentiment: 'good',
 }
 
 export const UPCOMING_RISK: ProjectRiskViewEntry = {
   value: '',
   description: 'No information available.',
+  sentiment: 'neutral',
 }
 
 export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
@@ -213,6 +225,7 @@ export function SEQUENCER_SELF_SEQUENCE(delay?: number): ProjectRiskViewEntry {
   return {
     value: 'Self sequence',
     description: `In the event of a sequencer failure, users can force transactions to be included in the L2 chain by sending them to L1.${delayString}`,
+    sentiment: 'good',
   }
 }
 
@@ -233,6 +246,7 @@ export function SEQUENCER_FORCE_VIA_L1(delay?: number): ProjectRiskViewEntry {
   return {
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
+    sentiment: 'good',
   }
 }
 
@@ -243,6 +257,7 @@ export function SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(
   return {
     value: 'Force via L1',
     description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`,
+    sentiment: 'good',
   }
 }
 
@@ -261,6 +276,7 @@ export function SEQUENCER_FORCE_VIA_L1_LOOPRING(
   return {
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1 with a ${forcedWithdrawalFeeString} fee. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawableString} users can get their funds back.`,
+    sentiment: 'good',
   }
 }
 
@@ -300,12 +316,14 @@ export const PROPOSER_USE_ESCAPE_HATCH_ZK: ProjectRiskViewEntry = {
   value: 'Use escape hatch',
   description:
     'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
+  sentiment: 'good',
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP: ProjectRiskViewEntry = {
   value: 'Use escape hatch',
   description:
     'Users are able to trustlessly exit by submitting a Merkle proof of funds.',
+  sentiment: 'good',
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: ProjectRiskViewEntry = {
@@ -329,6 +347,7 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
   return {
     value: 'Self propose',
     description: `Anyone can become a Proposer after ${delayString} of inactivity from the currently whitelisted Proposers.`,
+    sentiment: 'good',
   }
 }
 
@@ -336,12 +355,14 @@ export const PROPOSER_SELF_PROPOSE_ZK: ProjectRiskViewEntry = {
   value: 'Self propose',
   description:
     'If the Proposer fails, users can leverage the open source prover to submit proofs to the L1 bridge.',
+  sentiment: 'good',
 }
 
 export const PROPOSER_SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
   value: 'Self propose',
   description:
     'Anyone can be a Proposer and propose new roots to the L1 bridge.',
+  sentiment: 'good',
 }
 
 export const RISK_VIEW = {
