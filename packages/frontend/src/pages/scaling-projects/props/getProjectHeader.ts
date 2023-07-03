@@ -57,6 +57,7 @@ export function getProjectHeader(
     risks: getRiskValues(project.riskView),
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
+    isUnderReview: project.isUnderReview,
     warning: project.display.headerWarning,
   }
 }

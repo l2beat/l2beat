@@ -21,6 +21,7 @@ export interface ProjectHeaderProps {
   links: ProjectLink[]
   isArchived?: boolean
   isUpcoming?: boolean
+  isUnderReview?: boolean
   warning?: string
 }
 

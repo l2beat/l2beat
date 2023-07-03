@@ -35,6 +35,7 @@ export interface ProjectHeaderProps {
   stage?: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
+  isUnderReview?: boolean
   warning?: string | { text: string; href: string }
 }
 
