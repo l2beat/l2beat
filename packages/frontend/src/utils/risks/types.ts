@@ -1,15 +1,16 @@
-export type Sentiment = 'bad' | 'warning'
+import { Sentiment } from '@l2beat/config'
+
 type Risk =
   | 'sequencerFailure'
   | 'stateValidation'
   | 'dataAvailability'
   | 'upgradeability'
   | 'proposerFailure'
-export type RiskSentiments = Partial<Record<Risk, Sentiment>>
+export type RiskSentiments = Record<Risk, Sentiment>
 
 export interface RiskValue {
   value: string
-  sentiment?: Sentiment
+  sentiment: Sentiment
   // TODO: make required
   description?: string
 }
