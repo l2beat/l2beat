@@ -33,6 +33,7 @@ export class BalanceUpdater {
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
+    // TODO: make sure it runs on the same chain as this.chainId
     private readonly multicall: MulticallClient,
     private readonly blockNumberUpdater: BlockNumberUpdater,
     private readonly balanceRepository: BalanceRepository,

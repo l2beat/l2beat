@@ -12,6 +12,7 @@ export class BlockNumberUpdater {
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
+    // TODO: make sure it runs on the same chain as this.chainId
     private readonly etherscanClient: EtherscanClient,
     private readonly blockNumberRepository: BlockNumberRepository,
     private readonly clock: Clock,
