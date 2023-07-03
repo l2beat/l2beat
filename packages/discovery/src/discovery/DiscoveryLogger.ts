@@ -38,12 +38,20 @@ export class DiscoveryLogger {
   }
 
   logExecution(field: string, values: string[]) {
-    const dots = '.'.repeat(Math.max(1, 25 - field.length))
     const content = values
       .map((v, i) => (i % 2 === 0 ? v : chalk.blue(v)))
       .join('')
 
-    this.log(`  ${chalk.yellow(field)} ${chalk.gray(dots)} ${content}`)
+    this.log(`  ${chalk.yellow(field)} ${dots(25 - field.length)} ${content}`)
+  }
+
+  logExecutionError(field: string, error: string) {
+    const prefix = 'Error: ' + field
+    this.log(`  ${chalk.red(prefix)} ${dots(25 - prefix.length)} ${error}`)
+  }
+
+  logError(error: string) {
+    this.log(`${chalk.red(error)}`)
   }
 
   logSkip(address: EthereumAddress, reason: string) {
@@ -94,4 +102,8 @@ export class DiscoveryLogger {
       )}`,
     )
   }
+}
+
+function dots(length: number) {
+  return chalk.grey('.'.repeat(Math.max(1, length)))
 }
