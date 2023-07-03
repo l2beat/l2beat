@@ -40,6 +40,21 @@ export class DiscoveryEngine {
     }
 
     this.logger.flush(config.name)
+
+    this.checkErrors(resolved)
+
     return resolved
+  }
+
+  private checkErrors(resolved: Analysis[]) {
+    let errors = 0
+    for (const analysis of resolved) {
+      if (analysis.type === 'Contract') {
+        errors += Object.keys(analysis.errors).length
+      }
+    }
+    if (errors > 0) {
+      this.logger.logError(`Errors during discovery: ${errors}`)
+    }
   }
 }

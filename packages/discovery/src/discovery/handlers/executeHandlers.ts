@@ -1,5 +1,6 @@
 import { EthereumAddress, getErrorMessage } from '@l2beat/shared-pure'
 
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { Handler, HandlerResult } from './Handler'
 
@@ -8,6 +9,7 @@ export async function executeHandlers(
   handlers: Handler[],
   address: EthereumAddress,
   blockNumber: number,
+  logger: DiscoveryLogger,
 ) {
   const results: HandlerResult[] = []
   const batches = orderByDependencies(handlers)
@@ -16,7 +18,11 @@ export async function executeHandlers(
     const batchResults = await Promise.all(
       batch.map(async (x) => {
         try {
-          return await x.execute(provider, address, blockNumber, fields)
+          const result = await x.execute(provider, address, blockNumber, fields)
+          if (result.error) {
+            logger.logExecutionError(x.field, result.error)
+          }
+          return result
         } catch (e) {
           return { field: x.field, error: getErrorMessage(e) }
         }
