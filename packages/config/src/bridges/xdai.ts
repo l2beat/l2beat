@@ -117,6 +117,7 @@ export const xdai: Bridge = {
       value: 'Native',
       description:
         'Tokens transferred via this bridge end up as xDAI and are used to pay for gas on the destination chain.',
+      sentiment: 'good',
     },
   },
   contracts: {

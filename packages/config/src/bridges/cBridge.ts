@@ -151,10 +151,7 @@ export const cBridge: Bridge = {
     },
   },
   riskView: {
-    sourceUpgradeability: {
-      value: 'No',
-      description: 'The code that secures the system can never change',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
     validatedBy: {
       value: 'Third Party',

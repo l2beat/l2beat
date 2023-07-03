@@ -4,6 +4,7 @@ import React from 'react'
 import { NoDataBadge } from '../../../components/badge/NoDataBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
+import { SummaryStat } from '../../../components/header/Summary'
 import { ProjectLink } from '../../../components/icons'
 import { RiskCell } from '../../../components/table/RiskCell'
 
@@ -24,9 +25,11 @@ export interface ProjectHeaderProps {
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
-  const stats = [
+  const stats: SummaryStat[] = [
     {
       title: 'Total value locked',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
       value:
         !props.isUpcoming && props.tvl && props.tvlWeeklyChange ? (
           <StatWithChange

@@ -21,22 +21,27 @@ const meta = {
           dataAvailability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           sequencerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           stateValidation: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           upgradeability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           proposerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
         },
         warning: undefined,
@@ -69,22 +74,27 @@ const meta = {
           dataAvailability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           sequencerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           stateValidation: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           upgradeability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           proposerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
         },
         warning: undefined,
@@ -117,22 +127,27 @@ const meta = {
           dataAvailability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           sequencerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           stateValidation: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           upgradeability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           proposerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
         },
         warning: undefined,
@@ -165,22 +180,27 @@ const meta = {
           dataAvailability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           sequencerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           stateValidation: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           upgradeability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           proposerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
         },
         warning: undefined,
@@ -213,22 +233,27 @@ const meta = {
           dataAvailability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           sequencerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           stateValidation: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           upgradeability: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
           proposerFailure: {
             value: '',
             description: 'No information available.',
+            sentiment: 'neutral',
           },
         },
         warning: undefined,
@@ -262,16 +287,19 @@ const meta = {
             value: 'On chain',
             description:
               'All of the data needed for proof construction is published on chain.',
+            sentiment: 'good',
           },
           sequencerFailure: {
             value: 'Force exit to L1',
             description:
               'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'ZK proofs (SN)',
             description:
               'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+            sentiment: 'good',
           },
           upgradeability: {
             value: '8 days delay',
@@ -319,16 +347,19 @@ const meta = {
             value: 'On chain',
             description:
               'All of the data needed for proof construction is published on chain.',
+            sentiment: 'good',
           },
           sequencerFailure: {
             value: 'Force exit to L1',
             description:
               'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'ZK proofs (SN)',
             description:
               'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+            sentiment: 'good',
           },
           upgradeability: {
             value: '7 days delay',
@@ -375,16 +406,19 @@ const meta = {
             value: 'On chain',
             description:
               'All of the data needed for proof construction is published on chain.',
+            sentiment: 'good',
           },
           sequencerFailure: {
             value: 'Force exit to L1',
             description:
               'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'ZK proofs (SN)',
             description:
               'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+            sentiment: 'good',
           },
           upgradeability: {
             value: '8 days delay',
@@ -439,6 +473,7 @@ const meta = {
             value: 'Exit to L1',
             description:
               'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'Fraud proofs (!)',
@@ -456,6 +491,7 @@ const meta = {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of funds.',
+            sentiment: 'good',
           },
         },
         warning:
@@ -497,6 +533,7 @@ const meta = {
             value: 'Exit to L1',
             description:
               'The user is only able to submit an L1 withdrawal request. After that the user exits the system with their funds.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'Exits only',
@@ -555,11 +592,13 @@ const meta = {
             value: 'Force exit to L1',
             description:
               'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'ZK proofs (ST)',
             description:
               'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
+            sentiment: 'good',
           },
           upgradeability: {
             value: 'Yes',
@@ -571,6 +610,7 @@ const meta = {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of funds.',
+            sentiment: 'good',
           },
         },
         warning:
@@ -605,11 +645,13 @@ const meta = {
             value: 'On chain',
             description:
               'All of the data needed for proof construction is published on chain.',
+            sentiment: 'good',
           },
           sequencerFailure: {
             value: 'Transact using L1',
             description:
               'In the event of sequencer failure, after 1d (5760 blocks) user can force the transaction to be included in the L2 chain by sending it to the L1.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'Fraud proofs (INT)',
@@ -627,6 +669,7 @@ const meta = {
             value: 'Propose blocks',
             description:
               'Anyone can become a Validator after approximately 7 days (45818 blocks) of inactivity from the currently whitelisted Validators.',
+            sentiment: 'good',
           },
         },
         warning:
@@ -681,11 +724,13 @@ const meta = {
             value: 'On chain',
             description:
               'All of the data needed for proof construction is published on chain.',
+            sentiment: 'good',
           },
           sequencerFailure: {
             value: 'Transact using L1',
             description:
               'The user is able to submit a transaction through L1 and force its inclusion on L2.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'In development',
@@ -740,6 +785,7 @@ const meta = {
             value: 'On chain',
             description:
               'All of the data needed for proof construction is published on chain.',
+            sentiment: 'good',
           },
           sequencerFailure: {
             value: 'Force trade/exit to L1',
@@ -751,6 +797,7 @@ const meta = {
             value: 'ZK proofs (ST)',
             description:
               'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
+            sentiment: 'good',
           },
           upgradeability: {
             value: 'Yes',
@@ -762,6 +809,7 @@ const meta = {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit their collateral by submitting a merkle proof of funds. Positions will be closed using average price from the last batch state update.',
+            sentiment: 'good',
           },
         },
         warning: undefined,
@@ -795,6 +843,7 @@ const meta = {
             value: 'On chain (SD)',
             description:
               'All of the data (SD = state diffs) needed for proof construction is published on chain.',
+            sentiment: 'good',
           },
           sequencerFailure: {
             value: 'Transact using L1',
@@ -806,6 +855,7 @@ const meta = {
             value: 'ZK proofs',
             description:
               'Uses PLONK zero-knowledge proof system with KZG commitments.',
+            sentiment: 'good',
           },
           upgradeability: {
             value: 'Yes',
@@ -858,6 +908,7 @@ const meta = {
             value: 'Transact using L1',
             description:
               'The user is able to submit a transaction through L1 and force its inclusion on L2.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'In development',
@@ -912,16 +963,19 @@ const meta = {
             value: 'On chain',
             description:
               'All of the data needed for proof construction is published on chain.',
+            sentiment: 'good',
           },
           sequencerFailure: {
             value: 'Force exit to L1',
             description:
               'The user is only able to submit an L1 withdrawal request and force the sequencer to include it on L2. After that the user exits the system with their funds.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'ZK proofs (SN)',
             description:
               'ZK-SNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+            sentiment: 'good',
           },
           upgradeability: {
             value: 'Yes',
@@ -933,6 +987,7 @@ const meta = {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of funds.',
+            sentiment: 'good',
           },
         },
         warning: undefined,
@@ -974,11 +1029,13 @@ const meta = {
             value: 'Force exit to L1',
             description:
               'The user can force the the sequencer to include their withdrawal transaction by submitting a request through L1. If the sequencer is down, the user can use the exit hatch to withdraw funds.',
+            sentiment: 'good',
           },
           stateValidation: {
             value: 'ZK proofs (ST)',
             description:
               'ZK-STARKS are zero knowledge proofs that ensure state correctness.',
+            sentiment: 'good',
           },
           upgradeability: {
             value: '14d delay',
@@ -990,6 +1047,7 @@ const meta = {
             value: 'Escape hatch (MP)',
             description:
               'Users are able to trustlessly exit by submitting a merkle proof of their assets. NFTs will be minted on L1 on exit.',
+            sentiment: 'good',
           },
         },
         warning: undefined,

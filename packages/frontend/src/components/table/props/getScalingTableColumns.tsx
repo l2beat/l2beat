@@ -31,7 +31,12 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
       idHref: 'risk-analysis',
       minimalWidth: true,
       alignCenter: true,
-      getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
+      getValue: (project) => (
+        <RosetteCell
+          riskValues={project.riskValues}
+          isUpcoming={project.isUpcoming}
+        />
+      ),
     },
     {
       name: 'Technology',
@@ -64,7 +69,8 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
     },
     {
       name: 'TVL',
-      tooltip: 'Total value locked in escrow contracts on Ethereum.',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
@@ -167,7 +173,8 @@ export function getArchivedScalingTvlColumns() {
     },
     {
       name: 'TVL',
-      tooltip: 'Total value locked in escrow contracts on Ethereum.',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
