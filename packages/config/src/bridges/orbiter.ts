@@ -119,11 +119,7 @@ export const orbiter: Bridge = {
       description: 'Withdrawals are validated by EOA.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'No',
-      description: 'Bridge uses EOAs for deposits',
-      sentiment: 'warning',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.CANONICAL,
   },
   contracts: {
