@@ -24,7 +24,8 @@
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig",
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge",
     "0xEb3107117FEAd7de89Cd14D463D340A2E6917769": "SynthetixMultisig",
-    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "OptimismPortal"
+    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "OptimismPortal",
+    "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": "SystemConfig"
   },
   "overrides": {
     "AddressManager": {
@@ -203,6 +204,16 @@
     "L1CrossDomainMessengerProxy": {
       "ignoreMethods": ["xDomainMessageSender"],
       "ignoreInWatchMode": ["messageNonce"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        }
+      }
     }
   }
 }

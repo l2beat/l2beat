@@ -14,7 +14,8 @@
     "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef": "AddressManager",
     "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": "ChallengerMultisig",
     "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "ZoraMultisig",
-    "0xdC40a14d9abd6F410226f1E6de71aE03441ca506": "L1CrossDomainMessenger"
+    "0xdC40a14d9abd6F410226f1E6de71aE03441ca506": "L1CrossDomainMessenger",
+    "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86": "SystemConfig"
   },
   "overrides": {
     "OptimismPortal": {
@@ -41,6 +42,16 @@
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
       "ignoreInWatchMode": ["messageNonce"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        }
+      }
     }
   }
 }

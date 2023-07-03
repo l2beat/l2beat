@@ -61,6 +61,10 @@ export interface Layer2Display {
   description: string
   /** A short (<20 characters) description of the use case */
   purpose: string
+  /** Name of the category the layer2 belongs to */
+  category: Layer2Category
+  /** Technology provider */
+  provider?: 'StarkEx' | 'Optimism' | 'zkSync' | 'loopring'
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */
@@ -77,3 +81,11 @@ export interface Layer2Config {
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
 }
+
+export type Layer2Category =
+  | 'Optimistic Rollup'
+  | 'Optimistic Chain'
+  | 'Plasma'
+  | 'State Pools'
+  | 'Validium'
+  | 'ZK Rollup'

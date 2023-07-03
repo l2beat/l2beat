@@ -27,6 +27,7 @@ export const ronin: Bridge = {
     },
     description:
       'Ronin Bridge V2 is the official bridge for the Axie Infinity chain (Ronin chain). It uses external validators to confirm deposits for a typical Token Bridge swap.',
+    category: 'Token Bridge',
   },
   config: {
     associatedTokens: ['AXS'],
@@ -63,7 +64,6 @@ export const ronin: Bridge = {
     },
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Axie Infinity Chain'],
     canonical: true,
     principleOfOperation: {

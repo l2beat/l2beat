@@ -73,6 +73,7 @@ export const starknet: Layer2 = {
       is available and contracts are fully composable. It is currently launched \
       with a single Sequencer.',
     purpose: 'Universal',
+    category: 'ZK Rollup',
     links: {
       apps: [],
       websites: [
@@ -207,7 +208,6 @@ export const starknet: Layer2 = {
     },
   }),
   technology: {
-    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
