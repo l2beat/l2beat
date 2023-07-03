@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
+import { SummaryStat } from '../../../components/header/Summary'
 import { InfoIcon, ProjectLink } from '../../../components/icons'
 import { StageBadge } from '../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../components/stages/StageTooltip'
@@ -38,9 +39,11 @@ export interface ProjectHeaderProps {
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
-  const stats = [
+  const stats: SummaryStat[] = [
     {
       title: 'Total value locked',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
       value:
         !props.isUpcoming && props.tvl && props.tvlWeeklyChange ? (
           <StatWithChange
@@ -62,6 +65,8 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     },
     {
       title: 'Daily TPS',
+      tooltip:
+        'Transactions per second averaged over the past day displayed together with a percentage change compared to 7D ago.',
       value:
         props.tpsDaily && props.tpsWeeklyChange ? (
           <StatWithChange
