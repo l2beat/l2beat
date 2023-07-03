@@ -211,6 +211,22 @@ export const UPCOMING_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
   validatedBy: UPCOMING_RISK,
 })
 
+export const UNDER_REVIEW_RISK: ProjectRiskViewEntry = {
+  value: 'Under Review',
+  description: 'This risk is currently under review.',
+  sentiment: 'UnderReview',
+}
+
+export const UNDER_REVIEW_RISK_VIEW: Layer2RiskView = makeBridgeCompatible({
+  stateValidation: UNDER_REVIEW_RISK,
+  dataAvailability: UNDER_REVIEW_RISK,
+  upgradeability: UNDER_REVIEW_RISK,
+  sequencerFailure: UNDER_REVIEW_RISK,
+  proposerFailure: UNDER_REVIEW_RISK,
+  destinationToken: UNDER_REVIEW_RISK,
+  validatedBy: UNDER_REVIEW_RISK,
+})
+
 /* New risks for stages */
 
 // SEQUENCER COLUMN
@@ -403,4 +419,5 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
+  UNDER_REVIEW_RISK,
 }

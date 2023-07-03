@@ -16,7 +16,7 @@ export type ProjectRiskCategory =
   | 'Users can be censored if'
   | 'MEV can be extracted if'
 
-export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral'
+export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
 export interface ProjectRiskViewEntry {
   value: string
