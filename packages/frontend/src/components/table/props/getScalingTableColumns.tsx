@@ -64,7 +64,8 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
     },
     {
       name: 'TVL',
-      tooltip: 'Total value locked in escrow contracts on Ethereum.',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
@@ -167,7 +168,8 @@ export function getArchivedScalingTvlColumns() {
     },
     {
       name: 'TVL',
-      tooltip: 'Total value locked in escrow contracts on Ethereum.',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
