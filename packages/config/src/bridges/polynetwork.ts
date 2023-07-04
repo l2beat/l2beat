@@ -183,7 +183,13 @@ export const polynetwork: Bridge = {
       ),
       discovery.getContractDetails(
         'EthCrossChainManagerProxy',
-        'Used to proxy requests from LockProxy to EthCrossChainManager.',
+        {
+          description: 'Used to proxy requests from LockProxy to EthCrossChainManager.',
+          pausable: {
+            paused: discovery.getContractValue('EthCrossChainManager', 'paused'),
+            pausableBy: ['EthCrossChainManager']
+          }
+        }
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
