@@ -115,11 +115,8 @@ export function testConfigureTooltipsAndShow() {
   const tooltipText = $('.Tooltip-Popup span')
   const tooltipTriangle = $('.Tooltip-Triangle')
 
-  let activeElement: HTMLElement | undefined
-
   function show(element: HTMLElement, title: string) {
     if (element.dataset.tooltipBig && isMobile()) return
-    activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
     tooltipText.innerHTML = title
     tooltip.style.display = 'block'
