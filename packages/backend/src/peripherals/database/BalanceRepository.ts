@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/shared'
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BalanceRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
@@ -10,6 +15,7 @@ export interface BalanceRecord {
   holderAddress: EthereumAddress
   assetId: AssetId
   balance: bigint
+  chainId: ChainId
 }
 
 export interface DataBoundary {
@@ -23,24 +29,14 @@ export class BalanceRepository extends BaseRepository {
     this.autoWrap<CheckConvention<BalanceRepository>>(this)
   }
 
-  async getByTimestamp(timestamp: UnixTime): Promise<BalanceRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('asset_balances').where({
-      unix_timestamp: timestamp.toDate(),
-    })
-
-    return rows.map(toRecord)
-  }
-
-  async getByHolderAndAsset(
-    holder: EthereumAddress,
-    asset: AssetId,
+  async getByTimestamp(
+    chainId: ChainId,
+    timestamp: UnixTime,
   ): Promise<BalanceRecord[]> {
     const knex = await this.knex()
-    const rows = await knex
-      .from('asset_balances')
-      .where('holder_address', holder.toString())
-      .where('asset_id', asset.toString())
+    const rows = await knex('asset_balances')
+      .where('unix_timestamp', '=', timestamp.toDate())
+      .andWhere('chain_id', '=', Number(chainId))
 
     return rows.map(toRecord)
   }
@@ -50,7 +46,7 @@ export class BalanceRepository extends BaseRepository {
     const knex = await this.knex()
     await knex('asset_balances')
       .insert(rows)
-      .onConflict(['unix_timestamp', 'holder_address', 'asset_id'])
+      .onConflict(['chain_id', 'unix_timestamp', 'holder_address', 'asset_id'])
       .merge()
     return rows.length
   }
@@ -73,6 +69,7 @@ function toRecord(row: BalanceRow): BalanceRecord {
     assetId: AssetId(row.asset_id),
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     balance: BigInt(row.balance),
+    chainId: ChainId(row.chain_id),
   }
 }
 
@@ -82,5 +79,6 @@ function toRow(record: BalanceRecord): BalanceRow {
     asset_id: record.assetId.toString(),
     unix_timestamp: record.timestamp.toDate(),
     balance: record.balance.toString(),
+    chain_id: Number(record.chainId),
   }
 }

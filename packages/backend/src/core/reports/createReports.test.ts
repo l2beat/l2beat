@@ -1,4 +1,4 @@
-import { AssetId, ProjectId } from '@l2beat/shared-pure'
+import { AssetId, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { BALANCES, NOW, PRICES, PROJECTS } from '../../test/projects'
@@ -44,6 +44,7 @@ describe(aggregateBalancesPerProject.name, () => {
         timestamp: PROJECTS[0].escrows[0].sinceTimestamp.add(-1, 'days'),
         assetId: AssetId.DAI,
         balance: 100n * 10n ** 18n,
+        chainId: ChainId.ETHEREUM,
       },
       {
         holderAddress: PROJECTS[0].escrows[0].address,
@@ -53,6 +54,7 @@ describe(aggregateBalancesPerProject.name, () => {
         ),
         assetId: AssetId.DAI,
         balance: 200n * 10n ** 18n,
+        chainId: ChainId.ETHEREUM,
       },
     ])
     expect(result).toEqual([
@@ -86,6 +88,7 @@ describe(aggregateBalancesPerProject.name, () => {
         ),
         assetId: AssetId.DAI,
         balance: 100n * 10n ** 18n,
+        chainId: ChainId.ETHEREUM,
       },
       {
         holderAddress: PROJECTS[0].escrows[0].address,
@@ -95,6 +98,7 @@ describe(aggregateBalancesPerProject.name, () => {
         ),
         assetId: AssetId.DAI,
         balance: 200n * 10n ** 18n,
+        chainId: ChainId.ETHEREUM,
       },
     ])
     expect(result).toEqual([
