@@ -8,6 +8,11 @@ import { StageTooltip as StageTooltipComponent } from './StageTooltip'
 
 export default {
   title: 'Components/Stages',
+  parameters: {
+    screenshot: {
+      delay: 200,
+    },
+  },
 }
 
 export function Tooltip() {

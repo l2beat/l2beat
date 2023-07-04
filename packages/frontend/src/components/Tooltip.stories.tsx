@@ -5,6 +5,11 @@ import { testConfigureTooltipsAndShow } from '../scripts/configureTooltips'
 
 export default {
   title: 'Components/Tooltip',
+  parameters: {
+    screenshot: {
+      delay: 200,
+    },
+  },
 }
 
 export function Tooltip() {

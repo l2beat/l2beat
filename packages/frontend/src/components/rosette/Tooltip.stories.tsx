@@ -7,6 +7,11 @@ import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
 
 export default {
   title: 'Components/Tooltip',
+  parameters: {
+    screenshot: {
+      delay: 200,
+    },
+  },
 }
 
 export function RosetteTooltip() {
