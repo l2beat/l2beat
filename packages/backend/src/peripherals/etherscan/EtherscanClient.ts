@@ -1,12 +1,18 @@
 import { HttpClient, Logger } from '@l2beat/shared'
-import { getErrorMessage, RateLimiter, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  getErrorMessage,
+  RateLimiter,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { stringAsInt } from '../../tools/types'
 import { parseEtherscanResponse } from './parseEtherscanResponse'
+import { BlockNumberProvider } from '../generic/BlockNumberProvider'
 
 export class EtherscanError extends Error {}
 
-export class EtherscanClient {
+export class EtherscanClient implements BlockNumberProvider {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
@@ -17,6 +23,10 @@ export class EtherscanClient {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+  }
+
+  getChainId(): ChainId {
+    return ChainId.ETHEREUM
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
