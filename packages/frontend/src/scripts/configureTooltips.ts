@@ -124,32 +124,19 @@ export function testConfigureTooltipsAndShow() {
     const rect = activeElement.getBoundingClientRect()
     tooltipText.innerHTML = title
     tooltip.style.display = 'block'
-    const tooltipHeight = tooltip.getBoundingClientRect().height
     const tooltipWidth = tooltip.getBoundingClientRect().width
-    const left = clamp(
-      rect.left + rect.width / 2 - tooltipWidth / 2,
-      10,
-      window.innerWidth - 10 - tooltipWidth,
-    )
+
+    const left = rect.left + rect.width / 2 - tooltipWidth / 2
     tooltip.style.left = `${left}px`
-    if (rect.y + rect.height + 7 + tooltipHeight < window.innerHeight) {
-      tooltip.style.top = `${rect.bottom + 7}px`
-      tooltipTriangle.style.top = `${rect.bottom}px`
-      tooltipTriangle.classList.remove('rotate-180')
-    } else {
-      tooltip.style.top = `${rect.top - 7 - tooltipHeight}px`
-      tooltipTriangle.style.top = `${rect.top - 7}px`
-      tooltipTriangle.classList.add('rotate-180')
-    }
+
+    tooltip.style.top = `${rect.bottom + 7}px`
+    tooltipTriangle.style.top = `${rect.bottom}px`
+    tooltipTriangle.classList.remove('rotate-180')
 
     tooltip.style.textAlign =
       element.dataset.tooltipAlign === 'right' ? 'right' : 'left'
 
-    const triangleLeft = clamp(
-      rect.left + rect.width / 2 - 8,
-      10,
-      window.innerWidth - 10 - 16,
-    )
+    const triangleLeft = rect.left + rect.width / 2 - 8
     tooltipTriangle.style.left = `${triangleLeft}px`
   }
 
