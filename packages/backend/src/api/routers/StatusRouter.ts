@@ -1,6 +1,5 @@
 import Router from '@koa/router'
-import { stringAs } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { stringAs, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { StatusController } from '../controllers/status/StatusController'

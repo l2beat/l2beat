@@ -1,5 +1,4 @@
-import { stringAs } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { stringAs, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export type Rollup = z.infer<typeof Rollup>

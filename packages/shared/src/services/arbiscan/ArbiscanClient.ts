@@ -1,6 +1,6 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, stringAsInt, UnixTime } from '@l2beat/shared-pure'
 
-import { Logger, stringAsInt } from '../../tools'
+import { Logger } from '../../tools'
 import { EtherscanLikeClient } from '../etherscanlike/EtherscanLikeClient'
 import { HttpClient } from '../HttpClient'
 import { BlockNumberProvider } from '../providers/BlockNumberProvider'

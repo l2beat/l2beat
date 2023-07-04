@@ -2,11 +2,11 @@ import {
   ChainId,
   EthereumAddress,
   Hash256,
+  stringAsInt,
   UnixTime,
 } from '@l2beat/shared-pure'
 
 import { Logger } from '../../tools'
-import { stringAsInt } from '../../tools/types'
 import { EtherscanLikeClient } from '../etherscanlike/EtherscanLikeClient'
 import { HttpClient } from '../HttpClient'
 import { BlockNumberProvider } from '../providers/BlockNumberProvider'
