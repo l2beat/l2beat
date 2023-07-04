@@ -1,4 +1,4 @@
-import { HttpClient, Logger, EtherscanClient } from '@l2beat/shared'
+import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { handleCli } from './cli/handleCli'

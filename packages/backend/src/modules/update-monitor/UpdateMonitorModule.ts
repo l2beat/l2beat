@@ -9,7 +9,7 @@ import {
   ProxyDetector,
   SourceCodeService,
 } from '@l2beat/discovery'
-import { HttpClient, Logger, EtherscanClient } from '@l2beat/shared'
+import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
