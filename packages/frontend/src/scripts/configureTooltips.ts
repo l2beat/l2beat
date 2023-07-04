@@ -121,22 +121,20 @@ export function testConfigureTooltipsAndShow() {
     if (element.dataset.tooltipBig && isMobile()) return
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
-    const rect = activeElement.getBoundingClientRect()
     tooltipText.innerHTML = title
     tooltip.style.display = 'block'
-    const tooltipWidth = tooltip.getBoundingClientRect().width
 
-    const left = rect.left + rect.width / 2 - tooltipWidth / 2
+    const left = 48
     tooltip.style.left = `${left}px`
 
-    tooltip.style.top = `${rect.bottom + 7}px`
-    tooltipTriangle.style.top = `${rect.bottom}px`
+    tooltip.style.top = `${48 + 7}px`
+    tooltipTriangle.style.top = `${48}px`
     tooltipTriangle.classList.remove('rotate-180')
 
     tooltip.style.textAlign =
       element.dataset.tooltipAlign === 'right' ? 'right' : 'left'
 
-    const triangleLeft = rect.left + rect.width / 2 - 8
+    const triangleLeft = 48 + 48 / 2 - 8
     tooltipTriangle.style.left = `${triangleLeft}px`
   }
 
