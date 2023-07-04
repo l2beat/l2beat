@@ -5,11 +5,9 @@ import { UnderReviewIcon } from '../icons'
 
 export function UnderReviewCallout({
   small,
-  short,
   className,
 }: {
   small?: boolean
-  short?: boolean
   className?: string
 }) {
   return (
@@ -36,12 +34,12 @@ export function UnderReviewCallout({
           Project Under Review
         </span>
       </div>
-      {short ? (
+      {small ? (
         <p className="text-sm">
           Projects under review might present incomplete info & data.
         </p>
       ) : (
-        <p className={cx('text-sm', !small && 'text-center')}>
+        <p className={cx('text-center text-sm')}>
           Projects under review might present incomplete information & data.
           <br />
           L2BEAT Team is working to research & validate content before

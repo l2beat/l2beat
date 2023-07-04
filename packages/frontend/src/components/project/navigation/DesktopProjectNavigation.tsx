@@ -48,9 +48,7 @@ export function DesktopProjectNavigation({
           )}
           <span className="text-xl font-bold lg:text-2xl">{project.title}</span>
         </div>
-        {project.isUnderReview && (
-          <UnderReviewCallout small short className="mt-2" />
-        )}
+        {project.isUnderReview && <UnderReviewCallout small className="mt-2" />}
         <HorizontalSeparator className="my-4" />
       </div>
       <div

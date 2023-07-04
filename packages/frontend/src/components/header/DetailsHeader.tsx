@@ -6,6 +6,7 @@ import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ProjectLink } from '../icons'
 import { Link } from '../Link'
 import { ArchivedBar } from '../project/ArchivedBar'
+import { UnderReviewBar } from '../project/UnderReviewBar'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { WarningBar } from '../project/WarningBar'
 import { BigRosette } from '../rosette'
@@ -60,6 +61,7 @@ export function DetailsHeader(props: HeaderProps) {
           </h1>
           {props.isArchived && <ArchivedBar />}
           {props.isUpcoming && <UpcomingBar />}
+          {props.isUnderReview && <UnderReviewBar />}
           {props.warning && (
             <WarningBar
               text={
