@@ -120,7 +120,7 @@ export const skaleIMA: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'MessageProxyForMainnet',
-        'Contract responsible for sending and receiving messages. It is used internally by the DepositBox contracts to transfer value between chains.',
+        'Contract responsible for sending and receiving messages. It is used internally by the DepositBox contracts to transfer value between chains. It supports gas reimbursement from the CommunityPool.',
       ),
       discovery.getContractDetails(
         'DepositBoxEth',
