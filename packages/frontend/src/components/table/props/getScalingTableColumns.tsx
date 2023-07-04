@@ -33,6 +33,7 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
       alignCenter: true,
       getValue: (project) => (
         <RosetteCell
+          stage={project.stage}
           riskValues={project.riskValues}
           isUpcoming={project.isUpcoming}
         />
