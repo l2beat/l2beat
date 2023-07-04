@@ -1,8 +1,8 @@
 import Router from '@koa/router'
+import { stringAs } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-import { stringAs } from '../../tools/types'
 import { StatusController } from '../controllers/status/StatusController'
 import { withTypedContext } from './types'
 
