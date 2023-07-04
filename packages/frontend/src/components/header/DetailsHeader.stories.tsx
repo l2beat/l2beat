@@ -120,7 +120,7 @@ UpcomingHeader.args = {
 }
 
 export const UnderReviewHeader: Story<HeaderProps> = Template.bind({})
-UpcomingHeader.args = {
+UnderReviewHeader.args = {
   title: project.display.name,
   icon: `/icons/${project.display.slug}.png`,
   stats,
