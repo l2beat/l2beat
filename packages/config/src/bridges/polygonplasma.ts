@@ -14,6 +14,7 @@ export const polygonplasma: Bridge = {
     links: polygonpos.display.links,
     description:
       'Polygon Plasma is the official bridge provided by the Polygon team to bridge MATIC tokens from Ethereum to Polygon chain. Originally it was also used to bridge DAI, but now Polygon PoS bridge is recommended. Tokens are bridged to the same Polygon sidechain as if Polygon PoS bridge was used, the only difference is a required 7-day withdrawal delay. This delay was originally designed to allow users to challenge the withdrawal, however this functionality is not deployed.',
+    category: 'Token Bridge',
   },
   config: {
     associatedTokens: ['MATIC'],
@@ -43,7 +44,6 @@ export const polygonplasma: Bridge = {
   technology: {
     destination: ['Polygon'],
     canonical: true,
-    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

@@ -48,6 +48,8 @@ export const sorare: Layer2 = {
     description:
       'Sorare is a global fantasy football game where you can play with officially licensed digital cards and earn prizes every week.',
     purpose: 'NFT, Exchange',
+    provider: 'StarkEx',
+    category: 'Validium',
     links: {
       websites: ['https://sorare.com/'],
       apps: [],
@@ -86,13 +88,13 @@ export const sorare: Layer2 = {
         {
           contract: 'StarkExchange',
           references: [
-            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F13#L188',
+            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F14#L188',
           ],
         },
         {
           contract: 'Committee',
           references: [
-            'https://etherscan.io/address/0x879cD57975d596004863D30c59d579ef78BBbe32#code#F1#L60',
+            'https://etherscan.io/address/0x879cD57975d596004863D30c59d579ef78BBbe32#code#F1#L65',
           ],
         },
       ],
@@ -104,8 +106,6 @@ export const sorare: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    provider: 'StarkEx',
-    category: 'Validium',
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

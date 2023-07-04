@@ -8,13 +8,13 @@ export const bridge1WithDups: Bridge = {
   display: {
     name: 'Bridge1',
     slug: 'bridge1',
+    category: 'Token Bridge',
     links: {},
   },
   config: {
     escrows: [],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Dest chain'],
   },
   contracts: {

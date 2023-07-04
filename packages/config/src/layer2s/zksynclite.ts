@@ -53,6 +53,8 @@ export const zksynclite: Layer2 = {
     description:
       'zkSync Lite (formerly zkSync) is a user-centric zk rollup platform from Matter Labs. It is a scaling solution for Ethereum, already live on Ethereum mainnet. It supports payments, token swaps and NFT minting.',
     purpose: 'Payments, Tokens',
+    provider: 'zkSync',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
@@ -171,8 +173,6 @@ export const zksynclite: Layer2 = {
     },
   }),
   technology: {
-    provider: 'zkSync',
-    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

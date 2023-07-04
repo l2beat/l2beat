@@ -15,6 +15,7 @@ export const amarok: Bridge = {
     description:
       'Connext is a multilayered system that aggregates various native AMBs in an Hub-and-Spoke architecture with Ethereum being the Hub receiving\
     messages from other domains. It implements a liquidity network on top of its Hub-and-Spoke architecture.',
+    category: 'Liquidity Network',
     links: {
       apps: ['https://bridge.connext.network/', 'https://connextscan.io/'],
       websites: ['https://blog.connext.network/'],
@@ -55,7 +56,6 @@ export const amarok: Bridge = {
   },
   technology: {
     canonical: false,
-    category: 'Liquidity Network',
     destination: ['Gnosis', 'Optimism', 'Arbitrum', 'Polygon', 'BSC'],
     principleOfOperation: {
       name: 'Principle of operation',

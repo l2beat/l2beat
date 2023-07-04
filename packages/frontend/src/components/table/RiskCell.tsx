@@ -8,7 +8,6 @@ import { NoInfoCell } from './NoInfoCell'
 
 interface Props {
   item?: ProjectRiskViewEntry
-  isUpcoming?: boolean
 }
 
 export function RiskCell({ item }: Props) {

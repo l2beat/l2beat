@@ -14,6 +14,7 @@ export const connext: Bridge = {
   display: {
     name: 'Connext (Legacy)',
     slug: 'connext-legacy',
+    category: 'Liquidity Network',
     links: {
       websites: [
         'https://bridge.connext.network/',
@@ -41,7 +42,6 @@ export const connext: Bridge = {
     ],
   },
   technology: {
-    category: 'Liquidity Network',
     destination: [
       'Avalanche',
       'BNB Chain',
@@ -85,11 +85,9 @@ export const connext: Bridge = {
     validatedBy: {
       value: 'User',
       description: 'Transfer is done via peer-to-peer atomic swap',
+      sentiment: 'good',
     },
-    sourceUpgradeability: {
-      value: 'No',
-      description: '',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: {
       ...RISK_VIEW.CANONICAL,
       description: RISK_VIEW.CANONICAL.description,

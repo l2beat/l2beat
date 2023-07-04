@@ -29,6 +29,7 @@ export const stargate: Bridge = {
     description:
       'StarGate is built on top of LayerZero protocol and is a liquidity network for cross-chain transfer for assets. It leverages an oracle and relayer for cross-chain security for the protocol. \
       Note that StarGate UI also supports omnichain tokens built directly on top of LayerZero protocol, e.g. JOE.',
+    category: 'Liquidity Network',
   },
   riskView: {
     validatedBy: {
@@ -37,10 +38,7 @@ export const stargate: Bridge = {
         'Transfers need to be independently confirmed by oracle attesting to source chain checkpoints and Relayer providing merkle proof of the transfer event.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'No',
-      description: 'Contracts are not upgradable.',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
@@ -52,7 +50,6 @@ export const stargate: Bridge = {
       'Optimism',
       'Fantom',
     ],
-    category: 'Liquidity Network',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

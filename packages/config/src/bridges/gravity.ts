@@ -12,6 +12,7 @@ export const gravity: Bridge = {
   display: {
     name: 'Gravity',
     slug: 'gravity',
+    category: 'Token Bridge',
     links: {
       websites: ['https://www.gravitybridge.net/'],
       explorers: [
@@ -51,16 +52,12 @@ export const gravity: Bridge = {
         'Transfers need to be approved by 2/3 of the validator set operating in Cosmos Gravity Bridge blockchain.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'No',
-      description: 'The code that secures the system can never change.',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.WRAPPED,
   },
   technology: {
     destination: ['Cosmos'],
     canonical: false,
-    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

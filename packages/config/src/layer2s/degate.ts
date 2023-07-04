@@ -54,6 +54,8 @@ export const degate: Layer2 = {
     description:
       'DeGate is an app-specific ZK rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purpose: 'Exchange',
+    provider: 'loopring',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
@@ -137,8 +139,6 @@ export const degate: Layer2 = {
     },
   }),
   technology: {
-    provider: 'loopring',
-    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
@@ -175,7 +175,7 @@ export const degate: Layer2 = {
         },
         {
           text: 'LoopringIOExchangeOwner.sol#L98-L101 - DeGate source code',
-          href: 'https://etherscan.io/address/0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83#code#F78#L98',
+          href: 'https://etherscan.io/address/0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83#code#F1#L98',
         },
       ],
     },

@@ -22,6 +22,7 @@ export const fuelv1: Layer2 = {
     description:
       'Fuel aims to be a complete optimistic rollup with low transaction costs, high speed and high throughput.',
     purpose: 'Payments',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://fuel.sh/'],
       apps: [],
@@ -76,7 +77,6 @@ export const fuelv1: Layer2 = {
     },
   }),
   technology: {
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
       references: [

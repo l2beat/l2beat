@@ -31,6 +31,7 @@ export interface BridgeDisplay {
   slug: string
   warning?: string
   description?: string
+  category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
   links: Partial<ProjectLinks>
 }
 
@@ -47,7 +48,6 @@ export interface BridgeRiskView {
 
 export interface BridgeTechnology {
   canonical?: boolean
-  category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
   destination: string[]
   principleOfOperation?: ProjectTechnologyChoice
   validation?: ProjectTechnologyChoice
