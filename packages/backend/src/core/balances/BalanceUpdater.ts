@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/shared'
 import {
   assert,
   AssetId,
+  ChainId,
   EthereumAddress,
   Hash256,
   UnixTime,
@@ -32,6 +33,7 @@ export class BalanceUpdater {
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
+    // TODO: make sure it runs on the same chain as this.chainId
     private readonly multicall: MulticallClient,
     private readonly blockNumberUpdater: BlockNumberUpdater,
     private readonly balanceRepository: BalanceRepository,
@@ -39,6 +41,7 @@ export class BalanceUpdater {
     private readonly clock: Clock,
     private readonly projects: BalanceProject[],
     private readonly logger: Logger,
+    private readonly chainId: ChainId,
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getBalanceConfigHash(projects)
@@ -55,7 +58,7 @@ export class BalanceUpdater {
     while (!this.knownSet.has(timestamp.toNumber())) {
       await setTimeout(refreshIntervalMs)
     }
-    return this.balanceRepository.getByTimestamp(timestamp)
+    return this.balanceRepository.getByTimestamp(this.chainId, timestamp)
   }
 
   async start() {
@@ -77,7 +80,10 @@ export class BalanceUpdater {
 
   async update(timestamp: UnixTime) {
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const known = await this.balanceRepository.getByTimestamp(timestamp)
+    const known = await this.balanceRepository.getByTimestamp(
+      this.chainId,
+      timestamp,
+    )
     const missing = getMissingData(timestamp, known, this.projects)
 
     if (missing.length > 0) {
@@ -122,6 +128,7 @@ export class BalanceUpdater {
       assetId: missingData[i].assetId,
       balance: BalanceCall.decodeOr(res, 0n),
       timestamp,
+      chainId: this.chainId,
     }))
   }
 }

@@ -94,6 +94,7 @@ export function createTvlModule(
     clock,
     config.projects,
     logger,
+    ChainId.ETHEREUM,
   )
   const reportUpdater = new ReportUpdater(
     priceUpdater,
