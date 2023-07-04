@@ -1,8 +1,9 @@
-import { ChainId, UnixTime } from "@l2beat/shared-pure"
-import { Logger, stringAsInt } from "../../tools"
-import { EtherscanLikeClient } from "../etherscanlike/EtherscanLikeClient"
-import { HttpClient } from "../HttpClient"
-import { BlockNumberProvider } from "../providers/BlockNumberProvider"
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
+
+import { Logger, stringAsInt } from '../../tools'
+import { EtherscanLikeClient } from '../etherscanlike/EtherscanLikeClient'
+import { HttpClient } from '../HttpClient'
+import { BlockNumberProvider } from '../providers/BlockNumberProvider'
 
 export class ArbiscanClient
   extends EtherscanLikeClient
