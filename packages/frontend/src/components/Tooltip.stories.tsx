@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { Tooltip as TooltipComponent } from '../components/Tooltip'
-import { configureTooltips } from '../scripts/configureTooltips'
-import { hoverOver } from '../utils/storybook/hoverOver'
+import { testConfigureTooltipsAndShow } from '../scripts/configureTooltips'
 
 export default {
   title: 'Components/Tooltip',
@@ -10,8 +9,7 @@ export default {
 
 export function Tooltip() {
   useEffect(() => {
-    configureTooltips()
-    hoverOver('.Tooltip')
+    testConfigureTooltipsAndShow()
   }, [])
 
   return (

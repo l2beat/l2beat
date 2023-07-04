@@ -2,8 +2,7 @@ import { StageConfig } from '@l2beat/config'
 import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { configureTooltips } from '../../scripts/configureTooltips'
-import { hoverOver } from '../../utils/storybook/hoverOver'
+import { testConfigureTooltipsAndShow } from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
 import { StageTooltip as StageTooltipComponent } from './StageTooltip'
 
@@ -13,8 +12,7 @@ export default {
 
 export function Tooltip() {
   useEffect(() => {
-    configureTooltips()
-    hoverOver('.Tooltip')
+    testConfigureTooltipsAndShow()
   }, [])
 
   const item: StageConfig = {

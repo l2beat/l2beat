@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { configureTooltips } from '../../scripts/configureTooltips'
-import { hoverOver } from '../../utils/storybook/hoverOver'
+import { testConfigureTooltipsAndShow } from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
 import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
 
@@ -12,8 +11,7 @@ export default {
 
 export function RosetteTooltip() {
   useEffect(() => {
-    configureTooltips()
-    hoverOver('.Tooltip')
+    testConfigureTooltipsAndShow()
   }, [])
 
   const project: RosetteTooltipProps = {

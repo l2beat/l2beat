@@ -102,6 +102,65 @@ export function configureTooltips() {
   }
 }
 
+export function testConfigureTooltipsAndShow() {
+  const { $, $$ } = makeQuery(document.body)
+
+  if (!document.querySelector('.Tooltip-Popup')) {
+    return
+  }
+
+  const elements = $$('.Tooltip[title]')
+
+  const tooltip = $('.Tooltip-Popup')
+  const tooltipText = $('.Tooltip-Popup span')
+  const tooltipTriangle = $('.Tooltip-Triangle')
+
+  let activeElement: HTMLElement | undefined
+
+  function show(element: HTMLElement, title: string) {
+    if (element.dataset.tooltipBig && isMobile()) return
+    activeElement = element
+    tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
+    const rect = activeElement.getBoundingClientRect()
+    tooltipText.innerHTML = title
+    tooltip.style.display = 'block'
+    const tooltipHeight = tooltip.getBoundingClientRect().height
+    const tooltipWidth = tooltip.getBoundingClientRect().width
+    const left = clamp(
+      rect.left + rect.width / 2 - tooltipWidth / 2,
+      10,
+      window.innerWidth - 10 - tooltipWidth,
+    )
+    tooltip.style.left = `${left}px`
+    if (rect.y + rect.height + 7 + tooltipHeight < window.innerHeight) {
+      tooltip.style.top = `${rect.bottom + 7}px`
+      tooltipTriangle.style.top = `${rect.bottom}px`
+      tooltipTriangle.classList.remove('rotate-180')
+    } else {
+      tooltip.style.top = `${rect.top - 7 - tooltipHeight}px`
+      tooltipTriangle.style.top = `${rect.top - 7}px`
+      tooltipTriangle.classList.add('rotate-180')
+    }
+
+    tooltip.style.textAlign =
+      element.dataset.tooltipAlign === 'right' ? 'right' : 'left'
+
+    const triangleLeft = clamp(
+      rect.left + rect.width / 2 - 8,
+      10,
+      window.innerWidth - 10 - 16,
+    )
+    tooltipTriangle.style.left = `${triangleLeft}px`
+  }
+
+  for (const element of elements) {
+    const title = element.getAttribute('title') ?? ''
+    element.removeAttribute('title')
+    element.setAttribute('tabindex', '0')
+    show(element, title)
+  }
+}
+
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value))
 }
