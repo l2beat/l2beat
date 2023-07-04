@@ -18,6 +18,7 @@ declare module 'knex/types/tables' {
     holder_address: string
     asset_id: string
     balance: string
+    chain_id: number
   }
 
   interface ReportRow {
