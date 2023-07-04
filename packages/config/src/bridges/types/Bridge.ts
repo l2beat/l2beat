@@ -53,4 +53,5 @@ export interface BridgeTechnology {
   principleOfOperation?: ProjectTechnologyChoice
   validation?: ProjectTechnologyChoice
   destinationToken?: ProjectTechnologyChoice
+  isUnderReview?: boolean
 }

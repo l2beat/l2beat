@@ -129,7 +129,7 @@ describe('layer2s', () => {
         describe(layer2.display.name, () => {
           type Key = Exclude<
             keyof Layer2Technology,
-            'category' | 'provider' //TODO: Add test for permissions
+            'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
           >
 
           function check(key: Key) {

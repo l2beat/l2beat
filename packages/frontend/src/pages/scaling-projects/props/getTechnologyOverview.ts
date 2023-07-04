@@ -16,7 +16,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const technology: TechnologySectionProps = {
       id: 'technology',
       title: 'Technology',
-      isUnderReview: project.isUnderReview,
+      isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
       items: [
         makeTechnologyChoice(
           'state-correctness',
@@ -37,7 +37,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const operator: TechnologySectionProps = {
       id: 'operator',
       title: 'Operator',
-      isUnderReview: project.isUnderReview,
+      isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
       items: [
         makeTechnologyChoice('operator', project.technology.operator),
         makeTechnologyChoice(
@@ -50,7 +50,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const withdrawals: TechnologySectionProps = {
       id: 'withdrawals',
       title: 'Withdrawals',
-      isUnderReview: project.isUnderReview,
+      isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
       items: [
         ...project.technology.exitMechanisms.map((x, i) =>
           makeTechnologyChoice(`exit-mechanisms-${i + 1}`, x),
@@ -63,7 +63,7 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
     const other: TechnologySectionProps = {
       id: 'other-considerations',
       title: 'Other considerations',
-      isUnderReview: project.isUnderReview,
+      isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
       items: [
         project.technology.additionalPrivacy &&
           makeTechnologyChoice(
@@ -83,9 +83,19 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       ].filter(noUndefined),
     }
 
-    return [technology, operator, withdrawals, other].filter(
+    const filtered = [technology, operator, withdrawals, other].filter(
       (x) => x.items.length > 0,
     )
+
+    return filtered.map((section) => {
+      if (section.items.every((item) => item.isUnderReview)) {
+        return {
+          ...section,
+          isUnderReview: true,
+        }
+      }
+      return section
+    })
   }
 
   const sections = makeSections()

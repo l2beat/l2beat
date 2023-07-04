@@ -5,6 +5,7 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { SectionId } from './sectionId'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
+import { UnderReviewCallout } from './UnderReviewCallout'
 
 export interface TechnologySectionProps {
   id: SectionId
@@ -18,6 +19,7 @@ export interface TechnologyChoice {
   name: string
   description: string
   isIncomplete: boolean
+  isUnderReview: boolean
   risks: TechnologyRisk[]
   references: TechnologyReference[]
 }
@@ -36,11 +38,17 @@ export function TechnologySection({
             <a href={`#${item.id}`}>{item.name}</a>
           </h3>
           {item.isIncomplete && <TechnologyIncompleteShort />}
-          <p className="mt-2 text-gray-850 dark:text-gray-400">
-            {item.description}
-          </p>
-          <RiskList risks={item.risks} />
-          <ReferenceList references={item.references} />
+          {item.isUnderReview ? (
+            <UnderReviewCallout />
+          ) : (
+            <>
+              <p className="mt-2 text-gray-850 dark:text-gray-400">
+                {item.description}
+              </p>
+              <RiskList risks={item.risks} />
+              <ReferenceList references={item.references} />{' '}
+            </>
+          )}
         </div>
       ))}
     </ProjectDetailsSection>
