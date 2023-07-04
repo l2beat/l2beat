@@ -1,12 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import {
-  assert,
-  AssetId,
-  ChainId,
-  EthereumAddress,
-  Hash256,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -14,18 +7,12 @@ import {
   BalanceRepository,
 } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
-import { BalanceCall } from '../../peripherals/ethereum/calls/BalanceCall'
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { BalanceProject } from './BalanceProject'
+import { BalanceProvider, HeldAsset } from './BalanceProvider'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
-
-interface HeldAsset {
-  holder: EthereumAddress
-  assetId: AssetId
-}
 
 export class BalanceUpdater {
   private readonly configHash: Hash256
@@ -34,7 +21,7 @@ export class BalanceUpdater {
 
   constructor(
     // TODO: make sure it runs on the same chain as this.chainId
-    private readonly multicall: MulticallClient,
+    private readonly balanceProvider: BalanceProvider,
     private readonly blockNumberUpdater: BlockNumberUpdater,
     private readonly balanceRepository: BalanceRepository,
     private readonly balanceStatusRepository: BalanceStatusRepository,
@@ -51,6 +38,11 @@ export class BalanceUpdater {
       {
         metricsId: BalanceUpdater.name,
       },
+    )
+
+    assert(
+      this.balanceProvider.getChainId() === this.chainId,
+      'ChainId mismatch',
     )
   }
 
@@ -87,7 +79,18 @@ export class BalanceUpdater {
     const missing = getMissingData(timestamp, known, this.projects)
 
     if (missing.length > 0) {
-      const balances = await this.fetchBalances(missing, timestamp)
+      const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
+        timestamp,
+      )
+
+      assert(blockNumber, 'No timestamp for this block number')
+
+      const balances = await this.balanceProvider.fetchBalances(
+        missing,
+        timestamp,
+        blockNumber,
+      )
+
       await this.balanceRepository.addOrUpdateMany(balances)
       this.logger.debug('Updated balances', {
         timestamp: timestamp.toNumber(),
@@ -103,33 +106,6 @@ export class BalanceUpdater {
       timestamp,
     })
     this.logger.info('Update completed', { timestamp: timestamp.toNumber() })
-  }
-
-  async fetchBalances(
-    missingData: HeldAsset[],
-    timestamp: UnixTime,
-  ): Promise<BalanceRecord[]> {
-    const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
-      timestamp,
-    )
-    assert(blockNumber, 'No timestamp for this block number')
-
-    const calls = missingData.map((m) =>
-      BalanceCall.encode(m.holder, m.assetId),
-    )
-
-    const multicallResponses = await this.multicall.multicall(
-      calls,
-      blockNumber,
-    )
-
-    return multicallResponses.map((res, i) => ({
-      holderAddress: missingData[i].holder,
-      assetId: missingData[i].assetId,
-      balance: BalanceCall.decodeOr(res, 0n),
-      timestamp,
-      chainId: this.chainId,
-    }))
   }
 }
 
