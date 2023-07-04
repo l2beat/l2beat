@@ -40,6 +40,6 @@ Gray.args = {
 }
 
 export const UnderReview: Story<BadgeProps> = Template.bind({})
-Gray.args = {
+UnderReview.args = {
   type: 'UnderReview',
 }
