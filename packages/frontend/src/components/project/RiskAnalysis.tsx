@@ -3,6 +3,7 @@ import React from 'react'
 
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValue, RiskValues } from '../../utils/risks/types'
+import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { BigRosette } from '../rosette'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { SectionId } from './sectionId'
@@ -60,25 +61,28 @@ function SingleRisk({
   name: string
   riskValue: RiskValue
 }) {
-  if (riskValue.sentiment === 'UnderReview') {
-    return null
-  }
-
   return (
     <div>
       <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">{name}</h3>
-
-      <span
-        className={cx(
-          sentimentToTextColor(riskValue.sentiment),
-          'mt-2 block text-xl font-bold md:text-2xl',
-        )}
-      >
-        {riskValue.value}
-      </span>
-      <p className="mt-2 text-gray-850 dark:text-gray-400">
-        {riskValue.description}
-      </p>
+      {riskValue.sentiment === 'UnderReview' ? (
+        <span className="mt-2 block">
+          {name} risk is currently <UnderReviewBadge />
+        </span>
+      ) : (
+        <>
+          <span
+            className={cx(
+              sentimentToTextColor(riskValue.sentiment),
+              'mt-2 block text-xl font-bold md:text-2xl',
+            )}
+          >
+            {riskValue.value}
+          </span>
+          <p className="mt-2 text-gray-850 dark:text-gray-400">
+            {riskValue.description}
+          </p>
+        </>
+      )}
     </div>
   )
 }
