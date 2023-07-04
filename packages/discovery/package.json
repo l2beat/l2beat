@@ -9,7 +9,6 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "prebuild": "yarn clean",
     "clean": "rm -rf build",
     "format:fix": "prettier --write .",
     "format": "prettier --check .",

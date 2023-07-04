@@ -52,10 +52,7 @@ export const gravity: Bridge = {
         'Transfers need to be approved by 2/3 of the validator set operating in Cosmos Gravity Bridge blockchain.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'No',
-      description: 'The code that secures the system can never change.',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.WRAPPED,
   },
   technology: {

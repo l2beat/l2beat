@@ -12,21 +12,22 @@
     ]
   },
   "scripts": {
+    "build": "wsrun -ecsm build",
     "build:backend": "wsrun -p @l2beat/backend -recsm build",
     "build:frontend": "wsrun -p @l2beat/frontend -recsm build",
-    "build": "wsrun -ecsm build",
-    "build:dependencies": "wsrun -p @l2beat/{shared,discovery,config} -recsm build",
-    "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck && yarn test",
+    "build:dependencies": "wsrun -p @l2beat/{shared-pure,shared,discovery,config} -recsm build",
     "clean": "wsrun -ecam clean",
     "fix": "yarn lint:fix && yarn format:fix",
-    "format:fix": "wsrun -ecam format:fix",
     "format": "wsrun -ecam format",
-    "heroku-postbuild": "yarn build:backend",
-    "lint:fix": "wsrun -ecam lint:fix",
+    "format:fix": "wsrun -ecam format:fix",
     "lint": "wsrun -ecam lint",
+    "lint:fix": "wsrun -ecam lint:fix",
     "start": "cd packages/backend && yarn start",
     "test": "wsrun -ecam test",
-    "typecheck": "wsrun -ecam typecheck"
+    "typecheck": "wsrun -ecam typecheck",
+    "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck && yarn test",
+    "heroku-postbuild": "yarn build:backend",
+    "checkout": "yarn clean && yarn && yarn build"
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^10.0.2",

@@ -41,6 +41,7 @@ describe(executeHandlers.name, () => {
       ],
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
     )
     expect<unknown[]>(values).toEqual([
       { field: 'foo', value: 123, ignoreRelative: undefined },
@@ -81,6 +82,7 @@ describe(executeHandlers.name, () => {
       ],
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
     )
     expect<unknown[]>(values).toEqual([
       { field: 'foo', value: 123, ignoreRelative: undefined },
@@ -155,6 +157,7 @@ describe(executeHandlers.name, () => {
       ],
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
     )
     expect<unknown[]>(values).toEqual([
       { field: 'a', value: 100, ignoreRelative: undefined },
@@ -179,6 +182,7 @@ describe(executeHandlers.name, () => {
       ],
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
     )
     await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
@@ -196,6 +200,7 @@ describe(executeHandlers.name, () => {
       ],
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
     )
     await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
@@ -218,6 +223,7 @@ describe(executeHandlers.name, () => {
       ],
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
     )
     await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
@@ -238,6 +244,7 @@ describe(executeHandlers.name, () => {
       [new FunkyHandler()],
       EthereumAddress.random(),
       BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
     )
     expect<unknown[]>(values).toEqual([{ field: 'foo', error: 'oops' }])
   })

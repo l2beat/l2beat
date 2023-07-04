@@ -12,6 +12,7 @@
     "jsx": "react",
     "declaration": true,
     "declarationMap": true,
-    "noImplicitOverride": true
+    "noImplicitOverride": true,
+    "incremental": true
   }
 }
