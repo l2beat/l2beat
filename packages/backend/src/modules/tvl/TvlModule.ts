@@ -15,6 +15,7 @@ import { createDydxRouter } from '../../api/routers/DydxRouter'
 import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { Config } from '../../config'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
+import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
@@ -72,6 +73,7 @@ export function createTvlModule(
     config.tvl.etherscanApiKey,
     logger,
   )
+  const ethereumBalanceProvider = new EthereumBalanceProvider(multicall)
 
   // #endregion
   // #region updaters
@@ -91,7 +93,7 @@ export function createTvlModule(
     logger,
   )
   const balanceUpdater = new BalanceUpdater(
-    multicall,
+    ethereumBalanceProvider,
     blockNumberUpdater,
     balanceRepository,
     balanceStatusRepository,
