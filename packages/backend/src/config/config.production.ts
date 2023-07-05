@@ -58,7 +58,7 @@ export function getProductionConfig(): Config {
     tvl: {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-      arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
+      arbiscanApiKey: process.env.ARBISCAN_API_KEY,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
     },
     activity: {
