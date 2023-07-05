@@ -9,7 +9,12 @@ export function ValueType(value: string): ValueType {
   return value as unknown as ValueType
 }
 
-const TYPES = ['TVL', 'CBV', 'EBV', 'NMV']
+const TYPES = [
+  'TVL', // Total Value Locked
+  'CBV', // Canonically Bridged Value
+  'EBV', // Externally Bridged Value
+  'NMV', // Natively Minted Value
+]
 
 ValueType.TVL = ValueType(TYPES[0])
 ValueType.CBV = ValueType(TYPES[1])
