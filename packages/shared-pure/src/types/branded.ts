@@ -23,3 +23,10 @@ export function stringAs<T>(Brand: (s: string) => T) {
 export function numberAs<T>(Brand: (n: number) => T) {
   return branded(z.number(), Brand)
 }
+
+export function stringAsInt(fallback?: number) {
+  return z.preprocess((s) => {
+    const res = z.string().safeParse(s)
+    return res.success && s !== '' ? Number(res.data) : fallback
+  }, z.number().int())
+}
