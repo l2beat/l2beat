@@ -181,10 +181,14 @@ export const polynetwork: Bridge = {
         'EthCrossChainData',
         "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
       ),
-      discovery.getContractDetails(
-        'EthCrossChainManagerProxy',
-        'Used to proxy requests from LockProxy to EthCrossChainManager.',
-      ),
+      discovery.getContractDetails('EthCrossChainManagerProxy', {
+        description:
+          'Used to proxy requests from LockProxy to EthCrossChainManager.',
+        pausable: {
+          paused: discovery.getContractValue('EthCrossChainManager', 'paused'),
+          pausableBy: ['EthCrossChainManager'],
+        },
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

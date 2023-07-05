@@ -1,6 +1,6 @@
 {
   "name": "zksync2",
-  "blockNumber": 17434053,
+  "blockNumber": 17620016,
   "configHash": "0x1720f3c89dcbc0fc6b6cdeb076051bd49e8b661a1288de4810f30a49ccc2f67d",
   "version": 1,
   "contracts": [
@@ -238,20 +238,20 @@
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
         "getCurrentProposalId": 4,
-        "getFirstUnprocessedPriorityTx": 968186,
+        "getFirstUnprocessedPriorityTx": 1388256,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x010007794e73f682ad6d27e86b6f71bbee875fc26f5708d1713e7cfd476098d3",
         "getL2DefaultAccountBytecodeHash": "0x0100067d861e2f5717a12c3e869cfb657793b86bbb0caa05cc1421f16c5217bc",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 10615,
+        "getPriorityQueueSize": 11601,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 58443,
-        "getTotalBlocksExecuted": 57449,
-        "getTotalBlocksVerified": 58135,
-        "getTotalPriorityTxs": 978801,
+        "getTotalBlocksCommitted": 94267,
+        "getTotalBlocksExecuted": 92635,
+        "getTotalBlocksVerified": 93668,
+        "getTotalPriorityTxs": 1399857,
         "getUpgradeProposalState": 0,
         "getVerifier": "0x020b26826C23142f2582733b2E6428EE31eAaB49",
         "getVerifierParams": [
@@ -262,8 +262,8 @@
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0xf8b3bd241127309f9af4e58875e0f88266b69284d01256f4f73f2b8a6bd7eb52",
-          1686129947,
+          "0x994938663cbbc4f39b6f878eff6a4e8bb8fb34c0c0d3941c9f9f18f6c5f2e8bd",
+          1688386871,
           0
         ],
         "validators": ["0x3dB52cE065f728011Ac6732222270b3F2360d919"]
@@ -281,7 +281,7 @@
         "executionDelay": 75600,
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "validator": "0x112200EaA6d57120c86B8b51a8b6049d56B82211",
+        "validator": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
         "zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
       "derivedName": "ValidatorTimelock"
@@ -307,7 +307,7 @@
           "0xa265146cA40F52cfC439888D0b4291b5440e6769"
         ],
         "getThreshold": 4,
-        "nonce": 57,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -342,9 +342,9 @@
     }
   ],
   "eoas": [
-    "0x112200EaA6d57120c86B8b51a8b6049d56B82211",
     "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF",
     "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
+    "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
     "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
     "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
     "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
