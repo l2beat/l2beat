@@ -7,12 +7,21 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('polynetwork')
 
+const isPaused = discovery.getContractValue<boolean>(
+  'EthCrossChainManager',
+  'paused',
+)
+const warningText = isPaused
+  ? 'The bridge is currently paused due to an attack occurred on July 2nd, resulting from stolen or misused private keys. For more information, read the postmortem here: https://dedaub.com/blog/poly-chain-hack-postmortem'
+  : ''
+
 export const polynetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('polynetwork'),
   display: {
     name: 'Poly Bridge',
     slug: 'polynetwork',
+    warning: warningText,
     links: {
       websites: ['https://bridge.poly.network/', 'https://poly.network/'],
       apps: ['https://bridge.poly.network/'],
@@ -31,6 +40,7 @@ export const polynetwork: Bridge = {
     },
     description:
       'Poly Bridge allows users to transfer assets between different blockchains using Lock-Mint swap. It uses a PolyNetwork chain to verify and coordinate message passing between Relayers on supported chains. Each chain has a set of Relayers, while PolyNetwork chain has a set of Keepers that sign cross-chain messages. Chains integrated with Poly Bridge need to support light client verification, since validation of cross-chain messages includes verifying block headers and transactions via Merkle proofs. Some of the smart contracts used by the bridge infrastructure are not verified on Etherscan.',
+    category: 'Token Bridge',
   },
   riskView: {
     validatedBy: {
@@ -83,7 +93,6 @@ export const polynetwork: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Various'], // Careful, on UI, the destination options change based on selected asset
     // e.g. ETH supports only some niche chains, while FEI supports e.g. BNB.
     canonical: false,
@@ -168,10 +177,14 @@ export const polynetwork: Bridge = {
         'Lock Proxy 5',
         'Escrow and proxy contract for the Bridge.',
       ),
-      discovery.getContractDetails(
-        'EthCrossChainManager',
-        'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
-      ),
+      discovery.getContractDetails('EthCrossChainManager', {
+        description:
+          'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
+        pausable: {
+          paused: discovery.getContractValue('EthCrossChainManager', 'paused'),
+          pausableBy: ['EthCrossChainManager'],
+        },
+      }),
       //DUPLICATES???
       discovery.getContractDetails(
         'EthCrossChainData',
@@ -181,10 +194,17 @@ export const polynetwork: Bridge = {
         'EthCrossChainData',
         "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
       ),
-      discovery.getContractDetails(
-        'EthCrossChainManagerProxy',
-        'Used to proxy requests from LockProxy to EthCrossChainManager.',
-      ),
+      discovery.getContractDetails('EthCrossChainManagerProxy', {
+        description:
+          'Used to proxy requests from LockProxy to EthCrossChainManager.',
+        pausable: {
+          paused: discovery.getContractValue(
+            'EthCrossChainManagerProxy',
+            'paused',
+          ),
+          pausableBy: ['EthCrossChainManager'],
+        },
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

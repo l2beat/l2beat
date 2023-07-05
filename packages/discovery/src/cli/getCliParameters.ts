@@ -18,6 +18,7 @@ export interface DiscoverCliParameters {
 export interface InvertCliParameters {
   mode: 'invert'
   file: string
+  useMermaidMarkup: boolean
 }
 
 export interface HelpCliParameters {
@@ -73,13 +74,27 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
   }
 
   if (args[0] === 'invert') {
-    if (args.length === 1) {
-      return { mode: 'help', error: 'Not enough arguments' }
-    } else if (args.length > 2) {
-      return { mode: 'help', error: 'Too many arguments' }
+    const remaining = args.slice(1)
+
+    let useMermaidMarkup = false
+
+    if (remaining.includes('--mermaid')) {
+      useMermaidMarkup = true
+      remaining.splice(remaining.indexOf('--mermaid'), 1)
     }
 
-    return { mode: 'invert', file: args[1] }
+    if (remaining.length === 0) {
+      return { mode: 'help', error: 'Not enough arguments' }
+    } else if (remaining.length > 1) {
+      return { mode: 'help', error: 'Too many arguments' }
+    } else {
+      const result: InvertCliParameters = {
+        mode: 'invert',
+        file: remaining[0],
+        useMermaidMarkup,
+      }
+      return result
+    }
   }
 
   return { mode: 'help', error: `Unknown mode: ${args[0]}` }

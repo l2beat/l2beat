@@ -30,6 +30,7 @@ export const polygonpos: Bridge = {
     },
     description:
       'Polygon PoS it the official bridge provided by the Polygon team to bridge assets from Ethereum to Polygon chain. The bridge is validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
+    category: 'Token Bridge',
   },
   config: {
     escrows: [
@@ -87,7 +88,6 @@ export const polygonpos: Bridge = {
   technology: {
     destination: ['Polygon'],
     canonical: true,
-    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

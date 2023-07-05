@@ -13,6 +13,7 @@ export const nomad: Bridge = {
     slug: 'nomad',
     warning:
       'The Nomad token bridge contract has recently been exploited and currently is not operational.',
+    category: 'Token Bridge',
     links: {
       websites: ['https://app.nomad.xyz/', 'https://docs.nomad.xyz/'],
       repositories: ['https://github.com/nomad-xyz/monorepo'],
@@ -44,7 +45,6 @@ export const nomad: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Avalanche', 'Evmos', 'Milkomedia C1', 'Moonbeam'],
     principleOfOperation: {
       name: 'Principle of operation',

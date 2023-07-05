@@ -89,6 +89,7 @@ export const arbitrum: Layer2 = {
       validatorAfkTime,
     )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
@@ -219,7 +220,7 @@ export const arbitrum: Layer2 = {
         {
           contract: 'RollupProxy',
           references: [
-            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
+            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L55',
           ],
         },
       ],
@@ -228,7 +229,6 @@ export const arbitrum: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
   technology: {
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
@@ -251,7 +251,7 @@ export const arbitrum: Layer2 = {
         },
         {
           text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
-          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L288',
+          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L288',
         },
       ],
     },

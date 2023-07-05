@@ -42,6 +42,8 @@ export const bobanetwork: Layer2 = {
     This facility is using funds from liquidity providers. The second is Hybrid Compute technology that enables Ethereum developers to build dApps that trigger code executed on web-scale infrastructure. \
     Boba Network operates on multiple Layer 1 blockchains.',
     purpose: 'Universal',
+    provider: 'Optimism',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://boba.network'],
       apps: [],
@@ -159,8 +161,6 @@ export const bobanetwork: Layer2 = {
     },
   }),
   technology: {
-    provider: 'Optimism',
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
@@ -309,18 +309,6 @@ export const bobanetwork: Layer2 = {
         pausable: {
           paused: discovery.getContractValue<boolean>(
             'L1CrossDomainMessenger_1',
-            'paused',
-          ),
-          pausableBy: ['Owner'],
-        },
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessengerFast', {
-        description:
-          'The L1 Cross Domain Messenger (L1xDM) contract that allows permissioned relayer to relay messages from L2 onto L1 immediately without waiting for the end of the fraud proof window. It is used only for L2->L1 communication.',
-        pausable: {
-          paused: discovery.getContractValue<boolean>(
-            'L1CrossDomainMessengerFast',
             'paused',
           ),
           pausableBy: ['Owner'],

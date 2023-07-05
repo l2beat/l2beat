@@ -46,6 +46,7 @@ export const nova: Layer2 = {
     description:
       'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
     purpose: 'Universal',
+    category: 'Optimistic Chain',
     links: {
       websites: [
         'https://nova.arbitrum.io/',
@@ -119,7 +120,6 @@ export const nova: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    category: 'Optimistic Chain',
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
@@ -137,8 +137,8 @@ export const nova: Layer2 = {
           href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
         },
         {
-          text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
-          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L288',
+          text: 'RollupUserLogic.sol#L288 - Etherscan source code, onlyValidator modifier',
+          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L288',
         },
       ],
     },

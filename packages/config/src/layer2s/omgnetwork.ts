@@ -24,6 +24,7 @@ export const omgnetwork: Layer2 = {
     description:
       'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. Using the OMG Network, individuals and businesses can transact on a financial infrastructure that is claimed to be several times faster, 1/3rd the cost, and as secure as the Ethereum Network — while retaining full autonomy over their funds and keys. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',
     purpose: 'Payments',
+    category: 'Plasma',
     links: {
       websites: ['https://omg.network'],
       apps: [],
@@ -68,7 +69,6 @@ export const omgnetwork: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    category: 'Plasma',
     stateCorrectness: {
       ...STATE_CORRECTNESS.EXIT_FRAUD_PROOFS,
       isIncomplete: true,

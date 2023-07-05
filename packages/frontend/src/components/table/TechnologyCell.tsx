@@ -6,7 +6,7 @@ import { LoopringIcon, OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
 
 export interface TechnologyCellProps {
   children: string
-  provider?: Layer2['technology']['provider']
+  provider?: Layer2['display']['provider']
 }
 
 export function TechnologyCell({ provider, children }: TechnologyCellProps) {

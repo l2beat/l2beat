@@ -38,7 +38,7 @@ export function getActivityViewEntry(
   return {
     name: project.display.name,
     slug: project.display.slug,
-    provider: project.technology.provider,
+    provider: project.display.provider,
     warning: project.display.warning,
     isVerified,
     dataSource: project.display.activityDataSource,

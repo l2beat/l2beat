@@ -11,6 +11,7 @@ export const avalanche: Bridge = {
     slug: 'avalanche',
     description:
       'Avalanche Bridge is an externally validated bridge. It uses a set of Wardens using secure SGX Enclave to sign transfers. On Ethereum side it uses periodically rotated EOA address for an Escrow. In the announcement, 3 out of 4 Warden signatures are required, however the exact number is impossible to verify for an external observer.',
+    category: 'Token Bridge',
     links: {
       websites: ['https://www.avax.network/'],
       explorers: ['https://subnets.avax.network/'],
@@ -92,7 +93,6 @@ export const avalanche: Bridge = {
   technology: {
     destination: ['Avalanche'],
     canonical: true,
-    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

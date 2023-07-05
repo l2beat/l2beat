@@ -16,6 +16,7 @@ export const lzOmnichain: Bridge = {
     slug: 'omnichain',
     warning:
       'The security parameters of each individual token must be individually assessed, and can be changed by the developers. Omnichain tokens are are in the early stages of development, use at your own risk.',
+    category: 'Token Bridge',
     links: {
       websites: ['https://layerzero.network/'],
       repositories: [
@@ -48,7 +49,6 @@ export const lzOmnichain: Bridge = {
   },
   technology: {
     destination: ['Various'],
-    category: 'Token Bridge',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

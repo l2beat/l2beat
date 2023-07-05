@@ -1,7 +1,7 @@
 {
   "name": "dydx",
-  "blockNumber": 17491821,
-  "configHash": "0xee396f1740be94844a5e48d2f35f416d67a28f28336ed274df7dacdbb6082cf6",
+  "blockNumber": 17622125,
+  "configHash": "0xe1bdfb7c3675a3cba24a23ce6fd77cb43eb44aeb57c51d49417f18ca0e9dabad",
   "version": 1,
   "contracts": [
     {
@@ -45,9 +45,9 @@
         "CONFIG_UPDATER_ROLE": "0x1ab0187632b3cb5ac848b647a9edd463e705607328ab29602e80fc3fa8001918",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getAreRootUpdatesPaused": false,
-        "getCurrentEpoch": 24,
+        "getCurrentEpoch": 25,
         "getEpochParameters": [2419200, 1628002800],
-        "getIpfsEpoch": 24,
+        "getIpfsEpoch": 25,
         "getIpfsUpdatePeriod": 180,
         "getIpnsName": "rewards-data.dydx.foundation",
         "getRewardsOracle": "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
@@ -465,21 +465,21 @@
         "DISTRIBUTION_START": 1628002800,
         "EPOCH_PARAMETERS_ROLE": "0xa69ba352872fe0ee634bc8d48d2a09a61267da1bfb2015e67a11ad05fe21f04b",
         "getBlackoutWindow": 259200,
-        "getContractBalanceAvailableToBorrow": 322820514846,
-        "getContractBalanceAvailableToWithdraw": 556838751095,
-        "getCurrentEpoch": 24,
+        "getContractBalanceAvailableToBorrow": 321465035255,
+        "getContractBalanceAvailableToWithdraw": 554486212117,
+        "getCurrentEpoch": 25,
         "getEpochParameters": [2419200, 1628002800],
         "getRewardsPerSecond": 0,
         "getShortfall": [],
         "getShortfallCount": 0,
-        "getTimeRemainingInCurrentEpoch": 1571329,
-        "getTotalActiveBalanceCurrentEpoch": 322819519094,
-        "getTotalActiveBalanceNextEpoch": 322819519094,
+        "getTimeRemainingInCurrentEpoch": 2409253,
+        "getTotalActiveBalanceCurrentEpoch": 321464039503,
+        "getTotalActiveBalanceNextEpoch": 321464039503,
         "getTotalBorrowedBalance": 4248,
         "getTotalBorrowerDebtBalance": 0,
         "getTotalDebtAvailableToWithdraw": 0,
-        "getTotalInactiveBalanceCurrentEpoch": 234018236249,
-        "getTotalInactiveBalanceNextEpoch": 234018236249,
+        "getTotalInactiveBalanceCurrentEpoch": 233021176862,
+        "getTotalInactiveBalanceNextEpoch": 233021176862,
         "hasEpochZeroStarted": true,
         "inBlackoutWindow": false,
         "name": "dYdX Staked USDC",
@@ -491,7 +491,7 @@
         "STAKED_TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "symbol": "stkUSDC",
         "TOTAL_ALLOCATION": 10000,
-        "totalSupply": 556837755343
+        "totalSupply": 554485216365
       },
       "derivedName": "LiquidityStakingV1"
     },
@@ -618,7 +618,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "4184566908526662723606145"
+        "totalSupply": "4158086677339380257322008"
       },
       "derivedName": "SafetyModuleV2"
     },
@@ -886,7 +886,7 @@
         "FREEZE_GRACE_PERIOD": 1209600,
         "getAssetInfo": [],
         "getEthKey": [],
-        "getLastBatchId": 16937,
+        "getLastBatchId": 17396,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -895,7 +895,7 @@
         "getRegisteredVerifiers": [
           "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
         ],
-        "getSequenceNumber": 16644,
+        "getSequenceNumber": 17103,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",

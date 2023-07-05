@@ -12,9 +12,5 @@ export async function isContractVerified(
 }
 
 export function getEtherscanClient(): EtherscanClient {
-  return new EtherscanClient(
-    new HttpClient(),
-    'https://api.etherscan.io/api',
-    getEnv('ETHERSCAN_API_KEY'),
-  )
+  return new EtherscanClient(new HttpClient(), getEnv('ETHERSCAN_API_KEY'))
 }

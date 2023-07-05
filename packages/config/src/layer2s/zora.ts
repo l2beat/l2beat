@@ -22,14 +22,6 @@ const upgradesProxy = {
   upgradeDelay: 'No Delay',
 }
 
-const sequencer = (() => {
-  const paddedAddr = discovery
-    .getContractValue<string>('SystemConfig', 'batcherHash')
-    .slice(2)
-  const unpaddedAddr = paddedAddr.substring(paddedAddr.length - 40)
-  return EthereumAddress('0x' + unpaddedAddr)
-})()
-
 export const zora: Layer2 = {
   type: 'layer2',
   id: ProjectId('zora'),
@@ -41,6 +33,8 @@ export const zora: Layer2 = {
     description:
       'The Zora Network is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
     purpose: 'Universal, NFTs',
+    provider: 'Optimism',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
       apps: [],
@@ -153,8 +147,6 @@ export const zora: Layer2 = {
     },
   }),
   technology: {
-    provider: 'Optimism',
-    category: 'Optimistic Rollup',
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
@@ -270,7 +262,9 @@ export const zora: Layer2 = {
     },
     {
       name: 'Sequencer',
-      accounts: [discovery.formatPermissionedAccount(sequencer)],
+      accounts: [
+        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
+      ],
       description: 'Central actor allowed to commit L2 transactions to L1',
     },
     {

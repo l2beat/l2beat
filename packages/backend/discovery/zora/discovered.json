@@ -1,7 +1,7 @@
 {
   "name": "zora",
   "blockNumber": 17535698,
-  "configHash": "0xda8b953a57a3a4def126e4e0125be1838650bd9ac13a698e98435c94735e65a8",
+  "configHash": "0xd2bbb6438f9a4536459e543676876b53ddbc1c868ba39528bfcad405e65ea054",
   "version": 1,
   "contracts": [
     {
@@ -94,7 +94,7 @@
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
       "values": {
-        "batcherHash": "0x000000000000000000000000625726c858dbf78c0125436c943bf4b4be9d9033",
+        "batcherHash": "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "overhead": 188,
@@ -112,7 +112,8 @@
         "unsafeBlockSigner": "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228",
         "version": "1.3.0",
         "VERSION": 0
-      }
+      },
+      "derivedName": "SystemConfig"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -240,6 +241,7 @@
     "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
     "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
+    "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
     "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7",
     "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81",
     "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB",

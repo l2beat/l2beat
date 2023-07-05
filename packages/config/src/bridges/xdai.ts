@@ -9,6 +9,7 @@ export const xdai: Bridge = {
   display: {
     name: 'xDai Bridge',
     slug: 'xdai',
+    category: 'Token Bridge',
     links: {
       websites: ['https://bridge.gnosischain.com/'],
       apps: ['https://bridge.gnosischain.com/'],
@@ -42,7 +43,6 @@ export const xdai: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Gnosis Chain'],
     principleOfOperation: {
       name: 'Principle of operation',
@@ -117,6 +117,7 @@ export const xdai: Bridge = {
       value: 'Native',
       description:
         'Tokens transferred via this bridge end up as xDAI and are used to pay for gas on the destination chain.',
+      sentiment: 'good',
     },
   },
   contracts: {

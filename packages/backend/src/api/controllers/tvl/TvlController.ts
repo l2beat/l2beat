@@ -65,8 +65,8 @@ export class TvlController {
   ) {
     const balances = reports.map((r) => ({
       timestamp: r.timestamp,
-      usd: r.balanceUsd,
-      asset: r.balance,
+      usd: r.usdValue,
+      asset: r.amount,
     }))
     return getChartPoints(balances, hours, decimals)
   }

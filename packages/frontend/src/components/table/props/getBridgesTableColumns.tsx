@@ -28,7 +28,8 @@ export function getArchivedBridgesTvlColumns() {
     },
     {
       name: 'TVL',
-      tooltip: 'Total value locked in escrow contracts on Ethereum.',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       getValue: (entry) =>
         !entry.isUpcoming &&

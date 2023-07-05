@@ -16,6 +16,7 @@ export const allbridge: Bridge = {
     For its stableconin liquidity network it is using either own AMB or Wormhole to pass messages. Allbridge bridge is a token bridge implemented\
     as a separate contract. Both bridges contains a number of core, unverified smart contracts and it is owned by an EOA\
     account that can drain all funds.',
+    category: 'Hybrid',
     links: {
       websites: ['https://app.allbridge.io/'],
       apps: ['https://core.allbridge.io/'],
@@ -62,7 +63,6 @@ export const allbridge: Bridge = {
   },
   technology: {
     canonical: false,
-    category: 'Hybrid',
     destination: [
       'Aurora',
       'Avalanche',

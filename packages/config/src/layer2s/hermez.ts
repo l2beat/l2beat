@@ -25,6 +25,7 @@ export const hermez: Layer2 = {
     description:
       'Hermez is an open-source ZK-Rollup that aims to be optimized for secure, low-cost and usable token transfers on the wings of Ethereum.',
     purpose: 'Payments',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://hermez.io/'],
       apps: ['https://wallet.hermez.io/'],
@@ -63,7 +64,6 @@ export const hermez: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

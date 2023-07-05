@@ -16,6 +16,7 @@ export const cartesiHoneypot: Layer2 = {
        Honeypot holds real assets with a dual objective: setting a financial benchmark for secure asset management\
        and providing a gamified battlefield for the community to help audit and test Cartesi Rollups.',
     purpose: 'Bug bounty',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://cartesi.io/'],
       apps: [],
@@ -33,7 +34,7 @@ export const cartesiHoneypot: Layer2 = {
     escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: { ...TECHNOLOGY.UPCOMING, category: 'Optimistic Rollup' },
+  technology: TECHNOLOGY.UPCOMING,
   contracts: CONTRACTS.EMPTY,
   milestones: [
     {
