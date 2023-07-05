@@ -20,7 +20,6 @@ export async function up(knex: Knex) {
   })
 
   await knex('reports')
-    // @ts-expect-error: column isDaily change later to is_daily
     .update({ isDaily: true })
     .whereRaw('mod(reports.unix_timestamp,86400) = 0')
 }

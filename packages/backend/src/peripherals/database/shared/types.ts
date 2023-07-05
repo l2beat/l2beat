@@ -1,16 +1,15 @@
 export {}
 
 declare module 'knex/types/tables' {
-  interface BlockNumberRow {
-    unix_timestamp: Date
-    block_number: number
-    chain_id: number
-  }
-
   interface PriceRow {
     asset_id: string
     price_usd: number
     unix_timestamp: Date
+  }
+  interface BlockNumberRow {
+    unix_timestamp: Date
+    block_number: number
+    chain_id: number
   }
 
   interface BalanceRow {
@@ -19,6 +18,11 @@ declare module 'knex/types/tables' {
     asset_id: string
     balance: string
     chain_id: number
+  }
+
+  interface BalanceStatusRow {
+    config_hash: string
+    unix_timestamp: Date
   }
 
   interface ReportRow {
@@ -31,6 +35,11 @@ declare module 'knex/types/tables' {
     eth_value: string
   }
 
+  interface ReportStatusRow {
+    config_hash: string
+    unix_timestamp: Date
+  }
+
   interface AggregateReportRow {
     unix_timestamp: Date
     project_id: string
@@ -38,16 +47,6 @@ declare module 'knex/types/tables' {
     tvl_eth: string
     is_daily: boolean
     is_six_hourly: boolean
-  }
-
-  interface ReportStatusRow {
-    config_hash: string
-    unix_timestamp: Date
-  }
-
-  interface BalanceStatusRow {
-    config_hash: string
-    unix_timestamp: Date
   }
 
   interface SequenceProcessorRow {
@@ -101,13 +100,13 @@ declare module 'knex/types/tables' {
   }
 
   interface Tables {
-    block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
-    asset_balances: BalanceRow
-    balance_status: BalanceStatusRow
-    reports: ReportRow
-    aggregate_reports: AggregateReportRow
-    report_status: ReportStatusRow
+    block_numbers: BlockNumberRow
+    balances: BalanceRow
+    balances_status: BalanceStatusRow
+    project_assets: ReportRow
+    project_assets_status: ReportStatusRow
+    project_values: AggregateReportRow
     sequence_processor: SequenceProcessorRow
     'activity.zksync': ZksyncTransactionRow
     'activity.block': BlockTransactionCountRow
