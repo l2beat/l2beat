@@ -28,6 +28,7 @@ export const synapse: Bridge = {
     },
     description:
       'Synapse is a token bridge leveraging a validator between chains and liquidity pools to perform cross-chain and same chain swaps.',
+    category: 'Hybrid',
   },
   config: {
     escrows: [
@@ -61,7 +62,6 @@ export const synapse: Bridge = {
       'Fantom',
       'Metis',
     ],
-    category: 'Hybrid',
     principleOfOperation: {
       name: 'Principle of operation',
       description:

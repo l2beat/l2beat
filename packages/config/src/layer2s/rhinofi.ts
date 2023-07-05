@@ -48,6 +48,8 @@ export const rhinofi: Layer2 = {
     description:
       'rhino.fi (formerly DeversiFi) claims to be the easiest way to access DeFi opportunities on Ethereum: invest, trade, and send tokens without paying gas fees.',
     purpose: 'Exchange',
+    provider: 'StarkEx',
+    category: 'Validium',
     links: {
       websites: ['https://rhino.fi/'],
       apps: ['https://app.rhino.fi/'],
@@ -112,8 +114,6 @@ export const rhinofi: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
   technology: {
-    provider: 'StarkEx',
-    category: 'Validium',
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,

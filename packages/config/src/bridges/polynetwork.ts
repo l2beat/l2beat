@@ -31,6 +31,7 @@ export const polynetwork: Bridge = {
     },
     description:
       'Poly Bridge allows users to transfer assets between different blockchains using Lock-Mint swap. It uses a PolyNetwork chain to verify and coordinate message passing between Relayers on supported chains. Each chain has a set of Relayers, while PolyNetwork chain has a set of Keepers that sign cross-chain messages. Chains integrated with Poly Bridge need to support light client verification, since validation of cross-chain messages includes verifying block headers and transactions via Merkle proofs. Some of the smart contracts used by the bridge infrastructure are not verified on Etherscan.',
+    category: 'Token Bridge',
   },
   riskView: {
     validatedBy: {
@@ -83,7 +84,6 @@ export const polynetwork: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Various'], // Careful, on UI, the destination options change based on selected asset
     // e.g. ETH supports only some niche chains, while FEI supports e.g. BNB.
     canonical: false,

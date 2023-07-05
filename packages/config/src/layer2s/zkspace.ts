@@ -32,6 +32,8 @@ export const zkspace: Layer2 = {
     description:
       'The ZKSpace platform consists of three main parts: a Layer 2 AMM DEX utilizing ZK-Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
     purpose: 'Tokens, NFTs, AMM',
+    provider: 'zkSync',
+    category: zkswap.display.category,
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -139,8 +141,6 @@ export const zkspace: Layer2 = {
     },
   }),
   technology: {
-    provider: 'zkSync',
-    category: zkswap.technology.category,
     stateCorrectness: zkswap.technology.stateCorrectness,
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,

@@ -16,6 +16,8 @@ export const kroma: Layer2 = {
             The goal of Kroma is to eventually transition to a ZK Rollup once the generation of ZK proofs becomes more cost-efficient and faster. \
             Kroma is deployed on the Sepolia testnet for further testing and optimization.',
     purpose: 'Universal',
+    category: 'Optimistic Rollup',
+    provider: 'Optimism',
     links: {
       websites: ['https://kroma.network/'],
       apps: [
@@ -36,10 +38,6 @@ export const kroma: Layer2 = {
     escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: {
-    ...TECHNOLOGY.UPCOMING,
-    category: 'Optimistic Rollup',
-    provider: 'Optimism',
-  },
+  technology: TECHNOLOGY.UPCOMING,
   contracts: CONTRACTS.EMPTY,
 }

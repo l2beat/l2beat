@@ -12,23 +12,23 @@ export default {
   title: 'Components/Rosette',
   argTypes: {
     sequencerFailure: {
-      options: ['bad', 'warning', undefined],
+      options: ['bad', 'warning', 'good'],
       control: { type: 'select' },
     },
     stateValidation: {
-      options: ['bad', 'warning', undefined],
+      options: ['bad', 'warning', 'good'],
       control: { type: 'select' },
     },
     dataAvailability: {
-      options: ['bad', 'warning', undefined],
+      options: ['bad', 'warning', 'good'],
       control: { type: 'select' },
     },
     upgradeability: {
-      options: ['bad', 'warning', undefined],
+      options: ['bad', 'warning', 'good'],
       control: { type: 'select' },
     },
     proposerFailure: {
-      options: ['bad', 'warning', undefined],
+      options: ['bad', 'warning', 'good'],
       control: { type: 'select' },
     },
   },
@@ -37,7 +37,7 @@ export default {
 const args: RiskSentiments = {
   sequencerFailure: 'bad',
   stateValidation: 'warning',
-  dataAvailability: undefined,
+  dataAvailability: 'good',
   upgradeability: 'bad',
   proposerFailure: 'warning',
 }
@@ -114,18 +114,23 @@ function UpcomingTemplate(risks: RiskValues) {
 export const UpcomingRosette: Story<RiskValues> = UpcomingTemplate.bind({})
 UpcomingRosette.args = {
   sequencerFailure: {
-    value: 'Sequencer failure',
+    value: '',
+    sentiment: 'neutral',
   },
   dataAvailability: {
-    value: 'Data availability',
+    value: '',
+    sentiment: 'neutral',
   },
   upgradeability: {
-    value: 'Upgradeability',
+    value: '',
+    sentiment: 'neutral',
   },
   stateValidation: {
-    value: 'State validation',
+    value: '',
+    sentiment: 'neutral',
   },
   proposerFailure: {
-    value: 'Proposer failure',
+    value: '',
+    sentiment: 'neutral',
   },
 }

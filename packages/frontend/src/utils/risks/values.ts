@@ -1,4 +1,4 @@
-import { Layer2, Layer2RiskView } from '@l2beat/config'
+import { Layer2RiskView } from '@l2beat/config'
 
 import { RiskSentiments, RiskValues } from './types'
 
@@ -13,7 +13,7 @@ export function getRiskValues(riskView: Layer2RiskView): RiskValues {
 }
 
 export function getRiskSentiments(
-  riskView: Layer2['riskView'] | RiskValues,
+  riskView: Layer2RiskView | RiskValues,
 ): RiskSentiments {
   return {
     sequencerFailure: riskView.sequencerFailure.sentiment,

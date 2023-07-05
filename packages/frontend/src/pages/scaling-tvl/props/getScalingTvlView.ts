@@ -51,7 +51,7 @@ function getScalingTvlViewEntry(
   return {
     name: project.display.name,
     slug: project.display.slug,
-    provider: project.technology.provider,
+    provider: project.display.provider,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
     isVerified,
@@ -63,7 +63,7 @@ function getScalingTvlViewEntry(
     sevenDayChange: stats ? stats.sevenDayChange : undefined,
     marketShare: stats ? formatPercent(stats.tvl / aggregateTvl) : undefined,
     purpose: project.display.purpose,
-    technology: project.technology.category,
+    technology: project.display.category,
     stage: project.stage,
   }
 }

@@ -1,10 +1,6 @@
 import { ProjectTechnologyChoice } from '../../common/ProjectTechnologyChoice'
 
 export interface Layer2Technology {
-  /** Technology provider */
-  provider?: 'StarkEx' | 'Optimism' | 'zkSync' | 'loopring'
-  /** Name of the category the layer2 belongs to */
-  category: Layer2Category
   /** What state correctness mechanism is used in the layer2 */
   stateCorrectness: ProjectTechnologyChoice
   /** What is the new cryptography used in the layer2 */
@@ -26,11 +22,3 @@ export interface Layer2Technology {
   /** How can the Layer2 be upgraded? */
   upgradeMechanism?: ProjectTechnologyChoice
 }
-
-export type Layer2Category =
-  | 'Optimistic Rollup'
-  | 'Optimistic Chain'
-  | 'Plasma'
-  | 'State Pools'
-  | 'Validium'
-  | 'ZK Rollup'

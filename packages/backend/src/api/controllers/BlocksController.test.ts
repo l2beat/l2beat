@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
@@ -9,8 +9,16 @@ describe(BlocksController.name, () => {
     const blockNumberRepository = mockObject<BlockNumberRepository>({
       async getAll() {
         return [
-          { blockNumber: 123, timestamp: new UnixTime(1000) },
-          { blockNumber: 456, timestamp: new UnixTime(2000) },
+          {
+            blockNumber: 123,
+            timestamp: new UnixTime(1000),
+            chainId: ChainId.ETHEREUM,
+          },
+          {
+            blockNumber: 456,
+            timestamp: new UnixTime(2000),
+            chainId: ChainId.ETHEREUM,
+          },
         ]
       },
     })

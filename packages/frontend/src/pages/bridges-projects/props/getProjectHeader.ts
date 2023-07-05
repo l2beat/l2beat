@@ -21,7 +21,7 @@ export function getProjectHeader(
     tvlWeeklyChange,
     destination: getDestination(project.technology.destination),
     validatedBy: project.riskView?.validatedBy,
-    type: project.technology.category,
+    type: project.display.category,
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
     links: getLinks(project.display.links),

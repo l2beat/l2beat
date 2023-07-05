@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -13,34 +13,99 @@ describe(BlockNumberRepository.name, () => {
     await repository.deleteAll()
   })
 
-  it('can add new records', async () => {
-    const itemA = { blockNumber: 1234, timestamp: new UnixTime(5678) }
-    const itemB = { blockNumber: 7777, timestamp: new UnixTime(222222) }
+  it(BlockNumberRepository.prototype.add.name, async () => {
+    const itemA = {
+      blockNumber: 1234,
+      timestamp: new UnixTime(5678),
+      chainId: ChainId.ETHEREUM,
+    }
+    const itemB = {
+      blockNumber: 7777,
+      timestamp: new UnixTime(222222),
+      chainId: ChainId.ARBITRUM,
+    }
 
     await repository.add(itemA)
     await repository.add(itemB)
 
-    const results = await repository.getAll()
+    const resultsEth = await repository.getAll(ChainId.ETHEREUM)
+    expect(resultsEth).toEqualUnsorted([itemA])
 
-    expect(results).toEqualUnsorted([itemA, itemB])
+    const resultsArb = await repository.getAll(ChainId.ARBITRUM)
+    expect(resultsArb).toEqualUnsorted([itemB])
   })
 
-  it('can find by timestamp', async () => {
-    const itemA = { blockNumber: 1234, timestamp: new UnixTime(5678) }
-    const itemB = { blockNumber: 7777, timestamp: new UnixTime(222222) }
+  it(BlockNumberRepository.prototype.findByTimestamp.name, async () => {
+    const itemA = {
+      blockNumber: 1234,
+      timestamp: new UnixTime(5678),
+      chainId: ChainId.ETHEREUM,
+    }
+    const itemB = {
+      blockNumber: 7777,
+      timestamp: new UnixTime(222222),
+      chainId: ChainId.ETHEREUM,
+    }
+    const itemC = {
+      blockNumber: 7777,
+      timestamp: new UnixTime(222222),
+      chainId: ChainId.ARBITRUM,
+    }
 
     await repository.add(itemA)
     await repository.add(itemB)
+    await repository.add(itemC)
 
-    const result = await repository.findByTimestamp(new UnixTime(222222))
-    expect(result).toEqual(itemB)
+    const resultEth = await repository.findByTimestamp(
+      ChainId.ETHEREUM,
+      new UnixTime(222222),
+    )
+    expect(resultEth).toEqual(itemB)
+
+    const resultArb = await repository.findByTimestamp(
+      ChainId.ARBITRUM,
+      new UnixTime(222222),
+    )
+    expect(resultArb).toEqual(itemC)
   })
 
-  it('can delete all records', async () => {
-    await repository.add({ blockNumber: 1, timestamp: new UnixTime(1) })
+  it(BlockNumberRepository.prototype.getAll.name, async () => {
+    const itemA = {
+      blockNumber: 1234,
+      timestamp: new UnixTime(5678),
+      chainId: ChainId.ETHEREUM,
+    }
+    const itemB = {
+      blockNumber: 7777,
+      timestamp: new UnixTime(222222),
+      chainId: ChainId.ETHEREUM,
+    }
+    const itemC = {
+      blockNumber: 7777,
+      timestamp: new UnixTime(222222),
+      chainId: ChainId.ARBITRUM,
+    }
+
+    await repository.add(itemA)
+    await repository.add(itemB)
+    await repository.add(itemC)
+
+    const resultsEth = await repository.getAll(ChainId.ETHEREUM)
+    expect(resultsEth).toEqualUnsorted([itemA, itemB])
+
+    const resultsArb = await repository.getAll(ChainId.ARBITRUM)
+    expect(resultsArb).toEqualUnsorted([itemC])
+  })
+
+  it(BlockNumberRepository.prototype.deleteAll.name, async () => {
+    await repository.add({
+      blockNumber: 1,
+      timestamp: new UnixTime(1),
+      chainId: ChainId.ETHEREUM,
+    })
     await repository.deleteAll()
 
-    const results = await repository.getAll()
+    const results = await repository.getAll(ChainId.ETHEREUM)
     expect(results).toEqual([])
   })
 })

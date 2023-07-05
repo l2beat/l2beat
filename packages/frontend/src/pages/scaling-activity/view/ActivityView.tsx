@@ -24,7 +24,7 @@ export interface ActivityViewProps {
 export interface ActivityViewEntry {
   name: string
   slug: string
-  provider?: Layer2['technology']['provider']
+  provider?: Layer2['display']['provider']
   warning?: string
   isVerified?: boolean
   isUpcoming?: boolean

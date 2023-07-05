@@ -73,6 +73,7 @@ export const starknet: Layer2 = {
       is available and contracts are fully composable. It is currently launched \
       with a single Sequencer.',
     purpose: 'Universal',
+    category: 'ZK Rollup',
     links: {
       apps: [],
       websites: [
@@ -146,7 +147,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F17#L218',
+            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L218',
           ],
         },
         // we don't have a way to test against shared modules
@@ -165,7 +166,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F17#L213',
+            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L213',
           ],
         },
       ],
@@ -177,7 +178,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F17#L199',
+            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L199',
           ],
         },
       ],
@@ -207,7 +208,6 @@ export const starknet: Layer2 = {
     },
   }),
   technology: {
-    category: 'ZK Rollup',
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

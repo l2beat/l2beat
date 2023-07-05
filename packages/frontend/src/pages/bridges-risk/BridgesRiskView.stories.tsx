@@ -36,17 +36,23 @@ const meta = {
         isArchived: true,
         isVerified: false,
         category: 'ZK Rollup',
-        destination: { value: 'ZKSwap 1.0', description: '' },
+        destination: {
+          value: 'ZKSwap 1.0',
+          description: '',
+          sentiment: 'neutral',
+        },
 
         destinationToken: {
           value: 'Native & Canonical',
           description:
             'ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: '8 days delay',
@@ -64,17 +70,23 @@ const meta = {
         isArchived: true,
         isVerified: true,
         category: 'ZK Rollup',
-        destination: { value: 'Polygon Hermez', description: '' },
+        destination: {
+          value: 'Polygon Hermez',
+          description: '',
+          sentiment: 'neutral',
+        },
 
         destinationToken: {
           value: 'Canonical',
           description:
             'Tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: '7 days delay',
@@ -91,14 +103,22 @@ const meta = {
         isArchived: true,
         isVerified: true,
         category: 'Token Bridge',
-        destination: { value: 'Various', description: '' },
+        destination: {
+          value: 'Various',
+          description: '',
+          sentiment: 'neutral',
+        },
         validatedBy: {
           value: 'Third Party',
           description:
             'Transfers need to be signed offchain by a set of 2/3 of Guardians and then in a permissionless way relayed to the destination chain.',
           sentiment: 'bad',
         },
-        sourceUpgradeability: { value: 'No', description: '' },
+        sourceUpgradeability: {
+          value: 'No',
+          description: '',
+          sentiment: 'good',
+        },
         destinationToken: {
           value: 'Wrapped',
           description:
@@ -115,17 +135,22 @@ const meta = {
         isArchived: true,
         isVerified: false,
         category: 'ZK Rollup',
-        destination: { value: 'ZKSwap 2.0', description: '' },
-
+        destination: {
+          value: 'ZKSwap 2.0',
+          description: '',
+          sentiment: 'good',
+        },
         destinationToken: {
           value: 'Native & Canonical',
           description:
             'ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: '8 days delay',
@@ -143,17 +168,19 @@ const meta = {
         isArchived: true,
         isVerified: true,
         category: 'Plasma',
-        destination: { value: 'Gluon', description: '' },
+        destination: { value: 'Gluon', description: '', sentiment: 'neutral' },
 
         destinationToken: {
           value: 'Canonical',
           description:
             'Tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: 'Yes',
@@ -170,17 +197,23 @@ const meta = {
         isArchived: true,
         isVerified: false,
         category: 'Plasma',
-        destination: { value: 'OMG Network', description: '' },
+        destination: {
+          value: 'OMG Network',
+          description: '',
+          sentiment: 'neutral',
+        },
 
         destinationToken: {
           value: 'Native & Canonical',
           description:
             'OMG transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: 'Yes',
@@ -208,16 +241,23 @@ const meta = {
             'Gnosis Chain,\n' +
             'Arbitrum One,\n' +
             'Arbitrum Nova',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'User',
           description: 'Transfer is done via peer-to-peer atomic swap',
+          sentiment: 'good',
         },
-        sourceUpgradeability: { value: 'No', description: '' },
+        sourceUpgradeability: {
+          value: 'No',
+          description: '',
+          sentiment: 'good',
+        },
         destinationToken: {
           value: 'Canonical',
           description:
             'Tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
       },
       {
@@ -232,6 +272,7 @@ const meta = {
         destination: {
           value: 'Various',
           description: 'Avalanche,\nEvmos,\nMilkomedia C1,\nMoonbeam',
+          sentiment: 'neutral',
         },
         validatedBy: {
           value: 'Optimistically',
@@ -260,17 +301,23 @@ const meta = {
         isArchived: true,
         isVerified: false,
         category: 'Validium',
-        destination: { value: 'L2.Finance-zk', description: '' },
+        destination: {
+          value: 'L2.Finance-zk',
+          description: '',
+          sentiment: 'neutral',
+        },
 
         destinationToken: {
           value: 'Canonical',
           description:
             'Tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: 'Yes',
@@ -288,7 +335,7 @@ const meta = {
         isArchived: true,
         isVerified: true,
         category: 'Token Bridge',
-        destination: { value: 'Solana', description: '' },
+        destination: { value: 'Solana', description: '', sentiment: 'neutral' },
         validatedBy: {
           value: 'Third Party',
           description: 'Withdrawals need to be signed by an EOA account.',
@@ -297,6 +344,7 @@ const meta = {
         sourceUpgradeability: {
           value: 'No',
           description: 'Source code is not upgradeable',
+          sentiment: 'good',
         },
         destinationToken: {
           value: 'Wrapped',
@@ -315,17 +363,22 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Optimistic Rollup',
-        destination: { value: 'Arbitrum One', description: '' },
-
+        destination: {
+          value: 'Arbitrum One',
+          description: '',
+          sentiment: 'neutral',
+        },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         destinationToken: {
           value: 'Native & Canonical',
           description:
             'ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: '13d or no delay',
@@ -342,7 +395,11 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Token Bridge',
-        destination: { value: 'Polygon', description: '' },
+        destination: {
+          value: 'Polygon',
+          description: '',
+          sentiment: 'neutral',
+        },
         validatedBy: {
           value: 'Destination Chain',
           description:
@@ -371,17 +428,23 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Optimistic Rollup',
-        destination: { value: 'Optimism', description: '' },
+        destination: {
+          value: 'Optimism',
+          description: '',
+          sentiment: 'neutral',
+        },
 
         destinationToken: {
           value: 'Native & Canonical',
           description:
             'ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: 'Yes',
@@ -398,7 +461,11 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Token Bridge',
-        destination: { value: 'Polygon', description: '' },
+        destination: {
+          value: 'Polygon',
+          description: '',
+          sentiment: 'neutral',
+        },
         validatedBy: {
           value: 'Destination Chain',
           description:
@@ -415,6 +482,7 @@ const meta = {
           value: 'Native & Canonical',
           description:
             'MATIC transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
       },
       {
@@ -425,7 +493,11 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Token Bridge',
-        destination: { value: 'Axie Infinity Chain', description: '' },
+        destination: {
+          value: 'Axie Infinity Chain',
+          description: '',
+          sentiment: 'neutral',
+        },
         validatedBy: {
           value: 'Third Party',
           description: '2/3 MultiSig',
@@ -451,7 +523,11 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Token Bridge',
-        destination: { value: 'Avalanche', description: '' },
+        destination: {
+          value: 'Avalanche',
+          description: '',
+          sentiment: 'neutral',
+        },
         validatedBy: {
           value: 'Third Party',
           description: '6/8 Intel SGX',
@@ -477,17 +553,19 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'ZK Rollup',
-        destination: { value: 'dYdX', description: '' },
+        destination: { value: 'dYdX', description: '', sentiment: 'neutral' },
 
         destinationToken: {
           value: 'Canonical',
           description:
             'USDC transferred is considered canonical as it is the basis of the perpetual protocol on the chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: 'Yes',
@@ -561,6 +639,7 @@ const meta = {
             'Evmos,\n' +
             'Near,\n' +
             'XRP',
+          sentiment: 'neutral',
         },
         validatedBy: {
           value: 'Third Party',
@@ -588,7 +667,11 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Token Bridge',
-        destination: { value: 'Near, Aurora', description: '' },
+        destination: {
+          value: 'Near, Aurora',
+          description: '',
+          sentiment: 'neutral',
+        },
         validatedBy: {
           value: 'Destination Chain',
           description:
@@ -617,17 +700,23 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'ZK Rollup',
-        destination: { value: 'zkSync Era', description: '' },
+        destination: {
+          value: 'zkSync Era',
+          description: '',
+          sentiment: 'neutral',
+        },
 
         destinationToken: {
           value: 'Native & Canonical',
           description:
             'ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: 'Yes',
@@ -661,6 +750,7 @@ const meta = {
             'Near,\n' +
             'Oasis,\n' +
             'Polygon',
+          sentiment: 'neutral',
         },
         validatedBy: {
           value: 'Third Party',
@@ -703,6 +793,7 @@ const meta = {
             'ICON,\n' +
             'OKC,\n' +
             'Polygon',
+          sentiment: 'neutral',
         },
         validatedBy: {
           value: 'Third Party',
@@ -731,17 +822,23 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'Optimistic Chain',
-        destination: { value: 'Metis Andromeda', description: '' },
+        destination: {
+          value: 'Metis Andromeda',
+          description: '',
+          sentiment: 'neutral',
+        },
 
         destinationToken: {
           value: 'Native & Canonical',
           description:
             'METIS transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: 'Yes',
@@ -758,17 +855,23 @@ const meta = {
         isArchived: undefined,
         isVerified: true,
         category: 'ZK Rollup',
-        destination: { value: 'Loopring', description: '' },
+        destination: {
+          value: 'Loopring',
+          description: '',
+          sentiment: 'neutral',
+        },
 
         destinationToken: {
           value: 'Native & Canonical',
           description:
             'LRC transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain.',
+          sentiment: 'good',
         },
         validatedBy: {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         sourceUpgradeability: {
           value: 'Yes',

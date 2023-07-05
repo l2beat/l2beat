@@ -13,6 +13,7 @@ export const taiko: Layer2 = {
     description:
       'Taiko is a decentralized, Ethereum-equivalent ZK Rollup that has been developed on the Ethereum network. At present, Taiko is deployed on the Sepolia testnet for further testing and optimization.',
     purpose: 'Universal',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://taiko.xyz'],
       apps: ['https://bridge.test.taiko.xyz'],
@@ -33,6 +34,6 @@ export const taiko: Layer2 = {
     escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: { ...TECHNOLOGY.UPCOMING, category: 'ZK Rollup' },
+  technology: TECHNOLOGY.UPCOMING,
   contracts: CONTRACTS.EMPTY,
 }

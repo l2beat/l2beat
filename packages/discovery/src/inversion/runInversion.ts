@@ -1,11 +1,10 @@
-import {
-  ContractValue,
-  DiscoveryOutput,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import { ContractValue, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { execSync } from 'child_process'
 import { constants, utils } from 'ethers'
-import { readFile } from 'fs/promises'
+import { mkdir, writeFile } from 'fs/promises'
+
+import { ConfigReader } from '../discovery/config/ConfigReader'
 
 interface AddressDetails {
   name?: string
@@ -19,10 +18,13 @@ interface Role {
   atAddress: EthereumAddress
 }
 
-export async function runInversion(file: string, useMermaidMarkup: boolean) {
+export async function runInversion(
+  project: string,
+  configReader: ConfigReader,
+  useMermaidMarkup: boolean,
+) {
   const addresses = new Map<string, AddressDetails>()
-  const data = await readFile(file, 'utf-8')
-  const project = JSON.parse(data) as DiscoveryOutput
+  const projectDiscovery = await configReader.readDiscovery(project)
 
   function add(address: ContractValue, role?: Role) {
     if (
@@ -35,8 +37,9 @@ export async function runInversion(file: string, useMermaidMarkup: boolean) {
     let details = addresses.get(address)
     if (!details) {
       details = {
-        name: project.contracts.find((x) => x.address.toString() === address)
-          ?.name,
+        name: projectDiscovery.contracts.find(
+          (x) => x.address.toString() === address,
+        )?.name,
         address,
         roles: [],
       }
@@ -47,7 +50,7 @@ export async function runInversion(file: string, useMermaidMarkup: boolean) {
     }
   }
 
-  for (const contract of project.contracts) {
+  for (const contract of projectDiscovery.contracts) {
     const upgradeabilityValues = {
       ...(contract.upgradeability as unknown as Record<string, ContractValue>),
 
@@ -85,7 +88,26 @@ export async function runInversion(file: string, useMermaidMarkup: boolean) {
   }
 
   if (useMermaidMarkup) {
-    printMermaid(addresses)
+    const mermaid = createMermaid(addresses)
+    const mermaidPage = `
+    <!DOCTYPE html>
+    <html lang="en">
+      <body>
+        <pre class="mermaid">
+          ${mermaid};
+        </pre>
+        <script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        </script>
+      </body>
+    </html>`
+
+    const root = `discovery/${project}`
+    const htmlFilePath = `${root}/mermaid/index.html`
+    await mkdir(`${root}/mermaid`, { recursive: true })
+    await writeFile(htmlFilePath, mermaidPage)
+    await writeFile(`${root}/mermaid/graph`, mermaid)
+    execSync(`open ${htmlFilePath}`)
   } else {
     print(addresses)
   }
@@ -110,11 +132,11 @@ function print(addresses: Map<string, AddressDetails>) {
   }
 }
 
-function printMermaid(addresses: Map<string, AddressDetails>) {
-  console.log('flowchart LR')
+function createMermaid(addresses: Map<string, AddressDetails>): string {
+  const rows: string[] = ['flowchart LR']
   for (const details of addresses.values()) {
     if (details.roles.length === 0) {
-      console.log(
+      rows.push(
         details.address.slice(0, 6) +
           (details.name
             ? `(${details.name}\\n${details.address.slice(0, 6)})`
@@ -122,19 +144,22 @@ function printMermaid(addresses: Map<string, AddressDetails>) {
       )
     } else {
       for (const role of details.roles) {
-        console.log(
-          details.address.slice(0, 6) +
-            (details.name
-              ? `(${details.name}\\n${details.address.slice(0, 6)})`
-              : ''),
-          '-->|is ' + role.name + '|',
-          role.atAddress.slice(0, 6) +
-            (role.atName
-              ? `(${role.atName}\\n${role.atAddress.slice(0, 6)})`
-              : ''),
+        rows.push(
+          [
+            details.address.slice(0, 6) +
+              (details.name
+                ? `(${details.name}\\n${details.address.slice(0, 6)})`
+                : ''),
+            '-->|is ' + role.name + '|',
+            role.atAddress.slice(0, 6) +
+              (role.atName
+                ? `(${role.atName}\\n${role.atAddress.slice(0, 6)})`
+                : ''),
+          ].join(' '),
         )
       }
     }
-    console.log()
+    rows.push('')
   }
+  return rows.join('\n')
 }

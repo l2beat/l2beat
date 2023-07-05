@@ -13,6 +13,7 @@ export const linea: Layer2 = {
     description:
       'Linea is a zkRollup powered by Consensys zkEVM, designed to scale the Ethereum network. At present, it is undergoing further testing and optimization on the Goerli testnet before deployment.',
     purpose: 'Universal',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://linea.build/'],
       apps: ['https://goerli.linea.build/'],
@@ -30,10 +31,7 @@ export const linea: Layer2 = {
     escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: {
-    ...TECHNOLOGY.UPCOMING,
-    category: 'ZK Rollup',
-  },
+  technology: TECHNOLOGY.UPCOMING,
   contracts: CONTRACTS.EMPTY,
   milestones: [
     {

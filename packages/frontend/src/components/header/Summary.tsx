@@ -3,7 +3,7 @@ import { chunk } from 'lodash'
 import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ProjectLink } from '../icons'
+import { InfoIcon, ProjectLink } from '../icons'
 import { DesktopProjectLinks } from './DesktopProjectLinks'
 import { MobileProjectLinks } from './MobileProjectLinks'
 
@@ -18,6 +18,7 @@ interface SummaryProps {
 export interface SummaryStat {
   title: string
   value: ReactNode
+  tooltip?: string
   className?: string
 }
 
@@ -51,6 +52,7 @@ export function Summary(props: SummaryProps) {
                     key={stat.title}
                     title={stat.title}
                     value={stat.value}
+                    tooltip={stat.tooltip}
                   />
                 )
               })}
@@ -73,9 +75,20 @@ function DetailsHeaderStat(props: SummaryStat) {
         props.className,
       )}
     >
-      <span className="text-xs text-gray-500 dark:text-gray-600">
-        {props.title}
-      </span>
+      <div className="flex flex-row gap-1.5">
+        <span className="text-xs text-gray-500 dark:text-gray-600">
+          {props.title}
+        </span>
+        {props.tooltip && (
+          <span
+            className="Tooltip -translate-y-px md:translate-y-0"
+            title={props.tooltip}
+          >
+            <InfoIcon className="mt-[2px] fill-gray-500 dark:fill-gray-600 md:h-3.5 md:w-3.5" />
+          </span>
+        )}
+      </div>
+
       <span className="text-lg font-semibold !leading-none md:text-xl md:font-bold">
         {props.value}
       </span>

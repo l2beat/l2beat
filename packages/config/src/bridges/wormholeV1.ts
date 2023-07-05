@@ -13,6 +13,7 @@ export const wormholeV1: Bridge = {
     links: {
       websites: ['https://wormhole.com/'],
     },
+    category: 'Token Bridge',
   },
   config: {
     escrows: [
@@ -34,7 +35,6 @@ export const wormholeV1: Bridge = {
     ],
   },
   technology: {
-    category: 'Token Bridge',
     destination: ['Various'], // TODO: list the chains
     canonical: true,
   },
@@ -45,10 +45,7 @@ export const wormholeV1: Bridge = {
         'Transfers need to be signed offchain by a set of 2/3 of Guardians and then in a permissionless way relayed to the destination chain.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'No',
-      description: '',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.WRAPPED,
   },
 }
