@@ -7,8 +7,8 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
-import { EthereumBalanceProvider } from './BalanceProvider'
+import { MulticallClient } from '../../../peripherals/ethereum/MulticallClient'
+import { EthereumBalanceProvider } from './EthereumBalanceProvider'
 
 describe(EthereumBalanceProvider.name, () => {
   describe(EthereumBalanceProvider.prototype.fetchBalances.name, () => {

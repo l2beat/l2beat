@@ -11,7 +11,7 @@ import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { BalanceProject } from './BalanceProject'
-import { BalanceProvider, HeldAsset } from './BalanceProvider'
+import { BalanceProvider, BalanceQuery } from './BalanceProvider'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
 
 export class BalanceUpdater {
@@ -112,12 +112,12 @@ export function getMissingData(
   timestamp: UnixTime,
   known: BalanceRecord[],
   projects: BalanceProject[],
-): HeldAsset[] {
+): BalanceQuery[] {
   const knownSet = new Set(
     known.map((x) => `${x.holderAddress.toString()}-${x.assetId.toString()}`),
   )
 
-  const missing: HeldAsset[] = []
+  const missing: BalanceQuery[] = []
   for (const project of projects) {
     for (const escrow of project.escrows) {
       if (escrow.sinceTimestamp.gt(timestamp)) {
