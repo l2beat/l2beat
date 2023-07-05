@@ -19,9 +19,9 @@ import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatu
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { BalanceProject } from './BalanceProject'
-import { EthereumBalanceProvider } from './BalanceProvider'
 import { BalanceUpdater, getMissingData } from './BalanceUpdater'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
+import { EthereumBalanceProvider } from './providers/EthereumBalanceProvider'
 
 describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.start.name, () => {

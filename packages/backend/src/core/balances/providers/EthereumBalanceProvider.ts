@@ -6,10 +6,9 @@ import { MulticallClient } from '../../../peripherals/ethereum/MulticallClient'
 import { BalanceProvider, BalanceQuery } from '../BalanceProvider'
 
 export class EthereumBalanceProvider implements BalanceProvider {
-  constructor(
-    private readonly multiCallClient: MulticallClient,
-    private readonly chainId: ChainId,
-  ) {}
+  private readonly chainId = ChainId.ETHEREUM
+
+  constructor(private readonly multiCallClient: MulticallClient) {}
 
   public async fetchBalances(
     missingData: BalanceQuery[],

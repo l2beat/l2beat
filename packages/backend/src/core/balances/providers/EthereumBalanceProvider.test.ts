@@ -23,7 +23,6 @@ describe(EthereumBalanceProvider.name, () => {
 
       const ethereumBalanceProvider = new EthereumBalanceProvider(
         multicallClient,
-        ChainId.ETHEREUM,
       )
 
       const timestamp = UnixTime.now()
