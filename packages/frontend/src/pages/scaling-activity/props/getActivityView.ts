@@ -10,6 +10,7 @@ import { getMaxTps } from '../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
+import { isProjectUnderReview } from '../../../utils/project/isProjectUnderReview'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
@@ -42,7 +43,7 @@ export function getActivityViewEntry(
     provider: project.display.provider,
     warning: project.display.warning,
     isVerified,
-    isUnderReview: project.isUnderReview,
+    isUnderReview: isProjectUnderReview(project),
     dataSource: project.display.activityDataSource,
     ...getActivityViewEntryDetails(data),
   }

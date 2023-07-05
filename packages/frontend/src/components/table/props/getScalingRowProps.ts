@@ -7,6 +7,7 @@ interface ScalingTableEntry {
   isArchived?: boolean
   isVerified?: boolean
   isUpcoming?: boolean
+  isUnderReview?: boolean
 }
 
 export function getScalingRowProps(entry: ScalingTableEntry) {

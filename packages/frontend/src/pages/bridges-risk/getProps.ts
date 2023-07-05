@@ -3,6 +3,7 @@ import { getFooterProps, getNavbarProps } from '../../components'
 import { getDestination } from '../../utils/getDestination'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { orderByTvl } from '../../utils/orderByTvl'
+import { isProjectUnderReview } from '../../utils/project/isProjectUnderReview'
 import { PagesData, Wrapped } from '../Page'
 import { BridgesRiskPageProps } from './BridgesRiskPage'
 import { getPageMetadata } from './getPageMetadata'
@@ -31,7 +32,7 @@ export function getProps(
             slug: project.display.slug,
             warning: project.display.warning,
             isArchived: project.isArchived,
-            isUnderReview: project.isUnderReview,
+            isUnderReview: isProjectUnderReview(project),
             isVerified: verificationStatus.projects[project.id.toString()],
             category: project.display.category,
             destination: getDestination(

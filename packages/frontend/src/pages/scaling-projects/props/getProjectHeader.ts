@@ -6,6 +6,7 @@ import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
+import { isProjectUnderReview } from '../../../utils/project/isProjectUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
@@ -57,7 +58,7 @@ export function getProjectHeader(
     risks: getRiskValues(project.riskView),
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
-    isUnderReview: project.isUnderReview,
+    isUnderReview: isProjectUnderReview(project),
     warning: project.display.headerWarning,
   }
 }

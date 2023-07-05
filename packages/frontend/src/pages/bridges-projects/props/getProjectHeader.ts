@@ -3,6 +3,7 @@ import { TvlApiResponse } from '@l2beat/shared-pure'
 
 import { ProjectLink } from '../../../components/icons'
 import { getDestination } from '../../../utils/getDestination'
+import { isProjectUnderReview } from '../../../utils/project/isProjectUnderReview'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
@@ -24,6 +25,7 @@ export function getProjectHeader(
     type: project.display.category,
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
+    isUnderReview: isProjectUnderReview(project),
     links: getLinks(project.display.links),
     warning: project.display.warning,
   }
