@@ -25,9 +25,10 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
     project_id: string
     asset_id: string
-    balance: string
-    balance_usd: string
-    balance_eth: string
+    asset_type: string
+    asset_amount: string
+    usd_value: string
+    eth_value: string
   }
 
   interface AggregateReportRow {
