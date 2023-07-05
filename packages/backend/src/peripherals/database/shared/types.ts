@@ -31,11 +31,6 @@ declare module 'knex/types/tables' {
     eth_value: string
   }
 
-  interface ReportStatusRow {
-    config_hash: string
-    unix_timestamp: Date
-  }
-
   interface AggregatedReportRow {
     unix_timestamp: Date
     project_id: string
