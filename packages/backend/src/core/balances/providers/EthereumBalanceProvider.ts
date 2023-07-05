@@ -10,6 +10,7 @@ export class EthereumBalanceProvider implements BalanceProvider {
     private readonly multiCallClient: MulticallClient,
     private readonly chainId: ChainId,
   ) {}
+
   public async fetchBalances(
     missingData: BalanceQuery[],
     timestamp: UnixTime,
