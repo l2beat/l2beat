@@ -23,10 +23,10 @@
     },
     "EthCrossChainManagerProxy": {
       "fields": {
-        "ethCrossChainManager": {
-          "type": "call",
-          "method": "function getEthCrossChainManager() view returns (address)",
-          "args": []
+        "getEthCrossChainManager": {
+          "type": "storage",
+          "slot": 1,
+          "returnType": "address"
         }
       }
     },
