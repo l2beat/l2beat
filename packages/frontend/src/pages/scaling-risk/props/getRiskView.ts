@@ -1,7 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared-pure'
 
-import { isProjectUnderReview } from '../../../utils/project/isProjectUnderReview'
+import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { ScalingRiskViewProps } from '../view/ScalingRiskView'
 import { ScalingRiskViewEntry } from '../view/types'
 
@@ -28,7 +28,7 @@ export function getRiskViewEntry(
     provider: project.display.provider,
     warning: project.display.warning,
     isArchived: project.isArchived,
-    isUnderReview: isProjectUnderReview(project),
+    showProjectUnderReview: isAnySectionUnderReview(project),
     isVerified,
     isUpcoming: project.isUpcoming,
     ...project.riskView,

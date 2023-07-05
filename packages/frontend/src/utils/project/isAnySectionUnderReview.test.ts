@@ -11,9 +11,9 @@ import {
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { isProjectUnderReview } from './isProjectUnderReview'
+import { isAnySectionUnderReview } from './isAnySectionUnderReview'
 
-describe(isProjectUnderReview.name, () => {
+describe(isAnySectionUnderReview.name, () => {
   const mockProject: Layer2 = {
     type: 'layer2',
     id: ProjectId('project-id'),
@@ -25,7 +25,7 @@ describe(isProjectUnderReview.name, () => {
     stage: mockObject<StageConfig>({ stage: 'Stage 1' }),
   }
   it('returns false', () => {
-    expect(isProjectUnderReview(mockProject)).toEqual(false)
+    expect(isAnySectionUnderReview(mockProject)).toEqual(false)
   })
 
   describe('returns true if', () => {
@@ -34,7 +34,7 @@ describe(isProjectUnderReview.name, () => {
         ...mockProject,
         isUnderReview: true,
       }
-      expect(isProjectUnderReview(mock)).toEqual(true)
+      expect(isAnySectionUnderReview(mock)).toEqual(true)
     })
 
     it('project.technology.isUnderReview is true', () => {
@@ -45,7 +45,7 @@ describe(isProjectUnderReview.name, () => {
           isUnderReview: true,
         },
       }
-      expect(isProjectUnderReview(mock)).toEqual(true)
+      expect(isAnySectionUnderReview(mock)).toEqual(true)
     })
 
     it('project.contracts.isUnderReview is true', () => {
@@ -56,7 +56,7 @@ describe(isProjectUnderReview.name, () => {
           isUnderReview: true,
         },
       }
-      expect(isProjectUnderReview(mock)).toEqual(true)
+      expect(isAnySectionUnderReview(mock)).toEqual(true)
     })
 
     it('project.riskView has a underReview risk', () => {
@@ -70,7 +70,7 @@ describe(isProjectUnderReview.name, () => {
           },
         },
       }
-      expect(isProjectUnderReview(mock)).toEqual(true)
+      expect(isAnySectionUnderReview(mock)).toEqual(true)
     })
 
     it('project.type is layer2 and project.stage.stage is UnderReview', () => {
@@ -80,7 +80,7 @@ describe(isProjectUnderReview.name, () => {
           stage: 'UnderReview' as const,
         },
       }
-      expect(isProjectUnderReview(mock)).toEqual(true)
+      expect(isAnySectionUnderReview(mock)).toEqual(true)
     })
   })
 })

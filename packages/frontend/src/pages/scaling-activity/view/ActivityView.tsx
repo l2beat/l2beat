@@ -29,7 +29,7 @@ export interface ActivityViewEntry {
   isVerified?: boolean
   isUpcoming?: boolean
   isArchived?: boolean
-  isUnderReview?: boolean
+  showProjectUnderReview?: boolean
   dataSource?: string
   tpsDaily?: number
   tpsWeeklyChange: string

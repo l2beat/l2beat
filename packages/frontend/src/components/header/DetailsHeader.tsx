@@ -21,6 +21,7 @@ export interface HeaderProps {
   isArchived?: boolean
   isUpcoming?: boolean
   isUnderReview?: boolean
+  showProjectUnderReview?: boolean
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2'
@@ -61,7 +62,7 @@ export function DetailsHeader(props: HeaderProps) {
           </h1>
           {props.isArchived && <ArchivedBar />}
           {props.isUpcoming && <UpcomingBar />}
-          {props.isUnderReview && <UnderReviewBar />}
+          {props.showProjectUnderReview && <UnderReviewBar />}
           {props.warning && (
             <WarningBar
               text={

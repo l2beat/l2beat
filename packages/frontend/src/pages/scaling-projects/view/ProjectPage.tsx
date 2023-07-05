@@ -23,12 +23,6 @@ export interface ProjectPageProps {
 }
 
 export function ProjectPage(props: ProjectPageProps) {
-  const project = {
-    title: props.projectHeader.title,
-    icon: props.projectHeader.icon,
-    isUnderReview: props.projectHeader.isUnderReview,
-  }
-
   const sections = props.projectDetails.items.filter(
     (i): i is ScalingDetailsSection => !i.excludeFromNavigation,
   )
@@ -42,7 +36,15 @@ export function ProjectPage(props: ProjectPageProps) {
         <ProjectHeader {...props.projectHeader} />
         <div className="gap-x-12 md:flex">
           <div className="mt-16 hidden max-w-[240px] shrink-0 md:block">
-            <DesktopProjectNavigation project={project} sections={sections} />
+            <DesktopProjectNavigation
+              project={{
+                title: props.projectHeader.title,
+                icon: props.projectHeader.icon,
+                showProjectUnderReview:
+                  props.projectHeader.showProjectUnderReview,
+              }}
+              sections={sections}
+            />
           </div>
           <div className="col-span-full md:col-span-6">
             <ProjectDetails {...props.projectDetails} />

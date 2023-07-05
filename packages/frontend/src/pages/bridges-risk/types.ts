@@ -7,7 +7,7 @@ export interface BridgesRiskViewEntry {
   warning?: string
   isArchived?: boolean
   isVerified?: boolean
-  isUnderReview?: boolean
+  showProjectUnderReview?: boolean
   category: string
   destination: ProjectRiskViewEntry
   validatedBy?: ProjectRiskViewEntry

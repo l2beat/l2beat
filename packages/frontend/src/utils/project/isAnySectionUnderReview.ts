@@ -7,7 +7,7 @@ import {
 } from '@l2beat/config'
 
 // this function should be updated when new sections that can be under review are added
-export function isProjectUnderReview(project: Layer2 | Bridge): boolean {
+export function isAnySectionUnderReview(project: Layer2 | Bridge): boolean {
   return (
     project.isUnderReview ??
     project.technology.isUnderReview ??

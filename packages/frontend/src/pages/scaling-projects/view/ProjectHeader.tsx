@@ -36,6 +36,7 @@ export interface ProjectHeaderProps {
   isArchived?: boolean
   isUpcoming?: boolean
   isUnderReview?: boolean
+  showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
 }
 
@@ -126,6 +127,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       isUpcoming={props.isUpcoming}
       isUnderReview={props.isUnderReview}
       isArchived={props.isArchived}
+      showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
     />
   )

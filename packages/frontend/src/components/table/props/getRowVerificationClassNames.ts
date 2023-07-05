@@ -3,7 +3,7 @@ import cx from 'classnames'
 export function getRowVerificationClassNames(entry: {
   isVerified?: boolean
   isUpcoming?: boolean
-  isUnderReview?: boolean
+  showProjectUnderReview?: boolean
 }): string {
   if (entry.isVerified === false) {
     return cx(
@@ -11,7 +11,7 @@ export function getRowVerificationClassNames(entry: {
       'dark:bg-red-900 dark:hover:bg-red-900',
     )
   }
-  if (entry.isUnderReview === true) {
+  if (entry.showProjectUnderReview === true) {
     return '!bg-yellow-200/10 hover:!bg-yellow-200/20'
   }
   if (entry.isUpcoming === true) {

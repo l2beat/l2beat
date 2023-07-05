@@ -125,5 +125,5 @@ UnderReviewHeader.args = {
   icon: `/icons/${project.display.slug}.png`,
   stats,
   links,
-  isUnderReview: true,
+  showProjectUnderReview: true,
 }

@@ -10,7 +10,7 @@ import { DESKTOP_PROJECT_NAVIGATION_IDS } from './ids'
 
 interface Project {
   title: string
-  isUnderReview?: boolean
+  showProjectUnderReview?: boolean
   icon: string | undefined
 }
 interface ProjectNavigationProps {
@@ -22,14 +22,14 @@ export function DesktopProjectNavigation({
   project,
   sections,
 }: ProjectNavigationProps) {
-  const translateClassName = project.isUnderReview
+  const translateClassName = project.showProjectUnderReview
     ? '-translate-y-[180px]'
     : '-translate-y-16'
   return (
     <div
       className="sticky top-8"
       id={DESKTOP_PROJECT_NAVIGATION_IDS.container}
-      data-is-under-review={project.isUnderReview}
+      data-is-under-review={project.showProjectUnderReview}
     >
       <div
         id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}
@@ -48,7 +48,9 @@ export function DesktopProjectNavigation({
           )}
           <span className="text-xl font-bold lg:text-2xl">{project.title}</span>
         </div>
-        {project.isUnderReview && <UnderReviewCallout small className="mt-2" />}
+        {project.showProjectUnderReview && (
+          <UnderReviewCallout small className="mt-2" />
+        )}
         <HorizontalSeparator className="my-4" />
       </div>
       <div
