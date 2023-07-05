@@ -106,13 +106,13 @@ declare module 'knex/types/tables' {
   }
 
   interface Tables {
-    block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
-    asset_balances: BalanceRow
-    balance_status: BalanceStatusRow
+    block_numbers: BlockNumberRow
+    balances: BalanceRow
+    balances_status: BalanceStatusRow
     reports: ReportRow
-    report_status: ReportStatusRow
-    aggregate_reports: AggregateReportRow
+    reports_status: ReportStatusRow
+    aggregated_reports: AggregatedReportRow
     sequence_processor: SequenceProcessorRow
     'activity.zksync': ZksyncTransactionRow
     'activity.block': BlockTransactionCountRow

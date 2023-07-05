@@ -20,7 +20,7 @@ export class AggregatedReportRepository extends BaseRepository {
 
   async getDaily(): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('reports_aggregated')
+    const rows = await knex('aggregated_reports')
       .where('is_daily', true)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
@@ -28,7 +28,7 @@ export class AggregatedReportRepository extends BaseRepository {
 
   async getSixHourly(from: UnixTime): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('reports_aggregated')
+    const rows = await knex('aggregated_reports')
       .where('is_six_hourly', true)
       .andWhere('unix_timestamp', '>=', from.toDate())
       .orderBy('unix_timestamp')
@@ -37,7 +37,7 @@ export class AggregatedReportRepository extends BaseRepository {
 
   async getHourly(from: UnixTime): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('reports_aggregated')
+    const rows = await knex('aggregated_reports')
       .andWhere('unix_timestamp', '>=', from.toDate())
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
@@ -45,7 +45,7 @@ export class AggregatedReportRepository extends BaseRepository {
 
   async getAll(): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('reports_aggregated').select()
+    const rows = await knex('aggregated_reports').select()
     return rows.map(toRecord)
   }
 
@@ -53,7 +53,7 @@ export class AggregatedReportRepository extends BaseRepository {
     projectId: ProjectId,
   ): Promise<AggregatedReportRecord | undefined> {
     const knex = await this.knex()
-    const row = await knex('reports_aggregated')
+    const row = await knex('aggregated_reports')
       .select()
       .where({ project_id: projectId.toString() })
       .orderBy('unix_timestamp', 'desc')
@@ -71,10 +71,10 @@ export class AggregatedReportRepository extends BaseRepository {
     assert(timestampsMatch, 'Timestamps must match')
 
     await knex.transaction(async (trx) => {
-      await trx('reports_aggregated')
+      await trx('aggregated_reports')
         .where('unix_timestamp', rows[0].unix_timestamp)
         .delete()
-      await trx('reports_aggregated')
+      await trx('aggregated_reports')
         .insert(rows)
         .onConflict(['unix_timestamp', 'project_id'])
         .merge()
@@ -84,7 +84,7 @@ export class AggregatedReportRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('reports_aggregated').delete()
+    return await knex('aggregated_reports').delete()
   }
 }
 

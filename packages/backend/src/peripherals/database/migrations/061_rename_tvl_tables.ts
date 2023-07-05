@@ -31,7 +31,7 @@ const changes = [
   },
   {
     oldName: 'aggregate_reports',
-    newName: 'reports_aggregated',
+    newName: 'aggregated_reports',
     indexes: [
       'pkey',
       'is_daily_index',
