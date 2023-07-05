@@ -3,6 +3,7 @@ import { Logger } from '@l2beat/shared'
 import {
   AssetId,
   Bytes,
+  ChainId,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
@@ -54,6 +55,7 @@ describe(BalanceUpdater.name, () => {
         clock,
         [],
         Logger.SILENT,
+        ChainId.ETHEREUM,
       )
 
       await balanceUpdater.start()
@@ -93,8 +95,8 @@ describe(BalanceUpdater.name, () => {
       ]
 
       const balanceRepository = mockObject<BalanceRepository>({
-        getByTimestamp: async (timestamp) => [
-          { assetId: AssetId('baz'), timestamp, balance: 1n, holderAddress },
+        getByTimestamp: async (chainId, timestamp) => [
+          mockBalance(AssetId('baz'), timestamp, holderAddress, chainId),
         ],
         addOrUpdateMany: async () => 0,
       })
@@ -109,12 +111,13 @@ describe(BalanceUpdater.name, () => {
         mockObject<Clock>(),
         projects,
         Logger.SILENT,
+        ChainId.ETHEREUM,
       )
 
       const timestamp = new UnixTime(2000)
       const balances: BalanceRecord[] = [
-        { assetId: AssetId('foo'), timestamp, balance: 1n, holderAddress },
-        { assetId: AssetId('bar'), timestamp, balance: 1n, holderAddress },
+        mockBalance(AssetId('foo'), timestamp, holderAddress, ChainId.ETHEREUM),
+        mockBalance(AssetId('bar'), timestamp, holderAddress, ChainId.ETHEREUM),
       ]
       const fetchBalances =
         mockFn<typeof balanceUpdater.fetchBalances>().resolvesTo(balances)
@@ -157,10 +160,10 @@ describe(BalanceUpdater.name, () => {
       ]
 
       const balanceRepository = mockObject<BalanceRepository>({
-        getByTimestamp: async (timestamp) => [
-          { assetId: AssetId('foo'), timestamp, balance: 1n, holderAddress },
-          { assetId: AssetId('bar'), timestamp, balance: 1n, holderAddress },
-          { assetId: AssetId('baz'), timestamp, balance: 1n, holderAddress },
+        getByTimestamp: async (chainId, timestamp) => [
+          mockBalance(AssetId('foo'), timestamp, holderAddress, chainId),
+          mockBalance(AssetId('bar'), timestamp, holderAddress, chainId),
+          mockBalance(AssetId('baz'), timestamp, holderAddress, chainId),
         ],
       })
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
@@ -174,6 +177,7 @@ describe(BalanceUpdater.name, () => {
         mockObject<Clock>(),
         projects,
         Logger.SILENT,
+        ChainId.ETHEREUM,
       )
 
       const timestamp = new UnixTime(2000)
@@ -205,6 +209,7 @@ describe(BalanceUpdater.name, () => {
         mockObject<Clock>(),
         [],
         Logger.SILENT,
+        ChainId.ETHEREUM,
       )
 
       const timestamp = UnixTime.now()
@@ -223,12 +228,14 @@ describe(BalanceUpdater.name, () => {
           holderAddress: holderA,
           balance: 69n,
           timestamp,
+          chainId: ChainId.ETHEREUM,
         },
         {
           assetId: AssetId.ETH,
           holderAddress: holderB,
           balance: 420n,
           timestamp,
+          chainId: ChainId.ETHEREUM,
         },
       ])
     })
@@ -268,12 +275,14 @@ describe(BalanceUpdater.name, () => {
           assetId: AssetId('bar'),
           holderAddress: escrow,
           balance: 1n,
+          chainId: ChainId.ETHEREUM,
         },
         {
           timestamp,
           assetId: AssetId('baz'),
           holderAddress: escrow,
           balance: 1n,
+          chainId: ChainId.ETHEREUM,
         },
       ]
 
@@ -298,3 +307,17 @@ describe(BalanceUpdater.name, () => {
     }
   }
 })
+function mockBalance(
+  assetId: AssetId,
+  timestamp: UnixTime,
+  holderAddress: EthereumAddress,
+  chainId: ChainId,
+): BalanceRecord {
+  return {
+    assetId,
+    timestamp,
+    balance: 1n,
+    holderAddress,
+    chainId,
+  }
+}

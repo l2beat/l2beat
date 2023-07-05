@@ -88,7 +88,7 @@ export const myria: Layer2 = {
         {
           contract: 'StarkExchange',
           references: [
-            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F13#L188',
+            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F14#L188',
           ],
         },
         {

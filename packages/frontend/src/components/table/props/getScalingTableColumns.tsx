@@ -31,7 +31,12 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
       idHref: 'risk-analysis',
       minimalWidth: true,
       alignCenter: true,
-      getValue: (project) => <RosetteCell riskValues={project.riskValues} />,
+      getValue: (project) => (
+        <RosetteCell
+          riskValues={project.riskValues}
+          isUpcoming={project.isUpcoming}
+        />
+      ),
     },
     {
       name: 'Technology',

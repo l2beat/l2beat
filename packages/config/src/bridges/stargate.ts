@@ -38,10 +38,7 @@ export const stargate: Bridge = {
         'Transfers need to be independently confirmed by oracle attesting to source chain checkpoints and Relayer providing merkle proof of the transfer event.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'No',
-      description: 'Contracts are not upgradable.',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {

@@ -1,9 +1,8 @@
-import { Logger } from '@l2beat/shared'
+import { EtherscanClient, Logger } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
-import { EtherscanClient } from '../peripherals/etherscan'
 import { Clock } from './Clock'
 import { TaskQueue } from './queue/TaskQueue'
 
@@ -12,6 +11,7 @@ export class BlockNumberUpdater {
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
+    // TODO: make sure it runs on the same chain as this.chainId
     private readonly etherscanClient: EtherscanClient,
     private readonly blockNumberRepository: BlockNumberRepository,
     private readonly clock: Clock,

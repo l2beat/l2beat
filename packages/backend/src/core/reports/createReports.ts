@@ -1,4 +1,4 @@
-import { AssetId, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, UnixTime, ValueType } from '@l2beat/shared-pure'
 
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
@@ -72,6 +72,7 @@ export function aggregateBalancesPerProject(
         projectId,
         balance: assetBalances.reduce((acc, { balance }) => acc + balance, 0n),
         assetId: assetId,
+        type: ValueType.CBV,
         decimals,
       })
     }

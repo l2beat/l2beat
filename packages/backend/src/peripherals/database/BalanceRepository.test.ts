@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/shared'
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -11,12 +16,14 @@ const mockBalance = (
   offset: number,
   assetId: AssetId,
   balance: bigint,
+  chainId: ChainId,
 ) => {
   return {
     timestamp: START.add(offset, 'hours'),
     holderAddress: holderAddress,
     assetId,
     balance,
+    chainId,
   }
 }
 
@@ -30,8 +37,8 @@ describe(BalanceRepository.name, () => {
   const ASSET_2 = AssetId('asset-2')
   const BALANCE = 1000000000000000000n
   const DATA: BalanceRecord[] = [
-    mockBalance(HOLDER_A, 0, ASSET_1, BALANCE),
-    mockBalance(HOLDER_A, 1, ASSET_1, BALANCE),
+    mockBalance(HOLDER_A, 0, ASSET_1, BALANCE, ChainId.ETHEREUM),
+    mockBalance(HOLDER_A, 1, ASSET_1, BALANCE, ChainId.ETHEREUM),
   ]
 
   beforeEach(async () => {
@@ -42,39 +49,43 @@ describe(BalanceRepository.name, () => {
   describe(BalanceRepository.prototype.getByTimestamp.name, () => {
     it('known timestamp', async () => {
       const additionalData = [
-        mockBalance(HOLDER_A, 0, AssetId('asset-a'), BALANCE),
-        mockBalance(HOLDER_A, 0, AssetId('asset-b'), BALANCE),
-        mockBalance(HOLDER_A, 0, AssetId('asset-c'), BALANCE),
+        mockBalance(HOLDER_A, 0, AssetId('asset-a'), BALANCE, ChainId.ETHEREUM),
+        mockBalance(HOLDER_A, 0, AssetId('asset-b'), BALANCE, ChainId.ETHEREUM),
+        mockBalance(HOLDER_A, 0, AssetId('asset-c'), BALANCE, ChainId.ETHEREUM),
       ]
       await repository.addOrUpdateMany(additionalData)
 
-      const result = await repository.getByTimestamp(START)
+      const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
 
       expect(result).toEqualUnsorted([DATA[0], ...additionalData])
     })
 
     it('unknown timestamp', async () => {
-      const result = await repository.getByTimestamp(START.add(1, 'days'))
+      const result = await repository.getByTimestamp(
+        ChainId.ETHEREUM,
+        START.add(1, 'days'),
+      )
       expect(result).toEqual([])
     })
 
     it('one project one asset', async () => {
       await repository.deleteAll()
       const data = [
-        mockBalance(HOLDER_A, 0, ASSET_1, 1n),
-        mockBalance(HOLDER_A, 1, ASSET_1, 1n),
-        mockBalance(HOLDER_A, 2, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 0, ASSET_1, 1n, ChainId.ETHEREUM),
+        mockBalance(HOLDER_A, 1, ASSET_1, 1n, ChainId.ETHEREUM),
+        mockBalance(HOLDER_A, 2, ASSET_1, 1n, ChainId.ETHEREUM),
       ]
 
       await repository.addOrUpdateMany(data)
 
-      const result = await repository.getByTimestamp(START)
+      const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(result).toEqual([
         {
           holderAddress: HOLDER_A,
           timestamp: START,
           assetId: ASSET_1,
           balance: 1n,
+          chainId: ChainId.ETHEREUM,
         },
       ])
     })
@@ -82,71 +93,52 @@ describe(BalanceRepository.name, () => {
     it('many projects many assets', async () => {
       await repository.deleteAll()
       const data = [
-        mockBalance(HOLDER_A, 0, ASSET_1, 1n),
-        mockBalance(HOLDER_A, 1, ASSET_1, 1n),
-        mockBalance(HOLDER_A, 2, ASSET_1, 1n),
+        mockBalance(HOLDER_A, 0, ASSET_1, 1n, ChainId.ETHEREUM),
+        mockBalance(HOLDER_A, 1, ASSET_1, 1n, ChainId.ETHEREUM),
+        mockBalance(HOLDER_A, 2, ASSET_1, 1n, ChainId.ETHEREUM),
 
-        mockBalance(HOLDER_A, 0, ASSET_2, 3000n),
-        mockBalance(HOLDER_A, 1, ASSET_2, 1000n),
+        mockBalance(HOLDER_A, 0, ASSET_2, 3000n, ChainId.ETHEREUM),
+        mockBalance(HOLDER_A, 1, ASSET_2, 1000n, ChainId.ETHEREUM),
 
-        mockBalance(HOLDER_B, 0, ASSET_2, 1n),
-        mockBalance(HOLDER_B, 1, ASSET_2, 3n),
-        mockBalance(HOLDER_B, 2, ASSET_2, 5n),
+        mockBalance(HOLDER_B, 0, ASSET_2, 1n, ChainId.ETHEREUM),
+        mockBalance(HOLDER_B, 1, ASSET_2, 3n, ChainId.ETHEREUM),
+        mockBalance(HOLDER_B, 2, ASSET_2, 5n, ChainId.ETHEREUM),
       ]
 
       await repository.addOrUpdateMany(data)
 
-      const result = await repository.getByTimestamp(START)
+      const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(result).toEqualUnsorted([
         {
           holderAddress: HOLDER_A,
           timestamp: START,
           assetId: ASSET_1,
           balance: 1n,
+          chainId: ChainId.ETHEREUM,
         },
         {
           holderAddress: HOLDER_A,
           timestamp: START,
           assetId: ASSET_2,
           balance: 3000n,
+          chainId: ChainId.ETHEREUM,
         },
         {
           holderAddress: HOLDER_B,
           timestamp: START,
           assetId: ASSET_2,
           balance: 1n,
+          chainId: ChainId.ETHEREUM,
         },
       ])
     })
-  })
 
-  describe(BalanceRepository.prototype.getByHolderAndAsset.name, () => {
-    it('entries exist in the DB', async () => {
-      const result = await repository.getByHolderAndAsset(HOLDER_A, ASSET_1)
+    it('take chainId into consideration', async () => {
+      const resultEth = await repository.getByTimestamp(ChainId.ETHEREUM, START)
+      expect(resultEth).toEqual([DATA[0]])
 
-      expect(result).toEqual(DATA)
-    })
-
-    it('nonexisting holder', async () => {
-      const nonexistingHolder = EthereumAddress(
-        '0xcEe284F754E854890e311e3280b767F80797180d',
-      )
-      const result = await repository.getByHolderAndAsset(
-        nonexistingHolder,
-        ASSET_1,
-      )
-
-      expect(result).toEqual([])
-    })
-
-    it('nonexisting asset', async () => {
-      const nonexistingAsset = AssetId('nonexistent-token')
-      const result = await repository.getByHolderAndAsset(
-        HOLDER_A,
-        nonexistingAsset,
-      )
-
-      expect(result).toEqual([])
+      const resultArb = await repository.getByTimestamp(ChainId.ARBITRUM, START)
+      expect(resultArb).toEqual([])
     })
   })
 
@@ -160,6 +152,7 @@ describe(BalanceRepository.name, () => {
           ),
           assetId: AssetId('dai-dai-stablecoin'),
           balance: BALANCE,
+          chainId: ChainId.ETHEREUM,
         },
         {
           timestamp: START.add(3, 'hours'),
@@ -168,6 +161,7 @@ describe(BalanceRepository.name, () => {
           ),
           assetId: AssetId('dai-dai-stablecoin'),
           balance: BALANCE,
+          chainId: ChainId.ETHEREUM,
         },
       ]
       await repository.addOrUpdateMany(newRows)
@@ -183,12 +177,14 @@ describe(BalanceRepository.name, () => {
           holderAddress: DATA[0].holderAddress,
           assetId: DATA[0].assetId,
           balance: BALANCE,
+          chainId: ChainId.ETHEREUM,
         },
         {
           timestamp: DATA[1].timestamp,
           holderAddress: DATA[1].holderAddress,
           assetId: DATA[1].assetId,
           balance: BALANCE,
+          chainId: ChainId.ETHEREUM,
         },
       ]
       await repository.addOrUpdateMany(existingRows)
@@ -204,6 +200,7 @@ describe(BalanceRepository.name, () => {
           holderAddress: DATA[1].holderAddress,
           assetId: DATA[1].assetId,
           balance: BALANCE,
+          chainId: ChainId.ETHEREUM,
         },
         {
           timestamp: START.add(2, 'hours'),
@@ -212,6 +209,7 @@ describe(BalanceRepository.name, () => {
           ),
           assetId: AssetId('dai-dai-stablecoin'),
           balance: BALANCE,
+          chainId: ChainId.ETHEREUM,
         },
       ]
       await repository.addOrUpdateMany(mixedRows)

@@ -10,9 +10,9 @@
     "0xd151C9ef49cE2d30B829a98A07767E3280F70961": "ArbitrumHubConnector",
     "0x66a425f09cfd613d40A986B3ef800AA7604C8eeE": "OptimismHubConnector",
     "0x245F757d660C3ec65416168690431076d58d6413": "GnosisHubConnector",
-    "0xFaf539a73659fEAEC96ec7242f075Be0445526A8": "MultichainHubConnector",
     "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "RelayTransit",
-    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig"
+    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig",
+    "0x1E9B7e5ff9ccda4311ef475915b5A31B8b4f57CD": "AdminHubConnector"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -116,7 +116,7 @@
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "MultichainHubConnector": {
+    "AdminHubConnector": {
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
