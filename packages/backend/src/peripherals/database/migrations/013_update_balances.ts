@@ -26,6 +26,7 @@ export async function up(knex: Knex) {
     )
   `)
 
+  // @ts-expect-error unix_timestamp not nullable in knex types module
   await knex('asset_balances').where({ unix_timestamp: null }).delete()
 
   await knex.schema.alterTable('asset_balances', (table) => {
@@ -49,6 +50,7 @@ export async function down(knex: Knex) {
     )
   `)
 
+  // @ts-expect-error block_number not nullable in knex types module
   await knex('asset_balances').where({ block_number: null }).delete()
 
   await knex.schema.alterTable('asset_balances', (table) => {
