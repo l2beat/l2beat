@@ -29,7 +29,7 @@ export function generateTvlApiResponse(
           charts: getProjectCharts(reports, projectId),
           tokens: latestReports
             .filter((r) => r.projectId === projectId)
-            .map((r) => ({ assetId: r.asset, tvl: asNumber(r.balanceUsd, 2) })),
+            .map((r) => ({ assetId: r.asset, tvl: asNumber(r.usdValue, 2) })),
         }
         return acc
       },

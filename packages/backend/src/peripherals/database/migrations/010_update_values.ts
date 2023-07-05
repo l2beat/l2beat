@@ -25,6 +25,7 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
+  // @ts-expect-error-next-line
   await knex('reports').update({ balance: '0' })
   // @ts-expect-error-next-line
   await knex('reports').update({ is_daily: false })
