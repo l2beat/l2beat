@@ -3,7 +3,7 @@ import { ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
-import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { BALANCES, NOW, PRICES, PROJECTS } from '../../test/projects'
@@ -43,7 +43,7 @@ describe(ReportUpdater.name, () => {
       projectId: OPTIMISM_PROJECT_ID,
     },
   ]
-  const AGGREGATE_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
+  const AGGREGATED_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
   const FUTURE_AGGREGATE_REPORTS = aggregateReports(
     FUTURE_REPORTS,
     PROJECTS,
@@ -66,9 +66,11 @@ describe(ReportUpdater.name, () => {
         addOrUpdateMany: async () => 0,
       })
 
-      const aggregateReportRepository = mockObject<AggregateReportRepository>({
-        addOrUpdateMany: async () => 0,
-      })
+      const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
+        {
+          addOrUpdateMany: async () => 0,
+        },
+      )
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
         getByConfigHash: async () => [],
@@ -79,7 +81,7 @@ describe(ReportUpdater.name, () => {
         priceUpdater,
         balanceUpdater,
         reportRepository,
-        aggregateReportRepository,
+        aggregatedReportRepository,
         reportStatusRepository,
         mockObject<Clock>(),
         PROJECTS,
@@ -111,15 +113,15 @@ describe(ReportUpdater.name, () => {
         REPORTS,
       )
 
-      expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
-      expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
-        1,
-        FUTURE_AGGREGATE_REPORTS,
-      )
-      expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+      expect(aggregatedReportRepository.addOrUpdateMany).toHaveBeenCalledTimes(
         2,
-        AGGREGATE_REPORTS,
       )
+      expect(
+        aggregatedReportRepository.addOrUpdateMany,
+      ).toHaveBeenNthCalledWith(1, FUTURE_AGGREGATE_REPORTS)
+      expect(
+        aggregatedReportRepository.addOrUpdateMany,
+      ).toHaveBeenNthCalledWith(2, AGGREGATED_REPORTS)
     })
   })
 
@@ -139,9 +141,11 @@ describe(ReportUpdater.name, () => {
         addOrUpdateMany: async () => 0,
       })
 
-      const aggregateReportRepository = mockObject<AggregateReportRepository>({
-        addOrUpdateMany: async () => 0,
-      })
+      const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
+        {
+          addOrUpdateMany: async () => 0,
+        },
+      )
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
         getByConfigHash: async () => [
@@ -165,7 +169,7 @@ describe(ReportUpdater.name, () => {
         priceUpdater,
         balanceUpdater,
         reportRepository,
-        aggregateReportRepository,
+        aggregatedReportRepository,
         reportStatusRepository,
         clock,
         PROJECTS,
@@ -197,15 +201,15 @@ describe(ReportUpdater.name, () => {
           REPORTS,
         )
 
-        expect(aggregateReportRepository.addOrUpdateMany).toHaveBeenCalledTimes(
-          2,
-        )
         expect(
-          aggregateReportRepository.addOrUpdateMany,
+          aggregatedReportRepository.addOrUpdateMany,
+        ).toHaveBeenCalledTimes(2)
+        expect(
+          aggregatedReportRepository.addOrUpdateMany,
         ).toHaveBeenNthCalledWith(1, FUTURE_AGGREGATE_REPORTS)
         expect(
-          aggregateReportRepository.addOrUpdateMany,
-        ).toHaveBeenNthCalledWith(2, AGGREGATE_REPORTS)
+          aggregatedReportRepository.addOrUpdateMany,
+        ).toHaveBeenNthCalledWith(2, AGGREGATED_REPORTS)
       })
     })
   })

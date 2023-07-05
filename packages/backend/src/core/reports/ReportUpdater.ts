@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/shared'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
-import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
@@ -23,7 +23,7 @@ export class ReportUpdater {
     private readonly priceUpdater: PriceUpdater,
     private readonly balanceUpdater: BalanceUpdater,
     private readonly reportRepository: ReportRepository,
-    private readonly aggregateReportsRepository: AggregateReportRepository,
+    private readonly aggregatedReportsRepository: AggregatedReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
     private readonly projects: ReportProject[],
@@ -72,7 +72,7 @@ export class ReportUpdater {
     )
     await Promise.all([
       this.reportRepository.addOrUpdateMany(reports),
-      this.aggregateReportsRepository.addOrUpdateMany(aggregatedReports),
+      this.aggregatedReportsRepository.addOrUpdateMany(aggregatedReports),
     ])
     await this.reportStatusRepository.add({
       configHash: this.configHash,

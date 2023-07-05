@@ -1,7 +1,7 @@
 import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRecord } from '../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { aggregateReports } from './aggregateReports'
 import { ReportProject } from './ReportProject'
@@ -89,7 +89,10 @@ describe(aggregateReports.name, () => {
     return { projectId, type, escrows: [] }
   }
 
-  function record(projectId: ProjectId, usdTVL: bigint): AggregateReportRecord {
+  function record(
+    projectId: ProjectId,
+    usdTVL: bigint,
+  ): AggregatedReportRecord {
     return {
       timestamp: NOW,
       projectId,
