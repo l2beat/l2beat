@@ -40,7 +40,7 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
-  interface AggregateReportRow {
+  interface AggregatedReportRow {
     unix_timestamp: Date
     project_id: string
     tvl_usd: string
@@ -104,9 +104,9 @@ declare module 'knex/types/tables' {
     block_numbers: BlockNumberRow
     balances: BalanceRow
     balances_status: BalanceStatusRow
-    project_assets: ReportRow
-    project_assets_status: ReportStatusRow
-    project_values: AggregateReportRow
+    reports: ReportRow
+    reports_status: ReportStatusRow
+    reports_aggregated: AggregatedReportRow
     sequence_processor: SequenceProcessorRow
     'activity.zksync': ZksyncTransactionRow
     'activity.block': BlockTransactionCountRow

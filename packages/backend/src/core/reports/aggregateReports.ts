@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRecord } from '../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { ReportProject } from './ReportProject'
 
@@ -28,7 +28,7 @@ export function aggregateReports(
   reports: ReportRecord[],
   projects: ReportProject[],
   timestamp: UnixTime,
-): AggregateReportRecord[] {
+): AggregatedReportRecord[] {
   return aggregateReportsWithCategories(
     reports,
     projects,
@@ -42,14 +42,14 @@ export function aggregateReportsWithCategories(
   projects: ReportProject[],
   categories: Category[],
   timestamp: UnixTime,
-): AggregateReportRecord[] {
+): AggregatedReportRecord[] {
   const categorized = categories.map(({ projectId }) => ({
     timestamp,
     projectId,
     tvlEth: 0n,
     tvlUsd: 0n,
   }))
-  const aggregateReports: AggregateReportRecord[] = []
+  const aggregatedReports: AggregatedReportRecord[] = []
 
   for (const project of projects) {
     const filteredReports = reports.filter(
@@ -68,7 +68,7 @@ export function aggregateReportsWithCategories(
         categorized[i].tvlUsd += tvlUsd
       }
     }
-    aggregateReports.push({
+    aggregatedReports.push({
       timestamp,
       projectId: project.projectId,
       tvlEth,
@@ -76,7 +76,7 @@ export function aggregateReportsWithCategories(
     })
   }
 
-  aggregateReports.push(...categorized)
+  aggregatedReports.push(...categorized)
 
-  return aggregateReports
+  return aggregatedReports
 }

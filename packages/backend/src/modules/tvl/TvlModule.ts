@@ -20,7 +20,7 @@ import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { ReportUpdater } from '../../core/reports/ReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
-import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
@@ -49,7 +49,7 @@ export function createTvlModule(
   const priceRepository = new PriceRepository(database, logger)
   const balanceRepository = new BalanceRepository(database, logger)
   const reportRepository = new ReportRepository(database, logger)
-  const aggregateReportRepository = new AggregateReportRepository(
+  const aggregatedReportRepository = new AggregatedReportRepository(
     database,
     logger,
   )
@@ -104,7 +104,7 @@ export function createTvlModule(
     priceUpdater,
     balanceUpdater,
     reportRepository,
-    aggregateReportRepository,
+    aggregatedReportRepository,
     reportStatusRepository,
     clock,
     config.projects,
@@ -117,14 +117,14 @@ export function createTvlModule(
   const blocksController = new BlocksController(blockNumberRepository)
   const tvlController = new TvlController(
     reportStatusRepository,
-    aggregateReportRepository,
+    aggregatedReportRepository,
     reportRepository,
     config.projects,
     config.tokens,
     logger,
   )
 
-  const dydxController = new DydxController(aggregateReportRepository)
+  const dydxController = new DydxController(aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
   const tvlRouter = createTvlRouter(tvlController)

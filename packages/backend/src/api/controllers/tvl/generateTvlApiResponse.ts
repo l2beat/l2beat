@@ -6,15 +6,15 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
-import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
 import { getChartPoints } from './charts'
 
 export function generateTvlApiResponse(
-  hourly: AggregateReportRecord[],
-  sixHourly: AggregateReportRecord[],
-  daily: AggregateReportRecord[],
+  hourly: AggregatedReportRecord[],
+  sixHourly: AggregatedReportRecord[],
+  daily: AggregatedReportRecord[],
   latestReports: ReportRecord[],
   projectIds: ProjectId[],
 ): TvlApiResponse {
@@ -40,9 +40,9 @@ export function generateTvlApiResponse(
 
 function getProjectCharts(
   reports: {
-    hourly: AggregateReportRecord[]
-    sixHourly: AggregateReportRecord[]
-    daily: AggregateReportRecord[]
+    hourly: AggregatedReportRecord[]
+    sixHourly: AggregatedReportRecord[]
+    daily: AggregatedReportRecord[]
   },
   projectId: ProjectId,
 ): TvlApiCharts {
@@ -64,7 +64,7 @@ function getProjectCharts(
 }
 
 function getProjectChartData(
-  reports: AggregateReportRecord[],
+  reports: AggregatedReportRecord[],
   projectId: ProjectId,
   hours: number,
 ): TvlApiChartPoint[] {

@@ -9,7 +9,7 @@ import {
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { Token } from '../../../model'
-import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import {
   ReportRecord,
   ReportRepository,
@@ -23,7 +23,7 @@ import { generateTvlApiResponse } from './generateTvlApiResponse'
 export class TvlController {
   constructor(
     private readonly reportStatusRepository: ReportStatusRepository,
-    private readonly aggregateReportRepository: AggregateReportRepository,
+    private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
@@ -39,13 +39,13 @@ export class TvlController {
     }
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
-        this.aggregateReportRepository.getHourly(
+        this.aggregatedReportRepository.getHourly(
           getHourlyMinTimestamp(timestamp),
         ),
-        this.aggregateReportRepository.getSixHourly(
+        this.aggregatedReportRepository.getSixHourly(
           getSixHourlyMinTimestamp(timestamp),
         ),
-        this.aggregateReportRepository.getDaily(),
+        this.aggregatedReportRepository.getDaily(),
         this.reportRepository.getByTimestamp(timestamp),
       ])
     const tvlApiResponse = generateTvlApiResponse(
