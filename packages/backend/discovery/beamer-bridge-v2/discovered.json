@@ -1,7 +1,7 @@
 {
   "name": "beamer-bridge-v2",
-  "blockNumber": 17577670,
-  "configHash": "0xa021019b10d426f225fb37ddebea9248b2880b44db9cb095d39e9a03e9fb2f86",
+  "blockNumber": 17628014,
+  "configHash": "0xe9533171991da9abc6fcad46e90cbbc42cfaa266a23d51f646aed46c26a49c6e",
   "version": 1,
   "contracts": [
     {
@@ -68,14 +68,14 @@
           "1": {
             "chainId": 1,
             "finalityPeriod": 1,
-            "transferCost": 7849057300162679,
-            "targetWeightPPM": 415899
+            "transferCost": 8099922371948610,
+            "targetWeightPPM": 371922
           },
           "10": {
             "chainId": 10,
             "finalityPeriod": 604800,
-            "transferCost": 236204901221130,
-            "targetWeightPPM": 551457
+            "transferCost": 181722842108105,
+            "targetWeightPPM": 459523
           },
           "1101": {
             "chainId": 1101,
@@ -86,8 +86,8 @@
           "42161": {
             "chainId": 42161,
             "finalityPeriod": 691200,
-            "transferCost": 187174491872213,
-            "targetWeightPPM": 511120
+            "transferCost": 165093852726136,
+            "targetWeightPPM": 448346
           }
         },
         "challengePeriodExtension": 86400,
@@ -95,7 +95,7 @@
         "claimPeriod": 86400,
         "claimRequestExtension": 86400,
         "claimStake": "10000000000000000",
-        "currentNonce": 146,
+        "currentNonce": 158,
         "liquidityProviders": [
           "0x79b68B3d5533EfBF08c383eCCd47966d8EF181FC",
           "0x0F536e54cE49f2dBdD8ae5E86F7b41f09a2e2818",
