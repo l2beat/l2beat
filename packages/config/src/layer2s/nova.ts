@@ -137,8 +137,8 @@ export const nova: Layer2 = {
           href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
         },
         {
-          text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
-          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L288',
+          text: 'RollupUserLogic.sol#L288 - Etherscan source code, onlyValidator modifier',
+          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L288',
         },
       ],
     },

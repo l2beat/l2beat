@@ -1,0 +1,330 @@
+{
+  "name": "symbiosis",
+  "blockNumber": 17591702,
+  "configHash": "0x62d6f63adb151f1afb4be5faa7548c043199b3a28b6f9f0f2a570c146c8331bd",
+  "version": 1,
+  "contracts": [
+    {
+      "name": "ProxyAdminBridgeV2",
+      "address": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
+      "code": "https://etherscan.deth.net/address/0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
+      },
+      "derivedName": "ProxyAdmin"
+    },
+    {
+      "name": "MetaRouterGateway",
+      "address": "0x25bEE8C21D1d0ec2852302fd7E674196EA298eC6",
+      "code": "https://etherscan.deth.net/address/0x25bEE8C21D1d0ec2852302fd7E674196EA298eC6",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "metaRouter": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877"
+      }
+    },
+    {
+      "name": "ProxyAdminBridge",
+      "address": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
+      "code": "https://etherscan.deth.net/address/0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x0ee552336134B6f8F0a72927b6124f8A81865928"
+      },
+      "derivedName": "ProxyAdmin"
+    },
+    {
+      "name": "Multisig",
+      "address": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
+      "code": "https://etherscan.deth.net/address/0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xccc4d4f74988d0bce955a06b16641953bb625b9cc161a33d515a2555d06794ab",
+        "getChainId": 1,
+        "getOwners": [
+          "0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9",
+          "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e",
+          "0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9",
+          "0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F",
+          "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971"
+        ],
+        "getThreshold": 3,
+        "nonce": 10,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "BridgeV2",
+      "address": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
+      "code": "https://etherscan.deth.net/address/0x5523985926Aa12BA58DC5Ad00DDca99678D7227E,0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365",
+        "admin": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
+      },
+      "values": {
+        "currentChainId": 1,
+        "mpc": "0x28774891e1c690cb292A905f6288958C974f7EFf",
+        "newMPC": "0x28774891e1c690cb292A905f6288958C974f7EFf",
+        "newMPCEffectiveTime": 1686123275,
+        "oldMPC": "0x63DB3ED26D7Ec58872cD5aeBe79Ce597382B2F07",
+        "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
+      }
+    },
+    {
+      "name": "Portal",
+      "address": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
+      "code": "https://etherscan.deth.net/address/0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8,0x8a7F930003BedD63A1ebD99C5917FD6aE7E3dedf",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x8a7F930003BedD63A1ebD99C5917FD6aE7E3dedf",
+        "admin": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
+      },
+      "values": {
+        "bridge": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
+        "metaRouter": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
+        "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
+        "paused": false,
+        "requestCount": 1982,
+        "versionRecipient": "2.0.1",
+        "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "derivedName": "Portal"
+    },
+    {
+      "name": "Bridge",
+      "address": "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
+      "unverified": true,
+      "code": "https://etherscan.deth.net/address/0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0,0x61608F9520C311052D88Bc7d0c2c4Cba1c964662",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x61608F9520C311052D88Bc7d0c2c4Cba1c964662",
+        "admin": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA"
+      },
+      "derivedName": ""
+    },
+    {
+      "name": "MetaRouter",
+      "address": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
+      "code": "https://etherscan.deth.net/address/0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "metaRouterGateway": "0x25bEE8C21D1d0ec2852302fd7E674196EA298eC6"
+      }
+    }
+  ],
+  "eoas": [
+    "0x0ee552336134B6f8F0a72927b6124f8A81865928",
+    "0x28774891e1c690cb292A905f6288958C974f7EFf",
+    "0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9",
+    "0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F",
+    "0x63DB3ED26D7Ec58872cD5aeBe79Ce597382B2F07",
+    "0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9",
+    "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971",
+    "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e"
+  ],
+  "abis": {
+    "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x25bEE8C21D1d0ec2852302fd7E674196EA298eC6": [
+      "constructor(address _metaRouter)",
+      "function claimTokens(address _token, address _from, uint256 _amount)",
+      "function metaRouter() view returns (address)"
+    ],
+    "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a": [
+      "constructor(address _singleton)"
+    ],
+    "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365": [
+      "event LogChangeMPC(address indexed oldMPC, address indexed newMPC, uint256 indexed effectiveTime, uint256 chainId)",
+      "event OracleRequest(address bridge, bytes callData, address receiveSide, address oppositeBridge, uint256 chainId)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetAdminPermission(address indexed admin, bool permission)",
+      "event SetTransmitterStatus(address indexed transmitter, bool status)",
+      "function changeMPC(address _newMPC) returns (bool)",
+      "function changeMPCSigned(address _newMPC, bytes signature) returns (bool)",
+      "function currentChainId() view returns (uint256)",
+      "function initialize(address _mpc)",
+      "function isAdmin(address) view returns (bool)",
+      "function isTransmitter(address) view returns (bool)",
+      "function mpc() view returns (address)",
+      "function newMPC() view returns (address)",
+      "function newMPCEffectiveTime() view returns (uint256)",
+      "function oldMPC() view returns (address)",
+      "function owner() view returns (address)",
+      "function receiveRequestV2(bytes _callData, address _receiveSide)",
+      "function receiveRequestV2Signed(bytes _callData, address _receiveSide, bytes signature)",
+      "function renounceOwnership()",
+      "function setAdminPermission(address _user, bool _permission)",
+      "function setTransmitterStatus(address _transmitter, bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function transmitRequestV2(bytes _callData, address _receiveSide, address _oppositeBridge, uint256 _chainId)",
+      "function withdrawFee(address token, address to, uint256 amount) returns (bool)"
+    ],
+    "0x8a7F930003BedD63A1ebD99C5917FD6aE7E3dedf": [
+      "event BurnCompleted(bytes32 indexed id, address indexed to, uint256 amount, uint256 bridgingFee, address token)",
+      "event ClientIdLog(bytes32 requestId, bytes32 indexed clientId)",
+      "event MetaRevertRequest(bytes32 indexed id, address indexed to)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RevertBurnRequest(bytes32 indexed id, address indexed to)",
+      "event RevertSynthesizeCompleted(bytes32 indexed id, address indexed to, uint256 amount, uint256 bridgingFee, address token)",
+      "event SetMetaRouter(address metaRouter)",
+      "event SetTokenThreshold(address token, uint256 threshold)",
+      "event SetWhitelistToken(address token, bool activate)",
+      "event SynthesizeRequest(bytes32 id, address indexed from, uint256 indexed chainID, address indexed revertableAddress, address to, uint256 amount, address token)",
+      "event Unpaused(address account)",
+      "function balanceOf(address) view returns (uint256)",
+      "function bridge() view returns (address)",
+      "function initialize(address _bridge, address _trustedForwarder, address _wrapper, address _whitelistedToken, address _metaRouter)",
+      "function isTrustedForwarder(address forwarder) view returns (bool)",
+      "function metaRevertRequest(tuple(uint256 stableBridgingFee, bytes32 internalID, address receiveSide, address managerChainBridge, address sourceChainBridge, uint256 managerChainId, uint256 sourceChainId, address router, bytes swapCalldata, address sourceChainSynthesis, address burnToken, bytes burnCalldata, bytes32 clientID) _metaRevertTransaction)",
+      "function metaRouter() view returns (address)",
+      "function metaSynthesize(tuple(uint256 stableBridgingFee, uint256 amount, address rtoken, address chain2address, address receiveSide, address oppositeBridge, address syntCaller, uint256 chainID, address[] swapTokens, address secondDexRouter, bytes secondSwapCalldata, address finalReceiveSide, bytes finalCalldata, uint256 finalOffset, address revertableAddress, bytes32 clientID) _metaSynthesizeTransaction) returns (bytes32)",
+      "function metaUnsynthesize(uint256 _stableBridgingFee, bytes32 _externalID, address _to, uint256 _amount, address _rToken, address _finalReceiveSide, bytes _finalCalldata, uint256 _finalOffset)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceOwnership()",
+      "function requestCount() view returns (uint256)",
+      "function requests(bytes32) view returns (address recipient, address chain2address, uint256 amount, address rtoken, uint8 state)",
+      "function revertBurnRequest(uint256 _stableBridgingFee, bytes32 _internalID, address _receiveSide, address _oppositeBridge, uint256 _chainId, bytes32 _clientID)",
+      "function revertSynthesize(uint256 _stableBridgingFee, bytes32 _externalID)",
+      "function setMetaRouter(address _metaRouter)",
+      "function setTokenThreshold(address _token, uint256 _threshold)",
+      "function setWhitelistToken(address _token, bool _activate)",
+      "function synthesize(uint256 _stableBridgingFee, address _token, uint256 _amount, address _chain2address, address _receiveSide, address _oppositeBridge, address _revertableAddress, uint256 _chainID, bytes32 _clientID) returns (bytes32)",
+      "function synthesizeNative(uint256 _stableBridgingFee, address _chain2address, address _receiveSide, address _oppositeBridge, address _revertableAddress, uint256 _chainID, bytes32 _clientID) payable returns (bytes32)",
+      "function synthesizeWithPermit(tuple(uint256 stableBridgingFee, bytes approvalData, address token, uint256 amount, address chain2address, address receiveSide, address oppositeBridge, address revertableAddress, uint256 chainID, bytes32 clientID) _syntWithPermitTx) returns (bytes32)",
+      "function tokenThreshold(address) view returns (uint256)",
+      "function tokenWhitelist(address) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function unsynthesize(uint256 _stableBridgingFee, bytes32 _externalID, address _token, uint256 _amount, address _to)",
+      "function unsynthesizeStates(bytes32) view returns (uint8)",
+      "function versionRecipient() pure returns (string)",
+      "function wrapper() view returns (address)"
+    ],
+    "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xE75C7E85FE6ADd07077467064aD15847E6ba9877": [
+      "constructor()",
+      "function externalCall(address _token, uint256 _amount, address _receiveSide, bytes _calldata, uint256 _offset)",
+      "function metaMintSwap(tuple(uint256 stableBridgingFee, uint256 amount, bytes32 externalID, address tokenReal, uint256 chainID, address to, address[] swapTokens, address secondDexRouter, bytes secondSwapCalldata, address finalReceiveSide, bytes finalCalldata, uint256 finalOffset) _metaMintTransaction)",
+      "function metaRoute(tuple(bytes firstSwapCalldata, bytes secondSwapCalldata, address[] approvedTokens, address firstDexRouter, address secondDexRouter, uint256 amount, bool nativeIn, address relayRecipient, bytes otherSideCalldata) _metarouteTransaction) payable",
+      "function metaRouterGateway() view returns (address)",
+      "function returnSwap(address _token, uint256 _amount, address _router, bytes _swapCalldata, address _burnToken, address _synthesis, bytes _burnCalldata)"
+    ]
+  }
+}
