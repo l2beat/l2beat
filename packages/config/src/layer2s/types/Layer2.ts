@@ -36,7 +36,7 @@ export interface Layer2 {
   /** List of smart contracts used in the layer2 */
   contracts: ProjectContracts
   /** List of permissioned addresses */
-  permissions?: ProjectPermission[]
+  permissions?: ProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */

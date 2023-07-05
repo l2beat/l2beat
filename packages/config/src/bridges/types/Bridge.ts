@@ -22,7 +22,7 @@ export interface Bridge {
   riskView?: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ProjectContracts
-  permissions?: ProjectPermission[]
+  permissions?: ProjectPermission[] | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
