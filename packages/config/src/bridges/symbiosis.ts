@@ -15,9 +15,12 @@ export const symbiosis: Bridge = {
     slug: 'symbiosis',
     category: 'Hybrid',
     description:
-      'Symbiosis is a cross-chain AMM DEX that pools together liquidity from different networks, whether they use EVM technology or not.',
+      'Symbiosis is a cross-chain AMM DEX externally validated my a MPC relayers network.',
     links: {
-      websites: ['https://symbiosis.finance/'],
+      websites: [
+        'https://symbiosis.finance/',
+        'https://app.symbiosis.finance/swap',
+      ],
       repositories: ['https://github.com/symbiosis-finance'],
       socialMedia: [
         'https://t.me/symbiosis_finance',
