@@ -7,12 +7,16 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('polynetwork')
 
+const isPaused = discovery.getContractValue<boolean>('EthCrossChainManager', 'paused')
+const warningText = isPaused ? 'The bridge is currently paused due to an attack occurred on July 2nd, resulting from stolen or misused private keys. For more information, read the postmortem here: https://dedaub.com/blog/poly-chain-hack-postmortem' : ''
+
 export const polynetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('polynetwork'),
   display: {
     name: 'Poly Bridge',
     slug: 'polynetwork',
+    warning: warningText,
     links: {
       websites: ['https://bridge.poly.network/', 'https://poly.network/'],
       apps: ['https://bridge.poly.network/'],
@@ -170,7 +174,13 @@ export const polynetwork: Bridge = {
       ),
       discovery.getContractDetails(
         'EthCrossChainManager',
-        'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
+        {
+          description: 'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
+          pausable: {
+            paused: discovery.getContractValue('EthCrossChainManager', 'paused'),
+            pausableBy: ['EthCrossChainManager'],
+          },
+        },
       ),
       //DUPLICATES???
       discovery.getContractDetails(
@@ -185,7 +195,7 @@ export const polynetwork: Bridge = {
         description:
           'Used to proxy requests from LockProxy to EthCrossChainManager.',
         pausable: {
-          paused: discovery.getContractValue('EthCrossChainManager', 'paused'),
+          paused: discovery.getContractValue('EthCrossChainManagerProxy', 'paused'),
           pausableBy: ['EthCrossChainManager'],
         },
       }),
