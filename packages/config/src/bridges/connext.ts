@@ -85,11 +85,9 @@ export const connext: Bridge = {
     validatedBy: {
       value: 'User',
       description: 'Transfer is done via peer-to-peer atomic swap',
+      sentiment: 'good',
     },
-    sourceUpgradeability: {
-      value: 'No',
-      description: '',
-    },
+    sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: {
       ...RISK_VIEW.CANONICAL,
       description: RISK_VIEW.CANONICAL.description,

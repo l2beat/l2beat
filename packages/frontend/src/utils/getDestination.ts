@@ -5,10 +5,18 @@ export function getDestination(destinations: string[]): ProjectRiskViewEntry {
     throw new Error('Invalid destination')
   }
   if (destinations.length === 1) {
-    return { value: destinations[0], description: '' }
+    return { value: destinations[0], description: '', sentiment: 'neutral' }
   }
   if (destinations.length === 2) {
-    return { value: destinations.join(', '), description: '' }
+    return {
+      value: destinations.join(', '),
+      description: '',
+      sentiment: 'neutral',
+    }
   }
-  return { value: 'Various', description: destinations.join(',\n') }
+  return {
+    value: 'Various',
+    description: destinations.join(',\n'),
+    sentiment: 'neutral',
+  }
 }

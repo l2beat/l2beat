@@ -25,6 +25,7 @@ export class HandlerExecutor {
       handlers,
       address,
       blockNumber,
+      this.logger,
     )
     const { values, errors } = getValuesAndErrors(results)
     return { results, values, errors }

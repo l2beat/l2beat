@@ -7,15 +7,11 @@ import { RosetteTooltipPopup, SmallRosette } from '../rosette'
 
 export interface RosetteCellProps {
   riskValues: RiskValues
+  isUpcoming?: boolean
 }
 
-export function RosetteCell({ riskValues }: RosetteCellProps) {
+export function RosetteCell({ riskValues, isUpcoming }: RosetteCellProps) {
   const riskSentiments = getRiskSentiments(riskValues)
-  const isUpcoming = Object.values(riskValues).every((value) => {
-    return (
-      value.value === '' && value.description === 'No information available.'
-    )
-  })
   return (
     <span
       className="Tooltip"

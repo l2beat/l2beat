@@ -20,14 +20,14 @@ export function RosetteTooltip() {
     riskSentiments: {
       proposerFailure: 'bad',
       upgradeability: 'bad',
-      sequencerFailure: undefined,
+      sequencerFailure: 'good',
       dataAvailability: 'warning',
-      stateValidation: undefined,
+      stateValidation: 'good',
     },
     riskValues: {
       stateValidation: {
         value: 'Fraud proofs',
-        sentiment: undefined,
+        sentiment: 'good',
       },
       proposerFailure: {
         value: 'No mechanism',
@@ -39,7 +39,7 @@ export function RosetteTooltip() {
       },
       sequencerFailure: {
         value: 'Transact using L1',
-        sentiment: undefined,
+        sentiment: 'good',
       },
       dataAvailability: {
         value: 'Optimistic',
