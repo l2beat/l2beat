@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { stringAsInt } from './types'
+import { stringAsInt } from './branded'
 
 describe(stringAsInt.name, () => {
   describe('parses correct input', () => {

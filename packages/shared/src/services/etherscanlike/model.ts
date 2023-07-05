@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export type EtherscanSuccessResponse = z.infer<typeof EtherscanSuccessResponse>
@@ -29,11 +28,3 @@ export function parseEtherscanResponse(value: string): EtherscanResponse {
     throw new TypeError('Invalid Etherscan response')
   }
 }
-
-export type EtherscanLogEntry = z.infer<typeof EtherscanLogEntry>
-const EtherscanLogEntry = z.object({
-  blockNumber: z.string().transform((x) => BigInt(x)),
-  timeStamp: z.string().transform((x) => new UnixTime(Number(x))),
-})
-
-export const EtherscanLogResult = z.array(EtherscanLogEntry)

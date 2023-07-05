@@ -1,4 +1,9 @@
-import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  EtherscanClient,
+  HttpClient,
+  Logger,
+} from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
@@ -25,7 +30,6 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Database } from '../../peripherals/database/shared/Database'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
-import { EtherscanClient } from '../../peripherals/etherscan'
 import { ApplicationModule } from '../ApplicationModule'
 
 export function createTvlModule(
@@ -64,8 +68,8 @@ export function createTvlModule(
   const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
   const etherscanClient = new EtherscanClient(
-    config.tvl.etherscanApiKey,
     http,
+    config.tvl.etherscanApiKey,
     logger,
   )
 

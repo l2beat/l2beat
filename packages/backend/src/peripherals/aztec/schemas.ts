@@ -1,7 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { stringAs, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
-
-import { stringAs } from '../../tools/types'
 
 export type Rollup = z.infer<typeof Rollup>
 const mined = stringAs((s) => UnixTime.fromDate(new Date(s)))
