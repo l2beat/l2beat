@@ -9,7 +9,7 @@ export class ArbiscanClient
   extends EtherscanLikeClient
   implements BlockNumberProvider
 {
-  static API_URL = 'https://api.arbiscan.io/'
+  static API_URL = 'https://api.arbiscan.io/api'
 
   constructor(httpClient: HttpClient, apiKey: string, logger = Logger.SILENT) {
     super(httpClient, ArbiscanClient.API_URL, apiKey, logger)
