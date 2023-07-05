@@ -19,7 +19,7 @@ export function createReport(
   balance: BalancePerProject,
   ethPrice: number,
 ): ReportRecord {
-  const { balanceUsd, balanceEth } = convertBalance(
+  const { usdValue, ethValue } = balanceToValue(
     price.priceUsd,
     balance.decimals,
     balance.balance,
@@ -32,12 +32,12 @@ export function createReport(
     asset: balance.assetId,
     type: balance.type,
     amount: balance.balance,
-    usdValue: balanceUsd,
-    ethValue: balanceEth,
+    usdValue,
+    ethValue,
   }
 }
 
-export function convertBalance(
+export function balanceToValue(
   priceUsd: number,
   decimals: number,
   balance: bigint,
@@ -45,12 +45,12 @@ export function convertBalance(
 ) {
   const bigintPrice = getBigIntPrice(priceUsd, decimals)
   const usdBalance = (balance * bigintPrice) / 10n ** 18n
-  const balanceUsd = usdBalance / 10n ** (18n - USD_PRECISION)
+  const usdValue = usdBalance / 10n ** (18n - USD_PRECISION)
 
   const etherBigInt = getBigIntPrice(ethPrice, 18)
   const etherBalance = (usdBalance * 10n ** 18n) / etherBigInt
-  const balanceEth = etherBalance / 10n ** (18n - ETH_PRECISION)
-  return { balanceUsd, balanceEth }
+  const ethValue = etherBalance / 10n ** (18n - ETH_PRECISION)
+  return { usdValue, ethValue }
 }
 
 export function getBigIntPrice(price: number, decimals: number) {

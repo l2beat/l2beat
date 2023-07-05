@@ -2,7 +2,7 @@ import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 
 import { PriceRecord } from '../../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
-import { convertBalance } from '../createReport'
+import { balanceToValue } from '../createReport'
 
 function createCustomTokenReport({
   tokenPriceUsd,
@@ -25,7 +25,7 @@ function createCustomTokenReport({
 }): ReportRecord {
   const balance = tokenBalance(timestamp)
 
-  const { balanceUsd, balanceEth } = convertBalance(
+  const { usdValue, ethValue } = balanceToValue(
     tokenPriceUsd,
     tokenDecimals,
     balance,
@@ -36,8 +36,8 @@ function createCustomTokenReport({
     asset: tokenId,
     type: assetType,
     amount: balance,
-    ethValue: balanceEth,
-    usdValue: balanceUsd,
+    ethValue,
+    usdValue,
     projectId,
   }
 }

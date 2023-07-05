@@ -1,7 +1,7 @@
 import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { convertBalance, createReport, getBigIntPrice } from './createReport'
+import { balanceToValue, createReport, getBigIntPrice } from './createReport'
 
 describe(createReport.name, () => {
   it('price: 3.20 $ || balance: 22.123456', async () => {
@@ -63,7 +63,7 @@ describe(createReport.name, () => {
   })
 })
 
-describe(convertBalance.name, () => {
+describe(balanceToValue.name, () => {
   const runs = [
     {
       priceUsd: 1,
@@ -94,10 +94,10 @@ describe(convertBalance.name, () => {
   for (const run of runs) {
     it(`convertBalance(${run.priceUsd}, ${run.decimals}, ${run.balance}, ${run.ethPrice})`, () => {
       expect(
-        convertBalance(run.priceUsd, run.decimals, run.balance, run.ethPrice),
+        balanceToValue(run.priceUsd, run.decimals, run.balance, run.ethPrice),
       ).toEqual({
-        balanceUsd: run.balanceUsd,
-        balanceEth: run.balanceEth,
+        usdValue: run.balanceUsd,
+        ethValue: run.balanceEth,
       })
     })
   }
