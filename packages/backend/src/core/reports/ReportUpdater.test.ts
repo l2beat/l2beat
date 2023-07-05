@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/shared'
+import { ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -34,9 +35,10 @@ describe(ReportUpdater.name, () => {
     ...createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS),
     {
       asset: OP_TOKEN_ID,
-      balance: 644594782000000000000000000n,
-      balanceEth: 644594782000000n,
-      balanceUsd: 64459478200000n,
+      type: ValueType.NMV,
+      amount: 644594782000000000000000000n,
+      ethValue: 644594782000000n,
+      usdValue: 64459478200000n,
       timestamp: NOW.add(1, 'hours'),
       projectId: OPTIMISM_PROJECT_ID,
     },

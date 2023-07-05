@@ -1,4 +1,4 @@
-import { AssetId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 
 import { createAddCustomTokenReport } from './report'
 
@@ -19,6 +19,7 @@ export const ARB_TOKEN_BALANCE = () =>
 
 export const addArbTokenReport = createAddCustomTokenReport(
   ARB_TOKEN_ID,
+  ValueType.NMV,
   ARB_TOKEN_SINCE_TIMESTAMP,
   ARBITRUM_PROJECT_ID,
   ARB_TOKEN_BALANCE,

@@ -57,8 +57,8 @@ export function aggregateReportsWithCategories(
     )
     const { tvlEth, tvlUsd } = filteredReports.reduce(
       (acc, next) => ({
-        tvlUsd: acc.tvlUsd + next.balanceUsd,
-        tvlEth: acc.tvlEth + next.balanceEth,
+        tvlUsd: acc.tvlUsd + next.usdValue,
+        tvlEth: acc.tvlEth + next.ethValue,
       }),
       { tvlUsd: 0n, tvlEth: 0n },
     )

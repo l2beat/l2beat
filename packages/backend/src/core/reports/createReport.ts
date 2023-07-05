@@ -1,10 +1,11 @@
-import { AssetId, ProjectId } from '@l2beat/shared-pure'
+import { AssetId, ProjectId, ValueType } from '@l2beat/shared-pure'
 
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 
 export interface BalancePerProject {
   assetId: AssetId
+  type: ValueType
   balance: bigint
   decimals: number
   projectId: ProjectId
@@ -29,9 +30,10 @@ export function createReport(
     timestamp: price.timestamp,
     projectId: balance.projectId,
     asset: balance.assetId,
-    balance: balance.balance,
-    balanceUsd,
-    balanceEth,
+    type: balance.type,
+    amount: balance.balance,
+    usdValue: balanceUsd,
+    ethValue: balanceEth,
   }
 }
 

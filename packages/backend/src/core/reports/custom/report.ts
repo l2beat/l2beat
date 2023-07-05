@@ -1,4 +1,4 @@
-import { AssetId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 
 import { PriceRecord } from '../../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
@@ -9,6 +9,7 @@ function createCustomTokenReport({
   tokenDecimals,
   tokenBalance,
   tokenId,
+  assetType,
   ethPriceUsd,
   timestamp,
   projectId,
@@ -17,6 +18,7 @@ function createCustomTokenReport({
   tokenDecimals: number
   tokenBalance: (t: UnixTime) => bigint
   tokenId: AssetId
+  assetType: ValueType
   projectId: ProjectId
   ethPriceUsd: number
   timestamp: UnixTime
@@ -32,15 +34,17 @@ function createCustomTokenReport({
   return {
     timestamp,
     asset: tokenId,
-    balance,
-    balanceEth,
-    balanceUsd,
+    type: assetType,
+    amount: balance,
+    ethValue: balanceEth,
+    usdValue: balanceUsd,
     projectId,
   }
 }
 
 export function createAddCustomTokenReport(
   tokenId: AssetId,
+  assetType: ValueType,
   sinceTimestamp: UnixTime,
   projectId: ProjectId,
   tokenBalance: (t: UnixTime) => bigint,
@@ -68,6 +72,7 @@ export function createAddCustomTokenReport(
         tokenBalance,
         tokenDecimals,
         tokenId,
+        assetType,
         projectId,
         tokenPriceUsd,
         ethPriceUsd,

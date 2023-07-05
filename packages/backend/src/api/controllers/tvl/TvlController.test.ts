@@ -6,6 +6,7 @@ import {
   ProjectId,
   TvlApiChart,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
@@ -69,11 +70,12 @@ describe(TvlController.name, () => {
 
     it('returns reports', async () => {
       const baseReport: Omit<ReportRecord, 'timestamp'> = {
-        balanceUsd: 1234_56n,
-        balanceEth: 1_111111n,
-        balance: 111_1111n * 10n ** (18n - 4n),
+        usdValue: 1234_56n,
+        ethValue: 1_111111n,
+        amount: 111_1111n * 10n ** (18n - 4n),
         asset: AssetId.DAI,
         projectId: OPTIMISM.projectId,
+        type: ValueType.CBV,
       }
 
       const controller = new TvlController(

@@ -6,6 +6,7 @@ import {
   TvlApiCharts,
   TvlApiToken,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -116,7 +117,9 @@ describe(generateTvlApiResponse.name, () => {
 
   function fakeLatestReports(now: UnixTime, projectIds: ProjectId[]) {
     const assets = [AssetId.ETH, AssetId.DAI]
-    const result: Record<string, TvlApiToken[]> & { all: ReportRecord[] } = {
+    const result: Record<string, TvlApiToken[]> & {
+      all: ReportRecord[]
+    } = {
       all: [],
     }
     for (const projectId of projectIds) {
@@ -127,9 +130,10 @@ describe(generateTvlApiResponse.name, () => {
         const balanceUsd = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
         result.all.push({
           asset: assetId,
-          balance: 0n, // ignored
-          balanceEth: 0n, // ignored
-          balanceUsd,
+          type: ValueType.CBV,
+          amount: 0n, // ignored
+          ethValue: 0n, // ignored
+          usdValue: balanceUsd,
           projectId,
           timestamp: now,
         })
