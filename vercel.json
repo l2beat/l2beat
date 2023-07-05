@@ -54,6 +54,11 @@
       "source": "/projects/:name",
       "destination": "/scaling/projects/:name",
       "permanent": true
+    },
+    {
+      "source": "/jobs",
+      "destination": "https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f",
+      "permanent": true
     }
   ],
   "rewrites": [
