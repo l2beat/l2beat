@@ -1,15 +1,15 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { asNumber } from './tvl/asNumber'
 
 export class DydxController {
   constructor(
-    private readonly aggregateReportsRepository: AggregateReportRepository,
+    private readonly aggregatedReportsRepository: AggregatedReportRepository,
   ) {}
 
   async getTvl(): Promise<number | undefined> {
-    const report = await this.aggregateReportsRepository.findLatest(
+    const report = await this.aggregatedReportsRepository.findLatest(
       ProjectId('dydx'),
     )
 

@@ -11,7 +11,7 @@ import {
 import { expect, mockObject } from 'earl'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
-import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import {
   ReportRecord,
   ReportRepository,
@@ -39,7 +39,7 @@ describe(TvlController.name, () => {
     it('returns undefined if project does not exist', async () => {
       const controller = new TvlController(
         mockObject<ReportStatusRepository>(),
-        mockObject<AggregateReportRepository>(),
+        mockObject<AggregatedReportRepository>(),
         mockObject<ReportRepository>(),
         [],
         [],
@@ -55,7 +55,7 @@ describe(TvlController.name, () => {
     it('returns undefined if asset does not exist', async () => {
       const controller = new TvlController(
         mockObject<ReportStatusRepository>(),
-        mockObject<AggregateReportRepository>(),
+        mockObject<AggregatedReportRepository>(),
         mockObject<ReportRepository>(),
         [OPTIMISM],
         [],
@@ -84,7 +84,7 @@ describe(TvlController.name, () => {
             return START
           },
         }),
-        mockObject<AggregateReportRepository>(),
+        mockObject<AggregatedReportRepository>(),
         mockObject<ReportRepository>({
           getHourlyByProjectAndAsset: async () => [
             { ...baseReport, timestamp: START.add(-1, 'hours') },

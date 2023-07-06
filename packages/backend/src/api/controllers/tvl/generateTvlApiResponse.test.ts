@@ -10,7 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
@@ -92,7 +92,7 @@ describe(generateTvlApiResponse.name, () => {
     projectIds: ProjectId[],
   ) {
     const result: Record<string, TvlApiChartPoint[]> & {
-      all: AggregateReportRecord[]
+      all: AggregatedReportRecord[]
     } = {
       all: [],
     }

@@ -34,7 +34,7 @@ export class BalanceRepository extends BaseRepository {
     timestamp: UnixTime,
   ): Promise<BalanceRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('asset_balances')
+    const rows = await knex('balances')
       .where('unix_timestamp', '=', timestamp.toDate())
       .andWhere('chain_id', '=', Number(chainId))
 
@@ -44,7 +44,7 @@ export class BalanceRepository extends BaseRepository {
   async addOrUpdateMany(balances: BalanceRecord[]) {
     const rows = balances.map(toRow)
     const knex = await this.knex()
-    await knex('asset_balances')
+    await knex('balances')
       .insert(rows)
       .onConflict(['chain_id', 'unix_timestamp', 'holder_address', 'asset_id'])
       .merge()
@@ -53,13 +53,13 @@ export class BalanceRepository extends BaseRepository {
 
   async getAll(): Promise<BalanceRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('asset_balances')
+    const rows = await knex('balances')
     return rows.map(toRecord)
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('asset_balances').delete()
+    return await knex('balances').delete()
   }
 }
 
