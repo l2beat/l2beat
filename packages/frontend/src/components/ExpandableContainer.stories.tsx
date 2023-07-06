@@ -7,6 +7,11 @@ import { ExpandableContainer as ExpandableContainerComponent } from './Expandabl
 
 export default {
   title: 'Components/ExpandableContainer',
+  parameters: {
+    screenshot: {
+      delay: 400,
+    },
+  },
 }
 
 function Template({
@@ -29,7 +34,7 @@ function Template({
 export function Collapsed() {
   return (
     <Template>
-      {range(4).map(() => {
+      {range(8).map(() => {
         return (
           <div className="my-2">
             Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit
@@ -50,7 +55,7 @@ export function Expanded() {
   }, [])
   return (
     <Template>
-      {range(4).map(() => {
+      {range(8).map(() => {
         return (
           <div className="my-2">
             Sit Lorem est ad ut est do consectetur. Ipsum mollit pariatur sit

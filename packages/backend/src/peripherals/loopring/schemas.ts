@@ -1,7 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { numberAs, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
-
-import { numberAs } from '../../tools/types'
 
 const MS_IN_SECOND = 1000
 

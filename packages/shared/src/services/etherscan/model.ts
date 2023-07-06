@@ -1,13 +1,6 @@
 import { EthereumAddress, Hash256, stringAs } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-export type EtherscanResponse = z.infer<typeof EtherscanResponse>
-export const EtherscanResponse = z.object({
-  status: z.enum(['1', '0']),
-  message: z.string(),
-  result: z.any(),
-})
-
 export type ContractSource = z.infer<typeof ContractSource>
 export const ContractSource = z.object({
   SourceCode: z.string(),

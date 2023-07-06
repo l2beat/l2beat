@@ -1,4 +1,9 @@
-import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
+import {
+  CoingeckoClient,
+  EtherscanClient,
+  HttpClient,
+  Logger,
+} from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
@@ -10,12 +15,13 @@ import { createDydxRouter } from '../../api/routers/DydxRouter'
 import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { Config } from '../../config'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
+import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { ReportUpdater } from '../../core/reports/ReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
-import { AggregateReportRepository } from '../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
@@ -25,7 +31,6 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Database } from '../../peripherals/database/shared/Database'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
-import { EtherscanClient } from '../../peripherals/etherscan'
 import { ApplicationModule } from '../ApplicationModule'
 
 export function createTvlModule(
@@ -45,7 +50,7 @@ export function createTvlModule(
   const priceRepository = new PriceRepository(database, logger)
   const balanceRepository = new BalanceRepository(database, logger)
   const reportRepository = new ReportRepository(database, logger)
-  const aggregateReportRepository = new AggregateReportRepository(
+  const aggregatedReportRepository = new AggregatedReportRepository(
     database,
     logger,
   )
@@ -64,10 +69,11 @@ export function createTvlModule(
   const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
   const etherscanClient = new EtherscanClient(
-    config.tvl.etherscanApiKey,
     http,
+    config.tvl.etherscanApiKey,
     logger,
   )
+  const ethereumBalanceProvider = new EthereumBalanceProvider(multicall)
 
   // #endregion
   // #region updaters
@@ -87,7 +93,7 @@ export function createTvlModule(
     logger,
   )
   const balanceUpdater = new BalanceUpdater(
-    multicall,
+    ethereumBalanceProvider,
     blockNumberUpdater,
     balanceRepository,
     balanceStatusRepository,
@@ -100,7 +106,7 @@ export function createTvlModule(
     priceUpdater,
     balanceUpdater,
     reportRepository,
-    aggregateReportRepository,
+    aggregatedReportRepository,
     reportStatusRepository,
     clock,
     config.projects,
@@ -113,14 +119,14 @@ export function createTvlModule(
   const blocksController = new BlocksController(blockNumberRepository)
   const tvlController = new TvlController(
     reportStatusRepository,
-    aggregateReportRepository,
+    aggregatedReportRepository,
     reportRepository,
     config.projects,
     config.tokens,
     logger,
   )
 
-  const dydxController = new DydxController(aggregateReportRepository)
+  const dydxController = new DydxController(aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
   const tvlRouter = createTvlRouter(tvlController)

@@ -17,7 +17,7 @@ export class BalanceStatusRepository extends BaseRepository {
 
   async getByConfigHash(configHash: Hash256): Promise<UnixTime[]> {
     const knex = await this.knex()
-    const rows = await knex('balance_status')
+    const rows = await knex('balances_status')
       .where({ config_hash: configHash.toString() })
       .select('unix_timestamp')
 
@@ -27,12 +27,12 @@ export class BalanceStatusRepository extends BaseRepository {
   async add(record: BalanceStatusRecord): Promise<Hash256> {
     const knex = await this.knex()
     await knex.transaction(async (trx) => {
-      await trx('balance_status')
+      await trx('balances_status')
         .where({
           unix_timestamp: record.timestamp.toDate(),
         })
         .delete()
-      await trx('balance_status').insert({
+      await trx('balances_status').insert({
         config_hash: record.configHash.toString(),
         unix_timestamp: record.timestamp.toDate(),
       })
@@ -42,7 +42,7 @@ export class BalanceStatusRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('balance_status').delete()
+    return await knex('balances_status').delete()
   }
 
   async getBetween(
@@ -51,7 +51,7 @@ export class BalanceStatusRepository extends BaseRepository {
   ): Promise<BalanceStatusRecord[]> {
     const knex = await this.knex()
 
-    const rows = await knex('balance_status')
+    const rows = await knex('balances_status')
       .where('unix_timestamp', '>=', from.toDate())
       .andWhere('unix_timestamp', '<=', to.toDate())
 

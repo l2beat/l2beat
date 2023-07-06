@@ -6,11 +6,12 @@ import {
   ProjectId,
   TvlApiChart,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
-import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import {
   ReportRecord,
   ReportRepository,
@@ -38,7 +39,7 @@ describe(TvlController.name, () => {
     it('returns undefined if project does not exist', async () => {
       const controller = new TvlController(
         mockObject<ReportStatusRepository>(),
-        mockObject<AggregateReportRepository>(),
+        mockObject<AggregatedReportRepository>(),
         mockObject<ReportRepository>(),
         [],
         [],
@@ -54,7 +55,7 @@ describe(TvlController.name, () => {
     it('returns undefined if asset does not exist', async () => {
       const controller = new TvlController(
         mockObject<ReportStatusRepository>(),
-        mockObject<AggregateReportRepository>(),
+        mockObject<AggregatedReportRepository>(),
         mockObject<ReportRepository>(),
         [OPTIMISM],
         [],
@@ -69,11 +70,12 @@ describe(TvlController.name, () => {
 
     it('returns reports', async () => {
       const baseReport: Omit<ReportRecord, 'timestamp'> = {
-        balanceUsd: 1234_56n,
-        balanceEth: 1_111111n,
-        balance: 111_1111n * 10n ** (18n - 4n),
+        usdValue: 1234_56n,
+        ethValue: 1_111111n,
+        amount: 111_1111n * 10n ** (18n - 4n),
         asset: AssetId.DAI,
         projectId: OPTIMISM.projectId,
+        type: ValueType.CBV,
       }
 
       const controller = new TvlController(
@@ -82,7 +84,7 @@ describe(TvlController.name, () => {
             return START
           },
         }),
-        mockObject<AggregateReportRepository>(),
+        mockObject<AggregatedReportRepository>(),
         mockObject<ReportRepository>({
           getHourlyByProjectAndAsset: async () => [
             { ...baseReport, timestamp: START.add(-1, 'hours') },

@@ -55,6 +55,7 @@ export interface ClockConfig {
 export interface TvlConfig {
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
+  readonly arbiscanApiKey: string | undefined
   readonly coingeckoApiKey: string | undefined
 }
 

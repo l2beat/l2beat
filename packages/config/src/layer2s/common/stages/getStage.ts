@@ -47,7 +47,7 @@ export const getStage = createGetStage({
         positive:
           'In case of an unwanted upgrade by actors more centralized than a Security Council, users have at least 7d to exit.',
         negative:
-          'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit.',
+          'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
       },
       securityCouncilProperlySetUp: {
         positive: 'The Security Council is properly set up.',
