@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
@@ -123,8 +123,11 @@ export const beamerbridgev2: Bridge = {
   permissions: [
     {
       name: 'Owner',
-      description: 'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
-      accounts: [discovery.getPermissionedAccount('EthereumRequestManager', 'owner')],
-    }
+      description:
+        'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
+      accounts: [
+        discovery.getPermissionedAccount('EthereumRequestManager', 'owner'),
+      ],
+    },
   ],
 }
