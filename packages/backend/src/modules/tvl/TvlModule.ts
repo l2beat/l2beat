@@ -161,6 +161,7 @@ export function createTvlModule(
     await blockNumberUpdater.start()
     await balanceUpdater.start()
     await reportUpdater.start()
+    await aggregatedReportUpdater.start()
 
     logger.info('Started')
   }
