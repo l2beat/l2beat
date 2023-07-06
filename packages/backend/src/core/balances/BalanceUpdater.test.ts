@@ -2,7 +2,6 @@ import { TokenInfo } from '@l2beat/config'
 import { Logger } from '@l2beat/shared'
 import {
   AssetId,
-  Bytes,
   ChainId,
   CoingeckoId,
   EthereumAddress,
@@ -17,12 +16,12 @@ import {
   BalanceRepository,
 } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { BalanceProject } from './BalanceProject'
 import { BalanceUpdater, getMissingData } from './BalanceUpdater'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
+import { EthereumBalanceProvider } from './providers/EthereumBalanceProvider'
 
 describe(BalanceUpdater.name, () => {
   describe(BalanceUpdater.prototype.start.name, () => {
@@ -46,9 +45,12 @@ describe(BalanceUpdater.name, () => {
       const balanceRepository = mockObject<BalanceRepository>({
         getByTimestamp: async () => [],
       })
+      const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
+        getChainId: () => ChainId.ETHEREUM,
+      })
 
       const balanceUpdater = new BalanceUpdater(
-        mockObject<MulticallClient>(),
+        ethereumBalanceProvider,
         mockObject<BlockNumberUpdater>(),
         balanceRepository,
         balanceStatusRepository,
@@ -76,6 +78,7 @@ describe(BalanceUpdater.name, () => {
 
   describe(BalanceUpdater.prototype.update.name, () => {
     it('fetches and saves missing datapoints', async () => {
+      const blockNumber = 1234
       const holderAddress = EthereumAddress.random()
       const projects: BalanceProject[] = [
         {
@@ -103,9 +106,17 @@ describe(BalanceUpdater.name, () => {
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
         add: async (x) => x.configHash,
       })
+      const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
+        getChainId: () => ChainId.ETHEREUM,
+      })
+
+      const blockNumberUpdater = mockObject<BlockNumberUpdater>({
+        getBlockNumberWhenReady: async () => blockNumber,
+      })
+
       const balanceUpdater = new BalanceUpdater(
-        mockObject<MulticallClient>(),
-        mockObject<BlockNumberUpdater>(),
+        ethereumBalanceProvider,
+        blockNumberUpdater,
         balanceRepository,
         balanceStatusRepository,
         mockObject<Clock>(),
@@ -120,8 +131,10 @@ describe(BalanceUpdater.name, () => {
         mockBalance(AssetId('bar'), timestamp, holderAddress, ChainId.ETHEREUM),
       ]
       const fetchBalances =
-        mockFn<typeof balanceUpdater.fetchBalances>().resolvesTo(balances)
-      balanceUpdater.fetchBalances = fetchBalances
+        mockFn<typeof ethereumBalanceProvider.fetchBalances>().resolvesTo(
+          balances,
+        )
+      ethereumBalanceProvider.fetchBalances = fetchBalances
 
       await balanceUpdater.update(timestamp)
       expect(fetchBalances).toHaveBeenOnlyCalledWith(
@@ -130,6 +143,7 @@ describe(BalanceUpdater.name, () => {
           { assetId: AssetId('bar'), holder: holderAddress },
         ],
         timestamp,
+        blockNumber,
       )
       expect(balanceRepository.addOrUpdateMany).toHaveBeenOnlyCalledWith(
         balances,
@@ -169,8 +183,11 @@ describe(BalanceUpdater.name, () => {
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
         add: async (x) => x.configHash,
       })
+      const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
+        getChainId: () => ChainId.ETHEREUM,
+      })
       const balanceUpdater = new BalanceUpdater(
-        mockObject<MulticallClient>(),
+        ethereumBalanceProvider,
         mockObject<BlockNumberUpdater>(),
         balanceRepository,
         balanceStatusRepository,
@@ -187,57 +204,6 @@ describe(BalanceUpdater.name, () => {
         configHash: getBalanceConfigHash(projects),
         timestamp,
       })
-    })
-  })
-
-  describe(BalanceUpdater.prototype.fetchBalances.name, () => {
-    it('performs a multicall for missing data', async () => {
-      const multicallClient = mockObject<MulticallClient>({
-        multicall: async () => [
-          { success: true, data: Bytes.fromNumber(69).padStart(32) },
-          { success: true, data: Bytes.fromNumber(420).padStart(32) },
-        ],
-      })
-      const blockNumberUpdater = mockObject<BlockNumberUpdater>({
-        getBlockNumberWhenReady: async () => 1234,
-      })
-      const balanceUpdater = new BalanceUpdater(
-        multicallClient,
-        blockNumberUpdater,
-        mockObject<BalanceRepository>(),
-        mockObject<BalanceStatusRepository>(),
-        mockObject<Clock>(),
-        [],
-        Logger.SILENT,
-        ChainId.ETHEREUM,
-      )
-
-      const timestamp = UnixTime.now()
-      const holderA = EthereumAddress.random()
-      const holderB = EthereumAddress.random()
-      const results = await balanceUpdater.fetchBalances(
-        [
-          { assetId: AssetId.DAI, holder: holderA },
-          { assetId: AssetId.ETH, holder: holderB },
-        ],
-        timestamp,
-      )
-      expect(results).toEqual([
-        {
-          assetId: AssetId.DAI,
-          holderAddress: holderA,
-          balance: 69n,
-          timestamp,
-          chainId: ChainId.ETHEREUM,
-        },
-        {
-          assetId: AssetId.ETH,
-          holderAddress: holderB,
-          balance: 420n,
-          timestamp,
-          chainId: ChainId.ETHEREUM,
-        },
-      ])
     })
   })
 

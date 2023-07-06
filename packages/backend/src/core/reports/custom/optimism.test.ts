@@ -1,4 +1,4 @@
-import { AssetId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
@@ -48,28 +48,31 @@ describe(addOpTokenReport.name, () => {
       { timestamp, priceUsd: 1, assetId: AssetId.ETH },
       { timestamp, priceUsd: 2, assetId: OP_TOKEN_ID },
     ]
-    const opReport = {
+    const opReport: ReportRecord = {
       asset: OP_TOKEN_ID,
-      balance: 0n,
-      balanceEth: 0n,
-      balanceUsd: 0n,
+      type: ValueType.NMV,
+      amount: 0n,
+      usdValue: 0n,
+      ethValue: 0n,
       projectId: OPTIMISM_PROJECT_ID,
       timestamp,
     }
     const otherReports: ReportRecord[] = [
       {
         asset: AssetId.DAI,
-        balance: 1n,
-        balanceEth: 1n,
-        balanceUsd: 1n,
+        type: ValueType.CBV,
+        amount: 1n,
+        ethValue: 1n,
+        usdValue: 1n,
         projectId: ProjectId('arbitrum'),
         timestamp,
       },
       {
         asset: AssetId.ETH,
-        balance: 2n,
-        balanceEth: 2n,
-        balanceUsd: 2n,
+        type: ValueType.CBV,
+        amount: 2n,
+        ethValue: 2n,
+        usdValue: 2n,
         projectId: ProjectId('arbitrum'),
         timestamp,
       },
@@ -80,9 +83,10 @@ describe(addOpTokenReport.name, () => {
       ...otherReports,
       {
         ...opReport,
-        balance: 214748364000000000000000000n,
-        balanceEth: 429496728000000n,
-        balanceUsd: 42949672800n,
+        type: ValueType.NMV,
+        amount: 214748364000000000000000000n,
+        ethValue: 429496728000000n,
+        usdValue: 42949672800n,
       },
     ])
   })
@@ -98,11 +102,12 @@ describe(addOpTokenReport.name, () => {
     expect(reports).toEqual([
       {
         asset: OP_TOKEN_ID,
+        type: ValueType.NMV,
         projectId: OPTIMISM_PROJECT_ID,
         timestamp,
-        balance: 214748364000000000000000000n,
-        balanceEth: 429496728000000n,
-        balanceUsd: 42949672800n,
+        amount: 214748364000000000000000000n,
+        ethValue: 429496728000000n,
+        usdValue: 42949672800n,
       },
     ])
   })
@@ -118,11 +123,12 @@ describe(addOpTokenReport.name, () => {
     expect(reports).toEqual([
       {
         asset: OP_TOKEN_ID,
+        type: ValueType.NMV,
         projectId: OPTIMISM_PROJECT_ID,
         timestamp,
-        balance: 644594782000000000000000000n,
-        balanceEth: 1289189564000000n,
-        balanceUsd: 128918956400n,
+        amount: 644594782000000000000000000n,
+        ethValue: 1289189564000000n,
+        usdValue: 128918956400n,
       },
     ])
   })

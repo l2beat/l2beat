@@ -1,4 +1,4 @@
-import { MainnetEtherscanClient } from '@l2beat/shared'
+import { EtherscanClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { DiscoveryModuleConfig } from '../config/config.discovery'
@@ -17,7 +17,7 @@ import { SourceCodeService } from './source/SourceCodeService'
 
 export async function runDiscovery(
   provider: providers.AlchemyProvider,
-  etherscanClient: MainnetEtherscanClient,
+  etherscanClient: EtherscanClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
 ) {
@@ -47,7 +47,7 @@ export async function runDiscovery(
 
 export async function dryRunDiscovery(
   provider: providers.AlchemyProvider,
-  etherscanClient: MainnetEtherscanClient,
+  etherscanClient: EtherscanClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
 ) {
@@ -82,7 +82,7 @@ export async function dryRunDiscovery(
 
 async function justDiscover(
   provider: providers.AlchemyProvider,
-  etherscanClient: MainnetEtherscanClient,
+  etherscanClient: EtherscanClient,
   config: DiscoveryConfig,
   blockNumber: number,
 ) {
@@ -98,7 +98,7 @@ async function justDiscover(
 
 export async function discover(
   provider: providers.AlchemyProvider,
-  etherscanClient: MainnetEtherscanClient,
+  etherscanClient: EtherscanClient,
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
   blockNumber: number,

@@ -1,7 +1,7 @@
-import { AssetId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { AggregateReportRecord } from '../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRecord } from '../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { aggregateReports } from './aggregateReports'
 import { ReportProject } from './ReportProject'
@@ -74,10 +74,10 @@ describe(aggregateReports.name, () => {
       timestamp: NOW,
       projectId,
       asset: asset === 'eth' ? AssetId.ETH : AssetId.DAI,
-      balance: balance * 10n ** 18n,
-      balanceUsd:
-        (asset === 'eth' ? balance * ETH_PRICE_IN_DAI : balance) * 100n,
-      balanceEth:
+      type: ValueType.CBV,
+      amount: balance * 10n ** 18n,
+      usdValue: (asset === 'eth' ? balance * ETH_PRICE_IN_DAI : balance) * 100n,
+      ethValue:
         (asset === 'eth' ? balance : balance / ETH_PRICE_IN_DAI) * 1000000n,
     }
   }
@@ -89,7 +89,10 @@ describe(aggregateReports.name, () => {
     return { projectId, type, escrows: [] }
   }
 
-  function record(projectId: ProjectId, usdTVL: bigint): AggregateReportRecord {
+  function record(
+    projectId: ProjectId,
+    usdTVL: bigint,
+  ): AggregatedReportRecord {
     return {
       timestamp: NOW,
       projectId,

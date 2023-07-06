@@ -1,4 +1,4 @@
-import { HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/shared'
+import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { handleCli } from './cli/handleCli'
@@ -34,7 +34,7 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
     'mainnet',
     config.discovery.alchemyApiKey,
   )
-  const etherscanClient = new MainnetEtherscanClient(
+  const etherscanClient = new EtherscanClient(
     http,
     config.discovery.etherscanApiKey,
   )

@@ -52,6 +52,7 @@ export function getLocalConfig(): Config {
     tvl: tvlEnabled && {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+      arbiscanApiKey: process.env.ARBISCAN_API_KEY, // this is optional
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
     },
     activity: activityEnabled && {
