@@ -57,10 +57,11 @@ environment variables. One variable per line `KEY=value`.
 - `COINGECKO_API_KEY` (Optional) - API key for Coingecko
 - `LOG_LEVEL` (Optional) - Integer specifying the log level. `0` - none, `1` - error, `2` - warn, `3` - info, `4` - debug
 - `PORT` (Optional) - The port on which the application exposes the api
-- `SYNC_DISABLED` (default `false`) - When set to `true` it will prevent app from syncing, useful for local debugging
 - `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
 - `ACTIVITY_ENABLED` (default `false`) - When set to `true` activity feature is enabled
-- `TVL_SYNC_ENABLED` (default `true`) - When set to `true` tvl sync is enabled
+- `TVL_ENABLED` (default `true`) - When set to `true` tvl module is enabled
+- `ETHEREUM_TVL_ENABLED` (default `true`) - When set to `true` ethereum tvl sync is enabled
+- `ARBITRUM_TVL_ENABLED` (default `false`) - When set to `true` arbitrum tvl sync is enabled
 - `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
 - `PUBLIC_DISCORD_CHANNEL_ID` - public channel id the message will be sent to
 - `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
@@ -84,19 +85,20 @@ ALCHEMY_API_KEY=
 STARKEX_API_KEY=
 
 #-----OPTIONAL-----
-#COINGECKO_API_KEY=
-#LOG_LEVEL=
-#PORT=
-#SYNC_DISABLED=
-#FRESH_START=
-#ACTIVITY_ENABLED=
-#TVL_SYNC_ENABLED=
-#DISCOVERY_BLOCK_NUMBER=
-#WATCHMODE_ENABLED=
-#PUBLIC_DISCORD_CHANNEL_ID=
-#INTERNAL_DISCORD_CHANNEL_ID=
-#DISCORD_TOKEN=
-#UPDATE_MONITOR_RUN_ON_START=
+# COINGECKO_API_KEY=
+# LOG_LEVEL=
+# PORT=
+# FRESH_START=
+# ACTIVITY_ENABLED=
+# TVL_ENABLED
+# ETHEREUM_TVL_ENABLED
+# ARBITRUM_TVL_ENABLED
+# DISCOVERY_BLOCK_NUMBER=
+# WATCHMODE_ENABLED=
+# PUBLIC_DISCORD_CHANNEL_ID=
+# INTERNAL_DISCORD_CHANNEL_ID=
+# DISCORD_TOKEN=
+# UPDATE_MONITOR_RUN_ON_START=
 ```
 
 ## Scripts
