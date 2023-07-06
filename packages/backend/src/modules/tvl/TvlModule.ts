@@ -19,9 +19,11 @@ import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumB
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
+import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { ReportUpdater } from '../../core/reports/ReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
+import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
@@ -55,6 +57,10 @@ export function createTvlModule(
     logger,
   )
   const reportStatusRepository = new ReportStatusRepository(database, logger)
+  const aggregatedReportStatusRepository = new AggregatedReportStatusRepository(
+    database,
+    logger,
+  )
   const balanceStatusRepository = new BalanceStatusRepository(database, logger)
 
   // #endregion
@@ -106,8 +112,16 @@ export function createTvlModule(
     priceUpdater,
     balanceUpdater,
     reportRepository,
-    aggregatedReportRepository,
     reportStatusRepository,
+    clock,
+    config.projects,
+    logger,
+  )
+
+  const aggregatedReportUpdater = new AggregatedReportUpdater(
+    reportUpdater,
+    aggregatedReportRepository,
+    aggregatedReportStatusRepository,
     clock,
     config.projects,
     logger,

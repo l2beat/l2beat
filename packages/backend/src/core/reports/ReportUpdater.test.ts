@@ -3,14 +3,12 @@ import { ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
-import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { BALANCES, NOW, PRICES, PROJECTS } from '../../test/projects'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
 import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from './custom/optimism'
 import { getReportConfigHash } from './getReportConfigHash'
@@ -43,12 +41,6 @@ describe(ReportUpdater.name, () => {
       projectId: OPTIMISM_PROJECT_ID,
     },
   ]
-  const AGGREGATED_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
-  const FUTURE_AGGREGATE_REPORTS = aggregateReports(
-    FUTURE_REPORTS,
-    PROJECTS,
-    NOW.add(1, 'hours'),
-  )
 
   describe(ReportUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
@@ -67,12 +59,6 @@ describe(ReportUpdater.name, () => {
         getByTimestamp: async () => FUTURE_REPORTS,
       })
 
-      const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
-        {
-          addOrUpdateMany: async () => 0,
-        },
-      )
-
       const reportStatusRepository = mockObject<ReportStatusRepository>({
         getByConfigHash: async () => [],
         add: async ({ configHash }) => configHash,
@@ -82,7 +68,6 @@ describe(ReportUpdater.name, () => {
         priceUpdater,
         balanceUpdater,
         reportRepository,
-        aggregatedReportRepository,
         reportStatusRepository,
         mockObject<Clock>(),
         PROJECTS,
@@ -114,16 +99,6 @@ describe(ReportUpdater.name, () => {
         REPORTS,
       )
 
-      expect(aggregatedReportRepository.addOrUpdateMany).toHaveBeenCalledTimes(
-        2,
-      )
-      expect(
-        aggregatedReportRepository.addOrUpdateMany,
-      ).toHaveBeenNthCalledWith(1, FUTURE_AGGREGATE_REPORTS)
-      expect(
-        aggregatedReportRepository.addOrUpdateMany,
-      ).toHaveBeenNthCalledWith(2, AGGREGATED_REPORTS)
-
       const reports = await reportUpdater.getReportsWhenReady(
         NOW.add(1, 'hours'),
       )
@@ -148,12 +123,6 @@ describe(ReportUpdater.name, () => {
         addOrUpdateMany: async () => 0,
       })
 
-      const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
-        {
-          addOrUpdateMany: async () => 0,
-        },
-      )
-
       const reportStatusRepository = mockObject<ReportStatusRepository>({
         getByConfigHash: async () => [
           NOW.add(-1, 'hours'),
@@ -176,7 +145,6 @@ describe(ReportUpdater.name, () => {
         priceUpdater,
         balanceUpdater,
         reportRepository,
-        aggregatedReportRepository,
         reportStatusRepository,
         clock,
         PROJECTS,
@@ -207,16 +175,6 @@ describe(ReportUpdater.name, () => {
           2,
           REPORTS,
         )
-
-        expect(
-          aggregatedReportRepository.addOrUpdateMany,
-        ).toHaveBeenCalledTimes(2)
-        expect(
-          aggregatedReportRepository.addOrUpdateMany,
-        ).toHaveBeenNthCalledWith(1, FUTURE_AGGREGATE_REPORTS)
-        expect(
-          aggregatedReportRepository.addOrUpdateMany,
-        ).toHaveBeenNthCalledWith(2, AGGREGATED_REPORTS)
       })
     })
   })
@@ -237,12 +195,6 @@ describe(ReportUpdater.name, () => {
         addOrUpdateMany: async () => 0,
         getByTimestamp: async () => REPORTS,
       })
-
-      const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
-        {
-          addOrUpdateMany: async () => 0,
-        },
-      )
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
         getByConfigHash: async () => [
@@ -266,7 +218,6 @@ describe(ReportUpdater.name, () => {
         priceUpdater,
         balanceUpdater,
         reportRepository,
-        aggregatedReportRepository,
         reportStatusRepository,
         clock,
         PROJECTS,

@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/shared'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import {
   ReportRecord,
   ReportRepository,
@@ -12,7 +11,6 @@ import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
 import { addArbTokenReport } from './custom/arbitrum'
 import { addOpTokenReport } from './custom/optimism'
@@ -28,7 +26,6 @@ export class ReportUpdater {
     private readonly priceUpdater: PriceUpdater,
     private readonly balanceUpdater: BalanceUpdater,
     private readonly reportRepository: ReportRepository,
-    private readonly aggregatedReportsRepository: AggregatedReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
     private readonly projects: ReportProject[],
@@ -72,19 +69,14 @@ export class ReportUpdater {
     const reports = createReports(prices, balances, this.projects)
     addOpTokenReport(reports, prices, timestamp)
     addArbTokenReport(reports, prices, timestamp)
-    const aggregatedReports = aggregateReports(
-      reports,
-      this.projects,
-      timestamp,
-    )
-    await Promise.all([
-      this.reportRepository.addOrUpdateMany(reports),
-      this.aggregatedReportsRepository.addOrUpdateMany(aggregatedReports),
-    ])
+
+    await this.reportRepository.addOrUpdateMany(reports)
+
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
     })
+
     this.knownSet.add(timestamp.toNumber())
     this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
   }
