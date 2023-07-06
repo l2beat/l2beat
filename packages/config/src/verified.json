@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-07-04T18:02:46.371Z",
+  "updatedAt": "2023-07-06T07:20:35.758Z",
   "projects": {
     "across-v2": true,
     "allbridge": false,
@@ -73,7 +73,7 @@
     "zkswap2": false,
     "zksync": true,
     "zksync2": true,
-    "zora": false
+    "zora": true
   },
   "contracts": {
     "0x01d3348601968aB85b4bb028979006eac235a588": true,
@@ -492,7 +492,7 @@
     "0xdbF3C7e0a1493B81B295547ae3D0711417481A55": false,
     "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00": true,
     "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a": true,
-    "0xdC40a14d9abd6F410226f1E6de71aE03441ca506": false,
+    "0xdC40a14d9abd6F410226f1E6de71aE03441ca506": true,
     "0xdD813397b79f8df581eEb0c4B8aB72304c528396": true,
     "0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf": true,
     "0xdE7355C971A5B733fe2133753Abd7e5441d441Ec": true,
