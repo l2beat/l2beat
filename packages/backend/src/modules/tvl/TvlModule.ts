@@ -1,4 +1,5 @@
 import {
+  ArbiscanClient,
   CoingeckoClient,
   EtherscanClient,
   HttpClient,
@@ -75,10 +76,14 @@ export function createTvlModule(
   )
   const ethereumBalanceProvider = new EthereumBalanceProvider(multicall)
 
+  const arbiscanClient =
+    config.tvl.arbiscanApiKey &&
+    new ArbiscanClient(http, config.tvl.arbiscanApiKey, logger)
+
   // #endregion
   // #region updaters
 
-  const blockNumberUpdater = new BlockNumberUpdater(
+  const ethereumBlockNumberUpdater = new BlockNumberUpdater(
     etherscanClient,
     blockNumberRepository,
     clock,
@@ -94,7 +99,7 @@ export function createTvlModule(
   )
   const balanceUpdater = new BalanceUpdater(
     ethereumBalanceProvider,
-    blockNumberUpdater,
+    ethereumBlockNumberUpdater,
     balanceRepository,
     balanceStatusRepository,
     clock,
@@ -112,6 +117,16 @@ export function createTvlModule(
     config.projects,
     logger,
   )
+
+  const arbiscanBlockNumberUpdater =
+    arbiscanClient &&
+    new BlockNumberUpdater(
+      arbiscanClient,
+      blockNumberRepository,
+      clock,
+      logger,
+      ChainId.ETHEREUM,
+    )
 
   // #endregion
   // #region api
@@ -144,9 +159,13 @@ export function createTvlModule(
     logger.info('Starting')
 
     priceUpdater.start()
-    await blockNumberUpdater.start()
+    await ethereumBlockNumberUpdater.start()
     await balanceUpdater.start()
     await reportUpdater.start()
+
+    if (arbiscanBlockNumberUpdater) {
+      await arbiscanBlockNumberUpdater.start()
+    }
 
     logger.info('Started')
   }

@@ -13,6 +13,7 @@ export function getLocalConfig(): Config {
   const tvlEnabled = getEnv.boolean('TVL_SYNC_ENABLED', true)
   const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)
   const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
+  const l2AssetsEnabled = getEnv.boolean('L2_ASSETS_ENABLED', false)
   const discordEnabled =
     !!process.env.DISCORD_TOKEN && !!process.env.INTERNAL_DISCORD_CHANNEL_ID
 
@@ -52,7 +53,7 @@ export function getLocalConfig(): Config {
     tvl: tvlEnabled && {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-      arbiscanApiKey: process.env.ARBISCAN_API_KEY, // this is optional
+      arbiscanApiKey: l2AssetsEnabled && getEnv('ARBISCAN_API_KEY'),
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
     },
     activity: activityEnabled && {

@@ -12,6 +12,7 @@ export function getProductionConfig(): Config {
     !!process.env.DISCORD_TOKEN &&
     !!process.env.PUBLIC_DISCORD_CHANNEL_ID &&
     !!process.env.INTERNAL_DISCORD_CHANNEL_ID
+  const l2AssetsEnabled = getEnv.boolean('L2_ASSETS_ENABLED', false)
 
   return {
     name: 'Backend/Production',
@@ -58,7 +59,7 @@ export function getProductionConfig(): Config {
     tvl: {
       alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-      arbiscanApiKey: process.env.ARBISCAN_API_KEY,
+      arbiscanApiKey: l2AssetsEnabled && getEnv('ARBISCAN_API_KEY'),
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
     },
     activity: {
