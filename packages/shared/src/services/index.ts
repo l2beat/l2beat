@@ -1,5 +1,5 @@
 export * from './arbiscan'
 export * from './coingecko'
 export * from './etherscan'
-export * from './providers'
 export * from './HttpClient'
+export * from './providers'
