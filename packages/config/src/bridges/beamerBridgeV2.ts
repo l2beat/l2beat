@@ -99,6 +99,13 @@ export const beamerbridgev2: Bridge = {
         name: 'RequestManager',
         description:
           'When a user wants to perform a transfer from Ethereum to a rollup they deposit their funds in the request manager. An agent fills the request on the target chain and can later claim the funds locked in the RequestManager.',
+        pausable: {
+          paused: discovery.getContractValue<boolean>(
+            'EthereumRequestManager',
+            'paused',
+          ),
+          pausableBy: ['Owner'],
+        },
       }),
       discovery.getContractDetails('EthereumFillManager', {
         name: 'FillManager',
