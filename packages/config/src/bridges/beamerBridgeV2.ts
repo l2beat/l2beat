@@ -93,41 +93,38 @@ export const beamerbridgev2: Bridge = {
       discovery.getContractDetails('Resolver', {
         name: 'Resolver',
         description:
-          'The resolver contract is deployed on L1 and is used in the challenge game.',
-      }),
-      discovery.getContractDetails('EthereumL1Messenger', {
-        address: EthereumAddress('0x12B8489913E2afBCed131d52c345C380BBB65baf'),
-        name: 'EthereumL1Messenger',
+          'This contract resides on the L1 chain and is tasked with receiving thefill or non-fill proofs from the target L2 chain and forwarding them to the RequestManager on the source L2 chain.',
       }),
       discovery.getContractDetails('EthereumRequestManager', {
         name: 'RequestManager',
         description:
-          'Ethereum: When a user wants to perform a transfer from Ethereum to a rollup they deposit their funds in the request manager. An agent fills the request on the target chain and can later claim the funds locked in the RequestManager.',
+          'When a user wants to perform a transfer from Ethereum to a rollup they deposit their funds in the request manager. An agent fills the request on the target chain and can later claim the funds locked in the RequestManager.',
       }),
       discovery.getContractDetails('EthereumFillManager', {
         name: 'FillManager',
         description:
-          'Ethereum: Agents filling requests from a Rollup to Ethereum use this contract to transfer the funds to the user.',
+          'Agents filling requests from a Rollup to Ethereum use this contract to transfer the funds to the user.',
       }),
       discovery.getContractDetails('EthereumL2Messenger', {
         name: 'EthereumL2Messenger',
+      }),
+      discovery.getContractDetails('EthereumL1Messenger', {
+        name: 'EthereumL1Messenger',
+      }),
+      discovery.getContractDetails('OptimismL1Messenger', {
+        name: 'OptimismL1Messenger',
+      }),
+      discovery.getContractDetails('ArbitrumL1Messenger', {
+        name: 'ArbitrumL1Messenger',
       }),
     ],
     risks: [],
   },
   permissions: [
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70',
-          ),
-          type: 'EOA',
-        },
-      ],
       name: 'Owner',
-      description:
-        'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
-    },
+      description: 'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
+      accounts: [discovery.getPermissionedAccount('EthereumRequestManager', 'owner')],
+    }
   ],
 }
