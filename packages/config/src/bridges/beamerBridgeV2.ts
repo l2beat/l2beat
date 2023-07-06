@@ -114,15 +114,23 @@ export const beamerbridgev2: Bridge = {
       }),
       discovery.getContractDetails('EthereumL2Messenger', {
         name: 'EthereumL2Messenger',
+        description:
+          'The Ethereum L2 Messenger stores messages coming from the FillManager for a potential future L1 resolution. It takes over the job of the canonical bridges for rollups which is storing all messages going from the FillManager to the Resolution contract on L1.',
       }),
       discovery.getContractDetails('EthereumL1Messenger', {
         name: 'EthereumL1Messenger',
+        description:
+          'The Ethereum L1 Messenger contracts forwards messages to the RequestManager.',
       }),
       discovery.getContractDetails('OptimismL1Messenger', {
         name: 'OptimismL1Messenger',
+        description:
+          'The messenger contracts establish an interface for communication with the RequestManager and FillManager contracts via the rollups. The Optimism L1 Messenger is responsible for relaying the messages to the Optimism chain.',
       }),
       discovery.getContractDetails('ArbitrumL1Messenger', {
         name: 'ArbitrumL1Messenger',
+        description:
+          'The messenger contracts establish an interface for communication with the RequestManager and FillManager contracts via the rollups. The Arbitrum L1 Messenger is responsible for relaying the messages to the Arbitrum chain.',
       }),
     ],
     risks: [],
