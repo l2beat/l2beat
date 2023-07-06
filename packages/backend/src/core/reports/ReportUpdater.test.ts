@@ -64,6 +64,7 @@ describe(ReportUpdater.name, () => {
       })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
+        getByTimestamp: async () => FUTURE_REPORTS,
       })
 
       const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
@@ -122,6 +123,12 @@ describe(ReportUpdater.name, () => {
       expect(
         aggregatedReportRepository.addOrUpdateMany,
       ).toHaveBeenNthCalledWith(2, AGGREGATED_REPORTS)
+
+      const reports = await reportUpdater.getReportsWhenReady(
+        NOW.add(1, 'hours'),
+      )
+      // ensure that the updater updated internal knownSet
+      expect(reports).toEqual(FUTURE_REPORTS)
     })
   })
 
@@ -211,6 +218,68 @@ describe(ReportUpdater.name, () => {
           aggregatedReportRepository.addOrUpdateMany,
         ).toHaveBeenNthCalledWith(2, AGGREGATED_REPORTS)
       })
+    })
+  })
+
+  describe(ReportUpdater.prototype.getReportsWhenReady.name, () => {
+    it('returns known timestamps', async () => {
+      const priceUpdater = mockObject<PriceUpdater>({
+        getPricesWhenReady: mockFn()
+          .returnsOnce(FUTURE_PRICES)
+          .returnsOnce(PRICES),
+      })
+      const balanceUpdater = mockObject<BalanceUpdater>({
+        getBalancesWhenReady: mockFn()
+          .returnsOnce(FUTURE_BALANCES)
+          .returnsOnce(BALANCES),
+      })
+      const reportRepository = mockObject<ReportRepository>({
+        addOrUpdateMany: async () => 0,
+        getByTimestamp: async () => REPORTS,
+      })
+
+      const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
+        {
+          addOrUpdateMany: async () => 0,
+        },
+      )
+
+      const reportStatusRepository = mockObject<ReportStatusRepository>({
+        getByConfigHash: async () => [
+          NOW.add(-1, 'hours'),
+          NOW.add(2, 'hours'),
+        ],
+        add: async ({ configHash }) => configHash,
+      })
+
+      const clock = mockObject<Clock>({
+        onEveryHour: (callback) => {
+          callback(NOW.add(-1, 'hours'))
+          callback(NOW)
+          callback(NOW.add(1, 'hours'))
+          callback(NOW.add(2, 'hours'))
+          return () => {}
+        },
+      })
+
+      const reportUpdater = new ReportUpdater(
+        priceUpdater,
+        balanceUpdater,
+        reportRepository,
+        aggregatedReportRepository,
+        reportStatusRepository,
+        clock,
+        PROJECTS,
+        Logger.SILENT,
+      )
+
+      await reportUpdater.start()
+
+      const reports = await reportUpdater.getReportsWhenReady(
+        NOW.add(-1, 'hours'),
+      )
+
+      expect(reports).toEqual(REPORTS)
     })
   })
 })

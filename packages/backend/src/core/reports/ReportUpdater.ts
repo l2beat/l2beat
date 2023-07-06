@@ -1,8 +1,12 @@
 import { Logger } from '@l2beat/shared'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { setTimeout } from 'timers/promises'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
-import { ReportRepository } from '../../peripherals/database/ReportRepository'
+import {
+  ReportRecord,
+  ReportRepository,
+} from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
@@ -18,6 +22,7 @@ import { ReportProject } from './ReportProject'
 export class ReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
+  private readonly knownSet = new Set<number>()
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
@@ -44,11 +49,13 @@ export class ReportUpdater {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
     )
-    const knownSet = new Set(known.map((x) => x.toNumber()))
+    for (const timestamp of known) {
+      this.knownSet.add(timestamp.toNumber())
+    }
 
     this.logger.info('Started')
     return this.clock.onEveryHour((timestamp) => {
-      if (!knownSet.has(timestamp.toNumber())) {
+      if (!this.knownSet.has(timestamp.toNumber())) {
         // we add to front to sync from newest to oldest
         this.taskQueue.addToFront(timestamp)
       }
@@ -78,6 +85,17 @@ export class ReportUpdater {
       configHash: this.configHash,
       timestamp,
     })
+    this.knownSet.add(timestamp.toNumber())
     this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+  }
+
+  async getReportsWhenReady(
+    timestamp: UnixTime,
+    refreshIntervalMs = 1000,
+  ): Promise<ReportRecord[]> {
+    while (!this.knownSet.has(timestamp.toNumber())) {
+      await setTimeout(refreshIntervalMs)
+    }
+    return this.reportRepository.getByTimestamp(timestamp)
   }
 }
