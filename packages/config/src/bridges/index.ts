@@ -3,6 +3,7 @@ import { allbridge } from './allbridge'
 import { amarok } from './amarok'
 import { aptos } from './aptos'
 import { avalanche } from './avalanche'
+import { beamerbridgev2 } from './beamerBridgeV2'
 import { cBridge } from './cBridge'
 import { connext } from './connext'
 import { debridge } from './debridge'
@@ -44,6 +45,7 @@ export const bridges: Bridge[] = [
   amarok,
   avalanche,
   aptos,
+  beamerbridgev2,
   cBridge,
   connext,
   debridge,

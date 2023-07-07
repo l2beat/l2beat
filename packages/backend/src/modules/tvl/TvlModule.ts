@@ -1,11 +1,4 @@
-import {
-  CoingeckoClient,
-  EtherscanClient,
-  HttpClient,
-  Logger,
-} from '@l2beat/shared'
-import { ChainId } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
+import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
@@ -14,13 +7,8 @@ import { createBlocksRouter } from '../../api/routers/BlocksRouter'
 import { createDydxRouter } from '../../api/routers/DydxRouter'
 import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { Config } from '../../config'
-import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
-import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumBalanceProvider'
-import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
-import { ReportUpdater } from '../../core/reports/ReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
@@ -31,9 +19,9 @@ import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { Database } from '../../peripherals/database/shared/Database'
-import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { ApplicationModule } from '../ApplicationModule'
+import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
+import { createEthereumTvlSubmodule } from './EthereumTvl'
 
 export function createTvlModule(
   config: Config,
@@ -42,79 +30,42 @@ export function createTvlModule(
   database: Database,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.tvl) {
+  if (!config.tvl.enabled) {
     logger.info('TVL module disabled')
     return
   }
-
   // #region database
-  const blockNumberRepository = new BlockNumberRepository(database, logger)
-  const priceRepository = new PriceRepository(database, logger)
-  const balanceRepository = new BalanceRepository(database, logger)
-  const reportRepository = new ReportRepository(database, logger)
-  const aggregatedReportRepository = new AggregatedReportRepository(
-    database,
-    logger,
-  )
-  const reportStatusRepository = new ReportStatusRepository(database, logger)
-  const aggregatedReportStatusRepository = new AggregatedReportStatusRepository(
-    database,
-    logger,
-  )
-  const balanceStatusRepository = new BalanceStatusRepository(database, logger)
 
+  const db = {
+    blockNumberRepository: new BlockNumberRepository(database, logger),
+    priceRepository: new PriceRepository(database, logger),
+    balanceRepository: new BalanceRepository(database, logger),
+    reportRepository: new ReportRepository(database, logger),
+    aggregatedReportRepository: new AggregatedReportRepository(
+      database,
+      logger,
+    ),
+    reportStatusRepository: new ReportStatusRepository(database, logger),
+    aggregatedReportStatusRepository: AggregatedReportStatusRepository(
+      database,
+      logger,
+    ),
+    balanceStatusRepository: new BalanceStatusRepository(database, logger),
+  }
   // #endregion
   // #region peripherals
 
-  const ethereumProvider = new providers.AlchemyProvider(
-    'mainnet',
-    config.tvl.alchemyApiKey,
-  )
-  const ethereumClient = new EthereumClient(ethereumProvider, logger)
-  const multicall = new MulticallClient(ethereumClient)
   const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-  const etherscanClient = new EtherscanClient(
-    http,
-    config.tvl.etherscanApiKey,
-    logger,
-  )
-  const ethereumBalanceProvider = new EthereumBalanceProvider(multicall)
 
   // #endregion
   // #region updaters
 
-  const blockNumberUpdater = new BlockNumberUpdater(
-    etherscanClient,
-    blockNumberRepository,
-    clock,
-    logger,
-    ChainId.ETHEREUM,
-  )
   const priceUpdater = new PriceUpdater(
     coingeckoQueryService,
-    priceRepository,
+    db.priceRepository,
     clock,
     config.tokens,
-    logger,
-  )
-  const balanceUpdater = new BalanceUpdater(
-    ethereumBalanceProvider,
-    blockNumberUpdater,
-    balanceRepository,
-    balanceStatusRepository,
-    clock,
-    config.projects,
-    logger,
-    ChainId.ETHEREUM,
-  )
-  const reportUpdater = new ReportUpdater(
-    priceUpdater,
-    balanceUpdater,
-    reportRepository,
-    reportStatusRepository,
-    clock,
-    config.projects,
     logger,
   )
 
@@ -130,17 +81,17 @@ export function createTvlModule(
   // #endregion
   // #region api
 
-  const blocksController = new BlocksController(blockNumberRepository)
+  const blocksController = new BlocksController(db.blockNumberRepository)
   const tvlController = new TvlController(
-    reportStatusRepository,
-    aggregatedReportRepository,
-    reportRepository,
+    db.reportStatusRepository,
+    db.aggregatedReportRepository,
+    db.reportRepository,
     config.projects,
     config.tokens,
     logger,
   )
 
-  const dydxController = new DydxController(aggregatedReportRepository)
+  const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
   const tvlRouter = createTvlRouter(tvlController)
@@ -148,20 +99,22 @@ export function createTvlModule(
 
   // #endregion
 
-  const start = async () => {
-    if (!config.syncEnabled) {
-      logger.info('TVL sync disabled')
-      return
-    }
+  const modules: (ApplicationModule | undefined)[] = [
+    createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
+    createArbitrumTvlSubmodule(db, config, logger, http, clock),
+  ]
 
+  const start = async () => {
     logger = logger.for('TvlModule')
     logger.info('Starting')
 
     priceUpdater.start()
-    await blockNumberUpdater.start()
-    await balanceUpdater.start()
-    await reportUpdater.start()
-    await aggregatedReportUpdater.start()
+
+    logger.info('Starting modules...')
+
+    for (const module of modules) {
+      await module?.start?.()
+    }
 
     logger.info('Started')
   }
