@@ -105,6 +105,7 @@ export class BlockNumberUpdater {
     this.logger.info('Update completed', {
       blockNumber: Number(blockNumber),
       timestamp: timestamp.toNumber(),
+      chainId: this.chainId.toString(),
     })
   }
 }

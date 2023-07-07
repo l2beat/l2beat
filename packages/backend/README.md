@@ -50,10 +50,10 @@ environment variables. One variable per line `KEY=value`.
 - `DATABASE_URL` - Database url used in production deployment
 - `ETHERSCAN_API_KEY` - API key for Etherscan
 - `ALCHEMY_API_KEY` - API key for Alchemy
-- `STARKEX_API_KEY` - Starkex API key
 
 #### Optional
 
+- `STARKEX_API_KEY` - Starkex API key
 - `COINGECKO_API_KEY` (Optional) - API key for Coingecko
 - `LOG_LEVEL` (Optional) - Integer specifying the log level. `0` - none, `1` - error, `2` - warn, `3` - info, `4` - debug
 - `PORT` (Optional) - The port on which the application exposes the api
@@ -62,6 +62,7 @@ environment variables. One variable per line `KEY=value`.
 - `TVL_ENABLED` (default `true`) - When set to `true` tvl module is enabled
 - `ETHEREUM_TVL_ENABLED` (default `true`) - When set to `true` ethereum tvl sync is enabled
 - `ARBITRUM_TVL_ENABLED` (default `false`) - When set to `true` arbitrum tvl sync is enabled
+- `ARBISCAN_API_KEY` - API key for Arbiscan
 - `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
 - `PUBLIC_DISCORD_CHANNEL_ID` - public channel id the message will be sent to
 - `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
@@ -82,17 +83,18 @@ DATABASE_URL=
 
 ETHERSCAN_API_KEY=
 ALCHEMY_API_KEY=
-STARKEX_API_KEY=
 
 #-----OPTIONAL-----
+# STARKEX_API_KEY=
 # COINGECKO_API_KEY=
 # LOG_LEVEL=
 # PORT=
 # FRESH_START=
 # ACTIVITY_ENABLED=
-# TVL_ENABLED
-# ETHEREUM_TVL_ENABLED
-# ARBITRUM_TVL_ENABLED
+# TVL_ENABLED=
+# ETHEREUM_TVL_ENABLED=
+# ARBITRUM_TVL_ENABLED=
+# ARBISCAN_API_KEY=
 # DISCOVERY_BLOCK_NUMBER=
 # WATCHMODE_ENABLED=
 # PUBLIC_DISCORD_CHANNEL_ID=
