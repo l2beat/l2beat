@@ -59,6 +59,7 @@ export function getLocalConfig(): Config {
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
+        alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
       },
     },
     activity: activityEnabled && {
