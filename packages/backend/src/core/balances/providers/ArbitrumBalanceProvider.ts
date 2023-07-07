@@ -1,5 +1,6 @@
 import { getTokenByAssetId } from '@l2beat/config'
 import {
+  assert,
   AssetId,
   Bytes,
   ChainId,
@@ -84,11 +85,10 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
 
       const tokenAddress = getTokenByAssetId(balanceQuery.assetId).address
 
-      if (!tokenAddress) {
-        throw new Error(
-          `Unknown token address ${balanceQuery.assetId.toString()}`,
-        )
-      }
+      assert(
+        tokenAddress,
+        `Unknown token address for balance query: ${balanceQuery.assetId.toString()}`,
+      )
 
       const { address: to, data } = encodeErc20BalanceQuery(
         balanceQuery.holder,
@@ -130,9 +130,10 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
 
     const tokenAddress = getTokenByAssetId(assetId).address
 
-    if (!tokenAddress) {
-      throw new Error(`Unknown token address ${assetId.toString()}`)
-    }
+    assert(
+      tokenAddress,
+      `Unknown token address for balance query: ${assetId.toString()}`,
+    )
 
     return encodeErc20BalanceQuery(holder, tokenAddress)
   }
