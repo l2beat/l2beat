@@ -110,7 +110,7 @@ const FUTURE_BALANCES = BALANCES.map((balance) => ({
 
 const REPORTS = createReports(PRICES, BALANCES, PROJECTS)
 const FUTURE_REPORTS = createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS)
-// We need this mock for now, it ensures that the OP token is included in the
+// TODO: We need this mock for now, it ensures that the OP token is included in the
 // future reports. This will be removed in the next step of refactoring.
 const FUTURE_REPORTS_WITH_OP = [
   ...FUTURE_REPORTS,
