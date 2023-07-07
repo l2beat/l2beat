@@ -9,7 +9,6 @@ import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
@@ -92,7 +91,7 @@ export function createTvlModule(
 
   // #endregion
 
-  const modules: (ApplicationModule | undefined)[] = [
+  const submodules: (ApplicationModule | undefined)[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
     createArbitrumTvlSubmodule(db, config, logger, http, clock),
   ]
@@ -103,10 +102,10 @@ export function createTvlModule(
 
     priceUpdater.start()
 
-    logger.info('Starting modules...')
+    logger.info('Starting submodules...')
 
-    for (const module of modules) {
-      await module?.start?.()
+    for (const submodule of submodules) {
+      await submodule?.start?.()
     }
 
     logger.info('Started')
