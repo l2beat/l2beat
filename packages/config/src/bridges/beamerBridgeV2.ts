@@ -59,7 +59,6 @@ export const beamerbridgev2: Bridge = {
         },
       ],
       risks: [],
-      isIncomplete: true,
     },
     validation: {
       name: 'Optimistic validation with fallback to canonical bridge',
