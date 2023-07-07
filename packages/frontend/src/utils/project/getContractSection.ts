@@ -112,6 +112,7 @@ function makeTechnologyContract(
         case 'call implementation proxy':
         case 'EIP897 proxy':
         case 'CustomWithoutAdmin':
+        case 'Polygon proxy':
           links.push({
             name: 'Implementation (Upgradable)',
             href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
@@ -231,7 +232,21 @@ function makeTechnologyContract(
             isAdmin: true,
           })
           break
-
+        case 'Polygon Extension proxy':
+          links.push({
+            name: 'Implementation (Upgradable)',
+            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            address: item.upgradeability.implementation.toString(),
+            isAdmin: false,
+          }),
+          links.push({
+            name: 'Extension (Upgradable)',
+            href: `https://etherscan.io/address/${item.upgradeability.extension.toString()}#code`,
+            address: item.upgradeability.extension.toString(),
+            isAdmin: false,
+          })
+          break
+        
         // Ignore types
         case 'immutable':
         case 'gnosis safe':
