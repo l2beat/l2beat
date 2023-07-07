@@ -7,6 +7,8 @@ import { Config } from './Config'
 import { getGitCommitHash } from './getGitCommitHash'
 
 export function getProductionConfig(): Config {
+  const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
+
   const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
     !!process.env.DISCORD_TOKEN &&
@@ -17,7 +19,6 @@ export function getProductionConfig(): Config {
     name: 'Backend/Production',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
-    syncEnabled: true,
     logger: {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'json',
@@ -56,10 +57,15 @@ export function getProductionConfig(): Config {
       pass: getEnv('METRICS_AUTH_PASS'),
     },
     tvl: {
-      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
-      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-      arbiscanApiKey: process.env.ARBISCAN_API_KEY,
+      enabled: true,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
+      ethereum: {
+        alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+        etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+      },
+      arbitrum: arbitrumTvlEnabled && {
+        arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
+      },
     },
     activity: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),

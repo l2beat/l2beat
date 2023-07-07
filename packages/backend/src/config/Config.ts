@@ -9,7 +9,6 @@ export interface Config {
   readonly name: string
   readonly projects: Project[]
   readonly tokens: Token[]
-  readonly syncEnabled: boolean
   readonly logger: LoggerConfig
   readonly logThrottler: LogThrottlerConfig | false
   readonly clock: ClockConfig
@@ -17,7 +16,7 @@ export interface Config {
   readonly database: DatabaseConfig
   readonly api: ApiConfig
   readonly health: HealthConfig
-  readonly tvl: TvlConfig | false
+  readonly tvl: TvlConfig
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly statusEnabled: boolean
@@ -53,10 +52,19 @@ export interface ClockConfig {
 }
 
 export interface TvlConfig {
+  readonly enabled: boolean
+  readonly coingeckoApiKey: string | undefined
+  readonly ethereum: EthereumTvlConfig | false
+  readonly arbitrum: ArbitrumTvlConfig | false
+}
+
+export interface EthereumTvlConfig {
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
-  readonly arbiscanApiKey: string | undefined
-  readonly coingeckoApiKey: string | undefined
+}
+
+export interface ArbitrumTvlConfig {
+  readonly arbiscanApiKey: string
 }
 
 export interface HealthConfig {
