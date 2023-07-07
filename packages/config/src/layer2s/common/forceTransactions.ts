@@ -3,7 +3,7 @@ import { formatSeconds } from '../../utils/formatSeconds'
 
 const EXIT_CENSORSHIP: ProjectRisk = {
   category: 'Users can be censored if',
-  text: 'the operator refuses to include their transactions. They can still exit the system.',
+  text: 'the operator refuses to include their transactions. However, there exists a mechanism to independently exit the system.',
 }
 
 const WITHDRAW: ProjectTechnologyChoice = {
