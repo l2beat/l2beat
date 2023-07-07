@@ -28,7 +28,7 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
 
   constructor(
     private readonly arbitrumClient: EthereumClient,
-    private readonly multiCallClient: ArbitrumMulticallClient,
+    private readonly multicallClient: ArbitrumMulticallClient,
   ) {}
 
   public getChainId(): ChainId {
@@ -40,7 +40,7 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
     timestamp: UnixTime,
     blockNumber: number,
   ): Promise<BalanceRecord[]> {
-    const canMulticallBeUsed = this.multiCallClient.canBeUsed(blockNumber)
+    const canMulticallBeUsed = this.multicallClient.canBeUsed(blockNumber)
 
     if (canMulticallBeUsed) {
       return this.fetchUsingMulticall(balanceQueries, timestamp, blockNumber)
@@ -58,7 +58,7 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
       this.encodeForMulticall(balanceQuery),
     )
 
-    const balanceResponses = await this.multiCallClient.multicall(
+    const balanceResponses = await this.multicallClient.multicall(
       calls,
       blockNumber,
     )
@@ -124,7 +124,7 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
     if (this.isNativeCoin(assetId)) {
       return encodeMulticallCoinBalanceQuery(
         holder,
-        this.multiCallClient.getAddress(),
+        this.multicallClient.getAddress(),
       )
     }
 
