@@ -19,9 +19,37 @@
     "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
     "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManager",
     "0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension",
-    "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31": "ValidatorShareImpl"
+    "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31": "ValidatorShareImpl",
+    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": "RootChainManager",
+    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
+    "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Predicate",
+    "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": "StateSender",
+    "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig"
   },
   "overrides": {
+    "RootChainManager": {
+      "fields": {
+        "PREDICATES": {
+          "type": "arrayFromOneEvent",
+          "event": "event PredicateRegistered(bytes32 indexed tokenType, address indexed predicateAddress)",
+          "valueKey": "predicateAddress"
+        }
+      }
+    },
+    "Timelock": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "ERC20Predicate": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
     "WithdrawManager": {
       "ignoreMethods": ["exits"]
     },

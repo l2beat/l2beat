@@ -155,7 +155,7 @@ export const polygonpos: Bridge = {
         'Contract enforcing delay on code upgrades.',
       ),
       discovery.getContractDetails(
-        'ERC20Predicate',
+        'ERC20PredicateBurnOnly',
         'Escrow contract for ERC20 tokens.',
       ),
       discovery.getContractDetails(
@@ -167,7 +167,7 @@ export const polygonpos: Bridge = {
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'Polygon Multisig',
+      'PolygonMultisig',
       'Can propose and execute code upgrades on escrows via Timelock contract.',
     ),
   ],
