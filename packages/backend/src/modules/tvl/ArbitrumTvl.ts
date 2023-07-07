@@ -36,7 +36,7 @@ export function createArbitrumTvlModule(
     db.blockNumberRepository,
     clock,
     logger,
-    ChainId.ETHEREUM,
+    ChainId.ARBITRUM,
   )
 
   // #endregion
