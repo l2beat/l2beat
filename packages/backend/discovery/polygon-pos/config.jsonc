@@ -2,10 +2,8 @@
   "$schema": "../config.schema.json",
   "name": "polygon-pos",
   "initialAddresses": [
-    // POS
-    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-    // Plasma
-    "0x401F6c983eA34274ec46f84D70b31C151321188b"
+    // StateSender
+    "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
   ],
   "names": {
     "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0": "MaticToken",
@@ -24,9 +22,13 @@
     "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
     "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Predicate",
     "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": "StateSender",
-    "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig"
+    "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
+    "0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2": "InstaAaveV2"
   },
   "overrides": {
+    "InstaAaveV2": {
+      "ignoreDiscovery": true
+    },
     "RootChainManager": {
       "fields": {
         "PREDICATES": {
@@ -47,6 +49,15 @@
       "fields": {
         "accessControl": {
           "type": "accessControl"
+        }
+      }
+    },
+    "StateSender": {
+      "fields": {
+        "REGISTRATIONS": {
+          "type": "arrayFromOneEvent",
+          "event": "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
+          "valueKey": "sender"
         }
       }
     },

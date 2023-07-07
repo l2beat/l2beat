@@ -1,7 +1,7 @@
 {
   "name": "polygon-pos",
   "blockNumber": 17640301,
-  "configHash": "0x95e666c0ebffe4fba7788bc79b0b5e715702b92b212ce555e78991337d93d6de",
+  "configHash": "0x8a6cb6d8089eafdf7055e916a462c8febe3e89ffeac68abdfe1ff1ade6351000",
   "version": 1,
   "contracts": [
     {
@@ -13,6 +13,113 @@
         "type": "immutable"
       },
       "derivedName": ""
+    },
+    {
+      "name": "ERC721Collection",
+      "address": "0x09305998a531fAde369EBE30aDF868c96A34e813",
+      "code": "https://etherscan.deth.net/address/0x09305998a531fAde369EBE30aDF868c96A34e813",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "baseURI": "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/",
+        "getApproved": [
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000"
+        ],
+        "isComplete": true,
+        "isOwner": false,
+        "name": "dcl://pm_dreamverse_eminence",
+        "owner": "0x1FBf26781E289883a1Ec8Da235F7159B455D1160",
+        "ownerOf": [
+          "0xc3A8CF76264408DB3b350C60993d5849Ea350994",
+          "0x90A15B3D2A96eA5a146E648e257175af114F8E8A",
+          "0x1C83417Ee1Db46885bE74143F8f3e67A91384602",
+          "0x8EfD0D558886abD129306A83890b3782E512CaBf",
+          "0xe753aA24818f85e14962845b0A8ca46e4c0000d6"
+        ],
+        "symbol": "DCLPMDRMVRSMNNC",
+        "tokenByIndex": [0, 1, 2, 3, 4],
+        "tokenURI": [
+          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_boots/1",
+          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_boots/2",
+          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_cap/1",
+          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_cap/2",
+          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_hat_visor/1"
+        ],
+        "totalSupply": 19,
+        "wearables": [
+          "pm_dreamverse_eminence_boots",
+          "pm_dreamverse_eminence_cap",
+          "pm_dreamverse_eminence_hat_visor",
+          "pm_dreamverse_eminence_pants",
+          "pm_dreamverse_eminence_jacket"
+        ],
+        "wearablesCount": 6
+      },
+      "errors": {
+        "getApproved": "Too many values. Update configuration explore fully",
+        "ownerOf": "Too many values. Update configuration explore fully",
+        "tokenByIndex": "Too many values. Update configuration explore fully",
+        "tokenURI": "Too many values. Update configuration explore fully",
+        "wearables": "Too many values. Update configuration explore fully"
+      }
+    },
+    {
+      "name": "DigitalaxGarmentNFT",
+      "address": "0x0B509F4b044F713A91bB50535914f7ad160532fe",
+      "code": "https://etherscan.deth.net/address/0x0B509F4b044F713A91bB50535914f7ad160532fe",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "accessControls": "0x980bC991b52240C6271F4fd607638e984c888621",
+        "baseURI": "",
+        "childContract": "0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221",
+        "childContractsFor": [
+          [],
+          ["0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221"],
+          ["0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221"],
+          ["0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221"],
+          []
+        ],
+        "exists": [false, true, true, true, false],
+        "garmentDesigners": [
+          "0x0000000000000000000000000000000000000000",
+          "0xFF0c60609522fb053E58AC106EBb7D48ff3d0CCB",
+          "0xA53CC97D140Ba317Bd6272A2Af0f8D3eAE4809Bb",
+          "0x321E73Dbf24F31B25C515E52b362185888D111b1",
+          "0x0000000000000000000000000000000000000000"
+        ],
+        "getApproved": [],
+        "maxChildrenPerToken": 10,
+        "name": "DigitalaxNFT",
+        "ownerOf": [],
+        "primarySalePrice": [
+          0,
+          "1770000000000000000",
+          "1920000000000000000",
+          "5000000000000000000",
+          0
+        ],
+        "symbol": "DTX",
+        "tokenByIndex": [1, 2, 3, 230, 226],
+        "tokenIdPointer": 234,
+        "tokenURI": [],
+        "totalChildrenMapped": [0, 2, 2, 2, 0],
+        "totalSupply": 215
+      },
+      "errors": {
+        "childContractsFor": "Too many values. Update configuration explore fully",
+        "exists": "Too many values. Update configuration explore fully",
+        "garmentDesigners": "Too many values. Update configuration explore fully",
+        "primarySalePrice": "Too many values. Update configuration explore fully",
+        "tokenByIndex": "Too many values. Update configuration explore fully",
+        "totalChildrenMapped": "Too many values. Update configuration explore fully"
+      }
     },
     {
       "name": "ERC1155Predicate",
@@ -32,6 +139,73 @@
         "TOKEN_TYPE": "0x973bb64086f173ec8099b7ed3d43da984f4a332e4417a08bc6a286e6402b0586",
         "TRANSFER_BATCH_EVENT_SIG": "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb",
         "TRANSFER_SINGLE_EVENT_SIG": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62"
+      }
+    },
+    {
+      "name": "ATokenRootChainManager",
+      "address": "0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c",
+      "code": "https://etherscan.deth.net/address/0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c,0x6230F5C4193E632b084A083Dba713E73651Bb93A",
+      "upgradeability": {
+        "type": "Polygon proxy",
+        "implementation": "0x6230F5C4193E632b084A083Dba713E73651Bb93A",
+        "admin": "0x14B76eBB2F4391D8b506d6c7e6ABAf5FcaBd26F8"
+      },
+      "values": {
+        "checkpointManagerAddress": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+        "DEPOSIT": "0x87a7811f4bfedea3d341ad165680ae306b01aaeacc205d227629cf157dd9f821",
+        "ERC712_VERSION": "1",
+        "getChainId": 1,
+        "getDomainSeperator": "0xc088ed37c58d64de52930e52c13e73b9241d8ee722f5cf002a844fc8042bb6e6",
+        "headerBlocks": [
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            "0x0000000000000000000000000000000000000000"
+          ]
+        ],
+        "implementation": "0x6230F5C4193E632b084A083Dba713E73651Bb93A",
+        "MAP_TOKEN": "0x2cef46a936bdc5b7e6e8c71aa04560c41cf7d88bb26901a7e7f4936ff02accad",
+        "mapper": "0x14B76eBB2F4391D8b506d6c7e6ABAf5FcaBd26F8",
+        "MAPPER_ROLE": "0x2559c73ad5e64226de134fc607a00e9f0c0b7465b43c2ae69baaca347c607777",
+        "owner": "0x14B76eBB2F4391D8b506d6c7e6ABAf5FcaBd26F8",
+        "proxyOwner": "0x14B76eBB2F4391D8b506d6c7e6ABAf5FcaBd26F8",
+        "proxyType": 2,
+        "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
+        "stateSenderAddress": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
+        "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+      },
+      "errors": {
+        "headerBlocks": "Too many values. Update configuration explore fully"
       }
     },
     {
@@ -205,7 +379,18 @@
       "values": {
         "counter": 2712673,
         "isOwner": false,
-        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+        "REGISTRATIONS": [
+          "0x401F6c983eA34274ec46f84D70b31C151321188b",
+          "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+          "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7",
+          "0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1",
+          "0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c",
+          "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
+          "0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2",
+          "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55",
+          "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5"
+        ]
       },
       "derivedName": "StateSender"
     },
@@ -432,6 +617,21 @@
       "derivedName": "StakeManagerProxy"
     },
     {
+      "name": "RooySyncer",
+      "address": "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7",
+      "code": "https://etherscan.deth.net/address/0x6566115bC9Aa71f8DbC2004A656B5956C55726a7",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "checkpointManager": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+        "childTunnel": "0x09305998a531fAde369EBE30aDF868c96A34e813",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
+        "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      }
+    },
+    {
       "name": "EventsHub",
       "address": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
       "code": "https://etherscan.deth.net/address/0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b,0x0672777617CAA1E778083a4f74eBC997262C9EdD",
@@ -507,6 +707,21 @@
       "derivedName": "RootChain"
     },
     {
+      "name": "AlohaRootTunnel",
+      "address": "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5",
+      "code": "https://etherscan.deth.net/address/0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "checkpointManager": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+        "childTunnel": "0x7120d6647B79b437FD78A12bD6580978093A71E1",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
+        "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      }
+    },
+    {
       "name": "MintableERC721Predicate",
       "address": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
       "code": "https://etherscan.deth.net/address/0x932532aA4c0174b8453839A6E44eE09Cc615F2b7,0x7FBd00c577cAA70318BCF1c6c11e23732823b387",
@@ -524,6 +739,20 @@
         "proxyType": 2,
         "TOKEN_TYPE": "0xd4392723c111fcb98b073fe55873efb447bcd23cd3e49ec9ea2581930cd01ddc",
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+      }
+    },
+    {
+      "name": "DigitalaxAccessControls",
+      "address": "0x980bC991b52240C6271F4fd607638e984c888621",
+      "code": "https://etherscan.deth.net/address/0x980bC991b52240C6271F4fd607638e984c888621",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
+        "SMART_CONTRACT_ROLE": "0x9d49f397ae9ef1a834b569acb967799a367061e305932181a44f5773da873bfd",
+        "VERIFIED_MINTER_ROLE": "0x024cc602f552d5cf984f52b326f9f2ee425d0a430b49a420b74c244c1ecad047"
       }
     },
     {
@@ -613,6 +842,40 @@
       }
     },
     {
+      "name": "DigitalaxRootTunnel",
+      "address": "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55",
+      "code": "https://etherscan.deth.net/address/0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "accessControls": "0x980bC991b52240C6271F4fd607638e984c888621",
+        "checkpointManager": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+        "childTunnel": "0x7B2a989c4D1AD1B79a84CE2EB79dA5D8d9C2b7a7",
+        "materials": "0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221",
+        "nft": "0x0B509F4b044F713A91bB50535914f7ad160532fe",
+        "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
+        "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      }
+    },
+    {
+      "name": "TellorSender",
+      "address": "0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1",
+      "code": "https://etherscan.deth.net/address/0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getCurrentValue": [],
+        "getNewValueCountbyRequestId": [0, 38279, 49615, 22131, 2867],
+        "receiver": "0x2dF7C3f267c0433Ee143bAa7D40c4eccD411E10d",
+        "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      },
+      "errors": {
+        "getNewValueCountbyRequestId": "Too many values. Update configuration explore fully"
+      }
+    },
+    {
       "name": "ValidatorShareFactory",
       "address": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
       "code": "https://etherscan.deth.net/address/0xc4FA447A0e77Eff9717b09C057B40570813bb642",
@@ -696,6 +959,32 @@
       "derivedName": "ExitNFT"
     },
     {
+      "name": "DigitalaxMaterials",
+      "address": "0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221",
+      "code": "https://etherscan.deth.net/address/0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "accessControls": "0x980bC991b52240C6271F4fd607638e984c888621",
+        "name": "DigitalaxMaterials",
+        "symbol": "DXM",
+        "tokenIdPointer": 102,
+        "tokenTotalSupply": [0, 1, 1, 1, 1],
+        "uri": [
+          "",
+          "https://gateway.pinata.cloud/ipfs/QmWXgfL1iM9pMk8Fe4jwF2XdQzC3c9Chg9Ez6peqdojmhy",
+          "https://gateway.pinata.cloud/ipfs/Qme7anWvdZpzipiihDohAb4SvNaT6JR4VWyyyPTz5dd726",
+          "https://gateway.pinata.cloud/ipfs/QmYvugv3TSWD9UnsS7r2iL89ysZ4rmhFR4KgY8bPXbRB4m",
+          "https://gateway.pinata.cloud/ipfs/QmYVc6YdXymLaxts4h7HWpK5gwbq5Kaif8iqR7s1Xhn71T"
+        ]
+      },
+      "errors": {
+        "tokenTotalSupply": "Too many values. Update configuration explore fully",
+        "uri": "Too many values. Update configuration explore fully"
+      }
+    },
+    {
       "name": "ERC721Predicate",
       "address": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
       "code": "https://etherscan.deth.net/address/0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD,0xd515C8fF03eC79e7d5B3410c036f738e7f396C90",
@@ -743,6 +1032,18 @@
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "FxRoot",
+      "address": "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
+      "code": "https://etherscan.deth.net/address/0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "fxChild": "0x8397259c983751DAf40400790063935a11afa28a",
+        "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      }
     }
   ],
   "eoas": [
@@ -750,20 +1051,33 @@
     "0x0b22380B7c423470979AC3eD7d3c07696773dEa1",
     "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03",
     "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
+    "0x1C83417Ee1Db46885bE74143F8f3e67A91384602",
+    "0x1FBf26781E289883a1Ec8Da235F7159B455D1160",
+    "0x2dF7C3f267c0433Ee143bAa7D40c4eccD411E10d",
+    "0x321E73Dbf24F31B25C515E52b362185888D111b1",
     "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
     "0x5e31c357d03e9528E9BF95bD16e5c1aB3f7D37D0",
     "0x6fD155b9D52F80E8A73a8A2537268602978486e2",
+    "0x7120d6647B79b437FD78A12bD6580978093A71E1",
+    "0x7B2a989c4D1AD1B79a84CE2EB79dA5D8d9C2b7a7",
     "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
     "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a",
+    "0x8397259c983751DAf40400790063935a11afa28a",
     "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602",
+    "0x8EfD0D558886abD129306A83890b3782E512CaBf",
+    "0x90A15B3D2A96eA5a146E648e257175af114F8E8A",
     "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
+    "0xA53CC97D140Ba317Bd6272A2Af0f8D3eAE4809Bb",
     "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
     "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
+    "0xc3A8CF76264408DB3b350C60993d5849Ea350994",
     "0xC3c2e1Cf099Bc6e1fA94ce358562BCbD5cc59FE5",
     "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a",
     "0xD6049b48173636bA928Eb8ffb31a23674383903A",
+    "0xe753aA24818f85e14962845b0A8ca46e4c0000d6",
     "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe",
-    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+    "0xFF0c60609522fb053E58AC106EBb7D48ff3d0CCB"
   ],
   "abis": {
     "0x0672777617CAA1E778083a4f74eBC997262C9EdD": [
@@ -780,7 +1094,116 @@
       "function logUpdateCommissionRate(uint256 validatorId, uint256 newCommissionRate, uint256 oldCommissionRate)",
       "function registry() view returns (address)"
     ],
+    "0x09305998a531fAde369EBE30aDF868c96A34e813": [
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function safeBatchTransferFrom(address _from, address _to, uint256[] _tokenIds)",
+      "function name() view returns (string)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function approve(address to, uint256 tokenId)",
+      "function issueTokens(address[] _beneficiaries, bytes32[] _wearableIds)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address from, address to, uint256 tokenId)",
+      "function safeBatchTransferFrom(address _from, address _to, uint256[] _tokenIds, bytes _data)",
+      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
+      "function addWearable(string _wearableId, uint256 _maxIssuance)",
+      "function addWearables(bytes32[] _wearableIds, uint256[] _maxIssuances)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function setAllowed(address _operator, bool _allowed)",
+      "function tokenByIndex(uint256 index) view returns (uint256)",
+      "function setBaseURI(string _baseURI)",
+      "function issueToken(address _beneficiary, string _wearableId)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function baseURI() view returns (string)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function renounceOwnership()",
+      "function getWearableKey(string _wearableId) pure returns (bytes32)",
+      "function owner() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function symbol() view returns (string)",
+      "function setApprovalForAll(address to, bool approved)",
+      "function isComplete() view returns (bool)",
+      "function wearables(uint256) view returns (string)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes _data)",
+      "function issued(bytes32) view returns (uint256)",
+      "function tokenURI(uint256 _tokenId) view returns (string)",
+      "function allowed(address) view returns (bool)",
+      "function wearablesCount() view returns (uint256)",
+      "function maxIssuance(bytes32) view returns (uint256)",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function batchTransferFrom(address _from, address _to, uint256[] _tokenIds)",
+      "function completeCollection()",
+      "constructor(string _name, string _symbol, address _operator, string _baseURI)",
+      "event BaseURI(string _oldBaseURI, string _newBaseURI)",
+      "event Allowed(address indexed _operator, bool _allowed)",
+      "event AddWearable(bytes32 indexed _wearableIdKey, string _wearableId, uint256 _maxIssuance)",
+      "event Issue(address indexed _beneficiary, uint256 indexed _tokenId, bytes32 indexed _wearableIdKey, string _wearableId, uint256 _issuedId)",
+      "event Complete()",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
+    ],
+    "0x0B509F4b044F713A91bB50535914f7ad160532fe": [
+      "constructor(address _accessControls, address _childContract)",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event DigitalaxGarmentNFTContractDeployed()",
+      "event DigitalaxGarmentTokenUriUpdate(uint256 indexed _tokenId, string _tokenUri)",
+      "event ReceivedChild(address indexed from, uint256 indexed toTokenId, address indexed childContract, uint256 childTokenId, uint256 amount)",
+      "event TokenPrimarySalePriceSet(uint256 indexed _tokenId, uint256 _salePrice)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "event TransferBatchChild(uint256 indexed fromTokenId, address indexed to, address indexed childContract, uint256[] childTokenIds, uint256[] amounts)",
+      "function accessControls() view returns (address)",
+      "function approve(address to, uint256 tokenId)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function baseURI() view returns (string)",
+      "function burn(uint256 _tokenId)",
+      "function childBalance(uint256 _tokenId, address _childContract, uint256 _childTokenId) view returns (uint256)",
+      "function childContract() view returns (address)",
+      "function childContractsFor(uint256 _tokenId) view returns (address[])",
+      "function childIdsForOn(uint256 _tokenId, address _childContract) view returns (uint256[])",
+      "function exists(uint256 _tokenId) view returns (bool)",
+      "function garmentDesigners(uint256) view returns (address)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function isApproved(uint256 _tokenId, address _operator) view returns (bool)",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "function maxChildrenPerToken() view returns (uint256)",
+      "function mint(address _beneficiary, string _tokenUri, address _designer) returns (uint256)",
+      "function name() view returns (string)",
+      "function onERC1155BatchReceived(address _operator, address _from, uint256[] _ids, uint256[] _values, bytes _data) returns (bytes4)",
+      "function onERC1155Received(address _operator, address _from, uint256 _id, uint256 _amount, bytes _data) returns (bytes4)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function primarySalePrice(uint256) view returns (uint256)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes _data)",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function setPrimarySalePrice(uint256 _tokenId, uint256 _salePrice)",
+      "function setTokenURI(uint256 _tokenId, string _tokenUri)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function tokenByIndex(uint256 index) view returns (uint256)",
+      "function tokenIdPointer() view returns (uint256)",
+      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
+      "function tokenURI(uint256 tokenId) view returns (string)",
+      "function totalChildrenMapped(uint256 _tokenId) view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address from, address to, uint256 tokenId)",
+      "function updateAccessControls(address _accessControls)",
+      "function updateMaxChildrenPerToken(uint256 _maxChildrenPerToken)"
+    ],
     "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f": [
+      "constructor(address _proxyTo)",
+      "event ProxyOwnerUpdate(address _new, address _old)",
+      "event ProxyUpdated(address indexed _new, address indexed _old)",
+      "function implementation() view returns (address)",
+      "function proxyOwner() view returns (address)",
+      "function proxyType() pure returns (uint256 proxyTypeId)",
+      "function transferProxyOwnership(address newOwner)",
+      "function updateAndCall(address _newProxyTo, bytes data) payable",
+      "function updateImplementation(address _newProxyTo)"
+    ],
+    "0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
       "event ProxyUpdated(address indexed _new, address indexed _old)",
@@ -1215,6 +1638,46 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
     ],
+    "0x6230F5C4193E632b084A083Dba713E73651Bb93A": [
+      "event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)",
+      "event MetaTransactionExecuted(address userAddress, address relayerAddress, bytes functionSignature)",
+      "event SetMapper(address indexed _previousMapper, address indexed _newMapper)",
+      "event SetOwner(address indexed _previousOwner, address indexed _newOwner)",
+      "event TokenMapped(address indexed rootToken, address indexed childToken, bytes32 indexed tokenType)",
+      "function DEPOSIT() view returns (bytes32)",
+      "function ERC712_VERSION() view returns (string)",
+      "function MAPPER_ROLE() view returns (bytes32)",
+      "function MAP_TOKEN() view returns (bytes32)",
+      "function TRANSFER_EVENT_SIG() view returns (bytes32)",
+      "function checkpointManagerAddress() view returns (address)",
+      "function childToRootToken(address _childToken) view returns (address)",
+      "function childTokenAddress(address rootToken) view returns (address childToken_)",
+      "function depositFor(address user, address rootToken, bytes depositData)",
+      "function executeMetaTransaction(address userAddress, bytes functionSignature, bytes32 sigR, bytes32 sigS, uint8 sigV) payable returns (bytes)",
+      "function exit(bytes inputData)",
+      "function getATokenValue(address _aTokenAddress, uint256 _maTokenValue) view returns (uint256 aTokenValue_)",
+      "function getChainId() pure returns (uint256)",
+      "function getDomainSeperator() view returns (bytes32)",
+      "function getMATokenValue(address _aTokenAddress, uint256 _aTokenValue) view returns (uint256 maTokenValue_)",
+      "function getNonce(address user) view returns (uint256 nonce)",
+      "function headerBlocks(uint256) view returns (bytes32 root, uint256 start, uint256 end, uint256 createdAt, address proposer)",
+      "function initialize(address _owner, address _stateSender, address _checkpointManager, address _childChainManagerAddress, bytes32 _childTokenBytecodeHash)",
+      "function mapToken(address rootToken)",
+      "function mapper() view returns (address)",
+      "function owner() view returns (address)",
+      "function processedExits(bytes32 _exitHash) view returns (bool)",
+      "function remapToken(address rootToken)",
+      "function rootToChildToken(address _rootToken) view returns (address)",
+      "function setCheckpointManager(address newCheckpointManager)",
+      "function setChildChainManagerAddress(address newChildChainManager)",
+      "function setChildChainManagerAddressAndChildTokenBytecodeHash(address newChildChainManager, bytes32 newChildTokenBytecodeHash)",
+      "function setChildTokenBytecodeHash(bytes32 newChildTokenBytecodeHash)",
+      "function setMapper(address _newMapper)",
+      "function setOwner(address _newOwner)",
+      "function setStateSender(address newStateSender)",
+      "function stateSender() view returns (address)",
+      "function stateSenderAddress() view returns (address)"
+    ],
     "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3": [
       "constructor()",
       "event LockedBatchERC1155(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] ids, uint256[] amounts)",
@@ -1239,6 +1702,31 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7": [
+      "event ReceivedData(address indexed _from, bytes _bytes_data)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function SEND_MESSAGE_EVENT_SIG() view returns (bytes32)",
+      "function calculateSumOnChildChain(uint256 number)",
+      "function checkpointManager() view returns (address)",
+      "function childTunnel() view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function processedExits(bytes32) view returns (bool)",
+      "function receiveMessage(bytes inputData)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setCheckpointManager(address newCheckpointManager)",
+      "function setChildTunnel(address newChildTunnel)",
+      "function setStateSender(address newStateSender)",
+      "function stateSender() view returns (address)",
+      "function syncOnMatic(bytes _data)"
     ],
     "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b": [
       "constructor(address _proxyTo)",
@@ -1329,6 +1817,30 @@
       "event OwnerUpdate(address _prevOwner, address _newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
     ],
+    "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5": [
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function SEND_MESSAGE_EVENT_SIG() view returns (bytes32)",
+      "function checkpointManager() view returns (address)",
+      "function childTunnel() view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function processedExits(bytes32) view returns (bool)",
+      "function receiveMessage(bytes inputData)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setAlohaNFT(address newAlohaNFT)",
+      "function setCheckpointManager(address newCheckpointManager)",
+      "function setChildTunnel(address newChildTunnel)",
+      "function setStateSender(address newStateSender)",
+      "function stateSender() view returns (address)",
+      "function transferNFT(uint256 tokenId)"
+    ],
     "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
@@ -1339,6 +1851,43 @@
       "function transferProxyOwnership(address newOwner)",
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
+    ],
+    "0x980bC991b52240C6271F4fd607638e984c888621": [
+      "constructor()",
+      "event AdminRoleGranted(address indexed beneficiary, address indexed caller)",
+      "event AdminRoleRemoved(address indexed beneficiary, address indexed caller)",
+      "event MinterRoleGranted(address indexed beneficiary, address indexed caller)",
+      "event MinterRoleRemoved(address indexed beneficiary, address indexed caller)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SmartContractRoleGranted(address indexed beneficiary, address indexed caller)",
+      "event SmartContractRoleRemoved(address indexed beneficiary, address indexed caller)",
+      "event VerifiedMinterRoleGranted(address indexed beneficiary, address indexed caller)",
+      "event VerifiedMinterRoleRemoved(address indexed beneficiary, address indexed caller)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MINTER_ROLE() view returns (bytes32)",
+      "function SMART_CONTRACT_ROLE() view returns (bytes32)",
+      "function VERIFIED_MINTER_ROLE() view returns (bytes32)",
+      "function addAdminRole(address _address)",
+      "function addMinterRole(address _address)",
+      "function addSmartContractRole(address _address)",
+      "function addVerifiedMinterRole(address _address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasAdminRole(address _address) view returns (bool)",
+      "function hasMinterRole(address _address) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hasSmartContractRole(address _address) view returns (bool)",
+      "function hasVerifiedMinterRole(address _address) view returns (bool)",
+      "function removeAdminRole(address _address)",
+      "function removeMinterRole(address _address)",
+      "function removeSmartContractRole(address _address)",
+      "function removeVerifiedMinterRole(address _address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)"
     ],
     "0x98165b71cdDea047C0A49413350C40571195fd07": [
       "function update(address target, bytes data)",
@@ -1433,6 +1982,22 @@
       "function updateNonce(uint256[] validatorIds, uint256[] nonces)",
       "function validatorNonce(uint256) view returns (uint256)"
     ],
+    "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55": [
+      "constructor(address _accessControls, address _nft, address _materials, address _stateSender)",
+      "function SEND_MESSAGE_EVENT_SIG() view returns (bytes32)",
+      "function accessControls() view returns (address)",
+      "function checkpointManager() view returns (address)",
+      "function childTunnel() view returns (address)",
+      "function materials() view returns (address)",
+      "function nft() view returns (address)",
+      "function processedExits(bytes32) view returns (bool)",
+      "function receiveMessage(bytes inputData)",
+      "function setCheckpointManager(address newCheckpointManager)",
+      "function setChildTunnel(address newChildTunnel)",
+      "function setStateSender(address newStateSender)",
+      "function stateSender() view returns (address)",
+      "function transferNFTsDataToMatic(uint256[] _tokenIds)"
+    ],
     "0xb7fd49c7b662B5135D1bB03b51FfC51a6b908230": [
       "function approve(address _approved, uint256 _tokenId)",
       "function balanceOf(address _owner) view returns (uint256 balance_)",
@@ -1449,6 +2014,21 @@
       "function tokenURI(uint256 _tokenId) pure returns (string)",
       "function totalSupply() view returns (uint256 totalSupply_)",
       "function transferFrom(address _from, address _to, uint256 _tokenId)"
+    ],
+    "0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1": [
+      "constructor(address _tellorAddress, address _stateSender, address _receiver)",
+      "event DataSent(uint256 _requestId, uint256 _timestamp, uint256 _value, address _sender)",
+      "function getCurrentValue(uint256 _requestId) view returns (bool ifRetrieve, uint256 value, uint256 _timestampRetrieved)",
+      "function getCurrentValueAndSend(uint256 _requestId)",
+      "function getDataBefore(uint256 _requestId, uint256 _timestamp) returns (bool _ifRetrieve, uint256 _value, uint256 _timestampRetrieved)",
+      "function getIndexForDataBefore(uint256 _requestId, uint256 _timestamp) view returns (bool found, uint256 index)",
+      "function getNewValueCountbyRequestId(uint256 _requestId) view returns (uint256)",
+      "function getTimestampbyRequestIDandIndex(uint256 _requestId, uint256 _index) view returns (uint256)",
+      "function isInDispute(uint256 _requestId, uint256 _timestamp) view returns (bool)",
+      "function receiver() view returns (address)",
+      "function retrieveData(uint256 _requestId, uint256 _timestamp) view returns (uint256)",
+      "function retrieveDataAndSend(uint256 _requestId, uint256 _timestamp)",
+      "function stateSender() view returns (address)"
     ],
     "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963": [
       "constructor()",
@@ -1713,6 +2293,36 @@
       "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
       "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)"
     ],
+    "0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221": [
+      "constructor(string _name, string _symbol, address _accessControls)",
+      "event ApprovalForAll(address indexed account, address indexed operator, bool approved)",
+      "event ChildCreated(uint256 indexed childId)",
+      "event ChildrenCreated(uint256[] childIds)",
+      "event DigitalaxMaterialsDeployed()",
+      "event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values)",
+      "event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value)",
+      "event URI(string value, uint256 indexed id)",
+      "function accessControls() view returns (address)",
+      "function balanceOf(address account, uint256 id) view returns (uint256)",
+      "function balanceOfBatch(address[] accounts, uint256[] ids) view returns (uint256[])",
+      "function batchCreateChildren(string[] _uris) returns (uint256[] tokenIds)",
+      "function batchMintChildren(uint256[] _childTokenIds, uint256[] _amounts, address _beneficiary, bytes _data)",
+      "function burn(address account, uint256 id, uint256 amount)",
+      "function burnBatch(address account, uint256[] ids, uint256[] amounts)",
+      "function createChild(string _uri) returns (uint256 id)",
+      "function isApprovedForAll(address account, address operator) view returns (bool)",
+      "function mintChild(uint256 _childTokenId, uint256 _amount, address _beneficiary, bytes _data)",
+      "function name() view returns (string)",
+      "function safeBatchTransferFrom(address from, address to, uint256[] ids, uint256[] amounts, bytes data)",
+      "function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes data)",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function tokenIdPointer() view returns (uint256)",
+      "function tokenTotalSupply(uint256) view returns (uint256)",
+      "function updateAccessControls(address _accessControls)",
+      "function uri(uint256 tokenId) view returns (string)"
+    ],
     "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
@@ -1813,6 +2423,13 @@
     ],
     "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": [
       "constructor(address _masterCopy)"
+    ],
+    "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2": [
+      "constructor(address _stateSender)",
+      "function fxChild() view returns (address)",
+      "function sendMessageToChild(address _receiver, bytes _data)",
+      "function setFxChild(address _fxChild)",
+      "function stateSender() view returns (address)"
     ]
   }
 }
