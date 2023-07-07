@@ -102,7 +102,7 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
 
     return balanceQueries.map(({ holder, assetId }, i) => {
       const balanceResponse = responses[i]
-      console.dir({ isbn: BigNumber.isBigNumber(balanceResponse) })
+
       const balance = BigNumber.isBigNumber(balanceResponse)
         ? balanceResponse.toBigInt()
         : decodeErc20BalanceQuery(balanceResponse)
