@@ -36,17 +36,17 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
   }
 
   public async fetchBalances(
-    missingData: BalanceQuery[],
+    balanceQueries: BalanceQuery[],
     timestamp: UnixTime,
     blockNumber: number,
   ): Promise<BalanceRecord[]> {
     const canMulticallBeUsed = this.multiCallClient.canBeUsed(blockNumber)
 
     if (canMulticallBeUsed) {
-      return this.fetchUsingMulticall(missingData, timestamp, blockNumber)
+      return this.fetchUsingMulticall(balanceQueries, timestamp, blockNumber)
     }
 
-    return this.fetchUsingPlainCalls(missingData, timestamp, blockNumber)
+    return this.fetchUsingPlainCalls(balanceQueries, timestamp, blockNumber)
   }
 
   private async fetchUsingMulticall(
