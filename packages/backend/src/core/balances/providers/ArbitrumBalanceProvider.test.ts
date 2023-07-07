@@ -25,6 +25,7 @@ describe(ArbitrumBalanceProvider.name, () => {
         })
 
         const multicallClient = mockObject<ArbitrumMulticallClient>({
+          getChainId: () => ChainId.ARBITRUM,
           canBeUsed: () => true,
           multicall: async () => [
             { success: true, data: Bytes.fromNumber(69).padStart(32) },
@@ -84,6 +85,7 @@ describe(ArbitrumBalanceProvider.name, () => {
         })
 
         const multicallClient = mockObject<ArbitrumMulticallClient>({
+          getChainId: () => ChainId.ARBITRUM,
           canBeUsed: () => false,
           multicall: async () => [
             { success: true, data: Bytes.fromNumber(69).padStart(32) },
