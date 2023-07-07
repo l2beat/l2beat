@@ -1,7 +1,7 @@
 {
   "name": "polygon-pos",
   "blockNumber": 17640301,
-  "configHash": "0x8a6cb6d8089eafdf7055e916a462c8febe3e89ffeac68abdfe1ff1ade6351000",
+  "configHash": "0xd20705d6619e3ac2c85b15a5225c081396e749ea57fc0aeb6fbd753b05a1d7c1",
   "version": 1,
   "contracts": [
     {
@@ -66,59 +66,6 @@
         "tokenByIndex": "Too many values. Update configuration explore fully",
         "tokenURI": "Too many values. Update configuration explore fully",
         "wearables": "Too many values. Update configuration explore fully"
-      }
-    },
-    {
-      "name": "DigitalaxGarmentNFT",
-      "address": "0x0B509F4b044F713A91bB50535914f7ad160532fe",
-      "code": "https://etherscan.deth.net/address/0x0B509F4b044F713A91bB50535914f7ad160532fe",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "accessControls": "0x980bC991b52240C6271F4fd607638e984c888621",
-        "baseURI": "",
-        "childContract": "0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221",
-        "childContractsFor": [
-          [],
-          ["0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221"],
-          ["0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221"],
-          ["0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221"],
-          []
-        ],
-        "exists": [false, true, true, true, false],
-        "garmentDesigners": [
-          "0x0000000000000000000000000000000000000000",
-          "0xFF0c60609522fb053E58AC106EBb7D48ff3d0CCB",
-          "0xA53CC97D140Ba317Bd6272A2Af0f8D3eAE4809Bb",
-          "0x321E73Dbf24F31B25C515E52b362185888D111b1",
-          "0x0000000000000000000000000000000000000000"
-        ],
-        "getApproved": [],
-        "maxChildrenPerToken": 10,
-        "name": "DigitalaxNFT",
-        "ownerOf": [],
-        "primarySalePrice": [
-          0,
-          "1770000000000000000",
-          "1920000000000000000",
-          "5000000000000000000",
-          0
-        ],
-        "symbol": "DTX",
-        "tokenByIndex": [1, 2, 3, 230, 226],
-        "tokenIdPointer": 234,
-        "tokenURI": [],
-        "totalChildrenMapped": [0, 2, 2, 2, 0],
-        "totalSupply": 215
-      },
-      "errors": {
-        "childContractsFor": "Too many values. Update configuration explore fully",
-        "exists": "Too many values. Update configuration explore fully",
-        "garmentDesigners": "Too many values. Update configuration explore fully",
-        "primarySalePrice": "Too many values. Update configuration explore fully",
-        "tokenByIndex": "Too many values. Update configuration explore fully",
-        "totalChildrenMapped": "Too many values. Update configuration explore fully"
       }
     },
     {
@@ -742,20 +689,6 @@
       }
     },
     {
-      "name": "DigitalaxAccessControls",
-      "address": "0x980bC991b52240C6271F4fd607638e984c888621",
-      "code": "https://etherscan.deth.net/address/0x980bC991b52240C6271F4fd607638e984c888621",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
-        "SMART_CONTRACT_ROLE": "0x9d49f397ae9ef1a834b569acb967799a367061e305932181a44f5773da873bfd",
-        "VERIFIED_MINTER_ROLE": "0x024cc602f552d5cf984f52b326f9f2ee425d0a430b49a420b74c244c1ecad047"
-      }
-    },
-    {
       "name": "MintableERC20Predicate",
       "address": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
       "code": "https://etherscan.deth.net/address/0x9923263fA127b3d1484cFD649df8f1831c2A74e4,0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62",
@@ -839,23 +772,6 @@
       "code": "https://etherscan.deth.net/address/0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
       "upgradeability": {
         "type": "immutable"
-      }
-    },
-    {
-      "name": "DigitalaxRootTunnel",
-      "address": "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55",
-      "code": "https://etherscan.deth.net/address/0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "accessControls": "0x980bC991b52240C6271F4fd607638e984c888621",
-        "checkpointManager": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-        "childTunnel": "0x7B2a989c4D1AD1B79a84CE2EB79dA5D8d9C2b7a7",
-        "materials": "0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221",
-        "nft": "0x0B509F4b044F713A91bB50535914f7ad160532fe",
-        "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
-        "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
       }
     },
     {
@@ -959,32 +875,6 @@
       "derivedName": "ExitNFT"
     },
     {
-      "name": "DigitalaxMaterials",
-      "address": "0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221",
-      "code": "https://etherscan.deth.net/address/0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "accessControls": "0x980bC991b52240C6271F4fd607638e984c888621",
-        "name": "DigitalaxMaterials",
-        "symbol": "DXM",
-        "tokenIdPointer": 102,
-        "tokenTotalSupply": [0, 1, 1, 1, 1],
-        "uri": [
-          "",
-          "https://gateway.pinata.cloud/ipfs/QmWXgfL1iM9pMk8Fe4jwF2XdQzC3c9Chg9Ez6peqdojmhy",
-          "https://gateway.pinata.cloud/ipfs/Qme7anWvdZpzipiihDohAb4SvNaT6JR4VWyyyPTz5dd726",
-          "https://gateway.pinata.cloud/ipfs/QmYvugv3TSWD9UnsS7r2iL89ysZ4rmhFR4KgY8bPXbRB4m",
-          "https://gateway.pinata.cloud/ipfs/QmYVc6YdXymLaxts4h7HWpK5gwbq5Kaif8iqR7s1Xhn71T"
-        ]
-      },
-      "errors": {
-        "tokenTotalSupply": "Too many values. Update configuration explore fully",
-        "uri": "Too many values. Update configuration explore fully"
-      }
-    },
-    {
       "name": "ERC721Predicate",
       "address": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
       "code": "https://etherscan.deth.net/address/0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD,0xd515C8fF03eC79e7d5B3410c036f738e7f396C90",
@@ -1054,12 +944,10 @@
     "0x1C83417Ee1Db46885bE74143F8f3e67A91384602",
     "0x1FBf26781E289883a1Ec8Da235F7159B455D1160",
     "0x2dF7C3f267c0433Ee143bAa7D40c4eccD411E10d",
-    "0x321E73Dbf24F31B25C515E52b362185888D111b1",
     "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
     "0x5e31c357d03e9528E9BF95bD16e5c1aB3f7D37D0",
     "0x6fD155b9D52F80E8A73a8A2537268602978486e2",
     "0x7120d6647B79b437FD78A12bD6580978093A71E1",
-    "0x7B2a989c4D1AD1B79a84CE2EB79dA5D8d9C2b7a7",
     "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
     "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a",
     "0x8397259c983751DAf40400790063935a11afa28a",
@@ -1067,7 +955,6 @@
     "0x8EfD0D558886abD129306A83890b3782E512CaBf",
     "0x90A15B3D2A96eA5a146E648e257175af114F8E8A",
     "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
-    "0xA53CC97D140Ba317Bd6272A2Af0f8D3eAE4809Bb",
     "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
     "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
     "0xc3A8CF76264408DB3b350C60993d5849Ea350994",
@@ -1076,8 +963,7 @@
     "0xD6049b48173636bA928Eb8ffb31a23674383903A",
     "0xe753aA24818f85e14962845b0A8ca46e4c0000d6",
     "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe",
-    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-    "0xFF0c60609522fb053E58AC106EBb7D48ff3d0CCB"
+    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
   ],
   "abis": {
     "0x0672777617CAA1E778083a4f74eBC997262C9EdD": [
@@ -1143,54 +1029,6 @@
       "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
       "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
-    ],
-    "0x0B509F4b044F713A91bB50535914f7ad160532fe": [
-      "constructor(address _accessControls, address _childContract)",
-      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
-      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
-      "event DigitalaxGarmentNFTContractDeployed()",
-      "event DigitalaxGarmentTokenUriUpdate(uint256 indexed _tokenId, string _tokenUri)",
-      "event ReceivedChild(address indexed from, uint256 indexed toTokenId, address indexed childContract, uint256 childTokenId, uint256 amount)",
-      "event TokenPrimarySalePriceSet(uint256 indexed _tokenId, uint256 _salePrice)",
-      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
-      "event TransferBatchChild(uint256 indexed fromTokenId, address indexed to, address indexed childContract, uint256[] childTokenIds, uint256[] amounts)",
-      "function accessControls() view returns (address)",
-      "function approve(address to, uint256 tokenId)",
-      "function balanceOf(address owner) view returns (uint256)",
-      "function baseURI() view returns (string)",
-      "function burn(uint256 _tokenId)",
-      "function childBalance(uint256 _tokenId, address _childContract, uint256 _childTokenId) view returns (uint256)",
-      "function childContract() view returns (address)",
-      "function childContractsFor(uint256 _tokenId) view returns (address[])",
-      "function childIdsForOn(uint256 _tokenId, address _childContract) view returns (uint256[])",
-      "function exists(uint256 _tokenId) view returns (bool)",
-      "function garmentDesigners(uint256) view returns (address)",
-      "function getApproved(uint256 tokenId) view returns (address)",
-      "function isApproved(uint256 _tokenId, address _operator) view returns (bool)",
-      "function isApprovedForAll(address owner, address operator) view returns (bool)",
-      "function maxChildrenPerToken() view returns (uint256)",
-      "function mint(address _beneficiary, string _tokenUri, address _designer) returns (uint256)",
-      "function name() view returns (string)",
-      "function onERC1155BatchReceived(address _operator, address _from, uint256[] _ids, uint256[] _values, bytes _data) returns (bytes4)",
-      "function onERC1155Received(address _operator, address _from, uint256 _id, uint256 _amount, bytes _data) returns (bytes4)",
-      "function ownerOf(uint256 tokenId) view returns (address)",
-      "function primarySalePrice(uint256) view returns (uint256)",
-      "function safeTransferFrom(address from, address to, uint256 tokenId)",
-      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes _data)",
-      "function setApprovalForAll(address operator, bool approved)",
-      "function setPrimarySalePrice(uint256 _tokenId, uint256 _salePrice)",
-      "function setTokenURI(uint256 _tokenId, string _tokenUri)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function tokenByIndex(uint256 index) view returns (uint256)",
-      "function tokenIdPointer() view returns (uint256)",
-      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
-      "function tokenURI(uint256 tokenId) view returns (string)",
-      "function totalChildrenMapped(uint256 _tokenId) view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address from, address to, uint256 tokenId)",
-      "function updateAccessControls(address _accessControls)",
-      "function updateMaxChildrenPerToken(uint256 _maxChildrenPerToken)"
     ],
     "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f": [
       "constructor(address _proxyTo)",
@@ -1852,43 +1690,6 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x980bC991b52240C6271F4fd607638e984c888621": [
-      "constructor()",
-      "event AdminRoleGranted(address indexed beneficiary, address indexed caller)",
-      "event AdminRoleRemoved(address indexed beneficiary, address indexed caller)",
-      "event MinterRoleGranted(address indexed beneficiary, address indexed caller)",
-      "event MinterRoleRemoved(address indexed beneficiary, address indexed caller)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event SmartContractRoleGranted(address indexed beneficiary, address indexed caller)",
-      "event SmartContractRoleRemoved(address indexed beneficiary, address indexed caller)",
-      "event VerifiedMinterRoleGranted(address indexed beneficiary, address indexed caller)",
-      "event VerifiedMinterRoleRemoved(address indexed beneficiary, address indexed caller)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MINTER_ROLE() view returns (bytes32)",
-      "function SMART_CONTRACT_ROLE() view returns (bytes32)",
-      "function VERIFIED_MINTER_ROLE() view returns (bytes32)",
-      "function addAdminRole(address _address)",
-      "function addMinterRole(address _address)",
-      "function addSmartContractRole(address _address)",
-      "function addVerifiedMinterRole(address _address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasAdminRole(address _address) view returns (bool)",
-      "function hasMinterRole(address _address) view returns (bool)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function hasSmartContractRole(address _address) view returns (bool)",
-      "function hasVerifiedMinterRole(address _address) view returns (bool)",
-      "function removeAdminRole(address _address)",
-      "function removeMinterRole(address _address)",
-      "function removeSmartContractRole(address _address)",
-      "function removeVerifiedMinterRole(address _address)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)"
-    ],
     "0x98165b71cdDea047C0A49413350C40571195fd07": [
       "function update(address target, bytes data)",
       "function renounceOwnership()",
@@ -1981,22 +1782,6 @@
       "function transferOwnership(address newOwner)",
       "function updateNonce(uint256[] validatorIds, uint256[] nonces)",
       "function validatorNonce(uint256) view returns (uint256)"
-    ],
-    "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55": [
-      "constructor(address _accessControls, address _nft, address _materials, address _stateSender)",
-      "function SEND_MESSAGE_EVENT_SIG() view returns (bytes32)",
-      "function accessControls() view returns (address)",
-      "function checkpointManager() view returns (address)",
-      "function childTunnel() view returns (address)",
-      "function materials() view returns (address)",
-      "function nft() view returns (address)",
-      "function processedExits(bytes32) view returns (bool)",
-      "function receiveMessage(bytes inputData)",
-      "function setCheckpointManager(address newCheckpointManager)",
-      "function setChildTunnel(address newChildTunnel)",
-      "function setStateSender(address newStateSender)",
-      "function stateSender() view returns (address)",
-      "function transferNFTsDataToMatic(uint256[] _tokenIds)"
     ],
     "0xb7fd49c7b662B5135D1bB03b51FfC51a6b908230": [
       "function approve(address _approved, uint256 _tokenId)",
@@ -2292,36 +2077,6 @@
       "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
       "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
       "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)"
-    ],
-    "0xE6822E8b4d91b85F9CA00CCa79bf92Bab14bc221": [
-      "constructor(string _name, string _symbol, address _accessControls)",
-      "event ApprovalForAll(address indexed account, address indexed operator, bool approved)",
-      "event ChildCreated(uint256 indexed childId)",
-      "event ChildrenCreated(uint256[] childIds)",
-      "event DigitalaxMaterialsDeployed()",
-      "event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values)",
-      "event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value)",
-      "event URI(string value, uint256 indexed id)",
-      "function accessControls() view returns (address)",
-      "function balanceOf(address account, uint256 id) view returns (uint256)",
-      "function balanceOfBatch(address[] accounts, uint256[] ids) view returns (uint256[])",
-      "function batchCreateChildren(string[] _uris) returns (uint256[] tokenIds)",
-      "function batchMintChildren(uint256[] _childTokenIds, uint256[] _amounts, address _beneficiary, bytes _data)",
-      "function burn(address account, uint256 id, uint256 amount)",
-      "function burnBatch(address account, uint256[] ids, uint256[] amounts)",
-      "function createChild(string _uri) returns (uint256 id)",
-      "function isApprovedForAll(address account, address operator) view returns (bool)",
-      "function mintChild(uint256 _childTokenId, uint256 _amount, address _beneficiary, bytes _data)",
-      "function name() view returns (string)",
-      "function safeBatchTransferFrom(address from, address to, uint256[] ids, uint256[] amounts, bytes data)",
-      "function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes data)",
-      "function setApprovalForAll(address operator, bool approved)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function tokenIdPointer() view returns (uint256)",
-      "function tokenTotalSupply(uint256) view returns (uint256)",
-      "function updateAccessControls(address _accessControls)",
-      "function uri(uint256 tokenId) view returns (string)"
     ],
     "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD": [
       "constructor(address _proxyTo)",

@@ -23,10 +23,14 @@
     "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Predicate",
     "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": "StateSender",
     "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
-    "0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2": "InstaAaveV2"
+    "0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2": "InstaAaveV2",
+    "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55": "Digitalax"
   },
   "overrides": {
     "InstaAaveV2": {
+      "ignoreDiscovery": true
+    },
+    "Digitalax": {
       "ignoreDiscovery": true
     },
     "RootChainManager": {
