@@ -139,12 +139,12 @@ export const polygonpos: Bridge = {
     isIncomplete: true,
     addresses: [
       discovery.getContractDetails(
-        'RootChainManager',
-        'Main contract to manage bridge tokens, deposits and withdrawals.',
+        'StateSender',
+        'Smart contract containing the logic for syncing the state of registered bridges.',
       ),
       discovery.getContractDetails(
-        'StateSender',
-        'Smart contract containing logic for syncing the state of the bridge.',
+        'RootChainManager',
+        'Main contract to manage bridge tokens, deposits and withdrawals.',
       ),
       discovery.getContractDetails(
         'RootChain',

@@ -24,13 +24,33 @@
     "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": "StateSender",
     "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
     "0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2": "InstaAaveV2",
-    "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55": "Digitalax"
+    "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55": "Digitalax",
+    "0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c": "AToken",
+    "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5": "Aloha",
+    "0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1": "Tellor",
+    "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2": "Fx",
+    "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35": "CustomPredicate"
   },
   "overrides": {
     "InstaAaveV2": {
       "ignoreDiscovery": true
     },
     "Digitalax": {
+      "ignoreDiscovery": true
+    },
+    "AToken": {
+      "ignoreDiscovery": true
+    },
+    "Aloha": {
+      "ignoreDiscovery": true
+    },
+    "Tellor": {
+      "ignoreDiscovery": true
+    },
+    "Fx": {
+      "ignoreDiscovery": true
+    },
+    "CustomPredicate": {
       "ignoreDiscovery": true
     },
     "RootChainManager": {
