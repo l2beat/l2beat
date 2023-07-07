@@ -122,7 +122,7 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
     holder,
   }: BalanceQuery): MulticallRequest {
     if (this.isNativeCoin(assetId)) {
-      return encodeMulticallCoinBalanceQuery(
+      return encodeMulticallGetBalanceQuery(
         holder,
         this.multicallClient.getAddress(),
       )
@@ -176,7 +176,7 @@ function decodeErc20BalanceQuery(response: Bytes): bigint {
   return (value as BigNumber).toBigInt()
 }
 
-function encodeMulticallCoinBalanceQuery(
+function encodeMulticallGetBalanceQuery(
   holder: EthereumAddress,
   multicallAddress: EthereumAddress,
 ): MulticallRequest {
