@@ -7,7 +7,7 @@ import { Clock } from '../../core/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
-export function createArbitrumTvlModule(
+export function createArbitrumTvlSubmodule(
   db: TvlDatabase,
   config: Config,
   logger: Logger,

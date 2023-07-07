@@ -14,7 +14,7 @@ import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { ApplicationModule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
-export function createEthereumTvlModule(
+export function createEthereumTvlSubmodule(
   db: TvlDatabase,
   priceUpdater: PriceUpdater,
   config: Config,
