@@ -60,12 +60,12 @@ export function getProductionConfig(): Config {
       enabled: true,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {
-        alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+        alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
-        alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+        alchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
       },
     },
     activity: {
