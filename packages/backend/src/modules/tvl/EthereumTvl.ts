@@ -44,7 +44,6 @@ export function createEthereumTvlModule(
   const ethereumBalanceProvider = new EthereumBalanceProvider(multicall)
 
   // #endregion
-
   // #region updaters
 
   const ethereumBlockNumberUpdater = new BlockNumberUpdater(

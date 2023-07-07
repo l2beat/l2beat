@@ -28,7 +28,6 @@ export function createArbitrumTvlModule(
   )
 
   // #endregion
-
   // #region updaters
 
   const arbiscanBlockNumberUpdater = new BlockNumberUpdater(

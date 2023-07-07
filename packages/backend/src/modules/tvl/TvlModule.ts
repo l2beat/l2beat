@@ -48,14 +48,12 @@ export function createTvlModule(
     balanceStatusRepository: new BalanceStatusRepository(database, logger),
   }
   // #endregion
-
   // #region peripherals
 
   const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   // #endregion
-
   // #region updaters
 
   const priceUpdater = new PriceUpdater(
@@ -67,7 +65,6 @@ export function createTvlModule(
   )
 
   // #endregion
-
   // #region api
 
   const blocksController = new BlocksController(db.blockNumberRepository)
