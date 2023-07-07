@@ -70,7 +70,7 @@ describe(BlockNumberUpdater.name, () => {
         getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        add: async () => 0,
+        add: async () => '0',
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
@@ -92,7 +92,7 @@ describe(BlockNumberUpdater.name, () => {
         getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        add: async () => 0,
+        add: async () => '0',
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
@@ -130,7 +130,7 @@ describe(BlockNumberUpdater.name, () => {
         getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        add: async () => 0,
+        add: async () => '0',
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
@@ -171,7 +171,7 @@ describe(BlockNumberUpdater.name, () => {
         getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        add: async () => 0,
+        add: async () => '0',
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
