@@ -1,5 +1,5 @@
-import { EtherscanClient, Logger } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { BlockNumberProvider, Logger } from '@l2beat/shared'
+import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
@@ -11,8 +11,7 @@ export class BlockNumberUpdater {
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
-    // TODO: make sure it runs on the same chain as this.chainId
-    private readonly etherscanClient: EtherscanClient,
+    private readonly blockNumberProvider: BlockNumberProvider,
     private readonly blockNumberRepository: BlockNumberRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
@@ -25,6 +24,11 @@ export class BlockNumberUpdater {
       {
         metricsId: BlockNumberUpdater.name,
       },
+    )
+
+    assert(
+      this.chainId === blockNumberProvider.getChainId(),
+      'chainId mismatch between blockNumberProvider and consturctor argument',
     )
   }
 
@@ -92,7 +96,7 @@ export class BlockNumberUpdater {
 
   async update(timestamp: UnixTime) {
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const blockNumber = await this.etherscanClient.getBlockNumberAtOrBefore(
+    const blockNumber = await this.blockNumberProvider.getBlockNumberAtOrBefore(
       timestamp,
     )
     const block = { timestamp, blockNumber, chainId: this.chainId }
@@ -101,6 +105,7 @@ export class BlockNumberUpdater {
     this.logger.info('Update completed', {
       blockNumber: Number(blockNumber),
       timestamp: timestamp.toNumber(),
+      chainId: this.chainId.toString(),
     })
   }
 }

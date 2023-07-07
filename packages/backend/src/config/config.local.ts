@@ -10,7 +10,9 @@ import { getGitCommitHash } from './getGitCommitHash'
 export function getLocalConfig(): Config {
   dotenv()
 
-  const tvlEnabled = getEnv.boolean('TVL_SYNC_ENABLED', true)
+  const tvlEnabled = getEnv.boolean('TVL_ENABLED', true)
+  const ethereumTvlEnabled = getEnv.boolean('ETHEREUM_TVL_ENABLED', true)
+  const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
   const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)
   const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
@@ -20,7 +22,6 @@ export function getLocalConfig(): Config {
     name: 'Backend/Local',
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
-    syncEnabled: !getEnv.boolean('SYNC_DISABLED', false),
     logger: {
       logLevel: getEnv.integer('LOG_LEVEL', LogLevel.INFO),
       format: 'pretty',
@@ -49,11 +50,16 @@ export function getLocalConfig(): Config {
       commitSha: getGitCommitHash(),
     },
 
-    tvl: tvlEnabled && {
-      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
-      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-      arbiscanApiKey: process.env.ARBISCAN_API_KEY, // this is optional
+    tvl: {
+      enabled: tvlEnabled,
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
+      ethereum: ethereumTvlEnabled && {
+        alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+        etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+      },
+      arbitrum: arbitrumTvlEnabled && {
+        arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
+      },
     },
     activity: activityEnabled && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),

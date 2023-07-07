@@ -17,6 +17,7 @@ describe(BlockNumberUpdater.name, () => {
 
     it('skips known timestamps', async () => {
       const etherscan = mockObject<EtherscanClient>({
+        getChainId: mockFn().returns(ChainId.ETHEREUM),
         getBlockNumberAtOrBefore: mockFn()
           .resolvesToOnce(1300n)
           .resolvesToOnce(1100n),
@@ -65,10 +66,11 @@ describe(BlockNumberUpdater.name, () => {
     it('returns immediately if the data is available', async () => {
       const timestamp = UnixTime.now()
       const etherscanClient = mockObject<EtherscanClient>({
+        getChainId: mockFn().returns(ChainId.ETHEREUM),
         getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        add: async () => 0,
+        add: async () => '0',
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
@@ -86,10 +88,11 @@ describe(BlockNumberUpdater.name, () => {
     it('waits until data is available, then returns', async () => {
       const timestamp = UnixTime.now()
       const etherscanClient = mockObject<EtherscanClient>({
+        getChainId: mockFn().returns(ChainId.ETHEREUM),
         getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        add: async () => 0,
+        add: async () => '0',
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
@@ -123,10 +126,11 @@ describe(BlockNumberUpdater.name, () => {
       const to = from.add(2, 'hours')
 
       const etherscanClient = mockObject<EtherscanClient>({
+        getChainId: mockFn().returns(ChainId.ETHEREUM),
         getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        add: async () => 0,
+        add: async () => '0',
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
@@ -163,10 +167,11 @@ describe(BlockNumberUpdater.name, () => {
       const to = from.add(2, 'hours')
 
       const etherscanClient = mockObject<EtherscanClient>({
+        getChainId: mockFn().returns(ChainId.ETHEREUM),
         getBlockNumberAtOrBefore: async () => 1234,
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        add: async () => 0,
+        add: async () => '0',
       })
       const blockNumberUpdater = new BlockNumberUpdater(
         etherscanClient,
@@ -207,5 +212,24 @@ describe(BlockNumberUpdater.name, () => {
         ])
       })
     })
+  })
+
+  it('fails construction when chainId mismatch', async () => {
+    const etherscan = mockObject<EtherscanClient>({
+      getChainId: mockFn().returns(ChainId.ARBITRUM),
+    })
+    const blockNumberRepository = mockObject<BlockNumberRepository>({})
+    const clock = mockObject<Clock>({})
+
+    await expect(
+      async () =>
+        new BlockNumberUpdater(
+          etherscan,
+          blockNumberRepository,
+          clock,
+          Logger.SILENT,
+          ChainId.ETHEREUM,
+        ),
+    ).toBeRejectedWith('chainId mismatch')
   })
 })
