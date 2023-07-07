@@ -9,6 +9,7 @@ import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
+import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
@@ -22,6 +23,7 @@ import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
 import { createEthereumTvlSubmodule } from './EthereumTvl'
+import { TvlDatabase } from './types'
 
 export function createTvlModule(
   config: Config,
@@ -36,7 +38,7 @@ export function createTvlModule(
   }
   // #region database
 
-  const db = {
+  const db: TvlDatabase = {
     blockNumberRepository: new BlockNumberRepository(database, logger),
     priceRepository: new PriceRepository(database, logger),
     balanceRepository: new BalanceRepository(database, logger),
@@ -46,7 +48,7 @@ export function createTvlModule(
       logger,
     ),
     reportStatusRepository: new ReportStatusRepository(database, logger),
-    aggregatedReportStatusRepository: AggregatedReportStatusRepository(
+    aggregatedReportStatusRepository: new AggregatedReportStatusRepository(
       database,
       logger,
     ),
@@ -66,15 +68,6 @@ export function createTvlModule(
     db.priceRepository,
     clock,
     config.tokens,
-    logger,
-  )
-
-  const aggregatedReportUpdater = new AggregatedReportUpdater(
-    reportUpdater,
-    aggregatedReportRepository,
-    aggregatedReportStatusRepository,
-    clock,
-    config.projects,
     logger,
   )
 
