@@ -39,7 +39,9 @@
     "0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1": "Tellor",
     "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2": "Fx",
     "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35": "CustomPredicate",
-    "0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": "Aavegotchi"
+    "0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": "Aavegotchi",
+    "0x09305998a531fAde369EBE30aDF868c96A34e813": "DecentralandCollection",
+    "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7": "RootSyncer"
   },
   "overrides": {
     "InstaAaveV2": {
@@ -62,6 +64,12 @@
     },
     "Aavegotchi": {
       "ignoreDiscovery": true
+    },
+    "DecentralandCollection": {
+      "ignoreDiscovery": true
+    },
+    "RootSyncer": {
+      "ignoreDiscovery": true // not used
     },
     "DepositManager": {
       "ignoreDiscovery": true, // TODO: temporary,

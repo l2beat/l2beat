@@ -1,63 +1,9 @@
 {
   "name": "polygon-pos",
   "blockNumber": 17640301,
-  "configHash": "0x553ce081a0314116f6a03874a7caefef9de207f3f78519bd6b5bdd5a78343dde",
+  "configHash": "0x931a6513c7eb3f0dda089ba76561844efd2df2ff1a6c88c3e50b9016c1e886dc",
   "version": 1,
   "contracts": [
-    {
-      "name": "ERC721Collection",
-      "address": "0x09305998a531fAde369EBE30aDF868c96A34e813",
-      "code": "https://etherscan.deth.net/address/0x09305998a531fAde369EBE30aDF868c96A34e813",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "baseURI": "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/",
-        "getApproved": [
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000"
-        ],
-        "isComplete": true,
-        "isOwner": false,
-        "name": "dcl://pm_dreamverse_eminence",
-        "owner": "0x1FBf26781E289883a1Ec8Da235F7159B455D1160",
-        "ownerOf": [
-          "0xc3A8CF76264408DB3b350C60993d5849Ea350994",
-          "0x90A15B3D2A96eA5a146E648e257175af114F8E8A",
-          "0x1C83417Ee1Db46885bE74143F8f3e67A91384602",
-          "0x8EfD0D558886abD129306A83890b3782E512CaBf",
-          "0xe753aA24818f85e14962845b0A8ca46e4c0000d6"
-        ],
-        "symbol": "DCLPMDRMVRSMNNC",
-        "tokenByIndex": [0, 1, 2, 3, 4],
-        "tokenURI": [
-          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_boots/1",
-          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_boots/2",
-          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_cap/1",
-          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_cap/2",
-          "https://wearable-api.decentraland.org/v2/standards/erc721-metadata/collections/pm_dreamverse_eminence/wearables/pm_dreamverse_eminence_hat_visor/1"
-        ],
-        "totalSupply": 19,
-        "wearables": [
-          "pm_dreamverse_eminence_boots",
-          "pm_dreamverse_eminence_cap",
-          "pm_dreamverse_eminence_hat_visor",
-          "pm_dreamverse_eminence_pants",
-          "pm_dreamverse_eminence_jacket"
-        ],
-        "wearablesCount": 6
-      },
-      "errors": {
-        "getApproved": "Too many values. Update configuration explore fully",
-        "ownerOf": "Too many values. Update configuration explore fully",
-        "tokenByIndex": "Too many values. Update configuration explore fully",
-        "tokenURI": "Too many values. Update configuration explore fully",
-        "wearables": "Too many values. Update configuration explore fully"
-      }
-    },
     {
       "name": "ERC1155Predicate",
       "address": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
@@ -194,21 +140,6 @@
         "WITHDRAWN_EVENT_SIG": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5"
       },
       "derivedName": "PolygonERC20MintBurnPredicate"
-    },
-    {
-      "name": "RooySyncer",
-      "address": "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7",
-      "code": "https://etherscan.deth.net/address/0x6566115bC9Aa71f8DbC2004A656B5956C55726a7",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "checkpointManager": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-        "childTunnel": "0x09305998a531fAde369EBE30aDF868c96A34e813",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
-        "stateSender": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
-      }
     },
     {
       "name": "EtherPredicate",
@@ -452,72 +383,16 @@
   "eoas": [
     "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03",
     "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
-    "0x1C83417Ee1Db46885bE74143F8f3e67A91384602",
-    "0x1FBf26781E289883a1Ec8Da235F7159B455D1160",
     "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
     "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
     "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a",
     "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602",
-    "0x8EfD0D558886abD129306A83890b3782E512CaBf",
-    "0x90A15B3D2A96eA5a146E648e257175af114F8E8A",
     "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
     "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
-    "0xc3A8CF76264408DB3b350C60993d5849Ea350994",
     "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a",
-    "0xe753aA24818f85e14962845b0A8ca46e4c0000d6",
     "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
   ],
   "abis": {
-    "0x09305998a531fAde369EBE30aDF868c96A34e813": [
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function safeBatchTransferFrom(address _from, address _to, uint256[] _tokenIds)",
-      "function name() view returns (string)",
-      "function getApproved(uint256 tokenId) view returns (address)",
-      "function approve(address to, uint256 tokenId)",
-      "function issueTokens(address[] _beneficiaries, bytes32[] _wearableIds)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address from, address to, uint256 tokenId)",
-      "function safeBatchTransferFrom(address _from, address _to, uint256[] _tokenIds, bytes _data)",
-      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
-      "function addWearable(string _wearableId, uint256 _maxIssuance)",
-      "function addWearables(bytes32[] _wearableIds, uint256[] _maxIssuances)",
-      "function safeTransferFrom(address from, address to, uint256 tokenId)",
-      "function setAllowed(address _operator, bool _allowed)",
-      "function tokenByIndex(uint256 index) view returns (uint256)",
-      "function setBaseURI(string _baseURI)",
-      "function issueToken(address _beneficiary, string _wearableId)",
-      "function ownerOf(uint256 tokenId) view returns (address)",
-      "function baseURI() view returns (string)",
-      "function balanceOf(address owner) view returns (uint256)",
-      "function renounceOwnership()",
-      "function getWearableKey(string _wearableId) pure returns (bytes32)",
-      "function owner() view returns (address)",
-      "function isOwner() view returns (bool)",
-      "function symbol() view returns (string)",
-      "function setApprovalForAll(address to, bool approved)",
-      "function isComplete() view returns (bool)",
-      "function wearables(uint256) view returns (string)",
-      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes _data)",
-      "function issued(bytes32) view returns (uint256)",
-      "function tokenURI(uint256 _tokenId) view returns (string)",
-      "function allowed(address) view returns (bool)",
-      "function wearablesCount() view returns (uint256)",
-      "function maxIssuance(bytes32) view returns (uint256)",
-      "function isApprovedForAll(address owner, address operator) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function batchTransferFrom(address _from, address _to, uint256[] _tokenIds)",
-      "function completeCollection()",
-      "constructor(string _name, string _symbol, address _operator, string _baseURI)",
-      "event BaseURI(string _oldBaseURI, string _newBaseURI)",
-      "event Allowed(address indexed _operator, bool _allowed)",
-      "event AddWearable(bytes32 indexed _wearableIdKey, string _wearableId, uint256 _maxIssuance)",
-      "event Issue(address indexed _beneficiary, uint256 indexed _tokenId, bytes32 indexed _wearableIdKey, string _wearableId, uint256 _issuedId)",
-      "event Complete()",
-      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
-      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
-      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)"
-    ],
     "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
@@ -803,31 +678,6 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
-    ],
-    "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7": [
-      "event ReceivedData(address indexed _from, bytes _bytes_data)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function SEND_MESSAGE_EVENT_SIG() view returns (bytes32)",
-      "function calculateSumOnChildChain(uint256 number)",
-      "function checkpointManager() view returns (address)",
-      "function childTunnel() view returns (address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function processedExits(bytes32) view returns (bool)",
-      "function receiveMessage(bytes inputData)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setCheckpointManager(address newCheckpointManager)",
-      "function setChildTunnel(address newChildTunnel)",
-      "function setStateSender(address newStateSender)",
-      "function stateSender() view returns (address)",
-      "function syncOnMatic(bytes _data)"
     ],
     "0x7FBd00c577cAA70318BCF1c6c11e23732823b387": [
       "constructor()",
