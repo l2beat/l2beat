@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 
 import { EthereumClient } from '../../ethereum/EthereumClient'
 import {
@@ -18,6 +18,8 @@ export const ARBITRUM_MULTICALL_ADDRESS = EthereumAddress(
 )
 
 export class ArbitrumMulticallClient {
+  private readonly chainId = ChainId.ARBITRUM
+
   static forMainnet(arbitrumClient: EthereumClient) {
     return new ArbitrumMulticallClient(
       arbitrumClient,
@@ -82,6 +84,10 @@ export class ArbitrumMulticallClient {
     )
 
     return this.encoder.decode(result)
+  }
+
+  getChainId(): ChainId {
+    return this.chainId
   }
 }
 

@@ -30,7 +30,12 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
   constructor(
     private readonly arbitrumClient: EthereumClient,
     private readonly multicallClient: ArbitrumMulticallClient,
-  ) {}
+  ) {
+    assert(
+      this.chainId === this.multicallClient.getChainId(),
+      'chainId mismatch between multicallClient and balance provider',
+    )
+  }
 
   public getChainId(): ChainId {
     return this.chainId
