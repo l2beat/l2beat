@@ -1,8 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('omni');
 
 export const omni: Bridge = {
   type: 'bridge',
@@ -166,19 +169,10 @@ export const omni: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'Bridge Governance 7/16 MultiSig',
-      description:
-        'Can update bridge contracts, validator set, signature thresholds and bridge parameters',
-    },
+    ...discovery.getMultisigPermission(
+      'BridgeGovernance', 
+      'Can update the contracts and parameters of the bridge.'
+    ),
     {
       accounts: [
         {

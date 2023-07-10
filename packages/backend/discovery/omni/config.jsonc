@@ -1,0 +1,15 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "omni",
+  "initialAddresses": [
+    "0x88ad09518695c6c3712AC10a214bE5109a655671",
+    "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+    "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+    ],
+    "names": {
+        "0x88ad09518695c6c3712AC10a214bE5109a655671": "MultiTokenMediatorProxy",
+        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": "ForeignAMBProxy",
+        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": "BridgeValidatorsProxy",
+        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "BridgeGovernance",
+    }
+}
