@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -45,6 +45,8 @@ export class ReportUpdater {
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
+      ChainId.ETHEREUM,
+      ValueType.CBV,
     )
     for (const timestamp of known) {
       this.knownSet.add(timestamp.toNumber())
@@ -59,6 +61,7 @@ export class ReportUpdater {
     })
   }
 
+  // TODO(radomski): This should probably split op/arb report into different rows with correct chainId/valueType
   async update(timestamp: UnixTime) {
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const [prices, balances] = await Promise.all([
@@ -75,6 +78,8 @@ export class ReportUpdater {
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
+      chainId: ChainId.ETHEREUM,
+      valueType: ValueType.CBV,
     })
 
     this.knownSet.add(timestamp.toNumber())
