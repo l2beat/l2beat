@@ -55,7 +55,7 @@ export function Navbar(props: NavbarProps) {
         <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12">
           <ul className="flex h-full items-center">
             <li className="mr-4 lg:mr-8">
-              <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
+              <a href={props.selectedPage === 'bridges' ? '/bridges/summary' : '/'}>
                 <Logo className="h-8 w-auto" />
               </a>
             </li>
@@ -63,7 +63,7 @@ export function Navbar(props: NavbarProps) {
               <PageLink
                 selected={props.selectedPage === 'scaling'}
                 large
-                href="/scaling/tvl"
+                href="/scaling/summary"
               >
                 Scaling
               </PageLink>
@@ -72,7 +72,7 @@ export function Navbar(props: NavbarProps) {
               <PageLink
                 selected={props.selectedPage === 'bridges'}
                 large
-                href="/bridges/tvl"
+                href="/bridges/summary"
               >
                 Bridges
               </PageLink>

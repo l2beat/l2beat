@@ -4,7 +4,7 @@ import { RiskIcon, TvlIcon } from '../icons'
 import { NavigationTabs } from './NavigationTabs'
 
 interface BridgesNavigationTabsProps {
-  selected: 'tvl' | 'risk'
+  selected: 'summary' | 'risk'
 }
 
 export function BridgesNavigationTabs(props: BridgesNavigationTabsProps) {
@@ -15,8 +15,8 @@ export function BridgesNavigationTabs(props: BridgesNavigationTabsProps) {
           fullTitle: 'Total Value Locked',
           shortTitle: 'TVL',
           icon: <TvlIcon />,
-          link: '/bridges/tvl',
-          selected: props.selected === 'tvl',
+          link: '/bridges/summary',
+          selected: props.selected === 'summary',
         },
         {
           icon: <RiskIcon />,

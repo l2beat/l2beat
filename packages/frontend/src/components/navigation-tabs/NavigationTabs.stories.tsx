@@ -9,7 +9,7 @@ export default {
 }
 
 interface BridgesTemplateProps {
-  selected: 'tvl' | 'risk'
+  selected: 'summary' | 'risk'
 }
 function BridgesTemplate({ selected }: BridgesTemplateProps) {
   return (
@@ -23,15 +23,15 @@ export const Bridges: Story<BridgesTemplateProps> = BridgesTemplate.bind({})
 Bridges.argTypes = {
   selected: {
     control: 'radio',
-    options: ['tvl', 'risk'],
+    options: ['summary', 'risk'],
   },
 }
 Bridges.args = {
-  selected: 'tvl',
+  selected: 'summary',
 }
 
 interface ScalingTemplateProps {
-  selected: 'tvl' | 'risk' | 'activity'
+  selected: 'summary' | 'risk' | 'activity'
 }
 function ScalingTemplate({ selected }: ScalingTemplateProps) {
   return (
@@ -45,9 +45,9 @@ export const Scaling: Story<ScalingTemplateProps> = ScalingTemplate.bind({})
 Scaling.argTypes = {
   selected: {
     control: 'radio',
-    options: ['tvl', 'risk', 'activity'],
+    options: ['summary', 'risk', 'activity'],
   },
 }
 Scaling.args = {
-  selected: 'tvl',
+  selected: 'summary',
 }

@@ -4,7 +4,7 @@ import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
 import { NavigationPage, NavigationTabs } from './NavigationTabs'
 
 interface ScalingNavigationTabsProps {
-  selected: 'tvl' | 'risk' | 'activity'
+  selected: 'summary' | 'risk' | 'activity'
   showActivity: boolean
 }
 
@@ -14,8 +14,8 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       fullTitle: 'Total Value Locked',
       shortTitle: 'TVL',
       icon: <TvlIcon />,
-      link: '/scaling/tvl',
-      selected: props.selected === 'tvl',
+      link: '/scaling/summary',
+      selected: props.selected === 'summary',
     },
     {
       fullTitle: 'Risk Analysis',
