@@ -1,14 +1,16 @@
 import { Logger } from '@l2beat/shared'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { setTimeout } from 'timers/promises'
 
-import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
-import { ReportRepository } from '../../peripherals/database/ReportRepository'
+import {
+  ReportRecord,
+  ReportRepository,
+} from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { aggregateReports } from './aggregateReports'
 import { createReports } from './createReports'
 import { addArbTokenReport } from './custom/arbitrum'
 import { addOpTokenReport } from './custom/optimism'
@@ -18,12 +20,12 @@ import { ReportProject } from './ReportProject'
 export class ReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
+  private readonly knownSet = new Set<number>()
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
     private readonly balanceUpdater: BalanceUpdater,
     private readonly reportRepository: ReportRepository,
-    private readonly aggregatedReportsRepository: AggregatedReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
     private readonly projects: ReportProject[],
@@ -44,11 +46,13 @@ export class ReportUpdater {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
     )
-    const knownSet = new Set(known.map((x) => x.toNumber()))
+    for (const timestamp of known) {
+      this.knownSet.add(timestamp.toNumber())
+    }
 
     this.logger.info('Started')
     return this.clock.onEveryHour((timestamp) => {
-      if (!knownSet.has(timestamp.toNumber())) {
+      if (!this.knownSet.has(timestamp.toNumber())) {
         // we add to front to sync from newest to oldest
         this.taskQueue.addToFront(timestamp)
       }
@@ -65,19 +69,25 @@ export class ReportUpdater {
     const reports = createReports(prices, balances, this.projects)
     addOpTokenReport(reports, prices, timestamp)
     addArbTokenReport(reports, prices, timestamp)
-    const aggregatedReports = aggregateReports(
-      reports,
-      this.projects,
-      timestamp,
-    )
-    await Promise.all([
-      this.reportRepository.addOrUpdateMany(reports),
-      this.aggregatedReportsRepository.addOrUpdateMany(aggregatedReports),
-    ])
+
+    await this.reportRepository.addOrUpdateMany(reports)
+
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
     })
+
+    this.knownSet.add(timestamp.toNumber())
     this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+  }
+
+  async getReportsWhenReady(
+    timestamp: UnixTime,
+    refreshIntervalMs = 1000,
+  ): Promise<ReportRecord[]> {
+    while (!this.knownSet.has(timestamp.toNumber())) {
+      await setTimeout(refreshIntervalMs)
+    }
+    return this.reportRepository.getByTimestamp(timestamp)
   }
 }

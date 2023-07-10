@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
+import { ActivityIcon, RiskIcon, SummaryIcon } from '../icons'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
@@ -24,7 +24,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
       className="fixed left-0 bottom-0 top-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
     >
       <div className="mt-[11.5px] flex items-center justify-between px-4">
-        <a href={props.selectedPage === 'bridges' ? '/bridges/tvl' : '/'}>
+        <a href={props.selectedPage === 'bridges' ? '/bridges/summary' : '/'}>
           <Logo className="h-8 w-auto" />
         </a>
         <div className="flex gap-4">
@@ -38,12 +38,12 @@ export function SidebarMenu(props: SidebarMenuProps) {
         <ul className="mt-8 px-6">
           <li>
             <div className="mb-4 text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
-              <a href="/scaling/tvl">Scaling</a>
+              <a href="/scaling/summary">Scaling</a>
             </div>
             <ul className="ml-4 flex flex-col gap-4">
               <li className="flex gap-2 font-medium">
-                <TvlIcon className="h-auto w-4" />
-                <a href="/scaling/tvl">Total Value Locked</a>
+                <SummaryIcon className="h-auto w-4" />
+                <a href="/scaling/summary">Summary</a>
               </li>
               <li className="flex gap-2 font-medium">
                 <RiskIcon className="h-auto w-4" />
@@ -62,13 +62,13 @@ export function SidebarMenu(props: SidebarMenuProps) {
           <li>
             <div className="mb-4 flex items-center gap-2">
               <span className="text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
-                <a href="/bridges/tvl">Bridges</a>
+                <a href="/bridges/summary">Bridges</a>
               </span>
             </div>
             <ul className="ml-4 flex flex-col gap-4">
               <li className="flex items-center gap-2 font-medium">
-                <TvlIcon className="h-auto w-4" />
-                <a href="/bridges/tvl">Total Value Locked</a>
+                <SummaryIcon className="h-auto w-4" />
+                <a href="/bridges/summary">Summary</a>
               </li>
               <li className="flex items-center gap-2 font-medium">
                 <RiskIcon className="h-auto w-4" />

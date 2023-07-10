@@ -1,4 +1,5 @@
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
+import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
@@ -12,6 +13,7 @@ export interface TvlDatabase {
   readonly balanceRepository: BalanceRepository
   readonly reportRepository: ReportRepository
   readonly aggregatedReportRepository: AggregatedReportRepository
+  readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository
   readonly reportStatusRepository: ReportStatusRepository
   readonly balanceStatusRepository: BalanceStatusRepository
 }

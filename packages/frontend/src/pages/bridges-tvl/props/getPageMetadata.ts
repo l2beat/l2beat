@@ -6,6 +6,6 @@ export function getPageMetadata(): PageMetadata {
     description:
       'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
     image: 'https://l2beat.com/meta-images/overview-bridges.png',
-    url: 'https://l2beat.com/bridges/tvl',
+    url: 'https://l2beat.com/bridges/summary',
   }
 }
