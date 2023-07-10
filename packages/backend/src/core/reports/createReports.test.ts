@@ -1,15 +1,15 @@
 import { AssetId, ChainId, ProjectId, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { BALANCES, NOW, PRICES, PROJECTS } from '../../test/projects'
+import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
 import { aggregateBalancesPerProject, createReports } from './createReports'
 
 describe(createReports.name, () => {
   it('correctly aggregates many calculated balances', () => {
-    const result = createReports(PRICES, BALANCES, PROJECTS)
+    const result = createReports(MOCK.PRICES, MOCK.BALANCES, MOCK.PROJECTS)
     expect(result).toEqual([
       {
-        timestamp: NOW,
+        timestamp: MOCK.NOW,
         projectId: ProjectId('arbitrum'),
         asset: AssetId.DAI,
         type: ValueType.CBV,
@@ -18,7 +18,7 @@ describe(createReports.name, () => {
         ethValue: 5_000000n,
       },
       {
-        timestamp: NOW,
+        timestamp: MOCK.NOW,
         projectId: ProjectId('arbitrum'),
         asset: AssetId.ETH,
         type: ValueType.CBV,
@@ -27,7 +27,7 @@ describe(createReports.name, () => {
         ethValue: 30_000000n,
       },
       {
-        timestamp: NOW,
+        timestamp: MOCK.NOW,
         projectId: ProjectId('optimism'),
         asset: AssetId.ETH,
         type: ValueType.CBV,
@@ -41,17 +41,17 @@ describe(createReports.name, () => {
 
 describe(aggregateBalancesPerProject.name, () => {
   it('skips balances before escrow sinceTimestamp', () => {
-    const result = aggregateBalancesPerProject(PROJECTS, [
+    const result = aggregateBalancesPerProject(MOCK.PROJECTS, [
       {
-        holderAddress: PROJECTS[0].escrows[0].address,
-        timestamp: PROJECTS[0].escrows[0].sinceTimestamp.add(-1, 'days'),
+        holderAddress: MOCK.PROJECTS[0].escrows[0].address,
+        timestamp: MOCK.PROJECTS[0].escrows[0].sinceTimestamp.add(-1, 'days'),
         assetId: AssetId.DAI,
         balance: 100n * 10n ** 18n,
         chainId: ChainId.ETHEREUM,
       },
       {
-        holderAddress: PROJECTS[0].escrows[0].address,
-        timestamp: PROJECTS[0].escrows[0].tokens[0].sinceTimestamp.add(
+        holderAddress: MOCK.PROJECTS[0].escrows[0].address,
+        timestamp: MOCK.PROJECTS[0].escrows[0].tokens[0].sinceTimestamp.add(
           1,
           'days',
         ),
@@ -85,10 +85,10 @@ describe(aggregateBalancesPerProject.name, () => {
     ])
   })
   it('discards balances before asset sinceTimestamp', () => {
-    const result = aggregateBalancesPerProject(PROJECTS, [
+    const result = aggregateBalancesPerProject(MOCK.PROJECTS, [
       {
-        holderAddress: PROJECTS[0].escrows[0].address,
-        timestamp: PROJECTS[0].escrows[0].tokens[0].sinceTimestamp.add(
+        holderAddress: MOCK.PROJECTS[0].escrows[0].address,
+        timestamp: MOCK.PROJECTS[0].escrows[0].tokens[0].sinceTimestamp.add(
           -1,
           'days',
         ),
@@ -97,8 +97,8 @@ describe(aggregateBalancesPerProject.name, () => {
         chainId: ChainId.ETHEREUM,
       },
       {
-        holderAddress: PROJECTS[0].escrows[0].address,
-        timestamp: PROJECTS[0].escrows[0].tokens[0].sinceTimestamp.add(
+        holderAddress: MOCK.PROJECTS[0].escrows[0].address,
+        timestamp: MOCK.PROJECTS[0].escrows[0].tokens[0].sinceTimestamp.add(
           1,
           'days',
         ),
