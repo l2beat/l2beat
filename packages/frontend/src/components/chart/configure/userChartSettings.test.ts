@@ -18,7 +18,7 @@ describe('UserChartSettings', () => {
   })
 
   describe(getUserChartSettings.name, () => {
-    const pagePathname = 'scaling/tvl'
+    const pagePathname = 'scaling/summary'
 
     describe('with no persisted ChartSettings', () => {
       it('returns default ChartSettings', () => {
@@ -56,7 +56,7 @@ describe('UserChartSettings', () => {
 
       describe('For different pagePathname', () => {
         it('returns default ChartSettings', () => {
-          expect(getUserChartSettings('bridges/tvl')).toEqual({
+          expect(getUserChartSettings('bridges/summary')).toEqual({
             isLogScale: false,
             days: 365,
             currency: 'usd',

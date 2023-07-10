@@ -8,6 +8,7 @@ import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumB
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
+import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { ReportUpdater } from '../../core/reports/ReportUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
@@ -68,8 +69,16 @@ export function createEthereumTvlSubmodule(
     priceUpdater,
     balanceUpdater,
     db.reportRepository,
-    db.aggregatedReportRepository,
     db.reportStatusRepository,
+    clock,
+    config.projects,
+    logger,
+  )
+
+  const aggregatedReportUpdater = new AggregatedReportUpdater(
+    reportUpdater,
+    db.aggregatedReportRepository,
+    db.aggregatedReportStatusRepository,
     clock,
     config.projects,
     logger,
@@ -84,6 +93,7 @@ export function createEthereumTvlSubmodule(
     await ethereumBlockNumberUpdater.start()
     await balanceUpdater.start()
     await reportUpdater.start()
+    await aggregatedReportUpdater.start()
 
     logger.info('Started')
   }
