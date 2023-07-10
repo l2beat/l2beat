@@ -153,7 +153,7 @@ export class ArbitrumBalanceProvider implements BalanceProvider {
     }
 
     if (this.isNativeCoin(assetId)) {
-      return decodeMulticallCoinBalanceQuery(response.data)
+      return decodeMulticallGetBalanceQuery(response.data)
     }
 
     return decodeErc20BalanceQuery(response.data)
@@ -195,7 +195,7 @@ function encodeMulticallGetBalanceQuery(
   }
 }
 
-function decodeMulticallCoinBalanceQuery(response: Bytes): bigint {
+function decodeMulticallGetBalanceQuery(response: Bytes): bigint {
   const [value] = multicallInterface.decodeFunctionResult(
     'getEthBalance',
     response.toString(),
