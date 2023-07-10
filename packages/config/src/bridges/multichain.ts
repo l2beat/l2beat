@@ -188,7 +188,7 @@ export const multichain: Bridge = {
       name: 'Contracts hacked for $130M',
       date: '2023-07-07T00:00:00Z',
       link: 'https://blockworks.co/news/multichain-anyswap-exploit',
-    }
+    },
   ],
   knowledgeNuggets: [
     {
