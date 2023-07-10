@@ -12,7 +12,7 @@ export interface ProjectCellProps {
     isVerified?: boolean
     isUpcoming?: boolean
     isArchived?: boolean
-    isUnderReview?: boolean
+    showProjectUnderReview?: boolean
     warning?: string
   }
   highlightL2?: boolean
@@ -53,7 +53,7 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
           </span>
         </span>
       )}
-      {project.isUnderReview && (
+      {project.showProjectUnderReview && (
         <span className="pl-1.5">
           <span
             className="Tooltip inline-block"
