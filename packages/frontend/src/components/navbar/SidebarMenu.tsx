@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ActivityIcon, RiskIcon, TvlIcon } from '../icons'
+import { ActivityIcon, RiskIcon, SummaryIcon } from '../icons'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
@@ -42,8 +42,8 @@ export function SidebarMenu(props: SidebarMenuProps) {
             </div>
             <ul className="ml-4 flex flex-col gap-4">
               <li className="flex gap-2 font-medium">
-                <TvlIcon className="h-auto w-4" />
-                <a href="/scaling/summary">Total Value Locked</a>
+                <SummaryIcon className="h-auto w-4" />
+                <a href="/scaling/summary">Summary</a>
               </li>
               <li className="flex gap-2 font-medium">
                 <RiskIcon className="h-auto w-4" />
@@ -67,8 +67,8 @@ export function SidebarMenu(props: SidebarMenuProps) {
             </div>
             <ul className="ml-4 flex flex-col gap-4">
               <li className="flex items-center gap-2 font-medium">
-                <TvlIcon className="h-auto w-4" />
-                <a href="/bridges/summary">Total Value Locked</a>
+                <SummaryIcon className="h-auto w-4" />
+                <a href="/bridges/summary">Summary</a>
               </li>
               <li className="flex items-center gap-2 font-medium">
                 <RiskIcon className="h-auto w-4" />

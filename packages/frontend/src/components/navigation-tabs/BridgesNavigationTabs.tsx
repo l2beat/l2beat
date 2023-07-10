@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { RiskIcon, TvlIcon } from '../icons'
+import { RiskIcon, SummaryIcon } from '../icons'
 import { NavigationTabs } from './NavigationTabs'
 
 interface BridgesNavigationTabsProps {
@@ -12,9 +12,9 @@ export function BridgesNavigationTabs(props: BridgesNavigationTabsProps) {
     <NavigationTabs
       pages={[
         {
-          fullTitle: 'Total Value Locked',
-          shortTitle: 'TVL',
-          icon: <TvlIcon />,
+          fullTitle: 'Summary',
+          shortTitle: 'Summary',
+          icon: <SummaryIcon />,
           link: '/bridges/summary',
           selected: props.selected === 'summary',
         },
