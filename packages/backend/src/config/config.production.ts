@@ -96,7 +96,7 @@ export function getProductionConfig(): Config {
       },
     },
     updateMonitor: updateMonitorEnabled && {
-      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),
