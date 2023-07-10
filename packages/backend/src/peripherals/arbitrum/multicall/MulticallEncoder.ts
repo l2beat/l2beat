@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 
 import { MulticallEncoder, MulticallResponse } from './interfaces'
 
-const arbitrumMulticallInterface = new utils.Interface([
+export const arbitrumMulticallInterface = new utils.Interface([
   'function tryAggregate(bool requireSuccess, tuple(address target, bytes callData)[] calls) public returns (tuple(bool success, bytes returnData)[] returnData)',
 ])
 
