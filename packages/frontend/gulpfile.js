@@ -85,7 +85,7 @@ function serve() {
   const app = express()
   app.use(express.static('build'))
   app.get('/', (req, res) => {
-    res.redirect('/scaling/tvl')
+    res.redirect('/scaling/summary')
   })
   app.use(
     '/api/projects',

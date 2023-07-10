@@ -30,7 +30,7 @@ export function BridgesTvlPage(props: BridgesTvlPageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent>
-        <BridgesNavigationTabs selected="tvl" />
+        <BridgesNavigationTabs selected="summary" />
         <main>
           <div data-bridges-only-cell>
             <TvlHeader

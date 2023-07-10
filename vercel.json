@@ -2,7 +2,12 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "scaling/tvl/",
+      "destination": "scaling/summary/",
+      "permanent": true
+    },
+    {
+      "source": "/scaling/tvl",
+      "destination": "summary/",
       "permanent": true
     },
     {
@@ -53,6 +58,11 @@
     {
       "source": "/projects/:name",
       "destination": "/scaling/projects/:name",
+      "permanent": true
+    },
+    {
+      "source": "/bridges/tvl",
+      "destination": "summary/",
       "permanent": true
     },
     {

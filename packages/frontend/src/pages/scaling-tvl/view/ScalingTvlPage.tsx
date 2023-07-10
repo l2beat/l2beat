@@ -33,7 +33,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
       <PageContent>
         <ScalingNavigationTabs
           showActivity={props.showActivity}
-          selected="tvl"
+          selected="summary"
         />
         <main>
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />

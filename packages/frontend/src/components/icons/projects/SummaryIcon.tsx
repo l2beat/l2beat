@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { SVGAttributes } from 'react'
 
 import { Icon } from '../Icon'
 
-export function SummaryIcon() {
+export function SummaryIcon(props: SVGAttributes<SVGElement>) {
   return (
-    <Icon aria-label="Summary">
+    <Icon aria-label="Summary" {...props}>
       <g clipPath="url(#clip0_4_3317)">
         <path
           d="M11.9575 1.39722C6.07957 1.39722 1.31488 6.16191 1.31488 12.0398C1.31488 17.9177 6.07957 22.6824 11.9575 22.6824C14.8182 22.6824 17.4097 21.5479 19.3221 19.7115L11.9575 12.0398V1.39722Z"
