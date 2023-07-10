@@ -60,12 +60,13 @@ export class AggregatedReportUpdater {
       timestamp,
     )
 
+    await this.aggregatedReportRepository.addOrUpdateMany(aggregatedReports)
+
     await this.aggregatedReportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
     })
 
-    await this.aggregatedReportRepository.addOrUpdateMany(aggregatedReports),
-      this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+    this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
   }
 }
