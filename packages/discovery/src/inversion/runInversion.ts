@@ -77,6 +77,18 @@ export async function runInversion(
             atAddress: contract.address,
           })
         }
+      } else if (key === 'accessControl') {
+        for (const [roleName, role] of Object.entries(
+          value as Record<string, { members: string[] }>,
+        )) {
+          for (const member of role.members) {
+            add(member, {
+              name: roleName,
+              atName: contract.name,
+              atAddress: contract.address,
+            })
+          }
+        }
       } else if (value) {
         add(value, {
           name: key,
