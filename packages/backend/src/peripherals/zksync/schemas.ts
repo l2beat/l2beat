@@ -1,7 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { stringAs, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
-
-import { stringAs } from '../../tools/types'
 
 export type ZksyncSuccessResponse = z.infer<typeof ZksyncSuccessResponse>
 const ZksyncSuccessResponse = z.object({

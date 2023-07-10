@@ -4,13 +4,13 @@ import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
 import {
-  AggregateReportRecord,
-  AggregateReportRepository,
-} from './AggregateReportRepository'
+  AggregatedReportRecord,
+  AggregatedReportRepository,
+} from './AggregatedReportRepository'
 
-describe(AggregateReportRepository.name, () => {
+describe(AggregatedReportRepository.name, () => {
   const { database } = setupDatabaseTestSuite()
-  const repository = new AggregateReportRepository(database, Logger.SILENT)
+  const repository = new AggregatedReportRepository(database, Logger.SILENT)
 
   const TIME_0 = UnixTime.now().toStartOf('day')
   const TIME_1 = TIME_0.add(1, 'hours')
@@ -23,7 +23,7 @@ describe(AggregateReportRepository.name, () => {
     await repository.deleteAll()
   })
 
-  describe(AggregateReportRepository.prototype.getDaily.name, () => {
+  describe(AggregatedReportRepository.prototype.getDaily.name, () => {
     it('returns only full days', async () => {
       const REPORT = fakeAggregateReport({ timestamp: TIME_0 })
       await repository.addOrUpdateMany([REPORT])
@@ -48,7 +48,7 @@ describe(AggregateReportRepository.name, () => {
     })
   })
 
-  describe(AggregateReportRepository.prototype.getSixHourly.name, () => {
+  describe(AggregatedReportRepository.prototype.getSixHourly.name, () => {
     it('returns only six hourly reports', async () => {
       const REPORT = fakeAggregateReport({ timestamp: TIME_0.add(-6, 'hours') })
       await repository.addOrUpdateMany([REPORT])
@@ -78,7 +78,7 @@ describe(AggregateReportRepository.name, () => {
     })
   })
 
-  describe(AggregateReportRepository.prototype.getHourly.name, () => {
+  describe(AggregatedReportRepository.prototype.getHourly.name, () => {
     it('returns only last 7 days', async () => {
       const REPORT = fakeAggregateReport({ timestamp: TIME_0 })
       await repository.addOrUpdateMany([REPORT])
@@ -105,7 +105,7 @@ describe(AggregateReportRepository.name, () => {
     })
   })
 
-  describe(AggregateReportRepository.prototype.addOrUpdateMany.name, () => {
+  describe(AggregatedReportRepository.prototype.addOrUpdateMany.name, () => {
     it('replaces existing records', async () => {
       const REPORTS = [
         fakeAggregateReport({
@@ -149,7 +149,7 @@ describe(AggregateReportRepository.name, () => {
     })
   })
 
-  describe(AggregateReportRepository.prototype.findLatest.name, () => {
+  describe(AggregatedReportRepository.prototype.findLatest.name, () => {
     it('finds latest report', async () => {
       const reports = [
         fakeAggregateReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
@@ -166,7 +166,7 @@ describe(AggregateReportRepository.name, () => {
     })
   })
 
-  describe(AggregateReportRepository.prototype.getAll.name, () => {
+  describe(AggregatedReportRepository.prototype.getAll.name, () => {
     it('returns all records', async () => {
       const reports = [
         fakeAggregateReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
@@ -178,7 +178,7 @@ describe(AggregateReportRepository.name, () => {
     })
   })
 
-  describe(AggregateReportRepository.prototype.deleteAll.name, () => {
+  describe(AggregatedReportRepository.prototype.deleteAll.name, () => {
     it('deletes all reports', async () => {
       const reports = [
         fakeAggregateReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
@@ -193,8 +193,8 @@ describe(AggregateReportRepository.name, () => {
 })
 
 function fakeAggregateReport(
-  report?: Partial<AggregateReportRecord>,
-): AggregateReportRecord {
+  report?: Partial<AggregatedReportRecord>,
+): AggregatedReportRecord {
   return {
     timestamp: UnixTime.now(),
     projectId: ProjectId('fake-project'),

@@ -38,7 +38,7 @@ export function getTechnologyOverview(project: Bridge): TechnologyOverview {
   const sections = makeSections()
   const isIncomplete =
     !!project.contracts?.isIncomplete ||
-    sections.length !== 3 ||
+    sections[0]?.items.length !== 3 ||
     sections.some((x) => x.items.some((x) => x.isIncomplete))
 
   const incomplete = isIncomplete

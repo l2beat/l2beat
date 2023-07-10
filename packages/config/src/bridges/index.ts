@@ -3,6 +3,7 @@ import { allbridge } from './allbridge'
 import { amarok } from './amarok'
 import { aptos } from './aptos'
 import { avalanche } from './avalanche'
+import { beamerbridgev2 } from './beamerBridgeV2'
 import { cBridge } from './cBridge'
 import { connext } from './connext'
 import { debridge } from './debridge'
@@ -30,6 +31,7 @@ import { satellite } from './satellite'
 import { skaleIMA } from './skaleIMA'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
+import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
 import { Bridge } from './types'
 import { wormholeV1 } from './wormholeV1'
@@ -43,6 +45,7 @@ export const bridges: Bridge[] = [
   amarok,
   avalanche,
   aptos,
+  beamerbridgev2,
   cBridge,
   connext,
   debridge,
@@ -73,4 +76,5 @@ export const bridges: Bridge[] = [
   portal,
   wormholeV1,
   xdai,
+  symbiosis,
 ]

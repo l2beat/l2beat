@@ -18,7 +18,7 @@ export class ReportStatusRepository extends BaseRepository {
 
   async getByConfigHash(configHash: Hash256): Promise<UnixTime[]> {
     const knex = await this.knex()
-    const rows = await knex('report_status')
+    const rows = await knex('reports_status')
       .where({ config_hash: configHash.toString() })
       .select('unix_timestamp')
 
@@ -31,12 +31,12 @@ export class ReportStatusRepository extends BaseRepository {
   }): Promise<Hash256> {
     const knex = await this.knex()
     await knex.transaction(async (trx) => {
-      await trx('report_status')
+      await trx('reports_status')
         .where({
           unix_timestamp: record.timestamp.toDate(),
         })
         .delete()
-      await trx('report_status').insert({
+      await trx('reports_status').insert({
         config_hash: record.configHash.toString(),
         unix_timestamp: record.timestamp.toDate(),
       })
@@ -46,7 +46,7 @@ export class ReportStatusRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('report_status').delete()
+    return await knex('reports_status').delete()
   }
 
   async getBetween(
@@ -55,7 +55,7 @@ export class ReportStatusRepository extends BaseRepository {
   ): Promise<ReportStatusRecord[]> {
     const knex = await this.knex()
 
-    const rows = await knex('report_status')
+    const rows = await knex('reports_status')
       .where('unix_timestamp', '>=', from.toDate())
       .andWhere('unix_timestamp', '<=', to.toDate())
 
@@ -68,7 +68,7 @@ export class ReportStatusRepository extends BaseRepository {
   async findLatestTimestamp(): Promise<UnixTime | undefined> {
     const knex = await this.knex()
     // note: we need to provide better types manually here
-    const row = (await knex('report_status').max('unix_timestamp').first()) as
+    const row = (await knex('reports_status').max('unix_timestamp').first()) as
       | NullableDict<Date>
       | undefined
     if (!row || row.max === null) {

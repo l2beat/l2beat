@@ -25,12 +25,13 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
     project_id: string
     asset_id: string
-    balance: string
-    balance_usd: string
-    balance_eth: string
+    asset_type: string
+    asset_amount: string
+    usd_value: string
+    eth_value: string
   }
 
-  interface AggregateReportRow {
+  interface AggregatedReportRow {
     unix_timestamp: Date
     project_id: string
     tvl_usd: string
@@ -100,13 +101,13 @@ declare module 'knex/types/tables' {
   }
 
   interface Tables {
-    block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
-    asset_balances: BalanceRow
-    balance_status: BalanceStatusRow
+    block_numbers: BlockNumberRow
+    balances: BalanceRow
+    balances_status: BalanceStatusRow
     reports: ReportRow
-    aggregate_reports: AggregateReportRow
-    report_status: ReportStatusRow
+    reports_status: ReportStatusRow
+    aggregated_reports: AggregatedReportRow
     sequence_processor: SequenceProcessorRow
     'activity.zksync': ZksyncTransactionRow
     'activity.block': BlockTransactionCountRow

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { AssetId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -23,24 +23,24 @@ describe(ReportRepository.name, () => {
   describe(ReportRepository.prototype.addOrUpdateMany.name, () => {
     it('replaces existing records', async () => {
       const REPORTS_1 = [
-        fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, balance: 1n }),
-        fakeReport({ asset: AssetId.ETH, timestamp: TIME_1, balance: 1n }),
+        fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, amount: 1n }),
+        fakeReport({ asset: AssetId.ETH, timestamp: TIME_1, amount: 1n }),
         fakeReport({
           projectId: ProjectId('arbitrum'),
           asset: AssetId.ETH,
           timestamp: TIME_1,
-          balance: 1n,
+          amount: 1n,
         }),
       ]
       await repository.addOrUpdateMany(REPORTS_1)
       expect(await repository.getAll()).toEqual(REPORTS_1)
       const REPORTS_2 = [
-        fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, balance: 2n }),
+        fakeReport({ asset: AssetId.DAI, timestamp: TIME_1, amount: 2n }),
         fakeReport({
           projectId: ProjectId('dydx'),
           asset: AssetId.ETH,
           timestamp: TIME_1,
-          balance: 2n,
+          amount: 2n,
         }),
       ]
       await repository.addOrUpdateMany(REPORTS_2)
@@ -194,9 +194,10 @@ function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
     timestamp: UnixTime.now(),
     projectId: ProjectId('fake-project'),
     asset: AssetId('fake-asset'),
-    balance: 1234n,
-    balanceUsd: 1234n,
-    balanceEth: 1234n,
+    type: ValueType.CBV,
+    amount: 1234n,
+    usdValue: 1234n,
+    ethValue: 1234n,
     ...report,
   }
 }

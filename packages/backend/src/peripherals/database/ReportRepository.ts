@@ -1,5 +1,11 @@
 import { Logger } from '@l2beat/shared'
-import { assert, AssetId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  AssetId,
+  ProjectId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
 
@@ -10,9 +16,11 @@ export interface ReportRecord {
   timestamp: UnixTime
   projectId: ProjectId
   asset: AssetId
-  balanceUsd: bigint
-  balanceEth: bigint
-  balance: bigint
+  // TODO: Index this column when we start querying by it.
+  type: ValueType
+  amount: bigint
+  usdValue: bigint
+  ethValue: bigint
 }
 
 export const SIX_HOURS = UnixTime.HOUR * 6
@@ -120,9 +128,10 @@ function toRow(record: ReportRecord): ReportRow {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
     asset_id: record.asset.toString(),
-    balance: record.balance.toString(),
-    balance_usd: record.balanceUsd.toString(),
-    balance_eth: record.balanceEth.toString(),
+    asset_type: record.type.toString(),
+    asset_amount: record.amount.toString(),
+    usd_value: record.usdValue.toString(),
+    eth_value: record.ethValue.toString(),
   }
 }
 
@@ -131,8 +140,9 @@ function toRecord(row: ReportRow): ReportRecord {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),
     asset: AssetId(row.asset_id),
-    balance: BigInt(row.balance),
-    balanceUsd: BigInt(row.balance_usd),
-    balanceEth: BigInt(row.balance_eth),
+    type: ValueType(row.asset_type),
+    amount: BigInt(row.asset_amount),
+    usdValue: BigInt(row.usd_value),
+    ethValue: BigInt(row.eth_value),
   }
 }

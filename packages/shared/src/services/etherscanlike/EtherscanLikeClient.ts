@@ -1,54 +1,38 @@
-import { HttpClient, Logger } from '@l2beat/shared'
-import { getErrorMessage, RateLimiter, UnixTime } from '@l2beat/shared-pure'
+import { getErrorMessage, RateLimiter } from '@l2beat/shared-pure'
 
-import { stringAsInt } from '../../tools/types'
-import { parseEtherscanResponse } from './parseEtherscanResponse'
+import { Logger } from '../../tools'
+import { HttpClient } from '../HttpClient'
+import { parseEtherscanResponse } from './model'
 
 export class EtherscanError extends Error {}
 
-export class EtherscanClient {
+export class EtherscanLikeClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
+  private readonly timeoutMs = 20_000
 
   constructor(
-    private readonly etherscanApiKey: string,
     private readonly httpClient: HttpClient,
-    private readonly logger: Logger,
+    private readonly url: string,
+    private readonly apiKey: string,
+    private readonly logger = Logger.SILENT,
   ) {
-    this.logger = this.logger.for(this)
-  }
-
-  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
-    const result = await this.call('block', 'getblocknobytime', {
-      timestamp: timestamp.toString(),
-      closest: 'before',
-    })
-    return stringAsInt().parse(result)
+    this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
-    return this.rateLimiter.call(() =>
-      this.callUnlimited(module, action, params),
-    )
-  }
-
-  private async callUnlimited(
-    module: string,
-    action: string,
-    params: Record<string, string>,
-  ) {
     const query = new URLSearchParams({
       module,
       action,
       ...params,
-      apikey: this.etherscanApiKey,
+      apikey: this.apiKey,
     })
-    const url = `https://api.etherscan.io/api?${query.toString()}`
+    const url = `${this.url}?${query.toString()}`
 
     const start = Date.now()
     const { httpResponse, error } = await this.httpClient
-      .fetch(url, { timeout: 20_000 })
+      .fetch(url, { timeout: this.timeoutMs })
       .then(
         (httpResponse) => ({ httpResponse, error: undefined }),
         (error: unknown) => ({ httpResponse: undefined, error }),
@@ -66,7 +50,9 @@ export class EtherscanClient {
 
     if (!httpResponse.ok) {
       this.recordError(module, action, timeMs, text)
-      throw new Error(`Http error ${httpResponse.status}: ${text}`)
+      throw new Error(
+        `Server responded with non-2XX result: ${httpResponse.status} ${httpResponse.statusText}`,
+      )
     }
 
     if (!etherscanResponse) {
