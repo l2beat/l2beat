@@ -18,9 +18,7 @@ describe(BaseIndexer.name, () => {
 
   it('updates when dependencies are updated', async () => {
     const [dep1, dep2] = [new SpyParent(), new SpyParent()]
-    const indexer = new SpyIndexer(Logger.SILENT, [dep1, dep2], {
-      batchSize: 5,
-    })
+    const indexer = new SpyIndexer(Logger.SILENT, [dep1, dep2])
 
     dep1.progress(3)
     expect(indexer.update).not.toHaveBeenCalled() // not called yet because all dependencies are not updated
@@ -33,7 +31,7 @@ describe(BaseIndexer.name, () => {
 
   it('updates in batches', async () => {
     const [dep1] = [new SpyParent(), new SpyParent()]
-    const indexer = new SpyIndexer(Logger.SILENT, [dep1], { batchSize: 5 })
+    const indexer = new SpyIndexer(Logger.SILENT, [dep1])
 
     dep1.progress(6)
     await time.nextAsync()
@@ -45,7 +43,7 @@ describe(BaseIndexer.name, () => {
 
   it('enters error state when failed to update', async () => {
     const [dep1] = [new SpyParent(), new SpyParent()]
-    const indexer = new SpyIndexer(Logger.SILENT, [dep1], { batchSize: 1 })
+    const indexer = new SpyIndexer(Logger.SILENT, [dep1])
     indexer.update.rejectsWithOnce(new Error('Failed to update'))
 
     dep1.progress(1)
@@ -53,7 +51,6 @@ describe(BaseIndexer.name, () => {
 
     expect(indexer.update).toHaveBeenOnlyCalledWith(0, 1) // called with the lowest height
     expect(indexer.getState()).toEqual({
-      batchSize: 1,
       parentHeights: [1],
       height: 0,
       status: 'errored',
@@ -62,7 +59,7 @@ describe(BaseIndexer.name, () => {
 })
 
 class SpyIndexer extends BaseIndexer {
-  update = mockFn<BaseIndexer['update']>().resolvesTo()
+  update = mockFn<BaseIndexer['update']>().resolvesTo(1)
   invalidate = mockFn<BaseIndexer['invalidate']>().resolvesTo()
   setHeight = mockFn<BaseIndexer['setHeight']>().resolvesTo()
 }

@@ -10,7 +10,7 @@ export class BlockNumberIndexer extends BaseIndexer {
     private readonly clockIndexer: ClockIndexer,
     private readonly blockNumberRepository: BlockNumberRepository,
   ) {
-    super(logger, [clockIndexer], { batchSize: 10 })
+    super(logger, [clockIndexer])
   }
 
   override async start(): Promise<void> {
@@ -18,9 +18,10 @@ export class BlockNumberIndexer extends BaseIndexer {
     this.logger.info('Started')
   }
 
-  override async update(): Promise<void> {
-    await Promise.resolve()
+  override async update(from: number, to: number): Promise<number> {
     this.logger.info('Update started')
+    await Promise.resolve()
+    return to
   }
 
   override async invalidate(): Promise<void> {

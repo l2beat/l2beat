@@ -19,7 +19,6 @@ describe(baseIndexerReducer.name, () => {
 
       expect(state).toEqual({
         height: 0,
-        batchSize: expect.a(Number),
         parentHeights: [1, 0],
         status: 'idle',
       })
@@ -44,7 +43,6 @@ describe(baseIndexerReducer.name, () => {
 
       expect(state).toEqual({
         height: 0,
-        batchSize: expect.a(Number),
         parentHeights: [1, 2],
         status: 'idle',
       })
@@ -88,7 +86,6 @@ describe(baseIndexerReducer.name, () => {
 
       expect(state).toEqual({
         height: 1,
-        batchSize: expect.a(Number),
         parentHeights: [],
         status: 'idle',
       })
@@ -110,7 +107,6 @@ describe(baseIndexerReducer.name, () => {
 
       expect(state).toEqual({
         height: 0,
-        batchSize: expect.a(Number),
         parentHeights: [],
         status: 'errored',
       })

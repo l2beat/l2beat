@@ -59,14 +59,10 @@ export function baseIndexerReducer(
   }
 }
 
-export function getInitialState(
-  parents: unknown[] = [],
-  batchSize = 5,
-): BaseIndexerState {
+export function getInitialState(parents: unknown[] = []): BaseIndexerState {
   return {
     height: 0,
     parentHeights: parents.map(() => 0),
-    batchSize,
     status: 'idle',
   }
 }

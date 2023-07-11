@@ -13,21 +13,20 @@ export abstract class BaseIndexer implements Indexer {
    * @param from - inclusive
    * @param to - inclusive
    */
-  abstract update(from: number, to: number): Promise<void>
+  abstract update(from: number, to: number): Promise<number>
 
+  /**
+   * @param to - every value > `to` is invalid, but `to` itself is valid
+   */
   abstract invalidate(to: number): Promise<void>
 
   abstract setHeight(height: number): Promise<void>
 
   private state: BaseIndexerState
 
-  constructor(
-    protected logger: Logger,
-    public readonly parents: Indexer[],
-    config: { batchSize: number },
-  ) {
+  constructor(protected logger: Logger, public readonly parents: Indexer[]) {
     this.logger = this.logger.for(this)
-    this.state = getInitialState(parents, config.batchSize)
+    this.state = getInitialState(parents)
     this.parents.forEach((parent, index) => {
       this.logger.debug('Subscribing to parent', {
         parent: parent.constructor.name,
@@ -95,13 +94,19 @@ export abstract class BaseIndexer implements Indexer {
 
   private async executeUpdate(effect: UpdateEffect): Promise<void> {
     const from = this.state.height
-    const to = Math.min(from + this.state.batchSize, effect.to)
     try {
-      await this.update(from, to)
+      const to = await this.update(from, effect.to)
+      if (to > effect.to) {
+        this.logger.error('Indexer returned invalid height', {
+          returned: to,
+          expected: effect.to,
+        })
+        // TODO: invalidate in reducer
+      }
       this.dispatch({ type: 'UpdateSucceeded', from, to })
     } catch (e) {
       // @todo: retries, back-off
-      this.dispatch({ type: 'UpdateFailed', from, to })
+      this.dispatch({ type: 'UpdateFailed', from, to: effect.to })
     }
   }
 
