@@ -30,13 +30,13 @@ export async function up(knex: Knex) {
 
 export async function down(knex: Knex) {
   await knex.schema.alterTable('balances_status', function (table) {
-    table.dropColumn('chain_id')
-
     table.dropIndex(['chain_id', 'config_hash'])
     table.dropPrimary()
 
     table.primary(['config_hash', 'unix_timestamp'])
     table.index(['unix_timestamp'])
     table.index(['config_hash'])
+
+    table.dropColumn('chain_id')
   })
 }
