@@ -267,7 +267,7 @@ const meta = {
       },
       {
         type: 'bridge',
-        name: 'Omni Bridge',
+        name: 'Omnibridge',
         slug: 'omni',
         warning: undefined,
         isArchived: undefined,
@@ -281,7 +281,7 @@ const meta = {
           other: 0.011899439914528189,
           label: 'GNO – 98.81%<br>Other – 1.19%',
           warning:
-            'The GNO token associated with Omni Bridge accounts for 98.81% of the TVL!',
+            'The GNO token associated with Omnibridge accounts for 98.81% of the TVL!',
           warningSeverity: 'bad',
         },
         oneDayChange: '-4.68%',
