@@ -2,6 +2,7 @@ import assert from 'node:assert'
 
 import { BaseIndexerAction } from './BaseIndexerAction'
 import { BaseIndexerState, StateAndEffects } from './BaseIndexerState'
+import { Effect } from './Effect'
 
 export function baseIndexerReducer(
   state: BaseIndexerState,
@@ -38,11 +39,6 @@ export function baseIndexerReducer(
         ...state,
         parentHeights: state.parentHeights.map((height, index) => {
           if (index === action.index) {
-            // TODO: handle reorgs
-            assert(
-              height <= action.height,
-              "Attempting to update parent height to a lower value than it's current height",
-            )
             return action.height
           }
           return height
@@ -73,47 +69,74 @@ export function baseIndexerReducer(
         }
       }
 
-      if (state.height < Math.min(...newState.parentHeights)) {
-        return [
-          { ...newState, status: 'updating' },
-          [{ type: 'Update', to: Math.min(...newState.parentHeights) }],
-        ]
-      }
-      return [newState, []]
+      return newState.status === 'idle'
+        ? idleToAction(newState)
+        : [newState, []]
     }
     case 'UpdateSucceeded': {
       assert(
         state.status === 'updating',
         'Invalid status, expected updating, got ' + state.status,
       )
-      if (action.to < Math.min(...state.parentHeights)) {
-        return [
-          { ...state, height: action.to },
-          [{ type: 'Update', to: Math.min(...state.parentHeights) }],
-        ]
-      }
-      return [
-        { ...state, status: 'idle', height: action.to },
-        [{ type: 'UpdateHeight', to: action.to }],
-      ]
+      return idleToAction({ ...state, status: 'idle', height: action.to }, [
+        { type: 'UpdateHeight', to: action.to },
+      ])
     }
     case 'UpdateFailed': {
+      // TODO: retry
       assert(
         state.status === 'updating',
         'Invalid status, expected updating, got ' + state.status,
       )
       return [{ ...state, status: 'errored' }, []]
     }
-    case 'InvalidateSucceeded':
-      return [{ ...state, status: 'idle', height: action.height }, []]
-    case 'InvalidateFailed':
-      // TODO: handle invalidate failed
-      return [{ ...state, status: 'idle', height: action.height }, []]
+    case 'InvalidateSucceeded': {
+      assert(
+        state.status === 'invalidating',
+        'Invalid status, expected invalidating, got ' + state.status,
+      )
+      return idleToAction({ ...state, status: 'idle', height: action.height })
+    }
+    case 'InvalidateFailed': {
+      // TODO: we should probably retry first
+      assert(
+        state.status === 'invalidating',
+        'Invalid status, expected invalidating, got ' + state.status,
+      )
+      return [{ ...state, status: 'errored' }, []]
+    }
     default: {
       console.log(action)
       throw new Error('unreachable')
     }
   }
+}
+
+function idleToAction(
+  state: BaseIndexerState,
+  suggestedEffects: Effect[] = [],
+): StateAndEffects {
+  const minParentHeight = Math.min(...state.parentHeights)
+  const minHeight = Math.min(minParentHeight, state.height)
+
+  if (minParentHeight > state.height) {
+    return [
+      { ...state, status: 'updating' },
+      [...suggestedEffects, { type: 'Update', to: minParentHeight }],
+    ]
+  }
+
+  if (minHeight === state.height) {
+    return [state, suggestedEffects]
+  }
+
+  return [
+    { ...state, status: 'invalidating' },
+    [
+      { type: 'UpdateHeight', to: minHeight },
+      { type: 'Invalidate', to: minHeight },
+    ],
+  ]
 }
 
 export function getInitialState(parentCount: number): BaseIndexerState {
