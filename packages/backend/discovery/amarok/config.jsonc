@@ -70,12 +70,12 @@
         "connectors": {
           "type": "array",
           "method": "connectors",
-          "length": 6
+          "length": 5
         },
         "domains": {
           "type": "array",
           "method": "domains",
-          "length": 6
+          "length": 5
         }
       },
       "ignoreInWatchMode": [
