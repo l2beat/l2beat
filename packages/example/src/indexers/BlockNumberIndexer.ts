@@ -10,7 +10,7 @@ export class BlockNumberIndexer extends BaseIndexer {
     private readonly clockIndexer: ClockIndexer,
     private readonly blockNumberRepository: BlockNumberRepository,
   ) {
-    super(logger, [clockIndexer], {}, { batchSize: Infinity })
+    super(logger, [clockIndexer], { batchSize: Infinity })
   }
 
   override async start(): Promise<void> {

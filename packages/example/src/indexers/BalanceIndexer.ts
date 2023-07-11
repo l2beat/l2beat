@@ -1,7 +1,6 @@
 import { BaseIndexer } from '@l2beat/uif'
 import { Logger } from '@l2beat/backend-tools'
 
-
 import { BalanceRepository } from '../repositories/BalanceRepository'
 import { BlockNumberIndexer } from './BlockNumberIndexer'
 
@@ -11,7 +10,7 @@ export class BalanceIndexer extends BaseIndexer {
     private readonly blockNumberIndexer: BlockNumberIndexer,
     private readonly balanceRepository: BalanceRepository,
   ) {
-    super(logger, [blockNumberIndexer], {}, { batchSize: Infinity })
+    super(logger, [blockNumberIndexer], { batchSize: Infinity })
   }
 
   override async start(): Promise<void> {

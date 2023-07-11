@@ -1,8 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { Indexer, Subscription, SubscriptionCallback } from '../Indexer'
-import { JobQueue } from '../tools/JobQueue'
-import { json } from '../tools/json'
+import { Indexer, Subscription, SubscriptionCallback } from './Indexer'
 import {
   BaseIndexerAction,
   baseIndexerReducer,
@@ -23,11 +21,10 @@ export abstract class BaseIndexer implements Indexer {
   abstract update(from: number, to: number): Promise<void>
 
   private state: BaseIndexerState
-  private readonly effectsQueue: JobQueue
+
   constructor(
     protected logger: Logger,
     public readonly parents: Indexer[],
-    public readonly parameters: json,
     config: { batchSize: number },
   ) {
     this.logger = this.logger.for(this)
@@ -44,7 +41,6 @@ export abstract class BaseIndexer implements Indexer {
         })
       })
     })
-    this.effectsQueue = new JobQueue({ maxConcurrentJobs: 1 }, this.logger)
   }
 
   subscribe(callback: SubscriptionCallback): Subscription {
