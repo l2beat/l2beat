@@ -56,4 +56,11 @@ export const harmony: Bridge = {
       sentiment: 'bad',
     },
   },
+  milestones: [
+    {
+      name: 'Compromised multisig steals funds',
+      date: '2022-06-24T00:00:00.00Z',
+      link: 'https://rekt.news/harmony-rekt/',
+    },
+  ],
 }
