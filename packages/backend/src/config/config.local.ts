@@ -54,11 +54,12 @@ export function getLocalConfig(): Config {
       enabled: tvlEnabled,
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
       ethereum: ethereumTvlEnabled && {
-        alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+        alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
+        alchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
       },
     },
     activity: activityEnabled && {
@@ -97,7 +98,7 @@ export function getLocalConfig(): Config {
     },
     updateMonitor: updateMonitorEnabled && {
       runOnStart: getEnv.boolean('UPDATE_MONITOR_RUN_ON_START', true),
-      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),
