@@ -96,10 +96,8 @@ export abstract class BaseIndexer implements Indexer {
     const from = this.state.height
     const to = Math.min(from + this.state.batchSize, effect.to)
     try {
-      this.dispatch({ type: 'UpdateStarted', from, to })
       await this.update(from, to)
       this.dispatch({ type: 'UpdateSucceeded', from, to })
-      // @todo: children
     } catch (e) {
       // @todo: retries, back-off
       this.dispatch({ type: 'UpdateFailed', from, to })

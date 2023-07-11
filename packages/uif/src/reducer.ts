@@ -13,12 +13,6 @@ export interface ParentUpdated {
   height: number
 }
 
-export interface UpdateStarted {
-  type: 'UpdateStarted'
-  from: number
-  to: number
-}
-
 export interface UpdateSucceeded {
   type: 'UpdateSucceeded'
   from: number
@@ -47,7 +41,6 @@ export type BaseIndexerAction =
   | UpdateFailed
   | InvalidateSucceeded
   | InvalidateFailed
-  | UpdateStarted
 
 export interface UpdateEffect {
   type: 'Update'
@@ -85,20 +78,11 @@ export function baseIndexerReducer(
 
       if (newState.parentHeights.every((height) => height > state.height)) {
         return [
-          newState,
+          { ...newState, status: 'updating' },
           [{ type: 'Update', to: Math.min(...newState.parentHeights) }],
         ]
       }
       return [newState, []]
-
-    case 'UpdateStarted':
-      return [
-        {
-          ...state,
-          status: 'updating',
-        },
-        [],
-      ]
 
     case 'UpdateSucceeded':
       assert(
