@@ -1,4 +1,5 @@
 import assert from 'node:assert'
+
 import { BaseIndexerAction } from './BaseIndexerAction'
 import { BaseIndexerState, StateAndEffects } from './BaseIndexerState'
 

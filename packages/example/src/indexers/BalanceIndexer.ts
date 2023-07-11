@@ -10,7 +10,7 @@ export class BalanceIndexer extends BaseIndexer {
     private readonly blockNumberIndexer: BlockNumberIndexer,
     private readonly balanceRepository: BalanceRepository,
   ) {
-    super(logger, [blockNumberIndexer], { batchSize: Infinity })
+    super(logger, [blockNumberIndexer], { batchSize: 5 })
   }
 
   override async start(): Promise<void> {
@@ -18,8 +18,13 @@ export class BalanceIndexer extends BaseIndexer {
     return Promise.resolve()
   }
 
-  async update(): Promise<void> {
+  override async update(): Promise<void> {
     this.logger.info('Update started')
+    return Promise.resolve()
+  }
+
+  override async invalidate(): Promise<void> {
+    this.logger.info('Invalidate started')
     return Promise.resolve()
   }
 

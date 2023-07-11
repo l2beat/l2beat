@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { Indexer, Subscription, SubscriptionCallback } from './Indexer'
-import { baseIndexerReducer, getInitialState } from './reducer'
+import { BaseIndexerAction } from './BaseIndexerAction'
 import { BaseIndexerState } from './BaseIndexerState'
 import { InvalidateEffect, UpdateEffect, UpdateHeightEffect } from './Effect'
-import { BaseIndexerAction } from './BaseIndexerAction'
+import { Indexer, Subscription, SubscriptionCallback } from './Indexer'
+import { baseIndexerReducer, getInitialState } from './reducer'
 
 export abstract class BaseIndexer implements Indexer {
   private subscriptionCallbacks: SubscriptionCallback[] = []
