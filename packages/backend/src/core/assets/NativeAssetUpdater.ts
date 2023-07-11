@@ -1,44 +1,55 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainId,
+  Hash256,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import {
-  ReportRecord,
-  ReportRepository,
-} from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { NativeAssetUpdater } from '../assets/NativeAssetUpdater'
-import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createReports, createReportsFromAssets } from './createReports'
-import { getReportConfigHash } from './getReportConfigHash'
-import { ReportProject } from './ReportProject'
+import {
+  addArbTokenAsset,
+  ARBITRUM_PROJECT_ID,
+} from '../reports/custom/arbitrum'
+import {
+  addOpTokenAsset,
+  OPTIMISM_PROJECT_ID,
+} from '../reports/custom/optimism'
+import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { ReportProject } from '../reports/ReportProject'
+import { Asset } from './Asset'
 
-export class ReportUpdater {
+export class NativeAssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
+  private readonly assetMap: Record<number, Asset[]> = {}
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
-    private readonly balanceUpdater: BalanceUpdater,
-    private readonly nativeAssetUpdater: NativeAssetUpdater,
-    private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
     private readonly projects: ReportProject[],
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-    // TODO(radomski): This config hash should be generated from only CBV projects
-    this.configHash = getReportConfigHash(projects)
+    this.projects = this.projects.filter(
+      (p) =>
+        p.projectId === OPTIMISM_PROJECT_ID ||
+        p.projectId === ARBITRUM_PROJECT_ID,
+    )
+    this.configHash = getReportConfigHash(this.projects)
+
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: ReportUpdater.name,
+        metricsId: NativeAssetUpdater.name,
       },
     )
   }
@@ -47,8 +58,9 @@ export class ReportUpdater {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
       ChainId.ETHEREUM,
-      ValueType.CBV,
+      ValueType.NMV,
     )
+
     for (const timestamp of known) {
       this.knownSet.add(timestamp.toNumber())
     }
@@ -64,38 +76,40 @@ export class ReportUpdater {
 
   async update(timestamp: UnixTime) {
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const [prices, balances] = await Promise.all([
-      this.priceUpdater.getPricesWhenReady(timestamp),
-      this.balanceUpdater.getBalancesWhenReady(timestamp),
-    ])
-    const nativeAssets = await this.nativeAssetUpdater.getAssetsWhenReady(
-      timestamp,
-    )
-    this.logger.debug('Prices and balances ready')
+    const prices = await this.priceUpdater.getPricesWhenReady(timestamp)
+    this.logger.debug('Prices ready')
 
-    const reports = createReports(prices, balances, this.projects)
-    reports.push(...createReportsFromAssets(nativeAssets))
+    const assets: Asset[] = []
+    assets.concat(addOpTokenAsset(prices, timestamp))
+    assets.concat(addArbTokenAsset(prices, timestamp))
 
-    await this.reportRepository.addOrUpdateMany(reports)
+    this.assetMap[timestamp.toNumber()] = assets
 
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
       chainId: ChainId.ETHEREUM,
-      valueType: ValueType.CBV,
+      valueType: ValueType.NMV,
     })
 
     this.knownSet.add(timestamp.toNumber())
-    this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+    this.logger.info('Asset updated', { timestamp: timestamp.toNumber() })
   }
 
-  async getReportsWhenReady(
+  async getAssetsWhenReady(
     timestamp: UnixTime,
     refreshIntervalMs = 1000,
-  ): Promise<ReportRecord[]> {
+  ): Promise<Asset[]> {
     while (!this.knownSet.has(timestamp.toNumber())) {
       await setTimeout(refreshIntervalMs)
     }
-    return this.reportRepository.getByTimestamp(timestamp)
+
+    assert(
+      // NOTE(radomski): Eslint thinks that this can't be undefined
+      // eslint-disable-next-line
+      this.assetMap[timestamp.toNumber()] !== undefined,
+      'Expected assets to be present',
+    )
+    return this.assetMap[timestamp.toNumber()]
   }
 }

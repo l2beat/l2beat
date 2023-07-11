@@ -1,6 +1,5 @@
-import { AssetId, ProjectId, ValueType } from '@l2beat/shared-pure'
+import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 
-import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 
 export interface BalancePerProject {
@@ -11,11 +10,16 @@ export interface BalancePerProject {
   projectId: ProjectId
 }
 
+export interface PriceAtTimestamp {
+  priceUsd: number
+  timestamp: UnixTime
+}
+
 const ETH_PRECISION = 6n
 const USD_PRECISION = 2n
 
 export function createReport(
-  price: PriceRecord,
+  price: PriceAtTimestamp,
   balance: BalancePerProject,
   ethPrice: number,
 ): ReportRecord {

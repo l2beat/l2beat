@@ -10,7 +10,6 @@ describe(createReport.name, () => {
       {
         priceUsd: 3.2,
         timestamp,
-        assetId: AssetId.ETH,
       },
       {
         projectId: ProjectId('arbitrum'),
@@ -39,7 +38,6 @@ describe(createReport.name, () => {
       {
         priceUsd: 3.2,
         timestamp,
-        assetId: AssetId.ETH,
       },
       {
         projectId: ProjectId('arbitrum'),

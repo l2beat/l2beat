@@ -1,6 +1,6 @@
 import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 
-import { createAddCustomTokenReport } from './report'
+import { createAddCustomTokenAsset } from './report'
 
 export const ARBITRUM_PROJECT_ID = ProjectId('arbitrum')
 // Ethereum block 16890400 timestamp
@@ -17,7 +17,7 @@ const ARB_TOKEN_DECIMALS = 18
 export const ARB_TOKEN_BALANCE = () =>
   1_275_000_000n * 10n ** BigInt(ARB_TOKEN_DECIMALS)
 
-export const addArbTokenReport = createAddCustomTokenReport(
+export const addArbTokenAsset = createAddCustomTokenAsset(
   ARB_TOKEN_ID,
   ValueType.NMV,
   ARB_TOKEN_SINCE_TIMESTAMP,

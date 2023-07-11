@@ -132,6 +132,20 @@ const FUTURE_AGGREGATE_REPORTS = aggregateReports(
   NOW.add(1, 'hours'),
 )
 
+const FUTURE_OP_ASSETS = [
+  {
+    price: FUTURE_PRICES[FUTURE_PRICES.length - 1]!,
+    balance: {
+      assetId: OP_TOKEN_ID,
+      type: ValueType.NMV,
+      balance: 644594782000000000000000000n,
+      decimals: 18,
+      projectId: OPTIMISM_PROJECT_ID,
+    },
+    ethPrice: 1000,
+  },
+]
+
 function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
   return {
     name: 'Fake',
@@ -153,7 +167,9 @@ export const REPORTS_MOCK = {
   FUTURE_PRICES,
   BALANCES,
   FUTURE_BALANCES,
+  FUTURE_OP_ASSETS,
   REPORTS,
+  FUTURE_REPORTS,
   FUTURE_REPORTS_WITH_OP,
   AGGREGATED_REPORTS,
   FUTURE_AGGREGATE_REPORTS,
