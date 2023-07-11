@@ -11,7 +11,7 @@ export class ClockIndexer implements Indexer {
 
   async start(): Promise<void> {
     setInterval(() => {
-      this.height += 1
+      this.height += 10
       this.callbacks.forEach((cb) =>
         cb({ type: 'update', height: this.height }),
       )

@@ -23,7 +23,7 @@ export function baseIndexerReducer(
         }),
       }
 
-      if (newState.parentHeights.every((height) => height > state.height)) {
+      if (state.height < Math.min(...newState.parentHeights)) {
         return [
           { ...newState, status: 'updating' },
           [{ type: 'Update', to: Math.min(...newState.parentHeights) }],
@@ -36,6 +36,12 @@ export function baseIndexerReducer(
         state.status === 'updating',
         'Invalid status, expected updating, got ' + state.status,
       )
+      if (action.to < Math.min(...state.parentHeights)) {
+        return [
+          { ...state, height: action.to },
+          [{ type: 'Update', to: Math.min(...state.parentHeights) }],
+        ]
+      }
       return [
         { ...state, status: 'idle', height: action.to },
         [{ type: 'UpdateHeight', to: action.to }],

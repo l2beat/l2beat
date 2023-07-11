@@ -66,7 +66,13 @@ export abstract class BaseIndexer implements Indexer {
     return this.state
   }
 
+  private effectCount = 0
   private dispatch(action: BaseIndexerAction): void {
+    if (this.effectCount > 10) {
+      this.logger.error('Too many effects')
+      return
+    }
+
     this.logger.debug('Dispatching action', { action })
     const [newState, effects] = baseIndexerReducer(this.state, action)
 
