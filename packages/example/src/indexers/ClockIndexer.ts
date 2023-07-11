@@ -3,7 +3,7 @@ import { Logger } from '@l2beat/backend-tools'
 
 export class ClockIndexer implements Indexer {
   private callbacks: ((event: UpdateEvent) => void)[] = []
-  private height = 0
+  private height = 100
 
   constructor(private readonly logger: Logger) {
     this.logger = this.logger.for(this)

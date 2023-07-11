@@ -3,6 +3,7 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { BlockNumberRepository } from '../repositories/BlockNumberRepository'
 import { ClockIndexer } from './ClockIndexer'
+import { setTimeout } from 'timers/promises'
 
 export class BlockNumberIndexer extends BaseIndexer {
   constructor(
@@ -13,14 +14,9 @@ export class BlockNumberIndexer extends BaseIndexer {
     super(logger, [clockIndexer])
   }
 
-  override async start(): Promise<void> {
-    await Promise.resolve()
-    this.logger.info('Started')
-  }
-
   override async update(from: number, to: number): Promise<number> {
     this.logger.info('Update started')
-    await Promise.resolve()
+    await setTimeout(3_000)
     return to
   }
 
@@ -29,8 +25,12 @@ export class BlockNumberIndexer extends BaseIndexer {
     return Promise.resolve()
   }
 
+  override async getHeight(): Promise<number> {
+    const height = await this.blockNumberRepository.getLastSynced()
+    return height ?? 0
+  }
+
   override async setHeight(height: number): Promise<void> {
-    await Promise.resolve()
-    this.logger.info('setHeight started')
+    return this.blockNumberRepository.setLastSynced(height)
   }
 }

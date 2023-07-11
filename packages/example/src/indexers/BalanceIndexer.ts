@@ -1,6 +1,8 @@
 import { BaseIndexer } from '@l2beat/uif'
 import { Logger } from '@l2beat/backend-tools'
 
+import { setTimeout } from 'timers/promises'
+
 import { BalanceRepository } from '../repositories/BalanceRepository'
 import { BlockNumberIndexer } from './BlockNumberIndexer'
 
@@ -13,14 +15,9 @@ export class BalanceIndexer extends BaseIndexer {
     super(logger, [blockNumberIndexer])
   }
 
-  override async start(): Promise<void> {
-    this.logger.info('Started')
-    return Promise.resolve()
-  }
-
   override async update(from: number, to: number): Promise<number> {
     this.logger.info('Update started')
-    await Promise.resolve()
+    await setTimeout(2_000)
     to = Math.min(from + 5, to)
     return to
   }
@@ -30,8 +27,12 @@ export class BalanceIndexer extends BaseIndexer {
     return Promise.resolve()
   }
 
+  override async getHeight(): Promise<number> {
+    const height = await this.balanceRepository.getLastSynced()
+    return height ?? 0
+  }
+
   override async setHeight(height: number): Promise<void> {
-    this.logger.info('setHeight started')
-    return Promise.resolve()
+    return this.balanceRepository.setLastSynced(height)
   }
 }

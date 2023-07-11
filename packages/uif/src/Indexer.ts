@@ -12,5 +12,4 @@ export interface UpdateEvent {
 export interface Indexer {
   subscribe(callback: SubscriptionCallback): Subscription
   start(): Promise<void>
-  getHeight(): number
 }

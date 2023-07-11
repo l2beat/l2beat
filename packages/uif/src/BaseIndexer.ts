@@ -10,6 +10,19 @@ export abstract class BaseIndexer implements Indexer {
   private subscriptionCallbacks: SubscriptionCallback[] = []
 
   /**
+   * Should read the height from the database. It must return a height, so
+   * if database is empty a fallback value has to be chosen.
+   */
+  abstract getHeight(): Promise<number>
+
+  /**
+   * Should write the height to the database. The height given is the most
+   * pessimistic value and the indexer is expected to actually operate at a
+   * higher height in runtime.
+   */
+  abstract setHeight(height: number): Promise<void>
+
+  /**
    * @param from - inclusive
    * @param to - inclusive
    */
@@ -20,25 +33,28 @@ export abstract class BaseIndexer implements Indexer {
    */
   abstract invalidate(to: number): Promise<void>
 
-  abstract setHeight(height: number): Promise<void>
-
   private state: BaseIndexerState
 
   constructor(protected logger: Logger, public readonly parents: Indexer[]) {
     this.logger = this.logger.for(this)
-    this.state = getInitialState(parents)
+    this.state = getInitialState(parents.length)
     this.parents.forEach((parent, index) => {
       this.logger.debug('Subscribing to parent', {
         parent: parent.constructor.name,
       })
-      parent.subscribe((event) => {
+      parent.subscribe((event) =>
         this.dispatch({
           type: 'ParentUpdated',
           index,
           height: event.height,
-        })
-      })
+        }),
+      )
     })
+  }
+
+  async start(): Promise<void> {
+    const height = await this.getHeight()
+    this.dispatch({ type: 'Initialized', height })
   }
 
   subscribe(callback: SubscriptionCallback): Subscription {
@@ -53,31 +69,16 @@ export abstract class BaseIndexer implements Indexer {
     }
   }
 
-  start(): Promise<void> {
-    throw new Error('Method not implemented.')
-  }
-
-  getHeight(): number {
-    return this.state.height
-  }
-
   getState(): BaseIndexerState {
     return this.state
   }
 
-  private effectCount = 0
   private dispatch(action: BaseIndexerAction): void {
-    if (this.effectCount > 10) {
-      this.logger.error('Too many effects')
-      return
-    }
-
-    this.logger.debug('Dispatching action', { action })
     const [newState, effects] = baseIndexerReducer(this.state, action)
+    this.logger.debug('New state', { action, state: this.state, effects })
 
     this.state = newState
 
-    this.logger.debug('Dispatching effects', { action, effects })
     effects.forEach((effect) => {
       switch (effect.type) {
         case 'Update':
@@ -87,6 +88,7 @@ export abstract class BaseIndexer implements Indexer {
         case 'UpdateHeight':
           return void this.executeUpdateHeight(effect)
         default:
+          console.log(effect)
           throw new Error('unreachable')
       }
     })
@@ -105,6 +107,7 @@ export abstract class BaseIndexer implements Indexer {
       }
       this.dispatch({ type: 'UpdateSucceeded', from, to })
     } catch (e) {
+      this.logger.error('Failed to update', e)
       // @todo: retries, back-off
       this.dispatch({ type: 'UpdateFailed', from, to: effect.to })
     }
@@ -115,6 +118,7 @@ export abstract class BaseIndexer implements Indexer {
       await this.invalidate(effect.to)
       this.dispatch({ type: 'InvalidateSucceeded', height: effect.to })
     } catch (e) {
+      this.logger.error('Failed to invalidate', e)
       // @todo: retries, back-off
       this.dispatch({ type: 'InvalidateFailed', height: effect.to })
     }

@@ -1,3 +1,8 @@
+export interface Initialized {
+  type: 'Initialized'
+  height: number
+}
+
 export interface ParentUpdated {
   type: 'ParentUpdated'
   index: number
@@ -27,6 +32,7 @@ export interface InvalidateFailed {
 }
 
 export type BaseIndexerAction =
+  | Initialized
   | ParentUpdated
   | UpdateSucceeded
   | UpdateFailed
