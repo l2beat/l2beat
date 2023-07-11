@@ -1,12 +1,18 @@
 export interface InitializedAction {
   type: 'Initialized'
   height: number
+  childCount: number
 }
 
 export interface ParentUpdatedAction {
   type: 'ParentUpdated'
   index: number
   height: number
+}
+
+export interface ChildReadyAction {
+  type: 'ChildReady'
+  index: number
 }
 
 export interface UpdateSucceededAction {
@@ -34,6 +40,7 @@ export interface InvalidateFailedAction {
 export type IndexerAction =
   | InitializedAction
   | ParentUpdatedAction
+  | ChildReadyAction
   | UpdateSucceededAction
   | UpdateFailedAction
   | InvalidateSucceededAction

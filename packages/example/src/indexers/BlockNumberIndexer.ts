@@ -25,12 +25,12 @@ export class BlockNumberIndexer extends BaseIndexer {
     return Promise.resolve()
   }
 
-  override async getHeight(): Promise<number> {
+  override async getSafeHeight(): Promise<number> {
     const height = await this.blockNumberRepository.getLastSynced()
     return height ?? 0
   }
 
-  override async setHeight(height: number): Promise<void> {
+  override async setSafeHeight(height: number): Promise<void> {
     return this.blockNumberRepository.setLastSynced(height)
   }
 }

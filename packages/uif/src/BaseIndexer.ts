@@ -1,3 +1,5 @@
+import { assert } from 'node:console'
+
 import { Logger } from '@l2beat/backend-tools'
 
 import { assertUnreachable } from './assertUnreachable'
@@ -6,12 +8,11 @@ import { IndexerAction } from './IndexerAction'
 import {
   InvalidateEffect,
   NotifyReadyEffect,
-  SetHeightEffect,
+  SetSafeHeightEffect,
   UpdateEffect,
 } from './IndexerEffect'
 import { getInitialState, indexerReducer } from './indexerReducer'
 import { IndexerState } from './IndexerState'
-import { assert } from 'node:console'
 
 export abstract class BaseIndexer implements Indexer {
   private children: Indexer[] = []
@@ -20,14 +21,14 @@ export abstract class BaseIndexer implements Indexer {
    * Should read the height from the database. It must return a height, so
    * if database is empty a fallback value has to be chosen.
    */
-  abstract getHeight(): Promise<number>
+  abstract getSafeHeight(): Promise<number>
 
   /**
    * Should write the height to the database. The height given is the most
    * pessimistic value and the indexer is expected to actually operate at a
    * higher height in runtime.
    */
-  abstract setHeight(height: number): Promise<void>
+  abstract setSafeHeight(height: number): Promise<void>
 
   /**
    * @param from - inclusive
@@ -45,7 +46,7 @@ export abstract class BaseIndexer implements Indexer {
   constructor(protected logger: Logger, public readonly parents: Indexer[]) {
     this.logger = this.logger.for(this)
     this.state = getInitialState(parents.length)
-    this.parents.forEach((parent, index) => {
+    this.parents.forEach((parent) => {
       this.logger.debug('Subscribing to parent', {
         parent: parent.constructor.name,
       })
@@ -54,8 +55,12 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   async start(): Promise<void> {
-    const height = await this.getHeight()
-    this.dispatch({ type: 'Initialized', height })
+    const height = await this.getSafeHeight()
+    this.dispatch({
+      type: 'Initialized',
+      height,
+      childCount: this.children.length,
+    })
   }
 
   subscribe(child: Indexer): Subscription {
@@ -94,10 +99,10 @@ export abstract class BaseIndexer implements Indexer {
           return void this.executeUpdate(effect)
         case 'Invalidate':
           return void this.executeInvalidate(effect)
-        case 'SetHeight':
-          return void this.executeSetHeight(effect)
+        case 'SetSafeHeight':
+          return void this.executeSetSafeHeight(effect)
         case 'NotifyReady':
-          return void this.executeNotifyReady(effect)
+          return this.executeNotifyReady(effect)
         default:
           return assertUnreachable(effect)
       }
@@ -134,10 +139,13 @@ export abstract class BaseIndexer implements Indexer {
     }
   }
 
-  private async executeSetHeight(effect: SetHeightEffect): Promise<void> {
-    this.state.height = effect.height
-    await this.setHeight(effect.height)
-    this.children.forEach((child) => child.notifyUpdate(this, effect.height))
+  private async executeSetSafeHeight(
+    effect: SetSafeHeightEffect,
+  ): Promise<void> {
+    await this.setSafeHeight(effect.safeHeight)
+    this.children.forEach((child) =>
+      child.notifyUpdate(this, effect.safeHeight),
+    )
   }
 
   private executeNotifyReady(effect: NotifyReadyEffect): void {

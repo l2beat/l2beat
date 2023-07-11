@@ -27,12 +27,12 @@ export class BalanceIndexer extends BaseIndexer {
     return Promise.resolve()
   }
 
-  override async getHeight(): Promise<number> {
+  override async getSafeHeight(): Promise<number> {
     const height = await this.balanceRepository.getLastSynced()
     return height ?? 0
   }
 
-  override async setHeight(height: number): Promise<void> {
+  override async setSafeHeight(height: number): Promise<void> {
     return this.balanceRepository.setLastSynced(height)
   }
 }

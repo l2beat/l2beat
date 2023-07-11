@@ -1,7 +1,7 @@
 export type IndexerEffect =
   | UpdateEffect
   | InvalidateEffect
-  | SetHeightEffect
+  | SetSafeHeightEffect
   | NotifyReadyEffect
 
 export interface UpdateEffect {
@@ -14,9 +14,9 @@ export interface InvalidateEffect {
   to: number
 }
 
-export interface SetHeightEffect {
-  type: 'SetHeight'
-  height: number
+export interface SetSafeHeightEffect {
+  type: 'SetSafeHeight'
+  safeHeight: number
 }
 
 export interface NotifyReadyEffect {

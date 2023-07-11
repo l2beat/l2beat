@@ -10,6 +10,6 @@ export interface UpdateEvent {
 export interface Indexer {
   subscribe(child: Indexer): Subscription
   notifyReady(child: Indexer): void
-  notifyUpdate(parent: Indexer, height: number): void
+  notifyUpdate(parent: Indexer, safeHeight: number): void
   start(): Promise<void>
 }

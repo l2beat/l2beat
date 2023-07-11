@@ -18,7 +18,9 @@ export function indexerReducer(
       const newState = {
         ...state,
         height: action.height,
+        invalidateHeight: action.height,
         initializedSelf: true,
+        children: new Array(action.childCount).fill({ ready: false }),
       }
 
       const result = finishInitialization(newState)
@@ -39,15 +41,23 @@ export function indexerReducer(
         return result
       }
 
-      return newState.status === 'idle'
-        ? idleToAction(newState)
-        : [newState, []]
+      return continueOperations(newState)
+    }
+    case 'ChildReady': {
+      const newState = {
+        ...state,
+        children: state.children.map((child, index) =>
+          index === action.index ? { ...child, ready: true } : child,
+        ),
+      }
+      return continueOperations(newState)
     }
     case 'UpdateSucceeded': {
       assertStatus(state.status, 'updating')
-      return idleToAction({ ...state, status: 'idle', height: action.to }, [
-        { type: 'SetHeight', height: action.to },
-      ])
+      return continueOperations(
+        { ...state, status: 'idle', height: action.to },
+        true,
+      )
     }
     case 'UpdateFailed': {
       assertStatus(state.status, 'updating')
@@ -56,7 +66,11 @@ export function indexerReducer(
     }
     case 'InvalidateSucceeded': {
       assertStatus(state.status, 'invalidating')
-      return idleToAction({ ...state, status: 'idle', height: action.height })
+      return continueOperations({
+        ...state,
+        status: 'idle',
+        height: action.height,
+      })
     }
     case 'InvalidateFailed': {
       assertStatus(state.status, 'invalidating')
@@ -81,47 +95,77 @@ function assertStatus(
 function finishInitialization(
   state: IndexerState,
 ): IndexerReducerResult | undefined {
-  if (state.status === 'init') {
-    if (state.initializedSelf && state.parents.every((x) => x.initialized)) {
-      const height = Math.min(
-        ...state.parents.map((x) => x.height),
-        state.height,
-      )
-      return [
-        { ...state, status: 'invalidating' },
-        [
-          { type: 'SetHeight', height: height },
-          { type: 'Invalidate', to: height },
-        ],
-      ]
-    }
+  if (state.status !== 'init') {
+    return
+  }
+  if (state.initializedSelf && state.parents.every((x) => x.initialized)) {
+    const height = Math.min(...state.parents.map((x) => x.height), state.height)
+    return [
+      { ...state, status: 'invalidating', targetHeight: height },
+      [
+        { type: 'SetSafeHeight', safeHeight: height },
+        { type: 'Invalidate', to: height },
+      ],
+    ]
   }
 }
 
-function idleToAction(
-  state: IndexerState,
-  suggestedEffects: IndexerEffect[] = [],
-): IndexerReducerResult {
-  const minParentHeight = Math.min(...state.parents.map((x) => x.height))
-  const minHeight = Math.min(minParentHeight, state.height)
+/*
 
-  if (minParentHeight > state.height) {
-    return [
-      { ...state, status: 'updating' },
-      [...suggestedEffects, { type: 'Update', to: minParentHeight }],
-    ]
+Parent: 10
+You: idle, h: 5, th: 5 -> th: 10, update + success -> h: 10, idle
+
+Parent: 5 (was 10)
+You: idle, h: 10, th: 10 -> th: 5, invalidate -> h: 5, idle
+
+Parent: 5 (was 10)
+You: updating, h: 5, th: 10 -> th: 5; update success (10) -> h: 10, invalidate -> h: 5, idle
+
+Parent: 15 (was 10)
+You: updating, h: 5, th: 10 -> th: 15; update success (10) -> h: 10, update + success -> h: 15, idle
+
+*/
+
+function continueOperations(
+  state: IndexerState,
+  updateFinished?: boolean,
+): IndexerReducerResult {
+  const parentHeight = Math.min(...state.parents.map((x) => x.height))
+
+  if (
+    state.targetHeight === state.height ||
+    parentHeight < state.targetHeight
+  ) {
+    // We can change the target height in two different cases
+    // 1. We are synced and the parent changed to a higher or lower height
+    // 2. We are syncing and the parent changed to a lower height
+    state = { ...state, targetHeight: parentHeight }
   }
 
-  if (minHeight === state.height) {
-    return [state, suggestedEffects]
+  const effects: IndexerEffect[] = []
+  if (state.targetHeight < state.safeHeight) {
+    state = { ...state, safeHeight: state.targetHeight }
+    effects.push({ type: 'SetSafeHeight', safeHeight: state.targetHeight })
+  } else if (updateFinished) {
+    const safeHeight = Math.min(state.targetHeight, state.height)
+    state = { ...state, safeHeight }
+    effects.push({ type: 'SetSafeHeight', safeHeight })
+  }
+
+  if (state.status !== 'idle' || state.targetHeight === state.height) {
+    return [state, effects]
+  }
+
+  if (state.targetHeight > state.height) {
+    return [
+      { ...state, status: 'updating' },
+      [...effects, { type: 'Update', to: state.targetHeight }],
+    ]
   }
 
   return [
     { ...state, status: 'invalidating' },
-    [
-      { type: 'SetHeight', height: minHeight },
-      { type: 'Invalidate', to: minHeight },
-    ],
+    [...effects, { type: 'Invalidate', to: state.targetHeight }],
   ]
 }
 
@@ -129,6 +173,8 @@ export function getInitialState(parentCount: number): IndexerState {
   return {
     status: 'init',
     height: 0,
+    targetHeight: 0,
+    safeHeight: 0,
     initializedSelf: false,
     parents: Array.from({ length: parentCount }).map(() => ({
       height: 0,

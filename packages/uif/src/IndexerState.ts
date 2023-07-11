@@ -1,13 +1,21 @@
 export interface IndexerState {
-  status: 'init' | 'idle' | 'updating' | 'invalidating' | 'errored'
-  height: number
-  initializedSelf: boolean
-  parents: {
-    height: number
-    initialized: boolean
-    waiting: boolean
+  readonly status:
+    | 'init'
+    | 'idle'
+    | 'updating'
+    | 'will-invalidate'
+    | 'invalidating'
+    | 'errored'
+  readonly height: number
+  readonly targetHeight: number
+  readonly safeHeight: number
+  readonly initializedSelf: boolean
+  readonly parents: {
+    readonly height: number
+    readonly initialized: boolean
+    readonly waiting: boolean
   }[]
-  children: {
-    ready: boolean
+  readonly children: {
+    readonly ready: boolean
   }[]
 }
