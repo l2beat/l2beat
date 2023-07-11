@@ -7,7 +7,6 @@
   "scripts": {
     "test": "mocha",
     "clean": "rm -rf build",
-    "prebuild": "yarn clean",
     "build": "tsc",
     "start": "node -r esbuild-register src/",
     "format:fix": "prettier --write .",

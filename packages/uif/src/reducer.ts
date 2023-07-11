@@ -1,9 +1,9 @@
 import assert from 'node:assert'
 
+import { assertUnreachable } from './assertUnreachable'
 import { BaseIndexerAction } from './BaseIndexerAction'
 import { BaseIndexerState, StateAndEffects } from './BaseIndexerState'
 import { Effect } from './Effect'
-import { assertUnreachable } from './assertUnreachable'
 
 export function baseIndexerReducer(
   state: BaseIndexerState,

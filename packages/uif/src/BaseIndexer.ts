@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { assertUnreachable } from './assertUnreachable'
 import { BaseIndexerAction } from './BaseIndexerAction'
 import { BaseIndexerState } from './BaseIndexerState'
 import { InvalidateEffect, UpdateEffect, UpdateHeightEffect } from './Effect'
 import { Indexer, Subscription, SubscriptionCallback } from './Indexer'
 import { baseIndexerReducer, getInitialState } from './reducer'
-import { assertUnreachable } from './assertUnreachable'
 
 export abstract class BaseIndexer implements Indexer {
   private subscriptionCallbacks: SubscriptionCallback[] = []
