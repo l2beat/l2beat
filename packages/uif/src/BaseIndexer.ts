@@ -1,18 +1,20 @@
 import { Logger } from '@l2beat/backend-tools'
 
 import { assertUnreachable } from './assertUnreachable'
-import { Indexer, Subscription, SubscriptionCallback } from './Indexer'
+import { Indexer, Subscription } from './Indexer'
 import { IndexerAction } from './IndexerAction'
 import {
   InvalidateEffect,
+  NotifyReadyEffect,
   SetHeightEffect,
   UpdateEffect,
 } from './IndexerEffect'
 import { getInitialState, indexerReducer } from './indexerReducer'
 import { IndexerState } from './IndexerState'
+import { assert } from 'node:console'
 
 export abstract class BaseIndexer implements Indexer {
-  private subscriptionCallbacks: SubscriptionCallback[] = []
+  private children: Indexer[] = []
 
   /**
    * Should read the height from the database. It must return a height, so
@@ -47,13 +49,7 @@ export abstract class BaseIndexer implements Indexer {
       this.logger.debug('Subscribing to parent', {
         parent: parent.constructor.name,
       })
-      parent.subscribe((event) =>
-        this.dispatch({
-          type: 'ParentUpdated',
-          index,
-          height: event.height,
-        }),
-      )
+      parent.subscribe(this)
     })
   }
 
@@ -62,16 +58,24 @@ export abstract class BaseIndexer implements Indexer {
     this.dispatch({ type: 'Initialized', height })
   }
 
-  subscribe(callback: SubscriptionCallback): Subscription {
+  subscribe(child: Indexer): Subscription {
     this.logger.debug('Someone subscribed')
-    this.subscriptionCallbacks.push(callback)
+    this.children.push(child)
     return {
       unsubscribe: (): void => {
-        this.subscriptionCallbacks = this.subscriptionCallbacks.filter(
-          (cb) => cb !== callback,
-        )
+        this.children = this.children.filter((c) => c !== child)
       },
     }
+  }
+
+  notifyReady(child: Indexer): void {
+    this.logger.debug('Someone is ready', { child: child.constructor.name })
+  }
+
+  notifyUpdate(parent: Indexer, height: number): void {
+    const index = this.parents.indexOf(parent)
+    assert(index !== -1, 'Received update from unknown parent')
+    this.dispatch({ type: 'ParentUpdated', index, height })
   }
 
   getState(): IndexerState {
@@ -92,6 +96,8 @@ export abstract class BaseIndexer implements Indexer {
           return void this.executeInvalidate(effect)
         case 'SetHeight':
           return void this.executeSetHeight(effect)
+        case 'NotifyReady':
+          return void this.executeNotifyReady(effect)
         default:
           return assertUnreachable(effect)
       }
@@ -129,10 +135,16 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   private async executeSetHeight(effect: SetHeightEffect): Promise<void> {
-    this.state.height = effect.to
-    await this.setHeight(effect.to)
-    this.subscriptionCallbacks.forEach((callback) => {
-      callback({ type: 'update', height: effect.to })
+    this.state.height = effect.height
+    await this.setHeight(effect.height)
+    this.children.forEach((child) => child.notifyUpdate(this, effect.height))
+  }
+
+  private executeNotifyReady(effect: NotifyReadyEffect): void {
+    this.parents.forEach((parent, index) => {
+      if (effect.parentIndices.includes(index)) {
+        parent.notifyReady(this)
+      }
     })
   }
 }
