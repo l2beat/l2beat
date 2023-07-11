@@ -3,7 +3,7 @@ import { Logger } from '@l2beat/backend-tools'
 
 export class ClockIndexer implements Indexer {
   private callbacks: ((event: UpdateEvent) => void)[] = []
-  private height = Date.now()
+  private height = 0
 
   constructor(private readonly logger: Logger) {
     this.logger = this.logger.for(this)
@@ -11,7 +11,7 @@ export class ClockIndexer implements Indexer {
 
   async start(): Promise<void> {
     setInterval(() => {
-      this.height = Date.now()
+      this.height += 1
       this.callbacks.forEach((cb) =>
         cb({ type: 'update', height: this.height }),
       )
