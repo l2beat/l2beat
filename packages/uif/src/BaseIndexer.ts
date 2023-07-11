@@ -1,24 +1,23 @@
 import { Logger } from '@l2beat/backend-tools'
 
 import { Indexer, Subscription, SubscriptionCallback } from './Indexer'
-import {
-  BaseIndexerAction,
-  baseIndexerReducer,
-  BaseIndexerState,
-  getInitialState,
-  UpdateEffect,
-  UpdateHeightEffect,
-} from './reducer'
+import { baseIndexerReducer, getInitialState } from './reducer'
+import { BaseIndexerState } from './BaseIndexerState'
+import { InvalidateEffect, UpdateEffect, UpdateHeightEffect } from './Effect'
+import { BaseIndexerAction } from './BaseIndexerAction'
 
 export abstract class BaseIndexer implements Indexer {
   private subscriptionCallbacks: SubscriptionCallback[] = []
 
   /**
-   *
    * @param from - inclusive
    * @param to - inclusive
    */
   abstract update(from: number, to: number): Promise<void>
+
+  abstract invalidate(to: number): Promise<void>
+
+  abstract setHeight(height: number): Promise<void>
 
   private state: BaseIndexerState
 
@@ -78,6 +77,8 @@ export abstract class BaseIndexer implements Indexer {
       switch (effect.type) {
         case 'Update':
           return void this.executeUpdate(effect)
+        case 'Invalidate':
+          return void this.executeInvalidate(effect)
         case 'UpdateHeight':
           return void this.executeUpdateHeight(effect)
         default:
@@ -98,7 +99,15 @@ export abstract class BaseIndexer implements Indexer {
     }
   }
 
-  abstract setHeight(height: number): Promise<void>
+  private async executeInvalidate(effect: InvalidateEffect): Promise<void> {
+    try {
+      await this.invalidate(effect.to)
+      this.dispatch({ type: 'InvalidateSucceeded', height: effect.to })
+    } catch (e) {
+      // @todo: retries, back-off
+      this.dispatch({ type: 'InvalidateFailed', height: effect.to })
+    }
+  }
 
   private async executeUpdateHeight(effect: UpdateHeightEffect): Promise<void> {
     this.state.height = effect.to

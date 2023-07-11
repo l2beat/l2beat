@@ -1,60 +1,6 @@
 import assert from 'node:assert'
-
-export interface BaseIndexerState {
-  height: number
-  parentHeights: number[]
-  batchSize: number
-  status: 'idle' | 'updating' | 'invalidating' | 'errored'
-}
-
-export interface ParentUpdated {
-  type: 'ParentUpdated'
-  index: number
-  height: number
-}
-
-export interface UpdateSucceeded {
-  type: 'UpdateSucceeded'
-  from: number
-  to: number
-}
-
-export interface UpdateFailed {
-  type: 'UpdateFailed'
-  from: number
-  to: number
-}
-
-export interface InvalidateSucceeded {
-  type: 'InvalidateSucceeded'
-  height: number
-}
-
-export interface InvalidateFailed {
-  type: 'InvalidateFailed'
-  height: number
-}
-
-export type BaseIndexerAction =
-  | ParentUpdated
-  | UpdateSucceeded
-  | UpdateFailed
-  | InvalidateSucceeded
-  | InvalidateFailed
-
-export interface UpdateEffect {
-  type: 'Update'
-  to: number
-}
-
-export interface UpdateHeightEffect {
-  type: 'UpdateHeight'
-  to: number
-}
-
-export type Effect = UpdateEffect | UpdateHeightEffect
-
-export type StateAndEffects = [BaseIndexerState, Effect[]]
+import { BaseIndexerAction } from './BaseIndexerAction'
+import { BaseIndexerState, StateAndEffects } from './BaseIndexerState'
 
 export function baseIndexerReducer(
   state: BaseIndexerState,

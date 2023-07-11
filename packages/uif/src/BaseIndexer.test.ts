@@ -63,9 +63,8 @@ describe(BaseIndexer.name, () => {
 
 class SpyIndexer extends BaseIndexer {
   update = mockFn<BaseIndexer['update']>().resolvesTo()
-  override setHeight(): Promise<void> {
-    return Promise.resolve()
-  }
+  invalidate = mockFn<BaseIndexer['invalidate']>().resolvesTo()
+  setHeight = mockFn<BaseIndexer['setHeight']>().resolvesTo()
 }
 
 class SpyParent implements Indexer {

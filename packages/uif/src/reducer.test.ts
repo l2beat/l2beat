@@ -1,12 +1,8 @@
 import { expect } from 'earl'
 
-import {
-  BaseIndexerAction,
-  baseIndexerReducer,
-  BaseIndexerState,
-  getInitialState,
-  StateAndEffects,
-} from './reducer'
+import { baseIndexerReducer, getInitialState } from './reducer'
+import { BaseIndexerState, StateAndEffects } from './BaseIndexerState'
+import { BaseIndexerAction } from './BaseIndexerAction'
 
 describe(baseIndexerReducer.name, () => {
   describe('DependencyUpdated', () => {
