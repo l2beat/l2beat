@@ -60,7 +60,7 @@ export const omni: Bridge = {
       {
         address: EthereumAddress('0x88ad09518695c6c3712AC10a214bE5109a655671'),
         sinceTimestamp: new UnixTime(1596501090),
-        tokens: ['GNO', 'LINK'],
+        tokens: '*',
       },
     ],
   },
