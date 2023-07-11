@@ -54,6 +54,7 @@ export class BalanceUpdater {
 
   async start() {
     const known = await this.balanceStatusRepository.getByConfigHash(
+      this.chainId,
       this.configHash,
     )
     for (const timestamp of known) {
@@ -101,6 +102,7 @@ export class BalanceUpdater {
     }
     this.knownSet.add(timestamp.toNumber())
     await this.balanceStatusRepository.add({
+      chainId: this.chainId,
       configHash: this.configHash,
       timestamp,
     })

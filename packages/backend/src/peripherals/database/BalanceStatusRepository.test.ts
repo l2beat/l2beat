@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -20,42 +20,90 @@ describe(BalanceStatusRepository.name, () => {
   const TIME_TWO = TIME_ONE.add(-1, 'hours')
   const TIME_THREE = TIME_ONE.add(-2, 'hours')
 
-  it('stores a single timestamp', async () => {
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
+  const CHAIN_ID = ChainId.ETHEREUM
 
-    const timestamps = await repository.getByConfigHash(HASH_ONE)
+  it('stores a single timestamp', async () => {
+    await repository.add({
+      configHash: HASH_ONE,
+      timestamp: TIME_ONE,
+      chainId: CHAIN_ID,
+    })
+
+    const timestamps = await repository.getByConfigHash(CHAIN_ID, HASH_ONE)
     expect(timestamps).toEqual([TIME_ONE])
   })
 
   it('stores many timestamps across many hashes, but only latest', async () => {
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_TWO })
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_THREE })
-    await repository.add({ configHash: HASH_TWO, timestamp: TIME_ONE })
-    await repository.add({ configHash: HASH_TWO, timestamp: TIME_TWO })
+    await repository.add({
+      configHash: HASH_ONE,
+      timestamp: TIME_ONE,
+      chainId: CHAIN_ID,
+    })
+    await repository.add({
+      configHash: HASH_ONE,
+      timestamp: TIME_TWO,
+      chainId: CHAIN_ID,
+    })
+    await repository.add({
+      configHash: HASH_ONE,
+      timestamp: TIME_THREE,
+      chainId: CHAIN_ID,
+    })
+    await repository.add({
+      configHash: HASH_TWO,
+      timestamp: TIME_ONE,
+      chainId: CHAIN_ID,
+    })
+    await repository.add({
+      configHash: HASH_TWO,
+      timestamp: TIME_TWO,
+      chainId: CHAIN_ID,
+    })
 
-    const timestampsOne = await repository.getByConfigHash(HASH_ONE)
+    const timestampsOne = await repository.getByConfigHash(CHAIN_ID, HASH_ONE)
     expect(timestampsOne).toEqual([TIME_THREE])
 
-    const timestampsTwo = await repository.getByConfigHash(HASH_TWO)
+    const timestampsTwo = await repository.getByConfigHash(CHAIN_ID, HASH_TWO)
     expect(timestampsTwo).toEqualUnsorted([TIME_ONE, TIME_TWO])
   })
 
   it('can add the same value multiple times ', async () => {
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
+    await repository.add({
+      configHash: HASH_ONE,
+      timestamp: TIME_ONE,
+      chainId: CHAIN_ID,
+    })
+    await repository.add({
+      configHash: HASH_ONE,
+      timestamp: TIME_ONE,
+      chainId: CHAIN_ID,
+    })
+    await repository.add({
+      configHash: HASH_ONE,
+      timestamp: TIME_ONE,
+      chainId: CHAIN_ID,
+    })
 
-    const timestamps = await repository.getByConfigHash(HASH_ONE)
+    const timestamps = await repository.getByConfigHash(CHAIN_ID, HASH_ONE)
     expect(timestamps).toEqual([TIME_ONE])
   })
 
   it(BalanceStatusRepository.prototype.getBetween.name, async () => {
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_ONE })
-    await repository.add({ configHash: HASH_ONE, timestamp: TIME_TWO })
+    await repository.add({
+      configHash: HASH_ONE,
+      timestamp: TIME_ONE,
+      chainId: CHAIN_ID,
+    })
+    await repository.add({
+      configHash: HASH_ONE,
+      timestamp: TIME_TWO,
+      chainId: CHAIN_ID,
+    })
 
-    const result = await repository.getBetween(TIME_THREE, TIME_TWO)
+    const result = await repository.getBetween(CHAIN_ID, TIME_THREE, TIME_TWO)
 
-    expect(result).toEqual([{ configHash: HASH_ONE, timestamp: TIME_TWO }])
+    expect(result).toEqual([
+      { configHash: HASH_ONE, timestamp: TIME_TWO, chainId: CHAIN_ID },
+    ])
   })
 })

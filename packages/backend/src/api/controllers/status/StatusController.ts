@@ -18,7 +18,10 @@ import {
 } from '../../../peripherals/database/BalanceStatusRepository'
 import { UpdateMonitorRepository } from '../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
-import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
+import {
+  ReportStatusRecord,
+  ReportStatusRepository,
+} from '../../../peripherals/database/ReportStatusRepository'
 import { getDashboardContracts } from './discovery/props/getDashboardContracts'
 import { getDashboardProjects } from './discovery/props/getDashboardProjects'
 import { getDiff } from './discovery/props/utils/getDiff'
@@ -106,6 +109,7 @@ export class StatusController {
     const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
 
     const statuses = await this.balanceStatusRepository.getBetween(
+      ChainId.ETHEREUM,
       firstHour,
       lastHour,
     )
@@ -157,7 +161,7 @@ export class StatusController {
 }
 
 function isSynced(
-  statuses: BalanceStatusRecord[],
+  statuses: (ReportStatusRecord | BalanceStatusRecord)[],
   timestamp: UnixTime,
   configHash: Hash256,
 ): boolean {
