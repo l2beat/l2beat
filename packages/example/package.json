@@ -1,0 +1,6 @@
+{
+  "name": "example",
+  "dependencies": {
+    "@l2beat/uif": "*"
+  }
+}

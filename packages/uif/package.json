@@ -1,5 +1,5 @@
 {
-  "name": "@l0-monitoring/uif",
+  "name": "@l2beat/uif",
   "version": "0.1.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -7,7 +7,7 @@
     "test": "mocha",
     "clean": "rm -rf build",
     "prebuild": "yarn clean",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc",
     "start": "node -r esbuild-register src/",
     "format:fix": "prettier --write .",
     "format": "prettier --check .",
