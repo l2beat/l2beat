@@ -71,18 +71,7 @@ export const polynetwork: Bridge = {
       {
         address: EthereumAddress('0x250e76987d838a75310c34bf422ea9f1AC4Cc906'),
         sinceTimestamp: new UnixTime(1599099893),
-        tokens: [
-          'ETH',
-          'USDT',
-          'USDC',
-          // 'COW',
-          'WBTC',
-          'DAI',
-          'UNI',
-          'SHIB',
-          'renBTC',
-          'FEI',
-        ],
+        tokens: '*',
       },
       {
         // This new Escrow address has been added on 20 Oct 2022.
@@ -185,11 +174,6 @@ export const polynetwork: Bridge = {
           pausableBy: ['EthCrossChainManager'],
         },
       }),
-      //DUPLICATES???
-      discovery.getContractDetails(
-        'EthCrossChainData',
-        "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
-      ),
       discovery.getContractDetails(
         'EthCrossChainData',
         "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
@@ -233,6 +217,18 @@ export const polynetwork: Bridge = {
       ],
       name: 'Lock Proxy owners',
       description: 'Can update address of EthCrossChainManagerProxy contract.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Contracts hacked for $611M',
+      date: '2021-08-10T00:00:00.00Z',
+      link: 'https://en.wikipedia.org/wiki/Poly_Network_exploit',
+    },
+    {
+      name: 'Compromised multisig steals funds',
+      date: '2023-07-03T00:00:00.00Z',
+      link: 'https://rekt.news/poly-network-rekt2/',
     },
   ],
 }

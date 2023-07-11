@@ -1,5 +1,11 @@
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
-import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  getTimestamps,
+  Hash256,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
@@ -122,6 +128,8 @@ export class StatusController {
     const statuses = await this.reportStatusRepository.getBetween(
       firstHour,
       lastHour,
+      ChainId.ETHEREUM,
+      ValueType.CBV,
     )
     const configHash = getReportConfigHash(this.projects)
 
