@@ -64,6 +64,7 @@ export interface EthereumTvlConfig {
 }
 
 export interface ArbitrumTvlConfig {
+  readonly alchemyApiKey: string
   readonly arbiscanApiKey: string
 }
 

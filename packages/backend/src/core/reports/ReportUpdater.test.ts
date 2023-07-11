@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/shared'
+import { ChainId, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -53,10 +54,14 @@ describe(ReportUpdater.name, () => {
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
         configHash,
         timestamp: MOCK.NOW.add(1, 'hours'),
+        chainId: ChainId.ETHEREUM,
+        valueType: ValueType.CBV,
       })
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
         configHash,
         timestamp: MOCK.NOW,
+        chainId: ChainId.ETHEREUM,
+        valueType: ValueType.CBV,
       })
 
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
@@ -130,10 +135,14 @@ describe(ReportUpdater.name, () => {
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
           configHash,
           timestamp: MOCK.NOW.add(1, 'hours'),
+          chainId: ChainId.ETHEREUM,
+          valueType: ValueType.CBV,
         })
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
           configHash,
           timestamp: MOCK.NOW,
+          chainId: ChainId.ETHEREUM,
+          valueType: ValueType.CBV,
         })
 
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
