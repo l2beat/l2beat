@@ -78,38 +78,11 @@ describe(baseIndexerReducer.name, () => {
     })
   })
 
-  describe('UpdateStarted', () => {
-    it('should change state to updating', () => {
-      const initialState = getInitialState()
-
-      const [state, effects] = reduceWithBaseIndexerReducer(initialState, [
-        {
-          type: 'UpdateStarted',
-          from: 0,
-          to: 1,
-        },
-      ])
-
-      expect(state).toEqual({
-        height: 0,
-        batchSize: expect.a(Number),
-        parentHeights: [],
-        status: 'updating',
-      })
-      expect(effects).toEqual([])
-    })
-  })
-
   describe('UpdateSucceeded', () => {
     it('should update height and change state to idle', () => {
       const initialState = getInitialState()
 
       const [state, effects] = reduceWithBaseIndexerReducer(initialState, [
-        {
-          type: 'UpdateStarted',
-          from: 0,
-          to: 1,
-        },
         {
           type: 'UpdateSucceeded',
           from: 0,
@@ -132,11 +105,6 @@ describe(baseIndexerReducer.name, () => {
       const initialState = getInitialState()
 
       const [state, effects] = reduceWithBaseIndexerReducer(initialState, [
-        {
-          type: 'UpdateStarted',
-          from: 1,
-          to: 2,
-        },
         {
           type: 'UpdateFailed',
           from: 1,

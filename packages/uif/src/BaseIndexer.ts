@@ -68,18 +68,12 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   private dispatch(action: BaseIndexerAction): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-    this.logger.debug('Dispatching action', { action: action as any })
+    this.logger.debug('Dispatching action', { action })
     const [newState, effects] = baseIndexerReducer(this.state, action)
 
     this.state = newState
 
-    this.logger.debug('Dispatching effects', {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-      action: action as any,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-      effects: effects as any,
-    })
+    this.logger.debug('Dispatching effects', { action, effects })
     effects.forEach((effect) => {
       switch (effect.type) {
         case 'Update':
