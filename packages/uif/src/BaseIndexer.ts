@@ -5,6 +5,7 @@ import { BaseIndexerState } from './BaseIndexerState'
 import { InvalidateEffect, UpdateEffect, UpdateHeightEffect } from './Effect'
 import { Indexer, Subscription, SubscriptionCallback } from './Indexer'
 import { baseIndexerReducer, getInitialState } from './reducer'
+import { assertUnreachable } from './assertUnreachable'
 
 export abstract class BaseIndexer implements Indexer {
   private subscriptionCallbacks: SubscriptionCallback[] = []
@@ -75,10 +76,10 @@ export abstract class BaseIndexer implements Indexer {
 
   private dispatch(action: BaseIndexerAction): void {
     const [newState, effects] = baseIndexerReducer(this.state, action)
-    this.logger.debug('New state', { action, state: this.state, effects })
-
     this.state = newState
+    this.logger.debug('Dispatched', { action, newState: this.state, effects })
 
+    // TODO: check if this doesn't result in stack overflow
     effects.forEach((effect) => {
       switch (effect.type) {
         case 'Update':
@@ -88,8 +89,7 @@ export abstract class BaseIndexer implements Indexer {
         case 'UpdateHeight':
           return void this.executeUpdateHeight(effect)
         default:
-          console.log(effect)
-          throw new Error('unreachable')
+          return assertUnreachable(effect)
       }
     })
   }
@@ -98,17 +98,18 @@ export abstract class BaseIndexer implements Indexer {
     const from = this.state.height
     try {
       const to = await this.update(from, effect.to)
-      if (to > effect.to) {
-        this.logger.error('Indexer returned invalid height', {
+      if (to < from || to > effect.to) {
+        this.logger.error('Update returned invalid height', {
           returned: to,
-          expected: effect.to,
+          min: from,
+          max: effect.to,
         })
-        // TODO: invalidate in reducer
+        this.dispatch({ type: 'UpdateFailed', from, to: effect.to })
+      } else {
+        this.dispatch({ type: 'UpdateSucceeded', from, to })
       }
-      this.dispatch({ type: 'UpdateSucceeded', from, to })
     } catch (e) {
-      this.logger.error('Failed to update', e)
-      // @todo: retries, back-off
+      this.logger.error('Update failed', e)
       this.dispatch({ type: 'UpdateFailed', from, to: effect.to })
     }
   }
@@ -118,8 +119,7 @@ export abstract class BaseIndexer implements Indexer {
       await this.invalidate(effect.to)
       this.dispatch({ type: 'InvalidateSucceeded', height: effect.to })
     } catch (e) {
-      this.logger.error('Failed to invalidate', e)
-      // @todo: retries, back-off
+      this.logger.error('Invalidate failed', e)
       this.dispatch({ type: 'InvalidateFailed', height: effect.to })
     }
   }
