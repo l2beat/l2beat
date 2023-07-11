@@ -10,6 +10,7 @@ export function gatherAddressesFromUpgradeability(
 
   switch (item.type) {
     case 'EIP1967 proxy':
+    case 'Polygon proxy':
     case 'ZeppelinOS proxy':
     case 'resolved delegate proxy':
     case 'call implementation proxy':
@@ -45,6 +46,10 @@ export function gatherAddressesFromUpgradeability(
     case 'zkSync Lite proxy':
       result.push(item.implementation)
       result.push(item.additional)
+      break
+    case 'Polygon Extension proxy':
+      result.push(item.implementation)
+      result.push(item.extension)
       break
     case 'zkSpace proxy':
       result.push(item.implementation)

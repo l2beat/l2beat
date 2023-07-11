@@ -2,27 +2,161 @@
   "$schema": "../config.schema.json",
   "name": "polygon-pos",
   "initialAddresses": [
-    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-    "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-    "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+    // StateSender
+    "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
   ],
   "names": {
-    "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "Polygon Multisig"
+    "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0": "MaticToken",
+    "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH",
+    "0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A": "SlashingManager",
+    "0x2A88696e0fFA76bAA1338F2C74497cC013495922": "WithdrawManager",
+    "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT",
+    "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": "StarkingInfo",
+    "0x401F6c983eA34274ec46f84D70b31C151321188b": "DepositManager",
+    "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": "ExitNFT",
+    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
+    "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManager",
+    "0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension",
+    "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31": "ValidatorShareImpl",
+    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": "RootChainManager",
+    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
+    "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Predicate",
+    "0x9923263fA127b3d1484cFD649df8f1831c2A74e4": "MintableERC20Predicate",
+    "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4": "ERC20EscrowPredicate",
+    "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5": "ERC20MintBurnPredicate",
+    "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD": "ERC721Predicate",
+    "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f": "ERC1155Predicate",
+    "0x2d641867411650cd05dB93B59964536b1ED5b1B7": "MintableERC1155Predicate",
+    "0xDB2382413bCb9c2F1B6b62B52238558266361D68": "ChainExitERC1155Predicate",
+    "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30": "EtherPredicate",
+    "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7": "UnstoppableDomainsPredicate",
+    "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": "StateSender",
+    "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
+    "0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2": "InstaAaveV2",
+    "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55": "Digitalax",
+    "0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c": "AToken",
+    "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5": "Aloha",
+    "0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1": "Tellor",
+    "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2": "Fx",
+    "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35": "CustomPredicate",
+    "0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": "Aavegotchi",
+    "0x09305998a531fAde369EBE30aDF868c96A34e813": "DecentralandCollection",
+    "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7": "RootSyncer"
   },
   "overrides": {
-    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": {
-      "ignoreMethods": ["headerBlocks"],
-      "ignoreInWatchMode": [
-        "_nextHeaderBlock",
-        "currentHeaderBlock",
-        "getLastChildBlock"
+    "InstaAaveV2": {
+      "ignoreDiscovery": true
+    },
+    "Digitalax": {
+      "ignoreDiscovery": true
+    },
+    "AToken": {
+      "ignoreDiscovery": true
+    },
+    "Aloha": {
+      "ignoreDiscovery": true
+    },
+    "Tellor": {
+      "ignoreDiscovery": true
+    },
+    "Fx": {
+      "ignoreDiscovery": true
+    },
+    "Aavegotchi": {
+      "ignoreDiscovery": true
+    },
+    "DecentralandCollection": {
+      "ignoreDiscovery": true
+    },
+    "RootSyncer": {
+      "ignoreDiscovery": true // not used
+    },
+    "DepositManager": {
+      "ignoreDiscovery": true, // TODO: temporary,
+      "ignoreMethods": ["deposits"]
+    },
+    "RootChainManager": {
+      "fields": {
+        "PREDICATES": {
+          "type": "arrayFromOneEvent",
+          "event": "event PredicateRegistered(bytes32 indexed tokenType, address indexed predicateAddress)",
+          "valueKey": "predicateAddress"
+        }
+      }
+    },
+    "Timelock": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "ERC20Predicate": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "StateSender": {
+      "fields": {
+        "REGISTRATIONS": {
+          "type": "arrayFromOneEvent",
+          "event": "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
+          "valueKey": "sender"
+        }
+      }
+    },
+    "WithdrawManager": {
+      "ignoreMethods": ["exits"]
+    },
+    "StakingNFT": {
+      "ignoreMethods": ["tokenByIndex"]
+    },
+    "RootChain": {
+      "ignoreMethods": ["headerBlocks"]
+    },
+    "ExitNFT": {
+      "ignoreMethods": ["exists"]
+    },
+    "StakeManager": {
+      "proxyType": "Polygon Extension proxy",
+      "ignoreMethods": [
+        "delegatedAmount",
+        "getValidatorContract",
+        "isValidator",
+        "latestSignerUpdateEpoch",
+        "signers",
+        "validatorAuction",
+        "validators",
+        "validatorStake",
+        "validatorStateChanges"
       ]
     },
-    "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": {
-      "ignoreInWatchMode": ["counter"]
+    // TODO: custom proxy
+    "StakeManagerExtension": {
+      "ignoreMethods": [
+        "latestSignerUpdateEpoch",
+        "validatorAuction",
+        "validators",
+        "validatorStateChanges"
+      ]
     },
-    "Polygon Multisig": {
-      "ignoreInWatchMode": ["nonce"]
+    "StarkingInfo": {
+      "ignoreMethods": [
+        "getValidatorContractAddress",
+        "totalValidatorStake",
+        "validatorNonce"
+      ]
+    },
+    "ValidatorShareImpl": {
+      "ignoreDiscovery": true
+    },
+    "MaticToken": {
+      "ignoreDiscovery": true
+    },
+    "MaticWETH": {
+      "ignoreDiscovery": true
     }
   }
 }

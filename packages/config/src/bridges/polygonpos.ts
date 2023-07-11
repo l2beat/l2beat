@@ -2,10 +2,20 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS, NUGGETS } from '../layer2s/common'
+import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
+
+const delayString = formatSeconds(
+  discovery.getContractValue('Timelock', 'getMinDelay'),
+)
+
+const upgrades = {
+  upgradableBy: ['PolygonMultisig'],
+  upgradeDelay: delayString,
+}
 
 export const polygonpos: Bridge = {
   type: 'bridge',
@@ -34,35 +44,28 @@ export const polygonpos: Bridge = {
   },
   config: {
     escrows: [
-      {
+      discovery.getEscrowDetails({
+        // ERC20Predicate
         address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
         sinceTimestamp: new UnixTime(1598436664),
-        tokens: [
-          'USDC',
-          'USDT',
-          'WBTC',
-          'SAND',
-          //'ALTA',
-          //'QUICK',
-          'DAI',
-          //'GHST',
-          'AAVE',
-          'LINK',
-          //'BAL',
-          'CRV',
-          'MANA',
-          'CEL',
-          //'DG',
-          //'xDG',
-          //'BZRX',
-          //'AWX',
-        ],
-      },
-      {
+        tokens: '*',
+        ...upgrades,
+      }),
+      discovery.getEscrowDetails({
+        // EtherPredicate
         address: EthereumAddress('0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30'),
         sinceTimestamp: new UnixTime(1598437971),
         tokens: ['ETH'],
-      },
+        ...upgrades,
+      }),
+      discovery.getEscrowDetails({
+        // ERC20EscrowPredicate
+        address: EthereumAddress('0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4'),
+        sinceTimestamp: new UnixTime(1598437971),
+        tokens: '*',
+        ...upgrades,
+      }),
+      // ERC20MintBurnablePredicate is not used
     ],
   },
   riskView: {
@@ -98,7 +101,7 @@ export const polygonpos: Bridge = {
     validation: {
       name: 'Outbound transfers are externally verified, inbound require merkle proof',
       description:
-        'Validators on the Polygon network watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Polygon. Every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens users need to present a merkle proof of a burn event that is verified against the checkpoints.',
+        'Validators on the Polygon network watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Polygon. Around every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens users need to present a merkle proof of a burn event that is verified against the checkpoints.',
       references: [],
       risks: [
         {
@@ -135,40 +138,72 @@ export const polygonpos: Bridge = {
     },
   },
   contracts: {
-    // TODO: we need all contracts (check roles on escrows) and a diagram
-    isIncomplete: true,
     addresses: [
       discovery.getContractDetails(
-        'RootChainManager',
-        'Main contract to manage bridge tokens, deposits and withdrawals.',
-      ),
-      discovery.getContractDetails(
         'StateSender',
-        'Smart contract containing logic for syncing the state of the bridge.',
+        'Smart contract containing the logic for syncing the state of registered bridges.',
       ),
-      discovery.getContractDetails(
-        'RootChain',
-        'Contract storing Polygon sidechain checkpoints. Note that validity of these checkpoints is not verified, it is assumed they are valid if signed by 2/3 of the Polygon Validators.',
-      ),
+      discovery.getContractDetails('RootChainManager', {
+        description:
+          'Main contract to manage bridge tokens, deposits and withdrawals.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('RootChain', {
+        description:
+          'Contract storing Polygon sidechain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
+        ...upgrades,
+      }),
       discovery.getContractDetails(
         'Timelock',
-        'Contract enforcing delay on code upgrades.',
+        `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
       ),
+      discovery.getContractDetails('EtherPredicate', {
+        description: 'Escrow contract for ETH.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('ERC20Predicate', {
+        description: 'Escrow contract for ERC20 tokens.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('MintableERC20Predicate', {
+        description: 'Escrow contract for mintable ERC20 tokens.',
+        ...upgrades,
+      }),
       discovery.getContractDetails(
-        'ERC20Predicate',
+        'ERC20EscrowPredicate',
         'Escrow contract for ERC20 tokens.',
       ),
       discovery.getContractDetails(
-        'EtherPredicate',
-        'Escrow contract for ETH.',
+        'ERC20MintBurnPredicate',
+        'Escrow contract for ERC20 tokens that can be minted and burned.',
       ),
+      discovery.getContractDetails('ERC721Predicate', {
+        description: 'Escrow contract for ERC721 tokens.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('ERC1155Predicate', {
+        description: 'Escrow contract for ERC1155 tokens.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('MintableERC1155Predicate', {
+        description: 'Escrow contract for mintable ERC1155 tokens.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('ChainExitERC1155Predicate', {
+        description: 'Escrow contract for ERC1155 tokens.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('UnstoppableDomainsPredicate', {
+        description: 'Escrow contract for Unstoppable Domains NFTs.',
+        ...upgrades,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('48 hours')],
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'Polygon Multisig',
-      'Can propose and execute code upgrades on escrows via Timelock contract.',
+      'PolygonMultisig',
+      'Can propose and execute code upgrades via Timelock contract.',
     ),
   ],
   knowledgeNuggets: [
