@@ -1,14 +1,16 @@
 import assert from 'node:assert'
 
 import { assertUnreachable } from './assertUnreachable'
-import { BaseIndexerAction } from './BaseIndexerAction'
-import { BaseIndexerState, StateAndEffects } from './BaseIndexerState'
-import { Effect } from './Effect'
+import { IndexerAction } from './IndexerAction'
+import { IndexerEffect } from './IndexerEffect'
+import { IndexerState } from './IndexerState'
 
-export function baseIndexerReducer(
-  state: BaseIndexerState,
-  action: BaseIndexerAction,
-): StateAndEffects {
+export type IndexerReducerResult = [IndexerState, IndexerEffect[]]
+
+export function indexerReducer(
+  state: IndexerState,
+  action: IndexerAction,
+): IndexerReducerResult {
   switch (action.type) {
     case 'Initialized': {
       assertStatus(state.status, 'init')
@@ -45,7 +47,7 @@ export function baseIndexerReducer(
     case 'UpdateSucceeded': {
       assertStatus(state.status, 'updating')
       return idleToAction({ ...state, status: 'idle', height: action.to }, [
-        { type: 'UpdateHeight', to: action.to },
+        { type: 'SetHeight', to: action.to },
       ])
     }
     case 'UpdateFailed': {
@@ -68,8 +70,8 @@ export function baseIndexerReducer(
 }
 
 function assertStatus(
-  status: BaseIndexerState['status'],
-  expected: BaseIndexerState['status'],
+  status: IndexerState['status'],
+  expected: IndexerState['status'],
 ): void {
   assert(
     status === expected,
@@ -78,15 +80,15 @@ function assertStatus(
 }
 
 function finishInitialization(
-  state: BaseIndexerState,
-): StateAndEffects | undefined {
+  state: IndexerState,
+): IndexerReducerResult | undefined {
   if (state.status === 'init') {
     if (state.initializedSelf && state.initializedParents.every((x) => x)) {
       const height = Math.min(...state.parentHeights, state.height)
       return [
         { ...state, status: 'invalidating' },
         [
-          { type: 'UpdateHeight', to: height },
+          { type: 'SetHeight', to: height },
           { type: 'Invalidate', to: height },
         ],
       ]
@@ -95,9 +97,9 @@ function finishInitialization(
 }
 
 function idleToAction(
-  state: BaseIndexerState,
-  suggestedEffects: Effect[] = [],
-): StateAndEffects {
+  state: IndexerState,
+  suggestedEffects: IndexerEffect[] = [],
+): IndexerReducerResult {
   const minParentHeight = Math.min(...state.parentHeights)
   const minHeight = Math.min(minParentHeight, state.height)
 
@@ -115,13 +117,13 @@ function idleToAction(
   return [
     { ...state, status: 'invalidating' },
     [
-      { type: 'UpdateHeight', to: minHeight },
+      { type: 'SetHeight', to: minHeight },
       { type: 'Invalidate', to: minHeight },
     ],
   ]
 }
 
-export function getInitialState(parentCount: number): BaseIndexerState {
+export function getInitialState(parentCount: number): IndexerState {
   return {
     status: 'init',
     height: 0,

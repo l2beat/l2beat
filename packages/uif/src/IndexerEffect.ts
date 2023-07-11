@@ -1,4 +1,4 @@
-export type Effect = UpdateEffect | InvalidateEffect | UpdateHeightEffect
+export type IndexerEffect = UpdateEffect | InvalidateEffect | SetHeightEffect
 
 export interface UpdateEffect {
   type: 'Update'
@@ -10,7 +10,7 @@ export interface InvalidateEffect {
   to: number
 }
 
-export interface UpdateHeightEffect {
-  type: 'UpdateHeight'
+export interface SetHeightEffect {
+  type: 'SetHeight'
   to: number
 }

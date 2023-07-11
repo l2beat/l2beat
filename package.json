@@ -3,6 +3,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "clean": "wsrun -recsm clean",
     "build": "wsrun -recsm build",
     "test": "wsrun -ecam test",
     "format:fix": "wsrun -ecam format:fix",

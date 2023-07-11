@@ -1,11 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
 
 import { assertUnreachable } from './assertUnreachable'
-import { BaseIndexerAction } from './BaseIndexerAction'
-import { BaseIndexerState } from './BaseIndexerState'
-import { InvalidateEffect, UpdateEffect, UpdateHeightEffect } from './Effect'
 import { Indexer, Subscription, SubscriptionCallback } from './Indexer'
-import { baseIndexerReducer, getInitialState } from './reducer'
+import { IndexerAction } from './IndexerAction'
+import {
+  InvalidateEffect,
+  SetHeightEffect,
+  UpdateEffect,
+} from './IndexerEffect'
+import { getInitialState, indexerReducer } from './indexerReducer'
+import { IndexerState } from './IndexerState'
 
 export abstract class BaseIndexer implements Indexer {
   private subscriptionCallbacks: SubscriptionCallback[] = []
@@ -34,7 +38,7 @@ export abstract class BaseIndexer implements Indexer {
    */
   abstract invalidate(to: number): Promise<void>
 
-  private state: BaseIndexerState
+  private state: IndexerState
 
   constructor(protected logger: Logger, public readonly parents: Indexer[]) {
     this.logger = this.logger.for(this)
@@ -70,12 +74,12 @@ export abstract class BaseIndexer implements Indexer {
     }
   }
 
-  getState(): BaseIndexerState {
+  getState(): IndexerState {
     return this.state
   }
 
-  private dispatch(action: BaseIndexerAction): void {
-    const [newState, effects] = baseIndexerReducer(this.state, action)
+  private dispatch(action: IndexerAction): void {
+    const [newState, effects] = indexerReducer(this.state, action)
     this.state = newState
     this.logger.debug('Dispatched', { action, newState: this.state, effects })
 
@@ -86,8 +90,8 @@ export abstract class BaseIndexer implements Indexer {
           return void this.executeUpdate(effect)
         case 'Invalidate':
           return void this.executeInvalidate(effect)
-        case 'UpdateHeight':
-          return void this.executeUpdateHeight(effect)
+        case 'SetHeight':
+          return void this.executeSetHeight(effect)
         default:
           return assertUnreachable(effect)
       }
@@ -124,7 +128,7 @@ export abstract class BaseIndexer implements Indexer {
     }
   }
 
-  private async executeUpdateHeight(effect: UpdateHeightEffect): Promise<void> {
+  private async executeSetHeight(effect: SetHeightEffect): Promise<void> {
     this.state.height = effect.to
     await this.setHeight(effect.to)
     this.subscriptionCallbacks.forEach((callback) => {
