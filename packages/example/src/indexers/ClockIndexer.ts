@@ -9,17 +9,13 @@ export class ClockIndexer implements Indexer {
   }
 
   async start(): Promise<void> {
-    this.logger.info('Starting')
-    return Promise.resolve()
-  }
-
-  async callback(): Promise<void> {
     setInterval(() => {
       this.height = Date.now()
       this.callbacks.forEach((cb) =>
         cb({ type: 'update', height: this.height }),
       )
-    }, 10_000)
+    }, 2_000)
+    this.logger.info('Started')
     return Promise.resolve()
   }
 

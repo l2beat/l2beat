@@ -2,59 +2,64 @@ import assert from 'node:assert'
 
 export interface BaseIndexerState {
   height: number
-  dependencyHeights: number[]
+  parentHeights: number[]
   batchSize: number
   status: 'idle' | 'updating' | 'invalidating' | 'errored'
 }
 
-interface DependencyUpdated {
-  type: 'DependencyUpdated'
+export interface ParentUpdated {
+  type: 'ParentUpdated'
   index: number
   height: number
 }
 
-interface UpdateStarted {
+export interface UpdateStarted {
   type: 'UpdateStarted'
   from: number
   to: number
 }
 
-interface UpdateSucceeded {
+export interface UpdateSucceeded {
   type: 'UpdateSucceeded'
   from: number
   to: number
 }
 
-interface UpdateFailed {
+export interface UpdateFailed {
   type: 'UpdateFailed'
   from: number
   to: number
 }
 
-interface InvalidateSucceeded {
+export interface InvalidateSucceeded {
   type: 'InvalidateSucceeded'
   height: number
 }
 
-interface InvalidateFailed {
+export interface InvalidateFailed {
   type: 'InvalidateFailed'
   height: number
 }
 
 export type BaseIndexerAction =
-  | DependencyUpdated
+  | ParentUpdated
   | UpdateSucceeded
   | UpdateFailed
   | InvalidateSucceeded
   | InvalidateFailed
   | UpdateStarted
 
-interface UpdateEffect {
+export interface UpdateEffect {
   type: 'Update'
   to: number
 }
 
-export type Effect = UpdateEffect
+export interface UpdateHeightEffect {
+  type: 'UpdateHeight'
+  to: number
+}
+
+export type Effect = UpdateEffect | UpdateHeightEffect
 
 export type StateAndEffects = [BaseIndexerState, Effect[]]
 
@@ -63,14 +68,14 @@ export function baseIndexerReducer(
   action: BaseIndexerAction,
 ): StateAndEffects {
   switch (action.type) {
-    case 'DependencyUpdated':
+    case 'ParentUpdated':
       const newState = {
         ...state,
-        dependencyHeights: state.dependencyHeights.map((height, index) => {
+        parentHeights: state.parentHeights.map((height, index) => {
           if (index === action.index) {
             assert(
               height < action.height,
-              "Attempting to update dependency height to a lower value than it's current height",
+              "Attempting to update parent height to a lower value than it's current height",
             )
             return action.height
           }
@@ -78,10 +83,10 @@ export function baseIndexerReducer(
         }),
       }
 
-      if (newState.dependencyHeights.every((height) => height > state.height)) {
+      if (newState.parentHeights.every((height) => height > state.height)) {
         return [
           newState,
-          [{ type: 'Update', to: Math.min(...newState.dependencyHeights) }],
+          [{ type: 'Update', to: Math.min(...newState.parentHeights) }],
         ]
       }
       return [newState, []]
@@ -96,11 +101,20 @@ export function baseIndexerReducer(
       ]
 
     case 'UpdateSucceeded':
-      assert(state.status === 'updating')
-      return [{ ...state, status: 'idle', height: action.to }, []]
+      assert(
+        state.status === 'updating',
+        'Invalid status, expected updating, got ' + state.status,
+      )
+      return [
+        { ...state, status: 'idle', height: action.to },
+        [{ type: 'UpdateHeight', to: action.to }],
+      ]
 
     case 'UpdateFailed':
-      assert(state.status === 'updating')
+      assert(
+        state.status === 'updating',
+        'Invalid status, expected updating, got ' + state.status,
+      )
       return [{ ...state, status: 'errored' }, []]
 
     default:
@@ -109,12 +123,12 @@ export function baseIndexerReducer(
 }
 
 export function getInitialState(
-  dependencies: unknown[] = [],
+  parents: unknown[] = [],
   batchSize = 5,
 ): BaseIndexerState {
   return {
     height: 0,
-    dependencyHeights: dependencies.map(() => 0),
+    parentHeights: parents.map(() => 0),
     batchSize,
     status: 'idle',
   }

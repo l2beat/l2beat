@@ -9,17 +9,21 @@ export class BlockNumberIndexer extends BaseIndexer {
     private readonly clockIndexer: ClockIndexer,
     private readonly blockNumberRepository: BlockNumberRepository,
   ) {
-    super(logger, [clockIndexer], {}, { batchSize: 1 })
-    this.logger = this.logger.for(this)
+    super(logger, [clockIndexer], {}, { batchSize: Infinity })
   }
 
   override async start(): Promise<void> {
     await Promise.resolve()
-    this.logger.info('BlockNumberIndexer started')
+    this.logger.info('Started')
   }
 
   async update(): Promise<void> {
     await Promise.resolve()
-    this.logger.info('BlockNumberIndexer update started')
+    this.logger.info('Update started')
+  }
+
+  override async setHeight(height: number): Promise<void> {
+    await Promise.resolve()
+    this.logger.info('setHeight started')
   }
 }

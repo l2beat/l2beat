@@ -15,7 +15,7 @@ describe(baseIndexerReducer.name, () => {
 
       const [state, effects] = reduceWithBaseIndexerReducer(initialState, [
         {
-          type: 'DependencyUpdated',
+          type: 'ParentUpdated',
           index: 0,
           height: 1,
         },
@@ -24,7 +24,7 @@ describe(baseIndexerReducer.name, () => {
       expect(state).toEqual({
         height: 0,
         batchSize: expect.a(Number),
-        dependencyHeights: [1, 0],
+        parentHeights: [1, 0],
         status: 'idle',
       })
       expect(effects).toEqual([])
@@ -35,12 +35,12 @@ describe(baseIndexerReducer.name, () => {
 
       const [state, effects] = reduceWithBaseIndexerReducer(initialState, [
         {
-          type: 'DependencyUpdated',
+          type: 'ParentUpdated',
           index: 0,
           height: 1,
         },
         {
-          type: 'DependencyUpdated',
+          type: 'ParentUpdated',
           index: 1,
           height: 2,
         },
@@ -49,7 +49,7 @@ describe(baseIndexerReducer.name, () => {
       expect(state).toEqual({
         height: 0,
         batchSize: expect.a(Number),
-        dependencyHeights: [1, 2],
+        parentHeights: [1, 2],
         status: 'idle',
       })
       expect(effects).toEqual([{ type: 'Update', to: 1 }])
@@ -61,12 +61,12 @@ describe(baseIndexerReducer.name, () => {
       const fn = (): StateAndEffects =>
         reduceWithBaseIndexerReducer(initialState, [
           {
-            type: 'DependencyUpdated',
+            type: 'ParentUpdated',
             index: 0,
             height: 2,
           },
           {
-            type: 'DependencyUpdated',
+            type: 'ParentUpdated',
             index: 0,
             height: 1,
           },
@@ -93,7 +93,7 @@ describe(baseIndexerReducer.name, () => {
       expect(state).toEqual({
         height: 0,
         batchSize: expect.a(Number),
-        dependencyHeights: [],
+        parentHeights: [],
         status: 'updating',
       })
       expect(effects).toEqual([])
@@ -120,7 +120,7 @@ describe(baseIndexerReducer.name, () => {
       expect(state).toEqual({
         height: 1,
         batchSize: expect.a(Number),
-        dependencyHeights: [],
+        parentHeights: [],
         status: 'idle',
       })
       expect(effects).toEqual([])
@@ -147,7 +147,7 @@ describe(baseIndexerReducer.name, () => {
       expect(state).toEqual({
         height: 0,
         batchSize: expect.a(Number),
-        dependencyHeights: [],
+        parentHeights: [],
         status: 'errored',
       })
       expect(effects).toEqual([])

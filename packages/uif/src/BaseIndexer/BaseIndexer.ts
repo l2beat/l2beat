@@ -7,6 +7,8 @@ import {
   baseIndexerReducer,
   BaseIndexerState,
   getInitialState,
+  UpdateEffect,
+  UpdateHeightEffect,
 } from './reducer'
 
 export abstract class BaseIndexer implements Indexer {
@@ -23,15 +25,19 @@ export abstract class BaseIndexer implements Indexer {
   private readonly effectsQueue: JobQueue
   constructor(
     protected logger: Logger,
-    public readonly dependencies: Indexer[],
+    public readonly parents: Indexer[],
     public readonly parameters: json,
     config: { batchSize: number },
   ) {
-    this.state = getInitialState(dependencies, config.batchSize)
-    this.dependencies.forEach((dependency, index) => {
-      dependency.subscribe((event) => {
+    this.logger = this.logger.for(this)
+    this.state = getInitialState(parents, config.batchSize)
+    this.parents.forEach((parent, index) => {
+      this.logger.debug('Subscribing to parent', {
+        parent: parent.constructor.name,
+      })
+      parent.subscribe((event) => {
         this.dispatch({
-          type: 'DependencyUpdated',
+          type: 'ParentUpdated',
           index,
           height: event.height,
         })
@@ -41,6 +47,7 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   subscribe(callback: SubscriptionCallback): Subscription {
+    this.logger.debug('Someone subscribed')
     this.subscriptionCallbacks.push(callback)
     return {
       unsubscribe: (): void => {
@@ -64,11 +71,13 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   private dispatch(action: BaseIndexerAction): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+    this.logger.debug('Dispatching action', { action: action as any })
     const [newState, effects] = baseIndexerReducer(this.state, action)
 
     this.state = newState
 
-    this.logger.debug('Dispatching', {
+    this.logger.debug('Dispatching effects', {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
       action: action as any,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
@@ -77,37 +86,36 @@ export abstract class BaseIndexer implements Indexer {
     effects.forEach((effect) => {
       switch (effect.type) {
         case 'Update':
-          this.effectsQueue.add({
-            name: 'Update',
-            execute: async () => {
-              const finalFrom = this.state.height
-              const finalTo = effect.to
-              for (
-                let from = finalFrom;
-                from <= finalTo;
-                from += this.state.batchSize + 1
-              ) {
-                const to = Math.min(from + this.state.batchSize, finalTo)
-
-                this.dispatch({ type: 'UpdateStarted', from, to })
-                try {
-                  await this.update(from, to)
-                  this.dispatch({
-                    type: 'UpdateSucceeded',
-                    from,
-                    to,
-                  })
-                } catch (e) {
-                  // @todo: proper error handling: we need retries, backoff and proper support for error on invalidated state
-                  this.dispatch({ type: 'UpdateFailed', from, to })
-                }
-              }
-            },
-          })
-          break
+          return void this.executeUpdate(effect)
+        case 'UpdateHeight':
+          return void this.executeUpdateHeight(effect)
         default:
           throw new Error('unreachable')
       }
+    })
+  }
+
+  private async executeUpdate(effect: UpdateEffect): Promise<void> {
+    const from = this.state.height
+    const to = Math.min(from + this.state.batchSize, effect.to)
+    try {
+      this.dispatch({ type: 'UpdateStarted', from, to })
+      await this.update(from, to)
+      this.dispatch({ type: 'UpdateSucceeded', from, to })
+      // @todo: children
+    } catch (e) {
+      // @todo: retries, back-off
+      this.dispatch({ type: 'UpdateFailed', from, to })
+    }
+  }
+
+  abstract setHeight(height: number): Promise<void>
+
+  private async executeUpdateHeight(effect: UpdateHeightEffect): Promise<void> {
+    this.state.height = effect.to
+    await this.setHeight(effect.to)
+    this.subscriptionCallbacks.forEach((callback) => {
+      callback({ type: 'update', height: effect.to })
     })
   }
 }
