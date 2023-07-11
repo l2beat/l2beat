@@ -105,7 +105,10 @@
           "event": "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
           "valueKey": "sender"
         }
-      }
+      },
+      "ignoreInWatchMode": [
+        "counter"
+      ]
     },
     "WithdrawManager": {
       "ignoreMethods": ["exits"]
@@ -114,7 +117,12 @@
       "ignoreMethods": ["tokenByIndex"]
     },
     "RootChain": {
-      "ignoreMethods": ["headerBlocks"]
+      "ignoreMethods": ["headerBlocks"],
+      "ignoreInWatchMode": [
+        "_nextHeaderBlock",
+        "getLastChildBlock",
+        "currentHeaderBlock"
+      ]
     },
     "ExitNFT": {
       "ignoreMethods": ["exists"]
