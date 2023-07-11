@@ -254,4 +254,11 @@ export const nomad: Bridge = {
         'Watchers can unenroll, i.e. stop receiving messages, from a given Replica.',
     },
   ],
+  milestones: [
+    {
+      name: 'Contracts hacked for $190M',
+      date: '2022-08-02T00:00:00.00Z',
+      link: 'https://rekt.news/nomad-rekt/',
+    },
+  ],
 }
