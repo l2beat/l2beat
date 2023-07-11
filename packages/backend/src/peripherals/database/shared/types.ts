@@ -48,6 +48,7 @@ declare module 'knex/types/tables' {
   }
 
   interface BalanceStatusRow {
+    chain_id: number
     config_hash: string
     unix_timestamp: Date
   }
