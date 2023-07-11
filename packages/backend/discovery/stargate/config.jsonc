@@ -55,7 +55,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -74,7 +75,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -93,7 +95,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -112,7 +115,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -131,7 +135,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -150,7 +155,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -169,7 +175,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -188,7 +195,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -207,7 +215,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -226,7 +235,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -245,7 +255,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {
@@ -264,7 +275,8 @@
         "protocolFeeBalance",
         "totalLiquidity",
         "totalSupply",
-        "chainPaths"
+        "chainPaths",
+        "totalWeight"
       ],
       "fields": {
         "chainPaths": {

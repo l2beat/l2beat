@@ -116,10 +116,6 @@ export const amarok: Bridge = {
         'Contract that receives messages from other Domains on Ethereum.',
       ),
       discovery.getContractDetails(
-        'AdminHubConnector',
-        'Contract for sending/receiving messages from mainnet to Binance Smart Chain via Multichain AMB.',
-      ),
-      discovery.getContractDetails(
         'PolygonHubConnector',
         'Contract for sending/receiving messages from mainnet to Polygon via Polygon FxChannel AMB.',
       ),
