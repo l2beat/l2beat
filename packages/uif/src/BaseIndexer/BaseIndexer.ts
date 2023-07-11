@@ -1,7 +1,8 @@
+import { Logger } from '@l2beat/backend-tools'
+
 import { Indexer, Subscription, SubscriptionCallback } from '../Indexer'
 import { JobQueue } from '../tools/JobQueue'
 import { json } from '../tools/json'
-import { Logger } from '../tools/Logger'
 import {
   BaseIndexerAction,
   baseIndexerReducer,

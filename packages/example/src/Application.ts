@@ -1,4 +1,4 @@
-import { Logger, LogLevel } from '@l2beat/uif'
+import { Logger, LogLevel } from '@l2beat/backend-tools'
 
 import { Config } from './Config'
 import { BalanceIndexer } from './indexers/BalanceIndexer'

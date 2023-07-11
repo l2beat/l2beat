@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Logger } from './Logger'
+import { Logger } from '@l2beat/backend-tools'
 
 export interface Job {
   readonly name: string

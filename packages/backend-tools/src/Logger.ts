@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/ban-types */
 import chalk from 'chalk'
 import { inspect } from 'util'
-
-import { json } from './json'
 
 export enum LogLevel {
   NONE = 0,
@@ -18,8 +16,6 @@ export interface LoggerOptions {
   reportError?: (error: unknown) => void
 }
 
-export type LoggerParameters = Record<string, json>
-
 export class Logger {
   constructor(private readonly options: LoggerOptions) {}
 
@@ -30,8 +26,7 @@ export class Logger {
     return new Logger({ ...this.options, ...options })
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  for(object: {}) {
+  for(object: {}): Logger {
     return this.configure({
       service: this.options.service
         ? `${this.options.service}.${object.constructor.name}`
@@ -54,23 +49,23 @@ export class Logger {
     }
   }
 
-  info(message: string, parameters?: LoggerParameters): void
-  info(parameters: LoggerParameters): void
-  info(message: string | LoggerParameters, parameters?: LoggerParameters) {
+  info(message: string, parameters?: {}): void
+  info(parameters: {}): void
+  info(message: string | {}, parameters?: {}): void {
     if (this.options.logLevel >= LogLevel.INFO) {
       this.print('info', combine(message, parameters))
     }
   }
 
-  debug(message: string, parameters?: LoggerParameters): void
-  debug(parameters: LoggerParameters): void
-  debug(message: string | LoggerParameters, parameters?: LoggerParameters) {
+  debug(message: string, parameters?: {}): void
+  debug(parameters: {}): void
+  debug(message: string | {}, parameters?: {}): void {
     if (this.options.logLevel >= LogLevel.DEBUG) {
       this.print('debug', combine(message, parameters))
     }
   }
 
-  private print(level: string, parameters: LoggerParameters) {
+  private print(level: string, parameters: {}): void {
     switch (this.options.format) {
       case 'json':
         return this.printJson(level, parameters)
@@ -79,7 +74,7 @@ export class Logger {
     }
   }
 
-  private printJson(level: string, parameters: LoggerParameters) {
+  private printJson(level: string, parameters: {}): void {
     const time = new Date().toISOString()
     const data = {
       time,
@@ -87,6 +82,7 @@ export class Logger {
       service: this.options.service,
       ...parameters,
     }
+    // TODO: bigint
     const str = JSON.stringify(data)
     if (data.level === 'error') {
       console.error(str)
@@ -95,18 +91,18 @@ export class Logger {
     }
   }
 
-  private printPretty(level: string, parameters: LoggerParameters) {
+  private printPretty(level: string, parameters: {}): void {
     const time = getPrettyTime()
     const levelOut = getPrettyLevel(level)
     const service = getPrettyService(this.options.service)
     let messageOut = ''
-    if (typeof parameters.message === 'string') {
+    if ('message' in parameters && typeof parameters.message === 'string') {
       messageOut = ` ${parameters.message}`
       delete parameters.message
     }
     const params = getPrettyParameters(parameters)
     const str = `${time} ${levelOut}${service}${messageOut}${params}`
-    if (parameters.level === 'error') {
+    if ('level' in parameters && parameters.level === 'error') {
       console.error(str)
     } else {
       console.log(str)
@@ -114,7 +110,7 @@ export class Logger {
   }
 }
 
-export function getErrorMessage(error: unknown) {
+export function getErrorMessage(error: unknown): string {
   if (typeof error === 'string') {
     return error
   } else if (error instanceof Error) {
@@ -125,10 +121,7 @@ export function getErrorMessage(error: unknown) {
   }
 }
 
-function combine(
-  message: string | LoggerParameters,
-  parameters?: LoggerParameters,
-) {
+function combine(message: string | {}, parameters?: {}): {} {
   if (typeof message === 'string') {
     return { message, ...parameters }
   } else {
@@ -136,7 +129,7 @@ function combine(
   }
 }
 
-function getPrettyTime() {
+function getPrettyTime(): string {
   const now = new Date()
   const h = now.getHours().toString().padStart(2, '0')
   const m = now.getMinutes().toString().padStart(2, '0')
@@ -145,7 +138,7 @@ function getPrettyTime() {
   return chalk.gray(`${h}:${m}:${s}.${ms}`)
 }
 
-function getPrettyLevel(level: string) {
+function getPrettyLevel(level: string): string {
   switch (level) {
     case 'error':
       return chalk.red(level.toUpperCase())
@@ -157,14 +150,14 @@ function getPrettyLevel(level: string) {
   return level.toUpperCase()
 }
 
-function getPrettyService(service: string | undefined) {
+function getPrettyService(service: string | undefined): string {
   if (service === undefined) {
     return ''
   }
   return ` [${chalk.magenta(service)}]`
 }
 
-function getPrettyParameters(parameters: LoggerParameters | undefined) {
+function getPrettyParameters(parameters: {} | undefined): string {
   if (parameters === undefined) {
     return ''
   }

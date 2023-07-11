@@ -1,4 +1,5 @@
-import { Indexer, Logger, Subscription, UpdateEvent } from '@l2beat/uif'
+import { Indexer, Subscription, UpdateEvent } from '@l2beat/uif'
+import { Logger } from '@l2beat/backend-tools'
 
 export class ClockIndexer implements Indexer {
   private callbacks: ((event: UpdateEvent) => void)[] = []

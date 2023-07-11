@@ -1,8 +1,8 @@
+import { Logger } from '@l2beat/backend-tools'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn } from 'earl'
 
 import { Indexer, Subscription, UpdateEvent } from '../Indexer'
-import { Logger } from '../tools/Logger'
 import { BaseIndexer } from './BaseIndexer'
 
 describe(BaseIndexer.name, () => {

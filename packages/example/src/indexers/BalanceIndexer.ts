@@ -1,4 +1,6 @@
-import { BaseIndexer, Logger } from '@l2beat/uif'
+import { BaseIndexer } from '@l2beat/uif'
+import { Logger } from '@l2beat/backend-tools'
+
 
 import { BalanceRepository } from '../repositories/BalanceRepository'
 import { BlockNumberIndexer } from './BlockNumberIndexer'
