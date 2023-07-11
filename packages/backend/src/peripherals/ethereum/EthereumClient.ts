@@ -23,6 +23,10 @@ export class EthereumClient {
     return result
   }
 
+  async getBalance(holder: EthereumAddress, blockTag: BlockTag) {
+    return await this.provider.getBalance(holder.toString(), blockTag)
+  }
+
   async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
     const end = await this.getBlockNumber()
 

@@ -31,12 +31,12 @@ Alternatively you can simply run `./scripts/start_db.sh` which will always do wh
 
 You should also obtain an api key for the following services:
 
-- Alchemy: https://alchemy.com
-- Etherscan: https://etherscan.io/apis
+- Alchemy: <https://alchemy.com>
+- Etherscan: <https://etherscan.io/apis>
 
 Optionally if you want to speed up the price collection obtain an api key from:
 
-- Coingecko: https://www.coingecko.com/en/api/pricing
+- Coingecko: <https://www.coingecko.com/en/api/pricing>
 
 ### Environment variables
 
@@ -49,7 +49,8 @@ environment variables. One variable per line `KEY=value`.
 - `TEST_DB_URL` - Database url used in `yarn test`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_test`
 - `DATABASE_URL` - Database url used in production deployment
 - `ETHERSCAN_API_KEY` - API key for Etherscan
-- `ALCHEMY_API_KEY` - API key for Alchemy
+- `ETHEREUM_ALCHEMY_API_KEY` - API key for Alchemy Ethereum App
+- `ARBITRUM_ALCHEMY_API_KEY` - API key for Alchemy Arbitrum App
 
 #### Optional
 
@@ -74,7 +75,7 @@ environment variables. One variable per line `KEY=value`.
 - `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
 - `UPDATE_MONITOR_RUN_ON_START` (default `true`) - Prevent UpdateMonitor from running on start when developing locally
 
-#### .env boilerplate:
+#### .env boilerplate
 
 ```bash
 LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
@@ -82,7 +83,7 @@ TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 DATABASE_URL=
 
 ETHERSCAN_API_KEY=
-ALCHEMY_API_KEY=
+ETHEREUM_ALCHEMY_API_KEY=
 
 #-----OPTIONAL-----
 # STARKEX_API_KEY=
@@ -95,6 +96,7 @@ ALCHEMY_API_KEY=
 # ETHEREUM_TVL_ENABLED=
 # ARBITRUM_TVL_ENABLED=
 # ARBISCAN_API_KEY=
+# ARBITRUM_ALCHEMY_API_KEY
 # DISCOVERY_BLOCK_NUMBER=
 # WATCHMODE_ENABLED=
 # PUBLIC_DISCORD_CHANNEL_ID=
@@ -130,7 +132,7 @@ ALCHEMY_API_KEY=
 
 The `/status` endpoints were created to see the current progress of the Updaters.
 
-### Endpoints:
+### Endpoints
 
 - `/status/prices`
 - `/status/balances`
