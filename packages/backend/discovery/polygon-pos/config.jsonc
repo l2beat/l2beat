@@ -106,9 +106,7 @@
           "valueKey": "sender"
         }
       },
-      "ignoreInWatchMode": [
-        "counter"
-      ]
+      "ignoreInWatchMode": ["counter"]
     },
     "WithdrawManager": {
       "ignoreMethods": ["exits"]
