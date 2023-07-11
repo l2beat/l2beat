@@ -76,7 +76,7 @@ class SpyDependency implements Indexer {
     this.subscribers.push(callback)
 
     return {
-      cancel: (): void => {
+      unsubscribe: (): void => {
         this.subscribers = this.subscribers.filter(
           (subscriber) => subscriber !== callback,
         )

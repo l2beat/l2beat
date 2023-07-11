@@ -1,4 +1,4 @@
-import { Indexer, Subscription, UpdateEvent } from '../Indexer'
+import { Indexer, Subscription, SubscriptionCallback } from '../Indexer'
 import { JobQueue } from '../tools/JobQueue'
 import { json } from '../tools/json'
 import { Logger } from '../tools/Logger'
@@ -10,6 +10,8 @@ import {
 } from './reducer'
 
 export abstract class BaseIndexer implements Indexer {
+  private subscriptionCallbacks: SubscriptionCallback[] = []
+
   /**
    *
    * @param from - inclusive
@@ -20,7 +22,7 @@ export abstract class BaseIndexer implements Indexer {
   private state: BaseIndexerState
   private readonly effectsQueue: JobQueue
   constructor(
-    private readonly logger: Logger,
+    protected logger: Logger,
     public readonly dependencies: Indexer[],
     public readonly parameters: json,
     config: { batchSize: number },
@@ -38,8 +40,15 @@ export abstract class BaseIndexer implements Indexer {
     this.effectsQueue = new JobQueue({ maxConcurrentJobs: 1 }, this.logger)
   }
 
-  subscribe(_callback: (event: UpdateEvent) => void): Subscription {
-    throw new Error('Method not implemented.')
+  subscribe(callback: SubscriptionCallback): Subscription {
+    this.subscriptionCallbacks.push(callback)
+    return {
+      unsubscribe: (): void => {
+        this.subscriptionCallbacks = this.subscriptionCallbacks.filter(
+          (cb) => cb !== callback,
+        )
+      },
+    }
   }
 
   start(): Promise<void> {

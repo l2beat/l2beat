@@ -1,5 +1,7 @@
+export type SubscriptionCallback = (event: UpdateEvent) => void
+
 export interface Subscription {
-  cancel(): void
+  unsubscribe(): void
 }
 
 export interface UpdateEvent {
@@ -8,7 +10,7 @@ export interface UpdateEvent {
 }
 
 export interface Indexer {
-  subscribe(callback: (event: UpdateEvent) => void): Subscription
+  subscribe(callback: SubscriptionCallback): Subscription
   start(): Promise<void>
   getHeight(): number
 }
