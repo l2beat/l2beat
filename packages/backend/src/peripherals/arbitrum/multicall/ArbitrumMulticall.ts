@@ -8,6 +8,7 @@ import {
 } from './interfaces'
 import { arbitrumMulticallEncoder } from './MulticallEncoder'
 
+// TODO: Investigate if max batch size can be tweaked
 /**
  * @see https://arbiscan.io/address/0x842eC2c7D803033Edf55E478F461FC547Bc54EB2
  */
