@@ -53,10 +53,12 @@ export class AggregatedReportUpdater {
   async update(timestamp: UnixTime) {
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
 
-    const reports = [
-      ...(await this.reportUpdater.getReportsWhenReady(timestamp)),
-      ...(await this.nativeAssetUpdater.getReportsWhenReady(timestamp)),
-    ]
+    const reports = (
+      await Promise.all([
+        this.reportUpdater.getReportsWhenReady(timestamp),
+        this.nativeAssetUpdater.getReportsWhenReady(timestamp),
+      ])
+    ).flat()
     this.logger.debug('Reports ready')
 
     const aggregatedReports = aggregateReports(
