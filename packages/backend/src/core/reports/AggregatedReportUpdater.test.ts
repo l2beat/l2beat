@@ -64,7 +64,7 @@ describe(AggregatedReportUpdater.name, () => {
       )
       expect(
         aggregatedReportRepository.addOrUpdateMany,
-      ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS)
+      ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP)
       expect(
         aggregatedReportRepository.addOrUpdateMany,
       ).toHaveBeenNthCalledWith(2, MOCK.AGGREGATED_REPORTS)
@@ -140,7 +140,10 @@ describe(AggregatedReportUpdater.name, () => {
         ).toHaveBeenCalledTimes(2)
         expect(
           aggregatedReportRepository.addOrUpdateMany,
-        ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS)
+        ).toHaveBeenNthCalledWith(
+          1,
+          MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP,
+        )
         expect(
           aggregatedReportRepository.addOrUpdateMany,
         ).toHaveBeenNthCalledWith(2, MOCK.AGGREGATED_REPORTS)

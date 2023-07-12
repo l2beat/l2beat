@@ -110,27 +110,6 @@ const FUTURE_BALANCES = BALANCES.map((balance) => ({
 
 const REPORTS = createReports(PRICES, BALANCES, PROJECTS)
 const FUTURE_REPORTS = createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS)
-// TODO: We need this mock for now, it ensures that the OP token is included in the
-// future reports. This will be removed in the next step of refactoring.
-const FUTURE_REPORTS_WITH_OP = [
-  ...FUTURE_REPORTS,
-  {
-    asset: OP_TOKEN_ID,
-    type: ValueType.NMV,
-    amount: 644594782000000000000000000n,
-    ethValue: 644594782000000n,
-    usdValue: 64459478200000n,
-    timestamp: NOW.add(1, 'hours'),
-    projectId: OPTIMISM_PROJECT_ID,
-  },
-]
-
-const AGGREGATED_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
-const FUTURE_AGGREGATE_REPORTS = aggregateReports(
-  FUTURE_REPORTS_WITH_OP,
-  PROJECTS,
-  NOW.add(1, 'hours'),
-)
 
 const FUTURE_OP_REPORT = [
   {
@@ -143,6 +122,14 @@ const FUTURE_OP_REPORT = [
     projectId: OPTIMISM_PROJECT_ID,
   },
 ]
+const FUTURE_REPORTS_WITH_OP = [...FUTURE_REPORTS, ...FUTURE_OP_REPORT]
+
+const AGGREGATED_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
+const FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP = aggregateReports(
+  FUTURE_REPORTS_WITH_OP,
+  PROJECTS,
+  NOW.add(1, 'hours'),
+)
 
 function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
   return {
@@ -162,13 +149,12 @@ export const REPORTS_MOCK = {
   NOW,
   PROJECTS,
   PRICES,
-  FUTURE_PRICES,
   BALANCES,
+  REPORTS,
+  AGGREGATED_REPORTS,
+  FUTURE_PRICES,
   FUTURE_BALANCES,
   FUTURE_OP_REPORT,
-  REPORTS,
   FUTURE_REPORTS,
-  FUTURE_REPORTS_WITH_OP,
-  AGGREGATED_REPORTS,
-  FUTURE_AGGREGATE_REPORTS,
+  FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP,
 }
