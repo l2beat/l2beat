@@ -23,3 +23,7 @@
    - state: invalidating
    - effect: update height
    - effect: invalidate to height
+
+## Things to consider
+
+- is it required to have parents? (current logic says yes, but doesn't enforce it)

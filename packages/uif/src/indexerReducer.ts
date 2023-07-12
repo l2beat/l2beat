@@ -32,7 +32,7 @@ export function indexerReducer(
         ...state,
         parents: state.parents.map((parent, index) =>
           index === action.index
-            ? { ...parent, height: action.height, initialized: true }
+            ? { ...parent, height: action.to, initialized: true }
             : parent,
         ),
       }
@@ -55,6 +55,8 @@ export function indexerReducer(
     }
     case 'UpdateSucceeded': {
       assertStatus(state.status, 'updating')
+      assertHeight(action.from, state.height)
+      assertHeight(action.to, state.targetHeight)
       return continueOperations(
         { ...state, status: 'idle', height: action.to },
         true,
@@ -67,10 +69,11 @@ export function indexerReducer(
     }
     case 'InvalidateSucceeded': {
       assertStatus(state.status, 'invalidating')
+      assertHeight(action.to, state.targetHeight)
       return continueOperations({
         ...state,
         status: 'idle',
-        height: action.height,
+        height: action.to,
       })
     }
     case 'InvalidateFailed': {
@@ -90,6 +93,13 @@ function assertStatus(
   assert(
     status === expected,
     'Invalid status. Expected ' + expected + ', got ' + status,
+  )
+}
+
+function assertHeight(height: number, expected: number): void {
+  assert(
+    height === expected,
+    'Invalid height. Expected ' + expected + ', got ' + height,
   )
 }
 

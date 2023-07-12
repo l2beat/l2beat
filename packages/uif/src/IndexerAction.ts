@@ -7,7 +7,7 @@ export interface InitializedAction {
 export interface ParentUpdatedAction {
   type: 'ParentUpdated'
   index: number
-  height: number
+  to: number
 }
 
 export interface ChildReadyAction {
@@ -29,12 +29,12 @@ export interface UpdateFailedAction {
 
 export interface InvalidateSucceededAction {
   type: 'InvalidateSucceeded'
-  height: number
+  to: number
 }
 
 export interface InvalidateFailedAction {
   type: 'InvalidateFailed'
-  height: number
+  to: number
 }
 
 export type IndexerAction =

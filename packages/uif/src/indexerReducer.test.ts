@@ -42,14 +42,14 @@ describe(indexerReducer.name, () => {
         {
           type: 'ParentUpdated',
           index: 0,
-          height: 0,
+          to: 0,
         },
       ])
 
       const [idleState, idleEffects] = reduceWithIndexerReducer(state, [
         {
           type: 'InvalidateSucceeded',
-          height: 0,
+          to: 0,
         },
       ])
 
@@ -107,7 +107,7 @@ describe(indexerReducer.name, () => {
           {
             type: 'ParentUpdated',
             index: 0,
-            height: 0,
+            to: 0,
           },
           {
             type: 'Initialized',
@@ -140,7 +140,7 @@ describe(indexerReducer.name, () => {
           {
             type: 'ParentUpdated',
             index: 0,
-            height: 0,
+            to: 0,
           },
         ])
 
@@ -169,12 +169,12 @@ describe(indexerReducer.name, () => {
           {
             type: 'ParentUpdated' as const,
             index: 0,
-            height: 0,
+            to: 0,
           },
           {
             type: 'ParentUpdated' as const,
             index: 1,
-            height: 0,
+            to: 0,
           },
         ])
 
@@ -195,7 +195,7 @@ describe(indexerReducer.name, () => {
           {
             type: 'ParentUpdated' as const,
             index: 2,
-            height: 0,
+            to: 0,
           },
         ])
 
@@ -227,11 +227,11 @@ describe(indexerReducer.name, () => {
           ...initState.parents.map((_, index) => ({
             type: 'ParentUpdated' as const,
             index,
-            height: 2,
+            to: 2,
           })),
           {
             type: 'InvalidateSucceeded',
-            height: 1,
+            to: 1,
           },
         ])
 
@@ -266,7 +266,7 @@ describe(indexerReducer.name, () => {
           {
             type: 'ParentUpdated',
             index: 0,
-            height: 2,
+            to: 2,
           },
         ])
 
@@ -287,7 +287,7 @@ describe(indexerReducer.name, () => {
           {
             type: 'ParentUpdated',
             index: 0,
-            height: 0,
+            to: 0,
           },
         ])
 
@@ -304,7 +304,7 @@ describe(indexerReducer.name, () => {
   })
 })
 
-function getIdle() {
+function getIdle(): IndexerState {
   const initState = getInitialState(1)
   const [state] = reduceWithIndexerReducer(initState, [
     {
@@ -315,14 +315,14 @@ function getIdle() {
     {
       type: 'ParentUpdated',
       index: 0,
-      height: 1,
+      to: 1,
     },
   ])
 
   const [idleState] = reduceWithIndexerReducer(state, [
     {
       type: 'InvalidateSucceeded',
-      height: 1,
+      to: 1,
     },
   ])
 

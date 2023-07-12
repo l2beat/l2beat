@@ -77,10 +77,10 @@ export abstract class BaseIndexer implements Indexer {
     this.logger.debug('Someone is ready', { child: child.constructor.name })
   }
 
-  notifyUpdate(parent: Indexer, height: number): void {
+  notifyUpdate(parent: Indexer, to: number): void {
     const index = this.parents.indexOf(parent)
     assert(index !== -1, 'Received update from unknown parent')
-    this.dispatch({ type: 'ParentUpdated', index, height })
+    this.dispatch({ type: 'ParentUpdated', index, to })
   }
 
   getState(): IndexerState {
@@ -132,10 +132,10 @@ export abstract class BaseIndexer implements Indexer {
   private async executeInvalidate(effect: InvalidateEffect): Promise<void> {
     try {
       await this.invalidate(effect.to)
-      this.dispatch({ type: 'InvalidateSucceeded', height: effect.to })
+      this.dispatch({ type: 'InvalidateSucceeded', to: effect.to })
     } catch (e) {
       this.logger.error('Invalidate failed', e)
-      this.dispatch({ type: 'InvalidateFailed', height: effect.to })
+      this.dispatch({ type: 'InvalidateFailed', to: effect.to })
     }
   }
 
