@@ -27,7 +27,7 @@ describe(ReportUpdater.name, () => {
       })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestamp: async () => MOCK.FUTURE_REPORTS_WITH_OP,
+        getByTimestampAndAssetType: async () => MOCK.FUTURE_REPORTS,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -67,7 +67,7 @@ describe(ReportUpdater.name, () => {
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         1,
-        MOCK.FUTURE_REPORTS_WITH_OP,
+        MOCK.FUTURE_REPORTS,
       )
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         2,
@@ -78,7 +78,7 @@ describe(ReportUpdater.name, () => {
         MOCK.NOW.add(1, 'hours'),
       )
       // ensure that the updater updated internal knownSet
-      expect(reports).toEqual(MOCK.FUTURE_REPORTS_WITH_OP)
+      expect(reports).toEqual(MOCK.FUTURE_REPORTS)
     })
   })
 
@@ -172,7 +172,7 @@ describe(ReportUpdater.name, () => {
       })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestamp: async () => MOCK.REPORTS,
+        getByTimestampAndAssetType: async () => MOCK.REPORTS,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({

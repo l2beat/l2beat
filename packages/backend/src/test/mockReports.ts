@@ -127,22 +127,20 @@ const FUTURE_REPORTS_WITH_OP = [
 
 const AGGREGATED_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
 const FUTURE_AGGREGATE_REPORTS = aggregateReports(
-  FUTURE_REPORTS,
+  FUTURE_REPORTS_WITH_OP,
   PROJECTS,
   NOW.add(1, 'hours'),
 )
 
-const FUTURE_OP_ASSETS = [
+const FUTURE_OP_REPORT = [
   {
-    price: FUTURE_PRICES[FUTURE_PRICES.length - 1]!,
-    balance: {
-      assetId: OP_TOKEN_ID,
-      type: ValueType.NMV,
-      balance: 644594782000000000000000000n,
-      decimals: 18,
-      projectId: OPTIMISM_PROJECT_ID,
-    },
-    ethPrice: 1000,
+    asset: OP_TOKEN_ID,
+    type: ValueType.NMV,
+    amount: 644594782000000000000000000n,
+    ethValue: 644594782000000n,
+    usdValue: 64459478200000n,
+    timestamp: NOW.add(1, 'hours'),
+    projectId: OPTIMISM_PROJECT_ID,
   },
 ]
 
@@ -167,7 +165,7 @@ export const REPORTS_MOCK = {
   FUTURE_PRICES,
   BALANCES,
   FUTURE_BALANCES,
-  FUTURE_OP_ASSETS,
+  FUTURE_OP_REPORT,
   REPORTS,
   FUTURE_REPORTS,
   FUTURE_REPORTS_WITH_OP,

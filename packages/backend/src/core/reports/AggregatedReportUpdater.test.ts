@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
@@ -29,7 +29,11 @@ describe(AggregatedReportUpdater.name, () => {
       const reportUpdater = mockObject<ReportUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
       })
-      const nativeAssetUpdater = mockObject<NativeAssetUpdater>({})
+      const nativeAssetUpdater = mockObject<NativeAssetUpdater>({
+        getReportsWhenReady: mockFn()
+          .returnsOnce(MOCK.FUTURE_OP_REPORT)
+          .returnsOnce([]),
+      })
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
         reportUpdater,
@@ -86,7 +90,11 @@ describe(AggregatedReportUpdater.name, () => {
       const reportUpdater = mockObject<ReportUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
       })
-      const nativeAssetUpdater = mockObject<NativeAssetUpdater>({})
+      const nativeAssetUpdater = mockObject<NativeAssetUpdater>({
+        getReportsWhenReady: mockFn()
+          .returnsOnce(MOCK.FUTURE_OP_REPORT)
+          .returnsOnce([]),
+      })
 
       const clock = mockObject<Clock>({
         onEveryHour: (callback) => {
