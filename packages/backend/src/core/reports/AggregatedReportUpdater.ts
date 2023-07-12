@@ -3,7 +3,7 @@ import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
-import { NativeAssetUpdater } from '../assets/NativeAssetUpdater'
+import { NMVUpdater } from '../assets/NMVUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
@@ -17,7 +17,7 @@ export class AggregatedReportUpdater {
 
   constructor(
     private readonly reportUpdater: ReportUpdater,
-    private readonly nativeAssetUpdater: NativeAssetUpdater,
+    private readonly nativeAssetUpdater: NMVUpdater,
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly clock: Clock,

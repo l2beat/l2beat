@@ -3,7 +3,7 @@ import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
-import { NativeAssetUpdater } from '../../core/assets/NativeAssetUpdater'
+import { NMVUpdater } from '../../core/assets/NMVUpdater'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
@@ -67,7 +67,7 @@ export function createEthereumTvlSubmodule(
     ChainId.ETHEREUM,
   )
 
-  const nativeAssetUpdate = new NativeAssetUpdater(
+  const nativeAssetUpdate = new NMVUpdater(
     priceUpdater,
     db.reportRepository,
     db.reportStatusRepository,

@@ -8,13 +8,10 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import {
-  NATIVE_ASSET_CONFIG_HASH,
-  NativeAssetUpdater,
-} from './NativeAssetUpdater'
+import { NATIVE_ASSET_CONFIG_HASH, NMVUpdater } from './NMVUpdater'
 
-describe(NativeAssetUpdater.name, () => {
-  describe(NativeAssetUpdater.prototype.update.name, () => {
+describe(NMVUpdater.name, () => {
+  describe(NMVUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -31,7 +28,7 @@ describe(NativeAssetUpdater.name, () => {
         add: async ({ configHash }) => configHash,
       })
 
-      const nativeAssetUpdater = new NativeAssetUpdater(
+      const nativeAssetUpdater = new NMVUpdater(
         priceUpdater,
         reportRepository,
         reportStatusRepository,
@@ -71,7 +68,7 @@ describe(NativeAssetUpdater.name, () => {
     })
   })
 
-  describe(NativeAssetUpdater.prototype.start.name, () => {
+  describe(NMVUpdater.prototype.start.name, () => {
     it('skips known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -100,7 +97,7 @@ describe(NativeAssetUpdater.name, () => {
         },
       })
 
-      const nativeAssetUpdater = new NativeAssetUpdater(
+      const nativeAssetUpdater = new NMVUpdater(
         priceUpdater,
         reportRepository,
         reportStatusRepository,
@@ -135,7 +132,7 @@ describe(NativeAssetUpdater.name, () => {
     })
   })
 
-  describe(NativeAssetUpdater.prototype.getReportsWhenReady.name, () => {
+  describe(NMVUpdater.prototype.getReportsWhenReady.name, () => {
     it('returns known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -165,7 +162,7 @@ describe(NativeAssetUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new NativeAssetUpdater(
+      const reportUpdater = new NMVUpdater(
         priceUpdater,
         reportRepository,
         reportStatusRepository,

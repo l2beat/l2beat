@@ -18,7 +18,7 @@ export const NATIVE_ASSET_CONFIG_HASH = Hash256(
   '0xcb0de0a36a0369fe1e0c107bb217c4fd8e7142b5db33ffd01f29859ea323f52e',
 )
 
-export class NativeAssetUpdater {
+export class NMVUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -39,7 +39,7 @@ export class NativeAssetUpdater {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: NativeAssetUpdater.name,
+        metricsId: NMVUpdater.name,
       },
     )
   }
