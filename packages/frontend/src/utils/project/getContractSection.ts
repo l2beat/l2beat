@@ -68,6 +68,7 @@ export function getContractSection(
     architectureImage,
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
+    isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
     verificationStatus,
     nativeL2TokensIncludedInTVL:
       project.type === 'layer2'

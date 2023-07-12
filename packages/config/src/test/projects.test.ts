@@ -75,7 +75,7 @@ describe('projects', () => {
             })
           }
 
-          if ('address' in contract) {
+          if ('address' in contract && project.permissions !== 'UnderReview') {
             const upgradableBy = contract.upgradableBy
             const actors = project.permissions?.map((x) => x.name) ?? []
             if (upgradableBy) {

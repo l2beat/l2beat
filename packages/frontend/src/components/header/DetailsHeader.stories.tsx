@@ -118,3 +118,12 @@ UpcomingHeader.args = {
   links,
   isUpcoming: true,
 }
+
+export const UnderReviewHeader: Story<HeaderProps> = Template.bind({})
+UnderReviewHeader.args = {
+  title: project.display.name,
+  icon: `/icons/${project.display.slug}.png`,
+  stats,
+  links,
+  showProjectUnderReview: true,
+}

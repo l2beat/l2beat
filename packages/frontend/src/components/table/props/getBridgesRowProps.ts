@@ -7,6 +7,7 @@ interface BridgeTableEntry {
   slug: string
   isArchived?: boolean
   isVerified?: boolean
+  showProjectUnderReview?: boolean
 }
 
 export function getBridgesRowProps(entry: BridgeTableEntry) {

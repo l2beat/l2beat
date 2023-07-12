@@ -97,6 +97,8 @@ describe('layer2s', () => {
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 
+          if (layer2.permissions === 'UnderReview') continue
+
           for (const { name, references } of layer2.permissions ?? []) {
             const referencedAddresses = getAddressFromReferences(references)
             if (referencedAddresses.length === 0) continue
@@ -129,7 +131,7 @@ describe('layer2s', () => {
         describe(layer2.display.name, () => {
           type Key = Exclude<
             keyof Layer2Technology,
-            'category' | 'provider' //TODO: Add test for permissions
+            'category' | 'provider' | 'isUnderReview' //TODO: Add test for permissions
           >
 
           function check(key: Key) {

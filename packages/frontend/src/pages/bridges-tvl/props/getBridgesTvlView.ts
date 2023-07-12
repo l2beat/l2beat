@@ -1,6 +1,7 @@
 import { Bridge, Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
+import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
 import { BridgesTvlViewEntry } from '../types'
@@ -50,6 +51,7 @@ function getBridgesTvlViewEntry(
     warning: project.display.warning,
     isArchived: project.isArchived,
     isVerified,
+    showProjectUnderReview: isAnySectionUnderReview(project),
     tvl: stats ? formatUSD(stats.tvl) : undefined,
     tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
     oneDayChange: stats ? stats.oneDayChange : undefined,

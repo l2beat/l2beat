@@ -21,4 +21,6 @@ export interface Layer2Technology {
   smartContracts?: ProjectTechnologyChoice
   /** How can the Layer2 be upgraded? */
   upgradeMechanism?: ProjectTechnologyChoice
+  /** Is the technology section under review */
+  isUnderReview?: boolean
 }

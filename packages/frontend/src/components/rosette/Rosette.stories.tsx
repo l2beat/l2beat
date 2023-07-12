@@ -12,23 +12,23 @@ export default {
   title: 'Components/Rosette',
   argTypes: {
     sequencerFailure: {
-      options: ['bad', 'warning', 'good'],
+      options: ['bad', 'warning', 'good', 'neutral', 'UnderReview'],
       control: { type: 'select' },
     },
     stateValidation: {
-      options: ['bad', 'warning', 'good'],
+      options: ['bad', 'warning', 'good', 'neutral', 'UnderReview'],
       control: { type: 'select' },
     },
     dataAvailability: {
-      options: ['bad', 'warning', 'good'],
+      options: ['bad', 'warning', 'good', 'neutral', 'UnderReview'],
       control: { type: 'select' },
     },
     upgradeability: {
-      options: ['bad', 'warning', 'good'],
+      options: ['bad', 'warning', 'good', 'neutral', 'UnderReview'],
       control: { type: 'select' },
     },
     proposerFailure: {
-      options: ['bad', 'warning', 'good'],
+      options: ['bad', 'warning', 'good', 'neutral', 'UnderReview'],
       control: { type: 'select' },
     },
   },

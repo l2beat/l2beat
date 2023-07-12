@@ -35,6 +35,8 @@ export interface ProjectHeaderProps {
   stage?: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
+  isUnderReview?: boolean
+  showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
 }
 
@@ -123,7 +125,9 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       risks={props.risks}
       links={props.links}
       isUpcoming={props.isUpcoming}
+      isUnderReview={props.isUnderReview}
       isArchived={props.isArchived}
+      showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
     />
   )

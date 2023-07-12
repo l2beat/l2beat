@@ -1,7 +1,9 @@
 import cx from 'classnames'
 import React from 'react'
 
+import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
+import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { MediumRosette } from './Rosette'
 
 export interface RosetteTooltipProps {
@@ -13,6 +15,28 @@ export function RosetteTooltipPopup({
   riskValues,
   riskSentiments,
 }: RosetteTooltipProps) {
+  const isUnderReview = Object.values(riskSentiments).every(
+    (sentiment) => sentiment === 'UnderReview',
+  )
+
+  if (isUnderReview) {
+    return (
+      <div className="w-[300px]">
+        <div className="mb-4">
+          <span className="text-base font-bold">Risk analysis</span> is{' '}
+          <UnderReviewBadge />
+        </div>
+
+        <p>
+          Projects under review might present uncompleted information & data.
+          <br />
+          L2BEAT Team is working to research & validate content before
+          publishing.
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div className="flex w-[370px] flex-col">
       <span className="text-base font-bold">
@@ -55,16 +79,16 @@ interface RiskValueProps {
 }
 
 function RiskValueComponent({ title, risk }: RiskValueProps) {
-  const sentimentColor =
-    risk.sentiment === 'bad'
-      ? 'text-orange-600 dark:text-red-300'
-      : risk.sentiment === 'warning'
-      ? 'text-yellow-200'
-      : undefined
   return (
     <div className="font-medium">
       <span className="mb-1 block text-[10px] uppercase">{title}</span>
-      <span className={cx(sentimentColor, 'text-base')}>{risk.value}</span>
+      {risk.sentiment === 'UnderReview' ? (
+        <UnderReviewBadge />
+      ) : (
+        <span className={cx(sentimentToTextColor(risk.sentiment), 'text-base')}>
+          {risk.value}
+        </span>
+      )}
     </div>
   )
 }

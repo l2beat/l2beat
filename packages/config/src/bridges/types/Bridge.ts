@@ -16,12 +16,13 @@ export interface Bridge {
   id: ProjectId
   isArchived?: boolean
   isUpcoming?: boolean
+  isUnderReview?: boolean
   display: BridgeDisplay
   config: BridgeConfig
   riskView?: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ProjectContracts
-  permissions?: ProjectPermission[]
+  permissions?: ProjectPermission[] | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -52,4 +53,5 @@ export interface BridgeTechnology {
   principleOfOperation?: ProjectTechnologyChoice
   validation?: ProjectTechnologyChoice
   destinationToken?: ProjectTechnologyChoice
+  isUnderReview?: boolean
 }

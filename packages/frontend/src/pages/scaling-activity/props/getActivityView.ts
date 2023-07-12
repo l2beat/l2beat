@@ -10,6 +10,7 @@ import { getMaxTps } from '../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
+import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
 
 export function getActivityView(
@@ -35,12 +36,14 @@ export function getActivityViewEntry(
 ): ActivityViewEntry {
   const data = activityApiResponse.projects[project.id.toString()]?.data
   const isVerified = verificationStatus.projects[project.id.toString()]
+
   return {
     name: project.display.name,
     slug: project.display.slug,
     provider: project.display.provider,
     warning: project.display.warning,
     isVerified,
+    showProjectUnderReview: isAnySectionUnderReview(project),
     dataSource: project.display.activityDataSource,
     ...getActivityViewEntryDetails(data),
   }

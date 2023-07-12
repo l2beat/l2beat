@@ -16,6 +16,7 @@ export function getTechnologyOverview(project: Bridge): TechnologyOverview {
     const technology: TechnologySectionProps = {
       id: 'technology',
       title: 'Technology',
+      isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
       items: [
         project.technology.principleOfOperation &&
           makeTechnologyChoice(
@@ -31,8 +32,17 @@ export function getTechnologyOverview(project: Bridge): TechnologyOverview {
           ),
       ].filter(noUndefined),
     }
+    const filtered = [technology].filter((x) => x.items.length > 0)
 
-    return [technology].filter((x) => x.items.length > 0)
+    return filtered.map((section) => {
+      if (section.items.every((item) => item.isUnderReview)) {
+        return {
+          ...section,
+          isUnderReview: true,
+        }
+      }
+      return section
+    })
   }
 
   const sections = makeSections()

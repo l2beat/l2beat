@@ -1,13 +1,16 @@
+import cx from 'classnames'
 import React from 'react'
 
 import { BridgeDetailsSection } from '../../../pages/bridges-projects/props/getProjectDetails'
 import { ScalingDetailsSection } from '../../../pages/scaling-projects/props/getProjectDetails'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
 import { SummaryIcon } from '../../icons/projects/SummaryIcon'
+import { UnderReviewCallout } from '../UnderReviewCallout'
 import { DESKTOP_PROJECT_NAVIGATION_IDS } from './ids'
 
 interface Project {
   title: string
+  showProjectUnderReview?: boolean
   icon: string | undefined
 }
 interface ProjectNavigationProps {
@@ -19,11 +22,21 @@ export function DesktopProjectNavigation({
   project,
   sections,
 }: ProjectNavigationProps) {
+  const translateClassName = project.showProjectUnderReview
+    ? '-translate-y-[180px]'
+    : '-translate-y-16'
   return (
-    <div className="sticky top-8" id={DESKTOP_PROJECT_NAVIGATION_IDS.container}>
+    <div
+      className="sticky top-8"
+      id={DESKTOP_PROJECT_NAVIGATION_IDS.container}
+      data-is-under-review={project.showProjectUnderReview}
+    >
       <div
         id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}
-        className="-translate-y-16 opacity-0 transition-all duration-300"
+        className={cx(
+          'opacity-0 transition-all duration-300',
+          translateClassName,
+        )}
       >
         <div className="flex flex-row items-center gap-4">
           {project.icon && (
@@ -35,10 +48,16 @@ export function DesktopProjectNavigation({
           )}
           <span className="text-xl font-bold lg:text-2xl">{project.title}</span>
         </div>
+        {project.showProjectUnderReview && (
+          <UnderReviewCallout small className="mt-2" />
+        )}
         <HorizontalSeparator className="my-4" />
       </div>
       <div
-        className="flex -translate-y-16 flex-col gap-3 transition-transform duration-300"
+        className={cx(
+          'flex flex-col gap-3 transition-transform duration-300',
+          translateClassName,
+        )}
         id={DESKTOP_PROJECT_NAVIGATION_IDS.list}
       >
         <a

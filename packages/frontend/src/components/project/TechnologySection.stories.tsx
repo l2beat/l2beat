@@ -31,6 +31,7 @@ export function TechnologySection() {
               },
             ],
             isIncomplete: false,
+            isUnderReview: false,
           },
           {
             id: 'bar',
@@ -40,6 +41,16 @@ export function TechnologySection() {
             risks: [],
             references: [],
             isIncomplete: true,
+            isUnderReview: false,
+          },
+          {
+            id: 'bar',
+            name: 'Other considerations',
+            description: 'Sometimes the section is under review',
+            risks: [],
+            references: [],
+            isIncomplete: false,
+            isUnderReview: true,
           },
         ]}
       />

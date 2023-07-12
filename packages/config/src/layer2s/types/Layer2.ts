@@ -21,6 +21,8 @@ export interface Layer2 {
   isArchived?: boolean
   /** Is this layer2 an upcoming rollup? */
   isUpcoming?: boolean
+  /** Has this layer2 changed and is under review? */
+  isUnderReview?: boolean
   /** Information displayed about the layer2 on the frontend */
   display: Layer2Display
   /** Information required to calculate the stats of the layer2 */
@@ -34,7 +36,7 @@ export interface Layer2 {
   /** List of smart contracts used in the layer2 */
   contracts: ProjectContracts
   /** List of permissioned addresses */
-  permissions?: ProjectPermission[]
+  permissions?: ProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */

@@ -43,15 +43,18 @@ export function configureDesktopProjectNavigation() {
   }
 
   const handleShowingProjectTitle = () => {
+    const translateClassName = container.dataset.isUnderReview
+      ? '-translate-y-[180px]'
+      : '-translate-y-16'
     const navigationTopOffset = 32
     const navigationOffset = container.getBoundingClientRect().top
 
     if (navigationOffset <= navigationTopOffset) {
-      listHeader.classList.remove('opacity-0', '-translate-y-16')
-      list.classList.remove('-translate-y-16')
+      listHeader.classList.remove('opacity-0', translateClassName)
+      list.classList.remove(translateClassName)
     } else {
-      listHeader.classList.add('opacity-0', '-translate-y-16')
-      list.classList.add('-translate-y-16')
+      listHeader.classList.add('opacity-0', translateClassName)
+      list.classList.add(translateClassName)
     }
   }
 

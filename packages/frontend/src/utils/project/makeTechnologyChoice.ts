@@ -16,6 +16,7 @@ export function makeTechnologyChoice(
     name: item.name,
     description: item.description,
     isIncomplete: !!item.isIncomplete,
+    isUnderReview: !!item.isUnderReview,
     references: item.references,
     risks,
   }
