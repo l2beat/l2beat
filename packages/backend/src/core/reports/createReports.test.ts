@@ -10,7 +10,7 @@ describe(createReports.name, () => {
     expect(result).toEqual([
       {
         timestamp: MOCK.NOW,
-        projectId: ProjectId('arbitrum'),
+        projectId: ProjectId('apex'),
         asset: AssetId.DAI,
         type: ValueType.CBV,
         amount: 5_000n * 10n ** 18n,
@@ -19,7 +19,7 @@ describe(createReports.name, () => {
       },
       {
         timestamp: MOCK.NOW,
-        projectId: ProjectId('arbitrum'),
+        projectId: ProjectId('apex'),
         asset: AssetId.ETH,
         type: ValueType.CBV,
         amount: 30n * 10n ** 18n,
@@ -28,7 +28,7 @@ describe(createReports.name, () => {
       },
       {
         timestamp: MOCK.NOW,
-        projectId: ProjectId('optimism'),
+        projectId: ProjectId('dydx'),
         asset: AssetId.ETH,
         type: ValueType.CBV,
         amount: 20n * 10n ** 18n,
@@ -66,21 +66,21 @@ describe(aggregateBalancesPerProject.name, () => {
         type: ValueType.CBV,
         balance: 200n * 10n ** 18n,
         decimals: 18,
-        projectId: ProjectId('arbitrum'),
+        projectId: ProjectId('apex'),
       },
       {
         assetId: AssetId.ETH,
         type: ValueType.CBV,
         balance: 0n,
         decimals: 18,
-        projectId: ProjectId('arbitrum'),
+        projectId: ProjectId('apex'),
       },
       {
         assetId: AssetId.ETH,
         type: ValueType.CBV,
         balance: 0n,
         decimals: 18,
-        projectId: ProjectId('optimism'),
+        projectId: ProjectId('dydx'),
       },
     ])
   })
@@ -113,21 +113,21 @@ describe(aggregateBalancesPerProject.name, () => {
         type: ValueType.CBV,
         balance: 200n * 10n ** 18n,
         decimals: 18,
-        projectId: ProjectId('arbitrum'),
+        projectId: ProjectId('apex'),
       },
       {
         assetId: AssetId.ETH,
         type: ValueType.CBV,
         balance: 0n,
         decimals: 18,
-        projectId: ProjectId('arbitrum'),
+        projectId: ProjectId('apex'),
       },
       {
         assetId: AssetId.ETH,
         type: ValueType.CBV,
         balance: 0n,
         decimals: 18,
-        projectId: ProjectId('optimism'),
+        projectId: ProjectId('dydx'),
       },
     ])
   })

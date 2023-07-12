@@ -20,22 +20,22 @@ import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
 
 const NOW = UnixTime.now().toStartOf('hour')
-const ARBITRUM_ESCROW_ONE = EthereumAddress.random()
-const ARBITRUM_ESCROW_TWO = EthereumAddress.random()
-const OPTIMISM_ESCROW = EthereumAddress.random()
+const APEX_ESCROW_ONE = EthereumAddress.random()
+const APEX_ESCROW_TWO = EthereumAddress.random()
+const DYDX_ESCROW = EthereumAddress.random()
 
 const PROJECTS: ReportProject[] = [
   {
-    projectId: ProjectId('arbitrum'),
+    projectId: ProjectId('apex'),
     type: 'layer2',
     escrows: [
       {
-        address: ARBITRUM_ESCROW_ONE,
+        address: APEX_ESCROW_ONE,
         sinceTimestamp: new UnixTime(0),
         tokens: [fakeTokenInfo({ id: AssetId.DAI, decimals: 18 })],
       },
       {
-        address: ARBITRUM_ESCROW_TWO,
+        address: APEX_ESCROW_TWO,
         sinceTimestamp: new UnixTime(0),
         tokens: [
           fakeTokenInfo({ id: AssetId.DAI, decimals: 18 }),
@@ -45,11 +45,11 @@ const PROJECTS: ReportProject[] = [
     ],
   },
   {
-    projectId: ProjectId('optimism'),
+    projectId: ProjectId('dydx'),
     type: 'layer2',
     escrows: [
       {
-        address: OPTIMISM_ESCROW,
+        address: DYDX_ESCROW,
         sinceTimestamp: new UnixTime(0),
         tokens: [fakeTokenInfo({ id: AssetId.ETH, decimals: 18 })],
       },
@@ -76,28 +76,28 @@ const BALANCES: BalanceRecord[] = [
   {
     timestamp: NOW,
     assetId: AssetId.DAI,
-    holderAddress: ARBITRUM_ESCROW_ONE,
+    holderAddress: APEX_ESCROW_ONE,
     balance: 2_000n * 10n ** 18n,
     chainId: ChainId.ETHEREUM,
   },
   {
     timestamp: NOW,
     assetId: AssetId.DAI,
-    holderAddress: ARBITRUM_ESCROW_TWO,
+    holderAddress: APEX_ESCROW_TWO,
     balance: 3_000n * 10n ** 18n,
     chainId: ChainId.ETHEREUM,
   },
   {
     timestamp: NOW,
     assetId: AssetId.ETH,
-    holderAddress: ARBITRUM_ESCROW_TWO,
+    holderAddress: APEX_ESCROW_TWO,
     balance: 30n * 10n ** 18n,
     chainId: ChainId.ETHEREUM,
   },
   {
     timestamp: NOW,
     assetId: AssetId.ETH,
-    holderAddress: OPTIMISM_ESCROW,
+    holderAddress: DYDX_ESCROW,
     balance: 20n * 10n ** 18n,
     chainId: ChainId.ETHEREUM,
   },
