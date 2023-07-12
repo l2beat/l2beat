@@ -3,7 +3,6 @@ import { AssetId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
-import { Asset } from '../assets/Asset'
 import { BalancePerProject, createReport } from './createReport'
 import { ReportProject } from './ReportProject'
 
@@ -31,12 +30,6 @@ export function createReports(
   }
 
   return reports
-}
-
-export function createReportsFromAssets(assets: Asset[]): ReportRecord[] {
-  return assets.map((asset) =>
-    createReport(asset.price, asset.balance, asset.ethPrice),
-  )
 }
 
 export interface TokenDetails {

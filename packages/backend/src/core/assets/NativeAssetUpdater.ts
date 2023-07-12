@@ -10,16 +10,13 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import {
-  addArbTokenReport,
-  ARBITRUM_PROJECT_ID,
-} from '../reports/custom/arbitrum'
-import {
-  addOpTokenReport,
-  OPTIMISM_PROJECT_ID,
-} from '../reports/custom/optimism'
-import { getReportConfigHash } from '../reports/getReportConfigHash'
-import { ReportProject } from '../reports/ReportProject'
+import { addArbTokenReport } from '../reports/custom/arbitrum'
+import { addOpTokenReport } from '../reports/custom/optimism'
+
+// Shas256 of "L2Beat Native Asset [Arbitrum, Optimism]"
+export const NATIVE_ASSET_CONFIG_HASH = Hash256(
+  '0xcb0de0a36a0369fe1e0c107bb217c4fd8e7142b5db33ffd01f29859ea323f52e',
+)
 
 export class NativeAssetUpdater {
   private readonly configHash: Hash256
@@ -31,16 +28,12 @@ export class NativeAssetUpdater {
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
-    private readonly projects: ReportProject[],
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-    this.projects = this.projects.filter(
-      (p) =>
-        p.projectId === OPTIMISM_PROJECT_ID ||
-        p.projectId === ARBITRUM_PROJECT_ID,
-    )
-    this.configHash = getReportConfigHash(this.projects)
+
+    // Shas256 of "L2Beat Native Asset [Arbitrum, Optimism]"
+    this.configHash = NATIVE_ASSET_CONFIG_HASH
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
@@ -86,7 +79,7 @@ export class NativeAssetUpdater {
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
-      chainId: ChainId.ETHEREUM,
+      chainId: ChainId.NMV,
       valueType: ValueType.NMV,
     })
 

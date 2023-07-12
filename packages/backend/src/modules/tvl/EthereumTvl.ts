@@ -72,7 +72,6 @@ export function createEthereumTvlSubmodule(
     db.reportRepository,
     db.reportStatusRepository,
     clock,
-    config.projects,
     logger,
   )
 
