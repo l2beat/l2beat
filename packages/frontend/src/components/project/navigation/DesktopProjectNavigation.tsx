@@ -27,7 +27,7 @@ export function DesktopProjectNavigation({
     : '-translate-y-16'
   return (
     <div
-      className="sticky top-8"
+      className="sticky top-8 -z-1"
       id={DESKTOP_PROJECT_NAVIGATION_IDS.container}
       data-is-under-review={project.showProjectUnderReview ?? false}
     >
