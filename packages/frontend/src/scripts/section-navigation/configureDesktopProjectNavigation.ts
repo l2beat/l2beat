@@ -43,9 +43,10 @@ export function configureDesktopProjectNavigation() {
   }
 
   const handleShowingProjectTitle = () => {
-    const translateClassName = container.dataset.isUnderReview
-      ? '-translate-y-[180px]'
-      : '-translate-y-16'
+    const translateClassName =
+      container.dataset.isUnderReview === 'true'
+        ? '-translate-y-[180px]'
+        : '-translate-y-16'
     const navigationTopOffset = 32
     const navigationOffset = container.getBoundingClientRect().top
 
