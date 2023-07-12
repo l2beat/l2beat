@@ -61,7 +61,7 @@ export class BalanceUpdater {
       this.knownSet.add(timestamp.toNumber())
     }
 
-    this.logger.info('Started')
+    this.logger.info('Started', { chainId: this.chainId.toString() })
     return this.clock.onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
         // we add to front to sync from newest to oldest
@@ -71,7 +71,10 @@ export class BalanceUpdater {
   }
 
   async update(timestamp: UnixTime) {
-    this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
+    this.logger.debug('Update started', {
+      timestamp: timestamp.toNumber(),
+      chainId: this.chainId.toString(),
+    })
     const known = await this.balanceRepository.getByTimestamp(
       this.chainId,
       timestamp,
@@ -94,10 +97,12 @@ export class BalanceUpdater {
       await this.balanceRepository.addOrUpdateMany(balances)
       this.logger.debug('Updated balances', {
         timestamp: timestamp.toNumber(),
+        chainId: this.chainId.toString(),
       })
     } else {
       this.logger.debug('Skipped updating balances', {
         timestamp: timestamp.toNumber(),
+        chainId: this.chainId.toString(),
       })
     }
     this.knownSet.add(timestamp.toNumber())
@@ -106,7 +111,10 @@ export class BalanceUpdater {
       configHash: this.configHash,
       timestamp,
     })
-    this.logger.info('Update completed', { timestamp: timestamp.toNumber() })
+    this.logger.info('Update completed', {
+      timestamp: timestamp.toNumber(),
+      chainId: this.chainId.toString(),
+    })
   }
 }
 
