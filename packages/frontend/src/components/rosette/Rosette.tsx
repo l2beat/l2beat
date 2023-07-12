@@ -235,7 +235,7 @@ function BigRosetteIcon({
         width="181"
         height="180"
         viewBox="0 0 181 180"
-        className={cx(className, isUpcoming && 'opacity-20')}
+        className={cx(className, isUpcoming && 'opacity-30')}
         alt-text="Rosette showing risk summary"
       >
         <circle
