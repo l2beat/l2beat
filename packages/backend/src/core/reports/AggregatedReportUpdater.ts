@@ -3,6 +3,7 @@ import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
+import { NativeAssetUpdater } from '../assets/NativeAssetUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
@@ -16,6 +17,7 @@ export class AggregatedReportUpdater {
 
   constructor(
     private readonly reportUpdater: ReportUpdater,
+    private readonly nativeAssetUpdater: NativeAssetUpdater,
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly clock: Clock,
@@ -52,6 +54,9 @@ export class AggregatedReportUpdater {
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
 
     const reports = await this.reportUpdater.getReportsWhenReady(timestamp)
+    reports.push(
+      ...(await this.nativeAssetUpdater.getReportsWhenReady(timestamp)),
+    )
     this.logger.debug('Reports ready')
 
     const aggregatedReports = aggregateReports(

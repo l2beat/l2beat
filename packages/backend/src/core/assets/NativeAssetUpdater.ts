@@ -1,37 +1,34 @@
 import { Logger } from '@l2beat/shared'
-import {
-  assert,
-  ChainId,
-  Hash256,
-  UnixTime,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import {
+  ReportRecord,
+  ReportRepository,
+} from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import {
-  addArbTokenAsset,
+  addArbTokenReport,
   ARBITRUM_PROJECT_ID,
 } from '../reports/custom/arbitrum'
 import {
-  addOpTokenAsset,
+  addOpTokenReport,
   OPTIMISM_PROJECT_ID,
 } from '../reports/custom/optimism'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { ReportProject } from '../reports/ReportProject'
-import { Asset } from './Asset'
 
 export class NativeAssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
-  private readonly assetMap: Record<number, Asset[]> = {}
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
+    private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
     private readonly projects: ReportProject[],
@@ -79,12 +76,13 @@ export class NativeAssetUpdater {
     const prices = await this.priceUpdater.getPricesWhenReady(timestamp)
     this.logger.debug('Prices ready')
 
-    const assets: Asset[] = []
-    assets.concat(addOpTokenAsset(prices, timestamp))
-    assets.concat(addArbTokenAsset(prices, timestamp))
+    const reports: ReportRecord[] = []
+    reports.push(...addOpTokenReport(prices, timestamp))
+    reports.push(...addArbTokenReport(prices, timestamp))
 
-    this.assetMap[timestamp.toNumber()] = assets
+    await this.reportRepository.addOrUpdateMany(reports)
 
+    // TODO(radomski): chainId should correctly represent OP/ARB
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
@@ -96,20 +94,16 @@ export class NativeAssetUpdater {
     this.logger.info('Asset updated', { timestamp: timestamp.toNumber() })
   }
 
-  async getAssetsWhenReady(
+  async getReportsWhenReady(
     timestamp: UnixTime,
     refreshIntervalMs = 1000,
-  ): Promise<Asset[]> {
+  ): Promise<ReportRecord[]> {
     while (!this.knownSet.has(timestamp.toNumber())) {
       await setTimeout(refreshIntervalMs)
     }
-
-    assert(
-      // NOTE(radomski): Eslint thinks that this can't be undefined
-      // eslint-disable-next-line
-      this.assetMap[timestamp.toNumber()] !== undefined,
-      'Expected assets to be present',
+    return this.reportRepository.getByTimestampAndAssetType(
+      timestamp,
+      ValueType.NMV,
     )
-    return this.assetMap[timestamp.toNumber()]
   }
 }

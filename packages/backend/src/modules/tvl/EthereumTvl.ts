@@ -69,6 +69,7 @@ export function createEthereumTvlSubmodule(
 
   const nativeAssetUpdate = new NativeAssetUpdater(
     priceUpdater,
+    db.reportRepository,
     db.reportStatusRepository,
     clock,
     config.projects,
@@ -78,7 +79,6 @@ export function createEthereumTvlSubmodule(
   const reportUpdater = new ReportUpdater(
     priceUpdater,
     balanceUpdater,
-    nativeAssetUpdate,
     db.reportRepository,
     db.reportStatusRepository,
     clock,
@@ -88,6 +88,7 @@ export function createEthereumTvlSubmodule(
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
     reportUpdater,
+    nativeAssetUpdate,
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,

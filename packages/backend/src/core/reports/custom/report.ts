@@ -1,10 +1,10 @@
 import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 
 import { PriceRecord } from '../../../peripherals/database/PriceRepository'
-import { Asset } from '../../assets/Asset'
-import { BalancePerProject } from '../createReport'
+import { ReportRecord } from '../../../peripherals/database/ReportRepository'
+import { BalancePerProject, createReport } from '../createReport'
 
-export function createAddCustomTokenAsset(
+export function createAddCustomTokenReport(
   tokenId: AssetId,
   assetType: ValueType,
   sinceTimestamp: UnixTime,
@@ -12,7 +12,7 @@ export function createAddCustomTokenAsset(
   tokenBalance: (t: UnixTime) => bigint,
   tokenDecimals: number,
 ) {
-  return function (prices: PriceRecord[], timestamp: UnixTime): Asset[] {
+  return function (prices: PriceRecord[], timestamp: UnixTime): ReportRecord[] {
     const tokenPrice = prices.find((p) => p.assetId === tokenId)
     const ethPriceUsd = prices.find((p) => p.assetId === AssetId.ETH)?.priceUsd
     if (!tokenPrice || !ethPriceUsd || timestamp.lt(sinceTimestamp)) {
@@ -27,12 +27,6 @@ export function createAddCustomTokenAsset(
       projectId: projectId,
     }
 
-    return [
-      {
-        price: tokenPrice,
-        balance: balance,
-        ethPrice: ethPriceUsd,
-      },
-    ]
+    return [createReport(tokenPrice, balance, ethPriceUsd)]
   }
 }

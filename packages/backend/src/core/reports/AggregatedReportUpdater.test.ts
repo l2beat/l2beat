@@ -5,6 +5,7 @@ import waitForExpect from 'wait-for-expect'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
+import { NativeAssetUpdater } from '../assets/NativeAssetUpdater'
 import { Clock } from '../Clock'
 import { AggregatedReportUpdater } from './AggregatedReportUpdater'
 import { getReportConfigHash } from './getReportConfigHash'
@@ -28,9 +29,11 @@ describe(AggregatedReportUpdater.name, () => {
       const reportUpdater = mockObject<ReportUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
       })
+      const nativeAssetUpdater = mockObject<NativeAssetUpdater>({})
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
         reportUpdater,
+        nativeAssetUpdater,
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         mockObject<Clock>(),
@@ -83,6 +86,7 @@ describe(AggregatedReportUpdater.name, () => {
       const reportUpdater = mockObject<ReportUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
       })
+      const nativeAssetUpdater = mockObject<NativeAssetUpdater>({})
 
       const clock = mockObject<Clock>({
         onEveryHour: (callback) => {
@@ -96,6 +100,7 @@ describe(AggregatedReportUpdater.name, () => {
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
         reportUpdater,
+        nativeAssetUpdater,
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         clock,

@@ -40,6 +40,17 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByTimestampAndAssetType(
+    timestamp: UnixTime,
+    assetType: ValueType,
+  ): Promise<ReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('reports')
+      .where('unix_timestamp', timestamp.toDate())
+      .andWhere('asset_type', assetType.toString())
+    return rows.map(toRecord)
+  }
+
   async getAll(): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('reports').select()

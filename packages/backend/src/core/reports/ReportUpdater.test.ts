@@ -6,7 +6,6 @@ import waitForExpect from 'wait-for-expect'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
-import { NativeAssetUpdater } from '../assets/NativeAssetUpdater'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
@@ -26,11 +25,6 @@ describe(ReportUpdater.name, () => {
           .returnsOnce(MOCK.FUTURE_BALANCES)
           .returnsOnce(MOCK.BALANCES),
       })
-      const nativeAssetUpdater = mockObject<NativeAssetUpdater>({
-        getAssetsWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_OP_ASSETS)
-          .returns([]),
-      })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
         getByTimestamp: async () => MOCK.FUTURE_REPORTS_WITH_OP,
@@ -44,7 +38,6 @@ describe(ReportUpdater.name, () => {
       const reportUpdater = new ReportUpdater(
         priceUpdater,
         balanceUpdater,
-        nativeAssetUpdater,
         reportRepository,
         reportStatusRepository,
         mockObject<Clock>(),
@@ -101,9 +94,6 @@ describe(ReportUpdater.name, () => {
           .returnsOnce(MOCK.FUTURE_BALANCES)
           .returnsOnce(MOCK.BALANCES),
       })
-      const nativeAssetUpdater = mockObject<NativeAssetUpdater>({
-        getAssetsWhenReady: mockFn().returns([]),
-      })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
       })
@@ -129,7 +119,6 @@ describe(ReportUpdater.name, () => {
       const reportUpdater = new ReportUpdater(
         priceUpdater,
         balanceUpdater,
-        nativeAssetUpdater,
         reportRepository,
         reportStatusRepository,
         clock,
@@ -181,7 +170,6 @@ describe(ReportUpdater.name, () => {
           .returnsOnce(MOCK.FUTURE_BALANCES)
           .returnsOnce(MOCK.BALANCES),
       })
-      const nativeAssetUpdater = mockObject<NativeAssetUpdater>({})
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
         getByTimestamp: async () => MOCK.REPORTS,
@@ -208,7 +196,6 @@ describe(ReportUpdater.name, () => {
       const reportUpdater = new ReportUpdater(
         priceUpdater,
         balanceUpdater,
-        nativeAssetUpdater,
         reportRepository,
         reportStatusRepository,
         clock,

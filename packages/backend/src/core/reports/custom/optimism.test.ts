@@ -2,19 +2,19 @@ import { AssetId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
-  addOpTokenAsset,
+  addOpTokenReport,
   OP_TOKEN_ID,
   OP_TOKEN_SINCE_TIMESTAMP,
 } from './optimism'
 
-describe(addOpTokenAsset.name, () => {
+describe(addOpTokenReport.name, () => {
   it('returns untouched if op price missing', () => {
     const timestamp = UnixTime.now()
     const prices = [
       { timestamp, priceUsd: Math.random(), assetId: AssetId.ETH },
     ]
 
-    expect(addOpTokenAsset(prices, timestamp)).toEqual([])
+    expect(addOpTokenReport(prices, timestamp)).toEqual([])
   })
 
   it('returns untouched if eth price missing', () => {
@@ -23,7 +23,7 @@ describe(addOpTokenAsset.name, () => {
       { timestamp, priceUsd: Math.random(), assetId: OP_TOKEN_ID },
     ]
 
-    expect(addOpTokenAsset(prices, timestamp)).toEqual([])
+    expect(addOpTokenReport(prices, timestamp)).toEqual([])
   })
 
   it('returns untouched if too early timestamp', () => {
@@ -33,7 +33,7 @@ describe(addOpTokenAsset.name, () => {
       { timestamp, priceUsd: Math.random(), assetId: OP_TOKEN_ID },
     ]
 
-    expect(addOpTokenAsset(prices, timestamp)).toEqual([])
+    expect(addOpTokenReport(prices, timestamp)).toEqual([])
   })
 
   /*

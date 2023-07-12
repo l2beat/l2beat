@@ -7,12 +7,11 @@ import {
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { NativeAssetUpdater } from '../assets/NativeAssetUpdater'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createReports, createReportsFromAssets } from './createReports'
+import { createReports } from './createReports'
 import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
 
@@ -24,7 +23,6 @@ export class ReportUpdater {
   constructor(
     private readonly priceUpdater: PriceUpdater,
     private readonly balanceUpdater: BalanceUpdater,
-    private readonly nativeAssetUpdater: NativeAssetUpdater,
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
@@ -68,13 +66,9 @@ export class ReportUpdater {
       this.priceUpdater.getPricesWhenReady(timestamp),
       this.balanceUpdater.getBalancesWhenReady(timestamp),
     ])
-    const nativeAssets = await this.nativeAssetUpdater.getAssetsWhenReady(
-      timestamp,
-    )
     this.logger.debug('Prices and balances ready')
 
     const reports = createReports(prices, balances, this.projects)
-    reports.push(...createReportsFromAssets(nativeAssets))
 
     await this.reportRepository.addOrUpdateMany(reports)
 
@@ -96,6 +90,9 @@ export class ReportUpdater {
     while (!this.knownSet.has(timestamp.toNumber())) {
       await setTimeout(refreshIntervalMs)
     }
-    return this.reportRepository.getByTimestamp(timestamp)
+    return this.reportRepository.getByTimestampAndAssetType(
+      timestamp,
+      ValueType.CBV,
+    )
   }
 }
