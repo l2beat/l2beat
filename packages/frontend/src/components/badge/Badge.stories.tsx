@@ -38,8 +38,3 @@ export const Gray: Story<BadgeProps> = Template.bind({})
 Gray.args = {
   type: 'gray',
 }
-
-export const UnderReview: Story<BadgeProps> = Template.bind({})
-UnderReview.args = {
-  type: 'UnderReview',
-}
