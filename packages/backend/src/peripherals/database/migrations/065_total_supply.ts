@@ -15,7 +15,7 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.createTable('total_supplies', function (table) {
-    table.bigInteger('unix_timestamp').notNullable()
+    table.dateTime('unix_timestamp').notNullable()
     table.decimal('total_supply', 80, 0).notNullable()
     table.string('asset_id').notNullable()
     table.integer('chain_id').notNullable()
@@ -25,7 +25,7 @@ export async function up(knex: Knex) {
 
   await knex.schema.createTable('total_supplies_status', function (table) {
     table.string('config_hash').notNullable()
-    table.bigInteger('unix_timestamp').notNullable()
+    table.dateTime('unix_timestamp').notNullable()
     table.integer('chain_id').notNullable()
 
     table.index(['chain_id', 'config_hash'])

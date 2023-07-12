@@ -15,10 +15,10 @@ export interface DataBoundary {
   latestBlockNumber: bigint | undefined
 }
 
-export class BalanceStatusRepository extends BaseRepository {
+export class TotalSupplyStatusRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
-    this.autoWrap<CheckConvention<BalanceStatusRepository>>(this)
+    this.autoWrap<CheckConvention<TotalSupplyStatusRepository>>(this)
   }
 
   async getByConfigHash(

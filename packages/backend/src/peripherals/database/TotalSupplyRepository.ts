@@ -24,26 +24,29 @@ export class TotalSupplyRepository extends BaseRepository {
   }
 
   async getByTimestamp(
-    timestamp: UnixTime,
     chainId: ChainId,
-    assetId: AssetId,
+    timestamp: UnixTime,
   ): Promise<TotalSupplyRecord[]> {
     const knex = await this.knex()
     const rows = await knex('total_supplies').where({
       unix_timestamp: timestamp.toDate(),
       chain_id: Number(chainId),
-      asset_id: assetId.toString(),
     })
 
     return rows.map(toRecord)
   }
 
   async addOrUpdateMany(totalSupplies: TotalSupplyRecord[]) {
+    this.logger.info('addOrUpdateMany', {
+      chainId: totalSupplies[0].chainId.toString(),
+      rows: totalSupplies.length,
+    })
+
     const rows = totalSupplies.map(toRow)
     const knex = await this.knex()
     await knex('total_supplies')
       .insert(rows)
-      .onConflict(['chain_id', 'unix_timestamp', 'holder_address', 'asset_id'])
+      .onConflict(['chain_id', 'unix_timestamp', 'asset_id'])
       .merge()
     return rows.length
   }
