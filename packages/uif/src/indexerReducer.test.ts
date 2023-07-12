@@ -320,10 +320,15 @@ describe(indexerReducer.name, () => {
           status: 'will-invalidate',
           targetHeight: 0,
           parents: [{ height: 0, initialized: true, waiting: false }],
-          children: [{ ready: false }],
+          children: [{ ready: false, notifiedWaiting: true }],
         })
 
-        expect(effects).toEqual([])
+        expect(effects).toEqual([
+          {
+            childIndices: [0],
+            type: 'NotifyWaiting',
+          },
+        ])
 
         const [state2, effects2] = reduceWithIndexerReducer(state, [
           {
@@ -337,7 +342,7 @@ describe(indexerReducer.name, () => {
           status: 'invalidating',
           targetHeight: 0,
           parents: [{ height: 0, initialized: true, waiting: false }],
-          children: [{ ready: true }],
+          children: [{ ready: true, notifiedWaiting: true }],
         })
 
         expect(effects2).toEqual([{ type: 'Invalidate', to: 0 }])

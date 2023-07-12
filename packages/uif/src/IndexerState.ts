@@ -16,6 +16,7 @@ export interface IndexerState {
     readonly waiting: boolean
   }[]
   readonly children: {
+    readonly notifiedWaiting: boolean
     readonly ready: boolean
   }[]
 }

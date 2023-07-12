@@ -7,7 +7,9 @@ import { Indexer, Subscription } from './Indexer'
 import { IndexerAction } from './IndexerAction'
 import {
   InvalidateEffect,
+  NotifyInvalidatedEffect,
   NotifyReadyEffect,
+  NotifyWaitingEffect,
   SetSafeHeightEffect,
   UpdateEffect,
 } from './IndexerEffect'
@@ -88,6 +90,22 @@ export abstract class BaseIndexer implements Indexer {
     this.dispatch({ type: 'ChildReady', index })
   }
 
+  notifyWaiting(parent: Indexer): void {
+    this.logger.debug('Someone is waiting', { parent: parent.constructor.name })
+    const index = this.parents.indexOf(parent)
+    assert(index !== -1, 'Received waiting from unknown parent')
+    this.dispatch({ type: 'ParentWaiting', index })
+  }
+
+  notifyInvalidated(parent: Indexer, to: number): void {
+    this.logger.debug('Someone has invalidated', {
+      parent: parent.constructor.name,
+    })
+    const index = this.parents.indexOf(parent)
+    assert(index !== -1, 'Received invalidated from unknown parent')
+    this.dispatch({ type: 'ParentInvalidated', index, to })
+  }
+
   notifyUpdate(parent: Indexer, to: number): void {
     const index = this.parents.indexOf(parent)
     assert(index !== -1, 'Received update from unknown parent')
@@ -112,6 +130,10 @@ export abstract class BaseIndexer implements Indexer {
           return void this.executeInvalidate(effect)
         case 'SetSafeHeight':
           return void this.executeSetSafeHeight(effect)
+        case 'NotifyInvalidated':
+          return this.executeNotifyInvalidated(effect)
+        case 'NotifyWaiting':
+          return this.executeNotifyWaiting(effect)
         case 'NotifyReady':
           return this.executeNotifyReady(effect)
         default:
@@ -157,6 +179,22 @@ export abstract class BaseIndexer implements Indexer {
     this.children.forEach((child) =>
       child.notifyUpdate(this, effect.safeHeight),
     )
+  }
+
+  private executeNotifyInvalidated(effect: NotifyInvalidatedEffect): void {
+    this.children.forEach((child, index) => {
+      if (effect.childIndices.includes(index)) {
+        child.notifyInvalidated(this, effect.to)
+      }
+    })
+  }
+
+  private executeNotifyWaiting(effect: NotifyWaitingEffect): void {
+    this.children.forEach((child, index) => {
+      if (effect.childIndices.includes(index)) {
+        child.notifyWaiting(this)
+      }
+    })
   }
 
   private executeNotifyReady(effect: NotifyReadyEffect): void {

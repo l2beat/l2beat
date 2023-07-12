@@ -19,9 +19,10 @@ export function indexerReducer(
         ...state,
         height: action.height,
         initializedSelf: true,
-        children: new Array<{ ready: boolean }>(action.childCount).fill({
+        children: Array.from({ length: action.childCount }).map(() => ({
+          notifiedWaiting: false,
           ready: false,
-        }),
+        })),
       }
 
       const result = finishInitialization(newState)
@@ -44,10 +45,30 @@ export function indexerReducer(
 
       return continueOperations(newState)
     }
+    case 'ParentWaiting': {
+      const newState: IndexerState = {
+        ...state,
+        parents: state.parents.map((parent, index) =>
+          index === action.index ? { ...parent, waiting: true } : parent,
+        ),
+      }
+      return continueOperations(newState)
+    }
+    case 'ParentInvalidated': {
+      const newState: IndexerState = {
+        ...state,
+        parents: state.parents.map((parent, index) =>
+          index === action.index
+            ? { ...parent, waiting: false, height: action.to }
+            : parent,
+        ),
+      }
+      return continueOperations(newState)
+    }
     case 'ChildSubscribed': {
       const newState: IndexerState = {
         ...state,
-        children: [...state.children, { ready: false }],
+        children: [...state.children, { ready: false, notifiedWaiting: false }],
       }
       return [newState, []]
     }
@@ -67,10 +88,20 @@ export function indexerReducer(
       }
       return continueOperations(newState)
     }
+    case 'ChildNotReady': {
+      const newState: IndexerState = {
+        ...state,
+        children: state.children.map((child, index) =>
+          index === action.index ? { ...child, ready: false } : child,
+        ),
+      }
+      return continueOperations(newState)
+    }
     case 'UpdateSucceeded': {
       assertStatus(state.status, 'updating')
       return continueOperations(
         { ...state, status: 'idle', height: action.to },
+        [],
         true,
       )
     }
@@ -81,11 +112,34 @@ export function indexerReducer(
     }
     case 'InvalidateSucceeded': {
       assertStatus(state.status, 'invalidating')
-      return continueOperations({
-        ...state,
-        status: 'idle',
-        height: action.to,
+      const childIndices: number[] = []
+      state.children.forEach((child, index) => {
+        if (child.notifiedWaiting) {
+          childIndices.push(index)
+        }
       })
+      const effects =
+        childIndices.length > 0
+          ? [
+              {
+                type: 'NotifyInvalidated' as const,
+                to: action.to,
+                childIndices,
+              },
+            ]
+          : []
+      return continueOperations(
+        {
+          ...state,
+          children: state.children.map((child) => ({
+            ...child,
+            notifiedWaiting: false,
+          })),
+          status: 'idle',
+          height: action.to,
+        },
+        effects,
+      )
     }
     case 'InvalidateFailed': {
       assertStatus(state.status, 'invalidating')
@@ -144,8 +198,18 @@ You: updating, h: 5, th: 10 -> th: 15; update success (10) -> h: 10, update + su
 
 function continueOperations(
   state: IndexerState,
+  effects?: IndexerEffect[],
   updateFinished?: boolean,
 ): IndexerReducerResult {
+  if (state.parents.some((x) => x.waiting) && state.status === 'idle') {
+    const parentIndices: number[] = []
+    state.parents.forEach((x, index) => {
+      if (x.waiting) parentIndices.push(index)
+    })
+
+    return [state, [{ type: 'NotifyReady', parentIndices }]]
+  }
+
   const parentHeight = Math.min(...state.parents.map((x) => x.height))
 
   if (
@@ -158,7 +222,7 @@ function continueOperations(
     state = { ...state, targetHeight: parentHeight }
   }
 
-  const effects: IndexerEffect[] = []
+  effects = effects ?? []
   if (state.targetHeight < state.safeHeight) {
     state = { ...state, safeHeight: state.targetHeight }
     effects.push({ type: 'SetSafeHeight', safeHeight: state.targetHeight })
@@ -183,7 +247,21 @@ function continueOperations(
   }
 
   if (state.children.some((x) => !x.ready)) {
-    return [{ ...state, status: 'will-invalidate' }, effects]
+    const childIndices: number[] = []
+    state.children.forEach((x, index) => {
+      if (!x.ready) childIndices.push(index)
+    })
+
+    return [
+      {
+        ...state,
+        status: 'will-invalidate',
+        children: state.children.map((c, i) =>
+          childIndices.includes(i) ? { ...c, notifiedWaiting: true } : c,
+        ),
+      },
+      [...effects, { type: 'NotifyWaiting', childIndices }],
+    ]
   }
 
   return [

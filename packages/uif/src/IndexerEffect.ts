@@ -2,6 +2,8 @@ export type IndexerEffect =
   | UpdateEffect
   | InvalidateEffect
   | SetSafeHeightEffect
+  | NotifyWaitingEffect
+  | NotifyInvalidatedEffect
   | NotifyReadyEffect
 
 export interface UpdateEffect {
@@ -17,6 +19,17 @@ export interface InvalidateEffect {
 export interface SetSafeHeightEffect {
   type: 'SetSafeHeight'
   safeHeight: number
+}
+
+export interface NotifyWaitingEffect {
+  type: 'NotifyWaiting'
+  childIndices: number[]
+}
+
+export interface NotifyInvalidatedEffect {
+  type: 'NotifyInvalidated'
+  childIndices: number[]
+  to: number
 }
 
 export interface NotifyReadyEffect {

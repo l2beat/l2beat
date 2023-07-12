@@ -12,6 +12,17 @@ export interface ParentUpdatedAction {
   to: number
 }
 
+export interface ParentInvalidatedAction {
+  type: 'ParentInvalidated'
+  index: number
+  to: number
+}
+
+export interface ParentWaitingAction {
+  type: 'ParentWaiting'
+  index: number
+}
+
 export interface ChildSubscribedAction {
   type: 'ChildSubscribed'
 }
@@ -23,6 +34,11 @@ export interface ChildUnsubscribedAction {
 
 export interface ChildReadyAction {
   type: 'ChildReady'
+  index: number
+}
+
+export interface ChildNotReadyAction {
+  type: 'ChildNotReady'
   index: number
 }
 
@@ -51,9 +67,12 @@ export interface InvalidateFailedAction {
 export type IndexerAction =
   | InitializedAction
   | ParentUpdatedAction
+  | ParentInvalidatedAction
+  | ParentWaitingAction
   | ChildSubscribedAction
   | ChildUnsubscribedAction
   | ChildReadyAction
+  | ChildNotReadyAction
   | UpdateSucceededAction
   | UpdateFailedAction
   | InvalidateSucceededAction
