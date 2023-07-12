@@ -42,6 +42,11 @@ export class BalanceRepository extends BaseRepository {
   }
 
   async addOrUpdateMany(balances: BalanceRecord[]) {
+    this.logger.info('addOrUpdateMany', {
+      chainId: balances[0].chainId.toString(),
+      rows: balances.length,
+    })
+
     const rows = balances.map(toRow)
     const knex = await this.knex()
     await knex('balances')

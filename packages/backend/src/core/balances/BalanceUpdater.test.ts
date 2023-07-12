@@ -42,7 +42,8 @@ describe(BalanceUpdater.name, () => {
 
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
         getByConfigHash: async () => [NOW, NOW.add(1, 'hours')],
-        add: async (x) => x.configHash,
+        add: async (x) =>
+          `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
       })
       const balanceRepository = mockObject<BalanceRepository>({
         getByTimestamp: async () => [],
@@ -108,7 +109,8 @@ describe(BalanceUpdater.name, () => {
         addOrUpdateMany: async () => 0,
       })
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
-        add: async (x) => x.configHash,
+        add: async (x) =>
+          `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
       })
       const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
         getChainId: () => chainId,
@@ -186,7 +188,8 @@ describe(BalanceUpdater.name, () => {
         ],
       })
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
-        add: async (x) => x.configHash,
+        add: async (x) =>
+          `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
       })
       const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
         getChainId: () => chainId,
