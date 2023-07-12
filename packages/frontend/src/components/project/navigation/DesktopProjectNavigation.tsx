@@ -23,7 +23,7 @@ export function DesktopProjectNavigation({
   sections,
 }: ProjectNavigationProps) {
   const translateClassName = project.showProjectUnderReview
-    ? '-translate-y-[180px]'
+    ? '-translate-y-[40px]'
     : '-translate-y-16'
   return (
     <div
@@ -34,7 +34,7 @@ export function DesktopProjectNavigation({
       <div
         id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}
         className={cx(
-          'opacity-0 transition-all duration-300',
+          'opacity-100 transition-all duration-300',
           translateClassName,
         )}
       >
