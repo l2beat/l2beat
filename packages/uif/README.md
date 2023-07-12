@@ -23,6 +23,9 @@
    - state: invalidating
    - effect: update height
    - effect: invalidate to height
+3. Invalidate
+   - wait for all children to be ready
+   
 
 ## Things to consider
 

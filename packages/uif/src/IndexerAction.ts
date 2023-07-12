@@ -1,3 +1,5 @@
+import { Indexer } from './Indexer'
+
 export interface InitializedAction {
   type: 'Initialized'
   height: number
@@ -8,6 +10,15 @@ export interface ParentUpdatedAction {
   type: 'ParentUpdated'
   index: number
   to: number
+}
+
+export interface ChildSubscribedAction {
+  type: 'ChildSubscribed'
+}
+
+export interface ChildUnsubscribedAction {
+  type: 'ChildUnsubscribed'
+  index: number
 }
 
 export interface ChildReadyAction {
@@ -40,6 +51,8 @@ export interface InvalidateFailedAction {
 export type IndexerAction =
   | InitializedAction
   | ParentUpdatedAction
+  | ChildSubscribedAction
+  | ChildUnsubscribedAction
   | ChildReadyAction
   | UpdateSucceededAction
   | UpdateFailedAction

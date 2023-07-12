@@ -14,6 +14,11 @@ export class ClockIndexer implements Indexer {
       this.height += 10
       this.children.forEach((c) => c.notifyUpdate(this, this.height))
     }, 2_000)
+    // reorg after 10 seconds
+    setTimeout(() => {
+      console.log('reorg')
+      this.height = 50
+    }, 10_000)
     this.logger.info('Started')
     return Promise.resolve()
   }

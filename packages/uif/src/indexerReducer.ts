@@ -44,6 +44,20 @@ export function indexerReducer(
 
       return continueOperations(newState)
     }
+    case 'ChildSubscribed': {
+      const newState: IndexerState = {
+        ...state,
+        children: [...state.children, { ready: false }],
+      }
+      return [newState, []]
+    }
+    case 'ChildUnsubscribed': {
+      const newState: IndexerState = {
+        ...state,
+        children: state.children.filter((_, index) => index !== action.index),
+      }
+      return [newState, []]
+    }
     case 'ChildReady': {
       const newState: IndexerState = {
         ...state,
@@ -55,8 +69,6 @@ export function indexerReducer(
     }
     case 'UpdateSucceeded': {
       assertStatus(state.status, 'updating')
-      assertHeight(action.from, state.height)
-      assertHeight(action.to, state.targetHeight)
       return continueOperations(
         { ...state, status: 'idle', height: action.to },
         true,
@@ -69,7 +81,6 @@ export function indexerReducer(
     }
     case 'InvalidateSucceeded': {
       assertStatus(state.status, 'invalidating')
-      assertHeight(action.to, state.targetHeight)
       return continueOperations({
         ...state,
         status: 'idle',
@@ -93,13 +104,6 @@ function assertStatus(
   assert(
     status === expected,
     'Invalid status. Expected ' + expected + ', got ' + status,
-  )
-}
-
-function assertHeight(height: number, expected: number): void {
-  assert(
-    height === expected,
-    'Invalid height. Expected ' + expected + ', got ' + height,
   )
 }
 
@@ -164,15 +168,22 @@ function continueOperations(
     effects.push({ type: 'SetSafeHeight', safeHeight })
   }
 
-  if (state.status !== 'idle' || state.targetHeight === state.height) {
-    return [state, effects]
-  }
-
-  if (state.targetHeight > state.height) {
+  if (state.targetHeight > state.height && state.status === 'idle') {
     return [
       { ...state, status: 'updating' },
       [...effects, { type: 'Update', to: state.targetHeight }],
     ]
+  }
+
+  if (
+    (state.status !== 'idle' && state.status !== 'will-invalidate') ||
+    state.targetHeight === state.height
+  ) {
+    return [state, effects]
+  }
+
+  if (state.children.some((x) => !x.ready)) {
+    return [{ ...state, status: 'will-invalidate' }, effects]
   }
 
   return [

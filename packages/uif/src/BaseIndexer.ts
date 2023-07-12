@@ -64,17 +64,28 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   subscribe(child: Indexer): Subscription {
-    this.logger.debug('Someone subscribed')
+    this.logger.debug('Child subscribed', { child: child.constructor.name })
     this.children.push(child)
+    this.dispatch({ type: 'ChildSubscribed' })
     return {
       unsubscribe: (): void => {
+        const index = this.children.indexOf(child)
+        assert(index !== -1, 'Received unsubscribe from unknown child')
+
+        this.logger.debug('Child unsubscribed', {
+          child: child.constructor.name,
+        })
         this.children = this.children.filter((c) => c !== child)
+        this.dispatch({ type: 'ChildUnsubscribed', index })
       },
     }
   }
 
   notifyReady(child: Indexer): void {
     this.logger.debug('Someone is ready', { child: child.constructor.name })
+    const index = this.children.indexOf(child)
+    assert(index !== -1, 'Received ready from unknown child')
+    this.dispatch({ type: 'ChildReady', index })
   }
 
   notifyUpdate(parent: Indexer, to: number): void {

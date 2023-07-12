@@ -300,6 +300,48 @@ describe(indexerReducer.name, () => {
 
         expect(effects).toEqual([{ type: 'Invalidate', to: 0 }])
       })
+
+      it('wait for children before invalidating', () => {
+        const initState = getIdle()
+
+        const [state, effects] = reduceWithIndexerReducer(initState, [
+          {
+            type: 'ChildSubscribed',
+          },
+          {
+            type: 'ParentUpdated',
+            index: 0,
+            to: 0,
+          },
+        ])
+
+        expect(state).toEqual({
+          ...initState,
+          status: 'will-invalidate',
+          targetHeight: 0,
+          parents: [{ height: 0, initialized: true, waiting: false }],
+          children: [{ ready: false }],
+        })
+
+        expect(effects).toEqual([])
+
+        const [state2, effects2] = reduceWithIndexerReducer(state, [
+          {
+            type: 'ChildReady',
+            index: 0,
+          },
+        ])
+
+        expect(state2).toEqual({
+          ...initState,
+          status: 'invalidating',
+          targetHeight: 0,
+          parents: [{ height: 0, initialized: true, waiting: false }],
+          children: [{ ready: true }],
+        })
+
+        expect(effects2).toEqual([{ type: 'Invalidate', to: 0 }])
+      })
     })
   })
 })
