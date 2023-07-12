@@ -15,10 +15,9 @@ export function indexerReducer(
     case 'Initialized': {
       assertStatus(state.status, 'init')
 
-      const newState = {
+      const newState: IndexerState = {
         ...state,
         height: action.height,
-        invalidateHeight: action.height,
         initializedSelf: true,
         children: new Array(action.childCount).fill({ ready: false }),
       }
@@ -27,7 +26,7 @@ export function indexerReducer(
       return result ?? [newState, []]
     }
     case 'ParentUpdated': {
-      const newState = {
+      const newState: IndexerState = {
         ...state,
         parents: state.parents.map((parent, index) =>
           index === action.index
@@ -44,7 +43,7 @@ export function indexerReducer(
       return continueOperations(newState)
     }
     case 'ChildReady': {
-      const newState = {
+      const newState: IndexerState = {
         ...state,
         children: state.children.map((child, index) =>
           index === action.index ? { ...child, ready: true } : child,
@@ -100,6 +99,9 @@ function finishInitialization(
   }
   if (state.initializedSelf && state.parents.every((x) => x.initialized)) {
     const height = Math.min(...state.parents.map((x) => x.height), state.height)
+    if (height === state.height) {
+      return
+    }
     return [
       { ...state, status: 'invalidating', targetHeight: height },
       [
