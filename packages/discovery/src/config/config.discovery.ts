@@ -20,7 +20,7 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
     discovery: discoveryEnabled && {
       project: cli.project,
       blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
-      alchemyApiKey: getEnv('ALCHEMY_API_KEY'),
+      alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       dryRun: cli.dryRun,
       dev: cli.dev,

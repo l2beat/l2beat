@@ -184,6 +184,11 @@ export const multichain: Bridge = {
         'It is an upgrade of the network that is used to check cross chain messages.',
       link: 'https://multichainorg.medium.com/fastmpc-mainnet-goes-live-running-in-a-decentralized-way-99f9fe2956b8',
     },
+    {
+      name: 'Contracts hacked for $130M',
+      date: '2023-07-07T00:00:00Z',
+      link: 'https://blockworks.co/news/multichain-anyswap-exploit',
+    },
   ],
   knowledgeNuggets: [
     {

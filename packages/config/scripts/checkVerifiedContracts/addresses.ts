@@ -40,6 +40,7 @@ function gatherAddressesFromUpgradeability(
     case 'Custom':
     case 'CustomWithoutAdmin':
     case 'EIP1967 proxy':
+    case 'Polygon proxy':
     case 'ZeppelinOS proxy':
     case 'StarkWare diamond':
     case 'resolved delegate proxy':
@@ -70,6 +71,10 @@ function gatherAddressesFromUpgradeability(
     case 'zkSync Lite proxy':
       result.push(item.implementation)
       result.push(item.additional)
+      break
+    case 'Polygon Extension proxy':
+      result.push(item.implementation)
+      result.push(item.extension)
       break
     case 'zkSpace proxy':
       result.push(item.implementation)

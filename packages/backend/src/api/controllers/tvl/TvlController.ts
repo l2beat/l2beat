@@ -1,10 +1,12 @@
 import { Logger } from '@l2beat/shared'
 import {
   AssetId,
+  ChainId,
   ProjectId,
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
+  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
@@ -33,7 +35,10 @@ export class TvlController {
   }
 
   async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
-    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp(
+      ChainId.ETHEREUM,
+      ValueType.CBV,
+    )
     if (!timestamp) {
       return undefined
     }
@@ -80,7 +85,10 @@ export class TvlController {
     if (!project || !asset) {
       return undefined
     }
-    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp(
+      ChainId.ETHEREUM,
+      ValueType.CBV,
+    )
     if (!timestamp) {
       return undefined
     }

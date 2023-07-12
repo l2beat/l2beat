@@ -1,5 +1,11 @@
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
-import { getTimestamps, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  getTimestamps,
+  Hash256,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
@@ -12,7 +18,10 @@ import {
 } from '../../../peripherals/database/BalanceStatusRepository'
 import { UpdateMonitorRepository } from '../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
-import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
+import {
+  ReportStatusRecord,
+  ReportStatusRepository,
+} from '../../../peripherals/database/ReportStatusRepository'
 import { getDashboardContracts } from './discovery/props/getDashboardContracts'
 import { getDashboardProjects } from './discovery/props/getDashboardProjects'
 import { getDiff } from './discovery/props/utils/getDiff'
@@ -100,6 +109,7 @@ export class StatusController {
     const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
 
     const statuses = await this.balanceStatusRepository.getBetween(
+      ChainId.ETHEREUM,
       firstHour,
       lastHour,
     )
@@ -122,6 +132,8 @@ export class StatusController {
     const statuses = await this.reportStatusRepository.getBetween(
       firstHour,
       lastHour,
+      ChainId.ETHEREUM,
+      ValueType.CBV,
     )
     const configHash = getReportConfigHash(this.projects)
 
@@ -149,7 +161,7 @@ export class StatusController {
 }
 
 function isSynced(
-  statuses: BalanceStatusRecord[],
+  statuses: (ReportStatusRecord | BalanceStatusRecord)[],
   timestamp: UnixTime,
   configHash: Hash256,
 ): boolean {
