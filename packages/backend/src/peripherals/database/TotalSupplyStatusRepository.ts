@@ -10,11 +10,6 @@ export interface TotalSupplyStatusRecord {
   timestamp: UnixTime
 }
 
-export interface DataBoundary {
-  earliestBlockNumber: bigint | undefined
-  latestBlockNumber: bigint | undefined
-}
-
 export class TotalSupplyStatusRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
