@@ -7,7 +7,7 @@
     },
     {
       "source": "/scaling/tvl",
-      "destination": "summary/",
+      "destination": "/scaling/summary/",
       "permanent": true
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "source": "/bridges/tvl",
-      "destination": "summary/",
+      "destination": "bridges/summary/",
       "permanent": true
     },
     {
