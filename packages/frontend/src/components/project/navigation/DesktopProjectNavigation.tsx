@@ -29,7 +29,7 @@ export function DesktopProjectNavigation({
     <div
       className="sticky top-8"
       id={DESKTOP_PROJECT_NAVIGATION_IDS.container}
-      data-is-under-review={project.showProjectUnderReview}
+      data-is-under-review={project.showProjectUnderReview ?? false}
     >
       <div
         id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}
