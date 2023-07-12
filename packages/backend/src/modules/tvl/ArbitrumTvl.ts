@@ -63,7 +63,7 @@ export function createArbitrumTvlSubmodule(
     db.balanceRepository,
     db.balanceStatusRepository,
     clock,
-    config.projects,
+    [],
     logger,
     ChainId.ARBITRUM,
   )
