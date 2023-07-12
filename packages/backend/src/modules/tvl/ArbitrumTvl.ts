@@ -7,6 +7,8 @@ import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { ArbitrumBalanceProvider } from '../../core/balances/providers/ArbitrumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
+import { ArbitrumTotalSupplyProvider } from '../../core/totalSupply/providers/ArbitrumTotalSupplyProvider'
+import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { ArbitrumMulticallClient } from '../../peripherals/arbitrum/multicall/ArbitrumMulticall'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { ApplicationModule } from '../ApplicationModule'
@@ -39,7 +41,12 @@ export function createArbitrumTvlSubmodule(
 
   const arbitrumClient = new EthereumClient(arbitrumProvider, logger)
 
-  const multicallClient = ArbitrumMulticallClient.forMainnet(arbitrumClient)
+  const arbitrumMulticall = ArbitrumMulticallClient.forMainnet(arbitrumClient)
+
+  const totalSupplyProvider = new ArbitrumTotalSupplyProvider(
+    arbitrumClient,
+    arbitrumMulticall,
+  )
 
   // #endregion
   // #region updaters
@@ -54,7 +61,7 @@ export function createArbitrumTvlSubmodule(
 
   const arbitrumBalanceProvider = new ArbitrumBalanceProvider(
     arbitrumClient,
-    multicallClient,
+    arbitrumMulticall,
   )
 
   const arbitrumBalanceUpdater = new BalanceUpdater(
@@ -62,6 +69,17 @@ export function createArbitrumTvlSubmodule(
     arbiscanBlockNumberUpdater,
     db.balanceRepository,
     db.balanceStatusRepository,
+    clock,
+    [],
+    logger,
+    ChainId.ARBITRUM,
+  )
+
+  const totalSupplyUpdater = new TotalSupplyUpdater(
+    totalSupplyProvider,
+    arbiscanBlockNumberUpdater,
+    db.totalSupplyRepository,
+    db.totalSupplyStatusRepository,
     clock,
     [],
     logger,
@@ -76,6 +94,7 @@ export function createArbitrumTvlSubmodule(
 
     await arbiscanBlockNumberUpdater.start()
     await arbitrumBalanceUpdater.start()
+    await totalSupplyUpdater.start()
 
     logger.info('Started')
   }
