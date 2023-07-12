@@ -67,7 +67,7 @@ export function createEthereumTvlSubmodule(
     ChainId.ETHEREUM,
   )
 
-  const nativeAssetUpdate = new NMVUpdater(
+  const nativeAssetUpdater = new NMVUpdater(
     priceUpdater,
     db.reportRepository,
     db.reportStatusRepository,
