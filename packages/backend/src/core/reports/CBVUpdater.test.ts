@@ -9,11 +9,11 @@ import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
+import { CBVUpdater } from './CBVUpdater'
 import { getReportConfigHash } from './getReportConfigHash'
-import { ReportUpdater } from './ReportUpdater'
 
-describe(ReportUpdater.name, () => {
-  describe(ReportUpdater.prototype.update.name, () => {
+describe(CBVUpdater.name, () => {
+  describe(CBVUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -35,7 +35,7 @@ describe(ReportUpdater.name, () => {
         add: async ({ configHash }) => configHash,
       })
 
-      const reportUpdater = new ReportUpdater(
+      const reportUpdater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         reportRepository,
@@ -82,7 +82,7 @@ describe(ReportUpdater.name, () => {
     })
   })
 
-  describe(ReportUpdater.prototype.start.name, () => {
+  describe(CBVUpdater.prototype.start.name, () => {
     it('skips known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -116,7 +116,7 @@ describe(ReportUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new ReportUpdater(
+      const reportUpdater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         reportRepository,
@@ -158,7 +158,7 @@ describe(ReportUpdater.name, () => {
     })
   })
 
-  describe(ReportUpdater.prototype.getReportsWhenReady.name, () => {
+  describe(CBVUpdater.prototype.getReportsWhenReady.name, () => {
     it('returns known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -193,7 +193,7 @@ describe(ReportUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new ReportUpdater(
+      const reportUpdater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         reportRepository,

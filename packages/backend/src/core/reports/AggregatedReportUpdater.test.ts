@@ -8,8 +8,8 @@ import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
 import { NMVUpdater } from '../assets/NMVUpdater'
 import { Clock } from '../Clock'
 import { AggregatedReportUpdater } from './AggregatedReportUpdater'
+import { CBVUpdater } from './CBVUpdater'
 import { getReportConfigHash } from './getReportConfigHash'
-import { ReportUpdater } from './ReportUpdater'
 
 describe(AggregatedReportUpdater.name, () => {
   describe(AggregatedReportUpdater.prototype.update.name, () => {
@@ -26,7 +26,7 @@ describe(AggregatedReportUpdater.name, () => {
           add: async ({ configHash }) => configHash,
         })
 
-      const reportUpdater = mockObject<ReportUpdater>({
+      const reportUpdater = mockObject<CBVUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
       })
       const nativeAssetUpdater = mockObject<NMVUpdater>({
@@ -87,7 +87,7 @@ describe(AggregatedReportUpdater.name, () => {
           add: async ({ configHash }) => configHash,
         })
 
-      const reportUpdater = mockObject<ReportUpdater>({
+      const reportUpdater = mockObject<CBVUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
       })
       const nativeAssetUpdater = mockObject<NMVUpdater>({

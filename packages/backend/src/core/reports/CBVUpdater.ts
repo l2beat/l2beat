@@ -15,7 +15,7 @@ import { createReports } from './createReports'
 import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
 
-export class ReportUpdater {
+export class CBVUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -36,7 +36,7 @@ export class ReportUpdater {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: ReportUpdater.name,
+        metricsId: CBVUpdater.name,
       },
     )
   }

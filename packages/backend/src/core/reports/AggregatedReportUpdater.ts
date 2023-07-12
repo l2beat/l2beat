@@ -7,16 +7,16 @@ import { NMVUpdater } from '../assets/NMVUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
+import { CBVUpdater } from './CBVUpdater'
 import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
-import { ReportUpdater } from './ReportUpdater'
 
 export class AggregatedReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
-    private readonly reportUpdater: ReportUpdater,
+    private readonly reportUpdater: CBVUpdater,
     private readonly nativeAssetUpdater: NMVUpdater,
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,

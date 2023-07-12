@@ -10,7 +10,7 @@ import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
-import { ReportUpdater } from '../../core/reports/ReportUpdater'
+import { CBVUpdater } from '../../core/reports/CBVUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { ApplicationModule } from '../ApplicationModule'
@@ -75,7 +75,7 @@ export function createEthereumTvlSubmodule(
     logger,
   )
 
-  const reportUpdater = new ReportUpdater(
+  const reportUpdater = new CBVUpdater(
     priceUpdater,
     balanceUpdater,
     db.reportRepository,
