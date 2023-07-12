@@ -19,7 +19,9 @@ export function indexerReducer(
         ...state,
         height: action.height,
         initializedSelf: true,
-        children: new Array(action.childCount).fill({ ready: false }),
+        children: new Array<{ ready: boolean }>(action.childCount).fill({
+          ready: false,
+        }),
       }
 
       const result = finishInitialization(newState)
@@ -99,9 +101,7 @@ function finishInitialization(
   }
   if (state.initializedSelf && state.parents.every((x) => x.initialized)) {
     const height = Math.min(...state.parents.map((x) => x.height), state.height)
-    if (height === state.height) {
-      return
-    }
+
     return [
       { ...state, status: 'invalidating', targetHeight: height },
       [
