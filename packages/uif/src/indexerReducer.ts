@@ -54,6 +54,7 @@ export function indexerReducer(
       }
       return continueOperations(newState)
     }
+    // is this even needed? do we need to wait for our parent to invalidate?
     case 'ParentInvalidated': {
       const newState: IndexerState = {
         ...state,
@@ -108,6 +109,7 @@ export function indexerReducer(
     case 'UpdateFailed': {
       assertStatus(state.status, 'updating')
       // TODO: retry, exponential back-off
+      // TODO: if parent waiting, notify ready.
       return [{ ...state, status: 'errored' }, []]
     }
     case 'InvalidateSucceeded': {
@@ -132,7 +134,7 @@ export function indexerReducer(
         {
           ...state,
           children: state.children.map((child) => ({
-            ...child,
+            ready: false,
             notifiedWaiting: false,
           })),
           status: 'idle',
@@ -201,7 +203,11 @@ function continueOperations(
   effects?: IndexerEffect[],
   updateFinished?: boolean,
 ): IndexerReducerResult {
-  if (state.parents.some((x) => x.waiting) && state.status === 'idle') {
+  if (
+    state.parents.some((x) => x.waiting) &&
+    (state.status === 'idle' || state.status === 'will-invalidate') &&
+    state.children.every((x) => x.ready)
+  ) {
     const parentIndices: number[] = []
     state.parents.forEach((x, index) => {
       if (x.waiting) parentIndices.push(index)
