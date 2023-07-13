@@ -67,7 +67,7 @@ export function createEthereumTvlSubmodule(
     ChainId.ETHEREUM,
   )
 
-  const nativeAssetUpdater = new NMVUpdater(
+  const nmvUpdater = new NMVUpdater(
     priceUpdater,
     db.reportRepository,
     db.reportStatusRepository,
@@ -75,7 +75,7 @@ export function createEthereumTvlSubmodule(
     logger,
   )
 
-  const reportUpdater = new CBVUpdater(
+  const cbvUpdater = new CBVUpdater(
     priceUpdater,
     balanceUpdater,
     db.reportRepository,
@@ -86,8 +86,8 @@ export function createEthereumTvlSubmodule(
   )
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    reportUpdater,
-    nativeAssetUpdater,
+    cbvUpdater,
+    nmvUpdater,
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,
@@ -103,8 +103,8 @@ export function createEthereumTvlSubmodule(
 
     await ethereumBlockNumberUpdater.start()
     await balanceUpdater.start()
-    await nativeAssetUpdater.start()
-    await reportUpdater.start()
+    await nmvUpdater.start()
+    await cbvUpdater.start()
     await aggregatedReportUpdater.start()
 
     logger.info('Started')
