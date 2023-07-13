@@ -165,9 +165,7 @@
       "ignoreDiscovery": true
     },
     "PolygonMultisig": {
-      "ignoreInWatchMode": [
-        "nonce"
-      ]
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
