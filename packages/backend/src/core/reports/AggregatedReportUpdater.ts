@@ -3,11 +3,10 @@ import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
-import { NMVUpdater } from '../assets/NMVUpdater'
+import { CBVUpdater, NMVUpdater } from '../assets/'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
-import { CBVUpdater } from './CBVUpdater'
 import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
 

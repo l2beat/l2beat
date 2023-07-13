@@ -11,11 +11,11 @@ import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createReports } from './createReports'
-import { ARB_TOKEN_ID, ARBITRUM_PROJECT_ID } from './custom/arbitrum'
-import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from './custom/optimism'
-import { getReportConfigHash } from './getReportConfigHash'
-import { ReportProject } from './ReportProject'
+import { createReports } from '../reports/createReports'
+import { ARB_TOKEN_ID, ARBITRUM_PROJECT_ID } from '../reports/custom/arbitrum'
+import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from '../reports/custom/optimism'
+import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { ReportProject } from '../reports/ReportProject'
 
 export class CBVUpdater {
   private readonly configHash: Hash256
