@@ -12,12 +12,12 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createReports } from './createReports'
-import { addArbTokenReport } from './custom/arbitrum'
-import { addOpTokenReport } from './custom/optimism'
+import { ARB_TOKEN_ID, ARBITRUM_PROJECT_ID } from './custom/arbitrum'
+import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from './custom/optimism'
 import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
 
-export class ReportUpdater {
+export class CBVUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -32,12 +32,13 @@ export class ReportUpdater {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
+    // TODO(radomski): This config hash should be generated from only CBV projects
     this.configHash = getReportConfigHash(projects)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: ReportUpdater.name,
+        metricsId: CBVUpdater.name,
       },
     )
   }
@@ -61,7 +62,6 @@ export class ReportUpdater {
     })
   }
 
-  // TODO(radomski): This should probably split op/arb report into different rows with correct chainId/valueType
   async update(timestamp: UnixTime) {
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const [prices, balances] = await Promise.all([
@@ -69,9 +69,15 @@ export class ReportUpdater {
       this.balanceUpdater.getBalancesWhenReady(timestamp),
     ])
     this.logger.debug('Prices and balances ready')
-    const reports = createReports(prices, balances, this.projects)
-    addOpTokenReport(reports, prices, timestamp)
-    addArbTokenReport(reports, prices, timestamp)
+
+    let reports = createReports(
+      prices,
+      balances,
+      this.projects,
+      ChainId.ETHEREUM,
+    )
+    // TODO(radomski): This really needs to be refactored
+    reports = filterOutNVMReports(reports)
 
     await this.reportRepository.addOrUpdateMany(reports)
 
@@ -93,6 +99,20 @@ export class ReportUpdater {
     while (!this.knownSet.has(timestamp.toNumber())) {
       await setTimeout(refreshIntervalMs)
     }
-    return this.reportRepository.getByTimestamp(timestamp)
+    return this.reportRepository.getByTimestampAndPreciseAsset(
+      timestamp,
+      ChainId.ETHEREUM,
+      ValueType.CBV,
+    )
   }
+}
+
+function filterOutNVMReports(reports: ReportRecord[]): ReportRecord[] {
+  return reports.filter((r) => {
+    const isOpNative =
+      r.asset === OP_TOKEN_ID && r.projectId === OPTIMISM_PROJECT_ID
+    const isArbNative =
+      r.asset === ARB_TOKEN_ID && r.projectId === ARBITRUM_PROJECT_ID
+    return !isOpNative && !isArbNative
+  })
 }

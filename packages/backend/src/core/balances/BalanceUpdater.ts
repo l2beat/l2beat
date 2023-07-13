@@ -70,6 +70,8 @@ export class BalanceUpdater {
     })
   }
 
+  // TODO(radomski): Remove all op-optimism/arb-arbitrum tokens from balances.
+  // Don't fetch balances for those two tokens
   async update(timestamp: UnixTime) {
     this.logger.debug('Update started', {
       timestamp: timestamp.toNumber(),

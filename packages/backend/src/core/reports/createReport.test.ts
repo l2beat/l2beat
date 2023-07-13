@@ -1,4 +1,10 @@
-import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  ProjectId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { balanceToValue, createReport, getBigIntPrice } from './createReport'
@@ -10,11 +16,11 @@ describe(createReport.name, () => {
       {
         priceUsd: 3.2,
         timestamp,
-        assetId: AssetId.ETH,
       },
       {
         projectId: ProjectId('arbitrum'),
         assetId: AssetId.ETH,
+        chainId: ChainId.ETHEREUM,
         type: ValueType.CBV,
         balance: 22123456n,
         decimals: 6,
@@ -26,6 +32,7 @@ describe(createReport.name, () => {
       timestamp,
       projectId: ProjectId('arbitrum'),
       asset: AssetId.ETH,
+      chainId: ChainId.ETHEREUM,
       type: ValueType.CBV,
       amount: 22123456n,
       usdValue: 7079n,
@@ -39,11 +46,11 @@ describe(createReport.name, () => {
       {
         priceUsd: 3.2,
         timestamp,
-        assetId: AssetId.ETH,
       },
       {
         projectId: ProjectId('arbitrum'),
         assetId: AssetId.ETH,
+        chainId: ChainId.ETHEREUM,
         type: ValueType.CBV,
         balance: 22123456789123456789n,
         decimals: 18,
@@ -55,6 +62,7 @@ describe(createReport.name, () => {
       timestamp,
       projectId: ProjectId('arbitrum'),
       asset: AssetId.ETH,
+      chainId: ChainId.ETHEREUM,
       type: ValueType.CBV,
       amount: 22123456789123456789n,
       usdValue: 7079n,

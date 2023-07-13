@@ -26,6 +26,7 @@ declare module 'knex/types/tables' {
     project_id: string
     asset_id: string
     asset_type: string
+    chain_id: number
     asset_amount: string
     usd_value: string
     eth_value: string

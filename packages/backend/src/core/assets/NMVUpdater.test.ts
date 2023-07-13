@@ -6,28 +6,21 @@ import waitForExpect from 'wait-for-expect'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
-import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import { getReportConfigHash } from './getReportConfigHash'
-import { ReportUpdater } from './ReportUpdater'
+import { NATIVE_ASSET_CONFIG_HASH, NMVUpdater } from './NMVUpdater'
 
-describe(ReportUpdater.name, () => {
-  describe(ReportUpdater.prototype.update.name, () => {
+describe(NMVUpdater.name, () => {
+  describe(NMVUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
           .returnsOnce(MOCK.FUTURE_PRICES)
           .returnsOnce(MOCK.PRICES),
       })
-      const balanceUpdater = mockObject<BalanceUpdater>({
-        getBalancesWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_BALANCES)
-          .returnsOnce(MOCK.BALANCES),
-      })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestamp: async () => MOCK.FUTURE_REPORTS_WITH_OP,
+        getByTimestampAndPreciseAsset: async () => MOCK.FUTURE_REPORTS,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -35,65 +28,53 @@ describe(ReportUpdater.name, () => {
         add: async ({ configHash }) => configHash,
       })
 
-      const reportUpdater = new ReportUpdater(
+      const nativeAssetUpdater = new NMVUpdater(
         priceUpdater,
-        balanceUpdater,
         reportRepository,
         reportStatusRepository,
         mockObject<Clock>(),
-        MOCK.PROJECTS,
         Logger.SILENT,
       )
 
-      await reportUpdater.update(MOCK.NOW.add(1, 'hours'))
-      await reportUpdater.update(MOCK.NOW)
-
-      const configHash = getReportConfigHash(MOCK.PROJECTS)
+      await nativeAssetUpdater.update(MOCK.NOW.add(1, 'hours'))
+      await nativeAssetUpdater.update(MOCK.NOW)
 
       expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
-        configHash,
+        configHash: NATIVE_ASSET_CONFIG_HASH,
         timestamp: MOCK.NOW.add(1, 'hours'),
-        chainId: ChainId.ETHEREUM,
-        valueType: ValueType.CBV,
+        chainId: ChainId.NMV,
+        valueType: ValueType.NMV,
       })
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
-        configHash,
+        configHash: NATIVE_ASSET_CONFIG_HASH,
         timestamp: MOCK.NOW,
-        chainId: ChainId.ETHEREUM,
-        valueType: ValueType.CBV,
+        chainId: ChainId.NMV,
+        valueType: ValueType.NMV,
       })
 
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         1,
-        MOCK.FUTURE_REPORTS_WITH_OP,
+        MOCK.FUTURE_OP_REPORT,
       )
-      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
-        2,
-        MOCK.REPORTS,
-      )
+      expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(2, [])
 
-      const reports = await reportUpdater.getReportsWhenReady(
+      const reports = await nativeAssetUpdater.getReportsWhenReady(
         MOCK.NOW.add(1, 'hours'),
       )
       // ensure that the updater updated internal knownSet
-      expect(reports).toEqual(MOCK.FUTURE_REPORTS_WITH_OP)
+      expect(reports).toEqual(MOCK.FUTURE_REPORTS)
     })
   })
 
-  describe(ReportUpdater.prototype.start.name, () => {
+  describe(NMVUpdater.prototype.start.name, () => {
     it('skips known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
           .returnsOnce(MOCK.FUTURE_PRICES)
           .returnsOnce(MOCK.PRICES),
       })
-      const balanceUpdater = mockObject<BalanceUpdater>({
-        getBalancesWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_BALANCES)
-          .returnsOnce(MOCK.BALANCES),
-      })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
       })
@@ -116,63 +97,51 @@ describe(ReportUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new ReportUpdater(
+      const nativeAssetUpdater = new NMVUpdater(
         priceUpdater,
-        balanceUpdater,
         reportRepository,
         reportStatusRepository,
         clock,
-        MOCK.PROJECTS,
         Logger.SILENT,
       )
 
-      await reportUpdater.start()
+      await nativeAssetUpdater.start()
 
       await waitForExpect(() => {
-        const configHash = getReportConfigHash(MOCK.PROJECTS)
-
         expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
-          configHash,
+          configHash: NATIVE_ASSET_CONFIG_HASH,
           timestamp: MOCK.NOW.add(1, 'hours'),
-          chainId: ChainId.ETHEREUM,
-          valueType: ValueType.CBV,
+          chainId: ChainId.NMV,
+          valueType: ValueType.NMV,
         })
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
-          configHash,
+          configHash: NATIVE_ASSET_CONFIG_HASH,
           timestamp: MOCK.NOW,
-          chainId: ChainId.ETHEREUM,
-          valueType: ValueType.CBV,
+          chainId: ChainId.NMV,
+          valueType: ValueType.NMV,
         })
 
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
         expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
           1,
-          MOCK.FUTURE_REPORTS_WITH_OP,
+          MOCK.FUTURE_OP_REPORT,
         )
-        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
-          2,
-          MOCK.REPORTS,
-        )
+        expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(2, [])
       })
     })
   })
 
-  describe(ReportUpdater.prototype.getReportsWhenReady.name, () => {
+  describe(NMVUpdater.prototype.getReportsWhenReady.name, () => {
     it('returns known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
           .returnsOnce(MOCK.FUTURE_PRICES)
           .returnsOnce(MOCK.PRICES),
       })
-      const balanceUpdater = mockObject<BalanceUpdater>({
-        getBalancesWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_BALANCES)
-          .returnsOnce(MOCK.BALANCES),
-      })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestamp: async () => MOCK.REPORTS,
+        getByTimestampAndPreciseAsset: async () => MOCK.REPORTS,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -193,13 +162,11 @@ describe(ReportUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new ReportUpdater(
+      const reportUpdater = new NMVUpdater(
         priceUpdater,
-        balanceUpdater,
         reportRepository,
         reportStatusRepository,
         clock,
-        MOCK.PROJECTS,
         Logger.SILENT,
       )
 
