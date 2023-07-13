@@ -20,7 +20,7 @@ export async function up(knex: Knex) {
     table.string('asset_id').notNullable()
     table.integer('chain_id').notNullable()
 
-    table.primary(['unix_timestamp', 'asset_id', 'chain_id'])
+    table.primary(['chain_id', 'unix_timestamp', 'asset_id'])
   })
 
   await knex.schema.createTable('total_supplies_status', function (table) {
