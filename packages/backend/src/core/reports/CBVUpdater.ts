@@ -94,8 +94,9 @@ export class CBVUpdater {
     while (!this.knownSet.has(timestamp.toNumber())) {
       await setTimeout(refreshIntervalMs)
     }
-    return this.reportRepository.getByTimestampAndAssetType(
+    return this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
+      ChainId.ETHEREUM,
       ValueType.CBV,
     )
   }

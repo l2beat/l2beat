@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/shared'
 import {
   assert,
   AssetId,
+  ChainId,
   ProjectId,
   UnixTime,
   ValueType,
@@ -18,6 +19,7 @@ export interface ReportRecord {
   asset: AssetId
   // TODO: Index this column when we start querying by it.
   type: ValueType
+  chainId: ChainId
   amount: bigint
   usdValue: bigint
   ethValue: bigint
@@ -40,14 +42,16 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByTimestampAndAssetType(
+  async getByTimestampAndPreciseAsset(
     timestamp: UnixTime,
+    chainId: ChainId,
     assetType: ValueType,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('reports')
       .where('unix_timestamp', timestamp.toDate())
       .andWhere('asset_type', assetType.toString())
+      .andWhere('chain_id', chainId.valueOf())
     return rows.map(toRecord)
   }
 
@@ -64,17 +68,26 @@ export class ReportRepository extends BaseRepository {
       r.timestamp.equals(reports[0].timestamp),
     )
     const valueTypeMatch = reports.every((r) => r.type === reports[0].type)
+    const chainIdsMatch = reports.every((r) => r.chainId === reports[0].chainId)
     assert(timestampsMatch, 'Timestamps must match')
     assert(valueTypeMatch, 'Value types must match')
+    assert(chainIdsMatch, 'Chain Ids must match')
 
     await knex.transaction(async (trx) => {
       await trx('reports')
         .where('unix_timestamp', rows[0].unix_timestamp)
         .andWhere('asset_type', rows[0].asset_type)
+        .andWhere('chain_id', rows[0].chain_id)
         .delete()
       await trx('reports')
         .insert(rows)
-        .onConflict(['unix_timestamp', 'project_id', 'asset_id'])
+        .onConflict([
+          'unix_timestamp',
+          'project_id',
+          'asset_id',
+          'chain_id',
+          'asset_type',
+        ])
         .merge()
     })
     return rows.length
@@ -143,6 +156,7 @@ function toRow(record: ReportRecord): ReportRow {
     project_id: record.projectId.toString(),
     asset_id: record.asset.toString(),
     asset_type: record.type.toString(),
+    chain_id: record.chainId.valueOf(),
     asset_amount: record.amount.toString(),
     usd_value: record.usdValue.toString(),
     eth_value: record.ethValue.toString(),
@@ -155,6 +169,7 @@ function toRecord(row: ReportRow): ReportRecord {
     projectId: ProjectId(row.project_id),
     asset: AssetId(row.asset_id),
     type: ValueType(row.asset_type),
+    chainId: ChainId(row.chain_id),
     amount: BigInt(row.asset_amount),
     usdValue: BigInt(row.usd_value),
     ethValue: BigInt(row.eth_value),

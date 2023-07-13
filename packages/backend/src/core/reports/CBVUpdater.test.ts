@@ -27,7 +27,7 @@ describe(CBVUpdater.name, () => {
       })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestampAndAssetType: async () => MOCK.FUTURE_REPORTS,
+        getByTimestampAndPreciseAsset: async () => MOCK.FUTURE_REPORTS,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -172,7 +172,7 @@ describe(CBVUpdater.name, () => {
       })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestampAndAssetType: async () => MOCK.REPORTS,
+        getByTimestampAndPreciseAsset: async () => MOCK.REPORTS,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
