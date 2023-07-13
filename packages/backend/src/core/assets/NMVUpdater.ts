@@ -10,8 +10,8 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { addArbTokenReport } from '../reports/custom/arbitrum'
-import { addOpTokenReport } from '../reports/custom/optimism'
+import { genArbTokenReport } from '../reports/custom/arbitrum'
+import { genOpTokenReport } from '../reports/custom/optimism'
 
 // Shas256 of "L2Beat Native Asset [Arbitrum, Optimism]"
 export const NATIVE_ASSET_CONFIG_HASH = Hash256(
@@ -70,8 +70,8 @@ export class NMVUpdater {
     this.logger.debug('Prices ready')
 
     const reports: ReportRecord[] = []
-    reports.push(...addOpTokenReport(prices, timestamp))
-    reports.push(...addArbTokenReport(prices, timestamp))
+    reports.push(...genOpTokenReport(prices, timestamp))
+    reports.push(...genArbTokenReport(prices, timestamp))
 
     await this.reportRepository.addOrUpdateMany(reports)
 

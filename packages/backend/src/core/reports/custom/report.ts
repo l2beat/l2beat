@@ -10,7 +10,7 @@ import { PriceRecord } from '../../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { BalancePerProject, createReport } from '../createReport'
 
-export function createAddCustomTokenReport(
+export function createGenCustomTokenReport(
   tokenId: AssetId,
   chainId: ChainId,
   assetType: ValueType,
