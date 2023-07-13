@@ -43,7 +43,8 @@
           ],
           "groupBy": "chainId"
         }
-      }
+      },
+      "ignoreInWatchMode": ["chains", "currentNonce"]
     },
     "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": {
       "fields": {

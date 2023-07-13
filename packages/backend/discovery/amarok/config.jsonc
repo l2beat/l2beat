@@ -11,7 +11,8 @@
     "0x66a425f09cfd613d40A986B3ef800AA7604C8eeE": "OptimismHubConnector",
     "0x245F757d660C3ec65416168690431076d58d6413": "GnosisHubConnector",
     "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "RelayTransit",
-    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig"
+    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig",
+    "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45": "WormholeHubConnector"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -68,13 +69,11 @@
       "fields": {
         "connectors": {
           "type": "array",
-          "method": "connectors",
-          "length": 5
+          "method": "connectors"
         },
         "domains": {
           "type": "array",
-          "method": "domains",
-          "length": 5
+          "method": "domains"
         }
       },
       "ignoreInWatchMode": [
@@ -93,6 +92,11 @@
     },
     "ArbitrumHubConnector": {
       "ignoreRelatives": ["AMB", "mirrorConnector", "rollup", "outbox"],
+      "ignoreMethods": ["processed"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "WormholeHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreMethods": ["processed"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },

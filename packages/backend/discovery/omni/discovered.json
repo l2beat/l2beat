@@ -1,7 +1,7 @@
 {
   "name": "omni",
-  "blockNumber": 17668466,
-  "configHash": "0x49cfe500ef55bfe10d853bb8a728b80e2f1337b3ccaccca7a131c2681b67bbe2",
+  "blockNumber": 17684765,
+  "configHash": "0xa81486f24d44acea4b12563a38d70493f86837e809b3d2990e22c480fb89811b",
   "version": 1,
   "contracts": [
     {
@@ -162,7 +162,6 @@
         "bridgeContract": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
         "getBridgeInterfacesVersion": [3, 3, 1],
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 19549,
         "implementation": "0x8eB3b7D8498a6716904577b2579e1c313d48E347",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",

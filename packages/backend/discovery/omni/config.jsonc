@@ -18,7 +18,8 @@
   },
   "overrides": {
     "MultiTokenMediator": {
-      "proxyType": "Eternal Storage proxy"
+      "proxyType": "Eternal Storage proxy",
+      "ignoreMethods": ["getCurrentDay"]
     },
     "ForeignAMB": {
       "proxyType": "Eternal Storage proxy"
