@@ -1,26 +1,46 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import chalk from 'chalk'
-import { inspect } from 'util'
+import { join } from 'path'
 
-export enum LogLevel {
-  NONE = 0,
-  ERROR = 1,
-  INFO = 2,
-  DEBUG = 3,
-}
+import { formatLevelPretty } from './formatLevelPretty'
+import { formatParametersPretty } from './formatParametersPretty'
+import { formatServicePretty } from './formatServicePretty'
+import { formatTimePretty } from './formatTimePretty'
+import { LEVEL, LogLevel } from './LogLevel'
+import { resolveLog } from './resolveLog'
 
 export interface LoggerOptions {
   logLevel: LogLevel
-  service?: string
+  service: string
   format: 'pretty' | 'json'
-  reportError?: (error: unknown) => void
+  utc: boolean
+  colors: boolean
+  cwd: string
+  getTime: () => Date
+  reportError: (error: unknown) => void
 }
 
 export class Logger {
-  constructor(private readonly options: LoggerOptions) {}
+  private readonly options: LoggerOptions
+  private readonly logLevel: number
+  private readonly cwd: string
 
-  static SILENT = new Logger({ logLevel: LogLevel.NONE, format: 'pretty' })
-  static DEBUG = new Logger({ logLevel: LogLevel.DEBUG, format: 'pretty' })
+  constructor(options: Partial<LoggerOptions>) {
+    this.options = {
+      logLevel: options.logLevel ?? 'INFO',
+      service: options.service ?? '',
+      format: options.format ?? 'json',
+      utc: options.utc ?? false,
+      colors: options.colors ?? false,
+      cwd: options.cwd ?? process.cwd(),
+      getTime: options.getTime ?? (() => new Date()),
+      reportError: options.reportError ?? (() => {}),
+    }
+    this.cwd = join(this.options.cwd, '/')
+    this.logLevel = LEVEL[this.options.logLevel]
+  }
+
+  static SILENT = new Logger({ logLevel: 'NONE', format: 'pretty' })
+  static DEBUG = new Logger({ logLevel: 'NONE', format: 'pretty' })
 
   configure(options: Partial<LoggerOptions>): Logger {
     return new Logger({ ...this.options, ...options })
@@ -34,145 +54,126 @@ export class Logger {
     })
   }
 
-  error(error: unknown): void
-  error(annotation: string, error: unknown): void
-  error(...args: [unknown] | [string, unknown]): void {
-    if (this.options.logLevel >= LogLevel.ERROR) {
-      const [annotation, error] = args.length === 1 ? ['', args[0]] : args
+  critical(message: string, parameters?: unknown): void
+  critical(parameters: unknown): void
+  critical(message: unknown, parameters?: unknown): void {
+    if (this.logLevel < LEVEL.CRITICAL) {
+      return
+    }
+    this.print('CRITICAL', resolveLog(message, parameters, this.cwd))
+    this.options.reportError(parameters ?? message)
+  }
 
-      const message = [annotation, getErrorMessage(error)]
-        .filter(Boolean)
-        .join(' ')
+  error(message: string, parameters?: unknown): void
+  error(parameters: unknown): void
+  error(message: unknown, parameters?: unknown): void {
+    if (this.logLevel < LEVEL.ERROR) {
+      return
+    }
+    this.print('ERROR', resolveLog(message, parameters, this.cwd))
+    this.options.reportError(parameters ?? message)
+  }
 
-      this.print('error', { message })
-      this.options.reportError?.(error)
+  warn(message: string, parameters?: unknown): void
+  warn(parameters: unknown): void
+  warn(message: unknown, parameters?: unknown): void {
+    if (this.logLevel < LEVEL.WARN) {
+      return
+    }
+    this.print('WARN', resolveLog(message, parameters, this.cwd))
+  }
+
+  info(message: string, parameters?: unknown): void
+  info(parameters: unknown): void
+  info(message: unknown, parameters?: unknown): void {
+    if (this.logLevel < LEVEL.INFO) {
+      return
+    }
+    this.print('INFO', resolveLog(message, parameters, this.cwd))
+  }
+
+  debug(message: string, parameters?: unknown): void
+  debug(parameters: unknown): void
+  debug(message: unknown, parameters?: unknown): void {
+    if (this.logLevel < LEVEL.DEBUG) {
+      return
+    }
+    this.print('DEBUG', resolveLog(message, parameters, this.cwd))
+  }
+
+  trace(message: string, parameters?: unknown): void
+  trace(parameters: unknown): void
+  trace(message: unknown, parameters?: unknown): void {
+    if (this.logLevel < LEVEL.TRACE) {
+      return
+    }
+    this.print('TRACE', resolveLog(message, parameters, this.cwd))
+  }
+
+  private print(level: LogLevel, parameters: {}): void {
+    const output =
+      this.options.format === 'json'
+        ? this.formatJson(level, parameters)
+        : this.formatPretty(level, parameters)
+
+    if (level === 'CRITICAL' || level === 'ERROR') {
+      console.error(output)
+    } else if (level === 'WARN') {
+      console.warn(output)
+    } else if (level === 'INFO') {
+      console.log(output)
+    } else if (level === 'DEBUG' || level === 'TRACE') {
+      console.debug(output)
     }
   }
 
-  info(message: string, parameters?: {}): void
-  info(parameters: {}): void
-  info(message: string | {}, parameters?: {}): void {
-    if (this.options.logLevel >= LogLevel.INFO) {
-      this.print('info', combine(message, parameters))
-    }
-  }
-
-  debug(message: string, parameters?: {}): void
-  debug(parameters: {}): void
-  debug(message: string | {}, parameters?: {}): void {
-    if (this.options.logLevel >= LogLevel.DEBUG) {
-      this.print('debug', combine(message, parameters))
-    }
-  }
-
-  private print(level: string, parameters: {}): void {
-    switch (this.options.format) {
-      case 'json':
-        return this.printJson(level, parameters)
-      case 'pretty':
-        return this.printPretty(level, parameters)
-    }
-  }
-
-  private printJson(level: string, parameters: {}): void {
+  private formatJson(level: LogLevel, parameters: {}): string {
     const time = new Date().toISOString()
-    const data = {
+    const message =
+      'message' in parameters && typeof parameters.message === 'string'
+        ? parameters.message
+        : undefined
+
+    const core = {
       time,
       level,
-      service: this.options.service,
+      service: this.options.service ? this.options.service : undefined,
+      message,
+    }
+    const data = {
+      ...core,
       ...parameters,
     }
-    // TODO: bigint
-    const str = JSON.stringify(data)
-    if (data.level === 'error') {
-      console.error(str)
-    } else {
-      console.log(str)
+    try {
+      return JSON.stringify(data, (k, v: unknown) =>
+        typeof v === 'bigint' ? v.toString() : v,
+      )
+    } catch (e) {
+      this.error('Unable to log', e)
+      return JSON.stringify(core)
     }
   }
 
-  private printPretty(level: string, parameters: {}): void {
-    const time = getPrettyTime()
-    const levelOut = getPrettyLevel(level)
-    const service = getPrettyService(this.options.service)
+  private formatPretty(level: LogLevel, parameters: {}): string {
+    const time = formatTimePretty(
+      this.options.getTime(),
+      this.options.utc,
+      this.options.colors,
+    )
+
+    const levelOut = formatLevelPretty(level, this.options.colors)
+    const service = formatServicePretty(
+      this.options.service,
+      this.options.colors,
+    )
+
     let messageOut = ''
     if ('message' in parameters && typeof parameters.message === 'string') {
       messageOut = ` ${parameters.message}`
       delete parameters.message
     }
-    const params = getPrettyParameters(parameters)
-    const str = `${time} ${levelOut}${service}${messageOut}${params}`
-    if ('level' in parameters && parameters.level === 'error') {
-      console.error(str)
-    } else {
-      console.log(str)
-    }
-  }
-}
 
-export function getErrorMessage(error: unknown): string {
-  if (typeof error === 'string') {
-    return error
-  } else if (error instanceof Error) {
-    return error.message
-  } else {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    return `${error}`
+    const params = formatParametersPretty(parameters, this.options.colors)
+    return `${time} ${levelOut}${service}${messageOut}${params}\n`
   }
-}
-
-function combine(message: string | {}, parameters?: {}): {} {
-  if (typeof message === 'string') {
-    return { message, ...parameters }
-  } else {
-    return { ...message, ...parameters }
-  }
-}
-
-function getPrettyTime(): string {
-  const now = new Date()
-  const h = now.getHours().toString().padStart(2, '0')
-  const m = now.getMinutes().toString().padStart(2, '0')
-  const s = now.getSeconds().toString().padStart(2, '0')
-  const ms = now.getMilliseconds().toString().padStart(3, '0')
-  return chalk.gray(`${h}:${m}:${s}.${ms}`)
-}
-
-function getPrettyLevel(level: string): string {
-  switch (level) {
-    case 'error':
-      return chalk.red(level.toUpperCase())
-    case 'info':
-      return chalk.blue(level.toUpperCase())
-    case 'debug':
-      return chalk.yellow(level.toUpperCase())
-  }
-  return level.toUpperCase()
-}
-
-function getPrettyService(service: string | undefined): string {
-  if (service === undefined) {
-    return ''
-  }
-  return ` [${chalk.magenta(service)}]`
-}
-
-function getPrettyParameters(parameters: {} | undefined): string {
-  if (parameters === undefined) {
-    return ''
-  }
-  const previous = inspect.styles
-  const newStyles = { ...previous }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-  ;(newStyles as any).name = 'magenta'
-  newStyles.string = ''
-  newStyles.number = ''
-  newStyles.boolean = ''
-  inspect.styles = newStyles
-  const str = ` ${inspect(parameters, { colors: true, breakLength: Infinity })}`
-  inspect.styles = previous
-  if (str === ' {}') {
-    return ''
-  }
-  return str
 }

@@ -1,5 +1,3 @@
-import { Indexer } from './Indexer'
-
 export interface InitializedAction {
   type: 'Initialized'
   height: number

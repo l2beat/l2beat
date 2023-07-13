@@ -1,4 +1,4 @@
-import { Logger, LogLevel } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from './Config'
 import { BalanceIndexer } from './indexers/BalanceIndexer'
@@ -12,8 +12,10 @@ export class Application {
 
   constructor(config: Config) {
     const logger = new Logger({
-      logLevel: LogLevel.DEBUG,
+      logLevel: 'DEBUG',
       format: 'pretty',
+      colors: true,
+      utc: true,
     })
 
     const blockNumberRepository = new BlockNumberRepository()

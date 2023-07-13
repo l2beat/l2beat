@@ -133,7 +133,7 @@ export function indexerReducer(
       return continueOperations(
         {
           ...state,
-          children: state.children.map((child) => ({
+          children: state.children.map(() => ({
             ready: false,
             notifiedWaiting: false,
           })),
