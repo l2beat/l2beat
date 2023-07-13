@@ -1,10 +1,11 @@
 import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW, RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
+const discovery = new ProjectDiscovery('linea')
+
 export const linea: Layer2 = {
-  isUpcoming: true,
   type: 'layer2',
   id: ProjectId('linea'),
   display: {
@@ -30,7 +31,38 @@ export const linea: Layer2 = {
   config: {
     escrows: [],
   },
-  riskView: UPCOMING_RISK_VIEW,
+  riskView: makeBridgeCompatible({
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      sources: [
+        {
+          contract: 'zkEVM',
+          references: [
+            'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L116',
+          ],
+        },
+      ],
+    },
+    dataAvailability: {
+      ...RISK_VIEW.DATA_ON_CHAIN,
+      description:
+        RISK_VIEW.DATA_ON_CHAIN.description +
+        ' Unlike most zk rollups transactions are posted instead of state diffs.',
+      sources: [
+        {
+          contract: 'zkEVM',
+          references: [
+            'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L221',
+          ],
+        },
+      ],
+    },
+    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
   technology: TECHNOLOGY.UPCOMING,
   contracts: CONTRACTS.EMPTY,
   milestones: [
