@@ -3,7 +3,7 @@ import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
-import { NMVUpdater, CBVUpdater  } from '../../core/assets/'
+import { NMVUpdater, CBVUpdater } from '../../core/assets/'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
@@ -12,7 +12,7 @@ import { PriceUpdater } from '../../core/PriceUpdater'
 import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
-import { ApplicationModule } from '../ApplicationModule'
+import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
 export function createEthereumTvlSubmodule(
@@ -22,7 +22,7 @@ export function createEthereumTvlSubmodule(
   logger: Logger,
   http: HttpClient,
   clock: Clock,
-): ApplicationModule | undefined {
+): TvlSubmodule | undefined {
   if (!config.tvl.ethereum) {
     logger.info('Ethereum TVL module disabled')
     return
@@ -110,6 +110,7 @@ export function createEthereumTvlSubmodule(
   }
 
   return {
+    updater: cbvUpdater,
     start,
   }
 }

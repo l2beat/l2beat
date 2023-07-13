@@ -19,9 +19,7 @@ import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { Database } from '../../peripherals/database/shared/Database'
-import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
-import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
-import { ApplicationModule } from '../ApplicationModule'
+import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
 import { createEthereumTvlSubmodule } from './EthereumTvl'
 import { TvlDatabase } from './types'
@@ -98,9 +96,8 @@ export function createTvlModule(
 
   // #endregion
 
-  const submodules: (ApplicationModule | undefined)[] = [
+  const submodules: (TvlSubmodule | undefined)[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createArbitrumTvlSubmodule(db, config, logger, http, clock),
   ]
 
   const start = async () => {
