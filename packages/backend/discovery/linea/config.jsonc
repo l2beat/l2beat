@@ -3,7 +3,8 @@
   "name": "linea",
   "initialAddresses": ["0xd19d4B5d358258f05D7B411E21A1460D11B0876F"],
   "names": {
-    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "zkEVM"
+    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "zkEVM",
+    "0x892bb7EeD71efB060ab90140e7825d8127991DD3": "AdminMultiSig"
   },
   "overrides": {
     "zkEVM": {
