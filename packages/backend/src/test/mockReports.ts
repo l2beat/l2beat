@@ -108,13 +108,19 @@ const FUTURE_BALANCES = BALANCES.map((balance) => ({
   timestamp: NOW.add(1, 'hours'),
 }))
 
-const REPORTS = createReports(PRICES, BALANCES, PROJECTS)
-const FUTURE_REPORTS = createReports(FUTURE_PRICES, FUTURE_BALANCES, PROJECTS)
+const REPORTS = createReports(PRICES, BALANCES, PROJECTS, ChainId.ETHEREUM)
+const FUTURE_REPORTS = createReports(
+  FUTURE_PRICES,
+  FUTURE_BALANCES,
+  PROJECTS,
+  ChainId.ETHEREUM,
+)
 
 const FUTURE_OP_REPORT = [
   {
     asset: OP_TOKEN_ID,
     type: ValueType.NMV,
+    chainId: ChainId.NMV,
     amount: 644594782000000000000000000n,
     ethValue: 644594782000000n,
     usdValue: 64459478200000n,

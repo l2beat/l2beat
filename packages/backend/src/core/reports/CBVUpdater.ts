@@ -70,7 +70,12 @@ export class CBVUpdater {
     ])
     this.logger.debug('Prices and balances ready')
 
-    let reports = createReports(prices, balances, this.projects)
+    let reports = createReports(
+      prices,
+      balances,
+      this.projects,
+      ChainId.ETHEREUM,
+    )
     // TODO(radomski): This really needs to be refactored
     reports = filterOutNVMReports(reports)
 

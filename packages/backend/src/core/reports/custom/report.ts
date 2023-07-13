@@ -1,4 +1,10 @@
-import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  ProjectId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 
 import { PriceRecord } from '../../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
@@ -6,6 +12,7 @@ import { BalancePerProject, createReport } from '../createReport'
 
 export function createAddCustomTokenReport(
   tokenId: AssetId,
+  chainId: ChainId,
   assetType: ValueType,
   sinceTimestamp: UnixTime,
   projectId: ProjectId,
@@ -20,6 +27,7 @@ export function createAddCustomTokenReport(
     }
 
     const balance: BalancePerProject = {
+      chainId: chainId,
       assetId: tokenId,
       type: assetType,
       balance: tokenBalance(timestamp),

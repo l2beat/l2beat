@@ -35,7 +35,6 @@ export async function up(knex: Knex) {
 
 export async function down(knex: Knex) {
   await knex.schema.alterTable('reports', function (table) {
-    table.dropIndex(['chain_id', 'asset_type', 'unix_timestamp'])
     table.dropPrimary()
     table.primary(['unix_timestamp', 'project_id', 'asset_id'])
 
