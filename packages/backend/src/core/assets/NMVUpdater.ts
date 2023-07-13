@@ -47,7 +47,7 @@ export class NMVUpdater {
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
-      ChainId.ETHEREUM,
+      ChainId.NMV,
       ValueType.NMV,
     )
 

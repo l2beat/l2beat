@@ -12,6 +12,8 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createReports } from './createReports'
+import { ARB_TOKEN_ID, ARBITRUM_PROJECT_ID } from './custom/arbitrum'
+import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from './custom/optimism'
 import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
 
@@ -68,7 +70,9 @@ export class CBVUpdater {
     ])
     this.logger.debug('Prices and balances ready')
 
-    const reports = createReports(prices, balances, this.projects)
+    let reports = createReports(prices, balances, this.projects)
+    // TODO(radomski): This really needs to be refactored
+    reports = filterOutNVMReports(reports)
 
     await this.reportRepository.addOrUpdateMany(reports)
 
@@ -95,4 +99,14 @@ export class CBVUpdater {
       ValueType.CBV,
     )
   }
+}
+
+function filterOutNVMReports(reports: ReportRecord[]): ReportRecord[] {
+  return reports.filter((r) => {
+    const isOpNative =
+      r.asset === OP_TOKEN_ID && r.projectId === OPTIMISM_PROJECT_ID
+    const isArbNative =
+      r.asset === ARB_TOKEN_ID && r.projectId === ARBITRUM_PROJECT_ID
+    return !isOpNative && !isArbNative
+  })
 }

@@ -63,11 +63,14 @@ export class ReportRepository extends BaseRepository {
     const timestampsMatch = reports.every((r) =>
       r.timestamp.equals(reports[0].timestamp),
     )
+    const valueTypeMatch = reports.every((r) => r.type === reports[0].type)
     assert(timestampsMatch, 'Timestamps must match')
+    assert(valueTypeMatch, 'Value types must match')
 
     await knex.transaction(async (trx) => {
       await trx('reports')
         .where('unix_timestamp', rows[0].unix_timestamp)
+        .andWhere('asset_type', rows[0].asset_type)
         .delete()
       await trx('reports')
         .insert(rows)
