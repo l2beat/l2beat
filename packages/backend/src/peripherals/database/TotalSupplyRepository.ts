@@ -12,11 +12,6 @@ export interface TotalSupplyRecord {
   chainId: ChainId
 }
 
-export interface DataBoundary {
-  earliestBlockNumber: bigint | undefined
-  latestBlockNumber: bigint | undefined
-}
-
 export class TotalSupplyRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
