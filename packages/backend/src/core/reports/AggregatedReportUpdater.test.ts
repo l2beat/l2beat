@@ -5,10 +5,10 @@ import waitForExpect from 'wait-for-expect'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
+import { CBVUpdater } from '../assets'
 import { NMVUpdater } from '../assets/NMVUpdater'
 import { Clock } from '../Clock'
 import { AggregatedReportUpdater } from './AggregatedReportUpdater'
-import { CBVUpdater } from './CBVUpdater'
 import { getReportConfigHash } from './getReportConfigHash'
 
 describe(AggregatedReportUpdater.name, () => {

@@ -3,13 +3,12 @@ import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
-import { NMVUpdater, CBVUpdater } from '../../core/assets/'
+import { CBVUpdater } from '../../core/assets/'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { TvlSubmodule } from '../ApplicationModule'
@@ -66,29 +65,11 @@ export function createEthereumTvlSubmodule(
     ChainId.ETHEREUM,
   )
 
-  const nmvUpdater = new NMVUpdater(
-    priceUpdater,
-    db.reportRepository,
-    db.reportStatusRepository,
-    clock,
-    logger,
-  )
-
   const cbvUpdater = new CBVUpdater(
     priceUpdater,
     balanceUpdater,
     db.reportRepository,
     db.reportStatusRepository,
-    clock,
-    config.projects,
-    logger,
-  )
-
-  const aggregatedReportUpdater = new AggregatedReportUpdater(
-    cbvUpdater,
-    nmvUpdater,
-    db.aggregatedReportRepository,
-    db.aggregatedReportStatusRepository,
     clock,
     config.projects,
     logger,
@@ -102,15 +83,13 @@ export function createEthereumTvlSubmodule(
 
     await ethereumBlockNumberUpdater.start()
     await balanceUpdater.start()
-    await nmvUpdater.start()
     await cbvUpdater.start()
-    await aggregatedReportUpdater.start()
 
     logger.info('Started')
   }
 
   return {
-    updater: cbvUpdater,
+    updaters: [cbvUpdater],
     start,
   }
 }

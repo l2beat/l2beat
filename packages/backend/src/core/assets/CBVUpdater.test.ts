@@ -9,8 +9,8 @@ import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
+import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { CBVUpdater } from './CBVUpdater'
-import { getReportConfigHash } from './getReportConfigHash'
 
 describe(CBVUpdater.name, () => {
   describe(CBVUpdater.prototype.update.name, () => {

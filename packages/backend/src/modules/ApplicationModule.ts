@@ -1,4 +1,5 @@
 import Router from '@koa/router'
+
 import { AssetUpdater } from '../core/assets'
 
 export interface ApplicationModule {
@@ -7,6 +8,6 @@ export interface ApplicationModule {
 }
 
 export interface TvlSubmodule {
-  updater: AssetUpdater
+  updaters?: AssetUpdater[]
   start?: () => Promise<void> | void
 }

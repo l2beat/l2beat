@@ -20,8 +20,8 @@ import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
-import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
 import { createEthereumTvlSubmodule } from './EthereumTvl'
+import { createNativeTvlSubmodule } from './NativeTvl'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -98,6 +98,7 @@ export function createTvlModule(
 
   const submodules: (TvlSubmodule | undefined)[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
+    createNativeTvlSubmodule(db, priceUpdater, logger, clock),
   ]
 
   const start = async () => {
