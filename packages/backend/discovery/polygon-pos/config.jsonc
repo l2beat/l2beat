@@ -163,6 +163,11 @@
     },
     "MaticWETH": {
       "ignoreDiscovery": true
+    },
+    "PolygonMultisig": {
+      "ignoreInWatchMode": [
+        "nonce"
+      ]
     }
   }
 }
