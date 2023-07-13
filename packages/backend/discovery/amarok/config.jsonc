@@ -68,18 +68,12 @@
     "RootManager": {
       "fields": {
         "connectors": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event ConnectorAdded(uint32 domain, address connector, uint32[] domains, address[] connectors)",
-          "addKey": "connector",
-          "removeEvent": "event ConnectorRemoved(uint32 domain, address connector, uint32[] domains, address[] connectors, address caller)",
-          "removeKey": "connector"
+          "type": "array",
+          "method": "connectors"
         },
         "domains": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event DomainAdded(uint32 domain, address connector)",
-          "addKey": "domain",
-          "removeEvent": "event DomainRemoved(uint32 domain)",
-          "removeKey": "domain"
+          "type": "array",
+          "method": "domains"
         }
       },
       "ignoreInWatchMode": [

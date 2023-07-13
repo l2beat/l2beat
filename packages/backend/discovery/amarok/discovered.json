@@ -1,7 +1,7 @@
 {
   "name": "amarok",
-  "blockNumber": 17684664,
-  "configHash": "0x3947fac41308df4e0b2b1b1b549a7e1190bf2c271356e18a26d0b17b1aa4e96d",
+  "blockNumber": 17684817,
+  "configHash": "0x2dcefb3de1daedddc43a33fa7df85593535d0ddb152e622a9efd4b101d74b95d",
   "version": 1,
   "contracts": [
     {
@@ -25,19 +25,6 @@
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
       },
       "derivedName": "GnosisHubConnector"
-    },
-    {
-      "name": "WormholeRelayer",
-      "address": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
-      "code": "https://etherscan.deth.net/address/0x27428DD2d3DD32A4D7f7C497eAaa23130d894911,0x00337a31aEE3Ed37f5D5FBF892031d0090Da2EeF",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x00337a31aEE3Ed37f5D5FBF892031d0090Da2EeF",
-        "admin": "0x0000000000000000000000000000000000000000"
-      },
-      "values": {
-        "getDefaultDeliveryProvider": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
-      }
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -111,7 +98,8 @@
         "refundAddress": "0x9435Ba7C661a0Fd477deED640491de8c100325A7",
         "renounced": false,
         "ROOT_MANAGER": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1"
-      }
+      },
+      "derivedName": "WormholeHubConnector"
     },
     {
       "name": "WatcherManager",
@@ -133,17 +121,6 @@
         ]
       },
       "derivedName": "WatcherManager"
-    },
-    {
-      "name": "",
-      "address": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
-      "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x7A0a53847776f7e94Cc35742971aCb2217b0Db81,0x401d3A2ec0a071e2A8f8Fc9B4C69313C1a04540c",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x401d3A2ec0a071e2A8f8Fc9B4C69313C1a04540c",
-        "admin": "0x0000000000000000000000000000000000000000"
-      }
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -489,11 +466,11 @@
       },
       "values": {
         "connectors": [
+          "0x66a425f09cfd613d40A986B3ef800AA7604C8eeE",
           "0x245F757d660C3ec65416168690431076d58d6413",
+          "0xd151C9ef49cE2d30B829a98A07767E3280F70961",
           "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
           "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-          "0xd151C9ef49cE2d30B829a98A07767E3280F70961",
-          "0x66a425f09cfd613d40A986B3ef800AA7604C8eeE",
           "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45"
         ],
         "connectorsHash": "0x1ab775b9545e9c3175b57958dc75c2a1cf76c3d166d0527bbf7d51fe434efa00",
@@ -501,7 +478,7 @@
         "delayBlocks": 100,
         "DEQUEUE_MAX": 100,
         "domains": [
-          6778479, 1886350457, 6648936, 1634886255, 1869640809, 6450786
+          1869640809, 6778479, 1634886255, 1886350457, 6648936, 6450786
         ],
         "domainsHash": "0x678c65c2f3bd9522214f90322ceebb12cfa8f0ac9f0437dbf31a0939b2dc5a10",
         "getPendingInboundRootsCount": 5,
@@ -575,84 +552,12 @@
     "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
     "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
     "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
-    "0xC667DE991c8B40C969f6996b4F6167851527c9f6",
     "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c",
     "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c",
     "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754",
     "0xFaAB88015477493cFAa5DFAA533099C590876F21"
   ],
   "abis": {
-    "0x00337a31aEE3Ed37f5D5FBF892031d0090Da2EeF": [
-      "constructor(address wormhole)",
-      "error Cancelled(uint256 gasUsed, uint256 available, uint256 required)",
-      "error ChainAlreadyRegistered(uint16 chainId, bytes32 registeredWormholeRelayerContract)",
-      "error ContractUpgradeFailed(bytes failure)",
-      "error DeliveryProviderCannotReceivePayment()",
-      "error DeliveryProviderDoesNotSupportTargetChain(address relayer, uint16 chainId)",
-      "error DeliveryProviderPaymentFailed(uint256 gasUsed)",
-      "error DeliveryProviderReverted(uint256 gasUsed)",
-      "error ForwardRequestFromWrongAddress(address msgSender, address deliveryTarget)",
-      "error GovernanceActionAlreadyConsumed(bytes32 hash)",
-      "error InsufficientRelayerFunds(uint256 msgValue, uint256 minimum)",
-      "error InvalidDefaultDeliveryProvider(bytes32 defaultDeliveryProvider)",
-      "error InvalidDeliveryVaa(string reason)",
-      "error InvalidEmitter(bytes32 emitter, bytes32 registered, uint16 chainId)",
-      "error InvalidFork()",
-      "error InvalidGovernanceChainId(uint16 parsed, uint16 expected)",
-      "error InvalidGovernanceContract(bytes32 parsed, bytes32 expected)",
-      "error InvalidGovernanceVM(string reason)",
-      "error InvalidMsgValue(uint256 msgValue, uint256 totalFee)",
-      "error InvalidOverrideGasLimit()",
-      "error InvalidOverrideReceiverValue()",
-      "error InvalidOverrideRefundPerGasUnused()",
-      "error InvalidPayloadAction(uint8 parsed, uint8 expected)",
-      "error InvalidPayloadChainId(uint16 parsed, uint16 expected)",
-      "error InvalidPayloadId(uint8 parsed, uint8 expected)",
-      "error InvalidPayloadLength(uint256 received, uint256 expected)",
-      "error InvalidPayloadModule(bytes32 parsed, bytes32 expected)",
-      "error NoDeliveryInProgress()",
-      "error NotAnEvmAddress(bytes32)",
-      "error ReentrantDelivery(address msgSender, address lockedBy)",
-      "error RequesterNotWormholeRelayer()",
-      "error TargetChainIsNotThisChain(uint16 targetChain)",
-      "error UnexpectedExecutionInfoVersion(uint8 version, uint8 expectedVersion)",
-      "error VaaKeysDoNotMatchVaas(uint8 index)",
-      "error VaaKeysLengthDoesNotMatchVaasLength(uint256 keys, uint256 vaas)",
-      "error VersionMismatchOverride(uint8 instructionVersion, uint8 overrideVersion)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
-      "event Delivery(address indexed recipientContract, uint16 indexed sourceChain, uint64 indexed sequence, bytes32 deliveryVaaHash, uint8 status, uint256 gasUsed, uint8 refundStatus, bytes additionalStatusInfo, bytes overridesInfo)",
-      "event SendEvent(uint64 indexed sequence, uint256 deliveryQuote, uint256 paymentForExtraReceiverValue)",
-      "event Upgraded(address indexed implementation)",
-      "function checkAndExecuteUpgradeMigration()",
-      "function deliver(bytes[] encodedVMs, bytes encodedDeliveryVAA, address relayerRefundAddress, bytes deliveryOverrides) payable",
-      "function executeInstruction(tuple(uint16 sourceChain, bytes32 targetAddress, bytes payload, uint256 gasLimit, uint256 totalReceiverValue, uint256 targetChainRefundPerGasUnused, bytes32 senderAddress, bytes32 deliveryHash, bytes[] signedVaas) evmInstruction) returns (uint8 status, uint256 gasUsed, bytes targetRevertDataTruncated)",
-      "function forward(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable",
-      "function forwardPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit) payable",
-      "function forwardToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable",
-      "function forwardVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys) payable",
-      "function getDefaultDeliveryProvider() view returns (address deliveryProvider)",
-      "function getDefaultDeliveryProviderOnChain(uint16 targetChain) view returns (address deliveryProvider)",
-      "function getOriginalOrDefaultDeliveryProvider(uint16 targetChain) view returns (address deliveryProvider, address deliveryProviderOnTarget)",
-      "function getRegisteredWormholeRelayerContract(uint16 chainId) view returns (bytes32)",
-      "function initialize(address defaultDeliveryProvider)",
-      "function quoteDeliveryPrice(uint16 targetChain, uint256 receiverValue, bytes encodedExecutionParameters, address deliveryProviderAddress) view returns (uint256 nativePriceQuote, bytes encodedExecutionInfo)",
-      "function quoteEVMDeliveryPrice(uint16 targetChain, uint256 receiverValue, uint256 gasLimit, address deliveryProviderAddress) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerGasUnused)",
-      "function quoteEVMDeliveryPrice(uint16 targetChain, uint256 receiverValue, uint256 gasLimit) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerGasUnused)",
-      "function quoteNativeForChain(uint16 targetChain, uint256 currentChainAmount, address deliveryProviderAddress) view returns (uint256 targetChainAmount)",
-      "function registerWormholeRelayerContract(bytes encodedVm)",
-      "function resend(tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence) deliveryVaaKey, uint16 targetChain, uint256 newReceiverValue, bytes newEncodedExecutionParameters, address newDeliveryProviderAddress) payable returns (uint64 sequence)",
-      "function resendToEvm(tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence) deliveryVaaKey, uint16 targetChain, uint256 newReceiverValue, uint256 newGasLimit, address newDeliveryProviderAddress) payable returns (uint64 sequence)",
-      "function send(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
-      "function sendPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress) payable returns (uint64 sequence)",
-      "function sendPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit) payable returns (uint64 sequence)",
-      "function sendToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
-      "function sendVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys) payable returns (uint64 sequence)",
-      "function sendVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint16 refundChain, address refundAddress) payable returns (uint64 sequence)",
-      "function setDefaultDeliveryProvider(bytes encodedVm)",
-      "function submitContractUpgrade(bytes encodedVm)"
-    ],
     "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d": [
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
       "error BaseConnextFacet__getApprovedCanonicalId_notAllowlisted()",
@@ -744,12 +649,6 @@
       "function setGasCap(uint256 _gasCap)",
       "function setMirrorConnector(address _mirrorConnector)",
       "function verifySender(address _expected) returns (bool)"
-    ],
-    "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": [
-      "constructor(address impl)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "0x28A9e7bbed277092E2431F186E1aF898962d4E92": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
