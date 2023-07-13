@@ -1,9 +1,22 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS } from '../layer2s/common'
+import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { polygonpos } from './polygonpos'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('polygon-plasma')
+
+const delayString = formatSeconds(
+  discovery.getContractValue('Timelock', 'getMinDelay'),
+)
+
+const upgrades = {
+  upgradableBy: ['PolygonMultisig'],
+  upgradeDelay: delayString,
+}
 
 export const polygonplasma: Bridge = {
   type: 'bridge',
@@ -85,6 +98,15 @@ export const polygonplasma: Bridge = {
   },
   contracts: {
     addresses: [
+      discovery.getContractDetails(
+        'StateSender',
+        'Smart contract containing the logic for syncing the state of registered bridges.',
+      ),
+      discovery.getContractDetails('RootChain', {
+        description:
+          'Contract storing Polygon sidechain checkpoints. Note that the validity of the checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
+        ...upgrades,
+      }),
       {
         address: EthereumAddress('0x401F6c983eA34274ec46f84D70b31C151321188b'),
         name: 'Deposit Manager',
@@ -120,78 +142,9 @@ export const polygonplasma: Bridge = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('48 hours')],
   },
   permissions: [
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xFa7D2a996aC6350f4b56C043112Da0366a59b74c',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      name: 'Polygon MultiSig',
-      description:
-        'Can propose and execute code upgrades on escrows via Timelock contract.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x39415255619783A2E71fcF7d8f708A951d92e1b6',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xFb9af163DF1e54171bC773eb88B46aa1E912489f',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xb771380f912E4b5F6beDdf81314C383c13F16ab5',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'MultiSig Participants',
-      description: 'Participants of the 5/9 Polygon MultiSig.',
-    },
+    ...discovery.getMultisigPermission(
+      'PolygonMultisig',
+      'Can propose and execute code upgrades via Timelock contract.',
+    ),
   ],
 }
