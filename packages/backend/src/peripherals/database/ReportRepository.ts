@@ -31,6 +31,7 @@ export class ReportRepository extends BaseRepository {
     this.autoWrap<CheckConvention<ReportRepository>>(this)
   }
 
+  // probably that is not the best patter, we should filter by chainId and ValueType also
   async getByTimestamp(timestamp: UnixTime): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('reports').where(

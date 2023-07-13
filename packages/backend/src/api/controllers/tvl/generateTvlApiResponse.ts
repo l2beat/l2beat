@@ -29,6 +29,7 @@ export function generateTvlApiResponse(
           charts: getProjectCharts(reports, projectId),
           tokens: latestReports
             .filter((r) => r.projectId === projectId)
+            //probably there will be a need to reduce the doubled USDC entry
             .map((r) => ({ assetId: r.asset, tvl: asNumber(r.usdValue, 2) })),
         }
         return acc

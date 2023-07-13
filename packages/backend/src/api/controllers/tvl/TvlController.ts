@@ -35,6 +35,7 @@ export class TvlController {
   }
 
   async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
+    // include more statuses here and find minimum
     const timestamp = await this.reportStatusRepository.findLatestTimestamp(
       ChainId.ETHEREUM,
       ValueType.CBV,
@@ -51,6 +52,7 @@ export class TvlController {
           getSixHourlyMinTimestamp(timestamp),
         ),
         this.aggregatedReportRepository.getDaily(),
+        //USDC will be doubled, there will be a need to reduce it
         this.reportRepository.getByTimestamp(timestamp),
       ])
     const tvlApiResponse = generateTvlApiResponse(
@@ -85,6 +87,8 @@ export class TvlController {
     if (!project || !asset) {
       return undefined
     }
+    // include more statuses here and find minimum
+
     const timestamp = await this.reportStatusRepository.findLatestTimestamp(
       ChainId.ETHEREUM,
       ValueType.CBV,
@@ -92,6 +96,7 @@ export class TvlController {
     if (!timestamp) {
       return undefined
     }
+    //USDC will return doubled records, there will be a need to reduce them
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
       this.reportRepository.getHourlyByProjectAndAsset(
         projectId,
