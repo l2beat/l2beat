@@ -26,7 +26,6 @@ export async function up(knex: Knex) {
       'asset_id',
       'project_id',
     ])
-    table.index(['chain_id', 'asset_type', 'unix_timestamp'])
   })
 
   await knex('reports')
