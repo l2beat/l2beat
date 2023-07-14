@@ -28,7 +28,7 @@ export class TotalSupplyStatusRepository extends BaseRepository {
     return rows.map((r) => UnixTime.fromDate(r.unix_timestamp))
   }
 
-  async add(record: TotalSupplyStatusRecord): Promise<Hash256> {
+  async add(record: TotalSupplyStatusRecord): Promise<string> {
     const knex = await this.knex()
     await knex.transaction(async (trx) => {
       await trx('total_supplies_status')
@@ -43,7 +43,8 @@ export class TotalSupplyStatusRepository extends BaseRepository {
         unix_timestamp: record.timestamp.toDate(),
       })
     })
-    return record.configHash
+
+    return `[chainId | ${record.chainId.toString()}]: ${record.configHash.toString()}`
   }
 
   async deleteAll() {
