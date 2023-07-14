@@ -7,7 +7,7 @@ import { AssetUpdater } from '../assets/'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
-import { getReportConfigHash } from './getReportConfigHash'
+import { getAggregatedConfigHash } from './getAggregatedConfigHash'
 import { ReportProject } from './ReportProject'
 
 export class AggregatedReportUpdater {
@@ -23,7 +23,7 @@ export class AggregatedReportUpdater {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-    this.configHash = getReportConfigHash(projects)
+    this.configHash = getAggregatedConfigHash(this.assetUpdaters)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),

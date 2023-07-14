@@ -9,6 +9,7 @@ import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
+import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
@@ -101,11 +102,21 @@ export function createTvlModule(
     createNativeTvlSubmodule(db, priceUpdater, logger, clock),
   ]
 
+  const aggregatedReportUpdater = new AggregatedReportUpdater(
+    submodules.flatMap((x) => x?.updaters ?? []),
+    db.aggregatedReportRepository,
+    db.aggregatedReportStatusRepository,
+    clock,
+    config.projects,
+    logger,
+  )
+
   const start = async () => {
     logger = logger.for('TvlModule')
     logger.info('Starting')
 
     priceUpdater.start()
+    await aggregatedReportUpdater.start()
 
     logger.info('Starting submodules...')
 
