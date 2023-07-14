@@ -6,6 +6,7 @@ import {
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
+  UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
 
@@ -30,18 +31,38 @@ export class TvlController {
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
     private readonly logger: Logger,
+    private readonly isArbitrumEnabled = false,
   ) {
     this.logger = this.logger.for(this)
   }
 
   async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
-    const timestamp = await this.reportStatusRepository.findLatestTimestamp(
-      ChainId.ETHEREUM,
-      ValueType.CBV,
+    const timestamps: (UnixTime | undefined)[] = []
+
+    timestamps.push(
+      await this.reportStatusRepository.findLatestTimestamp(
+        ChainId.ETHEREUM,
+        ValueType.CBV,
+      ),
     )
-    if (!timestamp) {
+    if (this.isArbitrumEnabled) {
+      timestamps.push(
+        await this.reportStatusRepository.findLatestTimestamp(
+          ChainId.ARBITRUM,
+          ValueType.CBV,
+        ),
+      )
+    }
+
+    if (timestamps.some((x) => x === undefined)) {
       return undefined
     }
+
+    const timestamp = timestamps
+      .filter(notUndefined)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      .reduce((min, t) => (t.lt(min) ? t : min), timestamps[0]!)
+
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
         this.aggregatedReportRepository.getHourly(
@@ -85,13 +106,33 @@ export class TvlController {
     if (!project || !asset) {
       return undefined
     }
-    const timestamp = await this.reportStatusRepository.findLatestTimestamp(
-      ChainId.ETHEREUM,
-      ValueType.CBV,
+
+    const timestamps: (UnixTime | undefined)[] = []
+
+    timestamps.push(
+      await this.reportStatusRepository.findLatestTimestamp(
+        ChainId.ETHEREUM,
+        ValueType.CBV,
+      ),
     )
-    if (!timestamp) {
+    if (projectId === ProjectId.ARBITRUM && assetId === AssetId.USDC) {
+      timestamps.push(
+        await this.reportStatusRepository.findLatestTimestamp(
+          ChainId.ARBITRUM,
+          ValueType.CBV,
+        ),
+      )
+    }
+
+    if (timestamps.some((x) => x === undefined)) {
       return undefined
     }
+
+    const timestamp = timestamps
+      .filter(notUndefined)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      .reduce((min, t) => (t.lt(min) ? t : min), timestamps[0]!)
+
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
       this.reportRepository.getHourlyByProjectAndAssetUNSAFE(
         projectId,
@@ -166,4 +207,8 @@ export function reduceDuplicatedReports(
   }
 
   return result
+}
+
+function notUndefined<T>(x: T | undefined): x is T {
+  return x !== undefined
 }

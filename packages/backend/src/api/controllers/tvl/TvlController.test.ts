@@ -223,29 +223,10 @@ describe(TvlController.name, () => {
     })
 
     it('correctly finds timestamp for Arbitrum USDC', async () => {
-      const baseReport: Omit<ReportRecord, 'timestamp'> = {
-        usdValue: 1234_56n,
-        ethValue: 1_111111n,
-        amount: 111_1111n * 10n ** (6n - 4n),
-        asset: AssetId.USDC,
-        chainId: ChainId.ETHEREUM,
-        projectId: ARBITRUM.projectId,
-        type: ValueType.CBV,
-      }
-
       const reportRepository = mockObject<ReportRepository>({
-        getHourlyByProjectAndAssetUNSAFE: async () => [
-          { ...baseReport, timestamp: START.add(-1, 'hours') },
-          { ...baseReport, timestamp: START },
-        ],
-        getSixHourlyByProjectAndAssetUNSAFE: async () => [
-          { ...baseReport, timestamp: START.add(-6, 'hours') },
-          { ...baseReport, timestamp: START },
-        ],
-        getDailyByProjectAndAssetUNSAFE: async () => [
-          { ...baseReport, timestamp: START.add(-1, 'days') },
-          { ...baseReport, timestamp: START },
-        ],
+        getHourlyByProjectAndAssetUNSAFE: async () => [],
+        getSixHourlyByProjectAndAssetUNSAFE: async () => [],
+        getDailyByProjectAndAssetUNSAFE: async () => [],
       })
       const controller = new TvlController(
         mockObject<ReportStatusRepository>({
@@ -262,34 +243,28 @@ describe(TvlController.name, () => {
         [USDC],
         Logger.SILENT,
       )
-      const types: TvlApiChart['types'] = ['timestamp', 'usdc', 'usd']
-      const charts = await controller.getProjectAssetChart(
+
+      await controller.getProjectAssetChart(ARBITRUM.projectId, AssetId.USDC)
+
+      expect(
+        reportRepository.getHourlyByProjectAndAssetUNSAFE,
+      ).toHaveBeenOnlyCalledWith(
         ARBITRUM.projectId,
         AssetId.USDC,
+        START.add(-7, 'days'),
       )
-      expect(charts).toEqual({
-        hourly: {
-          types,
-          data: [
-            [START.add(-1, 'hours'), 111.1111 * 2, 1234.56 * 2],
-            [START, 111.1111 * 2, 1234.56 * 2],
-          ],
-        },
-        sixHourly: {
-          types,
-          data: [
-            [START.add(-6, 'hours'), 111.1111 * 2, 1234.56 * 2],
-            [START, 111.1111 * 2, 1234.56 * 2],
-          ],
-        },
-        daily: {
-          types,
-          data: [
-            [START.add(-1, 'days'), 111.1111 * 2, 1234.56 * 2],
-            [START, 111.1111 * 2, 1234.56 * 2],
-          ],
-        },
-      })
+
+      expect(
+        reportRepository.getSixHourlyByProjectAndAssetUNSAFE,
+      ).toHaveBeenOnlyCalledWith(
+        ARBITRUM.projectId,
+        AssetId.USDC,
+        START.add(-90, 'days'),
+      )
+
+      expect(
+        reportRepository.getDailyByProjectAndAssetUNSAFE,
+      ).toHaveBeenOnlyCalledWith(ARBITRUM.projectId, AssetId.USDC)
     })
   })
 })
