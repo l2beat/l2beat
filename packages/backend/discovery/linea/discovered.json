@@ -1,11 +1,11 @@
 {
   "name": "linea",
-  "blockNumber": 17685929,
-  "configHash": "0x1d11a27ff7b8059a27b725b4ead0f79464c61a0e6129e68d52828128897d5d0d",
+  "blockNumber": 17690963,
+  "configHash": "0x3846346d4b7dde6551188a730881b53cd28fcdf66a29a8cfa17e394c745cffd5",
   "version": 1,
   "contracts": [
     {
-      "name": "GnosisSafe",
+      "name": "AdminMultisig",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "code": "https://etherscan.deth.net/address/0x892bb7EeD71efB060ab90140e7825d8127991DD3,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -28,7 +28,8 @@
         "getThreshold": 3,
         "nonce": 5,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "PlonkVerifierFullLarge",
@@ -101,20 +102,43 @@
       "derivedName": "ZkEvmV2"
     },
     {
-      "name": "TimeLock",
+      "name": "Timelock",
       "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
       "code": "https://etherscan.deth.net/address/0xd6B95c960779c72B8C6752119849318E5d550574",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      }
+      },
+      "derivedName": "TimeLock"
     },
     {
       "name": "ProxyAdmin",

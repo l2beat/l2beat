@@ -1,22 +1,43 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+
+import { ProjectPermissionedAccount } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
-  STATE_CORRECTNESS,
   DATA_AVAILABILITY,
-  FRONTRUNNING_RISK,
   EXITS,
-  RISK_CENTRALIZED_VALIDATOR,
   FORCE_TRANSACTIONS,
-  TECHNOLOGY,
-  UPCOMING_RISK_VIEW,
-  RISK_VIEW,
+  FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
 } from './common'
-import { Layer2 } from './types'
 import { getStage } from './common/stages/getStage'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('linea')
+
+const timelockDelay = discovery.getContractValue<number>(
+  'Timelock',
+  'getMinDelay',
+)
+const timelockDelayString = formatSeconds(timelockDelay)
+
+const upgrades = {
+  upgradableBy: ['AdminMultisig'],
+  upgradableDelay: timelockDelay === 0 ? 'No delay' : timelockDelayString,
+}
+
+const roles = discovery.getContractValue<{
+  OPERATOR_ROLE: { members: string[] }
+}>('zkEVM', 'accessControl')
+const operators: ProjectPermissionedAccount[] = roles.OPERATOR_ROLE.members.map(
+  (address) => ({
+    address: EthereumAddress(address),
+    type: 'EOA',
+  }),
+)
 
 export const linea: Layer2 = {
   type: 'layer2',
@@ -30,9 +51,9 @@ export const linea: Layer2 = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://linea.build/'],
-      apps: ['https://goerli.linea.build/'],
+      apps: [],
       documentation: ['https://docs.linea.build/'],
-      explorers: ['https://explorer.goerli.linea.build/'],
+      explorers: ['https://explorer.linea.build/'],
       repositories: [],
       socialMedia: [
         'https://twitter.com/LineaBuild',
@@ -66,7 +87,7 @@ export const linea: Layer2 = {
       ...RISK_VIEW.DATA_ON_CHAIN,
       description:
         RISK_VIEW.DATA_ON_CHAIN.description +
-        ' Unlike most zk rollups transactions are posted instead of state diffs.',
+        ' Unlike most zk rollups, transaction data is posted instead of state diffs.',
       sources: [
         {
           contract: 'zkEVM',
@@ -110,7 +131,7 @@ export const linea: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ZkEvmV2sol.sol#L275 - Etherscan source code, _verifyProof() function',
+          text: 'ZkEvmV2.sol#L275 - Etherscan source code, _verifyProof() function',
           href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L275',
         },
       ],
@@ -119,7 +140,7 @@ export const linea: Layer2 = {
       ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'ZkEvmV2sol#L221 - Etherscan source code, _processBlockTransactions() function',
+          text: 'ZkEvmV2.sol#L221 - Etherscan source code, _processBlockTransactions() function',
           href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L221',
         },
       ],
@@ -138,46 +159,63 @@ export const linea: Layer2 = {
       ],
       references: [
         {
-          text: 'ZkEvmV2sol.sol#L125 - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
+          text: 'ZkEvmV2.sol#L125 - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
           href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L125',
         },
       ],
     },
     forceTransactions: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-    exitMechanism: {
-      ...REGULAR('zk', 'no proof'),
-      description:
-        REGULAR('zk', 'no proof').description +
-        ' Note that the withdrawal request can be censored by the Sequencer.',
-      references: [
-        {
-          text: ' Withdrawing is based on l2 to l1 messages',
-          href: '',
-        },
-      ],
-      risks: [OPERATOR_CENSORS_WITHDRAWAL],
-    },
+    exitMechanisms: [
+      {
+        ...EXITS.REGULAR('zk', 'no proof'),
+        description:
+          EXITS.REGULAR('zk', 'no proof').description +
+          ' Note that withdrawal requests can be censored by the Sequencer.',
+        risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
+        references: [
+          {
+            text: 'L1MessageService.sol#L115 - Etherscan source code, claimMessage() function',
+            href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F20#L115',
+          },
+        ],
+      },
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',
-      'Admin of the linea rollup',
+      'Admin of the Linea rollup. It can upgrade the contracts, change the verifier address, and publish blocks by effectively overriding the proof system.',
     ),
+    {
+      accounts: operators,
+      name: 'Operators',
+      description:
+        'The operators are allowed to prove blocks and post the corresponding transaction data.',
+    },
   ],
   contracts: {
     addresses: [
       discovery.getContractDetails('zkEVM', {
-        description: `The main contract of the Linea zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives transaction batches, L2 state roots as well as zk proofs.`,
-        ...timelockUpgrades,
+        description:
+          'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
+        ...upgrades,
+        references: [
+          {
+            text: 'ZkEvmV2.sol - Etherscan source code, state injections: stateRoot and exitRoot are part of the validity proof input.',
+            href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L806',
+          },
+        ],
       }),
+      discovery.getContractDetails(
+        'PlonkVerifierFull',
+        'Plonk verifier contract used by the Linea zkEVM rollup.',
+      ),
+      discovery.getContractDetails(
+        'PlonkVerifierFullLarge',
+        'Plonk verifier contract used by the Linea zkEVM rollup.',
+      ),
     ],
-    references: [
-      {
-        text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-        href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L806',
-      },
-    ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
   },
   milestones: [
     {
