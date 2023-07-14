@@ -5,6 +5,7 @@ import {
   STATE_CORRECTNESS,
   DATA_AVAILABILITY,
   FRONTRUNNING_RISK,
+  EXITS,
   RISK_CENTRALIZED_VALIDATOR,
   FORCE_TRANSACTIONS,
   TECHNOLOGY,
@@ -105,8 +106,24 @@ export const linea: Layer2 = {
     },
   }),
   technology: {
-    stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
-    dataAvailability: DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+    stateCorrectness: {
+      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+      references: [
+        {
+          text: 'ZkEvmV2sol.sol#L275 - Etherscan source code, _verifyProof() function',
+          href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L275',
+        },
+      ],
+    },
+    dataAvailability: {
+      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      references: [
+        {
+          text: 'ZkEvmV2sol#L221 - Etherscan source code, _processBlockTransactions() function',
+          href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L221',
+        },
+      ],
+    },
     operator: {
       name: 'The system has a centralized sequencer',
       description:
@@ -119,28 +136,49 @@ export const linea: Layer2 = {
           isCritical: true,
         },
       ],
+      references: [
+        {
+          text: 'ZkEvmV2sol.sol#L125 - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
+          href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L125',
+        },
+      ],
     },
     forceTransactions: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-    exitMechanisms: RISK_CENTRALIZED_VALIDATOR,
+    exitMechanism: {
+      ...REGULAR('zk', 'no proof'),
+      description:
+        REGULAR('zk', 'no proof').description +
+        ' Note that the withdrawal request can be censored by the Sequencer.',
+      references: [
+        {
+          text: ' Withdrawing is based on l2 to l1 messages',
+          href: '',
+        },
+      ],
+      risks: [OPERATOR_CENSORS_WITHDRAWAL],
+    },
   },
   permissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',
       'Admin of the linea rollup',
     ),
-    {
-      name: 'Operator',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'zkEVM',
-          'accessControl.OPERATOR_ROLE.members',
-        ),
-      ],
-      description:
-        'Its sole purpose and ability is to submit transaction batches and proofs.',
-    },
   ],
-  contracts: CONTRACTS.EMPTY,
+  contracts: {
+    addresses: [
+      discovery.getContractDetails('zkEVM', {
+        description: `The main contract of the Linea zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives transaction batches, L2 state roots as well as zk proofs.`,
+        ...timelockUpgrades,
+      }),
+    ],
+    references: [
+      {
+        text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
+        href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L806',
+      },
+    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(delay)],
+  },
   milestones: [
     {
       name: 'Open Testnet is Live',
