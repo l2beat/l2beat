@@ -26,6 +26,7 @@ declare module 'knex/types/tables' {
     project_id: string
     asset_id: string
     asset_type: string
+    chain_id: number
     asset_amount: string
     usd_value: string
     eth_value: string
@@ -103,6 +104,19 @@ declare module 'knex/types/tables' {
     diff_json_blob: string
   }
 
+  interface TotalSupplyRow {
+    unix_timestamp: Date
+    asset_id: string
+    total_supply: string
+    chain_id: number
+  }
+
+  interface TotalSupplyStatusRow {
+    chain_id: number
+    config_hash: string
+    unix_timestamp: Date
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -119,6 +133,8 @@ declare module 'knex/types/tables' {
     'activity.daily_count_view': DailyTransactionCountRow
     update_monitor: UpdateMonitorRow
     update_notifier: UpdateNotifierRow
+    total_supplies: TotalSupplyRow
+    total_supplies_status: TotalSupplyStatusRow
   }
 }
 

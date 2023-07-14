@@ -2,6 +2,7 @@ import { tokenList } from '@l2beat/config'
 import { Logger } from '@l2beat/shared'
 import {
   AssetId,
+  ChainId,
   EthereumAddress,
   ProjectId,
   TvlApiChart,
@@ -74,6 +75,7 @@ describe(TvlController.name, () => {
         ethValue: 1_111111n,
         amount: 111_1111n * 10n ** (18n - 4n),
         asset: AssetId.DAI,
+        chainId: ChainId.ETHEREUM,
         projectId: OPTIMISM.projectId,
         type: ValueType.CBV,
       }

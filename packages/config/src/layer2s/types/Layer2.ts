@@ -76,7 +76,7 @@ export interface Layer2Display {
 export interface Layer2Config {
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */
   associatedTokens?: string[]
-  /** Native L2 tokens should be also marked as associated tokens, however often associated tokens are not native L2 tokens. This has to be kept manually in sync with code executed in ReportUpdater.update.  */
+  /** Native L2 tokens should be also marked as associated tokens, however often associated tokens are not native L2 tokens. This has to be kept manually in sync with code executed in CBVUpdater.update.  */
   nativeL2TokensIncludedInTVL?: string[]
   /** List of contracts in which L1 funds are locked */
   escrows: ProjectEscrow[]

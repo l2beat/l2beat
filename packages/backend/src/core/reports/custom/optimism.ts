@@ -1,6 +1,12 @@
-import { AssetId, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  ProjectId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 
-import { createAddCustomTokenReport } from './report'
+import { createGenCustomTokenReport } from './report'
 
 export const OPTIMISM_PROJECT_ID = ProjectId('optimism')
 export const OP_TOKEN_SINCE_TIMESTAMP = UnixTime.fromDate(
@@ -26,8 +32,9 @@ function opTokenBalance(timestamp: UnixTime) {
   return OP_TOKEN_BALANCE_UPDATED
 }
 
-export const addOpTokenReport = createAddCustomTokenReport(
+export const genOpTokenReport = createGenCustomTokenReport(
   OP_TOKEN_ID,
+  ChainId.NMV,
   ValueType.NMV,
   OP_TOKEN_SINCE_TIMESTAMP,
   OPTIMISM_PROJECT_ID,

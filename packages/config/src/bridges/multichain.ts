@@ -12,20 +12,13 @@ export const multichain: Bridge = {
     name: 'Multichain',
     slug: 'multichain',
     warning:
-      'In July 2021 millions of dollars of user funds from the Multichain escrow addresses were taken out by validators to supply liquidity to Any tokens on various chains. \
-      Multichain declares it as a shared liquidity managed by SMPC tool to promote the routing paths between chains and help reduce bridge fee for users.\
-      As a result there is more tokens minted (e.g. DAI on Fantom) than there are tokens directly backing them in escrow.',
+      "THE BRIDGE IS NOT SAFE FOR USE. The Multichain's team urges everyone to refrain from using the bridge as it is under investigation by Chinese law enforcement authorities. For more information, please visit: https://twitter.com/multichainorg/status/1679768407628185600.",
     description:
       'Multichain is an externally validated bridge. It uses a network of nodes running SMPC (Secure Multi Party Computation) protocol. It supports dozens of blockchains and thousands of tokens with both Token Bridge and Liquidity Network.',
     category: 'Hybrid',
     links: {
-      websites: ['https://multichain.xyz/'],
       repositories: ['https://github.com/anyswap'],
-      socialMedia: [
-        'https://t.me/anyswap',
-        'https://medium.com/multichainorg',
-        'https://twitter.com/MultichainOrg',
-      ],
+      socialMedia: ['https://twitter.com/MultichainOrg'],
     },
   },
   config: {

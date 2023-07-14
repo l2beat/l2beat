@@ -3,19 +3,21 @@ import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
+import { NMVUpdater } from '../assets/NMVUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
+import { CBVUpdater } from './CBVUpdater'
 import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
-import { ReportUpdater } from './ReportUpdater'
 
 export class AggregatedReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
-    private readonly reportUpdater: ReportUpdater,
+    private readonly reportUpdater: CBVUpdater,
+    private readonly nativeAssetUpdater: NMVUpdater,
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly clock: Clock,
@@ -51,7 +53,12 @@ export class AggregatedReportUpdater {
   async update(timestamp: UnixTime) {
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
 
-    const reports = await this.reportUpdater.getReportsWhenReady(timestamp)
+    const reports = (
+      await Promise.all([
+        this.reportUpdater.getReportsWhenReady(timestamp),
+        this.nativeAssetUpdater.getReportsWhenReady(timestamp),
+      ])
+    ).flat()
     this.logger.debug('Reports ready')
 
     const aggregatedReports = aggregateReports(

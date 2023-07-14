@@ -1,14 +1,15 @@
 import { Logger } from '@l2beat/shared'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
+import { NMVUpdater } from '../assets/NMVUpdater'
 import { Clock } from '../Clock'
 import { AggregatedReportUpdater } from './AggregatedReportUpdater'
+import { CBVUpdater } from './CBVUpdater'
 import { getReportConfigHash } from './getReportConfigHash'
-import { ReportUpdater } from './ReportUpdater'
 
 describe(AggregatedReportUpdater.name, () => {
   describe(AggregatedReportUpdater.prototype.update.name, () => {
@@ -25,12 +26,18 @@ describe(AggregatedReportUpdater.name, () => {
           add: async ({ configHash }) => configHash,
         })
 
-      const reportUpdater = mockObject<ReportUpdater>({
+      const reportUpdater = mockObject<CBVUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
+      })
+      const nativeAssetUpdater = mockObject<NMVUpdater>({
+        getReportsWhenReady: mockFn()
+          .returnsOnce(MOCK.FUTURE_OP_REPORT)
+          .returnsOnce([]),
       })
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
         reportUpdater,
+        nativeAssetUpdater,
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         mockObject<Clock>(),
@@ -57,7 +64,7 @@ describe(AggregatedReportUpdater.name, () => {
       )
       expect(
         aggregatedReportRepository.addOrUpdateMany,
-      ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS)
+      ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP)
       expect(
         aggregatedReportRepository.addOrUpdateMany,
       ).toHaveBeenNthCalledWith(2, MOCK.AGGREGATED_REPORTS)
@@ -80,8 +87,13 @@ describe(AggregatedReportUpdater.name, () => {
           add: async ({ configHash }) => configHash,
         })
 
-      const reportUpdater = mockObject<ReportUpdater>({
+      const reportUpdater = mockObject<CBVUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
+      })
+      const nativeAssetUpdater = mockObject<NMVUpdater>({
+        getReportsWhenReady: mockFn()
+          .returnsOnce(MOCK.FUTURE_OP_REPORT)
+          .returnsOnce([]),
       })
 
       const clock = mockObject<Clock>({
@@ -96,6 +108,7 @@ describe(AggregatedReportUpdater.name, () => {
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
         reportUpdater,
+        nativeAssetUpdater,
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         clock,
@@ -127,7 +140,10 @@ describe(AggregatedReportUpdater.name, () => {
         ).toHaveBeenCalledTimes(2)
         expect(
           aggregatedReportRepository.addOrUpdateMany,
-        ).toHaveBeenNthCalledWith(1, MOCK.FUTURE_AGGREGATE_REPORTS)
+        ).toHaveBeenNthCalledWith(
+          1,
+          MOCK.FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP,
+        )
         expect(
           aggregatedReportRepository.addOrUpdateMany,
         ).toHaveBeenNthCalledWith(2, MOCK.AGGREGATED_REPORTS)
