@@ -19,6 +19,8 @@ import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { Database } from '../../peripherals/database/shared/Database'
+import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
+import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
 import { createEthereumTvlSubmodule } from './EthereumTvl'
@@ -52,6 +54,11 @@ export function createTvlModule(
       logger,
     ),
     balanceStatusRepository: new BalanceStatusRepository(database, logger),
+    totalSupplyRepository: new TotalSupplyRepository(database, logger),
+    totalSupplyStatusRepository: new TotalSupplyStatusRepository(
+      database,
+      logger,
+    ),
   }
   // #endregion
   // #region peripherals
