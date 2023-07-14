@@ -26,7 +26,7 @@ describe(ArbitrumTotalSupplyProvider.name, () => {
         const USDC_TOTAL_SUPPLY_BYTES = Bytes.fromNumber(420).padStart(32)
 
         const arbitrumClient = mockObject<EthereumClient>({
-          call: async () => {},
+          call: async () => USDC_TOTAL_SUPPLY_BYTES,
         })
 
         const multicallClient = mockObject<ArbitrumMulticallClient>({
