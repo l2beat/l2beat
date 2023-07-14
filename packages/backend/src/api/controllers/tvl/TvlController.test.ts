@@ -159,17 +159,24 @@ describe(TvlController.name, () => {
         type: ValueType.CBV,
       }
 
+      // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
       const reportRepository = mockObject<ReportRepository>({
         getHourlyByProjectAndAssetUNSAFE: async () => [
           { ...baseReport, timestamp: START.add(-1, 'hours') },
+          { ...baseReport, timestamp: START.add(-1, 'hours') },
+          { ...baseReport, timestamp: START },
           { ...baseReport, timestamp: START },
         ],
         getSixHourlyByProjectAndAssetUNSAFE: async () => [
           { ...baseReport, timestamp: START.add(-6, 'hours') },
+          { ...baseReport, timestamp: START.add(-6, 'hours') },
+          { ...baseReport, timestamp: START },
           { ...baseReport, timestamp: START },
         ],
         getDailyByProjectAndAssetUNSAFE: async () => [
           { ...baseReport, timestamp: START.add(-1, 'days') },
+          { ...baseReport, timestamp: START.add(-1, 'days') },
+          { ...baseReport, timestamp: START },
           { ...baseReport, timestamp: START },
         ],
       })
@@ -288,45 +295,31 @@ describe(TvlController.name, () => {
 })
 
 describe(reduceDuplicatedReports.name, () => {
-  const baseReport: Omit<ReportRecord, 'asset'> = {
+  const baseReport: Omit<ReportRecord, 'asset' | 'timestamp'> = {
     usdValue: 1234_56n,
     ethValue: 1_111111n,
     amount: 111_1111n * 10n ** (6n - 4n),
     chainId: ChainId.ETHEREUM,
     projectId: ARBITRUM.projectId,
     type: ValueType.CBV,
-    timestamp: START,
   }
 
-  it('throws when reports have different timestamps', () => {
+  it('works for different timestamps', () => {
     const reports: ReportRecord[] = [
       {
         ...baseReport,
         asset: AssetId.USDC,
+        timestamp: START,
       },
       {
         ...baseReport,
         asset: AssetId.USDC,
         timestamp: START.add(-1, 'hours'),
       },
-    ]
-
-    expect(() => reduceDuplicatedReports(reports)).toThrow()
-  })
-
-  it('reduces duplicated reports', () => {
-    const reports: ReportRecord[] = [
       {
         ...baseReport,
         asset: AssetId.USDC,
-      },
-      {
-        ...baseReport,
-        asset: AssetId.USDC,
-      },
-      {
-        ...baseReport,
-        asset: AssetId.DAI,
+        timestamp: START.add(-1, 'hours'),
       },
     ]
 
@@ -336,13 +329,15 @@ describe(reduceDuplicatedReports.name, () => {
       {
         ...baseReport,
         asset: AssetId.USDC,
-        usdValue: baseReport.usdValue * 2n,
-        ethValue: baseReport.ethValue * 2n,
-        amount: baseReport.amount * 2n,
+        timestamp: START,
       },
       {
         ...baseReport,
-        asset: AssetId.DAI,
+        asset: AssetId.USDC,
+        usdValue: baseReport.usdValue * 2n,
+        ethValue: baseReport.ethValue * 2n,
+        amount: baseReport.amount * 2n,
+        timestamp: START.add(-1, 'hours'),
       },
     ])
   })

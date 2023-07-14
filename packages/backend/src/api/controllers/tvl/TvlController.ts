@@ -35,7 +35,6 @@ export class TvlController {
   }
 
   async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
-    // include more statuses here and find minimum
     const timestamp = await this.reportStatusRepository.findLatestTimestamp(
       ChainId.ETHEREUM,
       ValueType.CBV,
@@ -52,14 +51,13 @@ export class TvlController {
           getSixHourlyMinTimestamp(timestamp),
         ),
         this.aggregatedReportRepository.getDaily(),
-        //USDC will be doubled, there will be a need to reduce it
         this.reportRepository.getByTimestampUNSAFE(timestamp),
       ])
     const tvlApiResponse = generateTvlApiResponse(
       hourlyReports,
       sixHourlyReports,
       dailyReports,
-      latestReports,
+      reduceDuplicatedReports(latestReports),
       this.projects.map((x) => x.projectId),
     )
     return tvlApiResponse
@@ -87,8 +85,6 @@ export class TvlController {
     if (!project || !asset) {
       return undefined
     }
-    // include more statuses here and find minimum
-
     const timestamp = await this.reportStatusRepository.findLatestTimestamp(
       ChainId.ETHEREUM,
       ValueType.CBV,
@@ -96,7 +92,6 @@ export class TvlController {
     if (!timestamp) {
       return undefined
     }
-    //USDC will return doubled records, there will be a need to reduce them
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
       this.reportRepository.getHourlyByProjectAndAssetUNSAFE(
         projectId,
@@ -118,15 +113,27 @@ export class TvlController {
     return {
       hourly: {
         types,
-        data: this.getChartData(hourlyReports, asset.decimals, 1),
+        data: this.getChartData(
+          reduceDuplicatedReports(hourlyReports),
+          asset.decimals,
+          1,
+        ),
       },
       sixHourly: {
         types,
-        data: this.getChartData(sixHourlyReports, asset.decimals, 6),
+        data: this.getChartData(
+          reduceDuplicatedReports(sixHourlyReports),
+          asset.decimals,
+          6,
+        ),
       },
       daily: {
         types,
-        data: this.getChartData(dailyReports, asset.decimals, 24),
+        data: this.getChartData(
+          reduceDuplicatedReports(dailyReports),
+          asset.decimals,
+          24,
+        ),
       },
     }
   }
@@ -135,18 +142,14 @@ export class TvlController {
 export function reduceDuplicatedReports(
   reports: ReportRecord[],
 ): ReportRecord[] {
-  if (reports.length === 0) {
-    return reports
-  }
-  if (!reports.every((r) => r.timestamp.equals(reports[0].timestamp))) {
-    throw new Error('Reports should have the same timestamp')
-  }
-
   const result: ReportRecord[] = []
 
   for (const report of reports) {
     const existingIndex = result.findIndex(
-      (r) => r.projectId === report.projectId && r.asset === report.asset,
+      (r) =>
+        r.projectId === report.projectId &&
+        r.asset === report.asset &&
+        r.timestamp.equals(report.timestamp),
     )
     if (existingIndex !== -1) {
       const existing = result[existingIndex]
