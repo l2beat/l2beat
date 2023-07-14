@@ -36,8 +36,7 @@ describe(AggregatedReportUpdater.name, () => {
       })
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
-        reportUpdater,
-        nativeAssetUpdater,
+        [reportUpdater, nativeAssetUpdater],
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         mockObject<Clock>(),
@@ -107,8 +106,7 @@ describe(AggregatedReportUpdater.name, () => {
       })
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
-        reportUpdater,
-        nativeAssetUpdater,
+        [reportUpdater, nativeAssetUpdater],
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         clock,
