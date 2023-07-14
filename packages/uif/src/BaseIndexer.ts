@@ -3,13 +3,11 @@ import { assert } from 'node:console'
 import { Logger } from '@l2beat/backend-tools'
 
 import { assertUnreachable } from './assertUnreachable'
-import { Indexer, Subscription } from './Indexer'
+import { Indexer } from './Indexer'
 import { IndexerAction } from './IndexerAction'
 import {
   InvalidateEffect,
-  NotifyInvalidatedEffect,
   NotifyReadyEffect,
-  NotifyWaitingEffect,
   SetSafeHeightEffect,
   UpdateEffect,
 } from './IndexerEffect'
@@ -44,6 +42,7 @@ export abstract class BaseIndexer implements Indexer {
   abstract invalidate(to: number): Promise<void>
 
   private state: IndexerState
+  private started = false
 
   constructor(protected logger: Logger, public readonly parents: Indexer[]) {
     this.logger = this.logger.for(this)
@@ -57,30 +56,20 @@ export abstract class BaseIndexer implements Indexer {
   }
 
   async start(): Promise<void> {
+    assert(!this.started, 'Indexer already started')
+    this.started = true
     const height = await this.getSafeHeight()
     this.dispatch({
       type: 'Initialized',
-      height,
+      safeHeight: height,
       childCount: this.children.length,
     })
   }
 
-  subscribe(child: Indexer): Subscription {
+  subscribe(child: Indexer) {
+    assert(!this.started, 'Indexer already started')
     this.logger.debug('Child subscribed', { child: child.constructor.name })
     this.children.push(child)
-    this.dispatch({ type: 'ChildSubscribed' })
-    return {
-      unsubscribe: (): void => {
-        const index = this.children.indexOf(child)
-        assert(index !== -1, 'Received unsubscribe from unknown child')
-
-        this.logger.debug('Child unsubscribed', {
-          child: child.constructor.name,
-        })
-        this.children = this.children.filter((c) => c !== child)
-        this.dispatch({ type: 'ChildUnsubscribed', index })
-      },
-    }
   }
 
   notifyReady(child: Indexer): void {
@@ -90,26 +79,10 @@ export abstract class BaseIndexer implements Indexer {
     this.dispatch({ type: 'ChildReady', index })
   }
 
-  notifyWaiting(parent: Indexer): void {
-    this.logger.debug('Someone is waiting', { parent: parent.constructor.name })
-    const index = this.parents.indexOf(parent)
-    assert(index !== -1, 'Received waiting from unknown parent')
-    this.dispatch({ type: 'ParentWaiting', index })
-  }
-
-  notifyInvalidated(parent: Indexer, to: number): void {
-    this.logger.debug('Someone has invalidated', {
-      parent: parent.constructor.name,
-    })
-    const index = this.parents.indexOf(parent)
-    assert(index !== -1, 'Received invalidated from unknown parent')
-    this.dispatch({ type: 'ParentInvalidated', index, to })
-  }
-
   notifyUpdate(parent: Indexer, to: number): void {
     const index = this.parents.indexOf(parent)
     assert(index !== -1, 'Received update from unknown parent')
-    this.dispatch({ type: 'ParentUpdated', index, to })
+    this.dispatch({ type: 'ParentUpdated', index, safeHeight: to })
   }
 
   getState(): IndexerState {
@@ -130,10 +103,6 @@ export abstract class BaseIndexer implements Indexer {
           return void this.executeInvalidate(effect)
         case 'SetSafeHeight':
           return void this.executeSetSafeHeight(effect)
-        case 'NotifyInvalidated':
-          return this.executeNotifyInvalidated(effect)
-        case 'NotifyWaiting':
-          return this.executeNotifyWaiting(effect)
         case 'NotifyReady':
           return this.executeNotifyReady(effect)
         default:
@@ -152,23 +121,23 @@ export abstract class BaseIndexer implements Indexer {
           min: from,
           max: effect.to,
         })
-        this.dispatch({ type: 'UpdateFailed', from, to: effect.to })
+        this.dispatch({ type: 'UpdateFailed', from, height: effect.to })
       } else {
-        this.dispatch({ type: 'UpdateSucceeded', from, to })
+        this.dispatch({ type: 'UpdateSucceeded', from, height: to })
       }
     } catch (e) {
       this.logger.error('Update failed', e)
-      this.dispatch({ type: 'UpdateFailed', from, to: effect.to })
+      this.dispatch({ type: 'UpdateFailed', from, height: effect.to })
     }
   }
 
   private async executeInvalidate(effect: InvalidateEffect): Promise<void> {
     try {
       await this.invalidate(effect.to)
-      this.dispatch({ type: 'InvalidateSucceeded', to: effect.to })
+      this.dispatch({ type: 'InvalidateSucceeded', height: effect.to })
     } catch (e) {
       this.logger.error('Invalidate failed', e)
-      this.dispatch({ type: 'InvalidateFailed', to: effect.to })
+      this.dispatch({ type: 'InvalidateFailed', height: effect.to })
     }
   }
 
@@ -179,22 +148,6 @@ export abstract class BaseIndexer implements Indexer {
     this.children.forEach((child) =>
       child.notifyUpdate(this, effect.safeHeight),
     )
-  }
-
-  private executeNotifyInvalidated(effect: NotifyInvalidatedEffect): void {
-    this.children.forEach((child, index) => {
-      if (effect.childIndices.includes(index)) {
-        child.notifyInvalidated(this, effect.to)
-      }
-    })
-  }
-
-  private executeNotifyWaiting(effect: NotifyWaitingEffect): void {
-    this.children.forEach((child, index) => {
-      if (effect.childIndices.includes(index)) {
-        child.notifyWaiting(this)
-      }
-    })
   }
 
   private executeNotifyReady(effect: NotifyReadyEffect): void {

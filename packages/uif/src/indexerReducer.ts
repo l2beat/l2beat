@@ -17,11 +17,10 @@ export function indexerReducer(
 
       const newState: IndexerState = {
         ...state,
-        height: action.height,
+        height: action.safeHeight,
         initializedSelf: true,
         children: Array.from({ length: action.childCount }).map(() => ({
-          notifiedWaiting: false,
-          ready: false,
+          ready: true,
         })),
       }
 
@@ -33,7 +32,14 @@ export function indexerReducer(
         ...state,
         parents: state.parents.map((parent, index) =>
           index === action.index
-            ? { ...parent, height: action.to, initialized: true }
+            ? {
+                ...parent,
+                safeHeight: action.safeHeight,
+                initialized: true,
+                waiting: parent.initialized
+                  ? action.safeHeight < parent.safeHeight
+                  : false,
+              }
             : parent,
         ),
       }
@@ -45,41 +51,6 @@ export function indexerReducer(
 
       return continueOperations(newState)
     }
-    case 'ParentWaiting': {
-      const newState: IndexerState = {
-        ...state,
-        parents: state.parents.map((parent, index) =>
-          index === action.index ? { ...parent, waiting: true } : parent,
-        ),
-      }
-      return continueOperations(newState)
-    }
-    // is this even needed? do we need to wait for our parent to invalidate?
-    case 'ParentInvalidated': {
-      const newState: IndexerState = {
-        ...state,
-        parents: state.parents.map((parent, index) =>
-          index === action.index
-            ? { ...parent, waiting: false, height: action.to }
-            : parent,
-        ),
-      }
-      return continueOperations(newState)
-    }
-    case 'ChildSubscribed': {
-      const newState: IndexerState = {
-        ...state,
-        children: [...state.children, { ready: false, notifiedWaiting: false }],
-      }
-      return [newState, []]
-    }
-    case 'ChildUnsubscribed': {
-      const newState: IndexerState = {
-        ...state,
-        children: state.children.filter((_, index) => index !== action.index),
-      }
-      return [newState, []]
-    }
     case 'ChildReady': {
       const newState: IndexerState = {
         ...state,
@@ -89,20 +60,10 @@ export function indexerReducer(
       }
       return continueOperations(newState)
     }
-    case 'ChildNotReady': {
-      const newState: IndexerState = {
-        ...state,
-        children: state.children.map((child, index) =>
-          index === action.index ? { ...child, ready: false } : child,
-        ),
-      }
-      return continueOperations(newState)
-    }
     case 'UpdateSucceeded': {
       assertStatus(state.status, 'updating')
       return continueOperations(
-        { ...state, status: 'idle', height: action.to },
-        [],
+        { ...state, status: 'idle', height: action.height },
         true,
       )
     }
@@ -114,34 +75,11 @@ export function indexerReducer(
     }
     case 'InvalidateSucceeded': {
       assertStatus(state.status, 'invalidating')
-      const childIndices: number[] = []
-      state.children.forEach((child, index) => {
-        if (child.notifiedWaiting) {
-          childIndices.push(index)
-        }
+      return continueOperations({
+        ...state,
+        status: 'idle',
+        height: action.height,
       })
-      const effects =
-        childIndices.length > 0
-          ? [
-              {
-                type: 'NotifyInvalidated' as const,
-                to: action.to,
-                childIndices,
-              },
-            ]
-          : []
-      return continueOperations(
-        {
-          ...state,
-          children: state.children.map(() => ({
-            ready: false,
-            notifiedWaiting: false,
-          })),
-          status: 'idle',
-          height: action.to,
-        },
-        effects,
-      )
     }
     case 'InvalidateFailed': {
       assertStatus(state.status, 'invalidating')
@@ -170,10 +108,18 @@ function finishInitialization(
     return
   }
   if (state.initializedSelf && state.parents.every((x) => x.initialized)) {
-    const height = Math.min(...state.parents.map((x) => x.height), state.height)
+    const height = Math.min(
+      ...state.parents.map((x) => x.safeHeight),
+      state.height,
+    )
 
     return [
-      { ...state, status: 'invalidating', targetHeight: height },
+      {
+        ...state,
+        status: 'invalidating',
+        safeHeight: height,
+        targetHeight: height,
+      },
       [
         { type: 'SetSafeHeight', safeHeight: height },
         { type: 'Invalidate', to: height },
@@ -200,42 +146,64 @@ You: updating, h: 5, th: 10 -> th: 15; update success (10) -> h: 10, update + su
 
 function continueOperations(
   state: IndexerState,
-  effects?: IndexerEffect[],
   updateFinished?: boolean,
 ): IndexerReducerResult {
+  const initializedParents = state.parents.filter((x) => x.initialized)
+  if (initializedParents.length > 0) {
+    const parentHeight = Math.min(
+      ...initializedParents.map((x) => x.safeHeight),
+    )
+
+    if (
+      state.targetHeight === state.height ||
+      parentHeight < state.targetHeight
+    ) {
+      // We can change the target height in two different cases
+      // 1. We are synced and the parent changed to a higher or lower height
+      // 2. We are syncing and the parent changed to a lower height
+      state = { ...state, targetHeight: parentHeight }
+    }
+  }
+
+  const effects: IndexerEffect[] = []
+  if (state.targetHeight < state.safeHeight || updateFinished) {
+    const safeHeight = Math.min(state.targetHeight, state.height)
+    if (safeHeight < state.safeHeight) {
+      state = {
+        ...state,
+        safeHeight,
+        waiting: true,
+        children: state.children.map((c) => ({ ...c, ready: false })),
+      }
+    } else {
+      state = { ...state, safeHeight }
+    }
+    effects.push({ type: 'SetSafeHeight', safeHeight })
+  }
+
+  if (state.children.every((x) => x.ready)) {
+    state = { ...state, waiting: false }
+  }
+
   if (
     state.parents.some((x) => x.waiting) &&
-    (state.status === 'idle' || state.status === 'will-invalidate') &&
-    state.children.every((x) => x.ready)
+    // TODO: there are cases where we are updating but below the safe height
+    // but we ignore it right now for simplicity
+    state.status !== 'updating' &&
+    !state.waiting
   ) {
     const parentIndices: number[] = []
-    state.parents.forEach((x, index) => {
-      if (x.waiting) parentIndices.push(index)
-    })
+    state = {
+      ...state,
+      parents: state.parents.map((x, index) => {
+        if (x.waiting) {
+          parentIndices.push(index)
+        }
+        return { ...x, waiting: false }
+      }),
+    }
 
-    return [state, [{ type: 'NotifyReady', parentIndices }]]
-  }
-
-  const parentHeight = Math.min(...state.parents.map((x) => x.height))
-
-  if (
-    state.targetHeight === state.height ||
-    parentHeight < state.targetHeight
-  ) {
-    // We can change the target height in two different cases
-    // 1. We are synced and the parent changed to a higher or lower height
-    // 2. We are syncing and the parent changed to a lower height
-    state = { ...state, targetHeight: parentHeight }
-  }
-
-  effects = effects ?? []
-  if (state.targetHeight < state.safeHeight) {
-    state = { ...state, safeHeight: state.targetHeight }
-    effects.push({ type: 'SetSafeHeight', safeHeight: state.targetHeight })
-  } else if (updateFinished) {
-    const safeHeight = Math.min(state.targetHeight, state.height)
-    state = { ...state, safeHeight }
-    effects.push({ type: 'SetSafeHeight', safeHeight })
+    effects.push({ type: 'NotifyReady', parentIndices })
   }
 
   if (state.targetHeight > state.height && state.status === 'idle') {
@@ -246,28 +214,11 @@ function continueOperations(
   }
 
   if (
-    (state.status !== 'idle' && state.status !== 'will-invalidate') ||
-    state.targetHeight === state.height
+    state.status !== 'idle' ||
+    state.targetHeight === state.height ||
+    state.waiting
   ) {
     return [state, effects]
-  }
-
-  if (state.children.some((x) => !x.ready)) {
-    const childIndices: number[] = []
-    state.children.forEach((x, index) => {
-      if (!x.ready) childIndices.push(index)
-    })
-
-    return [
-      {
-        ...state,
-        status: 'will-invalidate',
-        children: state.children.map((c, i) =>
-          childIndices.includes(i) ? { ...c, notifiedWaiting: true } : c,
-        ),
-      },
-      [...effects, { type: 'NotifyWaiting', childIndices }],
-    ]
   }
 
   return [
@@ -283,8 +234,9 @@ export function getInitialState(parentCount: number): IndexerState {
     targetHeight: 0,
     safeHeight: 0,
     initializedSelf: false,
+    waiting: false,
     parents: Array.from({ length: parentCount }).map(() => ({
-      height: 0,
+      safeHeight: 0,
       initialized: false,
       waiting: false,
     })),
