@@ -131,3 +131,36 @@ export class TvlController {
     }
   }
 }
+
+export function reduceDuplicatedReports(
+  reports: ReportRecord[],
+): ReportRecord[] {
+  if (reports.length === 0) {
+    return reports
+  }
+  if (!reports.every((r) => r.timestamp.equals(reports[0].timestamp))) {
+    throw new Error('Reports should have the same timestamp')
+  }
+
+  const result: ReportRecord[] = []
+
+  for (const report of reports) {
+    const existingIndex = result.findIndex(
+      (r) => r.projectId === report.projectId && r.asset === report.asset,
+    )
+    if (existingIndex !== -1) {
+      const existing = result[existingIndex]
+
+      result[existingIndex] = {
+        ...existing,
+        amount: existing.amount + report.amount,
+        usdValue: existing.usdValue + report.usdValue,
+        ethValue: existing.ethValue + report.ethValue,
+      }
+    } else {
+      result.push(report)
+    }
+  }
+
+  return result
+}

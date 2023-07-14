@@ -18,7 +18,7 @@ import {
   ReportRepository,
 } from '../../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
-import { TvlController } from './TvlController'
+import { reduceDuplicatedReports, TvlController } from './TvlController'
 
 const START = UnixTime.fromDate(new Date('2022-05-31'))
 const DAI = tokenList.find((x) => x.symbol === 'DAI')!
@@ -284,5 +284,66 @@ describe(TvlController.name, () => {
         },
       })
     })
+  })
+})
+
+describe(reduceDuplicatedReports.name, () => {
+  const baseReport: Omit<ReportRecord, 'asset'> = {
+    usdValue: 1234_56n,
+    ethValue: 1_111111n,
+    amount: 111_1111n * 10n ** (6n - 4n),
+    chainId: ChainId.ETHEREUM,
+    projectId: ARBITRUM.projectId,
+    type: ValueType.CBV,
+    timestamp: START,
+  }
+
+  it('throws when reports have different timestamps', () => {
+    const reports: ReportRecord[] = [
+      {
+        ...baseReport,
+        asset: AssetId.USDC,
+      },
+      {
+        ...baseReport,
+        asset: AssetId.USDC,
+        timestamp: START.add(-1, 'hours'),
+      },
+    ]
+
+    expect(() => reduceDuplicatedReports(reports)).toThrow()
+  })
+
+  it('reduces duplicated reports', () => {
+    const reports: ReportRecord[] = [
+      {
+        ...baseReport,
+        asset: AssetId.USDC,
+      },
+      {
+        ...baseReport,
+        asset: AssetId.USDC,
+      },
+      {
+        ...baseReport,
+        asset: AssetId.DAI,
+      },
+    ]
+
+    const reduced = reduceDuplicatedReports(reports)
+
+    expect(reduced).toEqual([
+      {
+        ...baseReport,
+        asset: AssetId.USDC,
+        usdValue: baseReport.usdValue * 2n,
+        ethValue: baseReport.ethValue * 2n,
+        amount: baseReport.amount * 2n,
+      },
+      {
+        ...baseReport,
+        asset: AssetId.DAI,
+      },
+    ])
   })
 })
