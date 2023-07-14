@@ -34,7 +34,7 @@ export class ReportRepository extends BaseRepository {
   }
 
   // probably that is not the best patter, we should filter by chainId and ValueType also
-  async getByTimestamp(timestamp: UnixTime): Promise<ReportRecord[]> {
+  async getByTimestampUNSAFE(timestamp: UnixTime): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('reports').where(
       'unix_timestamp',
@@ -99,7 +99,7 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
-  async getDailyByProjectAndAsset(
+  async getDailyByProjectAndAssetUNSAFE(
     projectId: ProjectId,
     assetId: AssetId,
   ): Promise<ReportRecord[]> {
@@ -113,7 +113,7 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getHourlyByProjectAndAsset(
+  async getHourlyByProjectAndAssetUNSAFE(
     projectId: ProjectId,
     assetId: AssetId,
     from: UnixTime,
@@ -127,7 +127,7 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getSixHourlyByProjectAndAsset(
+  async getSixHourlyByProjectAndAssetUNSAFE(
     projectId: ProjectId,
     assetId: AssetId,
     from: UnixTime,

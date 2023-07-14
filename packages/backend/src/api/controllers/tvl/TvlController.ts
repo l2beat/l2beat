@@ -53,7 +53,7 @@ export class TvlController {
         ),
         this.aggregatedReportRepository.getDaily(),
         //USDC will be doubled, there will be a need to reduce it
-        this.reportRepository.getByTimestamp(timestamp),
+        this.reportRepository.getByTimestampUNSAFE(timestamp),
       ])
     const tvlApiResponse = generateTvlApiResponse(
       hourlyReports,
@@ -98,17 +98,17 @@ export class TvlController {
     }
     //USDC will return doubled records, there will be a need to reduce them
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
-      this.reportRepository.getHourlyByProjectAndAsset(
+      this.reportRepository.getHourlyByProjectAndAssetUNSAFE(
         projectId,
         assetId,
         getHourlyMinTimestamp(timestamp),
       ),
-      this.reportRepository.getSixHourlyByProjectAndAsset(
+      this.reportRepository.getSixHourlyByProjectAndAssetUNSAFE(
         projectId,
         assetId,
         getSixHourlyMinTimestamp(timestamp),
       ),
-      this.reportRepository.getDailyByProjectAndAsset(projectId, assetId),
+      this.reportRepository.getDailyByProjectAndAssetUNSAFE(projectId, assetId),
     ])
     const types: TvlApiChart['types'] = [
       'timestamp',
