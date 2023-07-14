@@ -225,5 +225,11 @@ export const linea: Layer2 = {
         'Linea has launched on the Goerli testnet, allowing users and developers to test the platform.',
       link: 'https://linea.mirror.xyz/6G30hwV2wPs_wPv0VEgHYaIdghMkIQaad-OI_0br1hM',
     },
+    {
+      name: 'Mainnet Alpha Launch',
+      date: '2023-07-12',
+      description: 'Linea has launched on the Ethereum mainnet.',
+      link: 'https://linea.mirror.xyz/7l9gKzYzKVOxEOnReavov467Ss_fsrkGzABvbRISPMY',
+    },
   ],
 }
