@@ -29,3 +29,4 @@
 ## Things to consider
 
 - is it required to have parents? (current logic says yes, but doesn't enforce it)
+- the indexers should be able to invalidate on their own
