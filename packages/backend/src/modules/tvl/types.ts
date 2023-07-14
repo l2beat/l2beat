@@ -6,6 +6,8 @@ import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRep
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
+import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
+import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
 
 export interface TvlDatabase {
   readonly blockNumberRepository: BlockNumberRepository
@@ -16,4 +18,6 @@ export interface TvlDatabase {
   readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository
   readonly reportStatusRepository: ReportStatusRepository
   readonly balanceStatusRepository: BalanceStatusRepository
+  readonly totalSupplyRepository: TotalSupplyRepository
+  readonly totalSupplyStatusRepository: TotalSupplyStatusRepository
 }
