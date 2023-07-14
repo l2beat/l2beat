@@ -18,23 +18,36 @@ export interface ChildReadyAction {
 export interface UpdateSucceededAction {
   type: 'UpdateSucceeded'
   from: number
-  height: number
+  targetHeight: number
 }
 
 export interface UpdateFailedAction {
   type: 'UpdateFailed'
   from: number
-  height: number
+  targetHeight: number
 }
 
 export interface InvalidateSucceededAction {
   type: 'InvalidateSucceeded'
-  height: number
+  targetHeight: number
 }
 
 export interface InvalidateFailedAction {
   type: 'InvalidateFailed'
-  height: number
+  targetHeight: number
+}
+
+export interface TickAction {
+  type: 'Tick'
+}
+
+export interface TickSucceededAction {
+  type: 'TickSucceeded'
+  safeHeight: number
+}
+
+export interface TickFailedAction {
+  type: 'TickFailed'
 }
 
 export type IndexerAction =
@@ -45,3 +58,6 @@ export type IndexerAction =
   | UpdateFailedAction
   | InvalidateSucceededAction
   | InvalidateFailedAction
+  | TickAction
+  | TickSucceededAction
+  | TickFailedAction

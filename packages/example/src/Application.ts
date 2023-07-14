@@ -3,7 +3,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { Config } from './Config'
 import { BalanceIndexer } from './indexers/BalanceIndexer'
 import { BlockNumberIndexer } from './indexers/BlockNumberIndexer'
-import { ClockIndexer } from './indexers/ClockIndexer'
+import { FakeClockIndexer } from './indexers/FakeClockIndexer'
 import { BalanceRepository } from './repositories/BalanceRepository'
 import { BlockNumberRepository } from './repositories/BlockNumberRepository'
 
@@ -21,10 +21,10 @@ export class Application {
     const blockNumberRepository = new BlockNumberRepository()
     const balanceRepository = new BalanceRepository()
 
-    const clockIndexer = new ClockIndexer(logger)
+    const fakeClockIndexer = new FakeClockIndexer(logger)
     const blockNumberIndexer = new BlockNumberIndexer(
       logger,
-      clockIndexer,
+      fakeClockIndexer,
       blockNumberRepository,
     )
     const balanceIndexer = new BalanceIndexer(
@@ -37,7 +37,7 @@ export class Application {
       await Promise.resolve()
       console.log(`Application started: ${config.name}`)
 
-      await clockIndexer.start()
+      await fakeClockIndexer.start()
       await blockNumberIndexer.start()
       await balanceIndexer.start()
     }

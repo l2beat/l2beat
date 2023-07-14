@@ -1,4 +1,4 @@
-import { BaseIndexer } from '@l2beat/uif'
+import { ChildIndexer } from '@l2beat/uif'
 import { Logger } from '@l2beat/backend-tools'
 
 import { setTimeout } from 'timers/promises'
@@ -6,10 +6,10 @@ import { setTimeout } from 'timers/promises'
 import { BalanceRepository } from '../repositories/BalanceRepository'
 import { BlockNumberIndexer } from './BlockNumberIndexer'
 
-export class BalanceIndexer extends BaseIndexer {
+export class BalanceIndexer extends ChildIndexer {
   constructor(
     logger: Logger,
-    private readonly blockNumberIndexer: BlockNumberIndexer,
+    blockNumberIndexer: BlockNumberIndexer,
     private readonly balanceRepository: BalanceRepository,
   ) {
     super(logger, [blockNumberIndexer])

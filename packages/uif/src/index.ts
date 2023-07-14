@@ -1,2 +1,2 @@
-export { BaseIndexer } from './BaseIndexer'
+export * from './BaseIndexer'
 export * from './Indexer'

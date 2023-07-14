@@ -3,15 +3,16 @@ export type IndexerEffect =
   | InvalidateEffect
   | SetSafeHeightEffect
   | NotifyReadyEffect
+  | TickEffect
 
 export interface UpdateEffect {
   type: 'Update'
-  to: number
+  targetHeight: number
 }
 
 export interface InvalidateEffect {
   type: 'Invalidate'
-  to: number
+  targetHeight: number
 }
 
 export interface SetSafeHeightEffect {
@@ -22,4 +23,8 @@ export interface SetSafeHeightEffect {
 export interface NotifyReadyEffect {
   type: 'NotifyReady'
   parentIndices: number[]
+}
+
+export interface TickEffect {
+  type: 'Tick'
 }

@@ -23,7 +23,7 @@ describe(indexerReducer.name, () => {
       })
       expect(effects).toEqual([
         { type: 'SetSafeHeight', safeHeight: 0 },
-        { type: 'Invalidate', to: 0 },
+        { type: 'Invalidate', targetHeight: 0 },
       ])
     })
 
@@ -32,7 +32,7 @@ describe(indexerReducer.name, () => {
       const [state, effects] = reduceWithIndexerReducer(initState, [
         { type: 'Initialized', safeHeight: 0, childCount: 0 },
         { type: 'ParentUpdated', index: 0, safeHeight: 0 },
-        { type: 'InvalidateSucceeded', height: 0 },
+        { type: 'InvalidateSucceeded', targetHeight: 0 },
       ])
 
       expect(state).toEqual({
@@ -92,7 +92,7 @@ describe(indexerReducer.name, () => {
         })
         expect(effects).toEqual([
           { type: 'SetSafeHeight', safeHeight: 100 },
-          { type: 'Invalidate', to: 100 },
+          { type: 'Invalidate', targetHeight: 100 },
         ])
       })
 
@@ -114,7 +114,7 @@ describe(indexerReducer.name, () => {
         })
         expect(effects).toEqual([
           { type: 'SetSafeHeight', safeHeight: 100 },
-          { type: 'Invalidate', to: 100 },
+          { type: 'Invalidate', targetHeight: 100 },
         ])
       })
 
@@ -136,7 +136,7 @@ describe(indexerReducer.name, () => {
         })
         expect(effects).toEqual([
           { type: 'SetSafeHeight', safeHeight: 200 },
-          { type: 'Invalidate', to: 200 },
+          { type: 'Invalidate', targetHeight: 200 },
         ])
       })
 
@@ -182,7 +182,7 @@ describe(indexerReducer.name, () => {
         })
         expect(effects2).toEqual([
           { type: 'SetSafeHeight', safeHeight: 50 },
-          { type: 'Invalidate', to: 50 },
+          { type: 'Invalidate', targetHeight: 50 },
         ])
       })
 
@@ -192,7 +192,7 @@ describe(indexerReducer.name, () => {
           { type: 'Initialized', safeHeight: 50, childCount: 0 },
           { type: 'ParentUpdated', index: 0, safeHeight: 100 },
           { type: 'ParentUpdated', index: 1, safeHeight: 150 },
-          { type: 'InvalidateSucceeded', height: 50 },
+          { type: 'InvalidateSucceeded', targetHeight: 50 },
         ])
 
         expect(state).toEqual({
@@ -208,7 +208,7 @@ describe(indexerReducer.name, () => {
           ],
         })
 
-        expect(effects).toEqual([{ type: 'Update', to: 100 }])
+        expect(effects).toEqual([{ type: 'Update', targetHeight: 100 }])
       })
 
       it('notifies ready when not started', () => {
@@ -258,7 +258,7 @@ describe(indexerReducer.name, () => {
           ],
         })
 
-        expect(effects).toEqual([{ type: 'Update', to: 150 }])
+        expect(effects).toEqual([{ type: 'Update', targetHeight: 150 }])
       })
 
       it('invalidates to parent height', () => {
@@ -283,7 +283,7 @@ describe(indexerReducer.name, () => {
         expect(effects).toEqual([
           { type: 'SetSafeHeight', safeHeight: 50 },
           { type: 'NotifyReady', parentIndices: [0] },
-          { type: 'Invalidate', to: 50 },
+          { type: 'Invalidate', targetHeight: 50 },
         ])
       })
 
@@ -324,7 +324,7 @@ describe(indexerReducer.name, () => {
 
         expect(effects2).toEqual([
           { type: 'NotifyReady', parentIndices: [0] },
-          { type: 'Invalidate', to: 50 },
+          { type: 'Invalidate', targetHeight: 50 },
         ])
       })
     })
@@ -348,11 +348,11 @@ describe(indexerReducer.name, () => {
           parents: [{ safeHeight: 200, initialized: true, waiting: false }],
         })
 
-        expect(effects).toEqual([{ type: 'Update', to: 200 }])
+        expect(effects).toEqual([{ type: 'Update', targetHeight: 200 }])
 
         const [state2, effects2] = reduceWithIndexerReducer(state, [
           { type: 'ParentUpdated', index: 0, safeHeight: 50 },
-          { type: 'UpdateSucceeded', from: 100, height: 200 },
+          { type: 'UpdateSucceeded', from: 100, targetHeight: 200 },
         ])
 
         expect(state2).toEqual({
@@ -367,7 +367,7 @@ describe(indexerReducer.name, () => {
         expect(effects2).toEqual([
           { type: 'SetSafeHeight', safeHeight: 50 },
           { type: 'NotifyReady', parentIndices: [0] },
-          { type: 'Invalidate', to: 50 },
+          { type: 'Invalidate', targetHeight: 50 },
         ])
       })
     })
@@ -393,7 +393,7 @@ function getAfterInit({
     })),
     {
       type: 'InvalidateSucceeded',
-      height: Math.min(safeHeight, ...parentHeights),
+      targetHeight: Math.min(safeHeight, ...parentHeights),
     },
   ])
 

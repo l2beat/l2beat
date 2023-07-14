@@ -9,6 +9,7 @@ import {
   InvalidateEffect,
   NotifyReadyEffect,
   SetSafeHeightEffect,
+  TickEffect,
   UpdateEffect,
 } from './IndexerEffect'
 import { getInitialState, indexerReducer } from './indexerReducer'
@@ -31,15 +32,24 @@ export abstract class BaseIndexer implements Indexer {
   abstract setSafeHeight(height: number): Promise<void>
 
   /**
-   * @param from - inclusive
+   * To be used in ChildIndexer.
+   *
+   * @param from - current height of the indexer, exclusive
    * @param to - inclusive
    */
   abstract update(from: number, to: number): Promise<number>
 
   /**
-   * @param to - every value > `to` is invalid, but `to` itself is valid
+   * Only to be used in RootIndexer. It provides a way to start the height
+   * update process.
    */
-  abstract invalidate(to: number): Promise<void>
+  abstract tick(): Promise<number>
+
+  /**
+   * @param targetHeight - every value > `targetHeight` is invalid, but `targetHeight` itself is valid
+   */
+  // TODO: This function can retur Promise<number>
+  abstract invalidate(targetHeight: number): Promise<void>
 
   private state: IndexerState
   private started = false
@@ -92,7 +102,8 @@ export abstract class BaseIndexer implements Indexer {
   private dispatch(action: IndexerAction): void {
     const [newState, effects] = indexerReducer(this.state, action)
     this.state = newState
-    this.logger.debug('Dispatched', { action, newState: this.state, effects })
+    this.logger.debug('Action', { action })
+    this.logger.trace('State', { state: newState, effects })
 
     // TODO: check if this doesn't result in stack overflow
     effects.forEach((effect) => {
@@ -105,39 +116,85 @@ export abstract class BaseIndexer implements Indexer {
           return void this.executeSetSafeHeight(effect)
         case 'NotifyReady':
           return this.executeNotifyReady(effect)
+        case 'Tick':
+          return this.executeTick(effect)
         default:
           return assertUnreachable(effect)
       }
     })
   }
 
+  // #region Child methods
+
   private async executeUpdate(effect: UpdateEffect): Promise<void> {
+    // TODO: maybe from should be inclusive?
     const from = this.state.height
     try {
-      const to = await this.update(from, effect.to)
-      if (to < from || to > effect.to) {
+      const to = await this.update(from, effect.targetHeight)
+      if (to > effect.targetHeight) {
         this.logger.error('Update returned invalid height', {
           returned: to,
-          min: from,
-          max: effect.to,
+          max: effect.targetHeight,
         })
-        this.dispatch({ type: 'UpdateFailed', from, height: effect.to })
+        this.dispatch({
+          type: 'UpdateFailed',
+          from,
+          targetHeight: effect.targetHeight,
+        })
       } else {
-        this.dispatch({ type: 'UpdateSucceeded', from, height: to })
+        this.dispatch({ type: 'UpdateSucceeded', from, targetHeight: to })
       }
     } catch (e) {
       this.logger.error('Update failed', e)
-      this.dispatch({ type: 'UpdateFailed', from, height: effect.to })
+      this.dispatch({
+        type: 'UpdateFailed',
+        from,
+        targetHeight: effect.targetHeight,
+      })
     }
   }
 
+  private executeNotifyReady(effect: NotifyReadyEffect): void {
+    this.parents.forEach((parent, index) => {
+      if (effect.parentIndices.includes(index)) {
+        parent.notifyReady(this)
+      }
+    })
+  }
+
+  // #endregion
+  // #region Root methods
+
+  private async executeTick(effect: TickEffect): Promise<void> {
+    try {
+      const safeHeight = await this.tick()
+      this.dispatch({ type: 'TickSucceeded', safeHeight })
+    } catch (e) {
+      this.logger.error('Tick failed', e)
+      this.dispatch({ type: 'TickFailed' })
+    }
+  }
+
+  protected scheduleTick(): void {
+    this.dispatch({ type: 'Tick' })
+  }
+
+  // #endregion
+  // #region Common methods
+
   private async executeInvalidate(effect: InvalidateEffect): Promise<void> {
     try {
-      await this.invalidate(effect.to)
-      this.dispatch({ type: 'InvalidateSucceeded', height: effect.to })
+      await this.invalidate(effect.targetHeight)
+      this.dispatch({
+        type: 'InvalidateSucceeded',
+        targetHeight: effect.targetHeight,
+      })
     } catch (e) {
       this.logger.error('Invalidate failed', e)
-      this.dispatch({ type: 'InvalidateFailed', height: effect.to })
+      this.dispatch({
+        type: 'InvalidateFailed',
+        targetHeight: effect.targetHeight,
+      })
     }
   }
 
@@ -150,11 +207,37 @@ export abstract class BaseIndexer implements Indexer {
     )
   }
 
-  private executeNotifyReady(effect: NotifyReadyEffect): void {
-    this.parents.forEach((parent, index) => {
-      if (effect.parentIndices.includes(index)) {
-        parent.notifyReady(this)
-      }
-    })
+  // #endregion
+}
+
+export abstract class RootIndexer extends BaseIndexer {
+  constructor(logger: Logger) {
+    super(logger, [])
+  }
+
+  override async update(): Promise<number> {
+    throw new Error('RootIndexer cannot update')
+  }
+
+  override async invalidate(): Promise<void> {
+    throw new Error('RootIndexer cannot invalidate')
+  }
+
+  override async getSafeHeight(): Promise<number> {
+    return this.tick()
+  }
+
+  override async setSafeHeight(): Promise<void> {
+    return Promise.resolve()
+  }
+}
+
+export abstract class ChildIndexer extends BaseIndexer {
+  constructor(logger: Logger, parents: Indexer[]) {
+    super(logger, parents)
+  }
+
+  override async tick(): Promise<number> {
+    throw new Error('ChildIndexer cannot tick')
   }
 }

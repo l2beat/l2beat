@@ -62,10 +62,12 @@ export function indexerReducer(
     }
     case 'UpdateSucceeded': {
       assertStatus(state.status, 'updating')
-      return continueOperations(
-        { ...state, status: 'idle', height: action.height },
-        true,
-      )
+      if (action.targetHeight >= state.height) {
+        state = { ...state, status: 'idle', height: action.targetHeight }
+      } else {
+        state = { ...state, status: 'idle', targetHeight: action.targetHeight }
+      }
+      return continueOperations(state, true)
     }
     case 'UpdateFailed': {
       assertStatus(state.status, 'updating')
@@ -78,7 +80,7 @@ export function indexerReducer(
       return continueOperations({
         ...state,
         status: 'idle',
-        height: action.height,
+        height: action.targetHeight,
       })
     }
     case 'InvalidateFailed': {
@@ -86,9 +88,34 @@ export function indexerReducer(
       // TODO: retry, exponential back-off
       return [{ ...state, status: 'errored' }, []]
     }
+    case 'Tick': {
+      assertRoot(state)
+      assertStatus(state.status, 'idle')
+      // TODO: status = ticking????
+      return [{ ...state, status: 'updating' }, [{ type: 'Tick' }]]
+    }
+    case 'TickSucceeded': {
+      assertRoot(state)
+      return [
+        // TODO: should we set height also?
+        { ...state, status: 'idle', safeHeight: action.safeHeight },
+        [{ type: 'SetSafeHeight', safeHeight: action.safeHeight }],
+      ]
+    }
+    case 'TickFailed': {
+      assertRoot(state)
+      return [{ ...state, status: 'errored' }, []]
+    }
     default:
       return assertUnreachable(action)
   }
+}
+
+function assertRoot(state: IndexerState) {
+  assert(
+    state.parents.length === 0,
+    'Tick actions should only be called on root',
+  )
 }
 
 function assertStatus(
@@ -104,10 +131,23 @@ function assertStatus(
 function finishInitialization(
   state: IndexerState,
 ): IndexerReducerResult | undefined {
-  if (state.status !== 'init') {
+  if (state.status !== 'init' || !state.initializedSelf) {
     return
   }
-  if (state.initializedSelf && state.parents.every((x) => x.initialized)) {
+
+  if (state.parents.length === 0) {
+    return [
+      {
+        ...state,
+        status: 'idle',
+        safeHeight: state.height,
+        targetHeight: state.height,
+      },
+      [{ type: 'SetSafeHeight', safeHeight: state.height }],
+    ]
+  }
+
+  if (state.parents.every((x) => x.initialized)) {
     const height = Math.min(
       ...state.parents.map((x) => x.safeHeight),
       state.height,
@@ -122,7 +162,7 @@ function finishInitialization(
       },
       [
         { type: 'SetSafeHeight', safeHeight: height },
-        { type: 'Invalidate', to: height },
+        { type: 'Invalidate', targetHeight: height },
       ],
     ]
   }
@@ -207,9 +247,13 @@ function continueOperations(
   }
 
   if (state.targetHeight > state.height && state.status === 'idle') {
+    // this is the only difference (I think) that is tricky when having one
+    // continueOperations function for root and child indexer
+    // root indexer will call Tick, child indexer will call Update
+    const syncAction = state.parents.length > 0 ? 'Update' : 'Tick'
     return [
       { ...state, status: 'updating' },
-      [...effects, { type: 'Update', to: state.targetHeight }],
+      [...effects, { type: syncAction, targetHeight: state.targetHeight }],
     ]
   }
 
@@ -223,7 +267,7 @@ function continueOperations(
 
   return [
     { ...state, status: 'invalidating' },
-    [...effects, { type: 'Invalidate', to: state.targetHeight }],
+    [...effects, { type: 'Invalidate', targetHeight: state.targetHeight }],
   ]
 }
 

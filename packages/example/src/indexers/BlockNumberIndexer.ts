@@ -1,17 +1,17 @@
-import { BaseIndexer } from '@l2beat/uif'
+import { ChildIndexer } from '@l2beat/uif'
 import { Logger } from '@l2beat/backend-tools'
 
 import { BlockNumberRepository } from '../repositories/BlockNumberRepository'
-import { ClockIndexer } from './ClockIndexer'
+import { FakeClockIndexer } from './FakeClockIndexer'
 import { setTimeout } from 'timers/promises'
 
-export class BlockNumberIndexer extends BaseIndexer {
+export class BlockNumberIndexer extends ChildIndexer {
   constructor(
     logger: Logger,
-    private readonly clockIndexer: ClockIndexer,
+    fakeClockIndexer: FakeClockIndexer,
     private readonly blockNumberRepository: BlockNumberRepository,
   ) {
-    super(logger, [clockIndexer])
+    super(logger, [fakeClockIndexer])
   }
 
   override async update(from: number, to: number): Promise<number> {
