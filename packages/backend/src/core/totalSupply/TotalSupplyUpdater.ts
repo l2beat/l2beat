@@ -47,7 +47,7 @@ export class TotalSupplyUpdater {
 
     assert(
       this.totalSupplyProvider.getChainId() === this.chainId,
-      'ChainId mismatch between totalSupplyProvider and totalSupplyUpdater provider',
+      'ChainId mismatch between totalSupplyProvider and totalSupplyUpdater',
     )
   }
 
