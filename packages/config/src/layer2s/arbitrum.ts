@@ -1,4 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
@@ -113,6 +119,18 @@ export const arbitrum: Layer2 = {
   config: {
     associatedTokens: ['ARB'],
     nativeL2TokensIncludedInTVL: ['ARB'],
+    externalAssets: {
+      chainId: ChainId.ARBITRUM,
+      assets: [
+        {
+          assetId: AssetId.USDC,
+          tokenAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+          sinceTimestamp: new UnixTime(1667209872),
+          decimals: 6,
+          premintHolderAddresses: [],
+        },
+      ],
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
