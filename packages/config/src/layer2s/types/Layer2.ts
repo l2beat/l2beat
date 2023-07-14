@@ -87,21 +87,21 @@ export interface Layer2Config {
 }
 
 export interface Layer2ExternalAssets {
-    /** Id of the external chain on which assets are held. */
-    chainId: ChainId
-    /** List of assets to include. */
-    assets: {
-        /** Id of a given asset. */
-        assetId: AssetId
-        /** L2 contract address of the asset. */
-        tokenAddress: string
-        /** "Creation time" of a given asset, we assume that it did not exists before that time. */
-        sinceTimestamp: UnixTime
-        /** How fine grained the asset is */
-        decimals: number
-        /** List of L2 addresses which hold the premint asset */
-        premintHolderAddresses: string[]
-    }[]
+  /** Id of the external chain on which assets are held. */
+  chainId: ChainId
+  /** List of assets to include. */
+  assets: {
+    /** Id of a given asset. */
+    assetId: AssetId
+    /** L2 contract address of the asset. */
+    tokenAddress: string
+    /** "Creation time" of a given asset, we assume that it did not exists before that time. */
+    sinceTimestamp: UnixTime
+    /** How fine grained the asset is */
+    decimals: number
+    /** List of L2 addresses which hold the premint asset */
+    premintHolderAddresses: string[]
+  }[]
 }
 
 export type Layer2Category =
