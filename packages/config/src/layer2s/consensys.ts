@@ -46,7 +46,7 @@ export const linea: Layer2 = {
     name: 'Linea',
     slug: 'linea',
     description:
-      'Linea is a zkRollup powered by Consensys zkEVM, designed to scale the Ethereum network. At present, it is undergoing further testing and optimization on the Goerli testnet before deployment.',
+      'Linea is a zkRollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
     purpose: 'Universal',
     category: 'ZK Rollup',
     links: {
