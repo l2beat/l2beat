@@ -1,5 +1,11 @@
 import { Logger } from '@l2beat/shared'
-import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  AssetId,
+  ChainId,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -84,9 +90,13 @@ export class TotalSupplyUpdater {
       timestamp,
     )
 
-    const missing = getMissingData(timestamp, known, this.tokens)
+    const missingTotalSupplies = getMissingTotalSupplies(
+      timestamp,
+      known,
+      this.tokens,
+    )
 
-    if (missing.length > 0) {
+    if (missingTotalSupplies.length > 0) {
       const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
         timestamp,
       )
@@ -94,7 +104,7 @@ export class TotalSupplyUpdater {
       assert(blockNumber, 'No timestamp for this block number')
 
       const totalSupplies = await this.totalSupplyProvider.getTotalSupplies(
-        missing,
+        missingTotalSupplies,
         timestamp,
         blockNumber,
       )
@@ -120,32 +130,35 @@ export class TotalSupplyUpdater {
   }
 }
 
-export function getMissingData(
+export function getMissingTotalSupplies(
   timestamp: UnixTime,
   known: TotalSupplyRecord[],
   tokens: TotalSupplyTokensConfig[],
 ): TotalSupplyQuery[] {
-  const knownSet = new Set(
-    // FIXME: here? how to distinguish properly?
-    known.map(({ assetId }) => `${assetId.toString()}`),
+  function makeKey(assetId: AssetId) {
+    return `${assetId.toString()}`
+  }
+
+  const knownTotalSupplies = new Set(
+    known.map(({ assetId }) => makeKey(assetId)),
   )
 
-  const missing: TotalSupplyQuery[] = []
+  const tokensToQuery: TotalSupplyQuery[] = []
 
   for (const token of tokens) {
     if (token.sinceTimestamp.gt(timestamp)) {
       continue
     }
 
-    const entry: TotalSupplyQuery = {
+    const queryCandidate: TotalSupplyQuery = {
       tokenAddress: token.tokenAddress,
       assetId: token.assetId,
     }
 
-    if (!knownSet.has(`${entry.assetId.toString()}`)) {
-      missing.push(entry)
+    if (!knownTotalSupplies.has(makeKey(queryCandidate.assetId))) {
+      tokensToQuery.push(queryCandidate)
     }
   }
 
-  return missing
+  return tokensToQuery
 }
