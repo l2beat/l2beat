@@ -161,7 +161,7 @@ export const starknet: Layer2 = {
     },
 
     dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
+      ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
       sources: [
         {
           contract: 'Starknet',

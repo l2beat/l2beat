@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { AssetId, ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   KnowledgeNugget,
@@ -78,10 +78,30 @@ export interface Layer2Config {
   associatedTokens?: string[]
   /** Native L2 tokens should be also marked as associated tokens, however often associated tokens are not native L2 tokens. This has to be kept manually in sync with code executed in CBVUpdater.update.  */
   nativeL2TokensIncludedInTVL?: string[]
+  /** Assets external to L1 which should be incorporated into the aggregated TVL report for a given project.  */
+  externalAssets?: Layer2ExternalAssets
   /** List of contracts in which L1 funds are locked */
   escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
+}
+
+export interface Layer2ExternalAssets {
+  /** Id of the external chain on which assets are held. */
+  chainId: ChainId
+  /** List of assets to include. */
+  assets: {
+    /** Id of a given asset. */
+    assetId: AssetId
+    /** L2 contract address of the asset. */
+    tokenAddress: string
+    /** "Creation time" of a given asset, we assume that it did not exists before that time. */
+    sinceTimestamp: UnixTime
+    /** How fine grained the asset is */
+    decimals: number
+    /** List of L2 addresses which hold the premint asset */
+    premintHolderAddresses: string[]
+  }[]
 }
 
 export type Layer2Category =
