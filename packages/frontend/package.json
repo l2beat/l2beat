@@ -7,7 +7,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "NODE_ENV=production gulp build",
-    "prebuild": "yarn clean",
+    "build:dependencies": "cd ../.. && yarn build:dependencies",
     "clean": "rm -rf build",
     "format:fix": "prettier --write .",
     "format": "prettier --check .",
@@ -20,12 +20,11 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
-    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared,config} -recsm build --module es6) && storybook build",
+    "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared-pure,config} -recsm build --module es6) && storybook build",
     "storybook:screenshot": "yarn storycap --serverCmd \"npx http-server ./storybook-static -p 9001\" http://localhost:9001 --captureTimeout 50000 --parallel 8"
   },
   "dependencies": {
     "@l2beat/config": "*",
-    "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "@types/express": "^4.17.16",
     "@types/fs-extra": "^9.0.13",

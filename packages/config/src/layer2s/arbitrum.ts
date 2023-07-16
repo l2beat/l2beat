@@ -1,4 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
@@ -113,6 +119,18 @@ export const arbitrum: Layer2 = {
   config: {
     associatedTokens: ['ARB'],
     nativeL2TokensIncludedInTVL: ['ARB'],
+    externalAssets: {
+      chainId: ChainId.ARBITRUM,
+      assets: [
+        {
+          assetId: AssetId.USDC,
+          tokenAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+          sinceTimestamp: new UnixTime(1667209872),
+          decimals: 6,
+          premintHolderAddresses: [],
+        },
+      ],
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
@@ -220,7 +238,7 @@ export const arbitrum: Layer2 = {
         {
           contract: 'RollupProxy',
           references: [
-            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L55',
+            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L55',
           ],
         },
       ],
@@ -251,7 +269,7 @@ export const arbitrum: Layer2 = {
         },
         {
           text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
-          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F61#L288',
+          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L288',
         },
       ],
     },

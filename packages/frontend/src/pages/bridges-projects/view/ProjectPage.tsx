@@ -24,11 +24,6 @@ export interface ProjectPageProps {
 }
 
 export function ProjectPage(props: ProjectPageProps) {
-  const project = {
-    title: props.projectHeader.title,
-    icon: props.projectHeader.icon,
-  }
-
   const sections = props.projectDetails.items.filter(
     (i): i is BridgeDetailsSection => !i.excludeFromNavigation,
   )
@@ -42,9 +37,18 @@ export function ProjectPage(props: ProjectPageProps) {
       <PageContent mobileFull>
         <BridgesMvpWarning />
         <ProjectHeader {...props.projectHeader} />
-        <div className="grid grid-cols-8 gap-x-12">
-          <div className="col-span-2 mt-16 hidden md:block">
-            <DesktopProjectNavigation project={project} sections={sections} />
+
+        <div className="gap-x-12 md:flex">
+          <div className="mt-16 hidden max-w-[240px] shrink-0 md:block">
+            <DesktopProjectNavigation
+              project={{
+                title: props.projectHeader.title,
+                icon: props.projectHeader.icon,
+                showProjectUnderReview:
+                  props.projectHeader.showProjectUnderReview,
+              }}
+              sections={sections}
+            />
           </div>
           <div className="col-span-full md:col-span-6">
             <ProjectDetails {...props.projectDetails} />

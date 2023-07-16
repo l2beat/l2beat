@@ -2,7 +2,7 @@ import { TokenInfo } from '@l2beat/config'
 import { Logger } from '@l2beat/shared'
 import {
   AssetId,
-  Bytes,
+  ChainId,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
@@ -16,14 +16,16 @@ import {
   BalanceRepository,
 } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { BalanceProject } from './BalanceProject'
 import { BalanceUpdater, getMissingData } from './BalanceUpdater'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
+import { EthereumBalanceProvider } from './providers/EthereumBalanceProvider'
 
 describe(BalanceUpdater.name, () => {
+  const chainId = ChainId.ETHEREUM
+
   describe(BalanceUpdater.prototype.start.name, () => {
     const NOW = UnixTime.now().toStartOf('hour')
 
@@ -40,20 +42,25 @@ describe(BalanceUpdater.name, () => {
 
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
         getByConfigHash: async () => [NOW, NOW.add(1, 'hours')],
-        add: async (x) => x.configHash,
+        add: async (x) =>
+          `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
       })
       const balanceRepository = mockObject<BalanceRepository>({
         getByTimestamp: async () => [],
       })
+      const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
+        getChainId: () => chainId,
+      })
 
       const balanceUpdater = new BalanceUpdater(
-        mockObject<MulticallClient>(),
+        ethereumBalanceProvider,
         mockObject<BlockNumberUpdater>(),
         balanceRepository,
         balanceStatusRepository,
         clock,
         [],
         Logger.SILENT,
+        chainId,
       )
 
       await balanceUpdater.start()
@@ -63,10 +70,12 @@ describe(BalanceUpdater.name, () => {
         expect(balanceStatusRepository.add).toHaveBeenNthCalledWith(1, {
           configHash: getBalanceConfigHash([]),
           timestamp: NOW.add(2, 'hours'),
+          chainId,
         })
         expect(balanceStatusRepository.add).toHaveBeenNthCalledWith(2, {
           configHash: getBalanceConfigHash([]),
           timestamp: NOW.add(-1, 'hours'),
+          chainId,
         })
       })
     })
@@ -74,6 +83,7 @@ describe(BalanceUpdater.name, () => {
 
   describe(BalanceUpdater.prototype.update.name, () => {
     it('fetches and saves missing datapoints', async () => {
+      const blockNumber = 1234
       const holderAddress = EthereumAddress.random()
       const projects: BalanceProject[] = [
         {
@@ -93,32 +103,44 @@ describe(BalanceUpdater.name, () => {
       ]
 
       const balanceRepository = mockObject<BalanceRepository>({
-        getByTimestamp: async (timestamp) => [
-          { assetId: AssetId('baz'), timestamp, balance: 1n, holderAddress },
+        getByTimestamp: async (chainId, timestamp) => [
+          mockBalance(AssetId('baz'), timestamp, holderAddress, chainId),
         ],
         addOrUpdateMany: async () => 0,
       })
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
-        add: async (x) => x.configHash,
+        add: async (x) =>
+          `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
       })
+      const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
+        getChainId: () => chainId,
+      })
+
+      const blockNumberUpdater = mockObject<BlockNumberUpdater>({
+        getBlockNumberWhenReady: async () => blockNumber,
+      })
+
       const balanceUpdater = new BalanceUpdater(
-        mockObject<MulticallClient>(),
-        mockObject<BlockNumberUpdater>(),
+        ethereumBalanceProvider,
+        blockNumberUpdater,
         balanceRepository,
         balanceStatusRepository,
         mockObject<Clock>(),
         projects,
         Logger.SILENT,
+        chainId,
       )
 
       const timestamp = new UnixTime(2000)
       const balances: BalanceRecord[] = [
-        { assetId: AssetId('foo'), timestamp, balance: 1n, holderAddress },
-        { assetId: AssetId('bar'), timestamp, balance: 1n, holderAddress },
+        mockBalance(AssetId('foo'), timestamp, holderAddress, chainId),
+        mockBalance(AssetId('bar'), timestamp, holderAddress, chainId),
       ]
       const fetchBalances =
-        mockFn<typeof balanceUpdater.fetchBalances>().resolvesTo(balances)
-      balanceUpdater.fetchBalances = fetchBalances
+        mockFn<typeof ethereumBalanceProvider.fetchBalances>().resolvesTo(
+          balances,
+        )
+      ethereumBalanceProvider.fetchBalances = fetchBalances
 
       await balanceUpdater.update(timestamp)
       expect(fetchBalances).toHaveBeenOnlyCalledWith(
@@ -127,6 +149,7 @@ describe(BalanceUpdater.name, () => {
           { assetId: AssetId('bar'), holder: holderAddress },
         ],
         timestamp,
+        blockNumber,
       )
       expect(balanceRepository.addOrUpdateMany).toHaveBeenOnlyCalledWith(
         balances,
@@ -134,6 +157,7 @@ describe(BalanceUpdater.name, () => {
       expect(balanceStatusRepository.add).toHaveBeenOnlyCalledWith({
         configHash: getBalanceConfigHash(projects),
         timestamp,
+        chainId,
       })
     })
 
@@ -157,23 +181,28 @@ describe(BalanceUpdater.name, () => {
       ]
 
       const balanceRepository = mockObject<BalanceRepository>({
-        getByTimestamp: async (timestamp) => [
-          { assetId: AssetId('foo'), timestamp, balance: 1n, holderAddress },
-          { assetId: AssetId('bar'), timestamp, balance: 1n, holderAddress },
-          { assetId: AssetId('baz'), timestamp, balance: 1n, holderAddress },
+        getByTimestamp: async (chainId, timestamp) => [
+          mockBalance(AssetId('foo'), timestamp, holderAddress, chainId),
+          mockBalance(AssetId('bar'), timestamp, holderAddress, chainId),
+          mockBalance(AssetId('baz'), timestamp, holderAddress, chainId),
         ],
       })
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
-        add: async (x) => x.configHash,
+        add: async (x) =>
+          `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
+      })
+      const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
+        getChainId: () => chainId,
       })
       const balanceUpdater = new BalanceUpdater(
-        mockObject<MulticallClient>(),
+        ethereumBalanceProvider,
         mockObject<BlockNumberUpdater>(),
         balanceRepository,
         balanceStatusRepository,
         mockObject<Clock>(),
         projects,
         Logger.SILENT,
+        chainId,
       )
 
       const timestamp = new UnixTime(2000)
@@ -182,55 +211,8 @@ describe(BalanceUpdater.name, () => {
       expect(balanceStatusRepository.add).toHaveBeenOnlyCalledWith({
         configHash: getBalanceConfigHash(projects),
         timestamp,
+        chainId,
       })
-    })
-  })
-
-  describe(BalanceUpdater.prototype.fetchBalances.name, () => {
-    it('performs a multicall for missing data', async () => {
-      const multicallClient = mockObject<MulticallClient>({
-        multicall: async () => [
-          { success: true, data: Bytes.fromNumber(69).padStart(32) },
-          { success: true, data: Bytes.fromNumber(420).padStart(32) },
-        ],
-      })
-      const blockNumberUpdater = mockObject<BlockNumberUpdater>({
-        getBlockNumberWhenReady: async () => 1234,
-      })
-      const balanceUpdater = new BalanceUpdater(
-        multicallClient,
-        blockNumberUpdater,
-        mockObject<BalanceRepository>(),
-        mockObject<BalanceStatusRepository>(),
-        mockObject<Clock>(),
-        [],
-        Logger.SILENT,
-      )
-
-      const timestamp = UnixTime.now()
-      const holderA = EthereumAddress.random()
-      const holderB = EthereumAddress.random()
-      const results = await balanceUpdater.fetchBalances(
-        [
-          { assetId: AssetId.DAI, holder: holderA },
-          { assetId: AssetId.ETH, holder: holderB },
-        ],
-        timestamp,
-      )
-      expect(results).toEqual([
-        {
-          assetId: AssetId.DAI,
-          holderAddress: holderA,
-          balance: 69n,
-          timestamp,
-        },
-        {
-          assetId: AssetId.ETH,
-          holderAddress: holderB,
-          balance: 420n,
-          timestamp,
-        },
-      ])
     })
   })
 
@@ -268,12 +250,14 @@ describe(BalanceUpdater.name, () => {
           assetId: AssetId('bar'),
           holderAddress: escrow,
           balance: 1n,
+          chainId: chainId,
         },
         {
           timestamp,
           assetId: AssetId('baz'),
           holderAddress: escrow,
           balance: 1n,
+          chainId,
         },
       ]
 
@@ -298,3 +282,17 @@ describe(BalanceUpdater.name, () => {
     }
   }
 })
+function mockBalance(
+  assetId: AssetId,
+  timestamp: UnixTime,
+  holderAddress: EthereumAddress,
+  chainId: ChainId,
+): BalanceRecord {
+  return {
+    assetId,
+    timestamp,
+    balance: 1n,
+    holderAddress,
+    chainId,
+  }
+}

@@ -12,6 +12,8 @@ export interface ProjectContracts {
   references?: ProjectReference[]
   /** The description and research is incomplete */
   isIncomplete?: boolean
+  /** The description and research is under review */
+  isUnderReview?: boolean
 }
 
 export type ProjectContract =

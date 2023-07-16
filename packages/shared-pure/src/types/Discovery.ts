@@ -44,12 +44,14 @@ export const ManualProxyType = z.enum([
   'zkSync Lite proxy',
   'zkSpace proxy',
   'Eternal Storage proxy',
+  'Polygon Extension proxy',
 ])
 
 export type UpgradeabilityParameters =
   | ImmutableUpgradeability
   | GnosisSafeUpgradeability
   | EIP1967ProxyUpgradeability
+  | PolygonProxyUpgradeability
   | ZeppelinOSProxyUpgradeability
   | StarkWareProxyUpgradeability
   | StarkWareDiamondUpgradeability
@@ -61,6 +63,7 @@ export type UpgradeabilityParameters =
   | EIP2535ProxyUpgradeability
   | ZkSyncLiteProxyUpgradeability
   | EternalStorageProxyUpgradeability
+  | PolygonExtensionProxyUpgradeability
   | ZkSpaceProxyUpgradeability
 
 export interface ImmutableUpgradeability {
@@ -74,6 +77,12 @@ export interface GnosisSafeUpgradeability {
 
 export interface EIP1967ProxyUpgradeability {
   type: 'EIP1967 proxy'
+  admin: EthereumAddress
+  implementation: EthereumAddress
+}
+
+export interface PolygonProxyUpgradeability {
+  type: 'Polygon proxy'
   admin: EthereumAddress
   implementation: EthereumAddress
 }
@@ -155,6 +164,12 @@ export interface EternalStorageProxyUpgradeability {
   implementation: EthereumAddress
 }
 
+export interface PolygonExtensionProxyUpgradeability {
+  type: 'Polygon Extension proxy'
+  admin: EthereumAddress
+  implementation: EthereumAddress
+  extension: EthereumAddress
+}
 export interface ZkSpaceProxyUpgradeability {
   type: 'zkSpace proxy'
   admin: EthereumAddress

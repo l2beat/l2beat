@@ -3,12 +3,12 @@ import cx from 'classnames'
 import React from 'react'
 
 import { sentimentToTextColor } from '../../utils/risks/color'
+import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { NoInfoCell } from './NoInfoCell'
 
 interface Props {
   item?: ProjectRiskViewEntry
-  isUpcoming?: boolean
 }
 
 export function RiskCell({ item }: Props) {
@@ -18,6 +18,10 @@ export function RiskCell({ item }: Props) {
 
   if (item.value === '' && item.description === 'No information available.') {
     return <UpcomingBadge />
+  }
+
+  if (item.sentiment === 'UnderReview') {
+    return <UnderReviewBadge />
   }
 
   return (

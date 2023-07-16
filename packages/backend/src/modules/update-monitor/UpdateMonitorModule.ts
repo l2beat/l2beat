@@ -9,7 +9,7 @@ import {
   ProxyDetector,
   SourceCodeService,
 } from '@l2beat/discovery'
-import { HttpClient, Logger, MainnetEtherscanClient } from '@l2beat/shared'
+import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
@@ -39,7 +39,7 @@ export function createUpdateMonitorModule(
     'mainnet',
     config.updateMonitor.alchemyApiKey,
   )
-  const etherscanClient = new MainnetEtherscanClient(
+  const etherscanClient = new EtherscanClient(
     http,
     config.updateMonitor.etherscanApiKey,
   )

@@ -11,6 +11,7 @@ export interface ScalingTvlViewEntry {
   warning?: string
   isArchived?: boolean
   isVerified?: boolean
+  showProjectUnderReview?: boolean
   isUpcoming?: boolean
   tvl?: string
   tvlBreakdown?: TVLBreakdownProps

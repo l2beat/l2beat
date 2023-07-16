@@ -73,6 +73,7 @@ export function getProjectDetails(
       type: 'RiskAnalysisSection',
       props: {
         riskValues: getRiskValues(project.riskView),
+        isUnderReview: project.isUnderReview,
         id: 'risk-analysis',
         title: 'Risk Analysis',
       },
@@ -88,6 +89,7 @@ export function getProjectDetails(
           type: project.display.category,
           id: 'stage',
           title: 'Rollup stage',
+          isUnderReview: project.isUnderReview,
         },
       })
     }
@@ -107,6 +109,7 @@ export function getProjectDetails(
           items: section.items,
           id: section.id,
           title: section.title,
+          isUnderReview: section.isUnderReview,
         },
       }),
     )

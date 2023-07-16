@@ -7,12 +7,21 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('polynetwork')
 
+const isPaused = discovery.getContractValue<boolean>(
+  'EthCrossChainManager',
+  'paused',
+)
+const warningText = isPaused
+  ? 'The bridge is currently paused due to an attack occurred on July 2nd, resulting from stolen or misused private keys. For more information, read the postmortem here: https://dedaub.com/blog/poly-chain-hack-postmortem'
+  : ''
+
 export const polynetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('polynetwork'),
   display: {
     name: 'Poly Bridge',
     slug: 'polynetwork',
+    warning: warningText,
     links: {
       websites: ['https://bridge.poly.network/', 'https://poly.network/'],
       apps: ['https://bridge.poly.network/'],
@@ -62,18 +71,7 @@ export const polynetwork: Bridge = {
       {
         address: EthereumAddress('0x250e76987d838a75310c34bf422ea9f1AC4Cc906'),
         sinceTimestamp: new UnixTime(1599099893),
-        tokens: [
-          'ETH',
-          'USDT',
-          'USDC',
-          // 'COW',
-          'WBTC',
-          'DAI',
-          'UNI',
-          'SHIB',
-          'renBTC',
-          'FEI',
-        ],
+        tokens: '*',
       },
       {
         // This new Escrow address has been added on 20 Oct 2022.
@@ -168,23 +166,29 @@ export const polynetwork: Bridge = {
         'Lock Proxy 5',
         'Escrow and proxy contract for the Bridge.',
       ),
-      discovery.getContractDetails(
-        'EthCrossChainManager',
-        'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
-      ),
-      //DUPLICATES???
+      discovery.getContractDetails('EthCrossChainManager', {
+        description:
+          'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
+        pausable: {
+          paused: discovery.getContractValue('EthCrossChainManager', 'paused'),
+          pausableBy: ['EthCrossChainManager'],
+        },
+      }),
       discovery.getContractDetails(
         'EthCrossChainData',
         "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
       ),
-      discovery.getContractDetails(
-        'EthCrossChainData',
-        "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
-      ),
-      discovery.getContractDetails(
-        'EthCrossChainManagerProxy',
-        'Used to proxy requests from LockProxy to EthCrossChainManager.',
-      ),
+      discovery.getContractDetails('EthCrossChainManagerProxy', {
+        description:
+          'Used to proxy requests from LockProxy to EthCrossChainManager.',
+        pausable: {
+          paused: discovery.getContractValue(
+            'EthCrossChainManagerProxy',
+            'paused',
+          ),
+          pausableBy: ['EthCrossChainManager'],
+        },
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -213,6 +217,18 @@ export const polynetwork: Bridge = {
       ],
       name: 'Lock Proxy owners',
       description: 'Can update address of EthCrossChainManagerProxy contract.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Contracts hacked for $611M',
+      date: '2021-08-10T00:00:00.00Z',
+      link: 'https://en.wikipedia.org/wiki/Poly_Network_exploit',
+    },
+    {
+      name: 'Compromised multisig steals funds',
+      date: '2023-07-03T00:00:00.00Z',
+      link: 'https://rekt.news/poly-network-rekt2/',
     },
   ],
 }

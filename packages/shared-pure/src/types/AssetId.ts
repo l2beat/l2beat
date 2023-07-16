@@ -14,6 +14,8 @@ AssetId.DAI = AssetId('dai-dai-stablecoin')
 AssetId.USDT = AssetId('usdt-tether-usd')
 AssetId.USDC = AssetId('usdc-usd-coin')
 AssetId.ETH = AssetId('eth-ether')
+AssetId.OP = AssetId('op-optimism')
+AssetId.ARB = AssetId('arb-arbitrum')
 
 AssetId.fake = function fake(name?: string) {
   if (name) {

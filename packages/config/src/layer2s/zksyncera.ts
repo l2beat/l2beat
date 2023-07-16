@@ -101,18 +101,19 @@ export const zksyncera: Layer2 = {
       value: 'ZK proofs',
       description:
         'Uses PLONK zero-knowledge proof system with KZG commitments.',
+      sentiment: 'good',
       sources: [
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F5#L89',
+            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L89',
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L254',
-            'https://etherscan.io/address/0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc#code#F7#L24',
+            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F1#L254',
+            'https://etherscan.io/address/0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc#code#F1#L24',
           ],
         },
         {
@@ -128,21 +129,19 @@ export const zksyncera: Layer2 = {
       ],
     },
     dataAvailability: {
-      value: 'On chain (SD)',
-      description:
-        'All of the data (SD = state diffs) needed for proof construction is published on chain.',
+      ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
       sources: [
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F5#L71',
+            'https://etherscan.io/address/0x3dB52cE065f728011Ac6732222270b3F2360d919#code#F1#L71',
             'https://etherscan.io/tx/0xef9ad50d9b6a30365e4cc6709a5b7479fb67b8948138149597c49ef614782e1b', // example tx (see calldata)
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L149',
+            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F1#L149',
             'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F11#L41',
           ],
         },
@@ -157,8 +156,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F8#L121',
-            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51',
+            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F1#L121',
+            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F7#L51',
           ],
         },
       ],
@@ -185,7 +184,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F10#L149',
+            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F1#L149',
           ],
         },
       ],
@@ -260,26 +259,6 @@ export const zksyncera: Layer2 = {
           {
             text: 'Withdrawing funds - zkSync documentation',
             href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/bridging-asset.html',
-          },
-        ],
-      },
-      {
-        name: 'Forced exit',
-        description:
-          'If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. \
-          The system is then obliged to service this request. Once the force operation is submitted if the request is serviced the operation \
-          follows the flow of a regular exit. Note that this mechanism is not implemented yet.',
-        risks: [
-          {
-            category: 'Funds can be frozen if',
-            text: 'a user withdrawal request is censored.',
-            isCritical: true,
-          },
-        ],
-        references: [
-          {
-            text: "L1 - L2 interoperability - Developer's documentation",
-            href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
           },
         ],
       },

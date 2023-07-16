@@ -10,6 +10,7 @@ export interface BridgesTvlViewEntry {
   isArchived?: boolean
   isUpcoming?: boolean
   isVerified?: boolean
+  showProjectUnderReview?: boolean
   tvl?: string
   tvlBreakdown?: TVLBreakdownProps
   oneDayChange?: string

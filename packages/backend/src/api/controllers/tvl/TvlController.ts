@@ -1,15 +1,17 @@
 import { Logger } from '@l2beat/shared'
 import {
   AssetId,
+  ChainId,
   ProjectId,
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
+  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { Token } from '../../../model'
-import { AggregateReportRepository } from '../../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import {
   ReportRecord,
   ReportRepository,
@@ -23,7 +25,7 @@ import { generateTvlApiResponse } from './generateTvlApiResponse'
 export class TvlController {
   constructor(
     private readonly reportStatusRepository: ReportStatusRepository,
-    private readonly aggregateReportRepository: AggregateReportRepository,
+    private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
@@ -33,19 +35,22 @@ export class TvlController {
   }
 
   async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
-    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp(
+      ChainId.ETHEREUM,
+      ValueType.CBV,
+    )
     if (!timestamp) {
       return undefined
     }
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
-        this.aggregateReportRepository.getHourly(
+        this.aggregatedReportRepository.getHourly(
           getHourlyMinTimestamp(timestamp),
         ),
-        this.aggregateReportRepository.getSixHourly(
+        this.aggregatedReportRepository.getSixHourly(
           getSixHourlyMinTimestamp(timestamp),
         ),
-        this.aggregateReportRepository.getDaily(),
+        this.aggregatedReportRepository.getDaily(),
         this.reportRepository.getByTimestamp(timestamp),
       ])
     const tvlApiResponse = generateTvlApiResponse(
@@ -65,8 +70,8 @@ export class TvlController {
   ) {
     const balances = reports.map((r) => ({
       timestamp: r.timestamp,
-      usd: r.balanceUsd,
-      asset: r.balance,
+      usd: r.usdValue,
+      asset: r.amount,
     }))
     return getChartPoints(balances, hours, decimals)
   }
@@ -80,7 +85,10 @@ export class TvlController {
     if (!project || !asset) {
       return undefined
     }
-    const timestamp = await this.reportStatusRepository.findLatestTimestamp()
+    const timestamp = await this.reportStatusRepository.findLatestTimestamp(
+      ChainId.ETHEREUM,
+      ValueType.CBV,
+    )
     if (!timestamp) {
       return undefined
     }

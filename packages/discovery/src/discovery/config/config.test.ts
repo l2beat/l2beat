@@ -154,17 +154,40 @@ describe('discovery config.jsonc', () => {
           }
         }
       }
-    }),
-      it('all shared modules exist', async () => {
-        for (const config of configs ?? []) {
-          for (const sharedModule of config.sharedModules) {
-            assert(
-              configs?.some((c) => c.name === sharedModule),
-              `Shared module ${sharedModule} does not exist (${config.name})`,
-            )
+    })
+
+    it('all shared modules exist', async () => {
+      for (const config of configs ?? []) {
+        for (const sharedModule of config.sharedModules) {
+          assert(
+            configs?.some((c) => c.name === sharedModule),
+            `Shared module ${sharedModule} does not exist (${config.name})`,
+          )
+        }
+      }
+    })
+
+    // inversion logic depends on this
+    it('all accessControl fields keys are accessControl', async () => {
+      for (const config of configs ?? []) {
+        for (const override of config.overrides) {
+          if (override.fields === undefined) {
+            continue
+          }
+
+          for (const [key, value] of Object.entries(override.fields)) {
+            if (value.type === 'accessControl') {
+              assert(
+                key === 'accessControl',
+                `${
+                  config.name
+                } - ${override.address.toString()} - accessControl field must be named accessControl`,
+              )
+            }
           }
         }
-      })
+      }
+    })
   })
 
   describe('names', () => {

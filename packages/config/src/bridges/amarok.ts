@@ -116,10 +116,6 @@ export const amarok: Bridge = {
         'Contract that receives messages from other Domains on Ethereum.',
       ),
       discovery.getContractDetails(
-        'MultichainHubConnector',
-        'Contract for sending/receiving messages from mainnet to Binance Smart Chain via Multichain AMB.',
-      ),
-      discovery.getContractDetails(
         'PolygonHubConnector',
         'Contract for sending/receiving messages from mainnet to Polygon via Polygon FxChannel AMB.',
       ),
@@ -135,6 +131,10 @@ export const amarok: Bridge = {
       discovery.getContractDetails(
         'ArbitrumHubConnector',
         'Contract for sending/receiving messages from mainnet to Optimism via Arbitrum AMB transport layer. Note that it reads messages from Arbitrum as soon as Arbitrum state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
+      ),
+      discovery.getContractDetails(
+        'WormholeHubConnector',
+        'Contract for sending/receiving messages using Wormhole.',
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

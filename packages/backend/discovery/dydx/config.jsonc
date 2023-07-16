@@ -113,7 +113,7 @@
         "getTotalInactiveBalanceCurrentEpoch",
         "getTotalInactiveBalanceNextEpoch"
       ],
-      "ignoreInWatchMode": ["totalSupply"],
+      "ignoreInWatchMode": ["totalSupply", "inBlackoutWindow"],
       "fields": {
         "accessControl": {
           "type": "accessControl"

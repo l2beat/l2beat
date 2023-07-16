@@ -1,11 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import {
-  assert,
-  AssetId,
-  EthereumAddress,
-  Hash256,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -13,18 +7,12 @@ import {
   BalanceRepository,
 } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
-import { BalanceCall } from '../../peripherals/ethereum/calls/BalanceCall'
-import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { BalanceProject } from './BalanceProject'
+import { BalanceProvider, BalanceQuery } from './BalanceProvider'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
-
-interface HeldAsset {
-  holder: EthereumAddress
-  assetId: AssetId
-}
 
 export class BalanceUpdater {
   private readonly configHash: Hash256
@@ -32,13 +20,14 @@ export class BalanceUpdater {
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
-    private readonly multicall: MulticallClient,
+    private readonly balanceProvider: BalanceProvider,
     private readonly blockNumberUpdater: BlockNumberUpdater,
     private readonly balanceRepository: BalanceRepository,
     private readonly balanceStatusRepository: BalanceStatusRepository,
     private readonly clock: Clock,
     private readonly projects: BalanceProject[],
     private readonly logger: Logger,
+    private readonly chainId: ChainId,
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getBalanceConfigHash(projects)
@@ -49,24 +38,30 @@ export class BalanceUpdater {
         metricsId: BalanceUpdater.name,
       },
     )
+
+    assert(
+      this.balanceProvider.getChainId() === this.chainId,
+      'ChainId mismatch',
+    )
   }
 
   async getBalancesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
     while (!this.knownSet.has(timestamp.toNumber())) {
       await setTimeout(refreshIntervalMs)
     }
-    return this.balanceRepository.getByTimestamp(timestamp)
+    return this.balanceRepository.getByTimestamp(this.chainId, timestamp)
   }
 
   async start() {
     const known = await this.balanceStatusRepository.getByConfigHash(
+      this.chainId,
       this.configHash,
     )
     for (const timestamp of known) {
       this.knownSet.add(timestamp.toNumber())
     }
 
-    this.logger.info('Started')
+    this.logger.info('Started', { chainId: this.chainId.toString() })
     return this.clock.onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
         // we add to front to sync from newest to oldest
@@ -75,54 +70,53 @@ export class BalanceUpdater {
     })
   }
 
+  // TODO(radomski): Remove all op-optimism/arb-arbitrum tokens from balances.
+  // Don't fetch balances for those two tokens
   async update(timestamp: UnixTime) {
-    this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const known = await this.balanceRepository.getByTimestamp(timestamp)
+    this.logger.debug('Update started', {
+      timestamp: timestamp.toNumber(),
+      chainId: this.chainId.toString(),
+    })
+    const known = await this.balanceRepository.getByTimestamp(
+      this.chainId,
+      timestamp,
+    )
     const missing = getMissingData(timestamp, known, this.projects)
 
     if (missing.length > 0) {
-      const balances = await this.fetchBalances(missing, timestamp)
+      const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
+        timestamp,
+      )
+
+      assert(blockNumber, 'No timestamp for this block number')
+
+      const balances = await this.balanceProvider.fetchBalances(
+        missing,
+        timestamp,
+        blockNumber,
+      )
+
       await this.balanceRepository.addOrUpdateMany(balances)
       this.logger.debug('Updated balances', {
         timestamp: timestamp.toNumber(),
+        chainId: this.chainId.toString(),
       })
     } else {
       this.logger.debug('Skipped updating balances', {
         timestamp: timestamp.toNumber(),
+        chainId: this.chainId.toString(),
       })
     }
     this.knownSet.add(timestamp.toNumber())
     await this.balanceStatusRepository.add({
+      chainId: this.chainId,
       configHash: this.configHash,
       timestamp,
     })
-    this.logger.info('Update completed', { timestamp: timestamp.toNumber() })
-  }
-
-  async fetchBalances(
-    missingData: HeldAsset[],
-    timestamp: UnixTime,
-  ): Promise<BalanceRecord[]> {
-    const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
-      timestamp,
-    )
-    assert(blockNumber, 'No timestamp for this block number')
-
-    const calls = missingData.map((m) =>
-      BalanceCall.encode(m.holder, m.assetId),
-    )
-
-    const multicallResponses = await this.multicall.multicall(
-      calls,
-      blockNumber,
-    )
-
-    return multicallResponses.map((res, i) => ({
-      holderAddress: missingData[i].holder,
-      assetId: missingData[i].assetId,
-      balance: BalanceCall.decodeOr(res, 0n),
-      timestamp,
-    }))
+    this.logger.info('Update completed', {
+      timestamp: timestamp.toNumber(),
+      chainId: this.chainId.toString(),
+    })
   }
 }
 
@@ -130,12 +124,12 @@ export function getMissingData(
   timestamp: UnixTime,
   known: BalanceRecord[],
   projects: BalanceProject[],
-): HeldAsset[] {
+): BalanceQuery[] {
   const knownSet = new Set(
     known.map((x) => `${x.holderAddress.toString()}-${x.assetId.toString()}`),
   )
 
-  const missing: HeldAsset[] = []
+  const missing: BalanceQuery[] = []
   for (const project of projects) {
     for (const escrow of project.escrows) {
       if (escrow.sinceTimestamp.gt(timestamp)) {

@@ -1,24 +1,36 @@
-import { AssetId, ProjectId } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  ProjectId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 
-import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 
 export interface BalancePerProject {
   assetId: AssetId
+  chainId: ChainId
+  type: ValueType
   balance: bigint
   decimals: number
   projectId: ProjectId
+}
+
+export interface PriceAtTimestamp {
+  priceUsd: number
+  timestamp: UnixTime
 }
 
 const ETH_PRECISION = 6n
 const USD_PRECISION = 2n
 
 export function createReport(
-  price: PriceRecord,
+  price: PriceAtTimestamp,
   balance: BalancePerProject,
   ethPrice: number,
 ): ReportRecord {
-  const { balanceUsd, balanceEth } = convertBalance(
+  const { usdValue, ethValue } = balanceToValue(
     price.priceUsd,
     balance.decimals,
     balance.balance,
@@ -28,14 +40,16 @@ export function createReport(
   return {
     timestamp: price.timestamp,
     projectId: balance.projectId,
+    chainId: balance.chainId,
     asset: balance.assetId,
-    balance: balance.balance,
-    balanceUsd,
-    balanceEth,
+    type: balance.type,
+    amount: balance.balance,
+    usdValue,
+    ethValue,
   }
 }
 
-export function convertBalance(
+export function balanceToValue(
   priceUsd: number,
   decimals: number,
   balance: bigint,
@@ -43,12 +57,12 @@ export function convertBalance(
 ) {
   const bigintPrice = getBigIntPrice(priceUsd, decimals)
   const usdBalance = (balance * bigintPrice) / 10n ** 18n
-  const balanceUsd = usdBalance / 10n ** (18n - USD_PRECISION)
+  const usdValue = usdBalance / 10n ** (18n - USD_PRECISION)
 
   const etherBigInt = getBigIntPrice(ethPrice, 18)
   const etherBalance = (usdBalance * 10n ** 18n) / etherBigInt
-  const balanceEth = etherBalance / 10n ** (18n - ETH_PRECISION)
-  return { balanceUsd, balanceEth }
+  const ethValue = etherBalance / 10n ** (18n - ETH_PRECISION)
+  return { usdValue, ethValue }
 }
 
 export function getBigIntPrice(price: number, decimals: number) {

@@ -315,6 +315,8 @@ Count events with the specified topics:
 
 This handler allows you to analyze a contract using OpenZeppelin's AccessControl pattern.
 
+WARNING: Make sure that the name of this field is `accessControl`. The inversion logic depends on that.
+
 **Parameters:**
 
 - `type` - always the literal: `"accessControl"`

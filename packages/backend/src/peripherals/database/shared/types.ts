@@ -18,18 +18,21 @@ declare module 'knex/types/tables' {
     holder_address: string
     asset_id: string
     balance: string
+    chain_id: number
   }
 
   interface ReportRow {
     unix_timestamp: Date
     project_id: string
     asset_id: string
-    balance: string
-    balance_usd: string
-    balance_eth: string
+    asset_type: string
+    chain_id: number
+    asset_amount: string
+    usd_value: string
+    eth_value: string
   }
 
-  interface AggregateReportRow {
+  interface AggregatedReportRow {
     unix_timestamp: Date
     project_id: string
     tvl_usd: string
@@ -41,9 +44,12 @@ declare module 'knex/types/tables' {
   interface ReportStatusRow {
     config_hash: string
     unix_timestamp: Date
+    chain_id: number
+    asset_type: string
   }
 
   interface BalanceStatusRow {
+    chain_id: number
     config_hash: string
     unix_timestamp: Date
   }
@@ -98,14 +104,28 @@ declare module 'knex/types/tables' {
     diff_json_blob: string
   }
 
+  interface TotalSupplyRow {
+    unix_timestamp: Date
+    asset_id: string
+    total_supply: string
+    chain_id: number
+  }
+
+  interface TotalSupplyStatusRow {
+    chain_id: number
+    config_hash: string
+    unix_timestamp: Date
+  }
+
   interface Tables {
-    block_numbers: BlockNumberRow
     coingecko_prices: PriceRow
-    asset_balances: BalanceRow
-    balance_status: BalanceStatusRow
+    block_numbers: BlockNumberRow
+    balances: BalanceRow
+    balances_status: BalanceStatusRow
     reports: ReportRow
-    aggregate_reports: AggregateReportRow
-    report_status: ReportStatusRow
+    reports_status: ReportStatusRow
+    aggregated_reports: AggregatedReportRow
+    aggregated_reports_status: ReportStatusRow
     sequence_processor: SequenceProcessorRow
     'activity.zksync': ZksyncTransactionRow
     'activity.block': BlockTransactionCountRow
@@ -113,6 +133,8 @@ declare module 'knex/types/tables' {
     'activity.daily_count_view': DailyTransactionCountRow
     update_monitor: UpdateMonitorRow
     update_notifier: UpdateNotifierRow
+    total_supplies: TotalSupplyRow
+    total_supplies_status: TotalSupplyStatusRow
   }
 }
 

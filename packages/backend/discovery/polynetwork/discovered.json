@@ -1,7 +1,8 @@
 {
   "name": "polynetwork",
-  "blockNumber": 16910552,
-  "configHash": "0x900575aca065f8c4819a024172255361a2cb69c60a4a8e44a28b8cafff3513b9",
+  "blockNumber": 17619885,
+  "configHash": "0x8e3ded1966b3e7564c0395b641029989d8c7b7c888f79c9b8956f6abb509fbbc",
+  "version": 1,
   "contracts": [
     {
       "name": "EthCrossChainManager",
@@ -15,7 +16,7 @@
         "EthCrossChainDataAddress": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
         "isOwner": false,
         "owner": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "paused": false,
+        "paused": true,
         "whiteLister": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
       }
     },
@@ -69,11 +70,10 @@
         "type": "immutable"
       },
       "values": {
-        "ethCrossChainManager": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "getEthCrossChainManager": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "isOwner": false,
         "owner": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
-        "paused": false
+        "paused": true
       },
       "derivedName": "EthCrossChainManagerProxy"
     },
@@ -124,11 +124,11 @@
         "type": "immutable"
       },
       "values": {
-        "EthToPolyTxHashIndex": 68686,
-        "getEthTxHashIndex": 68686,
+        "EthToPolyTxHashIndex": 70198,
+        "getEthTxHashIndex": 70198,
         "isOwner": false,
         "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
-        "paused": false
+        "paused": true
       },
       "derivedName": "EthCrossChainData"
     },

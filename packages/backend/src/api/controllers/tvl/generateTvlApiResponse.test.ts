@@ -1,15 +1,17 @@
 import {
   AssetId,
+  ChainId,
   ProjectId,
   TvlApiChart,
   TvlApiChartPoint,
   TvlApiCharts,
   TvlApiToken,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { AggregateReportRecord } from '../../../peripherals/database/AggregateReportRepository'
+import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
@@ -91,7 +93,7 @@ describe(generateTvlApiResponse.name, () => {
     projectIds: ProjectId[],
   ) {
     const result: Record<string, TvlApiChartPoint[]> & {
-      all: AggregateReportRecord[]
+      all: AggregatedReportRecord[]
     } = {
       all: [],
     }
@@ -116,7 +118,9 @@ describe(generateTvlApiResponse.name, () => {
 
   function fakeLatestReports(now: UnixTime, projectIds: ProjectId[]) {
     const assets = [AssetId.ETH, AssetId.DAI]
-    const result: Record<string, TvlApiToken[]> & { all: ReportRecord[] } = {
+    const result: Record<string, TvlApiToken[]> & {
+      all: ReportRecord[]
+    } = {
       all: [],
     }
     for (const projectId of projectIds) {
@@ -127,9 +131,11 @@ describe(generateTvlApiResponse.name, () => {
         const balanceUsd = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
         result.all.push({
           asset: assetId,
-          balance: 0n, // ignored
-          balanceEth: 0n, // ignored
-          balanceUsd,
+          chainId: ChainId.ETHEREUM,
+          type: ValueType.CBV,
+          amount: 0n, // ignored
+          ethValue: 0n, // ignored
+          usdValue: balanceUsd,
           projectId,
           timestamp: now,
         })

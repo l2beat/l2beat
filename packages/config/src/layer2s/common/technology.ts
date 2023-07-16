@@ -13,6 +13,12 @@ const UPCOMING = {
   exitMechanisms: [],
 }
 
+const UNDER_REVIEW = {
+  ...UPCOMING,
+  isUnderReview: true,
+}
+
 export const TECHNOLOGY = {
   UPCOMING,
+  UNDER_REVIEW,
 }

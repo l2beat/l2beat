@@ -98,8 +98,8 @@ export const skaleIMA: Bridge = {
         {
           contract: 'MessageProxyForMainnet',
           references: [
-            'https://etherscan.io/address/0xC261084Dc6475d4980548Bd8C323FF825b3D0C38#code#F1#L398',
-            'https://etherscan.io/tx/0x2e2a29233aa564c66b99952bf962237c0f4386cc136a7e74ad0d6408ddea4c12',
+            'https://etherscan.io/address/0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190#code#F1#L508',
+            'https://etherscan.io/tx/0xb463ae9bacd3b0ba41eea25bdb51b115858bd9997d631bc26ccbb8a4fc3774c7',
           ],
         },
       ],
@@ -120,7 +120,7 @@ export const skaleIMA: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'MessageProxyForMainnet',
-        'Contract responsible for sending and receiving messages. It is used internally by the DepositBox contracts to transfer value between chains.',
+        'Contract responsible for sending and receiving messages. It is used internally by the DepositBox contracts to transfer value between chains. It supports gas reimbursement from the CommunityPool.',
       ),
       discovery.getContractDetails(
         'DepositBoxEth',

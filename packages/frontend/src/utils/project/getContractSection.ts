@@ -68,6 +68,7 @@ export function getContractSection(
     architectureImage,
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
+    isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
     verificationStatus,
     nativeL2TokensIncludedInTVL:
       project.type === 'layer2'
@@ -112,6 +113,7 @@ function makeTechnologyContract(
         case 'call implementation proxy':
         case 'EIP897 proxy':
         case 'CustomWithoutAdmin':
+        case 'Polygon proxy':
           links.push({
             name: 'Implementation (Upgradable)',
             href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
@@ -230,6 +232,20 @@ function makeTechnologyContract(
             address: item.upgradeability.admin.toString(),
             isAdmin: true,
           })
+          break
+        case 'Polygon Extension proxy':
+          links.push({
+            name: 'Implementation (Upgradable)',
+            href: `https://etherscan.io/address/${item.upgradeability.implementation.toString()}#code`,
+            address: item.upgradeability.implementation.toString(),
+            isAdmin: false,
+          }),
+            links.push({
+              name: 'Extension (Upgradable)',
+              href: `https://etherscan.io/address/${item.upgradeability.extension.toString()}#code`,
+              address: item.upgradeability.extension.toString(),
+              isAdmin: false,
+            })
           break
 
         // Ignore types

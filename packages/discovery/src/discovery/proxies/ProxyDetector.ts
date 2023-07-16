@@ -11,12 +11,14 @@ import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectEip2535proxy } from './auto/Eip2535Proxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
+import { detectPolygonProxy } from './auto/PolygonProxy'
 import { detectResolvedDelegateProxy } from './auto/ResolvedDelegateProxy'
 import { detectStarkWareProxy } from './auto/StarkWareProxy'
 import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getEternalStorageProxy } from './manual/EthernalStorageProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
+import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 
@@ -31,6 +33,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectResolvedDelegateProxy,
   detectArbitrumProxy,
   detectEip1967Proxy,
+  detectPolygonProxy,
   detectStarkWareProxy,
   detectGnosisSafe,
   detectEip897Proxy,
@@ -44,6 +47,7 @@ const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'zkSync Lite proxy': getZkSyncLiteProxy,
   'zkSpace proxy': getZkSpaceProxy,
   'Eternal Storage proxy': getEternalStorageProxy,
+  'Polygon Extension proxy': getPolygonExtensionProxy,
 }
 
 export class ProxyDetector {

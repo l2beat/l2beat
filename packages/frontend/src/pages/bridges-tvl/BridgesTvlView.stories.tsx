@@ -44,6 +44,7 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'Optimistic Rollup',
       },
@@ -107,6 +108,7 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'Optimistic Chain',
       },
@@ -227,6 +229,7 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'ZK Rollup',
       },
@@ -258,12 +261,13 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'ZK Rollup',
       },
       {
         type: 'bridge',
-        name: 'Omni Bridge',
+        name: 'Omnibridge',
         slug: 'omni',
         warning: undefined,
         isArchived: undefined,
@@ -277,7 +281,7 @@ const meta = {
           other: 0.011899439914528189,
           label: 'GNO – 98.81%<br>Other – 1.19%',
           warning:
-            'The GNO token associated with Omni Bridge accounts for 98.81% of the TVL!',
+            'The GNO token associated with Omnibridge accounts for 98.81% of the TVL!',
           warningSeverity: 'bad',
         },
         oneDayChange: '-4.68%',
@@ -379,6 +383,7 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'ZK Rollup',
       },
@@ -409,6 +414,7 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'ZK Rollup',
       },
@@ -471,6 +477,7 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'ZK Rollup',
       },
@@ -502,6 +509,7 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'Plasma',
       },
@@ -532,6 +540,7 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'Plasma',
       },
@@ -559,6 +568,7 @@ const meta = {
         combinedMarketShare: '0.00%',
         validatedBy: {
           value: 'User',
+          sentiment: 'good',
           description: 'Transfer is done via peer-to-peer atomic swap',
         },
         category: 'Liquidity Network',
@@ -621,6 +631,7 @@ const meta = {
           value: 'Ethereum',
           description:
             'Smart contracts on Ethereum validate all bridge transfers.',
+          sentiment: 'good',
         },
         category: 'Validium',
       },

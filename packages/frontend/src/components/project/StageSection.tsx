@@ -12,6 +12,7 @@ import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { SectionId } from './sectionId'
+import { UnderReviewCallout } from './UnderReviewCallout'
 
 export interface StageSectionProps {
   title: string
@@ -20,10 +21,11 @@ export interface StageSectionProps {
   name: string
   type: string
   stage: StageConfig
+  isUnderReview?: boolean
 }
 
 export function StageSection(props: StageSectionProps) {
-  if (props.stage.stage === 'UnderReview') {
+  if (props.stage.stage === 'UnderReview' || props.isUnderReview) {
     return (
       <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
         <div className="mb-6 font-medium">
@@ -40,20 +42,7 @@ export function StageSection(props: StageSectionProps) {
           />
           for stage assignment.
         </div>
-        <div className="flex flex-col items-center gap-4 rounded-lg bg-yellow-700/20 p-8">
-          <div>
-            <UnderReviewIcon className="relative -top-0.5 inline-block h-6 w-6" />
-            <span className="ml-2 inline-block text-2xl font-medium">
-              Project Under Review
-            </span>
-          </div>
-          <p className="text-center text-sm">
-            Projects under review might present uncompleted information & data.
-            <br />
-            L2BEAT Team is working to research & validate content before
-            publishing.
-          </p>
-        </div>
+        <UnderReviewCallout />
       </ProjectDetailsSection>
     )
   }

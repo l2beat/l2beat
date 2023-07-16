@@ -12,6 +12,7 @@ describe(EthereumClient.name, () => {
         call: mockFn(),
         getBlock: mockFn(),
         getBlockNumber: mockFn(),
+        getBalance: mockFn(),
         getLogs: mockFn()
           .throwsOnce(new Error('Log response size exceeded'))
           .returnsOnce([])
@@ -50,6 +51,7 @@ describe(EthereumClient.name, () => {
         call: mockFn(),
         getBlock: mockFn(),
         getBlockNumber: mockFn(),
+        getBalance: mockFn(),
         getLogs: mockFn()
           .throwsOnce(new Error('Log response size exceeded'))
           .returnsOnce([])
@@ -88,6 +90,7 @@ describe(EthereumClient.name, () => {
         call: mockFn(),
         getBlock: mockFn(),
         getBlockNumber: mockFn(),
+        getBalance: mockFn(),
         getLogs: mockFn().throwsOnce(new Error('Log response size exceeded')),
       })
 

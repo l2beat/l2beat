@@ -9,7 +9,7 @@ import { getProps } from './props'
 export function getBridgesTvlPage(config: Config, pagesData: PagesData) {
   const { props, wrapper } = getProps(config, pagesData)
   return {
-    slug: '/bridges/tvl',
+    slug: '/bridges/summary',
     page: (
       <PageWrapper {...wrapper}>
         <BridgesTvlPage {...props} />

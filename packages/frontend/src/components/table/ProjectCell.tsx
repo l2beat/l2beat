@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ShieldIcon } from '../icons'
+import { ShieldIcon, UnderReviewIcon } from '../icons'
 import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { UpcomingIcon } from '../icons/symbols/UpcomingIcon'
@@ -12,6 +12,7 @@ export interface ProjectCellProps {
     isVerified?: boolean
     isUpcoming?: boolean
     isArchived?: boolean
+    showProjectUnderReview?: boolean
     warning?: string
   }
   highlightL2?: boolean
@@ -49,6 +50,16 @@ export function ProjectCell({ project, type, highlightL2 }: ProjectCellProps) {
             title="This project contains unverified contracts."
           >
             <UnverifiedIcon className="relative top-px h-4 w-4 fill-red-300" />
+          </span>
+        </span>
+      )}
+      {project.showProjectUnderReview && (
+        <span className="pl-1.5">
+          <span
+            className="Tooltip inline-block"
+            title="This project is under review."
+          >
+            <UnderReviewIcon className="relative top-px h-4 w-4" />
           </span>
         </span>
       )}

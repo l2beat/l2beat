@@ -12,4 +12,6 @@ export interface ProjectTechnologyChoice {
   risks: ProjectRisk[]
   /** The description and research is incomplete */
   isIncomplete?: boolean
+  /** The description and research is under review */
+  isUnderReview?: boolean
 }

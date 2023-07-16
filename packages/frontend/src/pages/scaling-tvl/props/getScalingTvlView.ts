@@ -2,6 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
+import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
@@ -56,6 +57,7 @@ function getScalingTvlViewEntry(
     warning: project.display.warning,
     isVerified,
     isArchived: project.isArchived,
+    showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     tvl: stats ? formatUSD(stats.tvl) : undefined,
     tvlBreakdown: stats ? stats.tvlBreakdown : undefined,

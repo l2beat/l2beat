@@ -1,33 +1,36 @@
 import React, { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { configureTooltips } from '../../scripts/configureTooltips'
-import { hoverOver } from '../../utils/storybook/hoverOver'
+import { testConfigureTooltipsAndShow } from '../../scripts/configureTooltips'
 import { Tooltip as TooltipComponent } from '../Tooltip'
 import { RosetteTooltipPopup, RosetteTooltipProps } from './TooltipPopup'
 
 export default {
   title: 'Components/Tooltip',
+  parameters: {
+    screenshot: {
+      delay: 200,
+    },
+  },
 }
 
 export function RosetteTooltip() {
   useEffect(() => {
-    configureTooltips()
-    hoverOver('.Tooltip')
+    testConfigureTooltipsAndShow()
   }, [])
 
   const project: RosetteTooltipProps = {
     riskSentiments: {
       proposerFailure: 'bad',
       upgradeability: 'bad',
-      sequencerFailure: undefined,
+      sequencerFailure: 'good',
       dataAvailability: 'warning',
-      stateValidation: undefined,
+      stateValidation: 'good',
     },
     riskValues: {
       stateValidation: {
         value: 'Fraud proofs',
-        sentiment: undefined,
+        sentiment: 'good',
       },
       proposerFailure: {
         value: 'No mechanism',
@@ -39,7 +42,7 @@ export function RosetteTooltip() {
       },
       sequencerFailure: {
         value: 'Transact using L1',
-        sentiment: undefined,
+        sentiment: 'good',
       },
       dataAvailability: {
         value: 'Optimistic',

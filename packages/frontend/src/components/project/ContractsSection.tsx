@@ -18,6 +18,7 @@ export interface ContractsSectionProps {
   references: TechnologyReference[]
   architectureImage?: string
   isIncomplete?: boolean
+  isUnderReview?: boolean
   verificationStatus: VerificationStatus
   nativeL2TokensIncludedInTVL: string[]
 }
@@ -28,7 +29,11 @@ export function ContractsSection(props: ContractsSectionProps) {
   }
 
   return (
-    <ProjectDetailsSection title={props.title} id={props.id}>
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      isUnderReview={props.isUnderReview}
+    >
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="mt-4 mb-8 text-center">

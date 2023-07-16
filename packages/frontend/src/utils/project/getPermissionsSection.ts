@@ -8,12 +8,24 @@ export function getPermissionsSection(
   project: Layer2 | Bridge,
   verificationStatus: VerificationStatus,
 ): PermissionsSectionProps | undefined {
+  const section: PermissionsSectionProps = {
+    id: 'permissions',
+    title: 'Permissions',
+    verificationStatus,
+    permissions: [],
+  }
+
+  if (project.permissions === 'UnderReview') {
+    return {
+      ...section,
+      isUnderReview: true,
+    }
+  }
+
   return (
     project.permissions && {
-      id: 'permissions',
-      title: 'Permissions',
+      ...section,
       permissions: project.permissions.map(toTechnologyContract),
-      verificationStatus,
     }
   )
 }

@@ -4,7 +4,7 @@ import {
 } from '../../components/project/navigation/ids'
 
 export function getDesktopElements() {
-  const container = document.querySelector(
+  const container = document.querySelector<HTMLElement>(
     `#${DESKTOP_PROJECT_NAVIGATION_IDS.container}`,
   )
   const list = container?.querySelector(

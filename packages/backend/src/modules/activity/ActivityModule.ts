@@ -68,11 +68,6 @@ export function createActivityModule(
   const activityV2Router = createActivityRouter(activityController)
 
   const start = async () => {
-    if (!config.syncEnabled) {
-      logger.info('Activity sync disabled')
-      return
-    }
-
     logger = logger.for('ActivityModule')
     logger.info('Starting')
     await Promise.all(counters.map((c) => c.start()))
