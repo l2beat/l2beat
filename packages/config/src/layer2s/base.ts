@@ -313,7 +313,7 @@ export const base: Layer2 = {
       name: 'Base Mainnet Launch',
       link: 'https://base.mirror.xyz/hwNwqXHVoLlO8s4DZppog4DfGvM34tigaDjOWuEJQfY',
       date: '2023-07-13T00:00:00.00Z',
-      description: 'Base is live on mainnet',
+      description: 'Base is live on mainnet.',
     },
   ],
   knowledgeNuggets: [
