@@ -67,9 +67,14 @@ export class ArbitrumTotalSupplyProvider implements TotalSupplyProvider {
     )
 
     return totalSupplyResponses.map((totalSupplyResponse, i) => {
-      const totalSupply = totalSupplyResponse.success
-        ? decodeErc20TotalSupplyQuery(totalSupplyResponse.data)
-        : 0n
+      const assetId = totalSupplyQueries[i].assetId
+      if (!totalSupplyResponse.success) {
+        throw new Error(
+          `Could not obtain total supply of ${assetId.toString()} at timestamp ${timestamp.toString()} for block ${blockNumber}`,
+        )
+      }
+
+      const totalSupply = decodeErc20TotalSupplyQuery(totalSupplyResponse.data)
 
       return {
         timestamp,
