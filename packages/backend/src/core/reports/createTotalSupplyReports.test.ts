@@ -5,7 +5,7 @@ import { AssetId, ChainId, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 describe(createTotalSupplyReports.name, () => {
-  it('first test', () => {
+  it('valid data', () => {
     const result = createTotalSupplyReports(
       MOCK.PRICES,
       MOCK.BALANCES,
@@ -22,10 +22,36 @@ describe(createTotalSupplyReports.name, () => {
         asset: AssetId.USDC,
         chainId: ChainId.ARBITRUM,
         type: ValueType.EBV,
-        amount: 1_000n * 10n ** 6n,
-        usdValue: 1_000_00n,
-        ethValue: 1_000_000n,
+        amount: 900n * 10n ** 6n,
+        usdValue: 900_00n,
+        ethValue: 900_000n,
       },
     ])
+  })
+
+  it('chainId mismatch in balances', () => {
+    expect(() =>
+      createTotalSupplyReports(
+        MOCK.PRICES,
+        [{ ...MOCK.BALANCES[0], chainId: ChainId.ETHEREUM }],
+        MOCK.TOTAL_SUPPLIES,
+        MOCK.TOKENS,
+        MOCK.PROJECT,
+        ChainId.ARBITRUM,
+      ),
+    ).toThrow('ChainIds do not match')
+  })
+
+  it('chainId mismatch in total supplies', () => {
+    expect(() =>
+      createTotalSupplyReports(
+        MOCK.PRICES,
+        MOCK.BALANCES,
+        [{ ...MOCK.TOTAL_SUPPLIES[0], chainId: ChainId.ETHEREUM }],
+        MOCK.TOKENS,
+        MOCK.PROJECT,
+        ChainId.ARBITRUM,
+      ),
+    ).toThrow('ChainIds do not match')
   })
 })

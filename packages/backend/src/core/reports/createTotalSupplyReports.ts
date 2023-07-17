@@ -5,11 +5,6 @@ import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { TotalSupplyRecord } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyTokensConfig } from '../totalSupply/TotalSupplyTokensConfig'
 import { BalancePerProject, createReport } from './createReport'
-import {
-  aggregateBalancesPerProject,
-  createReports,
-  TokenDetails,
-} from './createReports'
 import { ReportProject } from './ReportProject'
 
 export function createTotalSupplyReports(
@@ -64,7 +59,9 @@ function transformBalances(
       (s) => s.assetId === assetId && s.timestamp.gte(sinceTimestamp),
     )
 
-    const chainIdsMatch = assetBalances.every((b) => b.chainId === chainId)
+    const chainIdsMatch =
+      assetBalances.every((b) => b.chainId === chainId) &&
+      assetSupplies.every((b) => b.chainId === chainId)
     assert(chainIdsMatch, 'ChainIds do not match for a given asset balanace')
 
     const totalBalance = assetSupplies.reduce(

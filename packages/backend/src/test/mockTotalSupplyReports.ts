@@ -13,6 +13,7 @@ import { REPORTS_MOCK as BASE_MOCK } from './mockReports'
 import { TokenInfo } from '@l2beat/config'
 import { TotalSupplyTokensConfig } from '../core/totalSupply/TotalSupplyTokensConfig'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
+import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 
 const ARBITRUM_ESCROW_ONE = EthereumAddress.random()
 const ARBITRUM_ESCROW_TWO = EthereumAddress.random()
@@ -29,6 +30,16 @@ const TOTAL_SUPPLIES: TotalSupplyRecord[] = [
 const PRICES: PriceRecord[] = [
   { priceUsd: 1, assetId: AssetId.USDC, timestamp: BASE_MOCK.NOW },
   { priceUsd: 1000, assetId: AssetId.ETH, timestamp: BASE_MOCK.NOW },
+]
+
+const BALANCES: BalanceRecord[] = [
+  {
+    timestamp: BASE_MOCK.NOW,
+    assetId: AssetId.USDC,
+    holderAddress: ARBITRUM_ESCROW_ONE,
+    balance: 100n * 10n ** 6n,
+    chainId: ChainId.ARBITRUM,
+  },
 ]
 
 const PROJECT: ReportProject = {
@@ -61,6 +72,7 @@ const TOKENS: TotalSupplyTokensConfig[] = [{
 export const REPORTS_MOCK = {
   ...BASE_MOCK,
   PRICES,
+  BALANCES,
   TOTAL_SUPPLIES,
   TOKENS,
   PROJECT,
