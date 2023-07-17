@@ -73,6 +73,8 @@ function transformBalances(
       0n,
     )
 
+    assert(totalBalance >= premintBalance, 'Total supply has to be bigger than premint balance')
+
     result.push({
       projectId: project.projectId,
       chainId,

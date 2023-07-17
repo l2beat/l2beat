@@ -29,6 +29,19 @@ describe(createTotalSupplyReports.name, () => {
     ])
   })
 
+  it('fails if premint is bigger than total supply', () => {
+    expect(() =>
+      createTotalSupplyReports(
+        MOCK.PRICES,
+        [{ ...MOCK.BALANCES[0], balance: 10000n * 10n ** 6n }],
+        MOCK.TOTAL_SUPPLIES,
+        MOCK.TOKENS,
+        MOCK.PROJECT,
+        ChainId.ARBITRUM,
+      ),
+    ).toThrow('Total supply has to be bigger than premint balance')
+  })
+
   it('chainId mismatch in balances', () => {
     expect(() =>
       createTotalSupplyReports(
