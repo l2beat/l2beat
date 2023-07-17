@@ -9,7 +9,11 @@ import { expect, mockObject } from 'earl'
 
 import { ArbitrumMulticallClient } from '../../../peripherals/arbitrum/multicall/ArbitrumMulticall'
 import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
-import { ArbitrumTotalSupplyProvider } from './ArbitrumTotalSupplyProvider'
+import {
+  ArbitrumTotalSupplyProvider,
+  decodeErc20TotalSupplyQuery,
+  encodeErc20TotalSupplyQuery,
+} from './ArbitrumTotalSupplyProvider'
 
 describe(ArbitrumTotalSupplyProvider.name, () => {
   describe(ArbitrumTotalSupplyProvider.prototype.getTotalSupplies.name, () => {
@@ -112,5 +116,31 @@ describe(ArbitrumTotalSupplyProvider.name, () => {
         ])
       })
     })
+  })
+})
+
+describe(encodeErc20TotalSupplyQuery.name, () => {
+  it('should encode the ERC20 totalSupply query', () => {
+    const tokenAddress = EthereumAddress.random()
+
+    const result = encodeErc20TotalSupplyQuery(tokenAddress)
+
+    expect(result.address.toString()).toEqual(tokenAddress.toString())
+    // hashFunctionSelector("function totalSupply() view returns (uint256)") = 0x18160ddd
+    expect(result.data.toString()).toEqual('0x18160ddd')
+  })
+})
+
+describe(decodeErc20TotalSupplyQuery.name, () => {
+  it('should decode ERC20 totalSupply query result into number', () => {
+    // Example Arbitrum USDC total supply call response
+    // 166330035479385 = 0x9746baae2359
+    const totalSupplyResponse = Bytes.fromHex(
+      '0x00000000000000000000000000000000000000000000000000009746baae2359',
+    )
+
+    const result = decodeErc20TotalSupplyQuery(totalSupplyResponse)
+
+    expect(result).toEqual(166330035479385n)
   })
 })

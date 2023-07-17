@@ -113,7 +113,7 @@ export class ArbitrumTotalSupplyProvider implements TotalSupplyProvider {
   }
 }
 
-function encodeErc20TotalSupplyQuery(
+export function encodeErc20TotalSupplyQuery(
   tokenAddress: EthereumAddress,
 ): MulticallRequest {
   return {
@@ -122,7 +122,7 @@ function encodeErc20TotalSupplyQuery(
   }
 }
 
-function decodeErc20TotalSupplyQuery(response: Bytes): bigint {
+export function decodeErc20TotalSupplyQuery(response: Bytes): bigint {
   const [value] = erc20Interface.decodeFunctionResult(
     'totalSupply',
     response.toString(),
