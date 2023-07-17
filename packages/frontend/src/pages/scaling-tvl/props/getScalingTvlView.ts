@@ -59,13 +59,23 @@ function getScalingTvlViewEntry(
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
-    tvl: stats ? formatUSD(stats.tvl) : undefined,
-    tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
-    oneDayChange: stats ? stats.oneDayChange : undefined,
-    sevenDayChange: stats ? stats.sevenDayChange : undefined,
-    marketShare: stats ? formatPercent(stats.tvl / aggregateTvl) : undefined,
+    tvl: stats && escrowsConfigured(project) ? formatUSD(stats.tvl) : undefined,
+    tvlBreakdown:
+      stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
+    oneDayChange:
+      stats && escrowsConfigured(project) ? stats.oneDayChange : undefined,
+    sevenDayChange:
+      stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
+    marketShare:
+      stats && escrowsConfigured(project)
+        ? formatPercent(stats.tvl / aggregateTvl)
+        : undefined,
     purpose: project.display.purpose,
     technology: project.display.category,
     stage: project.stage,
   }
+}
+
+export function escrowsConfigured(project: Layer2) {
+  return project.config.escrows.length > 0
 }

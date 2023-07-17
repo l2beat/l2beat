@@ -1,14 +1,16 @@
 import { Logger } from '@l2beat/shared'
+import { ChainId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
-import { NMVUpdater } from '../assets/NMVUpdater'
+import { CBVUpdater } from '../assets'
+import { NATIVE_ASSET_CONFIG_HASH, NMVUpdater } from '../assets/NMVUpdater'
 import { Clock } from '../Clock'
 import { AggregatedReportUpdater } from './AggregatedReportUpdater'
-import { CBVUpdater } from './CBVUpdater'
+import { getAggregatedConfigHash } from './getAggregatedConfigHash'
 import { getReportConfigHash } from './getReportConfigHash'
 
 describe(AggregatedReportUpdater.name, () => {
@@ -26,18 +28,22 @@ describe(AggregatedReportUpdater.name, () => {
           add: async ({ configHash }) => configHash,
         })
 
-      const reportUpdater = mockObject<CBVUpdater>({
+      const cbvUpdater = mockObject<CBVUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
+        getChainId: mockFn().returns(ChainId.ETHEREUM),
+        getConfigHash: mockFn().returns(getReportConfigHash(MOCK.PROJECTS)),
       })
-      const nativeAssetUpdater = mockObject<NMVUpdater>({
+      const nmvUpdater = mockObject<NMVUpdater>({
         getReportsWhenReady: mockFn()
           .returnsOnce(MOCK.FUTURE_OP_REPORT)
           .returnsOnce([]),
+        getChainId: mockFn().returns(ChainId.NMV),
+        getConfigHash: mockFn().returns(NATIVE_ASSET_CONFIG_HASH),
       })
+      const configHash = getAggregatedConfigHash([nmvUpdater, cbvUpdater])
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
-        reportUpdater,
-        nativeAssetUpdater,
+        [cbvUpdater, nmvUpdater],
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         mockObject<Clock>(),
@@ -47,8 +53,6 @@ describe(AggregatedReportUpdater.name, () => {
 
       await aggregatedReportUpdater.update(MOCK.NOW.add(1, 'hours'))
       await aggregatedReportUpdater.update(MOCK.NOW)
-
-      const configHash = getReportConfigHash(MOCK.PROJECTS)
 
       expect(aggregatedReportStatusRepository.add).toHaveBeenNthCalledWith(1, {
         configHash,
@@ -87,14 +91,19 @@ describe(AggregatedReportUpdater.name, () => {
           add: async ({ configHash }) => configHash,
         })
 
-      const reportUpdater = mockObject<CBVUpdater>({
+      const cbvUpdater = mockObject<CBVUpdater>({
         getReportsWhenReady: async () => MOCK.REPORTS,
+        getChainId: mockFn().returns(ChainId.ETHEREUM),
+        getConfigHash: mockFn().returns(getReportConfigHash(MOCK.PROJECTS)),
       })
-      const nativeAssetUpdater = mockObject<NMVUpdater>({
+      const nmvUpdater = mockObject<NMVUpdater>({
         getReportsWhenReady: mockFn()
           .returnsOnce(MOCK.FUTURE_OP_REPORT)
           .returnsOnce([]),
+        getChainId: mockFn().returns(ChainId.NMV),
+        getConfigHash: mockFn().returns(NATIVE_ASSET_CONFIG_HASH),
       })
+      const configHash = getAggregatedConfigHash([nmvUpdater, cbvUpdater])
 
       const clock = mockObject<Clock>({
         onEveryHour: (callback) => {
@@ -107,8 +116,7 @@ describe(AggregatedReportUpdater.name, () => {
       })
 
       const aggregatedReportUpdater = new AggregatedReportUpdater(
-        reportUpdater,
-        nativeAssetUpdater,
+        [cbvUpdater, nmvUpdater],
         aggregatedReportRepository,
         aggregatedReportStatusRepository,
         clock,
@@ -119,7 +127,6 @@ describe(AggregatedReportUpdater.name, () => {
       await aggregatedReportUpdater.start()
 
       await waitForExpect(() => {
-        const configHash = getReportConfigHash(MOCK.PROJECTS)
         expect(aggregatedReportStatusRepository.add).toHaveBeenCalledTimes(2)
         expect(aggregatedReportStatusRepository.add).toHaveBeenNthCalledWith(
           1,
