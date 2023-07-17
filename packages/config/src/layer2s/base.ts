@@ -30,6 +30,9 @@ export const base: Layer2 = {
   config: {
     escrows: [],
   },
+  stage: {
+    stage: 'UnderReview',
+  },
   riskView: UNDER_REVIEW_RISK_VIEW,
   technology: TECHNOLOGY.UNDER_REVIEW,
   contracts: CONTRACTS.UNDER_REVIEW,
