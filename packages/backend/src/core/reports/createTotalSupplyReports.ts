@@ -1,4 +1,5 @@
 import { assert, AssetId, ChainId, ValueType } from '@l2beat/shared-pure'
+
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
@@ -73,7 +74,10 @@ function transformBalances(
       0n,
     )
 
-    assert(totalBalance >= premintBalance, 'Total supply has to be bigger than premint balance')
+    assert(
+      totalBalance >= premintBalance,
+      'Total supply has to be bigger than premint balance',
+    )
 
     result.push({
       projectId: project.projectId,

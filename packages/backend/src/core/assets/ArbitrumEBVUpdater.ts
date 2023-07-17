@@ -1,5 +1,13 @@
 import { Logger } from '@l2beat/shared'
-import { assert, ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainId,
+  Hash256,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
+import { setTimeout } from 'timers/promises'
+
 import {
   ReportRecord,
   ReportRepository,
@@ -9,20 +17,17 @@ import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createReports, createTotalSupplyReports } from '../reports/createReports'
+import { createTotalSupplyReports } from '../reports/createTotalSupplyReports'
+import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { ReportProject } from '../reports/ReportProject'
-import { setTimeout } from 'timers/promises'
+import { TotalSupplyTokensConfig } from '../totalSupply/TotalSupplyTokensConfig'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
-import { TotalSupplyTokensConfig } from '../totalSupply/TotalSupplyTokensConfig'
-import { ARBITRUM_PROJECT_ID } from '../reports/custom/arbitrum'
-import { getReportConfigHash } from '../reports/getReportConfigHash'
 
 export class ArbitrumEBVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
-  private readonly arbitrumProject: ReportProject
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
@@ -31,15 +36,16 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
-    projects: ReportProject[],
+    private readonly arbitrumProject: ReportProject[],
     private readonly tokens: TotalSupplyTokensConfig[],
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-        const filtered = projects.filter((x) => x.projectId == ARBITRUM_PROJECT_ID)
-    assert(filtered.length === 1, "Expected there to be a single project when filtered")
-    this.arbitrumProject = filtered[0]
-    this.configHash = getReportConfigHash([this.arbitrumProject])
+    assert(
+      arbitrumProject.length === 1,
+      'Expected there to be a single project when filtered',
+    )
+    this.configHash = getReportConfigHash(this.arbitrumProject)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
@@ -87,11 +93,12 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     ])
     this.logger.debug('Prices, balances and supplies ready')
 
-    let reports = createTotalSupplyReports(
+    const reports = createTotalSupplyReports(
       prices,
       balances,
       totalSupplies,
-      this.arbitrumProject,
+      this.tokens,
+      this.arbitrumProject[0],
       this.getChainId(),
     )
     await this.reportRepository.addOrUpdateMany(reports)

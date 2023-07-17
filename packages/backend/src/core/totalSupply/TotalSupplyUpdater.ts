@@ -3,6 +3,7 @@ import {
   assert,
   AssetId,
   ChainId,
+  EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -151,7 +152,7 @@ export function getMissingTotalSupplies(
     }
 
     const queryCandidate: TotalSupplyQuery = {
-      tokenAddress: token.tokenAddress,
+      tokenAddress: EthereumAddress(token.tokenAddress),
       assetId: token.assetId,
     }
 

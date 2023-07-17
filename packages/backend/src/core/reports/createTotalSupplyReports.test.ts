@@ -1,8 +1,8 @@
-import { createTotalSupplyReports } from './createTotalSupplyReports'
-
-import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
 import { AssetId, ChainId, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+
+import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
+import { createTotalSupplyReports } from './createTotalSupplyReports'
 
 describe(createTotalSupplyReports.name, () => {
   it('valid data', () => {
