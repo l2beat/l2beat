@@ -34,6 +34,6 @@ export const mantle: Layer2 = {
     stage: 'UnderReview',
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
+  technology: TECHNOLOGY.UNDER_REVIEW,
+  contracts: CONTRACTS.UNDER_REVIEW,
 }
