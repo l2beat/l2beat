@@ -11,7 +11,7 @@ import { ArbitrumTotalSupplyProvider } from '../../core/totalSupply/providers/Ar
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { ArbitrumMulticallClient } from '../../peripherals/arbitrum/multicall/ArbitrumMulticall'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
-import { ApplicationModule } from '../ApplicationModule'
+import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
 export function createArbitrumTvlSubmodule(
@@ -20,7 +20,7 @@ export function createArbitrumTvlSubmodule(
   logger: Logger,
   http: HttpClient,
   clock: Clock,
-): ApplicationModule | undefined {
+): TvlSubmodule | undefined {
   if (!config.tvl.arbitrum) {
     logger.info('Arbitrum TVL module disabled')
     return

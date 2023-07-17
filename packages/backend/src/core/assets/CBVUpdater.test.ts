@@ -9,8 +9,8 @@ import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
+import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { CBVUpdater } from './CBVUpdater'
-import { getReportConfigHash } from './getReportConfigHash'
 
 describe(CBVUpdater.name, () => {
   describe(CBVUpdater.prototype.update.name, () => {
@@ -35,7 +35,7 @@ describe(CBVUpdater.name, () => {
         add: async ({ configHash }) => configHash,
       })
 
-      const reportUpdater = new CBVUpdater(
+      const cbvUpdater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         reportRepository,
@@ -45,8 +45,8 @@ describe(CBVUpdater.name, () => {
         Logger.SILENT,
       )
 
-      await reportUpdater.update(MOCK.NOW.add(1, 'hours'))
-      await reportUpdater.update(MOCK.NOW)
+      await cbvUpdater.update(MOCK.NOW.add(1, 'hours'))
+      await cbvUpdater.update(MOCK.NOW)
 
       const configHash = getReportConfigHash(MOCK.PROJECTS)
 
@@ -74,7 +74,7 @@ describe(CBVUpdater.name, () => {
         MOCK.REPORTS,
       )
 
-      const reports = await reportUpdater.getReportsWhenReady(
+      const reports = await cbvUpdater.getReportsWhenReady(
         MOCK.NOW.add(1, 'hours'),
       )
       // ensure that the updater updated internal knownSet
@@ -116,7 +116,7 @@ describe(CBVUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new CBVUpdater(
+      const cbvUpdater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         reportRepository,
@@ -126,7 +126,7 @@ describe(CBVUpdater.name, () => {
         Logger.SILENT,
       )
 
-      await reportUpdater.start()
+      await cbvUpdater.start()
 
       await waitForExpect(() => {
         const configHash = getReportConfigHash(MOCK.PROJECTS)
@@ -193,7 +193,7 @@ describe(CBVUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new CBVUpdater(
+      const cbvUpdater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         reportRepository,
@@ -203,9 +203,9 @@ describe(CBVUpdater.name, () => {
         Logger.SILENT,
       )
 
-      await reportUpdater.start()
+      await cbvUpdater.start()
 
-      const reports = await reportUpdater.getReportsWhenReady(
+      const reports = await cbvUpdater.getReportsWhenReady(
         MOCK.NOW.add(-1, 'hours'),
       )
 
