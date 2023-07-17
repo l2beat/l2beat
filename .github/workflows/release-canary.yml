@@ -44,6 +44,7 @@ jobs:
           token: ${{ secrets.NPM_TOKEN }}
           dry-run: false
           tag: canary
+          access: public
 
       - name: Publish uif to npm
         uses: JS-DevTools/npm-publish@v1
@@ -52,3 +53,4 @@ jobs:
           token: ${{ secrets.NPM_TOKEN }}
           dry-run: false
           tag: canary
+          access: public
