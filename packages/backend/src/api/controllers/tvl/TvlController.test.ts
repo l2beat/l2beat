@@ -101,15 +101,15 @@ describe(TvlController.name, () => {
         }),
         mockObject<AggregatedReportRepository>(),
         mockObject<ReportRepository>({
-          getHourlyByProjectAndAssetUNSAFE: async () => [
+          getHourlyByProjectAndAsset: async () => [
             { ...baseReport, timestamp: START.add(-1, 'hours') },
             { ...baseReport, timestamp: START },
           ],
-          getSixHourlyByProjectAndAssetUNSAFE: async () => [
+          getSixHourlyByProjectAndAsset: async () => [
             { ...baseReport, timestamp: START.add(-6, 'hours') },
             { ...baseReport, timestamp: START },
           ],
-          getDailyByProjectAndAssetUNSAFE: async () => [
+          getDailyByProjectAndAsset: async () => [
             { ...baseReport, timestamp: START.add(-1, 'days') },
             { ...baseReport, timestamp: START },
           ],
@@ -161,19 +161,19 @@ describe(TvlController.name, () => {
 
       // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
       const reportRepository = mockObject<ReportRepository>({
-        getHourlyByProjectAndAssetUNSAFE: async () => [
+        getHourlyByProjectAndAsset: async () => [
           { ...baseReport, timestamp: START.add(-1, 'hours') },
           { ...baseReport, timestamp: START.add(-1, 'hours') },
           { ...baseReport, timestamp: START },
           { ...baseReport, timestamp: START },
         ],
-        getSixHourlyByProjectAndAssetUNSAFE: async () => [
+        getSixHourlyByProjectAndAsset: async () => [
           { ...baseReport, timestamp: START.add(-6, 'hours') },
           { ...baseReport, timestamp: START.add(-6, 'hours') },
           { ...baseReport, timestamp: START },
           { ...baseReport, timestamp: START },
         ],
-        getDailyByProjectAndAssetUNSAFE: async () => [
+        getDailyByProjectAndAsset: async () => [
           { ...baseReport, timestamp: START.add(-1, 'days') },
           { ...baseReport, timestamp: START.add(-1, 'days') },
           { ...baseReport, timestamp: START },
@@ -224,9 +224,9 @@ describe(TvlController.name, () => {
 
     it('correctly finds timestamp for Arbitrum USDC', async () => {
       const reportRepository = mockObject<ReportRepository>({
-        getHourlyByProjectAndAssetUNSAFE: async () => [],
-        getSixHourlyByProjectAndAssetUNSAFE: async () => [],
-        getDailyByProjectAndAssetUNSAFE: async () => [],
+        getHourlyByProjectAndAsset: async () => [],
+        getSixHourlyByProjectAndAsset: async () => [],
+        getDailyByProjectAndAsset: async () => [],
       })
       const controller = new TvlController(
         mockObject<ReportStatusRepository>({
@@ -247,7 +247,7 @@ describe(TvlController.name, () => {
       await controller.getProjectAssetChart(ARBITRUM.projectId, AssetId.USDC)
 
       expect(
-        reportRepository.getHourlyByProjectAndAssetUNSAFE,
+        reportRepository.getHourlyByProjectAndAsset,
       ).toHaveBeenOnlyCalledWith(
         ARBITRUM.projectId,
         AssetId.USDC,
@@ -255,7 +255,7 @@ describe(TvlController.name, () => {
       )
 
       expect(
-        reportRepository.getSixHourlyByProjectAndAssetUNSAFE,
+        reportRepository.getSixHourlyByProjectAndAsset,
       ).toHaveBeenOnlyCalledWith(
         ARBITRUM.projectId,
         AssetId.USDC,
@@ -263,7 +263,7 @@ describe(TvlController.name, () => {
       )
 
       expect(
-        reportRepository.getDailyByProjectAndAssetUNSAFE,
+        reportRepository.getDailyByProjectAndAsset,
       ).toHaveBeenOnlyCalledWith(ARBITRUM.projectId, AssetId.USDC)
     })
   })

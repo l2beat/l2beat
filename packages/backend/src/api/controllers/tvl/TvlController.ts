@@ -72,7 +72,7 @@ export class TvlController {
           getSixHourlyMinTimestamp(timestamp),
         ),
         this.aggregatedReportRepository.getDaily(),
-        this.reportRepository.getByTimestampUNSAFE(timestamp),
+        this.reportRepository.getByTimestamp(timestamp),
       ])
     const tvlApiResponse = generateTvlApiResponse(
       hourlyReports,
@@ -134,17 +134,17 @@ export class TvlController {
       .reduce((min, t) => (t.lt(min) ? t : min), timestamps[0]!)
 
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
-      this.reportRepository.getHourlyByProjectAndAssetUNSAFE(
+      this.reportRepository.getHourlyByProjectAndAsset(
         projectId,
         assetId,
         getHourlyMinTimestamp(timestamp),
       ),
-      this.reportRepository.getSixHourlyByProjectAndAssetUNSAFE(
+      this.reportRepository.getSixHourlyByProjectAndAsset(
         projectId,
         assetId,
         getSixHourlyMinTimestamp(timestamp),
       ),
-      this.reportRepository.getDailyByProjectAndAssetUNSAFE(projectId, assetId),
+      this.reportRepository.getDailyByProjectAndAsset(projectId, assetId),
     ])
     const types: TvlApiChart['types'] = [
       'timestamp',

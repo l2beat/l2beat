@@ -33,8 +33,8 @@ export class ReportRepository extends BaseRepository {
     this.autoWrap<CheckConvention<ReportRepository>>(this)
   }
 
-  // probably that is not the best patter, we should filter by chainId and ValueType also
-  async getByTimestampUNSAFE(timestamp: UnixTime): Promise<ReportRecord[]> {
+  // TODO: phase out this method
+  async getByTimestamp(timestamp: UnixTime): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('reports').where(
       'unix_timestamp',
@@ -99,7 +99,8 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
-  async getDailyByProjectAndAssetUNSAFE(
+  // TODO: filter by ChainId and ValueType
+  async getDailyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
   ): Promise<ReportRecord[]> {
@@ -113,7 +114,8 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getHourlyByProjectAndAssetUNSAFE(
+  // TODO: filter by ChainId and ValueType
+  async getHourlyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
     from: UnixTime,
@@ -127,7 +129,8 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getSixHourlyByProjectAndAssetUNSAFE(
+  // TODO: filter by ChainId and ValueType
+  async getSixHourlyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
     from: UnixTime,
