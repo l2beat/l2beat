@@ -48,7 +48,7 @@ export abstract class BaseIndexer implements Indexer {
   /**
    * @param targetHeight - every value > `targetHeight` is invalid, but `targetHeight` itself is valid
    */
-  // TODO: This function can retur Promise<number>
+  // TODO: This function can return Promise<number>
   abstract invalidate(targetHeight: number): Promise<void>
 
   private state: IndexerState

@@ -252,6 +252,7 @@ function continueOperations(
     // root indexer will call Tick, child indexer will call Update
     const syncAction = state.parents.length > 0 ? 'Update' : 'Tick'
     return [
+      // TODO: status === ticking????
       { ...state, status: 'updating' },
       [...effects, { type: syncAction, targetHeight: state.targetHeight }],
     ]

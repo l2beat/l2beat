@@ -15,7 +15,7 @@ export class FakeClockIndexer extends RootIndexer {
 
   override async tick(): Promise<number> {
     if (Math.random() < 0.1) {
-      this.height -= 100
+      this.height = Math.max(this.height - 100, 0)
       this.logger.info('FakeClockIndexer: height decreased')
     } else {
       this.height += 10
