@@ -1,7 +1,7 @@
 {
   "name": "base",
-  "blockNumber": 17713515,
-  "configHash": "0x564bcd55ad22f8e26e439034e5f04d0323823bd36c98e38930649547767ee992",
+  "blockNumber": 17713651,
+  "configHash": "0x74bfe8bd0f1ca11bf3bbd5fa2a88b4e12e40626c52a898d8396d9843eb1034ad",
   "version": 1,
   "contracts": [
     {
@@ -89,7 +89,7 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 17713513],
+        "params": [1000000000, 100000, 17713651],
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
