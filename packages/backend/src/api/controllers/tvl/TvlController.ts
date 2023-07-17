@@ -49,7 +49,7 @@ export class TvlController {
       timestamps.push(
         await this.reportStatusRepository.findLatestTimestamp(
           ChainId.ARBITRUM,
-          ValueType.CBV,
+          ValueType.EBV,
         ),
       )
     }
@@ -119,7 +119,7 @@ export class TvlController {
       timestamps.push(
         await this.reportStatusRepository.findLatestTimestamp(
           ChainId.ARBITRUM,
-          ValueType.CBV,
+          ValueType.EBV,
         ),
       )
     }
