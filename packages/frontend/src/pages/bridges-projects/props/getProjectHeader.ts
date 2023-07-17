@@ -18,8 +18,9 @@ export function getProjectHeader(
   return {
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
-    tvl: formatUSD(tvl),
-    tvlWeeklyChange,
+    tvl: project.config.escrows.length > 0 ? formatUSD(tvl) : undefined,
+    tvlWeeklyChange:
+      project.config.escrows.length > 0 ? tvlWeeklyChange : undefined,
     destination: getDestination(project.technology.destination),
     validatedBy: project.riskView?.validatedBy,
     type: project.display.category,
