@@ -111,7 +111,7 @@ export function indexerReducer(
   }
 }
 
-function assertRoot(state: IndexerState) {
+function assertRoot(state: IndexerState): void {
   assert(
     state.parents.length === 0,
     'Tick actions should only be called on root',

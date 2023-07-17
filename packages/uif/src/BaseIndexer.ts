@@ -9,14 +9,13 @@ import {
   InvalidateEffect,
   NotifyReadyEffect,
   SetSafeHeightEffect,
-  TickEffect,
   UpdateEffect,
 } from './IndexerEffect'
 import { getInitialState, indexerReducer } from './indexerReducer'
 import { IndexerState } from './IndexerState'
 
 export abstract class BaseIndexer implements Indexer {
-  private children: Indexer[] = []
+  private readonly children: Indexer[] = []
 
   /**
    * Should read the height from the database. It must return a height, so
@@ -76,7 +75,7 @@ export abstract class BaseIndexer implements Indexer {
     })
   }
 
-  subscribe(child: Indexer) {
+  subscribe(child: Indexer): void {
     assert(!this.started, 'Indexer already started')
     this.logger.debug('Child subscribed', { child: child.constructor.name })
     this.children.push(child)
@@ -117,7 +116,7 @@ export abstract class BaseIndexer implements Indexer {
         case 'NotifyReady':
           return this.executeNotifyReady(effect)
         case 'Tick':
-          return this.executeTick(effect)
+          return void this.executeTick()
         default:
           return assertUnreachable(effect)
       }
@@ -165,7 +164,7 @@ export abstract class BaseIndexer implements Indexer {
   // #endregion
   // #region Root methods
 
-  private async executeTick(effect: TickEffect): Promise<void> {
+  private async executeTick(): Promise<void> {
     try {
       const safeHeight = await this.tick()
       this.dispatch({ type: 'TickSucceeded', safeHeight })
@@ -215,10 +214,12 @@ export abstract class RootIndexer extends BaseIndexer {
     super(logger, [])
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   override async update(): Promise<number> {
     throw new Error('RootIndexer cannot update')
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   override async invalidate(): Promise<void> {
     throw new Error('RootIndexer cannot invalidate')
   }
@@ -233,10 +234,7 @@ export abstract class RootIndexer extends BaseIndexer {
 }
 
 export abstract class ChildIndexer extends BaseIndexer {
-  constructor(logger: Logger, parents: Indexer[]) {
-    super(logger, parents)
-  }
-
+  // eslint-disable-next-line @typescript-eslint/require-await
   override async tick(): Promise<number> {
     throw new Error('ChildIndexer cannot tick')
   }
