@@ -49,6 +49,69 @@ const ARBITRUM: ReportProject = {
 }
 
 describe(TvlController.name, () => {
+  describe(TvlController.prototype.getTvlApiResponse.name, () => {
+    it('deduplicates tokens response', async () => {
+      const baseReport: Omit<ReportRecord, 'timestamp'> = {
+        usdValue: 1234_56n,
+        ethValue: 1_111111n,
+        amount: 111_1111n * 10n ** (6n - 4n),
+        asset: AssetId.USDC,
+        chainId: ChainId.ETHEREUM,
+        projectId: ARBITRUM.projectId,
+        type: ValueType.CBV,
+      }
+
+      // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
+      const reportRepository = mockObject<ReportRepository>({
+        getByTimestamp: async () => [
+          { ...baseReport, timestamp: START },
+          { ...baseReport, timestamp: START },
+        ],
+      })
+      const aggregateRepository = mockObject<AggregatedReportRepository>({
+        getDaily: async () => [],
+        getHourly: async () => [],
+        getSixHourly: async () => [],
+      })
+      const controller = new TvlController(
+        mockObject<ReportStatusRepository>({
+          async findLatestTimestamp() {
+            return START
+          },
+        }),
+        aggregateRepository,
+        reportRepository,
+        [ARBITRUM],
+        [USDC],
+        Logger.SILENT,
+      )
+      const types: TvlApiChart['types'] = ['timestamp', 'usd', 'eth']
+      const charts = await controller.getTvlApiResponse()
+      expect(charts?.projects.arbitrum).toEqual({
+        charts: {
+          hourly: {
+            types,
+            data: [],
+          },
+          sixHourly: {
+            types,
+            data: [],
+          },
+          daily: {
+            types,
+            data: [],
+          },
+        },
+        tokens: [
+          {
+            assetId: AssetId('usdc-usd-coin'),
+            tvl: 2469.12,
+          },
+        ],
+      })
+    })
+  })
+
   describe(TvlController.prototype.getProjectAssetChart.name, () => {
     it('returns undefined if project does not exist', async () => {
       const controller = new TvlController(
