@@ -23,6 +23,7 @@ import { Database } from '../../peripherals/database/shared/Database'
 import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
 import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
+import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
 import { createEthereumTvlSubmodule } from './EthereumTvl'
 import { createNativeTvlSubmodule } from './NativeTvl'
 import { TvlDatabase } from './types'
@@ -102,6 +103,7 @@ export function createTvlModule(
   const submodules: (TvlSubmodule | undefined)[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
     createNativeTvlSubmodule(db, priceUpdater, logger, clock),
+    createArbitrumTvlSubmodule(db, config, logger, http, clock),
   ]
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
@@ -118,13 +120,14 @@ export function createTvlModule(
     logger.info('Starting')
 
     priceUpdater.start()
-    await aggregatedReportUpdater.start()
 
     logger.info('Starting submodules...')
 
     for (const submodule of submodules) {
       await submodule?.start?.()
     }
+
+    await aggregatedReportUpdater.start()
 
     logger.info('Started')
   }
