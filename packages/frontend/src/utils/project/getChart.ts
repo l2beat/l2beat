@@ -22,7 +22,7 @@ export function getChart(
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],
     milestones: config?.features.milestones ? project.milestones : [],
-    isUpcoming: project.isUpcoming,
+    isUpcoming: project.isUpcoming ?? project.config.escrows.length === 0,
   }
 }
 

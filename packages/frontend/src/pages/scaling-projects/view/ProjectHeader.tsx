@@ -28,7 +28,7 @@ export interface ProjectHeaderProps {
   transactionMonthlyCount?: string
   purpose: string
   technology: string
-  tvlBreakdown: TVLBreakdownProps
+  tvlBreakdown: TVLBreakdownProps | undefined
   risks: RiskValues
   links: ProjectLink[]
   stagesEnabled?: boolean
@@ -59,11 +59,12 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     },
     {
       title: 'Breakdown',
-      value: !props.isUpcoming ? (
-        <TVLBreakdown {...props.tvlBreakdown} />
-      ) : (
-        <UpcomingBadge />
-      ),
+      value:
+        !props.isUpcoming && props.tvlBreakdown ? (
+          <TVLBreakdown {...props.tvlBreakdown} />
+        ) : (
+          <UpcomingBadge />
+        ),
     },
     {
       title: 'Daily TPS',
