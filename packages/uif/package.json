@@ -1,9 +1,23 @@
 {
   "name": "@l2beat/uif",
-  "license": "MIT",
+  "description": "Universal Indexer Framework.",
   "version": "0.1.0",
+  "license": "MIT",
+  "repository": "https://github.com/l2beat/tools",
+  "bugs": {
+    "url": "https://github.com/l2beat/tools/issues"
+  },
+  "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "!**/*.test.*",
+    "!**/*.snapshot",
+    "!src/test",
+    "!dist/test"
+  ],
   "scripts": {
     "test": "mocha",
     "clean": "rm -rf build",
