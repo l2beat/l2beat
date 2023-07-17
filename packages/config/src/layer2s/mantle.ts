@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
 export const mantle: Layer2 = {
@@ -30,7 +30,10 @@ export const mantle: Layer2 = {
   config: {
     escrows: [],
   },
-  riskView: UNDER_REVIEW_RISK_VIEW,
-  technology: TECHNOLOGY.UNDER_REVIEW,
-  contracts: CONTRACTS.UNDER_REVIEW,
+  stage: {
+    stage: 'UnderReview',
+  },
+  riskView: UPCOMING_RISK_VIEW,
+  technology: TECHNOLOGY.UPCOMING,
+  contracts: CONTRACTS.EMPTY,
 }
