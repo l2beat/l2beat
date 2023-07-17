@@ -68,6 +68,13 @@ export const DATA_ON_CHAIN: ProjectRiskViewEntry = {
   sentiment: 'good',
 }
 
+export const DATA_ON_CHAIN_STATE_DIFFS: ProjectRiskViewEntry = {
+  value: 'On chain (SD)',
+  description:
+    'All of the data (SD = state diffs) needed for proof construction is published on chain.',
+  sentiment: 'good',
+}
+
 export const DATA_MIXED: ProjectRiskViewEntry = {
   value: 'Mixed',
   description:
@@ -389,6 +396,7 @@ export const RISK_VIEW = {
   STATE_ZKP_ST,
   STATE_EXITS_ONLY,
   DATA_ON_CHAIN,
+  DATA_ON_CHAIN_STATE_DIFFS,
   DATA_MIXED,
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,

@@ -12,13 +12,14 @@ import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { genArbTokenReport } from '../reports/custom/arbitrum'
 import { genOpTokenReport } from '../reports/custom/optimism'
+import { AssetUpdater } from './AssetUpdater'
 
 // Shas256 of "L2Beat Native Asset [Arbitrum, Optimism]"
 export const NATIVE_ASSET_CONFIG_HASH = Hash256(
   '0xcb0de0a36a0369fe1e0c107bb217c4fd8e7142b5db33ffd01f29859ea323f52e',
 )
 
-export class NMVUpdater {
+export class NMVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -44,10 +45,18 @@ export class NMVUpdater {
     )
   }
 
+  getChainId() {
+    return ChainId.NMV
+  }
+
+  getConfigHash() {
+    return this.configHash
+  }
+
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
-      ChainId.NMV,
+      this.getChainId(),
       ValueType.NMV,
     )
 
@@ -79,7 +88,7 @@ export class NMVUpdater {
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
-      chainId: ChainId.NMV,
+      chainId: this.getChainId(),
       valueType: ValueType.NMV,
     })
 
@@ -96,7 +105,7 @@ export class NMVUpdater {
     }
     return this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
-      ChainId.NMV,
+      this.getChainId(),
       ValueType.NMV,
     )
   }

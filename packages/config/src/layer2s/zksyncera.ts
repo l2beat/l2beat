@@ -129,10 +129,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     dataAvailability: {
-      value: 'On chain (SD)',
-      description:
-        'All of the data (SD = state diffs) needed for proof construction is published on chain.',
-      sentiment: 'good',
+      ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
       sources: [
         {
           contract: 'ValidatorTimelock',

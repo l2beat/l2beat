@@ -1,11 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import {
-  ChainId,
-  Hash256,
-  ProjectId,
-  UnixTime,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -17,13 +11,14 @@ import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createReports } from './createReports'
-import { ARB_TOKEN_ID } from './custom/arbitrum'
-import { OP_TOKEN_ID } from './custom/optimism'
-import { getReportConfigHash } from './getReportConfigHash'
-import { ReportProject } from './ReportProject'
+import { createReports } from '../reports/createReports'
+import { ARB_TOKEN_ID, ARBITRUM_PROJECT_ID } from '../reports/custom/arbitrum'
+import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from '../reports/custom/optimism'
+import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { ReportProject } from '../reports/ReportProject'
+import { AssetUpdater } from './AssetUpdater'
 
-export class CBVUpdater {
+export class CBVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -48,11 +43,18 @@ export class CBVUpdater {
       },
     )
   }
+  getChainId() {
+    return ChainId.ETHEREUM
+  }
+
+  getConfigHash() {
+    return this.configHash
+  }
 
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
-      ChainId.ETHEREUM,
+      this.getChainId(),
       ValueType.CBV,
     )
     for (const timestamp of known) {
@@ -80,7 +82,7 @@ export class CBVUpdater {
       prices,
       balances,
       this.projects,
-      ChainId.ETHEREUM,
+      this.getChainId(),
     )
     // TODO(radomski): This really needs to be refactored
     reports = filterOutNVMReports(reports)
@@ -90,7 +92,7 @@ export class CBVUpdater {
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
-      chainId: ChainId.ETHEREUM,
+      chainId: this.getChainId(),
       valueType: ValueType.CBV,
     })
 
@@ -107,7 +109,7 @@ export class CBVUpdater {
     }
     return this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
-      ChainId.ETHEREUM,
+      this.getChainId(),
       ValueType.CBV,
     )
   }
@@ -116,9 +118,9 @@ export class CBVUpdater {
 function filterOutNVMReports(reports: ReportRecord[]): ReportRecord[] {
   return reports.filter((r) => {
     const isOpNative =
-      r.asset === OP_TOKEN_ID && r.projectId === ProjectId.OPTIMISM
+      r.asset === OP_TOKEN_ID && r.projectId === OPTIMISM_PROJECT_ID
     const isArbNative =
-      r.asset === ARB_TOKEN_ID && r.projectId === ProjectId.ARBITRUM
+      r.asset === ARB_TOKEN_ID && r.projectId === ARBITRUM_PROJECT_ID
     return !isOpNative && !isArbNative
   })
 }

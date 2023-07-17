@@ -40,8 +40,9 @@ export function getProjectHeader(
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
     titleLength: getTitleLength(project.display.name),
-    tvl: formatUSD(tvl),
-    tvlWeeklyChange,
+    tvl: project.config.escrows.length > 0 ? formatUSD(tvl) : undefined,
+    tvlWeeklyChange:
+      project.config.escrows.length > 0 ? tvlWeeklyChange : undefined,
     tpsDaily: tpsDaily?.toFixed(2) ?? '',
     tpsWeeklyChange,
     transactionMonthlyCount:
@@ -50,7 +51,7 @@ export function getProjectHeader(
         : undefined,
     purpose: project.display.purpose,
     technology: project.display.category,
-    tvlBreakdown,
+    tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
     links: getLinks(project.display.links),
     stagesEnabled: config.features.stages,
     stage: project.stage,

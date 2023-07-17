@@ -1,0 +1,42 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "linea",
+  "initialAddresses": ["0xd19d4B5d358258f05D7B411E21A1460D11B0876F"],
+  "names": {
+    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "zkEVM",
+    "0x892bb7EeD71efB060ab90140e7825d8127991DD3": "AdminMultisig",
+    "0xd6B95c960779c72B8C6752119849318E5d550574": "Timelock"
+  },
+  "overrides": {
+    "zkEVM": {
+      "ignoreMethods": [
+        "stateRootHashes",
+        "currentTimestamp",
+        "currentPeriodEnd",
+        "currentL2BlockNumber",
+        "nextMessageNumber"
+      ],
+      "fields": {
+        "verifiers": {
+          "type": "array",
+          "length": 4
+        },
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929": "OPERATOR",
+            "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26": "PAUSE_MANAGER",
+            "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82": "RATE_LIMIT_SETTER"
+          }
+        }
+      }
+    },
+    "Timelock": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    }
+  }
+}
