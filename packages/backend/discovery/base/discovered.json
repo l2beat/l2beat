@@ -1,7 +1,7 @@
 {
   "name": "base",
-  "blockNumber": 17712411,
-  "configHash": "0x846b4f19d62fc6ea98128a1e7740612f4e68fb29145a09b39c21faa79e7695d1",
+  "blockNumber": 17713515,
+  "configHash": "0x564bcd55ad22f8e26e439034e5f04d0323823bd36c98e38930649547767ee992",
   "version": 1,
   "contracts": [
     {
@@ -33,7 +33,7 @@
       "derivedName": "OptimismMintableERC20Factory"
     },
     {
-      "name": "BaseMultisig",
+      "name": "ChallengerMultisig",
       "address": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
       "code": "https://etherscan.deth.net/address/0x14536667Cd30e52C0b458BaACcB9faDA7046E056,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -89,7 +89,7 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 17712404],
+        "params": [1000000000, 100000, 17713513],
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
@@ -109,10 +109,10 @@
         "CHALLENGER": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 1398600,
-        "latestOutputIndex": 776,
-        "nextBlockNumber": 1400400,
-        "nextOutputIndex": 777,
+        "latestBlockNumber": 1405800,
+        "latestOutputIndex": 780,
+        "nextBlockNumber": 1407600,
+        "nextOutputIndex": 781,
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686789348,
@@ -208,7 +208,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "AdminMultisig",
       "address": "0x9855054731540A48b28990B63DcF4f33d8AE46A1",
       "code": "https://etherscan.deth.net/address/0x9855054731540A48b28990B63DcF4f33d8AE46A1,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -229,7 +229,8 @@
         "getThreshold": 3,
         "nonce": 8,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
