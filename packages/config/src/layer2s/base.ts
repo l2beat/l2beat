@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
 export const base: Layer2 = {
@@ -32,9 +32,5 @@ export const base: Layer2 = {
   },
   riskView: UNDER_REVIEW_RISK_VIEW,
   technology: TECHNOLOGY.UNDER_REVIEW,
-  contracts: {
-    isUnderReview: true,
-    addresses: [],
-    risks: [],
-  },
+  contracts: CONTRACTS.UNDER_REVIEW,
 }
