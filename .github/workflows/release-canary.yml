@@ -25,14 +25,14 @@ jobs:
 
       - name: Set backend-tools version
         run: |
-          # yarn changeset version
+          yarn changeset version
           cd packages/backend-tools
           npm pkg set version=$(cat package.json | jq .version -r)-canary.$(date +'%Y%m%dT%H%M%S')
           echo "Version changed: $(npm pkg get version)"
 
       - name: Set uif version
         run: |
-          # yarn changeset version
+          yarn changeset version
           cd packages/uif
           npm pkg set version=$(cat package.json | jq .version -r)-canary.$(date +'%Y%m%dT%H%M%S')
           echo "Version changed: $(npm pkg get version)"

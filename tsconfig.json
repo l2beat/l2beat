@@ -14,6 +14,6 @@
     "declarationMap": true,
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
-    "outDir": "build"
+    "outDir": "dist"
   }
 }
