@@ -28,7 +28,7 @@ describe(NMVUpdater.name, () => {
         add: async ({ configHash }) => configHash,
       })
 
-      const nativeAssetUpdater = new NMVUpdater(
+      const nmvUpdater = new NMVUpdater(
         priceUpdater,
         reportRepository,
         reportStatusRepository,
@@ -36,8 +36,8 @@ describe(NMVUpdater.name, () => {
         Logger.SILENT,
       )
 
-      await nativeAssetUpdater.update(MOCK.NOW.add(1, 'hours'))
-      await nativeAssetUpdater.update(MOCK.NOW)
+      await nmvUpdater.update(MOCK.NOW.add(1, 'hours'))
+      await nmvUpdater.update(MOCK.NOW)
 
       expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
@@ -60,7 +60,7 @@ describe(NMVUpdater.name, () => {
       )
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(2, [])
 
-      const reports = await nativeAssetUpdater.getReportsWhenReady(
+      const reports = await nmvUpdater.getReportsWhenReady(
         MOCK.NOW.add(1, 'hours'),
       )
       // ensure that the updater updated internal knownSet
@@ -97,7 +97,7 @@ describe(NMVUpdater.name, () => {
         },
       })
 
-      const nativeAssetUpdater = new NMVUpdater(
+      const nmvUpdater = new NMVUpdater(
         priceUpdater,
         reportRepository,
         reportStatusRepository,
@@ -105,7 +105,7 @@ describe(NMVUpdater.name, () => {
         Logger.SILENT,
       )
 
-      await nativeAssetUpdater.start()
+      await nmvUpdater.start()
 
       await waitForExpect(() => {
         expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
@@ -162,7 +162,7 @@ describe(NMVUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new NMVUpdater(
+      const nmvUpdater = new NMVUpdater(
         priceUpdater,
         reportRepository,
         reportStatusRepository,
@@ -170,9 +170,9 @@ describe(NMVUpdater.name, () => {
         Logger.SILENT,
       )
 
-      await reportUpdater.start()
+      await nmvUpdater.start()
 
-      const reports = await reportUpdater.getReportsWhenReady(
+      const reports = await nmvUpdater.getReportsWhenReady(
         MOCK.NOW.add(-1, 'hours'),
       )
 
