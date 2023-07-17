@@ -1,7 +1,7 @@
 {
   "name": "zora",
-  "blockNumber": 17669325,
-  "configHash": "0xd2bbb6438f9a4536459e543676876b53ddbc1c868ba39528bfcad405e65ea054",
+  "blockNumber": 17711360,
+  "configHash": "0x76437a39e6e87f7bd6d11184c3de41b0c3d600b9a7ce9c1b8f4bd1f62c47ead6",
   "version": 1,
   "contracts": [
     {
@@ -17,7 +17,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 17669321],
+        "params": [1000000000, 300000, 17711358],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -72,10 +72,10 @@
         "CHALLENGER": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 1184580,
-        "latestOutputIndex": 882,
-        "nextBlockNumber": 1186380,
-        "nextOutputIndex": 883,
+        "latestBlockNumber": 1440180,
+        "latestOutputIndex": 1024,
+        "nextBlockNumber": 1441980,
+        "nextOutputIndex": 1025,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -195,6 +195,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
+      "unverified": true,
       "code": "https://etherscan.deth.net/address/0xdC40a14d9abd6F410226f1E6de71aE03441ca506,0x363B4B1ADa52E50353f746999bd9E94395190d2C",
       "upgradeability": {
         "type": "resolved delegate proxy",
@@ -204,7 +205,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619780",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619781",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -536,9 +537,6 @@
       "function messenger() view returns (address)",
       "function otherBridge() view returns (address)",
       "function version() view returns (string)"
-    ],
-    "0xdC40a14d9abd6F410226f1E6de71aE03441ca506": [
-      "constructor(address _addressManager, string _implementationName)"
     ],
     "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef": [
       "event AddressSet(string indexed name, address newAddress, address oldAddress)",
