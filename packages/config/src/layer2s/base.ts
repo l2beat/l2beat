@@ -36,5 +36,5 @@ export const base: Layer2 = {
     isUnderReview: true,
     addresses: [],
     risks: [],
-  }
+  },
 }
