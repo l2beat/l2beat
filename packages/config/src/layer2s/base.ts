@@ -72,6 +72,7 @@ export const base: Layer2 = {
       startBlock: 1,
       url: 'developer-access-mainnet.base.org',
       callsPerMinute: 1500,
+      excludeFromActivityApi: true,
     },
   },
   riskView: makeBridgeCompatible({
