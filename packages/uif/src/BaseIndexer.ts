@@ -200,10 +200,10 @@ export abstract class BaseIndexer implements Indexer {
   private async executeSetSafeHeight(
     effect: SetSafeHeightEffect,
   ): Promise<void> {
-    await this.setSafeHeight(effect.safeHeight)
     this.children.forEach((child) =>
       child.notifyUpdate(this, effect.safeHeight),
     )
+    await this.setSafeHeight(effect.safeHeight)
   }
 
   // #endregion

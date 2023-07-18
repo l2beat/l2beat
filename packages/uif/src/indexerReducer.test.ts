@@ -367,9 +367,69 @@ describe(indexerReducer.name, () => {
         })
 
         expect(effects2).toEqual([
-          { type: 'SetSafeHeight', safeHeight: 50 },
           { type: 'NotifyReady', parentIndices: [0] },
           { type: 'Invalidate', targetHeight: 50 },
+        ])
+      })
+    })
+
+    describe('complex scenarios', () => {
+      it('if parent is waiting, it keeps waiting until notifyReady', () => {
+        //1. grandparent ticks lower (to: x1) && parent updating (to: x2)-> parent sets (safeHeight: x1), but still updating (to:x2), child sets (safeHeight: x1) -> parennt finishes update (to: x2, waiting: true), child notifies ready
+        const initState = getAfterInit({
+          safeHeight: 100,
+          childCount: 1,
+          parentHeights: [100],
+        })
+
+        const [state, effects] = reduceWithIndexerReducer(initState, [
+          { type: 'ParentUpdated', index: 0, safeHeight: 50 },
+          { type: 'ParentUpdated', index: 0, safeHeight: 50 },
+        ])
+
+        expect(state).toEqual({
+          ...initState,
+          status: 'idle',
+          targetHeight: 50,
+          safeHeight: 50,
+          waiting: true,
+          parents: [{ safeHeight: 50, initialized: true, waiting: true }],
+          children: [{ ready: false }],
+        })
+
+        expect(effects).toEqual([])
+      })
+
+      it('does not emit extra SetSafeHeight effect in ChildIndexer', () => {
+        const initState = getAfterInit({
+          safeHeight: 100,
+          childCount: 0,
+          parentHeights: [100],
+        })
+
+        const [state1, effects1] = reduceWithIndexerReducer(initState, [
+          { type: 'ParentUpdated', index: 0, safeHeight: 200 },
+          { type: 'UpdateSucceeded', from: 100, targetHeight: 150 },
+        ])
+
+        expect(effects1).toEqual([
+          { type: 'SetSafeHeight', safeHeight: 150 },
+          { type: 'Update', targetHeight: 200 },
+        ])
+
+        const [state2, effects2] = reduceWithIndexerReducer(state1, [
+          { type: 'ParentUpdated', index: 0, safeHeight: 140 },
+        ])
+
+        expect(effects2).toEqual([{ type: 'SetSafeHeight', safeHeight: 140 }])
+
+        const [, effects3] = reduceWithIndexerReducer(state2, [
+          { type: 'UpdateSucceeded', from: 150, targetHeight: 200 },
+        ])
+
+        expect(effects3).toEqual([
+          { type: 'NotifyReady', parentIndices: [0] },
+          { type: 'Invalidate', targetHeight: 140 },
         ])
       })
     })

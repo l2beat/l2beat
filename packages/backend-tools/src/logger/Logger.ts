@@ -3,14 +3,15 @@ import { join } from 'path'
 
 import { formatLevelPretty } from './formatLevelPretty'
 import { formatParametersPretty } from './formatParametersPretty'
-import { formatServicePretty } from './formatServicePretty'
+import { formatServicePretty, tagService } from './formatServicePretty'
 import { formatTimePretty } from './formatTimePretty'
 import { LEVEL, LogLevel } from './LogLevel'
 import { resolveLog } from './resolveLog'
 
 export interface LoggerOptions {
   logLevel: LogLevel
-  service: string
+  service?: string
+  tag?: string
   format: 'pretty' | 'json'
   utc: boolean
   colors: boolean
@@ -27,7 +28,8 @@ export class Logger {
   constructor(options: Partial<LoggerOptions>) {
     this.options = {
       logLevel: options.logLevel ?? 'INFO',
-      service: options.service ?? '',
+      service: options.service,
+      tag: options.tag,
       format: options.format ?? 'json',
       utc: options.utc ?? false,
       colors: options.colors ?? false,
@@ -40,7 +42,28 @@ export class Logger {
   }
 
   static SILENT = new Logger({ logLevel: 'NONE', format: 'pretty' })
-  static DEBUG = new Logger({ logLevel: 'NONE', format: 'pretty' })
+  static CRITICAL = new Logger({
+    logLevel: 'CRITICAL',
+    format: 'pretty',
+    colors: true,
+  })
+  static ERROR = new Logger({
+    logLevel: 'ERROR',
+    format: 'pretty',
+    colors: true,
+  })
+  static WARN = new Logger({ logLevel: 'WARN', format: 'pretty', colors: true })
+  static INFO = new Logger({ logLevel: 'INFO', format: 'pretty', colors: true })
+  static DEBUG = new Logger({
+    logLevel: 'DEBUG',
+    format: 'pretty',
+    colors: true,
+  })
+  static TRACE = new Logger({
+    logLevel: 'TRACE',
+    format: 'pretty',
+    colors: true,
+  })
 
   configure(options: Partial<LoggerOptions>): Logger {
     return new Logger({ ...this.options, ...options })
@@ -52,6 +75,10 @@ export class Logger {
         ? `${this.options.service}.${object.constructor.name}`
         : object.constructor.name,
     })
+  }
+
+  tag(tag: string | undefined): Logger {
+    return this.configure({ tag })
   }
 
   critical(message: string, parameters?: unknown): void
@@ -137,7 +164,7 @@ export class Logger {
     const core = {
       time,
       level,
-      service: this.options.service ? this.options.service : undefined,
+      service: tagService(this.options.service, this.options.tag),
       message,
     }
     const data = {
@@ -164,6 +191,7 @@ export class Logger {
     const levelOut = formatLevelPretty(level, this.options.colors)
     const service = formatServicePretty(
       this.options.service,
+      this.options.tag,
       this.options.colors,
     )
 

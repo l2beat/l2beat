@@ -30,18 +30,19 @@ export function indexerReducer(
     case 'ParentUpdated': {
       const newState: IndexerState = {
         ...state,
-        parents: state.parents.map((parent, index) =>
-          index === action.index
-            ? {
-                ...parent,
-                safeHeight: action.safeHeight,
-                initialized: true,
-                waiting: parent.initialized
-                  ? action.safeHeight < parent.safeHeight
-                  : false,
-              }
-            : parent,
-        ),
+        parents: state.parents.map((parent, index) => {
+          if (index === action.index) {
+            const waiting =
+              parent.waiting || action.safeHeight < parent.safeHeight
+            return {
+              ...parent,
+              safeHeight: action.safeHeight,
+              initialized: true,
+              waiting: parent.initialized ? waiting : false,
+            }
+          }
+          return parent
+        }),
       }
 
       const result = finishInitialization(newState)
@@ -90,6 +91,7 @@ export function indexerReducer(
     }
     case 'Tick': {
       assertRoot(state)
+      // TODO: either tick is sync or we should remember to tick in the future
       assertStatus(state.status, 'idle')
       // TODO: status = ticking????
       return [{ ...state, status: 'updating' }, [{ type: 'Tick' }]]
@@ -208,6 +210,11 @@ function continueOperations(
   const effects: IndexerEffect[] = []
   if (state.targetHeight < state.safeHeight || updateFinished) {
     const safeHeight = Math.min(state.targetHeight, state.height)
+
+    if (safeHeight !== state.safeHeight) {
+      effects.push({ type: 'SetSafeHeight', safeHeight })
+    }
+
     if (safeHeight < state.safeHeight) {
       state = {
         ...state,
@@ -218,7 +225,6 @@ function continueOperations(
     } else {
       state = { ...state, safeHeight }
     }
-    effects.push({ type: 'SetSafeHeight', safeHeight })
   }
 
   if (state.children.every((x) => x.ready)) {
