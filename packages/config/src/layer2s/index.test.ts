@@ -4,6 +4,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { startsWith } from 'lodash'
 
 import {
   ProjectReference,
@@ -46,6 +47,29 @@ describe('layer2s', () => {
         } catch {
           continue
         }
+      }
+    })
+  })
+
+  describe('activity', () => {
+    describe('custom URL starts with https', () => {
+      const layers2WithUrls = layer2s.flatMap((layer2) => {
+        const { transactionApi } = layer2.config
+
+        if (transactionApi && 'url' in transactionApi && transactionApi.url) {
+          return {
+            id: layer2.id,
+            url: transactionApi.url,
+          }
+        }
+
+        return []
+      })
+
+      for (const { id, url } of layers2WithUrls) {
+        it(`${id.toString()} : ${url}`, () => {
+          expect(url).toSatisfy((url: string) => startsWith(url, 'https://'))
+        })
       }
     })
   })

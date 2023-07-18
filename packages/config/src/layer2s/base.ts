@@ -70,7 +70,7 @@ export const base: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
-      url: 'developer-access-mainnet.base.org',
+      url: 'https://developer-access-mainnet.base.org',
       callsPerMinute: 1500,
       excludeFromActivityApi: true,
     },
@@ -270,13 +270,6 @@ export const base: Layer2 = {
         discovery.getPermissionedAccount('L2OutputOracle', 'PROPOSER'),
       ],
       description: 'Central actor allowed to post new L2 state roots to L1.',
-    },
-    {
-      name: 'Challenger',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'CHALLENGER'),
-      ],
-      description: 'Central actor allowed to challenge L2 state roots.',
     },
   ],
   contracts: {
