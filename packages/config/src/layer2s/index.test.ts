@@ -71,7 +71,6 @@ describe('layer2s', () => {
           expect(url).toSatisfy((url: string) => startsWith(url, 'https://'))
         })
       }
-      }
     })
   })
 
