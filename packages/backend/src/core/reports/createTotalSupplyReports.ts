@@ -59,6 +59,10 @@ function transformBalances(
     const assetSupplies = totalSupplies.filter(
       (s) => s.assetId === assetId && s.timestamp.gte(sinceTimestamp),
     )
+    assert(
+      assetSupplies.length === 1,
+      'Expected only one external asset, delete this if you are adding a new one',
+    )
 
     const chainIdsMatch =
       assetBalances.every((b) => b.chainId === chainId) &&
