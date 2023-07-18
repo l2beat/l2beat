@@ -17,6 +17,7 @@ export function formatTimePretty(
   const ms = (utc ? now.getUTCMilliseconds() : now.getMilliseconds())
     .toString()
     .padStart(3, '0')
-  const result = `${h}:${m}:${s}.${ms}`
+  const time = `${h}:${m}:${s}.${ms}`
+  const result = utc ? `${time} (UTC)` : time
   return colors ? chalk.gray(result) : result
 }
