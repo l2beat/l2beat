@@ -61,7 +61,7 @@ function transformBalances(
     )
     assert(
       assetSupplies.length === 1,
-      'Expected only one external asset, delete this if you are adding a new one',
+      'Expected only one supply asset, delete this if you are adding a new one',
     )
 
     const chainIdsMatch =

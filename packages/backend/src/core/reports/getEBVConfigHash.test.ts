@@ -15,12 +15,11 @@ import { ReportProject } from './ReportProject'
 
 describe(getEBVConfigHash.name, () => {
   it('hash changes if tokens added', () => {
-    const project = [
-      fakeProject('arbitrum', 'layer2', [
-        fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
-        fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
-      ]),
-    ]
+    const project = fakeProject('arbitrum', 'layer2', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+      fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
+    ])
+
     const tokenConfigBefore: TotalSupplyTokensConfig[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
@@ -36,12 +35,11 @@ describe(getEBVConfigHash.name, () => {
   })
 
   it('hash changes if project is removed', () => {
-    const project = [
-      fakeProject('arbitrum', 'layer2', [
-        fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
-        fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
-      ]),
-    ]
+    const project = fakeProject('arbitrum', 'layer2', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+      fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
+    ])
+
     const tokenConfigBefore: TotalSupplyTokensConfig[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
@@ -54,12 +52,10 @@ describe(getEBVConfigHash.name, () => {
   })
 
   it('hash stays the same if nothing changes', () => {
-    const project = [
-      fakeProject('arbitrum', 'layer2', [
-        fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
-        fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
-      ]),
-    ]
+    const project = fakeProject('arbitrum', 'layer2', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+      fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
+    ])
     const tokenConfigBefore: TotalSupplyTokensConfig[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
@@ -74,18 +70,55 @@ describe(getEBVConfigHash.name, () => {
     expect(hashBefore).toEqual(hashAfter)
   })
 
-  it('hash changes if project changes', () => {
-    const projectBefore = [
-      fakeProject('arbitrum', 'layer2', [
-        fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
-        fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
-      ]),
+  it('hash stays the same if only escrow changes', () => {
+    const projectBefore = fakeProject('arbitrum', 'layer2', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+      fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
+    ])
+    const projectAfter = fakeProject('arbitrum', 'layer2', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+    ])
+
+    const tokenConfig: TotalSupplyTokensConfig[] = [
+      fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
+      fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
-    const projectAfter = [
-      fakeProject('arbitrum', 'layer2', [
-        fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
-      ]),
+
+    const hashBefore = getEBVConfigHash(projectBefore, tokenConfig)
+    const hashAfter = getEBVConfigHash(projectAfter, tokenConfig)
+    expect(hashBefore).toEqual(hashAfter)
+  })
+
+  it('hash changes if escrow stay the same but project id changes', () => {
+    const projectBefore = fakeProject('arbitrum', 'layer2', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+      fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
+    ])
+    const projectAfter = fakeProject('arbitrum_with_blackjack', 'layer2', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+      fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
+    ])
+
+    const tokenConfig: TotalSupplyTokensConfig[] = [
+      fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
+      fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
+
+    const hashBefore = getEBVConfigHash(projectBefore, tokenConfig)
+    const hashAfter = getEBVConfigHash(projectAfter, tokenConfig)
+    expect(hashBefore).not.toEqual(hashAfter)
+  })
+
+  it('hash changes if escrow stay the same but project type changes', () => {
+    const projectBefore = fakeProject('arbitrum', 'layer2', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+      fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
+    ])
+    const projectAfter = fakeProject('arbitrum', 'bridge', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+      fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
+    ])
+
     const tokenConfig: TotalSupplyTokensConfig[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),

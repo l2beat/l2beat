@@ -45,7 +45,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
       arbitrumProject.length === 1,
       'Expected there to be a single project when filtered',
     )
-    this.configHash = getEBVConfigHash(this.arbitrumProject, this.tokens)
+    this.configHash = getEBVConfigHash(this.arbitrumProject[0], this.tokens)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
