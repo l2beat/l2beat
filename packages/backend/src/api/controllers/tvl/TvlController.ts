@@ -6,6 +6,7 @@ import {
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
+  UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
 
@@ -30,18 +31,38 @@ export class TvlController {
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
     private readonly logger: Logger,
+    private readonly isArbitrumEnabled = false,
   ) {
     this.logger = this.logger.for(this)
   }
 
   async getTvlApiResponse(): Promise<TvlApiResponse | undefined> {
-    const timestamp = await this.reportStatusRepository.findLatestTimestamp(
-      ChainId.ETHEREUM,
-      ValueType.CBV,
+    const timestamps: (UnixTime | undefined)[] = []
+
+    timestamps.push(
+      await this.reportStatusRepository.findLatestTimestamp(
+        ChainId.ETHEREUM,
+        ValueType.CBV,
+      ),
     )
-    if (!timestamp) {
+    if (this.isArbitrumEnabled) {
+      timestamps.push(
+        await this.reportStatusRepository.findLatestTimestamp(
+          ChainId.ARBITRUM,
+          ValueType.EBV,
+        ),
+      )
+    }
+
+    if (timestamps.some((x) => x === undefined)) {
       return undefined
     }
+
+    const timestamp = timestamps
+      .filter(notUndefined)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      .reduce((min, t) => (t.lt(min) ? t : min), timestamps[0]!)
+
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
         this.aggregatedReportRepository.getHourly(
@@ -57,7 +78,7 @@ export class TvlController {
       hourlyReports,
       sixHourlyReports,
       dailyReports,
-      latestReports,
+      reduceDuplicatedReports(latestReports),
       this.projects.map((x) => x.projectId),
     )
     return tvlApiResponse
@@ -85,13 +106,33 @@ export class TvlController {
     if (!project || !asset) {
       return undefined
     }
-    const timestamp = await this.reportStatusRepository.findLatestTimestamp(
-      ChainId.ETHEREUM,
-      ValueType.CBV,
+
+    const timestamps: (UnixTime | undefined)[] = []
+
+    timestamps.push(
+      await this.reportStatusRepository.findLatestTimestamp(
+        ChainId.ETHEREUM,
+        ValueType.CBV,
+      ),
     )
-    if (!timestamp) {
+    if (projectId === ProjectId.ARBITRUM && assetId === AssetId.USDC) {
+      timestamps.push(
+        await this.reportStatusRepository.findLatestTimestamp(
+          ChainId.ARBITRUM,
+          ValueType.EBV,
+        ),
+      )
+    }
+
+    if (timestamps.some((x) => x === undefined)) {
       return undefined
     }
+
+    const timestamp = timestamps
+      .filter(notUndefined)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      .reduce((min, t) => (t.lt(min) ? t : min), timestamps[0]!)
+
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
       this.reportRepository.getHourlyByProjectAndAsset(
         projectId,
@@ -113,16 +154,61 @@ export class TvlController {
     return {
       hourly: {
         types,
-        data: this.getChartData(hourlyReports, asset.decimals, 1),
+        data: this.getChartData(
+          reduceDuplicatedReports(hourlyReports),
+          asset.decimals,
+          1,
+        ),
       },
       sixHourly: {
         types,
-        data: this.getChartData(sixHourlyReports, asset.decimals, 6),
+        data: this.getChartData(
+          reduceDuplicatedReports(sixHourlyReports),
+          asset.decimals,
+          6,
+        ),
       },
       daily: {
         types,
-        data: this.getChartData(dailyReports, asset.decimals, 24),
+        data: this.getChartData(
+          reduceDuplicatedReports(dailyReports),
+          asset.decimals,
+          24,
+        ),
       },
     }
   }
+}
+
+export function reduceDuplicatedReports(
+  reports: ReportRecord[],
+): ReportRecord[] {
+  const result: ReportRecord[] = []
+
+  for (const report of reports) {
+    const existingIndex = result.findIndex(
+      (r) =>
+        r.projectId === report.projectId &&
+        r.asset === report.asset &&
+        r.timestamp.equals(report.timestamp),
+    )
+    if (existingIndex !== -1) {
+      const existing = result[existingIndex]
+
+      result[existingIndex] = {
+        ...existing,
+        amount: existing.amount + report.amount,
+        usdValue: existing.usdValue + report.usdValue,
+        ethValue: existing.ethValue + report.ethValue,
+      }
+    } else {
+      result.push(report)
+    }
+  }
+
+  return result
+}
+
+function notUndefined<T>(x: T | undefined): x is T {
+  return x !== undefined
 }

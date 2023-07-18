@@ -1,5 +1,11 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  Hash256,
+  ProjectId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -12,8 +18,8 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createReports } from '../reports/createReports'
-import { ARB_TOKEN_ID, ARBITRUM_PROJECT_ID } from '../reports/custom/arbitrum'
-import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from '../reports/custom/optimism'
+import { ARB_TOKEN_ID } from '../reports/custom/arbitrum'
+import { OP_TOKEN_ID } from '../reports/custom/optimism'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { ReportProject } from '../reports/ReportProject'
 import { AssetUpdater } from './AssetUpdater'
@@ -118,9 +124,9 @@ export class CBVUpdater implements AssetUpdater {
 function filterOutNVMReports(reports: ReportRecord[]): ReportRecord[] {
   return reports.filter((r) => {
     const isOpNative =
-      r.asset === OP_TOKEN_ID && r.projectId === OPTIMISM_PROJECT_ID
+      r.asset === OP_TOKEN_ID && r.projectId === ProjectId.OPTIMISM
     const isArbNative =
-      r.asset === ARB_TOKEN_ID && r.projectId === ARBITRUM_PROJECT_ID
+      r.asset === ARB_TOKEN_ID && r.projectId === ProjectId.ARBITRUM
     return !isOpNative && !isArbNative
   })
 }
