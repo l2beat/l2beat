@@ -39,9 +39,7 @@
       }
     },
     "AdminMultisig": {
-      "ignoreInWatchMode": [
-        "nonce"
-      ]
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
