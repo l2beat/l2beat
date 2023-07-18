@@ -64,11 +64,15 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     return this.configHash
   }
 
+  getValueType() {
+    return ValueType.EBV
+  }
+
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.getConfigHash(),
       this.getChainId(),
-      ValueType.EBV,
+      this.getValueType(),
     )
 
     for (const timestamp of known) {
@@ -107,7 +111,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
       configHash: this.getConfigHash(),
       timestamp,
       chainId: this.getChainId(),
-      valueType: ValueType.EBV,
+      valueType: this.getValueType(),
     })
 
     this.knownSet.add(timestamp.toNumber())
@@ -124,7 +128,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     return this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      ValueType.EBV,
+      this.getValueType(),
     )
   }
 }
