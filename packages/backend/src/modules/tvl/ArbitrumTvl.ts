@@ -1,5 +1,5 @@
 import { ArbiscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { assert, ChainId } from '@l2beat/shared-pure'
+import { assert, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
@@ -9,7 +9,6 @@ import { ArbitrumBalanceProvider } from '../../core/balances/providers/ArbitrumB
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { ARBITRUM_PROJECT_ID } from '../../core/reports/custom/arbitrum'
 import { ArbitrumTotalSupplyProvider } from '../../core/totalSupply/providers/ArbitrumTotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { Project } from '../../model'
@@ -127,7 +126,7 @@ export function createArbitrumTvlSubmodule(
 }
 
 function filterArbitrumProject(projects: Project[]) {
-  const result = projects.filter((x) => x.projectId === ARBITRUM_PROJECT_ID)
+  const result = projects.filter((x) => x.projectId === ProjectId.ARBITRUM)
   assert(
     result.length === 1,
     'Expected there only to be a single matching project',

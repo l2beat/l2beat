@@ -4,11 +4,11 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 
 import { createTotalSupplyReports } from '../core/reports/createTotalSupplyReports'
-import { ARBITRUM_PROJECT_ID } from '../core/reports/custom/arbitrum'
 import { ReportProject } from '../core/reports/ReportProject'
 import { TotalSupplyTokensConfig } from '../core/totalSupply/TotalSupplyTokensConfig'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
@@ -53,7 +53,7 @@ const FUTURE_BALANCES = BALANCES.map((balance) => ({
 }))
 
 const PROJECT: ReportProject = {
-  projectId: ARBITRUM_PROJECT_ID,
+  projectId: ProjectId.ARBITRUM,
   type: 'layer2',
   escrows: [
     {
