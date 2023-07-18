@@ -9,7 +9,7 @@ import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { getEBVConfigHash } from '../reports/getEBVConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { ArbitrumEBVUpdater } from './ArbitrumEBVUpdater'
 
@@ -56,7 +56,7 @@ describe(ArbitrumEBVUpdater.name, () => {
       await ebvUpdater.update(MOCK.NOW.add(1, 'hours'))
       await ebvUpdater.update(MOCK.NOW)
 
-      const configHash = getReportConfigHash([MOCK.PROJECT])
+      const configHash = getEBVConfigHash([MOCK.PROJECT], MOCK.TOKENS)
 
       expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
@@ -144,7 +144,7 @@ describe(ArbitrumEBVUpdater.name, () => {
       await ebvUpdater.start()
 
       await waitForExpect(() => {
-        const configHash = getReportConfigHash([MOCK.PROJECT])
+        const configHash = getEBVConfigHash([MOCK.PROJECT], MOCK.TOKENS)
 
         expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {

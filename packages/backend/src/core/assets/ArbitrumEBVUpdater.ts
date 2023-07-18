@@ -18,7 +18,7 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createEBVReports } from '../reports/createEBVReports'
-import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { getEBVConfigHash } from '../reports/getEBVConfigHash'
 import { ReportProject } from '../reports/ReportProject'
 import { TotalSupplyTokensConfig } from '../totalSupply/TotalSupplyTokensConfig'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
@@ -45,7 +45,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
       arbitrumProject.length === 1,
       'Expected there to be a single project when filtered',
     )
-    this.configHash = getReportConfigHash(this.arbitrumProject)
+    this.configHash = getEBVConfigHash(this.arbitrumProject, this.tokens)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
