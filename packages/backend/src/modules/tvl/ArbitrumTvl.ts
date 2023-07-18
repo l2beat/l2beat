@@ -10,7 +10,6 @@ import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { ARBITRUM_PROJECT_ID } from '../../core/reports/custom/arbitrum'
-import { ReportProject } from '../../core/reports/ReportProject'
 import { ArbitrumTotalSupplyProvider } from '../../core/totalSupply/providers/ArbitrumTotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { Project } from '../../model'
@@ -35,7 +34,10 @@ export function createArbitrumTvlSubmodule(
   // #region peripherals
 
   const arbitrumProject = filterArbitrumProject(config.projects)
-  assert(arbitrumProject.length === 1, 'Expected there only to be a single matching project')
+  assert(
+    arbitrumProject.length === 1,
+    'Expected there only to be a single matching project',
+  )
   assert(arbitrumProject[0].externalTokens, 'No external tokens configured')
   const arbitrumTokens = arbitrumProject[0].externalTokens.assets
 
@@ -98,15 +100,15 @@ export function createArbitrumTvlSubmodule(
   )
 
   const ebvUpdater = new ArbitrumEBVUpdater(
-      priceUpdater,
-      arbitrumBalanceUpdater,
-      totalSupplyUpdater,
-      db.reportRepository,
-      db.reportStatusRepository,
-      clock,
-      arbitrumProject,
-      arbitrumTokens,
-      logger
+    priceUpdater,
+    arbitrumBalanceUpdater,
+    totalSupplyUpdater,
+    db.reportRepository,
+    db.reportStatusRepository,
+    clock,
+    arbitrumProject,
+    arbitrumTokens,
+    logger,
   )
 
   // #endregion
@@ -129,5 +131,5 @@ export function createArbitrumTvlSubmodule(
 }
 
 function filterArbitrumProject(projects: Project[]) {
-    return projects.filter((x) => x.projectId === ARBITRUM_PROJECT_ID)
+  return projects.filter((x) => x.projectId === ARBITRUM_PROJECT_ID)
 }

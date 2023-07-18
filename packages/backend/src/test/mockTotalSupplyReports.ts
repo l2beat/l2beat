@@ -7,6 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { createTotalSupplyReports } from '../core/reports/createTotalSupplyReports'
 import { ARBITRUM_PROJECT_ID } from '../core/reports/custom/arbitrum'
 import { ReportProject } from '../core/reports/ReportProject'
 import { TotalSupplyTokensConfig } from '../core/totalSupply/TotalSupplyTokensConfig'
@@ -31,6 +32,10 @@ const PRICES: PriceRecord[] = [
   { priceUsd: 1, assetId: AssetId.USDC, timestamp: BASE_MOCK.NOW },
   { priceUsd: 1000, assetId: AssetId.ETH, timestamp: BASE_MOCK.NOW },
 ]
+const FUTURE_PRICES = PRICES.map((price) => ({
+  ...price,
+  timestamp: BASE_MOCK.NOW.add(1, 'hours'),
+}))
 
 const BALANCES: BalanceRecord[] = [
   {
@@ -41,6 +46,11 @@ const BALANCES: BalanceRecord[] = [
     chainId: ChainId.ARBITRUM,
   },
 ]
+
+const FUTURE_BALANCES = BALANCES.map((balance) => ({
+  ...balance,
+  timestamp: BASE_MOCK.NOW.add(1, 'hours'),
+}))
 
 const PROJECT: ReportProject = {
   projectId: ARBITRUM_PROJECT_ID,
@@ -65,19 +75,47 @@ const PROJECT: ReportProject = {
 const TOKENS: TotalSupplyTokensConfig[] = [
   {
     assetId: AssetId.USDC,
-    tokenAddress: EthereumAddress.random(),
+    tokenAddress: EthereumAddress.random().toString(),
     sinceTimestamp: BASE_MOCK.NOW,
     decimals: 6,
   },
 ]
 
-export const REPORTS_MOCK = {
-  ...BASE_MOCK,
+const REPORTS = createTotalSupplyReports(
   PRICES,
   BALANCES,
   TOTAL_SUPPLIES,
   TOKENS,
   PROJECT,
+  ChainId.ARBITRUM,
+)
+const FUTURE_REPORTS = createTotalSupplyReports(
+  FUTURE_PRICES,
+  FUTURE_BALANCES,
+  TOTAL_SUPPLIES,
+  TOKENS,
+  PROJECT,
+  ChainId.ARBITRUM,
+)
+
+// const AGGREGATED_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
+// const FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP = aggregateReports(
+//   FUTURE_REPORTS_WITH_OP,
+//   PROJECTS,
+//   NOW.add(1, 'hours'),
+// )
+
+export const REPORTS_MOCK = {
+  ...BASE_MOCK,
+  PRICES,
+  REPORTS,
+  BALANCES,
+  TOTAL_SUPPLIES,
+  TOKENS,
+  PROJECT,
+  FUTURE_PRICES,
+  FUTURE_BALANCES,
+  FUTURE_REPORTS,
 }
 
 function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
