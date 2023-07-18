@@ -34,7 +34,7 @@ export function DesktopProjectNavigation({
       <div
         id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}
         className={cx(
-          'opacity-0 transition-all duration-300 -z-1',
+          '-z-1 opacity-0 transition-all duration-300',
           translateClassName,
         )}
       >
