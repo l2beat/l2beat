@@ -271,13 +271,6 @@ export const base: Layer2 = {
       ],
       description: 'Central actor allowed to post new L2 state roots to L1.',
     },
-    {
-      name: 'Challenger',
-      accounts: [
-        discovery.getPermissionedAccount('L2OutputOracle', 'CHALLENGER'),
-      ],
-      description: 'Central actor allowed to challenge L2 state roots.',
-    },
   ],
   contracts: {
     addresses: [
