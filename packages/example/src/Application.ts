@@ -6,6 +6,8 @@ import { BlockNumberIndexer } from './indexers/BlockNumberIndexer'
 import { FakeClockIndexer } from './indexers/FakeClockIndexer'
 import { BalanceRepository } from './repositories/BalanceRepository'
 import { BlockNumberRepository } from './repositories/BlockNumberRepository'
+import { TvlRepository } from './repositories/TvlRepository'
+import { TvlIndexer } from './indexers/TvlIndexer'
 
 export class Application {
   start: () => Promise<void>
@@ -20,6 +22,7 @@ export class Application {
 
     const blockNumberRepository = new BlockNumberRepository()
     const balanceRepository = new BalanceRepository()
+    const tvlRepository = new TvlRepository()
 
     const fakeClockIndexer = new FakeClockIndexer(logger)
     const blockNumberIndexer = new BlockNumberIndexer(
@@ -32,6 +35,11 @@ export class Application {
       blockNumberIndexer,
       balanceRepository,
     )
+    const tvlIndexer = new TvlIndexer(
+      logger,
+      balanceIndexer,
+      tvlRepository,
+    )
 
     this.start = async (): Promise<void> => {
       await Promise.resolve()
@@ -40,6 +48,7 @@ export class Application {
       await fakeClockIndexer.start()
       await blockNumberIndexer.start()
       await balanceIndexer.start()
+      await tvlIndexer.start()
     }
   }
 }
