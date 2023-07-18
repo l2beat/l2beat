@@ -24,6 +24,7 @@
     "lint:fix": "wsrun -ecam lint:fix",
     "start": "cd packages/backend && yarn start",
     "test": "wsrun -ecam test",
+    "test:exclude-backend": "wsrun -p @l2beat/{shared-pure,shared,discovery,config,frontend} -ecam test",
     "typecheck": "wsrun -ecam typecheck",
     "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck && yarn test",
     "heroku-postbuild": "yarn build:backend",
