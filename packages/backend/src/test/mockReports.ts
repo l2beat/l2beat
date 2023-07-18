@@ -11,10 +11,7 @@ import {
 
 import { aggregateReports } from '../core/reports/aggregateReports'
 import { createReports } from '../core/reports/createReports'
-import {
-  OP_TOKEN_ID,
-  OPTIMISM_PROJECT_ID,
-} from '../core/reports/custom/optimism'
+import { OP_TOKEN_ID } from '../core/reports/custom/optimism'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
@@ -125,7 +122,7 @@ const FUTURE_OP_REPORT = [
     ethValue: 644594782000000n,
     usdValue: 64459478200000n,
     timestamp: NOW.add(1, 'hours'),
-    projectId: OPTIMISM_PROJECT_ID,
+    projectId: ProjectId.OPTIMISM,
   },
 ]
 const FUTURE_REPORTS_WITH_OP = [...FUTURE_REPORTS, ...FUTURE_OP_REPORT]

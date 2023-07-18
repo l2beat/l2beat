@@ -90,6 +90,7 @@ export function createTvlModule(
     config.projects,
     config.tokens,
     logger,
+    config.tvl.arbitrum ? true : false,
   )
 
   const dydxController = new DydxController(db.aggregatedReportRepository)
