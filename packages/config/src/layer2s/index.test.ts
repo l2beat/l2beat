@@ -53,17 +53,24 @@ describe('layer2s', () => {
 
   describe('activity', () => {
     describe('custom URL starts with https', () => {
-      for (const layer2 of layer2s) {
-        if (layer2.config.transactionApi === undefined) continue
+      const layers2WithUrls = layer2s.flatMap((layer2) => {
+        const { transactionApi } = layer2.config
 
-        // @ts-expect-error complex type
-        const rpcURL: string | undefined = layer2.config.transactionApi.url
+        if (transactionApi && 'url' in transactionApi && transactionApi.url) {
+          return {
+            id: layer2.id,
+            url: transactionApi.url,
+          }
+        }
 
-        if (rpcURL === undefined) continue
+        return []
+      })
 
-        it(`${layer2.id.toString()} : ${rpcURL}`, () => {
-          expect(rpcURL).toSatisfy((url: string) => startsWith(url, 'https://'))
+      for (const { id, url } of layers2WithUrls) {
+        it(`${id.toString()} : ${url}`, () => {
+          expect(url).toSatisfy((url: string) => startsWith(url, 'https://'))
         })
+      }
       }
     })
   })
