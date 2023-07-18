@@ -34,12 +34,7 @@ export function createArbitrumTvlSubmodule(
   // #region peripherals
 
   const arbitrumProject = filterArbitrumProject(config.projects)
-  assert(
-    arbitrumProject.length === 1,
-    'Expected there only to be a single matching project',
-  )
-  assert(arbitrumProject[0].externalTokens, 'No external tokens configured')
-  const arbitrumTokens = arbitrumProject[0].externalTokens.assets
+  const arbitrumTokens = getExternalTokens(arbitrumProject)
 
   const arbitrumProvider = new providers.AlchemyProvider(
     'arbitrum',
@@ -126,10 +121,25 @@ export function createArbitrumTvlSubmodule(
   }
 
   return {
+    updaters: [ebvUpdater],
     start,
   }
 }
 
 function filterArbitrumProject(projects: Project[]) {
-  return projects.filter((x) => x.projectId === ARBITRUM_PROJECT_ID)
+  const result = projects.filter((x) => x.projectId === ARBITRUM_PROJECT_ID)
+  assert(
+    result.length === 1,
+    'Expected there only to be a single matching project',
+  )
+  return result
+}
+
+function getExternalTokens(project: Project[]) {
+  assert(
+    project.length === 1,
+    'Expected there only to be a single matching project',
+  )
+  assert(project[0].externalTokens, 'No external tokens configured')
+  return project[0].externalTokens.assets
 }
