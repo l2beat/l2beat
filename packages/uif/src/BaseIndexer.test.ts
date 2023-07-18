@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { expect } from 'earl'
 
 import { BaseIndexer, ChildIndexer, RootIndexer } from './BaseIndexer'
-import { IndexerAction } from './IndexerAction'
+import { IndexerAction } from './reducer/types/IndexerAction'
 
 describe(BaseIndexer.name, () => {
   describe('correctly informs about updates', () => {

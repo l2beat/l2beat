@@ -4,15 +4,16 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { assertUnreachable } from './assertUnreachable'
 import { Indexer } from './Indexer'
-import { IndexerAction } from './IndexerAction'
+import { getInitialState } from './reducer/getInitialState'
+import { indexerReducer } from './reducer/indexerReducer'
+import { IndexerAction } from './reducer/types/IndexerAction'
 import {
   InvalidateEffect,
   NotifyReadyEffect,
   SetSafeHeightEffect,
   UpdateEffect,
-} from './IndexerEffect'
-import { getInitialState, indexerReducer } from './indexerReducer'
-import { IndexerState } from './IndexerState'
+} from './reducer/types/IndexerEffect'
+import { IndexerState } from './reducer/types/IndexerState'
 
 export abstract class BaseIndexer implements Indexer {
   private readonly children: Indexer[] = []

@@ -1,12 +1,10 @@
 import { expect } from 'earl'
 
-import { IndexerAction } from './IndexerAction'
-import {
-  getInitialState,
-  indexerReducer,
-  IndexerReducerResult,
-} from './indexerReducer'
-import { IndexerState } from './IndexerState'
+import { getInitialState } from './getInitialState'
+import { indexerReducer } from './indexerReducer'
+import { IndexerAction } from './types/IndexerAction'
+import { IndexerReducerResult } from './types/IndexerReducerResult'
+import { IndexerState } from './types/IndexerState'
 
 describe(indexerReducer.name, () => {
   describe('Initialization', () => {
