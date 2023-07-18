@@ -4,6 +4,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { startsWith } from 'lodash'
 
 import {
   ProjectReference,
@@ -46,6 +47,24 @@ describe('layer2s', () => {
         } catch {
           continue
         }
+      }
+    })
+  })
+
+  describe('activity', () => {
+    describe('custom RPC URL starts with https', () => {
+      for (const layer2 of layer2s) {
+        if (layer2.config.transactionApi === undefined) continue
+
+        if (layer2.config.transactionApi.type !== 'rpc') continue
+
+        const rpcURL = layer2.config.transactionApi.url
+
+        if (rpcURL === undefined) continue
+
+        it(`${layer2.id.toString()} : ${rpcURL}`, () => {
+          expect(rpcURL).toSatisfy((url: string) => startsWith(url, 'https://'))
+        })
       }
     })
   })
