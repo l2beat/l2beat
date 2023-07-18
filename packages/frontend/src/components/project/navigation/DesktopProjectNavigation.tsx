@@ -27,14 +27,14 @@ export function DesktopProjectNavigation({
     : '-translate-y-16'
   return (
     <div
-      className="sticky top-8 -z-1"
+      className="sticky top-8"
       id={DESKTOP_PROJECT_NAVIGATION_IDS.container}
       data-is-under-review={project.showProjectUnderReview ?? false}
     >
       <div
         id={DESKTOP_PROJECT_NAVIGATION_IDS.listHeader}
         className={cx(
-          'opacity-0 transition-all duration-300',
+          '-z-1 opacity-0 transition-all duration-300',
           translateClassName,
         )}
       >
