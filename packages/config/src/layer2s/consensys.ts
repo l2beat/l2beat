@@ -45,6 +45,7 @@ export const linea: Layer2 = {
   display: {
     name: 'Linea',
     slug: 'linea',
+    headerWarning: 'The circuit of the program being proven is not public.',
     description:
       'Linea is a zkRollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
     purpose: 'Universal',
