@@ -152,7 +152,12 @@ describe(TotalSupplyUpdater.name, () => {
       await balanceUpdater.update(queryTimestamp)
 
       expect(getTotalSupplies).toHaveBeenOnlyCalledWith(
-        [{ assetId: fakeUsdc.assetId, tokenAddress: fakeUsdc.tokenAddress }],
+        [
+          {
+            assetId: fakeUsdc.assetId,
+            tokenAddress: EthereumAddress(fakeUsdc.tokenAddress),
+          },
+        ],
         queryTimestamp,
         blockNumber,
       )
@@ -258,11 +263,11 @@ describe(TotalSupplyUpdater.name, () => {
       expect(result).toEqual([
         {
           assetId: AssetId.ETH,
-          tokenAddress: fakeEth.tokenAddress,
+          tokenAddress: EthereumAddress(fakeEth.tokenAddress),
         },
         {
           assetId: AssetId.DAI,
-          tokenAddress: fakeDai.tokenAddress,
+          tokenAddress: EthereumAddress(fakeDai.tokenAddress),
         },
       ])
     })
@@ -276,7 +281,7 @@ describe(TotalSupplyUpdater.name, () => {
       assetId,
       sinceTimestamp,
       decimals: 18,
-      tokenAddress: EthereumAddress.random(),
+      tokenAddress: EthereumAddress.random().toString(),
     }
   }
 })
