@@ -61,6 +61,7 @@ export const linea: Layer2 = {
         'https://linea.mirror.xyz/',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
@@ -70,6 +71,13 @@ export const linea: Layer2 = {
         tokens: ['ETH'],
       }),
     ],
+    transactionApi: {
+      type: 'rpc',
+      startBlock: 1,
+      url: 'https://linea-mainnet.infura.io/v3',
+      callsPerMinute: 1500,
+      excludeFromActivityApi: true,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
