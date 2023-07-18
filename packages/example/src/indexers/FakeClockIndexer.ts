@@ -10,7 +10,7 @@ export class FakeClockIndexer extends RootIndexer {
 
   override async start(): Promise<void> {
     await super.start()
-    setInterval(() => this.scheduleTick(), 1_000)
+    setInterval(() => this.requestTick(), 1_000)
   }
 
   override async tick(): Promise<number> {

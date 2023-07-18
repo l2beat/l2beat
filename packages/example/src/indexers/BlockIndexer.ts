@@ -18,7 +18,7 @@ export class BlockIndexer extends RootIndexer {
 
   override async start(): Promise<void> {
     await super.start()
-    setInterval(() => this.scheduleTick(), 1000)
+    setInterval(() => this.requestTick(), 1000)
   }
 
   override async tick(): Promise<number> {

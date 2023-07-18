@@ -89,19 +89,37 @@ export function indexerReducer(
       // TODO: retry, exponential back-off
       return [{ ...state, status: 'errored' }, []]
     }
-    case 'Tick': {
+    case 'RequestTick': {
       assertRoot(state)
       // TODO: either tick is sync or we should remember to tick in the future
-      assertStatus(state.status, 'idle')
-      // TODO: status = ticking????
-      return [{ ...state, status: 'updating' }, [{ type: 'Tick' }]]
+      assertStatus(state.status, ['idle', 'ticking'])
+      if (state.status === 'ticking') {
+        return [{ ...state, tickScheduled: true }, []]
+      }
+      return [
+        { ...state, status: 'ticking', tickScheduled: false },
+        [{ type: 'Tick' }],
+      ]
     }
     case 'TickSucceeded': {
       assertRoot(state)
+      assertStatus(state.status, 'ticking')
+      const effects: IndexerEffect[] = [
+        { type: 'SetSafeHeight', safeHeight: action.safeHeight },
+      ]
+      if (state.tickScheduled) {
+        effects.push({ type: 'Tick' })
+      }
       return [
-        // TODO: should we set height also?
-        { ...state, status: 'idle', safeHeight: action.safeHeight },
-        [{ type: 'SetSafeHeight', safeHeight: action.safeHeight }],
+        {
+          ...state,
+          status: state.tickScheduled ? 'ticking' : 'idle',
+          tickScheduled: false,
+          safeHeight: action.safeHeight,
+          height: action.safeHeight,
+          targetHeight: action.safeHeight,
+        },
+        effects,
       ]
     }
     case 'TickFailed': {
@@ -122,12 +140,19 @@ function assertRoot(state: IndexerState): void {
 
 function assertStatus(
   status: IndexerState['status'],
-  expected: IndexerState['status'],
+  expected: IndexerState['status'] | IndexerState['status'][],
 ): void {
-  assert(
-    status === expected,
-    'Invalid status. Expected ' + expected + ', got ' + status,
-  )
+  if (Array.isArray(expected)) {
+    assert(
+      expected.includes(status),
+      'Invalid status. Expected ' + expected.join(' or ') + ', got ' + status,
+    )
+  } else {
+    assert(
+      status === expected,
+      'Invalid status. Expected ' + expected + ', got ' + status,
+    )
+  }
 }
 
 function finishInitialization(
@@ -169,22 +194,6 @@ function finishInitialization(
     ]
   }
 }
-
-/*
-
-Parent: 10
-You: idle, h: 5, th: 5 -> th: 10, update + success -> h: 10, idle
-
-Parent: 5 (was 10)
-You: idle, h: 10, th: 10 -> th: 5, invalidate -> h: 5, idle
-
-Parent: 5 (was 10)
-You: updating, h: 5, th: 10 -> th: 5; update success (10) -> h: 10, invalidate -> h: 5, idle
-
-Parent: 15 (was 10)
-You: updating, h: 5, th: 10 -> th: 15; update success (10) -> h: 10, update + success -> h: 15, idle
-
-*/
 
 function continueOperations(
   state: IndexerState,
@@ -253,14 +262,11 @@ function continueOperations(
   }
 
   if (state.targetHeight > state.height && state.status === 'idle') {
-    // this is the only difference (I think) that is tricky when having one
-    // continueOperations function for root and child indexer
-    // root indexer will call Tick, child indexer will call Update
-    const syncAction = state.parents.length > 0 ? 'Update' : 'Tick'
+    assert(state.parents.length > 0, 'Root indexer cannot update')
+
     return [
-      // TODO: status === ticking????
       { ...state, status: 'updating' },
-      [...effects, { type: syncAction, targetHeight: state.targetHeight }],
+      [...effects, { type: 'Update', targetHeight: state.targetHeight }],
     ]
   }
 
@@ -286,6 +292,7 @@ export function getInitialState(parentCount: number): IndexerState {
     safeHeight: 0,
     initializedSelf: false,
     waiting: false,
+    tickScheduled: false,
     parents: Array.from({ length: parentCount }).map(() => ({
       safeHeight: 0,
       initialized: false,

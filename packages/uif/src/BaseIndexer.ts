@@ -174,8 +174,13 @@ export abstract class BaseIndexer implements Indexer {
     }
   }
 
-  protected scheduleTick(): void {
-    this.dispatch({ type: 'Tick' })
+  /**
+   * Requests the tick function to be called. Repeated calls will result in
+   * only one tick. Only when the tick is finished, the next tick will be
+   * scheduled.
+   */
+  protected requestTick(): void {
+    this.dispatch({ type: 'RequestTick' })
   }
 
   // #endregion

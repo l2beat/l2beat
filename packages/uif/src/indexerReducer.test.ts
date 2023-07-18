@@ -10,25 +10,6 @@ import { IndexerState } from './IndexerState'
 
 describe(indexerReducer.name, () => {
   describe('Initialization', () => {
-    it('invalidates on startup', () => {
-      const initState = getInitialState(0)
-      const [state, effects] = reduceWithIndexerReducer(initState, [
-        { type: 'Initialized', safeHeight: 0, childCount: 0 },
-      ])
-
-      expect(state).toEqual({
-        ...initState,
-        initializedSelf: true,
-        // TODO: Should probably be invalidating
-        status: 'idle',
-      })
-      expect(effects).toEqual([
-        { type: 'SetSafeHeight', safeHeight: 0 },
-        // TODO: Should probably be invalidating
-        // { type: 'Invalidate', targetHeight: 0 },
-      ])
-    })
-
     it('arrives to the idle state', () => {
       const initState = getInitialState(1)
       const [state, effects] = reduceWithIndexerReducer(initState, [
@@ -430,6 +411,102 @@ describe(indexerReducer.name, () => {
         expect(effects3).toEqual([
           { type: 'NotifyReady', parentIndices: [0] },
           { type: 'Invalidate', targetHeight: 140 },
+        ])
+      })
+    })
+
+    describe('root indexer', () => {
+      it('does not invalidate on startup', () => {
+        const initState = getInitialState(0)
+        const [state, effects] = reduceWithIndexerReducer(initState, [
+          { type: 'Initialized', safeHeight: 100, childCount: 0 },
+        ])
+
+        expect(state).toEqual({
+          ...initState,
+          initializedSelf: true,
+          status: 'idle',
+          height: 100,
+          safeHeight: 100,
+          targetHeight: 100,
+        })
+        expect(effects).toEqual([{ type: 'SetSafeHeight', safeHeight: 100 }])
+      })
+
+      it('runs the first tick', () => {
+        const initState = getInitialState(0)
+        const [state1, effects1] = reduceWithIndexerReducer(initState, [
+          { type: 'Initialized', safeHeight: 100, childCount: 0 },
+          { type: 'RequestTick' },
+        ])
+
+        expect(state1).toEqual({
+          ...initState,
+          status: 'ticking',
+          height: 100,
+          safeHeight: 100,
+          targetHeight: 100,
+          initializedSelf: true,
+        })
+        expect(effects1).toEqual([{ type: 'Tick' }])
+
+        const [state2, effects2] = reduceWithIndexerReducer(state1, [
+          { type: 'TickSucceeded', safeHeight: 150 },
+        ])
+
+        expect(state2).toEqual({
+          ...initState,
+          status: 'idle',
+          height: 150,
+          safeHeight: 150,
+          targetHeight: 150,
+          initializedSelf: true,
+        })
+        expect(effects2).toEqual([{ type: 'SetSafeHeight', safeHeight: 150 }])
+      })
+
+      it('remembers ticks', () => {
+        const initState = getInitialState(0)
+        const [state1, effects1] = reduceWithIndexerReducer(initState, [
+          { type: 'Initialized', safeHeight: 100, childCount: 0 },
+          { type: 'RequestTick' },
+          { type: 'RequestTick' },
+        ])
+
+        expect(state1).toEqual({
+          ...initState,
+          status: 'ticking',
+          tickScheduled: true,
+          height: 100,
+          safeHeight: 100,
+          targetHeight: 100,
+          initializedSelf: true,
+        })
+        expect(effects1).toEqual([])
+
+        const [state2, effects2] = reduceWithIndexerReducer(state1, [
+          { type: 'RequestTick' },
+        ])
+
+        expect(state2).toEqual(state1)
+        expect(effects2).toEqual([])
+
+        const [state3, effects3] = reduceWithIndexerReducer(state2, [
+          { type: 'TickSucceeded', safeHeight: 150 },
+        ])
+
+        expect(state3).toEqual({
+          ...initState,
+          status: 'ticking',
+          tickScheduled: false,
+          height: 150,
+          safeHeight: 150,
+          targetHeight: 150,
+          initializedSelf: true,
+        })
+        expect(effects3).toEqual([
+          { type: 'SetSafeHeight', safeHeight: 150 },
+          { type: 'Tick' },
         ])
       })
     })

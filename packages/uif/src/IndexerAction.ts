@@ -37,8 +37,8 @@ export interface InvalidateFailedAction {
   targetHeight: number
 }
 
-export interface TickAction {
-  type: 'Tick'
+export interface RequestTickAction {
+  type: 'RequestTick'
 }
 
 export interface TickSucceededAction {
@@ -58,6 +58,6 @@ export type IndexerAction =
   | UpdateFailedAction
   | InvalidateSucceededAction
   | InvalidateFailedAction
-  | TickAction
+  | RequestTickAction
   | TickSucceededAction
   | TickFailedAction

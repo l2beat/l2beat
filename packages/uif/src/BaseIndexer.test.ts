@@ -94,7 +94,7 @@ class TestRootIndexer extends RootIndexer {
     await waitUntil(() => this.getState().status === 'idle')
     this.safeHeight = height
     const counter = this.dispatchCounter
-    this.scheduleTick()
+    this.requestTick()
     await waitUntil(() => this.dispatchCounter > counter)
   }
 

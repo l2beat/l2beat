@@ -8,8 +8,7 @@ export class HourlyIndexer extends RootIndexer {
 
   override async start(): Promise<void> {
     await super.start()
-    this.scheduleTick()
-    setInterval(() => this.scheduleTick(), 60 * 1000)
+    setInterval(() => this.requestTick(), 60 * 1000)
   }
 
   async tick(): Promise<number> {
