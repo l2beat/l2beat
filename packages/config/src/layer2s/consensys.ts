@@ -31,13 +31,21 @@ const upgrades = {
 
 const roles = discovery.getContractValue<{
   OPERATOR_ROLE: { members: string[] }
+  PAUSE_MANAGER_ROLE: { members: string[] }
 }>('zkEVM', 'accessControl')
+
 const operators: ProjectPermissionedAccount[] = roles.OPERATOR_ROLE.members.map(
   (address) => ({
     address: EthereumAddress(address),
     type: 'EOA',
   }),
 )
+
+const pausers: string[] = roles.PAUSE_MANAGER_ROLE.members
+const isPaused: boolean =
+  discovery.getContractValue<boolean>('zkEVM', 'generalPause') ||
+  discovery.getContractValue<boolean>('zkEVM', 'l1l2Pause') ||
+  discovery.getContractValue<boolean>('zkEVM', 'l2l1Pause')
 
 export const linea: Layer2 = {
   type: 'layer2',
@@ -208,6 +216,10 @@ export const linea: Layer2 = {
         description:
           'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
         ...upgrades,
+        pausable: {
+          pausableBy: pausers,
+          paused: isPaused,
+        },
         references: [
           {
             text: 'ZkEvmV2.sol - Etherscan source code, state injections: stateRoot and exitRoot are part of the validity proof input.',
