@@ -52,13 +52,12 @@ describe('layer2s', () => {
   })
 
   describe('activity', () => {
-    describe('custom RPC URL starts with https', () => {
+    describe('custom URL starts with https', () => {
       for (const layer2 of layer2s) {
         if (layer2.config.transactionApi === undefined) continue
 
-        if (layer2.config.transactionApi.type !== 'rpc') continue
-
-        const rpcURL = layer2.config.transactionApi.url
+        // @ts-expect-error complex type
+        const rpcURL: string | undefined = layer2.config.transactionApi.url
 
         if (rpcURL === undefined) continue
 
