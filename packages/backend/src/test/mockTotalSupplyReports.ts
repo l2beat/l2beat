@@ -8,7 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { createTotalSupplyReports } from '../core/reports/createTotalSupplyReports'
+import { createEBVReports } from '../core/reports/createEBVReports'
 import { ReportProject } from '../core/reports/ReportProject'
 import { TotalSupplyTokensConfig } from '../core/totalSupply/TotalSupplyTokensConfig'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
@@ -81,7 +81,7 @@ const TOKENS: TotalSupplyTokensConfig[] = [
   },
 ]
 
-const REPORTS = createTotalSupplyReports(
+const REPORTS = createEBVReports(
   PRICES,
   BALANCES,
   TOTAL_SUPPLIES,
@@ -89,7 +89,7 @@ const REPORTS = createTotalSupplyReports(
   PROJECT,
   ChainId.ARBITRUM,
 )
-const FUTURE_REPORTS = createTotalSupplyReports(
+const FUTURE_REPORTS = createEBVReports(
   FUTURE_PRICES,
   FUTURE_BALANCES,
   TOTAL_SUPPLIES,

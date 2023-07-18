@@ -2,11 +2,11 @@ import { AssetId, ChainId, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
-import { createTotalSupplyReports } from './createTotalSupplyReports'
+import { createEBVReports } from './createEBVReports'
 
-describe(createTotalSupplyReports.name, () => {
+describe(createEBVReports.name, () => {
   it('valid data', () => {
-    const result = createTotalSupplyReports(
+    const result = createEBVReports(
       MOCK.PRICES,
       MOCK.BALANCES,
       MOCK.TOTAL_SUPPLIES,
@@ -31,7 +31,7 @@ describe(createTotalSupplyReports.name, () => {
 
   it('fails if premint is bigger than total supply', () => {
     expect(() =>
-      createTotalSupplyReports(
+      createEBVReports(
         MOCK.PRICES,
         [{ ...MOCK.BALANCES[0], balance: 10000n * 10n ** 6n }],
         MOCK.TOTAL_SUPPLIES,
@@ -44,7 +44,7 @@ describe(createTotalSupplyReports.name, () => {
 
   it('chainId mismatch in balances', () => {
     expect(() =>
-      createTotalSupplyReports(
+      createEBVReports(
         MOCK.PRICES,
         [{ ...MOCK.BALANCES[0], chainId: ChainId.ETHEREUM }],
         MOCK.TOTAL_SUPPLIES,
@@ -57,7 +57,7 @@ describe(createTotalSupplyReports.name, () => {
 
   it('chainId mismatch in total supplies', () => {
     expect(() =>
-      createTotalSupplyReports(
+      createEBVReports(
         MOCK.PRICES,
         MOCK.BALANCES,
         [{ ...MOCK.TOTAL_SUPPLIES[0], chainId: ChainId.ETHEREUM }],

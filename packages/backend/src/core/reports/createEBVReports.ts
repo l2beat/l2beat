@@ -8,7 +8,7 @@ import { TotalSupplyTokensConfig } from '../totalSupply/TotalSupplyTokensConfig'
 import { BalancePerProject, createReport } from './createReport'
 import { ReportProject } from './ReportProject'
 
-export function createTotalSupplyReports(
+export function createEBVReports(
   prices: PriceRecord[],
   balances: BalanceRecord[],
   totalSupplies: TotalSupplyRecord[],

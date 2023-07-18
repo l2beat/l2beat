@@ -17,7 +17,7 @@ import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createTotalSupplyReports } from '../reports/createTotalSupplyReports'
+import { createEBVReports } from '../reports/createEBVReports'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { ReportProject } from '../reports/ReportProject'
 import { TotalSupplyTokensConfig } from '../totalSupply/TotalSupplyTokensConfig'
@@ -93,7 +93,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     ])
     this.logger.debug('Prices, balances and supplies ready')
 
-    const reports = createTotalSupplyReports(
+    const reports = createEBVReports(
       prices,
       balances,
       totalSupplies,
