@@ -70,7 +70,7 @@ export const base: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
-      url: 'developer-access-mainnet.base.org',
+      url: 'https://developer-access-mainnet.base.org',
       callsPerMinute: 1500,
       excludeFromActivityApi: true,
     },
