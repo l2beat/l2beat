@@ -50,7 +50,7 @@ export function getContractSection(
 
   if (verificationStatus.projects[project.id.toString()] === false) {
     risks.push({
-      text: CONTRACTS.UNVERIFIED_RISK.text,
+      text: `${CONTRACTS.UNVERIFIED_RISK.category} ${CONTRACTS.UNVERIFIED_RISK.text}`,
       isCritical: !!CONTRACTS.UNVERIFIED_RISK.isCritical,
     })
   }
