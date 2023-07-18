@@ -128,6 +128,10 @@ export const apex: Layer2 = {
         description:
           'Allows deposits in different tokens and swaps them to USDC. Allows fast withdrawals after the agreement of at least 2 designated signers.',
       },
+      discovery.getContractDetails('PerpetualEscapeVerifier', {
+        description:
+          'Contract responsible for validating force withdrawal requests.',
+      }),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
