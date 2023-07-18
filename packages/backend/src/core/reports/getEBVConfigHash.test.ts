@@ -9,7 +9,7 @@ import {
 import { expect } from 'earl'
 
 import { ProjectEscrow } from '../../model'
-import { TotalSupplyTokensConfig } from '../totalSupply/TotalSupplyTokensConfig'
+import { EBVToken } from '../assets'
 import { getEBVConfigHash } from './getEBVConfigHash'
 import { ReportProject } from './ReportProject'
 
@@ -20,11 +20,11 @@ describe(getEBVConfigHash.name, () => {
       fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
     ])
 
-    const tokenConfigBefore: TotalSupplyTokensConfig[] = [
+    const tokenConfigBefore: EBVToken[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
-    const tokenConfigAfter: TotalSupplyTokensConfig[] = [
+    const tokenConfigAfter: EBVToken[] = [
       ...tokenConfigBefore,
       fakeExternalToken(AssetId.USDC, new UnixTime(2000)),
     ]
@@ -39,12 +39,11 @@ describe(getEBVConfigHash.name, () => {
       fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
       fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
     ])
-
-    const tokenConfigBefore: TotalSupplyTokensConfig[] = [
+    const tokenConfigBefore: EBVToken[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
-    const tokenConfigAfter: TotalSupplyTokensConfig[] = [tokenConfigBefore[0]]
+    const tokenConfigAfter: EBVToken[] = [tokenConfigBefore[0]]
 
     const hashBefore = getEBVConfigHash(project, tokenConfigBefore)
     const hashAfter = getEBVConfigHash(project, tokenConfigAfter)
@@ -56,11 +55,11 @@ describe(getEBVConfigHash.name, () => {
       fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
       fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
     ])
-    const tokenConfigBefore: TotalSupplyTokensConfig[] = [
+    const tokenConfigBefore: EBVToken[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
-    const tokenConfigAfter: TotalSupplyTokensConfig[] = [
+    const tokenConfigAfter: EBVToken[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
@@ -68,6 +67,23 @@ describe(getEBVConfigHash.name, () => {
     const hashBefore = getEBVConfigHash(project, tokenConfigBefore)
     const hashAfter = getEBVConfigHash(project, tokenConfigAfter)
     expect(hashBefore).toEqual(hashAfter)
+  })
+
+  it('hash changes if premint addresses changes', () => {
+    const project = fakeProject('arbitrum', 'layer2', [
+      fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
+      fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
+    ])
+    const tokenConfigBefore: EBVToken[] = [
+      fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
+    ]
+    const tokenConfigAfter: EBVToken[] = [
+      { ...tokenConfigBefore[0], premintHolderAddresses: ['0x1234'] },
+    ]
+
+    const hashBefore = getEBVConfigHash(project, tokenConfigBefore)
+    const hashAfter = getEBVConfigHash(project, tokenConfigAfter)
+    expect(hashBefore).not.toEqual(hashAfter)
   })
 
   it('hash stays the same if only escrow changes', () => {
@@ -79,7 +95,7 @@ describe(getEBVConfigHash.name, () => {
       fakeEscrow('aa', 1000, [fakeToken('dai', 123), fakeToken('eth', 0)]),
     ])
 
-    const tokenConfig: TotalSupplyTokensConfig[] = [
+    const tokenConfig: EBVToken[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
@@ -99,7 +115,7 @@ describe(getEBVConfigHash.name, () => {
       fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
     ])
 
-    const tokenConfig: TotalSupplyTokensConfig[] = [
+    const tokenConfig: EBVToken[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
@@ -119,7 +135,7 @@ describe(getEBVConfigHash.name, () => {
       fakeEscrow('bb', 2000, [fakeToken('dai', 123)]),
     ])
 
-    const tokenConfig: TotalSupplyTokensConfig[] = [
+    const tokenConfig: EBVToken[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
@@ -169,11 +185,12 @@ function fakeToken(id: string, timestamp: number): TokenInfo {
 function fakeExternalToken(
   assetId: AssetId,
   sinceTimestamp: UnixTime,
-): TotalSupplyTokensConfig {
+): EBVToken {
   return {
     assetId,
     sinceTimestamp,
     decimals: 18,
     tokenAddress: '0x0000000000000000000000000000000000000000',
+    premintHolderAddresses: [],
   }
 }

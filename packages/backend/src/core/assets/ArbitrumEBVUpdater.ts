@@ -20,9 +20,9 @@ import { TaskQueue } from '../queue/TaskQueue'
 import { createEBVReports } from '../reports/createEBVReports'
 import { getEBVConfigHash } from '../reports/getEBVConfigHash'
 import { ReportProject } from '../reports/ReportProject'
-import { TotalSupplyTokensConfig } from '../totalSupply/TotalSupplyTokensConfig'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
+import { EBVToken } from './EBVToken'
 
 export class ArbitrumEBVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
@@ -37,7 +37,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
     private readonly arbitrumProject: ReportProject[],
-    private readonly tokens: TotalSupplyTokensConfig[],
+    private readonly tokens: EBVToken[],
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)

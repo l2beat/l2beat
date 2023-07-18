@@ -8,9 +8,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { EBVToken } from '../core/assets'
 import { createEBVReports } from '../core/reports/createEBVReports'
 import { ReportProject } from '../core/reports/ReportProject'
-import { TotalSupplyTokensConfig } from '../core/totalSupply/TotalSupplyTokensConfig'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
 import { TotalSupplyRecord } from '../peripherals/database/TotalSupplyRepository'
@@ -72,12 +72,13 @@ const PROJECT: ReportProject = {
   ],
 }
 
-const TOKENS: TotalSupplyTokensConfig[] = [
+const TOKENS: EBVToken[] = [
   {
     assetId: AssetId.USDC,
     tokenAddress: EthereumAddress.random().toString(),
     sinceTimestamp: BASE_MOCK.NOW,
     decimals: 6,
+    premintHolderAddresses: [],
   },
 ]
 
