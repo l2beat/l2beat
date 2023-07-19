@@ -42,6 +42,11 @@
           "addKey": "operator",
           "removeEvent": "event LogOperatorRemoved(address operator)",
           "removeKey": "operator"
+        },
+        "escapeVerifier": {
+          "type": "storage",
+          "slot": 4,
+          "returnType": "address"
         }
       }
     },
