@@ -107,7 +107,7 @@ export const DATA_EXTERNAL_DAC: ProjectRiskViewEntry = {
 export const DATA_EXTERNAL: ProjectRiskViewEntry = {
   value: 'External',
   description:
-    'Proof construction relies fully on data that is NOT published on chain.',
+    'Proof construction and state derivation rely fully on data that is NOT published on chain.',
   sentiment: 'bad',
 }
 
