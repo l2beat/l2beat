@@ -12,7 +12,6 @@ import { About } from '../../../components/About'
 import { FullAnnouncementBanner } from '../../../components/announcement/AnnouncementBanner'
 import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
-import { OtherSites } from '../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../components/PageContent'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
@@ -44,7 +43,6 @@ export function ScalingTvlPage(props: TvlPageProps) {
             milestones={props.milestones}
           />
           <ScalingTvlView {...props.tvlView} />
-          <OtherSites />
           {props.showMultisigReportBanner && <FullAnnouncementBanner />}
           <About />
         </main>
