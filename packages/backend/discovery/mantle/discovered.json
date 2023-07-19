@@ -1,7 +1,7 @@
 {
   "name": "mantle",
-  "blockNumber": 17720458,
-  "configHash": "0x68f499fd2493da5851b0260e06319dfce63109b4240714a410688b5e35ae2d96",
+  "blockNumber": 17725438,
+  "configHash": "0x0a0281df46f45278219d1228a74abb9c29806e498edc332952ab63b5ec41e2f8",
   "version": 1,
   "contracts": [
     {
@@ -60,48 +60,18 @@
         "batches": "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17720384,
-        "getLastTimestamp": 1689687375,
-        "getNextQueueIndex": 1945,
-        "getNumPendingQueueElements": 6,
-        "getQueueElement": [
-          [
-            "0x3f3d58762f3ababfae43ad4b378ff95586963ad6f40a8e7d5903eb0cd93a8d51",
-            1688314115,
-            17607410
-          ],
-          [
-            "0x11e80e94d38ead19186c50e11df4fc75256348bb910412c0fdaa99e0697cf2a8",
-            1688314199,
-            17607417
-          ],
-          [
-            "0xd6ac5092efbb87902c52605af1fbc008fca4327de3ce3c4be268e1cb81ca35dc",
-            1688352143,
-            17610553
-          ],
-          [
-            "0xffbe9d1a4b8813753c84d7620a871f6c6f1639063dee89311a392c90bfb24336",
-            1688352551,
-            17610587
-          ],
-          [
-            "0x58e39dcb535ce62bb76fcbd49501d52a0f0466a83c0cb7c3367e9d77ced75cdf",
-            1688354963,
-            17610785
-          ]
-        ],
-        "getQueueLength": 1951,
-        "getTotalBatches": 1235,
-        "getTotalElements": 21346,
+        "getLastBlockNumber": 17725351,
+        "getLastTimestamp": 1689747633,
+        "getNextQueueIndex": 2220,
+        "getNumPendingQueueElements": 12,
+        "getQueueLength": 2232,
+        "getTotalBatches": 1300,
+        "getTotalElements": 28392,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "MAX_ROLLUP_TX_SIZE": 50000,
         "maxTransactionGasLimit": 30000000,
         "MIN_ROLLUP_TX_GAS": 100000
-      },
-      "errors": {
-        "getQueueElement": "Too many values. Update configuration explore fully"
       },
       "derivedName": "CanonicalTransactionChain"
     },
@@ -219,7 +189,6 @@
       "values": {
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x4657b7bac12b34fb80f1848c560d6e440dfccdffe8b83f2dc958a534c89b0622",
-        "getPastTotalSupply": [0, 0, 0, 0, 0],
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
         "MINT_CAP_MAX_NUMERATOR": 200,
@@ -230,9 +199,7 @@
         "symbol": "MNT",
         "totalSupply": "6219316794990000000000000000"
       },
-      "errors": {
-        "getPastTotalSupply": "Too many values. Update configuration explore fully"
-      }
+      "derivedName": "L1MantleToken"
     },
     {
       "name": "",
@@ -288,35 +255,15 @@
         "dataManageAddress": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
         "FRAUD_STRING": "0x2d2d5468697320697320612062616420737472696e672e204e6f626f64792073617973207468697320737472696e672e2d2d",
         "fraudProofPeriod": 3600,
-        "getL2ConfirmedBlockNumber": 21347,
-        "getL2StoredBlockNumber": 21347,
-        "getRollupStoreByRollupBatchIndex": [
-          [9, 9, 1688464595, 1],
-          [10, 10, 1688467619, 1],
-          [11, 11, 1688467679, 1],
-          [12, 12, 1688468459, 1],
-          [13, 13, 1688468519, 1]
-        ],
-        "l2ConfirmedBlockNumber": 21347,
-        "l2StoredBlockNumber": 21347,
+        "getL2ConfirmedBlockNumber": 28393,
+        "getL2StoredBlockNumber": 28393,
+        "l2ConfirmedBlockNumber": 28393,
+        "l2StoredBlockNumber": 28393,
         "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "reRollupBatchIndex": [0, 0, 0, 0, 0],
         "reRollupIndex": 0,
         "reSubmitterAddress": "0x630E93130809c4acE55249229Ee6B043b929A9Ad",
-        "rollupBatchIndex": 1245,
-        "rollupBatchIndexRollupStores": [
-          [9, 9, 1688464595, 1],
-          [10, 10, 1688467619, 1],
-          [11, 11, 1688467679, 1],
-          [12, 12, 1688468459, 1],
-          [13, 13, 1688468519, 1]
-        ],
+        "rollupBatchIndex": 1310,
         "sequencer": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
-      },
-      "errors": {
-        "getRollupStoreByRollupBatchIndex": "Too many values. Update configuration explore fully",
-        "reRollupBatchIndex": "Too many values. Update configuration explore fully",
-        "rollupBatchIndexRollupStores": "Too many values. Update configuration explore fully"
       },
       "derivedName": "BVM_EigenDataLayrChain"
     },
@@ -340,20 +287,10 @@
         "type": "immutable"
       },
       "values": {
-        "get": [
-          "0xdf1739df24eccbe26f880828a794beb9c931ef46b5747f299809cd2e940df947",
-          "0x2a4a691790bcb78c1abc8ed3d7cf296bfe0125cf2b41955b87d2362e543ac20a",
-          "0xaf2097ae66cddfce9867a5ce14192bd2ed02f4d3ecf7374cd6f04bb7a154c625",
-          "0xfa8142720251c749e817a90031ae106c05109257512ea743f0a040f6c9cdec02",
-          "0xbd7c11bd89ec288ab13844ca4f896455aa797fa81bb5ac7b6e4e6aa30b870e32"
-        ],
-        "getGlobalMetadata": "0x0000000000000000010e64400064b6954f00000007990000005362",
-        "length": 1235,
+        "getGlobalMetadata": "0x0000000000000000010e77a70064b780b100000008ac0000006ee8",
+        "length": 1300,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "owner": "CanonicalTransactionChain"
-      },
-      "errors": {
-        "get": "Too many values. Update configuration explore fully"
       },
       "derivedName": "ChainStorageContainer"
     },
@@ -373,9 +310,7 @@
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "paused": false
       },
-      "errors": {
-        "xDomainMessageSender": "Execution reverted"
-      }
+      "derivedName": "L1CrossDomainMessenger"
     },
     {
       "name": "AddressManager",
@@ -441,24 +376,15 @@
         "paused": false,
         "quitRequestList": [],
         "regulatoryAccount": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-        "sharesToUnderlying": [0, 1, 2, 3, 4],
-        "sharesToUnderlyingView": [0, 1, 2, 3, 4],
         "slashAmount": ["195000000000000000000", "10000000000000000000000"],
         "totalShares": "1000000000000000000000000",
         "tssDelegationContract": "0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A",
         "tssDelegationManagerContract": "0xA90FCe37D274e673f3850b835F18790542b1755d",
         "tssGroupContract": "0x399ca67660B79F7aA8A7Efd5BEF9836A4c19CACF",
         "tssManager": "0x9844f67c071caE21B0324D049Febe67158E23f98",
-        "underlyingToken": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "underlyingToShares": [0, 1, 2, 3, 4],
-        "underlyingToSharesView": [0, 1, 2, 3, 4]
+        "underlyingToken": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
       },
-      "errors": {
-        "sharesToUnderlying": "Too many values. Update configuration explore fully",
-        "sharesToUnderlyingView": "Too many values. Update configuration explore fully",
-        "underlyingToShares": "Too many values. Update configuration explore fully",
-        "underlyingToSharesView": "Too many values. Update configuration explore fully"
-      }
+      "derivedName": "TssStakingSlashing"
     },
     {
       "name": "StateCommitmentChain",
@@ -471,9 +397,9 @@
         "batches": "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
         "FRAUD_PROOF_WINDOW": 604800,
         "getFraudProofWindow": 604800,
-        "getLastSequencerTimestamp": 1689687383,
-        "getTotalBatches": 575,
-        "getTotalElements": 21091,
+        "getLastSequencerTimestamp": 1689747683,
+        "getTotalBatches": 640,
+        "getTotalElements": 28360,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "messenger": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
@@ -592,20 +518,10 @@
         "type": "immutable"
       },
       "values": {
-        "get": [
-          "0x324261a5f7a9c2f7d80924541b4f0d363c0a19c53bdb2a05776a30db4a4e5866",
-          "0x9d563deddb4ecf0cd2a459738a87a950951dc9b5b9fa344093d42f1a4558659e",
-          "0x305c0092d858ac79181f5982ea452b73a3e068b373883b43af3a7c493be18145",
-          "0x6bda84b2bc7f9dd041d816231478e4eca0d678d7c1b71b8d3ae6efb46bc569ed",
-          "0xa9e83148df9d1baf801aaa437f1907644ba39ef76ebb054991cd4b970c875f12"
-        ],
-        "getGlobalMetadata": "0x00000000000000000000000000000000000064b695570000005263",
-        "length": 575,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000064b780e30000006ec8",
+        "length": 640,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "owner": "StateCommitmentChain"
-      },
-      "errors": {
-        "get": "Too many values. Update configuration explore fully"
       },
       "derivedName": "ChainStorageContainer"
     },

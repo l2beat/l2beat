@@ -1,7 +1,10 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('mantle')
 
 export const mantle: Layer2 = {
   type: 'layer2',
@@ -10,9 +13,10 @@ export const mantle: Layer2 = {
     name: 'Mantle',
     slug: 'mantle',
     description:
-      'Mantle is an EVM compatible zkRollup that has been designed for use on the Ethereum network.',
+      'Mantle is an EVM compatible optimistic chain that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.',
     purpose: 'Universal',
     category: 'Optimistic Chain',
+    provider: 'Optimism',
     links: {
       websites: ['https://www.mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],
@@ -26,9 +30,18 @@ export const mantle: Layer2 = {
         'https://t.me/mantlenetwork',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
-    escrows: [],
+    associatedTokens: ['MNT'],
+    escrows: [
+      {
+        // L1StandardBridge
+        address: EthereumAddress('0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012'),
+        sinceTimestamp: new UnixTime(1687954103),
+        tokens: '*',
+      }
+    ],
   },
   stage: {
     stage: 'UnderReview',
