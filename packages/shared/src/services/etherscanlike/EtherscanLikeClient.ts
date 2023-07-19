@@ -1,4 +1,9 @@
-import { getErrorMessage, RateLimiter } from '@l2beat/shared-pure'
+import {
+  getErrorMessage,
+  RateLimiter,
+  stringAsInt,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { Logger } from '../../tools'
 import { HttpClient } from '../HttpClient'
@@ -16,9 +21,29 @@ export class EtherscanLikeClient {
     private readonly httpClient: HttpClient,
     private readonly url: string,
     private readonly apiKey: string,
+    readonly minTimestamp: UnixTime,
     private readonly logger = Logger.SILENT,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
+  }
+
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
+    let current = new UnixTime(timestamp.toNumber())
+
+    while (current.gte(this.minTimestamp)) {
+      try {
+        const result = await this.call('block', 'getblocknobytime', {
+          timestamp: current.toString(),
+          closest: 'before',
+        })
+
+        return stringAsInt().parse(result)
+      } catch (error) {
+        current = current.add(-10, 'minutes')
+      }
+    }
+
+    throw new Error('Could not fetch block number')
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
