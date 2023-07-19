@@ -1,23 +1,10 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
 import { ArrowRightIcon } from '../icons'
 
 export function AnnouncementBar({ children }: { children: ReactNode }) {
   return (
-    <div
-      className={cx(
-        'bg-indigo-500 text-white dark:bg-indigo-500',
-        'flex',
-        'flex-col',
-        'md:flex-row',
-        'justify-center',
-        'text-center',
-        'items-center',
-        'space-x-5',
-        'p-2',
-      )}
-    >
+    <div className="flex flex-col items-center justify-center space-x-5 bg-indigo-500 p-2 text-center text-white dark:bg-indigo-500 md:flex-row">
       {children}
     </div>
   )
@@ -28,7 +15,7 @@ export function MultisigReportAnnouncementBar() {
     <AnnouncementBar>
       <p>Just released ⸱ Upgradeability of Ethereum L2s</p>
       <a href="/multisig-report">
-        <span className={cx('underline decoration-solid underline-offset-2')}>
+        <span className="underline decoration-solid underline-offset-2">
           Download now
         </span>
         <ArrowRightIcon className="ml-1 inline-block fill-current" />

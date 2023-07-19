@@ -2,9 +2,6 @@ import cx from 'classnames'
 import React from 'react'
 
 import { AnnouncementButtonLink } from '../announcement/AnnouncementButtonLink'
-import { AnnouncementImage } from '../announcement/AnnouncementImage'
-import { AnnouncementNotation } from '../announcement/AnnouncementNotation'
-import { AnnouncementTitle } from '../announcement/AnnouncementTitle'
 import { FloatingBannerCross } from './FloatingBannerCross'
 
 export function FloatingBanner() {
@@ -37,32 +34,15 @@ export function FloatingBanner() {
           'max-w-[182px]',
         )}
       >
-        <AnnouncementImage src={'/images/announcements/multisig-cover.png'} />
+        <img src={'/images/announcements/multisig-cover.png'} />
       </div>
       <div className={cx('flex', 'flex-col', 'px-4', 'pl-5', 'justify-center')}>
-        <AnnouncementNotation
-          className={cx(
-            'text-gray-550',
-            'dark:text-gray-50',
-            'text-xs',
-            'md:text-sm',
-            'font-medium',
-            'mb-2',
-          )}
-        >
+        <div className="mb-2 text-xs font-medium uppercase text-gray-550 dark:text-gray-50 md:text-sm">
           Just Released
-        </AnnouncementNotation>
-        <AnnouncementTitle
-          className={cx(
-            'text-black',
-            'dark:text-white',
-            'text-xl',
-            'md:text-2xl',
-            'mb-5',
-          )}
-        >
+        </div>
+        <div className="mb-5 text-xl font-semibold leading-tight tracking-normal text-black dark:text-white md:text-2xl">
           Upgradeability of Ethereum L2s
-        </AnnouncementTitle>
+        </div>
         <AnnouncementButtonLink
           className={cx('py-[8px]', 'max-w-[135px]', 'text-base')}
           href="/multisig-report"

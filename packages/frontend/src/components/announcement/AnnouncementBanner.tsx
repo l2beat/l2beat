@@ -2,28 +2,11 @@ import cx from 'classnames'
 import React from 'react'
 
 import { Logo } from '../Logo'
-import { AnnouncementButtonLink } from './AnnouncementButtonLink'
-import { AnnouncementImage } from './AnnouncementImage'
-import { AnnouncementNotation } from './AnnouncementNotation'
-import { AnnouncementTitle } from './AnnouncementTitle'
 import { PolygonLogo } from './logos/AnnouncementLogos'
 
 export function FullAnnouncementBanner() {
   return (
-    <div
-      className={cx(
-        'flex',
-        'flex-col-reverse',
-        'md:grid',
-        'md:grid-cols-2',
-        'rounded-md',
-        'my-20',
-        'overflow-hidden',
-        'max-h-fit',
-        'bg-gray-100',
-        'dark:bg-zinc-800',
-      )}
-    >
+    <div className="my-20 flex max-h-fit flex-col-reverse overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800 md:grid md:grid-cols-2">
       <div
         className={cx('flex', 'flex-col', 'justify-center', 'm-6', 'md:m-10')}
       >
@@ -32,27 +15,21 @@ export function FullAnnouncementBanner() {
           <PolygonLogo />
         </div>
 
-        <AnnouncementNotation
-          className={cx('text-gray-550', 'dark:text-gray-50', 'mb-1')}
-        >
+        <div className="dark:text-gray-5 mb-1 uppercase text-gray-550">
           Just Released
-        </AnnouncementNotation>
-        <AnnouncementTitle
-          className={cx(
-            'text-black',
-            'dark:text-white',
-            'mb-4 md:mb-7',
-            'text-2xl',
-            'sm:text-4xl',
-          )}
-        >
+        </div>
+
+        <div className="mb-4 text-2xl font-semibold leading-tight tracking-normal text-black dark:text-white sm:text-4xl md:mb-7">
           Upgradeability <br /> of Ethereum L2s
-        </AnnouncementTitle>
-        <AnnouncementButtonLink href="/multisig-report">
+        </div>
+        <a
+          href="/multisig-report"
+          className="w-full rounded-md bg-pink-900 py-3.5 text-center font-medium text-white md:w-40"
+        >
           Read now
-        </AnnouncementButtonLink>
+        </a>
       </div>
-      <AnnouncementImage
+      <img
         className={cx('h-full')}
         src="/images/announcements/multisig-report.png"
       />
@@ -85,27 +62,16 @@ export function LimitedAnnouncementBanner() {
           'md:mx-12',
         )}
       >
-        <AnnouncementNotation
-          className={cx('text-gray-50', 'md:text-black', 'md:text-xl', 'mb-2')}
-        >
+        <div className="text-gray-5 mb-2 uppercase md:text-xl md:text-black">
           Just Released
-        </AnnouncementNotation>
-        <AnnouncementTitle
-          className={cx(
-            'text-black',
-            'dark:text-white',
-            'text-2xl',
-            'md:text-black',
-            'md:dark:text-black',
-            'md:text-5xl',
-          )}
-        >
+        </div>
+        <div className="tracking-norm text-2xl font-semibold leading-tight text-black dark:text-white md:text-5xl md:text-black md:dark:text-black">
           Upgradeability of Ethereum L2s
-        </AnnouncementTitle>
+        </div>
       </div>
-      <AnnouncementImage
+      <img
         src="/images/announcements/multisig-report.png"
-        className={cx('h-full', 'rounded-md', 'md:rounded-none')}
+        className="h-full rounded-md md:rounded-none"
       />
     </div>
   )
