@@ -53,7 +53,7 @@ export class MulticallClient {
       return batchedResults.flat()
     } catch (e) {
       throw new Error(
-        `Ethereum multicall failed for block number:  ${blockNumber}`,
+        `Ethereum multicall failed for block number:  ${blockNumber}. Call size was ${requests.length}.`,
       )
     }
   }
