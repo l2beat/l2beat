@@ -31,7 +31,9 @@ const upgrades = {
 
 const roles = discovery.getContractValue<{
   OPERATOR_ROLE: { members: string[] }
+  PAUSE_MANAGER_ROLE: { members: string[] }
 }>('zkEVM', 'accessControl')
+
 const operators: ProjectPermissionedAccount[] = roles.OPERATOR_ROLE.members.map(
   (address) => ({
     address: EthereumAddress(address),
@@ -39,12 +41,19 @@ const operators: ProjectPermissionedAccount[] = roles.OPERATOR_ROLE.members.map(
   }),
 )
 
+const pausers: string[] = roles.PAUSE_MANAGER_ROLE.members
+const isPaused: boolean =
+  discovery.getContractValue<boolean>('zkEVM', 'generalPause') ||
+  discovery.getContractValue<boolean>('zkEVM', 'l1l2Pause') ||
+  discovery.getContractValue<boolean>('zkEVM', 'l2l1Pause')
+
 export const linea: Layer2 = {
   type: 'layer2',
   id: ProjectId('linea'),
   display: {
     name: 'Linea',
     slug: 'linea',
+    headerWarning: 'The circuit of the program being proven is not public.',
     description:
       'Linea is a zkRollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
     purpose: 'Universal',
@@ -61,6 +70,7 @@ export const linea: Layer2 = {
         'https://linea.mirror.xyz/',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
@@ -70,6 +80,13 @@ export const linea: Layer2 = {
         tokens: ['ETH'],
       }),
     ],
+    transactionApi: {
+      type: 'rpc',
+      startBlock: 1,
+      url: 'https://linea-mainnet.infura.io/v3',
+      callsPerMinute: 1500,
+      excludeFromActivityApi: true,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -199,6 +216,10 @@ export const linea: Layer2 = {
         description:
           'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
         ...upgrades,
+        pausable: {
+          pausableBy: pausers,
+          paused: isPaused,
+        },
         references: [
           {
             text: 'ZkEvmV2.sol#L275 - Etherscan source code, state injections: stateRoot and exitRoot are part of the validity proof input.',
