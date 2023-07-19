@@ -40,13 +40,13 @@ describe(EtherscanLikeClient.name, () => {
     it('throws on non-json response', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetch() {
-          return new Response('text')
+          return new Response('mytestresp')
         },
       })
 
       const etherscanClient = new EtherscanLikeClient(httpClient, 'url', 'key')
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
-        'Invalid Etherscan response.',
+        'Invalid Etherscan response for response [mytestresp].',
       )
     })
 
