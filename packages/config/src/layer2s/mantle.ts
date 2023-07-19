@@ -1,7 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
+import { CONTRACTS, makeBridgeCompatible,TECHNOLOGY } from './common'
+import { RISK_VIEW } from './common/riskView';
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantle')
@@ -52,7 +53,15 @@ export const mantle: Layer2 = {
   stage: {
     stage: 'UnderReview',
   },
-  riskView: UNDER_REVIEW_RISK_VIEW,
+  riskView: makeBridgeCompatible({
+    stateValidation: RISK_VIEW.STATE_NONE,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('MNT'),
+  }),
   technology: TECHNOLOGY.UNDER_REVIEW,
   contracts: CONTRACTS.UNDER_REVIEW,
 }
