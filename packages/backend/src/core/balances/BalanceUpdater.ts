@@ -47,6 +47,9 @@ export class BalanceUpdater {
 
   async getBalancesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug('Something is waiting for getBalancesWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
     return this.balanceRepository.getByTimestamp(this.chainId, timestamp)

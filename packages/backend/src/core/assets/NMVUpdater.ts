@@ -101,6 +101,9 @@ export class NMVUpdater implements AssetUpdater {
     refreshIntervalMs = 1000,
   ): Promise<ReportRecord[]> {
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug('Something is waiting for getReportsWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
     return this.reportRepository.getByTimestampAndPreciseAsset(
