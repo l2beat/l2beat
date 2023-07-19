@@ -160,7 +160,7 @@ export class TaskQueue<T> {
       )
       this.eventTracker?.record('error')
       if (this.shouldHaltAfterFailedRetries) {
-        this.logger.info('Halting queue because of error')
+        this.logger.error('Halting queue because of error')
         this.halted = true
       }
       return
