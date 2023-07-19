@@ -1,7 +1,7 @@
 {
   "name": "linea",
-  "blockNumber": 17719000,
-  "configHash": "0xcedd0ea613de59e88a61a3352853ef9e23df5451383690678e298b9fd9eef5c9",
+  "blockNumber": 17725379,
+  "configHash": "0xd657c2e47bec6c38ed4df0cf31a0e67d4d167dd2bce2e9b5f3ff53c30bb5e144",
   "version": 1,
   "contracts": [
     {
@@ -75,7 +75,7 @@
             "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "currentPeriodAmountInWei": 10000000000000,
+        "currentPeriodAmountInWei": 2000000000000000,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": "0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0",
         "generalPause": false,
