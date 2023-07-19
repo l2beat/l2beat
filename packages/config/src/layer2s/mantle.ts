@@ -42,6 +42,12 @@ export const mantle: Layer2 = {
         tokens: '*',
       }
     ],
+    transactionApi: {
+      type: 'rpc',
+      url: 'https://rpc.mantle.xyz',
+      callsPerMinute: 1500,
+      excludeFromActivityApi: true,
+    }
   },
   stage: {
     stage: 'UnderReview',
