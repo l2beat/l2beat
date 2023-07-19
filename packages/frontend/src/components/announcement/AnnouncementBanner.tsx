@@ -1,16 +1,13 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { Logo } from '../Logo'
-import { PolygonLogo } from './logos/AnnouncementLogos'
+import { PolygonLogo } from '../PolygonLogo'
 
 export function FullAnnouncementBanner() {
   return (
     <div className="my-20 flex max-h-fit flex-col-reverse overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800 md:grid md:grid-cols-2">
-      <div
-        className={cx('flex', 'flex-col', 'justify-center', 'm-6', 'md:m-10')}
-      >
-        <div className={cx('flex', 'space-x-4', 'mb-5 md:mb-8')}>
+      <div className="m-6 flex flex-col justify-center md:m-10">
+        <div className="mb-5 flex space-x-4 md:mb-8">
           <Logo className="h-[26px] w-[64px]" />
           <PolygonLogo />
         </div>
@@ -29,39 +26,15 @@ export function FullAnnouncementBanner() {
           Read now
         </a>
       </div>
-      <img
-        className={cx('h-full')}
-        src="/images/announcements/multisig-report.png"
-      />
+      <img className="h-full" src="/images/announcements/multisig-report.png" />
     </div>
   )
 }
 
 export function LimitedAnnouncementBanner() {
   return (
-    <div
-      className={cx(
-        'flex',
-        'flex-col',
-        'md:grid',
-        'md:grid-cols-2',
-        'rounded-md',
-        'my-12',
-        'overflow-hidden',
-        'max-h-fit',
-        'bg-transparent from-gray-250 to-gray-450 md:bg-gradient-to-r',
-      )}
-    >
-      <div
-        className={cx(
-          'flex',
-          'flex-col',
-          'justify-center',
-          'mx-0',
-          'my-8',
-          'md:mx-12',
-        )}
-      >
+    <div className="my-12 flex max-h-fit flex-col overflow-hidden rounded-md bg-transparent from-gray-250 to-gray-450 md:grid md:grid-cols-2 md:bg-gradient-to-r">
+      <div className="mx-0 my-8 flex flex-col justify-center md:mx-12">
         <div className="text-gray-5 mb-2 uppercase md:text-xl md:text-black">
           Just Released
         </div>

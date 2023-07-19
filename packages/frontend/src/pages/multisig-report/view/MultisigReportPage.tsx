@@ -1,4 +1,3 @@
-import cx from 'classnames'
 import React from 'react'
 
 import {
@@ -9,9 +8,9 @@ import {
   NavbarProps,
 } from '../../../components'
 import { LimitedAnnouncementBanner } from '../../../components/announcement/AnnouncementBanner'
-import { PolygonLogo } from '../../../components/announcement/logos/AnnouncementLogos'
 import { DownloadButton } from '../../../components/download-button/DownloadButton'
 import { PageContent } from '../../../components/PageContent'
+import { PolygonLogo } from '../../../components/PolygonLogo'
 
 export interface MultisigReportPageProps {
   navbar: NavbarProps
@@ -25,21 +24,13 @@ export function MultisigReportPage(props: MultisigReportPageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent>
-        <main className={cx('flex', 'flex-col', 'md:items-center')}>
+        <main className="flex flex-col md:items-center">
           <LimitedAnnouncementBanner />
           <DownloadButton fileUrl={props.multisigReportUrl}>
             Download the report
           </DownloadButton>
           <div className="mt-12 mb-6 w-full leading-7">
-            <h2
-              className={cx(
-                'text-2xl',
-                'md:text-4xl',
-                'font-medium',
-                'mb-3',
-                'md:mb-5',
-              )}
-            >
+            <h2 className="mb-3 text-2xl font-medium md:mb-5 md:text-4xl">
               About the report
             </h2>
             <div>
@@ -55,7 +46,7 @@ export function MultisigReportPage(props: MultisigReportPageProps) {
               mechanisms will remain an essential aspect of L2s for the
               foreseeable future.
             </div>
-            <div className={cx('mt-6')}>
+            <div className="mt-6">
               This report is a snapshot of our current knowledge as of June
               2023. In the report, we delve into various aspects of system
               upgradeability. We start with why and when we need Layer 2s to be
@@ -77,7 +68,7 @@ export function MultisigReportPage(props: MultisigReportPageProps) {
           </div>
           <DownloadButton
             fileUrl={props.multisigReportUrl}
-            className={cx('visible', 'md:invisible', 'mt-12')}
+            className="visible mt-12 md:invisible"
           >
             Download the report
           </DownloadButton>
