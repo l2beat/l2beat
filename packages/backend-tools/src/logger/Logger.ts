@@ -8,6 +8,13 @@ import { formatTimePretty } from './formatTimePretty'
 import { LEVEL, LogLevel } from './LogLevel'
 import { resolveLog } from './resolveLog'
 
+export interface LoggerBackend {
+  debug(message: string): void
+  log(message: string): void
+  warn(message: string): void
+  error(message: string): void
+}
+
 export interface LoggerOptions {
   logLevel: LogLevel
   service?: string
@@ -18,6 +25,7 @@ export interface LoggerOptions {
   cwd: string
   getTime: () => Date
   reportError: (error: unknown) => void
+  backend: LoggerBackend
 }
 
 export class Logger {
@@ -36,6 +44,7 @@ export class Logger {
       cwd: options.cwd ?? process.cwd(),
       getTime: options.getTime ?? (() => new Date()),
       reportError: options.reportError ?? (() => {}),
+      backend: options.backend ?? console,
     }
     this.cwd = join(this.options.cwd, '/')
     this.logLevel = LEVEL[this.options.logLevel]
@@ -69,11 +78,10 @@ export class Logger {
     return new Logger({ ...this.options, ...options })
   }
 
-  for(object: {}): Logger {
+  for(object: {} | string): Logger {
+    const name = typeof object === 'string' ? object : object.constructor.name
     return this.configure({
-      service: this.options.service
-        ? `${this.options.service}.${object.constructor.name}`
-        : object.constructor.name,
+      service: this.options.service ? `${this.options.service}.${name}` : name,
     })
   }
 
@@ -144,18 +152,18 @@ export class Logger {
         : this.formatPretty(level, parameters)
 
     if (level === 'CRITICAL' || level === 'ERROR') {
-      console.error(output)
+      this.options.backend.error(output)
     } else if (level === 'WARN') {
-      console.warn(output)
+      this.options.backend.warn(output)
     } else if (level === 'INFO') {
-      console.log(output)
+      this.options.backend.log(output)
     } else if (level === 'DEBUG' || level === 'TRACE') {
-      console.debug(output)
+      this.options.backend.debug(output)
     }
   }
 
   private formatJson(level: LogLevel, parameters: {}): string {
-    const time = new Date().toISOString()
+    const time = this.options.getTime().toISOString()
     const message =
       'message' in parameters && typeof parameters.message === 'string'
         ? parameters.message
@@ -167,14 +175,8 @@ export class Logger {
       service: tagService(this.options.service, this.options.tag),
       message,
     }
-    const data = {
-      ...core,
-      ...parameters,
-    }
     try {
-      return JSON.stringify(data, (k, v: unknown) =>
-        typeof v === 'bigint' ? v.toString() : v,
-      )
+      return toJSON({ ...core, ...parameters })
     } catch (e) {
       this.error('Unable to log', e)
       return JSON.stringify(core)
@@ -201,7 +203,21 @@ export class Logger {
       delete parameters.message
     }
 
-    const params = formatParametersPretty(parameters, this.options.colors)
+    const params = formatParametersPretty(
+      sanitize(parameters),
+      this.options.colors,
+    )
     return `${time} ${levelOut}${service}${messageOut}${params}\n`
   }
+}
+
+function toJSON(parameters: {}): string {
+  return JSON.stringify(parameters, (k, v: unknown) =>
+    typeof v === 'bigint' ? v.toString() : v,
+  )
+}
+
+function sanitize(parameters: {}): {} {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return JSON.parse(toJSON(parameters))
 }
