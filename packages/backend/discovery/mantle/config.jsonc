@@ -84,11 +84,23 @@
     "CanonicalTransactionChain": {
       "ignoreMethods": [
         "getQueueElement"
+      ],
+      "ignoreInWatchMode": [
+        "getLastBlockNumber",
+        "getLastTimestamp",
+        "getNextQueueIndex",
+        "getNumPendingQueueElements",
+        "getQueueLength",
+        "getTotalBatches",
+        "getTotalElements"
       ]
     },
     "L1MantleToken": {
       "ignoreMethods": [
         "getPastTotalSupply"
+      ],
+      "ignoreInWatchMode": [
+        "totalSupply"
       ]
     },
     "EigenDataLayerChain": {
@@ -96,11 +108,22 @@
         "getRollupStoreByRollupBatchIndex",
         "reRollupBatchIndex",
         "rollupBatchIndexRollupStores"
+      ],
+      "ignoreInWatchMode": [
+        "getL2ConfirmedBlockNumber",
+        "getL2StoredBlockNumber",
+        "l2ConfirmedBlockNumber",
+        "l2StoredBlockNumber",
+        "rollupBatchIndex"
       ]
     },
     "ChainStorageContainerCTC": {
       "ignoreMethods": [
         "get"
+      ],
+      "ignoreInWatchMode": [
+        "getGlobalMetadata",
+        "length"
       ]
     },
     "L1CrossDomainMessenger": {
@@ -119,7 +142,18 @@
     "ChainStorageContainerSCC": {
       "ignoreMethods": [
         "get"
+      ],
+      "ignoreInWatchMode": [
+        "getGlobalMetadata",
+        "length"
       ]
     },
+    "StateCommitmentChain": {
+      "ignoreInWatchMode": [
+        "getLastSequencerTimestamp",
+        "getTotalBatches",
+        "getTotalElements"
+      ]
+    }
   }
 }
