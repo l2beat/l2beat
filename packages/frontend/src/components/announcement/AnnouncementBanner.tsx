@@ -1,11 +1,12 @@
 import cx from 'classnames'
 import React from 'react'
 
+import { Logo } from '../Logo'
 import { AnnouncementButtonLink } from './AnnouncementButtonLink'
 import { AnnouncementImage } from './AnnouncementImage'
 import { AnnouncementNotation } from './AnnouncementNotation'
 import { AnnouncementTitle } from './AnnouncementTitle'
-import { L2BeatLogo, PolygonLogo } from './logos/AnnouncementLogos'
+import { PolygonLogo } from './logos/AnnouncementLogos'
 
 export function FullAnnouncementBanner() {
   return (
@@ -27,7 +28,7 @@ export function FullAnnouncementBanner() {
         className={cx('flex', 'flex-col', 'justify-center', 'm-6', 'md:m-10')}
       >
         <div className={cx('flex', 'space-x-4', 'mb-5 md:mb-8')}>
-          <L2BeatLogo />
+          <Logo className="h-[26px] w-[64px]" />
           <PolygonLogo />
         </div>
 

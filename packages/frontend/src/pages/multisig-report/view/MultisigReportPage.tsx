@@ -1,12 +1,15 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
-import { LimitedAnnouncementBanner } from '../../../components/announcement/AnnouncementBanner'
 import {
-  L2BeatLogo,
-  PolygonLogo,
-} from '../../../components/announcement/logos/AnnouncementLogos'
+  Footer,
+  FooterProps,
+  Logo,
+  Navbar,
+  NavbarProps,
+} from '../../../components'
+import { LimitedAnnouncementBanner } from '../../../components/announcement/AnnouncementBanner'
+import { PolygonLogo } from '../../../components/announcement/logos/AnnouncementLogos'
 import { DownloadButton } from '../../../components/download-button/DownloadButton'
 import { PageContent } from '../../../components/PageContent'
 
@@ -69,7 +72,7 @@ export function MultisigReportPage(props: MultisigReportPageProps) {
             </div>
           </div>
           <div className="flex w-full space-x-4">
-            <L2BeatLogo />
+            <Logo className="h-[26px] w-[64px]" />
             <PolygonLogo />
           </div>
           <DownloadButton
