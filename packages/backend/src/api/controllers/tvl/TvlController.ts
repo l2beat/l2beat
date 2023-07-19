@@ -115,7 +115,11 @@ export class TvlController {
         ValueType.CBV,
       ),
     )
-    if (projectId === ProjectId.ARBITRUM && assetId === AssetId.USDC) {
+    if (
+      this.isArbitrumEnabled &&
+      projectId === ProjectId.ARBITRUM &&
+      assetId === AssetId.USDC
+    ) {
       timestamps.push(
         await this.reportStatusRepository.findLatestTimestamp(
           ChainId.ARBITRUM,
