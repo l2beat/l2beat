@@ -1,8 +1,6 @@
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Layer2ExternalAssets } from '@l2beat/config'
 
-export interface TotalSupplyTokensConfig {
-  assetId: AssetId
-  tokenAddress: EthereumAddress
-  sinceTimestamp: UnixTime
-  decimals: number
-}
+export type TotalSupplyTokensConfig = Pick<
+  Layer2ExternalAssets['assets'][0],
+  'assetId' | 'tokenAddress' | 'sinceTimestamp' | 'decimals'
+>

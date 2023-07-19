@@ -104,7 +104,7 @@ export function createTvlModule(
   const submodules: (TvlSubmodule | undefined)[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
     createNativeTvlSubmodule(db, priceUpdater, logger, clock),
-    createArbitrumTvlSubmodule(db, config, logger, http, clock),
+    createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
   ]
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(

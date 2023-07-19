@@ -1,4 +1,4 @@
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
@@ -79,6 +79,6 @@ function fakeToken(
     assetId,
     sinceTimestamp,
     decimals: 18,
-    tokenAddress: EthereumAddress('0x0000000000000000000000000000000000000000'),
+    tokenAddress: '0x0000000000000000000000000000000000000000',
   }
 }
