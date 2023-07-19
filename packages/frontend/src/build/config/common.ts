@@ -16,7 +16,8 @@ export const common: Omit<Config, 'backend'> = {
     /**
      * FIXME: change it to the correct link
      */
-    multisigReport: 'https://google.com',
+    multisigReport:
+      'https://drive.google.com/file/d/1dNlRj4ZYUl5OxkzhorFDqx7BJBABjOvO/view?usp=sharing',
   },
   features: {
     banner: new Date() <= GITCOIN_BETA_ROUND_END,

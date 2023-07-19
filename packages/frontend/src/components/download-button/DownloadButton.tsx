@@ -30,6 +30,7 @@ export function DownloadButton({
         className,
       )}
       href={fileUrl}
+      target="_blank"
     >
       <DownloadArrow className="mr-3" />
       {children}
