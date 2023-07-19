@@ -10,24 +10,20 @@ export function configureFloatingBanner() {
     return
   }
 
-  const floatingBanners = $$('.FloatingBanner')
+  const [floatingBanner] = $$('.FloatingBanner') // only one regarding announcement
 
   if (hasClosedBanner) {
-    floatingBanners.forEach((banner) => {
-      banner.classList.add('hidden')
-    })
+    floatingBanner.classList.add('hidden')
 
     return
   }
 
-  for (const banner of floatingBanners) {
-    const cross = banner.querySelector('.FloatingBanner-Cross')
-    if (!cross) continue
+  const cross = floatingBanner.querySelector('.FloatingBanner-Cross')
 
+  if (cross) {
     cross.addEventListener('click', () => {
-      banner.classList.toggle('hidden')
+      floatingBanner.classList.add('hidden')
+      localStorage.setItem('floatingBannerClosed', 'true')
     })
   }
-
-  localStorage.setItem('floatingBannerClosed', 'true')
 }
