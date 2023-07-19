@@ -1,8 +1,4 @@
-import { makeQuery } from './query'
-
 export function configureFloatingBanner() {
-  const { $$ } = makeQuery(document.body)
-
   const hasClosedBanner =
     localStorage.getItem('floatingBannerClosed') === 'true'
 
@@ -10,7 +6,11 @@ export function configureFloatingBanner() {
     return
   }
 
-  const [floatingBanner] = $$('.FloatingBanner') // only one regarding announcement
+  const floatingBanner = document.querySelector('.FloatingBanner') // only one regarding announcement
+
+  if (!floatingBanner) {
+    return
+  }
 
   if (hasClosedBanner) {
     floatingBanner.classList.add('hidden')
