@@ -8,7 +8,6 @@ import {
 
 import { createGenCustomTokenReport } from './report'
 
-export const OPTIMISM_PROJECT_ID = ProjectId('optimism')
 export const OP_TOKEN_SINCE_TIMESTAMP = UnixTime.fromDate(
   new Date('2022-05-30'),
 )
@@ -37,7 +36,7 @@ export const genOpTokenReport = createGenCustomTokenReport(
   ChainId.NMV,
   ValueType.NMV,
   OP_TOKEN_SINCE_TIMESTAMP,
-  OPTIMISM_PROJECT_ID,
+  ProjectId.OPTIMISM,
   opTokenBalance,
   OP_TOKEN_DECIMALS,
 )

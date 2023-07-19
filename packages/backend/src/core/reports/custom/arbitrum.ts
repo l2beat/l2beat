@@ -8,7 +8,6 @@ import {
 
 import { createGenCustomTokenReport as createGenCustomTokenReport } from './report'
 
-export const ARBITRUM_PROJECT_ID = ProjectId('arbitrum')
 // Ethereum block 16890400 timestamp
 export const ARB_TOKEN_SINCE_TIMESTAMP = new UnixTime(1679572871)
 export const ARB_TOKEN_ID = AssetId('arb-arbitrum')
@@ -28,7 +27,7 @@ export const genArbTokenReport = createGenCustomTokenReport(
   ChainId.NMV,
   ValueType.NMV,
   ARB_TOKEN_SINCE_TIMESTAMP,
-  ARBITRUM_PROJECT_ID,
+  ProjectId.ARBITRUM,
   ARB_TOKEN_BALANCE,
   ARB_TOKEN_DECIMALS,
 )

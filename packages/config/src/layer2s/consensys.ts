@@ -78,7 +78,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L116',
+            'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L116',
           ],
         },
       ],
@@ -92,7 +92,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L221',
+            'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L221',
           ],
         },
       ],
@@ -132,7 +132,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'ZkEvmV2.sol#L275 - Etherscan source code, _verifyProof() function',
-          href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L275',
+          href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L275',
         },
       ],
     },
@@ -141,7 +141,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'ZkEvmV2.sol#L221 - Etherscan source code, _processBlockTransactions() function',
-          href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L221',
+          href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L221',
         },
       ],
     },
@@ -160,7 +160,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'ZkEvmV2.sol#L125 - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F1#L125',
+          href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L125',
         },
       ],
     },
@@ -175,7 +175,7 @@ export const linea: Layer2 = {
         references: [
           {
             text: 'L1MessageService.sol#L115 - Etherscan source code, claimMessage() function',
-            href: 'https://etherscan.io/address/0xE8f627df6Cb02e415b2e6d6e112323BD269b4706#code#F20#L115',
+            href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F20#L115',
           },
         ],
       },
@@ -201,8 +201,8 @@ export const linea: Layer2 = {
         ...upgrades,
         references: [
           {
-            text: 'ZkEvmV2.sol - Etherscan source code, state injections: stateRoot and exitRoot are part of the validity proof input.',
-            href: 'https://etherscan.io/address/0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF#code#F1#L806',
+            text: 'ZkEvmV2.sol#L275 - Etherscan source code, state injections: stateRoot and exitRoot are part of the validity proof input.',
+            href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L275',
           },
         ],
       }),
