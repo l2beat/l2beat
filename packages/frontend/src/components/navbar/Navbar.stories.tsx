@@ -32,6 +32,7 @@ function Template(props: TemplateProps) {
       forumLink="#"
       showActivity
       showHiring
+      showMultisigReport
       selectedPage={props.selectedPage}
       socialLinks={{
         discordLink: '#',
