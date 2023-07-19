@@ -87,7 +87,7 @@ export const bobanetwork: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_NONE, 
+    stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
@@ -205,11 +205,11 @@ export const bobanetwork: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.ENQUEUE,
       references: [
         {
-          text: 'Canonical Transaction Chain - Boba documentation',
-          href: 'https://docs.boba.network/developer-docs/chain-contracts#ovm-canonicaltransactionchain-ctc',
+          text: 'CanonicalTransactionChain.sol#L201 - Etherscan source code, enqueue function',
+          href: 'https://etherscan.io/address/0x5e4e65926ba27467555eb562121fac00d24e9dd2#code#F1#L201',
         },
       ],
     },

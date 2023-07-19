@@ -22,6 +22,7 @@
     "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD": "ChainStorageContainerSCC",
     "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1StandardBridge",
     "0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "L1MantleToken",
+    "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": "Owner",
     "0x676A795fe6E43C17c668de16730c3F690FEB7120": "L1CrossDomainMessenger",
     "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A": "EigenDataLayerChain",
     "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798": "Delegation", // check mermaid to see what's going on from now on
@@ -82,9 +83,7 @@
       }
     },
     "CanonicalTransactionChain": {
-      "ignoreMethods": [
-        "getQueueElement"
-      ],
+      "ignoreMethods": ["getQueueElement"],
       "ignoreInWatchMode": [
         "getLastBlockNumber",
         "getLastTimestamp",
@@ -96,12 +95,8 @@
       ]
     },
     "L1MantleToken": {
-      "ignoreMethods": [
-        "getPastTotalSupply"
-      ],
-      "ignoreInWatchMode": [
-        "totalSupply"
-      ]
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "EigenDataLayerChain": {
       "ignoreMethods": [
@@ -118,18 +113,11 @@
       ]
     },
     "ChainStorageContainerCTC": {
-      "ignoreMethods": [
-        "get"
-      ],
-      "ignoreInWatchMode": [
-        "getGlobalMetadata",
-        "length"
-      ]
+      "ignoreMethods": ["get"],
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
     },
     "L1CrossDomainMessenger": {
-      "ignoreMethods": [
-        "xDomainMessageSender"
-      ]
+      "ignoreMethods": ["xDomainMessageSender"]
     },
     "TssStakingSlashing": {
       "ignoreMethods": [
@@ -140,13 +128,8 @@
       ]
     },
     "ChainStorageContainerSCC": {
-      "ignoreMethods": [
-        "get"
-      ],
-      "ignoreInWatchMode": [
-        "getGlobalMetadata",
-        "length"
-      ]
+      "ignoreMethods": ["get"],
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
     },
     "StateCommitmentChain": {
       "ignoreInWatchMode": [

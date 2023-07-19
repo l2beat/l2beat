@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "blockNumber": 17725438,
-  "configHash": "0x0a0281df46f45278219d1228a74abb9c29806e498edc332952ab63b5ec41e2f8",
+  "configHash": "0x1496227b11352bd81aea4eca07838f2a9a2c9d9ff42e58d43ac634f94b24c617",
   "version": 1,
   "contracts": [
     {
@@ -211,7 +211,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Owner",
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
       "code": "https://etherscan.deth.net/address/0x4e59e778a0fb77fBb305637435C62FaeD9aED40f,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -239,7 +239,8 @@
         "getThreshold": 6,
         "nonce": 25,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "EigenDataLayerChain",

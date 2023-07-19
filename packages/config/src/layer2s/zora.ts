@@ -71,7 +71,7 @@ export const zora: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_NONE, 
+    stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
