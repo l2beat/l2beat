@@ -9,6 +9,8 @@ import {
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
+import { MultisigReportAnnouncementBar } from '../../../components/announcement/AnnouncementBar'
+import { FloatingBanner } from '../../../components/floating-banner/FloatingBanner'
 import { ActivityHeader } from '../../../components/header/ActivityHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { PageContent } from '../../../components/PageContent'
@@ -22,11 +24,18 @@ export interface ActivityPageProps {
   navbar: NavbarProps
   showActivity: boolean
   milestones?: Milestone[]
+  showMultisigReport: boolean
 }
 
 export function ActivityPage(props: ActivityPageProps) {
   return (
     <>
+      {props.showMultisigReport && (
+        <>
+          <MultisigReportAnnouncementBar />
+          <FloatingBanner />
+        </>
+      )}
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs

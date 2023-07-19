@@ -8,8 +8,6 @@ import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
 
 export function getProjectPages(config: Config, pagesData: PagesData) {
-  const shouldHideMultisigAnnouncement = !config.features.multisigReport
-
   const included = getIncludedProjects(
     config.layer2s,
     pagesData.tvlApiResponse,
@@ -22,11 +20,7 @@ export function getProjectPages(config: Config, pagesData: PagesData) {
     return {
       slug: `/scaling/projects/${project.display.slug}`,
       page: (
-        <PageWrapper
-          {...wrapper}
-          hideAnnouncementBar={shouldHideMultisigAnnouncement}
-          hideFloatingBanner={shouldHideMultisigAnnouncement}
-        >
+        <PageWrapper {...wrapper}>
           <ProjectPage {...props} />
         </PageWrapper>
       ),

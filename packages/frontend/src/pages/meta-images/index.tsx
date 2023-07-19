@@ -14,11 +14,6 @@ export function getMetaImagePages(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ) {
-  const hideAnnouncementProps = {
-    hideAnnouncementBar: true,
-    hideFloatingBanner: true,
-  }
-
   const included = getIncludedProjects(
     [...config.layer2s, ...config.bridges],
     tvlApiResponse,
@@ -33,7 +28,7 @@ export function getMetaImagePages(
     {
       slug: '/meta-images/overview-scaling',
       page: (
-        <PageWrapper {...scaling.wrapper} {...hideAnnouncementProps}>
+        <PageWrapper {...scaling.wrapper}>
           <TvlMetaImage {...scaling.props} />
         </PageWrapper>
       ),
@@ -41,7 +36,7 @@ export function getMetaImagePages(
     activity && {
       slug: '/meta-images/overview-scaling-activity',
       page: (
-        <PageWrapper {...activity.wrapper} {...hideAnnouncementProps}>
+        <PageWrapper {...activity.wrapper}>
           <ActivityMetaImage {...activity.props} />
         </PageWrapper>
       ),
@@ -49,7 +44,7 @@ export function getMetaImagePages(
     {
       slug: '/meta-images/overview-bridges',
       page: (
-        <PageWrapper {...bridges.wrapper} {...hideAnnouncementProps}>
+        <PageWrapper {...bridges.wrapper}>
           <TvlMetaImage {...bridges.props} />
         </PageWrapper>
       ),
@@ -59,11 +54,7 @@ export function getMetaImagePages(
       return {
         slug: `/meta-images/${project.display.slug}`,
         page: (
-          <PageWrapper
-            {...wrapper}
-            hideAnnouncementBar={true}
-            hideFloatingBanner={true}
-          >
+          <PageWrapper {...wrapper}>
             <TvlMetaImage {...props} />
           </PageWrapper>
         ),

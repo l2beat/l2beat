@@ -7,17 +7,11 @@ import { getProps } from './props'
 import { ScalingTvlPage } from './view/ScalingTvlPage'
 
 export function getTvlPage(config: Config, pagesData: PagesData) {
-  const shouldHideMultisigAnnouncement = !config.features.multisigReport
-
   const { props, wrapper } = getProps(config, pagesData)
   return {
     slug: '/scaling/summary',
     page: (
-      <PageWrapper
-        {...wrapper}
-        hideAnnouncementBar={shouldHideMultisigAnnouncement}
-        hideFloatingBanner={shouldHideMultisigAnnouncement}
-      >
+      <PageWrapper {...wrapper}>
         <ScalingTvlPage {...props} />
       </PageWrapper>
     ),

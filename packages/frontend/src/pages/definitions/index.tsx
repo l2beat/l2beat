@@ -6,16 +6,11 @@ import { DefinitionsPage } from './DefinitionsPage'
 import { getProps } from './getProps'
 
 export function getDefinitionsPage(config: Config) {
-  const shouldHideMultisigAnnouncement = !config.features.multisigReport
   const { props, wrapper } = getProps(config)
   return {
     slug: '/definitions',
     page: (
-      <PageWrapper
-        {...wrapper}
-        hideAnnouncementBar={shouldHideMultisigAnnouncement}
-        hideFloatingBanner={shouldHideMultisigAnnouncement}
-      >
+      <PageWrapper {...wrapper}>
         <DefinitionsPage {...props} />
       </PageWrapper>
     ),

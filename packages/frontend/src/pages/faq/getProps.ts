@@ -11,6 +11,7 @@ export function getProps(config: Config): Wrapped<FaqPageProps> {
       title: 'Frequently Asked Questions',
       items: faqItems,
       footer: getFooterProps(config),
+      showMultisigReport: config.features.multisigReport,
     },
     wrapper: {
       metadata: {

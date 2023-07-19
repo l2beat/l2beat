@@ -13,6 +13,7 @@ export function getProps(config: Config): Wrapped<DefinitionsPageProps> {
       title: 'Definitions',
       htmlContent: getHtml(path.join(__dirname, 'maturity.md')),
       footer: getFooterProps(config),
+      showMultisigReport: config.features.multisigReport,
     },
     wrapper: {
       metadata: {

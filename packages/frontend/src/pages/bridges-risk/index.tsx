@@ -7,17 +7,11 @@ import { BridgesRiskPage } from './BridgesRiskPage'
 import { getProps } from './getProps'
 
 export function getBridgesRiskPage(config: Config, pagesData: PagesData) {
-  const shouldHideMultisigAnnouncement = !config.features.multisigReport
-
   const { props, wrapper } = getProps(config, pagesData)
   return {
     slug: '/bridges/risk',
     page: (
-      <PageWrapper
-        {...wrapper}
-        hideAnnouncementBar={shouldHideMultisigAnnouncement}
-        hideFloatingBanner={shouldHideMultisigAnnouncement}
-      >
+      <PageWrapper {...wrapper}>
         <BridgesRiskPage {...props} />
       </PageWrapper>
     ),

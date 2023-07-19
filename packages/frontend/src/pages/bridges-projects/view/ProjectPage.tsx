@@ -7,7 +7,9 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../components'
+import { MultisigReportAnnouncementBar } from '../../../components/announcement/AnnouncementBar'
 import { BridgesMvpWarning } from '../../../components/BridgesMvpWarning'
+import { FloatingBanner } from '../../../components/floating-banner/FloatingBanner'
 import { PageContent } from '../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../../components/project/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../../components/project/navigation/MobileProjectNavigation'
@@ -21,6 +23,7 @@ export interface ProjectPageProps {
   projectHeader: ProjectHeaderProps
   projectDetails: ProjectDetailsProps
   footer: FooterProps
+  showMultisigReport: boolean
 }
 
 export function ProjectPage(props: ProjectPageProps) {
@@ -30,6 +33,12 @@ export function ProjectPage(props: ProjectPageProps) {
 
   return (
     <>
+      {props.showMultisigReport && (
+        <>
+          <MultisigReportAnnouncementBar />
+          <FloatingBanner />
+        </>
+      )}
       <Navbar {...props.navbar} />
       <div className="sticky top-0 z-40 md:hidden">
         <MobileProjectNavigation sections={sections} />

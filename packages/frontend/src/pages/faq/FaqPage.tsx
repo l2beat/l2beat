@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { Footer, FooterProps, Navbar, NavbarProps } from '../../components'
+import { MultisigReportAnnouncementBar } from '../../components/announcement/AnnouncementBar'
+import { FloatingBanner } from '../../components/floating-banner/FloatingBanner'
 import { HorizontalSeparator } from '../../components/HorizontalSeparator'
 import { PageContent } from '../../components/PageContent'
 import { FaqItem } from './faqItems'
@@ -10,11 +12,18 @@ export interface FaqPageProps {
   items: FaqItem[]
   footer: FooterProps
   navbar: NavbarProps
+  showMultisigReport: boolean
 }
 
 export function FaqPage(props: FaqPageProps) {
   return (
     <>
+      {props.showMultisigReport && (
+        <>
+          <MultisigReportAnnouncementBar />
+          <FloatingBanner />
+        </>
+      )}
       <Navbar {...props.navbar} />
       <PageContent>
         <div className="mt-16">

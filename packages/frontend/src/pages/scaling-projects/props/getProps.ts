@@ -35,6 +35,7 @@ export function getProps(
         chart,
       ),
       footer: getFooterProps(config),
+      showMultisigReport: config.features.multisigReport,
     },
     wrapper: {
       preloadApi: chart.tvlEndpoint,

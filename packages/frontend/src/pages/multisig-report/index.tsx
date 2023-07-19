@@ -11,11 +11,7 @@ export function getMultisigReportDownloadPage(config: Config) {
   return {
     slug: '/multisig-report',
     page: (
-      <PageWrapper
-        hideAnnouncementBar
-        hideFloatingBanner
-        metadata={wrapper.metadata}
-      >
+      <PageWrapper metadata={wrapper.metadata}>
         <MultisigReportPage {...props} />
       </PageWrapper>
     ),
