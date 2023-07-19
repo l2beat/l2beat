@@ -1,10 +1,17 @@
-import { AssetId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  ProjectId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
   genOpTokenReport,
   OP_TOKEN_ID,
   OP_TOKEN_SINCE_TIMESTAMP,
+  UPDATE_TIMESTAMP,
 } from './optimism'
 
 describe(genOpTokenReport.name, () => {
@@ -36,55 +43,6 @@ describe(genOpTokenReport.name, () => {
     expect(genOpTokenReport(prices, timestamp)).toEqual([])
   })
 
-  /*
-  describe('updates balances if op report present already', () => {
-    const timestamp = UPDATE_TIMESTAMP.add(-1, 'hours')
-    const prices = [
-      { timestamp, priceUsd: 1, assetId: AssetId.ETH },
-      { timestamp, priceUsd: 2, assetId: OP_TOKEN_ID },
-    ]
-    const opReport: ReportRecord = {
-      asset: OP_TOKEN_ID,
-      type: ValueType.NMV,
-      amount: 0n,
-      usdValue: 0n,
-      ethValue: 0n,
-      projectId: OPTIMISM_PROJECT_ID,
-      timestamp,
-    }
-    const otherReports: ReportRecord[] = [
-      {
-        asset: AssetId.DAI,
-        type: ValueType.CBV,
-        amount: 1n,
-        ethValue: 1n,
-        usdValue: 1n,
-        projectId: ProjectId('arbitrum'),
-        timestamp,
-      },
-      {
-        asset: AssetId.ETH,
-        type: ValueType.CBV,
-        amount: 2n,
-        ethValue: 2n,
-        usdValue: 2n,
-        projectId: ProjectId('arbitrum'),
-        timestamp,
-      },
-    ]
-
-    expect(addOpTokenAsset(prices, timestamp)).toEqual([
-      ...otherReports,
-      {
-        ...opReport,
-        type: ValueType.NMV,
-        amount: 214748364000000000000000000n,
-        ethValue: 429496728000000n,
-        usdValue: 42949672800n,
-      },
-    ])
-  })
-
   it('adds op report if not present', () => {
     const timestamp = UPDATE_TIMESTAMP.add(-1, 'hours')
     const prices = [
@@ -92,11 +50,12 @@ describe(genOpTokenReport.name, () => {
       { timestamp, priceUsd: 2, assetId: OP_TOKEN_ID },
     ]
 
-    expect(addOpTokenAsset(prices, timestamp)).toEqual([
+    expect(genOpTokenReport(prices, timestamp)).toEqual([
       {
         asset: OP_TOKEN_ID,
+        chainId: ChainId.NMV,
         type: ValueType.NMV,
-        projectId: OPTIMISM_PROJECT_ID,
+        projectId: ProjectId.OPTIMISM,
         timestamp,
         amount: 214748364000000000000000000n,
         ethValue: 429496728000000n,
@@ -111,12 +70,13 @@ describe(genOpTokenReport.name, () => {
       { timestamp, priceUsd: 1, assetId: AssetId.ETH },
       { timestamp, priceUsd: 2, assetId: OP_TOKEN_ID },
     ]
-    
-    expect(addOpTokenAsset(prices, timestamp)).toEqual([
+
+    expect(genOpTokenReport(prices, timestamp)).toEqual([
       {
         asset: OP_TOKEN_ID,
+        chainId: ChainId.NMV,
         type: ValueType.NMV,
-        projectId: OPTIMISM_PROJECT_ID,
+        projectId: ProjectId.OPTIMISM,
         timestamp,
         amount: 644594782000000000000000000n,
         ethValue: 1289189564000000n,
@@ -124,5 +84,4 @@ describe(genOpTokenReport.name, () => {
       },
     ])
   })
-*/
 })
