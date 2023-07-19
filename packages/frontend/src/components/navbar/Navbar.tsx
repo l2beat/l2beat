@@ -21,6 +21,7 @@ export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
   showHiring: boolean
+  showMultisigReport: boolean
   forumLink: string
   socialLinks: SocialLinksProps
   selectedPage: NavbarPage
@@ -35,6 +36,7 @@ export function getNavbarProps(
     forumLink: config.links.forum,
     showHiring: config.features.hiring,
     showActivity: config.features.activity,
+    showMultisigReport: config.features.multisigReport,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }
@@ -47,6 +49,7 @@ export function Navbar(props: NavbarProps) {
         selectedPage={props.selectedPage}
         showActivity={props.showActivity}
         showHiring={props.showHiring}
+        showMultisigReport={props.showMultisigReport}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
       />
@@ -107,6 +110,16 @@ export function Navbar(props: NavbarProps) {
                   Donate
                 </PageLink>
               </li>
+              {props.showMultisigReport && (
+                <li className="h-full">
+                  <PageLink
+                    selected={props.selectedPage === 'multisig-report'}
+                    href="/multisig-report"
+                  >
+                    Multisig Report
+                  </PageLink>
+                </li>
+              )}
               <li className="h-full">
                 <PageLink href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
                   Governance
