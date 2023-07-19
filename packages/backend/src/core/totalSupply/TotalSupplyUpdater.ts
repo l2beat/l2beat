@@ -57,6 +57,9 @@ export class TotalSupplyUpdater {
     refreshIntervalMs = 1000,
   ) {
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug('Something is waiting for getTotalSuppliesWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
     return this.totalSupplyRepository.getByTimestamp(this.chainId, timestamp)

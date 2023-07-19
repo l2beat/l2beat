@@ -56,7 +56,7 @@ export class EtherscanLikeClient {
     }
 
     if (!etherscanResponse) {
-      const message = 'Invalid Etherscan response.'
+      const message = `Invalid Etherscan response [${text}] for request [${url}].`
       this.recordError(module, action, timeMs, message)
       throw new TypeError(message)
     }
