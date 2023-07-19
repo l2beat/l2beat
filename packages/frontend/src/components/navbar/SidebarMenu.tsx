@@ -14,6 +14,7 @@ export interface SidebarMenuProps {
   showActivity: boolean
   showMultisigReport: boolean
   showHiring: boolean
+  showHiringBadge: boolean
   forumLink: string
   socialLinks: SocialLinksProps
 }
@@ -106,7 +107,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
                 href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
               >
                 Jobs
-                <HiringBadge className="ml-2" />
+                {props.showHiringBadge && <HiringBadge className="ml-2" />}
               </OutLink>
             </li>
           )}

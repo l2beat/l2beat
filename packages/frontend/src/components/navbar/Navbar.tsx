@@ -21,6 +21,7 @@ export interface NavbarProps {
   showBanner: boolean
   showActivity: boolean
   showHiring: boolean
+  showHiringBadge: boolean
   showMultisigReport: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -35,6 +36,7 @@ export function getNavbarProps(
     showBanner: config.features.banner,
     forumLink: config.links.forum,
     showHiring: config.features.hiring,
+    showHiringBadge: config.features.hiringBadge,
     showActivity: config.features.activity,
     showMultisigReport: config.features.multisigReport,
     socialLinks: getSocialLinksProps(config),
@@ -49,6 +51,7 @@ export function Navbar(props: NavbarProps) {
         selectedPage={props.selectedPage}
         showActivity={props.showActivity}
         showHiring={props.showHiring}
+        showHiringBadge={props.showHiringBadge}
         showMultisigReport={props.showMultisigReport}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
@@ -137,7 +140,7 @@ export function Navbar(props: NavbarProps) {
                     href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
                   >
                     Jobs
-                    <HiringBadge className="ml-1" />
+                    {props.showHiringBadge && <HiringBadge className="ml-1" />}
                   </OutLink>
                 </li>
               )}
