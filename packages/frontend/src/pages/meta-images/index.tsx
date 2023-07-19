@@ -14,7 +14,10 @@ export function getMetaImagePages(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ) {
-  const shouldHideMultisigAnnouncement = !config.features.multisigReport
+  const hideAnnouncementProps = {
+    hideAnnouncementBar: true,
+    hideFloatingBanner: true,
+  }
 
   const included = getIncludedProjects(
     [...config.layer2s, ...config.bridges],
@@ -30,11 +33,7 @@ export function getMetaImagePages(
     {
       slug: '/meta-images/overview-scaling',
       page: (
-        <PageWrapper
-          {...scaling.wrapper}
-          hideAnnouncementBar={shouldHideMultisigAnnouncement}
-          hideFloatingBanner={shouldHideMultisigAnnouncement}
-        >
+        <PageWrapper {...scaling.wrapper} {...hideAnnouncementProps}>
           <TvlMetaImage {...scaling.props} />
         </PageWrapper>
       ),
@@ -42,11 +41,7 @@ export function getMetaImagePages(
     activity && {
       slug: '/meta-images/overview-scaling-activity',
       page: (
-        <PageWrapper
-          {...activity.wrapper}
-          hideAnnouncementBar={shouldHideMultisigAnnouncement}
-          hideFloatingBanner={shouldHideMultisigAnnouncement}
-        >
+        <PageWrapper {...activity.wrapper} {...hideAnnouncementProps}>
           <ActivityMetaImage {...activity.props} />
         </PageWrapper>
       ),
@@ -54,11 +49,7 @@ export function getMetaImagePages(
     {
       slug: '/meta-images/overview-bridges',
       page: (
-        <PageWrapper
-          {...bridges.wrapper}
-          hideAnnouncementBar={shouldHideMultisigAnnouncement}
-          hideFloatingBanner={shouldHideMultisigAnnouncement}
-        >
+        <PageWrapper {...bridges.wrapper} {...hideAnnouncementProps}>
           <TvlMetaImage {...bridges.props} />
         </PageWrapper>
       ),
@@ -70,8 +61,8 @@ export function getMetaImagePages(
         page: (
           <PageWrapper
             {...wrapper}
-            hideAnnouncementBar={shouldHideMultisigAnnouncement}
-            hideFloatingBanner={shouldHideMultisigAnnouncement}
+            hideAnnouncementBar={true}
+            hideFloatingBanner={true}
           >
             <TvlMetaImage {...props} />
           </PageWrapper>
