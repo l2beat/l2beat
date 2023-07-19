@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, ValueType } from '@l2beat/shared-pure'
+import { ChainId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -34,6 +34,7 @@ describe(NMVUpdater.name, () => {
         reportStatusRepository,
         mockObject<Clock>(),
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await nmvUpdater.update(MOCK.NOW.add(1, 'hours'))
@@ -103,6 +104,7 @@ describe(NMVUpdater.name, () => {
         reportStatusRepository,
         clock,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await nmvUpdater.start()
@@ -168,6 +170,7 @@ describe(NMVUpdater.name, () => {
         reportStatusRepository,
         clock,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await nmvUpdater.start()

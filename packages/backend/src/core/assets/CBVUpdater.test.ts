@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, ValueType } from '@l2beat/shared-pure'
+import { ChainId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -43,6 +43,7 @@ describe(CBVUpdater.name, () => {
         mockObject<Clock>(),
         MOCK.PROJECTS,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await cbvUpdater.update(MOCK.NOW.add(1, 'hours'))
@@ -124,6 +125,7 @@ describe(CBVUpdater.name, () => {
         clock,
         MOCK.PROJECTS,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await cbvUpdater.start()
@@ -201,6 +203,7 @@ describe(CBVUpdater.name, () => {
         clock,
         MOCK.PROJECTS,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await cbvUpdater.start()

@@ -56,6 +56,11 @@ export function createArbitrumTvlSubmodule(
     arbitrumMulticall,
   )
 
+  const arbitrumBalanceProvider = new ArbitrumBalanceProvider(
+    arbitrumClient,
+    arbitrumMulticall,
+  )
+
   // #endregion
   // #region updaters
 
@@ -65,11 +70,6 @@ export function createArbitrumTvlSubmodule(
     clock,
     logger,
     ChainId.ARBITRUM,
-  )
-
-  const arbitrumBalanceProvider = new ArbitrumBalanceProvider(
-    arbitrumClient,
-    arbitrumMulticall,
   )
 
   const arbitrumBalanceUpdater = new BalanceUpdater(
@@ -104,6 +104,7 @@ export function createArbitrumTvlSubmodule(
     arbitrumProject,
     arbitrumTokens,
     logger,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   // #endregion

@@ -39,6 +39,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     private readonly arbitrumProject: ReportProject[],
     private readonly tokens: EBVToken[],
     private readonly logger: Logger,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
     assert(
@@ -62,6 +63,10 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
 
   getConfigHash() {
     return this.configHash
+  }
+
+  getMinTimestamp() {
+    return this.minTimestamp
   }
 
   getValueType() {

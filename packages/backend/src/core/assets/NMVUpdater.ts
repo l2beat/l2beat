@@ -30,6 +30,7 @@ export class NMVUpdater implements AssetUpdater {
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
 
@@ -51,6 +52,10 @@ export class NMVUpdater implements AssetUpdater {
 
   getConfigHash() {
     return this.configHash
+  }
+
+  getMinTimestamp() {
+    return this.minTimestamp
   }
 
   async start() {

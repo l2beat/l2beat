@@ -74,6 +74,7 @@ export function createEthereumTvlSubmodule(
     clock,
     config.projects,
     logger,
+    config.tvl.ethereum.minBlockTimestamp,
   )
 
   // #endregion

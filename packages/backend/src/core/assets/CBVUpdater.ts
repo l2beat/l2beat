@@ -37,6 +37,7 @@ export class CBVUpdater implements AssetUpdater {
     private readonly clock: Clock,
     private readonly projects: ReportProject[],
     private readonly logger: Logger,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
     // TODO(radomski): This config hash should be generated from only CBV projects
@@ -55,6 +56,10 @@ export class CBVUpdater implements AssetUpdater {
 
   getConfigHash() {
     return this.configHash
+  }
+
+  getMinTimestamp() {
+    return this.minTimestamp
   }
 
   async start() {

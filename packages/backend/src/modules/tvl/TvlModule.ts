@@ -103,7 +103,7 @@ export function createTvlModule(
 
   const submodules: (TvlSubmodule | undefined)[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createNativeTvlSubmodule(db, priceUpdater, logger, clock),
+    createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
     createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
   ]
 
