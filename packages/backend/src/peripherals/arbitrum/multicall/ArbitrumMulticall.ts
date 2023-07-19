@@ -63,11 +63,17 @@ export class ArbitrumMulticallClient {
 
     const batches = toBatches(requests, this.maxBatchSize)
 
-    const batchedResults = await Promise.all(
-      batches.map((batch) => this.executeBatch(batch, blockNumber)),
-    )
+    try {
+      const batchedResults = await Promise.all(
+        batches.map((batch) => this.executeBatch(batch, blockNumber)),
+      )
 
-    return batchedResults.flat()
+      return batchedResults.flat()
+    } catch (e) {
+      throw new Error(
+        `Arbitrum multicall failed for block number ${blockNumber}}. Call size was ${requests.length} in ${batches.length} batches.`,
+      )
+    }
   }
 
   private async executeBatch(
