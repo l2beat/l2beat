@@ -46,7 +46,7 @@ describe(EtherscanLikeClient.name, () => {
 
       const etherscanClient = new EtherscanLikeClient(httpClient, 'url', 'key')
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
-        'Invalid Etherscan response for response [mytestresp].',
+        'Invalid Etherscan response [mytestresp] for request [url?module=mod&action=act&apikey=key].',
       )
     })
 
