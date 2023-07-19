@@ -5,6 +5,7 @@ import { getBridgesTvlPage } from './bridges-tvl'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
 import { getMetaImagePages } from './meta-images'
+import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling-activity'
@@ -27,6 +28,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(getBridgesTvlPage(config, pagesData))
   pages.push(getBridgesRiskPage(config, pagesData))
   pages.push(...getBridgeProjectPages(config, pagesData))
+
+  if (config.features.multisigReport) {
+    pages.push(getMultisigReportDownloadPage(config))
+  }
 
   if (activityApiResponse) {
     pages.push(

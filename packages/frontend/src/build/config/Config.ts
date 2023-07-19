@@ -9,6 +9,7 @@ export interface Config {
     youTube: string
     medium: string
     forum: string
+    multisigReport: string
   }
   features: {
     activity: boolean
@@ -19,6 +20,7 @@ export interface Config {
     stages: boolean
     buildAllProjectPages: boolean
     upcomingRollups: boolean
+    multisigReport: boolean
   }
   backend: {
     apiUrl: string

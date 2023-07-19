@@ -13,6 +13,10 @@ export const common: Omit<Config, 'backend'> = {
     youTube: 'https://www.youtube.com/channel/UCDrl-fNXFjOoykr4lQij9BA/videos',
     medium: 'https://medium.com/l2beat',
     forum: 'https://gov.l2beat.com/',
+    /**
+     * FIXME: change it to the correct link
+     */
+    multisigReport: 'https://google.com',
   },
   features: {
     banner: new Date() <= GITCOIN_BETA_ROUND_END,
@@ -23,6 +27,7 @@ export const common: Omit<Config, 'backend'> = {
     stages: true,
     buildAllProjectPages: false,
     upcomingRollups: true,
+    multisigReport: true,
   },
   layer2s,
   bridges,
