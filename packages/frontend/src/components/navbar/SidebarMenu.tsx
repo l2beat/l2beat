@@ -12,7 +12,6 @@ import { NavbarPage } from './types'
 export interface SidebarMenuProps {
   selectedPage: NavbarPage
   showActivity: boolean
-  showMultisigReport: boolean
   showHiring: boolean
   showHiringBadge: boolean
   forumLink: string
@@ -87,11 +86,6 @@ export function SidebarMenu(props: SidebarMenuProps) {
           <li>
             <a href="/donate">Donate</a>
           </li>
-          {props.showMultisigReport && (
-            <li>
-              <a href="/multisig-report">Multisig Report</a>
-            </li>
-          )}
           <li>
             <a href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
               Governance
