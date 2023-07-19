@@ -37,7 +37,7 @@ export function FloatingBanner() {
           'max-w-[182px]',
         )}
       >
-        <AnnouncementImage src={'/images/multisig-cover.png'} />
+        <AnnouncementImage src={'/images/announcements/multisig-cover.png'} />
       </div>
       <div className={cx('flex', 'flex-col', 'px-4', 'pl-5', 'justify-center')}>
         <AnnouncementNotation

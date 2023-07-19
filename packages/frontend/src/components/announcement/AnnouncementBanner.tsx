@@ -53,7 +53,7 @@ export function FullAnnouncementBanner() {
       </div>
       <AnnouncementImage
         className={cx('h-full')}
-        src="/images/multisig-report.png"
+        src="/images/announcements/multisig-report.png"
       />
     </div>
   )
@@ -103,7 +103,7 @@ export function LimitedAnnouncementBanner() {
         </AnnouncementTitle>
       </div>
       <AnnouncementImage
-        src="/images/multisig-report.png"
+        src="/images/announcements/multisig-report.png"
         className={cx('h-full', 'rounded-md', 'md:rounded-none')}
       />
     </div>
