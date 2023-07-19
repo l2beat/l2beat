@@ -55,10 +55,51 @@ export const mantle: Layer2 = {
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
-    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    dataAvailability: {
+      ...RISK_VIEW.DATA_EXTERNAL,
+      sources: [
+        {
+          contract: 'EigenDataLayerChain',
+          references: [ // The contract that is supposed to perfrom the signature check is not verified!
+            'https://etherscan.io/address/0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a#code#F1#L328'
+          ]
+        }
+      ]
+    },
+    upgradeability: {
+      ...RISK_VIEW.UPGRADABLE_YES,
+      sources: [
+        {
+          contract: 'L1CrossDomainMessenger',
+          references: [
+            'https://etherscan.io/address/0x676A795fe6E43C17c668de16730c3F690FEB7120#code'
+          ]
+        }
+      ]
+    },
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
+      sources: [
+        {
+          contract: 'CanonicalTransactionChain',
+          references: [
+            'https://etherscan.io/address/0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93#code#F1#L210'
+          ]
+        }
+      ]
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      sources: [
+        {
+          contract: 'StateCommitmentChain',
+          references: [
+            'https://etherscan.io/address/0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa#code#F1#L111', // isCollateralized call
+            'https://etherscan.io/address/0x31aBe1c466C2A8b95fd84258dD1471472979B650#code#F1#L31' // dummy isCollateralized function
+          ]
+        }
+      ]
+    },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('MNT'),
   }),
