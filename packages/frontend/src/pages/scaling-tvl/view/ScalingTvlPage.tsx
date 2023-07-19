@@ -9,6 +9,7 @@ import {
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
+import { FullAnnouncementBanner } from '../../../components/announcement/AnnouncementBanner'
 import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../components/other-sites/OtherSites'
@@ -23,6 +24,7 @@ export interface TvlPageProps {
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
+  showMultisigReportBanner: boolean
   milestones?: Milestone[]
 }
 
@@ -43,6 +45,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
           />
           <ScalingTvlView {...props.tvlView} />
           <OtherSites />
+          {props.showMultisigReportBanner && <FullAnnouncementBanner />}
           <About />
         </main>
       </PageContent>

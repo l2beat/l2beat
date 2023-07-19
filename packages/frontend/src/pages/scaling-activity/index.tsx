@@ -13,11 +13,17 @@ export function getActivityPage(
     verificationStatus: VerificationStatus
   },
 ) {
+  const shouldHideMultisigAnnouncement = !config.features.multisigReport
+
   const { props, wrapper } = getProps(config, pagesData)
   return {
     slug: '/scaling/activity',
     page: (
-      <PageWrapper {...wrapper}>
+      <PageWrapper
+        {...wrapper}
+        hideAnnouncementBar={shouldHideMultisigAnnouncement}
+        hideFloatingBanner={shouldHideMultisigAnnouncement}
+      >
         <ActivityPage {...props} />
       </PageWrapper>
     ),

@@ -7,11 +7,17 @@ import { getProps } from './props'
 import { ScalingRiskPage } from './view/ScalingRiskPage'
 
 export function getRiskPage(config: Config, pagesData: PagesData) {
+  const shouldHideMultisigAnnouncement = !config.features.multisigReport
+
   const { props, wrapper } = getProps(config, pagesData)
   return {
     slug: '/scaling/risk',
     page: (
-      <PageWrapper {...wrapper}>
+      <PageWrapper
+        {...wrapper}
+        hideAnnouncementBar={shouldHideMultisigAnnouncement}
+        hideFloatingBanner={shouldHideMultisigAnnouncement}
+      >
         <ScalingRiskPage {...props} />
       </PageWrapper>
     ),

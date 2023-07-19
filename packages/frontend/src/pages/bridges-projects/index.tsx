@@ -8,6 +8,8 @@ import { getProps } from './props'
 import { ProjectPage } from './view/ProjectPage'
 
 export function getBridgeProjectPages(config: Config, pagesData: PagesData) {
+  const shouldHideMultisigAnnouncement = !config.features.multisigReport
+
   const included = getIncludedProjects(
     config.bridges,
     pagesData.tvlApiResponse,
@@ -19,7 +21,11 @@ export function getBridgeProjectPages(config: Config, pagesData: PagesData) {
     return {
       slug: `/bridges/projects/${bridge.display.slug}`,
       page: (
-        <PageWrapper {...wrapper}>
+        <PageWrapper
+          {...wrapper}
+          hideAnnouncementBar={shouldHideMultisigAnnouncement}
+          hideFloatingBanner={shouldHideMultisigAnnouncement}
+        >
           <ProjectPage {...props} />
         </PageWrapper>
       ),

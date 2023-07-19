@@ -14,6 +14,8 @@ export function getMetaImagePages(
   tvlApiResponse: TvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ) {
+  const shouldHideMultisigAnnouncement = !config.features.multisigReport
+
   const included = getIncludedProjects(
     [...config.layer2s, ...config.bridges],
     tvlApiResponse,
@@ -28,7 +30,11 @@ export function getMetaImagePages(
     {
       slug: '/meta-images/overview-scaling',
       page: (
-        <PageWrapper {...scaling.wrapper}>
+        <PageWrapper
+          {...scaling.wrapper}
+          hideAnnouncementBar={shouldHideMultisigAnnouncement}
+          hideFloatingBanner={shouldHideMultisigAnnouncement}
+        >
           <TvlMetaImage {...scaling.props} />
         </PageWrapper>
       ),
@@ -36,7 +42,11 @@ export function getMetaImagePages(
     activity && {
       slug: '/meta-images/overview-scaling-activity',
       page: (
-        <PageWrapper {...activity.wrapper}>
+        <PageWrapper
+          {...activity.wrapper}
+          hideAnnouncementBar={shouldHideMultisigAnnouncement}
+          hideFloatingBanner={shouldHideMultisigAnnouncement}
+        >
           <ActivityMetaImage {...activity.props} />
         </PageWrapper>
       ),
@@ -44,7 +54,11 @@ export function getMetaImagePages(
     {
       slug: '/meta-images/overview-bridges',
       page: (
-        <PageWrapper {...bridges.wrapper}>
+        <PageWrapper
+          {...bridges.wrapper}
+          hideAnnouncementBar={shouldHideMultisigAnnouncement}
+          hideFloatingBanner={shouldHideMultisigAnnouncement}
+        >
           <TvlMetaImage {...bridges.props} />
         </PageWrapper>
       ),
@@ -54,7 +68,11 @@ export function getMetaImagePages(
       return {
         slug: `/meta-images/${project.display.slug}`,
         page: (
-          <PageWrapper {...wrapper}>
+          <PageWrapper
+            {...wrapper}
+            hideAnnouncementBar={shouldHideMultisigAnnouncement}
+            hideFloatingBanner={shouldHideMultisigAnnouncement}
+          >
             <TvlMetaImage {...props} />
           </PageWrapper>
         ),

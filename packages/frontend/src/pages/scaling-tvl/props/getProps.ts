@@ -37,6 +37,7 @@ export function getProps(
       ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
+      showMultisigReportBanner: config.features.multisigReport,
       milestones: config.features.milestones ? config.milestones : [],
     },
     wrapper: {
