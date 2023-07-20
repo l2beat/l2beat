@@ -117,7 +117,7 @@ export function shouldCounterBeIncluded(
     return false
   }
 
-  const isExcludedInEnv = activity.excludedProjects.some(
+  const isExcludedInEnv = activity.projectsExcludedFromAPI.some(
     (p) => p === counter.projectId.toString(),
   )
   if (isExcludedInEnv) {

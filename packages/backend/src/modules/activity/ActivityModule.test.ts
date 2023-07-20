@@ -26,7 +26,7 @@ const ENV_CONFIG: ActivityConfig = {
   starkexApiKey: 'key',
   starkexCallsPerMinute: 1,
   skipExplicitExclusion: false,
-  excludedProjects: [],
+  projectsExcludedFromAPI: [],
   projects: {},
 }
 
@@ -67,7 +67,7 @@ describe(createActivityModule.name, () => {
 
       const envConfig: ActivityConfig = {
         ...ENV_CONFIG,
-        excludedProjects: ['project'],
+        projectsExcludedFromAPI: ['project'],
       }
 
       const result = shouldCounterBeIncluded(
