@@ -70,6 +70,7 @@ module.exports = {
       pink: {
         100: '#FF46C0',
         200: '#DB8BF7',
+        800: '#B94DDF',
         900: '#AB3BD2',
       },
       green: {

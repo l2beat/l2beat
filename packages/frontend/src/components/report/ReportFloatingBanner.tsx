@@ -17,7 +17,7 @@ export function ReportFloatingBanner() {
           Upgradeability of Ethereum L2s
         </div>
         <a
-          className="w-full max-w-[135px] rounded-md bg-pink-900 py-[8px] text-center font-medium text-white md:w-40"
+          className="w-full max-w-[135px] rounded-md bg-pink-900 py-[8px] text-center font-medium text-white transition-colors hover:bg-pink-800 md:w-40"
           href="/multisig-report"
         >
           Read now

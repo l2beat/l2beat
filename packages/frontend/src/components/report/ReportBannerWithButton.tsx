@@ -21,7 +21,7 @@ export function ReportBannerWithButton() {
         </div>
         <a
           href="/multisig-report"
-          className="w-full rounded-md bg-pink-900 py-3.5 text-center font-medium text-white md:w-40"
+          className="w-full rounded-md bg-pink-900 py-3.5 text-center font-medium text-white transition-colors hover:bg-pink-800 md:w-40"
         >
           Read now
         </a>
