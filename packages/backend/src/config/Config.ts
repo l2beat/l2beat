@@ -79,6 +79,7 @@ export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
   readonly skipExplicitExclusion: boolean
+  readonly projectsExcludedFromAPI: string[]
   readonly allowedProjectIds?: string[]
   readonly projects: Record<string, Layer2TransactionApi | undefined>
 }

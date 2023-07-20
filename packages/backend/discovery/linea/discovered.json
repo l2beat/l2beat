@@ -1,7 +1,7 @@
 {
   "name": "linea",
-  "blockNumber": 17718506,
-  "configHash": "0xf284ece38635c025f02c0f95fa15b2272abd35110692405b695f2708412c2d40",
+  "blockNumber": 17725379,
+  "configHash": "0xd657c2e47bec6c38ed4df0cf31a0e67d4d167dd2bce2e9b5f3ff53c30bb5e144",
   "version": 1,
   "contracts": [
     {
@@ -75,13 +75,16 @@
             "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "currentPeriodAmountInWei": 10000000000000,
+        "currentPeriodAmountInWei": 2000000000000000,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": "0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0",
+        "generalPause": false,
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
         "L1_L2_PAUSE_TYPE": "0x9a80e24e463f00a8763c4dcec6a92d07d33272fa5db895d8589be70dccb002df",
+        "l1l2Pause": false,
         "L2_L1_PAUSE_TYPE": "0x21ea2f4fee4bcb623de15ac222ea5c1464307d884f23394b78ddc07f9c9c7cd8",
+        "l2l1Pause": false,
         "limitInWei": "100000000000000000000",
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
         "OUTBOX_STATUS_RECEIVED": 2,
