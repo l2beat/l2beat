@@ -7,7 +7,7 @@ import {
 
 import { Logger } from '../../tools'
 import { HttpClient } from '../HttpClient'
-import { parseEtherscanResponse } from './model'
+import { EtherscanErrorResponse, parseEtherscanResponse } from './model'
 
 export class EtherscanError extends Error {}
 
@@ -46,6 +46,17 @@ export class EtherscanLikeClient {
 
         return stringAsInt().parse(result)
       } catch (error) {
+        if (typeof error !== 'object') {
+          const errorString =
+            typeof error === 'string' ? error : 'Unknown error type caught'
+          throw new Error(errorString)
+        }
+
+        const errorObject = error as EtherscanErrorResponse
+        if (!errorObject.result.includes('No closest block found')) {
+          throw new Error(`RPC ERROR: [${errorObject.result}]`)
+        }
+
         current = current.add(-10, 'minutes')
       }
     }
