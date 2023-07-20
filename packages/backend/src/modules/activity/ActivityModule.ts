@@ -100,7 +100,21 @@ function getIncludedInApiProjectIds(
           `Project ${counter.projectId.toString()} explicitly excluded from activity v2 api via config - will not be present in the response, but will continue syncing`,
         )
       }
-      return activity.skipExplicitExclusion || !explicitlyExcluded
+
+      const isExcludedInEnv = activity.excludedProjects.some(
+        (p) => p === counter.projectId.toString(),
+      )
+      if (isExcludedInEnv) {
+        logger.info(
+          `Project ${counter.projectId.toString()} excluded from activity v2 api via .env - will not be present in the response, but will continue syncing`,
+        )
+      }
+
+      return (
+        activity.skipExplicitExclusion ||
+        !explicitlyExcluded ||
+        !isExcludedInEnv
+      )
     })
     .map((c) => c.projectId)
 }
