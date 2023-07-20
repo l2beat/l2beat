@@ -35,7 +35,8 @@
     "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a": "PubkeyCompendium",
     "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01": "RegistryPermission",
     "0x075a48633dc6845f92339741E9c96b88f1b2A86f": "PauserRegistry",
-    "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashing"
+    "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashing",
+    "0xD1328C9167e0693B689b5aa5a024379d4e437858": "Rollup"
   },
   "overrides": {
     "AddressManager": {
@@ -55,6 +56,16 @@
           "method": "getAddress",
           "args": ["BVM_Sequencer"]
         },
+        "proposer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BVM_Proposer"]
+        },
+        "rolluper": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BVM_Rolluper"]
+        },
         "StateCommitmentChain": {
           "type": "call",
           "method": "getAddress",
@@ -70,16 +81,51 @@
           "method": "getAddress",
           "args": ["BVM_FraudVerifier"]
         },
-        "GroupManager": {
+        "GroupManagerProxy": {
           "type": "call",
           "method": "getAddress",
           "args": ["Proxy__TSS_GroupManager"]
+        },
+        "TssGroupManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["TssGroupManager"]
+        },
+        "TssStakingSlashing": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["TssStakingSlashing"]
+        },
+        "TssStakingSlashingProxy": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__TSS_StakingSlashing"]
+        },
+        "L1StandardBridgeProxy": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__L1StandardBridge"]
         },
         "BondManager": {
           "type": "call",
           "method": "getAddress",
           "args": ["BondManager"]
-        }
+        },
+        "L1CrossDomainMessenger": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BVM_L1CrossDomainMessenger"]
+        },
+        "L1CrossDomainMessengerProxy": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__BVM_L1CrossDomainMessenger"]
+        },
+        "L1MantleAddress": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1_MantleAddress"]
+        },
       }
     },
     "CanonicalTransactionChain": {
