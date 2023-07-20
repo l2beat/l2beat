@@ -36,10 +36,10 @@ describe(createActivityModule.name, () => {
       const projects: Project[] = [PROJECT]
 
       const result = shouldCounterBeIncluded(
-        projects,
         COUNTER,
-        Logger.SILENT,
+        projects,
         ENV_CONFIG,
+        Logger.SILENT,
       )
       expect(result).toEqual(true)
     })
@@ -55,10 +55,10 @@ describe(createActivityModule.name, () => {
       ]
 
       const result = shouldCounterBeIncluded(
-        projects,
         COUNTER,
-        Logger.SILENT,
+        projects,
         ENV_CONFIG,
+        Logger.SILENT,
       )
       expect(result).toEqual(false)
     })
@@ -71,10 +71,10 @@ describe(createActivityModule.name, () => {
       }
 
       const result = shouldCounterBeIncluded(
-        projects,
         COUNTER,
-        Logger.SILENT,
+        projects,
         envConfig,
+        Logger.SILENT,
       )
       expect(result).toEqual(false)
     })
@@ -95,10 +95,10 @@ describe(createActivityModule.name, () => {
       }
 
       const result = shouldCounterBeIncluded(
-        projects,
         COUNTER,
-        Logger.SILENT,
+        projects,
         envConfig,
+        Logger.SILENT,
       )
       expect(result).toEqual(true)
     })

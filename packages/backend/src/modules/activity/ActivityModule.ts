@@ -90,16 +90,16 @@ function getIncludedInApiProjectIds(
 ): ProjectId[] {
   return counters
     .filter((counter) => {
-      return shouldCounterBeIncluded(projects, counter, logger, activity)
+      return shouldCounterBeIncluded(counter, projects, activity, logger)
     })
     .map((c) => c.projectId)
 }
 
 export function shouldCounterBeIncluded(
-  projects: Project[],
   counter: TransactionCounter,
-  logger: Logger,
+  projects: Project[],
   activity: ActivityConfig,
+  logger: Logger,
 ) {
   if (activity.skipExplicitExclusion) {
     return true
