@@ -8,5 +8,9 @@ export function getProductionConfig(): Config {
       apiUrl: 'https://api.l2beat.com',
       skipCache: false,
     },
+    features: {
+      ...common.features,
+      multisigReport: false,
+    },
   }
 }
