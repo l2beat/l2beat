@@ -90,31 +90,42 @@ function getIncludedInApiProjectIds(
 ): ProjectId[] {
   return counters
     .filter((counter) => {
-      const explicitlyExcluded = projects.some(
-        (p) =>
-          p.projectId === counter.projectId &&
-          p.transactionApi?.excludeFromActivityApi === true,
-      )
-      if (explicitlyExcluded) {
-        logger.info(
-          `Project ${counter.projectId.toString()} explicitly excluded from activity v2 api via config - will not be present in the response, but will continue syncing`,
-        )
-      }
-
-      const isExcludedInEnv = activity.excludedProjects.some(
-        (p) => p === counter.projectId.toString(),
-      )
-      if (isExcludedInEnv) {
-        logger.info(
-          `Project ${counter.projectId.toString()} excluded from activity v2 api via .env - will not be present in the response, but will continue syncing`,
-        )
-      }
-
-      return (
-        activity.skipExplicitExclusion ||
-        !explicitlyExcluded ||
-        !isExcludedInEnv
-      )
+      return shouldCounterBeIncluded(projects, counter, logger, activity)
     })
     .map((c) => c.projectId)
+}
+
+export function shouldCounterBeIncluded(
+  projects: Project[],
+  counter: TransactionCounter,
+  logger: Logger,
+  activity: ActivityConfig,
+) {
+  if (activity.skipExplicitExclusion) {
+    return true
+  }
+
+  const explicitlyExcluded = projects.some(
+    (p) =>
+      p.projectId === counter.projectId &&
+      p.transactionApi?.excludeFromActivityApi === true,
+  )
+  if (explicitlyExcluded) {
+    logger.info(
+      `Project ${counter.projectId.toString()} explicitly excluded from activity v2 api via config - will not be present in the response, but will continue syncing`,
+    )
+    return false
+  }
+
+  const isExcludedInEnv = activity.excludedProjects.some(
+    (p) => p === counter.projectId.toString(),
+  )
+  if (isExcludedInEnv) {
+    logger.info(
+      `Project ${counter.projectId.toString()} excluded from activity v2 api via .env - will not be present in the response, but will continue syncing`,
+    )
+    return false
+  }
+
+  return true
 }
