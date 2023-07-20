@@ -82,6 +82,7 @@ export function createArbitrumTvlSubmodule(
     arbitrumProject,
     logger,
     ChainId.ARBITRUM,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   const totalSupplyUpdater = new TotalSupplyUpdater(

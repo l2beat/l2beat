@@ -65,6 +65,7 @@ export function createEthereumTvlSubmodule(
     config.projects,
     logger,
     ChainId.ETHEREUM,
+    config.tvl.ethereum.minBlockTimestamp,
   )
 
   const cbvUpdater = new CBVUpdater(

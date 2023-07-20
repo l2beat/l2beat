@@ -61,6 +61,7 @@ describe(BalanceUpdater.name, () => {
         [],
         Logger.SILENT,
         chainId,
+        new UnixTime(0),
       )
 
       await balanceUpdater.start()
@@ -129,6 +130,7 @@ describe(BalanceUpdater.name, () => {
         projects,
         Logger.SILENT,
         chainId,
+        new UnixTime(0),
       )
 
       const timestamp = new UnixTime(2000)
@@ -203,6 +205,7 @@ describe(BalanceUpdater.name, () => {
         projects,
         Logger.SILENT,
         chainId,
+        new UnixTime(0),
       )
 
       const timestamp = new UnixTime(2000)
@@ -213,6 +216,29 @@ describe(BalanceUpdater.name, () => {
         timestamp,
         chainId,
       })
+    })
+
+    it('skips work if timestamp < minTimestamp', async () => {
+      const provider = mockObject<EthereumBalanceProvider>({
+        getChainId: () => chainId,
+        fetchBalances: async () => [],
+      })
+
+      const balanceUpdater = new BalanceUpdater(
+        provider,
+        mockObject<BlockNumberUpdater>(),
+        mockObject<BalanceRepository>(),
+        mockObject<BalanceStatusRepository>(),
+        mockObject<Clock>(),
+        [],
+        Logger.SILENT,
+        chainId,
+        new UnixTime(1000),
+      )
+
+      await balanceUpdater.update(new UnixTime(500))
+
+      expect(provider.fetchBalances).not.toHaveBeenCalled()
     })
   })
 
