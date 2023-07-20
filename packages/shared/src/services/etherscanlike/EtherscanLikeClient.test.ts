@@ -172,6 +172,128 @@ describe(EtherscanLikeClient.name, () => {
       expect(blockNumber).toEqual(result)
     })
 
+    it('tries to find a block eariler only if no closest block found error, throws otherwise', async () => {
+      const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
+
+      const httpClient = mockObject<HttpClient>({
+        fetch: mockFn()
+          .throwsOnce({
+            status: '1',
+            message: 'NOTOK',
+            result: 'Error! No closest block found',
+          })
+          .throwsOnce({
+            status: '1',
+            message: 'NOTOK',
+            result: 'Gateway error',
+          }),
+      })
+
+      const etherscanLikeClient = new EtherscanLikeClient(
+        httpClient,
+        API_URL,
+        'key',
+        timestamp.add(-40, 'minutes'),
+      )
+
+      await expect(() =>
+        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+      ).toBeRejectedWith('RPC ERROR: [Gateway error]')
+
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        1,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        expect.anything(),
+      )
+
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        2,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
+          .add(-10, 'minutes')
+          .toNumber()}&closest=before&apikey=key`,
+        expect.anything(),
+      )
+    })
+
+    it('when trying to find a block going backwards if error type is string, throws it', async () => {
+      const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
+
+      const errorString = '{"error":"string error"}'
+      const httpClient = mockObject<HttpClient>({
+        fetch: mockFn()
+          .throwsOnce({
+            status: '1',
+            message: 'NOTOK',
+            result: 'Error! No closest block found',
+          })
+          .throwsOnce(errorString),
+      })
+
+      const etherscanLikeClient = new EtherscanLikeClient(
+        httpClient,
+        API_URL,
+        'key',
+        timestamp.add(-40, 'minutes'),
+      )
+
+      await expect(() =>
+        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+      ).toBeRejectedWith(errorString)
+
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        1,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        expect.anything(),
+      )
+
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        2,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
+          .add(-10, 'minutes')
+          .toNumber()}&closest=before&apikey=key`,
+        expect.anything(),
+      )
+    })
+
+    it('when trying to find a block going backwards if error type is neither string nor object, throws unknown error', async () => {
+      const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
+
+      const httpClient = mockObject<HttpClient>({
+        fetch: mockFn()
+          .throwsOnce({
+            status: '1',
+            message: 'NOTOK',
+            result: 'Error! No closest block found',
+          })
+          .throwsOnce(1234),
+      })
+
+      const etherscanLikeClient = new EtherscanLikeClient(
+        httpClient,
+        API_URL,
+        'key',
+        timestamp.add(-40, 'minutes'),
+      )
+
+      await expect(() =>
+        etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
+      ).toBeRejectedWith('Unknown error type caught')
+
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        1,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
+        expect.anything(),
+      )
+
+      expect(httpClient.fetch).toHaveBeenNthCalledWith(
+        2,
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
+          .add(-10, 'minutes')
+          .toNumber()}&closest=before&apikey=key`,
+        expect.anything(),
+      )
+    })
+
     it('tries to find blockNumber until minTimestamp then throw', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
