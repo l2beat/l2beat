@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "chalk": "^5.2.0",
+    "chalk": "^4.1.2",
     "dotenv": "^16.3.1",
     "error-stack-parser": "^2.1.4"
   },
