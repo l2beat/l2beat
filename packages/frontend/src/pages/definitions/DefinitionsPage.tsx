@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { Footer, FooterProps, Navbar, NavbarProps } from '../../components'
-import { MultisigReportAnnouncementBar } from '../../components/announcement/AnnouncementBar'
 import { FloatingBanner } from '../../components/floating-banner/FloatingBanner'
 import { HorizontalSeparator } from '../../components/HorizontalSeparator'
 import { PageContent } from '../../components/PageContent'
+import { ReportBar } from '../../components/report/ReportBar'
 
 export interface DefinitionsPageProps {
   title: string
@@ -19,7 +19,7 @@ export function DefinitionsPage(props: DefinitionsPageProps) {
     <>
       {props.showMultisigReport && (
         <>
-          <MultisigReportAnnouncementBar />
+          <ReportBar />
           <FloatingBanner />
         </>
       )}

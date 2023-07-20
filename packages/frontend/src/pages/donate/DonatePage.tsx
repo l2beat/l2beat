@@ -7,9 +7,9 @@ import {
   Navbar,
   NavbarProps,
 } from '../../components'
-import { MultisigReportAnnouncementBar } from '../../components/announcement/AnnouncementBar'
 import { FloatingBanner } from '../../components/floating-banner/FloatingBanner'
 import { PageContent } from '../../components/PageContent'
+import { ReportBar } from '../../components/report/ReportBar'
 import { DonateDetails, DonationDetailsProps } from './DonateDetails'
 import { DonateLetter } from './DonateLetter'
 import { GitcoinButton } from './GitcoinButton'
@@ -28,7 +28,7 @@ export function DonatePage(props: DonatePageProps) {
     <>
       {props.showMultisigReport && (
         <>
-          <MultisigReportAnnouncementBar />
+          <ReportBar />
           <FloatingBanner />
         </>
       )}

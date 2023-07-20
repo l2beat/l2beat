@@ -7,10 +7,10 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../components'
-import { LimitedAnnouncementBanner } from '../../../components/announcement/AnnouncementBanner'
 import { DownloadButton } from '../../../components/download-button/DownloadButton'
 import { PageContent } from '../../../components/PageContent'
 import { PolygonLogo } from '../../../components/PolygonLogo'
+import { ReportBanner } from '../../../components/report/ReportBanner'
 
 export interface MultisigReportPageProps {
   navbar: NavbarProps
@@ -25,7 +25,7 @@ export function MultisigReportPage(props: MultisigReportPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <main className="flex flex-col md:items-center">
-          <LimitedAnnouncementBanner />
+          <ReportBanner />
           <DownloadButton fileUrl={props.multisigReportUrl}>
             Download the report
           </DownloadButton>

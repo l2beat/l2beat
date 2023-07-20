@@ -2,11 +2,11 @@ import React from 'react'
 
 import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { About } from '../../../components/About'
-import { MultisigReportAnnouncementBar } from '../../../components/announcement/AnnouncementBar'
 import { FloatingBanner } from '../../../components/floating-banner/FloatingBanner'
 import { RiskHeader } from '../../../components/header/RiskHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { PageContent } from '../../../components/PageContent'
+import { ReportBar } from '../../../components/report/ReportBar'
 import { ScalingRiskView, ScalingRiskViewProps } from './ScalingRiskView'
 
 export interface ScalingRiskPageProps {
@@ -22,7 +22,7 @@ export function ScalingRiskPage(props: ScalingRiskPageProps) {
     <>
       {props.showMultisigReport && (
         <>
-          <MultisigReportAnnouncementBar />
+          <ReportBar />
           <FloatingBanner />
         </>
       )}

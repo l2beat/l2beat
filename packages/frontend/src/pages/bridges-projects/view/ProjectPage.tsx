@@ -7,12 +7,12 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../components'
-import { MultisigReportAnnouncementBar } from '../../../components/announcement/AnnouncementBar'
 import { BridgesMvpWarning } from '../../../components/BridgesMvpWarning'
 import { FloatingBanner } from '../../../components/floating-banner/FloatingBanner'
 import { PageContent } from '../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../../components/project/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../../components/project/navigation/MobileProjectNavigation'
+import { ReportBar } from '../../../components/report/ReportBar'
 import { BridgeDetailsSection } from '../props/getProjectDetails'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
@@ -35,7 +35,7 @@ export function ProjectPage(props: ProjectPageProps) {
     <>
       {props.showMultisigReport && (
         <>
-          <MultisigReportAnnouncementBar />
+          <ReportBar />
           <FloatingBanner />
         </>
       )}

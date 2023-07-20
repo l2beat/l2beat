@@ -9,12 +9,12 @@ import {
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
-import { FullAnnouncementBanner } from '../../../components/announcement/AnnouncementBanner'
-import { MultisigReportAnnouncementBar } from '../../../components/announcement/AnnouncementBar'
 import { FloatingBanner } from '../../../components/floating-banner/FloatingBanner'
 import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { PageContent } from '../../../components/PageContent'
+import { ReportBannerWithButton } from '../../../components/report/ReportBannerWithButton'
+import { ReportBar } from '../../../components/report/ReportBar'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
 export interface TvlPageProps {
@@ -34,7 +34,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
     <>
       {props.showMultisigReport && (
         <>
-          <MultisigReportAnnouncementBar />
+          <ReportBar />
           <FloatingBanner />
         </>
       )}
@@ -51,7 +51,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
             milestones={props.milestones}
           />
           <ScalingTvlView {...props.tvlView} />
-          {props.showMultisigReport && <FullAnnouncementBanner />}
+          {props.showMultisigReport && <ReportBannerWithButton />}
           <About />
         </main>
       </PageContent>

@@ -9,11 +9,11 @@ import {
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
-import { MultisigReportAnnouncementBar } from '../../../components/announcement/AnnouncementBar'
 import { FloatingBanner } from '../../../components/floating-banner/FloatingBanner'
 import { ActivityHeader } from '../../../components/header/ActivityHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { PageContent } from '../../../components/PageContent'
+import { ReportBar } from '../../../components/report/ReportBar'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
@@ -32,7 +32,7 @@ export function ActivityPage(props: ActivityPageProps) {
     <>
       {props.showMultisigReport && (
         <>
-          <MultisigReportAnnouncementBar />
+          <ReportBar />
           <FloatingBanner />
         </>
       )}
