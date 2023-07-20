@@ -65,7 +65,7 @@ export interface EthereumTvlConfig {
 }
 
 export interface ArbitrumTvlConfig {
-  readonly alchemyApiKey: string
+  readonly providerUrl: string
   readonly arbiscanApiKey: string
   readonly minBlockTimestamp: UnixTime
 }
