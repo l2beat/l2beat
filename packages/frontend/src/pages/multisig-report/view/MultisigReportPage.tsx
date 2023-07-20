@@ -7,10 +7,10 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../components'
-import { DownloadButton } from '../../../components/download-button/DownloadButton'
 import { PageContent } from '../../../components/PageContent'
 import { PolygonLogo } from '../../../components/PolygonLogo'
 import { ReportBanner } from '../../../components/report/ReportBanner'
+import { ReportDownloadButton } from '../../../components/report/ReportDownloadButton'
 
 export interface MultisigReportPageProps {
   navbar: NavbarProps
@@ -26,9 +26,7 @@ export function MultisigReportPage(props: MultisigReportPageProps) {
       <PageContent>
         <main className="flex flex-col md:items-center">
           <ReportBanner />
-          <DownloadButton fileUrl={props.multisigReportUrl}>
-            Download the report
-          </DownloadButton>
+          <ReportDownloadButton fileUrl={props.multisigReportUrl} />
           <div className="mt-12 mb-6 w-full leading-7">
             <h2 className="mb-3 text-2xl font-medium md:mb-5 md:text-4xl">
               About the report
@@ -66,12 +64,10 @@ export function MultisigReportPage(props: MultisigReportPageProps) {
             <Logo className="h-[26px] w-[64px]" />
             <PolygonLogo />
           </div>
-          <DownloadButton
+          <ReportDownloadButton
             fileUrl={props.multisigReportUrl}
             className="visible mt-12 md:invisible"
-          >
-            Download the report
-          </DownloadButton>
+          />
         </main>
       </PageContent>
       <Footer {...props.footer} />
