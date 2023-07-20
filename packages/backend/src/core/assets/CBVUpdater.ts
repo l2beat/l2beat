@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/shared'
 import {
+  assert,
   ChainId,
   Hash256,
   ProjectId,
@@ -37,6 +38,7 @@ export class CBVUpdater implements AssetUpdater {
     private readonly clock: Clock,
     private readonly projects: ReportProject[],
     private readonly logger: Logger,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
     // TODO(radomski): This config hash should be generated from only CBV projects
@@ -55,6 +57,10 @@ export class CBVUpdater implements AssetUpdater {
 
   getConfigHash() {
     return this.configHash
+  }
+
+  getMinTimestamp() {
+    return this.minTimestamp
   }
 
   async start() {
@@ -77,6 +83,14 @@ export class CBVUpdater implements AssetUpdater {
   }
 
   async update(timestamp: UnixTime) {
+    if (!timestamp.gte(this.minTimestamp)) {
+      this.logger.debug('Skipping update', {
+        timestamp: timestamp.toNumber(),
+        minTimestamp: this.minTimestamp.toNumber(),
+      })
+      return
+    }
+
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const [prices, balances] = await Promise.all([
       this.priceUpdater.getPricesWhenReady(timestamp),
@@ -110,6 +124,11 @@ export class CBVUpdater implements AssetUpdater {
     timestamp: UnixTime,
     refreshIntervalMs = 1000,
   ): Promise<ReportRecord[]> {
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Programmer error: requested timestamp does not exist',
+    )
+
     while (!this.knownSet.has(timestamp.toNumber())) {
       this.logger.debug('Something is waiting for getReportsWhenReady', {
         timestamp: timestamp.toString(),

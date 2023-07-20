@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, ValueType } from '@l2beat/shared-pure'
+import { ChainId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -43,6 +43,7 @@ describe(CBVUpdater.name, () => {
         mockObject<Clock>(),
         MOCK.PROJECTS,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await cbvUpdater.update(MOCK.NOW.add(1, 'hours'))
@@ -79,6 +80,30 @@ describe(CBVUpdater.name, () => {
       )
       // ensure that the updater updated internal knownSet
       expect(reports).toEqual(MOCK.FUTURE_REPORTS)
+    })
+
+    it('skips update if timestamp < minTimestamp', async () => {
+      const priceUpdater = mockObject<PriceUpdater>({
+        getPricesWhenReady: mockFn(),
+      })
+      const balanceUpdater = mockObject<BalanceUpdater>({
+        getBalancesWhenReady: mockFn(),
+      })
+      const updater = new CBVUpdater(
+        priceUpdater,
+        balanceUpdater,
+        mockObject<ReportRepository>(),
+        mockObject<ReportStatusRepository>(),
+        mockObject<Clock>(),
+        MOCK.PROJECTS,
+        Logger.SILENT,
+        new UnixTime(1000),
+      )
+
+      await updater.update(new UnixTime(999))
+
+      expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
+      expect(balanceUpdater.getBalancesWhenReady).not.toHaveBeenCalled()
     })
   })
 
@@ -124,6 +149,7 @@ describe(CBVUpdater.name, () => {
         clock,
         MOCK.PROJECTS,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await cbvUpdater.start()
@@ -201,6 +227,7 @@ describe(CBVUpdater.name, () => {
         clock,
         MOCK.PROJECTS,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
       await cbvUpdater.start()

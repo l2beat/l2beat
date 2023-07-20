@@ -61,11 +61,13 @@ export interface TvlConfig {
 export interface EthereumTvlConfig {
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
+  readonly minBlockTimestamp: UnixTime
 }
 
 export interface ArbitrumTvlConfig {
   readonly alchemyApiKey: string
   readonly arbiscanApiKey: string
+  readonly minBlockTimestamp: UnixTime
 }
 
 export interface HealthConfig {

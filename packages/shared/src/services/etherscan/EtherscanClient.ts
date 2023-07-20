@@ -2,7 +2,6 @@ import {
   ChainId,
   EthereumAddress,
   Hash256,
-  stringAsInt,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -23,20 +22,17 @@ export class EtherscanClient
 {
   static API_URL = 'https://api.etherscan.io/api'
 
-  constructor(httpClient: HttpClient, apiKey: string, logger = Logger.SILENT) {
-    super(httpClient, EtherscanClient.API_URL, apiKey, logger)
+  constructor(
+    httpClient: HttpClient,
+    apiKey: string,
+    minTimestamp: UnixTime,
+    logger = Logger.SILENT,
+  ) {
+    super(httpClient, EtherscanClient.API_URL, apiKey, minTimestamp, logger)
   }
 
   getChainId(): ChainId {
     return ChainId.ETHEREUM
-  }
-
-  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
-    const result = await this.call('block', 'getblocknobytime', {
-      timestamp: timestamp.toString(),
-      closest: 'before',
-    })
-    return stringAsInt().parse(result)
   }
 
   async getContractSource(address: EthereumAddress) {

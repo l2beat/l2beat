@@ -5,6 +5,7 @@ import { ReportRecord } from '../../peripherals/database/ReportRepository'
 export interface AssetUpdater {
   getChainId: () => ChainId
   getConfigHash: () => Hash256
+  getMinTimestamp: () => UnixTime
   getReportsWhenReady(
     timestamp: UnixTime,
     refreshIntervalMs?: number,

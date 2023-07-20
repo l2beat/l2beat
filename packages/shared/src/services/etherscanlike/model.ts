@@ -2,14 +2,12 @@ import { z } from 'zod'
 
 export type EtherscanSuccessResponse = z.infer<typeof EtherscanSuccessResponse>
 const EtherscanSuccessResponse = z.object({
-  status: z.literal('1'),
   message: z.literal('OK'),
   result: z.unknown(),
 })
 
 export type EtherscanErrorResponse = z.infer<typeof EtherscanErrorResponse>
 const EtherscanErrorResponse = z.object({
-  status: z.literal('0'),
   message: z.literal('NOTOK'),
   result: z.string(),
 })

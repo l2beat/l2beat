@@ -43,6 +43,7 @@ export function createArbitrumTvlSubmodule(
   const arbiscanClient = new ArbiscanClient(
     http,
     config.tvl.arbitrum.arbiscanApiKey,
+    config.tvl.arbitrum.minBlockTimestamp,
     logger,
   )
 
@@ -51,6 +52,11 @@ export function createArbitrumTvlSubmodule(
   const arbitrumMulticall = ArbitrumMulticallClient.forMainnet(arbitrumClient)
 
   const totalSupplyProvider = new ArbitrumTotalSupplyProvider(
+    arbitrumClient,
+    arbitrumMulticall,
+  )
+
+  const arbitrumBalanceProvider = new ArbitrumBalanceProvider(
     arbitrumClient,
     arbitrumMulticall,
   )
@@ -64,11 +70,7 @@ export function createArbitrumTvlSubmodule(
     clock,
     logger,
     ChainId.ARBITRUM,
-  )
-
-  const arbitrumBalanceProvider = new ArbitrumBalanceProvider(
-    arbitrumClient,
-    arbitrumMulticall,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   const arbitrumBalanceUpdater = new BalanceUpdater(
@@ -80,6 +82,7 @@ export function createArbitrumTvlSubmodule(
     arbitrumProject,
     logger,
     ChainId.ARBITRUM,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   const totalSupplyUpdater = new TotalSupplyUpdater(
@@ -91,6 +94,7 @@ export function createArbitrumTvlSubmodule(
     arbitrumTokens,
     logger,
     ChainId.ARBITRUM,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   const ebvUpdater = new ArbitrumEBVUpdater(
@@ -103,6 +107,7 @@ export function createArbitrumTvlSubmodule(
     arbitrumProject,
     arbitrumTokens,
     logger,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   // #endregion

@@ -1,4 +1,4 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
@@ -31,7 +31,11 @@ describe(EtherscanClient.name, () => {
         },
       })
 
-      const etherscanClient = new EtherscanClient(httpClient, 'key')
+      const etherscanClient = new EtherscanClient(
+        httpClient,
+        'key',
+        new UnixTime(0),
+      )
       const source = await etherscanClient.getContractSource(
         EthereumAddress.ZERO,
       )
@@ -59,7 +63,11 @@ describe(EtherscanClient.name, () => {
         },
       })
 
-      const etherscanClient = new EtherscanClient(httpClient, 'key')
+      const etherscanClient = new EtherscanClient(
+        httpClient,
+        'key',
+        new UnixTime(0),
+      )
       const source = await etherscanClient.getContractDeploymentTx(
         EthereumAddress.ZERO,
       )

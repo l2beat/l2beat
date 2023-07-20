@@ -53,7 +53,9 @@ export class AggregatedReportUpdater {
 
     const reports = (
       await Promise.all(
-        this.assetUpdaters.map((x) => x.getReportsWhenReady(timestamp)),
+        this.assetUpdaters
+          .filter((updater) => timestamp.gte(updater.getMinTimestamp()))
+          .map((updater) => updater.getReportsWhenReady(timestamp)),
       )
     ).flat()
     this.logger.debug('Reports ready')

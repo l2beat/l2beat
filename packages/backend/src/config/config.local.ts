@@ -56,10 +56,12 @@ export function getLocalConfig(): Config {
       ethereum: ethereumTvlEnabled && {
         alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         alchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
     },
     activity: activityEnabled && {

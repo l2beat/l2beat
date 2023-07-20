@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
-import { CBVUpdater } from '../assets'
+import { AssetUpdater, CBVUpdater } from '../assets'
 import { NATIVE_ASSET_CONFIG_HASH, NMVUpdater } from '../assets/NMVUpdater'
 import { Clock } from '../Clock'
 import { AggregatedReportUpdater } from './AggregatedReportUpdater'
@@ -32,6 +32,7 @@ describe(AggregatedReportUpdater.name, () => {
         getReportsWhenReady: async () => MOCK.REPORTS,
         getChainId: mockFn().returns(ChainId.ETHEREUM),
         getConfigHash: mockFn().returns(getReportConfigHash(MOCK.PROJECTS)),
+        getMinTimestamp: () => new UnixTime(0),
       })
       const nmvUpdater = mockObject<NMVUpdater>({
         getReportsWhenReady: mockFn()
@@ -39,6 +40,7 @@ describe(AggregatedReportUpdater.name, () => {
           .returnsOnce([]),
         getChainId: mockFn().returns(ChainId.NMV),
         getConfigHash: mockFn().returns(NATIVE_ASSET_CONFIG_HASH),
+        getMinTimestamp: () => new UnixTime(0),
       })
       const configHash = getAggregatedConfigHash([nmvUpdater, cbvUpdater])
 
@@ -73,6 +75,50 @@ describe(AggregatedReportUpdater.name, () => {
         aggregatedReportRepository.addOrUpdateMany,
       ).toHaveBeenNthCalledWith(2, MOCK.AGGREGATED_REPORTS)
     })
+
+    it('calls only updaters with proper minTimestamp', async () => {
+      const timestamp = MOCK.NOW
+
+      const firstUpdater = mockObject<AssetUpdater>({
+        getReportsWhenReady: mockFn().returns([]),
+        getChainId: mockFn().returns(ChainId.ETHEREUM),
+        getConfigHash: mockFn().returns(''),
+        getMinTimestamp: mockFn().returns(timestamp),
+      })
+
+      const secondUpdater = mockObject<AssetUpdater>({
+        getReportsWhenReady: mockFn().returns([]),
+        getChainId: mockFn().returns(ChainId.ETHEREUM),
+        getConfigHash: mockFn().returns(''),
+        getMinTimestamp: mockFn().returns(timestamp.add(1, 'hours')),
+      })
+
+      const aggregatedReportRepository = mockObject<AggregatedReportRepository>(
+        {
+          addOrUpdateMany: async () => 0,
+        },
+      )
+
+      const aggregatedReportStatusRepository =
+        mockObject<AggregatedReportStatusRepository>({
+          getByConfigHash: async () => [],
+          add: async ({ configHash }) => configHash,
+        })
+
+      const aggregatedReportUpdater = new AggregatedReportUpdater(
+        [firstUpdater, secondUpdater],
+        aggregatedReportRepository,
+        aggregatedReportStatusRepository,
+        mockObject<Clock>(),
+        MOCK.PROJECTS,
+        Logger.SILENT,
+      )
+
+      await aggregatedReportUpdater.update(timestamp)
+
+      expect(firstUpdater.getReportsWhenReady).toHaveBeenCalledTimes(1)
+      expect(secondUpdater.getReportsWhenReady).toHaveBeenCalledTimes(0)
+    })
   })
 
   describe(AggregatedReportUpdater.prototype.start.name, () => {
@@ -95,6 +141,7 @@ describe(AggregatedReportUpdater.name, () => {
         getReportsWhenReady: async () => MOCK.REPORTS,
         getChainId: mockFn().returns(ChainId.ETHEREUM),
         getConfigHash: mockFn().returns(getReportConfigHash(MOCK.PROJECTS)),
+        getMinTimestamp: () => new UnixTime(0),
       })
       const nmvUpdater = mockObject<NMVUpdater>({
         getReportsWhenReady: mockFn()
@@ -102,6 +149,7 @@ describe(AggregatedReportUpdater.name, () => {
           .returnsOnce([]),
         getChainId: mockFn().returns(ChainId.NMV),
         getConfigHash: mockFn().returns(NATIVE_ASSET_CONFIG_HASH),
+        getMinTimestamp: () => new UnixTime(0),
       })
       const configHash = getAggregatedConfigHash([nmvUpdater, cbvUpdater])
 

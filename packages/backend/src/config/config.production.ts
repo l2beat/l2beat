@@ -62,10 +62,14 @@ export function getProductionConfig(): Config {
       ethereum: {
         alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+        // Deployment of the first L2
+        minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         alchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+        // ~ Timestamp of block number 0 on Arbitrum
+        minBlockTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
       },
     },
     activity: {
