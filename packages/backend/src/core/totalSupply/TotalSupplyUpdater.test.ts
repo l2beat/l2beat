@@ -62,6 +62,7 @@ describe(TotalSupplyUpdater.name, () => {
         [],
         Logger.SILENT,
         chainId,
+        new UnixTime(0),
       )
 
       await totalSupplyUpdater.start()
@@ -136,6 +137,7 @@ describe(TotalSupplyUpdater.name, () => {
         tokensConfig,
         Logger.SILENT,
         chainId,
+        new UnixTime(0),
       )
 
       const totalSupplies: TotalSupplyRecord[] = [
@@ -210,6 +212,7 @@ describe(TotalSupplyUpdater.name, () => {
         tokensConfig,
         Logger.SILENT,
         chainId,
+        new UnixTime(0),
       )
 
       await balanceUpdater.update(queryTimestamp)
@@ -218,6 +221,29 @@ describe(TotalSupplyUpdater.name, () => {
         timestamp: queryTimestamp,
         chainId,
       })
+    })
+
+    it('skips if timestamp < minTimestamp', async () => {
+      const provider = mockObject<TotalSupplyProvider>({
+        getChainId: () => chainId,
+        getTotalSupplies: async () => [],
+      })
+
+      const updater = new TotalSupplyUpdater(
+        provider,
+        mockObject<BlockNumberUpdater>(),
+        mockObject<TotalSupplyRepository>(),
+        mockObject<TotalSupplyStatusRepository>(),
+        mockObject<Clock>(),
+        [],
+        Logger.SILENT,
+        chainId,
+        new UnixTime(1000),
+      )
+
+      await updater.update(new UnixTime(999))
+
+      expect(provider.getTotalSupplies).not.toHaveBeenCalled()
     })
   })
 

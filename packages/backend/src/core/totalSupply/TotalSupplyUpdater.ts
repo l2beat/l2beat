@@ -35,6 +35,7 @@ export class TotalSupplyUpdater {
     private readonly tokens: TotalSupplyTokensConfig[],
     private readonly logger: Logger,
     private readonly chainId: ChainId,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getTotalSupplyConfigHash(tokens)
@@ -52,10 +53,19 @@ export class TotalSupplyUpdater {
     )
   }
 
+  getMinTimestamp() {
+    return this.minTimestamp
+  }
+
   async getTotalSuppliesWhenReady(
     timestamp: UnixTime,
     refreshIntervalMs = 1000,
   ) {
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Programmer error: requested timestamp does not exist',
+    )
+
     while (!this.knownSet.has(timestamp.toNumber())) {
       this.logger.debug('Something is waiting for getTotalSuppliesWhenReady', {
         timestamp: timestamp.toString(),
@@ -85,6 +95,14 @@ export class TotalSupplyUpdater {
   }
 
   async update(timestamp: UnixTime) {
+    if (!timestamp.gte(this.minTimestamp)) {
+      this.logger.debug('Skipping update', {
+        timestamp: timestamp.toNumber(),
+        minTimestamp: this.minTimestamp.toNumber(),
+      })
+      return
+    }
+
     this.logger.debug('Update started', {
       timestamp: timestamp.toNumber(),
       chainId: this.chainId.toString(),

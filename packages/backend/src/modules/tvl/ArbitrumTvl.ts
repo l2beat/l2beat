@@ -94,6 +94,7 @@ export function createArbitrumTvlSubmodule(
     arbitrumTokens,
     logger,
     ChainId.ARBITRUM,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   const ebvUpdater = new ArbitrumEBVUpdater(
