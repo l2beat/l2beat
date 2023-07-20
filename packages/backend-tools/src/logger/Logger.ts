@@ -3,10 +3,12 @@ import { join } from 'path'
 
 import { formatLevelPretty } from './formatLevelPretty'
 import { formatParametersPretty } from './formatParametersPretty'
-import { formatServicePretty, tagService } from './formatServicePretty'
+import { formatServicePretty } from './formatServicePretty'
 import { formatTimePretty } from './formatTimePretty'
 import { LEVEL, LogLevel } from './LogLevel'
+import { LogThrottle, LogThrottleOptions } from './LogThrottle'
 import { resolveLog } from './resolveLog'
+import { tagService } from './tagService'
 
 export interface LoggerBackend {
   debug(message: string): void
@@ -32,6 +34,7 @@ export class Logger {
   private readonly options: LoggerOptions
   private readonly logLevel: number
   private readonly cwd: string
+  private throttle?: LogThrottle
 
   constructor(options: Partial<LoggerOptions>) {
     this.options = {
@@ -75,7 +78,9 @@ export class Logger {
   })
 
   configure(options: Partial<LoggerOptions>): Logger {
-    return new Logger({ ...this.options, ...options })
+    const logger = new Logger({ ...this.options, ...options })
+    logger.throttle = this.throttle
+    return logger
   }
 
   for(object: {} | string): Logger {
@@ -87,6 +92,15 @@ export class Logger {
 
   tag(tag: string | undefined): Logger {
     return this.configure({ tag })
+  }
+
+  withThrottling(options: LogThrottleOptions): Logger {
+    const logger = new Logger(this.options)
+    logger.throttle = new LogThrottle(
+      { print: (...args) => logger.printExactly(...args) },
+      options,
+    )
+    return logger
   }
 
   critical(message: string, parameters?: unknown): void
@@ -146,10 +160,30 @@ export class Logger {
   }
 
   private print(level: LogLevel, parameters: {}): void {
+    const service = tagService(this.options.service, this.options.tag)
+    let message: string | undefined
+    if ('message' in parameters && typeof parameters.message === 'string') {
+      message = parameters.message
+      delete parameters.message
+    }
+
+    if (this.throttle?.throttle(level, service, message)) {
+      return
+    }
+
+    this.printExactly(level, service, message, parameters)
+  }
+
+  private printExactly(
+    level: LogLevel,
+    service: string | undefined,
+    message: string | undefined,
+    parameters: {},
+  ): void {
     const output =
       this.options.format === 'json'
-        ? this.formatJson(level, parameters)
-        : this.formatPretty(level, parameters)
+        ? this.formatJson(level, service, message, parameters)
+        : this.formatPretty(level, service, message, parameters)
 
     if (level === 'CRITICAL' || level === 'ERROR') {
       this.options.backend.error(output)
@@ -162,17 +196,16 @@ export class Logger {
     }
   }
 
-  private formatJson(level: LogLevel, parameters: {}): string {
-    const time = this.options.getTime().toISOString()
-    const message =
-      'message' in parameters && typeof parameters.message === 'string'
-        ? parameters.message
-        : undefined
-
+  private formatJson(
+    level: LogLevel,
+    service: string | undefined,
+    message: string | undefined,
+    parameters: {},
+  ): string {
     const core = {
-      time,
+      time: this.options.getTime().toISOString(),
       level,
-      service: tagService(this.options.service, this.options.tag),
+      service,
       message,
     }
     try {
@@ -183,31 +216,26 @@ export class Logger {
     }
   }
 
-  private formatPretty(level: LogLevel, parameters: {}): string {
-    const time = formatTimePretty(
+  private formatPretty(
+    level: LogLevel,
+    service: string | undefined,
+    message: string | undefined,
+    parameters: {},
+  ): string {
+    const timeOut = formatTimePretty(
       this.options.getTime(),
       this.options.utc,
       this.options.colors,
     )
-
     const levelOut = formatLevelPretty(level, this.options.colors)
-    const service = formatServicePretty(
-      this.options.service,
-      this.options.tag,
-      this.options.colors,
-    )
-
-    let messageOut = ''
-    if ('message' in parameters && typeof parameters.message === 'string') {
-      messageOut = ` ${parameters.message}`
-      delete parameters.message
-    }
-
-    const params = formatParametersPretty(
+    const serviceOut = formatServicePretty(service, this.options.colors)
+    const messageOut = message ? ` ${message}` : ''
+    const paramsOut = formatParametersPretty(
       sanitize(parameters),
       this.options.colors,
     )
-    return `${time} ${levelOut}${service}${messageOut}${params}\n`
+
+    return `${timeOut} ${levelOut}${serviceOut}${messageOut}${paramsOut}\n`
   }
 }
 
