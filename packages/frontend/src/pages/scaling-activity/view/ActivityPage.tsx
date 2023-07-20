@@ -9,11 +9,9 @@ import {
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
-import { FloatingBanner } from '../../../components/floating-banner/FloatingBanner'
 import { ActivityHeader } from '../../../components/header/ActivityHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { PageContent } from '../../../components/PageContent'
-import { ReportBar } from '../../../components/report/ReportBar'
 import { ActivityView, ActivityViewProps } from './ActivityView'
 
 export interface ActivityPageProps {
@@ -24,18 +22,11 @@ export interface ActivityPageProps {
   navbar: NavbarProps
   showActivity: boolean
   milestones?: Milestone[]
-  showMultisigReport: boolean
 }
 
 export function ActivityPage(props: ActivityPageProps) {
   return (
     <>
-      {props.showMultisigReport && (
-        <>
-          <ReportBar />
-          <FloatingBanner />
-        </>
-      )}
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs

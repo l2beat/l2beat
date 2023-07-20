@@ -7,7 +7,10 @@ import { getPageMetadata } from './getPageMetadata'
 export function getProps(config: Config): Wrapped<MultisigReportPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'multisig-report'),
+      navbar: {
+        ...getNavbarProps(config, 'multisig-report'),
+        showMultisigReport: false,
+      },
       footer: getFooterProps(config),
       showActivity: config.features.activity,
       multisigReportUrl: config.links.multisigReport,

@@ -1,9 +1,11 @@
 import React from 'react'
 
 import { Config } from '../../build/config'
+import { FloatingBanner } from '../floating-banner/FloatingBanner'
 import { MenuOpenIcon } from '../icons'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
+import { ReportBar } from '../report/ReportBar'
 import { Banner } from './Banner'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
@@ -19,6 +21,7 @@ import { VerticalBar } from './VerticalBar'
 
 export interface NavbarProps {
   showBanner: boolean
+  showMultisigReport: boolean
   showActivity: boolean
   showHiring: boolean
   showHiringBadge: boolean
@@ -33,6 +36,7 @@ export function getNavbarProps(
 ): NavbarProps {
   return {
     showBanner: config.features.banner,
+    showMultisigReport: config.features.multisigReport,
     forumLink: config.links.forum,
     showHiring: config.features.hiring,
     showHiringBadge: config.features.hiringBadge,
@@ -54,6 +58,12 @@ export function Navbar(props: NavbarProps) {
         socialLinks={props.socialLinks}
       />
       {props.showBanner && <Banner />}
+      {props.showMultisigReport && (
+        <>
+          <ReportBar />
+          <FloatingBanner />
+        </>
+      )}
       <div className="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16">
         <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12">
           <ul className="flex h-full items-center">

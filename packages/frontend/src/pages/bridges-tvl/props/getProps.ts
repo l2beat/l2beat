@@ -44,7 +44,6 @@ export function getProps(
         ),
       },
       footer: getFooterProps(config),
-      showMultisigReport: config.features.multisigReport,
     },
     wrapper: {
       preloadApi: '/api/bridges-tvl.json',

@@ -26,7 +26,6 @@ export function getProps(
       ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
-      showMultisigReport: config.features.multisigReport,
     },
     wrapper: {
       metadata: getPageMetadata(),

@@ -57,7 +57,6 @@ export async function getProps(
       },
       footer: getFooterProps(config),
       showGitcoinButton: config.features.gitcoinOption,
-      showMultisigReport: config.features.multisigReport,
     },
     wrapper: {
       metadata: {

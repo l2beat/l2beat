@@ -7,11 +7,9 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../components'
-import { FloatingBanner } from '../../../components/floating-banner/FloatingBanner'
 import { PageContent } from '../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../../components/project/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../../components/project/navigation/MobileProjectNavigation'
-import { ReportBar } from '../../../components/report/ReportBar'
 import { ScalingDetailsSection } from '../props/getProjectDetails'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
@@ -22,7 +20,6 @@ export interface ProjectPageProps {
   projectHeader: ProjectHeaderProps
   projectDetails: ProjectDetailsProps
   footer: FooterProps
-  showMultisigReport: boolean
 }
 
 export function ProjectPage(props: ProjectPageProps) {
@@ -31,12 +28,6 @@ export function ProjectPage(props: ProjectPageProps) {
   )
   return (
     <>
-      {props.showMultisigReport && (
-        <>
-          <ReportBar />
-          <FloatingBanner />
-        </>
-      )}
       <Navbar {...props.navbar} />
       <div className="sticky top-0 z-100 md:hidden">
         <MobileProjectNavigation sections={sections} />

@@ -9,11 +9,9 @@ import {
 } from '../../components'
 import { About } from '../../components/About'
 import { BridgesMvpWarning } from '../../components/BridgesMvpWarning'
-import { FloatingBanner } from '../../components/floating-banner/FloatingBanner'
 import { TvlHeader } from '../../components/header/TvlHeader'
 import { BridgesNavigationTabs } from '../../components/navigation-tabs/BridgesNavigationTabs'
 import { PageContent } from '../../components/PageContent'
-import { ReportBar } from '../../components/report/ReportBar'
 import { BridgesTvlView, BridgesTvlViewProps } from './BridgesTvlView'
 
 export interface BridgesTvlPageProps {
@@ -25,18 +23,11 @@ export interface BridgesTvlPageProps {
   tvlView: BridgesTvlViewProps
   footer: FooterProps
   navbar: NavbarProps
-  showMultisigReport: boolean
 }
 
 export function BridgesTvlPage(props: BridgesTvlPageProps) {
   return (
     <>
-      {props.showMultisigReport && (
-        <>
-          <ReportBar />
-          <FloatingBanner />
-        </>
-      )}
       <Navbar {...props.navbar} />
       <PageContent>
         <BridgesNavigationTabs selected="summary" />

@@ -45,7 +45,6 @@ export function getProps(
         ),
       },
       footer: getFooterProps(config),
-      showMultisigReport: config.features.multisigReport,
     },
     wrapper: {
       metadata: getPageMetadata(),

@@ -25,7 +25,6 @@ export function getProps(
       projectHeader: getProjectHeader(bridge, tvlApiResponse),
       projectDetails: getProjectDetails(bridge, verificationStatus, chart),
       footer: getFooterProps(config),
-      showMultisigReport: config.features.multisigReport,
     },
     wrapper: {
       preloadApi: chart.tvlEndpoint,

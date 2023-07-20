@@ -9,12 +9,10 @@ import {
   NavbarProps,
 } from '../../../components'
 import { About } from '../../../components/About'
-import { FloatingBanner } from '../../../components/floating-banner/FloatingBanner'
 import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { PageContent } from '../../../components/PageContent'
 import { ReportBannerWithButton } from '../../../components/report/ReportBannerWithButton'
-import { ReportBar } from '../../../components/report/ReportBar'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
 export interface TvlPageProps {
@@ -32,12 +30,6 @@ export interface TvlPageProps {
 export function ScalingTvlPage(props: TvlPageProps) {
   return (
     <>
-      {props.showMultisigReport && (
-        <>
-          <ReportBar />
-          <FloatingBanner />
-        </>
-      )}
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
