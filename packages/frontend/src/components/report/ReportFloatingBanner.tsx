@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { FloatingBannerCross } from './FloatingBannerCross'
+import { CrossIcon } from '../icons/Cross'
 
-export function FloatingBanner() {
+export function ReportFloatingBanner() {
   return (
-    <div className="FloatingBanner fixed bottom-0 left-0 z-110 m-4 flex max-w-[435px] overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800">
-      <FloatingBannerCross />
+    <div className="ReportFloatingBanner fixed bottom-0 left-0 z-110 m-4 flex max-w-[435px] overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800">
+      <ReportFloatingBannerCross />
       <div className="flex max-w-[182px] bg-purple-50 py-2 px-3 md:px-5 md:py-4">
         <img src={'/images/announcements/multisig-cover.png'} />
       </div>
@@ -23,6 +23,14 @@ export function FloatingBanner() {
           Read now
         </a>
       </div>
+    </div>
+  )
+}
+
+function ReportFloatingBannerCross() {
+  return (
+    <div className="ReportFloatingBanner-Cross absolute top-0 right-0 mt-4 mr-4 cursor-pointer">
+      <CrossIcon className="fill-gray-550 dark:fill-gray-50" />
     </div>
   )
 }
