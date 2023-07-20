@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
-export function CrossIcon({ className }: { className?: string }) {
+export function CloseIcon({ className }: { className?: string }) {
   return (
     <svg
       width="16"

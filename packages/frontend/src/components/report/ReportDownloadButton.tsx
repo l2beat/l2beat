@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
-import { DownloadArrow } from '../icons'
+import { DownloadArrow } from '../icons/DownloadArrow'
 
 interface ReportDownloadButtonProps {
   fileUrl: string

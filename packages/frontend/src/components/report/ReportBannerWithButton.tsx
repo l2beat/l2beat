@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Logo } from '../Logo'
-import { PolygonLogo } from '../PolygonLogo'
+import { PolygonLogo } from './PolygonLogo'
 
 export function ReportBannerWithButton() {
   return (

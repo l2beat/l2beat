@@ -13,7 +13,7 @@ export function configureReport() {
     return
   }
 
-  const cross = banner.querySelector('.ReportFloatingBanner-Cross')
+  const cross = banner.querySelector('.ReportFloatingBanner-Close')
   if (cross) {
     cross.addEventListener('click', () => {
       banner.classList.add('hidden')

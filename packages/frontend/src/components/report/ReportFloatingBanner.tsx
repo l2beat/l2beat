@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { CrossIcon } from '../icons/Cross'
+import { CloseIcon } from '../icons/CloseIcon'
 
 export function ReportFloatingBanner() {
   return (
     <div className="ReportFloatingBanner fixed bottom-0 left-0 z-110 m-4 flex max-w-[435px] overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800">
-      <ReportFloatingBannerCross />
+      <Close />
       <div className="flex max-w-[182px] bg-purple-50 py-2 px-3 md:px-5 md:py-4">
         <img src={'/images/announcements/multisig-cover.png'} />
       </div>
@@ -27,10 +27,10 @@ export function ReportFloatingBanner() {
   )
 }
 
-function ReportFloatingBannerCross() {
+function Close() {
   return (
-    <div className="ReportFloatingBanner-Cross absolute top-0 right-0 mt-4 mr-4 cursor-pointer">
-      <CrossIcon className="fill-gray-550 dark:fill-gray-50" />
+    <div className="ReportFloatingBanner-Close absolute top-0 right-0 mt-4 mr-4 cursor-pointer">
+      <CloseIcon className="fill-gray-550 dark:fill-gray-50" />
     </div>
   )
 }
