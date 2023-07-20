@@ -24,4 +24,7 @@ export interface IndexerState {
   readonly children: {
     readonly ready: boolean
   }[]
+  readonly updateBlocked: boolean
+  readonly invalidateBlocked: boolean
+  readonly tickBlocked: boolean
 }

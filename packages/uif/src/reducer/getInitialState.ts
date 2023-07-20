@@ -15,5 +15,8 @@ export function getInitialState(parentCount: number): IndexerState {
       waiting: false,
     })),
     children: [],
+    updateBlocked: false,
+    invalidateBlocked: false,
+    tickBlocked: false,
   }
 }

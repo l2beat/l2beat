@@ -5,8 +5,16 @@ import { IndexerState } from '../types/IndexerState'
 
 export function handleTickFailed(
   state: IndexerState,
-  _action: TickFailedAction,
+  action: TickFailedAction,
 ): IndexerReducerResult {
   assertRoot(state)
-  return [{ ...state, status: 'errored' }, []]
+
+  if (action.fatal) {
+    return [{ ...state, status: 'errored', tickScheduled: false }, []]
+  }
+
+  return [
+    { ...state, status: 'idle', tickScheduled: false, tickBlocked: true },
+    [{ type: 'ScheduleRetryTick' }],
+  ]
 }

@@ -6,10 +6,18 @@ import { IndexerState } from '../types/IndexerState'
 
 export function continueOperations(
   state: IndexerState,
-  updateFinished?: boolean,
+  options: {
+    updateFinished?: boolean
+    forceInvalidate?: boolean
+    updateFailed?: boolean
+    invalidateFailed?: boolean
+  } = {},
 ): IndexerReducerResult {
+  const forceInvalidate =
+    options.updateFailed ?? options.invalidateFailed ?? options.forceInvalidate
+
   const initializedParents = state.parents.filter((x) => x.initialized)
-  if (initializedParents.length > 0) {
+  if (initializedParents.length > 0 && !forceInvalidate) {
     const parentHeight = Math.min(
       ...initializedParents.map((x) => x.safeHeight),
     )
@@ -26,7 +34,7 @@ export function continueOperations(
   }
 
   const effects: IndexerEffect[] = []
-  if (state.targetHeight < state.safeHeight || updateFinished) {
+  if (state.targetHeight < state.safeHeight || options.updateFinished) {
     const safeHeight = Math.min(state.targetHeight, state.height)
 
     if (safeHeight !== state.safeHeight) {
@@ -70,7 +78,13 @@ export function continueOperations(
     effects.push({ type: 'NotifyReady', parentIndices })
   }
 
-  if (state.targetHeight > state.height && state.status === 'idle') {
+  if (
+    !forceInvalidate &&
+    state.targetHeight > state.height &&
+    state.status === 'idle' &&
+    !state.updateBlocked &&
+    !state.invalidateBlocked
+  ) {
     assert(state.parents.length > 0, 'Root indexer cannot update')
 
     return [
@@ -79,12 +93,25 @@ export function continueOperations(
     ]
   }
 
+  if (options.invalidateFailed) {
+    assert(state.invalidateBlocked, 'Invalidate should be blocked')
+    effects.push({ type: 'ScheduleRetryInvalidate' })
+  }
+
   if (
-    state.status !== 'idle' ||
-    state.targetHeight === state.height ||
-    state.waiting
+    state.invalidateBlocked ||
+    (!forceInvalidate &&
+      (state.status !== 'idle' ||
+        state.targetHeight === state.height ||
+        state.waiting ||
+        (state.updateBlocked && state.targetHeight >= state.height)))
   ) {
     return [state, effects]
+  }
+
+  if (options.updateFailed) {
+    assert(state.updateBlocked, 'Update should be blocked')
+    effects.push({ type: 'ScheduleRetryUpdate' })
   }
 
   return [

@@ -14,5 +14,5 @@ export function handleUpdateSucceeded(
   } else {
     state = { ...state, status: 'idle', targetHeight: action.targetHeight }
   }
-  return continueOperations(state, true)
+  return continueOperations(state, { updateFinished: true })
 }

@@ -14,14 +14,12 @@ export class TvlIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number) {
-    this.logger.info('Update started')
     await setTimeout(2_000)
     to = Math.min(from + 10, to)
     return to
   }
 
   override async invalidate() {
-    this.logger.info('Invalidate started')
     return Promise.resolve()
   }
 

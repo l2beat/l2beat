@@ -23,8 +23,11 @@ export interface UpdateSucceededAction {
 
 export interface UpdateFailedAction {
   type: 'UpdateFailed'
-  from: number
-  targetHeight: number
+  fatal?: boolean
+}
+
+export interface RetryUpdateAction {
+  type: 'RetryUpdate'
 }
 
 export interface InvalidateSucceededAction {
@@ -35,6 +38,11 @@ export interface InvalidateSucceededAction {
 export interface InvalidateFailedAction {
   type: 'InvalidateFailed'
   targetHeight: number
+  fatal?: boolean
+}
+
+export interface RetryInvalidateAction {
+  type: 'RetryInvalidate'
 }
 
 export interface RequestTickAction {
@@ -48,6 +56,11 @@ export interface TickSucceededAction {
 
 export interface TickFailedAction {
   type: 'TickFailed'
+  fatal?: boolean
+}
+
+export interface RetryTickAction {
+  type: 'RetryTick'
 }
 
 export type IndexerAction =
@@ -56,8 +69,11 @@ export type IndexerAction =
   | ChildReadyAction
   | UpdateSucceededAction
   | UpdateFailedAction
+  | RetryUpdateAction
   | InvalidateSucceededAction
   | InvalidateFailedAction
+  | RetryInvalidateAction
   | RequestTickAction
   | TickSucceededAction
   | TickFailedAction
+  | RetryTickAction

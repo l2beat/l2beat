@@ -16,9 +16,8 @@ export class BalanceIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    this.logger.info('Update started')
     await setTimeout(1_000)
-    if(Math.random() < 0.1) {
+    if (Math.random() < 0.1) {
       this.logger.info('BalanceIndexer: height decreased')
       return Math.max(from - 5, 0)
     }
@@ -27,7 +26,6 @@ export class BalanceIndexer extends ChildIndexer {
   }
 
   override async invalidate(): Promise<void> {
-    this.logger.info('Invalidate started')
     return Promise.resolve()
   }
 

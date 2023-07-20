@@ -9,7 +9,11 @@ export function handleRequestTick(
   _action: RequestTickAction,
 ): IndexerReducerResult {
   assertRoot(state)
-  // TODO: either tick is sync or we should remember to tick in the future
+
+  if (state.status === 'errored' || state.tickBlocked) {
+    return [state, []]
+  }
+
   assertStatus(state.status, ['idle', 'ticking'])
   if (state.status === 'ticking') {
     return [{ ...state, tickScheduled: true }, []]

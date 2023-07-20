@@ -1,14 +1,24 @@
 import { assertStatus } from '../helpers/assertStatus'
+import { continueOperations } from '../helpers/continueOperations'
 import { UpdateFailedAction } from '../types/IndexerAction'
 import { IndexerReducerResult } from '../types/IndexerReducerResult'
 import { IndexerState } from '../types/IndexerState'
 
 export function handleUpdateFailed(
   state: IndexerState,
-  _action: UpdateFailedAction,
+  action: UpdateFailedAction,
 ): IndexerReducerResult {
   assertStatus(state.status, 'updating')
-  // TODO: retry, exponential back-off
-  // TODO: if parent waiting, notify ready.
-  return [{ ...state, status: 'errored' }, []]
+  if (action.fatal) {
+    return [{ ...state, status: 'errored' }, []]
+  }
+
+  const targetHeight =
+    state.height < state.targetHeight || state.waiting
+      ? state.height
+      : state.targetHeight
+  return continueOperations(
+    { ...state, status: 'idle', targetHeight, updateBlocked: true },
+    { updateFailed: true },
+  )
 }
