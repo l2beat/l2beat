@@ -24,7 +24,7 @@ export const common: Omit<Config, 'backend'> = {
     gitcoinOption: false,
     hiring: true,
     hiringBadge: false,
-    activity: false,
+    activity: true,
     milestones: true,
     stages: true,
     buildAllProjectPages: false,
