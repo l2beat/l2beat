@@ -2,7 +2,7 @@ import React from 'react'
 
 export function ReportBanner() {
   return (
-    <div className="my-12 flex max-h-fit flex-col overflow-hidden rounded-md bg-transparent from-gray-250 to-gray-450 md:grid md:grid-cols-2 md:bg-gradient-to-r">
+    <div className="mt-8 mb-10 flex max-h-fit flex-col overflow-hidden rounded-md bg-transparent from-gray-250 to-gray-450 md:my-12 md:grid md:grid-cols-2 md:bg-gradient-to-r">
       <div className="mx-0 my-8 flex flex-col justify-center md:mx-12">
         <div className="text-gray-5 mb-2 uppercase md:text-xl md:text-black">
           Just Released
