@@ -12,7 +12,7 @@ export function ReportBannerWithButton() {
           <PolygonLogo />
         </div>
 
-        <div className="dark:text-gray-5 mb-1 uppercase text-gray-550">
+        <div className="dark:text-gray-5 mb-1 text-sm uppercase text-gray-550">
           Just Released
         </div>
 
