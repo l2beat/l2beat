@@ -66,6 +66,10 @@ export function getLocalConfig(): Config {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
       skipExplicitExclusion: true,
+      projectsExcludedFromAPI: getEnv.array(
+        'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
+        [],
+      ),
       projects: {
         ethereum: {
           type: 'rpc',
