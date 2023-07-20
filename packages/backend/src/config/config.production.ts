@@ -67,7 +67,7 @@ export function getProductionConfig(): Config {
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
-        alchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+        providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
         // ~ Timestamp of block number 0 on Arbitrum
         minBlockTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
       },

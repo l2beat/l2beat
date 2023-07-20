@@ -50,7 +50,7 @@ environment variables. One variable per line `KEY=value`.
 - `DATABASE_URL` - Database url used in production deployment
 - `ETHERSCAN_API_KEY` - API key for Etherscan
 - `ETHEREUM_ALCHEMY_API_KEY` - API key for Alchemy Ethereum App
-- `ARBITRUM_ALCHEMY_API_KEY` - API key for Alchemy Arbitrum App
+- `ARBITRUM_PROVIDER_URL` - API Url for Arbitrum QuickNode provider
 
 #### Optional
 
@@ -97,7 +97,7 @@ ETHEREUM_ALCHEMY_API_KEY=
 # ETHEREUM_TVL_ENABLED=
 # ARBITRUM_TVL_ENABLED=
 # ARBISCAN_API_KEY=
-# ARBITRUM_ALCHEMY_API_KEY
+# ARBITRUM_PROVIDER_URL
 # DISCOVERY_BLOCK_NUMBER=
 # WATCHMODE_ENABLED=
 # PUBLIC_DISCORD_CHANNEL_ID=

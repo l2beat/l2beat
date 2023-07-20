@@ -35,9 +35,9 @@ export function createArbitrumTvlSubmodule(
   const arbitrumProject = filterArbitrumProject(config.projects)
   const arbitrumTokens = getExternalTokens(arbitrumProject)
 
-  const arbitrumProvider = new providers.AlchemyProvider(
+  const arbitrumProvider = new providers.JsonRpcProvider(
+    config.tvl.arbitrum.providerUrl,
     'arbitrum',
-    config.tvl.arbitrum.alchemyApiKey,
   )
 
   const arbiscanClient = new ArbiscanClient(
@@ -47,7 +47,7 @@ export function createArbitrumTvlSubmodule(
     logger,
   )
 
-  const arbitrumClient = new EthereumClient(arbitrumProvider, logger)
+  const arbitrumClient = new EthereumClient(arbitrumProvider, logger, 25)
 
   const arbitrumMulticall = ArbitrumMulticallClient.forMainnet(arbitrumClient)
 

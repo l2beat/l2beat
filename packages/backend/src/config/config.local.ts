@@ -60,7 +60,7 @@ export function getLocalConfig(): Config {
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
-        alchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+        providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
     },
