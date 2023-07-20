@@ -81,6 +81,30 @@ describe(CBVUpdater.name, () => {
       // ensure that the updater updated internal knownSet
       expect(reports).toEqual(MOCK.FUTURE_REPORTS)
     })
+
+    it('skips update if timestamp < minTimestamp', async () => {
+      const priceUpdater = mockObject<PriceUpdater>({
+        getPricesWhenReady: mockFn(),
+      })
+      const balanceUpdater = mockObject<BalanceUpdater>({
+        getBalancesWhenReady: mockFn(),
+      })
+      const updater = new CBVUpdater(
+        priceUpdater,
+        balanceUpdater,
+        mockObject<ReportRepository>(),
+        mockObject<ReportStatusRepository>(),
+        mockObject<Clock>(),
+        MOCK.PROJECTS,
+        Logger.SILENT,
+        new UnixTime(1000),
+      )
+
+      await updater.update(new UnixTime(999))
+
+      expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
+      expect(balanceUpdater.getBalancesWhenReady).not.toHaveBeenCalled()
+    })
   })
 
   describe(CBVUpdater.prototype.start.name, () => {
