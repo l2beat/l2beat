@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/shared'
 import { ChainId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { describe } from 'mocha'
 import waitForExpect from 'wait-for-expect'
 
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
@@ -66,6 +67,24 @@ describe(NMVUpdater.name, () => {
       )
       // ensure that the updater updated internal knownSet
       expect(reports).toEqual(MOCK.FUTURE_REPORTS)
+    })
+
+    it('skips update if timestamp < minTimestamp', async () => {
+      const priceUpdater = mockObject<PriceUpdater>({
+        getPricesWhenReady: mockFn(),
+      })
+      const updater = new NMVUpdater(
+        priceUpdater,
+        mockObject<ReportRepository>(),
+        mockObject<ReportStatusRepository>(),
+        mockObject<Clock>(),
+        Logger.SILENT,
+        new UnixTime(1000),
+      )
+
+      await updater.update(new UnixTime(999))
+
+      expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
     })
   })
 
