@@ -94,6 +94,14 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
   }
 
   async update(timestamp: UnixTime) {
+    if (!timestamp.gte(this.minTimestamp)) {
+      this.logger.debug('Skipping update', {
+        timestamp: timestamp.toNumber(),
+        minTimestamp: this.minTimestamp.toNumber(),
+      })
+      return
+    }
+
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const [prices, balances, totalSupplies] = await Promise.all([
       this.priceUpdater.getPricesWhenReady(timestamp),
@@ -127,6 +135,11 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     timestamp: UnixTime,
     refreshIntervalMs = 1000,
   ): Promise<ReportRecord[]> {
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Programmer error: requested timestamp does not exist',
+    )
+
     while (!this.knownSet.has(timestamp.toNumber())) {
       this.logger.debug('Something is waiting for getReportsWhenReady', {
         timestamp: timestamp.toString(),
