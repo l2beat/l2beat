@@ -27,6 +27,13 @@ export class EtherscanLikeClient {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
 
+  // Etherscan API is not stable enough to trust it to return "closest" block.
+  // There is a case when there is not enough activity on a given chain
+  // so that blocks come in a greater than 10 minutes intervals,
+  // e.g block 0 @ 22:45 and block 1 @ 23:15
+  // if you query for 23:00 Etherscan API returns "No closes block found".
+  //
+  // To mitigate this, we need to go back in time by 10 minutes until we find a block
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     let current = new UnixTime(timestamp.toNumber())
 
