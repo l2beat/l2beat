@@ -53,6 +53,7 @@ export function createEthereumTvlSubmodule(
     clock,
     logger,
     ChainId.ETHEREUM,
+    config.tvl.ethereum.minBlockTimestamp,
   )
 
   const balanceUpdater = new BalanceUpdater(

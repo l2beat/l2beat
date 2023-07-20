@@ -70,6 +70,7 @@ export function createArbitrumTvlSubmodule(
     clock,
     logger,
     ChainId.ARBITRUM,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   const arbitrumBalanceUpdater = new BalanceUpdater(
