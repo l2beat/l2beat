@@ -129,11 +129,15 @@ describe(EtherscanLikeClient.name, () => {
       const result = 1234
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .throwsOnce({
-            status: '1',
-            message: 'NOTOK',
-            result: 'Error! No closest block found',
-          })
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: '1',
+                message: 'NOTOK',
+                result: `Error! No closest block found`,
+              }),
+            ),
+          )
           .resolvesToOnce(
             new Response(
               JSON.stringify({
@@ -175,18 +179,24 @@ describe(EtherscanLikeClient.name, () => {
     it('tries to find a block eariler only if no closest block found error, throws otherwise', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
+      const gatewayError = {
+        status: '1',
+        message: 'NOTOK',
+        result: `Gateway error`,
+      }
+      const gatewayErrorJsonString = JSON.stringify(gatewayError)
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .throwsOnce({
-            status: '1',
-            message: 'NOTOK',
-            result: 'Error! No closest block found',
-          })
-          .throwsOnce({
-            status: '1',
-            message: 'NOTOK',
-            result: 'Gateway error',
-          }),
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: '1',
+                message: 'NOTOK',
+                result: `Error! No closest block found`,
+              }),
+            ),
+          )
+          .resolvesToOnce(new Response(gatewayErrorJsonString)),
       })
 
       const etherscanLikeClient = new EtherscanLikeClient(
@@ -198,7 +208,7 @@ describe(EtherscanLikeClient.name, () => {
 
       await expect(() =>
         etherscanLikeClient.getBlockNumberAtOrBefore(timestamp),
-      ).toBeRejectedWith('RPC ERROR: [Gateway error]')
+      ).toBeRejectedWith(gatewayError.result)
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
@@ -221,11 +231,15 @@ describe(EtherscanLikeClient.name, () => {
       const errorString = '{"error":"string error"}'
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .throwsOnce({
-            status: '1',
-            message: 'NOTOK',
-            result: 'Error! No closest block found',
-          })
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: '1',
+                message: 'NOTOK',
+                result: `Error! No closest block found`,
+              }),
+            ),
+          )
           .throwsOnce(errorString),
       })
 
@@ -260,11 +274,15 @@ describe(EtherscanLikeClient.name, () => {
 
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .throwsOnce({
-            status: '1',
-            message: 'NOTOK',
-            result: 'Error! No closest block found',
-          })
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: '1',
+                message: 'NOTOK',
+                result: `Error! No closest block found`,
+              }),
+            ),
+          )
           .throwsOnce(1234),
       })
 
@@ -300,21 +318,33 @@ describe(EtherscanLikeClient.name, () => {
       const result = 1234
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .throwsOnce({
-            status: '1',
-            message: 'NOTOK',
-            result: 'Error! No closest block found',
-          })
-          .throwsOnce({
-            status: '1',
-            message: 'NOTOK',
-            result: 'Error! No closest block found',
-          })
-          .throwsOnce({
-            status: '1',
-            message: 'NOTOK',
-            result: 'Error! No closest block found',
-          })
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: '1',
+                message: 'NOTOK',
+                result: `Error! No closest block found`,
+              }),
+            ),
+          )
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: '1',
+                message: 'NOTOK',
+                result: `Error! No closest block found`,
+              }),
+            ),
+          )
+          .resolvesToOnce(
+            new Response(
+              JSON.stringify({
+                status: '1',
+                message: 'NOTOK',
+                result: `Error! No closest block found`,
+              }),
+            ),
+          )
           .resolvesToOnce(
             new Response(
               JSON.stringify({
