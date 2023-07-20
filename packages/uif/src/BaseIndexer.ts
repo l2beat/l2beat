@@ -216,7 +216,6 @@ export abstract class BaseIndexer implements Indexer {
       this.logger.error('Invalidate failed', e)
       this.dispatch({
         type: 'InvalidateFailed',
-        targetHeight: effect.targetHeight,
       })
     }
   }

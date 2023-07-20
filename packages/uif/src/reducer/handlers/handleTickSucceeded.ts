@@ -24,7 +24,7 @@ export function handleTickSucceeded(
       tickScheduled: false,
       safeHeight: action.safeHeight,
       height: action.safeHeight,
-      targetHeight: action.safeHeight,
+      invalidateToHeight: action.safeHeight,
     },
     effects,
   ]

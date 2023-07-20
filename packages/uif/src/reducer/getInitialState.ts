@@ -4,7 +4,8 @@ export function getInitialState(parentCount: number): IndexerState {
   return {
     status: 'init',
     height: 0,
-    targetHeight: 0,
+    invalidateToHeight: 0,
+    forceInvalidate: false,
     safeHeight: 0,
     initializedSelf: false,
     waiting: false,

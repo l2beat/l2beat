@@ -13,5 +13,6 @@ export function handleInvalidateSucceeded(
     ...state,
     status: 'idle',
     height: action.targetHeight,
+    forceInvalidate: false,
   })
 }

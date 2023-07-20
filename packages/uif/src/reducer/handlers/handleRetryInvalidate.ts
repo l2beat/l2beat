@@ -11,11 +11,9 @@ export function handleRetryInvalidate(
 ): IndexerReducerResult {
   assert(state.invalidateBlocked, 'invalidate should be blocked')
 
-  const targetHeight = state.waiting
-    ? Math.min(state.height, state.targetHeight)
-    : state.safeHeight
-  return continueOperations(
-    { ...state, invalidateBlocked: false, targetHeight },
-    { forceInvalidate: true },
-  )
+  return continueOperations({
+    ...state,
+    invalidateBlocked: false,
+    forceInvalidate: true,
+  })
 }

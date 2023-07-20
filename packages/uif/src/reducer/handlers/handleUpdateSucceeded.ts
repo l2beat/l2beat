@@ -10,9 +10,25 @@ export function handleUpdateSucceeded(
 ): IndexerReducerResult {
   assertStatus(state.status, 'updating')
   if (action.targetHeight >= state.height) {
-    state = { ...state, status: 'idle', height: action.targetHeight }
+    state = {
+      ...state,
+      status: 'idle',
+      height: action.targetHeight,
+      invalidateToHeight:
+        state.invalidateToHeight === state.height && !state.forceInvalidate
+          ? action.targetHeight
+          : state.invalidateToHeight,
+    }
   } else {
-    state = { ...state, status: 'idle', targetHeight: action.targetHeight }
+    state = {
+      ...state,
+      status: 'idle',
+      invalidateToHeight: Math.min(
+        action.targetHeight,
+        state.invalidateToHeight,
+      ),
+      forceInvalidate: true,
+    }
   }
   return continueOperations(state, { updateFinished: true })
 }

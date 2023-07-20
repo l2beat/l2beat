@@ -7,7 +7,8 @@ export interface IndexerState {
     | 'ticking'
     | 'errored'
   readonly height: number
-  readonly targetHeight: number
+  readonly invalidateToHeight: number
+  readonly forceInvalidate: boolean
   // When we change safe height to a lower value we become waiting
   // and we mark all children as not ready
   readonly safeHeight: number

@@ -14,24 +14,22 @@ export function finishInitialization(
         ...state,
         status: 'idle',
         safeHeight: state.height,
-        targetHeight: state.height,
+        invalidateToHeight: state.height,
       },
       [{ type: 'SetSafeHeight', safeHeight: state.height }],
     ]
   }
 
   if (state.parents.every((x) => x.initialized)) {
-    const height = Math.min(
-      ...state.parents.map((x) => x.safeHeight),
-      state.height,
-    )
+    const parentHeight = Math.min(...state.parents.map((x) => x.safeHeight))
+    const height = Math.min(parentHeight, state.height)
 
     return [
       {
         ...state,
         status: 'invalidating',
         safeHeight: height,
-        targetHeight: height,
+        invalidateToHeight: height,
       },
       [
         { type: 'SetSafeHeight', safeHeight: height },

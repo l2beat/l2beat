@@ -8,34 +8,24 @@ export function continueOperations(
   state: IndexerState,
   options: {
     updateFinished?: boolean
-    forceInvalidate?: boolean
     updateFailed?: boolean
     invalidateFailed?: boolean
   } = {},
 ): IndexerReducerResult {
-  const forceInvalidate =
-    options.updateFailed ?? options.invalidateFailed ?? options.forceInvalidate
-
   const initializedParents = state.parents.filter((x) => x.initialized)
-  if (initializedParents.length > 0 && !forceInvalidate) {
-    const parentHeight = Math.min(
-      ...initializedParents.map((x) => x.safeHeight),
-    )
+  const parentHeight = Math.min(...initializedParents.map((x) => x.safeHeight))
 
-    if (
-      state.targetHeight === state.height ||
-      parentHeight < state.targetHeight
-    ) {
-      // We can change the target height in two different cases
-      // 1. We are synced and the parent changed to a higher or lower height
-      // 2. We are syncing and the parent changed to a lower height
-      state = { ...state, targetHeight: parentHeight }
+  if (initializedParents.length > 0) {
+    state = {
+      ...state,
+      invalidateToHeight: Math.min(state.invalidateToHeight, parentHeight),
     }
   }
 
   const effects: IndexerEffect[] = []
-  if (state.targetHeight < state.safeHeight || options.updateFinished) {
-    const safeHeight = Math.min(state.targetHeight, state.height)
+
+  if (state.invalidateToHeight < state.safeHeight || options.updateFinished) {
+    const safeHeight = Math.min(state.invalidateToHeight, state.height)
 
     if (safeHeight !== state.safeHeight) {
       effects.push({ type: 'SetSafeHeight', safeHeight })
@@ -78,44 +68,55 @@ export function continueOperations(
     effects.push({ type: 'NotifyReady', parentIndices })
   }
 
-  if (
-    !forceInvalidate &&
-    state.targetHeight > state.height &&
-    state.status === 'idle' &&
-    !state.updateBlocked &&
-    !state.invalidateBlocked
-  ) {
-    assert(state.parents.length > 0, 'Root indexer cannot update')
-
-    return [
-      { ...state, status: 'updating' },
-      [...effects, { type: 'Update', targetHeight: state.targetHeight }],
-    ]
-  }
-
-  if (options.invalidateFailed) {
-    assert(state.invalidateBlocked, 'Invalidate should be blocked')
-    effects.push({ type: 'ScheduleRetryInvalidate' })
-  }
-
-  if (
-    state.invalidateBlocked ||
-    (!forceInvalidate &&
-      (state.status !== 'idle' ||
-        state.targetHeight === state.height ||
-        state.waiting ||
-        (state.updateBlocked && state.targetHeight >= state.height)))
-  ) {
+  if (!state.initializedSelf) {
     return [state, effects]
   }
 
   if (options.updateFailed) {
-    assert(state.updateBlocked, 'Update should be blocked')
+    assert(!state.updateBlocked, 'Update should be blocked')
+    state = { ...state, updateBlocked: true }
     effects.push({ type: 'ScheduleRetryUpdate' })
   }
 
-  return [
-    { ...state, status: 'invalidating' },
-    [...effects, { type: 'Invalidate', targetHeight: state.targetHeight }],
-  ]
+  if (options.invalidateFailed) {
+    assert(!state.invalidateBlocked, 'Invalidate should be blocked')
+    state = { ...state, invalidateBlocked: true, forceInvalidate: true }
+    effects.push({ type: 'ScheduleRetryInvalidate' })
+  }
+
+  const shouldInvalidate =
+    state.forceInvalidate || state.invalidateToHeight < state.height
+  const shouldUpdate =
+    !shouldInvalidate &&
+    initializedParents.length > 0 &&
+    parentHeight > state.height
+
+  if (shouldInvalidate) {
+    if (state.invalidateBlocked || state.waiting || state.status !== 'idle') {
+      return [state, effects]
+    } else {
+      assert(state.parents.length > 0, 'Root indexer cannot invalidate')
+      return [
+        { ...state, status: 'invalidating', forceInvalidate: false },
+        [
+          ...effects,
+          { type: 'Invalidate', targetHeight: state.invalidateToHeight },
+        ],
+      ]
+    }
+  }
+
+  if (shouldUpdate) {
+    if (state.updateBlocked || state.waiting || state.status !== 'idle') {
+      return [state, effects]
+    } else {
+      assert(state.parents.length > 0, 'Root indexer cannot update')
+      return [
+        { ...state, status: 'updating' },
+        [...effects, { type: 'Update', targetHeight: parentHeight }],
+      ]
+    }
+  }
+
+  return [state, effects]
 }
