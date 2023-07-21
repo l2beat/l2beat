@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { describe } from 'mocha'
 import waitForExpect from 'wait-for-expect'
@@ -73,10 +73,13 @@ describe(NMVUpdater.name, () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn(),
       })
+      const status = mockObject<ReportStatusRepository>({
+        add: async () => Hash256.random(),
+      })
       const updater = new NMVUpdater(
         priceUpdater,
         mockObject<ReportRepository>(),
-        mockObject<ReportStatusRepository>(),
+        status,
         mockObject<Clock>(),
         Logger.SILENT,
         new UnixTime(1000),
@@ -85,6 +88,7 @@ describe(NMVUpdater.name, () => {
       await updater.update(new UnixTime(999))
 
       expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
+      expect(status.add).toHaveBeenCalledTimes(1)
     })
   })
 

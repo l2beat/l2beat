@@ -224,11 +224,14 @@ describe(BalanceUpdater.name, () => {
         fetchBalances: async () => [],
       })
 
+      const status = mockObject<BalanceStatusRepository>({
+        add: async () => '',
+      })
       const balanceUpdater = new BalanceUpdater(
         provider,
         mockObject<BlockNumberUpdater>(),
         mockObject<BalanceRepository>(),
-        mockObject<BalanceStatusRepository>(),
+        status,
         mockObject<Clock>(),
         [],
         Logger.SILENT,
@@ -239,6 +242,7 @@ describe(BalanceUpdater.name, () => {
       await balanceUpdater.update(new UnixTime(500))
 
       expect(provider.fetchBalances).not.toHaveBeenCalled()
+      expect(status.add).toHaveBeenCalledTimes(1)
     })
   })
 

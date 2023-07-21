@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -100,12 +100,15 @@ describe(ArbitrumEBVUpdater.name, () => {
       const suppliesUpdater = mockObject<TotalSupplyUpdater>({
         getTotalSuppliesWhenReady: mockFn(),
       })
+      const status = mockObject<ReportStatusRepository>({
+        add: async () => Hash256.random(),
+      })
       const updater = new ArbitrumEBVUpdater(
         priceUpdater,
         balanceUpdater,
         suppliesUpdater,
         mockObject<ReportRepository>(),
-        mockObject<ReportStatusRepository>(),
+        status,
         mockObject<Clock>(),
         [MOCK.PROJECT],
         MOCK.TOKENS,
@@ -118,6 +121,7 @@ describe(ArbitrumEBVUpdater.name, () => {
       expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
       expect(balanceUpdater.getBalancesWhenReady).not.toHaveBeenCalled()
       expect(suppliesUpdater.getTotalSuppliesWhenReady).not.toHaveBeenCalled()
+      expect(status.add).toHaveBeenCalledTimes(1)
     })
   })
 

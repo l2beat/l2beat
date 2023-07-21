@@ -229,11 +229,14 @@ describe(TotalSupplyUpdater.name, () => {
         getTotalSupplies: async () => [],
       })
 
+      const status = mockObject<TotalSupplyStatusRepository>({
+        add: async () => '',
+      })
       const updater = new TotalSupplyUpdater(
         provider,
         mockObject<BlockNumberUpdater>(),
         mockObject<TotalSupplyRepository>(),
-        mockObject<TotalSupplyStatusRepository>(),
+        status,
         mockObject<Clock>(),
         [],
         Logger.SILENT,
@@ -244,6 +247,7 @@ describe(TotalSupplyUpdater.name, () => {
       await updater.update(new UnixTime(999))
 
       expect(provider.getTotalSupplies).not.toHaveBeenCalled()
+      expect(status.add).toHaveBeenCalledTimes(1)
     })
   })
 

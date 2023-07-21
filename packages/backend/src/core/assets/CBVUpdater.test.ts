@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -89,11 +89,14 @@ describe(CBVUpdater.name, () => {
       const balanceUpdater = mockObject<BalanceUpdater>({
         getBalancesWhenReady: mockFn(),
       })
+      const status = mockObject<ReportStatusRepository>({
+        add: async () => Hash256.random(),
+      })
       const updater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         mockObject<ReportRepository>(),
-        mockObject<ReportStatusRepository>(),
+        status,
         mockObject<Clock>(),
         MOCK.PROJECTS,
         Logger.SILENT,
@@ -104,6 +107,7 @@ describe(CBVUpdater.name, () => {
 
       expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
       expect(balanceUpdater.getBalancesWhenReady).not.toHaveBeenCalled()
+      expect(status.add).toHaveBeenCalledTimes(1)
     })
   })
 
