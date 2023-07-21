@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { Page } from './Page'
@@ -12,11 +12,15 @@ interface Report {
 
 interface ReportsPageProps {
   reports: Report[]
+  chainId: ChainId
+  valueType: ValueType
 }
 
-export function ReportsPage({ reports }: ReportsPageProps) {
+export function ReportsPage({ reports, chainId, valueType }: ReportsPageProps) {
   return (
-    <Page title="Reports">
+    <Page
+      title={`Reports [chainId: ${chainId.toString()}] [valueType: ${valueType.toString()}]`}
+    >
       <StatusTable
         columns={['Timestamp', 'Date']}
         rows={reports.map(({ isSynced, timestamp }) => ({

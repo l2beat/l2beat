@@ -100,6 +100,7 @@ export class StatusController {
   }
 
   async getBalancesStatus(
+    chainId: ChainId = ChainId.ETHEREUM,
     from: UnixTime | undefined,
     to: UnixTime | undefined,
   ): Promise<string> {
@@ -109,7 +110,7 @@ export class StatusController {
     const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
 
     const statuses = await this.balanceStatusRepository.getBetween(
-      ChainId.ETHEREUM,
+      chainId,
       firstHour,
       lastHour,
     )
@@ -120,10 +121,15 @@ export class StatusController {
       isSynced: isSynced(statuses, timestamp, configHash),
     }))
 
-    return renderBalancesPage({ balances })
+    return renderBalancesPage({ balances, chainId })
   }
 
-  async getReportsStatus(from: UnixTime | undefined, to: UnixTime | undefined) {
+  async getReportsStatus(
+    chainId: ChainId = ChainId.ETHEREUM,
+    valueType: ValueType = ValueType.CBV,
+    from: UnixTime | undefined,
+    to: UnixTime | undefined,
+  ) {
     const firstHour = this.getFirstHour(from)
     const lastHour = to ? to : this.clock.getLastHour()
 
@@ -132,8 +138,8 @@ export class StatusController {
     const statuses = await this.reportStatusRepository.getBetween(
       firstHour,
       lastHour,
-      ChainId.ETHEREUM,
-      ValueType.CBV,
+      chainId,
+      valueType,
     )
     const configHash = getReportConfigHash(this.projects)
 
@@ -142,7 +148,7 @@ export class StatusController {
       isSynced: isSynced(statuses, timestamp, configHash),
     }))
 
-    return renderReportsPage({ reports })
+    return renderReportsPage({ reports, chainId, valueType })
   }
 
   private getFirstHour(from: UnixTime | undefined) {
