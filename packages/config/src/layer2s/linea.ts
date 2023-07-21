@@ -83,8 +83,6 @@ export const linea: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
-      url: 'https://linea-mainnet.infura.io/v3',
-      callsPerMinute: 1500,
       excludeFromActivityApi: true,
     },
   },
