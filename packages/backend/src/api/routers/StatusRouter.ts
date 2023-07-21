@@ -42,6 +42,19 @@ export function createStatusRouter(statusController: StatusController) {
   )
 
   router.get(
+    '/status/supplies',
+    withTypedContext(queryParser, async (ctx) => {
+      const { chainId, from, to } = ctx.query
+
+      ctx.body = await statusController.getTotalSuppliesStatus(
+        chainId,
+        from,
+        to,
+      )
+    }),
+  )
+
+  router.get(
     '/status/reports',
     withTypedContext(queryParser, async (ctx) => {
       const { chainId, type, from, to } = ctx.query
