@@ -93,8 +93,14 @@ export class TransactionCountingMonitor {
   }
 
   private logLagging(syncInfos: SyncInfo[], today: string): void {
+    const unsyncedNames = syncInfos
+      .filter((s) => !s.isSynced)
+      .map((s) => s.projectId)
+    const connector = unsyncedNames.length === 1 ? 'is' : 'are'
+
     this.logger.error(
       {
+        message: `${unsyncedNames.join(', ')} ${connector} lagging behind`,
         syncInfo: {
           counters: syncInfos,
           today,
