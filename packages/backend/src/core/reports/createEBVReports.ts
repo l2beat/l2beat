@@ -70,7 +70,7 @@ function transformBalances(
     const chainIdsMatch =
       assetBalances.every((b) => b.chainId === chainId) &&
       assetSupplies.every((b) => b.chainId === chainId)
-    assert(chainIdsMatch, 'ChainIds do not match for a given asset balanace')
+    assert(chainIdsMatch, 'ChainIds do not match for a given asset balance')
 
     const totalBalance = assetSupplies.reduce(
       (acc, { totalSupply }) => acc + totalSupply,
