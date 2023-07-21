@@ -59,11 +59,9 @@ function transformBalances(
     const assetSupplies = totalSupplies.filter(
       (s) => s.assetId === assetId && s.timestamp.gte(sinceTimestamp),
     )
-    if (assetSupplies.length === 0) {
-      continue
-    }
+
     assert(
-      assetSupplies.length === 1,
+      assetSupplies.length <= 1,
       'Expected only one supply asset, delete this if you are adding a new one',
     )
 
