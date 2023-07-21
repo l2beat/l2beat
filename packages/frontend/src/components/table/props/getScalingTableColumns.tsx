@@ -218,29 +218,34 @@ export function getScalingRiskColumns() {
     {
       name: 'State validation',
       tooltip: 'How is the validity of the system state checked?',
+      noHrefMobile: true,
       getValue: (project) => <RiskCell item={project.stateValidation} />,
     },
     {
       name: 'Data availability',
       tooltip: 'Is the data needed to reconstruct the state available?',
+      noHrefMobile: true,
       getValue: (project) => <RiskCell item={project.dataAvailability} />,
     },
     {
       name: 'Upgradeability',
       tooltip:
         'Are the Ethereum contracts upgradeable? Note that the delay itself might not be enough to ensure that users can withdraw their funds in the case of a malicious and censoring operator.',
+      noHrefMobile: true,
       getValue: (project) => <RiskCell item={project.upgradeability} />,
     },
     {
       name: 'Sequencer failure',
       tooltip:
         "Sequencer is an entity responsible for constructing L2 blocks and deciding on the ordering of user's L2 transactions. What happens if it is offline or censors individual user?",
+      noHrefMobile: true,
       getValue: (project) => <RiskCell item={project.sequencerFailure} />,
     },
     {
       name: 'Proposer failure',
       tooltip:
         'Proposer is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
+      noHrefMobile: true,
       getValue: (project) => <RiskCell item={project.proposerFailure} />,
     },
   ]
