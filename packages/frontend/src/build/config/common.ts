@@ -13,11 +13,8 @@ export const common: Omit<Config, 'backend'> = {
     youTube: 'https://www.youtube.com/channel/UCDrl-fNXFjOoykr4lQij9BA/videos',
     medium: 'https://medium.com/l2beat',
     forum: 'https://gov.l2beat.com/',
-    /**
-     * FIXME: change it to the correct link
-     */
     multisigReport:
-      'https://drive.google.com/file/d/1dNlRj4ZYUl5OxkzhorFDqx7BJBABjOvO/view?usp=sharing',
+      'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
   },
   features: {
     banner: new Date() <= GITCOIN_BETA_ROUND_END,
