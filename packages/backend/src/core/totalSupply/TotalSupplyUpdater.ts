@@ -100,6 +100,11 @@ export class TotalSupplyUpdater {
         timestamp: timestamp.toNumber(),
         minTimestamp: this.minTimestamp.toNumber(),
       })
+      await this.totalSupplyStatusRepository.add({
+        chainId: this.chainId,
+        configHash: this.configHash,
+        timestamp,
+      })
       return
     }
 

@@ -88,6 +88,12 @@ export class CBVUpdater implements AssetUpdater {
         timestamp: timestamp.toNumber(),
         minTimestamp: this.minTimestamp.toNumber(),
       })
+      await this.reportStatusRepository.add({
+        configHash: this.configHash,
+        timestamp,
+        chainId: this.getChainId(),
+        valueType: ValueType.CBV,
+      })
       return
     }
 

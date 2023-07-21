@@ -91,6 +91,11 @@ export class BalanceUpdater {
         timestamp: timestamp.toNumber(),
         minTimestamp: this.minTimestamp.toNumber(),
       })
+      await this.balanceStatusRepository.add({
+        chainId: this.chainId,
+        configHash: this.configHash,
+        timestamp,
+      })
       return
     }
 

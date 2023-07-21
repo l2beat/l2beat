@@ -99,6 +99,12 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
         timestamp: timestamp.toNumber(),
         minTimestamp: this.minTimestamp.toNumber(),
       })
+      await this.reportStatusRepository.add({
+        configHash: this.getConfigHash(),
+        timestamp,
+        chainId: this.getChainId(),
+        valueType: this.getValueType(),
+      })
       return
     }
 
