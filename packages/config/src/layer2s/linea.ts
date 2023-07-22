@@ -83,7 +83,6 @@ export const linea: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
-      excludeFromActivityApi: true,
     },
   },
   riskView: makeBridgeCompatible({
