@@ -15,7 +15,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('mantle')
 
 const upgradesAddressManager = {
-  upgradableBy: ['Owner'],
+  upgradableBy: ['OwnerMultisig'],
   upgradeDelay: 'No delay',
   upgradeConsiderations:
     'The AddressManager can be used to replace this contract.',
@@ -253,17 +253,18 @@ export const mantle: Layer2 = {
       }),
       discovery.getContractDetails('AddressManager', {
         description:
-          'This is a library that stores the mappings between names and their addresses. Changing the values effectively upgrades the system. It is controlled by the Owner.',
+          'This is a library that stores the mappings between names and their addresses. Changing the values effectively upgrades the system. It is controlled by the OwnerMultisig.',
         ...regularUpgrades,
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
+    ...discovery.getMultisigPermission('OwnerMultisig', 'This address is the owner of the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, TssGroupManager, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation, EigenDataLayerChain, Rollup, AssertionMap.'),
     {
-      name: 'Owner',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
-      description: 'This address is the owner of the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, TssGroupManager, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation, EigenDataLayerChain, Rollup, AssertionMap.',
-    },
+      name: 'Sequencer',
+      accounts: [discovery.getPermissionedAccount('AddressManager', 'sequencer')],
+      description: 'Central actor allowed to commit L2 transactions to L1.',
+    }
   ],
 }

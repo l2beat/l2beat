@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "blockNumber": 17762426,
-  "configHash": "0x48199172db0077527e016526705e5c6ba1ac200edeec32d9dc2b1f7fd280ebfc",
+  "configHash": "0xd6b5bcd38dc7675bd320ea4ded48c8a843b0aa0cbd9785303ed4b51ba8daadf9",
   "version": 1,
   "contracts": [
     {
@@ -15,7 +15,7 @@
       "derivedName": ""
     },
     {
-      "name": "ProxyAdmin",
+      "name": "MantleTokenProxyAdmin",
       "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
       "code": "https://etherscan.deth.net/address/0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
       "upgradeability": {
@@ -23,7 +23,8 @@
       },
       "values": {
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "dlReg",
@@ -258,7 +259,7 @@
       }
     },
     {
-      "name": "Owner",
+      "name": "OwnerMultisig",
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
       "code": "https://etherscan.deth.net/address/0x4e59e778a0fb77fBb305637435C62FaeD9aED40f,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
