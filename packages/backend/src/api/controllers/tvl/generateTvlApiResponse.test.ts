@@ -105,7 +105,8 @@ describe(generateTvlApiResponse.name, () => {
       for (const projectId of projectIds) {
         const tvlUsd = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
         const tvlEth = tvlUsd * 1000n
-        result.all.push({ timestamp, projectId, tvlUsd, tvlEth })
+        const valueType = ValueType.TVL
+        result.all.push({ timestamp, projectId, tvlUsd, tvlEth, valueType })
         result[projectId.toString()].push([
           timestamp,
           asNumber(tvlUsd, 2),

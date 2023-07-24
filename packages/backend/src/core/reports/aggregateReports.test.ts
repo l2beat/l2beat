@@ -105,6 +105,7 @@ describe(aggregateReports.name, () => {
       projectId,
       tvlUsd: usdTVL * 100n,
       tvlEth: usdTVL * 1000n,
+      valueType: ValueType.TVL,
     }
   }
 })

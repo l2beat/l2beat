@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -200,6 +200,7 @@ function fakeAggregateReport(
     projectId: ProjectId('fake-project'),
     tvlUsd: 1234n,
     tvlEth: 1234n,
+    valueType: ValueType.TVL,
     ...report,
   }
 }
