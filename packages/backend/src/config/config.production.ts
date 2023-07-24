@@ -101,6 +101,11 @@ export function getProductionConfig(): Config {
           callsPerMinute: getEnv.integer('ACTIVITY_NOVA_CALLS'),
           url: getEnv('ACTIVITY_NOVA_URL'),
         },
+        linea: {
+          type: 'rpc',
+          callsPerMinute: getEnv.integer('ACTIVITY_LINEA_CALLS'),
+          url: getEnv('ACTIVITY_LINEA_URL'),
+        },
       },
     },
     updateMonitor: updateMonitorEnabled && {

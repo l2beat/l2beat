@@ -100,6 +100,14 @@ export function getLocalConfig(): Config {
           callsPerMinute: 60,
           url: getEnv('ACTIVITY_NOVA_URL', 'https://nova.arbitrum.io/rpc'),
         },
+        linea: {
+          type: 'rpc',
+          callsPerMinute: 60,
+          url: getEnv(
+            'ACTIVITY_LINEA_URL',
+            'https://linea-mainnet.infura.io/v3',
+          ),
+        },
       },
     },
     updateMonitor: updateMonitorEnabled && {
