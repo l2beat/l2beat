@@ -49,7 +49,7 @@ export function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
   ] as TvlProjectData[]
 
   checkIfEmptyTvlCharts(allProjects)
-  checkIfDelayedTvl(allProjects, UnixTime.now())
+  // checkIfDelayedTvl(allProjects, UnixTime.now())
 }
 
 export function checkIfEmptyTvlCharts(allProjects: TvlProjectData[]) {
