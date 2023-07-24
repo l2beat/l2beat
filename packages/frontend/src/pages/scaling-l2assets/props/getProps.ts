@@ -2,31 +2,34 @@ import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getIncludedProjects } from '../../../utils/getIncludedProjects'
 import { orderByTvl } from '../../../utils/orderByTvl'
+import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
+import { formatUSD } from '../../../utils/utils'
 import { PagesData, Wrapped } from '../../Page'
-import { ScalingRiskPageProps } from '../view/ScalingRiskPage'
+import { L2AssetsPageProps } from '../view/L2AssetsPage'
+import { getDetailedTvlView } from './getDetailedTvlView'
 import { getPageMetadata } from './getPageMetadata'
-import { getRiskView } from './getRiskView'
 
 export function getProps(
   config: Config,
   pagesData: PagesData,
-): Wrapped<ScalingRiskPageProps> {
-  const { tvlApiResponse, verificationStatus } = pagesData
+): Wrapped<L2AssetsPageProps> {
+  const { tvlApiResponse } = pagesData
+
+  const charts = tvlApiResponse.layers2s
 
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
 
+  const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
   return {
     props: {
-      navbar: getNavbarProps(config, 'scaling'),
-      riskView: getRiskView(
-        ordering,
-        verificationStatus,
-        config.features.upcomingRollups,
-      ),
-      footer: getFooterProps(config),
-      showActivity: config.features.activity,
       showL2Assets: config.features.l2assets,
+      showActivity: config.features.activity,
+      navbar: getNavbarProps(config, 'scaling'),
+      footer: getFooterProps(config),
+      tvl: formatUSD(tvl),
+      tvlWeeklyChange,
+      detailedTvlView: getDetailedTvlView(config, ordering),
     },
     wrapper: {
       metadata: getPageMetadata(),

@@ -8,8 +8,10 @@ export function getChartElements(chart: HTMLElement) {
       showCombined: document.querySelector<HTMLInputElement>(
         '[data-role="chart-combined"]',
       ),
-      showActivity: chart.querySelector<HTMLInputElement>(
-        '[data-role="toggle-tvl-activity"]',
+      chartType: Array.from(
+        chart.querySelectorAll<HTMLInputElement>(
+          '[data-role="radio-chart-type-controls"] input',
+        ),
       ),
       showEthereum: chart.querySelector<HTMLInputElement>(
         '[data-role="toggle-ethereum-activity"]',

@@ -21,6 +21,7 @@ export interface ActivityPageProps {
   footer: FooterProps
   navbar: NavbarProps
   showActivity: boolean
+  showL2Assets: boolean
   milestones?: Milestone[]
 }
 
@@ -31,6 +32,7 @@ export function ActivityPage(props: ActivityPageProps) {
       <PageContent>
         <ScalingNavigationTabs
           showActivity={props.showActivity}
+          showTvlBreakdown={props.showL2Assets}
           selected="activity"
         />
         <main>

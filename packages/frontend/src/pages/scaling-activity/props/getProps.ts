@@ -31,6 +31,7 @@ export function getProps(
       ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
+      showL2Assets: config.features.l2assets,
       milestones: config.features.milestones ? config.milestones : [],
     },
     wrapper: {

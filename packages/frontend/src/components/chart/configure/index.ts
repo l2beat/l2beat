@@ -1,3 +1,4 @@
+import { useThemeToggle } from '../../navbar/configureDarkThemeToggle'
 import { setupControls } from './controls/setupControls'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
@@ -32,6 +33,13 @@ function configureChart(chart: HTMLElement) {
     previousState = currentState
   }
 
+  useThemeToggle((isDarkMode: boolean) => {
+      dispatch({
+          type: 'ThemeChanged',
+          isDarkMode
+      })
+  })
+
   window.addEventListener('resize', () => {
     previousState = EMPTY_STATE
     requestAnimationFrame(renderUpdates)
@@ -45,7 +53,20 @@ function getInitMessage(elements: ChartElements): InitMessage {
   const pagePathname = new URL(elements.chart.baseURI).pathname
   const chartSettings = getUserChartSettings(pagePathname)
 
-  const initialView = elements.chart.dataset.type === 'tvl' ? 'tvl' : 'activity'
+  // TODO(radomski): This can be done better
+  const getType = (): InitMessage['initialView'] => {
+    switch (elements.chart.dataset.type) {
+      case 'tvl':
+        return 'tvl'
+      case 'detailedTvl':
+        return 'detailedTvl'
+      case 'activity':
+        return 'activity'
+      default:
+        return 'activity'
+    }
+  }
+  const initialView = getType()
 
   const milestones = elements.chart.dataset.milestones
     ? Milestones.parse(JSON.parse(elements.chart.dataset.milestones))
@@ -57,6 +78,7 @@ function getInitMessage(elements: ChartElements): InitMessage {
     pagePathname,
     aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
     alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
+    detailedAggregateTvlEndpoint: elements.chart.dataset.detailedTvlEndpoint,
     activityEndpoint: elements.chart.dataset.activityEndpoint,
     labelCount: elements.view.labels.length,
     milestones,

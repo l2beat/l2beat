@@ -54,25 +54,22 @@ export function render(
 
   if (state.controls.view !== previousState.controls.view) {
     const isTvl = state.controls.view === 'tvl'
+    const isDetailedTvl = state.controls.view === 'detailedTvl'
     const sevenDayRadio = elements.controls.days.find(
       (x) => toDays(x.value) === 7,
     )?.parentElement
+    const toggle = !isTvl && !isDetailedTvl
 
-    sevenDayRadio?.classList.toggle('hidden', !isTvl)
-    elements.view.currencyControlsWrapper?.classList.toggle('hidden', !isTvl)
-    elements.view.tokenControlsWrapper?.classList.toggle('hidden', !isTvl)
+    sevenDayRadio?.classList.toggle('hidden', toggle)
+    elements.view.currencyControlsWrapper?.classList.toggle('hidden', toggle)
+    elements.view.tokenControlsWrapper?.classList.toggle('hidden', toggle)
     elements.controls.showEthereum?.parentElement?.classList.toggle(
       'hidden',
-      isTvl,
+      !toggle,
     )
   }
 
-  if (state.view !== previousState.view) {
-    const labels = elements.view.labels
-    for (let i = 0; i < labels.length; i++) {
-      labels[i].innerHTML = state.view.labels?.[labels.length - 1 - i] ?? '...'
-    }
-
+  if (state.view !== previousState.view || state.controls.theme !== previousState.controls.theme) {
     if (elements.view.dateRange) {
       elements.view.dateRange.innerHTML = state.view.dateRange ?? '...'
     }

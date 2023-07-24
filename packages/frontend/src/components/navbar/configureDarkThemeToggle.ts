@@ -1,3 +1,5 @@
+const callbacks: ((isDarkMode: boolean) => void)[] = []
+
 export function configureDarkThemeToggle() {
   let prefersDark: boolean | undefined
   const saved = localStorage.getItem('l2beat-theme')
@@ -20,6 +22,9 @@ export function configureDarkThemeToggle() {
     const isDark = !document.documentElement.classList.contains('dark')
     updateTheme(isDark)
     localStorage.setItem('l2beat-theme', isDark ? 'dark' : 'light')
+    for(const callback of callbacks) {
+        callback(isDark)
+    }
   }
 
   function updateTheme(isDark: boolean) {
@@ -30,4 +35,13 @@ export function configureDarkThemeToggle() {
   document
     .querySelectorAll('[data-role="dark-theme-toggle"]')
     .forEach((e) => e.addEventListener('click', toggleDarkMode))
+}
+
+export function useThemeToggle(callback: (isDarkMode: boolean) => void) {
+    callbacks.push(callback)
+}
+
+export function isDarkMode(): boolean {
+    return document.documentElement.classList.contains('dark')
+
 }

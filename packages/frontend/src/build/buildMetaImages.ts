@@ -39,6 +39,10 @@ async function main() {
     slugs.push('overview-scaling-activity')
   }
 
+  if (config.features.l2assets) {
+    slugs.push('overview-scaling-l2assets')
+  }
+
   const browser = await puppeteer.launch({
     args: ['--no-sandbox'],
   })

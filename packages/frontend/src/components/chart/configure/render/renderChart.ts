@@ -1,7 +1,14 @@
 import { State } from '../state/State'
 import { fillBelowChart } from './fillBelowChart'
+import { moveToMany } from './moveToMany'
 import { strokeChartLine } from './strokeChartLine'
-import { getMainStyle, getSecondaryStyle } from './style'
+import {
+  getCBVStyle,
+  getEBVStyle,
+  getMainStyle,
+  getNMVStyle,
+  getSecondaryStyle,
+} from './style'
 
 export function renderChart(
   state: State,
@@ -15,11 +22,19 @@ export function renderChart(
   const box = canvas.getBoundingClientRect()
   canvas.width = box.width * window.devicePixelRatio
   canvas.height = box.height * window.devicePixelRatio
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  const usableHeight = canvas.height - 20 * window.devicePixelRatio
 
   const mainStyle = getMainStyle(canvas, ctx)
   const secondaryStyle = getSecondaryStyle(canvas, ctx)
+
+  const yAxisLineStroke =
+    state.controls.theme === 'dark'
+      ? 'rgba(255, 255, 255, 0.3)'
+      : 'rgba(51, 51, 51, 0.3)'
+  const yAxisLabelFill =
+    state.controls.theme === 'dark'
+      ? 'rgba(255, 255, 255, 0.5)'
+      : 'rgba(115, 115, 115, 0.5)'
 
   if (
     state.controls.showEthereum &&
@@ -27,15 +42,166 @@ export function renderChart(
   ) {
     const mainPoints = state.view.chart.points
     const secondaryPoints = mainPoints.map((p) => ({ x: p.x, y: p.y2 }))
-    fillBelowChart(ctx, secondaryPoints, canvas, secondaryStyle.fillGradient, {
-      fade: true,
-    })
-    fillBelowChart(ctx, mainPoints, canvas, mainStyle.fillGradient)
-    strokeChartLine(ctx, secondaryPoints, canvas, secondaryStyle.strokeGradient)
-    strokeChartLine(ctx, mainPoints, canvas, mainStyle.strokeGradient)
+    fillBelowChart(
+      ctx,
+      secondaryPoints,
+      canvas,
+      usableHeight,
+      secondaryStyle.fillGradient,
+      {
+        fade: true,
+      },
+    )
+    fillBelowChart(
+      ctx,
+      mainPoints,
+      canvas,
+      usableHeight,
+      mainStyle.fillGradient,
+    )
+    drawYAxisLabels(
+      ctx,
+      state.view.labels,
+      canvas,
+      usableHeight,
+      yAxisLineStroke,
+      yAxisLabelFill,
+    )
+    strokeChartLine(
+      ctx,
+      secondaryPoints,
+      canvas,
+      usableHeight,
+      secondaryStyle.strokeGradient,
+    )
+    strokeChartLine(
+      ctx,
+      mainPoints,
+      canvas,
+      usableHeight,
+      mainStyle.strokeGradient,
+    )
+  } else if (state.view.chart.type === 'AggregateDetailedTvlChart') {
+    const cbvFillSTyle = getCBVStyle(canvas, ctx)
+    const ebvFillStyle = getEBVStyle(canvas, ctx)
+    const nmvFillStyle = getNMVStyle(canvas, ctx)
+    const cbvPoints = state.view.chart.points.map((p) => ({
+      x: p.x,
+      y: p.parts.cbv,
+    }))
+    const ebvPoints = state.view.chart.points.map((p) => ({
+      x: p.x,
+      y: p.parts.ebv,
+    }))
+    const nmvPoints = state.view.chart.points.map((p) => ({
+      x: p.x,
+      y: p.parts.nmv,
+    }))
+
+    fillBelowChart(ctx, cbvPoints, canvas, usableHeight, cbvFillSTyle)
+    fillBelowChart(ctx, ebvPoints, canvas, usableHeight, ebvFillStyle)
+    fillBelowChart(ctx, nmvPoints, canvas, usableHeight, nmvFillStyle)
+    drawYAxisLabels(
+      ctx,
+      state.view.labels,
+      canvas,
+      usableHeight,
+      yAxisLineStroke,
+      yAxisLabelFill,
+    )
   } else {
     const mainPoints = state.view.chart.points
-    fillBelowChart(ctx, mainPoints, canvas, mainStyle.fillGradient)
-    strokeChartLine(ctx, mainPoints, canvas, mainStyle.strokeGradient)
+    fillBelowChart(
+      ctx,
+      mainPoints,
+      canvas,
+      usableHeight,
+      mainStyle.fillGradient,
+    )
+    drawYAxisLabels(
+      ctx,
+      state.view.labels,
+      canvas,
+      usableHeight,
+      yAxisLineStroke,
+      yAxisLabelFill,
+    )
+    strokeChartLine(
+      ctx,
+      mainPoints,
+      canvas,
+      usableHeight,
+      mainStyle.strokeGradient,
+    )
   }
+}
+
+function drawYAxisLabels(
+  ctx: CanvasRenderingContext2D,
+  labels: string[] | undefined,
+  canvas: HTMLCanvasElement,
+  usableHeight: number,
+  lineStrokeStyle: string,
+  labelFillStyle: string,
+) {
+  ctx.beginPath()
+
+  const lines = [
+    [
+      { x: 0.0, y: 1.0 },
+      { x: 1.0, y: 1.0 },
+    ],
+    [
+      { x: 0.0, y: 0.75 },
+      { x: 1.0, y: 0.75 },
+    ],
+    [
+      { x: 0.0, y: 0.5 },
+      { x: 1.0, y: 0.5 },
+    ],
+    [
+      { x: 0.0, y: 0.25 },
+      { x: 1.0, y: 0.25 },
+    ],
+    [
+      { x: 0.0, y: 0.0 },
+      { x: 1.0, y: 0.0 },
+    ],
+  ]
+
+  lines.forEach((linePoints, i) => {
+    moveToMany(linePoints, ctx, canvas, usableHeight)
+    labelText(
+      linePoints[0],
+      ctx,
+      canvas,
+      usableHeight,
+      labels ? labels[i] : '...',
+      labelFillStyle,
+    )
+  })
+
+  ctx.strokeStyle = lineStrokeStyle
+  ctx.lineWidth = Math.floor(window.devicePixelRatio)
+  ctx.stroke()
+}
+
+function labelText(
+  point: { x: number; y: number },
+  ctx: CanvasRenderingContext2D,
+  canvas: HTMLCanvasElement,
+  usableHeight: number,
+  label: string,
+  fillStyle: string,
+) {
+  const LINE_WIDTH = 6
+  ctx.fillStyle = fillStyle
+  const fontSize = (15 * window.devicePixelRatio).toFixed()
+  const lineHeight = (22 * window.devicePixelRatio).toFixed()
+  ctx.font = `${fontSize}px/${lineHeight}px Roboto`
+  ctx.fillText(
+    label,
+    point.x * canvas.width,
+    point.y * usableHeight + (canvas.height - usableHeight) - LINE_WIDTH,
+  )
 }

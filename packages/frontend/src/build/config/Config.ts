@@ -12,6 +12,7 @@ export interface Config {
     multisigReport: string
   }
   features: {
+    l2assets: boolean
     activity: boolean
     banner: boolean
     gitcoinOption: boolean

@@ -1,3 +1,4 @@
+import { isDarkMode } from '../../../navbar/configureDarkThemeToggle'
 import { State } from './State'
 
 export const EMPTY_STATE: State = {
@@ -13,12 +14,14 @@ export const EMPTY_STATE: State = {
   },
   data: {
     aggregateTvl: undefined,
+    aggregateDetailedTvl: undefined,
     alternativeTvl: undefined,
     activity: undefined,
     tokenTvl: {},
     milestones: {},
   },
   controls: {
+    theme: isDarkMode() ? 'dark' : 'light',
     view: 'tvl',
     pagePathname: '',
     days: 0,

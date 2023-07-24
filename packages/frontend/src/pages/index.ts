@@ -9,6 +9,7 @@ import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling-activity'
+import { getL2AssetsPage } from './scaling-l2assets'
 import { getProjectPages } from './scaling-projects'
 import { getRiskPage } from './scaling-risk'
 import { getTvlPage } from './scaling-tvl'
@@ -41,6 +42,8 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       }),
     )
   }
+
+  pages.push(getL2AssetsPage(config, pagesData))
 
   outputPages(pages)
 }

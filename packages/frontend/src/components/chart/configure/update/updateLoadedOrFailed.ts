@@ -2,6 +2,8 @@ import { Effect } from '../effects/effects'
 import {
   ActivityFailedMessage,
   ActivityLoadedMessage,
+  AggregateDetailedTvlFailedMessage,
+  AggregateDetailedTvlLoadedMessage,
   AggregateTvlFailedMessage,
   AggregateTvlLoadedMessage,
   AlternativeTvlFailedMessage,
@@ -17,6 +19,8 @@ export function updateLoadedOrFailed(
   message:
     | AggregateTvlLoadedMessage
     | AggregateTvlFailedMessage
+    | AggregateDetailedTvlLoadedMessage
+    | AggregateDetailedTvlFailedMessage
     | AlternativeTvlLoadedMessage
     | AlternativeTvlFailedMessage
     | TokenTvlLoadedMessage
@@ -26,6 +30,7 @@ export function updateLoadedOrFailed(
 ): [State, Effect[]] {
   if (
     message.type === 'AggregateTvlFailed' ||
+    message.type === 'AggregateDetailedTvlFailed' ||
     message.type === 'AlternativeTvlFailed' ||
     message.type === 'TokenTvlFailed' ||
     message.type === 'ActivityFailed'
@@ -40,6 +45,9 @@ export function updateLoadedOrFailed(
   const data: State['data'] = { ...state.data }
   if (message.type === 'AggregateTvlLoaded') {
     data.aggregateTvl = message.data
+  }
+  if (message.type === 'AggregateDetailedTvlLoaded') {
+    data.aggregateDetailedTvl = message.data
   }
   if (message.type === 'AlternativeTvlLoaded') {
     data.alternativeTvl = message.data
