@@ -56,6 +56,8 @@ export const optimism: Layer2 = {
   config: {
     associatedTokens: ['OP'],
     nativeL2TokensIncludedInTVL: ['OP'],
+    tvlTooltip:
+      'TVL includes canonically bridged assets and natively minted assets.',
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xbEb5Fc579115071764c7423A4f12eDde41f106Ed'),
