@@ -69,7 +69,7 @@ describe(NMVUpdater.name, () => {
       expect(reports).toEqual(MOCK.FUTURE_REPORTS)
     })
 
-    it.only('throws if timestamp < minTimestamp', async () => {
+    it('throws if timestamp < minTimestamp', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn(),
       })
