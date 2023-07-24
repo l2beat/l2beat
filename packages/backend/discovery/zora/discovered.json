@@ -1,6 +1,6 @@
 {
   "name": "zora",
-  "blockNumber": 17718403,
+  "blockNumber": 17761267,
   "configHash": "0x76437a39e6e87f7bd6d11184c3de41b0c3d600b9a7ce9c1b8f4bd1f62c47ead6",
   "version": 1,
   "contracts": [
@@ -17,7 +17,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 17718403],
+        "params": [1000000000, 222000, 17761267],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -72,10 +72,10 @@
         "CHALLENGER": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 1483380,
-        "latestOutputIndex": 1048,
-        "nextBlockNumber": 1485180,
-        "nextOutputIndex": 1049,
+        "latestBlockNumber": 1742580,
+        "latestOutputIndex": 1192,
+        "nextBlockNumber": 1744380,
+        "nextOutputIndex": 1193,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -205,7 +205,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619782",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619797",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
