@@ -11,6 +11,7 @@ import { degate } from './degate'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
+import { gnosispay } from './gnosispay'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
 import { kroma } from './kroma'
@@ -24,6 +25,8 @@ import { myria } from './myria'
 import { nova } from './nova'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { polygonmiden } from './polygonmiden'
+import { polygonpos } from './polygonpos'
 import { polygonzkevm } from './polygonzkevm'
 import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
@@ -31,6 +34,7 @@ import { sorare } from './sorare'
 import { starknet } from './starknet'
 import { taiko } from './taiko'
 import { Layer2 } from './types'
+import { xchain } from './xchain'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
@@ -53,6 +57,7 @@ export const layer2s: Layer2[] = [
   dydx,
   fuelv1,
   gluon,
+  gnosispay,
   hermez,
   immutablex,
   kroma,
@@ -66,12 +71,15 @@ export const layer2s: Layer2[] = [
   nova,
   omgnetwork,
   optimism,
+  polygonmiden,
   polygonzkevm,
+  polygonpos,
   rhinofi,
   scroll,
   sorare,
   starknet,
   taiko,
+  xchain,
   zkspace,
   zkswap,
   zkswap2,
