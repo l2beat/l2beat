@@ -1,7 +1,8 @@
 {
   "name": "orbit",
-  "blockNumber": 17321776,
+  "blockNumber": 17761255,
   "configHash": "0x9473327ec8ccf35193a6f10232a638543ce1fe535ef5865049eff51ed7584987",
+  "version": 1,
   "contracts": [
     {
       "name": "ETH Vault",
@@ -16,7 +17,7 @@
         "chain": "ETH",
         "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "daiFarm": "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
-        "depositCount": 113022,
+        "depositCount": 114596,
         "edai": "0xC355fe6E4e99C0B93577F08c4e9a599714435912",
         "feeGovernance": "0x0000000000000000000000000000000000000000",
         "gasLimitForBridgeReceiver": 300000,
@@ -26,7 +27,7 @@
           "0x34EBf4f74a881eB63F666E63ce1Ff2F287CA5a8b",
           "0x3b6590Ff12Ba188e465395E1610D8368613054B0",
           "0x3924Ac70075078A7713f543b72e3F8817ecEc646",
-          "0xd1176F2f576C102F6516D386De53ec7a72Cc1491",
+          "0x595f1a527527Fa28A8C5f294c49E51B9799fdAF0",
           "0x1c0Cd56F1c3E2cF13B9B44dBE5529104bade543E",
           "0x6013f0B3ffE1fFdcA3Fc6A8cd705b1Af048F7437",
           "0xa6dc28CbcB2f8060a00b4FA67F9b67775AC5a3a1"
@@ -40,7 +41,7 @@
         "taxRate": 10,
         "taxReceiver": "0xE9f3604B85c9672728eEecf689cf1F0cF7Dd03F2",
         "tetherAddress": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "transactionCount": 61,
+        "transactionCount": 63,
         "usdcFarm": "0x830433dE03ABedE062660CC629e1A2c714272474",
         "usdtFarm": "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
         "wbtcFarm": "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
@@ -129,11 +130,11 @@
     "0x3924Ac70075078A7713f543b72e3F8817ecEc646",
     "0x3b6590Ff12Ba188e465395E1610D8368613054B0",
     "0x4C35e473D57cF4daA90BB9FE341CeDEc81124d05",
+    "0x595f1a527527Fa28A8C5f294c49E51B9799fdAF0",
     "0x6013f0B3ffE1fFdcA3Fc6A8cd705b1Af048F7437",
     "0x67C3c784C49d9ab8757ADb71491df1A1B38FbFA8",
     "0x8a3F117Ef3b40f1661Dedf7f28fC33E7b6fae4F8",
     "0xa6dc28CbcB2f8060a00b4FA67F9b67775AC5a3a1",
-    "0xd1176F2f576C102F6516D386De53ec7a72Cc1491",
     "0xE9f3604B85c9672728eEecf689cf1F0cF7Dd03F2"
   ],
   "abis": {

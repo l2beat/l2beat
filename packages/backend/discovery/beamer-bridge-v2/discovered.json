@@ -1,7 +1,7 @@
 {
   "name": "beamer-bridge-v2",
-  "blockNumber": 17684727,
-  "configHash": "0xf61fa047ecab1cac1901c01ff03095a1fd87207ea080a098582d2afe633ba6bf",
+  "blockNumber": 17761285,
+  "configHash": "0xf4ee1695dc1f704e627a1a585dc33676800ecf23242ffbe7bf5b49e0f3396e2e",
   "version": 1,
   "contracts": [
     {
@@ -95,14 +95,7 @@
         "claimPeriod": 86400,
         "claimRequestExtension": 86400,
         "claimStake": "10000000000000000",
-        "currentNonce": 172,
-        "liquidityProviders": [
-          "0x79b68B3d5533EfBF08c383eCCd47966d8EF181FC",
-          "0x0F536e54cE49f2dBdD8ae5E86F7b41f09a2e2818",
-          "0xa1151b7F265AA2e546382D8deF6c2A2613798F88",
-          "0xa48B6821024ff16884763A21CE149d3412a933E2",
-          "0xdC256EC77E97448d29D88118e55C82067150b768"
-        ],
+        "currentNonce": 192,
         "lpFeePPM": 3000,
         "MAX_VALIDITY_PERIOD": 172800,
         "MIN_VALIDITY_PERIOD": 1800,
@@ -139,7 +132,9 @@
           "0x0F536e54cE49f2dBdD8ae5E86F7b41f09a2e2818",
           "0xa1151b7F265AA2e546382D8deF6c2A2613798F88",
           "0xa48B6821024ff16884763A21CE149d3412a933E2",
-          "0xdC256EC77E97448d29D88118e55C82067150b768"
+          "0xdC256EC77E97448d29D88118e55C82067150b768",
+          "0xDD3307A939c131981315Bd4C51Abea37048B7177",
+          "0xd065B1B3BD137476CF276351Cf71F44fDE9747eF"
         ],
         "messenger": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
