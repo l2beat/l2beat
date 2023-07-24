@@ -72,7 +72,10 @@ export class UpdateMonitor {
       try {
         await this.updateProject(projectConfig, blockNumber, timestamp)
       } catch (error) {
-        this.logger.error(error)
+        this.logger.error(
+          { message: `Failed to update project [${projectConfig.name}]` },
+          error,
+        )
         errorsCount.inc()
       }
 

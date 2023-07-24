@@ -151,16 +151,15 @@ export class TaskQueue<T> {
     job.attempts++
     const result = this.shouldRetry(job, error)
     if (!result.retry) {
-      this.logger.error(
-        {
-          message: 'No more retries',
-          job: JSON.stringify(job),
-        },
-        error,
-      )
       this.eventTracker?.record('error')
       if (this.shouldHaltAfterFailedRetries) {
-        this.logger.info('Halting queue because of error')
+        this.logger.error(
+          {
+            message: 'Halting queue because of error',
+            job: JSON.stringify(job),
+          },
+          error,
+        )
         this.halted = true
       }
       return

@@ -9,6 +9,7 @@
   },
   "overrides": {
     "zkEVM": {
+      "ignoreInWatchMode": ["currentPeriodAmountInWei"],
       "ignoreMethods": [
         "stateRootHashes",
         "currentTimestamp",
