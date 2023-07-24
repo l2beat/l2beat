@@ -1,7 +1,7 @@
 {
   "name": "mantle",
-  "blockNumber": 17725438,
-  "configHash": "0x1ae05630d0213f2c3fa8df1e52eaf7cd093d2c99d12ae62e278eb74756413f8d",
+  "blockNumber": 17762426,
+  "configHash": "0x48199172db0077527e016526705e5c6ba1ac200edeec32d9dc2b1f7fd280ebfc",
   "version": 1,
   "contracts": [
     {
@@ -13,42 +13,6 @@
         "type": "immutable"
       },
       "derivedName": ""
-    },
-    {
-      "name": "TssStakingSlashing",
-      "address": "0x09b276F9EcB83Fb6a37970e655863B04143Dc431",
-      "code": "https://etherscan.deth.net/address/0x09b276F9EcB83Fb6a37970e655863B04143Dc431",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "delegation": "0x0000000000000000000000000000000000000000",
-        "delegationManager": "0x0000000000000000000000000000000000000000",
-        "explanation": "Mantle token DelegationShare implementation for submodules as an example",
-        "getQuitRequestList": [],
-        "getSlashingParams": [0, 0],
-        "isSetParam": false,
-        "messenger": "0x0000000000000000000000000000000000000000",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "quitRequestList": [],
-        "regulatoryAccount": "0x0000000000000000000000000000000000000000",
-        "sharesToUnderlying": [0, 1, 2, 3, 4],
-        "sharesToUnderlyingView": [0, 1, 2, 3, 4],
-        "slashAmount": [0, 0],
-        "totalShares": 0,
-        "tssDelegationContract": "0x0000000000000000000000000000000000000000",
-        "tssDelegationManagerContract": "0x0000000000000000000000000000000000000000",
-        "tssGroupContract": "0x0000000000000000000000000000000000000000",
-        "tssManager": "0x0000000000000000000000000000000000000000",
-        "underlyingToken": "0x0000000000000000000000000000000000000000",
-        "underlyingToShares": [],
-        "underlyingToSharesView": []
-      },
-      "errors": {
-        "sharesToUnderlying": "Too many values. Update configuration explore fully",
-        "sharesToUnderlyingView": "Too many values. Update configuration explore fully"
-      }
     },
     {
       "name": "ProxyAdmin",
@@ -96,13 +60,13 @@
         "batches": "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17725351,
-        "getLastTimestamp": 1689747633,
-        "getNextQueueIndex": 2220,
-        "getNumPendingQueueElements": 12,
-        "getQueueLength": 2232,
-        "getTotalBatches": 1300,
-        "getTotalElements": 28392,
+        "getLastBlockNumber": 17762342,
+        "getLastTimestamp": 1690194978,
+        "getNextQueueIndex": 4129,
+        "getNumPendingQueueElements": 2,
+        "getQueueLength": 4131,
+        "getTotalBatches": 1794,
+        "getTotalElements": 105831,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -141,7 +105,7 @@
           "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
         ],
         "getThreshold": 3,
-        "nonce": 38,
+        "nonce": 41,
         "VERSION": "1.3.0"
       }
     },
@@ -260,23 +224,6 @@
       }
     },
     {
-      "name": "L1CrossDomainMessenger",
-      "address": "0x4692363048d0F32a2dE7816860D48fff0c61B24B",
-      "code": "https://etherscan.deth.net/address/0x4692363048d0F32a2dE7816860D48fff0c61B24B",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "getPauseOwner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
-        "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-        "paused": false
-      },
-      "errors": {
-        "xDomainMessageSender": "Execution reverted"
-      }
-    },
-    {
       "name": "GnosisSafe",
       "address": "0x47336ae44F573a7C3C41a9ae04A9D48E5dFD8f8E",
       "code": "https://etherscan.deth.net/address/0x47336ae44F573a7C3C41a9ae04A9D48E5dFD8f8E,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -356,14 +303,14 @@
         "dataManageAddress": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
         "FRAUD_STRING": "0x2d2d5468697320697320612062616420737472696e672e204e6f626f64792073617973207468697320737472696e672e2d2d",
         "fraudProofPeriod": 3600,
-        "getL2ConfirmedBlockNumber": 28393,
-        "getL2StoredBlockNumber": 28393,
-        "l2ConfirmedBlockNumber": 28393,
-        "l2StoredBlockNumber": 28393,
+        "getL2ConfirmedBlockNumber": 105832,
+        "getL2StoredBlockNumber": 105832,
+        "l2ConfirmedBlockNumber": 105832,
+        "l2StoredBlockNumber": 105832,
         "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "reRollupIndex": 0,
         "reSubmitterAddress": "0x630E93130809c4acE55249229Ee6B043b929A9Ad",
-        "rollupBatchIndex": 1310,
+        "rollupBatchIndex": 1803,
         "sequencer": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
       },
       "derivedName": "BVM_EigenDataLayrChain"
@@ -388,8 +335,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x0000000000000000010e77a70064b780b100000008ac0000006ee8",
-        "length": 1300,
+        "getGlobalMetadata": "0x0000000000000000010f08260064be542200000010210000019d67",
+        "length": 1794,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "owner": "CanonicalTransactionChain"
       },
@@ -463,7 +410,7 @@
       }
     },
     {
-      "name": "TssStakingSlashing",
+      "name": "TssStakingSlashingProxy",
       "address": "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81",
       "code": "https://etherscan.deth.net/address/0x78CF48880E9e1b3ab209779c0D8A76f611e53e81,0x09b276F9EcB83Fb6a37970e655863B04143Dc431",
       "upgradeability": {
@@ -532,9 +479,9 @@
         "batches": "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
         "FRAUD_PROOF_WINDOW": 604800,
         "getFraudProofWindow": 604800,
-        "getLastSequencerTimestamp": 1689747683,
-        "getTotalBatches": 640,
-        "getTotalElements": 28360,
+        "getLastSequencerTimestamp": 1690194995,
+        "getTotalBatches": 1134,
+        "getTotalElements": 105066,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "messenger": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
@@ -595,78 +542,10 @@
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
       "values": {
-        "assertions": [
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0,
-            0,
-            17578318,
-            17578318,
-            2,
-            384
-          ],
-          [
-            "0x36d4908414e6e69dd1540988c24511cb0e647bfcb7e7d479a90cbfe82b7a7b8f",
-            384,
-            0,
-            1688464535,
-            17619798,
-            1,
-            399
-          ],
-          [
-            "0x4a70df977d58418f7cfcbd6e3c51ba4c76253c21d1bec31e991c40ff7b89f650",
-            399,
-            1,
-            1688466047,
-            17619923,
-            1,
-            411
-          ],
-          [
-            "0xa8c7d97d65c687a4335a884c5b15f399b97baf76aa77bf9e7ca0a1e30d1ed97c",
-            411,
-            2,
-            1688466539,
-            17619964,
-            1,
-            416
-          ],
-          [
-            "0x91081e7a9cdaf0bf000f7eec600df04916512db064d0060f5c06d250a037e0ab",
-            416,
-            3,
-            1688468567,
-            17620131,
-            1,
-            930
-          ]
-        ],
-        "getDeadline": [
-          17578318, 1688464535, 1688466047, 1688466539, 1688468567
-        ],
-        "getInboxSize": [0, 384, 399, 411, 416],
-        "getNumStakers": [2, 1, 1, 1, 1],
-        "getParentID": [0, 0, 1, 2, 3],
-        "getProposalTime": [17578318, 17619798, 17619923, 17619964, 17620131],
-        "getStateHash": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x36d4908414e6e69dd1540988c24511cb0e647bfcb7e7d479a90cbfe82b7a7b8f",
-          "0x4a70df977d58418f7cfcbd6e3c51ba4c76253c21d1bec31e991c40ff7b89f650",
-          "0xa8c7d97d65c687a4335a884c5b15f399b97baf76aa77bf9e7ca0a1e30d1ed97c",
-          "0x91081e7a9cdaf0bf000f7eec600df04916512db064d0060f5c06d250a037e0ab"
-        ],
+        "getNumStakers": [2, 1, 1],
         "rollupAddress": "0xD1328C9167e0693B689b5aa5a024379d4e437858"
       },
-      "errors": {
-        "assertions": "Too many values. Update configuration explore fully",
-        "getDeadline": "Too many values. Update configuration explore fully",
-        "getInboxSize": "Too many values. Update configuration explore fully",
-        "getNumStakers": "Too many values. Update configuration explore fully",
-        "getParentID": "Too many values. Update configuration explore fully",
-        "getProposalTime": "Too many values. Update configuration explore fully",
-        "getStateHash": "Too many values. Update configuration explore fully"
-      }
+      "derivedName": "AssertionMap"
     },
     {
       "name": "TssDelegationManager",
@@ -748,11 +627,11 @@
           0,
           0
         ],
-        "confirmedInboxSize": 28360,
+        "confirmedInboxSize": 105066,
         "currentRequiredStake": 0,
-        "lastConfirmedAssertionID": 640,
-        "lastCreatedAssertionID": 640,
-        "lastResolvedAssertionID": 640,
+        "lastConfirmedAssertionID": 1134,
+        "lastCreatedAssertionID": 1134,
+        "lastResolvedAssertionID": 1134,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "minimumAssertionPeriod": 0,
         "numStakers": 2,
@@ -779,8 +658,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x00000000000000000000000000000000000064b780e30000006ec8",
-        "length": 640,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000064be54330000019a6a",
+        "length": 1134,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "owner": "StateCommitmentChain"
       },
