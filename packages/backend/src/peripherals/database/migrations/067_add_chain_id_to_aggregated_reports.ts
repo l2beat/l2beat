@@ -17,11 +17,17 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.alterTable('aggregated_reports', function (table) {
     table.string('value_type').notNullable().defaultTo(ValueType.TVL)
+
+    table.dropPrimary()
+
+    table.primary(['value_type', 'unix_timestamp', 'project_id'])
   })
 }
 
 export async function down(knex: Knex) {
   await knex.schema.alterTable('aggregated_reports', function (table) {
+    table.dropPrimary()
     table.dropColumn('value_type')
+    table.primary(['unix_timestamp', 'project_id'])
   })
 }
