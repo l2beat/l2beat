@@ -87,13 +87,10 @@ export class NMVUpdater implements AssetUpdater {
   }
 
   async update(timestamp: UnixTime) {
-    if (!timestamp.gte(this.minTimestamp)) {
-      this.logger.debug('Skipping update', {
-        timestamp: timestamp.toNumber(),
-        minTimestamp: this.minTimestamp.toNumber(),
-      })
-      return
-    }
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Timestamp cannot be smaller than minTimestamp',
+    )
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const prices = await this.priceUpdater.getPricesWhenReady(timestamp)

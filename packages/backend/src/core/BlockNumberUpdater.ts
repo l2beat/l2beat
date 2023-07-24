@@ -73,13 +73,10 @@ export class BlockNumberUpdater {
   }
 
   async update(timestamp: UnixTime) {
-    if (!timestamp.gte(this.minTimestamp)) {
-      this.logger.debug('Skipping update', {
-        timestamp: timestamp.toNumber(),
-        minTimestamp: this.minTimestamp.toNumber(),
-      })
-      return
-    }
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Timestamp cannot be smaller than minTimestamp',
+    )
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const blockNumber = await this.blockNumberProvider.getBlockNumberAtOrBefore(
