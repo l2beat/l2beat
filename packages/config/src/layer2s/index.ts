@@ -20,6 +20,7 @@ import { linea } from './linea'
 import { loopring } from './loopring'
 import { mantle } from './mantle'
 import { metis } from './metis'
+import { mxc } from './mxc'
 import { myria } from './myria'
 import { nova } from './nova'
 import { omgnetwork } from './omgnetwork'
@@ -62,6 +63,7 @@ export const layer2s: Layer2[] = [
   loopring,
   mantle,
   metis,
+  mxc,
   myria,
   nova,
   omgnetwork,
