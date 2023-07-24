@@ -24,14 +24,6 @@
     "EthereumRequestManager": {
       "ignoreMethods": ["protocolFee"],
       "fields": {
-        "liquidityProviders": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "LpAdded",
-          "addKey": "lp",
-          "removeEvent": "LpRemoved",
-          "removeKey": "lp",
-          "ignoreRelative": true
-        },
         "chains": {
           "type": "stateFromEvent",
           "event": "ChainUpdated",
