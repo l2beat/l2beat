@@ -21,6 +21,11 @@ const upgradesAddressManager = {
     'The AddressManager can be used to replace this contract.',
 }
 
+const regularUpgrades = {
+  upgradableBy: ['Owner'],
+  upgradeDelay: 'No delay',
+}
+
 export const mantle: Layer2 = {
   type: 'layer2',
   id: ProjectId('mantle'),
@@ -217,6 +222,40 @@ export const mantle: Layer2 = {
           'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the batches instance of the ChainStorageContainerCTC. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue an L2 transaction, which the Sequencer must eventually append to the rollup state.',
         ...upgradesAddressManager,
       }),
+      discovery.getContractDetails('StateCommitmentChain', {
+        description:
+          'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. The BVM_Proposer can submit new state roots.',
+        ...upgradesAddressManager,
+      }),
+      discovery.getContractDetails('ChainStorageContainerCTC', {
+        ...upgradesAddressManager
+      }),
+      discovery.getContractDetails('ChainStorageContainerSCC', {
+        ...upgradesAddressManager
+      }),
+      discovery.getContractDetails('BondManager', {
+        description:
+          'Mock implementation of the contract supposed to handle deposits from proposers. The contract only allows the BVM_Proposer to publish state roots.',
+        ...upgradesAddressManager,
+      }),
+      discovery.getContractDetails('L1CrossDomainMessenger', {
+        description:
+          'The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract\'s replay function.',
+        ...upgradesAddressManager,
+        pausable: {
+          paused: discovery.getContractValue<boolean>('L1CrossDomainMessenger', 'paused'),
+          pausableBy: ['Owner'],
+        }
+      }),
+      discovery.getContractDetails('L1StandardBridge', {
+        description: 'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway. This contract can store any token.',
+        ...upgradesAddressManager,
+      }),
+      discovery.getContractDetails('AddressManager', {
+        description:
+          'This is a library that stores the mappings between names and their addresses. Changing the values effectively upgrades the system. It is controlled by the Owner.',
+        ...regularUpgrades,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -224,7 +263,7 @@ export const mantle: Layer2 = {
     {
       name: 'Owner',
       accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
-      description: 'This address is the owner of the following contracts: TODO',
+      description: 'This address is the owner of the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, TssGroupManager, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation, EigenDataLayerChain, Rollup, AssertionMap.',
     },
   ],
 }
