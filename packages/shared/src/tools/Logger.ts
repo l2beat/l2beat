@@ -40,10 +40,9 @@ export class Logger implements ILogger {
       const message = { ...parameters, error: getErrorMessage(error) }
 
       this.print('error', { message })
-      this.options.reportError?.(error, {
-        ...parameters,
-        service: this.options.service,
-      })
+      this.options.reportError?.(
+        new Error(this.formatErrorReport(parameters, message.error)),
+      )
     }
   }
 
@@ -69,6 +68,16 @@ export class Logger implements ILogger {
     if (this.options.logLevel >= LogLevel.DEBUG) {
       this.print('debug', combine(message, parameters))
     }
+  }
+
+  private formatErrorReport(parameter: LoggerParameters, errorStr: string) {
+    const service = this.options.service ?? 'unknown service'
+    const logMessage =
+      parameter.message && typeof parameter.message === 'string'
+        ? parameter.message
+        : 'no message provided'
+
+    return `[${service}]: ${logMessage} [${errorStr}]`
   }
 
   private print(level: string, parameters: LoggerParameters) {
