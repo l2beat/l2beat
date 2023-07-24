@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { AggregatedReportRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
@@ -10,6 +10,7 @@ export interface AggregatedReportRecord {
   projectId: ProjectId
   tvlUsd: bigint
   tvlEth: bigint
+  valueType: ValueType
 }
 
 export class AggregatedReportRepository extends BaseRepository {
@@ -94,6 +95,7 @@ function toRow(record: AggregatedReportRecord): AggregatedReportRow {
     project_id: record.projectId.toString(),
     tvl_usd: record.tvlUsd.toString(),
     tvl_eth: record.tvlEth.toString(),
+    value_type: record.valueType.toString(),
     is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
     is_six_hourly: record.timestamp.toNumber() % 21600 === 0 ? true : false,
   }
@@ -105,5 +107,6 @@ function toRecord(row: AggregatedReportRow): AggregatedReportRecord {
     projectId: ProjectId(row.project_id),
     tvlUsd: BigInt(row.tvl_usd),
     tvlEth: BigInt(row.tvl_eth),
+    valueType: ValueType(row.value_type),
   }
 }

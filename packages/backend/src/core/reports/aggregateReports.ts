@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 
 import { AggregatedReportRecord } from '../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
@@ -48,7 +48,9 @@ export function aggregateReportsWithCategories(
     projectId,
     tvlEth: 0n,
     tvlUsd: 0n,
+    valueType: ValueType.TVL,
   }))
+
   const aggregatedReports: AggregatedReportRecord[] = []
 
   for (const project of projects) {
@@ -69,8 +71,9 @@ export function aggregateReportsWithCategories(
       }
     }
     aggregatedReports.push({
-      timestamp,
       projectId: project.projectId,
+      valueType: ValueType.TVL,
+      timestamp,
       tvlEth,
       tvlUsd,
     })

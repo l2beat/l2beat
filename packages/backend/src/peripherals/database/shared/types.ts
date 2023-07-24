@@ -37,6 +37,7 @@ declare module 'knex/types/tables' {
     project_id: string
     tvl_usd: string
     tvl_eth: string
+    value_type: string
     is_daily: boolean
     is_six_hourly: boolean
   }
