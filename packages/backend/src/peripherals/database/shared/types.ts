@@ -38,8 +38,6 @@ declare module 'knex/types/tables' {
     tvl_usd: string
     tvl_eth: string
     value_type: string
-    is_daily: boolean
-    is_six_hourly: boolean
   }
 
   interface ReportStatusRow {

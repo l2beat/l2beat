@@ -1,0 +1,58 @@
+/*
+                      ====== IMPORTANT NOTICE ======
+
+DO NOT EDIT OR RENAME THIS FILE
+
+This is a migration file. Once created the file should not be renamed or edited,
+because migrations are only run once on the production server. 
+
+If you find that something was incorrectly set up in the `up` function you
+should create a new migration file that fixes the issue.
+
+*/
+
+import { Knex } from 'knex'
+
+const sixHourlyIndex = 'aggregated_reports_unix_timestamp_six_hourly_index'
+const dailyIndex = 'aggregated_reports_unix_timestamp_daily_index'
+
+export async function up(knex: Knex) {
+  // Old index names
+  await knex.schema.raw(
+    'DROP INDEX IF EXISTS aggregated_reports_is_daily_index',
+  )
+  await knex.schema.raw(
+    'DROP INDEX IF EXISTS aggregated_reports_is_six_hourly_index',
+  )
+
+  await knex.schema.alterTable('aggregated_reports', (table) => {
+    table.dropColumn('is_daily')
+    table.dropColumn('is_six_hourly')
+  })
+
+  await knex.schema.raw(
+    `CREATE INDEX IF NOT EXISTS ${sixHourlyIndex}
+    on aggregated_reports (unix_timestamp) 
+    WHERE
+    EXTRACT(hour FROM unix_timestamp) % 6 = 0`,
+  )
+  await knex.schema.raw(
+    `CREATE INDEX IF NOT EXISTS ${dailyIndex}
+    on aggregated_reports (unix_timestamp) 
+    WHERE
+    EXTRACT(hour FROM unix_timestamp) = 0`,
+  )
+}
+
+export async function down(knex: Knex) {
+  await knex.schema.raw(`DROP INDEX IF EXISTS ${sixHourlyIndex}`)
+  await knex.schema.raw(`DROP INDEX IF EXISTS ${dailyIndex}`)
+
+  await knex.schema.alterTable('aggregated_reports', (table) => {
+    table.boolean('is_daily').defaultTo(false).notNullable()
+    table.boolean('is_six_hourly').defaultTo(false).notNullable()
+
+    table.index(['is_daily'], 'aggregated_reports_is_daily_index')
+    table.index(['is_six_hourly'], 'aggregated_reports_is_six_hourly_index')
+  })
+}
