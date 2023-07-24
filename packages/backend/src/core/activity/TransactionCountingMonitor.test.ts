@@ -115,7 +115,7 @@ describe(TransactionCountingMonitor.name, () => {
 
       expect(logger.error).toHaveBeenOnlyCalledWith(
         {
-          message: `${projectIdA} is lagging behind`,
+          message: `${projectIdA.toString()} is lagging behind`,
           syncInfo: {
             counters: [
               {
