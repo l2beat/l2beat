@@ -26,6 +26,9 @@ const regularUpgrades = {
   upgradeDelay: 'No delay',
 }
 
+const TssThreshold = discovery.getContractValue<[number, number, string, string[]]>('TssGroupManager', 'getTssGroupInfo')
+const TssGroup = `${TssThreshold[1]} / ${TssThreshold[3].length}`
+
 export const mantle: Layer2 = {
   type: 'layer2',
   id: ProjectId('mantle'),
@@ -224,7 +227,7 @@ export const mantle: Layer2 = {
       }),
       discovery.getContractDetails('StateCommitmentChain', {
         description:
-          'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. The BVM_Proposer can submit new state roots.',
+          'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Only the BVM_Proposer (which currently resolves to the Rollup contract) is allowed to submit new state roots.',
         ...upgradesAddressManager,
       }),
       discovery.getContractDetails('ChainStorageContainerCTC', {
@@ -256,6 +259,31 @@ export const mantle: Layer2 = {
           'This is a library that stores the mappings between names and their addresses. Changing the values effectively upgrades the system. It is controlled by the OwnerMultisig.',
         ...regularUpgrades,
       }),
+      discovery.getContractDetails('TssGroupManager', {
+        description:
+          'This contract controls the TSS group. It can update the public key, add and remove members, and check signed messages. Proposer\'s state updates are signed by the TSS group.',
+        ...regularUpgrades,
+      }),
+      discovery.getContractDetails('TssStakingSlashing', {
+        description:
+          'This contract handles staking and slashing of TSS group members. Only whitelisted actors can stake.',
+        ...regularUpgrades,
+      }),
+      discovery.getContractDetails('TssDelegationManager', {
+        description:
+          'Contract that manages different investing strategies related to delegation.',
+        ...regularUpgrades,
+      }),
+      discovery.getContractDetails('TssDelegation', {
+        description:
+          'Primary delegation contract.',
+        ...regularUpgrades,
+      }),
+      discovery.getContractDetails('TssDelegationSlasher', {
+        description:
+          'This contract is used to add or remove slashing contracts related to delegation.',
+        ...regularUpgrades,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -265,6 +293,11 @@ export const mantle: Layer2 = {
       name: 'Sequencer',
       accounts: [discovery.getPermissionedAccount('AddressManager', 'sequencer')],
       description: 'Central actor allowed to commit L2 transactions to L1.',
+    },
+    {
+      name: 'Tss group',
+      accounts: [],
+      description: `Group of addresses that sign state updates usign a threshold signature scheme. Members of the group can be slashed by the group itself. It is managed by the TssGroupManager contract. It is equivalent to a ${TssGroup} multisig.`,
     }
   ],
 }

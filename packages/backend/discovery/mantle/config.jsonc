@@ -36,7 +36,7 @@
     "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a": "PubkeyCompendium",
     "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01": "RegistryPermission",
     "0x075a48633dc6845f92339741E9c96b88f1b2A86f": "PauserRegistry",
-    "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashingProxy",
+    "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashing",
     "0xD1328C9167e0693B689b5aa5a024379d4e437858": "Rollup",
     "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317": "AssertionMap"
   },
@@ -83,7 +83,7 @@
           "method": "getAddress",
           "args": ["BVM_FraudVerifier"]
         },
-        "GroupManagerProxy": {
+        "TssGroupManagerProxy": {
           "type": "call",
           "method": "getAddress",
           "args": ["Proxy__TSS_GroupManager"]
@@ -91,7 +91,8 @@
         "TssGroupManager": {
           "type": "call",
           "method": "getAddress",
-          "args": ["TssGroupManager"]
+          "args": ["TssGroupManager"],
+          "ignoreRelative": true
         },
         "TssStakingSlashing": {
           "type": "call",
@@ -172,7 +173,7 @@
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"]
     },
-    "TssStakingSlashingProxy": {
+    "TssStakingSlashing": {
       "ignoreMethods": [
         "sharesToUnderlying",
         "sharesToUnderlyingView",
