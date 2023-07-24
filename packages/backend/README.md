@@ -146,7 +146,7 @@ Query parameters:
 Example
 
 ```
-https://api.l2beat.com/status/prices
+https://api.l2beat.com/status/prices?from=1687599307&to=1690191307
 ```
 
 ---
@@ -162,7 +162,7 @@ Query parameters:
 Example
 
 ```
-https://api.l2beat.com/status/balances?chainId=1
+https://api.l2beat.com/status/balances?chainId=1&from=1687599307&to=1690191307
 ```
 
 ---
@@ -179,11 +179,19 @@ Query parameters:
 Example
 
 ```
-https://api.l2beat.com/status/reports/?chainId=1&type=CBV
+https://api.l2beat.com/status/reports/?chainId=1&type=CBV&from=1687599307&to=1690191307
 ```
 
 ---
 
 #### `/status/discovery`
+
+There are no query parameters.
+
+Example
+
+```
+https://api.l2beat.com/status/discovery
+```
 
 ---
