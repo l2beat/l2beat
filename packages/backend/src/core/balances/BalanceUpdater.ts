@@ -77,8 +77,10 @@ export class BalanceUpdater {
     this.logger.info('Started', { chainId: this.chainId.toString() })
     return this.clock.onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
-        // we add to front to sync from newest to oldest
-        this.taskQueue.addToFront(timestamp)
+        if (timestamp.gte(this.minTimestamp)) {
+          // we add to front to sync from newest to oldest
+          this.taskQueue.addToFront(timestamp)
+        }
       }
     })
   }
@@ -90,11 +92,6 @@ export class BalanceUpdater {
       this.logger.debug('Skipping update', {
         timestamp: timestamp.toNumber(),
         minTimestamp: this.minTimestamp.toNumber(),
-      })
-      await this.balanceStatusRepository.add({
-        chainId: this.chainId,
-        configHash: this.configHash,
-        timestamp,
       })
       return
     }

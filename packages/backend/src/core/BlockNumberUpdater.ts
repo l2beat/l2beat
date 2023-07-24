@@ -64,8 +64,10 @@ export class BlockNumberUpdater {
     this.logger.info('Started')
     return this.clock.onEveryHour((timestamp) => {
       if (!this.blocksByTimestamp.has(timestamp.toNumber())) {
-        // we add to front to sync from newest to oldest
-        this.taskQueue.addToFront(timestamp)
+        if (timestamp.gte(this.minTimestamp)) {
+          // we add to front to sync from newest to oldest
+          this.taskQueue.addToFront(timestamp)
+        }
       }
     })
   }

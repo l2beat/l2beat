@@ -76,8 +76,10 @@ export class CBVUpdater implements AssetUpdater {
     this.logger.info('Started')
     return this.clock.onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
-        // we add to front to sync from newest to oldest
-        this.taskQueue.addToFront(timestamp)
+        if (timestamp.gte(this.minTimestamp)) {
+          // we add to front to sync from newest to oldest
+          this.taskQueue.addToFront(timestamp)
+        }
       }
     })
   }
@@ -87,12 +89,6 @@ export class CBVUpdater implements AssetUpdater {
       this.logger.debug('Skipping update', {
         timestamp: timestamp.toNumber(),
         minTimestamp: this.minTimestamp.toNumber(),
-      })
-      await this.reportStatusRepository.add({
-        configHash: this.configHash,
-        timestamp,
-        chainId: this.getChainId(),
-        valueType: ValueType.CBV,
       })
       return
     }
