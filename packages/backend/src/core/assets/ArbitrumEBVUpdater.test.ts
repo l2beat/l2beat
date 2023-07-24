@@ -90,7 +90,7 @@ describe(ArbitrumEBVUpdater.name, () => {
       expect(reports).toEqual(MOCK.FUTURE_REPORTS)
     })
 
-    it('skips update if timestamp < minTimestamp', async () => {
+    it('throws if timestamp < minTimestamp', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn(),
       })
@@ -116,12 +116,13 @@ describe(ArbitrumEBVUpdater.name, () => {
         new UnixTime(1000),
       )
 
-      await updater.update(new UnixTime(999))
+      await expect(
+        async () => await updater.update(new UnixTime(999)),
+      ).toBeRejectedWith('Timestamp cannot be smaller than minTimestamp')
 
       expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
       expect(balanceUpdater.getBalancesWhenReady).not.toHaveBeenCalled()
       expect(suppliesUpdater.getTotalSuppliesWhenReady).not.toHaveBeenCalled()
-      expect(status.add).toHaveBeenCalledTimes(1)
     })
   })
 
