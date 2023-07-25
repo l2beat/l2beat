@@ -5,21 +5,22 @@ import { Page } from './Page'
 import { reactToHtml } from './reactToHtml'
 import { StatusTable } from './StatusTable'
 
-interface Report {
+interface Status {
   timestamp: UnixTime
   isSynced: boolean
 }
 
-interface ReportsPageProps {
-  reports: Report[]
+interface StatusPageProps {
+  statuses: Status[]
+  title: string
 }
 
-export function ReportsPage({ reports }: ReportsPageProps) {
+export function StatusPage({ statuses, title }: StatusPageProps) {
   return (
-    <Page title="Reports">
+    <Page title={title}>
       <StatusTable
         columns={['Timestamp', 'Date']}
-        rows={reports.map(({ isSynced, timestamp }) => ({
+        rows={statuses.map(({ isSynced, timestamp }) => ({
           isSynced,
           cells: [
             timestamp.toString(),
@@ -31,6 +32,6 @@ export function ReportsPage({ reports }: ReportsPageProps) {
   )
 }
 
-export function renderReportsPage(props: ReportsPageProps) {
-  return reactToHtml(<ReportsPage {...props} />)
+export function renderStatusPage(props: StatusPageProps) {
+  return reactToHtml(<StatusPage {...props} />)
 }

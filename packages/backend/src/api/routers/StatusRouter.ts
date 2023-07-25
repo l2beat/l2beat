@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { stringAs, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, stringAs, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { StatusController } from '../controllers/status/StatusController'
@@ -9,6 +9,8 @@ const queryParser = z.object({
   query: z.object({
     from: stringAs((s) => new UnixTime(+s)).optional(),
     to: stringAs((s) => new UnixTime(+s)).optional(),
+    chainId: stringAs((s) => ChainId(+s)).optional(),
+    type: stringAs((s) => ValueType(s)).optional(),
   }),
 })
 
@@ -33,18 +35,36 @@ export function createStatusRouter(statusController: StatusController) {
   router.get(
     '/status/balances',
     withTypedContext(queryParser, async (ctx) => {
-      const { from, to } = ctx.query
+      const { chainId, from, to } = ctx.query
 
-      ctx.body = await statusController.getBalancesStatus(from, to)
+      ctx.body = await statusController.getBalancesStatus(chainId, from, to)
+    }),
+  )
+
+  router.get(
+    '/status/supplies',
+    withTypedContext(queryParser, async (ctx) => {
+      const { chainId, from, to } = ctx.query
+
+      ctx.body = await statusController.getTotalSuppliesStatus(
+        chainId,
+        from,
+        to,
+      )
     }),
   )
 
   router.get(
     '/status/reports',
     withTypedContext(queryParser, async (ctx) => {
-      const { from, to } = ctx.query
+      const { chainId, type, from, to } = ctx.query
 
-      ctx.body = await statusController.getReportsStatus(from, to)
+      ctx.body = await statusController.getReportsStatus(
+        chainId,
+        type,
+        from,
+        to,
+      )
     }),
   )
 

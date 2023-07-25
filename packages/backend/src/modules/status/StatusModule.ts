@@ -11,6 +11,7 @@ import { UpdateMonitorRepository } from '../../peripherals/database/discovery/Up
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { Database } from '../../peripherals/database/shared/Database'
+import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
 import { ApplicationModule } from '../ApplicationModule'
 
 export function createStatusModule(
@@ -28,12 +29,17 @@ export function createStatusModule(
   const priceRepository = new PriceRepository(database, logger)
   const reportStatusRepository = new ReportStatusRepository(database, logger)
   const balanceStatusRepository = new BalanceStatusRepository(database, logger)
+  const totalSupplyStatusRepository = new TotalSupplyStatusRepository(
+    database,
+    logger,
+  )
 
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
   const statusController = new StatusController(
     priceRepository,
     balanceStatusRepository,
+    totalSupplyStatusRepository,
     reportStatusRepository,
     updateMonitorRepository,
     clock,
