@@ -17,6 +17,7 @@ import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupp
 import { TotalSupplyTokensConfig } from '../../../core/totalSupply/TotalSupplyTokensConfig'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
+import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import {
   BalanceStatusRecord,
   BalanceStatusRepository,
@@ -33,6 +34,7 @@ import { getDashboardProjects } from './discovery/props/getDashboardProjects'
 import { getDiff } from './discovery/props/utils/getDiff'
 import { renderDashboardPage } from './discovery/view/DashboardPage'
 import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
+import { renderAggregatedPage } from './view/AggregatedReportsPage'
 import { renderPricesPage } from './view/PricesPage'
 import { renderStatusPage } from './view/StatusPage'
 
@@ -42,6 +44,7 @@ export class StatusController {
     private readonly balanceStatusRepository: BalanceStatusRepository,
     private readonly totalSupplyStatusRepository: TotalSupplyStatusRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
+    private readonly aggregatedStatusRepository: AggregatedReportStatusRepository,
     private readonly updateMonitorRepository: UpdateMonitorRepository,
     private readonly clock: Clock,
     private readonly tokens: Token[],
@@ -193,6 +196,26 @@ export class StatusController {
     const title = `Reports [chainId: ${chainId.toString()}] [type: ${valueType.toString()}]`
 
     return renderStatusPage({ statuses: reports, title })
+  }
+
+  async getAggregatedStatus(
+    from: UnixTime | undefined,
+    to: UnixTime | undefined,
+  ) {
+    const firstHour = this.getFirstHour(from)
+    const lastHour = to ? to : this.clock.getLastHour()
+
+    const statuses = await this.aggregatedStatusRepository.getBetween(
+      firstHour,
+      lastHour,
+    )
+
+    const reports = statuses.map((status) => ({
+      timestamp: status.timestamp,
+      configHash: status.configHash,
+    }))
+
+    return renderAggregatedPage({ statuses: reports })
   }
 
   private getFirstHour(from: UnixTime | undefined) {
