@@ -284,11 +284,25 @@ export const mantle: Layer2 = {
           'This contract is used to add or remove slashing contracts related to delegation.',
         ...regularUpgrades,
       }),
+      discovery.getContractDetails('Rollup', {
+        description:
+          'Main contract related to fraud proofs (not live yet). It is designated as the BVM_Proposer, meaning it can publish state roots. It is inspired by the Specular proof system.',
+        ...regularUpgrades,
+      }),
+      discovery.getContractDetails('VerifierEntry', {
+        description:
+          'Contains the list of verifiers for the different EVM operations. Currently they are all set to the zero address.',
+        ...regularUpgrades,
+      }),
+      discovery.getContractDetails('AssertionMap', {
+        description:
+          'Extension of Rollup, contains the listst of assertions.',
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    ...discovery.getMultisigPermission('OwnerMultisig', 'This address can upgrade the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, TssGroupManager, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation, EigenDataLayerChain, Rollup, AssertionMap.'),
+    ...discovery.getMultisigPermission('OwnerMultisig', 'This address can upgrade the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, TssGroupManager, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation, EigenDataLayerChain, Rollup, AssertionMap, VerifierEntry.'),
     ...discovery.getMultisigPermission('Owner2Multisig', 'This address is the owner of the following contracts: TssGroupManager, VerifierEntry, EigenDataLayerChain, L1CrossDomainMessenger, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation. It is also designated as the FraudVerifier, meaning it can delete state roots.'),
     {
       name: 'Sequencer',
@@ -299,6 +313,16 @@ export const mantle: Layer2 = {
       name: 'Tss group',
       accounts: [],
       description: `Group of addresses that sign state updates usign a threshold signature scheme. Members of the group can be slashed by the group itself. It is managed by the TssGroupManager contract. It is equivalent to a ${TssGroup} multisig.`,
+    },
+    {
+      name: 'Rollup operators',
+      accounts: discovery.getPermissionedAccounts('Rollup', 'operatorslist'),
+      description: 'Addresses that can initiate a state root update and challenge them. They currently sit behind a whitelist.',
+    },
+    {
+      name: 'Rollup stakers',
+      accounts: discovery.getPermissionedAccounts('Rollup', 'stakerslist'),
+      description: 'Addresses that stake on the Rollup contract. They are not in use yet.',
     }
   ],
 }
