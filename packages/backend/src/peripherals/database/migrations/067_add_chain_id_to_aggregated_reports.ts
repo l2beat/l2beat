@@ -20,7 +20,7 @@ export async function up(knex: Knex) {
 
     table.dropPrimary()
 
-    table.primary(['value_type', 'unix_timestamp', 'project_id'])
+    table.primary(['unix_timestamp', 'project_id', 'value_type'])
   })
 }
 
