@@ -288,7 +288,8 @@ export const mantle: Layer2 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    ...discovery.getMultisigPermission('OwnerMultisig', 'This address is the owner of the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, TssGroupManager, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation, EigenDataLayerChain, Rollup, AssertionMap.'),
+    ...discovery.getMultisigPermission('OwnerMultisig', 'This address can upgrade the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, TssGroupManager, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation, EigenDataLayerChain, Rollup, AssertionMap.'),
+    ...discovery.getMultisigPermission('Owner2Multisig', 'This address is the owner of the following contracts: TssGroupManager, VerifierEntry, EigenDataLayerChain, L1CrossDomainMessenger, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation. It is also designated as the FraudVerifier, meaning it can delete state roots.'),
     {
       name: 'Sequencer',
       accounts: [discovery.getPermissionedAccount('AddressManager', 'sequencer')],

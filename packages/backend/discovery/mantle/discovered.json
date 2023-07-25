@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "blockNumber": 17762426,
-  "configHash": "0xc180853558516877d8c71daab4a35ab323e44374adcf96d360a9f5772bb4e681",
+  "configHash": "0xdd8e17270038a94279e18a0c14822b5cb434902a53787be49bbb39b61b617a4e",
   "version": 1,
   "contracts": [
     {
@@ -86,7 +86,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Owner2Multisig",
       "address": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
       "code": "https://etherscan.deth.net/address/0x2F44BD2a54aC3fB20cd7783cF94334069641daC9,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -108,7 +108,8 @@
         "getThreshold": 3,
         "nonce": 41,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "BondManager",

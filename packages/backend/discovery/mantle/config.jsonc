@@ -24,6 +24,7 @@
     "0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "L1MantleToken",
     "0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "MantleTokenProxyAdmin",
     "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": "OwnerMultisig",
+    "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": "Owner2Multisig",
     "0x676A795fe6E43C17c668de16730c3F690FEB7120": "L1CrossDomainMessenger",
     "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A": "EigenDataLayerChain",
     "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798": "Delegation", // check mermaid to see what's going on from now on
