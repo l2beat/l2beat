@@ -16,6 +16,9 @@ import { Knex } from 'knex'
 const sixHourlyIndex = 'aggregated_reports_unix_timestamp_six_hourly_index'
 const dailyIndex = 'aggregated_reports_unix_timestamp_daily_index'
 
+const SIX_HOURS_IN_SECONDS = 6 * 60 * 60
+const ONE_DAY_IN_SECONDS = 24 * 60 * 60
+
 export async function up(knex: Knex) {
   // Old index names
   await knex.schema.raw(
@@ -63,13 +66,13 @@ export async function down(knex: Knex) {
       UPDATE aggregated_reports
       SET is_six_hourly = true
       WHERE
-      EXTRACT(epoch FROM unix_timestamp) % 21600 = 0
+      EXTRACT(epoch FROM unix_timestamp) % ${SIX_HOURS_IN_SECONDS} = 0
       `)
 
   await knex.schema.raw(`
       UPDATE aggregated_reports
       SET is_daily = true
       WHERE
-      EXTRACT(epoch FROM unix_timestamp) % 86400 = 0
+      EXTRACT(epoch FROM unix_timestamp) % ${ONE_DAY_IN_SECONDS} = 0
       `)
 }
