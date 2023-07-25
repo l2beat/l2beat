@@ -47,9 +47,8 @@ export const polygonplasma: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: '48 hours delay',
-      description:
-        'The bridge can be upgraded by 5/9 MSig after 48 hour delay.',
+      value: `${delayString} delay`,
+      description: `The bridge can be upgraded by the PolygonMultisig after a delay of ${delayString}.`,
       sentiment: 'warning',
     },
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('MATIC'),
@@ -60,14 +59,14 @@ export const polygonplasma: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'This is a very typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum. The withdrawal process includes 7-day delay.',
+        'This is a very typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum. There is no exit delay since the challenge system is not implemented.',
       references: [],
       risks: [],
     },
     validation: {
       name: 'Outbound transfers are externally verified, inbound require merkle proof',
       description:
-        'Validators on the Polygon network watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Polygon. Every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens users need to present a merkle proof of a burn event that is verified against the checkpoints.',
+        'Validators on the Polygon network watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Polygon. Validators periodically submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens users need to present a merkle proof of a burn event that is verified against the checkpoints.',
       references: [],
       risks: [
         {
@@ -91,7 +90,7 @@ export const polygonplasma: Bridge = {
     destinationToken: {
       name: 'Destination tokens',
       description:
-        'If MATIC ERC20 token is bridged, the native MATIC token is minted on Polygon sidechain.',
+        'If the MATIC ERC20 token is bridged, the native MATIC token is minted on Polygon sidechain.',
       references: [],
       risks: [],
     },
@@ -108,14 +107,12 @@ export const polygonplasma: Bridge = {
         ...upgrades,
       }),
       discovery.getContractDetails('DepositManager', {
-        description:
-          'Contract used to deposit ETH, ERC20 or ERC721 tokens.',
+        description: 'Contract used to deposit ETH, ERC20 or ERC721 tokens.',
         ...upgrades,
       }),
       discovery.getContractDetails('WithdrawManager', {
-        description:
-          'Contract handling users\' withdrawal finalization.',
-        ...upgrades
+        description: "Contract handling users' withdrawal finalization.",
+        ...upgrades,
       }),
       discovery.getContractDetails('ERC20PredicateBurnOnly', {
         description:
@@ -130,7 +127,8 @@ export const polygonplasma: Bridge = {
           'Contract mantaining the addresses of the contracts used in the system.',
       }),
       discovery.getContractDetails('StakeManager', {
-        description: 'Contract managing the staker network and that checks checkpoints signatures.',
+        description:
+          'Contract managing the staker network and that checks checkpoints signatures.',
         ...upgrades,
       }),
       discovery.getContractDetails('Governance', {
@@ -139,14 +137,25 @@ export const polygonplasma: Bridge = {
         ...upgrades,
       }),
       discovery.getContractDetails('EventsHub', {
-        description:
-          'Contains events used by other contracts.',
+        description: 'Contains events used by other contracts.',
         ...upgrades,
       }),
-      discovery.getContractDetails('StakingInfo', 'Contains logging and getter functions regarding the staking network.'),
-      discovery.getContractDetails('ValidatorShareFactory', 'Contract used to create ValidatorShare contracts.'),
-      discovery.getContractDetails('ValidatorShare', 'Contract used to delegate to a validator.'),
-      discovery.getContractDetails('ExitNFT', 'NFTs used to represent an exit.'),
+      discovery.getContractDetails(
+        'StakingInfo',
+        'Contains logging and getter functions regarding the staking network.',
+      ),
+      discovery.getContractDetails(
+        'ValidatorShareFactory',
+        'Contract used to create ValidatorShare contracts.',
+      ),
+      discovery.getContractDetails(
+        'ValidatorShare',
+        'Contract used to delegate to a validator.',
+      ),
+      discovery.getContractDetails(
+        'ExitNFT',
+        'NFTs used to represent an exit.',
+      ),
       discovery.getContractDetails('SlashingManager'),
       discovery.getContractDetails('ChildChain'),
     ],
