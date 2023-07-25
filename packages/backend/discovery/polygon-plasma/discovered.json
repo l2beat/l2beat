@@ -1,7 +1,7 @@
 {
   "name": "polygon-plasma",
-  "blockNumber": 17682782,
-  "configHash": "0x74ca8c57043e120b2edf1a5bb17ee95b27a369c577254afbd6f83bdba3e00bb5",
+  "blockNumber": 17769088,
+  "configHash": "0x38e082e36f1293c33e0d331205536f387922b8f511dfbbd9c64f71b80e2b2a67",
   "version": 1,
   "contracts": [
     {
@@ -33,7 +33,7 @@
         "type": "immutable"
       },
       "values": {
-        "counter": 2717244,
+        "counter": 2730088,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -146,13 +146,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 48263,
-        "currentValidatorSetSize": 100,
-        "currentValidatorSetTotalStake": "3595005561827494304635221749",
+        "currentEpoch": 48735,
+        "currentValidatorSetSize": 101,
+        "currentValidatorSetTotalStake": "3613623584367256337480410300",
         "delegationEnabled": true,
         "delegatorsReward": [],
         "dynasty": 80,
-        "epoch": 48263,
+        "epoch": 48735,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -165,7 +165,7 @@
         "minDeposit": "1000000000000000000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
-        "NFTCounter": 153,
+        "NFTCounter": 155,
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [],
         "prevBlockInterval": 1,
@@ -174,18 +174,18 @@
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "2284108699418537297527018",
+        "rewardPerStake": "2300786827019215328301697",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "6703939209428901681108",
+        "totalHeimdallFee": "6755939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "77736918654861193940338244",
-        "totalStaked": "19946448750568655166643872",
+        "totalRewardsLiquidated": "78261144827798888541428775",
+        "totalStaked": "19946454750568655166643872",
         "validatorReward": [],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
-        "validatorState": ["3595005561827494304635221749", 100],
-        "validatorThreshold": 100,
+        "validatorState": ["3613623584367256337480410300", 101],
+        "validatorThreshold": 101,
         "WITHDRAWAL_DELAY": 80,
         "withdrawalDelay": 80
       },
@@ -248,10 +248,10 @@
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
       },
       "values": {
-        "_nextHeaderBlock": 482630000,
+        "_nextHeaderBlock": 487350000,
         "CHAINID": 137,
-        "currentHeaderBlock": 482620000,
-        "getLastChildBlock": 45018021,
+        "currentHeaderBlock": 487340000,
+        "getLastChildBlock": 45493413,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -413,7 +413,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 180,
+        "nonce": 181,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
