@@ -352,4 +352,13 @@ export const mantle: Layer2 = {
         'Addresses that stake on the Rollup contract. They are not in use yet.',
     },
   ],
+  milestones: [
+    {
+      name: 'Mainnet launch',
+      link: 'https://www.mantle.xyz/blog/announcements/mantle-network-mainnet-alpha',
+      date: '2023-07-14T00:00:00.00Z',
+      description:
+        'Mantle is live on mainnet.'
+    }
+  ]
 }
