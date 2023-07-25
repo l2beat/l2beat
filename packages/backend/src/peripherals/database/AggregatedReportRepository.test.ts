@@ -111,22 +111,22 @@ describe(AggregatedReportRepository.name, () => {
         fakeAggregateReport({
           projectId: ProjectId('1'),
           timestamp: TIME_1,
-          valueUsd: 1n,
+          usdValue: 1n,
         }),
         fakeAggregateReport({
           projectId: ProjectId('2'),
           timestamp: TIME_1,
-          valueUsd: 2n,
+          usdValue: 2n,
         }),
         fakeAggregateReport({
           projectId: ProjectId('3'),
           timestamp: TIME_1,
-          valueUsd: 3n,
+          usdValue: 3n,
         }),
         fakeAggregateReport({
           projectId: ProjectId('4'),
           timestamp: TIME_1,
-          valueUsd: 4n,
+          usdValue: 4n,
         }),
       ]
       await repository.addOrUpdateMany(REPORTS.slice(0, 2))
@@ -198,8 +198,8 @@ function fakeAggregateReport(
   return {
     timestamp: UnixTime.now(),
     projectId: ProjectId('fake-project'),
-    valueUsd: 1234n,
-    valueEth: 1234n,
+    usdValue: 1234n,
+    ethValue: 1234n,
     valueType: ValueType.TVL,
     ...report,
   }

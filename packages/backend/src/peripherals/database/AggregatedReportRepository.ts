@@ -8,8 +8,8 @@ import { Database } from './shared/Database'
 export interface AggregatedReportRecord {
   timestamp: UnixTime
   projectId: ProjectId
-  valueUsd: bigint
-  valueEth: bigint
+  usdValue: bigint
+  ethValue: bigint
   valueType: ValueType
 }
 
@@ -99,8 +99,8 @@ function toRow(record: AggregatedReportRecord): AggregatedReportRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
-    value_usd: record.valueUsd.toString(),
-    value_eth: record.valueEth.toString(),
+    usd_value: record.usdValue.toString(),
+    eth_value: record.ethValue.toString(),
     value_type: record.valueType.toString(),
   }
 }
@@ -109,8 +109,8 @@ function toRecord(row: AggregatedReportRow): AggregatedReportRecord {
   return {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),
-    valueUsd: BigInt(row.value_usd),
-    valueEth: BigInt(row.value_eth),
+    usdValue: BigInt(row.usd_value),
+    ethValue: BigInt(row.eth_value),
     valueType: ValueType(row.value_type),
   }
 }

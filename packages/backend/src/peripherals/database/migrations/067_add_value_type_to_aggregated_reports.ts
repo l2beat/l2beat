@@ -22,8 +22,8 @@ export async function up(knex: Knex) {
 
     table.primary(['unix_timestamp', 'project_id', 'value_type'])
 
-    table.renameColumn('tvl_usd', 'value_usd')
-    table.renameColumn('tvl_eth', 'value_eth')
+    table.renameColumn('tvl_usd', 'usd_value')
+    table.renameColumn('tvl_eth', 'eth_value')
   })
 }
 
@@ -33,7 +33,7 @@ export async function down(knex: Knex) {
     table.dropColumn('value_type')
     table.primary(['unix_timestamp', 'project_id'])
 
-    table.renameColumn('value_usd', 'tvl_usd')
-    table.renameColumn('value_eth', 'tvl_eth')
+    table.renameColumn('usd_value', 'tvl_usd')
+    table.renameColumn('eth_value', 'tvl_eth')
   })
 }
