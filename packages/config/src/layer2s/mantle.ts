@@ -22,7 +22,7 @@ const upgradesAddressManager = {
 }
 
 const regularUpgrades = {
-  upgradableBy: ['Owner'],
+  upgradableBy: ['OwnerMultisig'],
   upgradeDelay: 'No delay',
 }
 
