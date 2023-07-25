@@ -56,16 +56,22 @@ export function getLocalConfig(): Config {
       ethereum: ethereumTvlEnabled && {
         alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
-        alchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+        providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
+        minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
     },
     activity: activityEnabled && {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
       skipExplicitExclusion: true,
+      projectsExcludedFromAPI: getEnv.array(
+        'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
+        [],
+      ),
       projects: {
         ethereum: {
           type: 'rpc',
@@ -93,6 +99,14 @@ export function getLocalConfig(): Config {
           type: 'rpc',
           callsPerMinute: 60,
           url: getEnv('ACTIVITY_NOVA_URL', 'https://nova.arbitrum.io/rpc'),
+        },
+        linea: {
+          type: 'rpc',
+          callsPerMinute: 60,
+          url: getEnv(
+            'ACTIVITY_LINEA_URL',
+            'https://linea-mainnet.infura.io/v3',
+          ),
         },
       },
     },

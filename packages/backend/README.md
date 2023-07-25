@@ -50,7 +50,7 @@ environment variables. One variable per line `KEY=value`.
 - `DATABASE_URL` - Database url used in production deployment
 - `ETHERSCAN_API_KEY` - API key for Etherscan
 - `ETHEREUM_ALCHEMY_API_KEY` - API key for Alchemy Ethereum App
-- `ARBITRUM_ALCHEMY_API_KEY` - API key for Alchemy Arbitrum App
+- `ARBITRUM_PROVIDER_URL` - API Url for Arbitrum QuickNode provider
 
 #### Optional
 
@@ -69,6 +69,7 @@ environment variables. One variable per line `KEY=value`.
 - `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
 - `DISCORD_TOKEN` - Bot account authentication token, for more details go to `DiscordClient.ts`
 - `STATUS_ENABLE`(default `true`) - enable/disable status module
+- `ACTIVITY_PROJECTS_EXCLUDED_FROM_API` - allows to exclude certain projects from the activity API response
 
 #### Optional (local development)
 
@@ -96,13 +97,14 @@ ETHEREUM_ALCHEMY_API_KEY=
 # ETHEREUM_TVL_ENABLED=
 # ARBITRUM_TVL_ENABLED=
 # ARBISCAN_API_KEY=
-# ARBITRUM_ALCHEMY_API_KEY
+# ARBITRUM_PROVIDER_URL
 # DISCOVERY_BLOCK_NUMBER=
 # WATCHMODE_ENABLED=
 # PUBLIC_DISCORD_CHANNEL_ID=
 # INTERNAL_DISCORD_CHANNEL_ID=
 # DISCORD_TOKEN=
 # UPDATE_MONITOR_RUN_ON_START=
+# ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
 ```
 
 ## Scripts

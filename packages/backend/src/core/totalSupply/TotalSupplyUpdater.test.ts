@@ -62,6 +62,7 @@ describe(TotalSupplyUpdater.name, () => {
         [],
         Logger.SILENT,
         chainId,
+        new UnixTime(0),
       )
 
       await totalSupplyUpdater.start()
@@ -136,6 +137,7 @@ describe(TotalSupplyUpdater.name, () => {
         tokensConfig,
         Logger.SILENT,
         chainId,
+        new UnixTime(0),
       )
 
       const totalSupplies: TotalSupplyRecord[] = [
@@ -152,7 +154,12 @@ describe(TotalSupplyUpdater.name, () => {
       await balanceUpdater.update(queryTimestamp)
 
       expect(getTotalSupplies).toHaveBeenOnlyCalledWith(
-        [{ assetId: fakeUsdc.assetId, tokenAddress: fakeUsdc.tokenAddress }],
+        [
+          {
+            assetId: fakeUsdc.assetId,
+            tokenAddress: EthereumAddress(fakeUsdc.tokenAddress),
+          },
+        ],
         queryTimestamp,
         blockNumber,
       )
@@ -205,6 +212,7 @@ describe(TotalSupplyUpdater.name, () => {
         tokensConfig,
         Logger.SILENT,
         chainId,
+        new UnixTime(0),
       )
 
       await balanceUpdater.update(queryTimestamp)
@@ -213,6 +221,29 @@ describe(TotalSupplyUpdater.name, () => {
         timestamp: queryTimestamp,
         chainId,
       })
+    })
+
+    it('skips if timestamp < minTimestamp', async () => {
+      const provider = mockObject<TotalSupplyProvider>({
+        getChainId: () => chainId,
+        getTotalSupplies: async () => [],
+      })
+
+      const updater = new TotalSupplyUpdater(
+        provider,
+        mockObject<BlockNumberUpdater>(),
+        mockObject<TotalSupplyRepository>(),
+        mockObject<TotalSupplyStatusRepository>(),
+        mockObject<Clock>(),
+        [],
+        Logger.SILENT,
+        chainId,
+        new UnixTime(1000),
+      )
+
+      await updater.update(new UnixTime(999))
+
+      expect(provider.getTotalSupplies).not.toHaveBeenCalled()
     })
   })
 
@@ -258,11 +289,11 @@ describe(TotalSupplyUpdater.name, () => {
       expect(result).toEqual([
         {
           assetId: AssetId.ETH,
-          tokenAddress: fakeEth.tokenAddress,
+          tokenAddress: EthereumAddress(fakeEth.tokenAddress),
         },
         {
           assetId: AssetId.DAI,
-          tokenAddress: fakeDai.tokenAddress,
+          tokenAddress: EthereumAddress(fakeDai.tokenAddress),
         },
       ])
     })
@@ -276,7 +307,7 @@ describe(TotalSupplyUpdater.name, () => {
       assetId,
       sinceTimestamp,
       decimals: 18,
-      tokenAddress: EthereumAddress.random(),
+      tokenAddress: EthereumAddress.random().toString(),
     }
   }
 })

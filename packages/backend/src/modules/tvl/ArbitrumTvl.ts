@@ -1,14 +1,17 @@
 import { ArbiscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId } from '@l2beat/shared-pure'
+import { assert, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
+import { ArbitrumEBVUpdater } from '../../core/assets/ArbitrumEBVUpdater'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { ArbitrumBalanceProvider } from '../../core/balances/providers/ArbitrumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
+import { PriceUpdater } from '../../core/PriceUpdater'
 import { ArbitrumTotalSupplyProvider } from '../../core/totalSupply/providers/ArbitrumTotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
+import { Project } from '../../model'
 import { ArbitrumMulticallClient } from '../../peripherals/arbitrum/multicall/ArbitrumMulticall'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { TvlSubmodule } from '../ApplicationModule'
@@ -16,6 +19,7 @@ import { TvlDatabase } from './types'
 
 export function createArbitrumTvlSubmodule(
   db: TvlDatabase,
+  priceUpdater: PriceUpdater,
   config: Config,
   logger: Logger,
   http: HttpClient,
@@ -28,22 +32,31 @@ export function createArbitrumTvlSubmodule(
 
   // #region peripherals
 
-  const arbitrumProvider = new providers.AlchemyProvider(
+  const arbitrumProject = filterArbitrumProject(config.projects)
+  const arbitrumTokens = getExternalTokens(arbitrumProject)
+
+  const arbitrumProvider = new providers.JsonRpcProvider(
+    config.tvl.arbitrum.providerUrl,
     'arbitrum',
-    config.tvl.arbitrum.alchemyApiKey,
   )
 
   const arbiscanClient = new ArbiscanClient(
     http,
     config.tvl.arbitrum.arbiscanApiKey,
+    config.tvl.arbitrum.minBlockTimestamp,
     logger,
   )
 
-  const arbitrumClient = new EthereumClient(arbitrumProvider, logger)
+  const arbitrumClient = new EthereumClient(arbitrumProvider, logger, 25)
 
   const arbitrumMulticall = ArbitrumMulticallClient.forMainnet(arbitrumClient)
 
   const totalSupplyProvider = new ArbitrumTotalSupplyProvider(
+    arbitrumClient,
+    arbitrumMulticall,
+  )
+
+  const arbitrumBalanceProvider = new ArbitrumBalanceProvider(
     arbitrumClient,
     arbitrumMulticall,
   )
@@ -57,11 +70,7 @@ export function createArbitrumTvlSubmodule(
     clock,
     logger,
     ChainId.ARBITRUM,
-  )
-
-  const arbitrumBalanceProvider = new ArbitrumBalanceProvider(
-    arbitrumClient,
-    arbitrumMulticall,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   const arbitrumBalanceUpdater = new BalanceUpdater(
@@ -73,6 +82,7 @@ export function createArbitrumTvlSubmodule(
     [],
     logger,
     ChainId.ARBITRUM,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   const totalSupplyUpdater = new TotalSupplyUpdater(
@@ -81,9 +91,23 @@ export function createArbitrumTvlSubmodule(
     db.totalSupplyRepository,
     db.totalSupplyStatusRepository,
     clock,
-    [],
+    arbitrumTokens,
     logger,
     ChainId.ARBITRUM,
+    config.tvl.arbitrum.minBlockTimestamp,
+  )
+
+  const ebvUpdater = new ArbitrumEBVUpdater(
+    priceUpdater,
+    arbitrumBalanceUpdater,
+    totalSupplyUpdater,
+    db.reportRepository,
+    db.reportStatusRepository,
+    clock,
+    arbitrumProject,
+    arbitrumTokens,
+    logger,
+    config.tvl.arbitrum.minBlockTimestamp,
   )
 
   // #endregion
@@ -95,11 +119,31 @@ export function createArbitrumTvlSubmodule(
     await arbiscanBlockNumberUpdater.start()
     await arbitrumBalanceUpdater.start()
     await totalSupplyUpdater.start()
+    await ebvUpdater.start()
 
     logger.info('Started')
   }
 
   return {
+    updaters: [ebvUpdater],
     start,
   }
+}
+
+function filterArbitrumProject(projects: Project[]) {
+  const result = projects.filter((x) => x.projectId === ProjectId.ARBITRUM)
+  assert(
+    result.length === 1,
+    'Expected there only to be a single matching project',
+  )
+  return result
+}
+
+function getExternalTokens(project: Project[]) {
+  assert(
+    project.length === 1,
+    'Expected there only to be a single matching project',
+  )
+  assert(project[0].externalTokens, 'No external tokens configured')
+  return project[0].externalTokens.assets
 }

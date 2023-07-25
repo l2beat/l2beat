@@ -125,7 +125,7 @@ export const arbitrum: Layer2 = {
         {
           assetId: AssetId.USDC,
           tokenAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
-          sinceTimestamp: new UnixTime(1667209872),
+          sinceTimestamp: new UnixTime(1667250000),
           decimals: 6,
           premintHolderAddresses: [],
         },

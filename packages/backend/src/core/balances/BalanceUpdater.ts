@@ -28,6 +28,7 @@ export class BalanceUpdater {
     private readonly projects: BalanceProject[],
     private readonly logger: Logger,
     private readonly chainId: ChainId,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
     this.configHash = getBalanceConfigHash(projects)
@@ -45,8 +46,20 @@ export class BalanceUpdater {
     )
   }
 
+  getMinTimestamp() {
+    return this.minTimestamp
+  }
+
   async getBalancesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Programmer error: requested timestamp does not exist',
+    )
+
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug('Something is waiting for getBalancesWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
     return this.balanceRepository.getByTimestamp(this.chainId, timestamp)
@@ -73,6 +86,14 @@ export class BalanceUpdater {
   // TODO(radomski): Remove all op-optimism/arb-arbitrum tokens from balances.
   // Don't fetch balances for those two tokens
   async update(timestamp: UnixTime) {
+    if (!timestamp.gte(this.minTimestamp)) {
+      this.logger.debug('Skipping update', {
+        timestamp: timestamp.toNumber(),
+        minTimestamp: this.minTimestamp.toNumber(),
+      })
+      return
+    }
+
     this.logger.debug('Update started', {
       timestamp: timestamp.toNumber(),
       chainId: this.chainId.toString(),

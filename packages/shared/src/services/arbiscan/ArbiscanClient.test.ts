@@ -17,7 +17,11 @@ describe(ArbiscanClient.name, () => {
         },
       })
 
-      const arbiscanClient = new ArbiscanClient(httpClient, 'key')
+      const arbiscanClient = new ArbiscanClient(
+        httpClient,
+        'key',
+        new UnixTime(0),
+      )
       const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
         new UnixTime(3141592653),
       )
@@ -33,7 +37,11 @@ describe(ArbiscanClient.name, () => {
   describe(ArbiscanClient.prototype.getChainId.name, () => {
     it('returns arbitrum chainId', async () => {
       const httpClient = mockObject<HttpClient>()
-      const arbiscanClient = new ArbiscanClient(httpClient, 'key')
+      const arbiscanClient = new ArbiscanClient(
+        httpClient,
+        'key',
+        new UnixTime(0),
+      )
       expect(arbiscanClient.getChainId()).toEqual(ChainId.ARBITRUM)
     })
   })

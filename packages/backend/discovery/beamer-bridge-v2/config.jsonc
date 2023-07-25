@@ -18,20 +18,12 @@
     "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": "ArbitrumL1Messenger"
   },
   "overrides": {
-    "0xCb60516819a28431233195A8b7E0227C288B61AD": {
+    "Resolver": {
       "ignoreMethods": ["sourceChainInfos"]
     },
-    "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": {
+    "EthereumRequestManager": {
       "ignoreMethods": ["protocolFee"],
       "fields": {
-        "liquidityProviders": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "LpAdded",
-          "addKey": "lp",
-          "removeEvent": "LpRemoved",
-          "removeKey": "lp",
-          "ignoreRelative": true
-        },
         "chains": {
           "type": "stateFromEvent",
           "event": "ChainUpdated",
@@ -46,7 +38,7 @@
       },
       "ignoreInWatchMode": ["chains", "currentNonce"]
     },
-    "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": {
+    "EthereumFillManager": {
       "fields": {
         "liquidityProviders": {
           "type": "arrayFromTwoEvents",

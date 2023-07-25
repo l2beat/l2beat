@@ -14,6 +14,7 @@ module.exports = {
       '2xl': ['24px', '36px'],
       '3xl': ['32px', '36px'],
       '4xl': ['40px', '60px'],
+      '5xl': ['48px', '60px'],
     },
     colors: {
       current: 'currentColor',
@@ -29,8 +30,10 @@ module.exports = {
         50: '#AEAEAE',
         100: '#EDEDED',
         200: '#DFDFDF',
+        250: '#D4D4D4',
         300: '#D3D3D3',
         400: '#D0CED1',
+        450: '#B9B9B9',
         500: '#737373',
         550: '#888888',
         600: '#848484',
@@ -54,15 +57,20 @@ module.exports = {
       },
       orange: { 400: '#FF8B36', 500: '#FF7D1F', 600: '#F94A24' },
       purple: {
+        50: '#6C57BF',
         100: '#7E41CC',
         300: '#F1D6FF',
         500: '#6A008E',
         700: '#4A133C',
         800: '#32102A',
       },
+      indigo: {
+        500: '#7252F2',
+      },
       pink: {
         100: '#FF46C0',
         200: '#DB8BF7',
+        800: '#B94DDF',
         900: '#AB3BD2',
       },
       green: {

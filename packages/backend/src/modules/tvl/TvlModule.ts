@@ -90,6 +90,7 @@ export function createTvlModule(
     config.projects,
     config.tokens,
     logger,
+    config.tvl.arbitrum ? true : false,
   )
 
   const dydxController = new DydxController(db.aggregatedReportRepository)
@@ -102,8 +103,8 @@ export function createTvlModule(
 
   const submodules: (TvlSubmodule | undefined)[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createNativeTvlSubmodule(db, priceUpdater, logger, clock),
-    createArbitrumTvlSubmodule(db, config, logger, http, clock),
+    createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
+    createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
   ]
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(

@@ -97,7 +97,7 @@ export class UpdateNotifier {
     for (const message of arrayMessages) {
       await this.discordClient.sendMessage(message, channel).then(
         () => this.logger.debug('Notification to Discord has been sent'),
-        (e) => this.logger.error(e),
+        (e) => this.logger.error({ message: 'Discord API error' }, e),
       )
     }
   }

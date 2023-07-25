@@ -1,5 +1,12 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainId,
+  Hash256,
+  ProjectId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -12,8 +19,8 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createReports } from '../reports/createReports'
-import { ARB_TOKEN_ID, ARBITRUM_PROJECT_ID } from '../reports/custom/arbitrum'
-import { OP_TOKEN_ID, OPTIMISM_PROJECT_ID } from '../reports/custom/optimism'
+import { ARB_TOKEN_ID } from '../reports/custom/arbitrum'
+import { OP_TOKEN_ID } from '../reports/custom/optimism'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { ReportProject } from '../reports/ReportProject'
 import { AssetUpdater } from './AssetUpdater'
@@ -31,6 +38,7 @@ export class CBVUpdater implements AssetUpdater {
     private readonly clock: Clock,
     private readonly projects: ReportProject[],
     private readonly logger: Logger,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
     // TODO(radomski): This config hash should be generated from only CBV projects
@@ -49,6 +57,10 @@ export class CBVUpdater implements AssetUpdater {
 
   getConfigHash() {
     return this.configHash
+  }
+
+  getMinTimestamp() {
+    return this.minTimestamp
   }
 
   async start() {
@@ -71,6 +83,14 @@ export class CBVUpdater implements AssetUpdater {
   }
 
   async update(timestamp: UnixTime) {
+    if (!timestamp.gte(this.minTimestamp)) {
+      this.logger.debug('Skipping update', {
+        timestamp: timestamp.toNumber(),
+        minTimestamp: this.minTimestamp.toNumber(),
+      })
+      return
+    }
+
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const [prices, balances] = await Promise.all([
       this.priceUpdater.getPricesWhenReady(timestamp),
@@ -104,7 +124,15 @@ export class CBVUpdater implements AssetUpdater {
     timestamp: UnixTime,
     refreshIntervalMs = 1000,
   ): Promise<ReportRecord[]> {
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Programmer error: requested timestamp does not exist',
+    )
+
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug('Something is waiting for getReportsWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
     return this.reportRepository.getByTimestampAndPreciseAsset(
@@ -118,9 +146,9 @@ export class CBVUpdater implements AssetUpdater {
 function filterOutNVMReports(reports: ReportRecord[]): ReportRecord[] {
   return reports.filter((r) => {
     const isOpNative =
-      r.asset === OP_TOKEN_ID && r.projectId === OPTIMISM_PROJECT_ID
+      r.asset === OP_TOKEN_ID && r.projectId === ProjectId.OPTIMISM
     const isArbNative =
-      r.asset === ARB_TOKEN_ID && r.projectId === ARBITRUM_PROJECT_ID
+      r.asset === ARB_TOKEN_ID && r.projectId === ProjectId.ARBITRUM
     return !isOpNative && !isArbNative
   })
 }
