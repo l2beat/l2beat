@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "blockNumber": 17761148,
+  "blockNumber": 17768617,
   "configHash": "0x2335858d3e21a17a6b4c4cbb0cef0af8634d87307265f83de8afbf778c4108f9",
   "version": 1,
   "contracts": [
@@ -26,7 +26,7 @@
           "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
         ],
         "getThreshold": 3,
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -75,7 +75,7 @@
             "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "currentPeriodAmountInWei": "8991829003754789183",
+        "currentPeriodAmountInWei": "54621130537025442928",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": "0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0",
         "generalPause": false,
@@ -85,7 +85,7 @@
         "l1l2Pause": false,
         "L2_L1_PAUSE_TYPE": "0x21ea2f4fee4bcb623de15ac222ea5c1464307d884f23394b78ddc07f9c9c7cd8",
         "l2l1Pause": false,
-        "limitInWei": "100000000000000000000",
+        "limitInWei": "400000000000000000000",
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
         "OUTBOX_STATUS_RECEIVED": 2,
         "OUTBOX_STATUS_SENT": 1,
