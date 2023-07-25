@@ -68,6 +68,15 @@ export function createStatusRouter(statusController: StatusController) {
     }),
   )
 
+  router.get(
+    '/status/aggregated',
+    withTypedContext(queryParser, async (ctx) => {
+      const { from, to } = ctx.query
+
+      ctx.body = await statusController.getAggregatedStatus(from, to)
+    }),
+  )
+
   router.get('/status/discovery', async (ctx) => {
     ctx.body = await statusController.getDiscoveryDashboard()
   })
