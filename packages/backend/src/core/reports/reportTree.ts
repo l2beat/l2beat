@@ -1,12 +1,9 @@
 import { assert } from '@l2beat/shared-pure'
 
-export class AggregatedReportTree<
-  Root = unknown,
-  Branch = unknown,
-  Leaf = unknown,
-> {
-  roots: Root[]
-  static fromScratch<Root, Branch, Leaf>(
+export class ReportTree<Root = unknown, Branch = unknown, Leaf = unknown> {
+  private readonly roots: Root[]
+
+  static from<Root, Branch, Leaf>(
     roots: Root[],
     branches: Branch[],
     leafValue: () => Leaf,
@@ -20,7 +17,7 @@ export class AggregatedReportTree<
       tree.set(root, leafs)
     }
 
-    return new AggregatedReportTree(tree)
+    return new ReportTree(tree)
   }
 
   constructor(private readonly tree: Map<Root, Map<Branch, Leaf>>) {
@@ -29,6 +26,10 @@ export class AggregatedReportTree<
 
   getRawTree() {
     return this.tree
+  }
+
+  getRoots() {
+    return [...this.roots]
   }
 
   get(root: Root, branch: Branch) {
@@ -46,14 +47,14 @@ export class AggregatedReportTree<
     this.tree.get(root)?.set(branch, newValue)
   }
 
-  mergeWith(otherTree: AggregatedReportTree<Root, Branch, Leaf>) {
+  mergeWith(otherTree: ReportTree<Root, Branch, Leaf>) {
     const newTree = new Map([...this.tree, ...otherTree.tree])
 
-    return new AggregatedReportTree(newTree)
+    return new ReportTree(newTree)
   }
 
   replaceRoots<NewRoot>(newRoots: NewRoot[]) {
-    assert(newRoots.length === this.roots.length, 'unreachable roots')
+    assert(newRoots.length === this.roots.length, 'amount of roots mismatch')
 
     const entries = [...this.tree.entries()]
 
@@ -63,7 +64,7 @@ export class AggregatedReportTree<
       }),
     )
 
-    return new AggregatedReportTree(newTree)
+    return new ReportTree(newTree)
   }
 
   *[Symbol.iterator]() {
