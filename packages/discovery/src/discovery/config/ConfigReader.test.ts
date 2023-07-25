@@ -51,7 +51,7 @@ describe(ConfigReader.name, () => {
 
     for (const project of configs) {
       it(`can read discovered.json for ${project}`, async () => {
-        const result = await configReader.readDiscovery(project)
+        const result = await configReader.readDiscovery(project, 'L1')
         expect(result.name).toEqual(project)
       })
     }

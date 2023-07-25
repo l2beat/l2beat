@@ -40,9 +40,9 @@ export class ConfigReader {
     return result
   }
 
-  async readDiscovery(name: string): Promise<DiscoveryOutput> {
+  async readDiscovery(name: string, layer: Layer): Promise<DiscoveryOutput> {
     const contents = await readFile(
-      `discovery/${name}/discovered.json`,
+      `discovery/${name}/${layer}/discovered.json`,
       'utf-8',
     )
 

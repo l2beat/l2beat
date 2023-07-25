@@ -24,7 +24,7 @@ export async function runInversion(
   useMermaidMarkup: boolean,
 ) {
   const addresses = new Map<string, AddressDetails>()
-  const projectDiscovery = await configReader.readDiscovery(project)
+  const projectDiscovery = await configReader.readDiscovery(project, 'L1')
 
   function add(address: ContractValue, role?: Role) {
     if (

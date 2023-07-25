@@ -26,7 +26,7 @@ export async function runDiscovery(
   const blockNumber =
     config.blockNumber ??
     (config.dev
-      ? (await configReader.readDiscovery(config.project)).blockNumber
+      ? (await configReader.readDiscovery(config.project, 'L1')).blockNumber
       : await provider.getBlockNumber())
 
   const logger = DiscoveryLogger.CLI

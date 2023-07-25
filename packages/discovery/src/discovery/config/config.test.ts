@@ -36,7 +36,7 @@ describe('discovery config.jsonc', () => {
     const notEqual = []
 
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(config.name, 'L1')
       if (discovery.name !== config.name) {
         notEqual.push(config.name)
       }
@@ -50,7 +50,7 @@ describe('discovery config.jsonc', () => {
 
   it('fields inside ignoreInWatchMode exists in discovery', async function () {
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(config.name, 'L1')
 
       for (const override of config.overrides) {
         if (override.ignoreDiscovery === true) {
@@ -94,7 +94,7 @@ describe('discovery config.jsonc', () => {
     const notSorted: string[] = []
 
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(config.name, 'L1')
 
       if (
         !isEqual(
@@ -118,7 +118,7 @@ describe('discovery config.jsonc', () => {
   it('committed discovery config hash matches committed config hash', async () => {
     const outdatedHashes: string[] = []
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(config.name, 'L1')
 
       if (discovery.configHash !== config.hash) {
         outdatedHashes.push(config.name)
@@ -134,7 +134,7 @@ describe('discovery config.jsonc', () => {
 
   it('discovery.json does not include errors', async () => {
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(config.name, 'L1')
 
       assert(
         discovery.contracts.every((c) => c.errors === undefined),
