@@ -6,7 +6,7 @@ export async function findUnknownContracts(
   contracts: ContractParameters[],
   configReader: ConfigReader,
 ): Promise<EthereumAddress[]> {
-  const committed = await configReader.readDiscovery(name)
+  const committed = await configReader.readDiscovery(name, 'L1')
 
   const unknownContracts = contracts
     .filter((contract) => {

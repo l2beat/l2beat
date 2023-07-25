@@ -82,7 +82,7 @@ export class DiscoveryRunner {
   // this function ensures that initial addresses are taken from discovered.json
   // so this way we will always discover "known" contracts
   async updateInitialAddresses(config: DiscoveryConfig) {
-    const discovery = await this.configReader.readDiscovery(config.name)
+    const discovery = await this.configReader.readDiscovery(config.name, 'L1')
     const initialAddresses = discovery.contracts.map((c) => c.address)
     return new DiscoveryConfig({
       ...config.raw,

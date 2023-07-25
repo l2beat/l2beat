@@ -142,6 +142,7 @@ export class UpdateMonitor {
       this.logger.info('Using committed file', { project: projectConfig.name })
       previousDiscovery = await this.configReader.readDiscovery(
         projectConfig.name,
+        'L1',
       )
     }
 
@@ -205,6 +206,7 @@ export class UpdateMonitor {
 
       const committed = await this.configReader.readDiscovery(
         projectConfig.name,
+        'L1',
       )
 
       const diff = diffDiscovery(

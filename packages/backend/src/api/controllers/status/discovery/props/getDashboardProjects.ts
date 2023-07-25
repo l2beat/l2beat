@@ -25,8 +25,8 @@ export async function getDashboardProjects(
   const projects: DashboardProject[] = []
 
   for (const name of names) {
-    const config = await configReader.readConfig(name)
-    const discovery = await configReader.readDiscovery(name)
+    const config = await configReader.readConfig(name, 'L1')
+    const discovery = await configReader.readDiscovery(name, 'L1')
     const diff: DiscoveryDiff[] = await getDiff(
       updateMonitorRepository,
       discovery,

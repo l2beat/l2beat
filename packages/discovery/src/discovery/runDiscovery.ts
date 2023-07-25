@@ -42,6 +42,7 @@ export async function runDiscovery(
     projectConfig,
     blockNumber,
     projectConfig.hash,
+    'L1',
   )
 }
 

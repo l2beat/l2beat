@@ -5,6 +5,7 @@ import { dirname } from 'path'
 import { rimraf } from 'rimraf'
 
 import { Analysis } from '../analysis/AddressAnalyzer'
+import { Layer } from '../config/ConfigReader'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
 import { toPrettyJson } from './toPrettyJson'
@@ -14,6 +15,7 @@ export async function saveDiscoveryResult(
   config: DiscoveryConfig,
   blockNumber: number,
   configHash: Hash256,
+  layer: Layer,
 ) {
   const project = toDiscoveryOutput(
     config.name,
@@ -23,7 +25,7 @@ export async function saveDiscoveryResult(
   )
   const json = await toPrettyJson(project)
 
-  const root = `discovery/${config.name}`
+  const root = `discovery/${config.name}/${layer}`
 
   await writeFile(`${root}/discovered.json`, json)
 

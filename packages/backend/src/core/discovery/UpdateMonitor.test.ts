@@ -391,7 +391,10 @@ describe(UpdateMonitor.name, () => {
       // calls repository (and gets undefined)
       expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // reads committed file
-      expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
+      expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(
+        PROJECT_A,
+        'L1',
+      )
       expect(result).toEqual(committed)
     })
 
