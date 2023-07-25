@@ -6,9 +6,14 @@ import { parse, ParseError } from 'jsonc-parser'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
+export type Layer = 'L1' | 'L2'
+
 export class ConfigReader {
-  async readConfig(name: string): Promise<DiscoveryConfig> {
-    const contents = await readFile(`discovery/${name}/config.jsonc`, 'utf-8')
+  async readConfig(name: string, layer: Layer): Promise<DiscoveryConfig> {
+    const contents = await readFile(
+      `discovery/${name}/${layer}/config.jsonc`,
+      'utf-8',
+    )
     const errors: ParseError[] = []
     const parsed: unknown = parse(contents, errors, {
       allowTrailingComma: true,
@@ -28,7 +33,7 @@ export class ConfigReader {
       .map((x) => x.name)
 
     for (const config of configs) {
-      const contents = await this.readConfig(config)
+      const contents = await this.readConfig(config, 'L1')
       result.push(contents)
     }
 

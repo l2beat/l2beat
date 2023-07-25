@@ -21,7 +21,7 @@ export async function runDiscovery(
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
 ) {
-  const projectConfig = await configReader.readConfig(config.project)
+  const projectConfig = await configReader.readConfig(config.project, 'L1')
 
   const blockNumber =
     config.blockNumber ??
@@ -55,7 +55,7 @@ export async function dryRunDiscovery(
   const BLOCKS_PER_DAY = 86400 / 12
   const blockNumberYesterday = blockNumber - BLOCKS_PER_DAY
 
-  const projectConfig = await configReader.readConfig(config.project)
+  const projectConfig = await configReader.readConfig(config.project, 'L1')
 
   const [discovered, discoveredYesterday] = await Promise.all([
     justDiscover(provider, etherscanClient, projectConfig, blockNumber),

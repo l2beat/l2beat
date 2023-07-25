@@ -22,7 +22,7 @@ describe(ConfigReader.name, () => {
 
     for (const project of configs) {
       it(`can read ${project} config`, async () => {
-        const result = await configReader.readConfig(project)
+        const result = await configReader.readConfig(project, 'L1')
         expect(result.name).toEqual(project)
       })
     }
