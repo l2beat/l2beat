@@ -28,7 +28,9 @@
     "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": "StakingInfo",
     "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31": "ValidatorShare",
     "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
-    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock"
+    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
+    "0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A": "SlashingManager",
+    "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861": "ChildChain"
   },
   "overrides": {
     "InstaAaveV2": {

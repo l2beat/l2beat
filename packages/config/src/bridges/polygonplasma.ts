@@ -107,37 +107,48 @@ export const polygonplasma: Bridge = {
           'Contract storing Polygon sidechain checkpoints. Note that the validity of the checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
         ...upgrades,
       }),
-      {
-        address: EthereumAddress('0x401F6c983eA34274ec46f84D70b31C151321188b'),
-        name: 'Deposit Manager',
-        description: 'Escrow contract for MATIC and DAI.',
-        upgradeability: {
-          type: 'Custom',
-          implementation: EthereumAddress(
-            '0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf',
-          ),
-          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
-        },
-      },
-      {
-        address: EthereumAddress('0x2A88696e0fFA76bAA1338F2C74497cC013495922'),
-        name: 'Withdraw Manager',
+      discovery.getContractDetails('DepositManager', {
         description:
-          'Contract handling completion of user withdrawal requests after the 7-day delay.',
-        upgradeability: {
-          type: 'Custom',
-          implementation: EthereumAddress(
-            '0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de',
-          ),
-          admin: EthereumAddress('0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf'),
-        },
-      },
-      {
-        address: EthereumAddress('0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95'),
-        name: 'ERC20PredicateBurnOnly',
+          'Contract used to deposit ETH, ERC20 or ERC721 tokens.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('WithdrawManager', {
         description:
-          'Contract allowing users to start the withdrawal process. It should also exit challenges, however with empty verifyDeprecation() method no challenges are supported.',
-      },
+          'Contract handling users\' withdrawal finalization.',
+        ...upgrades
+      }),
+      discovery.getContractDetails('ERC20PredicateBurnOnly', {
+        description:
+          'Contract used to initiate ERC20 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
+      }),
+      discovery.getContractDetails('ERC721PredicateBurnOnly', {
+        description:
+          'Contract used to initiate ERC721 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
+      }),
+      discovery.getContractDetails('Registry', {
+        description:
+          'Contract mantaining the addresses of the contracts used in the system.',
+      }),
+      discovery.getContractDetails('StakeManager', {
+        description: 'Contract managing the staker network and that checks checkpoints signatures.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('Governance', {
+        description:
+          'Contract used to manage permissions in the system. It consists of a single owner: the PolygonMultisig.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('EventsHub', {
+        description:
+          'Contains events used by other contracts.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('StakingInfo', 'Contains logging and getter functions regarding the staking network.'),
+      discovery.getContractDetails('ValidatorShareFactory', 'Contract used to create ValidatorShare contracts.'),
+      discovery.getContractDetails('ValidatorShare', 'Contract used to delegate to a validator.'),
+      discovery.getContractDetails('ExitNFT', 'NFTs used to represent an exit.'),
+      discovery.getContractDetails('SlashingManager'),
+      discovery.getContractDetails('ChildChain'),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('48 hours')],
   },

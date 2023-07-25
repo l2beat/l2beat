@@ -1,17 +1,18 @@
 {
   "name": "polygon-plasma",
   "blockNumber": 17769088,
-  "configHash": "0x38e082e36f1293c33e0d331205536f387922b8f511dfbbd9c64f71b80e2b2a67",
+  "configHash": "0x824eb6d8eb27cd5041833df76424a32f1dc732cfd044505932ba4ae42af38907",
   "version": 1,
   "contracts": [
     {
-      "name": "",
+      "name": "SlashingManager",
       "address": "0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A",
       "unverified": true,
       "code": "https://etherscan.deth.net/address/0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "ERC20PredicateBurnOnly",
@@ -337,13 +338,14 @@
       "derivedName": "Timelock"
     },
     {
-      "name": "",
+      "name": "ChildChain",
       "address": "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
       "unverified": true,
       "code": "https://etherscan.deth.net/address/0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "ExitNFT",
