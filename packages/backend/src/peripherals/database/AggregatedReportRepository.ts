@@ -22,7 +22,7 @@ export class AggregatedReportRepository extends BaseRepository {
   async getDaily(): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
-      .andWhere({ value_type: ValueType.TVL.toString() })
+      .where({ value_type: ValueType.TVL.toString() })
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) = 0`)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
@@ -31,7 +31,7 @@ export class AggregatedReportRepository extends BaseRepository {
   async getSixHourly(from: UnixTime): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
-      .andWhere('unix_timestamp', '>=', from.toDate())
+      .where('unix_timestamp', '>=', from.toDate())
       .andWhere({ value_type: ValueType.TVL.toString() })
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) % 6 = 0`)
       .orderBy('unix_timestamp')
