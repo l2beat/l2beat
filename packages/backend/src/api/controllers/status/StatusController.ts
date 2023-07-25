@@ -10,6 +10,8 @@ import {
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
+import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
+import { TotalSupplyTokensConfig } from '../../../core/totalSupply/TotalSupplyTokensConfig'
 import { Project } from '../../../model'
 import { Token } from '../../../model/Token'
 import {
@@ -22,19 +24,20 @@ import {
   ReportStatusRecord,
   ReportStatusRepository,
 } from '../../../peripherals/database/ReportStatusRepository'
+import { TotalSupplyStatusRepository } from '../../../peripherals/database/TotalSupplyStatusRepository'
 import { getDashboardContracts } from './discovery/props/getDashboardContracts'
 import { getDashboardProjects } from './discovery/props/getDashboardProjects'
 import { getDiff } from './discovery/props/utils/getDiff'
 import { renderDashboardPage } from './discovery/view/DashboardPage'
 import { renderDashboardProjectPage } from './discovery/view/DashboardProjectPage'
-import { renderBalancesPage } from './view/BalancesPage'
 import { renderPricesPage } from './view/PricesPage'
-import { renderReportsPage } from './view/ReportsPage'
+import { renderStatusPage } from './view/StatusPage'
 
 export class StatusController {
   constructor(
     private readonly priceRepository: PriceRepository,
     private readonly balanceStatusRepository: BalanceStatusRepository,
+    private readonly totalSupplyStatusRepository: TotalSupplyStatusRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly updateMonitorRepository: UpdateMonitorRepository,
     private readonly clock: Clock,
@@ -100,6 +103,7 @@ export class StatusController {
   }
 
   async getBalancesStatus(
+    chainId: ChainId = ChainId.ETHEREUM,
     from: UnixTime | undefined,
     to: UnixTime | undefined,
   ): Promise<string> {
@@ -109,7 +113,7 @@ export class StatusController {
     const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
 
     const statuses = await this.balanceStatusRepository.getBetween(
-      ChainId.ETHEREUM,
+      chainId,
       firstHour,
       lastHour,
     )
@@ -120,10 +124,51 @@ export class StatusController {
       isSynced: isSynced(statuses, timestamp, configHash),
     }))
 
-    return renderBalancesPage({ balances })
+    const title = `Balances [chainId: ${chainId.toString()}]`
+
+    return renderStatusPage({ statuses: balances, title })
   }
 
-  async getReportsStatus(from: UnixTime | undefined, to: UnixTime | undefined) {
+  async getTotalSuppliesStatus(
+    chainId: ChainId = ChainId.ARBITRUM,
+    from: UnixTime | undefined,
+    to: UnixTime | undefined,
+  ): Promise<string> {
+    const firstHour = this.getFirstHour(from)
+    const lastHour = to ? to : this.clock.getLastHour()
+
+    const timestamps = getTimestamps(firstHour, lastHour, 'hourly').reverse()
+
+    const statuses = await this.totalSupplyStatusRepository.getBetween(
+      chainId,
+      firstHour,
+      lastHour,
+    )
+    const config: TotalSupplyTokensConfig[] = []
+    const tokens = this.projects.find(
+      (p) => p.externalTokens?.chainId === chainId,
+    )?.externalTokens?.assets
+    if (tokens) {
+      config.push(...tokens)
+    }
+    const configHash = getTotalSupplyConfigHash(config)
+
+    const totalSupplies = timestamps.map((timestamp) => ({
+      timestamp,
+      isSynced: isSynced(statuses, timestamp, configHash),
+    }))
+
+    const title = `Total Supplies [chainId: ${chainId.toString()}]`
+
+    return renderStatusPage({ statuses: totalSupplies, title })
+  }
+
+  async getReportsStatus(
+    chainId: ChainId = ChainId.ETHEREUM,
+    valueType: ValueType = ValueType.CBV,
+    from: UnixTime | undefined,
+    to: UnixTime | undefined,
+  ) {
     const firstHour = this.getFirstHour(from)
     const lastHour = to ? to : this.clock.getLastHour()
 
@@ -132,8 +177,8 @@ export class StatusController {
     const statuses = await this.reportStatusRepository.getBetween(
       firstHour,
       lastHour,
-      ChainId.ETHEREUM,
-      ValueType.CBV,
+      chainId,
+      valueType,
     )
     const configHash = getReportConfigHash(this.projects)
 
@@ -142,7 +187,9 @@ export class StatusController {
       isSynced: isSynced(statuses, timestamp, configHash),
     }))
 
-    return renderReportsPage({ reports })
+    const title = `Reports [chainId: ${chainId.toString()}] [type: ${valueType.toString()}]`
+
+    return renderStatusPage({ statuses: reports, title })
   }
 
   private getFirstHour(from: UnixTime | undefined) {
