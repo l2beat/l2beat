@@ -103,8 +103,8 @@ describe(aggregateReports.name, () => {
     return {
       timestamp: NOW,
       projectId,
-      tvlUsd: usdTVL * 100n,
-      tvlEth: usdTVL * 1000n,
+      valueUsd: usdTVL * 100n,
+      valueEth: usdTVL * 1000n,
       valueType: ValueType.TVL,
     }
   }

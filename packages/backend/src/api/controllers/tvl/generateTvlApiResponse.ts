@@ -72,8 +72,8 @@ function getProjectChartData(
     .filter((r) => r.projectId === projectId)
     .map((r) => ({
       timestamp: r.timestamp,
-      usd: r.tvlUsd,
-      asset: r.tvlEth,
+      usd: r.valueUsd,
+      asset: r.valueEth,
     }))
   return getChartPoints(balances, hours, 6, true)
 }

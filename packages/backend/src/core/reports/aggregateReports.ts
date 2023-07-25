@@ -46,8 +46,8 @@ export function aggregateReportsWithCategories(
   const categorized = categories.map(({ projectId }) => ({
     timestamp,
     projectId,
-    tvlEth: 0n,
-    tvlUsd: 0n,
+    valueEth: 0n,
+    valueUsd: 0n,
     valueType: ValueType.TVL,
   }))
 
@@ -57,25 +57,25 @@ export function aggregateReportsWithCategories(
     const filteredReports = reports.filter(
       (x) => x.projectId === project.projectId,
     )
-    const { tvlEth, tvlUsd } = filteredReports.reduce(
+    const { valueEth, valueUsd } = filteredReports.reduce(
       (acc, next) => ({
-        tvlUsd: acc.tvlUsd + next.usdValue,
-        tvlEth: acc.tvlEth + next.ethValue,
+        valueUsd: acc.valueUsd + next.usdValue,
+        valueEth: acc.valueEth + next.ethValue,
       }),
-      { tvlUsd: 0n, tvlEth: 0n },
+      { valueUsd: 0n, valueEth: 0n },
     )
     for (const [i, { check }] of categories.entries()) {
       if (check(project)) {
-        categorized[i].tvlEth += tvlEth
-        categorized[i].tvlUsd += tvlUsd
+        categorized[i].valueEth += valueEth
+        categorized[i].valueUsd += valueUsd
       }
     }
     aggregatedReports.push({
       projectId: project.projectId,
       valueType: ValueType.TVL,
       timestamp,
-      tvlEth,
-      tvlUsd,
+      valueEth,
+      valueUsd,
     })
   }
 

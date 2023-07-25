@@ -21,6 +21,9 @@ export async function up(knex: Knex) {
     table.dropPrimary()
 
     table.primary(['unix_timestamp', 'project_id', 'value_type'])
+
+    table.renameColumn('tvl_usd', 'value_usd')
+    table.renameColumn('tvl_eth', 'value_eth')
   })
 }
 
@@ -29,5 +32,8 @@ export async function down(knex: Knex) {
     table.dropPrimary()
     table.dropColumn('value_type')
     table.primary(['unix_timestamp', 'project_id'])
+
+    table.renameColumn('value_usd', 'tvl_usd')
+    table.renameColumn('value_eth', 'tvl_eth')
   })
 }
