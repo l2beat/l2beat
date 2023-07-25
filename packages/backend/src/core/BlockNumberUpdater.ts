@@ -16,6 +16,7 @@ export class BlockNumberUpdater {
     private readonly clock: Clock,
     private readonly logger: Logger,
     private readonly chainId: ChainId,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -32,7 +33,15 @@ export class BlockNumberUpdater {
     )
   }
 
+  getMinTimestamp() {
+    return this.minTimestamp
+  }
+
   async getBlockNumberWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Programmer error: requested timestamp does not exist',
+    )
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
       const blockNumber = this.blocksByTimestamp.get(timestamp.toNumber())
@@ -43,39 +52,6 @@ export class BlockNumberUpdater {
         timestamp: timestamp.toString(),
       })
       await setTimeout(refreshIntervalMs)
-    }
-  }
-
-  async getBlockRangeWhenReady(
-    from: UnixTime,
-    to: UnixTime,
-    refreshIntervalMs = 1000,
-  ): Promise<{ timestamp: UnixTime; blockNumber: number }[]> {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    while (true) {
-      const blocks: { timestamp: UnixTime; blockNumber: number }[] = []
-      let noHoles = true
-      for (let t = from; t.lte(to); t = t.add(1, 'hours')) {
-        const blockNumber = this.blocksByTimestamp.get(t.toNumber())
-        if (blockNumber !== undefined) {
-          blocks.push({
-            timestamp: t,
-            blockNumber,
-          })
-        } else {
-          noHoles = false
-          break
-        }
-      }
-      if (noHoles) {
-        return blocks
-      } else {
-        this.logger.debug('Something is waiting for getBlockRangeWhenReady', {
-          from: from.toString(),
-          to: to.toString(),
-        })
-        await setTimeout(refreshIntervalMs)
-      }
     }
   }
 
@@ -95,6 +71,14 @@ export class BlockNumberUpdater {
   }
 
   async update(timestamp: UnixTime) {
+    if (!timestamp.gte(this.minTimestamp)) {
+      this.logger.debug('Skipping update', {
+        timestamp: timestamp.toNumber(),
+        minTimestamp: this.minTimestamp.toNumber(),
+      })
+      return
+    }
+
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const blockNumber = await this.blockNumberProvider.getBlockNumberAtOrBefore(
       timestamp,

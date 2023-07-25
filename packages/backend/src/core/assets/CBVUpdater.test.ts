@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, ValueType } from '@l2beat/shared-pure'
+import { ChainId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -9,11 +9,11 @@ import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import { getReportConfigHash } from './getReportConfigHash'
-import { ReportUpdater } from './ReportUpdater'
+import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { CBVUpdater } from './CBVUpdater'
 
-describe(ReportUpdater.name, () => {
-  describe(ReportUpdater.prototype.update.name, () => {
+describe(CBVUpdater.name, () => {
+  describe(CBVUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -27,7 +27,7 @@ describe(ReportUpdater.name, () => {
       })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestamp: async () => MOCK.FUTURE_REPORTS_WITH_OP,
+        getByTimestampAndPreciseAsset: async () => MOCK.FUTURE_REPORTS,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -35,7 +35,7 @@ describe(ReportUpdater.name, () => {
         add: async ({ configHash }) => configHash,
       })
 
-      const reportUpdater = new ReportUpdater(
+      const cbvUpdater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         reportRepository,
@@ -43,10 +43,11 @@ describe(ReportUpdater.name, () => {
         mockObject<Clock>(),
         MOCK.PROJECTS,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
-      await reportUpdater.update(MOCK.NOW.add(1, 'hours'))
-      await reportUpdater.update(MOCK.NOW)
+      await cbvUpdater.update(MOCK.NOW.add(1, 'hours'))
+      await cbvUpdater.update(MOCK.NOW)
 
       const configHash = getReportConfigHash(MOCK.PROJECTS)
 
@@ -67,22 +68,46 @@ describe(ReportUpdater.name, () => {
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         1,
-        MOCK.FUTURE_REPORTS_WITH_OP,
+        MOCK.FUTURE_REPORTS,
       )
       expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
         2,
         MOCK.REPORTS,
       )
 
-      const reports = await reportUpdater.getReportsWhenReady(
+      const reports = await cbvUpdater.getReportsWhenReady(
         MOCK.NOW.add(1, 'hours'),
       )
       // ensure that the updater updated internal knownSet
-      expect(reports).toEqual(MOCK.FUTURE_REPORTS_WITH_OP)
+      expect(reports).toEqual(MOCK.FUTURE_REPORTS)
+    })
+
+    it('skips update if timestamp < minTimestamp', async () => {
+      const priceUpdater = mockObject<PriceUpdater>({
+        getPricesWhenReady: mockFn(),
+      })
+      const balanceUpdater = mockObject<BalanceUpdater>({
+        getBalancesWhenReady: mockFn(),
+      })
+      const updater = new CBVUpdater(
+        priceUpdater,
+        balanceUpdater,
+        mockObject<ReportRepository>(),
+        mockObject<ReportStatusRepository>(),
+        mockObject<Clock>(),
+        MOCK.PROJECTS,
+        Logger.SILENT,
+        new UnixTime(1000),
+      )
+
+      await updater.update(new UnixTime(999))
+
+      expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
+      expect(balanceUpdater.getBalancesWhenReady).not.toHaveBeenCalled()
     })
   })
 
-  describe(ReportUpdater.prototype.start.name, () => {
+  describe(CBVUpdater.prototype.start.name, () => {
     it('skips known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -116,7 +141,7 @@ describe(ReportUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new ReportUpdater(
+      const cbvUpdater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         reportRepository,
@@ -124,9 +149,10 @@ describe(ReportUpdater.name, () => {
         clock,
         MOCK.PROJECTS,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
-      await reportUpdater.start()
+      await cbvUpdater.start()
 
       await waitForExpect(() => {
         const configHash = getReportConfigHash(MOCK.PROJECTS)
@@ -148,7 +174,7 @@ describe(ReportUpdater.name, () => {
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
         expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
           1,
-          MOCK.FUTURE_REPORTS_WITH_OP,
+          MOCK.FUTURE_REPORTS,
         )
         expect(reportRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
           2,
@@ -158,7 +184,7 @@ describe(ReportUpdater.name, () => {
     })
   })
 
-  describe(ReportUpdater.prototype.getReportsWhenReady.name, () => {
+  describe(CBVUpdater.prototype.getReportsWhenReady.name, () => {
     it('returns known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -172,7 +198,7 @@ describe(ReportUpdater.name, () => {
       })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestamp: async () => MOCK.REPORTS,
+        getByTimestampAndPreciseAsset: async () => MOCK.REPORTS,
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -193,7 +219,7 @@ describe(ReportUpdater.name, () => {
         },
       })
 
-      const reportUpdater = new ReportUpdater(
+      const cbvUpdater = new CBVUpdater(
         priceUpdater,
         balanceUpdater,
         reportRepository,
@@ -201,11 +227,12 @@ describe(ReportUpdater.name, () => {
         clock,
         MOCK.PROJECTS,
         Logger.SILENT,
+        new UnixTime(0),
       )
 
-      await reportUpdater.start()
+      await cbvUpdater.start()
 
-      const reports = await reportUpdater.getReportsWhenReady(
+      const reports = await cbvUpdater.getReportsWhenReady(
         MOCK.NOW.add(-1, 'hours'),
       )
 

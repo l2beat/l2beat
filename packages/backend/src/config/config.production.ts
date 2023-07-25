@@ -62,16 +62,24 @@ export function getProductionConfig(): Config {
       ethereum: {
         alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+        // Deployment of the first L2
+        minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
-        alchemyApiKey: getEnv('ARBITRUM_ALCHEMY_API_KEY'),
+        providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
+        // ~ Timestamp of block number 0 on Arbitrum
+        minBlockTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
       },
     },
     activity: {
       starkexApiKey: getEnv('STARKEX_API_KEY'),
       starkexCallsPerMinute: getEnv.integer('STARKEX_CALLS_PER_MINUTE', 600),
       skipExplicitExclusion: false,
+      projectsExcludedFromAPI: getEnv.array(
+        'ACTIVITY_PROJECTS_EXCLUDED_FROM_API',
+        [],
+      ),
       projects: {
         ethereum: {
           type: 'rpc',
@@ -92,6 +100,11 @@ export function getProductionConfig(): Config {
           type: 'rpc',
           callsPerMinute: getEnv.integer('ACTIVITY_NOVA_CALLS'),
           url: getEnv('ACTIVITY_NOVA_URL'),
+        },
+        linea: {
+          type: 'rpc',
+          callsPerMinute: getEnv.integer('ACTIVITY_LINEA_CALLS'),
+          url: getEnv('ACTIVITY_LINEA_URL'),
         },
       },
     },

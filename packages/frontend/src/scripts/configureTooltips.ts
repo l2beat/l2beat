@@ -18,7 +18,7 @@ export function configureTooltips() {
   let visible = false
 
   function show(element: HTMLElement, title: string) {
-    if (element.dataset.tooltipBig && isMobile()) return
+    if (element.dataset.tooltipMobileDisabled && isMobile()) return
     visible = true
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
@@ -66,7 +66,12 @@ export function configureTooltips() {
   document
     .querySelectorAll('.TableView')
     .forEach((x) => x.addEventListener('scroll', hide))
+  document
+    .querySelectorAll('[data-role="table"]')
+    .forEach((x) => x.addEventListener('scroll', hide))
   document.body.addEventListener('scroll', hide)
+  window.addEventListener('scroll', hide)
+  window.addEventListener('scroll', hide)
   document.body.addEventListener('click', (e) => {
     if (e.currentTarget !== tooltip) {
       hide()

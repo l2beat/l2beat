@@ -4,3 +4,4 @@ export type NavbarPage =
   | 'donate'
   | 'faq'
   | 'definitions'
+  | 'multisig-report'

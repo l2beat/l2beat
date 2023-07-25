@@ -9,6 +9,7 @@ import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
+import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
 import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
@@ -19,9 +20,12 @@ import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { Database } from '../../peripherals/database/shared/Database'
-import { ApplicationModule } from '../ApplicationModule'
+import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
+import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
+import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
 import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
 import { createEthereumTvlSubmodule } from './EthereumTvl'
+import { createNativeTvlSubmodule } from './NativeTvl'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -52,6 +56,11 @@ export function createTvlModule(
       logger,
     ),
     balanceStatusRepository: new BalanceStatusRepository(database, logger),
+    totalSupplyRepository: new TotalSupplyRepository(database, logger),
+    totalSupplyStatusRepository: new TotalSupplyStatusRepository(
+      database,
+      logger,
+    ),
   }
   // #endregion
   // #region peripherals
@@ -81,6 +90,7 @@ export function createTvlModule(
     config.projects,
     config.tokens,
     logger,
+    config.tvl.arbitrum ? true : false,
   )
 
   const dydxController = new DydxController(db.aggregatedReportRepository)
@@ -91,10 +101,20 @@ export function createTvlModule(
 
   // #endregion
 
-  const submodules: (ApplicationModule | undefined)[] = [
+  const submodules: (TvlSubmodule | undefined)[] = [
     createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createArbitrumTvlSubmodule(db, config, logger, http, clock),
+    createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
+    createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
   ]
+
+  const aggregatedReportUpdater = new AggregatedReportUpdater(
+    submodules.flatMap((x) => x?.updaters ?? []),
+    db.aggregatedReportRepository,
+    db.aggregatedReportStatusRepository,
+    clock,
+    config.projects,
+    logger,
+  )
 
   const start = async () => {
     logger = logger.for('TvlModule')
@@ -107,6 +127,8 @@ export function createTvlModule(
     for (const submodule of submodules) {
       await submodule?.start?.()
     }
+
+    await aggregatedReportUpdater.start()
 
     logger.info('Started')
   }

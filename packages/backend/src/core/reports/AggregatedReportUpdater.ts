@@ -3,19 +3,19 @@ import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
+import { AssetUpdater } from '../assets/'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { aggregateReports } from './aggregateReports'
-import { getReportConfigHash } from './getReportConfigHash'
+import { getAggregatedConfigHash } from './getAggregatedConfigHash'
 import { ReportProject } from './ReportProject'
-import { ReportUpdater } from './ReportUpdater'
 
 export class AggregatedReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
-    private readonly reportUpdater: ReportUpdater,
+    private readonly assetUpdaters: AssetUpdater[],
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly clock: Clock,
@@ -23,7 +23,7 @@ export class AggregatedReportUpdater {
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
-    this.configHash = getReportConfigHash(projects)
+    this.configHash = getAggregatedConfigHash(this.assetUpdaters)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
@@ -51,7 +51,13 @@ export class AggregatedReportUpdater {
   async update(timestamp: UnixTime) {
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
 
-    const reports = await this.reportUpdater.getReportsWhenReady(timestamp)
+    const reports = (
+      await Promise.all(
+        this.assetUpdaters
+          .filter((updater) => timestamp.gte(updater.getMinTimestamp()))
+          .map((updater) => updater.getReportsWhenReady(timestamp)),
+      )
+    ).flat()
     this.logger.debug('Reports ready')
 
     const aggregatedReports = aggregateReports(

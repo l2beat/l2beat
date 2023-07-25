@@ -1,4 +1,10 @@
-import { AssetId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  assert,
+  AssetId,
+  ChainId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
@@ -10,6 +16,7 @@ export function createReports(
   prices: PriceRecord[],
   balances: BalanceRecord[],
   projects: ReportProject[],
+  chainId: ChainId,
 ): ReportRecord[] {
   const priceMap = new Map(prices.map((p) => [p.assetId, p]))
   const ethPrice = priceMap.get(AssetId.ETH)?.priceUsd
@@ -18,7 +25,11 @@ export function createReports(
     return []
   }
 
-  const balancesPerProject = aggregateBalancesPerProject(projects, balances)
+  const balancesPerProject = aggregateBalancesPerProject(
+    projects,
+    balances,
+    chainId,
+  )
 
   const reports: ReportRecord[] = []
   for (const balance of balancesPerProject) {
@@ -40,6 +51,7 @@ export interface TokenDetails {
 export function aggregateBalancesPerProject(
   projects: ReportProject[],
   balances: BalanceRecord[],
+  chainId: ChainId,
 ): BalancePerProject[] {
   const balancesPerProject = []
 
@@ -68,8 +80,12 @@ export function aggregateBalancesPerProject(
           balance.assetId === assetId && balance.timestamp.gte(sinceTimestamp),
       )
 
+      const chainIdsMatch = assetBalances.every((b) => b.chainId === chainId)
+      assert(chainIdsMatch, 'ChainIds do not match for a given asset balanace')
+
       balancesPerProject.push({
         projectId,
+        chainId: chainId,
         balance: assetBalances.reduce((acc, { balance }) => acc + balance, 0n),
         assetId: assetId,
         type: ValueType.CBV,

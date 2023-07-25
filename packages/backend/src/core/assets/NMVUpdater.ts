@@ -1,5 +1,11 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainId,
+  Hash256,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -7,47 +13,64 @@ import {
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createReports } from './createReports'
-import { addArbTokenReport } from './custom/arbitrum'
-import { addOpTokenReport } from './custom/optimism'
-import { getReportConfigHash } from './getReportConfigHash'
-import { ReportProject } from './ReportProject'
+import { genArbTokenReport } from '../reports/custom/arbitrum'
+import { genOpTokenReport } from '../reports/custom/optimism'
+import { AssetUpdater } from './AssetUpdater'
 
-export class ReportUpdater {
+// Shas256 of "L2Beat Native Asset [Arbitrum, Optimism]"
+export const NATIVE_ASSET_CONFIG_HASH = Hash256(
+  '0xcb0de0a36a0369fe1e0c107bb217c4fd8e7142b5db33ffd01f29859ea323f52e',
+)
+
+export class NMVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
-    private readonly balanceUpdater: BalanceUpdater,
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
-    private readonly projects: ReportProject[],
     private readonly logger: Logger,
+    private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
-    this.configHash = getReportConfigHash(projects)
+
+    // Shas256 of "L2Beat Native Asset [Arbitrum, Optimism]"
+    this.configHash = NATIVE_ASSET_CONFIG_HASH
+
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: ReportUpdater.name,
+        metricsId: NMVUpdater.name,
       },
     )
+  }
+
+  getChainId() {
+    return ChainId.NMV
+  }
+
+  getConfigHash() {
+    return this.configHash
+  }
+
+  getMinTimestamp() {
+    return this.minTimestamp
   }
 
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
-      ChainId.ETHEREUM,
-      ValueType.CBV,
+      this.getChainId(),
+      ValueType.NMV,
     )
+
     for (const timestamp of known) {
       this.knownSet.add(timestamp.toNumber())
     }
@@ -61,38 +84,56 @@ export class ReportUpdater {
     })
   }
 
-  // TODO(radomski): This should probably split op/arb report into different rows with correct chainId/valueType
   async update(timestamp: UnixTime) {
+    if (!timestamp.gte(this.minTimestamp)) {
+      this.logger.debug('Skipping update', {
+        timestamp: timestamp.toNumber(),
+        minTimestamp: this.minTimestamp.toNumber(),
+      })
+      return
+    }
+
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const [prices, balances] = await Promise.all([
-      this.priceUpdater.getPricesWhenReady(timestamp),
-      this.balanceUpdater.getBalancesWhenReady(timestamp),
-    ])
-    this.logger.debug('Prices and balances ready')
-    const reports = createReports(prices, balances, this.projects)
-    addOpTokenReport(reports, prices, timestamp)
-    addArbTokenReport(reports, prices, timestamp)
+    const prices = await this.priceUpdater.getPricesWhenReady(timestamp)
+    this.logger.debug('Prices ready')
+
+    const reports: ReportRecord[] = []
+    reports.push(...genOpTokenReport(prices, timestamp))
+    reports.push(...genArbTokenReport(prices, timestamp))
 
     await this.reportRepository.addOrUpdateMany(reports)
 
+    // TODO(radomski): chainId should correctly represent OP/ARB
     await this.reportStatusRepository.add({
       configHash: this.configHash,
       timestamp,
-      chainId: ChainId.ETHEREUM,
-      valueType: ValueType.CBV,
+      chainId: this.getChainId(),
+      valueType: ValueType.NMV,
     })
 
     this.knownSet.add(timestamp.toNumber())
-    this.logger.info('Report updated', { timestamp: timestamp.toNumber() })
+    this.logger.info('Asset updated', { timestamp: timestamp.toNumber() })
   }
 
   async getReportsWhenReady(
     timestamp: UnixTime,
     refreshIntervalMs = 1000,
   ): Promise<ReportRecord[]> {
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Programmer error: requested timestamp does not exist',
+    )
+
     while (!this.knownSet.has(timestamp.toNumber())) {
+      this.logger.debug('Something is waiting for getReportsWhenReady', {
+        timestamp: timestamp.toString(),
+      })
       await setTimeout(refreshIntervalMs)
     }
-    return this.reportRepository.getByTimestamp(timestamp)
+    return this.reportRepository.getByTimestampAndPreciseAsset(
+      timestamp,
+      this.getChainId(),
+      ValueType.NMV,
+    )
   }
 }

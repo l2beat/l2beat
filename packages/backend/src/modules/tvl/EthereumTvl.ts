@@ -3,16 +3,15 @@ import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
+import { CBVUpdater } from '../../core/assets/'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { EthereumBalanceProvider } from '../../core/balances/providers/EthereumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
-import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
-import { ReportUpdater } from '../../core/reports/ReportUpdater'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { MulticallClient } from '../../peripherals/ethereum/MulticallClient'
-import { ApplicationModule } from '../ApplicationModule'
+import { TvlSubmodule } from '../ApplicationModule'
 import { TvlDatabase } from './types'
 
 export function createEthereumTvlSubmodule(
@@ -22,7 +21,7 @@ export function createEthereumTvlSubmodule(
   logger: Logger,
   http: HttpClient,
   clock: Clock,
-): ApplicationModule | undefined {
+): TvlSubmodule | undefined {
   if (!config.tvl.ethereum) {
     logger.info('Ethereum TVL module disabled')
     return
@@ -40,6 +39,7 @@ export function createEthereumTvlSubmodule(
   const etherscanClient = new EtherscanClient(
     http,
     config.tvl.ethereum.etherscanApiKey,
+    config.tvl.ethereum.minBlockTimestamp,
     logger,
   )
   const ethereumBalanceProvider = new EthereumBalanceProvider(multicall)
@@ -53,6 +53,7 @@ export function createEthereumTvlSubmodule(
     clock,
     logger,
     ChainId.ETHEREUM,
+    config.tvl.ethereum.minBlockTimestamp,
   )
 
   const balanceUpdater = new BalanceUpdater(
@@ -64,8 +65,10 @@ export function createEthereumTvlSubmodule(
     config.projects,
     logger,
     ChainId.ETHEREUM,
+    config.tvl.ethereum.minBlockTimestamp,
   )
-  const reportUpdater = new ReportUpdater(
+
+  const cbvUpdater = new CBVUpdater(
     priceUpdater,
     balanceUpdater,
     db.reportRepository,
@@ -73,15 +76,7 @@ export function createEthereumTvlSubmodule(
     clock,
     config.projects,
     logger,
-  )
-
-  const aggregatedReportUpdater = new AggregatedReportUpdater(
-    reportUpdater,
-    db.aggregatedReportRepository,
-    db.aggregatedReportStatusRepository,
-    clock,
-    config.projects,
-    logger,
+    config.tvl.ethereum.minBlockTimestamp,
   )
 
   // #endregion
@@ -92,13 +87,13 @@ export function createEthereumTvlSubmodule(
 
     await ethereumBlockNumberUpdater.start()
     await balanceUpdater.start()
-    await reportUpdater.start()
-    await aggregatedReportUpdater.start()
+    await cbvUpdater.start()
 
     logger.info('Started')
   }
 
   return {
+    updaters: [cbvUpdater],
     start,
   }
 }

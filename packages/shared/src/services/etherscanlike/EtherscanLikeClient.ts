@@ -1,4 +1,9 @@
-import { getErrorMessage, RateLimiter } from '@l2beat/shared-pure'
+import {
+  getErrorMessage,
+  RateLimiter,
+  stringAsInt,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { Logger } from '../../tools'
 import { HttpClient } from '../HttpClient'
@@ -16,9 +21,47 @@ export class EtherscanLikeClient {
     private readonly httpClient: HttpClient,
     private readonly url: string,
     private readonly apiKey: string,
+    readonly minTimestamp: UnixTime,
     private readonly logger = Logger.SILENT,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
+  }
+
+  // Etherscan API is not stable enough to trust it to return "closest" block.
+  // There is a case when there is not enough activity on a given chain
+  // so that blocks come in a greater than 10 minutes intervals,
+  // e.g block 0 @ 22:45 and block 1 @ 23:15
+  // if you query for 23:00 Etherscan API returns "No closes block found".
+  //
+  // To mitigate this, we need to go back in time by 10 minutes until we find a block
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
+    let current = new UnixTime(timestamp.toNumber())
+
+    while (current.gte(this.minTimestamp)) {
+      try {
+        const result = await this.call('block', 'getblocknobytime', {
+          timestamp: current.toString(),
+          closest: 'before',
+        })
+
+        return stringAsInt().parse(result)
+      } catch (error) {
+        if (typeof error !== 'object') {
+          const errorString =
+            typeof error === 'string' ? error : 'Unknown error type caught'
+          throw new Error(errorString)
+        }
+
+        const errorObject = error as EtherscanError
+        if (!errorObject.message.includes('No closest block found')) {
+          throw new Error(errorObject.message)
+        }
+
+        current = current.add(-10, 'minutes')
+      }
+    }
+
+    throw new Error('Could not fetch block number')
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
@@ -56,7 +99,7 @@ export class EtherscanLikeClient {
     }
 
     if (!etherscanResponse) {
-      const message = 'Invalid Etherscan response.'
+      const message = `Invalid Etherscan response [${text}] for request [${url}].`
       this.recordError(module, action, timeMs, message)
       throw new TypeError(message)
     }

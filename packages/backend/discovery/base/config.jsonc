@@ -1,0 +1,56 @@
+{
+  "$schema": "../config.schema.json",
+  "name": "base",
+  "initialAddresses": [
+    "0x608d94945A64503E642E6370Ec598e519a2C1E53",
+    "0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
+  ],
+  "names": {
+    "0x3154Cf16ccdb4C6d922629664174b904d80F2C35": "L1StandardBridge",
+    "0x608d94945A64503E642E6370Ec598e519a2C1E53": "L1ERC721Bridge",
+    "0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84": "OptimismMintableERC20Factory",
+    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "AdminMultisig",
+    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "ChallengerMultisig",
+    "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e": "OptimismPortal",
+    "0x56315b90c40730925ec5485cf004d835058518A0": "L2OutputOracle",
+    "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa": "L1CrossDomainMessenger",
+    "0x73a79Fab69143498Ed3712e519A88a918e1f4072": "SystemConfig"
+  },
+  "overrides": {
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output",
+        "computeL2Timestamp"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ]
+    },
+    "AdminMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        }
+      }
+    }
+  }
+}

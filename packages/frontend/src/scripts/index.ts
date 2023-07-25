@@ -6,6 +6,7 @@ import { configureCanonicalBridgesFilter } from './configureCanonicalBridgesFilt
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
+import { configureReport } from './configureReport'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
@@ -20,6 +21,7 @@ configureCharts()
 configureTvlActivity()
 configureDropdowns()
 configureRosetteOverlay()
+configureReport()
 configureHoverableDropdown()
 configureProjectNavigation()
 configureExpandableContainer()

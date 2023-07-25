@@ -1,24 +1,23 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from './common'
+import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from './common'
 import { Layer2 } from './types'
 
 export const mantle: Layer2 = {
-  isUpcoming: true,
   type: 'layer2',
   id: ProjectId('mantle'),
   display: {
     name: 'Mantle',
     slug: 'mantle',
     description:
-      'Mantle is an EVM compatible zkRollup that has been designed for use on the Ethereum network. At present, it is undergoing further testing and optimization on the Goerli testnet before deployment.',
+      'Mantle is an EVM compatible zkRollup that has been designed for use on the Ethereum network.',
     purpose: 'Universal',
     category: 'Optimistic Chain',
     links: {
       websites: ['https://www.mantle.xyz/'],
-      apps: ['https://bridge.testnet.mantle.xyz'],
+      apps: ['https://bridge.mantle.xyz'],
       documentation: ['https://docs.mantle.xyz/'],
-      explorers: ['https://explorer.testnet.mantle.xyz/'],
+      explorers: ['https://explorer.mantle.xyz/'],
       repositories: ['https://github.com/mantlenetworkio'],
       socialMedia: [
         'https://discord.gg/0xMantle',
@@ -31,7 +30,10 @@ export const mantle: Layer2 = {
   config: {
     escrows: [],
   },
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
+  stage: {
+    stage: 'UnderReview',
+  },
+  riskView: UNDER_REVIEW_RISK_VIEW,
+  technology: TECHNOLOGY.UNDER_REVIEW,
+  contracts: CONTRACTS.UNDER_REVIEW,
 }

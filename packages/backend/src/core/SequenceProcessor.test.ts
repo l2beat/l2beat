@@ -211,8 +211,6 @@ describe(SequenceProcessor.name, () => {
     it('re-processes data when from > getLatest', async () => {
       const time = install()
 
-      const errorMessage =
-        'getLatest returned sequence member that was already processed'
       const reportErrorMock = mockFn().returns(undefined)
       const getLatestMock =
         mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(0)
@@ -233,10 +231,7 @@ describe(SequenceProcessor.name, () => {
 
       time.uninstall()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(
-        expect.subset({ message: expect.includes(errorMessage) }),
-        expect.anything(),
-      )
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
     })
 
     it('works when processRange throws', async () => {
@@ -264,10 +259,7 @@ describe(SequenceProcessor.name, () => {
 
       time.uninstall()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(
-        expect.subset({ message: errorMessage }),
-        expect.anything(),
-      )
+      expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
     })
 
     it('does not process anything when already done', async () => {

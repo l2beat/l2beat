@@ -42,14 +42,20 @@ export class MulticallClient {
   }
 
   async multicall(requests: MulticallRequest[], blockNumber: number) {
-    if (blockNumber < MULTICALL_V1_BLOCK) {
-      return this.executeIndividual(requests, blockNumber)
+    try {
+      if (blockNumber < MULTICALL_V1_BLOCK) {
+        return this.executeIndividual(requests, blockNumber)
+      }
+      const batches = toBatches(requests, MULTICALL_BATCH_SIZE)
+      const batchedResults = await Promise.all(
+        batches.map((batch) => this.executeBatch(batch, blockNumber)),
+      )
+      return batchedResults.flat()
+    } catch (e) {
+      throw new Error(
+        `Ethereum multicall failed for block number:  ${blockNumber}. Call size was ${requests.length}.`,
+      )
     }
-    const batches = toBatches(requests, MULTICALL_BATCH_SIZE)
-    const batchedResults = await Promise.all(
-      batches.map((batch) => this.executeBatch(batch, blockNumber)),
-    )
-    return batchedResults.flat()
   }
 
   private async executeIndividual(
