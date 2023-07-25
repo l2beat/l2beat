@@ -55,4 +55,21 @@ export async function down(knex: Knex) {
     table.index(['is_daily'], 'aggregated_reports_is_daily_index')
     table.index(['is_six_hourly'], 'aggregated_reports_is_six_hourly_index')
   })
+
+  /**
+   * Data reverse migration for is_six_hourly and is_daily respectively
+   */
+  await knex.schema.raw(`
+      UPDATE aggregated_reports
+      SET is_six_hourly = true
+      WHERE
+      EXTRACT(epoch FROM unix_timestamp) % 21600 = 0
+      `)
+
+  await knex.schema.raw(`
+      UPDATE aggregated_reports
+      SET is_daily = true
+      WHERE
+      EXTRACT(epoch FROM unix_timestamp) % 86400 = 0
+      `)
 }
