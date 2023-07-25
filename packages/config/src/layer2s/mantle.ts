@@ -357,8 +357,7 @@ export const mantle: Layer2 = {
       name: 'Mainnet launch',
       link: 'https://www.mantle.xyz/blog/announcements/mantle-network-mainnet-alpha',
       date: '2023-07-14T00:00:00.00Z',
-      description:
-        'Mantle is live on mainnet.'
-    }
-  ]
+      description: 'Mantle is live on mainnet.',
+    },
+  ],
 }
