@@ -51,13 +51,20 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
       etherscanClient,
       configReader,
       config.discovery,
+      'L1',
     )
     return
   }
 
   logger = logger.for('Discovery')
   logger.info('Starting')
-  await runDiscovery(provider, etherscanClient, configReader, config.discovery)
+  await runDiscovery(
+    provider,
+    etherscanClient,
+    configReader,
+    config.discovery,
+    'L1',
+  )
 }
 
 async function invert(config: DiscoveryCliConfig, logger: Logger) {
@@ -72,5 +79,5 @@ async function invert(config: DiscoveryCliConfig, logger: Logger) {
   logger = logger.for('Inversion')
   logger.info('Starting')
 
-  await runInversion(file, configReader, useMermaidMarkup)
+  await runInversion(file, configReader, useMermaidMarkup, 'L1')
 }

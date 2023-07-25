@@ -4,7 +4,7 @@ import { execSync } from 'child_process'
 import { constants, utils } from 'ethers'
 import { mkdir, writeFile } from 'fs/promises'
 
-import { ConfigReader } from '../discovery/config/ConfigReader'
+import { ConfigReader, Layer } from '../discovery/config/ConfigReader'
 
 interface AddressDetails {
   name?: string
@@ -22,9 +22,10 @@ export async function runInversion(
   project: string,
   configReader: ConfigReader,
   useMermaidMarkup: boolean,
+  layer: Layer,
 ) {
   const addresses = new Map<string, AddressDetails>()
-  const projectDiscovery = await configReader.readDiscovery(project, 'L1')
+  const projectDiscovery = await configReader.readDiscovery(project, layer)
 
   function add(address: ContractValue, role?: Role) {
     if (
@@ -114,7 +115,7 @@ export async function runInversion(
       </body>
     </html>`
 
-    const root = `discovery/${project}`
+    const root = `discovery/${project}/${layer}`
     const htmlFilePath = `${root}/mermaid/index.html`
     await mkdir(`${root}/mermaid`, { recursive: true })
     await writeFile(htmlFilePath, mermaidPage)
