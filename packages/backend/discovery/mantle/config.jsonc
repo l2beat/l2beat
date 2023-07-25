@@ -131,7 +131,7 @@
           "type": "call",
           "method": "getAddress",
           "args": ["L1_MantleAddress"]
-        },
+        }
       }
     },
     "CanonicalTransactionChain": {
@@ -189,7 +189,8 @@
         "getInboxSize",
         "getParentID",
         "getProposalTime",
-        "getStateHash"
+        "getStateHash",
+        "getNumStakers"
       ]
     },
     "ChainStorageContainerSCC": {

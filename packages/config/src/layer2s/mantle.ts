@@ -26,7 +26,9 @@ const regularUpgrades = {
   upgradeDelay: 'No delay',
 }
 
-const TssThreshold = discovery.getContractValue<[number, number, string, string[]]>('TssGroupManager', 'getTssGroupInfo')
+const TssThreshold = discovery.getContractValue<
+  [number, number, string, string[]]
+>('TssGroupManager', 'getTssGroupInfo')
 const TssGroup = `${TssThreshold[1]} / ${TssThreshold[3].length}`
 
 export const mantle: Layer2 = {
@@ -231,10 +233,10 @@ export const mantle: Layer2 = {
         ...upgradesAddressManager,
       }),
       discovery.getContractDetails('ChainStorageContainerCTC', {
-        ...upgradesAddressManager
+        ...upgradesAddressManager,
       }),
       discovery.getContractDetails('ChainStorageContainerSCC', {
-        ...upgradesAddressManager
+        ...upgradesAddressManager,
       }),
       discovery.getContractDetails('BondManager', {
         description:
@@ -243,15 +245,19 @@ export const mantle: Layer2 = {
       }),
       discovery.getContractDetails('L1CrossDomainMessenger', {
         description:
-          'The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract\'s replay function.',
+          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
         ...upgradesAddressManager,
         pausable: {
-          paused: discovery.getContractValue<boolean>('L1CrossDomainMessenger', 'paused'),
+          paused: discovery.getContractValue<boolean>(
+            'L1CrossDomainMessenger',
+            'paused',
+          ),
           pausableBy: ['Owner'],
-        }
+        },
       }),
       discovery.getContractDetails('L1StandardBridge', {
-        description: 'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway. This contract can store any token.',
+        description:
+          'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway. This contract can store any token.',
         ...upgradesAddressManager,
       }),
       discovery.getContractDetails('AddressManager', {
@@ -261,7 +267,7 @@ export const mantle: Layer2 = {
       }),
       discovery.getContractDetails('TssGroupManager', {
         description:
-          'This contract controls the TSS group. It can update the public key, add and remove members, and check signed messages. Proposer\'s state updates are signed by the TSS group.',
+          "This contract controls the TSS group. It can update the public key, add and remove members, and check signed messages. Proposer's state updates are signed by the TSS group.",
         ...regularUpgrades,
       }),
       discovery.getContractDetails('TssStakingSlashing', {
@@ -275,8 +281,7 @@ export const mantle: Layer2 = {
         ...regularUpgrades,
       }),
       discovery.getContractDetails('TssDelegation', {
-        description:
-          'Primary delegation contract.',
+        description: 'Primary delegation contract.',
         ...regularUpgrades,
       }),
       discovery.getContractDetails('TssDelegationSlasher', {
@@ -295,18 +300,38 @@ export const mantle: Layer2 = {
         ...regularUpgrades,
       }),
       discovery.getContractDetails('AssertionMap', {
-        description:
-          'Extension of Rollup, contains the listst of assertions.',
+        description: 'Extension of Rollup, contains the listst of assertions.',
       }),
+      discovery.getContractDetails('EigenDataLayerChain', {
+        description:
+          'Main contract related to data availability. The proof of custody mechanism is not live.',
+      }),
+      discovery.getContractDetails('dlReg'),
+      discovery.getContractDetails('dlsm'),
+      discovery.getContractDetails('PubkeyCompendium'),
+      discovery.getContractDetails('InvestmentManager'),
+      discovery.getContractDetails('MantleFirstStrat'),
+      discovery.getContractDetails('MantleSecondStrat'),
+      discovery.getContractDetails('RegistryPermission'),
+      discovery.getContractDetails('Delegation'),
+      discovery.getContractDetails('PauserRegistry'),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    ...discovery.getMultisigPermission('OwnerMultisig', 'This address can upgrade the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, TssGroupManager, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation, EigenDataLayerChain, Rollup, AssertionMap, VerifierEntry.'),
-    ...discovery.getMultisigPermission('Owner2Multisig', 'This address is the owner of the following contracts: TssGroupManager, VerifierEntry, EigenDataLayerChain, L1CrossDomainMessenger, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation. It is also designated as the FraudVerifier, meaning it can delete state roots.'),
+    ...discovery.getMultisigPermission(
+      'OwnerMultisig',
+      'This address can upgrade the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, TssGroupManager, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation, EigenDataLayerChain, Rollup, AssertionMap, VerifierEntry.',
+    ),
+    ...discovery.getMultisigPermission(
+      'Owner2Multisig',
+      'This address is the owner of the following contracts: TssGroupManager, VerifierEntry, EigenDataLayerChain, L1CrossDomainMessenger, TssStakingSlashing, TssDelegationSlasher, TssDelegationManager, TssDelegation. It is also designated as the FraudVerifier, meaning it can delete state roots.',
+    ),
     {
       name: 'Sequencer',
-      accounts: [discovery.getPermissionedAccount('AddressManager', 'sequencer')],
+      accounts: [
+        discovery.getPermissionedAccount('AddressManager', 'sequencer'),
+      ],
       description: 'Central actor allowed to commit L2 transactions to L1.',
     },
     {
@@ -317,12 +342,14 @@ export const mantle: Layer2 = {
     {
       name: 'Rollup operators',
       accounts: discovery.getPermissionedAccounts('Rollup', 'operatorslist'),
-      description: 'Addresses that can initiate a state root update and challenge them. They currently sit behind a whitelist.',
+      description:
+        'Addresses that can initiate a state root update and challenge them. They currently sit behind a whitelist.',
     },
     {
       name: 'Rollup stakers',
       accounts: discovery.getPermissionedAccounts('Rollup', 'stakerslist'),
-      description: 'Addresses that stake on the Rollup contract. They are not in use yet.',
-    }
+      description:
+        'Addresses that stake on the Rollup contract. They are not in use yet.',
+    },
   ],
 }
