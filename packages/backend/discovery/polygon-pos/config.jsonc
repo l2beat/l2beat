@@ -120,15 +120,6 @@
         "currentHeaderBlock"
       ]
     },
-    "ExitNFT": {
-      "ignoreMethods": ["exists"]
-    },
-    "MaticToken": {
-      "ignoreDiscovery": true
-    },
-    "MaticWETH": {
-      "ignoreDiscovery": true
-    },
     "PolygonMultisig": {
       "ignoreInWatchMode": ["nonce"]
     }
