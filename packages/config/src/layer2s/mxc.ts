@@ -17,7 +17,7 @@ export const mxc: Layer2 = {
     slug: 'mxc',
     headerWarning: '',
     description:
-      'MXC zkEVM is a new zk-rollup that provides type-1 Ethereum Virtual Machine (EVM) equivalence (opcode-level compatibility) for a transparent user experience and existing Ethereum ecosystem and tooling compatibility.',
+      'The MXC zkEVM is an IoT-centric zk-rollup solution. It offers type-1 EVM equivalence, ensuring opcode-level compatibility with the Ethereum Virtual Machine. This ensures seamless user experiences and compatibility with existing Ethereum tooling, making it ideal for DePIN and various real-world applications.',
     purpose: 'Universal',
     provider: 'taiko',
     category: 'ZK Rollup',
