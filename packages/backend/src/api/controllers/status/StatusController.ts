@@ -1,14 +1,17 @@
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import {
+  assert,
   ChainId,
   getTimestamps,
   Hash256,
+  ProjectId,
   UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
+import { getEBVConfigHash } from '../../../core/reports/getEBVConfigHash'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
 import { TotalSupplyTokensConfig } from '../../../core/totalSupply/TotalSupplyTokensConfig'
@@ -180,7 +183,7 @@ export class StatusController {
       chainId,
       valueType,
     )
-    const configHash = getReportConfigHash(this.projects)
+    const configHash = getConfigHashForReports(chainId, this.projects)
 
     const reports = timestamps.map((timestamp) => ({
       timestamp,
@@ -216,4 +219,32 @@ function isSynced(
     statuses.find((s) => s.timestamp.toString() === timestamp.toString())
       ?.configHash === configHash
   )
+}
+
+function getConfigHashForReports(chainId: ChainId, projects: Project[]) {
+  switch (chainId) {
+    case ChainId.ETHEREUM:
+      return getReportConfigHash(projects)
+    case ChainId.ARBITRUM:
+      return getEBVConfigHash(
+        filterArbitrumProject(projects),
+        getExternalTokens(filterArbitrumProject(projects)),
+      )
+    default:
+      throw new Error(`Unknown chainId: ${chainId.toString()}`)
+  }
+}
+
+function filterArbitrumProject(projects: Project[]) {
+  const result = projects.filter((x) => x.projectId === ProjectId.ARBITRUM)
+  assert(
+    result.length === 1,
+    'Expected there only to be a single matching project',
+  )
+  return result[0]
+}
+
+function getExternalTokens(project: Project) {
+  assert(project.externalTokens, 'No external tokens configured')
+  return project.externalTokens.assets
 }
