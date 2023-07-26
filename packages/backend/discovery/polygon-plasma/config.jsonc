@@ -140,9 +140,7 @@
       }
     },
     "MaticWETH": {
-      "ignoreInWatchMode": [
-        "totalSupply"
-      ]
+      "ignoreInWatchMode": ["totalSupply"]
     }
   }
 }
