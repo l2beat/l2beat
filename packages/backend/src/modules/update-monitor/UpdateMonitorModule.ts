@@ -4,6 +4,7 @@ import {
   DiscoveryLogger,
 } from '@l2beat/discovery'
 import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
+import { ChainId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
@@ -55,6 +56,7 @@ export function createUpdateMonitorModule(
 
   const runner = createDiscoveryRunner(
     {
+      chainId: ChainId.ETHEREUM,
       etherscanLikeApiUrl: EtherscanClient.API_URL,
       etherscanLikeApiKey: config.updateMonitor.etherscanApiKey,
       rpcUrl: '',

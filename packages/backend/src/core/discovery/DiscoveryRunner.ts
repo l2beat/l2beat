@@ -18,6 +18,7 @@ export class DiscoveryRunner {
   constructor(
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly configReader: ConfigReader,
+    private readonly chainId: ChainId,
   ) {}
 
   async getBlockNumber(): Promise<number> {
@@ -25,7 +26,7 @@ export class DiscoveryRunner {
   }
 
   getChainId(): ChainId {
-    throw new Error('Not implemented')
+    return this.chainId
   }
 
   async run(
