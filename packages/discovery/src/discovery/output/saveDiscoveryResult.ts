@@ -1,27 +1,14 @@
-import { ChainId, Hash256 } from '@l2beat/shared-pure'
+import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
-import { mkdirp } from 'mkdirp'
-import { dirname } from 'path'
-import { rimraf } from 'rimraf'
 
-import { Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { toDiscoveryOutput } from './toDiscoveryOutput'
 import { toPrettyJson } from './toPrettyJson'
 
 export async function saveDiscoveryResult(
-  results: Analysis[],
+  project: DiscoveryOutput,
   config: DiscoveryConfig,
-  blockNumber: number,
-  configHash: Hash256,
   chain: ChainId,
 ) {
-  const project = toDiscoveryOutput(
-    config.name,
-    configHash,
-    blockNumber,
-    results,
-  )
   const json = await toPrettyJson(project)
 
   const chainName = ChainId.getName(chain).toString()
@@ -30,20 +17,20 @@ export async function saveDiscoveryResult(
 
   await writeFile(`${root}/discovered.json`, json)
 
-  await rimraf(`${root}/.code`)
-  for (const result of results) {
-    if (result.type === 'EOA') {
-      continue
-    }
-    for (const [i, files] of result.sources.entries()) {
-      for (const [file, content] of Object.entries(files)) {
-        const codebase = getSourceName(i, result.sources.length)
-        const path = `${root}/.code/${result.name}${codebase}/${file}`
-        await mkdirp(dirname(path))
-        await writeFile(path, content)
-      }
-    }
-  }
+  // await rimraf(`${root}/.code`)
+  // for (const result of project) {
+  //   if (result.type === 'EOA') {
+  //     continue
+  //   }
+  //   for (const [i, files] of result.sources.entries()) {
+  //     for (const [file, content] of Object.entries(files)) {
+  //       const codebase = getSourceName(i, result.sources.length)
+  //       const path = `${root}/.code/${result.name}${codebase}/${file}`
+  //       await mkdirp(dirname(path))
+  //       await writeFile(path, content)
+  //     }
+  //   }
+  // }
 }
 
 /**

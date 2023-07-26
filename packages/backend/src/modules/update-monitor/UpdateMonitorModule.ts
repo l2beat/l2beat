@@ -3,6 +3,7 @@ import {
   DISCOVERY_LOGIC_VERSION,
   DiscoveryLogger,
 } from '@l2beat/discovery'
+import { createDiscoveryRunner } from '@l2beat/discovery/src/discovery/createDiscoveryRunner'
 import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 
@@ -15,7 +16,6 @@ import { UpdateNotifierRepository } from '../../peripherals/database/discovery/U
 import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'
-import { createDiscoveryRunner } from './createDiscoveryRunner'
 
 export function createUpdateMonitorModule(
   config: Config,

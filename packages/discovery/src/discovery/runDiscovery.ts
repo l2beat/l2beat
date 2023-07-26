@@ -7,6 +7,7 @@ import { AddressAnalyzer } from './analysis/AddressAnalyzer'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
+import { DiscoveryRunner } from './DiscoveryRunner'
 import { DiscoveryEngine } from './engine/DiscoveryEngine'
 import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { diffDiscovery } from './output/diffDiscovery'
@@ -17,8 +18,7 @@ import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
 
 export async function runDiscovery(
-  provider: providers.AlchemyProvider,
-  etherscanClient: EtherscanClient,
+  runner: DiscoveryRunner,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
   chain: ChainId,
@@ -29,23 +29,11 @@ export async function runDiscovery(
     config.blockNumber ??
     (config.dev
       ? (await configReader.readDiscovery(config.project, chain)).blockNumber
-      : await provider.getBlockNumber())
+      : await runner.getBlockNumber())
 
-  const logger = DiscoveryLogger.CLI
-  const result = await discover(
-    provider,
-    etherscanClient,
-    projectConfig,
-    logger,
-    blockNumber,
-  )
-  await saveDiscoveryResult(
-    result,
-    projectConfig,
-    blockNumber,
-    projectConfig.hash,
-    chain,
-  )
+  const result = await runner.discover(projectConfig, blockNumber)
+
+  await saveDiscoveryResult(result, projectConfig, chain)
 }
 
 export async function dryRunDiscovery(

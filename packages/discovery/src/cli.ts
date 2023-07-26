@@ -8,6 +8,8 @@ import {
   getDiscoveryCliConfig,
 } from './config/config.discovery'
 import { ConfigReader } from './discovery/config/ConfigReader'
+import { createDiscoveryRunner } from './discovery/createDiscoveryRunner'
+import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { dryRunDiscovery, runDiscovery } from './discovery/runDiscovery'
 import { runInversion } from './inversion/runInversion'
 
@@ -31,6 +33,23 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
   }
 
   const http = new HttpClient()
+  const configReader = new ConfigReader()
+
+  const discoveryLogger = DiscoveryLogger.CLI
+
+  const runner = createDiscoveryRunner(
+    {
+      chainId: ChainId.ETHEREUM,
+      etherscanLikeApiUrl: EtherscanClient.API_URL,
+      etherscanLikeApiKey: config.discovery.etherscanApiKey,
+      rpcUrl: config.discovery.ethereumRpcUrl,
+      minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+    },
+    http,
+    configReader,
+    discoveryLogger,
+  )
+
   const provider = new providers.AlchemyProvider(
     'mainnet',
     config.discovery.alchemyApiKey,
@@ -40,7 +59,6 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
     config.discovery.etherscanApiKey,
     new UnixTime(0),
   )
-  const configReader = new ConfigReader()
 
   if (config.discovery.dryRun) {
     logger = logger.for('DryRun')
@@ -58,13 +76,7 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
 
   logger = logger.for('Discovery')
   logger.info('Starting')
-  await runDiscovery(
-    provider,
-    etherscanClient,
-    configReader,
-    config.discovery,
-    ChainId.ETHEREUM,
-  )
+  await runDiscovery(runner, configReader, config.discovery, ChainId.ETHEREUM)
 }
 
 async function invert(config: DiscoveryCliConfig, logger: Logger) {

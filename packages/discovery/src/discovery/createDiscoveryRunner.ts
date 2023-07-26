@@ -1,17 +1,16 @@
-import {
-  AddressAnalyzer,
-  ConfigReader,
-  DiscoveryEngine,
-  DiscoveryLogger,
-  DiscoveryProvider,
-  HandlerExecutor,
-  ProxyDetector,
-  SourceCodeService,
-} from '@l2beat/discovery'
-import { DiscoveryRunner } from '@l2beat/discovery/src/discovery/DiscoveryRunner'
 import { EtherscanLikeClient, HttpClient } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
+
+import { AddressAnalyzer } from './analysis/AddressAnalyzer'
+import { ConfigReader } from './config/ConfigReader'
+import { DiscoveryLogger } from './DiscoveryLogger'
+import { DiscoveryRunner } from './DiscoveryRunner'
+import { DiscoveryEngine } from './engine/DiscoveryEngine'
+import { HandlerExecutor } from './handlers/HandlerExecutor'
+import { DiscoveryProvider } from './provider/DiscoveryProvider'
+import { ProxyDetector } from './proxies/ProxyDetector'
+import { SourceCodeService } from './source/SourceCodeService'
 
 export interface DiscoveryRunnerConfig {
   chainId: ChainId

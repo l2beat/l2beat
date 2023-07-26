@@ -21,6 +21,7 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       project: cli.project,
       blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
       alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
+      ethereumRpcUrl: getEnv('ETHEREUM_RPC_URL'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       dryRun: cli.dryRun,
       dev: cli.dev,
@@ -38,6 +39,7 @@ export interface DiscoveryModuleConfig {
   readonly blockNumber?: number
   readonly alchemyApiKey: string
   readonly etherscanApiKey: string
+  readonly ethereumRpcUrl: string
   readonly dryRun?: boolean
   readonly dev?: boolean
 }
