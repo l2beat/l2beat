@@ -22,7 +22,7 @@ export const obscuro: Layer2 = {
         'https://obscu.ro/litepaper',
         'https://whitepaper.obscu.ro',
       ],
-      explorers: ['http://testnet.obscuroscan.io'],
+      explorers: ['https://testnet.obscuroscan.io'],
       repositories: [
         'https://github.com/obscuronet',
         'https://github.com/obscuronet/go-obscuro',
