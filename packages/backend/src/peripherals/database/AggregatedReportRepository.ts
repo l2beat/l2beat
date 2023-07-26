@@ -19,10 +19,10 @@ export class AggregatedReportRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AggregatedReportRepository>>(this)
   }
 
-  async getDaily(): Promise<AggregatedReportRecord[]> {
+  async getDaily(valueType: ValueType): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
-      .where({ value_type: ValueType.TVL.toString() })
+      .where({ value_type: valueType.toString() })
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) = 0`)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)

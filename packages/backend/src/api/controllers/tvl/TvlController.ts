@@ -73,7 +73,7 @@ export class TvlController {
           getSixHourlyMinTimestamp(timestamp),
           ValueType.TVL,
         ),
-        this.aggregatedReportRepository.getDaily(),
+        this.aggregatedReportRepository.getDaily(ValueType.TVL),
         this.reportRepository.getByTimestamp(timestamp),
       ])
     const tvlApiResponse = generateTvlApiResponse(

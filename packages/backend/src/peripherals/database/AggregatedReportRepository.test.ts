@@ -30,7 +30,7 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([
         fakeAggregateReport({ timestamp: TIME_1 }),
       ])
-      const result = await repository.getDaily()
+      const result = await repository.getDaily(ValueType.TVL)
       expect(result).toEqual([REPORT])
     })
 
@@ -43,7 +43,7 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[0]])
       await repository.addOrUpdateMany([REPORTS[1]])
       await repository.addOrUpdateMany([REPORTS[2]])
-      const result = await repository.getDaily()
+      const result = await repository.getDaily(ValueType.TVL)
       expect(result).toEqual(REPORTS)
     })
   })
