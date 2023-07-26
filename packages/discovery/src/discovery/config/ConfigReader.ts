@@ -8,8 +8,9 @@ import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class ConfigReader {
   async readConfig(name: string, chain: ChainId): Promise<DiscoveryConfig> {
+    const chainName = ChainId.getName(chain).toString()
     const contents = await readFile(
-      `discovery/${name}/${chain.toString()}/config.jsonc`,
+      `discovery/${name}/${chainName}/config.jsonc`,
       'utf-8',
     )
     const errors: ParseError[] = []
@@ -39,8 +40,10 @@ export class ConfigReader {
   }
 
   async readDiscovery(name: string, chain: ChainId): Promise<DiscoveryOutput> {
+    const chainName = ChainId.getName(chain).toString()
+
     const contents = await readFile(
-      `discovery/${name}/${chain.toString()}/discovered.json`,
+      `discovery/${name}/${chainName}/discovered.json`,
       'utf-8',
     )
 
