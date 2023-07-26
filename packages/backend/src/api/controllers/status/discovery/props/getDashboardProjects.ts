@@ -26,11 +26,8 @@ export async function getDashboardProjects(
   const projects: DashboardProject[] = []
 
   for (const name of names) {
-    const config = await configReader.readConfig(name, ChainName('ethereum'))
-    const discovery = await configReader.readDiscovery(
-      name,
-      ChainName('ethereum'),
-    )
+    const config = await configReader.readConfig(name, ChainName.ETHEREUM)
+    const discovery = await configReader.readDiscovery(name, ChainName.ETHEREUM)
     const diff: DiscoveryDiff[] = await getDiff(
       updateMonitorRepository,
       discovery,

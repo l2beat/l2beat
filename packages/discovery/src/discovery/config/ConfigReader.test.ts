@@ -25,7 +25,7 @@ describe(ConfigReader.name, () => {
       it(`can read ${project} config`, async () => {
         const result = await configReader.readConfig(
           project,
-          ChainName('ethereum'),
+          ChainName.ETHEREUM,
         )
         expect(result.name).toEqual(project)
       })
@@ -57,7 +57,7 @@ describe(ConfigReader.name, () => {
       it(`can read discovered.json for ${project}`, async () => {
         const result = await configReader.readDiscovery(
           project,
-          ChainName('ethereum'),
+          ChainName.ETHEREUM,
         )
         expect(result.name).toEqual(project)
       })

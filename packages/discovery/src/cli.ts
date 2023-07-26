@@ -51,7 +51,7 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
       etherscanClient,
       configReader,
       config.discovery,
-      ChainName('ethereum'),
+      ChainName.ETHEREUM,
     )
     return
   }
@@ -63,7 +63,7 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
     etherscanClient,
     configReader,
     config.discovery,
-    ChainName('ethereum'),
+    ChainName.ETHEREUM,
   )
 }
 
@@ -79,10 +79,5 @@ async function invert(config: DiscoveryCliConfig, logger: Logger) {
   logger = logger.for('Inversion')
   logger.info('Starting')
 
-  await runInversion(
-    file,
-    configReader,
-    useMermaidMarkup,
-    ChainName('ethereum'),
-  )
+  await runInversion(file, configReader, useMermaidMarkup, ChainName.ETHEREUM)
 }

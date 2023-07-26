@@ -38,7 +38,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName('ethereum'),
+        ChainName.ETHEREUM,
       )
       if (discovery.name !== config.name) {
         notEqual.push(config.name)
@@ -55,7 +55,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName('ethereum'),
+        ChainName.ETHEREUM,
       )
 
       for (const override of config.overrides) {
@@ -102,7 +102,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName('ethereum'),
+        ChainName.ETHEREUM,
       )
 
       if (
@@ -129,7 +129,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName('ethereum'),
+        ChainName.ETHEREUM,
       )
 
       if (discovery.configHash !== config.hash) {
@@ -148,7 +148,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName('ethereum'),
+        ChainName.ETHEREUM,
       )
 
       assert(

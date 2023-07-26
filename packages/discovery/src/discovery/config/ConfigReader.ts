@@ -31,7 +31,7 @@ export class ConfigReader {
       .map((x) => x.name)
 
     for (const config of configs) {
-      const contents = await this.readConfig(config, ChainName('ethereum'))
+      const contents = await this.readConfig(config, ChainName.ETHEREUM)
       result.push(contents)
     }
 
