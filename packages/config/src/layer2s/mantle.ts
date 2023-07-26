@@ -39,10 +39,10 @@ export const mantle: Layer2 = {
     slug: 'mantle',
     description:
       'Mantle is an EVM compatible optimistic chain that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.\
-      It has a modular architecture trying to leverage Eigen DA as Data Availability layer and Specular Network fraud proof system for fraud proofs.\
+      It has a modular architecture trying to leverage EigenDA as Data Availability layer and Specular Network fraud proof system for fraud proofs.\
       Note that as currently both of these technologies are yet to be fully launched on mainnet, Mantle needs to be considered "under development".\
       Additionally Mantle uses a set of nodes that are required to co-sign L2 state roots via TSS (Threshold Signature Scheme). This component is\
-      intendent to be eventually run by third parties, and act as an independent check on state validity prior to batch submission.',
+      intended to be eventually run by third parties, and act as an independent check on state validity prior to batch submission.',
     purpose: 'Universal',
     category: 'Optimistic Chain',
     provider: 'Optimism',
