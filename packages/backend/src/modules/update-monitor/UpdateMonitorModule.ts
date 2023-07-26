@@ -1,20 +1,12 @@
 import {
-  AddressAnalyzer,
   ConfigReader,
   DISCOVERY_LOGIC_VERSION,
-  DiscoveryEngine,
   DiscoveryLogger,
-  DiscoveryProvider,
-  HandlerExecutor,
-  ProxyDetector,
-  SourceCodeService,
 } from '@l2beat/discovery'
 import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { providers } from 'ethers'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
-import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
 import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
@@ -22,6 +14,7 @@ import { UpdateNotifierRepository } from '../../peripherals/database/discovery/U
 import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ApplicationModule } from '../ApplicationModule'
+import { createDiscoveryRunner } from './createDiscoveryRunner'
 
 export function createUpdateMonitorModule(
   config: Config,
@@ -35,16 +28,9 @@ export function createUpdateMonitorModule(
     return
   }
 
-  const provider = new providers.AlchemyProvider(
-    'mainnet',
-    config.updateMonitor.alchemyApiKey,
-  )
-  const etherscanClient = new EtherscanClient(
-    http,
-    config.updateMonitor.etherscanApiKey,
-    config.clock.minBlockTimestamp,
-  )
-  const discoveryProvider = new DiscoveryProvider(provider, etherscanClient)
+  const configReader = new ConfigReader()
+
+  const discoveryLogger = DiscoveryLogger.SERVER
 
   const discordClient = config.updateMonitor.discord
     ? new DiscordClient(
@@ -59,6 +45,7 @@ export function createUpdateMonitorModule(
     database,
     logger,
   )
+  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
   const updateNotifier = new UpdateNotifier(
     updateNotifierRepository,
@@ -66,31 +53,20 @@ export function createUpdateMonitorModule(
     logger,
   )
 
-  const configReader = new ConfigReader()
-
-  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
-
-  const discoveryLogger = DiscoveryLogger.SERVER
-
-  const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
-  const sourceCodeService = new SourceCodeService(discoveryProvider)
-  const handlerExecutor = new HandlerExecutor(
-    discoveryProvider,
+  const runner = createDiscoveryRunner(
+    {
+      etherscanLikeApiUrl: EtherscanClient.API_URL,
+      etherscanLikeApiKey: config.updateMonitor.etherscanApiKey,
+      rpcUrl: '',
+      minBlockTimestamp: config.clock.minBlockTimestamp,
+    },
+    http,
+    configReader,
     discoveryLogger,
   )
-  const addressAnalyzer = new AddressAnalyzer(
-    discoveryProvider,
-    proxyDetector,
-    sourceCodeService,
-    handlerExecutor,
-    discoveryLogger,
-  )
-  const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
-  const discoveryRunner = new DiscoveryRunner(discoveryEngine, configReader)
 
   const updateMonitor = new UpdateMonitor(
-    provider,
-    discoveryRunner,
+    [runner],
     updateNotifier,
     configReader,
     updateMonitorRepository,

@@ -91,8 +91,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const updateMonitor = new UpdateMonitor(
-        provider,
-        discoveryRunner,
+        [discoveryRunner],
         updateNotifier,
         configReader,
         repository,
@@ -165,8 +164,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const updateMonitor = new UpdateMonitor(
-        provider,
-        discoveryRunner,
+        [discoveryRunner],
         updateNotifier,
         configReader,
         repository,
@@ -216,8 +214,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const updateMonitor = new UpdateMonitor(
-        provider,
-        discoveryRunner,
+        [discoveryRunner],
         updateNotifier,
         configReader,
         repository,
@@ -279,8 +276,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const updateMonitor = new UpdateMonitor(
-        provider,
-        discoveryRunner,
+        [discoveryRunner],
         updateNotifier,
         configReader,
         repository,
@@ -327,8 +323,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const updateMonitor = new UpdateMonitor(
-        provider,
-        discoveryRunner,
+        [discoveryRunner],
         updateNotifier,
         configReader,
         repository,
@@ -374,8 +369,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const updateMonitor = new UpdateMonitor(
-        mockObject<providers.AlchemyProvider>(),
-        mockObject<DiscoveryRunner>(),
+        [mockObject<DiscoveryRunner>()],
         mockObject<UpdateNotifier>(),
         configReader,
         repository,
@@ -386,6 +380,7 @@ describe(UpdateMonitor.name, () => {
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
+        mockObject<DiscoveryRunner>(),
         mockConfig(PROJECT_A),
       )
 
@@ -411,8 +406,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const updateMonitor = new UpdateMonitor(
-        mockObject<providers.AlchemyProvider>(),
-        mockObject<DiscoveryRunner>(),
+        [mockObject<DiscoveryRunner>()],
         mockObject<UpdateNotifier>(),
         mockObject<ConfigReader>(),
         repository,
@@ -423,6 +417,7 @@ describe(UpdateMonitor.name, () => {
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
+        mockObject<DiscoveryRunner>(),
         mockConfig(PROJECT_A),
       )
 
@@ -454,8 +449,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const updateMonitor = new UpdateMonitor(
-        mockObject<providers.AlchemyProvider>(),
-        mockObject<DiscoveryRunner>(),
+        [mockObject<DiscoveryRunner>()],
         mockObject<UpdateNotifier>(),
         configReader,
         repository,
@@ -466,6 +460,7 @@ describe(UpdateMonitor.name, () => {
       )
 
       const result = await updateMonitor.getPreviousDiscovery(
+        mockObject<DiscoveryRunner>(),
         // different config hash
         new DiscoveryConfig({
           name: PROJECT_A,
@@ -497,8 +492,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const updateMonitor = new UpdateMonitor(
-        mockObject<providers.AlchemyProvider>(),
-        discoveryRunner,
+        [discoveryRunner],
         mockObject<UpdateNotifier>(),
         mockObject<ConfigReader>(),
         repository,
@@ -508,7 +502,10 @@ describe(UpdateMonitor.name, () => {
         1,
       )
 
-      await updateMonitor.getPreviousDiscovery(mockConfig(PROJECT_A))
+      await updateMonitor.getPreviousDiscovery(
+        discoveryRunner,
+        mockConfig(PROJECT_A),
+      )
 
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
       expect(discoveryRunner.run).toHaveBeenCalledWith(

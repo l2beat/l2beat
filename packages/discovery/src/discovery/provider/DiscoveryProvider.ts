@@ -1,4 +1,4 @@
-import { EtherscanClient } from '@l2beat/shared'
+import { EtherscanLikeClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
@@ -24,7 +24,7 @@ export interface ContractMetadata {
 export class DiscoveryProvider {
   constructor(
     private readonly provider: providers.Provider,
-    private readonly etherscanClient: EtherscanClient,
+    private readonly etherscanLikeClient: EtherscanLikeClient,
   ) {}
 
   async call(
@@ -76,7 +76,7 @@ export class DiscoveryProvider {
   }
 
   async getMetadata(address: EthereumAddress): Promise<ContractMetadata> {
-    const result = await this.etherscanClient.getContractSource(address)
+    const result = await this.etherscanLikeClient.getContractSource(address)
     const isVerified = result.ABI !== 'Contract source code not verified'
 
     return {
@@ -88,7 +88,7 @@ export class DiscoveryProvider {
   }
 
   async getContractDeploymentTx(address: EthereumAddress) {
-    return this.etherscanClient.getContractDeploymentTx(address)
+    return this.etherscanLikeClient.getContractDeploymentTx(address)
   }
 
   async getDeployer(address: EthereumAddress) {

@@ -6,7 +6,6 @@ import {
 } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
 import { ChainId, DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
 import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
@@ -22,8 +21,7 @@ export class UpdateMonitor {
   readonly cachedDiscovery = new Map<string, DiscoveryOutput>()
 
   constructor(
-    private readonly provider: providers.AlchemyProvider,
-    private readonly discoveryRunner: DiscoveryRunner,
+    private readonly discoveryRunners: DiscoveryRunner[],
     private readonly updateNotifier: UpdateNotifier,
     private readonly configReader: ConfigReader,
     private readonly repository: UpdateMonitorRepository,
@@ -54,62 +52,71 @@ export class UpdateMonitor {
   }
 
   async update(timestamp: UnixTime) {
-    // TODO: get block number based on clock time
-    const blockNumber = await this.provider.getBlockNumber()
-    const metricsDone = this.initMetrics(blockNumber)
-    this.logger.info('Update started', {
-      blockNumber,
-      timestamp: timestamp.toNumber(),
-    })
+    for (const runner of this.discoveryRunners) {
+      // TODO: get block number based on clock time
+      const blockNumber = await runner.getBlockNumber()
+      const chainId = runner.getChainId()
 
-    const projectConfigs = await this.configReader.readAllConfigsForChain(
-      ChainId.ETHEREUM,
-    )
-
-    for (const projectConfig of projectConfigs) {
-      this.logger.info('Project update started', {
-        project: projectConfig.name,
+      const metricsDone = this.initMetrics(blockNumber)
+      this.logger.info('Update started', {
+        blockNumber,
+        timestamp: timestamp.toNumber(),
       })
 
-      try {
-        await this.updateProject(projectConfig, blockNumber, timestamp)
-      } catch (error) {
-        this.logger.error(
-          { message: `Failed to update project [${projectConfig.name}]` },
-          error,
-        )
-        errorsCount.inc()
+      const projectConfigs = await this.configReader.readAllConfigsForChain(
+        chainId,
+      )
+
+      for (const projectConfig of projectConfigs) {
+        this.logger.info('Project update started', {
+          project: projectConfig.name,
+        })
+
+        try {
+          await this.updateProject(
+            runner,
+            projectConfig,
+            blockNumber,
+            timestamp,
+          )
+        } catch (error) {
+          this.logger.error(
+            { message: `Failed to update project [${projectConfig.name}]` },
+            error,
+          )
+          errorsCount.inc()
+        }
+
+        this.logger.info('Project update finished', {
+          project: projectConfig.name,
+        })
       }
 
-      this.logger.info('Project update finished', {
-        project: projectConfig.name,
+      await this.findUnresolvedProjects(projectConfigs, timestamp)
+
+      metricsDone()
+      this.logger.info('Update finished', {
+        blockNumber,
+        timestamp: timestamp.toNumber(),
       })
     }
-
-    await this.findUnresolvedProjects(projectConfigs, timestamp)
-
-    metricsDone()
-    this.logger.info('Update finished', {
-      blockNumber,
-      timestamp: timestamp.toNumber(),
-    })
   }
 
   private async updateProject(
+    runner: DiscoveryRunner,
     projectConfig: DiscoveryConfig,
     blockNumber: number,
     timestamp: UnixTime,
   ) {
-    const previousDiscovery = await this.getPreviousDiscovery(projectConfig)
-
-    const discovery = await this.discoveryRunner.run(
+    const previousDiscovery = await this.getPreviousDiscovery(
+      runner,
       projectConfig,
-      blockNumber,
-      {
-        runSanityCheck: true,
-        injectInitialAddresses: true,
-      },
     )
+
+    const discovery = await runner.run(projectConfig, blockNumber, {
+      runSanityCheck: true,
+      injectInitialAddresses: true,
+    })
     this.cachedDiscovery.set(projectConfig.name, discovery)
 
     const diff = diffDiscovery(
@@ -131,6 +138,8 @@ export class UpdateMonitor {
   }
 
   async getPreviousDiscovery(
+    runner: DiscoveryRunner,
+
     projectConfig: DiscoveryConfig,
   ): Promise<DiscoveryOutput> {
     const databaseEntry = await this.repository.findLatest(projectConfig.name)
@@ -155,14 +164,10 @@ export class UpdateMonitor {
       'Discovery logic version changed, discovering with new logic',
       { project: projectConfig.name },
     )
-    return await this.discoveryRunner.run(
-      projectConfig,
-      previousDiscovery.blockNumber,
-      {
-        runSanityCheck: true,
-        injectInitialAddresses: true,
-      },
-    )
+    return await runner.run(projectConfig, previousDiscovery.blockNumber, {
+      runSanityCheck: true,
+      injectInitialAddresses: true,
+    })
   }
 
   private async handleDiff(

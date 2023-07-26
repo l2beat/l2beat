@@ -20,6 +20,14 @@ export class DiscoveryRunner {
     private readonly configReader: ConfigReader,
   ) {}
 
+  async getBlockNumber(): Promise<number> {
+    return Promise.reject('Not implemented')
+  }
+
+  getChainId(): ChainId {
+    throw new Error('Not implemented')
+  }
+
   async run(
     projectConfig: DiscoveryConfig,
     blockNumber: number,
