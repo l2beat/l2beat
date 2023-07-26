@@ -1,11 +1,11 @@
 import {
+  ConfigReader,
   diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
-  name,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
-import { DiscoveryOutput } from '@l2beat/shared-pure'
+import { ChainName, DiscoveryOutput } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
@@ -17,7 +17,7 @@ export interface DiscoveryRunnerOptions {
 export class DiscoveryRunner {
   constructor(
     private readonly discoveryEngine: DiscoveryEngine,
-    private readonly configReader: name,
+    private readonly configReader: ConfigReader,
   ) {}
 
   async run(
@@ -82,7 +82,10 @@ export class DiscoveryRunner {
   // this function ensures that initial addresses are taken from discovered.json
   // so this way we will always discover "known" contracts
   async updateInitialAddresses(config: DiscoveryConfig) {
-    const discovery = await this.configReader.readDiscovery(config.name, 'L1')
+    const discovery = await this.configReader.readDiscovery(
+      config.name,
+      ChainName('ethereum'),
+    )
     const initialAddresses = discovery.contracts.map((c) => c.address)
     return new DiscoveryConfig({
       ...config.raw,

@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { name } from '@l2beat/discovery'
+import { ConfigReader } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
 
 import { StatusController } from '../../api/controllers/status/StatusController'
@@ -25,7 +25,7 @@ export function createStatusModule(
     logger.info('StatusModule disabled')
     return
   }
-  const configReader = new name()
+  const configReader = new ConfigReader()
 
   const priceRepository = new PriceRepository(database, logger)
   const reportStatusRepository = new ReportStatusRepository(database, logger)

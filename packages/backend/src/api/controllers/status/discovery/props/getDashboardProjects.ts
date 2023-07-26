@@ -1,4 +1,5 @@
-import { DiscoveryDiff, name } from '@l2beat/discovery'
+import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
+import { ChainName } from '@l2beat/shared-pure'
 
 import { UpdateMonitorRepository } from '../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { getDashboardContracts } from './getDashboardContracts'
@@ -17,7 +18,7 @@ export interface DashboardProject {
 }
 
 export async function getDashboardProjects(
-  configReader: name,
+  configReader: ConfigReader,
   updateMonitorRepository: UpdateMonitorRepository,
 ): Promise<DashboardProject[]> {
   const names = (await configReader.readAllConfigs()).map((c) => c.name)
@@ -25,8 +26,11 @@ export async function getDashboardProjects(
   const projects: DashboardProject[] = []
 
   for (const name of names) {
-    const config = await configReader.readConfig(name, 'L1')
-    const discovery = await configReader.readDiscovery(name, 'L1')
+    const config = await configReader.readConfig(name, ChainName('ethereum'))
+    const discovery = await configReader.readDiscovery(
+      name,
+      ChainName('ethereum'),
+    )
     const diff: DiscoveryDiff[] = await getDiff(
       updateMonitorRepository,
       discovery,
