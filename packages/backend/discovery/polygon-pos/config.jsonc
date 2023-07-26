@@ -6,14 +6,12 @@
     "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
   ],
   "names": {
-    "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0": "MaticToken",
     "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH",
     "0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A": "SlashingManager",
     "0x2A88696e0fFA76bAA1338F2C74497cC013495922": "WithdrawManager",
     "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT",
-    "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": "StarkingInfo",
+    "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": "StakingInfo",
     "0x401F6c983eA34274ec46f84D70b31C151321188b": "DepositManager",
-    "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": "ExitNFT",
     "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
     "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManager",
     "0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension",
@@ -72,7 +70,7 @@
       "ignoreDiscovery": true // not used
     },
     "DepositManager": {
-      "ignoreDiscovery": true, // TODO: temporary,
+      "ignoreDiscovery": true, // Plasma Bridge
       "ignoreMethods": ["deposits"]
     },
     "RootChainManager": {
@@ -121,48 +119,6 @@
         "getLastChildBlock",
         "currentHeaderBlock"
       ]
-    },
-    "ExitNFT": {
-      "ignoreMethods": ["exists"]
-    },
-    "StakeManager": {
-      "proxyType": "Polygon Extension proxy",
-      "ignoreMethods": [
-        "delegatedAmount",
-        "getValidatorContract",
-        "isValidator",
-        "latestSignerUpdateEpoch",
-        "signers",
-        "validatorAuction",
-        "validators",
-        "validatorStake",
-        "validatorStateChanges"
-      ]
-    },
-    // TODO: custom proxy
-    "StakeManagerExtension": {
-      "ignoreMethods": [
-        "latestSignerUpdateEpoch",
-        "validatorAuction",
-        "validators",
-        "validatorStateChanges"
-      ]
-    },
-    "StarkingInfo": {
-      "ignoreMethods": [
-        "getValidatorContractAddress",
-        "totalValidatorStake",
-        "validatorNonce"
-      ]
-    },
-    "ValidatorShareImpl": {
-      "ignoreDiscovery": true
-    },
-    "MaticToken": {
-      "ignoreDiscovery": true
-    },
-    "MaticWETH": {
-      "ignoreDiscovery": true
     },
     "PolygonMultisig": {
       "ignoreInWatchMode": ["nonce"]

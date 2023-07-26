@@ -6,6 +6,7 @@ import { StatusController } from '../../api/controllers/status/StatusController'
 import { createStatusRouter } from '../../api/routers/StatusRouter'
 import { Config } from '../../config/Config'
 import { Clock } from '../../core/Clock'
+import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
@@ -33,6 +34,10 @@ export function createStatusModule(
     database,
     logger,
   )
+  const aggregatedStatusRepository = new AggregatedReportStatusRepository(
+    database,
+    logger,
+  )
 
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
@@ -41,6 +46,7 @@ export function createStatusModule(
     balanceStatusRepository,
     totalSupplyStatusRepository,
     reportStatusRepository,
+    aggregatedStatusRepository,
     updateMonitorRepository,
     clock,
     config.tokens,
