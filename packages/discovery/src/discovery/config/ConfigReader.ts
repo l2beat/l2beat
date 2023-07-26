@@ -23,7 +23,7 @@ export class ConfigReader {
     return new DiscoveryConfig(rawConfig)
   }
 
-  async readAllConfigs(): Promise<DiscoveryConfig[]> {
+  async readAllConfigs(chain: ChainName): Promise<DiscoveryConfig[]> {
     const result: DiscoveryConfig[] = []
 
     const configs = readdirSync('discovery', { withFileTypes: true })
@@ -31,7 +31,7 @@ export class ConfigReader {
       .map((x) => x.name)
 
     for (const config of configs) {
-      const contents = await this.readConfig(config, ChainName.ETHEREUM)
+      const contents = await this.readConfig(config, chain)
       result.push(contents)
     }
 

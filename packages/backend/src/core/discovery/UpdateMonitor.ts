@@ -62,7 +62,9 @@ export class UpdateMonitor {
       timestamp: timestamp.toNumber(),
     })
 
-    const projectConfigs = await this.configReader.readAllConfigs()
+    const projectConfigs = await this.configReader.readAllConfigs(
+      ChainName.ETHEREUM,
+    )
 
     for (const projectConfig of projectConfigs) {
       this.logger.info('Project update started', {
