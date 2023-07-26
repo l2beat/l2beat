@@ -1,5 +1,41 @@
 import { assert } from '@l2beat/shared-pure'
 
+/**
+ * Simple wrapper around two-level nested `Map`.
+ * Useful when aggregating many sub-variants of a value.
+ * For example, when aggregating reports, we have a root value (project) and a branch value (value type from report).
+ * The leaf value may be the aggregated value of i.e all EBV reports
+ *
+ * @example
+ *    const tree = ReportTree.from(
+ *      [ARBITRUM, OPTIMISM],
+ *      [ValueType.CBV, ValueType.EBV, ValueType.NMV, ValueType.TVL],
+ *      () => ({ valueUsd: 0n, valueEth: 0n }),
+ *    )
+ *
+ *    tree.set(ARBITRUM, ValueType.CBV, () => ({ valueUsd: 1n, valueEth: 2n }))
+ *    tree.set(ARBITRUM, ValueType.NMV, () => ({ valueUsd: 10n, valueEth: 20n }))
+ *    tree.set(ARBITRUM, ValueType.TVL, () => ({ valueUsd: 11n, valueEth: 22n }))
+ *
+ *    console.dir({ tree }, { depth: null })
+ *
+ *
+ *    // Output:
+ *    tree: Map(2) {
+ *      'arbitrum' => Map(4) {
+ *        'CBV' => { valueUsd: 1n, valueEth: 2n },
+ *        'EBV' => { valueUsd: 0n, valueEth: 0n },
+ *        'NMV' => { valueUsd: 10n, valueEth: 20n },
+ *        'TVL' => { valueUsd: 11n, valueEth: 22n }
+ *      },
+ *      'optimism' => Map(4) {
+ *        'CBV' => { valueUsd: 0n, valueEth: 0n },
+ *        'EBV' => { valueUsd: 0n, valueEth: 0n },
+ *        'NMV' => { valueUsd: 0n, valueEth: 0n },
+ *        'TVL' => { valueUsd: 0n, valueEth: 0n }
+ *      }
+ *    },
+ */
 export class ReportTree<Root = unknown, Branch = unknown, Leaf = unknown> {
   private readonly roots: Root[]
 
@@ -35,7 +71,7 @@ export class ReportTree<Root = unknown, Branch = unknown, Leaf = unknown> {
   get(root: Root, branch: Branch) {
     const leaf = this.tree.get(root)?.get(branch)
 
-    assert(leaf, 'unreachable leaf')
+    assert(leaf !== undefined, 'unreachable leaf')
 
     return leaf
   }
