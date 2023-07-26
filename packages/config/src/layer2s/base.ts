@@ -122,7 +122,7 @@ export const base: Layer2 = {
         {
           contract: 'L2OutputOracle',
           references: [
-            'https://etherscan.io/address/0x7237343c2A746Aa2940E5E4Fbd53eaFBF3049DcA#code#F1#L186',
+            'https://etherscan.io/address/0xf2460D3433475C8008ceFfe8283F07EB1447E39a#code#F1#L186',
           ],
         },
       ],
