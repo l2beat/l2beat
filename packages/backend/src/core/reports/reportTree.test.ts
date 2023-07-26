@@ -28,7 +28,7 @@ describe(ReportTree.name, () => {
       }),
     )
 
-    // Is references were shared, this would be '3' in all cases
+    // If references were shared, this would be '3' in all cases
     expect(tree.get('root1', 'branch1')).toEqual({ leafValue: 0 })
     expect(tree.get('root1', 'branch2')).toEqual({ leafValue: 1 })
     expect(tree.get('root2', 'branch1')).toEqual({ leafValue: 2 })
