@@ -52,7 +52,7 @@ export class ProjectDiscovery {
 
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
-      path.resolve(`../backend/discovery/${project}/discovered.json`),
+      path.resolve(`../backend/discovery/${project}/ethereum/discovered.json`),
     )
 
     return JSON.parse(discoveryFile) as DiscoveryOutput
