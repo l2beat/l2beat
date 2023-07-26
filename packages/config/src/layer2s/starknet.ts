@@ -35,6 +35,8 @@ const ESCROW_ETH_ADDRESS = '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'
 const ESCROW_WBTC_ADDRESS = '0x283751A21eafBFcD52297820D27C1f1963D9b5b4'
 const ESCROW_USDC_ADDRESS = '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'
 const ESCROW_USDT_ADDRESS = '0xbb3400F107804DFB482565FF1Ec8D8aE66747605'
+const ESCROW_WSTETH_ADDRESS = '0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B'
+const ESCROW_RETH_ADDRESS = '0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2'
 
 const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_ETH_ADDRESS,
@@ -53,12 +55,24 @@ const escrowUSDTDelaySeconds = discovery.getContractUpgradeabilityParam(
   'upgradeDelay',
 )
 
+const escrowWSTETHDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_WSTETH_ADDRESS,
+  'upgradeDelay',
+)
+
+const escrowRETHDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_RETH_ADDRESS,
+  'upgradeDelay',
+)
+
 const minDelay = Math.min(
   escrowETHDelaySeconds,
   escrowWBTCDelaySeconds,
   escrowUSDCDelaySeconds,
   escrowUSDTDelaySeconds,
   starknetDelaySeconds,
+  escrowWSTETHDelaySeconds,
+  escrowRETHDelaySeconds,
 )
 
 export const starknet: Layer2 = {
@@ -132,6 +146,22 @@ export const starknet: Layer2 = {
         description: 'StarkGate bridge for USDT.',
         upgradableBy: ['StarkGate USDT owner'],
         upgradeDelay: formatSeconds(escrowUSDTDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_WSTETH_ADDRESS),
+        sinceTimestamp: new UnixTime(1657137623),
+        tokens: ['wstETH'],
+        description: 'StarkGate bridge for wstETH.',
+        upgradableBy: ['StarkGate wstETH owner'],
+        upgradeDelay: formatSeconds(escrowWSTETHDelaySeconds),
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_RETH_ADDRESS),
+        sinceTimestamp: new UnixTime(1657137623),
+        tokens: ['rETH'],
+        description: 'StarkGate bridge for rETH.',
+        upgradableBy: ['StarkGate rETH owner'],
+        upgradeDelay: formatSeconds(escrowRETHDelaySeconds),
       }),
     ],
     transactionApi: {
@@ -325,6 +355,20 @@ export const starknet: Layer2 = {
       description:
         'Can upgrade implementation of the USDT escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowUSDTDelaySeconds),
+    },
+    {
+      name: 'StarkGate wstETH owner',
+      accounts: getProxyGovernance(discovery, ESCROW_WSTETH_ADDRESS),
+      description:
+        'Can upgrade implementation of the wstETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowWSTETHDelaySeconds),
+    },
+    {
+      name: 'StarkGate rETH owner',
+      accounts: getProxyGovernance(discovery, ESCROW_RETH_ADDRESS),
+      description:
+        'Can upgrade implementation of the rETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowRETHDelaySeconds),
     },
   ],
   milestones: [

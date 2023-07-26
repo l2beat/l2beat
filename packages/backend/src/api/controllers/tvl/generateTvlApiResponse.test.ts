@@ -103,13 +103,14 @@ describe(generateTvlApiResponse.name, () => {
     for (let i = 0; i < count; i++) {
       const timestamp = now.add(-i * offsetHours, 'hours')
       for (const projectId of projectIds) {
-        const tvlUsd = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-        const tvlEth = tvlUsd * 1000n
-        result.all.push({ timestamp, projectId, tvlUsd, tvlEth })
+        const usdValue = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
+        const ethValue = usdValue * 1000n
+        const valueType = ValueType.TVL
+        result.all.push({ timestamp, projectId, usdValue, ethValue, valueType })
         result[projectId.toString()].push([
           timestamp,
-          asNumber(tvlUsd, 2),
-          asNumber(tvlEth, 6),
+          asNumber(usdValue, 2),
+          asNumber(ethValue, 6),
         ])
       }
     }

@@ -13,6 +13,6 @@ export class DydxController {
       ProjectId('dydx'),
     )
 
-    return report ? asNumber(report.tvlUsd, 2) : undefined
+    return report ? asNumber(report.usdValue, 2) : undefined
   }
 }
