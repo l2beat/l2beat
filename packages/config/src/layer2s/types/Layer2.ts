@@ -84,6 +84,8 @@ export interface Layer2Config {
   escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
+  /** Text displayed on the TVL number hover */
+  tvlTooltip?: string
 }
 
 export interface Layer2ExternalAssets {
