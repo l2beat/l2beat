@@ -76,20 +76,19 @@ export class CBVUpdater implements AssetUpdater {
     this.logger.info('Started')
     return this.clock.onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
-        // we add to front to sync from newest to oldest
-        this.taskQueue.addToFront(timestamp)
+        if (timestamp.gte(this.minTimestamp)) {
+          // we add to front to sync from newest to oldest
+          this.taskQueue.addToFront(timestamp)
+        }
       }
     })
   }
 
   async update(timestamp: UnixTime) {
-    if (!timestamp.gte(this.minTimestamp)) {
-      this.logger.debug('Skipping update', {
-        timestamp: timestamp.toNumber(),
-        minTimestamp: this.minTimestamp.toNumber(),
-      })
-      return
-    }
+    assert(
+      timestamp.gte(this.minTimestamp),
+      'Timestamp cannot be smaller than minTimestamp',
+    )
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
     const [prices, balances] = await Promise.all([

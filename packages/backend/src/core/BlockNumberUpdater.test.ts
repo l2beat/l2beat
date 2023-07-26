@@ -64,7 +64,7 @@ describe(BlockNumberUpdater.name, () => {
   })
 
   describe(BlockNumberUpdater.prototype.update.name, () => {
-    it('skips update if timestamp is smaller than minTimestamp', async () => {
+    it('throws if timestamp is smaller than minTimestamp', async () => {
       const provider = mockObject<EtherscanClient>({
         getBlockNumberAtOrBefore: mockFn().resolvesToOnce(1n),
         getChainId: mockFn().returns(ChainId.ETHEREUM),
@@ -78,9 +78,9 @@ describe(BlockNumberUpdater.name, () => {
         new UnixTime(1000),
       )
 
-      await blockNumberUpdater.update(new UnixTime(999))
-
-      expect(provider.getBlockNumberAtOrBefore).not.toHaveBeenCalled()
+      await expect(
+        async () => await blockNumberUpdater.update(new UnixTime(999)),
+      ).toBeRejectedWith('Timestamp cannot be smaller than minTimestamp')
     })
   })
 

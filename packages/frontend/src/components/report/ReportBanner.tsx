@@ -13,7 +13,7 @@ export function ReportBanner() {
       </div>
       <img
         src="/images/announcements/multisig-report.png"
-        className="h-full rounded-md md:rounded-none"
+        className="h-full max-h-[320px] rounded-md md:rounded-none"
       />
     </div>
   )
