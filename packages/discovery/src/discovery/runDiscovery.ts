@@ -1,4 +1,5 @@
 import { EtherscanClient } from '@l2beat/shared'
+import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { DiscoveryModuleConfig } from '../config/config.discovery'
@@ -14,7 +15,6 @@ import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { ProviderWithCache } from './provider/ProviderWithCache'
 import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
-import { ChainId } from '@l2beat/shared-pure'
 
 export async function runDiscovery(
   provider: providers.AlchemyProvider,
