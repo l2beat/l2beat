@@ -35,10 +35,9 @@ declare module 'knex/types/tables' {
   interface AggregatedReportRow {
     unix_timestamp: Date
     project_id: string
-    tvl_usd: string
-    tvl_eth: string
-    is_daily: boolean
-    is_six_hourly: boolean
+    usd_value: string
+    eth_value: string
+    value_type: string
   }
 
   interface ReportStatusRow {
