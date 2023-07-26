@@ -7,7 +7,9 @@
     "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
     "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
     "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-    "0x9F96fE0633eE838D0298E8b8980E6716bE81388d"
+    "0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
+    "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+    "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
   ],
   "names": {
     "0x0437465dfb5B79726e35F08559B0cBea55bb585C": "DAI Bridge",
@@ -20,7 +22,9 @@
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "Proxy Multisig",
     "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "Implementation Multisig",
-    "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": "L1DaiGateway"
+    "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": "L1DaiGateway",
+    "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": "wstETH Bridge",
+    "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": "rETH Bridge"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "l2beat-starkware"
@@ -81,6 +85,22 @@
       }
     },
     "USDT Bridge": {
+      "fields": {
+        "governors": {
+          "type": "starkWareGovernance",
+          "filterBy": "isGovernor"
+        }
+      }
+    },
+    "wstETH Bridge": {
+      "fields": {
+        "governors": {
+          "type": "starkWareGovernance",
+          "filterBy": "isGovernor"
+        }
+      }
+    },
+    "rETH Bridge": {
       "fields": {
         "governors": {
           "type": "starkWareGovernance",
