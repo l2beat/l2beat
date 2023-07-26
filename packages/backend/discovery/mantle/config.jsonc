@@ -39,7 +39,8 @@
     "0x075a48633dc6845f92339741E9c96b88f1b2A86f": "PauserRegistry",
     "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashing",
     "0xD1328C9167e0693B689b5aa5a024379d4e437858": "Rollup",
-    "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317": "AssertionMap"
+    "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317": "AssertionMap",
+    "0x3F77D44E1789D47e076a4d5f2779a1fCAb821C2a": "VerifierEntry"
   },
   "overrides": {
     "AddressManager": {
@@ -202,6 +203,14 @@
         "getLastSequencerTimestamp",
         "getTotalBatches",
         "getTotalElements"
+      ]
+    },
+    "Rollup": {
+      "ignoreInWatchMode": [
+        "confirmedInboxSize",
+        "lastConfirmedAssertionID",
+        "lastCreatedAssertionID",
+        "lastResolvedAssertionID"
       ]
     }
   }
