@@ -21,15 +21,15 @@ export async function getDashboardProjects(
   configReader: ConfigReader,
   updateMonitorRepository: UpdateMonitorRepository,
 ): Promise<DashboardProject[]> {
-  const names = (await configReader.readAllConfigs(ChainId.ETHEREUM)).map(
-    (c) => c.name,
-  )
+  const configs = await configReader.readAllConfigs(ChainId.ETHEREUM)
 
   const projects: DashboardProject[] = []
 
-  for (const name of names) {
-    const config = await configReader.readConfig(name, ChainId.ETHEREUM)
-    const discovery = await configReader.readDiscovery(name, ChainId.ETHEREUM)
+  for (const config of configs) {
+    const discovery = await configReader.readDiscovery(
+      config.name,
+      ChainId.ETHEREUM,
+    )
     const diff: DiscoveryDiff[] = await getDiff(
       updateMonitorRepository,
       discovery,
@@ -38,7 +38,7 @@ export async function getDashboardProjects(
     const contracts = getDashboardContracts(discovery, config)
 
     const project: DashboardProject = {
-      name,
+      name: config.name,
       diff,
       discoveredCount: contracts.length,
       initialAddressesCount: contracts.filter((c) => c.isInitial).length,
