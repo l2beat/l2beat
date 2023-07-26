@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 
 /**
- * Simple wrapper around two-level nested `Map`.
+ * Simple wrapper around two-level nested `Map` for report aggregation purposes.
  * Useful when aggregating many sub-variants of a value.
  * For example, when aggregating reports, we have a root value (project) and a branch value (value type from report).
  * The leaf value may be the aggregated value of i.e all EBV reports
@@ -111,5 +111,21 @@ export class ReportTree<Root = unknown, Branch = unknown, Leaf = unknown> {
 
       yield [root, branches] as const
     }
+  }
+
+  flat() {
+    const flatResult: {
+      root: Root
+      branch: Branch
+      leaf: Leaf
+    }[] = []
+
+    for (const [root, branches] of this) {
+      for (const [branch, leaf] of branches) {
+        flatResult.push({ root: root, branch: branch, leaf: leaf })
+      }
+    }
+
+    return flatResult
   }
 }
