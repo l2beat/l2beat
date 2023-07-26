@@ -17,7 +17,7 @@ export async function up(knex: Knex) {
   })
 
   const configReader = new ConfigReader()
-  const configs = await configReader.readAllConfigs(ChainId.ETHEREUM)
+  const configs = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
 
   await Promise.all(
     configs.map((config) => {

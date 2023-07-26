@@ -29,11 +29,11 @@ describe(ConfigReader.name, () => {
     }
   })
 
-  describe(ConfigReader.prototype.readAllConfigs.name, () => {
+  describe(ConfigReader.prototype.readAllConfigsForChain.name, () => {
     it('can read all configs', async () => {
       const configReader = new ConfigReader()
 
-      const result = await configReader.readAllConfigs(ChainId.ETHEREUM)
+      const result = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
 
       const readConfigs: string[] = []
       for (const project of configs) {

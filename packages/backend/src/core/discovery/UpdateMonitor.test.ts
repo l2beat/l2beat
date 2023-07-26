@@ -79,7 +79,7 @@ describe(UpdateMonitor.name, () => {
           contracts: COMMITTED,
         }),
 
-        readAllConfigs: async () => [
+        readAllConfigsForChain: async () => [
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
         ],
@@ -106,7 +106,7 @@ describe(UpdateMonitor.name, () => {
       // gets block number
       expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
-      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
+      expect(configReader.readAllConfigsForChain).toHaveBeenCalledTimes(1)
       // runs discovery for every project
       expect(discoveryRunner.run).toHaveBeenCalledTimes(2)
       expect(discoveryRunner.run).toHaveBeenNthCalledWith(
@@ -151,7 +151,7 @@ describe(UpdateMonitor.name, () => {
 
     it('does not send notification about the same change', async () => {
       const configReader = mockObject<ConfigReader>({
-        readAllConfigs: async () => [mockConfig(PROJECT_A)],
+        readAllConfigsForChain: async () => [mockConfig(PROJECT_A)],
         readDiscovery: async () => ({ ...mockProject, contracts: [] }),
       })
 
@@ -181,7 +181,7 @@ describe(UpdateMonitor.name, () => {
       // gets block number
       expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
-      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
+      expect(configReader.readAllConfigsForChain).toHaveBeenCalledTimes(1)
       // gets latest from database (with the same config hash)
       expect(repository.findLatest).toHaveBeenOnlyCalledWith(PROJECT_A)
       // runs discovery
@@ -198,7 +198,7 @@ describe(UpdateMonitor.name, () => {
 
     it('does not send notification if discovery throws', async () => {
       const configReader = mockObject<ConfigReader>({
-        readAllConfigs: async () => [mockConfig(PROJECT_A)],
+        readAllConfigsForChain: async () => [mockConfig(PROJECT_A)],
         readDiscovery: async () => ({ ...mockProject, contracts: [] }),
       })
 
@@ -243,7 +243,7 @@ describe(UpdateMonitor.name, () => {
       const config = mockConfig(PROJECT_A)
 
       const configReader = mockObject<ConfigReader>({
-        readAllConfigs: async () => [config],
+        readAllConfigsForChain: async () => [config],
         readDiscovery: async () => ({
           ...mockProject,
           blockNumber: BLOCK_NUMBER - 1,
@@ -311,7 +311,7 @@ describe(UpdateMonitor.name, () => {
 
     it('handles error', async () => {
       const configReader = mockObject<ConfigReader>({
-        readAllConfigs: async () => [mockConfig(PROJECT_A)],
+        readAllConfigsForChain: async () => [mockConfig(PROJECT_A)],
         readDiscovery: async () => ({ ...mockProject, contracts: [] }),
       })
 
@@ -343,7 +343,7 @@ describe(UpdateMonitor.name, () => {
       // gets block number
       expect(provider.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
-      expect(configReader.readAllConfigs).toHaveBeenCalledTimes(1)
+      expect(configReader.readAllConfigsForChain).toHaveBeenCalledTimes(1)
       // gets latest from database (with the same config hash)
       expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // does not save changes to database

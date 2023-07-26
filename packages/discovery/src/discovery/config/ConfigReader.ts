@@ -24,7 +24,7 @@ export class ConfigReader {
     return new DiscoveryConfig(rawConfig)
   }
 
-  async readAllConfigs(chain: ChainId): Promise<DiscoveryConfig[]> {
+  async readAllConfigsForChain(chain: ChainId): Promise<DiscoveryConfig[]> {
     const result: DiscoveryConfig[] = []
 
     const configs = readdirSync('discovery', { withFileTypes: true })

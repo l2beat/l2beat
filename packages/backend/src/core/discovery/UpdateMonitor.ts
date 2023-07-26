@@ -62,7 +62,7 @@ export class UpdateMonitor {
       timestamp: timestamp.toNumber(),
     })
 
-    const projectConfigs = await this.configReader.readAllConfigs(
+    const projectConfigs = await this.configReader.readAllConfigsForChain(
       ChainId.ETHEREUM,
     )
 

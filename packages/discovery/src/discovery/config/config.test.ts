@@ -15,7 +15,7 @@ describe('discovery config.jsonc', () => {
     .concat(bridges.map((p) => p.id.toString()))
 
   before(async () => {
-    configs = await configReader.readAllConfigs(ChainId.ETHEREUM)
+    configs = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
   })
 
   it(`every config name corresponds to ProjectId`, () => {
