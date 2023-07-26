@@ -52,6 +52,12 @@
           "args": []
         }
       }
+    },
+    "OptimismMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "GuardianMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
