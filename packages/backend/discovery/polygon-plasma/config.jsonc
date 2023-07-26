@@ -30,7 +30,8 @@
     "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": "PolygonMultisig",
     "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
     "0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A": "SlashingManager",
-    "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861": "ChildChain"
+    "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861": "ChildChain",
+    "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH"
   },
   "overrides": {
     "InstaAaveV2": {
@@ -87,14 +88,25 @@
         "getValidatorContract", // there are 100 validators, not very useful to list them all
         "signers",
         "validators",
-        "validatorStake"
+        "validatorStake",
+        "rewardPerStake"
       ],
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
         "epoch",
         "rewardPerStake",
-        "validatorState"
+        "validatorState",
+        "totalRewardsLiquidated",
+        "totalStaked",
+        "checkPointBlockInterval",
+        "checkPointRewardDelta",
+        "currentValidatorSetSize",
+        "logger",
+        "NFTCounter",
+        "signerUpdateLimit",
+        "totalHeimdallFee",
+        "withdrawalDelay"
       ]
     },
     "WithdrawManager": {
@@ -130,6 +142,11 @@
           "type": "accessControl"
         }
       }
+    },
+    "MaticWETH": {
+      "ignoreInWatchMode": [
+        "totalSupply"
+      ]
     }
   }
 }
