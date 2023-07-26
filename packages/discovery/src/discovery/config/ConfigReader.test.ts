@@ -1,4 +1,4 @@
-import { ChainName } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { readdirSync } from 'fs'
 import path from 'path'
@@ -23,10 +23,7 @@ describe(ConfigReader.name, () => {
 
     for (const project of configs) {
       it(`can read ${project} config`, async () => {
-        const result = await configReader.readConfig(
-          project,
-          ChainName.ETHEREUM,
-        )
+        const result = await configReader.readConfig(project, ChainId.ETHEREUM)
         expect(result.name).toEqual(project)
       })
     }
@@ -36,7 +33,7 @@ describe(ConfigReader.name, () => {
     it('can read all configs', async () => {
       const configReader = new ConfigReader()
 
-      const result = await configReader.readAllConfigs()
+      const result = await configReader.readAllConfigs(ChainId.ETHEREUM)
 
       const readConfigs: string[] = []
       for (const project of configs) {
@@ -57,7 +54,7 @@ describe(ConfigReader.name, () => {
       it(`can read discovered.json for ${project}`, async () => {
         const result = await configReader.readDiscovery(
           project,
-          ChainName.ETHEREUM,
+          ChainId.ETHEREUM,
         )
         expect(result.name).toEqual(project)
       })

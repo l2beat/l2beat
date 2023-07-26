@@ -1,4 +1,4 @@
-import { ChainName, DiscoveryOutput } from '@l2beat/shared-pure'
+import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
@@ -7,7 +7,7 @@ import { DiscoveryConfig } from './DiscoveryConfig'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class ConfigReader {
-  async readConfig(name: string, chain: ChainName): Promise<DiscoveryConfig> {
+  async readConfig(name: string, chain: ChainId): Promise<DiscoveryConfig> {
     const contents = await readFile(
       `discovery/${name}/${chain.toString()}/config.jsonc`,
       'utf-8',
@@ -23,7 +23,7 @@ export class ConfigReader {
     return new DiscoveryConfig(rawConfig)
   }
 
-  async readAllConfigs(chain: ChainName): Promise<DiscoveryConfig[]> {
+  async readAllConfigs(chain: ChainId): Promise<DiscoveryConfig[]> {
     const result: DiscoveryConfig[] = []
 
     const configs = readdirSync('discovery', { withFileTypes: true })
@@ -38,10 +38,7 @@ export class ConfigReader {
     return result
   }
 
-  async readDiscovery(
-    name: string,
-    chain: ChainName,
-  ): Promise<DiscoveryOutput> {
+  async readDiscovery(name: string, chain: ChainId): Promise<DiscoveryOutput> {
     const contents = await readFile(
       `discovery/${name}/${chain.toString()}/discovered.json`,
       'utf-8',

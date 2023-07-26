@@ -5,7 +5,7 @@ import {
   DiscoveryDiff,
 } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
-import { ChainName, DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { Gauge, Histogram } from 'prom-client'
 
@@ -63,7 +63,7 @@ export class UpdateMonitor {
     })
 
     const projectConfigs = await this.configReader.readAllConfigs(
-      ChainName.ETHEREUM,
+      ChainId.ETHEREUM,
     )
 
     for (const projectConfig of projectConfigs) {
@@ -144,7 +144,7 @@ export class UpdateMonitor {
       this.logger.info('Using committed file', { project: projectConfig.name })
       previousDiscovery = await this.configReader.readDiscovery(
         projectConfig.name,
-        ChainName.ETHEREUM,
+        ChainId.ETHEREUM,
       )
     }
 
@@ -180,7 +180,7 @@ export class UpdateMonitor {
         discovery.name,
         discovery.contracts,
         this.configReader,
-        ChainName.ETHEREUM,
+        ChainId.ETHEREUM,
       )
       await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
         dependents,
@@ -209,7 +209,7 @@ export class UpdateMonitor {
 
       const committed = await this.configReader.readDiscovery(
         projectConfig.name,
-        ChainName.ETHEREUM,
+        ChainId.ETHEREUM,
       )
 
       const diff = diffDiscovery(

@@ -1,5 +1,5 @@
 import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainName, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { handleCli } from './cli/handleCli'
@@ -51,7 +51,7 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
       etherscanClient,
       configReader,
       config.discovery,
-      ChainName.ETHEREUM,
+      ChainId.ETHEREUM,
     )
     return
   }
@@ -63,7 +63,7 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
     etherscanClient,
     configReader,
     config.discovery,
-    ChainName.ETHEREUM,
+    ChainId.ETHEREUM,
   )
 }
 
@@ -79,5 +79,5 @@ async function invert(config: DiscoveryCliConfig, logger: Logger) {
   logger = logger.for('Inversion')
   logger.info('Starting')
 
-  await runInversion(file, configReader, useMermaidMarkup, ChainName.ETHEREUM)
+  await runInversion(file, configReader, useMermaidMarkup, ChainId.ETHEREUM)
 }

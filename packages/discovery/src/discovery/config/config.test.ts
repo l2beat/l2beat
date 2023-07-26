@@ -1,5 +1,5 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { assert, ChainName, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
 
@@ -15,7 +15,7 @@ describe('discovery config.jsonc', () => {
     .concat(bridges.map((p) => p.id.toString()))
 
   before(async () => {
-    configs = await configReader.readAllConfigs()
+    configs = await configReader.readAllConfigs(ChainId.ETHEREUM)
   })
 
   it(`every config name corresponds to ProjectId`, () => {
@@ -38,7 +38,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName.ETHEREUM,
+        ChainId.ETHEREUM,
       )
       if (discovery.name !== config.name) {
         notEqual.push(config.name)
@@ -55,7 +55,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName.ETHEREUM,
+        ChainId.ETHEREUM,
       )
 
       for (const override of config.overrides) {
@@ -102,7 +102,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName.ETHEREUM,
+        ChainId.ETHEREUM,
       )
 
       if (
@@ -129,7 +129,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName.ETHEREUM,
+        ChainId.ETHEREUM,
       )
 
       if (discovery.configHash !== config.hash) {
@@ -148,7 +148,7 @@ describe('discovery config.jsonc', () => {
     for (const config of configs ?? []) {
       const discovery = await configReader.readDiscovery(
         config.name,
-        ChainName.ETHEREUM,
+        ChainId.ETHEREUM,
       )
 
       assert(

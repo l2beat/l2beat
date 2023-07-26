@@ -2,7 +2,6 @@ import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
-  ChainName,
   getTimestamps,
   Hash256,
   ProjectId,
@@ -68,7 +67,7 @@ export class StatusController {
 
   async getDiscoveryDashboardProject(
     project: string,
-    chain: ChainName,
+    chain: ChainId,
   ): Promise<string> {
     const discovery = await this.configReader.readDiscovery(project, chain)
     const config = await this.configReader.readConfig(project, chain)

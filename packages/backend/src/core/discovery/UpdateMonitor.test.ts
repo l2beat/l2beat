@@ -1,7 +1,7 @@
 import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
 import {
-  ChainName,
+  ChainId,
   ContractParameters,
   DiscoveryOutput,
   EthereumAddress,
@@ -394,7 +394,7 @@ describe(UpdateMonitor.name, () => {
       // reads committed file
       expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(
         PROJECT_A,
-        ChainName.ETHEREUM,
+        ChainId.ETHEREUM,
       )
       expect(result).toEqual(committed)
     })
