@@ -97,4 +97,8 @@ export class DiscoveryProvider {
 
     return EthereumAddress(tx.from)
   }
+
+  async getBlockNumber(): Promise<number> {
+    return this.provider.getBlockNumber()
+  }
 }

@@ -3,6 +3,7 @@ import {
   diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
+  DiscoveryProvider,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
@@ -16,13 +17,14 @@ export interface DiscoveryRunnerOptions {
 
 export class DiscoveryRunner {
   constructor(
+    private readonly discoveryProvider: DiscoveryProvider,
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly configReader: ConfigReader,
     private readonly chainId: ChainId,
   ) {}
 
   async getBlockNumber(): Promise<number> {
-    return Promise.reject('Not implemented')
+    return this.discoveryProvider.getBlockNumber()
   }
 
   getChainId(): ChainId {

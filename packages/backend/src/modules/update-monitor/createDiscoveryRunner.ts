@@ -53,6 +53,7 @@ export function createDiscoveryRunner(
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
   const discoveryRunner = new DiscoveryRunner(
+    discoveryProvider,
     discoveryEngine,
     configReader,
     config.chainId,
