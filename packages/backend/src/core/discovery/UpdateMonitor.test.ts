@@ -16,7 +16,10 @@ import {
   UpdateMonitorRepository,
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
-import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
+import {
+  DiscoveryRunner,
+  DiscoveryRunnerOptions,
+} from '@l2beat/discovery/src/discovery/DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateMetadata, UpdateNotifier } from './UpdateNotifier'
 

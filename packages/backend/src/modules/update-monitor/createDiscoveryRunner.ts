@@ -8,11 +8,10 @@ import {
   ProxyDetector,
   SourceCodeService,
 } from '@l2beat/discovery'
+import { DiscoveryRunner } from '@l2beat/discovery/src/discovery/DiscoveryRunner'
 import { EtherscanLikeClient, HttpClient } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
-
-import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
 
 export interface DiscoveryRunnerConfig {
   chainId: ChainId

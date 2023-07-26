@@ -2,6 +2,7 @@ export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
+export { DiscoveryRunner } from './discovery/DiscoveryRunner'
 export {
   DISCOVERY_LOGIC_VERSION,
   DiscoveryEngine,
