@@ -1,6 +1,6 @@
-import { name } from '@l2beat/discovery'
+import { ConfigReader } from '@l2beat/discovery'
 
-export async function findDependents(name: string, configReader: name) {
+export async function findDependents(name: string, configReader: ConfigReader) {
   if (!name.startsWith('l2beat')) return []
 
   const configs = await configReader.readAllConfigs()

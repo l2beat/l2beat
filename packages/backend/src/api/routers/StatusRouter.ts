@@ -1,5 +1,11 @@
 import Router from '@koa/router'
-import { ChainId, stringAs, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  ChainName,
+  stringAs,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { StatusController } from '../controllers/status/StatusController'
@@ -85,7 +91,10 @@ export function createStatusRouter(statusController: StatusController) {
     '/status/discovery/:project',
     withTypedContext(paramsParser, async (ctx) => {
       const { project } = ctx.params
-      ctx.body = await statusController.getDiscoveryDashboardProject(project)
+      ctx.body = await statusController.getDiscoveryDashboardProject(
+        project,
+        ChainName.ETHEREUM,
+      )
     }),
   )
 

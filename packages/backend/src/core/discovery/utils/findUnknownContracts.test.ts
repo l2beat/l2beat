@@ -1,5 +1,9 @@
-import { name } from '@l2beat/discovery'
-import { ContractParameters, EthereumAddress } from '@l2beat/shared-pure'
+import { ConfigReader } from '@l2beat/discovery'
+import {
+  ChainName,
+  ContractParameters,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { findUnknownContracts } from './findUnknownContracts'
@@ -10,7 +14,7 @@ const C = { address: EthereumAddress.random() }
 
 describe(findUnknownContracts.name, () => {
   it('finds contracts not present in discovered.json', async () => {
-    const configReader = mockObject<name>({
+    const configReader = mockObject<ConfigReader>({
       readDiscovery: mockFn().resolvesTo({
         contracts: [A, B],
       }),
@@ -18,13 +22,18 @@ describe(findUnknownContracts.name, () => {
 
     const contracts = [A, B, C] as ContractParameters[]
 
-    const result = await findUnknownContracts('', contracts, configReader)
+    const result = await findUnknownContracts(
+      '',
+      contracts,
+      configReader,
+      ChainName.ETHEREUM,
+    )
 
     expect(result).toEqual([C.address])
   })
 
   it('works for empty arrays', async () => {
-    const configReader = mockObject<name>({
+    const configReader = mockObject<ConfigReader>({
       readDiscovery: mockFn().resolvesTo({
         contracts: [],
       }),
@@ -32,7 +41,12 @@ describe(findUnknownContracts.name, () => {
 
     const contracts: ContractParameters[] = []
 
-    const result = await findUnknownContracts('', contracts, configReader)
+    const result = await findUnknownContracts(
+      '',
+      contracts,
+      configReader,
+      ChainName.ETHEREUM,
+    )
 
     expect(result).toEqual([])
   })

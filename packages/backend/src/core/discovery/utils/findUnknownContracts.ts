@@ -1,11 +1,14 @@
-import { name } from '@l2beat/discovery'
-import { ChainName } from '@l2beat/discovery/build/discovery/config/ConfigReader'
-import { ContractParameters, EthereumAddress } from '@l2beat/shared-pure'
+import { ConfigReader } from '@l2beat/discovery'
+import {
+  ChainName,
+  ContractParameters,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 
 export async function findUnknownContracts(
   name: string,
   contracts: ContractParameters[],
-  configReader: name,
+  configReader: ConfigReader,
   chain: ChainName,
 ): Promise<EthereumAddress[]> {
   const committed = await configReader.readDiscovery(name, chain)

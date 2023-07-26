@@ -1,8 +1,8 @@
-import { DiscoveryDiff, name } from '@l2beat/discovery'
-import { ChainName } from '@l2beat/discovery/build/discovery/config/ConfigReader'
+import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
+  ChainName,
   getTimestamps,
   Hash256,
   ProjectId,
@@ -50,7 +50,7 @@ export class StatusController {
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly projects: Project[],
-    private readonly configReader: name,
+    private readonly configReader: ConfigReader,
   ) {}
 
   async getDiscoveryDashboard(): Promise<string> {

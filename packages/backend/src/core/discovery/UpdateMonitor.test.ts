@@ -1,6 +1,7 @@
-import { DiscoveryConfig, DiscoveryDiff, name } from '@l2beat/discovery'
+import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
 import {
+  ChainName,
   ContractParameters,
   DiscoveryOutput,
   EthereumAddress,
@@ -72,7 +73,7 @@ describe(UpdateMonitor.name, () => {
 
   describe(UpdateMonitor.prototype.update.name, () => {
     it('iterates over projects and finds diff', async () => {
-      const configReader = mockObject<name>({
+      const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => ({
           ...mockProject,
           contracts: COMMITTED,
@@ -149,7 +150,7 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('does not send notification about the same change', async () => {
-      const configReader = mockObject<name>({
+      const configReader = mockObject<ConfigReader>({
         readAllConfigs: async () => [mockConfig(PROJECT_A)],
         readDiscovery: async () => ({ ...mockProject, contracts: [] }),
       })
@@ -196,7 +197,7 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('does not send notification if discovery throws', async () => {
-      const configReader = mockObject<name>({
+      const configReader = mockObject<ConfigReader>({
         readAllConfigs: async () => [mockConfig(PROJECT_A)],
         readDiscovery: async () => ({ ...mockProject, contracts: [] }),
       })
@@ -241,7 +242,7 @@ describe(UpdateMonitor.name, () => {
     it('uses discovery on previous block number if version changes', async () => {
       const config = mockConfig(PROJECT_A)
 
-      const configReader = mockObject<name>({
+      const configReader = mockObject<ConfigReader>({
         readAllConfigs: async () => [config],
         readDiscovery: async () => ({
           ...mockProject,
@@ -309,7 +310,7 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('handles error', async () => {
-      const configReader = mockObject<name>({
+      const configReader = mockObject<ConfigReader>({
         readAllConfigs: async () => [mockConfig(PROJECT_A)],
         readDiscovery: async () => ({ ...mockProject, contracts: [] }),
       })
@@ -364,7 +365,7 @@ describe(UpdateMonitor.name, () => {
         ...mockProject,
         contracts: COMMITTED,
       }
-      const configReader = mockObject<name>({
+      const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => committed,
       })
 
@@ -393,7 +394,7 @@ describe(UpdateMonitor.name, () => {
       // reads committed file
       expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(
         PROJECT_A,
-        'ethereum',
+        ChainName.ETHEREUM,
       )
       expect(result).toEqual(committed)
     })
@@ -413,7 +414,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<providers.AlchemyProvider>(),
         mockObject<DiscoveryRunner>(),
         mockObject<UpdateNotifier>(),
-        mockObject<name>(),
+        mockObject<ConfigReader>(),
         repository,
         mockObject<Clock>(),
         Logger.SILENT,
@@ -437,7 +438,7 @@ describe(UpdateMonitor.name, () => {
         contracts: DISCOVERY_RESULT.contracts,
       }
 
-      const configReader = mockObject<name>({
+      const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => committed,
       })
 
@@ -499,7 +500,7 @@ describe(UpdateMonitor.name, () => {
         mockObject<providers.AlchemyProvider>(),
         discoveryRunner,
         mockObject<UpdateNotifier>(),
-        mockObject<name>(),
+        mockObject<ConfigReader>(),
         repository,
         mockObject<Clock>(),
         Logger.SILENT,
