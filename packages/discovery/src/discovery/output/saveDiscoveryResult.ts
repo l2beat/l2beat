@@ -24,7 +24,9 @@ export async function saveDiscoveryResult(
   )
   const json = await toPrettyJson(project)
 
-  const root = `discovery/${config.name}/${chain.toString()}`
+  const chainName = ChainId.getName(chain).toString()
+
+  const root = `discovery/${config.name}/${chainName}`
 
   await writeFile(`${root}/discovered.json`, json)
 
