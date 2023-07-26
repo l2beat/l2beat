@@ -9,7 +9,7 @@ export const obscuro: Layer2 = {
   id: ProjectId('obscuro'),
   display: {
     name: 'Obscuro',
-    slug: 'Obscuro',
+    slug: 'obscuro',
     description:
       'Obscuro is an Encrypted Rollup that has been designed for use on the Ethereum network and uses 100% of the EVM. At present, Obscuro is available in testnet running on the Sepolia testnet for further testing and optimization.',
     purpose: 'Universal, Encrypted',
@@ -21,10 +21,8 @@ export const obscuro: Layer2 = {
         'https://docs.obscu.ro',
         'https://obscu.ro/litepaper',
         'https://whitepaper.obscu.ro',
-    ],
-      explorers: [
-        'http://testnet.obscuroscan.io',
       ],
+      explorers: ['http://testnet.obscuroscan.io'],
       repositories: [
         'https://github.com/obscuronet',
         'https://github.com/obscuronet/go-obscuro',
