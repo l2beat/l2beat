@@ -1,7 +1,7 @@
 {
   "name": "polygon-plasma",
-  "blockNumber": 17775574,
-  "configHash": "0x6d9f9385226a3f1fb18546640dad07ccd8880086c9a8e195e8facf2accddcb47",
+  "blockNumber": 17776044,
+  "configHash": "0xca0a372bcc2799dd0bda5821dd8fea6d751b5ac7ebed8f1b26665c695326df99",
   "version": 1,
   "contracts": [
     {
@@ -34,7 +34,7 @@
         "type": "immutable"
       },
       "values": {
-        "counter": 2730951,
+        "counter": 2731007,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -147,13 +147,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 48775,
+        "currentEpoch": 48779,
         "currentValidatorSetSize": 101,
-        "currentValidatorSetTotalStake": "3613861007358061721125686099",
+        "currentValidatorSetTotalStake": "3614380103023444951991064185",
         "delegationEnabled": true,
         "delegatorsReward": [],
         "dynasty": 80,
-        "epoch": 48775,
+        "epoch": 48779,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -184,7 +184,7 @@
         "totalStaked": "19946454750568655166643872",
         "validatorReward": [],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
-        "validatorState": ["3613861007358061721125686099", 101],
+        "validatorState": ["3614380103023444951991064185", 101],
         "validatorThreshold": 101,
         "WITHDRAWAL_DELAY": 80,
         "withdrawalDelay": 80
@@ -248,10 +248,10 @@
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
       },
       "values": {
-        "_nextHeaderBlock": 487750000,
+        "_nextHeaderBlock": 487790000,
         "CHAINID": 137,
-        "currentHeaderBlock": 487740000,
-        "getLastChildBlock": 45529253,
+        "currentHeaderBlock": 487780000,
+        "getLastChildBlock": 45532325,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,

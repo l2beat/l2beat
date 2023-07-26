@@ -95,18 +95,14 @@
         "currentEpoch",
         "currentValidatorSetTotalStake",
         "epoch",
-        "rewardPerStake",
         "validatorState",
         "totalRewardsLiquidated",
         "totalStaked",
         "checkPointBlockInterval",
-        "checkPointRewardDelta",
-        "currentValidatorSetSize",
-        "logger",
+        "checkpointRewardDelta",
         "NFTCounter",
         "signerUpdateLimit",
-        "totalHeimdallFee",
-        "withdrawalDelay"
+        "totalHeimdallFee"
       ]
     },
     "WithdrawManager": {
