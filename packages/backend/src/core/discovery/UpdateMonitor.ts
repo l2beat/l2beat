@@ -1,8 +1,8 @@
 import {
-  ConfigReader,
   diffDiscovery,
   DiscoveryConfig,
   DiscoveryDiff,
+  name,
 } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
 import { DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
@@ -25,7 +25,7 @@ export class UpdateMonitor {
     private readonly provider: providers.AlchemyProvider,
     private readonly discoveryRunner: DiscoveryRunner,
     private readonly updateNotifier: UpdateNotifier,
-    private readonly configReader: ConfigReader,
+    private readonly configReader: name,
     private readonly repository: UpdateMonitorRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
@@ -142,7 +142,7 @@ export class UpdateMonitor {
       this.logger.info('Using committed file', { project: projectConfig.name })
       previousDiscovery = await this.configReader.readDiscovery(
         projectConfig.name,
-        'L1',
+        'ethereum',
       )
     }
 
@@ -206,7 +206,7 @@ export class UpdateMonitor {
 
       const committed = await this.configReader.readDiscovery(
         projectConfig.name,
-        'L1',
+        'ethereum',
       )
 
       const diff = diffDiscovery(

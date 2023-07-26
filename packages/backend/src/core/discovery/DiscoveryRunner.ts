@@ -1,8 +1,8 @@
 import {
-  ConfigReader,
   diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
+  name,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/shared-pure'
@@ -17,7 +17,7 @@ export interface DiscoveryRunnerOptions {
 export class DiscoveryRunner {
   constructor(
     private readonly discoveryEngine: DiscoveryEngine,
-    private readonly configReader: ConfigReader,
+    private readonly configReader: name,
   ) {}
 
   async run(

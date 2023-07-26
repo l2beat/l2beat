@@ -1,8 +1,4 @@
-import {
-  ConfigReader,
-  DiscoveryConfig,
-  DiscoveryEngine,
-} from '@l2beat/discovery'
+import { DiscoveryConfig, DiscoveryEngine, name } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
@@ -14,7 +10,7 @@ describe(DiscoveryRunner.name, () => {
   describe(DiscoveryRunner.prototype.run.name, () => {
     it('runs discovery twice', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
-      const runner = new DiscoveryRunner(engine, mockObject<ConfigReader>({}))
+      const runner = new DiscoveryRunner(engine, mockObject<name>({}))
       await runner.run(getMockConfig(), 1, {
         runSanityCheck: true,
         injectInitialAddresses: false,
@@ -25,7 +21,7 @@ describe(DiscoveryRunner.name, () => {
 
     it('injects initial addresses', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
-      const configReader = mockObject<ConfigReader>({
+      const configReader = mockObject<name>({
         readDiscovery: mockFn().resolvesTo({
           contracts: [{ address: ADDRESS }],
         }),
@@ -52,7 +48,7 @@ describe(DiscoveryRunner.name, () => {
       const sourceConfig: DiscoveryConfig = new DiscoveryConfig({
         ...getMockConfig().raw,
       })
-      const configReader = mockObject<ConfigReader>({
+      const configReader = mockObject<name>({
         readDiscovery: mockFn().resolvesTo({
           contracts: [{ address: ADDRESS }],
         }),

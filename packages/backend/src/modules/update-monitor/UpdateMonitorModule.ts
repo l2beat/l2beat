@@ -1,11 +1,11 @@
 import {
   AddressAnalyzer,
-  ConfigReader,
   DISCOVERY_LOGIC_VERSION,
   DiscoveryEngine,
   DiscoveryLogger,
   DiscoveryProvider,
   HandlerExecutor,
+  name,
   ProxyDetector,
   SourceCodeService,
 } from '@l2beat/discovery'
@@ -66,7 +66,7 @@ export function createUpdateMonitorModule(
     logger,
   )
 
-  const configReader = new ConfigReader()
+  const configReader = new name()
 
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 

@@ -1,4 +1,4 @@
-import { DiscoveryOutput } from '@l2beat/shared-pure'
+import { ChainName, DiscoveryOutput } from '@l2beat/shared-pure'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
@@ -6,12 +6,10 @@ import { parse, ParseError } from 'jsonc-parser'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
-export type Layer = 'L1' | 'L2'
-
 export class ConfigReader {
-  async readConfig(name: string, layer: Layer): Promise<DiscoveryConfig> {
+  async readConfig(name: string, chain: ChainName): Promise<DiscoveryConfig> {
     const contents = await readFile(
-      `discovery/${name}/${layer}/config.jsonc`,
+      `discovery/${name}/${chain.toString()}/config.jsonc`,
       'utf-8',
     )
     const errors: ParseError[] = []
@@ -33,16 +31,19 @@ export class ConfigReader {
       .map((x) => x.name)
 
     for (const config of configs) {
-      const contents = await this.readConfig(config, 'L1')
+      const contents = await this.readConfig(config, ChainName('ethereum'))
       result.push(contents)
     }
 
     return result
   }
 
-  async readDiscovery(name: string, layer: Layer): Promise<DiscoveryOutput> {
+  async readDiscovery(
+    name: string,
+    chain: ChainName,
+  ): Promise<DiscoveryOutput> {
     const contents = await readFile(
-      `discovery/${name}/${layer}/discovered.json`,
+      `discovery/${name}/${chain.toString()}/discovered.json`,
       'utf-8',
     )
 

@@ -1,11 +1,10 @@
-import { Hash256 } from '@l2beat/shared-pure'
+import { ChainName, Hash256 } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname } from 'path'
 import { rimraf } from 'rimraf'
 
 import { Analysis } from '../analysis/AddressAnalyzer'
-import { Layer } from '../config/ConfigReader'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
 import { toPrettyJson } from './toPrettyJson'
@@ -15,7 +14,7 @@ export async function saveDiscoveryResult(
   config: DiscoveryConfig,
   blockNumber: number,
   configHash: Hash256,
-  layer: Layer,
+  chain: ChainName,
 ) {
   const project = toDiscoveryOutput(
     config.name,
@@ -25,7 +24,7 @@ export async function saveDiscoveryResult(
   )
   const json = await toPrettyJson(project)
 
-  const root = `discovery/${config.name}/${layer}`
+  const root = `discovery/${config.name}/${chain.toString()}`
 
   await writeFile(`${root}/discovered.json`, json)
 

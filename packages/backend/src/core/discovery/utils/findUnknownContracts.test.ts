@@ -1,4 +1,4 @@
-import { ConfigReader } from '@l2beat/discovery'
+import { name } from '@l2beat/discovery'
 import { ContractParameters, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
@@ -10,7 +10,7 @@ const C = { address: EthereumAddress.random() }
 
 describe(findUnknownContracts.name, () => {
   it('finds contracts not present in discovered.json', async () => {
-    const configReader = mockObject<ConfigReader>({
+    const configReader = mockObject<name>({
       readDiscovery: mockFn().resolvesTo({
         contracts: [A, B],
       }),
@@ -24,7 +24,7 @@ describe(findUnknownContracts.name, () => {
   })
 
   it('works for empty arrays', async () => {
-    const configReader = mockObject<ConfigReader>({
+    const configReader = mockObject<name>({
       readDiscovery: mockFn().resolvesTo({
         contracts: [],
       }),

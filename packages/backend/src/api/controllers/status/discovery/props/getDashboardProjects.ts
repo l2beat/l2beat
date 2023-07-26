@@ -1,4 +1,4 @@
-import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
+import { DiscoveryDiff, name } from '@l2beat/discovery'
 
 import { UpdateMonitorRepository } from '../../../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { getDashboardContracts } from './getDashboardContracts'
@@ -17,7 +17,7 @@ export interface DashboardProject {
 }
 
 export async function getDashboardProjects(
-  configReader: ConfigReader,
+  configReader: name,
   updateMonitorRepository: UpdateMonitorRepository,
 ): Promise<DashboardProject[]> {
   const names = (await configReader.readAllConfigs()).map((c) => c.name)

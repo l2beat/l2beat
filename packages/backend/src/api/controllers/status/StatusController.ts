@@ -1,4 +1,5 @@
-import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
+import { DiscoveryDiff, name } from '@l2beat/discovery'
+import { ChainName } from '@l2beat/discovery/build/discovery/config/ConfigReader'
 import {
   assert,
   ChainId,
@@ -49,7 +50,7 @@ export class StatusController {
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly projects: Project[],
-    private readonly configReader: ConfigReader,
+    private readonly configReader: name,
   ) {}
 
   async getDiscoveryDashboard(): Promise<string> {
@@ -65,9 +66,12 @@ export class StatusController {
     })
   }
 
-  async getDiscoveryDashboardProject(project: string): Promise<string> {
-    const discovery = await this.configReader.readDiscovery(project, 'L1')
-    const config = await this.configReader.readConfig(project, 'L1')
+  async getDiscoveryDashboardProject(
+    project: string,
+    chain: ChainName,
+  ): Promise<string> {
+    const discovery = await this.configReader.readDiscovery(project, chain)
+    const config = await this.configReader.readConfig(project, chain)
     const contracts = getDashboardContracts(discovery, config)
 
     const diff: DiscoveryDiff[] = await getDiff(
