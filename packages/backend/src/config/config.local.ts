@@ -113,6 +113,7 @@ export function getLocalConfig(): Config {
     updateMonitor: updateMonitorEnabled && {
       runOnStart: getEnv.boolean('UPDATE_MONITOR_RUN_ON_START', true),
       alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
+      ethereumRpcUrl: getEnv('ETHEREUM_RPC_URL'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),

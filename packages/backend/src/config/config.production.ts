@@ -111,6 +111,7 @@ export function getProductionConfig(): Config {
     updateMonitor: updateMonitorEnabled && {
       alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
       etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+      ethereumRpcUrl: getEnv('ETHEREUM_RPC_URL'),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),
         publicChannelId: getEnv('PUBLIC_DISCORD_CHANNEL_ID'),

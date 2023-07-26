@@ -92,6 +92,7 @@ export interface MetricsAuthConfig {
 export interface UpdateMonitorConfig {
   readonly runOnStart?: boolean
   readonly alchemyApiKey: string
+  readonly ethereumRpcUrl: string
   readonly etherscanApiKey: string
   readonly discord:
     | {

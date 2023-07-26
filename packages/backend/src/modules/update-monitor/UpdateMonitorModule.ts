@@ -59,7 +59,7 @@ export function createUpdateMonitorModule(
       chainId: ChainId.ETHEREUM,
       etherscanLikeApiUrl: EtherscanClient.API_URL,
       etherscanLikeApiKey: config.updateMonitor.etherscanApiKey,
-      rpcUrl: '',
+      rpcUrl: config.updateMonitor.ethereumRpcUrl,
       minBlockTimestamp: config.clock.minBlockTimestamp,
     },
     http,
