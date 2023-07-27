@@ -1161,6 +1161,16 @@
       "category": "other"
     },
     {
+      "id": "mnt-mantle",
+      "name": "Mantle",
+      "coingeckoId": "mantle",
+      "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+      "symbol": "MNT",
+      "decimals": 18,
+      "sinceTimestamp": 1687241795,
+      "category": "other"
+    },
+    {
       "id": "mask-mask-network",
       "name": "Mask Network",
       "coingeckoId": "mask-network",
