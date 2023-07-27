@@ -1,4 +1,4 @@
-import { EtherscanClient } from '@l2beat/shared'
+import { EtherscanLikeClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
@@ -11,7 +11,10 @@ const identity = <T>(x: T) => x
 export class ProviderWithCache extends DiscoveryProvider {
   private readonly cache: ProviderCache
 
-  constructor(provider: providers.Provider, etherscanClient: EtherscanClient) {
+  constructor(
+    provider: providers.Provider,
+    etherscanClient: EtherscanLikeClient,
+  ) {
     super(provider, etherscanClient)
     this.cache = new ProviderCache()
   }

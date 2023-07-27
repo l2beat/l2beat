@@ -1,5 +1,6 @@
-import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { EtherscanLikeClient, HttpClient, Logger } from '@l2beat/shared'
+import { ChainId } from '@l2beat/shared-pure'
+import { assert } from 'console'
 import { providers } from 'ethers'
 
 import { handleCli } from './cli/handleCli'
@@ -8,8 +9,6 @@ import {
   getDiscoveryCliConfig,
 } from './config/config.discovery'
 import { ConfigReader } from './discovery/config/ConfigReader'
-import { createDiscoveryRunner } from './discovery/createDiscoveryRunner'
-import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { dryRunDiscovery, runDiscovery } from './discovery/runDiscovery'
 import { runInversion } from './inversion/runInversion'
 
@@ -31,36 +30,25 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
   if (!config.discovery) {
     return
   }
+  const discoverConfig = config.discovery
+  const chainConfig = config.chains[ChainId.getName(discoverConfig.chainId)]
+  assert(chainConfig, 'Chain config not found! Update "discovery.config" file')
+  assert(
+    discoverConfig.chainId === chainConfig.chainId,
+    'Chain ID mismatch in "discovery.config" file',
+  )
 
   const http = new HttpClient()
+  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
+  const etherscanClient = new EtherscanLikeClient(
+    http,
+    chainConfig.etherscanUrl,
+    chainConfig.etherscanApiKey,
+    chainConfig.minTimestamp,
+  )
   const configReader = new ConfigReader()
 
-  const discoveryLogger = DiscoveryLogger.CLI
-
-  const runner = createDiscoveryRunner(
-    {
-      chainId: ChainId.ETHEREUM,
-      etherscanLikeApiUrl: EtherscanClient.API_URL,
-      etherscanLikeApiKey: config.discovery.etherscanApiKey,
-      rpcUrl: config.discovery.ethereumRpcUrl,
-      minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
-    },
-    http,
-    configReader,
-    discoveryLogger,
-  )
-
-  const provider = new providers.AlchemyProvider(
-    'mainnet',
-    config.discovery.alchemyApiKey,
-  )
-  const etherscanClient = new EtherscanClient(
-    http,
-    config.discovery.etherscanApiKey,
-    new UnixTime(0),
-  )
-
-  if (config.discovery.dryRun) {
+  if (discoverConfig.dryRun) {
     logger = logger.for('DryRun')
     logger.info('Starting')
 
@@ -68,15 +56,19 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
       provider,
       etherscanClient,
       configReader,
-      config.discovery,
-      ChainId.ETHEREUM,
+      discoverConfig,
     )
     return
   }
 
   logger = logger.for('Discovery')
   logger.info('Starting')
-  await runDiscovery(runner, configReader, config.discovery, ChainId.ETHEREUM)
+  logger.info(
+    `Chain: ${ChainId.getName(discoverConfig.chainId)} | Project: ${
+      discoverConfig.project
+    }`,
+  )
+  await runDiscovery(provider, etherscanClient, configReader, config.discovery)
 }
 
 async function invert(config: DiscoveryCliConfig, logger: Logger) {
@@ -84,12 +76,12 @@ async function invert(config: DiscoveryCliConfig, logger: Logger) {
     return
   }
 
-  const { file, useMermaidMarkup } = config.invert
+  const { project, useMermaidMarkup, chainId } = config.invert
 
   const configReader = new ConfigReader()
 
   logger = logger.for('Inversion')
   logger.info('Starting')
 
-  await runInversion(file, configReader, useMermaidMarkup, ChainId.ETHEREUM)
+  await runInversion(project, configReader, useMermaidMarkup, chainId)
 }
