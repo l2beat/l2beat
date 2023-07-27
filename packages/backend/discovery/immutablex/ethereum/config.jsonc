@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "immutablex",
   "initialAddresses": ["0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"],
   "names": {

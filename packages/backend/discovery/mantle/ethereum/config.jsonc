@@ -1,0 +1,217 @@
+{
+  "$schema": "../../config.schema.json",
+  "name": "mantle",
+  "initialAddresses": [
+    "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
+    "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+    "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
+    "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
+    "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
+    "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
+    "0xA937660031787C4408587D2c6A67Ec4B260630F5",
+    "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+    "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+    "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+    "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
+  ],
+  "names": {
+    "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93": "CanonicalTransactionChain",
+    "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E": "ChainStorageContainerCTC",
+    "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": "AddressManager",
+    "0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa": "StateCommitmentChain",
+    "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD": "ChainStorageContainerSCC",
+    "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1StandardBridge",
+    "0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "L1MantleToken",
+    "0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "MantleTokenProxyAdmin",
+    "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": "OwnerMultisig",
+    "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9": "Owner2Multisig",
+    "0x676A795fe6E43C17c668de16730c3F690FEB7120": "L1CrossDomainMessenger",
+    "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A": "EigenDataLayerChain",
+    "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798": "Delegation", // check mermaid to see what's going on from now on
+    "0x23754725a49c0f003C349A6C7869fF8609a7CEfd": "InvestmentManager",
+    "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1": "MantleFirstStrat",
+    "0xA937660031787C4408587D2c6A67Ec4B260630F5": "MantleSecondStrat",
+    "0x1e70dc4B6f41c16B23cF0EE674B4d5471C63F2e7": "SlashRecorder",
+    "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67": "dlReg",
+    "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1": "dlsm",
+    "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a": "PubkeyCompendium",
+    "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01": "RegistryPermission",
+    "0x075a48633dc6845f92339741E9c96b88f1b2A86f": "PauserRegistry",
+    "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashing",
+    "0xD1328C9167e0693B689b5aa5a024379d4e437858": "Rollup",
+    "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317": "AssertionMap",
+    "0x3F77D44E1789D47e076a4d5f2779a1fCAb821C2a": "VerifierEntry"
+  },
+  "overrides": {
+    "AddressManager": {
+      "fields": {
+        "CanonicalTransactionChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["CanonicalTransactionChain"]
+        },
+        "ChainStorageContainerCTC": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["ChainStorageContainer-CTC-batches"]
+        },
+        "sequencer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BVM_Sequencer"]
+        },
+        "proposer": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BVM_Proposer"]
+        },
+        "rolluper": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BVM_Rolluper"]
+        },
+        "StateCommitmentChain": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["StateCommitmentChain"]
+        },
+        "ChainStorageContainerSCC": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["ChainStorageContainer-SCC-batches"]
+        },
+        "FraudVerifier": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BVM_FraudVerifier"]
+        },
+        "TssGroupManagerProxy": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__TSS_GroupManager"]
+        },
+        "TssGroupManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["TssGroupManager"],
+          "ignoreRelative": true
+        },
+        "TssStakingSlashing": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["TssStakingSlashing"],
+          "ignoreRelative": true
+        },
+        "TssStakingSlashingProxy": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__TSS_StakingSlashing"]
+        },
+        "L1StandardBridgeProxy": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__L1StandardBridge"]
+        },
+        "BondManager": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BondManager"]
+        },
+        "L1CrossDomainMessenger": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["BVM_L1CrossDomainMessenger"],
+          "ignoreRelative": true
+        },
+        "L1CrossDomainMessengerProxy": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["Proxy__BVM_L1CrossDomainMessenger"]
+        },
+        "L1MantleAddress": {
+          "type": "call",
+          "method": "getAddress",
+          "args": ["L1_MantleAddress"]
+        }
+      }
+    },
+    "CanonicalTransactionChain": {
+      "ignoreMethods": ["getQueueElement"],
+      "ignoreInWatchMode": [
+        "getLastBlockNumber",
+        "getLastTimestamp",
+        "getNextQueueIndex",
+        "getNumPendingQueueElements",
+        "getQueueLength",
+        "getTotalBatches",
+        "getTotalElements"
+      ]
+    },
+    "L1MantleToken": {
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "OwnerMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "EigenDataLayerChain": {
+      "ignoreMethods": [
+        "getRollupStoreByRollupBatchIndex",
+        "reRollupBatchIndex",
+        "rollupBatchIndexRollupStores"
+      ],
+      "ignoreInWatchMode": [
+        "getL2ConfirmedBlockNumber",
+        "getL2StoredBlockNumber",
+        "l2ConfirmedBlockNumber",
+        "l2StoredBlockNumber",
+        "rollupBatchIndex"
+      ]
+    },
+    "ChainStorageContainerCTC": {
+      "ignoreMethods": ["get"],
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"]
+    },
+    "TssStakingSlashing": {
+      "ignoreMethods": [
+        "sharesToUnderlying",
+        "sharesToUnderlyingView",
+        "underlyingToShares",
+        "underlyingToSharesView"
+      ]
+    },
+    "AssertionMap": {
+      "ignoreMethods": [
+        "assertions",
+        "getDeadline",
+        "getInboxSize",
+        "getParentID",
+        "getProposalTime",
+        "getStateHash",
+        "getNumStakers"
+      ]
+    },
+    "ChainStorageContainerSCC": {
+      "ignoreMethods": ["get"],
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
+    },
+    "StateCommitmentChain": {
+      "ignoreInWatchMode": [
+        "getLastSequencerTimestamp",
+        "getTotalBatches",
+        "getTotalElements"
+      ]
+    },
+    "Rollup": {
+      "ignoreInWatchMode": [
+        "confirmedInboxSize",
+        "lastConfirmedAssertionID",
+        "lastCreatedAssertionID",
+        "lastResolvedAssertionID"
+      ]
+    }
+  }
+}

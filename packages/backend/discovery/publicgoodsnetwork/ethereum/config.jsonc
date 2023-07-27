@@ -1,19 +1,23 @@
 {
   "$schema": "../../config.schema.json",
-  "name": "zora",
+  "name": "publicgoodsnetwork",
   "initialAddresses": [
-    "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf",
-    "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3"
+    // improve when fully researched
+    "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+    "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+    "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
+    "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e",
+    "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"
   ],
   "names": {
-    "0x1a0ad011913A150f69f6A19DF447A0CfD9551054": "OptimismPortal",
-    "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631": "L1StandardBridge",
-    "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c": "L2OutputOracle",
-    "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef": "AddressManager",
-    "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": "ChallengerMultisig",
-    "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "ZoraMultisig",
-    "0xdC40a14d9abd6F410226f1E6de71aE03441ca506": "L1CrossDomainMessenger",
-    "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86": "SystemConfig"
+    "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c": "OptimismPortal",
+    "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b": "L1StandardBridge",
+    "0xA38d0c4E6319F9045F20318BA5f04CDe94208608": "L2OutputOracle",
+    "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e": "L1CrossDomainMessenger",
+    "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e": "AddressManager",
+    "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84": "GuardianMultisig",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "PGNMultisig",
+    "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9": "SystemConfig"
   },
   "overrides": {
     "OptimismPortal": {
@@ -34,7 +38,10 @@
         "latestOutputIndex"
       ]
     },
-    "ZoraMultisig": {
+    "PGNMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "GuardianMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "L1CrossDomainMessenger": {

@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "debridge",
   "initialAddresses": ["0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"],
   "names": {

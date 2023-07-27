@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "loopring",
   "names": {
     "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": "ExchangeV3",
