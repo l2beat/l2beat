@@ -15,6 +15,7 @@
     "start:dev": "node -r esbuild-register src server",
     "start": "node -r source-map-support/register build/src/index.js",
     "discover": "discovery discover",
+    "discover:dev": "cd ../discovery && yarn build && cd - && discovery discover --dev",
     "invert": "discovery invert",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
