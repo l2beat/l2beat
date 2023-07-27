@@ -1,11 +1,13 @@
+import {
+  ConfigReader,
+  DiscoveryConfig,
+  DiscoveryEngine,
+  DiscoveryProvider,
+} from '@l2beat/discovery'
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { ConfigReader } from './config/ConfigReader'
-import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryRunner } from './DiscoveryRunner'
-import { DiscoveryEngine } from './engine/DiscoveryEngine'
-import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
 const ADDRESS = EthereumAddress.random()
 

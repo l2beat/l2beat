@@ -1,4 +1,9 @@
-import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  DiscoveryConfig,
+  DiscoveryDiff,
+  DiscoveryRunner,
+} from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
 import {
   ChainId,
@@ -16,10 +21,7 @@ import {
   UpdateMonitorRepository,
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
-import {
-  DiscoveryRunner,
-  DiscoveryRunnerOptions,
-} from '@l2beat/discovery/src/discovery/DiscoveryRunner'
+import { DiscoveryRunnerOptions } from './DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateMetadata, UpdateNotifier } from './UpdateNotifier'
 

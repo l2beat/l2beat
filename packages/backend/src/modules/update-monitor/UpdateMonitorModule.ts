@@ -3,12 +3,12 @@ import {
   DISCOVERY_LOGIC_VERSION,
   DiscoveryLogger,
 } from '@l2beat/discovery'
-import { createDiscoveryRunner } from '@l2beat/discovery/src/discovery/createDiscoveryRunner'
 import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
+import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
 import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'

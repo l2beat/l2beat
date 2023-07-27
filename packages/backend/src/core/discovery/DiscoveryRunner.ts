@@ -1,13 +1,14 @@
+import {
+  ConfigReader,
+  diffDiscovery,
+  DiscoveryConfig,
+  DiscoveryEngine,
+  DiscoveryProvider,
+  toDiscoveryOutput,
+} from '@l2beat/discovery'
 import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
-
-import { ConfigReader } from './config/ConfigReader'
-import { DiscoveryConfig } from './config/DiscoveryConfig'
-import { DiscoveryEngine } from './engine/DiscoveryEngine'
-import { diffDiscovery } from './output/diffDiscovery'
-import { toDiscoveryOutput } from './output/toDiscoveryOutput'
-import { DiscoveryProvider } from './provider/DiscoveryProvider'
 
 export interface DiscoveryRunnerOptions {
   injectInitialAddresses: boolean
