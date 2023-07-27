@@ -10,11 +10,12 @@
     "0x608d94945A64503E642E6370Ec598e519a2C1E53": "L1ERC721Bridge",
     "0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84": "OptimismMintableERC20Factory",
     "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "AdminMultisig",
-    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "ChallengerMultisig",
+    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "GuardianMultisig",
     "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e": "OptimismPortal",
     "0x56315b90c40730925ec5485cf004d835058518A0": "L2OutputOracle",
     "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa": "L1CrossDomainMessenger",
-    "0x73a79Fab69143498Ed3712e519A88a918e1f4072": "SystemConfig"
+    "0x73a79Fab69143498Ed3712e519A88a918e1f4072": "SystemConfig",
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig"
   },
   "overrides": {
     "OptimismPortal": {
@@ -51,6 +52,12 @@
           "args": []
         }
       }
+    },
+    "OptimismMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "GuardianMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
