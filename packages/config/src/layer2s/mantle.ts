@@ -108,7 +108,10 @@ export const mantle: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
+      description:
+        RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1.description +
+        ' The operators can also reset the batch index, effectively removing transactions from the chain from a certain point onwards.',
       sources: [
         {
           contract: 'CanonicalTransactionChain',
@@ -197,8 +200,15 @@ export const mantle: Layer2 = {
       ],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      ...FORCE_TRANSACTIONS.ENQUEUE,
+      description:
+        FORCE_TRANSACTIONS.ENQUEUE.description +
+        ' The operators can also reset the batch index, effectively removing transactions from the chain from a certain point onwards.',
       references: [
+        {
+          text: 'CanonicalTransactionChain.sol#L210 - Etherscan source code, enqueue function',
+          href: 'https://etherscan.io/address/0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93#code#F1#L210',
+        },
         {
           text: 'CanonicalTransactionChain.sol#L539 - Etherscan source code, resetIndex function',
           href: 'https://etherscan.io/address/0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93#code#F1#L539',
