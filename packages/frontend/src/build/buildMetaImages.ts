@@ -39,8 +39,8 @@ async function main() {
     slugs.push('overview-scaling-activity')
   }
 
-  if (config.features.l2assets) {
-    slugs.push('overview-scaling-l2assets')
+  if (config.features.detailedTvl) {
+    slugs.push('overview-scaling-detailedTvl')
   }
 
   const browser = await puppeteer.launch({

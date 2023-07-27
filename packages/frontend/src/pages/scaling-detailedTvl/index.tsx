@@ -9,7 +9,7 @@ import { L2AssetsPage } from './view/L2AssetsPage'
 export function getL2AssetsPage(config: Config, pagesData: PagesData) {
   const { props, wrapper } = getProps(config, pagesData)
   return {
-    slug: '/scaling/l2assets',
+    slug: '/scaling/detailedTvl',
     page: (
       <PageWrapper {...wrapper}>
         <L2AssetsPage {...props} />

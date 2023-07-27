@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { DetailedTvlViewEntry } from '../../../pages/scaling-l2assets/types'
+import { DetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
 import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
 import { StageCell } from '../../stages/StageCell'

@@ -24,7 +24,7 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       fullTitle: 'Detailed TVL',
       shortTitle: 'Detailed',
       icon: <TvlIcon />,
-      link: '/scaling/l2assets',
+      link: '/scaling/detailedTvl',
       selected: props.selected === 'detailed',
     })
   }

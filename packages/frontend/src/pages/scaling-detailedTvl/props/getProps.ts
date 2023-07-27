@@ -23,7 +23,7 @@ export function getProps(
   const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
   return {
     props: {
-      showL2Assets: config.features.l2assets,
+      showL2Assets: config.features.detailedTvl,
       showActivity: config.features.activity,
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
