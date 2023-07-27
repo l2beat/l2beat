@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "symbiosis",
   "initialAddresses": [
     "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",

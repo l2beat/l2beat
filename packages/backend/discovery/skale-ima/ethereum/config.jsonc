@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "skale-ima",
   "initialAddresses": [
     "0x49F583d263e4Ef938b9E09772D3394c71605Df94",
