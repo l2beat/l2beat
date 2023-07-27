@@ -212,13 +212,24 @@ export class StatusController {
       firstHour,
       lastHour,
     )
+    const uniqueHashes = new Set<Hash256>()
 
-    const reports = statuses.map((status) => ({
-      timestamp: status.timestamp,
-      configHash: status.configHash,
-    }))
+    const reports = statuses
+      .map((status) => {
+        uniqueHashes.add(status.configHash)
+        return {
+          timestamp: status.timestamp,
+          configHash: status.configHash,
+        }
+      })
+      .sort((a, b) =>
+        a.timestamp.toString().localeCompare(b.timestamp.toString()),
+      )
 
-    return renderAggregatedPage({ statuses: reports })
+    return renderAggregatedPage({
+      statuses: reports,
+      uniqueHashes: Array.from(uniqueHashes),
+    })
   }
 
   private getFirstHour(from: UnixTime | undefined) {
