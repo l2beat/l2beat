@@ -1,6 +1,5 @@
 import { EtherscanLikeClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId } from '@l2beat/shared-pure'
-import { assert } from 'console'
+import { assert, ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { handleCli } from './cli/handleCli'
@@ -31,11 +30,12 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
     return
   }
   const discoverConfig = config.discovery
-  const chainConfig = config.chains[ChainId.getName(discoverConfig.chainId)]
-  assert(chainConfig, 'Chain config not found! Update "discovery.config" file')
+  const chainConfig = config.chains.find(
+    (chain) => chain.chainId === discoverConfig.chainId,
+  )
   assert(
-    discoverConfig.chainId === chainConfig.chainId,
-    'Chain ID mismatch in "discovery.config" file',
+    chainConfig !== undefined,
+    'Chain config not found! Update "discovery.config" file',
   )
 
   const http = new HttpClient()
@@ -62,12 +62,9 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
   }
 
   logger = logger.for('Discovery')
-  logger.info('Starting')
-  logger.info(
-    `Chain: ${ChainId.getName(discoverConfig.chainId)} | Project: ${
-      discoverConfig.project
-    }`,
-  )
+  logger.info('Starting discovery...\n')
+  logger.info(`Project: ${discoverConfig.project}`)
+  logger.info(`Chain: ${ChainId.getName(discoverConfig.chainId)}\n`)
   await runDiscovery(provider, etherscanClient, configReader, config.discovery)
 }
 

@@ -26,21 +26,21 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       dev: cli.dev,
       blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
     },
-    chains: {
-      ethereum: {
+    chains: [
+      {
         chainId: ChainId.ETHEREUM,
         rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
         etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
         etherscanUrl: EtherscanClient.API_URL,
         minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
       },
-    },
+    ],
   }
 }
 
 export interface DiscoveryCliConfig {
   discovery: DiscoveryModuleConfig | false
-  chains: Record<string, DiscoveryChainConfig>
+  chains: [DiscoveryChainConfig]
   invert: InversionConfig | false
 }
 
