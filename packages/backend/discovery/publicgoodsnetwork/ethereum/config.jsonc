@@ -1,21 +1,23 @@
 {
   "$schema": "../../config.schema.json",
-  "name": "base",
+  "name": "publicgoodsnetwork",
   "initialAddresses": [
-    "0x608d94945A64503E642E6370Ec598e519a2C1E53",
-    "0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
+    // improve when fully researched
+    "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+    "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+    "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
+    "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e",
+    "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"
   ],
   "names": {
-    "0x3154Cf16ccdb4C6d922629664174b904d80F2C35": "L1StandardBridge",
-    "0x608d94945A64503E642E6370Ec598e519a2C1E53": "L1ERC721Bridge",
-    "0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84": "OptimismMintableERC20Factory",
-    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "AdminMultisig",
-    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "GuardianMultisig",
-    "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e": "OptimismPortal",
-    "0x56315b90c40730925ec5485cf004d835058518A0": "L2OutputOracle",
-    "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa": "L1CrossDomainMessenger",
-    "0x73a79Fab69143498Ed3712e519A88a918e1f4072": "SystemConfig",
-    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig"
+    "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c": "OptimismPortal",
+    "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b": "L1StandardBridge",
+    "0xA38d0c4E6319F9045F20318BA5f04CDe94208608": "L2OutputOracle",
+    "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e": "L1CrossDomainMessenger",
+    "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e": "AddressManager",
+    "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84": "GuardianMultisig",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "PGNMultisig",
+    "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9": "SystemConfig"
   },
   "overrides": {
     "OptimismPortal": {
@@ -36,7 +38,10 @@
         "latestOutputIndex"
       ]
     },
-    "AdminMultisig": {
+    "PGNMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "GuardianMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "L1CrossDomainMessenger": {
@@ -52,12 +57,6 @@
           "args": []
         }
       }
-    },
-    "OptimismMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "GuardianMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
