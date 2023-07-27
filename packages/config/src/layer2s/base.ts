@@ -75,12 +75,7 @@ export const base: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: {
-      value: 'In development',
-      description:
-        'Currently the system permits invalid state roots. More details in project overview.',
-      sentiment: 'bad',
-    },
+    stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
