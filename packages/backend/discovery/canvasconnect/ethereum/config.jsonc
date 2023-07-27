@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "canvasconnect",
   "initialAddresses": ["0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d"],
   "names": {

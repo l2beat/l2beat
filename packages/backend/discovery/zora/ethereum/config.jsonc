@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "zora",
   "initialAddresses": [
     "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf",

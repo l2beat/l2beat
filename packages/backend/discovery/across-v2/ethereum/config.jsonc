@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "across-v2",
   "initialAddresses": ["0xc186fA914353c44b2E33eBE05f21846F1048bEda"],
   "names": {

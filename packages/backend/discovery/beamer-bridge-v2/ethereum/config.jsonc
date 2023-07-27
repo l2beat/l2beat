@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "beamer-bridge-v2",
   "initialAddresses": [
     "0x12B8489913E2afBCed131d52c345C380BBB65baf",

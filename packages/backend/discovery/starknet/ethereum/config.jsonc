@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "starknet",
   "initialAddresses": [
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
