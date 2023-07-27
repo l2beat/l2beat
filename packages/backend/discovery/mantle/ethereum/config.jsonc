@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "mantle",
   "initialAddresses": [
     "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
