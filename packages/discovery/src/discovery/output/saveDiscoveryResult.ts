@@ -1,4 +1,4 @@
-import { Hash256 } from '@l2beat/shared-pure'
+import { ChainId, Hash256 } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname } from 'path'
@@ -14,6 +14,7 @@ export async function saveDiscoveryResult(
   config: DiscoveryConfig,
   blockNumber: number,
   configHash: Hash256,
+  chain: ChainId,
 ) {
   const project = toDiscoveryOutput(
     config.name,
@@ -23,7 +24,9 @@ export async function saveDiscoveryResult(
   )
   const json = await toPrettyJson(project)
 
-  const root = `discovery/${config.name}`
+  const chainName = ChainId.getName(chain).toString()
+
+  const root = `discovery/${config.name}/${chainName}`
 
   await writeFile(`${root}/discovered.json`, json)
 
