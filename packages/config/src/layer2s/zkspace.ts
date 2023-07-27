@@ -15,12 +15,13 @@ import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkspace')
 
-const upgradeDelay = formatSeconds(HARDCODED.ZKSPACE.UPGRADE_NOTICE_PERIOD)
+const upgradeDelay = HARDCODED.ZKSPACE.UPGRADE_NOTICE_PERIOD
+const upgradeDelayString = formatSeconds(upgradeDelay)
 const forcedWithdrawalDelay = HARDCODED.ZKSPACE.PRIORITY_EXPIRATION_PERIOD
 
 const upgradeability = {
   upgradableBy: ['zkSpace Admin'],
-  upgradeDelay,
+  upgradeDelayString,
 }
 
 export const zkspace: Layer2 = {
@@ -83,7 +84,7 @@ export const zkspace: Layer2 = {
       ],
     },
     upgradeability: {
-      ...RISK_VIEW.UPGRADE_DELAY(upgradeDelay),
+      ...RISK_VIEW.UPGRADE_DELAY_SECONDS(upgradeDelay, forcedWithdrawalDelay),
       sources: [
         {
           contract: 'ZkSync',
@@ -189,7 +190,7 @@ export const zkspace: Layer2 = {
         'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
       ),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelay)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   permissions: [
     {

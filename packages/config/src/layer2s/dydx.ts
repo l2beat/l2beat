@@ -37,9 +37,9 @@ const upgradeRisk: ProjectRiskViewEntry = {
   )} delay`,
   description: `There is a ${formatSeconds(
     maxPriorityDelay,
-  )}, although this time can be shortened to ${formatSeconds(
+  )} delay, although this time can be shortened to ${formatSeconds(
     minPriorityDelay,
-  )} by Priority Controller.`,
+  )} by the Priority Controller.`,
   sentiment: 'warning',
 }
 const shortTimelockDelay = discovery.getContractValue<number>(
