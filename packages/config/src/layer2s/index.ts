@@ -26,6 +26,7 @@ import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { polygonzkevm } from './polygonzkevm'
+import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
@@ -69,6 +70,7 @@ export const layer2s: Layer2[] = [
   omgnetwork,
   optimism,
   polygonzkevm,
+  publicgoodsnetwork,
   rhinofi,
   scroll,
   sorare,
