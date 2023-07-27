@@ -1,5 +1,9 @@
 import { ConfigReader } from '@l2beat/discovery'
-import { ContractParameters, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  ContractParameters,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { findUnknownContracts } from './findUnknownContracts'
@@ -18,7 +22,12 @@ describe(findUnknownContracts.name, () => {
 
     const contracts = [A, B, C] as ContractParameters[]
 
-    const result = await findUnknownContracts('', contracts, configReader)
+    const result = await findUnknownContracts(
+      '',
+      contracts,
+      configReader,
+      ChainId.ETHEREUM,
+    )
 
     expect(result).toEqual([C.address])
   })
@@ -32,7 +41,12 @@ describe(findUnknownContracts.name, () => {
 
     const contracts: ContractParameters[] = []
 
-    const result = await findUnknownContracts('', contracts, configReader)
+    const result = await findUnknownContracts(
+      '',
+      contracts,
+      configReader,
+      ChainId.ETHEREUM,
+    )
 
     expect(result).toEqual([])
   })

@@ -5,7 +5,7 @@ import {
   DiscoveryEngine,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
-import { DiscoveryOutput } from '@l2beat/shared-pure'
+import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
@@ -82,7 +82,10 @@ export class DiscoveryRunner {
   // this function ensures that initial addresses are taken from discovered.json
   // so this way we will always discover "known" contracts
   async updateInitialAddresses(config: DiscoveryConfig) {
-    const discovery = await this.configReader.readDiscovery(config.name)
+    const discovery = await this.configReader.readDiscovery(
+      config.name,
+      ChainId.ETHEREUM,
+    )
     const initialAddresses = discovery.contracts.map((c) => c.address)
     return new DiscoveryConfig({
       ...config.raw,

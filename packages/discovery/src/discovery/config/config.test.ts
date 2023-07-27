@@ -1,5 +1,5 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
 
@@ -15,7 +15,7 @@ describe('discovery config.jsonc', () => {
     .concat(bridges.map((p) => p.id.toString()))
 
   before(async () => {
-    configs = await configReader.readAllConfigs()
+    configs = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
   })
 
   it(`every config name corresponds to ProjectId`, () => {
@@ -36,7 +36,10 @@ describe('discovery config.jsonc', () => {
     const notEqual = []
 
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(
+        config.name,
+        ChainId.ETHEREUM,
+      )
       if (discovery.name !== config.name) {
         notEqual.push(config.name)
       }
@@ -50,7 +53,10 @@ describe('discovery config.jsonc', () => {
 
   it('fields inside ignoreInWatchMode exists in discovery', async function () {
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(
+        config.name,
+        ChainId.ETHEREUM,
+      )
 
       for (const override of config.overrides) {
         if (override.ignoreDiscovery === true) {
@@ -94,7 +100,10 @@ describe('discovery config.jsonc', () => {
     const notSorted: string[] = []
 
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(
+        config.name,
+        ChainId.ETHEREUM,
+      )
 
       if (
         !isEqual(
@@ -118,7 +127,10 @@ describe('discovery config.jsonc', () => {
   it('committed discovery config hash matches committed config hash', async () => {
     const outdatedHashes: string[] = []
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(
+        config.name,
+        ChainId.ETHEREUM,
+      )
 
       if (discovery.configHash !== config.hash) {
         outdatedHashes.push(config.name)
@@ -134,7 +146,10 @@ describe('discovery config.jsonc', () => {
 
   it('discovery.json does not include errors', async () => {
     for (const config of configs ?? []) {
-      const discovery = await configReader.readDiscovery(config.name)
+      const discovery = await configReader.readDiscovery(
+        config.name,
+        ChainId.ETHEREUM,
+      )
 
       assert(
         discovery.contracts.every((c) => c.errors === undefined),

@@ -85,7 +85,10 @@ export function createStatusRouter(statusController: StatusController) {
     '/status/discovery/:project',
     withTypedContext(paramsParser, async (ctx) => {
       const { project } = ctx.params
-      ctx.body = await statusController.getDiscoveryDashboardProject(project)
+      ctx.body = await statusController.getDiscoveryDashboardProject(
+        project,
+        ChainId.ETHEREUM,
+      )
     }),
   )
 
