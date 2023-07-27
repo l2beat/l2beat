@@ -79,7 +79,8 @@ export function render(
 
     const ctx = elements.view.canvas?.getContext('2d')
     if (elements.view.canvas && ctx) {
-      renderChart(state, elements.view.canvas, ctx)
+      const drawYAxis = elements.view.canvas.dataset.isMeta === 'false'
+      renderChart(state, elements.view.canvas, ctx, drawYAxis)
     }
 
     if (elements.view.milestones) {

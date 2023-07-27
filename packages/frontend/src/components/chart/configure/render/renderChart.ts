@@ -14,6 +14,7 @@ export function renderChart(
   state: State,
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
+  drawYAxis: boolean,
 ) {
   if (!state.view.chart) {
     return
@@ -22,19 +23,11 @@ export function renderChart(
   const box = canvas.getBoundingClientRect()
   canvas.width = box.width * window.devicePixelRatio
   canvas.height = box.height * window.devicePixelRatio
-  const usableHeight = canvas.height - 20 * window.devicePixelRatio
+  const usableHeight = getUsableHeight(canvas, drawYAxis)
 
   const mainStyle = getMainStyle(canvas, ctx)
   const secondaryStyle = getSecondaryStyle(canvas, ctx)
-
-  const yAxisLineStroke =
-    state.controls.theme === 'dark'
-      ? 'rgba(255, 255, 255, 0.3)'
-      : 'rgba(51, 51, 51, 0.3)'
-  const yAxisLabelFill =
-    state.controls.theme === 'dark'
-      ? 'rgba(255, 255, 255, 0.5)'
-      : 'rgba(115, 115, 115, 0.5)'
+  const yAxisStyle = getYAxisStyle(state.controls.theme)
 
   if (
     state.controls.showEthereum &&
@@ -59,14 +52,18 @@ export function renderChart(
       usableHeight,
       mainStyle.fillGradient,
     )
-    drawYAxisLabels(
-      ctx,
-      state.view.labels,
-      canvas,
-      usableHeight,
-      yAxisLineStroke,
-      yAxisLabelFill,
-    )
+
+    if (drawYAxis) {
+      drawYAxisLabels(
+        ctx,
+        state.view.labels,
+        canvas,
+        usableHeight,
+        yAxisStyle.lineStroke,
+        yAxisStyle.labelFill,
+      )
+    }
+
     strokeChartLine(
       ctx,
       secondaryPoints,
@@ -101,14 +98,16 @@ export function renderChart(
     fillBelowChart(ctx, cbvPoints, canvas, usableHeight, cbvFillSTyle)
     fillBelowChart(ctx, ebvPoints, canvas, usableHeight, ebvFillStyle)
     fillBelowChart(ctx, nmvPoints, canvas, usableHeight, nmvFillStyle)
-    drawYAxisLabels(
-      ctx,
-      state.view.labels,
-      canvas,
-      usableHeight,
-      yAxisLineStroke,
-      yAxisLabelFill,
-    )
+    if (drawYAxis) {
+      drawYAxisLabels(
+        ctx,
+        state.view.labels,
+        canvas,
+        usableHeight,
+        yAxisStyle.lineStroke,
+        yAxisStyle.labelFill,
+      )
+    }
   } else {
     const mainPoints = state.view.chart.points
     fillBelowChart(
@@ -118,14 +117,16 @@ export function renderChart(
       usableHeight,
       mainStyle.fillGradient,
     )
-    drawYAxisLabels(
-      ctx,
-      state.view.labels,
-      canvas,
-      usableHeight,
-      yAxisLineStroke,
-      yAxisLabelFill,
-    )
+    if (drawYAxis) {
+      drawYAxisLabels(
+        ctx,
+        state.view.labels,
+        canvas,
+        usableHeight,
+        yAxisStyle.lineStroke,
+        yAxisStyle.labelFill,
+      )
+    }
     strokeChartLine(
       ctx,
       mainPoints,
@@ -204,4 +205,22 @@ function labelText(
     point.x * canvas.width,
     point.y * usableHeight + (canvas.height - usableHeight) - LINE_WIDTH,
   )
+}
+
+function getUsableHeight(canvas: HTMLCanvasElement, drawYAxis: boolean) {
+  return drawYAxis
+    ? canvas.height - 20 * window.devicePixelRatio
+    : canvas.height
+}
+
+function getYAxisStyle(theme: State['controls']['theme']) {
+  const lineStroke =
+    theme === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(51, 51, 51, 0.3)'
+  const labelFill =
+    theme === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(115, 115, 115, 0.5)'
+
+  return {
+    lineStroke: lineStroke,
+    labelFill: labelFill,
+  }
 }

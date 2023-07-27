@@ -98,6 +98,7 @@ export function Chart({
             <Logo className="absolute bottom-2 right-2 z-10 h-[25px] w-[60px] opacity-40" />
             <canvas
               data-role="chart-canvas"
+              data-is-meta={metaChart}
               className="absolute bottom-0 left-0 z-20 block h-full w-full"
             />
             <div
