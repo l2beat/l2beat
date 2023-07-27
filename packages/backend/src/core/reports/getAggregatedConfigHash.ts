@@ -3,7 +3,7 @@ import { sortBy } from 'lodash'
 
 import { AssetUpdater } from '../assets'
 
-const AGGREGATED_REPORT_LOGIC_VERSION = 0
+const AGGREGATED_REPORT_LOGIC_VERSION = 1
 
 export function getAggregatedConfigHash(updaters: AssetUpdater[]) {
   const chainIds = sortBy(updaters.map((x) => x.getChainId()))
