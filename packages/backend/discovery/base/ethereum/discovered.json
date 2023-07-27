@@ -1,7 +1,7 @@
 {
   "name": "base",
-  "blockNumber": 17713651,
-  "configHash": "0x74bfe8bd0f1ca11bf3bbd5fa2a88b4e12e40626c52a898d8396d9843eb1034ad",
+  "blockNumber": 17782778,
+  "configHash": "0x59d3b66337f7373eeee7f5edd73d4aca1a9eda11245074e19ea127b9877312c3",
   "version": 1,
   "contracts": [
     {
@@ -33,7 +33,7 @@
       "derivedName": "OptimismMintableERC20Factory"
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "GuardianMultisig",
       "address": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
       "code": "https://etherscan.deth.net/address/0x14536667Cd30e52C0b458BaACcB9faDA7046E056,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -77,6 +77,26 @@
       "derivedName": "L1StandardBridge"
     },
     {
+      "name": "GnosisSafe",
+      "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
+      "code": "https://etherscan.deth.net/address/0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xc7edf91fb84ec337ffa25b6f502a8c52c3dd4ea86d452728767d2836fa3819e3",
+        "getChainId": 1,
+        "getOwners": [
+          "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
+          "0x4665374939642965EfD8357D4568D2A77f677429"
+        ],
+        "getThreshold": 2,
+        "nonce": 23,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "OptimismPortal",
       "address": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
       "code": "https://etherscan.deth.net/address/0x49048044D57e1C92A77f79988d21Fa8fAF74E97e,0x5FB30336A8d0841cf15d452afA297cB6D10877D7",
@@ -89,7 +109,7 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 17713651],
+        "params": [1000000000, 300000, 17782778],
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
@@ -99,20 +119,20 @@
     {
       "name": "L2OutputOracle",
       "address": "0x56315b90c40730925ec5485cf004d835058518A0",
-      "code": "https://etherscan.deth.net/address/0x56315b90c40730925ec5485cf004d835058518A0,0x7237343c2A746Aa2940E5E4Fbd53eaFBF3049DcA",
+      "code": "https://etherscan.deth.net/address/0x56315b90c40730925ec5485cf004d835058518A0,0xf2460D3433475C8008ceFfe8283F07EB1447E39a",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x7237343c2A746Aa2940E5E4Fbd53eaFBF3049DcA",
+        "implementation": "0xf2460D3433475C8008ceFfe8283F07EB1447E39a",
         "admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
       },
       "values": {
-        "CHALLENGER": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
+        "CHALLENGER": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 1405800,
-        "latestOutputIndex": 780,
-        "nextBlockNumber": 1407600,
-        "nextOutputIndex": 781,
+        "latestBlockNumber": 1823400,
+        "latestOutputIndex": 1012,
+        "nextBlockNumber": 1825200,
+        "nextOutputIndex": 1013,
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686789348,
@@ -138,6 +158,19 @@
         "version": "1.1.1"
       },
       "derivedName": "L1ERC721Bridge"
+    },
+    {
+      "name": "Challenger1of2",
+      "address": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
+      "code": "https://etherscan.deth.net/address/0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "L2_OUTPUT_ORACLE_PROXY": "0x56315b90c40730925ec5485cf004d835058518A0",
+        "OP_SIGNER": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "OTHER_SIGNER": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056"
+      }
     },
     {
       "name": "SystemConfig",
@@ -182,7 +215,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619790",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619808",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -227,8 +260,35 @@
           "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c"
         ],
         "getThreshold": 3,
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "OptimismMultisig",
+      "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+      "code": "https://etherscan.deth.net/address/0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+      },
+      "values": {
+        "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",
+        "getModules": [],
+        "getOwners": [
+          "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
+          "0x3041BA32f451F5850c147805F5521AC206421623",
+          "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+          "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+          "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+          "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
+        ],
+        "getThreshold": 5,
+        "NAME": "Gnosis Safe",
+        "nonce": 84,
+        "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
     }
@@ -236,22 +296,28 @@
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
     "0x1d0D1f61137E457d4CF13146bBFA9F07B33f8Ec5",
+    "0x3041BA32f451F5850c147805F5521AC206421623",
     "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
     "0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
     "0x4200000000000000000000000000000000000014",
     "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839",
+    "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
     "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
     "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
     "0x6CD3850756b7894774Ab715D136F9dD02837De50",
     "0x73565876170a336Fa02fDe34EeD03E3121f70bA6",
+    "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
     "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F",
     "0x969ffD102fbF304d4e401999333FE9397DaC653D",
+    "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
     "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18",
     "0xAf6E19BE0F9cE7f8afd49a1824851023A8249e8a",
     "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
     "0xBECAbd620cb6675f73C92bc444F7faCddf204DE2",
+    "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+    "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
     "0xF8C7C1A8395a1C1E9b089bC8d7bF204Cad5F60DD",
     "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c"
   ],
@@ -312,6 +378,51 @@
       "function otherBridge() view returns (address)",
       "function version() view returns (string)"
     ],
+    "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedMasterCopy(address masterCopy)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function NAME() view returns (string)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeMasterCopy(address _masterCopy)",
+      "function changeThreshold(uint256 _threshold)",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getMessageHash(bytes message) view returns (bytes32)",
+      "function getModules() view returns (address[])",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isOwner(address owner) view returns (bool)",
+      "function isValidSignature(bytes _data, bytes _signature) returns (bytes4)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signMessage(bytes _data)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "0x3d2c2f8f95CAba644eA25319c4c08594b8DC0359": [
       "constructor(address _bridge)",
       "event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer)",
@@ -349,6 +460,9 @@
       "function l2TokenBridge() view returns (address)",
       "function messenger() view returns (address)",
       "function version() view returns (string)"
+    ],
+    "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": [
+      "constructor(address _singleton)"
     ],
     "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e": [
       "constructor(address _admin)",
@@ -432,30 +546,13 @@
       "function unsafeBlockSigner() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0x7237343c2A746Aa2940E5E4Fbd53eaFBF3049DcA": [
-      "constructor(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
-      "event Initialized(uint8 version)",
-      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
-      "function CHALLENGER() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function PROPOSER() view returns (address)",
-      "function SUBMISSION_INTERVAL() view returns (uint256)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function deleteL2Outputs(uint256 _l2OutputIndex)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function initialize(uint256 _startingBlockNumber, uint256 _startingTimestamp)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
-      "function version() view returns (string)"
+    "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824": [
+      "constructor(address _opSigner, address _otherSigner, address _l2OutputOracleProxy)",
+      "event ChallengerCallExecuted(address indexed _caller, bytes _data, bytes _result)",
+      "function L2_OUTPUT_ORACLE_PROXY() view returns (address)",
+      "function OP_SIGNER() view returns (address)",
+      "function OTHER_SIGNER() view returns (address)",
+      "function execute(bytes _data)"
     ],
     "0x73a79Fab69143498Ed3712e519A88a918e1f4072": [
       "constructor(address _admin)",
@@ -509,6 +606,9 @@
     "0x9855054731540A48b28990B63DcF4f33d8AE46A1": [
       "constructor(address _singleton)"
     ],
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": [
+      "constructor(address _masterCopy)"
+    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -557,6 +657,31 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xf2460D3433475C8008ceFfe8283F07EB1447E39a": [
+      "constructor(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
+      "event Initialized(uint8 version)",
+      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
+      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
+      "function CHALLENGER() view returns (address)",
+      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function PROPOSER() view returns (address)",
+      "function SUBMISSION_INTERVAL() view returns (uint256)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function deleteL2Outputs(uint256 _l2OutputIndex)",
+      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
+      "function initialize(uint256 _startingBlockNumber, uint256 _startingTimestamp)",
+      "function latestBlockNumber() view returns (uint256)",
+      "function latestOutputIndex() view returns (uint256)",
+      "function nextBlockNumber() view returns (uint256)",
+      "function nextOutputIndex() view returns (uint256)",
+      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
+      "function startingBlockNumber() view returns (uint256)",
+      "function startingTimestamp() view returns (uint256)",
+      "function version() view returns (string)"
     ]
   }
 }

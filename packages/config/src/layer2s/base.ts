@@ -122,7 +122,7 @@ export const base: Layer2 = {
         {
           contract: 'L2OutputOracle',
           references: [
-            'https://etherscan.io/address/0x7237343c2A746Aa2940E5E4Fbd53eaFBF3049DcA#code#F1#L186',
+            'https://etherscan.io/address/0xf2460D3433475C8008ceFfe8283F07EB1447E39a#code#F1#L186',
           ],
         },
       ],
@@ -247,14 +247,18 @@ export const base: Layer2 = {
       'This address is the owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds.',
     ),
     ...discovery.getMultisigPermission(
-      'ChallengerMultisig',
-      "This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It's the owner of SystemConfig, which allows to update the sequencer address.",
+      'GuardianMultisig',
+      "Address designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It's the owner of SystemConfig, which allows to update the sequencer address. Moreover, it can challenge state roots without going through the fault proof process.",
+    ),
+    ...discovery.getMultisigPermission(
+      'OptimismMultisig',
+      'Core multisig of the Optimism team, it can challenge state roots without going through the fault proof process.',
     ),
     {
       name: 'ProxyAdmin',
       accounts: [discovery.getPermissionedAccount('AddressManager', 'owner')],
       description:
-        'Admin of the OptimismPortal, L1ERC721Bridge, L2OutputOracle, OptimismMintableERC20Factory, L1StandardBridge, AddressManager, SystemConfig proxies. It’s controlled by the AdminMultisig.',
+        "Admin of the OptimismPortal, L1ERC721Bridge, L2OutputOracle, OptimismMintableERC20Factory, L1StandardBridge, AddressManager, SystemConfig proxies. It's controlled by the AdminMultisig.",
     },
     {
       name: 'Sequencer',
@@ -297,6 +301,10 @@ export const base: Layer2 = {
         description:
           "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
         ...upgradesProxy,
+      }),
+      discovery.getContractDetails('Challenger1of2', {
+        description:
+          "This contract is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is functionally equivalent to a 1/2 multisig where neither party can remove the other's permission to execute a Challenger call. It is controlled by the GuardianMultisig and the OptimismMultisig.",
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
