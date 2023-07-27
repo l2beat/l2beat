@@ -153,15 +153,15 @@ export function UPGRADE_DELAY(
   const upgradeDelayString = formatSeconds(upgradeDelay)
   const canReactString =
     canExit === false
-      ? 'and users have not enough time to react if the permissioned operator is censoring.'
-      : 'but users have some time to react even if the permissioned operator is censoring.'
+      ? "and users don't have enough time to react if the permissioned operator is censoring"
+      : 'but users have some time to react even if the permissioned operator is censoring'
   return {
     value: `${upgradeDelayString} delay`,
     description:
       'The code that secures the system can be changed arbitrarily ' +
       canReactString +
       '.',
-    sentiment: 'warning',
+    sentiment: canExit === false ? 'bad' : 'warning',
   }
 }
 
