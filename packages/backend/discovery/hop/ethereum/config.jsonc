@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "hop",
   "initialAddresses": [
     "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",

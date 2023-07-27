@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "arbitrum",
   "initialAddresses": [
     "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",

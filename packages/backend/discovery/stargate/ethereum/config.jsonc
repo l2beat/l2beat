@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "stargate",
   "initialAddresses": ["0x8731d54E9D02c286767d56ac03e8037C07e01e98"],
   "names": {

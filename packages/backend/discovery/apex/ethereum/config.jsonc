@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "apex",
   "initialAddresses": ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"],
   "names": {
