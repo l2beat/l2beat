@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "optimism",
   "initialAddresses": [
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",

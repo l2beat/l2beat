@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "deversifi",
   "initialAddresses": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"],
   "names": {

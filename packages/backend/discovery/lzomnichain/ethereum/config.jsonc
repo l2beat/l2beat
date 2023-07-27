@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "lzomnichain",
   "initialAddresses": [
     "0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6" // STG

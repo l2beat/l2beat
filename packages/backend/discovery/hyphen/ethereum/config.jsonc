@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "hyphen",
   "initialAddresses": ["0x2A5c2568b10A0E826BfA892Cf21BA7218310180b"],
   "overrides": {
