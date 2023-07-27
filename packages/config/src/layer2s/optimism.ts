@@ -56,6 +56,7 @@ export const optimism: Layer2 = {
   config: {
     associatedTokens: ['OP'],
     nativeL2TokensIncludedInTVL: ['OP'],
+    tvlTooltip: 'TVL includes canonically bridged assets and native OP',
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xbEb5Fc579115071764c7423A4f12eDde41f106Ed'),
@@ -106,12 +107,7 @@ export const optimism: Layer2 = {
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: {
-      value: 'In development',
-      description:
-        'Currently the system permits invalid state roots. More details in project overview.',
-      sentiment: 'bad',
-    },
+    stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [

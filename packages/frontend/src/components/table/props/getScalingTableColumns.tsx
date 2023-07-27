@@ -71,13 +71,15 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
     {
       name: 'TVL',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <>
-          <NumberCell className="font-bold">{project.tvl}</NumberCell>
+          <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
+            {project.tvl}
+          </NumberCell>
           <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
             {project.sevenDayChange}
           </NumberCell>
@@ -176,7 +178,7 @@ export function getArchivedScalingTvlColumns() {
     {
       name: 'TVL',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',

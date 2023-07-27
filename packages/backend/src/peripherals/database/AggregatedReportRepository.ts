@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { AggregatedReportRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
@@ -8,8 +8,9 @@ import { Database } from './shared/Database'
 export interface AggregatedReportRecord {
   timestamp: UnixTime
   projectId: ProjectId
-  tvlUsd: bigint
-  tvlEth: bigint
+  usdValue: bigint
+  ethValue: bigint
+  valueType: ValueType
 }
 
 export class AggregatedReportRepository extends BaseRepository {
@@ -21,7 +22,8 @@ export class AggregatedReportRepository extends BaseRepository {
   async getDaily(): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
-      .where('is_daily', true)
+      .where({ value_type: ValueType.TVL.toString() })
+      .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) = 0`)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -29,8 +31,9 @@ export class AggregatedReportRepository extends BaseRepository {
   async getSixHourly(from: UnixTime): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
-      .where('is_six_hourly', true)
-      .andWhere('unix_timestamp', '>=', from.toDate())
+      .where('unix_timestamp', '>=', from.toDate())
+      .andWhere({ value_type: ValueType.TVL.toString() })
+      .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) % 6 = 0`)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -38,7 +41,8 @@ export class AggregatedReportRepository extends BaseRepository {
   async getHourly(from: UnixTime): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
-      .andWhere('unix_timestamp', '>=', from.toDate())
+      .where('unix_timestamp', '>=', from.toDate())
+      .andWhere({ value_type: ValueType.TVL.toString() })
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -55,7 +59,10 @@ export class AggregatedReportRepository extends BaseRepository {
     const knex = await this.knex()
     const row = await knex('aggregated_reports')
       .select()
-      .where({ project_id: projectId.toString() })
+      .where({
+        project_id: projectId.toString(),
+        value_type: ValueType.TVL.toString(),
+      })
       .orderBy('unix_timestamp', 'desc')
       .first()
 
@@ -76,7 +83,7 @@ export class AggregatedReportRepository extends BaseRepository {
         .delete()
       await trx('aggregated_reports')
         .insert(rows)
-        .onConflict(['unix_timestamp', 'project_id'])
+        .onConflict(['unix_timestamp', 'project_id', 'value_type'])
         .merge()
     })
     return rows.length
@@ -92,10 +99,9 @@ function toRow(record: AggregatedReportRecord): AggregatedReportRow {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
-    tvl_usd: record.tvlUsd.toString(),
-    tvl_eth: record.tvlEth.toString(),
-    is_daily: record.timestamp.toNumber() % 86400 === 0 ? true : false,
-    is_six_hourly: record.timestamp.toNumber() % 21600 === 0 ? true : false,
+    usd_value: record.usdValue.toString(),
+    eth_value: record.ethValue.toString(),
+    value_type: record.valueType.toString(),
   }
 }
 
@@ -103,7 +109,8 @@ function toRecord(row: AggregatedReportRow): AggregatedReportRecord {
   return {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),
-    tvlUsd: BigInt(row.tvl_usd),
-    tvlEth: BigInt(row.tvl_eth),
+    usdValue: BigInt(row.usd_value),
+    ethValue: BigInt(row.eth_value),
+    valueType: ValueType(row.value_type),
   }
 }

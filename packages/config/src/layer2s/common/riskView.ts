@@ -17,6 +17,13 @@ export function makeBridgeCompatible(
 
 // State validation
 
+export const STATE_NONE: ProjectRiskViewEntry = {
+  value: 'In development',
+  description:
+    'Currently the system permits invalid state roots. More details in project overview.',
+  sentiment: 'bad',
+}
+
 export const STATE_FP: ProjectRiskViewEntry = {
   value: 'Fraud proofs',
   description:
@@ -100,7 +107,7 @@ export const DATA_EXTERNAL_DAC: ProjectRiskViewEntry = {
 export const DATA_EXTERNAL: ProjectRiskViewEntry = {
   value: 'External',
   description:
-    'Proof construction relies fully on data that is NOT published on chain.',
+    'Proof construction and state derivation rely fully on data that is NOT published on chain.',
   sentiment: 'bad',
 }
 
@@ -389,6 +396,7 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: ProjectRiskViewEntry = {
 }
 
 export const RISK_VIEW = {
+  STATE_NONE,
   STATE_FP,
   STATE_FP_1R,
   STATE_FP_INT,

@@ -23,11 +23,13 @@ import { mantle } from './mantle'
 import { metis } from './metis'
 import { myria } from './myria'
 import { nova } from './nova'
+import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos } from './polygonpos'
 import { polygonzkevm } from './polygonzkevm'
+import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { rhinofi } from './rhinofi'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
@@ -69,11 +71,13 @@ export const layer2s: Layer2[] = [
   metis,
   myria,
   nova,
+  obscuro,
   omgnetwork,
   optimism,
   polygonmiden,
   polygonzkevm,
   polygonpos,
+  publicgoodsnetwork,
   rhinofi,
   scroll,
   sorare,

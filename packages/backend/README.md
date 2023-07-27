@@ -134,9 +134,64 @@ ETHEREUM_ALCHEMY_API_KEY=
 
 The `/status` endpoints were created to see the current progress of the Updaters.
 
-### Endpoints
+---
 
-- `/status/prices`
-- `/status/balances`
-- `/status/reports`
-- `/status/discovery`
+#### `/status/prices`
+
+Query parameters:
+
+- `from` - (number) UTC timestamp from when to start the query (default earliest)
+- `to` - (number) UTC timestamp when to end the query (default latest)
+
+Example
+
+```
+https://api.l2beat.com/status/prices?from=1687599307&to=1690191307
+```
+
+---
+
+#### `/status/balances`
+
+Query parameters:
+
+- `from` - (number) UTC timestamp from when to start the query (default earliest)
+- `to` - (number) UTC timestamp when to end the query (default latest)
+- `chainId` - (number) which chainId to check the status of (default 1 (ETH))
+
+Example
+
+```
+https://api.l2beat.com/status/balances?chainId=1&from=1687599307&to=1690191307
+```
+
+---
+
+#### `/status/reports`
+
+Query parameters:
+
+- `from` - (number) UTC timestamp from when to start the query (default earliest)
+- `to` - (number) UTC timestamp when to end the query (default latest)
+- `chainId` - (number) which chainId to check the status of (default 1 (ETH))
+- `type` - (string) which value type to check the status of(default CBV)
+
+Example
+
+```
+https://api.l2beat.com/status/reports/?chainId=1&type=CBV&from=1687599307&to=1690191307
+```
+
+---
+
+#### `/status/discovery`
+
+There are no query parameters.
+
+Example
+
+```
+https://api.l2beat.com/status/discovery
+```
+
+---
