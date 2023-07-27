@@ -1,9 +1,4 @@
-import {
-  ConfigReader,
-  DiscoveryConfig,
-  DiscoveryDiff,
-  DiscoveryRunner,
-} from '@l2beat/discovery'
+import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
 import {
   ChainId,
@@ -21,7 +16,7 @@ import {
   UpdateMonitorRepository,
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
-import { DiscoveryRunnerOptions } from './DiscoveryRunner'
+import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateMetadata, UpdateNotifier } from './UpdateNotifier'
 
@@ -58,6 +53,7 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
   version: 0,
 }
 
+//TODO: add test for multiple chains
 describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})

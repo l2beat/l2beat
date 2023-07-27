@@ -9,31 +9,23 @@ import {
   SourceCodeService,
 } from '@l2beat/discovery'
 import { EtherscanLikeClient, HttpClient } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
+import { UpdateMonitorChainConfig } from '../../config/Config'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
-export interface DiscoveryRunnerConfig {
-  chainId: ChainId
-  etherscanLikeApiUrl: string
-  etherscanLikeApiKey: string
-  rpcUrl: string
-  minBlockTimestamp: UnixTime
-}
-
 export function createDiscoveryRunner(
-  config: DiscoveryRunnerConfig,
   http: HttpClient,
   configReader: ConfigReader,
   discoveryLogger: DiscoveryLogger,
+  config: UpdateMonitorChainConfig,
 ) {
   const provider = new providers.StaticJsonRpcProvider(config.rpcUrl)
   const etherscanLikeClient = new EtherscanLikeClient(
     http,
-    config.etherscanLikeApiUrl,
-    config.etherscanLikeApiKey,
-    config.minBlockTimestamp,
+    config.etherscanUrl,
+    config.etherscanApiKey,
+    config.minTimestamp,
   )
 
   const discoveryProvider = new DiscoveryProvider(provider, etherscanLikeClient)

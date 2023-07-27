@@ -3,7 +3,6 @@ import {
   diffDiscovery,
   DiscoveryConfig,
   DiscoveryDiff,
-  DiscoveryRunner,
 } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
 import { ChainId, DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
@@ -12,6 +11,7 @@ import { Gauge, Histogram } from 'prom-client'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
+import { DiscoveryRunner } from './DiscoveryRunner'
 import { UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
