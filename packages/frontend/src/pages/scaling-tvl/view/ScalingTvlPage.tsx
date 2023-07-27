@@ -23,7 +23,7 @@ export interface TvlPageProps {
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
-  showL2Assets: boolean
+  showDetailedTvl: boolean
   showMultisigReport: boolean
   milestones?: Milestone[]
 }
@@ -35,7 +35,7 @@ export function ScalingTvlPage(props: TvlPageProps) {
       <PageContent>
         <ScalingNavigationTabs
           showActivity={props.showActivity}
-          showTvlBreakdown={props.showL2Assets}
+          showDetailedTvl={props.showDetailedTvl}
           selected="summary"
         />
         <main>

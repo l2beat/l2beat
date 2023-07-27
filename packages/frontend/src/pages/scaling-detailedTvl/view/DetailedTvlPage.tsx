@@ -14,24 +14,24 @@ import { OtherSites } from '../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../components/PageContent'
 import { DetailedTvlView, DetailedTvlViewProps } from './DetailedTvlView'
 
-export interface L2AssetsPageProps {
+export interface DetailedTvlPageProps {
   tvl: string
   tvlWeeklyChange: string
   navbar: NavbarProps
   footer: FooterProps
-  showL2Assets: boolean
+  showDetailedTvl: boolean
   showActivity: boolean
   detailedTvlView: DetailedTvlViewProps
 }
 
-export function L2AssetsPage(props: L2AssetsPageProps) {
+export function DetailedTvlPage(props: DetailedTvlPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
           showActivity={props.showActivity}
-          showTvlBreakdown={props.showL2Assets}
+          showDetailedTvl={props.showDetailedTvl}
           selected="detailed"
         />
         <main>

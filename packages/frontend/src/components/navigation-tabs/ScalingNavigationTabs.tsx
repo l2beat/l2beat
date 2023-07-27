@@ -6,7 +6,7 @@ import { NavigationPage, NavigationTabs } from './NavigationTabs'
 interface ScalingNavigationTabsProps {
   selected: 'summary' | 'detailed' | 'risk' | 'activity'
   showActivity: boolean
-  showTvlBreakdown?: boolean
+  showDetailedTvl?: boolean
 }
 
 export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
@@ -19,7 +19,7 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       selected: props.selected === 'summary',
     },
   ]
-  if (props.showTvlBreakdown) {
+  if (props.showDetailedTvl) {
     pages.push({
       fullTitle: 'Detailed TVL',
       shortTitle: 'Detailed',

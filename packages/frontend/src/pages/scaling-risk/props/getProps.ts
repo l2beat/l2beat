@@ -26,7 +26,7 @@ export function getProps(
       ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
-      showL2Assets: config.features.detailedTvl,
+      showDetailedTvl: config.features.detailedTvl,
     },
     wrapper: {
       metadata: getPageMetadata(),

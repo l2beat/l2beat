@@ -4,15 +4,15 @@ import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
 import { PagesData } from '../Page'
 import { getProps } from './props'
-import { L2AssetsPage } from './view/L2AssetsPage'
+import { DetailedTvlPage } from './view/DetailedTvlPage'
 
-export function getL2AssetsPage(config: Config, pagesData: PagesData) {
+export function getDetailedTvlPage(config: Config, pagesData: PagesData) {
   const { props, wrapper } = getProps(config, pagesData)
   return {
     slug: '/scaling/detailedTvl',
     page: (
       <PageWrapper {...wrapper}>
-        <L2AssetsPage {...props} />
+        <DetailedTvlPage {...props} />
       </PageWrapper>
     ),
   }
