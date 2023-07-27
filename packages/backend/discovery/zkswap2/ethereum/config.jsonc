@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "zkswap2",
   "initialAddresses": ["0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"],
   "names": {

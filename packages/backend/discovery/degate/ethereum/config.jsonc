@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "degate",
   "initialAddresses": ["0x814d0c1903d69eb1c7ceb8f5190b20a06892d1da"],
   "names": {

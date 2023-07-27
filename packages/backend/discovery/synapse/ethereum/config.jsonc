@@ -1,5 +1,5 @@
 {
-  "$schema": "../config.schema.json",
+  "$schema": "../../config.schema.json",
   "name": "synapse",
   "initialAddresses": [
     "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
