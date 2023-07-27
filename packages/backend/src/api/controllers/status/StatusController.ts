@@ -65,9 +65,12 @@ export class StatusController {
     })
   }
 
-  async getDiscoveryDashboardProject(project: string): Promise<string> {
-    const discovery = await this.configReader.readDiscovery(project)
-    const config = await this.configReader.readConfig(project)
+  async getDiscoveryDashboardProject(
+    project: string,
+    chain: ChainId,
+  ): Promise<string> {
+    const discovery = await this.configReader.readDiscovery(project, chain)
+    const config = await this.configReader.readConfig(project, chain)
     const contracts = getDashboardContracts(discovery, config)
 
     const diff: DiscoveryDiff[] = await getDiff(
