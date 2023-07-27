@@ -1,6 +1,6 @@
 import { Effect } from '../effects/effects'
-import { ThemeChangedMessage } from "../messages";
-import { State } from "../state/State";
+import { ThemeChangedMessage } from '../messages'
+import { State } from '../state/State'
 
 export function updateThemeChanged(
   state: State,
@@ -9,9 +9,9 @@ export function updateThemeChanged(
   const newState: State = {
     ...state,
     controls: {
-        ...state.controls,
-        theme: message.isDarkMode ? "dark" : "light"
-    }
+      ...state.controls,
+      theme: message.isDarkMode ? 'dark' : 'light',
+    },
   }
 
   return [newState, []]

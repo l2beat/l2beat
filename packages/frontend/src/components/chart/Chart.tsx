@@ -72,15 +72,16 @@ export function Chart({
           sectionClassName,
         )}
       >
-        {!metaChart && (hasTvl && hasActivity) || (hasTvl && hasDetailedTvl) && (
-          <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
-            <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
-              <a href={`#${id}`}>{title}</a>
-            </h2>
+        {(!metaChart && hasTvl && hasActivity) ||
+          (hasTvl && hasDetailedTvl && (
+            <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
+              <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
+                <a href={`#${id}`}>{title}</a>
+              </h2>
 
-            <RadioChartTypeControl hasActivity hasDetailedTvl/>
-          </div>
-        )}
+              <RadioChartTypeControl hasActivity hasDetailedTvl />
+            </div>
+          ))}
         <div className="flex flex-col gap-4">
           <div className="flex justify-between">
             <TimeRange />

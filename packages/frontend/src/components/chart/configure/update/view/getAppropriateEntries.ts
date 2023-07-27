@@ -1,4 +1,8 @@
-import { AggregateDetailedTvlResponse, AggregateTvlResponse, TokenTvlResponse } from '../../state/State'
+import {
+  AggregateDetailedTvlResponse,
+  AggregateTvlResponse,
+  TokenTvlResponse,
+} from '../../state/State'
 
 export function getAppropriateEntries(
   days: number,
@@ -21,7 +25,7 @@ export function getAppropriateEntries(
 // TODO(radomski): It should be possible to combine the use of this function with the one above
 export function getAppropriateDetailedEntries(
   days: number,
-  response: AggregateDetailedTvlResponse
+  response: AggregateDetailedTvlResponse,
 ) {
   if (days <= 7) {
     return response.hourly.data.slice(-24 * days)

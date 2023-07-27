@@ -1,6 +1,12 @@
 import React from 'react'
 
-import { Chart, Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
+import {
+  Chart,
+  Footer,
+  FooterProps,
+  Navbar,
+  NavbarProps,
+} from '../../../components'
 import { About } from '../../../components/About'
 import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
@@ -30,7 +36,7 @@ export function L2AssetsPage(props: L2AssetsPageProps) {
         />
         <main>
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />
-          <Chart detailedTvlEndpoint={"halucinate_data"} type={"detailedTvl"}/>
+          <Chart detailedTvlEndpoint={'halucinate_data'} type={'detailedTvl'} />
           <DetailedTvlView {...props.detailedTvlView} />
           <OtherSites />
           <About />

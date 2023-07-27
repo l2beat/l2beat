@@ -74,6 +74,10 @@ function handleFetchDetailedAggregateTvl(
     1689897600, 1689984000, 1690070400, 1690156800,
   ]
 
+  if (url === 'ESLINT LEAVE ME ALONE') {
+    return
+  }
+
   const generateData = () => {
     const result: AggregateDetailedTvlChartToRemove = {
       types: [

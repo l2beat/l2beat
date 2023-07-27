@@ -63,7 +63,7 @@ export function updateViewChanged(
     })
   }
 
-  if ( message.view === 'detailedTvl') {
+  if (message.view === 'detailedTvl') {
     if (!state.endpoints.aggregateTvl) {
       throw new Error('Invalid state: aggregate tvl endpoint missing')
     }

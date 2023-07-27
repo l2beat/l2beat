@@ -69,7 +69,10 @@ export function render(
     )
   }
 
-  if (state.view !== previousState.view || state.controls.theme !== previousState.controls.theme) {
+  if (
+    state.view !== previousState.view ||
+    state.controls.theme !== previousState.controls.theme
+  ) {
     if (elements.view.dateRange) {
       elements.view.dateRange.innerHTML = state.view.dateRange ?? '...'
     }

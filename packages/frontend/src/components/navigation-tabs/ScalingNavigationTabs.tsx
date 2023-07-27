@@ -6,7 +6,7 @@ import { NavigationPage, NavigationTabs } from './NavigationTabs'
 interface ScalingNavigationTabsProps {
   selected: 'summary' | 'detailed' | 'risk' | 'activity'
   showActivity: boolean
-  showTvlBreakdown: boolean
+  showTvlBreakdown?: boolean
 }
 
 export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {

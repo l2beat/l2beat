@@ -22,8 +22,8 @@ export function configureDarkThemeToggle() {
     const isDark = !document.documentElement.classList.contains('dark')
     updateTheme(isDark)
     localStorage.setItem('l2beat-theme', isDark ? 'dark' : 'light')
-    for(const callback of callbacks) {
-        callback(isDark)
+    for (const callback of callbacks) {
+      callback(isDark)
     }
   }
 
@@ -38,10 +38,9 @@ export function configureDarkThemeToggle() {
 }
 
 export function useThemeToggle(callback: (isDarkMode: boolean) => void) {
-    callbacks.push(callback)
+  callbacks.push(callback)
 }
 
 export function isDarkMode(): boolean {
-    return document.documentElement.classList.contains('dark')
-
+  return document.documentElement.classList.contains('dark')
 }

@@ -1,6 +1,6 @@
-import { Layer2 } from "@l2beat/config"
+import { Layer2 } from '@l2beat/config'
 
-import { RiskValues } from "../../utils/risks/types"
+import { RiskValues } from '../../utils/risks/types'
 
 export interface DetailedTvlViewEntry {
   name: string

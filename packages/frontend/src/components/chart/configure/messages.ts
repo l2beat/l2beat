@@ -135,8 +135,8 @@ export interface LoaderTimedOutMessage {
 }
 
 export interface ThemeChangedMessage {
-    type: "ThemeChanged"
-    isDarkMode: boolean
+  type: 'ThemeChanged'
+  isDarkMode: boolean
 }
 
 export type Message =

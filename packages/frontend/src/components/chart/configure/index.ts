@@ -34,10 +34,10 @@ function configureChart(chart: HTMLElement) {
   }
 
   useThemeToggle((isDarkMode: boolean) => {
-      dispatch({
-          type: 'ThemeChanged',
-          isDarkMode
-      })
+    dispatch({
+      type: 'ThemeChanged',
+      isDarkMode,
+    })
   })
 
   window.addEventListener('resize', () => {

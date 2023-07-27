@@ -2,9 +2,9 @@ import React from 'react'
 
 import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ScalingLegend } from '../../../components/ScalingLegend'
-import { getScalingRowProps } from "../../../components/table/props/getScalingRowProps"
+import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import { getScalingDetailedTvlColumns } from '../../../components/table/props/getScalingTableColumns'
-import { RowConfig, TableView } from "../../../components/table/TableView"
+import { RowConfig, TableView } from '../../../components/table/TableView'
 import { Tabs } from '../../../components/Tabs'
 import { DetailedTvlViewEntry } from '../types'
 
@@ -13,7 +13,7 @@ export interface DetailedTvlViewProps {
   upcomingEnabled?: boolean
 }
 
-export function DetailedTvlView({items}: DetailedTvlViewProps) {
+export function DetailedTvlView({ items }: DetailedTvlViewProps) {
   const rows: RowConfig<DetailedTvlViewEntry> = {
     getProps: getScalingRowProps,
   }

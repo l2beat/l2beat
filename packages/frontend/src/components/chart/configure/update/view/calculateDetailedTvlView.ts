@@ -17,13 +17,18 @@ export function calculateDetailedTvlView(
   console.log(entries)
   const dateRange = formatRange(entries[0][0], entries[entries.length - 1][0])
   const { labels, getY } = getYAxis(
-    entries.flatMap((x) => (controls.currency === 'usd' ? x.slice(1, 5) : x.slice(5,9))),
+    entries.flatMap((x) =>
+      controls.currency === 'usd' ? x.slice(1, 5) : x.slice(5, 9),
+    ),
     5,
     controls.isLogScale,
     (x) => formatCurrency(x, controls.currency),
   )
 
-  const points = entries.map(([timestamp,
+  const points = entries.map(
+    (
+      [
+        timestamp,
         valueUsd,
         cbvUsd,
         ebvUsd,
@@ -31,30 +36,39 @@ export function calculateDetailedTvlView(
         valueEth,
         cbvEth,
         ebvEth,
-        nmvEth
-  ], i) => ({
-    x: i / (entries.length - 1),
-    y: getY(controls.currency === 'usd' ? valueUsd : valueEth),
-    parts: {
-        cbv: getY(controls.currency === 'usd' ? cbvUsd + ebvUsd + nmvUsd : cbvEth + ebvEth + nmvEth),
-        ebv: getY(controls.currency === 'usd' ? ebvUsd + nmvUsd : ebvEth + nmvEth),
+        nmvEth,
+      ],
+      i,
+    ) => ({
+      x: i / (entries.length - 1),
+      y: getY(controls.currency === 'usd' ? valueUsd : valueEth),
+      parts: {
+        cbv: getY(
+          controls.currency === 'usd'
+            ? cbvUsd + ebvUsd + nmvUsd
+            : cbvEth + ebvEth + nmvEth,
+        ),
+        ebv: getY(
+          controls.currency === 'usd' ? ebvUsd + nmvUsd : ebvEth + nmvEth,
+        ),
         nmv: getY(controls.currency === 'usd' ? nmvUsd : nmvEth),
-    },
-    date: formatTimestamp(timestamp, true),
-    usd: valueUsd,
-    eth: valueEth,
-    usdParts: {
+      },
+      date: formatTimestamp(timestamp, true),
+      usd: valueUsd,
+      eth: valueEth,
+      usdParts: {
         cbv: cbvUsd,
         ebv: ebvUsd,
         nmv: nmvUsd,
-    },
-    ethParts: {
+      },
+      ethParts: {
         cbv: cbvEth,
         ebv: ebvEth,
         nmv: nmvEth,
-    },
-    milestone: data.milestones[timestamp],
-  }))
+      },
+      milestone: data.milestones[timestamp],
+    }),
+  )
 
   return {
     chart: { type: 'AggregateDetailedTvlChart', points },

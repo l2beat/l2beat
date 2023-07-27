@@ -39,12 +39,17 @@ function fadeFill(
     0,
     usableHeight * (1 - getMedianHeight(points)),
     0,
-    usableHeight
+    usableHeight,
   )
   darkenGradient.addColorStop(0, '#00000000')
   darkenGradient.addColorStop(1, '#000000')
   ctx.fillStyle = darkenGradient
-  ctx.fillRect(0, usableHeight - canvas.height, canvas.width, usableHeight + (usableHeight - canvas.height))
+  ctx.fillRect(
+    0,
+    usableHeight - canvas.height,
+    canvas.width,
+    usableHeight + (usableHeight - canvas.height),
+  )
 }
 
 function getMedianHeight(points: { x: number; y: number }[]) {

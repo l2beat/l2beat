@@ -101,7 +101,7 @@ export function getEBVStyle(
       ],
       patternCtx,
       patternCanvas,
-      patternCanvas.height
+      patternCanvas.height,
     )
 
     moveToMany(
@@ -113,7 +113,7 @@ export function getEBVStyle(
       ],
       patternCtx,
       patternCanvas,
-      patternCanvas.height
+      patternCanvas.height,
     )
     patternCtx.stroke()
   }
@@ -145,7 +145,7 @@ export function getNMVStyle(
       ],
       patternCtx,
       patternCanvas,
-      patternCanvas.height
+      patternCanvas.height,
     )
 
     moveToMany(
@@ -158,7 +158,7 @@ export function getNMVStyle(
       ],
       patternCtx,
       patternCanvas,
-      patternCanvas.height
+      patternCanvas.height,
     )
     patternCtx.stroke()
   }
