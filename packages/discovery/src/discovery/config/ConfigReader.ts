@@ -26,18 +26,11 @@ export class ConfigReader {
 
   async readAllConfigsForChain(chain: ChainId): Promise<DiscoveryConfig[]> {
     const result: DiscoveryConfig[] = []
+    const projects = this.readAllProjectsForChain(chain)
 
-    const configs = readdirSync('discovery', { withFileTypes: true })
-      .filter((x) => x.isDirectory())
-      .map((x) => x.name)
-
-    for (const config of configs) {
-      try {
-        const contents = await this.readConfig(config, chain)
-        result.push(contents)
-      } catch (e) {
-        continue
-      }
+    for (const project of projects) {
+      const contents = await this.readConfig(project, chain)
+      result.push(contents)
     }
 
     return result
@@ -54,5 +47,27 @@ export class ConfigReader {
     const parsed: unknown = JSON.parse(contents)
 
     return parsed as DiscoveryOutput
+  }
+
+  readAllProjectsForChain(chain: ChainId): string[] {
+    const folders = readdirSync('discovery', { withFileTypes: true }).filter(
+      (x) => x.isDirectory(),
+    )
+
+    const projects = []
+
+    for (const folder of folders) {
+      const contents = readdirSync(`discovery/${folder.name}`, {
+        withFileTypes: true,
+      })
+        .filter((x) => x.isDirectory())
+        .map((x) => x.name)
+
+      if (contents.includes(ChainId.getName(chain))) {
+        projects.push(folder.name)
+      }
+    }
+
+    return projects
   }
 }

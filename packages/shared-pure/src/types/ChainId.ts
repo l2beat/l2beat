@@ -40,3 +40,7 @@ ChainId.getName = function (chainId: ChainId): string {
   }
   return chain.name
 }
+
+ChainId.getAll = function (): ChainId[] {
+  return CHAIN_IDS.map((c) => ChainId(c.id))
+}
