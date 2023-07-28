@@ -1,5 +1,6 @@
 import { State } from '../state/State'
 import { fillBelowChart } from './fillBelowChart'
+import { labelText } from './labelText'
 import { moveToMany } from './moveToMany'
 import { strokeChartLine } from './strokeChartLine'
 import {
@@ -185,26 +186,6 @@ function drawYAxisLabels(
   ctx.strokeStyle = lineStrokeStyle
   ctx.lineWidth = Math.floor(window.devicePixelRatio)
   ctx.stroke()
-}
-
-function labelText(
-  point: { x: number; y: number },
-  ctx: CanvasRenderingContext2D,
-  canvas: HTMLCanvasElement,
-  usableHeight: number,
-  label: string,
-  fillStyle: string,
-) {
-  const LINE_WIDTH = 6
-  ctx.fillStyle = fillStyle
-  const fontSize = (15 * window.devicePixelRatio).toFixed()
-  const lineHeight = (22 * window.devicePixelRatio).toFixed()
-  ctx.font = `${fontSize}px/${lineHeight}px Roboto`
-  ctx.fillText(
-    label,
-    point.x * canvas.width,
-    point.y * usableHeight + (canvas.height - usableHeight) - LINE_WIDTH,
-  )
 }
 
 function getUsableHeight(canvas: HTMLCanvasElement, drawYAxis: boolean) {
