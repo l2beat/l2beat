@@ -4,11 +4,11 @@ export function strokeChartLine(
   ctx: CanvasRenderingContext2D,
   points: { x: number; y: number }[],
   canvas: HTMLCanvasElement,
-  usableHeigth: number,
+  usableHeight: number,
   strokeStyle: CanvasFillStrokeStyles['strokeStyle'],
 ) {
   ctx.beginPath()
-  moveToMany(points, ctx, canvas, usableHeigth)
+  moveToMany(points, ctx, canvas, usableHeight)
 
   ctx.strokeStyle = strokeStyle
   ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
