@@ -161,7 +161,6 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      },
       "derivedName": "GpsStatementVerifier"
     },
     {

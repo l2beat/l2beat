@@ -15,7 +15,7 @@ export const brine: Layer2 = {
     slug: 'brine',
     description: 'Brine is a DEX powered by StarkEx.',
     purpose: 'Exchange',
-    category: 'ZK Rollup',
+    category: 'Validium',
     provider: 'StarkEx',
     links: {
       websites: ['https://www.brine.fi/'],
