@@ -37,6 +37,10 @@ export function configureDarkThemeToggle() {
     .forEach((e) => e.addEventListener('click', toggleDarkMode))
 }
 
+// NOTE(radomski): If you need to do something while the website changes the
+// theme you might hook into this callback to get notified when this happens.
+// Currently this is use to re-render the chart using new style for Y axis
+// lines.
 export function useThemeToggle(callback: (isDarkMode: boolean) => void) {
   callbacks.push(callback)
 }
