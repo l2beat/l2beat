@@ -4,29 +4,12 @@ import {
   TokenTvlResponse,
 } from '../../state/State'
 
-export function getAppropriateEntries(
-  days: number,
-  response: AggregateTvlResponse | TokenTvlResponse,
-) {
-  if (days <= 7) {
-    return response.hourly.data.slice(-24 * days)
-  } else if (days <= 90) {
-    return response.sixHourly.data.slice(-4 * days)
-  } else {
-    const firstNonZero = response.daily.data.findIndex((p) => p[1] > 0)
-    if (firstNonZero === -1) {
-      // TODO: filter out tokens for which this is the case on the backend
-      return response.daily.data.slice(-days)
-    }
-    return response.daily.data.slice(firstNonZero).slice(-days)
-  }
-}
-
-// TODO(radomski): It should be possible to combine the use of this function with the one above
-export function getAppropriateDetailedEntries(
-  days: number,
-  response: AggregateDetailedTvlResponse,
-) {
+export function getAppropriateEntries<
+  ResponseType extends
+    | AggregateTvlResponse
+    | TokenTvlResponse
+    | AggregateDetailedTvlResponse,
+>(days: number, response: ResponseType): ResponseType['hourly']['data'] {
   if (days <= 7) {
     return response.hourly.data.slice(-24 * days)
   } else if (days <= 90) {
