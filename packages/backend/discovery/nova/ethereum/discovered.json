@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "blockNumber": 17334354,
-  "configHash": "0xb0e0d65b315aa8ebdd587cf3528e36b93ad91fab80adc74c65f67a429d70470c",
+  "configHash": "0xd4b348366a8456f491830ae0fdf771dd5ea73bc386089f18146979b5640add06",
   "contracts": [
     {
       "name": "OneStepProverMath",

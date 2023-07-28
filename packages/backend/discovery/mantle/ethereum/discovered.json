@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "blockNumber": 17782821,
-  "configHash": "0xd53666ffa87cd2911470967584f27f3e4f7c6998fa9272f3743885c5b7649624",
+  "configHash": "0x2fc3922d9ddc139c5d4597677b6e44b018f44b407ddd1a0cbefaa9c91e462f73",
   "version": 1,
   "contracts": [
     {

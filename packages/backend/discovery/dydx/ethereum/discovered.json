@@ -1,7 +1,7 @@
 {
   "name": "dydx",
   "blockNumber": 17622125,
-  "configHash": "0xb9c1b2e30eacd3eed6df24ee24ab6ea1b3efa35281c180bdf4911c46846d8ed0",
+  "configHash": "0x051a1cdd442c27020469b0364825496f871a9ecf736da91d664ff1026594d876",
   "version": 1,
   "contracts": [
     {

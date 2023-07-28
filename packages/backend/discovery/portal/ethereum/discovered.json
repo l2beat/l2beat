@@ -1,7 +1,7 @@
 {
   "name": "portal",
   "blockNumber": 17031675,
-  "configHash": "0x00181827a36818608af7e31b97554234ba5cfbbf095b5764926f011de82da651",
+  "configHash": "0x7b5ed8b240cd5f44fbd18e011db5d28f61dd5c5bd8005a20d79ce3056c93b398",
   "contracts": [
     {
       "name": "TokenImplementation",

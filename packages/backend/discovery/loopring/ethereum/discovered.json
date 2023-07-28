@@ -1,7 +1,7 @@
 {
   "name": "loopring",
   "blockNumber": 17372169,
-  "configHash": "0x2a4c5064720f85f62ae2577db2f944aebe243d8f3123645913db9cfec53b3a1a",
+  "configHash": "0x71c69dca4c3c23fc3f8221dd539a87e439d2df4d316861c926c5424356e7524e",
   "version": 1,
   "contracts": [
     {
