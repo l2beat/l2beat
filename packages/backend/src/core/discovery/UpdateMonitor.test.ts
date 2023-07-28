@@ -653,4 +653,5 @@ const UPDATE_METADATA: UpdateMetadata = {
   unknownContracts: [],
   blockNumber: BLOCK_NUMBER,
   dependents: [],
+  chainId: ChainId.ETHEREUM,
 }

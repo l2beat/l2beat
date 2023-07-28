@@ -138,7 +138,13 @@ export class UpdateMonitor {
       projectConfig,
     )
 
-    await this.handleDiff(diff, discovery, projectConfig, blockNumber)
+    await this.handleDiff(
+      diff,
+      discovery,
+      projectConfig,
+      blockNumber,
+      runner.getChainId(),
+    )
 
     await this.repository.addOrUpdate({
       projectName: projectConfig.name,
@@ -198,6 +204,7 @@ export class UpdateMonitor {
     discovery: DiscoveryOutput,
     projectConfig: DiscoveryConfig,
     blockNumber: number,
+    chainId: ChainId,
   ) {
     if (diff.length > 0) {
       const dependents = await findDependents(
@@ -212,6 +219,7 @@ export class UpdateMonitor {
       )
       await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
         dependents,
+        chainId,
         blockNumber,
         unknownContracts,
       })
