@@ -5,7 +5,7 @@ import {
   DiscoveryDiff,
 } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
-import { ChainId, DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainId, DiscoveryOutput, UnixTime } from '@l2beat/shared-pure'
 import { Gauge, Histogram } from 'prom-client'
 
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
@@ -53,63 +53,66 @@ export class UpdateMonitor {
 
   async update(timestamp: UnixTime) {
     for (const runner of this.discoveryRunners) {
-      // TODO: get block number based on clock time
-      const blockNumber = await runner.getBlockNumber()
-      const chainId = runner.getChainId()
+      await this.updateChain(runner, timestamp)
+    }
+  }
 
-      const metricsDone = this.initMetrics(blockNumber)
-      this.logger.info('Update started', {
+  async updateChain(runner: DiscoveryRunner, timestamp: UnixTime) {
+    // TODO: get block number based on clock time
+    const blockNumber = await runner.getBlockNumber()
+    const chainId = runner.getChainId()
+
+    const metricsDone = this.initMetrics(blockNumber)
+    this.logger.info('Update started', {
+      chainId: ChainId.getName(chainId),
+      blockNumber,
+      timestamp: timestamp.toNumber(),
+      date: timestamp.toDate().toISOString(),
+    })
+
+    const projectConfigs = await this.configReader.readAllConfigsForChain(
+      chainId,
+    )
+
+    for (const projectConfig of projectConfigs) {
+      assert(
+        projectConfig.chainId === chainId,
+        `Discovery runner and project config chain id mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
+      )
+      this.logger.info('Project update started', {
         chainId: ChainId.getName(chainId),
-        blockNumber,
-        timestamp: timestamp.toNumber(),
-        date: timestamp.toDate().toISOString(),
+        project: projectConfig.name,
       })
 
-      const projectConfigs = await this.configReader.readAllConfigsForChain(
-        chainId,
-      )
-
-      for (const projectConfig of projectConfigs) {
-        this.logger.info('Project update started', {
-          chainId: ChainId.getName(chainId),
-          project: projectConfig.name,
-        })
-
-        try {
-          await this.updateProject(
-            runner,
-            projectConfig,
-            blockNumber,
-            timestamp,
-          )
-        } catch (error) {
-          this.logger.error(
-            {
-              message: `[chain: ${ChainId.getName(
-                chainId,
-              )}] Failed to update project [${projectConfig.name}]`,
-            },
-            error,
-          )
-          errorsCount.inc()
-        }
-
-        this.logger.info('Project update finished', {
-          chainId: ChainId.getName(chainId),
-          project: projectConfig.name,
-        })
+      try {
+        await this.updateProject(runner, projectConfig, blockNumber, timestamp)
+      } catch (error) {
+        this.logger.error(
+          {
+            message: `[chain: ${ChainId.getName(
+              chainId,
+            )}] Failed to update project [${projectConfig.name}]`,
+          },
+          error,
+        )
+        errorsCount.inc()
       }
 
-      await this.findUnresolvedProjects(projectConfigs, timestamp)
-
-      metricsDone()
-      this.logger.info('Update finished', {
+      this.logger.info('Project update finished', {
         chainId: ChainId.getName(chainId),
-        blockNumber,
-        timestamp: timestamp.toNumber(),
-        date: timestamp.toDate().toISOString(),
+        project: projectConfig.name,
       })
     }
+
+    await this.findUnresolvedProjects(projectConfigs, timestamp)
+
+    metricsDone()
+    this.logger.info('Update finished', {
+      chainId: ChainId.getName(chainId),
+      blockNumber,
+      timestamp: timestamp.toNumber(),
+      date: timestamp.toDate().toISOString(),
+    })
   }
 
   private async updateProject(

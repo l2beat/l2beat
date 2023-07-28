@@ -70,6 +70,68 @@ describe(UpdateMonitor.name, () => {
   })
 
   describe(UpdateMonitor.prototype.update.name, () => {
+    it('iterates over runners and dispatches updates', async () => {
+      const discoveryRunnerEth = discoveryRunner
+      const discoveryRunnerArb = mockObject<DiscoveryRunner>({
+        run: async () => DISCOVERY_RESULT,
+        getChainId: () => ChainId.ARBITRUM,
+        getBlockNumber: async () => BLOCK_NUMBER,
+      })
+
+      const runners = [discoveryRunnerEth, discoveryRunnerArb]
+
+      const configReader = mockObject<ConfigReader>({
+        readDiscovery: async () => ({
+          ...mockProject,
+          contracts: COMMITTED,
+        }),
+
+        readAllConfigsForChain: async (chainId: ChainId) => {
+          return [mockConfig(PROJECT_A, chainId)]
+        },
+      })
+
+      const repository = mockObject<UpdateMonitorRepository>({
+        findLatest: async () => undefined,
+        addOrUpdate: async () => '',
+      })
+
+      const updateMonitor = new UpdateMonitor(
+        runners,
+        updateNotifier,
+        configReader,
+        repository,
+        mockObject<Clock>(),
+        Logger.SILENT,
+        false,
+        0,
+      )
+
+      await updateMonitor.update(new UnixTime(0))
+
+      // gets block number
+      expect(discoveryRunnerEth.getBlockNumber).toHaveBeenCalledTimes(1)
+      expect(discoveryRunnerArb.getBlockNumber).toHaveBeenCalledTimes(1)
+
+      // reads all the configs
+      expect(configReader.readAllConfigsForChain).toHaveBeenCalledTimes(2)
+      expect(configReader.readAllConfigsForChain).toHaveBeenNthCalledWith(
+        1,
+        ChainId.ETHEREUM,
+      )
+
+      expect(configReader.readAllConfigsForChain).toHaveBeenNthCalledWith(
+        2,
+        ChainId.ARBITRUM,
+      )
+
+      // runs discovery for every project
+      expect(discoveryRunnerEth.run).toHaveBeenCalledTimes(1)
+      expect(discoveryRunnerEth.run).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe(UpdateMonitor.prototype.updateChain.name, () => {
     it('iterates over projects and finds diff', async () => {
       const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => ({
@@ -98,7 +160,7 @@ describe(UpdateMonitor.name, () => {
         false,
         0,
       )
-      await updateMonitor.update(TIMESTAMP)
+      await updateMonitor.updateChain(discoveryRunner, TIMESTAMP)
 
       // gets block number
       expect(discoveryRunner.getBlockNumber).toHaveBeenCalledTimes(1)
@@ -172,7 +234,7 @@ describe(UpdateMonitor.name, () => {
         0,
       )
 
-      await updateMonitor.update(new UnixTime(0))
+      await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
 
       // gets block number
       expect(discoveryRunner.getBlockNumber).toHaveBeenCalledTimes(1)
@@ -227,7 +289,7 @@ describe(UpdateMonitor.name, () => {
         0,
       )
 
-      await updateMonitor.update(new UnixTime(0))
+      await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
 
       // send notification about the error of discovery
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
@@ -291,7 +353,7 @@ describe(UpdateMonitor.name, () => {
         1,
       )
 
-      await updateMonitor.update(new UnixTime(0))
+      await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
 
       expect(discoveryRunner.run).toHaveBeenCalledTimes(2)
       expect(discoveryRunner.run).toHaveBeenNthCalledWith(
@@ -340,7 +402,7 @@ describe(UpdateMonitor.name, () => {
         0,
       )
 
-      await updateMonitor.update(new UnixTime(0))
+      await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
 
       // gets block number
       expect(discoveryRunner.getBlockNumber).toHaveBeenCalledTimes(1)
@@ -471,6 +533,7 @@ describe(UpdateMonitor.name, () => {
         // different config hash
         new DiscoveryConfig({
           name: PROJECT_A,
+          chain: ChainId.getName(ChainId.ETHEREUM),
           initialAddresses: [EthereumAddress.ZERO],
         }),
       )
@@ -560,9 +623,10 @@ function mockContract(
   }
 }
 
-function mockConfig(name: string): DiscoveryConfig {
+function mockConfig(name: string, chainId = ChainId.ETHEREUM): DiscoveryConfig {
   return new DiscoveryConfig({
     name,
+    chain: ChainId.getName(chainId),
     initialAddresses: [],
   })
 }
