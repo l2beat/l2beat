@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2023-07-26T10:52:25.127Z",
+  "updatedAt": "2023-07-28T10:58:08.577Z",
   "projects": {
     "across-v2": true,
     "allbridge": false,
@@ -13,6 +13,7 @@
     "base": true,
     "beamer-bridge-v2": true,
     "bobanetwork": true,
+    "brine": true,
     "canvasconnect": true,
     "cartesi-honeypot": true,
     "cbridge": true,
@@ -56,6 +57,7 @@
     "polygonzkevm": true,
     "polynetwork": false,
     "portal": true,
+    "publicgoodsnetwork": true,
     "pulseChain": true,
     "ronin": true,
     "satellite": true,
@@ -485,8 +487,8 @@
     "0xA90FCe37D274e673f3850b835F18790542b1755d": true,
     "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": true,
     "0xA937660031787C4408587D2c6A67Ec4B260630F5": false,
-    "0xAb00B934DE01c1b4931047125C2ba5B3d6186b85": false,
     "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD": true,
+    "0xAb00B934DE01c1b4931047125C2ba5B3d6186b85": false,
     "0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77": true,
     "0xAB42127980a3bff124E6465e097a5fC97228827e": false,
     "0xab6Ebe9472e2e4B6FE720Dad16701F32ab905CC6": false,
