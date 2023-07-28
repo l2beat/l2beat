@@ -19,7 +19,6 @@ export function calculateDetailedTvlView(
     entries.flatMap((x) =>
       controls.currency === 'usd' ? x.slice(1, 5) : x.slice(5, 9),
     ),
-    5,
     controls.isLogScale,
     (x) => formatCurrency(x, controls.currency),
   )
