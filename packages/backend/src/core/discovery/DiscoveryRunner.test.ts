@@ -87,6 +87,7 @@ describe(DiscoveryRunner.name, () => {
 const getMockConfig = () => {
   return new DiscoveryConfig({
     name: 'project-a',
+    chain: ChainId.getName(ChainId.ETHEREUM),
     initialAddresses: [],
   })
 }
