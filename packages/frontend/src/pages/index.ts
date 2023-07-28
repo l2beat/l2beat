@@ -43,7 +43,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  pages.push(getDetailedTvlPage(config, pagesData))
+  if (config.features.detailedTvl) {
+    pages.push(getDetailedTvlPage(config, pagesData))
+  }
 
   outputPages(pages)
 }
