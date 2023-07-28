@@ -60,12 +60,12 @@ export function RadioChartTypeControl({
         'md:before:rounded-xl',
       )}
     >
-      <div className="relative z-20 inline-flex w-full overflow-hidden rounded-[5px] md:rounded-[11px] bg-purple-300 px-[5px] text-base dark:bg-purple-700 md:px-[7px]">
+      <div className="relative z-20 inline-flex w-full overflow-hidden rounded-[5px] bg-purple-300 px-[5px] text-base dark:bg-purple-700 md:rounded-[11px] md:px-[7px]">
         {tabs.map((tab, i) => (
           <label
             key={i}
             className={cx(
-              'flex-1 md:flex-auto text-lg font-bold',
+              'flex-1 text-lg font-bold md:flex-auto',
               'block items-center py-[5px] md:py-[7px]',
               'cursor-pointer select-none',
               'relative',
