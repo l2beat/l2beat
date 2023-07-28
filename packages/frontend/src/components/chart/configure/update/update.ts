@@ -9,6 +9,7 @@ import { updateMoreTokensClicked } from './updateMoreTokensClicked'
 import { updateMouseExited } from './updateMouseExited'
 import { updateMouseMoved } from './updateMouseMoved'
 import { updateShowAlternativeTvlChanged } from './updateShowAlternativeTvlChanged'
+import { updateThemeChanged } from './updateThemeChanged'
 import { updateTokenChanged } from './updateTokenChanged'
 import { updateViewChanged } from './updateViewChanged'
 
@@ -35,6 +36,8 @@ export function update(state: State, message: Message): [State, Effect[]] {
       return updateMoreTokensClicked(state)
     case 'AggregateTvlLoaded':
     case 'AggregateTvlFailed':
+    case 'AggregateDetailedTvlLoaded':
+    case 'AggregateDetailedTvlFailed':
     case 'AlternativeTvlLoaded':
     case 'AlternativeTvlFailed':
     case 'TokenTvlLoaded':
@@ -44,5 +47,7 @@ export function update(state: State, message: Message): [State, Effect[]] {
       return updateLoadedOrFailed(state, message)
     case 'LoaderTimedOut':
       return updateLoaderTimedOut(state, message)
+    case 'ThemeChanged':
+      return updateThemeChanged(state, message)
   }
 }

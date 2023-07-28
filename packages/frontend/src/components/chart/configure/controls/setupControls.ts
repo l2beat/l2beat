@@ -1,5 +1,5 @@
 import { ChartElements } from '../elements'
-import { Message } from '../messages'
+import { Message, ViewChangedMessage } from '../messages'
 import { onCheckboxChange } from './onCheckboxChange'
 import { onMouseMove } from './onMouseMove'
 import { onRadioChange } from './onRadioChange'
@@ -44,8 +44,21 @@ export function setupControls(
     dispatch({ type: 'ShowAlternativeTvlChanged', showAlternativeTvl: checked })
   })
 
-  onCheckboxChange(elements.controls.showActivity, (checked) => {
-    dispatch({ type: 'ViewChanged', view: checked ? 'activity' : 'tvl' })
+  onRadioChange(elements.controls.chartType, (control) => {
+    let view: ViewChangedMessage['view'] = 'tvl'
+    switch (control.value) {
+      case 'detailedTvl':
+        view = 'detailedTvl'
+        break
+      case 'activity':
+        view = 'activity'
+        break
+    }
+
+    dispatch({
+      type: 'ViewChanged',
+      view: view,
+    })
   })
 
   onCheckboxChange(elements.controls.showEthereum, (checked) => {

@@ -22,6 +22,8 @@ export const common: Omit<Config, 'backend'> = {
     hiring: true,
     hiringBadge: false,
     activity: true,
+    // TODO(radomski): After L2 Assets are implemented we want to make this be true by default
+    detailedTvl: false,
     milestones: true,
     stages: true,
     buildAllProjectPages: false,

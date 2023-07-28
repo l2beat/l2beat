@@ -1,4 +1,3 @@
-import { Milestone } from '@l2beat/config'
 import React from 'react'
 
 import {
@@ -11,24 +10,21 @@ import {
 import { About } from '../../../components/About'
 import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
+import { OtherSites } from '../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../components/PageContent'
-import { ReportBannerWithButton } from '../../../components/report/ReportBannerWithButton'
-import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
+import { DetailedTvlView, DetailedTvlViewProps } from './DetailedTvlView'
 
-export interface TvlPageProps {
+export interface DetailedTvlPageProps {
   tvl: string
   tvlWeeklyChange: string
-  tvlEndpoint: string
-  tvlView: ScalingTvlViewProps
   navbar: NavbarProps
   footer: FooterProps
-  showActivity: boolean
   showDetailedTvl: boolean
-  showMultisigReport: boolean
-  milestones?: Milestone[]
+  showActivity: boolean
+  detailedTvlView: DetailedTvlViewProps
 }
 
-export function ScalingTvlPage(props: TvlPageProps) {
+export function DetailedTvlPage(props: DetailedTvlPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -36,16 +32,13 @@ export function ScalingTvlPage(props: TvlPageProps) {
         <ScalingNavigationTabs
           showActivity={props.showActivity}
           showDetailedTvl={props.showDetailedTvl}
-          selected="summary"
+          selected="detailed"
         />
         <main>
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />
-          <Chart
-            tvlEndpoint={props.tvlEndpoint}
-            milestones={props.milestones}
-          />
-          <ScalingTvlView {...props.tvlView} />
-          {props.showMultisigReport && <ReportBannerWithButton />}
+          <Chart detailedTvlEndpoint={'halucinate_data'} type={'detailedTvl'} />
+          <DetailedTvlView {...props.detailedTvlView} />
+          <OtherSites />
           <About />
         </main>
       </PageContent>

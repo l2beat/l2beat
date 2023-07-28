@@ -5,44 +5,33 @@ import { orderByTvl } from '../../../utils/orderByTvl'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 import { PagesData, Wrapped } from '../../Page'
-import { TvlPageProps } from '../view/ScalingTvlPage'
+import { DetailedTvlPageProps } from '../view/DetailedTvlPage'
+import { getDetailedTvlView } from './getDetailedTvlView'
 import { getPageMetadata } from './getPageMetadata'
-import { getScalingTvlView } from './getScalingTvlView'
 
 export function getProps(
   config: Config,
   pagesData: PagesData,
-): Wrapped<TvlPageProps> {
-  const { tvlApiResponse, verificationStatus } = pagesData
+): Wrapped<DetailedTvlPageProps> {
+  const { tvlApiResponse } = pagesData
 
   const charts = tvlApiResponse.layers2s
-  const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
 
   const included = getIncludedProjects(config.layer2s, tvlApiResponse)
   const ordering = orderByTvl(included, tvlApiResponse)
-  const tvlEndpoint = '/api/scaling-tvl.json'
 
+  const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
   return {
     props: {
+      showDetailedTvl: config.features.detailedTvl,
+      showActivity: config.features.activity,
       navbar: getNavbarProps(config, 'scaling'),
+      footer: getFooterProps(config),
       tvl: formatUSD(tvl),
       tvlWeeklyChange,
-      tvlEndpoint,
-      tvlView: getScalingTvlView(
-        config,
-        ordering,
-        tvlApiResponse,
-        tvl,
-        verificationStatus,
-      ),
-      footer: getFooterProps(config),
-      showActivity: config.features.activity,
-      showDetailedTvl: config.features.detailedTvl,
-      showMultisigReport: config.features.multisigReport,
-      milestones: config.features.milestones ? config.milestones : [],
+      detailedTvlView: getDetailedTvlView(config, ordering),
     },
     wrapper: {
-      preloadApi: tvlEndpoint,
       metadata: getPageMetadata(),
     },
   }
