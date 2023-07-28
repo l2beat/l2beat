@@ -64,7 +64,7 @@ export class UpdateMonitor {
 
     const metricsDone = this.initMetrics(blockNumber)
     this.logger.info('Update started', {
-      chainId: ChainId.getName(chainId),
+      chain: ChainId.getName(chainId),
       blockNumber,
       timestamp: timestamp.toNumber(),
       date: timestamp.toDate().toISOString(),
@@ -80,7 +80,7 @@ export class UpdateMonitor {
         `Discovery runner and project config chain id mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
       )
       this.logger.info('Project update started', {
-        chainId: ChainId.getName(chainId),
+        chain: ChainId.getName(chainId),
         project: projectConfig.name,
       })
 
@@ -99,7 +99,7 @@ export class UpdateMonitor {
       }
 
       this.logger.info('Project update finished', {
-        chainId: ChainId.getName(chainId),
+        chain: ChainId.getName(chainId),
         project: projectConfig.name,
       })
     }
@@ -108,7 +108,7 @@ export class UpdateMonitor {
 
     metricsDone()
     this.logger.info('Update finished', {
-      chainId: ChainId.getName(chainId),
+      chain: ChainId.getName(chainId),
       blockNumber,
       timestamp: timestamp.toNumber(),
       date: timestamp.toDate().toISOString(),
