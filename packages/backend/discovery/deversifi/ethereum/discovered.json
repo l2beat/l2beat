@@ -1,6 +1,6 @@
 {
   "name": "deversifi",
-  "blockNumber": 17684746,
+  "blockNumber": 17783222,
   "configHash": "0x658d4052c425a9d4155ea4a74d209c7fd39006ff9ed7fff6a54a72a4a6cf69aa",
   "version": 1,
   "contracts": [
@@ -49,7 +49,7 @@
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-        "upgradeDelay": 1209600,
+        "upgradeDelay": 259200,
         "isFinal": false,
         "facets": {
           "StarkWare_AllVerifiers_2020_1": "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -68,8 +68,8 @@
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
-        "getLastBatchId": 3767,
-        "getOrderRoot": "1103053906209757678866539785852926010657276660011701433574582617410679697088",
+        "getLastBatchId": 3866,
+        "getOrderRoot": "360631126010355824183317493522340741787107541035421187726199382005786982696",
         "getOrderTreeHeight": 63,
         "getRegisteredAvailabilityVerifiers": [
           "0x28780349A33eEE56bb92241bAAB8095449e24306"
@@ -77,8 +77,8 @@
         "getRegisteredVerifiers": [
           "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
         ],
-        "getSequenceNumber": 3742,
-        "getVaultRoot": "943188244487030137129315096336191652515227928249320423539934938360221262626",
+        "getSequenceNumber": 3841,
+        "getVaultRoot": "2783815725772431273228498382440401428183850263808950613029859549852197178281",
         "getVaultTreeHeight": 31,
         "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
         "isFrozen": false,
@@ -129,7 +129,7 @@
           "0x0405107a60391Eb51821be373ff978115Ee58488"
         ],
         "getThreshold": 2,
-        "nonce": 3,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

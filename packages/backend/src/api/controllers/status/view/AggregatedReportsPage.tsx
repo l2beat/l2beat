@@ -11,13 +11,18 @@ interface Aggregated {
 
 interface AggregatedPageProps {
   statuses: Aggregated[]
+  uniqueHashes: Hash256[]
 }
 
-export function AggregatedPage({ statuses }: AggregatedPageProps) {
+export function AggregatedPage({
+  statuses,
+  uniqueHashes,
+}: AggregatedPageProps) {
   const columns = ['Timestamp', 'Date', 'Config Hash']
 
   return (
     <Page title="Aggregated Reports">
+      <h2>Unique hashes count: {uniqueHashes.length}</h2>
       <table>
         <thead>
           <tr>
@@ -33,7 +38,12 @@ export function AggregatedPage({ statuses }: AggregatedPageProps) {
               <td key={`${i}-1`}>
                 {s.timestamp.toDate().toLocaleString('pl')}
               </td>
-              <td key={`${i}-2`}>{s.configHash}</td>
+              <td
+                style={{ color: getColorClass(uniqueHashes, s.configHash) }}
+                key={`${i}-2`}
+              >
+                {s.configHash}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -44,4 +54,14 @@ export function AggregatedPage({ statuses }: AggregatedPageProps) {
 
 export function renderAggregatedPage(props: AggregatedPageProps) {
   return reactToHtml(<AggregatedPage {...props} />)
+}
+
+const getColorClass = (uniqueHashes: Hash256[], hash: Hash256) => {
+  const colors = ['green', 'blue', 'yellow', 'orange', 'purple']
+  const index = uniqueHashes.findIndex((u) => u === hash)
+
+  if (index === -1) {
+    return 'red'
+  }
+  return colors[index]
 }
