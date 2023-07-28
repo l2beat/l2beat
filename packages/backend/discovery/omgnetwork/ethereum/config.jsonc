@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "omgnetwork",
   "initialAddresses": [
     "0x0D4C1222f5e839a911e2053860e45F18921D72ac",

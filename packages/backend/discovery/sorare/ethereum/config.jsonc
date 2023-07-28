@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "sorare",
   "initialAddresses": ["0xF5C9F957705bea56a7e806943f98F7777B995826"],
   "names": {

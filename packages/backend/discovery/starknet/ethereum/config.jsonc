@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "starknet",
   "initialAddresses": [
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",

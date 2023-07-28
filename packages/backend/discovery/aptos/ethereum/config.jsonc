@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "aptos",
   "initialAddresses": ["0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907"],
   "names": {

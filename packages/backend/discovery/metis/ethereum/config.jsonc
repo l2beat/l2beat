@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "metis",
   "initialAddresses": ["0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"],
   "names": {

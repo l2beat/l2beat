@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "pNetwork",
   "initialAddresses": [
     "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",

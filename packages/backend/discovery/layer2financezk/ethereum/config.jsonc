@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "layer2financezk",
   "initialAddresses": ["0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5"],
   "overrides": {
