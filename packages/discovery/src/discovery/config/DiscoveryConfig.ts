@@ -1,4 +1,9 @@
-import { EthereumAddress, Hash256, hashJson } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  Hash256,
+  hashJson,
+} from '@l2beat/shared-pure'
 
 import { DiscoveryOverrides } from './DiscoveryOverrides'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
@@ -19,6 +24,10 @@ export class DiscoveryConfig {
 
   get name() {
     return this.config.name
+  }
+
+  get chainId() {
+    return ChainId.getId(this.config.chain)
   }
 
   get initialAddresses() {
