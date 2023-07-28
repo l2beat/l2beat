@@ -11,7 +11,6 @@ import { degate } from './degate'
 import { dydx } from './dydx'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
-import { gnosispay } from './gnosispay'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
 import { kroma } from './kroma'
@@ -27,7 +26,7 @@ import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { polygonmiden } from './polygonmiden'
-import { polygonpos } from './polygonpos'
+import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { rhinofi } from './rhinofi'
@@ -59,7 +58,6 @@ export const layer2s: Layer2[] = [
   dydx,
   fuelv1,
   gluon,
-  gnosispay,
   hermez,
   immutablex,
   kroma,
@@ -76,7 +74,7 @@ export const layer2s: Layer2[] = [
   optimism,
   polygonmiden,
   polygonzkevm,
-  polygonpos,
+  polygonpos2,
   publicgoodsnetwork,
   rhinofi,
   scroll,
