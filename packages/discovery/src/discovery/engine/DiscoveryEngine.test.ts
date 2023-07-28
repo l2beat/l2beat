@@ -16,7 +16,7 @@ describe(DiscoveryEngine.name, () => {
   it('can perform a discovery', async () => {
     const config = new DiscoveryConfig({
       name: 'test',
-      chain: ChainId.getName(ChainId.ETHEREUM),
+      chain: ChainId.ETHEREUM,
       initialAddresses: [A],
       overrides: { [B.toString()]: { ignoreDiscovery: true } },
     })

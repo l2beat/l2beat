@@ -18,7 +18,7 @@ const OVERRIDE_B = {
 }
 const CONFIG = new DiscoveryConfig({
   name: 'a',
-  chain: ChainId.getName(ChainId.ETHEREUM),
+  chain: ChainId.ETHEREUM,
   initialAddresses: [ADDRESS_A],
   maxAddresses: 1,
   maxDepth: 1,
@@ -59,7 +59,7 @@ describe(DiscoveryConfig.name, () => {
     it('does not modify original config object', () => {
       const config: DiscoveryConfig = new DiscoveryConfig({
         name: 'a',
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: ChainId.ETHEREUM,
         initialAddresses: [
           EthereumAddress('0x0000000000000000000000000000000000000003'),
           EthereumAddress('0x0000000000000000000000000000000000000002'),

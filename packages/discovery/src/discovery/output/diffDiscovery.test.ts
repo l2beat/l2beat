@@ -94,7 +94,7 @@ describe(diffDiscovery.name, () => {
     ]
     const config = new DiscoveryConfig({
       name: '',
-      chain: ChainId.getName(ChainId.ETHEREUM),
+      chain: ChainId.ETHEREUM,
       initialAddresses: [],
       overrides: {
         [ADDRESS_A.toString()]: {
