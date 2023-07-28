@@ -37,6 +37,10 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
     chainConfig !== undefined,
     'Chain config not found! Update "discovery.config" file',
   )
+  assert(
+    chainConfig.chainId === discoverConfig.chainId,
+    'Chain config does not match discovery config! Update "discovery.config" file or config.json of your project',
+  )
 
   const http = new HttpClient()
   const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
