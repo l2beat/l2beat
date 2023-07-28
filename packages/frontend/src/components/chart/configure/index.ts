@@ -53,20 +53,12 @@ function getInitMessage(elements: ChartElements): InitMessage {
   const pagePathname = new URL(elements.chart.baseURI).pathname
   const chartSettings = getUserChartSettings(pagePathname)
 
-  // TODO(radomski): This can be done better
-  const getType = (): InitMessage['initialView'] => {
-    switch (elements.chart.dataset.type) {
-      case 'tvl':
-        return 'tvl'
-      case 'detailedTvl':
-        return 'detailedTvl'
-      case 'activity':
-        return 'activity'
-      default:
-        return 'activity'
-    }
-  }
-  const initialView = getType()
+  const initialView: InitMessage['initialView'] =
+    elements.chart.dataset.type === 'tvl'
+      ? 'tvl'
+      : elements.chart.dataset.type === 'detailedTvl'
+      ? 'detailedTvl'
+      : 'activity'
 
   const milestones = elements.chart.dataset.milestones
     ? Milestones.parse(JSON.parse(elements.chart.dataset.milestones))
