@@ -100,7 +100,10 @@ export const immutablex: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(delaySeconds),
+    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(
+      delaySeconds,
+      freezeGracePeriod,
+    ),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
