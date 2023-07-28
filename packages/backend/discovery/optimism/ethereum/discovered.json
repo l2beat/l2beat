@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "blockNumber": 17718368,
-  "configHash": "0x68c24f4ae10dbb6d1c1f482807b26c79cfc8362d6a4583cb39cbf37402a18a86",
+  "configHash": "0x385d59e1b8b5f19af06e413dbeab46933c21deb8ba12fe65570531d9471eb0ed",
   "version": 1,
   "contracts": [
     {

@@ -1,7 +1,7 @@
 {
   "name": "layer2financezk",
   "blockNumber": 17271618,
-  "configHash": "0xaa8ca66a74dd1a33d0a75b1835729ecdf4734d719f3f9292c9a19da34aff2010",
+  "configHash": "0xa9e8bea046a770a43c23cfabf0c0656e7531cf58575355d7ecc6dd73ad77cd79",
   "contracts": [
     {
       "name": "GnosisSafe",

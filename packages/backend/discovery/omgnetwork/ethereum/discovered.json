@@ -1,7 +1,7 @@
 {
   "name": "omgnetwork",
   "blockNumber": 16154924,
-  "configHash": "0x0c3bcfa66ce09ac47db140bc1c5c82697a39ee216151e692c0d121133ff982ac",
+  "configHash": "0x1ec97603db98dffdb993ea79f846aa206fad37e514741e0ee5d3f1d9bbfae717",
   "contracts": [
     {
       "name": "Erc20Vault",

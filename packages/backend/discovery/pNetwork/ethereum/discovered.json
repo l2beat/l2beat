@@ -1,7 +1,7 @@
 {
   "name": "pNetwork",
   "blockNumber": 17288492,
-  "configHash": "0x1df8a07e293c04127074731ef8d769ba9b1d42c09f7a3a53dfcad723aa7297ca",
+  "configHash": "0xa61d821f011b7f638277080351c4d613d1f6e1fdcf2f31bc091432284ec796d1",
   "contracts": [
     {
       "name": "ERC20 Vault V1",

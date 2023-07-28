@@ -1,7 +1,7 @@
 {
   "name": "aptos",
   "blockNumber": 16154924,
-  "configHash": "0xdd0cabd0e343f17a9d66968708751114a0d969c6e6d54874da61cd9c8554f0d5",
+  "configHash": "0x49e893540574ea0fd09867e2f5ae1f21ab6c6f66cd905b76ddc6373b5ebd8bbc",
   "contracts": [
     {
       "name": "TreasuryV2",

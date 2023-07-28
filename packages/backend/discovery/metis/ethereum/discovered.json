@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "blockNumber": 17272120,
-  "configHash": "0x84caa287885c0a7cc1c5a60bf66c91d8ed10675962232fcdd99582495cf112bd",
+  "configHash": "0x114e7151f8a619dacd94fa4b6bb539f5393ba47dd9658c31a3efb74fc3614fa4",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

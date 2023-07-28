@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "blockNumber": 17321205,
-  "configHash": "0xc6b0d3a532d2e382ce8cbf776c9449e721c67b2ef54cfc152e2d7a1f265cd13d",
+  "configHash": "0xa9881055310db2a9492dc079d1b8a1a02f7d3bfcf1b895a9669ba4066ac87e05",
   "contracts": [
     {
       "name": "ProxyAdmin",

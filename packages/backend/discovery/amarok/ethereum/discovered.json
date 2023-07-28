@@ -1,7 +1,7 @@
 {
   "name": "amarok",
   "blockNumber": 17761185,
-  "configHash": "0x2dcefb3de1daedddc43a33fa7df85593535d0ddb152e622a9efd4b101d74b95d",
+  "configHash": "0xdd12bf9dab2ec7f444dbfc6828ed87bf0c5c5fcd517fe12a3ec48ac1ff392695",
   "version": 1,
   "contracts": [
     {

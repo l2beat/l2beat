@@ -1,7 +1,7 @@
 {
   "name": "base",
   "blockNumber": 17782778,
-  "configHash": "0x59d3b66337f7373eeee7f5edd73d4aca1a9eda11245074e19ea127b9877312c3",
+  "configHash": "0xcc9e703a1c0ee8d496afa2c5753b6ea66b483e20728f5181f39146bb9c63c160",
   "version": 1,
   "contracts": [
     {

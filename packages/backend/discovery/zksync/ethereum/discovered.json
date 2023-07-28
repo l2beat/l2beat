@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "blockNumber": 17434701,
-  "configHash": "0xb2c1b214380e339c53ca4af42343b5755f5b4d33a6b99f2559cd8939be64d37c",
+  "configHash": "0x995098f8016001c5166957e6400fb5e5a809985b48246f7bed0260429a529a5c",
   "version": 1,
   "contracts": [
     {

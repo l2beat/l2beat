@@ -1,7 +1,7 @@
 {
   "name": "l2beat-starkware",
   "blockNumber": 17031968,
-  "configHash": "0x4a08219d1e5a61bb3dccc4981d98a6fa53f8d0d2a6f76ddb3bc8f157fcf5c761",
+  "configHash": "0x841171a25aa3d93c10dce84168e9eb68731c390d8e3315dc3b7e52ea82d36db0",
   "contracts": [
     {
       "name": "CpuFrilessVerifier",

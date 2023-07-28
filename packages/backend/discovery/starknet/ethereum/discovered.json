@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "blockNumber": 17770459,
-  "configHash": "0xd7615732d1df767835afc179fb14089e53e2d6a26764ff6aeb0d2094d07dc50a",
+  "configHash": "0xf9a069195f844b43d86737c0e8af973609bd9d174b9dac785358440fbfa637fb",
   "version": 1,
   "contracts": [
     {

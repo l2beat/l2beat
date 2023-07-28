@@ -1,7 +1,7 @@
 {
   "name": "zkswap",
   "blockNumber": 16154924,
-  "configHash": "0xc19029ad39c3832de6cb98c769cb5e1c2256fbe17ede824bca09c573cc966736",
+  "configHash": "0xe3bb144dfec50b6b929c503b1c167ef7da007f7bb5a02472d90bb34e2fb50f9b",
   "contracts": [
     {
       "name": "Governance",

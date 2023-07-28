@@ -1,7 +1,7 @@
 {
   "name": "allbridge",
   "blockNumber": 17321271,
-  "configHash": "0x66fed3959766deaee9440241feb2582ea84a16273e57a8e5dbd689d9ba5a22f5",
+  "configHash": "0x2eb97b1bc446c5e3c7c8b853978f96282ead38741f1a72f610ef6fa188abc4b4",
   "contracts": [
     {
       "name": "USDC_POOL",

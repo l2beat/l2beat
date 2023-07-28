@@ -1,7 +1,7 @@
 {
   "name": "pulseChain",
   "blockNumber": 17284804,
-  "configHash": "0x6d60b01c006d1757441882c6b5af39df307e8fe484704fb11532342b22abc051",
+  "configHash": "0xccac8f34b06e2a5664c1a8d39d3544c382c436c2d93cd6c2c70718376fae67b3",
   "contracts": [
     {
       "name": "ForeignOmnibridge",

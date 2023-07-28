@@ -1,7 +1,7 @@
 {
   "name": "degate",
   "blockNumber": 17434695,
-  "configHash": "0x4280477e52571f3c175c0bd26e20238d408ca124e72e62ebe8b12eb61ad589d5",
+  "configHash": "0xc6f58d72ff6e79d16b6c24ab1ef34936d753f5b38fdead36578c6e0d6151292a",
   "version": 1,
   "contracts": [
     {

@@ -1,7 +1,7 @@
 {
   "name": "myria",
   "blockNumber": 17039298,
-  "configHash": "0x1d9046748a0af9c3d7a1ca99b86efb4b153864104108a15bbb306215b5e5083b",
+  "configHash": "0x077baa6b8fe50a71e1ea24dd724184a5efc8dcd5c5866970907b8fddd6bc243b",
   "contracts": [
     {
       "name": "Committee",

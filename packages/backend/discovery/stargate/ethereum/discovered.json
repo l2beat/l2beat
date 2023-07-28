@@ -1,7 +1,7 @@
 {
   "name": "stargate",
   "blockNumber": 17718386,
-  "configHash": "0x8658f52abbe024c510d3104acda45a9407bdc0f461276ae27a71fa145cc8580b",
+  "configHash": "0x520b5cfd7867f6bab53433094166233383bb9cc91bc820fe6d9802c27dfd4266",
   "version": 1,
   "contracts": [
     {

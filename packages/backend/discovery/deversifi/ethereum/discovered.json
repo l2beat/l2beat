@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
   "blockNumber": 17783222,
-  "configHash": "0x658d4052c425a9d4155ea4a74d209c7fd39006ff9ed7fff6a54a72a4a6cf69aa",
+  "configHash": "0x5250dd305f335ba1a46b6300dec92c865f5a303c82cb7ba7fd0a41d20dada576",
   "version": 1,
   "contracts": [
     {

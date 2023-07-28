@@ -1,7 +1,7 @@
 {
   "name": "zkspace",
   "blockNumber": 17442401,
-  "configHash": "0x5f681b354f3c3db9093fc37b195e251f719581acf280adc9d5b2deecb273f8a3",
+  "configHash": "0x22c23817b0b7d602314d355c5d49fbdea0dd36123d7704058ca84ed5fc224982",
   "version": 1,
   "contracts": [
     {
