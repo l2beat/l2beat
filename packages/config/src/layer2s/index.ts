@@ -13,6 +13,7 @@ import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
+import { immutablezkevm } from './immutablezkevm'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
@@ -57,6 +58,7 @@ export const layer2s: Layer2[] = [
   gluon,
   hermez,
   immutablex,
+  immutablezkevm,
   kroma,
   layer2finance,
   layer2financezk,
