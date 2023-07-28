@@ -39,10 +39,6 @@ async function main() {
     slugs.push('overview-scaling-activity')
   }
 
-  if (config.features.detailedTvl) {
-    slugs.push('overview-scaling-detailedTvl')
-  }
-
   const browser = await puppeteer.launch({
     args: ['--no-sandbox'],
   })
