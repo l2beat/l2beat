@@ -52,7 +52,6 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
   version: 0,
 }
 
-//TODO: add test for multiple chains
 describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
