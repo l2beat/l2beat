@@ -1,7 +1,7 @@
 {
   "name": "brine",
   "blockNumber": 17791101,
-  "configHash": "0x629a2beb0a8c40c0d9f01b0703485d64df8d30bba1ff36a1a74a00b5fcd6a493",
+  "configHash": "0x165a31b24f0a50b28669bfcd9e248315179682764dff28b3e1f6664900417737",
   "version": 1,
   "contracts": [
     {
@@ -65,7 +65,7 @@
       "derivedName": "Proxy"
     },
     {
-      "name": "BrineMultisig",
+      "name": "SHARPVerifierGovernorMultisig",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
       "code": "https://etherscan.deth.net/address/0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -87,7 +87,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "CallProxy",
+      "name": "SHARPVerifierProxy",
       "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
       "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
       "upgradeability": {
@@ -111,7 +111,8 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
-      }
+      },
+      "derivedName": "CallProxy"
     },
     {
       "name": "FinalizableCommittee",
@@ -142,7 +143,7 @@
       }
     },
     {
-      "name": "GpsStatementVerifier",
+      "name": "SHARPVerifier",
       "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
       "code": "https://etherscan.deth.net/address/0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
       "upgradeability": {
@@ -160,7 +161,8 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "GpsStatementVerifier"
     },
     {
       "name": "OrderRegistry",
