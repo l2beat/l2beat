@@ -20,8 +20,9 @@ export interface DashboardProject {
 export async function getDashboardProjects(
   configReader: ConfigReader,
   updateMonitorRepository: UpdateMonitorRepository,
+  chainId: ChainId,
 ): Promise<DashboardProject[]> {
-  const configs = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
+  const configs = await configReader.readAllConfigsForChain(chainId)
 
   const projects: DashboardProject[] = []
 
@@ -34,6 +35,7 @@ export async function getDashboardProjects(
       updateMonitorRepository,
       discovery,
       config,
+      chainId,
     )
     const contracts = getDashboardContracts(discovery, config)
 

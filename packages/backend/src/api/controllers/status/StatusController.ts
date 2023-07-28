@@ -52,10 +52,11 @@ export class StatusController {
     private readonly configReader: ConfigReader,
   ) {}
 
-  async getDiscoveryDashboard(): Promise<string> {
+  async getDiscoveryDashboard(chainId: ChainId): Promise<string> {
     const projects = await getDashboardProjects(
       this.configReader,
       this.updateMonitorRepository,
+      chainId,
     )
     const projectsList = this.projects.map((p) => p.projectId.toString())
 
@@ -67,16 +68,17 @@ export class StatusController {
 
   async getDiscoveryDashboardProject(
     project: string,
-    chain: ChainId,
+    chainId: ChainId,
   ): Promise<string> {
-    const discovery = await this.configReader.readDiscovery(project, chain)
-    const config = await this.configReader.readConfig(project, chain)
+    const discovery = await this.configReader.readDiscovery(project, chainId)
+    const config = await this.configReader.readConfig(project, chainId)
     const contracts = getDashboardContracts(discovery, config)
 
     const diff: DiscoveryDiff[] = await getDiff(
       this.updateMonitorRepository,
       discovery,
       config,
+      chainId,
     )
 
     return renderDashboardProjectPage({

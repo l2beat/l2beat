@@ -78,7 +78,7 @@ export function createStatusRouter(statusController: StatusController) {
   )
 
   router.get('/status/discovery', async (ctx) => {
-    ctx.body = await statusController.getDiscoveryDashboard()
+    ctx.body = await statusController.getDiscoveryDashboard(ChainId.ETHEREUM)
   })
 
   router.get(
