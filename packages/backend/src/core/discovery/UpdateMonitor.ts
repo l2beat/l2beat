@@ -129,6 +129,7 @@ export class UpdateMonitor {
 
     await this.repository.addOrUpdate({
       projectName: projectConfig.name,
+      chainId: runner.getChainId(),
       timestamp,
       blockNumber,
       discovery,
@@ -139,10 +140,12 @@ export class UpdateMonitor {
 
   async getPreviousDiscovery(
     runner: DiscoveryRunner,
-
     projectConfig: DiscoveryConfig,
   ): Promise<DiscoveryOutput> {
-    const databaseEntry = await this.repository.findLatest(projectConfig.name)
+    const databaseEntry = await this.repository.findLatest(
+      projectConfig.name,
+      runner.getChainId(),
+    )
     let previousDiscovery: DiscoveryOutput
     if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
       this.logger.info('Using database record', {
