@@ -59,8 +59,10 @@ export class UpdateMonitor {
 
       const metricsDone = this.initMetrics(blockNumber)
       this.logger.info('Update started', {
+        chainId: ChainId.getName(chainId),
         blockNumber,
         timestamp: timestamp.toNumber(),
+        date: timestamp.toDate().toISOString(),
       })
 
       const projectConfigs = await this.configReader.readAllConfigsForChain(
@@ -69,6 +71,7 @@ export class UpdateMonitor {
 
       for (const projectConfig of projectConfigs) {
         this.logger.info('Project update started', {
+          chainId: ChainId.getName(chainId),
           project: projectConfig.name,
         })
 
@@ -81,13 +84,18 @@ export class UpdateMonitor {
           )
         } catch (error) {
           this.logger.error(
-            { message: `Failed to update project [${projectConfig.name}]` },
+            {
+              message: `[chain: ${ChainId.getName(
+                chainId,
+              )}] Failed to update project [${projectConfig.name}]`,
+            },
             error,
           )
           errorsCount.inc()
         }
 
         this.logger.info('Project update finished', {
+          chainId: ChainId.getName(chainId),
           project: projectConfig.name,
         })
       }
@@ -96,8 +104,10 @@ export class UpdateMonitor {
 
       metricsDone()
       this.logger.info('Update finished', {
+        chainId: ChainId.getName(chainId),
         blockNumber,
         timestamp: timestamp.toNumber(),
+        date: timestamp.toDate().toISOString(),
       })
     }
   }
@@ -149,11 +159,15 @@ export class UpdateMonitor {
     let previousDiscovery: DiscoveryOutput
     if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
       this.logger.info('Using database record', {
+        chain: ChainId.getName(runner.getChainId()),
         project: projectConfig.name,
       })
       previousDiscovery = databaseEntry.discovery
     } else {
-      this.logger.info('Using committed file', { project: projectConfig.name })
+      this.logger.info('Using committed file', {
+        chain: ChainId.getName(runner.getChainId()),
+        project: projectConfig.name,
+      })
       previousDiscovery = await this.configReader.readDiscovery(
         projectConfig.name,
         ChainId.ETHEREUM,
@@ -165,7 +179,10 @@ export class UpdateMonitor {
     }
     this.logger.info(
       'Discovery logic version changed, discovering with new logic',
-      { project: projectConfig.name },
+      {
+        chain: ChainId.getName(runner.getChainId()),
+        project: projectConfig.name,
+      },
     )
     return await runner.run(projectConfig, previousDiscovery.blockNumber, {
       runSanityCheck: true,
