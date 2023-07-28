@@ -14,7 +14,6 @@ export function calculateDetailedTvlView(
   }
 
   const entries = getAppropriateDetailedEntries(controls.days, response)
-  console.log(entries)
   const dateRange = formatRange(entries[0][0], entries[entries.length - 1][0])
   const { labels, getY } = getYAxis(
     entries.flatMap((x) =>

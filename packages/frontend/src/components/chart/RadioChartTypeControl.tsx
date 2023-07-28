@@ -27,7 +27,7 @@ export function RadioChartTypeControl({
   if (hasDetailedTvl) {
     tabs.push({
       fullName: 'Detailed TVL',
-      shortName: 'Detailed TVL',
+      shortName: 'Detailed',
       value: 'detailedTvl',
       checked: false,
     })
@@ -60,12 +60,12 @@ export function RadioChartTypeControl({
         'md:before:rounded-xl',
       )}
     >
-      <div className="relative z-20 inline-flex overflow-hidden rounded-[11px] bg-purple-300 px-[5px] text-base dark:bg-purple-700 md:px-[7px]">
+      <div className="relative z-20 inline-flex w-full overflow-hidden rounded-[5px] md:rounded-[11px] bg-purple-300 px-[5px] text-base dark:bg-purple-700 md:px-[7px]">
         {tabs.map((tab, i) => (
           <label
             key={i}
             className={cx(
-              'text-lg font-bold',
+              'flex-1 md:flex-auto text-lg font-bold',
               'block items-center py-[5px] md:py-[7px]',
               'cursor-pointer select-none',
               'relative',
