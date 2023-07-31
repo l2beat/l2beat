@@ -10,14 +10,14 @@ import { UnderReviewBar } from '../project/UnderReviewBar'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { WarningBar } from '../project/WarningBar'
 import { BigRosette } from '../rosette'
-import { Summary, SummaryStat } from './Summary'
+import { FullSummaryStats, Summary } from './Summary'
 
 export interface HeaderProps {
   title: string
   titleLength?: 'long' | 'very-long'
   titleClassName?: string
   icon?: string
-  stats: SummaryStat[]
+  stats: FullSummaryStats
   isArchived?: boolean
   isUpcoming?: boolean
   isUnderReview?: boolean
@@ -26,6 +26,7 @@ export interface HeaderProps {
   links: ProjectLink[]
   type: 'bridge' | 'layer2'
   stagesEnabled?: boolean
+  detailedTvlEnabled?: boolean
   warning?: string | { text: string; href: string }
 }
 
@@ -86,6 +87,7 @@ export function DetailsHeader(props: HeaderProps) {
             links={props.links}
             isUpcoming={props.isUpcoming}
             stagesEnabled={props.stagesEnabled}
+            detailedTvlEnabled={props.detailedTvlEnabled}
           />
         </div>
         {props.risks && (
