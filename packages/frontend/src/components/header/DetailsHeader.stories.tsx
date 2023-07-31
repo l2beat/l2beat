@@ -94,7 +94,7 @@ export const DetailsHeader: Story<HeaderProps> = Template.bind({})
 DetailsHeader.args = {
   title: project.display.name,
   icon: `/icons/${project.display.slug}.png`,
-  stats,
+  stats: { summary: stats },
   links,
   isArchived: false,
   warning,
@@ -104,7 +104,7 @@ export const ArchivedHeader: Story<HeaderProps> = Template.bind({})
 ArchivedHeader.args = {
   title: project.display.name,
   icon: `/icons/${project.display.slug}.png`,
-  stats,
+  stats: { summary: stats },
   links,
   isArchived: true,
   warning,
@@ -114,7 +114,7 @@ export const UpcomingHeader: Story<HeaderProps> = Template.bind({})
 UpcomingHeader.args = {
   title: project.display.name,
   icon: `/icons/${project.display.slug}.png`,
-  stats,
+  stats: { summary: stats },
   links,
   isUpcoming: true,
 }
@@ -123,7 +123,7 @@ export const UnderReviewHeader: Story<HeaderProps> = Template.bind({})
 UnderReviewHeader.args = {
   title: project.display.name,
   icon: `/icons/${project.display.slug}.png`,
-  stats,
+  stats: { summary: stats },
   links,
   showProjectUnderReview: true,
 }
