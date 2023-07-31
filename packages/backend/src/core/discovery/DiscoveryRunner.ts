@@ -46,6 +46,8 @@ export class DiscoveryRunner {
       await this.sanityCheck(discovery, config, blockNumber)
     }
 
+    // TODO retry if error is Etherscan timeout
+
     return discovery
   }
 
