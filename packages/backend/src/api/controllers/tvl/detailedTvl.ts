@@ -58,15 +58,19 @@ export function getProjectTokensCharts(
     return []
   }
 
-  const tokens = []
+  const tokens = Object.entries(assetValuesPerProject).map(
+    ([asset, reports]) => {
+      const tokenUsdTvl = reports.reduce(
+        (acc, report) => acc + report.usdValue,
+        0n,
+      )
 
-  for (const [asset, reports] of Object.entries(assetValuesPerProject)) {
-    const tvl = reports.reduce((acc, report) => acc + report.usdValue, 0n)
-    tokens.push({
-      assetId: AssetId(asset),
-      tvl: asNumber(tvl, 2),
-    })
-  }
+      return {
+        assetId: AssetId(asset),
+        tvl: asNumber(tokenUsdTvl, 2),
+      }
+    },
+  )
 
   return tokens
 }
