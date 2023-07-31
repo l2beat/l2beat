@@ -97,8 +97,8 @@ export function createTvlModule(
   const detailedTvlController = new DetailedTvlController(
     db.reportStatusRepository,
     db.aggregatedReportRepository,
-    db.aggregatedReportStatusRepository,
     db.reportRepository,
+    db.aggregatedReportStatusRepository,
     config.projects,
     logger,
   )
