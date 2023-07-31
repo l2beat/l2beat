@@ -19,6 +19,7 @@ describe(ConfigReader.name, () => {
   for (const chainId of chainIds) {
     describe(`${ConfigReader.name} for ${ChainId.getName(chainId)}`, () => {
       const projects = configReader.readAllProjectsForChain(chainId)
+
       describe(ConfigReader.prototype.readConfig.name, () => {
         for (const project of projects) {
           it(`can read ${project} config`, async () => {
@@ -57,6 +58,18 @@ describe(ConfigReader.name, () => {
               ChainId.ETHEREUM,
             )
             expect(result.name).toEqual(project)
+          })
+        }
+      })
+
+      describe('ChainId in config.jsonc matches the ChainId of the folder', () => {
+        for (const project of projects) {
+          it(`${project}`, async () => {
+            const config = await configReader.readConfig(
+              project,
+              ChainId.ETHEREUM,
+            )
+            expect(config.chainId).toEqual(chainId)
           })
         }
       })
