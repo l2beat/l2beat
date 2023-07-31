@@ -18,6 +18,7 @@ export function getProps(
   const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
 
   const chart = getChart(project, tvlApiResponse, config, activityApiResponse)
+  console.log(chart)
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),

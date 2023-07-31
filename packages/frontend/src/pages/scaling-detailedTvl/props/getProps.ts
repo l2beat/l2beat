@@ -21,8 +21,10 @@ export function getProps(
   const ordering = orderByTvl(included, tvlApiResponse)
 
   const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
+  const detailedTvlEndpoint = '/api/scaling-detailed-tvl.json'
   return {
     props: {
+      detailedTvlEndpoint,
       showDetailedTvl: config.features.detailedTvl,
       showActivity: config.features.activity,
       navbar: getNavbarProps(config, 'scaling'),

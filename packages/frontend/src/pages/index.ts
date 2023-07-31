@@ -4,7 +4,6 @@ import { getBridgesRiskPage } from './bridges-risk'
 import { getBridgesTvlPage } from './bridges-tvl'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
-import { getMetaImagePages } from './meta-images'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { Page, PagesData } from './Page'
@@ -17,14 +16,14 @@ import { getTvlPage } from './scaling-tvl'
 export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
 
-  const { tvlApiResponse, activityApiResponse, verificationStatus } = pagesData
+  const { activityApiResponse, verificationStatus } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
   pages.push(getTvlPage(config, pagesData))
   pages.push(getFaqPage(config))
   pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, pagesData))
-  pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
+  // pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
 
   pages.push(getBridgesTvlPage(config, pagesData))
   pages.push(getBridgesRiskPage(config, pagesData))

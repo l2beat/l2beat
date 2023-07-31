@@ -1,4 +1,4 @@
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import { ActivityApiResponse, DetailedTvlApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import React from 'react'
 
@@ -11,7 +11,7 @@ import { TvlMetaImage } from './TvlMetaImage'
 
 export function getMetaImagePages(
   config: Config,
-  tvlApiResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ) {
   const included = getIncludedProjects(
