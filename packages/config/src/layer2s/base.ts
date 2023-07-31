@@ -19,7 +19,7 @@ const discovery = new ProjectDiscovery('base')
 
 const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No Delay',
+  upgradeDelay: 'No delay',
 }
 
 export const base: Layer2 = {

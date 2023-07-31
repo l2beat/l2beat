@@ -19,7 +19,7 @@ const discovery = new ProjectDiscovery('zora')
 
 const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No Delay',
+  upgradeDelay: 'No delay',
 }
 
 export const zora: Layer2 = {
@@ -96,6 +96,8 @@ export const zora: Layer2 = {
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+        // the value is inside the node config, but we have no reference to it
+        // so we assume it to be the same value as in other op stack chains
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
       sources: [
