@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "base",
   "blockNumber": 17782778,
   "configHash": "0x1024ee033f09283e7971475d67345ab8965f550468adac4c2ad51633a3007592",

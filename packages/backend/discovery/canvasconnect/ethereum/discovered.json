@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "canvasconnect",
   "blockNumber": 17044496,
   "configHash": "0xc88c50f0bc156a7977f6aef4367f3e9a5ce62209b7ccbf5bee8ad3ac8e6571e3",

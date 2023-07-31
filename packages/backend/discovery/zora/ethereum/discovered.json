@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "zora",
   "blockNumber": 17768577,
   "configHash": "0x11a78f39c3de4b930a11851a87481fade694a707bca1f55e550a581c6b17b336",

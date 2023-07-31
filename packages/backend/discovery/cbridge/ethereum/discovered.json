@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "cbridge",
   "blockNumber": 17434738,
   "configHash": "0xe70c32243578622d14dbf6a3064bc9aa087219bf3c025055cfb73414705d183d",

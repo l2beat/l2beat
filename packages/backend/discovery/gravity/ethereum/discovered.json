@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "gravity",
   "blockNumber": 17065004,
   "configHash": "0x758ac62a67058b3e0d7b566f6cd60fb5eae8d88090fc9042ac6932a406ded906",

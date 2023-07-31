@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "aztec",
   "blockNumber": 17378164,
   "configHash": "0xe2a93d58ae1c112d7b8332ec0805a1148e3d5f61c498a0ce0198e92c81db0c82",

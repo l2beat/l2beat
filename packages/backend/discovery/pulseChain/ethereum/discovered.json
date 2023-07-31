@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "pulseChain",
   "blockNumber": 17284804,
   "configHash": "0xe6029cfb8a71ff69155d2b2234227629c32dca8b437e49b598a4a5ac21ef21bb",

@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "sorare",
   "blockNumber": 17412704,
   "configHash": "0x2f28a2386707886cf2bf5985a0e42484b84840f69fd84e6e5194de0d734eb58e",

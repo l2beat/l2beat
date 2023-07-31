@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "polygon-plasma",
   "blockNumber": 17776044,
   "configHash": "0x477e099e8ea3af784240e53f62de9cd67f2cadd7ded7f3e499f74945ecd1cc06",

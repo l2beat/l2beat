@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "metis",
   "blockNumber": 17272120,
   "configHash": "0x1a8c7f109e78f0dcd6581b9313d6f003a8b207a956032357d114b7ef323afca7",

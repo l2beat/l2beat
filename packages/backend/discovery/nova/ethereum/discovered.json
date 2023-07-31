@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "nova",
   "blockNumber": 17334354,
   "configHash": "0xd4b348366a8456f491830ae0fdf771dd5ea73bc386089f18146979b5640add06",

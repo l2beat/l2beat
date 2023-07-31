@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "skale-ima",
   "blockNumber": 17619955,
   "configHash": "0x087b9989306e11a8d2db2c0ced551a809b035a18b56eeb2752b5d5589cea5ee1",

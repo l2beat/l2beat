@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "zksync2",
   "blockNumber": 17620016,
   "configHash": "0xc8ba3ed7ea70afef403aaa6d18d9dcc108a63337f27dba1333e60918af99fc62",

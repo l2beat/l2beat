@@ -23,10 +23,7 @@ describe(ConfigReader.name, () => {
       describe(ConfigReader.prototype.readConfig.name, () => {
         for (const project of projects) {
           it(`can read ${project} config`, async () => {
-            const result = await configReader.readConfig(
-              project,
-              ChainId.ETHEREUM,
-            )
+            const result = await configReader.readConfig(project, chainId)
             expect(result.name).toEqual(project)
           })
         }
@@ -53,10 +50,7 @@ describe(ConfigReader.name, () => {
       describe(ConfigReader.prototype.readDiscovery.name, () => {
         for (const project of projects) {
           it(`can read discovered.json for ${project}`, async () => {
-            const result = await configReader.readDiscovery(
-              project,
-              ChainId.ETHEREUM,
-            )
+            const result = await configReader.readDiscovery(project, chainId)
             expect(result.name).toEqual(project)
           })
         }
@@ -65,11 +59,20 @@ describe(ConfigReader.name, () => {
       describe('ChainId in config.jsonc matches the ChainId of the folder', () => {
         for (const project of projects) {
           it(`${project}`, async () => {
-            const config = await configReader.readConfig(
-              project,
-              ChainId.ETHEREUM,
-            )
+            const config = await configReader.readConfig(project, chainId)
             expect(config.chainId).toEqual(chainId)
+          })
+        }
+      })
+
+      describe('ChainId in discovered.json matches the ChainId of the folder', () => {
+        for (const project of projects) {
+          it(`${project}`, async () => {
+            const discovered = await configReader.readDiscovery(
+              project,
+              chainId,
+            )
+            expect(ChainId.getId(discovered.chain)).toEqual(chainId)
           })
         }
       })

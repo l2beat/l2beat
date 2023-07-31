@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "optimism",
   "blockNumber": 17718368,
   "configHash": "0xf38079963f297bf5743c96341ff36cdebfa76552c8e09b39f43a9d3f5fc184ef",

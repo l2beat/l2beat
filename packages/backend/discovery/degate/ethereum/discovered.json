@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "degate",
   "blockNumber": 17434695,
   "configHash": "0xadf196f9058092e27299c4f7165d10c2012663548dc91fb005ef32fa8beb5e31",

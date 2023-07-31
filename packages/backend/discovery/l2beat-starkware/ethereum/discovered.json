@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "l2beat-starkware",
   "blockNumber": 17031968,
   "configHash": "0x80112d572c320dae60a1cc29c37f837881984f02c13575f623751c96992ac434",

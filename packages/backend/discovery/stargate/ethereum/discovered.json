@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "stargate",
   "blockNumber": 17718386,
   "configHash": "0xf4647eea5ee0ad585f71dba48ec65cef3f4adc4f85acfd27e20911a18c090333",

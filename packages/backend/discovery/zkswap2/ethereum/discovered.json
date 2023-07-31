@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "zkswap2",
   "blockNumber": 16767881,
   "configHash": "0x879a7179f610639a3c172e2a1a3b2f58ea32b2e0ac512188d2f4541dc49309b3",

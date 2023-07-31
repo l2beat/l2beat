@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "zkspace",
   "blockNumber": 17442401,
   "configHash": "0x6fdb3e12ba6696f7e5f76d2b8399a7b189acd85c15ca93fde175459e121fa715",

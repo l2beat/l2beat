@@ -1,5 +1,7 @@
 {
+  "chain": "ethereum",
   "name": "across-v2",
+  "chain": "ethereum",
   "blockNumber": 17494607,
   "configHash": "0xcb59c3b84210bb0169461c8730dc1615c59ab20789594eca701e4ccd032ebd89",
   "version": 1,

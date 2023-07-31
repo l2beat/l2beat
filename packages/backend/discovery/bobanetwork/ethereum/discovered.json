@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "bobanetwork",
   "blockNumber": 17619337,
   "configHash": "0x33ca51c13c33399a88621568b90684739dd62f2a15c97649de215f4e831197d6",

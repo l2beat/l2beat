@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "aptos",
   "blockNumber": 16154924,
   "configHash": "0x958973499ce64958db371146958f80fd0cfab57839c701cb633e6272a9483162",

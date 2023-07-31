@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "pNetwork",
   "blockNumber": 17288492,
   "configHash": "0x54844ed628d7d1a3ce56c214e349f5d45c391d569e0e5c50f22aac3fc9e8ecfe",
