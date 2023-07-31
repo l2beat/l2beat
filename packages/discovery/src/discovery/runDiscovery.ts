@@ -101,7 +101,13 @@ async function justDiscover(
     DiscoveryLogger.CLI,
     blockNumber,
   )
-  return toDiscoveryOutput(config.name, config.hash, blockNumber, result)
+  return toDiscoveryOutput(
+    config.name,
+    config.chainId,
+    config.hash,
+    blockNumber,
+    result,
+  )
 }
 
 export async function discover(

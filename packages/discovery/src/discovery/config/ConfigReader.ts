@@ -1,4 +1,5 @@
 import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
+import { assert } from 'console'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
@@ -21,19 +22,11 @@ export class ConfigReader {
       throw new Error('Cannot parse file')
     }
     const rawConfig = RawDiscoveryConfig.parse(parsed)
-    return new DiscoveryConfig(rawConfig)
-  }
+    const config = new DiscoveryConfig(rawConfig)
 
-  async readAllConfigsForChain(chain: ChainId): Promise<DiscoveryConfig[]> {
-    const result: DiscoveryConfig[] = []
-    const projects = this.readAllProjectsForChain(chain)
+    assert(config.chainId === chain, 'Chain ID mismatch in config.jsonc')
 
-    for (const project of projects) {
-      const contents = await this.readConfig(project, chain)
-      result.push(contents)
-    }
-
-    return result
+    return config
   }
 
   async readDiscovery(name: string, chain: ChainId): Promise<DiscoveryOutput> {
@@ -46,7 +39,26 @@ export class ConfigReader {
 
     const parsed: unknown = JSON.parse(contents)
 
-    return parsed as DiscoveryOutput
+    const discovery = parsed as DiscoveryOutput
+
+    assert(
+      ChainId.getId(discovery.chain) === chain,
+      'Chain ID mismatch in discovered.json',
+    )
+
+    return discovery
+  }
+
+  async readAllConfigsForChain(chain: ChainId): Promise<DiscoveryConfig[]> {
+    const result: DiscoveryConfig[] = []
+    const projects = this.readAllProjectsForChain(chain)
+
+    for (const project of projects) {
+      const contents = await this.readConfig(project, chain)
+      result.push(contents)
+    }
+
+    return result
   }
 
   readAllProjectsForChain(chain: ChainId): string[] {

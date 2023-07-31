@@ -28,6 +28,7 @@ describe(UpdateMonitorRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
+        chain: ChainId.getName(ChainId.ETHEREUM),
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -46,6 +47,7 @@ describe(UpdateMonitorRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
+        chain: ChainId.getName(ChainId.ETHEREUM),
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -77,6 +79,7 @@ describe(UpdateMonitorRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
+        chain: ChainId.getName(ChainId.ETHEREUM),
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],

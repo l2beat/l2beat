@@ -38,6 +38,7 @@ const COMMITTED: ContractParameters[] = [
 
 const DISCOVERY_RESULT: DiscoveryOutput = {
   name: PROJECT_A,
+  chain: ChainId.getName(ChainId.ETHEREUM),
   blockNumber: BLOCK_NUMBER,
   configHash: Hash256.random(),
   contracts: [
@@ -600,6 +601,7 @@ const mockRecord: UpdateMonitorRecord = {
 
 const mockProject: DiscoveryOutput = {
   name: PROJECT_A,
+  chain: ChainId.getName(ChainId.ETHEREUM),
   blockNumber: BLOCK_NUMBER,
   configHash: Hash256.random(),
   contracts: COMMITTED,

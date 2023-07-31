@@ -62,7 +62,13 @@ export class DiscoveryRunner {
     histogramDone({ project: config.name })
     latestBlock.set({ project: config.name }, blockNumber)
 
-    return toDiscoveryOutput(config.name, config.hash, blockNumber, result)
+    return toDiscoveryOutput(
+      config.name,
+      config.chainId,
+      config.hash,
+      blockNumber,
+      result,
+    )
   }
 
   // 3rd party APIs are unstable, so we do a sanity check before sending
