@@ -40,13 +40,14 @@ export class DiscoveryRunner {
       ? await this.updateInitialAddresses(projectConfig)
       : projectConfig
 
-    const discovery = await this.discover(config, blockNumber)
+    const discovery: DiscoveryOutput = await this.discoverWithRetry(
+      config,
+      blockNumber,
+    )
 
     if (options.runSanityCheck) {
       await this.sanityCheck(discovery, config, blockNumber)
     }
-
-    // TODO retry if error is Etherscan timeout
 
     return discovery
   }
@@ -69,6 +70,32 @@ export class DiscoveryRunner {
       blockNumber,
       result,
     )
+  }
+
+  private async discoverWithRetry(
+    config: DiscoveryConfig,
+    blockNumber: number,
+  ) {
+    let discovery: DiscoveryOutput | undefined = undefined
+
+    try {
+      discovery = await this.discover(config, blockNumber)
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message.includes('network timeout')) {
+          try {
+            discovery = await this.discover(config, blockNumber)
+          } catch {
+            throw error
+          }
+        } else {
+          throw error
+        }
+      } else {
+        throw error
+      }
+    }
+    return discovery
   }
 
   // 3rd party APIs are unstable, so we do a sanity check before sending
