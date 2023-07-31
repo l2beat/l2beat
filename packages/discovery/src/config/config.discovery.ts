@@ -1,5 +1,5 @@
-import { EtherscanClient, getEnv } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ArbiscanClient, EtherscanClient, getEnv } from '@l2beat/shared'
+import { ChainId, minTimestamps, UnixTime } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
 import { CliParameters } from '../cli/getCliParameters'
@@ -32,7 +32,14 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
         rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
         etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
         etherscanUrl: EtherscanClient.API_URL,
-        minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+        minTimestamp: minTimestamps.ethereum,
+      },
+      {
+        chainId: ChainId.ARBITRUM,
+        rpcUrl: getEnv('DISCOVERY_ARBITRUM_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_ARBISCAN_API_KEY'),
+        etherscanUrl: ArbiscanClient.API_URL,
+        minTimestamp: minTimestamps.arbitrum,
       },
     ],
   }
@@ -40,7 +47,7 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
 
 export interface DiscoveryCliConfig {
   discovery: DiscoveryModuleConfig | false
-  chains: [DiscoveryChainConfig]
+  chains: DiscoveryChainConfig[]
   invert: InversionConfig | false
 }
 

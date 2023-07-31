@@ -1,0 +1,9 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "arbitrum",
+  "name": "lzomnichain",
+  "initialAddresses": ["0x4D73AdB72bC3DD368966edD0f0b2148401A178E2"],
+  "names": {
+    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2"
+  }
+}

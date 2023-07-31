@@ -1,6 +1,6 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
 import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, minTimestamps } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
@@ -29,7 +29,7 @@ export function getProductionConfig(): Config {
       throttleTimeInMs: 20000,
     },
     clock: {
-      minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+      minBlockTimestamp: minTimestamps.ethereum,
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: {
@@ -62,14 +62,12 @@ export function getProductionConfig(): Config {
       ethereum: {
         alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-        // Deployment of the first L2
-        minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+        minBlockTimestamp: minTimestamps.ethereum,
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
-        // ~ Timestamp of block number 0 on Arbitrum
-        minBlockTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+        minBlockTimestamp: minTimestamps.arbitrum,
       },
     },
     activity: {
@@ -121,7 +119,7 @@ export function getProductionConfig(): Config {
           rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
           etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+          minTimestamp: minTimestamps.ethereum,
         },
       ],
     },
