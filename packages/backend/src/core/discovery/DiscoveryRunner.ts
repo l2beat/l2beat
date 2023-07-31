@@ -6,7 +6,7 @@ import {
   DiscoveryProvider,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
-import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
+import { assert, ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
@@ -75,26 +75,28 @@ export class DiscoveryRunner {
   private async discoverWithRetry(
     config: DiscoveryConfig,
     blockNumber: number,
-  ) {
+    maxRetries = 2,
+    delayMs = 1000,
+  ): Promise<DiscoveryOutput> {
     let discovery: DiscoveryOutput | undefined = undefined
 
-    try {
-      discovery = await this.discover(config, blockNumber)
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.message.includes('network timeout')) {
-          try {
-            discovery = await this.discover(config, blockNumber)
-          } catch {
-            throw error
-          }
-        } else {
-          throw error
-        }
-      } else {
-        throw error
+    for (let i = 0; i < maxRetries; i++) {
+      try {
+        discovery = await this.discover(config, blockNumber)
+        break // Break out of the loop if the discovery is successful
+      } catch (error) {
+        // Retry on error (maxRetries will limit the number of attempts)
       }
+
+      // Add a delay before the next retry
+      await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
+
+    assert(
+      discovery !== undefined,
+      'Programmer error, it should not be undefined here',
+    )
+
     return discovery
   }
 
