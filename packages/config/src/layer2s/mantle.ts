@@ -75,7 +75,6 @@ export const mantle: Layer2 = {
       type: 'rpc',
       url: 'https://rpc.mantle.xyz',
       callsPerMinute: 1500,
-      excludeFromActivityApi: true,
     },
   },
   riskView: makeBridgeCompatible({

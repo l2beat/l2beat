@@ -23,7 +23,6 @@ export function calculateTokenTvlView(
   const dateRange = formatRange(entries[0][0], entries[entries.length - 1][0])
   const { labels, getY } = getYAxis(
     entries.map((x) => x[1]),
-    controls.labelCount,
     controls.isLogScale,
     (x) => formatCurrency(x, token),
   )

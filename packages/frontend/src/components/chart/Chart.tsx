@@ -9,22 +9,23 @@ import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
 import { CurrencyControls } from './CurrencyControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
+import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
 import { TokenControl, TokenControls } from './TokenControls'
-import { TvlActivityToggle } from './TvlActivityToggle'
-import { YAxisLabels } from './YAxisLabels'
 
 export interface ChartProps {
-  type?: 'tvl' | 'activity'
+  type?: 'tvl' | 'detailedTvl' | 'activity'
   title?: string
   id?: string
   tvlEndpoint?: string
+  detailedTvlEndpoint?: string
   activityEndpoint?: string
   tokens?: TokenControl[]
   hasActivity?: boolean
   hasTvl?: boolean
+  hasDetailedTvl?: boolean
   metaChart?: boolean
   mobileFull?: boolean
   milestones?: Milestone[]
@@ -36,11 +37,13 @@ export function Chart({
   title = 'Chart',
   id = 'chart',
   tvlEndpoint,
+  detailedTvlEndpoint,
   activityEndpoint,
   tokens,
   type = 'tvl',
   hasActivity,
   hasTvl = true,
+  hasDetailedTvl,
   metaChart = false,
   mobileFull: fullWidth = false,
   milestones,
@@ -59,6 +62,7 @@ export function Chart({
         data-role="chart"
         data-type={type}
         data-tvl-endpoint={tvlEndpoint}
+        data-detailed-tvl-endpoint={detailedTvlEndpoint}
         data-activity-endpoint={activityEndpoint}
         data-milestones={JSON.stringify(milestones)}
         className={cx(
@@ -68,14 +72,19 @@ export function Chart({
           sectionClassName,
         )}
       >
-        {!metaChart && hasTvl && hasActivity && (
-          <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
-            <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
-              <a href={`#${id}`}>{title}</a>
-            </h2>
-            <TvlActivityToggle />
-          </div>
-        )}
+        {!metaChart &&
+          ((hasTvl && hasActivity) || (hasTvl && hasDetailedTvl)) && (
+            <div className="mb-4 gap-5 md:mb-6 md:flex md:items-center">
+              <h2 className="hidden text-2xl font-bold md:block md:text-4xl md:leading-normal">
+                <a href={`#${id}`}>{title}</a>
+              </h2>
+
+              <RadioChartTypeControl
+                hasActivity={hasActivity ?? false}
+                hasDetailedTvl={hasDetailedTvl ?? false}
+              />
+            </div>
+          )}
         <div className="flex flex-col gap-4">
           <div className="flex justify-between">
             <TimeRange />
@@ -92,9 +101,9 @@ export function Chart({
             <Logo className="absolute bottom-2 right-2 z-10 h-[25px] w-[60px] opacity-40" />
             <canvas
               data-role="chart-canvas"
-              className="absolute bottom-0 left-0 z-20 block h-[calc(100%_-_20px)] w-full"
+              data-is-meta={metaChart}
+              className="absolute bottom-0 left-0 z-20 block h-full w-full"
             />
-            <YAxisLabels />
             <div
               data-role="chart-milestones"
               className="absolute bottom-0 w-[100%]"

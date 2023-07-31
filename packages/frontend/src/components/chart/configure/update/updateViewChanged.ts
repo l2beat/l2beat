@@ -63,6 +63,19 @@ export function updateViewChanged(
     })
   }
 
+  if (message.view === 'detailedTvl') {
+    if (!state.endpoints.aggregateTvl) {
+      throw new Error('Invalid state: aggregate tvl endpoint missing')
+    }
+    request.isFetching = true
+    request.lastId++
+    effects.push({
+      type: 'FetchDetailedAggregateTvl',
+      requestId: request.lastId,
+      url: state.endpoints.aggregateTvl,
+    })
+  }
+
   // we do not check token tvl because it is impossible for it to be selected
   // without making an appropriate request first
 
