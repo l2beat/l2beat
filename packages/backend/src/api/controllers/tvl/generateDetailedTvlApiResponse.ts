@@ -88,7 +88,7 @@ function getProjectCharts(
   }
 }
 
-function getProjectChartData(
+export function getProjectChartData(
   reportTree: ReportsPerProjectIdAndTimestamp,
   projectId: ProjectId,
   resolutionInHours: number,
@@ -117,7 +117,7 @@ function getProjectChartData(
   return covertBalancesToChartPoints(balancesInTime, resolutionInHours, 6, true)
 }
 
-function extractValueTypeSet(reports: AggregatedReportRecord[]) {
+export function extractValueTypeSet(reports: AggregatedReportRecord[]) {
   const typesToSeek = [
     ValueType.TVL,
     ValueType.CBV,

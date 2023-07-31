@@ -6,7 +6,7 @@ import {
 
 import { asNumber } from './asNumber'
 
-interface BalanceInTime {
+interface DetailedBalanceInTime {
   timestamp: UnixTime
   usdTvl: bigint
   ethTvl: bigint
@@ -94,7 +94,7 @@ export function getChartPoints(
 }
 
 export function covertBalancesToChartPoints(
-  balancesInTime: BalanceInTime[],
+  balancesInTime: DetailedBalanceInTime[],
   resolutionInHours: number,
   decimals: number,
   usdFirst = false,

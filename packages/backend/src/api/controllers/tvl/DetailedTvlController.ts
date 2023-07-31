@@ -18,8 +18,8 @@ export class DetailedTvlController {
   constructor(
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly aggregatedReportRepository: AggregatedReportRepository,
-    private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly reportRepository: ReportRepository,
+    private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly projects: ReportProject[],
     private readonly logger: Logger,
   ) {
