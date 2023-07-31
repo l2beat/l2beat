@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "optimism",
   "blockNumber": 17718368,
-  "configHash": "0x68c24f4ae10dbb6d1c1f482807b26c79cfc8362d6a4583cb39cbf37402a18a86",
+  "configHash": "0xf38079963f297bf5743c96341ff36cdebfa76552c8e09b39f43a9d3f5fc184ef",
   "version": 1,
   "contracts": [
     {

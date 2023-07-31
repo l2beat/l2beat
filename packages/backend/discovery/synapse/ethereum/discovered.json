@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "synapse",
   "blockNumber": 17620009,
-  "configHash": "0xf6fd397c277b530df44de6f2593a809c10d246777a0332922654d1c19c1c9a3e",
+  "configHash": "0x7f5b5661d230aca74956b184647ad600ae0db124a982bff7a24f73c9193dd9a5",
   "version": 1,
   "contracts": [
     {

@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "omni",
   "blockNumber": 17684765,
-  "configHash": "0xa81486f24d44acea4b12563a38d70493f86837e809b3d2990e22c480fb89811b",
+  "configHash": "0x6bb2f6515f379bd9f658e5b42d44ee08d430d26deee0c258699a59d81ffd4731",
   "version": 1,
   "contracts": [
     {

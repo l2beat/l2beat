@@ -1,5 +1,4 @@
-import { EtherscanClient } from '@l2beat/shared'
-import { ChainId } from '@l2beat/shared-pure'
+import { EtherscanLikeClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { DiscoveryModuleConfig } from '../config/config.discovery'
@@ -17,18 +16,21 @@ import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
 
 export async function runDiscovery(
-  provider: providers.AlchemyProvider,
-  etherscanClient: EtherscanClient,
+  provider: providers.StaticJsonRpcProvider,
+  etherscanClient: EtherscanLikeClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
-  chain: ChainId,
 ) {
-  const projectConfig = await configReader.readConfig(config.project, chain)
+  const projectConfig = await configReader.readConfig(
+    config.project,
+    config.chainId,
+  )
 
   const blockNumber =
     config.blockNumber ??
     (config.dev
-      ? (await configReader.readDiscovery(config.project, chain)).blockNumber
+      ? (await configReader.readDiscovery(config.project, config.chainId))
+          .blockNumber
       : await provider.getBlockNumber())
 
   const logger = DiscoveryLogger.CLI
@@ -44,22 +46,24 @@ export async function runDiscovery(
     projectConfig,
     blockNumber,
     projectConfig.hash,
-    chain,
+    config.chainId,
   )
 }
 
 export async function dryRunDiscovery(
-  provider: providers.AlchemyProvider,
-  etherscanClient: EtherscanClient,
+  provider: providers.StaticJsonRpcProvider,
+  etherscanClient: EtherscanLikeClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
-  chain: ChainId,
 ) {
   const blockNumber = await provider.getBlockNumber()
   const BLOCKS_PER_DAY = 86400 / 12
   const blockNumberYesterday = blockNumber - BLOCKS_PER_DAY
 
-  const projectConfig = await configReader.readConfig(config.project, chain)
+  const projectConfig = await configReader.readConfig(
+    config.project,
+    config.chainId,
+  )
 
   const [discovered, discoveredYesterday] = await Promise.all([
     justDiscover(provider, etherscanClient, projectConfig, blockNumber),
@@ -85,8 +89,8 @@ export async function dryRunDiscovery(
 }
 
 async function justDiscover(
-  provider: providers.AlchemyProvider,
-  etherscanClient: EtherscanClient,
+  provider: providers.StaticJsonRpcProvider,
+  etherscanClient: EtherscanLikeClient,
   config: DiscoveryConfig,
   blockNumber: number,
 ) {
@@ -97,12 +101,18 @@ async function justDiscover(
     DiscoveryLogger.CLI,
     blockNumber,
   )
-  return toDiscoveryOutput(config.name, config.hash, blockNumber, result)
+  return toDiscoveryOutput(
+    config.name,
+    config.chainId,
+    config.hash,
+    blockNumber,
+    result,
+  )
 }
 
 export async function discover(
-  provider: providers.AlchemyProvider,
-  etherscanClient: EtherscanClient,
+  provider: providers.StaticJsonRpcProvider,
+  etherscanClient: EtherscanLikeClient,
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
   blockNumber: number,

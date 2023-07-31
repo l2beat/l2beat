@@ -18,6 +18,7 @@ export async function saveDiscoveryResult(
 ) {
   const project = toDiscoveryOutput(
     config.name,
+    config.chainId,
     configHash,
     blockNumber,
     results,

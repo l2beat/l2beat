@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "l2beat-starkware",
   "initialAddresses": ["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"],
   "names": {

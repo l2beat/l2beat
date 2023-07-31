@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/shared'
-import { DiscoveryOutput, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  DiscoveryOutput,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { UpdateMonitorRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
@@ -7,6 +12,7 @@ import { Database } from '../shared/Database'
 
 export interface UpdateMonitorRecord {
   projectName: string
+  chainId: ChainId
   blockNumber: number
   timestamp: UnixTime
   discovery: DiscoveryOutput
@@ -21,9 +27,17 @@ export class UpdateMonitorRepository extends BaseRepository {
     this.autoWrap<CheckConvention<UpdateMonitorRepository>>(this)
   }
 
-  async findLatest(name: string): Promise<UpdateMonitorRecord | undefined> {
+  async findLatest(
+    name: string,
+    chainId: ChainId,
+  ): Promise<UpdateMonitorRecord | undefined> {
     const knex = await this.knex()
-    const row = await knex('update_monitor').where('project_name', name).first()
+    const row = await knex('update_monitor')
+      .where({
+        project_name: name,
+        chain_id: +chainId,
+      })
+      .first()
 
     return row ? toRecord(row) : undefined
   }
@@ -32,7 +46,10 @@ export class UpdateMonitorRepository extends BaseRepository {
     const knex = await this.knex()
     const row = toRow(record)
 
-    await knex('update_monitor').insert(row).onConflict('project_name').merge()
+    await knex('update_monitor')
+      .insert(row)
+      .onConflict(['project_name', 'chain_id'])
+      .merge()
 
     return `${
       record.projectName
@@ -55,6 +72,7 @@ export class UpdateMonitorRepository extends BaseRepository {
 function toRecord(row: UpdateMonitorRow): UpdateMonitorRecord {
   return {
     projectName: row.project_name,
+    chainId: ChainId(row.chain_id),
     blockNumber: row.block_number,
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     discovery: row.discovery_json_blob as unknown as DiscoveryOutput,
@@ -66,6 +84,7 @@ function toRecord(row: UpdateMonitorRow): UpdateMonitorRecord {
 function toRow(record: UpdateMonitorRecord): UpdateMonitorRow {
   return {
     project_name: record.projectName,
+    chain_id: +record.chainId,
     block_number: record.blockNumber,
     unix_timestamp: record.timestamp.toDate(),
     discovery_json_blob: JSON.stringify(record.discovery),

@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { RawDiscoveryConfig } from '../config/RawDiscoveryConfig'
@@ -12,6 +12,7 @@ describe(getDiscoveryConfigEntries.name, () => {
   it('correctly sorts raw config object keys', () => {
     const config: RawDiscoveryConfig = {
       name: 'a',
+      chain: ChainId.ETHEREUM,
       initialAddresses: [ADDRESS_A],
       maxDepth: 1,
       maxAddresses: 1,
@@ -46,6 +47,7 @@ describe(getDiscoveryConfigEntries.name, () => {
 
     const expected = {
       // correctly sort params (nest level = 0)
+      chain: ChainId.ETHEREUM,
       initialAddresses: [ADDRESS_A.toString()],
       maxAddresses: 1,
       maxDepth: 1,

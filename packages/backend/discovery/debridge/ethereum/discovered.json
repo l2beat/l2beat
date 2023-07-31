@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "debridge",
   "blockNumber": 17619637,
-  "configHash": "0x9ae2dcdfb4b7d5ed7cbf076e5dd20318c538a0cf43747ee8f7dd41f35c21d647",
+  "configHash": "0x665f7cf5f3311e3ba1c22318c90b05fa543fedc1c4d185febec1d557f591c086",
   "version": 1,
   "contracts": [
     {

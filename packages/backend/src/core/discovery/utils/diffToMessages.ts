@@ -1,9 +1,11 @@
 import { DiscoveryDiff, FieldDiff } from '@l2beat/discovery'
+import { ChainId } from '@l2beat/shared-pure'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
 export interface DiffMetadata {
   blockNumber: number
+  chainId: ChainId
   dependents: string[]
   nonce?: number
 }
@@ -13,7 +15,12 @@ export function diffToMessages(
   diffs: DiscoveryDiff[],
   metadata: DiffMetadata,
 ): string[] {
-  const header = getHeader(name, metadata.blockNumber, metadata.nonce)
+  const header = getHeader(
+    name,
+    metadata.chainId,
+    metadata.blockNumber,
+    metadata.nonce,
+  )
   const dependentsMessage = getDependentsMessage(metadata.dependents)
   const overheadLength =
     header.length + dependentsMessage.length + wrapDiffCodeBlock('').length
@@ -91,15 +98,26 @@ export function fieldDiffToMessage(diff: FieldDiff): string {
   return message
 }
 
-function getHeader(name: string, blockNumber: number, nonce?: number) {
+function getHeader(
+  name: string,
+  chainId: ChainId,
+  blockNumber: number,
+  nonce?: number,
+) {
   if (nonce === undefined) {
-    return `${wrapBoldAndItalic(name)} | detected changes`
+    return `${wrapBoldAndItalic(
+      name,
+    )} | detected changes on chain: ${wrapBoldAndItalic(
+      ChainId.getName(chainId),
+    )}`
   }
   return `> ${formatNonce(
     nonce,
   )} (block_number=${blockNumber})\n\n${wrapBoldAndItalic(
     name,
-  )} | detected changes`
+  )} | detected changes on chain: ${wrapBoldAndItalic(
+    ChainId.getName(chainId),
+  )}`
 }
 
 function getDependentsMessage(dependents: string[]) {

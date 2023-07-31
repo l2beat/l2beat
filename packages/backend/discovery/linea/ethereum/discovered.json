@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "linea",
   "blockNumber": 17768617,
-  "configHash": "0x2335858d3e21a17a6b4c4cbb0cef0af8634d87307265f83de8afbf778c4108f9",
+  "configHash": "0xe80b520d763d175c92fa6910a6874e6532a4b75d34c67e49d2cfb19f7e43fe58",
   "version": 1,
   "contracts": [
     {
