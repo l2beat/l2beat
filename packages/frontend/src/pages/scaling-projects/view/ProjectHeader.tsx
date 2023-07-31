@@ -6,6 +6,7 @@ import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import { DetailsHeader } from '../../../components/header/DetailsHeader'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { SummaryStat } from '../../../components/header/Summary'
+import { TvlStats } from '../../../components/header/TvlSummary'
 import { InfoIcon, ProjectLink } from '../../../components/icons'
 import { StageBadge } from '../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../components/stages/StageTooltip'
@@ -21,8 +22,7 @@ export interface ProjectHeaderProps {
   titleLength?: 'long' | 'very-long'
   titleClassName?: string
   icon?: string
-  tvl?: string
-  tvlWeeklyChange?: string
+  tvlStats?: TvlStats
   tpsDaily?: string
   tpsWeeklyChange?: string
   transactionMonthlyCount?: string
@@ -32,6 +32,7 @@ export interface ProjectHeaderProps {
   risks: RiskValues
   links: ProjectLink[]
   stagesEnabled?: boolean
+  detailedTvlEnabled?: boolean
   stage?: StageConfig
   isArchived?: boolean
   isUpcoming?: boolean
@@ -41,22 +42,7 @@ export interface ProjectHeaderProps {
 }
 
 export function ProjectHeader(props: ProjectHeaderProps) {
-  const stats: SummaryStat[] = [
-    {
-      title: 'Total value locked',
-      tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
-      value:
-        !props.isUpcoming && props.tvl && props.tvlWeeklyChange ? (
-          <StatWithChange
-            className="font-bold"
-            stat={props.tvl}
-            change={props.tvlWeeklyChange}
-          />
-        ) : (
-          <UpcomingBadge />
-        ),
-    },
+  const summary: SummaryStat[] = [
     {
       title: 'Breakdown',
       value:
@@ -116,13 +102,31 @@ export function ProjectHeader(props: ProjectHeaderProps) {
     },
   ]
 
+  if (!props.detailedTvlEnabled && props.tvlStats) {
+    summary.unshift({
+      title: 'Total value locked',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+      value: !props.isUpcoming ? (
+        <StatWithChange
+          className="font-bold"
+          stat={props.tvlStats.tvl}
+          change={props.tvlStats.tvlChange}
+        />
+      ) : (
+        <UpcomingBadge />
+      ),
+    })
+  }
+
   return (
     <DetailsHeader
       type="layer2"
       stagesEnabled={props.stagesEnabled}
+      detailedTvlEnabled={props.detailedTvlEnabled}
       title={props.title}
       icon={props.icon}
-      stats={stats}
+      stats={{ summary, l2Tvl: props.tvlStats }}
       risks={props.risks}
       links={props.links}
       isUpcoming={props.isUpcoming}
