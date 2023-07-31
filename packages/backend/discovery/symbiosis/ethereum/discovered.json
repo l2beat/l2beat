@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "symbiosis",
   "blockNumber": 17591702,
-  "configHash": "0x62d6f63adb151f1afb4be5faa7548c043199b3a28b6f9f0f2a570c146c8331bd",
+  "configHash": "0x76ac800bea8c8e3ad26c2f2f0f0be1944a388c050021f68d01c117b9313373f9",
   "version": 1,
   "contracts": [
     {

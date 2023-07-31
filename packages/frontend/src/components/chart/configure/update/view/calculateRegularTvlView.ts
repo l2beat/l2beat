@@ -19,7 +19,6 @@ export function calculateRegularTvlView(
   const dateRange = formatRange(entries[0][0], entries[entries.length - 1][0])
   const { labels, getY } = getYAxis(
     entries.map((x) => (controls.currency === 'usd' ? x[1] : x[2])),
-    controls.labelCount,
     controls.isLogScale,
     (x) => formatCurrency(x, controls.currency),
   )

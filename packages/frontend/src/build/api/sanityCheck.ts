@@ -128,9 +128,7 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
     'ethereum',
     'dydx',
     'arbitrum',
-    // 'immutablex',
     'optimism',
-    // 'sorare',
     'starknet',
   ]
 

@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "publicgoodsnetwork",
   "blockNumber": 17782704,
-  "configHash": "0x503556f192d981901ac0206cda7491ade88ac4884649e1c6714f01259a49fb5a",
+  "configHash": "0xa72dcbe7ab373160599e13740ee5fa75dcf24498412a1176cb086c79eb69dcc0",
   "version": 1,
   "contracts": [
     {

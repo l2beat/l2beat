@@ -1,3 +1,5 @@
+import { ChainId } from '@l2beat/shared-pure'
+
 export type CliParameters =
   | ServerCliParameters
   | DiscoverCliParameters
@@ -11,13 +13,15 @@ export interface ServerCliParameters {
 export interface DiscoverCliParameters {
   mode: 'discover'
   project: string
+  chain: ChainId
   dryRun: boolean
   dev: boolean
 }
 
 export interface InvertCliParameters {
   mode: 'invert'
-  file: string
+  project: string
+  chain: ChainId
   useMermaidMarkup: boolean
 }
 
@@ -60,12 +64,13 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
 
     if (remaining.length === 0) {
       return { mode: 'help', error: 'Not enough arguments' }
-    } else if (remaining.length > 1) {
+    } else if (remaining.length > 2) {
       return { mode: 'help', error: 'Too many arguments' }
     } else {
       const result: DiscoverCliParameters = {
         mode: 'discover',
-        project: remaining[0],
+        chain: ChainId.getId(remaining[0]),
+        project: remaining[1],
         dryRun,
         dev,
       }
@@ -85,12 +90,13 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
 
     if (remaining.length === 0) {
       return { mode: 'help', error: 'Not enough arguments' }
-    } else if (remaining.length > 1) {
+    } else if (remaining.length > 2) {
       return { mode: 'help', error: 'Too many arguments' }
     } else {
       const result: InvertCliParameters = {
         mode: 'invert',
-        file: remaining[0],
+        chain: ChainId.getId(remaining[0]),
+        project: remaining[1],
         useMermaidMarkup,
       }
       return result

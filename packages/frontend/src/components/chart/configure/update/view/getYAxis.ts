@@ -2,11 +2,12 @@ import { calculateTicks } from './calculateTicks'
 
 export function getYAxis(
   values: number[],
-  labelCount: number,
   isLogScale: boolean,
   format: (value: number) => string,
 ) {
-  const ticks = calculateTicks(labelCount, values, isLogScale)
+  const LABEL_COUNT = 5
+
+  const ticks = calculateTicks(LABEL_COUNT, values, isLogScale)
   const labels = ticks.map(format)
   const min = ticks[0]
   const max = ticks[ticks.length - 1]

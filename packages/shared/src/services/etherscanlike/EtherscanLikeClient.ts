@@ -1,15 +1,21 @@
 import {
+  EthereumAddress,
   getErrorMessage,
+  Hash256,
   RateLimiter,
   stringAsInt,
   UnixTime,
 } from '@l2beat/shared-pure'
 
 import { Logger } from '../../tools'
+import {
+  ContractCreatorAndCreationTxHashResult,
+  ContractSourceResult,
+} from '../etherscan/model'
 import { HttpClient } from '../HttpClient'
 import { parseEtherscanResponse } from './model'
 
-export class EtherscanError extends Error {}
+class EtherscanError extends Error {}
 
 export class EtherscanLikeClient {
   private readonly rateLimiter = new RateLimiter({
@@ -62,6 +68,21 @@ export class EtherscanLikeClient {
     }
 
     throw new Error('Could not fetch block number')
+  }
+
+  async getContractSource(address: EthereumAddress) {
+    const response = await this.call('contract', 'getsourcecode', {
+      address: address.toString(),
+    })
+    return ContractSourceResult.parse(response)[0]
+  }
+
+  async getContractDeploymentTx(address: EthereumAddress): Promise<Hash256> {
+    const response = await this.call('contract', 'getcontractcreation', {
+      contractaddresses: address.toString(),
+    })
+
+    return ContractCreatorAndCreationTxHashResult.parse(response)[0].txHash
   }
 
   async call(module: string, action: string, params: Record<string, string>) {

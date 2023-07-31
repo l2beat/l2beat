@@ -2,18 +2,20 @@ import type { Milestone } from '@l2beat/config'
 
 import {
   ActivityResponse,
+  AggregateDetailedTvlResponse,
   AggregateTvlResponse,
   TokenTvlResponse,
 } from './state/State'
 
 export interface InitMessage {
   type: 'Init'
-  initialView: 'tvl' | 'activity'
+  initialView: 'tvl' | 'detailedTvl' | 'activity'
   pagePathname: string
   days: number
   currency: 'usd' | 'eth'
   aggregateTvlEndpoint?: string
   alternativeTvlEndpoint?: string
+  detailedAggregateTvlEndpoint?: string
   activityEndpoint?: string
   showEthereum?: boolean
   labelCount: number
@@ -23,7 +25,7 @@ export interface InitMessage {
 
 export interface ViewChangedMessage {
   type: 'ViewChanged'
-  view: 'tvl' | 'activity'
+  view: 'tvl' | 'detailedTvl' | 'activity'
 }
 
 export interface DaysChangedMessage {
@@ -82,6 +84,17 @@ export interface AggregateTvlFailedMessage {
   requestId: number
 }
 
+export interface AggregateDetailedTvlLoadedMessage {
+  type: 'AggregateDetailedTvlLoaded'
+  requestId: number
+  data: AggregateDetailedTvlResponse
+}
+
+export interface AggregateDetailedTvlFailedMessage {
+  type: 'AggregateDetailedTvlFailed'
+  requestId: number
+}
+
 export interface AlternativeTvlLoadedMessage {
   type: 'AlternativeTvlLoaded'
   requestId: number
@@ -121,6 +134,11 @@ export interface LoaderTimedOutMessage {
   requestId: number
 }
 
+export interface ThemeChangedMessage {
+  type: 'ThemeChanged'
+  isDarkMode: boolean
+}
+
 export type Message =
   | InitMessage
   | ViewChangedMessage
@@ -133,6 +151,8 @@ export type Message =
   | MouseMovedMessage
   | MouseExitedMessage
   | MoreTokensClickedMessage
+  | AggregateDetailedTvlLoadedMessage
+  | AggregateDetailedTvlFailedMessage
   | AggregateTvlLoadedMessage
   | AggregateTvlFailedMessage
   | AlternativeTvlLoadedMessage
@@ -142,3 +162,4 @@ export type Message =
   | ActivityLoadedMessage
   | ActivityFailedMessage
   | LoaderTimedOutMessage
+  | ThemeChangedMessage

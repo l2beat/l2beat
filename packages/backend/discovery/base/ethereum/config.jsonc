@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "base",
   "initialAddresses": [
     "0x608d94945A64503E642E6370Ec598e519a2C1E53",

@@ -4,6 +4,12 @@ export interface FetchAggregateTvlEffect {
   url: string
 }
 
+export interface FetchDetailedAggregateTvlEffect {
+  type: 'FetchDetailedAggregateTvl'
+  requestId: number
+  url: string
+}
+
 export interface FetchAlternativeTvlEffect {
   type: 'FetchAlternativeTvl'
   requestId: number
@@ -25,6 +31,7 @@ export interface FetchActivityEffect {
 
 export type Effect =
   | FetchAggregateTvlEffect
+  | FetchDetailedAggregateTvlEffect
   | FetchAlternativeTvlEffect
   | FetchTokenTvlEffect
   | FetchActivityEffect

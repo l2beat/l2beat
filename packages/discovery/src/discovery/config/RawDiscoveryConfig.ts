@@ -1,4 +1,9 @@
-import { EthereumAddress, ManualProxyType, stringAs } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  ManualProxyType,
+  stringAs,
+} from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'
@@ -21,6 +26,7 @@ export const DiscoveryContract = z.object({
 export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
 export const RawDiscoveryConfig = z.object({
   name: z.string().min(1),
+  chain: stringAs((s) => ChainId.getId(s)),
   initialAddresses: z.array(stringAs(EthereumAddress)),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number().positive()),

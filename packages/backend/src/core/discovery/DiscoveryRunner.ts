@@ -3,6 +3,7 @@ import {
   diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
+  DiscoveryProvider,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
@@ -16,9 +17,19 @@ export interface DiscoveryRunnerOptions {
 
 export class DiscoveryRunner {
   constructor(
+    private readonly discoveryProvider: DiscoveryProvider,
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly configReader: ConfigReader,
+    private readonly chainId: ChainId,
   ) {}
+
+  async getBlockNumber(): Promise<number> {
+    return this.discoveryProvider.getBlockNumber()
+  }
+
+  getChainId(): ChainId {
+    return this.chainId
+  }
 
   async run(
     projectConfig: DiscoveryConfig,
@@ -35,6 +46,8 @@ export class DiscoveryRunner {
       await this.sanityCheck(discovery, config, blockNumber)
     }
 
+    // TODO retry if error is Etherscan timeout
+
     return discovery
   }
 
@@ -49,7 +62,13 @@ export class DiscoveryRunner {
     histogramDone({ project: config.name })
     latestBlock.set({ project: config.name }, blockNumber)
 
-    return toDiscoveryOutput(config.name, config.hash, blockNumber, result)
+    return toDiscoveryOutput(
+      config.name,
+      config.chainId,
+      config.hash,
+      blockNumber,
+      result,
+    )
   }
 
   // 3rd party APIs are unstable, so we do a sanity check before sending

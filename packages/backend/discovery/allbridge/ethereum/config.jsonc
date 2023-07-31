@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "allbridge",
   "initialAddresses": [
     "0xA314330482f325D38A83B492EF6B006224a3bea9",

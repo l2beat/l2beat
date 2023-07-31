@@ -4,6 +4,7 @@ import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { base } from './base'
 import { bobanetwork } from './bobanetwork'
+import { brine } from './brine'
 import { canvasconnect } from './canvasconnect'
 import { cartesiHoneypot } from './cartesiHoneypot'
 import { HOMEPAGE_MILESTONES } from './common'
@@ -50,6 +51,7 @@ export const layer2s: Layer2[] = [
   aztecconnect,
   base,
   bobanetwork,
+  brine,
   canvasconnect,
   cartesiHoneypot,
   degate,
