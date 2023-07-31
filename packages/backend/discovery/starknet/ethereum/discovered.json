@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "starknet",
   "blockNumber": 17770459,
-  "configHash": "0xd7615732d1df767835afc179fb14089e53e2d6a26764ff6aeb0d2094d07dc50a",
+  "configHash": "0xeca029c883d3f62ceabae1cf9fd132a44b6781d20439ee04e12de6ac147a5990",
   "version": 1,
   "contracts": [
     {

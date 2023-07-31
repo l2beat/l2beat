@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "deversifi",
   "initialAddresses": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"],
   "names": {

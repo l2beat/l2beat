@@ -1,6 +1,6 @@
 import { DiscoveryDiff } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
@@ -44,19 +44,20 @@ describe(UpdateNotifier.name, () => {
         dependents,
         blockNumber: BLOCK,
         unknownContracts: [],
+        chainId: ChainId.ETHEREUM,
       })
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '> #0000 (block_number=123)\n\n***project-a*** | detected changes```diff\nContract | ' +
+        '> #0000 (block_number=123)\n\n***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
           address.toString() +
           '\n\nA\n- 1\n+ 2\n\n```',
         'INTERNAL',
       )
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         2,
-        '***project-a*** | detected changes```diff\nContract | ' +
+        '***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
           address.toString() +
           '\n\nA\n- 1\n+ 2\n\n```',
         'PUBLIC',
@@ -101,12 +102,13 @@ describe(UpdateNotifier.name, () => {
         dependents,
         blockNumber: BLOCK,
         unknownContracts: [],
+        chainId: ChainId.ETHEREUM,
       })
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '> #0000 (block_number=123)\n\n***project-a*** | detected changes```diff\nContract | ' +
+        '> #0000 (block_number=123)\n\n***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
           address.toString() +
           '\n\nerrors\n+ Execution reverted\n\n```',
         'INTERNAL',

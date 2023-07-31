@@ -1,7 +1,9 @@
 {
+  "chain": "ethereum",
   "name": "allbridge",
+  "chain": "ethereum",
   "blockNumber": 17321271,
-  "configHash": "0x66fed3959766deaee9440241feb2582ea84a16273e57a8e5dbd689d9ba5a22f5",
+  "configHash": "0x93d4ddbdf45c48e50296f6ea9e52c0c535908ed407738973689e4d9f45a7b2ad",
   "contracts": [
     {
       "name": "USDC_POOL",

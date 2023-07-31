@@ -21,6 +21,10 @@ export class DiscoveryConfig {
     return this.config.name
   }
 
+  get chainId() {
+    return this.config.chain
+  }
+
   get initialAddresses() {
     return this.config.initialAddresses
   }

@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "polygon-pos",
   "initialAddresses": [
     // StateSender
