@@ -18,14 +18,14 @@ export function createDiscoveryRunner(
   http: HttpClient,
   configReader: ConfigReader,
   discoveryLogger: DiscoveryLogger,
-  config: UpdateMonitorChainConfig,
+  chainConfig: UpdateMonitorChainConfig,
 ) {
-  const provider = new providers.StaticJsonRpcProvider(config.rpcUrl)
+  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
   const etherscanLikeClient = new EtherscanLikeClient(
     http,
-    config.etherscanUrl,
-    config.etherscanApiKey,
-    config.minTimestamp,
+    chainConfig.etherscanUrl,
+    chainConfig.etherscanApiKey,
+    chainConfig.minTimestamp,
   )
 
   const discoveryProvider = new DiscoveryProvider(provider, etherscanLikeClient)
@@ -48,7 +48,7 @@ export function createDiscoveryRunner(
     discoveryProvider,
     discoveryEngine,
     configReader,
-    config.chainId,
+    chainConfig.chainId,
   )
 
   return discoveryRunner
