@@ -107,16 +107,15 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title: 'Total value locked',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
-      value:
-        !props.isUpcoming && props.tvlStats && props.tvlStats.tvlChange ? (
-          <StatWithChange
-            className="font-bold"
-            stat={props.tvlStats.tvl}
-            change={props.tvlStats.tvlChange}
-          />
-        ) : (
-          <UpcomingBadge />
-        ),
+      value: !props.isUpcoming ? (
+        <StatWithChange
+          className="font-bold"
+          stat={props.tvlStats.tvl}
+          change={props.tvlStats.tvlChange}
+        />
+      ) : (
+        <UpcomingBadge />
+      ),
     })
   }
 
