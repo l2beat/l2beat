@@ -103,4 +103,16 @@ export class ReportStatusRepository extends BaseRepository {
 
     return UnixTime.fromDate(row.max)
   }
+
+  async findAnyLatestTimestamp(): Promise<UnixTime | undefined> {
+    const knex = await this.knex()
+    const row = (await knex('reports_status').max('unix_timestamp').first()) as
+      | NullableDict<Date>
+      | undefined
+    if (!row || row.max === null) {
+      return
+    }
+
+    return UnixTime.fromDate(row.max)
+  }
 }
