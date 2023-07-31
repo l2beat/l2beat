@@ -1,7 +1,6 @@
 {
   "chain": "ethereum",
   "name": "across-v2",
-  "chain": "ethereum",
   "blockNumber": 17494607,
   "configHash": "0xcb59c3b84210bb0169461c8730dc1615c59ab20789594eca701e4ccd032ebd89",
   "version": 1,
@@ -97,7 +96,7 @@
       },
       "values": {
         "isOwner": false,
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+        "owner": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
       }
     },
     {
