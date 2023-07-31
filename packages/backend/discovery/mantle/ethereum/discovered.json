@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "mantle",
   "blockNumber": 17811342,
   "configHash": "0xafcfc38b24fd078a62ddc8f72ff8b59a92bd1b7a0716a1b89733f8f6918406de",

@@ -2,12 +2,15 @@ import chalk from 'chalk'
 
 const usage = `Usage:
     yarn start ...................................... run the server application
-    yarn discover [project] ................. run discovery on a specific system
-    yarn discover [project] --dry-run ..... check simulated discovery bot output
-    yarn discover [project] --dev ..... run on the same block number as in .json
-    yarn invert [project] ..................... print addresses and their functions
-    yarn invert [project] --mermaid .................... print mermaid graph markup
+    yarn discover [chain] [project] ................. run discovery on a specific system
+    yarn discover [chain] [project] --dry-run ..... check simulated discovery bot output
+    yarn discover [chain] [project] --dev ..... run on the same block number as in .json
+    yarn invert [chain] [project] ..................... print addresses and their functions
+    yarn invert [chain] [project] --mermaid .................... print mermaid graph markup
     yarn <start|discover> --help .......................... display this message
+
+    supported chains:
+      - ethereum
 `
 const colorUsage = usage
   .replace(/ \.+ /g, (x) => chalk.dim(x))

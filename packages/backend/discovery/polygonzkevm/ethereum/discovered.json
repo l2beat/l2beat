@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "polygonzkevm",
   "blockNumber": 17321205,
-  "configHash": "0xc6b0d3a532d2e382ce8cbf776c9449e721c67b2ef54cfc152e2d7a1f265cd13d",
+  "configHash": "0x43e651fe1c268ac0de6b340bf40139e7b547454c95a20c3d6b625dd9205ba41c",
   "contracts": [
     {
       "name": "ProxyAdmin",

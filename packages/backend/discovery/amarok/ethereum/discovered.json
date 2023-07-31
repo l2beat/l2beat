@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "amarok",
   "blockNumber": 17811145,
   "configHash": "0x2dcefb3de1daedddc43a33fa7df85593535d0ddb152e622a9efd4b101d74b95d",

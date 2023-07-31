@@ -1,16 +1,18 @@
-import { DiscoveryOutput, Hash256 } from '@l2beat/shared-pure'
+import { ChainId, DiscoveryOutput, Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
 
 export function toDiscoveryOutput(
   configName: string,
+  chainId: ChainId,
   configHash: Hash256,
   blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
   return {
     name: configName,
+    chain: ChainId.getName(chainId),
     blockNumber,
     configHash,
     version: DISCOVERY_LOGIC_VERSION,
@@ -20,7 +22,10 @@ export function toDiscoveryOutput(
 
 export function processAnalysis(
   results: Analysis[],
-): Omit<DiscoveryOutput, 'name' | 'blockNumber' | 'configHash' | 'version'> {
+): Omit<
+  DiscoveryOutput,
+  'name' | 'blockNumber' | 'configHash' | 'version' | 'chain'
+> {
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
 

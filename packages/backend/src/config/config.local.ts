@@ -1,6 +1,6 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { getEnv, LogLevel } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
 import { bridgeToProject, layer2ToProject } from '../model'
@@ -110,16 +110,23 @@ export function getLocalConfig(): Config {
         },
       },
     },
+    statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
     updateMonitor: updateMonitorEnabled && {
       runOnStart: getEnv.boolean('UPDATE_MONITOR_RUN_ON_START', true),
-      alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
-      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),
         publicChannelId: process.env.PUBLIC_DISCORD_CHANNEL_ID,
         internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
       },
+      chains: [
+        {
+          chainId: ChainId.ETHEREUM,
+          rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
+          etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
+          etherscanUrl: EtherscanClient.API_URL,
+          minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+        },
+      ],
     },
-    statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
   }
 }

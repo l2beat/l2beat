@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "apex",
   "blockNumber": 17705531,
-  "configHash": "0xc2f23013f7c833b9b05b7e6a2e6589086aba4064022f82d0e8cc17867ab5db3c",
+  "configHash": "0xf318b1d0c2dad0392e1b6e4d71389461b890be5513385cf3cb3cd32804f37186",
   "version": 1,
   "contracts": [
     {

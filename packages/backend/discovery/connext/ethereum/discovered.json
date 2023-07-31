@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "connext",
   "blockNumber": 17129653,
-  "configHash": "0x4184fa16a46aa45c6c80f00e426dc7c874d3949cff8b9d353c63c2e88b208638",
+  "configHash": "0xdcf91d8c4968003c2e4d896e5f39e668d06ba2866c5a0383fa2be56a70ca45ac",
   "contracts": [
     {
       "name": "TransactionManager",

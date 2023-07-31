@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "nova",
   "blockNumber": 17334354,
-  "configHash": "0xfc4a858e2b7762d6759244e76983e04323841e5bba9d0b464385fa7fb33a7aad",
+  "configHash": "0xd4b348366a8456f491830ae0fdf771dd5ea73bc386089f18146979b5640add06",
   "contracts": [
     {
       "name": "OneStepProverMath",

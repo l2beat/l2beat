@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
@@ -16,6 +16,7 @@ describe(DiscoveryEngine.name, () => {
   it('can perform a discovery', async () => {
     const config = new DiscoveryConfig({
       name: 'test',
+      chain: ChainId.ETHEREUM,
       initialAddresses: [A],
       overrides: { [B.toString()]: { ignoreDiscovery: true } },
     })

@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "myria",
   "initialAddresses": ["0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"],
   "names": {

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { Hash256, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../../test/database'
@@ -21,12 +21,14 @@ describe(UpdateMonitorRepository.name, () => {
   it(UpdateMonitorRepository.prototype.findLatest.name, async () => {
     const projectName = 'project'
 
-    const expected: UpdateMonitorRecord = {
+    const expectedEth: UpdateMonitorRecord = {
       projectName,
+      chainId: ChainId.ETHEREUM,
       blockNumber: -1,
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
+        chain: ChainId.getName(ChainId.ETHEREUM),
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -38,10 +40,33 @@ describe(UpdateMonitorRepository.name, () => {
       version: 0,
     }
 
-    await repository.addOrUpdate(expected)
-    const result = await repository.findLatest(projectName)
+    const expectedArb: UpdateMonitorRecord = {
+      projectName,
+      chainId: ChainId.ARBITRUM,
+      blockNumber: -1,
+      timestamp: new UnixTime(0),
+      discovery: {
+        name: projectName,
+        chain: ChainId.getName(ChainId.ETHEREUM),
+        blockNumber: -1,
+        configHash: Hash256.random(),
+        contracts: [],
+        eoas: [],
+        abis: {},
+        version: 0,
+      },
+      configHash: CONFIG_HASH,
+      version: 0,
+    }
 
-    expect(result).toEqual(expected)
+    await repository.addOrUpdate(expectedEth)
+    await repository.addOrUpdate(expectedArb)
+
+    const resultEth = await repository.findLatest(projectName, ChainId.ETHEREUM)
+    const resultArb = await repository.findLatest(projectName, ChainId.ARBITRUM)
+
+    expect(resultEth).toEqual(expectedEth)
+    expect(resultArb).toEqual(expectedArb)
   })
 
   it(UpdateMonitorRepository.prototype.addOrUpdate.name, async () => {
@@ -49,10 +74,12 @@ describe(UpdateMonitorRepository.name, () => {
 
     const discovery: UpdateMonitorRecord = {
       projectName,
+      chainId: ChainId.ETHEREUM,
       blockNumber: -1,
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
+        chain: ChainId.getName(ChainId.ETHEREUM),
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -67,7 +94,7 @@ describe(UpdateMonitorRepository.name, () => {
 
     const updated: UpdateMonitorRecord = { ...discovery, blockNumber: 1 }
     await repository.addOrUpdate(updated)
-    const latest = await repository.findLatest(projectName)
+    const latest = await repository.findLatest(projectName, ChainId.ETHEREUM)
 
     expect(latest).toEqual(updated)
   })
