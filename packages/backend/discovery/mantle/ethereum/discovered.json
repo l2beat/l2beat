@@ -1,7 +1,7 @@
 {
   "name": "mantle",
-  "blockNumber": 17782821,
-  "configHash": "0x72fa50b582325fd738a6aa21546e4966653323124de66989dbd978cfd7f07faa",
+  "blockNumber": 17811342,
+  "configHash": "0xafcfc38b24fd078a62ddc8f72ff8b59a92bd1b7a0716a1b89733f8f6918406de",
   "version": 1,
   "contracts": [
     {
@@ -61,13 +61,13 @@
         "batches": "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 17782741,
-        "getLastTimestamp": 1690441576,
-        "getNextQueueIndex": 4672,
-        "getNumPendingQueueElements": 3,
-        "getQueueLength": 4675,
-        "getTotalBatches": 2063,
-        "getTotalElements": 231074,
+        "getLastBlockNumber": 17811249,
+        "getLastTimestamp": 1690786276,
+        "getNextQueueIndex": 5717,
+        "getNumPendingQueueElements": 2,
+        "getQueueLength": 5719,
+        "getTotalBatches": 2446,
+        "getTotalElements": 414544,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -106,7 +106,7 @@
           "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
         ],
         "getThreshold": 3,
-        "nonce": 41,
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -306,14 +306,14 @@
         "dataManageAddress": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
         "FRAUD_STRING": "0x2d2d5468697320697320612062616420737472696e672e204e6f626f64792073617973207468697320737472696e672e2d2d",
         "fraudProofPeriod": 3600,
-        "getL2ConfirmedBlockNumber": 231075,
-        "getL2StoredBlockNumber": 231075,
-        "l2ConfirmedBlockNumber": 231075,
-        "l2StoredBlockNumber": 231075,
+        "getL2ConfirmedBlockNumber": 414545,
+        "getL2StoredBlockNumber": 414545,
+        "l2ConfirmedBlockNumber": 414545,
+        "l2StoredBlockNumber": 414545,
         "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "reRollupIndex": 0,
         "reSubmitterAddress": "0x630E93130809c4acE55249229Ee6B043b929A9Ad",
-        "rollupBatchIndex": 2071,
+        "rollupBatchIndex": 2449,
         "sequencer": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
       },
       "derivedName": "BVM_EigenDataLayrChain"
@@ -338,8 +338,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x0000000000000000010f57d50064c21768000000124000000386a2",
-        "length": 2063,
+        "getGlobalMetadata": "0x0000000000000000010fc7310064c759e400000016550000065350",
+        "length": 2446,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "owner": "CanonicalTransactionChain"
       },
@@ -482,9 +482,9 @@
         "batches": "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
         "FRAUD_PROOF_WINDOW": 604800,
         "getFraudProofWindow": 604800,
-        "getLastSequencerTimestamp": 1690441595,
-        "getTotalBatches": 1357,
-        "getTotalElements": 230395,
+        "getLastSequencerTimestamp": 1690785383,
+        "getTotalBatches": 1537,
+        "getTotalElements": 413377,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "messenger": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
@@ -629,11 +629,11 @@
           0,
           0
         ],
-        "confirmedInboxSize": 230395,
+        "confirmedInboxSize": 413377,
         "currentRequiredStake": 0,
-        "lastConfirmedAssertionID": 1357,
-        "lastCreatedAssertionID": 1357,
-        "lastResolvedAssertionID": 1357,
+        "lastConfirmedAssertionID": 1537,
+        "lastCreatedAssertionID": 1537,
+        "lastResolvedAssertionID": 1537,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "minimumAssertionPeriod": 0,
         "numStakers": 2,
@@ -660,8 +660,8 @@
         "type": "immutable"
       },
       "values": {
-        "getGlobalMetadata": "0x00000000000000000000000000000000000064c2177b00000383fb",
-        "length": 1357,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000064c756670000064ec1",
+        "length": 1537,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "owner": "StateCommitmentChain"
       },
