@@ -110,12 +110,12 @@ export function covertBalancesToChartPoints(
         bit.usdNmv,
       ].map((usdBalance) => asNumber(usdBalance, USD_DECIMALS))
 
-      const [assetTvl, assetCbv, assetEbv, assetNmv] = [
-        bit.usdTvl,
-        bit.usdCbv,
-        bit.usdEbv,
-        bit.usdNmv,
-      ].map((usdBalance) => asNumber(usdBalance, decimals))
+      const [ethTvl, ethCbv, ethEbv, ethNmv] = [
+        bit.ethTvl,
+        bit.ethCbv,
+        bit.ethEbv,
+        bit.ethNmv,
+      ].map((ethBalance) => asNumber(ethBalance, decimals))
 
       return usdFirst
         ? [
@@ -124,17 +124,17 @@ export function covertBalancesToChartPoints(
             usdCbv,
             usdEbv,
             usdNmv,
-            assetTvl,
-            assetCbv,
-            assetEbv,
-            assetNmv,
+            ethTvl,
+            ethCbv,
+            ethEbv,
+            ethNmv,
           ]
         : [
             bit.timestamp,
-            assetTvl,
-            assetCbv,
-            assetEbv,
-            assetNmv,
+            ethTvl,
+            ethCbv,
+            ethEbv,
+            ethNmv,
             usdTvl,
             usdCbv,
             usdEbv,
