@@ -1,5 +1,9 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { DetailedTvlApiResponse, TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import {
+  DetailedTvlApiResponse,
+  TvlApiResponse,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'

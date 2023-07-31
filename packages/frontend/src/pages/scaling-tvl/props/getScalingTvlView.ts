@@ -1,5 +1,9 @@
 import { Layer2 } from '@l2beat/config'
-import { DetailedTvlApiResponse, TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import {
+  DetailedTvlApiResponse,
+  TvlApiResponse,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'

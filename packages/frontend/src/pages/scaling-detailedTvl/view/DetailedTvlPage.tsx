@@ -37,7 +37,10 @@ export function DetailedTvlPage(props: DetailedTvlPageProps) {
         />
         <main>
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />
-          <Chart detailedTvlEndpoint={props.detailedTvlEndpoint} type={'detailedTvl'} />
+          <Chart
+            detailedTvlEndpoint={props.detailedTvlEndpoint}
+            type={'detailedTvl'}
+          />
           <DetailedTvlView {...props.detailedTvlView} />
           <OtherSites />
           <About />

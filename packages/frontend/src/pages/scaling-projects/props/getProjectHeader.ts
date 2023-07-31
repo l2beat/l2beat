@@ -1,5 +1,9 @@
 import { Layer2, ProjectLinks } from '@l2beat/config'
-import { ActivityApiResponse, DetailedTvlApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  DetailedTvlApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
 import { TvlStats } from '../../../components/header/TvlSummary'

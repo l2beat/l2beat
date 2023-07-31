@@ -29,7 +29,10 @@ export function getChart(
   }
 }
 
-function getTokens(projectId: ProjectId, tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse) {
+function getTokens(
+  projectId: ProjectId,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+) {
   return tvlApiResponse.projects[projectId.toString()]?.tokens
     .map(({ assetId, tvl }) => {
       const symbol = safeGetTokenByAssetId(assetId)?.symbol

@@ -18,7 +18,9 @@ const layer2s = allLayer2s
 
 export type TvlProjectData = [string, TvlApiCharts]
 
-export function tvlSanityCheck(tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse) {
+export function tvlSanityCheck(
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+) {
   const projectsInApi = Object.keys(tvlApiResponse.projects).map(ProjectId)
 
   const bridgesInApi = bridges.filter((x) => projectsInApi.includes(x.id))
@@ -46,6 +48,7 @@ export function tvlSanityCheck(tvlApiResponse: TvlApiResponse | DetailedTvlApiRe
     ['combined', tvlApiResponse.combined],
     ...Object.entries(tvlApiResponse.projects)
       .filter(([id]) => ids.includes(id))
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       .map(([id, project]) => [id, project?.charts] as const),
   ] as TvlProjectData[]
 
@@ -73,7 +76,7 @@ export function checkIfDelayedTvl(
   allProjects: TvlProjectData[],
   now: UnixTime,
 ) {
-    return;
+  return
   const delayedProjects = allProjects
     .map(([name, charts]) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

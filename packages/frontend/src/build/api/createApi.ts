@@ -38,7 +38,10 @@ export function createApi(
     const projectTvlData = tvlApiResponse.projects[project.id.toString()]
     if (projectTvlData) {
       urlCharts.set(`${project.display.slug}-tvl`, projectTvlData.charts)
-      urlCharts.set(`${project.display.slug}-detailed-tvl`, projectTvlData.charts)
+      urlCharts.set(
+        `${project.display.slug}-detailed-tvl`,
+        projectTvlData.charts,
+      )
     }
   }
   urlCharts.set(`placeholder-tvl`, PLACEHOLDER_API_DATA)

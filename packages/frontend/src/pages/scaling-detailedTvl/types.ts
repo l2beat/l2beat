@@ -17,6 +17,8 @@ export interface DetailedTvlViewEntry {
   cbv?: string
   ebv?: string
   nmv?: string
-  oneDayChange?: string
-  sevenDayChange?: string
+  tvlChange?: string
+  ebvChange?: string
+  cbvChange?: string
+  nmvChange?: string
 }

@@ -5,6 +5,7 @@ import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
 import { StageCell } from '../../stages/StageCell'
 import { IndexCell } from '../IndexCell'
+import { NonZeroDiffedNumberCell } from '../NonZeroDiffedNumberCell'
 import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
@@ -125,12 +126,10 @@ export function getScalingDetailedTvlColumns() {
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <>
-          <NumberCell className="font-bold">{project.tvl}</NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
+        <NonZeroDiffedNumberCell
+          value={project.tvl}
+          percentChange={project.tvlChange}
+        />
       ),
     },
     {
@@ -141,12 +140,10 @@ export function getScalingDetailedTvlColumns() {
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <>
-          <NumberCell className="font-bold">{project.cbv}</NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
+        <NonZeroDiffedNumberCell
+          value={project.cbv}
+          percentChange={project.cbvChange}
+        />
       ),
     },
     {
@@ -157,12 +154,10 @@ export function getScalingDetailedTvlColumns() {
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <>
-          <NumberCell className="font-bold">{project.ebv}</NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
+        <NonZeroDiffedNumberCell
+          value={project.ebv}
+          percentChange={project.ebvChange}
+        />
       ),
     },
     {
@@ -173,12 +168,10 @@ export function getScalingDetailedTvlColumns() {
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <>
-          <NumberCell className="font-bold">{project.nmv}</NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
+        <NonZeroDiffedNumberCell
+          value={project.nmv}
+          percentChange={project.nmvChange}
+        />
       ),
     },
   ]

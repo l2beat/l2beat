@@ -174,7 +174,12 @@ function fetchThenDispatch(
   successMessage: (data: any) => Message,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errorMessage: (error: any) => Message,
-  schema: ZodSchema<AggregateTvlResponse | TokenTvlResponse | ActivityResponse | AggregateDetailedTvlResponse>,
+  schema: ZodSchema<
+    | AggregateTvlResponse
+    | TokenTvlResponse
+    | ActivityResponse
+    | AggregateDetailedTvlResponse
+  >,
 ) {
   fetch(url)
     .then((res) => res.json())

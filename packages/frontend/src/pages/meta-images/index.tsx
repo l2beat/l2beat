@@ -1,4 +1,8 @@
-import { ActivityApiResponse, DetailedTvlApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  DetailedTvlApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import React from 'react'
 
