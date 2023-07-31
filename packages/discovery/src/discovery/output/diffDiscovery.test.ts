@@ -1,4 +1,8 @@
-import { ContractParameters, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  ContractParameters,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
@@ -90,6 +94,7 @@ describe(diffDiscovery.name, () => {
     ]
     const config = new DiscoveryConfig({
       name: '',
+      chain: ChainId.ETHEREUM,
       initialAddresses: [],
       overrides: {
         [ADDRESS_A.toString()]: {

@@ -1,9 +1,15 @@
-import { AggregateTvlResponse, TokenTvlResponse } from '../../state/State'
+import {
+  AggregateDetailedTvlResponse,
+  AggregateTvlResponse,
+  TokenTvlResponse,
+} from '../../state/State'
 
-export function getAppropriateEntries(
-  days: number,
-  response: AggregateTvlResponse | TokenTvlResponse,
-) {
+export function getAppropriateEntries<
+  ResponseType extends
+    | AggregateTvlResponse
+    | TokenTvlResponse
+    | AggregateDetailedTvlResponse,
+>(days: number, response: ResponseType): ResponseType['hourly']['data'] {
   if (days <= 7) {
     return response.hourly.data.slice(-24 * days)
   } else if (days <= 90) {

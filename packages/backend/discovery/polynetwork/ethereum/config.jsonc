@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "polynetwork",
   "initialAddresses": ["0x81910675dbaf69dee0fd77570bfd07f8e436386a"],
   "names": {

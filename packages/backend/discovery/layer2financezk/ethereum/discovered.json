@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "layer2financezk",
   "blockNumber": 17271618,
-  "configHash": "0xaa8ca66a74dd1a33d0a75b1835729ecdf4734d719f3f9292c9a19da34aff2010",
+  "configHash": "0xcaa1cbc5c03ede6a2281b93df0293fc741b921d5ec4594bef060e7fddcf5817c",
   "contracts": [
     {
       "name": "GnosisSafe",

@@ -5,6 +5,7 @@ import { Hash256 } from './Hash256'
 
 export interface DiscoveryOutput {
   name: string
+  chain: string
   blockNumber: number
   contracts: ContractParameters[]
   eoas: EthereumAddress[]

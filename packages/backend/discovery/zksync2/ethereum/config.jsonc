@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "zksync2",
   "initialAddresses": [
     "0x32400084C286CF3E17e7B677ea9583e60a000324",

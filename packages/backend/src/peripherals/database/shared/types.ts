@@ -87,6 +87,7 @@ declare module 'knex/types/tables' {
 
   interface UpdateMonitorRow {
     project_name: string
+    chain_id: number
     block_number: number
     unix_timestamp: Date
     discovery_json_blob: string

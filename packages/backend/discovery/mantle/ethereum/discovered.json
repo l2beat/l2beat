@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "mantle",
   "blockNumber": 17782821,
-  "configHash": "0x72fa50b582325fd738a6aa21546e4966653323124de66989dbd978cfd7f07faa",
+  "configHash": "0x2fc3922d9ddc139c5d4597677b6e44b018f44b407ddd1a0cbefaa9c91e462f73",
   "version": 1,
   "contracts": [
     {

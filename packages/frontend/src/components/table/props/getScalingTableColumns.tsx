@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { DetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
 import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
 import { StageCell } from '../../stages/StageCell'
@@ -96,6 +97,89 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
         project.tvlBreakdown && (
           <NumberCell className="pr-4">{project.marketShare}</NumberCell>
         ),
+    },
+  ]
+
+  return columns
+}
+
+export function getScalingDetailedTvlColumns() {
+  const columns: ColumnConfig<DetailedTvlViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'md:pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      getValue: (project) => <ProjectCell type="layer2" project={project} />,
+    },
+    {
+      name: 'TVL',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+      alignRight: true,
+      noPaddingRight: true,
+      headClassName: '-translate-x-[72px]',
+      getValue: (project) => (
+        <>
+          <NumberCell className="font-bold">{project.tvl}</NumberCell>
+          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
+            {project.sevenDayChange}
+          </NumberCell>
+        </>
+      ),
+    },
+    {
+      name: 'CBV',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+      alignRight: true,
+      noPaddingRight: true,
+      headClassName: '-translate-x-[72px]',
+      getValue: (project) => (
+        <>
+          <NumberCell className="font-bold">{project.cbv}</NumberCell>
+          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
+            {project.sevenDayChange}
+          </NumberCell>
+        </>
+      ),
+    },
+    {
+      name: 'EBV',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+      alignRight: true,
+      noPaddingRight: true,
+      headClassName: '-translate-x-[72px]',
+      getValue: (project) => (
+        <>
+          <NumberCell className="font-bold">{project.ebv}</NumberCell>
+          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
+            {project.sevenDayChange}
+          </NumberCell>
+        </>
+      ),
+    },
+    {
+      name: 'NMV',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+      alignRight: true,
+      noPaddingRight: true,
+      headClassName: '-translate-x-[72px]',
+      getValue: (project) => (
+        <>
+          <NumberCell className="font-bold">{project.nmv}</NumberCell>
+          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
+            {project.sevenDayChange}
+          </NumberCell>
+        </>
+      ),
     },
   ]
 

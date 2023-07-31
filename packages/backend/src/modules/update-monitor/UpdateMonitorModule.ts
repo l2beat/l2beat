@@ -1,20 +1,13 @@
 import {
-  AddressAnalyzer,
   ConfigReader,
   DISCOVERY_LOGIC_VERSION,
-  DiscoveryEngine,
   DiscoveryLogger,
-  DiscoveryProvider,
-  HandlerExecutor,
-  ProxyDetector,
-  SourceCodeService,
 } from '@l2beat/discovery'
-import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { providers } from 'ethers'
+import { HttpClient, Logger } from '@l2beat/shared'
 
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
-import { DiscoveryRunner } from '../../core/discovery/DiscoveryRunner'
+import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
 import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
@@ -35,16 +28,9 @@ export function createUpdateMonitorModule(
     return
   }
 
-  const provider = new providers.AlchemyProvider(
-    'mainnet',
-    config.updateMonitor.alchemyApiKey,
-  )
-  const etherscanClient = new EtherscanClient(
-    http,
-    config.updateMonitor.etherscanApiKey,
-    config.clock.minBlockTimestamp,
-  )
-  const discoveryProvider = new DiscoveryProvider(provider, etherscanClient)
+  const configReader = new ConfigReader()
+
+  const discoveryLogger = DiscoveryLogger.SERVER
 
   const discordClient = config.updateMonitor.discord
     ? new DiscordClient(
@@ -59,6 +45,7 @@ export function createUpdateMonitorModule(
     database,
     logger,
   )
+  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
   const updateNotifier = new UpdateNotifier(
     updateNotifierRepository,
@@ -66,31 +53,12 @@ export function createUpdateMonitorModule(
     logger,
   )
 
-  const configReader = new ConfigReader()
-
-  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
-
-  const discoveryLogger = DiscoveryLogger.SERVER
-
-  const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
-  const sourceCodeService = new SourceCodeService(discoveryProvider)
-  const handlerExecutor = new HandlerExecutor(
-    discoveryProvider,
-    discoveryLogger,
+  const runners = config.updateMonitor.chains.map((chainConfig) =>
+    createDiscoveryRunner(http, configReader, discoveryLogger, chainConfig),
   )
-  const addressAnalyzer = new AddressAnalyzer(
-    discoveryProvider,
-    proxyDetector,
-    sourceCodeService,
-    handlerExecutor,
-    discoveryLogger,
-  )
-  const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
-  const discoveryRunner = new DiscoveryRunner(discoveryEngine, configReader)
 
   const updateMonitor = new UpdateMonitor(
-    provider,
-    discoveryRunner,
+    runners,
     updateNotifier,
     configReader,
     updateMonitorRepository,

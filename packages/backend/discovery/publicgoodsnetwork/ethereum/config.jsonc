@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "publicgoodsnetwork",
   "initialAddresses": [
     // improve when fully researched

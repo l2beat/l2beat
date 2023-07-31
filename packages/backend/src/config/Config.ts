@@ -1,6 +1,6 @@
 import { Layer2TransactionApi } from '@l2beat/config'
 import { LogLevel } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project, Token } from '../model'
@@ -91,8 +91,7 @@ export interface MetricsAuthConfig {
 
 export interface UpdateMonitorConfig {
   readonly runOnStart?: boolean
-  readonly alchemyApiKey: string
-  readonly etherscanApiKey: string
+  readonly chains: UpdateMonitorChainConfig[]
   readonly discord:
     | {
         readonly token: string
@@ -100,4 +99,12 @@ export interface UpdateMonitorConfig {
         readonly internalChannelId: string
       }
     | false
+}
+
+export interface UpdateMonitorChainConfig {
+  chainId: ChainId
+  rpcUrl: string
+  etherscanApiKey: string
+  etherscanUrl: string
+  minTimestamp: UnixTime
 }

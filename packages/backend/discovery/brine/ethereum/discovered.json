@@ -1,4 +1,5 @@
 {
+  "chain": "ethereum",
   "name": "brine",
   "blockNumber": 17811467,
   "configHash": "0x3fa734ecb0cd9db7e221c69ef568129e00bbe429f57441f5ebf8f20e7ccb66b7",

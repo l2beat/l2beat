@@ -4,18 +4,19 @@ export function fillBelowChart(
   ctx: CanvasRenderingContext2D,
   points: { x: number; y: number }[],
   canvas: HTMLCanvasElement,
-  fillStyle: CanvasGradient,
+  usableHeight: number,
+  fillStyle: CanvasFillStrokeStyles['fillStyle'],
   opts?: {
     fade: boolean
   },
 ) {
   if (opts?.fade) {
     ctx.globalCompositeOperation = 'source-out'
-    fadeFill(canvas, ctx, points)
+    fadeFill(canvas, usableHeight, ctx, points)
   }
 
   ctx.beginPath()
-  moveToMany(points, ctx, canvas)
+  moveToMany(points, ctx, canvas, usableHeight)
 
   ctx.fillStyle = fillStyle
   ctx.lineTo(canvas.width, canvas.height)
@@ -30,19 +31,25 @@ export function fillBelowChart(
 
 function fadeFill(
   canvas: HTMLCanvasElement,
+  usableHeight: number,
   ctx: CanvasRenderingContext2D,
   points: { x: number; y: number }[],
 ) {
   const darkenGradient = ctx.createLinearGradient(
     0,
-    canvas.height * (1 - getMedianHeight(points)),
+    usableHeight * (1 - getMedianHeight(points)),
     0,
-    canvas.height,
+    usableHeight,
   )
   darkenGradient.addColorStop(0, '#00000000')
   darkenGradient.addColorStop(1, '#000000')
   ctx.fillStyle = darkenGradient
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.fillRect(
+    0,
+    usableHeight - canvas.height,
+    canvas.width,
+    usableHeight + (usableHeight - canvas.height),
+  )
 }
 
 function getMedianHeight(points: { x: number; y: number }[]) {
