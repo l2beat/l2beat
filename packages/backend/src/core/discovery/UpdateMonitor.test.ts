@@ -532,7 +532,7 @@ describe(UpdateMonitor.name, () => {
         // different config hash
         new DiscoveryConfig({
           name: PROJECT_A,
-          chain: ChainId.getName(ChainId.ETHEREUM),
+          chain: ChainId.ETHEREUM,
           initialAddresses: [EthereumAddress.ZERO],
         }),
       )
@@ -625,7 +625,7 @@ function mockContract(
 function mockConfig(name: string, chainId = ChainId.ETHEREUM): DiscoveryConfig {
   return new DiscoveryConfig({
     name,
-    chain: ChainId.getName(chainId),
+    chain: chainId,
     initialAddresses: [],
   })
 }
