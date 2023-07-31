@@ -1,5 +1,9 @@
 import { Logger } from '@l2beat/shared'
-import { DetailedTvlApiResponse, UnixTime } from '@l2beat/shared-pure'
+import {
+  DetailedTvlApiResponse,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
@@ -26,25 +30,17 @@ export class DetailedTvlController {
     this.logger = this.logger.for(this)
   }
 
+  /**
+   * TODO: Add project exclusion?
+   */
   async getDetailedTvlApiResponse(): Promise<
     DetailedTvlApiResponse | undefined
   > {
-    const [latestReportUpdateTime, latestAggregateReportUpdateTime] =
-      await Promise.all([
-        this.reportStatusRepository.findAnyLatestTimestamp(),
-        this.aggregatedReportStatusRepository.findLatestTimestamp(),
-      ])
+    const minimumTimestamp = await this.getMinimumTimestamp()
 
-    if (!latestReportUpdateTime || !latestAggregateReportUpdateTime) {
+    if (!minimumTimestamp) {
       return
     }
-
-    const minimumTimestamp = new UnixTime(
-      Math.min(
-        Number(latestReportUpdateTime),
-        Number(latestAggregateReportUpdateTime),
-      ),
-    )
 
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
@@ -91,4 +87,35 @@ export class DetailedTvlController {
 
     return tvlApiResponse
   }
+
+  async getMinimumTimestamp(): Promise<UnixTime | undefined> {
+    const valueTypes = [ValueType.CBV, ValueType.EBV, ValueType.NMV]
+
+    const reportsTimestampsPromises = valueTypes.map((valueType) =>
+      this.reportStatusRepository.findLatestTimestampOfType(valueType),
+    )
+
+    const aggregatedReportsTimestampsPromises = [
+      this.aggregatedReportStatusRepository.findLatestTimestamp(),
+    ]
+
+    const timestampCandidates = await Promise.all([
+      ...reportsTimestampsPromises,
+      ...aggregatedReportsTimestampsPromises,
+    ])
+
+    if (!timestampCandidates.every(Boolean)) {
+      return
+    }
+
+    const minimumTimestamp = Math.min(
+      ...timestampCandidates.filter(notUndefined).map((x) => Number(x)),
+    )
+
+    return new UnixTime(minimumTimestamp)
+  }
+}
+
+function notUndefined<T>(x: T | undefined): x is T {
+  return x !== undefined
 }

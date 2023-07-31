@@ -81,7 +81,14 @@ describe(DetailedTvlController.name, () => {
         ]
 
         const reportStatusRepository = mockObject<ReportStatusRepository>({
-          findAnyLatestTimestamp: async () => START,
+          findLatestTimestampOfType: async (type) =>
+            type === ValueType.CBV
+              ? START
+              : type === ValueType.EBV
+              ? START.add(-15, 'minutes')
+              : type === ValueType.NMV
+              ? START.add(-30, 'minutes')
+              : undefined,
         })
         const aggregatedReportStatusRepository =
           mockObject<AggregatedReportStatusRepository>({

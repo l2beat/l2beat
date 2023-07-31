@@ -95,6 +95,12 @@ export function getProjectChartData(
 ): DetailedTvlApiChartPoint[] {
   const projectReportsByTimestamp = reportTree[projectId.toString()]
 
+  // Project may be missing reports
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!projectReportsByTimestamp) {
+    return []
+  }
+
   const balancesInTime = Object.entries(projectReportsByTimestamp).map(
     ([timestamp, valueReports]) => {
       const { tvlReport, cbvReport, ebvReport, nmvReport } =
