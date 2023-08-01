@@ -3,6 +3,7 @@ import { expect } from 'earl'
 
 import { bridges, getTokenBySymbol, layer2s } from '../'
 import { checkRisk } from './helpers'
+import { link } from 'fs'
 
 describe('projects', () => {
   describe('every token is valid', () => {
@@ -112,6 +113,7 @@ describe('projects', () => {
       )
       for (const link of links) {
         it(link, () => {
+          console.log(link)
           expect(link).toMatchRegex(/^https:\/\//)
         })
       }

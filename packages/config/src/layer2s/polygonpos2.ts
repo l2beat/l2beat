@@ -23,7 +23,7 @@ export const polygonpos2: Layer2 = {
       repositories: ['https://github.com/maticnetwork/'],
       socialMedia: [
         'https://twitter.com/0xPolygonLabs',
-        'https://discord.com/invite/0xPolygon',
+        'https://discord.gg/0xPolygon',
         'https://t.me/polygonofficial',
       ],
     },

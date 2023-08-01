@@ -20,11 +20,11 @@ export const xchain: Layer2 = {
       documentation: [
         'https://medium.com/idex/the-all-new-idex-a-quick-recap-b27df4cd981b',
       ],
-      explorers: [''],
-      repositories: [''],
+      explorers: [],
+      repositories: [],
       socialMedia: [
         'https://twitter.com/idexio',
-        'https://discord.com/invite/idex',
+        'https://discord.gg/idex',
         'https://t.me/IDEXChat',
       ],
     },

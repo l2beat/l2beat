@@ -16,15 +16,15 @@ export const polygonmiden: Layer2 = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://polygon.technology/polygon-miden'],
-      apps: [''],
+      apps: [],
       documentation: [
         'https://0xpolygonmiden.github.io/miden-base/introduction.html',
       ],
-      explorers: [''],
+      explorers: [],
       repositories: ['https://github.com/0xPolygonMiden'],
       socialMedia: [
         'https://twitter.com/0xPolygonLabs',
-        'https://discord.com/invite/0xPolygon',
+        'https://discord.gg/0xPolygon',
         'https://t.me/polygonofficial',
       ],
     },
