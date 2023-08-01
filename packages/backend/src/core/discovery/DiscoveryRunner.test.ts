@@ -81,6 +81,57 @@ describe(DiscoveryRunner.name, () => {
 
       expect(sourceConfig).toEqual(getMockConfig())
     })
+
+    describe(DiscoveryRunner.prototype.discoverWithRetry.name, () => {
+      it('retries successfully', async () => {
+        const engine = mockObject<DiscoveryEngine>({
+          discover: mockFn()
+            .rejectsWithOnce(new Error('error'))
+            .rejectsWithOnce(new Error('error'))
+            .resolvesToOnce([]),
+        })
+        const runner = new DiscoveryRunner(
+          mockObject<DiscoveryProvider>({}),
+          engine,
+          mockObject<ConfigReader>({}),
+          ChainId.ETHEREUM,
+        )
+
+        await runner.run(getMockConfig(), 1, {
+          runSanityCheck: false,
+          injectInitialAddresses: false,
+          maxRetries: 2,
+          retryDelayMs: 10,
+        })
+
+        expect(engine.discover).toHaveBeenCalledTimes(3)
+      })
+
+      it('throws error if maxRetries exceed', async () => {
+        const engine = mockObject<DiscoveryEngine>({
+          discover: mockFn()
+            .rejectsWithOnce(new Error('error'))
+            .rejectsWithOnce(new Error('error'))
+            .resolvesToOnce([]),
+        })
+        const runner = new DiscoveryRunner(
+          mockObject<DiscoveryProvider>({}),
+          engine,
+          mockObject<ConfigReader>({}),
+          ChainId.ETHEREUM,
+        )
+
+        await expect(
+          async () =>
+            await runner.run(getMockConfig(), 1, {
+              runSanityCheck: false,
+              injectInitialAddresses: false,
+              maxRetries: 1,
+              retryDelayMs: 10,
+            }),
+        ).toBeRejectedWith('error')
+      })
+    })
   })
 })
 

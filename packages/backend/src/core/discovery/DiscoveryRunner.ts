@@ -7,12 +7,15 @@ import {
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
-import { isEqual } from 'lodash'
+import { assert } from 'console'
+import { isEqual, isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
   injectInitialAddresses: boolean
   runSanityCheck: boolean
+  maxRetries?: number
+  retryDelayMs?: number
 }
 
 export class DiscoveryRunner {
@@ -40,13 +43,16 @@ export class DiscoveryRunner {
       ? await this.updateInitialAddresses(projectConfig)
       : projectConfig
 
-    const discovery = await this.discover(config, blockNumber)
+    const discovery = await this.discoverWithRetry(
+      config,
+      blockNumber,
+      options.maxRetries,
+      options.retryDelayMs,
+    )
 
     if (options.runSanityCheck) {
       await this.sanityCheck(discovery, config, blockNumber)
     }
-
-    // TODO retry if error is Etherscan timeout
 
     return discovery
   }
@@ -69,6 +75,37 @@ export class DiscoveryRunner {
       blockNumber,
       result,
     )
+  }
+
+  async discoverWithRetry(
+    config: DiscoveryConfig,
+    blockNumber: number,
+    maxRetries = 2,
+    delayMs = 1000,
+  ): Promise<DiscoveryOutput> {
+    let discovery: DiscoveryOutput | undefined = undefined
+    let err: Error | undefined = undefined
+
+    for (let i = 0; i <= maxRetries; i++) {
+      try {
+        discovery = await this.discover(config, blockNumber)
+        break
+      } catch (error) {
+        err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, delayMs))
+    }
+
+    if (discovery === undefined) {
+      assert(
+        err !== undefined,
+        'Programmer error: Error should not be undefined there',
+      )
+      throw err
+    }
+
+    return discovery
   }
 
   // 3rd party APIs are unstable, so we do a sanity check before sending
