@@ -21,6 +21,7 @@ const OP_TOKEN_DECIMALS = 18
 // https://www.coingecko.com/en/coins/optimism
 // https://optimistic.etherscan.io/token/0x4200000000000000000000000000000000000042?a=0x2a82ae142b2e62cb7d10b55e323acb1cab663a26
 
+// When updating, make sure you add the newest timestamp at the end of this array.
 export const OP_CIRCULATING_SUPPLY_HISTORY: {
   supply: bigint
   untilTimestamp?: UnixTime
