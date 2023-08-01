@@ -89,13 +89,11 @@ export class DiscoveryRunner {
     for (let i = 0; i < maxRetries; i++) {
       try {
         discovery = await this.discover(config, blockNumber)
-        break // Break out of the loop if the discovery is successful
+        break
       } catch (error) {
         err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
-        // Retry on error (maxRetries will limit the number of attempts)
       }
 
-      // Add a delay before the next retry
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
 
