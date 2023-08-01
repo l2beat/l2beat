@@ -69,7 +69,7 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
   logger.info('Starting discovery...\n')
   logger.info(`Project: ${discoverConfig.project}`)
   logger.info(`Chain: ${ChainId.getName(discoverConfig.chainId)}\n`)
-  await runDiscovery(provider, etherscanClient, configReader, config.discovery)
+  await runDiscovery(provider, etherscanClient, configReader, discoverConfig)
 }
 
 async function invert(config: DiscoveryCliConfig, logger: Logger) {

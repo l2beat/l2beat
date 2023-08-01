@@ -12,16 +12,19 @@ export function ChainId(value: number): ChainId {
 interface ChainMetadata {
   id: number
   name: string
+  dethDomain?: string
 }
 
 const CHAIN_IDS: ChainMetadata[] = [
   {
     id: 1,
     name: 'ethereum',
+    dethDomain: 'etherscan.deth.net',
   },
   {
     id: 42161,
     name: 'arbitrum',
+    dethDomain: 'arbiscan.deth.net',
   },
   {
     id: -1,
@@ -51,4 +54,14 @@ ChainId.getId = function (chainName: string): ChainId {
 
 ChainId.getAll = function (): ChainId[] {
   return CHAIN_IDS.map((c) => ChainId(c.id))
+}
+
+ChainId.getDethDomain = function (chainId: ChainId): string {
+  const dethDomain = CHAIN_IDS.find((c) => c.id === +chainId)?.dethDomain
+
+  if (!dethDomain) {
+    throw new TypeError(`Unsupported chain ID: ${chainId.toString()}`)
+  }
+
+  return dethDomain
 }

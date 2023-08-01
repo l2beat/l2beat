@@ -1,3 +1,5 @@
+import { ChainId } from '@l2beat/shared-pure'
+
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryLogger } from '../DiscoveryLogger'
@@ -10,6 +12,7 @@ import { DiscoveryEngine } from './DiscoveryEngine'
 export async function discover(
   provider: DiscoveryProvider,
   config: DiscoveryConfig,
+  chainId: ChainId,
   logger: DiscoveryLogger,
   blockNumber: number,
 ) {
@@ -21,6 +24,7 @@ export async function discover(
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
+    chainId,
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)

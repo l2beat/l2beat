@@ -1,4 +1,5 @@
 import {
+  ChainId,
   ContractValue,
   EthereumAddress,
   UpgradeabilityParameters,
@@ -40,6 +41,7 @@ export class AddressAnalyzer {
     private readonly proxyDetector: ProxyDetector,
     private readonly sourceCodeService: SourceCodeService,
     private readonly handlerExecutor: HandlerExecutor,
+    private readonly chainId: ChainId,
     private readonly logger: DiscoveryLogger,
   ) {}
 
@@ -81,7 +83,7 @@ export class AddressAnalyzer {
         derivedName: overrides?.name !== undefined ? sources.name : undefined,
         isVerified: sources.isVerified,
         address,
-        codeLink: getCodeLink(address, proxy?.implementations),
+        codeLink: getCodeLink(address, proxy?.implementations, this.chainId),
         upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
         values,
         errors,
