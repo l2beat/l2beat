@@ -3,6 +3,7 @@ import {
   assert,
   ChainId,
   Hash256,
+  hashJson,
   UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
@@ -20,10 +21,8 @@ import { genArbTokenReport } from '../reports/custom/arbitrum'
 import { genOpTokenReport } from '../reports/custom/optimism'
 import { AssetUpdater } from './AssetUpdater'
 
-// Shas256 of "L2Beat Native Asset [Arbitrum, Optimism]"
-export const NATIVE_ASSET_CONFIG_HASH = Hash256(
-  '0xcb0de0a36a0369fe1e0c107bb217c4fd8e7142b5db33ffd01f29859ea323f52e',
-)
+// Last updated because: updated OP token balance
+export const NATIVE_ASSET_CONFIG_VERSION = 1
 
 export class NMVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
@@ -40,8 +39,7 @@ export class NMVUpdater implements AssetUpdater {
   ) {
     this.logger = this.logger.for(this)
 
-    // Shas256 of "L2Beat Native Asset [Arbitrum, Optimism]"
-    this.configHash = NATIVE_ASSET_CONFIG_HASH
+    this.configHash = hashJson(NATIVE_ASSET_CONFIG_VERSION)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
