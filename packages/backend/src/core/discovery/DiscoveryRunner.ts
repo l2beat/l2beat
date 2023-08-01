@@ -86,7 +86,7 @@ export class DiscoveryRunner {
     let discovery: DiscoveryOutput | undefined = undefined
     let err: Error | undefined = undefined
 
-    for (let i = 0; i < maxRetries; i++) {
+    for (let i = 0; i <= maxRetries; i++) {
       try {
         discovery = await this.discover(config, blockNumber)
         break

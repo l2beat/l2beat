@@ -100,7 +100,7 @@ describe(DiscoveryRunner.name, () => {
         await runner.run(getMockConfig(), 1, {
           runSanityCheck: false,
           injectInitialAddresses: false,
-          maxRetries: 3,
+          maxRetries: 2,
           retryDelayMs: 10,
         })
 
@@ -126,7 +126,7 @@ describe(DiscoveryRunner.name, () => {
             await runner.run(getMockConfig(), 1, {
               runSanityCheck: false,
               injectInitialAddresses: false,
-              maxRetries: 2,
+              maxRetries: 1,
               retryDelayMs: 10,
             }),
         ).toBeRejectedWith('error')
