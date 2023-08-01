@@ -2,11 +2,17 @@ import os
 import argparse
 import pty
 
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BOLD = "\033[1m"
+RESET = "\033[0m"
+
 # List of keywords to ignore in directory names
 IGNORE_KEYWORDS = ["Multisig", "AddressManager", "ProxyAdmin", "Gnosis"]
 
 
-def get_project_subpath(base_path, folder_name, directory):
+def get_project_subpath(base_path: str, folder_name: str, directory: str) -> (str, str) or (None, None):
     possible_directories = {
         "main_contracts": "implementation/contracts",
         "bedrock_contracts": "implementation/optimism/packages/contracts-bedrock/contracts",
@@ -14,12 +20,12 @@ def get_project_subpath(base_path, folder_name, directory):
     }
 
     for logical_name, subpath in possible_directories.items():
-        full_path = os.path.join(
+        full_path: str = os.path.join(
             base_path, "discovery", folder_name, "ethereum", ".code", directory, subpath)
         if os.path.exists(full_path):
-            return subpath
+            return subpath, logical_name
 
-    return None
+    return None, None
 
 
 def list_directories(folder_name):
@@ -50,7 +56,7 @@ def list_directories(folder_name):
 
 def diff_proxies(folder1, folder2, common_directories):
     base_path = ".."
-    print("\nComparing proxies...")
+    print(BOLD + "\nComparing proxies..." + RESET)
     no_changes = True
 
     for directory in common_directories:
@@ -97,14 +103,16 @@ def diff_proxies(folder1, folder2, common_directories):
 
 def diff_implementations(folder1, folder2, common_directories):
     base_path = ".."
-    print("\nComparing implementations...")
+    print(BOLD + "\nComparing implementations..." + RESET)
     no_changes = True
 
     # Determine the project structure
     # use the first directory to determine the project structure
     dummy_directory = next(iter(common_directories))
-    subpath1 = get_project_subpath(base_path, folder1, dummy_directory)
-    subpath2 = get_project_subpath(base_path, folder2, dummy_directory)
+    subpath1, logical_name1 = get_project_subpath(
+        base_path, folder1, dummy_directory)
+    subpath2, logical_name2 = get_project_subpath(
+        base_path, folder2, dummy_directory)
 
     # Iterate over directories
     for directory in common_directories:
@@ -114,8 +122,13 @@ def diff_implementations(folder1, folder2, common_directories):
         dir_path2 = os.path.join(
             base_path, "discovery", folder2, "ethereum", ".code", directory, subpath2)
 
-        if not os.path.exists(dir_path1) or not os.path.exists(dir_path2):
-            print("Neither 'contracts' nor 'optimism/packages/contracts-bedrock/contracts' directory exists in " + directory + ".")
+        if not os.path.exists(dir_path1):
+            print(
+                f"{folder1} does not contain {directory} with project structure {logical_name1}.")
+            continue
+        if not os.path.exists(dir_path2):
+            print(
+                f"{folder2} does not contain {directory} with project structure {logical_name2}.")
             continue
 
         sol_files1 = [os.path.join(root, f) for root, dirs, files in os.walk(
@@ -141,10 +154,14 @@ def diff_implementations(folder1, folder2, common_directories):
             # subprocess.run(["forge", "fmt", file1])
             # subprocess.run(["forge", "fmt", file2])
 
+            # get terminal column size
+            terminal_size = os.get_terminal_size()
+            terminal_width = terminal_size.columns
+
             pid, fd = pty.fork()
             if pid == 0:  # child process
                 os.execvp("difft", ["difft", "--skip-unchanged",
-                          "--ignore-comments", file1, file2])
+                          "--ignore-comments", "--width", str(terminal_width), file1, file2])
             else:  # parent process
                 result = b""
                 while True:
@@ -185,28 +202,25 @@ def main():
     unique_to_folder2 = directories2 - directories1
     ignored_directories = ignored1 | ignored2
 
-    RED = "\033[31m"
-    GREEN = "\033[32m"
-    YELLOW = "\033[33m"
-    RESET = "\033[0m"
-
     if common_directories:
-        print("Common Directories:")
+        print(BOLD + "Common Directories:" + RESET)
         for directory in common_directories:
             print(directory)
 
     if unique_to_folder1:
-        print("\nDirectories unique to " + args.Folder_Name1 + ":")
+        print(BOLD + "\nDirectories unique to " +
+              args.Folder_Name1 + ":" + RESET)
         for directory in unique_to_folder1:
             print(RED + directory + RESET)
 
     if unique_to_folder2:
-        print("\nDirectories unique to " + args.Folder_Name2 + ":")
+        print(BOLD + "\nDirectories unique to " +
+              args.Folder_Name2 + ":" + RESET)
         for directory in unique_to_folder2:
             print(GREEN + directory + RESET)
 
     if ignored_directories:
-        print("\nIgnored Directories:")
+        print(BOLD + "\nIgnored Directories:" + RESET)
         for directory in ignored_directories:
             print(YELLOW + directory + RESET)
 
