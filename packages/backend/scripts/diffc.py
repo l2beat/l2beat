@@ -108,7 +108,6 @@ def diff_proxies(folder1, folder2, common_directories):
 def diff_implementations(folder1, folder2, common_directories):
     base_path = ".."
     print(BOLD + "\nComparing implementations..." + RESET)
-    no_changes = True
 
     # Determine the project structure
     # use the first directory to determine the project structure
@@ -120,6 +119,7 @@ def diff_implementations(folder1, folder2, common_directories):
 
     # Iterate over directories
     for directory in common_directories:
+        no_changes = True
         directory_title = " {0} ".format(directory)
         num_dashes = (terminal_width - len(directory_title)) // 2
         print(f"\n{'-' * num_dashes}{directory_title}{'-' * num_dashes}\n")
@@ -184,10 +184,11 @@ def diff_implementations(folder1, folder2, common_directories):
                     for line in lines:
                         if line.strip():  # This checks if line is not empty when whitespace is removed
                             print(line)
-                    no_changes = False
+                    if (line not in [""]):
+                        no_changes = False
 
-    if no_changes:
-        print("No changes in implementations.")
+        if no_changes:
+            print("No changes in implementations.")
 
 
 def main():
