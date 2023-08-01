@@ -8,6 +8,10 @@ YELLOW = "\033[33m"
 BOLD = "\033[1m"
 RESET = "\033[0m"
 
+# get terminal column size
+terminal_size = os.get_terminal_size()
+terminal_width = terminal_size.columns
+
 # List of keywords to ignore in directory names
 IGNORE_KEYWORDS = ["Multisig", "AddressManager", "ProxyAdmin", "Gnosis"]
 
@@ -116,6 +120,10 @@ def diff_implementations(folder1, folder2, common_directories):
 
     # Iterate over directories
     for directory in common_directories:
+        directory_title = " {0} ".format(directory)
+        num_dashes = (terminal_width - len(directory_title)) // 2
+        print(f"\n{'-' * num_dashes}{directory_title}{'-' * num_dashes}\n")
+
         # Construct the directory paths for the current directory
         dir_path1 = os.path.join(
             base_path, "discovery", folder1, "ethereum", ".code", directory, subpath1)
@@ -153,10 +161,6 @@ def diff_implementations(folder1, folder2, common_directories):
             # Run "forge fmt" on each file before diffing
             # subprocess.run(["forge", "fmt", file1])
             # subprocess.run(["forge", "fmt", file2])
-
-            # get terminal column size
-            terminal_size = os.get_terminal_size()
-            terminal_width = terminal_size.columns
 
             pid, fd = pty.fork()
             if pid == 0:  # child process
