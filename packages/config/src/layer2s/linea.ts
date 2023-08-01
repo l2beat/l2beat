@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 
 import { ProjectPermissionedAccount } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -46,6 +47,22 @@ const isPaused: boolean =
   discovery.getContractValue<boolean>('zkEVM', 'generalPause') ||
   discovery.getContractValue<boolean>('zkEVM', 'l1l2Pause') ||
   discovery.getContractValue<boolean>('zkEVM', 'l2l1Pause')
+
+const periodInSeconds = discovery.getContractValue<number>(
+  'zkEVM',
+  'periodInSeconds',
+)
+
+const withdrawalLimitInWei = discovery.getContractValue<number>(
+  'zkEVM',
+  'limitInWei',
+)
+
+const withdrawalLimitString = `Currently, there is a general limit of ${utils.formatEther(
+  withdrawalLimitInWei,
+)} ETH that can be withdrawn within each ${formatSeconds(
+  periodInSeconds,
+)} time window.`
 
 export const linea: Layer2 = {
   type: 'layer2',
@@ -184,7 +201,8 @@ export const linea: Layer2 = {
         ...EXITS.REGULAR('zk', 'no proof'),
         description:
           EXITS.REGULAR('zk', 'no proof').description +
-          ' Note that withdrawal requests can be censored by the Sequencer.',
+          ' Note that withdrawal requests can be censored by the Sequencer. ' +
+          withdrawalLimitString,
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {

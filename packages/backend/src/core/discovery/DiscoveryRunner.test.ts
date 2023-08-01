@@ -2,8 +2,9 @@ import {
   ConfigReader,
   DiscoveryConfig,
   DiscoveryEngine,
+  DiscoveryProvider,
 } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryRunner } from './DiscoveryRunner'
@@ -14,7 +15,12 @@ describe(DiscoveryRunner.name, () => {
   describe(DiscoveryRunner.prototype.run.name, () => {
     it('runs discovery twice', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
-      const runner = new DiscoveryRunner(engine, mockObject<ConfigReader>({}))
+      const runner = new DiscoveryRunner(
+        mockObject<DiscoveryProvider>({}),
+        engine,
+        mockObject<ConfigReader>({}),
+        ChainId.ETHEREUM,
+      )
       await runner.run(getMockConfig(), 1, {
         runSanityCheck: true,
         injectInitialAddresses: false,
@@ -30,7 +36,12 @@ describe(DiscoveryRunner.name, () => {
           contracts: [{ address: ADDRESS }],
         }),
       })
-      const runner = new DiscoveryRunner(engine, configReader)
+      const runner = new DiscoveryRunner(
+        mockObject<DiscoveryProvider>({}),
+        engine,
+        configReader,
+        ChainId.ETHEREUM,
+      )
 
       await runner.run(getMockConfig(), 1, {
         runSanityCheck: false,
@@ -57,7 +68,12 @@ describe(DiscoveryRunner.name, () => {
           contracts: [{ address: ADDRESS }],
         }),
       })
-      const runner = new DiscoveryRunner(engine, configReader)
+      const runner = new DiscoveryRunner(
+        mockObject<DiscoveryProvider>({}),
+        engine,
+        configReader,
+        ChainId.ETHEREUM,
+      )
       await runner.run(sourceConfig, 1, {
         runSanityCheck: true,
         injectInitialAddresses: true,
@@ -65,12 +81,64 @@ describe(DiscoveryRunner.name, () => {
 
       expect(sourceConfig).toEqual(getMockConfig())
     })
+
+    describe(DiscoveryRunner.prototype.discoverWithRetry.name, () => {
+      it('retries successfully', async () => {
+        const engine = mockObject<DiscoveryEngine>({
+          discover: mockFn()
+            .rejectsWithOnce(new Error('error'))
+            .rejectsWithOnce(new Error('error'))
+            .resolvesToOnce([]),
+        })
+        const runner = new DiscoveryRunner(
+          mockObject<DiscoveryProvider>({}),
+          engine,
+          mockObject<ConfigReader>({}),
+          ChainId.ETHEREUM,
+        )
+
+        await runner.run(getMockConfig(), 1, {
+          runSanityCheck: false,
+          injectInitialAddresses: false,
+          maxRetries: 2,
+          retryDelayMs: 10,
+        })
+
+        expect(engine.discover).toHaveBeenCalledTimes(3)
+      })
+
+      it('throws error if maxRetries exceed', async () => {
+        const engine = mockObject<DiscoveryEngine>({
+          discover: mockFn()
+            .rejectsWithOnce(new Error('error'))
+            .rejectsWithOnce(new Error('error'))
+            .resolvesToOnce([]),
+        })
+        const runner = new DiscoveryRunner(
+          mockObject<DiscoveryProvider>({}),
+          engine,
+          mockObject<ConfigReader>({}),
+          ChainId.ETHEREUM,
+        )
+
+        await expect(
+          async () =>
+            await runner.run(getMockConfig(), 1, {
+              runSanityCheck: false,
+              injectInitialAddresses: false,
+              maxRetries: 1,
+              retryDelayMs: 10,
+            }),
+        ).toBeRejectedWith('error')
+      })
+    })
   })
 })
 
 const getMockConfig = () => {
   return new DiscoveryConfig({
     name: 'project-a',
+    chain: ChainId.ETHEREUM,
     initialAddresses: [],
   })
 }

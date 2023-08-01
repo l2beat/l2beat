@@ -13,6 +13,11 @@
       "description": "An identifier for this project",
       "type": "string"
     },
+    "chain": {
+      "description": "Chain on which to run the discovery on",
+      "type": "string",
+      "enum": ["ethereum"]
+    },
     "initialAddresses": {
       "description": "A list of addresses that discovery starts from",
       "type": "array",

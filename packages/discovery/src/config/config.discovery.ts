@@ -1,4 +1,5 @@
-import { getEnv } from '@l2beat/shared'
+import { EtherscanClient, getEnv } from '@l2beat/shared'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
 import { CliParameters } from '../cli/getCliParameters'
@@ -14,35 +15,53 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
 
   return {
     invert: invertEnabled && {
-      file: cli.file,
+      project: cli.project,
+      chainId: cli.chain,
       useMermaidMarkup: cli.useMermaidMarkup,
     },
     discovery: discoveryEnabled && {
       project: cli.project,
-      blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
-      alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
-      etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
+      chainId: cli.chain,
       dryRun: cli.dryRun,
       dev: cli.dev,
+      blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
     },
+    chains: [
+      {
+        chainId: ChainId.ETHEREUM,
+        rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
+        etherscanUrl: EtherscanClient.API_URL,
+        minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+      },
+    ],
   }
 }
 
 export interface DiscoveryCliConfig {
   discovery: DiscoveryModuleConfig | false
+  chains: [DiscoveryChainConfig]
   invert: InversionConfig | false
 }
 
 export interface DiscoveryModuleConfig {
   readonly project: string
-  readonly blockNumber?: number
-  readonly alchemyApiKey: string
-  readonly etherscanApiKey: string
+  readonly chainId: ChainId
   readonly dryRun?: boolean
   readonly dev?: boolean
+  readonly blockNumber?: number
+}
+
+export interface DiscoveryChainConfig {
+  chainId: ChainId
+  rpcUrl: string
+  etherscanApiKey: string
+  etherscanUrl: string
+  minTimestamp: UnixTime
 }
 
 export interface InversionConfig {
-  readonly file: string
+  readonly project: string
   readonly useMermaidMarkup: boolean
+  readonly chainId: ChainId
 }

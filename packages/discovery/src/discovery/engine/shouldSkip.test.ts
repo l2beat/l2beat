@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
@@ -9,6 +9,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
+      chain: ChainId.ETHEREUM,
       initialAddresses: [],
       overrides: {
         [address.toString()]: {
@@ -24,6 +25,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
+      chain: ChainId.ETHEREUM,
       initialAddresses: [],
       names: {
         [address.toString()]: 'Foo',
@@ -40,6 +42,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
+      chain: ChainId.ETHEREUM,
       initialAddresses: [],
       maxDepth: 1,
     })
@@ -51,6 +54,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
+      chain: ChainId.ETHEREUM,
       initialAddresses: [],
       maxAddresses: 1,
     })
@@ -62,6 +66,7 @@ describe(shouldSkip.name, () => {
     const address = EthereumAddress.random()
     const config = new DiscoveryConfig({
       name: 'Test',
+      chain: ChainId.ETHEREUM,
       initialAddresses: [],
     })
     const result = shouldSkip({ address, depth: 0, counter: 1 }, config)

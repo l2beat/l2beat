@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
@@ -123,6 +123,33 @@ describe(EtherscanLikeClient.name, () => {
   })
 
   describe(EtherscanLikeClient.prototype.getBlockNumberAtOrBefore.name, () => {
+    it('constructs a correct url', async () => {
+      const result = 1234
+      const httpClient = mockObject<HttpClient>({
+        async fetch() {
+          return new Response(
+            JSON.stringify({ status: '1', message: 'OK', result: `${result}` }),
+          )
+        },
+      })
+
+      const arbiscanClient = new EtherscanLikeClient(
+        httpClient,
+        API_URL,
+        'key',
+        new UnixTime(0),
+      )
+      const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
+        new UnixTime(3141592653),
+      )
+
+      expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
+        `${API_URL}?module=block&action=getblocknobytime&timestamp=3141592653&closest=before&apikey=key`,
+        expect.anything(),
+      )
+      expect(blockNumber).toEqual(result)
+    })
+
     it('if there is no closes block number try 10 minutes earlier', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
@@ -388,6 +415,82 @@ describe(EtherscanLikeClient.name, () => {
           .toNumber()}&closest=before&apikey=key`,
         expect.anything(),
       )
+    })
+  })
+
+  describe(EtherscanLikeClient.prototype.getContractSource.name, () => {
+    it('constructs a correct url', async () => {
+      const result = {
+        SourceCode: '',
+        ABI: 'Contract source code not verified',
+        ContractName: '',
+        CompilerVersion: '',
+        OptimizationUsed: '',
+        Runs: '',
+        ConstructorArguments: '',
+        EVMVersion: 'Default',
+        Library: '',
+        LicenseType: 'Unknown',
+        Proxy: '0',
+        Implementation: '',
+        SwarmSource: '',
+      }
+      const httpClient = mockObject<HttpClient>({
+        async fetch() {
+          return new Response(
+            JSON.stringify({ status: '1', message: 'OK', result: [result] }),
+          )
+        },
+      })
+
+      const etherscanClient = new EtherscanLikeClient(
+        httpClient,
+        API_URL,
+        'key',
+        new UnixTime(0),
+      )
+      const source = await etherscanClient.getContractSource(
+        EthereumAddress.ZERO,
+      )
+
+      expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
+        `${API_URL}?module=contract&action=getsourcecode&address=0x0000000000000000000000000000000000000000&apikey=key`,
+        expect.anything(),
+      )
+      expect(source).toEqual(result)
+    })
+  })
+
+  describe(EtherscanLikeClient.prototype.getContractDeploymentTx.name, () => {
+    it('constructs a correct url', async () => {
+      const result = {
+        contractAddress: EthereumAddress.random(),
+        contractCreator: EthereumAddress.random(),
+        txHash: Hash256.random(),
+      }
+      const httpClient = mockObject<HttpClient>({
+        async fetch() {
+          return new Response(
+            JSON.stringify({ status: '1', message: 'OK', result: [result] }),
+          )
+        },
+      })
+
+      const etherscanClient = new EtherscanLikeClient(
+        httpClient,
+        API_URL,
+        'key',
+        new UnixTime(0),
+      )
+      const source = await etherscanClient.getContractDeploymentTx(
+        EthereumAddress.ZERO,
+      )
+
+      expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
+        `${API_URL}?module=contract&action=getcontractcreation&contractaddresses=0x0000000000000000000000000000000000000000&apikey=key`,
+        expect.anything(),
+      )
+      expect(source).toEqual(result.txHash)
     })
   })
 })

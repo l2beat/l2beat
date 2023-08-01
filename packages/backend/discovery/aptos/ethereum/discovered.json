@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "aptos",
   "blockNumber": 16154924,
-  "configHash": "0xdd0cabd0e343f17a9d66968708751114a0d969c6e6d54874da61cd9c8554f0d5",
+  "configHash": "0x958973499ce64958db371146958f80fd0cfab57839c701cb633e6272a9483162",
   "contracts": [
     {
       "name": "TreasuryV2",

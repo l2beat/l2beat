@@ -64,17 +64,19 @@ environment variables. One variable per line `KEY=value`.
 - `ETHEREUM_TVL_ENABLED` (default `true`) - When set to `true` ethereum tvl sync is enabled
 - `ARBITRUM_TVL_ENABLED` (default `false`) - When set to `true` arbitrum tvl sync is enabled
 - `ARBISCAN_API_KEY` - API key for Arbiscan
-- `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
-- `PUBLIC_DISCORD_CHANNEL_ID` - public channel id the message will be sent to
-- `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
-- `DISCORD_TOKEN` - Bot account authentication token, for more details go to `DiscordClient.ts`
 - `STATUS_ENABLE`(default `true`) - enable/disable status module
 - `ACTIVITY_PROJECTS_EXCLUDED_FROM_API` - allows to exclude certain projects from the activity API response
 
-#### Optional (local development)
+#### Discovery/Bot related
 
+- `DISCOVERY_ETHEREUM_RPC_URL`
+- `DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY`
+- `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
 - `DISCOVERY_BLOCK_NUMBER` (Optional) - Override the block number used during local discovery
 - `UPDATE_MONITOR_RUN_ON_START` (default `true`) - Prevent UpdateMonitor from running on start when developing locally
+- `PUBLIC_DISCORD_CHANNEL_ID` - public channel id the message will be sent to
+- `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
+- `DISCORD_TOKEN` - Bot account authentication token, for more details go to `DiscordClient.ts`
 
 #### .env boilerplate
 
@@ -98,13 +100,20 @@ ETHEREUM_ALCHEMY_API_KEY=
 # ARBITRUM_TVL_ENABLED=
 # ARBISCAN_API_KEY=
 # ARBITRUM_PROVIDER_URL
-# DISCOVERY_BLOCK_NUMBER=
+
+# UPDATE_MONITOR_RUN_ON_START=
+# ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
+
+#-----DISCOVERY-----
 # WATCHMODE_ENABLED=
 # PUBLIC_DISCORD_CHANNEL_ID=
 # INTERNAL_DISCORD_CHANNEL_ID=
 # DISCORD_TOKEN=
-# UPDATE_MONITOR_RUN_ON_START=
-# ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
+# DISCOVERY_BLOCK_NUMBER=
+# DISCOVERY_ETHEREUM_RPC_URL=
+# DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY=
+
+
 ```
 
 ## Scripts

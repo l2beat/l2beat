@@ -40,3 +40,15 @@ ChainId.getName = function (chainId: ChainId): string {
   }
   return chain.name
 }
+
+ChainId.getId = function (chainName: string): ChainId {
+  const chain = CHAIN_IDS.find((c) => c.name === chainName)
+  if (!chain) {
+    throw new TypeError('Invalid ChainId')
+  }
+  return ChainId(chain.id)
+}
+
+ChainId.getAll = function (): ChainId[] {
+  return CHAIN_IDS.map((c) => ChainId(c.id))
+}

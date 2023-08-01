@@ -1,5 +1,6 @@
 {
   "$schema": "../../config.schema.json",
+  "chain": "ethereum",
   "name": "portal",
   "initialAddresses": [
     "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
