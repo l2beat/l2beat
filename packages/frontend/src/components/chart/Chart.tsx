@@ -102,7 +102,7 @@ export function Chart({
           >
             <ChartLoader />
             <ChartHover />
-            <Logo className="absolute bottom-2 right-2 z-10 h-[25px] w-[60px] opacity-40" />
+            <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-40" />
             <canvas
               data-role="chart-canvas"
               data-is-meta={metaChart}
