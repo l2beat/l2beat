@@ -22,7 +22,8 @@ import { genOpTokenReport } from '../reports/custom/optimism'
 import { AssetUpdater } from './AssetUpdater'
 
 // Last updated because: updated OP token balance
-export const NATIVE_ASSET_CONFIG_VERSION = 1
+const LOGIC_VERSION = 1
+export const NATIVE_ASSET_CONFIG_HASH = hashJson(LOGIC_VERSION)
 
 export class NMVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
@@ -39,7 +40,7 @@ export class NMVUpdater implements AssetUpdater {
   ) {
     this.logger = this.logger.for(this)
 
-    this.configHash = hashJson(NATIVE_ASSET_CONFIG_VERSION)
+    this.configHash = NATIVE_ASSET_CONFIG_HASH
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
