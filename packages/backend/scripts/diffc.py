@@ -141,7 +141,8 @@ def diff_implementations(folder1, folder2, common_directories):
 
             pid, fd = pty.fork()
             if pid == 0:  # child process
-                os.execvp("difft", ["difft", "--skip-unchanged", file1, file2])
+                os.execvp("difft", ["difft", "--skip-unchanged",
+                          "--ignore-comments", file1, file2])
             else:  # parent process
                 result = b""
                 while True:
@@ -155,6 +156,7 @@ def diff_implementations(folder1, folder2, common_directories):
                 result = result.decode()
                 if "No changes." not in result:
                     # print(f"Comparing {file1} and {file2}")
+                    print("---")
                     print(result)
                     no_changes = False
 
