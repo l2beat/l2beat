@@ -67,13 +67,16 @@ export class TvlController {
       await Promise.all([
         this.aggregatedReportRepository.getHourly(
           getHourlyMinTimestamp(timestamp),
+          ValueType.TVL,
         ),
         this.aggregatedReportRepository.getSixHourly(
           getSixHourlyMinTimestamp(timestamp),
+          ValueType.TVL,
         ),
-        this.aggregatedReportRepository.getDaily(),
+        this.aggregatedReportRepository.getDaily(ValueType.TVL),
         this.reportRepository.getByTimestamp(timestamp),
       ])
+
     const tvlApiResponse = generateTvlApiResponse(
       hourlyReports,
       sixHourlyReports,

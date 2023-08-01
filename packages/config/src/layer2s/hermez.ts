@@ -55,7 +55,7 @@ export const hermez: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADE_DELAY('7 days'),
+    upgradeability: RISK_VIEW.UPGRADE_DELAY(604800),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
     // NOTE: I have no clue what token are fees paid in. There are fees but

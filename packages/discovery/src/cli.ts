@@ -1,5 +1,5 @@
-import { EtherscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { EtherscanLikeClient, HttpClient, Logger } from '@l2beat/shared'
+import { assert, ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { handleCli } from './cli/handleCli'
@@ -29,20 +29,30 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
   if (!config.discovery) {
     return
   }
+  const discoverConfig = config.discovery
+  const chainConfig = config.chains.find(
+    (chain) => chain.chainId === discoverConfig.chainId,
+  )
+  assert(
+    chainConfig !== undefined,
+    'Chain config not found! Update "discovery.config" file',
+  )
+  assert(
+    chainConfig.chainId === discoverConfig.chainId,
+    'Chain config does not match discovery config! Update "discovery.config" file or config.json of your project',
+  )
 
   const http = new HttpClient()
-  const provider = new providers.AlchemyProvider(
-    'mainnet',
-    config.discovery.alchemyApiKey,
-  )
-  const etherscanClient = new EtherscanClient(
+  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
+  const etherscanClient = new EtherscanLikeClient(
     http,
-    config.discovery.etherscanApiKey,
-    new UnixTime(0),
+    chainConfig.etherscanUrl,
+    chainConfig.etherscanApiKey,
+    chainConfig.minTimestamp,
   )
   const configReader = new ConfigReader()
 
-  if (config.discovery.dryRun) {
+  if (discoverConfig.dryRun) {
     logger = logger.for('DryRun')
     logger.info('Starting')
 
@@ -50,21 +60,16 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
       provider,
       etherscanClient,
       configReader,
-      config.discovery,
-      ChainId.ETHEREUM,
+      discoverConfig,
     )
     return
   }
 
   logger = logger.for('Discovery')
-  logger.info('Starting')
-  await runDiscovery(
-    provider,
-    etherscanClient,
-    configReader,
-    config.discovery,
-    ChainId.ETHEREUM,
-  )
+  logger.info('Starting discovery...\n')
+  logger.info(`Project: ${discoverConfig.project}`)
+  logger.info(`Chain: ${ChainId.getName(discoverConfig.chainId)}\n`)
+  await runDiscovery(provider, etherscanClient, configReader, config.discovery)
 }
 
 async function invert(config: DiscoveryCliConfig, logger: Logger) {
@@ -72,12 +77,12 @@ async function invert(config: DiscoveryCliConfig, logger: Logger) {
     return
   }
 
-  const { file, useMermaidMarkup } = config.invert
+  const { project, useMermaidMarkup, chainId } = config.invert
 
   const configReader = new ConfigReader()
 
   logger = logger.for('Inversion')
   logger.info('Starting')
 
-  await runInversion(file, configReader, useMermaidMarkup, ChainId.ETHEREUM)
+  await runInversion(project, configReader, useMermaidMarkup, chainId)
 }

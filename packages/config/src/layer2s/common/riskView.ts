@@ -153,21 +153,39 @@ export function UPGRADABLE_ZKSYNC(
   }
 }
 
-export function UPGRADE_DELAY(delay: string): ProjectRiskViewEntry {
+export function UPGRADE_DELAY(
+  upgradeDelay: number,
+  canExit?: boolean,
+): ProjectRiskViewEntry {
+  const upgradeDelayString = formatSeconds(upgradeDelay)
+  const canReactString =
+    canExit === false
+      ? "and users don't have enough time to react if the permissioned operator is censoring"
+      : 'but users have some time to react even if the permissioned operator is censoring'
   return {
-    value: `${delay} delay`,
+    value: `${upgradeDelayString} delay`,
     description:
-      'The code that secures the system can be changed arbitrarily but users have some time to react.',
-    sentiment: 'warning',
+      'The code that secures the system can be changed arbitrarily ' +
+      canReactString +
+      '.',
+    sentiment: canExit === false ? 'bad' : 'warning',
   }
 }
 
-function UPGRADE_DELAY_SECONDS(delay: number): ProjectRiskViewEntry {
-  if (delay < DANGER_DELAY_THRESHOLD_SECONDS) {
+function UPGRADE_DELAY_SECONDS(
+  upgradeDelay: number,
+  exitDelay?: number,
+): ProjectRiskViewEntry {
+  if (upgradeDelay < DANGER_DELAY_THRESHOLD_SECONDS) {
     return UPGRADABLE_YES
   }
-  const delayString = formatSeconds(delay)
-  return UPGRADE_DELAY(delayString)
+  if (
+    exitDelay !== undefined &&
+    upgradeDelay - exitDelay < DANGER_DELAY_THRESHOLD_SECONDS
+  ) {
+    return UPGRADE_DELAY(upgradeDelay, false)
+  }
+  return UPGRADE_DELAY(upgradeDelay, true)
 }
 
 export const UPGRADABLE_NO: ProjectRiskViewEntry = {

@@ -2,6 +2,7 @@ import { Layer2, ProjectLinks } from '@l2beat/config'
 import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
+import { TvlStats } from '../../../components/header/TvlSummary'
 import { formatLargeNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
@@ -40,9 +41,7 @@ export function getProjectHeader(
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
     titleLength: getTitleLength(project.display.name),
-    tvl: project.config.escrows.length > 0 ? formatUSD(tvl) : undefined,
-    tvlWeeklyChange:
-      project.config.escrows.length > 0 ? tvlWeeklyChange : undefined,
+    tvlStats: getTvlStats(project, tvl, tvlWeeklyChange),
     tpsDaily: tpsDaily?.toFixed(2) ?? '',
     tpsWeeklyChange,
     transactionMonthlyCount:
@@ -54,6 +53,7 @@ export function getProjectHeader(
     tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
     links: getLinks(project.display.links),
     stagesEnabled: config.features.stages,
+    detailedTvlEnabled: config.features.detailedTvl,
     stage: project.stage,
     // TODO: will need to be riskValues when rosette has hover
     risks: getRiskValues(project.riskView),
@@ -109,4 +109,37 @@ function getLinks(links: ProjectLinks) {
   ] as const
 
   return items.filter((link) => link.links.length > 0)
+}
+
+function getTvlStats(
+  project: Layer2,
+  tvl: number,
+  tvlWeeklyChange: string,
+): TvlStats | undefined {
+  // TODO(radomski): When L2 Assets backend gets connected to the frontend,
+  // instead of hardcoding random things change this to actual values
+  const parts = [
+    project.config.escrows.length > 0 ? formatUSD(tvl) : undefined,
+    project.config.escrows.length > 0 ? tvlWeeklyChange : undefined,
+    '$2.99 B',
+    '$2.2 B',
+    '$280 M',
+  ]
+
+  if (parts.every((x) => notUndefined(x))) {
+    const ps = parts.filter(notUndefined)
+    return {
+      tvl: ps[0],
+      tvlChange: ps[1],
+      ebv: ps[2],
+      cbv: ps[3],
+      nmv: ps[4],
+    }
+  }
+
+  return undefined
+}
+
+function notUndefined<T>(x: T | undefined): x is T {
+  return x !== undefined
 }

@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 
+import { isDarkMode } from '../../../navbar/configureDarkThemeToggle'
 import { Effect } from '../effects/effects'
 import { InitMessage } from '../messages'
 import { State } from '../state/State'
@@ -13,6 +14,16 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
     fetchEffect = {
       type: 'FetchAggregateTvl',
       url: message.aggregateTvlEndpoint,
+      requestId: 1,
+    }
+  } else if (message.initialView === 'detailedTvl') {
+    if (!message.detailedAggregateTvlEndpoint) {
+      throw new Error('Invalid init message, missing detailed tvl endpoint!')
+    }
+
+    fetchEffect = {
+      type: 'FetchDetailedAggregateTvl',
+      url: message.detailedAggregateTvlEndpoint,
       requestId: 1,
     }
   } else {
@@ -40,12 +51,14 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
       },
       data: {
         aggregateTvl: undefined,
+        aggregateDetailedTvl: undefined,
         alternativeTvl: undefined,
         activity: undefined,
         tokenTvl: {},
         milestones: milestonesToRecord(message.milestones),
       },
       controls: {
+        theme: isDarkMode() ? 'dark' : 'light',
         pagePathname: message.pagePathname,
         view: message.initialView,
         days: message.days,

@@ -1,3 +1,4 @@
+import { ChainId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { getCliParameters } from './getCliParameters'
@@ -29,9 +30,10 @@ describe(getCliParameters.name, () => {
   })
 
   it('discover foo', () => {
-    const cli = getCliParameters(['discover', 'foo'])
+    const cli = getCliParameters(['discover', 'ethereum', 'foo'])
     expect(cli).toEqual({
       mode: 'discover',
+      chain: ChainId.getId('ethereum'),
       project: 'foo',
       dryRun: false,
       dev: false,
@@ -39,9 +41,10 @@ describe(getCliParameters.name, () => {
   })
 
   it('discover foo --dry-run', () => {
-    const cli = getCliParameters(['discover', 'foo', '--dry-run'])
+    const cli = getCliParameters(['discover', 'ethereum', 'foo', '--dry-run'])
     expect(cli).toEqual({
       mode: 'discover',
+      chain: ChainId.getId('ethereum'),
       project: 'foo',
       dryRun: true,
       dev: false,
@@ -49,9 +52,10 @@ describe(getCliParameters.name, () => {
   })
 
   it('discover --dev foo', () => {
-    const cli = getCliParameters(['discover', '--dev', 'foo'])
+    const cli = getCliParameters(['discover', '--dev', 'ethereum', 'foo'])
     expect(cli).toEqual({
       mode: 'discover',
+      chain: ChainId.getId('ethereum'),
       project: 'foo',
       dryRun: false,
       dev: true,
@@ -59,12 +63,12 @@ describe(getCliParameters.name, () => {
   })
 
   it('discover foo bar', () => {
-    const cli = getCliParameters(['discover', 'foo', 'bar'])
+    const cli = getCliParameters(['discover', 'foo', 'bar', 'baz'])
     expect(cli).toEqual({ mode: 'help', error: 'Too many arguments' })
   })
 
   it('discover foo bar baz', () => {
-    const cli = getCliParameters(['discover', 'foo', 'bar', 'baz'])
+    const cli = getCliParameters(['discover', 'foo', 'bar', 'baz', 'qux'])
     expect(cli).toEqual({ mode: 'help', error: 'Too many arguments' })
   })
 })

@@ -4,6 +4,7 @@ import { aztec } from './aztec'
 import { aztecconnect } from './aztecconnect'
 import { base } from './base'
 import { bobanetwork } from './bobanetwork'
+import { brine } from './brine'
 import { canvasconnect } from './canvasconnect'
 import { cartesiHoneypot } from './cartesiHoneypot'
 import { HOMEPAGE_MILESTONES } from './common'
@@ -13,6 +14,7 @@ import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
 import { hermez } from './hermez'
 import { immutablex } from './immutablex'
+import { immutablezkevm } from './immutablezkevm'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
@@ -52,6 +54,7 @@ export const layer2s: Layer2[] = [
   aztecconnect,
   base,
   bobanetwork,
+  brine,
   canvasconnect,
   cartesiHoneypot,
   degate,
@@ -60,6 +63,7 @@ export const layer2s: Layer2[] = [
   gluon,
   hermez,
   immutablex,
+  immutablezkevm,
   kroma,
   layer2finance,
   layer2financezk,

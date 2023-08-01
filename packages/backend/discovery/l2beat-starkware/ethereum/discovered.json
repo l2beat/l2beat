@@ -1,7 +1,8 @@
 {
+  "chain": "ethereum",
   "name": "l2beat-starkware",
   "blockNumber": 17031968,
-  "configHash": "0x4a08219d1e5a61bb3dccc4981d98a6fa53f8d0d2a6f76ddb3bc8f157fcf5c761",
+  "configHash": "0x80112d572c320dae60a1cc29c37f837881984f02c13575f623751c96992ac434",
   "contracts": [
     {
       "name": "CpuFrilessVerifier",

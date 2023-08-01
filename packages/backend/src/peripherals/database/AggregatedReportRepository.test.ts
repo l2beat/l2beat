@@ -30,7 +30,7 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([
         fakeAggregateReport({ timestamp: TIME_1 }),
       ])
-      const result = await repository.getDaily()
+      const result = await repository.getDaily(ValueType.TVL)
       expect(result).toEqual([REPORT])
     })
 
@@ -43,7 +43,7 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[0]])
       await repository.addOrUpdateMany([REPORTS[1]])
       await repository.addOrUpdateMany([REPORTS[2]])
-      const result = await repository.getDaily()
+      const result = await repository.getDaily(ValueType.TVL)
       expect(result).toEqual(REPORTS)
     })
   })
@@ -60,7 +60,10 @@ describe(AggregatedReportRepository.name, () => {
           timestamp: TIME_0.add(-90, 'days').add(-1, 'minutes'),
         }),
       ])
-      const result = await repository.getSixHourly(TIME_0.add(-1, 'days'))
+      const result = await repository.getSixHourly(
+        TIME_0.add(-1, 'days'),
+        ValueType.TVL,
+      )
       expect(result).toEqual([REPORT])
     })
 
@@ -73,7 +76,10 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[0]])
       await repository.addOrUpdateMany([REPORTS[1]])
       await repository.addOrUpdateMany([REPORTS[2]])
-      const result = await repository.getSixHourly(TIME_0.add(-1, 'days'))
+      const result = await repository.getSixHourly(
+        TIME_0.add(-1, 'days'),
+        ValueType.TVL,
+      )
       expect(result).toEqual(REPORTS)
     })
   })
@@ -87,7 +93,10 @@ describe(AggregatedReportRepository.name, () => {
           timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes'),
         }),
       ])
-      const result = await repository.getHourly(TIME_0.add(-1, 'days'))
+      const result = await repository.getHourly(
+        TIME_0.add(-1, 'days'),
+        ValueType.TVL,
+      )
       expect(result).toEqual([REPORT])
     })
 
@@ -100,7 +109,10 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[0]])
       await repository.addOrUpdateMany([REPORTS[1]])
       await repository.addOrUpdateMany([REPORTS[2]])
-      const result = await repository.getHourly(TIME_0.add(-7, 'days'))
+      const result = await repository.getHourly(
+        TIME_0.add(-7, 'days'),
+        ValueType.TVL,
+      )
       expect(result).toEqual(REPORTS)
     })
   })
@@ -161,7 +173,7 @@ describe(AggregatedReportRepository.name, () => {
       })
       await repository.addOrUpdateMany(reports)
       await repository.addOrUpdateMany([expected])
-      const result = await repository.findLatest(PROJECT_A)
+      const result = await repository.findLatest(PROJECT_A, ValueType.TVL)
       expect(result).toEqual(expected)
     })
   })

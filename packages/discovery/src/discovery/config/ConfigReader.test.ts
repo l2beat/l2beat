@@ -1,6 +1,5 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { readdirSync } from 'fs'
 import path from 'path'
 
 import { ConfigReader } from './ConfigReader'
@@ -14,50 +13,69 @@ describe(ConfigReader.name, () => {
     process.chdir(dir)
   })
 
-  const configs = readdirSync('discovery', { withFileTypes: true })
-    .filter((x) => x.isDirectory())
-    .map((x) => x.name)
+  const configReader = new ConfigReader()
+  const chainIds = ChainId.getAll()
 
-  describe(ConfigReader.prototype.readConfig.name, () => {
-    const configReader = new ConfigReader()
+  for (const chainId of chainIds) {
+    describe(`${ConfigReader.name} for ${ChainId.getName(chainId)}`, () => {
+      const projects = configReader.readAllProjectsForChain(chainId)
 
-    for (const project of configs) {
-      it(`can read ${project} config`, async () => {
-        const result = await configReader.readConfig(project, ChainId.ETHEREUM)
-        expect(result.name).toEqual(project)
-      })
-    }
-  })
-
-  describe(ConfigReader.prototype.readAllConfigsForChain.name, () => {
-    it('can read all configs', async () => {
-      const configReader = new ConfigReader()
-
-      const result = await configReader.readAllConfigsForChain(ChainId.ETHEREUM)
-
-      const readConfigs: string[] = []
-      for (const project of configs) {
-        const i = result.find((r) => r.name === project)
-        if (i) {
-          readConfigs.push(project)
+      describe(ConfigReader.prototype.readConfig.name, () => {
+        for (const project of projects) {
+          it(`can read ${project} config`, async () => {
+            const result = await configReader.readConfig(project, chainId)
+            expect(result.name).toEqual(project)
+          })
         }
-      }
-
-      expect(configs).toEqual(readConfigs)
-    })
-  })
-
-  describe(ConfigReader.prototype.readDiscovery.name, () => {
-    const configReader = new ConfigReader()
-
-    for (const project of configs) {
-      it(`can read discovered.json for ${project}`, async () => {
-        const result = await configReader.readDiscovery(
-          project,
-          ChainId.ETHEREUM,
-        )
-        expect(result.name).toEqual(project)
       })
-    }
-  })
+
+      describe(ConfigReader.prototype.readAllConfigsForChain.name, () => {
+        it(`can read all configs for ${ChainId.getName(chainId)}`, async () => {
+          const configReader = new ConfigReader()
+
+          const result = await configReader.readAllConfigsForChain(chainId)
+
+          const readConfigs: string[] = []
+          for (const project of projects) {
+            const i = result.find((r) => r.name === project)
+            if (i) {
+              readConfigs.push(project)
+            }
+          }
+
+          expect(projects).toEqual(readConfigs)
+        })
+      })
+
+      describe(ConfigReader.prototype.readDiscovery.name, () => {
+        for (const project of projects) {
+          it(`can read discovered.json for ${project}`, async () => {
+            const result = await configReader.readDiscovery(project, chainId)
+            expect(result.name).toEqual(project)
+          })
+        }
+      })
+
+      describe('ChainId in config.jsonc matches the ChainId of the folder', () => {
+        for (const project of projects) {
+          it(`${project}`, async () => {
+            const config = await configReader.readConfig(project, chainId)
+            expect(config.chainId).toEqual(chainId)
+          })
+        }
+      })
+
+      describe('ChainId in discovered.json matches the ChainId of the folder', () => {
+        for (const project of projects) {
+          it(`${project}`, async () => {
+            const discovered = await configReader.readDiscovery(
+              project,
+              chainId,
+            )
+            expect(ChainId.getId(discovered.chain)).toEqual(chainId)
+          })
+        }
+      })
+    })
+  }
 })

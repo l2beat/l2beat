@@ -6,7 +6,7 @@ export function RangeControls({
   type,
 }: {
   days: number
-  type: 'tvl' | 'activity'
+  type: 'tvl' | 'detailedTvl' | 'activity'
 }) {
   return (
     <RadioGroup

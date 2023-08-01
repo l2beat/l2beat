@@ -60,7 +60,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       title={props.title}
       icon={props.icon}
       links={props.links}
-      stats={stats}
+      stats={{ summary: stats }}
       isArchived={props.isArchived}
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}

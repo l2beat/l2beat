@@ -1,6 +1,6 @@
 import { DiscoveryDiff } from '@l2beat/discovery'
 import { Logger } from '@l2beat/shared'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
@@ -10,6 +10,7 @@ import { isNineAM } from './utils/isNineAM'
 
 export interface UpdateMetadata {
   blockNumber: number
+  chainId: ChainId
   dependents: string[]
   unknownContracts: EthereumAddress[]
 }
@@ -32,6 +33,7 @@ export class UpdateNotifier {
     const messages = diffToMessages(name, diff, {
       dependents: metadata.dependents,
       blockNumber: metadata.blockNumber,
+      chainId: metadata.chainId,
       nonce,
     })
     await this.notify(messages, 'INTERNAL')
@@ -52,6 +54,7 @@ export class UpdateNotifier {
     const filteredMessages = diffToMessages(name, filteredDiff, {
       dependents: metadata.dependents,
       blockNumber: metadata.blockNumber,
+      chainId: metadata.chainId,
     })
     await this.notify(filteredMessages, 'PUBLIC')
     this.logger.info('Updates detected, notification sent [PUBLIC]', {
