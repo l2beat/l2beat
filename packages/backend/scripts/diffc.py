@@ -174,9 +174,12 @@ def diff_implementations(folder1, folder2, common_directories):
                         break
                 result = result.decode()
                 if "No changes." not in result:
-                    # print(f"Comparing {file1} and {file2}")
-                    print("---")
-                    print(result)
+                    # Split result into lines
+                    lines = result.split('\n')
+                    # Only print lines that are not empty
+                    for line in lines:
+                        if line.strip():  # This checks if line is not empty when whitespace is removed
+                            print(line)
                     no_changes = False
 
     if no_changes:
