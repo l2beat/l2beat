@@ -1,26 +1,25 @@
 import os
 import argparse
-import subprocess
 import pty
-import sh
 
 # List of keywords to ignore in directory names
 IGNORE_KEYWORDS = ["Multisig", "AddressManager", "ProxyAdmin", "Gnosis"]
 
 
-def get_project_structure(base_path, folder_name, directory):
-    # Add more possible directories here, with a logical name as the key
+def get_project_subpath(base_path, folder_name, directory):
     possible_directories = {
-        "main_contracts": os.path.join(base_path, "discovery", folder_name, "ethereum", ".code", directory, "implementation", "contracts"),
-        "bedrock_contracts": os.path.join(base_path, "discovery", folder_name, "ethereum", ".code", directory, "implementation", "optimism/packages/contracts-bedrock/contracts"),
+        "main_contracts": "implementation/contracts",
+        "bedrock_contracts": "implementation/optimism/packages/contracts-bedrock/contracts",
         # Add more paths here...
     }
 
-    for logical_name, path in possible_directories.items():
-        if os.path.exists(path):
-            return path, logical_name
+    for logical_name, subpath in possible_directories.items():
+        full_path = os.path.join(
+            base_path, "discovery", folder_name, "ethereum", ".code", directory, subpath)
+        if os.path.exists(full_path):
+            return subpath
 
-    return None, None
+    return None
 
 
 def list_directories(folder_name):
@@ -104,14 +103,16 @@ def diff_implementations(folder1, folder2, common_directories):
     # Determine the project structure
     # use the first directory to determine the project structure
     dummy_directory = next(iter(common_directories))
-    path1, _ = get_project_structure(base_path, folder1, dummy_directory)
-    path2, _ = get_project_structure(base_path, folder2, dummy_directory)
+    subpath1 = get_project_subpath(base_path, folder1, dummy_directory)
+    subpath2 = get_project_subpath(base_path, folder2, dummy_directory)
 
     # Iterate over directories
     for directory in common_directories:
-        # Replace the dummy directory with the current directory
-        dir_path1 = path1.replace(dummy_directory, directory)
-        dir_path2 = path2.replace(dummy_directory, directory)
+        # Construct the directory paths for the current directory
+        dir_path1 = os.path.join(
+            base_path, "discovery", folder1, "ethereum", ".code", directory, subpath1)
+        dir_path2 = os.path.join(
+            base_path, "discovery", folder2, "ethereum", ".code", directory, subpath2)
 
         if not os.path.exists(dir_path1) or not os.path.exists(dir_path2):
             print("Neither 'contracts' nor 'optimism/packages/contracts-bedrock/contracts' directory exists in " + directory + ".")
