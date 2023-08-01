@@ -86,7 +86,7 @@ export function Chart({
             </div>
           )}
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between">
+          <div className={`flex justify-between ${metaChart ? "absolute left-0 bottom-0 w-full" : ""}`}>
             <TimeRange />
             <RangeControls days={days} type={type} />
           </div>

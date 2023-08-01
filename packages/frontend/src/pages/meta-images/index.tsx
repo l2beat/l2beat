@@ -10,7 +10,8 @@ import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
 import { getIncludedProjects } from '../../utils/getIncludedProjects'
 import { ActivityMetaImage } from './ActivityMetaImage'
-import { getProps, getPropsActivity } from './getProps'
+import { DetailedTvlMetaImage } from './DetailedTvlMetaImage'
+import { getProps, getPropsActivity, getPropsDetailed } from './getProps'
 import { TvlMetaImage } from './TvlMetaImage'
 
 export function getMetaImagePages(
@@ -27,6 +28,9 @@ export function getMetaImagePages(
   const activity = activityApiResponse
     ? getPropsActivity(activityApiResponse)
     : undefined
+  const detailedScaling = config.features.detailedTvl
+    ? getPropsDetailed(tvlApiResponse, undefined, 'layers2s')
+    : undefined
 
   return compact([
     {
@@ -34,6 +38,14 @@ export function getMetaImagePages(
       page: (
         <PageWrapper {...scaling.wrapper}>
           <TvlMetaImage {...scaling.props} />
+        </PageWrapper>
+      ),
+    },
+    detailedScaling && {
+      slug: '/meta-images/overview-detailed-scaling',
+      page: (
+        <PageWrapper {...detailedScaling.wrapper}>
+          <DetailedTvlMetaImage {...detailedScaling.props} />
         </PageWrapper>
       ),
     },
@@ -60,6 +72,17 @@ export function getMetaImagePages(
         page: (
           <PageWrapper {...wrapper}>
             <TvlMetaImage {...props} />
+          </PageWrapper>
+        ),
+      }
+    }),
+    ...included.map((project) => {
+      const { props, wrapper } = getPropsDetailed(tvlApiResponse, project, 'layers2s')
+      return {
+        slug: `/meta-images/${project.display.slug}-detailed`,
+        page: (
+          <PageWrapper {...wrapper}>
+            <DetailedTvlMetaImage {...props} />
           </PageWrapper>
         ),
       }
