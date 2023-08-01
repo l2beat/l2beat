@@ -63,16 +63,18 @@ export class UpdateMonitor {
     const chainId = runner.getChainId()
 
     const metricsDone = this.initMetrics(blockNumber)
-    this.logger.info('Update started', {
-      chain: ChainId.getName(chainId),
-      blockNumber,
-      timestamp: timestamp.toNumber(),
-      date: timestamp.toDate().toISOString(),
-    })
 
     const projectConfigs = await this.configReader.readAllConfigsForChain(
       chainId,
     )
+
+    this.logger.info('Update started', {
+      chain: ChainId.getName(chainId),
+      projects: projectConfigs.length,
+      blockNumber,
+      timestamp: timestamp.toNumber(),
+      date: timestamp.toDate().toISOString(),
+    })
 
     for (const projectConfig of projectConfigs) {
       assert(
