@@ -21,9 +21,7 @@
     "initialAddresses": {
       "description": "A list of addresses that discovery starts from",
       "type": "array",
-      "items": {
-        "$ref": "#/$defs/address"
-      }
+      "items": { "$ref": "#/$defs/address" }
     },
     "maxDepth": {
       "description": "Maximum depth of discovery",
@@ -54,29 +52,19 @@
           "type": "object",
           "unevaluatedProperties": false,
           "properties": {
-            "ignoreDiscovery": {
-              "type": "boolean"
-            },
-            "proxyType": {
-              "type": "string"
-            },
+            "ignoreDiscovery": { "type": "boolean" },
+            "proxyType": { "type": "string" },
             "ignoreInWatchMode": {
               "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "items": { "type": "string" }
             },
             "ignoreMethods": {
               "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "items": { "type": "string" }
             },
             "ignoreRelatives": {
               "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "items": { "type": "string" }
             },
             "fields": {
               "type": "object",
@@ -86,9 +74,7 @@
                   "type": "object",
                   "required": ["type"],
                   "properties": {
-                    "type": {
-                      "type": "string"
-                    }
+                    "type": { "type": "string" }
                   }
                 }
               }
