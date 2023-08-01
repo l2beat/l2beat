@@ -40,10 +40,7 @@ export class DiscoveryRunner {
       ? await this.updateInitialAddresses(projectConfig)
       : projectConfig
 
-    const discovery: DiscoveryOutput = await this.discoverWithRetry(
-      config,
-      blockNumber,
-    )
+    const discovery = await this.discoverWithRetry(config, blockNumber)
 
     if (options.runSanityCheck) {
       await this.sanityCheck(discovery, config, blockNumber)
