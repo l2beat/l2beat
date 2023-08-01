@@ -18,6 +18,7 @@ import {
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import {
+  extractValueTypeSet,
   generateDetailedTvlApiResponse,
   getProjectChartData,
 } from './generateDetailedTvlApiResponse'
@@ -201,4 +202,61 @@ describe(generateDetailedTvlApiResponse.name, () => {
     }
     return result
   }
+})
+
+describe(extractValueTypeSet.name, () => {
+  it('fills in missing values', () => {
+    const timestamp = UnixTime.now()
+    const usdValue = 1_000n
+    const ethValue = 1_000_000n
+
+    const filledUsdValue = 0n
+    const filledEthValue = 0n
+
+    // NMV missing
+    const mockReports: AggregatedReportRecord[] = [
+      {
+        timestamp,
+        projectId: ProjectId.ARBITRUM,
+        usdValue,
+        ethValue,
+        valueType: ValueType.TVL,
+      },
+      {
+        timestamp,
+        projectId: ProjectId.ARBITRUM,
+        usdValue,
+        ethValue,
+        valueType: ValueType.CBV,
+      },
+      {
+        timestamp,
+        projectId: ProjectId.ARBITRUM,
+        usdValue,
+        ethValue,
+        valueType: ValueType.EBV,
+      },
+    ]
+
+    const result = extractValueTypeSet(mockReports)
+
+    expect(result).toEqual({
+      ebvReport: {
+        usdValue,
+        ethValue,
+      },
+      cbvReport: {
+        usdValue,
+        ethValue,
+      },
+      tvlReport: {
+        usdValue,
+        ethValue,
+      },
+      nmvReport: {
+        usdValue: filledUsdValue,
+        ethValue: filledEthValue,
+      },
+    })
+  })
 })
