@@ -2,14 +2,7 @@
   "$schema": "../../config.schema.json",
   "chain": "ethereum",
   "name": "publicgoodsnetwork",
-  "initialAddresses": [
-    // improve when fully researched
-    "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
-    "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
-    "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
-    "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e",
-    "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"
-  ],
+  "initialAddresses": ["0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"],
   "names": {
     "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c": "OptimismPortal",
     "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b": "L1StandardBridge",
