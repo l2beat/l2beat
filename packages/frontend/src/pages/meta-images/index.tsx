@@ -77,7 +77,11 @@ export function getMetaImagePages(
       }
     }),
     ...included.map((project) => {
-      const { props, wrapper } = getPropsDetailed(tvlApiResponse, project, 'layers2s')
+      const { props, wrapper } = getPropsDetailed(
+        tvlApiResponse,
+        project,
+        'layers2s',
+      )
       return {
         slug: `/meta-images/${project.display.slug}-detailed`,
         page: (

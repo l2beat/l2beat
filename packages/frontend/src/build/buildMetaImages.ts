@@ -38,14 +38,12 @@ async function main() {
   if (config.features.detailedTvl) {
     slugs.push('overview-detailed-scaling')
 
-    slugs.push(...
-      [...layer2s, ...bridges]
+    slugs.push(
+      ...[...layer2s, ...bridges]
         .map((x) => `${x.display.slug}-detailed`)
         .filter((slug) =>
           // only screenshot those that were actually generated
-          existsSync(
-            path.join('build/meta-images', slug, 'index.html'),
-          ),
+          existsSync(path.join('build/meta-images', slug, 'index.html')),
         ),
     )
   }
