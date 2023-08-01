@@ -76,7 +76,6 @@ export function checkIfDelayedTvl(
   allProjects: TvlProjectData[],
   now: UnixTime,
 ) {
-  return
   const delayedProjects = allProjects
     .map(([name, charts]) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
