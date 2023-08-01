@@ -4,7 +4,7 @@ import { existsSync } from 'fs'
 import { mkdirpSync } from 'fs-extra'
 import { Server } from 'http'
 import path from 'path'
-import puppeteer from 'puppeteer'
+import { launch, Page } from 'puppeteer'
 
 import { getConfig } from './config'
 
@@ -39,7 +39,7 @@ async function main() {
     slugs.push('overview-scaling-activity')
   }
 
-  const browser = await puppeteer.launch({
+  const browser = await launch({
     args: ['--no-sandbox'],
   })
   await Promise.all(slugs.map(screenshot))
@@ -67,7 +67,7 @@ async function main() {
   )
 }
 
-async function sanityCheck(page: puppeteer.Page, slug: string): Promise<void> {
+async function sanityCheck(page: Page, slug: string): Promise<void> {
   const l2BeatLogo = await page.$('[aria-label="L2BEAT logo"]')
   if (!l2BeatLogo) {
     throw new Error(`Meta image for ${slug} did not build properly!`)
