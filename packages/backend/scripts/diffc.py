@@ -2,9 +2,24 @@ import os
 import argparse
 import subprocess
 import pty
+import sh
 
 # List of keywords to ignore in directory names
 IGNORE_KEYWORDS = ["Multisig", "AddressManager", "ProxyAdmin", "Gnosis"]
+
+
+def get_project_structure(base_path, folder_name, directory):
+    main_contracts_path = os.path.join(
+        base_path, "discovery", folder_name, "ethereum", ".code", directory, "implementation", "contracts")
+    bedrock_contracts_path = os.path.join(base_path, "discovery", folder_name, "ethereum",
+                                          ".code", directory, "implementation", "optimism/packages/contracts-bedrock/contracts")
+
+    if os.path.exists(main_contracts_path):
+        return main_contracts_path, "main_contracts"
+    elif os.path.exists(bedrock_contracts_path):
+        return bedrock_contracts_path, "bedrock_contracts"
+    else:
+        return None, None
 
 
 def list_directories(folder_name):
@@ -14,10 +29,15 @@ def list_directories(folder_name):
 
     try:
         entries = os.listdir(path)
-        directories = [entry for entry in entries if os.path.isdir(os.path.join(
-            path, entry)) and not any(keyword in entry for keyword in IGNORE_KEYWORDS)]
-        ignored_directories = [entry for entry in entries if any(
-            keyword in entry for keyword in IGNORE_KEYWORDS)]
+        directories = [
+            entry
+            for entry in entries
+            if os.path.isdir(os.path.join(path, entry))
+            and not any(keyword in entry for keyword in IGNORE_KEYWORDS)
+        ]
+        ignored_directories = [
+            entry for entry in entries if any(keyword in entry for keyword in IGNORE_KEYWORDS)
+        ]
 
         return set(directories), set(ignored_directories)
     except FileNotFoundError:
@@ -58,8 +78,8 @@ def diff_proxies(folder1, folder2, common_directories):
             file2 = sol_file.replace(folder1, folder2)
 
             # Run "forge fmt" on each file before diffing
-            subprocess.run(["forge", "fmt", file1])
-            subprocess.run(["forge", "fmt", file2])
+            # subprocess.run(["forge", "fmt", file1])
+            # subprocess.run(["forge", "fmt", file2])
 
             pid, fd = pty.fork()
             if pid == 0:  # child process
@@ -73,6 +93,73 @@ def diff_proxies(folder1, folder2, common_directories):
 
     if no_changes:
         print("No changes in proxies.")
+
+
+def diff_implementations(folder1, folder2, common_directories):
+    base_path = ".."
+    print("\nComparing implementations...")
+    no_changes = True
+
+    # Determine the project structure
+    # use the first directory to determine the project structure
+    dummy_directory = next(iter(common_directories))
+    path1, _ = get_project_structure(base_path, folder1, dummy_directory)
+    path2, _ = get_project_structure(base_path, folder2, dummy_directory)
+
+    # Iterate over directories
+    for directory in common_directories:
+        # Replace the dummy directory with the current directory
+        dir_path1 = path1.replace(dummy_directory, directory)
+        dir_path2 = path2.replace(dummy_directory, directory)
+
+        if not os.path.exists(dir_path1) or not os.path.exists(dir_path2):
+            print("Neither 'contracts' nor 'optimism/packages/contracts-bedrock/contracts' directory exists in " + directory + ".")
+            continue
+
+        sol_files1 = [os.path.join(root, f) for root, dirs, files in os.walk(
+            dir_path1) for f in files if f.endswith('.sol')]
+        sol_files2 = [os.path.join(root, f) for root, dirs, files in os.walk(
+            dir_path2) for f in files if f.endswith('.sol')]
+
+        # Map to common format
+        sol_files1 = {f.replace(dir_path1, "<placeholder>")
+                      for f in sol_files1}
+        sol_files2 = {f.replace(dir_path2, "<placeholder>")
+                      for f in sol_files2}
+
+        common_sol_files = sol_files1 & sol_files2
+
+        for sol_file in common_sol_files:
+            file1 = sol_file.replace(
+                "<placeholder>", dir_path1).replace(folder1, folder1)
+            file2 = sol_file.replace(
+                "<placeholder>", dir_path2).replace(folder1, folder2)
+
+            # Run "forge fmt" on each file before diffing
+            # subprocess.run(["forge", "fmt", file1])
+            # subprocess.run(["forge", "fmt", file2])
+
+            pid, fd = pty.fork()
+            if pid == 0:  # child process
+                os.execvp("difft", ["difft", "--skip-unchanged", file1, file2])
+            else:  # parent process
+                result = b""
+                while True:
+                    try:
+                        chunk = os.read(fd, 1024)
+                        if not chunk:  # no more data
+                            break
+                        result += chunk
+                    except OSError:
+                        break
+                result = result.decode()
+                if "No changes." not in result:
+                    # print(f"Comparing {file1} and {file2}")
+                    print(result)
+                    no_changes = False
+
+    if no_changes:
+        print("No changes in implementations.")
 
 
 def main():
@@ -120,6 +207,8 @@ def main():
             print(YELLOW + directory + RESET)
 
     diff_proxies(args.Folder_Name1, args.Folder_Name2, common_directories)
+    diff_implementations(
+        args.Folder_Name1, args.Folder_Name2, common_directories)
 
 
 if __name__ == "__main__":
