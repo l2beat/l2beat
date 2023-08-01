@@ -138,7 +138,6 @@ export async function discover(
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
-    chainId,
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)

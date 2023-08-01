@@ -41,7 +41,6 @@ export function createDiscoveryRunner(
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
-    chainConfig.chainId,
     discoveryLogger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)

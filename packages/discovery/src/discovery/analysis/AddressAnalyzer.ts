@@ -1,5 +1,4 @@
 import {
-  ChainId,
   ContractValue,
   EthereumAddress,
   UpgradeabilityParameters,
@@ -11,7 +10,6 @@ import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 import { SourceCodeService } from '../source/SourceCodeService'
-import { getCodeLink } from './getCodeLink'
 import { getRelatives } from './getRelatives'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
@@ -22,8 +20,8 @@ export interface AnalyzedContract {
   name: string
   derivedName: string | undefined
   isVerified: boolean
-  codeLink: string
   upgradeability: UpgradeabilityParameters
+  implementations: EthereumAddress[]
   values: Record<string, ContractValue>
   errors: Record<string, string>
   abis: Record<string, string[]>
@@ -41,7 +39,6 @@ export class AddressAnalyzer {
     private readonly proxyDetector: ProxyDetector,
     private readonly sourceCodeService: SourceCodeService,
     private readonly handlerExecutor: HandlerExecutor,
-    private readonly chainId: ChainId,
     private readonly logger: DiscoveryLogger,
   ) {}
 
@@ -83,8 +80,8 @@ export class AddressAnalyzer {
         derivedName: overrides?.name !== undefined ? sources.name : undefined,
         isVerified: sources.isVerified,
         address,
-        codeLink: getCodeLink(address, proxy?.implementations, this.chainId),
         upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
+        implementations: proxy?.implementations ?? [],
         values,
         errors,
         abis: sources.abis,
