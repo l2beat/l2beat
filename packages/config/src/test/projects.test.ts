@@ -3,7 +3,6 @@ import { expect } from 'earl'
 
 import { bridges, getTokenBySymbol, layer2s } from '../'
 import { checkRisk } from './helpers'
-import { link } from 'fs'
 
 describe('projects', () => {
   describe('every token is valid', () => {
