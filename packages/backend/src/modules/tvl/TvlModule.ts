@@ -2,6 +2,7 @@ import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
+import { DetailedTvlController } from '../../api/controllers/tvl/DetailedTvlController'
 import { TvlController } from '../../api/controllers/tvl/TvlController'
 import { createBlocksRouter } from '../../api/routers/BlocksRouter'
 import { createDydxRouter } from '../../api/routers/DydxRouter'
@@ -93,10 +94,21 @@ export function createTvlModule(
     config.tvl.arbitrum ? true : false,
   )
 
+  const detailedTvlController = new DetailedTvlController(
+    db.reportStatusRepository,
+    db.aggregatedReportRepository,
+    db.reportRepository,
+    db.aggregatedReportStatusRepository,
+    config.projects,
+    logger,
+  )
+
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
-  const tvlRouter = createTvlRouter(tvlController)
+  const tvlRouter = createTvlRouter(tvlController, detailedTvlController, {
+    detailedTvlEnabled: config.tvl.detailedTvlEnabled,
+  })
   const dydxRouter = createDydxRouter(dydxController)
 
   // #endregion

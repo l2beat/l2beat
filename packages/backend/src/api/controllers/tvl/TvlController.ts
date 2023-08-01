@@ -76,6 +76,7 @@ export class TvlController {
         this.aggregatedReportRepository.getDaily(ValueType.TVL),
         this.reportRepository.getByTimestamp(timestamp),
       ])
+
     const tvlApiResponse = generateTvlApiResponse(
       hourlyReports,
       sixHourlyReports,

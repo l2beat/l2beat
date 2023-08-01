@@ -2,10 +2,17 @@ import Router from '@koa/router'
 import { AssetId, branded, ProjectId } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
+import { DetailedTvlController } from '../controllers/tvl/DetailedTvlController'
 import { TvlController } from '../controllers/tvl/TvlController'
 import { withTypedContext } from './types'
 
-export function createTvlRouter(tvlController: TvlController) {
+export function createTvlRouter(
+  tvlController: TvlController,
+  detailedTvlController: DetailedTvlController,
+  features: {
+    detailedTvlEnabled: boolean
+  },
+) {
   const router = new Router()
 
   router.get('/api/tvl', async (ctx) => {
@@ -14,6 +21,7 @@ export function createTvlRouter(tvlController: TvlController) {
       ctx.status = 404
       return
     }
+
     ctx.body = data
   })
 
@@ -40,6 +48,19 @@ export function createTvlRouter(tvlController: TvlController) {
       },
     ),
   )
+
+  if (features.detailedTvlEnabled) {
+    router.get('/api/detailed-tvl', async (ctx) => {
+      const data = await detailedTvlController.getDetailedTvlApiResponse()
+
+      if (!data) {
+        ctx.status = 404
+        return
+      }
+
+      ctx.body = data
+    })
+  }
 
   return router
 }

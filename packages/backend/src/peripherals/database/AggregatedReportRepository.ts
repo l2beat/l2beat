@@ -28,6 +28,14 @@ export class AggregatedReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getDailyWithAnyType(): Promise<AggregatedReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('aggregated_reports')
+      .whereRaw(`EXTRACT(hour FROM unix_timestamp) = 0`)
+      .orderBy('unix_timestamp')
+    return rows.map(toRecord)
+  }
+
   async getSixHourly(
     from: UnixTime,
     valueType: ValueType,
@@ -41,6 +49,17 @@ export class AggregatedReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getSixHourlyWithAnyType(
+    from: UnixTime,
+  ): Promise<AggregatedReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('aggregated_reports')
+      .where('unix_timestamp', '>=', from.toDate())
+      .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) % 6 = 0`)
+      .orderBy('unix_timestamp')
+    return rows.map(toRecord)
+  }
+
   async getHourly(
     from: UnixTime,
     valueType: ValueType,
@@ -49,6 +68,16 @@ export class AggregatedReportRepository extends BaseRepository {
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
       .andWhere({ value_type: valueType.toString() })
+      .orderBy('unix_timestamp')
+    return rows.map(toRecord)
+  }
+
+  async getHourlyWithAnyType(
+    from: UnixTime,
+  ): Promise<AggregatedReportRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('aggregated_reports')
+      .where('unix_timestamp', '>=', from.toDate())
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
