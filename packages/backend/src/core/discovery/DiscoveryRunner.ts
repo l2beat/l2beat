@@ -6,13 +6,16 @@ import {
   DiscoveryProvider,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
-import { assert, ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
-import { isEqual } from 'lodash'
+import { ChainId, DiscoveryOutput } from '@l2beat/shared-pure'
+import { assert } from 'console'
+import { isEqual, isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
   injectInitialAddresses: boolean
   runSanityCheck: boolean
+  maxRetries?: number
+  retryDelayMs?: number
 }
 
 export class DiscoveryRunner {
@@ -40,7 +43,12 @@ export class DiscoveryRunner {
       ? await this.updateInitialAddresses(projectConfig)
       : projectConfig
 
-    const discovery = await this.discoverWithRetry(config, blockNumber)
+    const discovery = await this.discoverWithRetry(
+      config,
+      blockNumber,
+      options.maxRetries,
+      options.retryDelayMs,
+    )
 
     if (options.runSanityCheck) {
       await this.sanityCheck(discovery, config, blockNumber)
@@ -69,19 +77,21 @@ export class DiscoveryRunner {
     )
   }
 
-  private async discoverWithRetry(
+  async discoverWithRetry(
     config: DiscoveryConfig,
     blockNumber: number,
     maxRetries = 2,
     delayMs = 1000,
   ): Promise<DiscoveryOutput> {
     let discovery: DiscoveryOutput | undefined = undefined
+    let err: Error | undefined = undefined
 
     for (let i = 0; i < maxRetries; i++) {
       try {
         discovery = await this.discover(config, blockNumber)
         break // Break out of the loop if the discovery is successful
       } catch (error) {
+        err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
         // Retry on error (maxRetries will limit the number of attempts)
       }
 
@@ -89,10 +99,13 @@ export class DiscoveryRunner {
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
 
-    assert(
-      discovery !== undefined,
-      'Programmer error, it should not be undefined here',
-    )
+    if (discovery === undefined) {
+      assert(
+        err !== undefined,
+        'Programmer error: Error should not be undefined there',
+      )
+      throw err
+    }
 
     return discovery
   }
