@@ -1,6 +1,6 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
-import { ChainId, minTimestamps, UnixTime } from '@l2beat/shared-pure'
+import { EtherscanClient, LogLevel, getEnv } from '@l2beat/shared'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
 import { bridgeToProject, layer2ToProject } from '../model'
@@ -126,7 +126,7 @@ export function getLocalConfig(): Config {
           rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
           etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: minTimestamps.ethereum,
+          minTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
         },
       ],
     },
