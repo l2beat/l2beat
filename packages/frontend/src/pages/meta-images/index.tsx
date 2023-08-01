@@ -32,64 +32,68 @@ export function getMetaImagePages(
     ? getPropsDetailed(tvlApiResponse, undefined, 'layers2s')
     : undefined
 
-  return compact([
-    {
-      slug: '/meta-images/overview-scaling',
-      page: (
-        <PageWrapper {...scaling.wrapper}>
-          <TvlMetaImage {...scaling.props} />
-        </PageWrapper>
-      ),
-    },
-    detailedScaling && {
-      slug: '/meta-images/overview-detailed-scaling',
-      page: (
-        <PageWrapper {...detailedScaling.wrapper}>
-          <DetailedTvlMetaImage {...detailedScaling.props} />
-        </PageWrapper>
-      ),
-    },
-    activity && {
-      slug: '/meta-images/overview-scaling-activity',
-      page: (
-        <PageWrapper {...activity.wrapper}>
-          <ActivityMetaImage {...activity.props} />
-        </PageWrapper>
-      ),
-    },
-    {
-      slug: '/meta-images/overview-bridges',
-      page: (
-        <PageWrapper {...bridges.wrapper}>
-          <TvlMetaImage {...bridges.props} />
-        </PageWrapper>
-      ),
-    },
-    ...included.map((project) => {
-      const { props, wrapper } = getProps(tvlApiResponse, project, 'layers2s')
-      return {
-        slug: `/meta-images/${project.display.slug}`,
+  return compact(
+    [
+      {
+        slug: '/meta-images/overview-scaling',
         page: (
-          <PageWrapper {...wrapper}>
-            <TvlMetaImage {...props} />
+          <PageWrapper {...scaling.wrapper}>
+            <TvlMetaImage {...scaling.props} />
           </PageWrapper>
         ),
-      }
-    }),
-    ...included.map((project) => {
-      const { props, wrapper } = getPropsDetailed(
-        tvlApiResponse,
-        project,
-        'layers2s',
-      )
-      return {
-        slug: `/meta-images/${project.display.slug}-detailed`,
+      },
+      detailedScaling && {
+        slug: '/meta-images/overview-detailed-scaling',
         page: (
-          <PageWrapper {...wrapper}>
-            <DetailedTvlMetaImage {...props} />
+          <PageWrapper {...detailedScaling.wrapper}>
+            <DetailedTvlMetaImage {...detailedScaling.props} />
           </PageWrapper>
         ),
-      }
-    }),
-  ])
+      },
+      activity && {
+        slug: '/meta-images/overview-scaling-activity',
+        page: (
+          <PageWrapper {...activity.wrapper}>
+            <ActivityMetaImage {...activity.props} />
+          </PageWrapper>
+        ),
+      },
+      {
+        slug: '/meta-images/overview-bridges',
+        page: (
+          <PageWrapper {...bridges.wrapper}>
+            <TvlMetaImage {...bridges.props} />
+          </PageWrapper>
+        ),
+      },
+      ...included.map((project) => {
+        const { props, wrapper } = getProps(tvlApiResponse, project, 'layers2s')
+        return {
+          slug: `/meta-images/${project.display.slug}`,
+          page: (
+            <PageWrapper {...wrapper}>
+              <TvlMetaImage {...props} />
+            </PageWrapper>
+          ),
+        }
+      }),
+    ].concat(
+      detailedScaling &&
+        included.map((project) => {
+          const { props, wrapper } = getPropsDetailed(
+            tvlApiResponse,
+            project,
+            'layers2s',
+          )
+          return {
+            slug: `/meta-images/${project.display.slug}-detailed`,
+            page: (
+              <PageWrapper {...wrapper}>
+                <DetailedTvlMetaImage {...props} />
+              </PageWrapper>
+            ),
+          }
+        }),
+    ),
+  )
 }
