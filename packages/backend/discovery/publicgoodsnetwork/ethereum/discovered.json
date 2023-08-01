@@ -1,8 +1,8 @@
 {
-  "chain": "ethereum",
   "name": "publicgoodsnetwork",
-  "blockNumber": 17782704,
-  "configHash": "0xa72dcbe7ab373160599e13740ee5fa75dcf24498412a1176cb086c79eb69dcc0",
+  "chain": "ethereum",
+  "blockNumber": 17821196,
+  "configHash": "0xa0894dde8b4387c4b469554af405a6d02e9392326eda54b75a00c649c3a7ae49",
   "version": 1,
   "contracts": [
     {
@@ -105,7 +105,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620284",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621973",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -132,10 +132,10 @@
         "CHALLENGER": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 666000,
-        "latestOutputIndex": 369,
-        "nextBlockNumber": 667800,
-        "nextOutputIndex": 370,
+        "latestBlockNumber": 898200,
+        "latestOutputIndex": 498,
+        "nextBlockNumber": 900000,
+        "nextOutputIndex": 499,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
@@ -157,7 +157,7 @@
         "GUARDIAN": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "L2_ORACLE": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 17782692],
+        "params": [1000000000, 490798, 17821120],
         "paused": false,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.6.0"
