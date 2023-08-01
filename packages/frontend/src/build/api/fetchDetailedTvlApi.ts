@@ -6,7 +6,7 @@ export async function fetchDetailedTvlApi(
   apiUrl: string,
   http: JsonHttpClient,
 ): Promise<DetailedTvlApiResponse> {
-  const url = 'http://localhost:9001/detailed-tvl-response.json'
+  const url = `${apiUrl}/api/detailed-tvl`
   const json = await http.fetchJson(url)
   return DetailedTvlApiResponse.parse(json)
 }
