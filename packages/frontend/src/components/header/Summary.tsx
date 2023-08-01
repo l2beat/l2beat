@@ -6,12 +6,14 @@ import { HorizontalSeparator } from '../HorizontalSeparator'
 import { InfoIcon, ProjectLink } from '../icons'
 import { DesktopProjectLinks } from './DesktopProjectLinks'
 import { MobileProjectLinks } from './MobileProjectLinks'
+import { TvlStats, TvlSummary } from './TvlSummary'
 
 interface SummaryProps {
   type: 'bridge' | 'layer2'
-  stats: SummaryStat[]
+  stats: FullSummaryStats
   links: ProjectLink[]
   stagesEnabled?: boolean
+  detailedTvlEnabled?: boolean
   isUpcoming?: boolean
 }
 
@@ -22,43 +24,58 @@ export interface SummaryStat {
   className?: string
 }
 
+export interface FullSummaryStats {
+  summary: SummaryStat[]
+  l2Tvl?: TvlStats
+}
+
 export function Summary(props: SummaryProps) {
-  const cols = props.type === 'bridge' || props.stagesEnabled ? 4 : 3
-  const groupedStats = chunk(props.stats, cols)
+  const cols =
+    props.type === 'bridge' ||
+    (!props.detailedTvlEnabled && props.stagesEnabled)
+      ? 4
+      : 3
+  const groupedStats = chunk(props.stats.summary, cols)
 
   return (
     <div className="w-full min-w-0">
       <div className="my-6 hidden md:block">
         <DesktopProjectLinks projectLinks={props.links} />
       </div>
-      <div
-        className={classNames(
-          'row grid h-fit grow grid-cols-1 gap-3 md:gap-0 md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800',
-          cols === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3',
-        )}
-      >
-        {groupedStats.map((group, groupIndex) => {
-          return (
-            <React.Fragment key={`summary-group${groupIndex}`}>
-              {groupIndex !== 0 && (
-                <HorizontalSeparator
-                  key={`horizontal-separator${groupIndex}`}
-                  className="col-span-full mt-2 hidden md:my-4 md:block"
-                />
-              )}
-              {group.map((stat) => {
-                return (
-                  <DetailsHeaderStat
-                    key={stat.title}
-                    title={stat.title}
-                    value={stat.value}
-                    tooltip={stat.tooltip}
+      <div className="flex gap-4">
+        <TvlSummary
+          stats={props.stats.l2Tvl}
+          detailedTvlEnabled={props.detailedTvlEnabled}
+        />
+        <div
+          className={classNames(
+            'row grid h-fit grow grid-cols-1 gap-3 md:gap-0 md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800',
+            cols === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3',
+          )}
+        >
+          {groupedStats.map((group, groupIndex) => {
+            return (
+              <React.Fragment key={`summary-group${groupIndex}`}>
+                {groupIndex !== 0 && (
+                  <HorizontalSeparator
+                    key={`horizontal-separator${groupIndex}`}
+                    className="col-span-full mt-2 hidden md:my-4 md:block"
                   />
-                )
-              })}
-            </React.Fragment>
-          )
-        })}
+                )}
+                {group.map((stat) => {
+                  return (
+                    <DetailsHeaderStat
+                      key={stat.title}
+                      title={stat.title}
+                      value={stat.value}
+                      tooltip={stat.tooltip}
+                    />
+                  )
+                })}
+              </React.Fragment>
+            )
+          })}
+        </div>
       </div>
       <div className="md:hidden">
         <MobileProjectLinks projectLinks={props.links} />

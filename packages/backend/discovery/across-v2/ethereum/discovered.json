@@ -1,7 +1,7 @@
 {
   "chain": "ethereum",
   "name": "across-v2",
-  "blockNumber": 17494607,
+  "blockNumber": 17813159,
   "configHash": "0xcb59c3b84210bb0169461c8730dc1615c59ab20789594eca701e4ccd032ebd89",
   "version": 1,
   "contracts": [
@@ -17,7 +17,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "114268961144392825049024765",
+        "totalSupply": "114790790035722144510785416",
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
@@ -96,7 +96,7 @@
       },
       "values": {
         "isOwner": false,
-        "owner": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
       }
     },
     {
@@ -109,7 +109,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1686945311,
+        "getCurrentTime": 1690808531,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -137,10 +137,10 @@
         "chainId": 1,
         "crossDomainAdmin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1686945311,
+        "getCurrentTime": 1690808531,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1006065,
+        "numberOfDeposits": 1013886,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -160,13 +160,13 @@
       },
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1686945311,
+        "getCurrentTime": 1690808531,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 195
+        "numProposals": 196
       },
       "derivedName": "GovernorV2"
     },
@@ -195,7 +195,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 419,
+        "nonce": 437,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -210,7 +210,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1686945311,
+        "getCurrentTime": 1690808531,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -238,7 +238,7 @@
           "0x1f11D8B72fc1B534448436BA60B4B371276DAb33"
         ],
         "getThreshold": 3,
-        "nonce": 136,
+        "nonce": 142,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -298,13 +298,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0xa30552ac4c29e9bccc0f45c9c616c792f02dc93ea1b0ba5d7e7d95f09bec9fce",
-          "0x1ba4b16369d40315325758006aa8ca2cae578b6ffd24dd4039240d97409dfb4d",
+          "0x398563178038d7dab4a6ff95b55795b9c82ca6ecf60d656b1c2df0fbd260c0e1",
+          "0x561c5fe211332d540f3d5b886d37b3fcdf85590c53c9417fa5078b0e16d413bc",
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           0,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           4,
-          1686949319
+          1690812143
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"

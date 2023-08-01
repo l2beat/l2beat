@@ -1,7 +1,7 @@
 {
-  "chain": "ethereum",
   "name": "linea",
-  "blockNumber": 17768617,
+  "chain": "ethereum",
+  "blockNumber": 17813826,
   "configHash": "0xe80b520d763d175c92fa6910a6874e6532a4b75d34c67e49d2cfb19f7e43fe58",
   "version": 1,
   "contracts": [
@@ -17,17 +17,17 @@
         "domainSeparator": "0xf720f1fd8bfacb497aa1c16a19a7f17ba6e7bfba9ae23c73812ce40727956e08",
         "getChainId": 1,
         "getOwners": [
+          "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
+          "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
           "0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
           "0x5822D8457c00FB82203918ED92907b935B9D40AE",
           "0x36a0b60162d7F407d74bd1def01410D20437F87B",
           "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
-          "0x41a4bf7B4f6D38CFB7AAbDb95A8C5f0137D06B35",
           "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1",
-          "0xB38B764fDe235F4e665b01c9630B9D8088ffeEA2",
           "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
         ],
-        "getThreshold": 3,
-        "nonce": 10,
+        "getThreshold": 4,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -76,7 +76,7 @@
             "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "currentPeriodAmountInWei": "54621130537025442928",
+        "currentPeriodAmountInWei": "823725489558064148193",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": "0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0",
         "generalPause": false,
@@ -86,7 +86,7 @@
         "l1l2Pause": false,
         "L2_L1_PAUSE_TYPE": "0x21ea2f4fee4bcb623de15ac222ea5c1464307d884f23394b78ddc07f9c9c7cd8",
         "l2l1Pause": false,
-        "limitInWei": "400000000000000000000",
+        "limitInWei": "1200000000000000000000",
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
         "OUTBOX_STATUS_RECEIVED": 2,
         "OUTBOX_STATUS_SENT": 1,
@@ -159,13 +159,13 @@
   "eoas": [
     "0x00000000000000000000000000000000075BCd15",
     "0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
+    "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
     "0x36a0b60162d7F407d74bd1def01410D20437F87B",
-    "0x41a4bf7B4f6D38CFB7AAbDb95A8C5f0137D06B35",
+    "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
     "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
     "0x5822D8457c00FB82203918ED92907b935B9D40AE",
     "0x9228624C3185FCBcf24c1c9dB76D8Bef5f5DAd64",
     "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1",
-    "0xB38B764fDe235F4e665b01c9630B9D8088ffeEA2",
     "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
   ],
   "abis": {
