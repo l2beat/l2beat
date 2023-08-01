@@ -21,12 +21,22 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
+const paused =
+  discovery.getContractValue<number>('ForeignAMB', 'maxGasPerTx') < 21000
+const warningString = paused ? 'The bridge is currently paused.' : undefined
+
+const pausable = {
+  paused,
+  pausableBy: ['BridgeGovernance'],
+}
+
 export const omni: Bridge = {
   type: 'bridge',
   id: ProjectId('omni'),
   display: {
     name: 'Omnibridge',
     slug: 'omni',
+    warning: warningString,
     category: 'Token Bridge',
     links: {
       websites: ['https://omni.gnosischain.com/'],
@@ -154,6 +164,7 @@ export const omni: Bridge = {
         description:
           'Arbitrary Message Bridge validated by the BridgeValidators.',
         ...upgrades,
+        pausable,
       }),
       discovery.getContractDetails('MultiTokenMediator', {
         description: 'Mediator contract and escrow.',
