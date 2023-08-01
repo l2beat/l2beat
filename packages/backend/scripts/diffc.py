@@ -9,17 +9,18 @@ IGNORE_KEYWORDS = ["Multisig", "AddressManager", "ProxyAdmin", "Gnosis"]
 
 
 def get_project_structure(base_path, folder_name, directory):
-    main_contracts_path = os.path.join(
-        base_path, "discovery", folder_name, "ethereum", ".code", directory, "implementation", "contracts")
-    bedrock_contracts_path = os.path.join(base_path, "discovery", folder_name, "ethereum",
-                                          ".code", directory, "implementation", "optimism/packages/contracts-bedrock/contracts")
+    # Add more possible directories here, with a logical name as the key
+    possible_directories = {
+        "main_contracts": os.path.join(base_path, "discovery", folder_name, "ethereum", ".code", directory, "implementation", "contracts"),
+        "bedrock_contracts": os.path.join(base_path, "discovery", folder_name, "ethereum", ".code", directory, "implementation", "optimism/packages/contracts-bedrock/contracts"),
+        # Add more paths here...
+    }
 
-    if os.path.exists(main_contracts_path):
-        return main_contracts_path, "main_contracts"
-    elif os.path.exists(bedrock_contracts_path):
-        return bedrock_contracts_path, "bedrock_contracts"
-    else:
-        return None, None
+    for logical_name, path in possible_directories.items():
+        if os.path.exists(path):
+            return path, logical_name
+
+    return None, None
 
 
 def list_directories(folder_name):
