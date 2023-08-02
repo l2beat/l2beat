@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "arbitrum",
-  "blockNumber": 117081376,
-  "configHash": "0xb2b0a6dd72e4e677fb287bfca685f2c17a09fe4cdff4c3cf31b8887c17929fd4",
+  "blockNumber": 117399533,
+  "configHash": "0xec16ca9d268225fdaaf5a304045e23256e638a571c6fc5b493bcf9eb1322176c",
   "version": 1,
   "contracts": [
     {
@@ -41,7 +41,8 @@
         "isSendingPayload": false,
         "latestVersion": 2,
         "owner": "0xFE22f5D2755b06b9149656C5793Cb15A08d09847"
-      }
+      },
+      "derivedName": "Endpoint"
     },
     {
       "name": "UltraLightNodeV2",
