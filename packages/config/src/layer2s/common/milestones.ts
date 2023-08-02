@@ -105,6 +105,6 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     date: '2023-03-24T00:00:00Z',
     link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
     description:
-      'zkSync Era is now permissionless and open for everyone brining first zkEVM to mainnet.',
+      'zkSync Era is now permissionless and open for everyone bringing first zkEVM to mainnet.',
   },
 ]
