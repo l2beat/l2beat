@@ -19,7 +19,7 @@ const discovery = new ProjectDiscovery('zora')
 
 const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No Delay',
+  upgradeDelay: 'No delay',
 }
 
 export const zora: Layer2 = {
@@ -96,6 +96,8 @@ export const zora: Layer2 = {
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+        // the value is inside the node config, but we have no reference to it
+        // so we assume it to be the same value as in other op stack chains
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
       sources: [
@@ -145,7 +147,7 @@ export const zora: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, Zora Network will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -230,7 +232,7 @@ export const zora: Layer2 = {
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
       description:
-        'Zora Network is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Zora Network.',
+        'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
       risks: [],
       references: [
         {
@@ -243,7 +245,7 @@ export const zora: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'ZoraMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power)',
+      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     ...discovery.getMultisigPermission(
       'ChallengerMultisig',

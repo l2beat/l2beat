@@ -27,6 +27,8 @@ import { nova } from './nova'
 import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { polygonmiden } from './polygonmiden'
+import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { rhinofi } from './rhinofi'
@@ -35,6 +37,7 @@ import { sorare } from './sorare'
 import { starknet } from './starknet'
 import { taiko } from './taiko'
 import { Layer2 } from './types'
+import { xchain } from './xchain'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
@@ -73,13 +76,16 @@ export const layer2s: Layer2[] = [
   obscuro,
   omgnetwork,
   optimism,
+  polygonmiden,
   polygonzkevm,
+  polygonpos2,
   publicgoodsnetwork,
   rhinofi,
   scroll,
   sorare,
   starknet,
   taiko,
+  xchain,
   zkspace,
   zkswap,
   zkswap2,

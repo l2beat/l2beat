@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 17813708,
+  "blockNumber": 17825487,
   "configHash": "0x6bb2f6515f379bd9f658e5b42d44ee08d430d26deee0c258699a59d81ffd4731",
   "version": 1,
   "contracts": [
@@ -35,7 +35,7 @@
           "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
         ],
         "getThreshold": 8,
-        "nonce": 75,
+        "nonce": 76,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -81,7 +81,7 @@
         "getBridgeMode": "0x2544fbb9",
         "implementation": "0x82B67a43b69914E611710C62e629dAbB2f7AC6AB",
         "isInitialized": true,
-        "maxGasPerTx": 0,
+        "maxGasPerTx": 4000000,
         "messageId": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "messageSender": "0x0000000000000000000000000000000000000000",
         "messageSourceChainId": 0,

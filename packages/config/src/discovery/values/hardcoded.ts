@@ -21,8 +21,11 @@ export const HARDCODED = {
   },
   OPTIMISM: {
     // https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/packages/contracts-bedrock/deploy-config/mainnet.json#LL10C26-L10C30
-    SEQUENCER: '0x6887246668a3b87F54DeB3b94Ba47a6f63F32985',
-    SEQUENCING_WINDOW_SECONDS: 43200,
+    SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
+  },
+  PUBLICGOODSNETWORK: {
+    // https://github.com/ethereum-optimism/optimism/pull/6261/files
+    SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
   },
   ZKSYNC_2: {
     FACETS: [
