@@ -208,9 +208,7 @@ describe(SequenceProcessor.name, () => {
       })
     })
 
-    it('re-processes data when from > getLatest', async function () {
-      this.timeout(10000)
-
+    it('re-processes data when from > getLatest', async () => {
       const time = install()
 
       const reportErrorMock = mockFn().returns(undefined)
@@ -236,9 +234,7 @@ describe(SequenceProcessor.name, () => {
       expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
     })
 
-    it('works when processRange throws', async function () {
-      this.timeout(10000)
-
+    it('works when processRange throws', async () => {
       const time = install()
 
       const errorMessage = 'Force-failing during tests!'
@@ -500,7 +496,7 @@ async function waitForErrorReport(
   let errorReported = false
 
   while (!errorReported) {
-    await time.tickAsync(1)
+    await time.tickAsync(100)
     errorReported = reportErrorMock.calls.length > currentCalls
   }
 }
