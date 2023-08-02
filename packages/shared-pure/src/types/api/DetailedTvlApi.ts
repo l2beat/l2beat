@@ -2,7 +2,9 @@ import z from 'zod'
 
 import { AssetId } from '../AssetId'
 import { branded } from '../branded'
+import { ChainId } from '../ChainId'
 import { UnixTime } from '../UnixTime'
+import { ValueType } from '../ValueType'
 
 const DetailedTvlApiChartPoint = z.tuple([
   branded(z.number(), (n) => new UnixTime(n)),
@@ -44,9 +46,19 @@ export const DetailedTvlApiToken = z.object({
   assetId: branded(z.string(), AssetId),
   tvl: z.number(),
 })
+
+export const DetailedTvlApiTopToken = z.object({
+  assetId: branded(z.string(), AssetId),
+  chainId: branded(z.number(), ChainId),
+  valueType: branded(z.string(), ValueType),
+})
+
+export type DetailedTvlApiTopToken = z.infer<typeof DetailedTvlApiTopToken>
+
 export type DetailedTvlApiToken = z.infer<typeof DetailedTvlApiToken>
 
 export const DetailedTvlApiProject = z.object({
+  topTokens: z.array(DetailedTvlApiTopToken),
   tokens: z.array(DetailedTvlApiToken),
   charts: DetailedTvlApiCharts,
 })
