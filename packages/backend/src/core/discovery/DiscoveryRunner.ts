@@ -49,8 +49,8 @@ export class DiscoveryRunner {
     const discovery = await this.discoverWithRetry(
       config,
       blockNumber,
-      MAX_RETRIES,
-      RETRY_DELAY_MS,
+      options.maxRetries,
+      options.retryDelayMs,
     )
 
     if (options.runSanityCheck) {
@@ -83,8 +83,8 @@ export class DiscoveryRunner {
   async discoverWithRetry(
     config: DiscoveryConfig,
     blockNumber: number,
-    maxRetries: number,
-    delayMs: number,
+    maxRetries = MAX_RETRIES,
+    delayMs = RETRY_DELAY_MS,
   ): Promise<DiscoveryOutput> {
     let discovery: DiscoveryOutput | undefined = undefined
     let err: Error | undefined = undefined
