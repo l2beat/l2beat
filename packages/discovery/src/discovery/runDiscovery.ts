@@ -1,5 +1,4 @@
 import { EtherscanLikeClient } from '@l2beat/shared'
-import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { DiscoveryModuleConfig } from '../config/config.discovery'
@@ -39,7 +38,6 @@ export async function runDiscovery(
     provider,
     etherscanClient,
     projectConfig,
-    config.chainId,
     logger,
     blockNumber,
   )
@@ -68,18 +66,11 @@ export async function dryRunDiscovery(
   )
 
   const [discovered, discoveredYesterday] = await Promise.all([
+    justDiscover(provider, etherscanClient, projectConfig, blockNumber),
     justDiscover(
       provider,
       etherscanClient,
       projectConfig,
-      config.chainId,
-      blockNumber,
-    ),
-    justDiscover(
-      provider,
-      etherscanClient,
-      projectConfig,
-      config.chainId,
       blockNumberYesterday,
     ),
   ])
@@ -101,14 +92,12 @@ async function justDiscover(
   provider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
   config: DiscoveryConfig,
-  chainId: ChainId,
   blockNumber: number,
 ) {
   const result = await discover(
     provider,
     etherscanClient,
     config,
-    chainId,
     DiscoveryLogger.CLI,
     blockNumber,
   )
@@ -125,7 +114,6 @@ export async function discover(
   provider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
   config: DiscoveryConfig,
-  chainId: ChainId,
   logger: DiscoveryLogger,
   blockNumber: number,
 ) {
