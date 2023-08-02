@@ -4,6 +4,7 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
+import { VerticalSeparator } from '../VerticalSeparator'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
@@ -120,10 +121,15 @@ export function Chart({
                 className="max-w-[135px] xs:max-w-none"
               />
             )}
-            {hasTvl && <CurrencyControls />}
+            {hasTvl && (
+              <div className="flex h-[2rem] items-end gap-6">
+                <CurrencyControls />
+                <VerticalSeparator />
+                <TokenControls tokens={tokens} />
+              </div>
+            )}
             <ScaleControls />
           </div>
-          {hasTvl && <TokenControls tokens={tokens} />}
         </div>
       </section>
       <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />

@@ -22,14 +22,14 @@ export function setupControls(
   })
 
   onRadioChange(elements.controls.tokens, (control) => {
-    if (!control.dataset.tvlEndpoint) {
-      throw new Error('Missing tvl endpoint')
+    if (control.dataset.tvlEndpoint) {
+      console.log('Token', control.dataset.tvlEndpoint, control.value)
+      dispatch({
+        type: 'TokenChanged',
+        token: control.value,
+        tokenEndpoint: control.dataset.tvlEndpoint,
+      })
     }
-    dispatch({
-      type: 'TokenChanged',
-      token: control.value,
-      tokenEndpoint: control.dataset.tvlEndpoint,
-    })
   })
 
   elements.controls.showMoreTokens?.addEventListener('click', () => {
