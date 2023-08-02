@@ -1,5 +1,11 @@
 import Router from '@koa/router'
-import { AssetId, branded, ProjectId } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  branded,
+  ChainId,
+  ProjectId,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { DetailedTvlController } from '../controllers/tvl/DetailedTvlController'
@@ -60,6 +66,39 @@ export function createTvlRouter(
 
       ctx.body = data
     })
+
+    router.get(
+      '/api/projects/:projectId/tvl/chains/:chainId/assets/:assetId/types/:assetType',
+
+      withTypedContext(
+        z.object({
+          params: z.object({
+            chainId: z.string(),
+            projectId: branded(z.string(), ProjectId),
+            assetId: branded(z.string(), AssetId),
+            assetType: branded(z.string(), ValueType),
+          }),
+        }),
+        async (ctx) => {
+          const { assetId, chainId, assetType, projectId } = ctx.params
+
+          const chart =
+            await detailedTvlController.getDetailedAssetTvlApiResponse(
+              projectId,
+              ChainId(+chainId),
+              assetId,
+              assetType,
+            )
+
+          if (!chart) {
+            ctx.status = 404
+            return
+          }
+
+          ctx.body = chart
+        },
+      ),
+    )
   }
 
   return router
