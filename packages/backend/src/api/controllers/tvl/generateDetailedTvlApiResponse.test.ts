@@ -8,7 +8,6 @@ import {
   ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { writeFileSync } from 'fs'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
