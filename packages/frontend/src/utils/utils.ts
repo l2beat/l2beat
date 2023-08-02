@@ -18,3 +18,7 @@ export function formatPercent(value: number, addPlus = false) {
 export function formatUSD(value: number) {
   return `$${formatLargeNumber(value)}`
 }
+
+export function isZeroUSD(value: string) {
+  return value === '$0.00'
+}

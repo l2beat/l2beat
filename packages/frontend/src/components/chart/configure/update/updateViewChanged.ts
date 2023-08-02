@@ -64,15 +64,15 @@ export function updateViewChanged(
   }
 
   if (message.view === 'detailedTvl') {
-    if (!state.endpoints.aggregateTvl) {
-      throw new Error('Invalid state: aggregate tvl endpoint missing')
+    if (!state.endpoints.aggregateDetailedTvl) {
+      throw new Error('Invalid state: aggregate detailed tvl endpoint missing')
     }
     request.isFetching = true
     request.lastId++
     effects.push({
       type: 'FetchDetailedAggregateTvl',
       requestId: request.lastId,
-      url: state.endpoints.aggregateTvl,
+      url: state.endpoints.aggregateDetailedTvl,
     })
   }
 

@@ -1,5 +1,9 @@
 import { Layer2, ProjectLinks } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  DetailedTvlApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
 import { TvlStats } from '../../../components/header/TvlSummary'
@@ -17,7 +21,7 @@ import { ProjectHeaderProps } from '../view/ProjectHeader'
 export function getProjectHeader(
   project: Layer2,
   config: Config,
-  tvlApiResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]

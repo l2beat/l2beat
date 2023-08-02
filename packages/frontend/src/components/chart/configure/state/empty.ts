@@ -4,6 +4,7 @@ import { State } from './State'
 export const EMPTY_STATE: State = {
   endpoints: {
     aggregateTvl: undefined,
+    aggregateDetailedTvl: undefined,
     alternativeTvl: undefined,
     activity: undefined,
   },

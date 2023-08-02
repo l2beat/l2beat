@@ -1,6 +1,7 @@
 import { Bridge, Layer2, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   ActivityApiResponse,
+  DetailedTvlApiResponse,
   ProjectId,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
@@ -10,12 +11,13 @@ import { ChartProps } from '../../components'
 
 export function getChart(
   project: Layer2 | Bridge,
-  tvlApiResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   config?: Config,
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
   return {
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
+    detailedTvlEndpoint: `/api/${project.display.slug}-detailed-tvl.json`,
     activityEndpoint: `/api/activity/${project.display.slug}.json`,
     tokens: getTokens(project.id, tvlApiResponse),
     hasActivity:
@@ -27,7 +29,10 @@ export function getChart(
   }
 }
 
-function getTokens(projectId: ProjectId, tvlApiResponse: TvlApiResponse) {
+function getTokens(
+  projectId: ProjectId,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+) {
   return tvlApiResponse.projects[projectId.toString()]?.tokens
     .map(({ assetId, tvl }) => {
       const symbol = safeGetTokenByAssetId(assetId)?.symbol

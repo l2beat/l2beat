@@ -4,6 +4,7 @@ import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
+import { fetchDetailedTvlApi } from './api/fetchDetailedTvlApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { getVerificationStatus } from './api/getVerificationStatus'
 import { printActivityInfo, printApiInfo } from './api/printApiInfo'
@@ -23,7 +24,9 @@ async function main() {
 
   const http = new JsonHttpClient(new HttpClient(), config.backend.skipCache)
 
-  const tvlApiResponse = await fetchTvlApi(config.backend.apiUrl, http)
+  const tvlApiResponse = config.features.detailedTvl
+    ? await fetchDetailedTvlApi(config.backend.apiUrl, http)
+    : await fetchTvlApi(config.backend.apiUrl, http)
   printApiInfo(tvlApiResponse)
   tvlSanityCheck(tvlApiResponse)
 

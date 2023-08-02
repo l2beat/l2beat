@@ -1,5 +1,9 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  DetailedTvlApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { HeaderProps } from '../../components'
 import { getTpsDaily } from '../activity/getTpsDaily'
@@ -8,13 +12,13 @@ import { formatUSD, getPercentageChange } from '../utils'
 
 export function getHeader(
   project: Layer2 | Bridge,
-  tvlApiResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): HeaderProps {
   const hourly =
     tvlApiResponse.projects[project.id.toString()]?.charts.hourly.data ?? []
   const tvl = hourly.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = hourly[0]?.[1] ?? 0
+  const tvlSevenDaysAgo = hourly[0][1]
   const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const activityData =
