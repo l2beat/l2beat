@@ -1,5 +1,10 @@
 import { EventTracker, Logger } from '@l2beat/shared'
-import { assert, json } from '@l2beat/shared-pure'
+import {
+  assert,
+  exponentialBackOff,
+  ExponentialBackOffOpts,
+  json,
+} from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 import { EventEmitter } from 'stream'
@@ -43,6 +48,9 @@ export interface SequenceProcessorOpts {
   ) => Promise<void>
   uncertaintyBuffer?: number // resync from lastProcessed - uncertaintyBuffer
   scheduleIntervalMs?: number
+  taskQueueOpts?: {
+    exponentialBackOffOpts: ExponentialBackOffOpts
+  }
 }
 
 export const ALL_PROCESSED_EVENT = 'All processed'
@@ -92,6 +100,9 @@ export class SequenceProcessor extends EventEmitter {
       this.logger.for('updateQueue'),
       {
         metricsId: `${SequenceProcessor.name}_${id}`,
+        shouldRetry: opts.taskQueueOpts
+          ? exponentialBackOff(opts.taskQueueOpts.exponentialBackOffOpts)
+          : undefined,
       },
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR

@@ -12,7 +12,7 @@ function always() {
   return { retry: true }
 }
 
-interface ExponentialBackOffOpts {
+export interface ExponentialBackOffOpts {
   stepMs: number
   maxAttempts: number // use Infinity for indefinite retries
   maxDistanceMs?: number

@@ -49,6 +49,13 @@ describe(SequenceProcessor.name, () => {
         processRange,
         scheduleIntervalMs: refreshInterval,
         uncertaintyBuffer,
+        taskQueueOpts: {
+          exponentialBackOffOpts: {
+            stepMs: 100,
+            maxDistanceMs: 60_000,
+            maxAttempts: 10,
+          },
+        },
       },
     )
   }
