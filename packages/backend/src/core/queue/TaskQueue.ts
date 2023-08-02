@@ -93,13 +93,11 @@ export class TaskQueue<T> {
   }
 
   addToFront(task: T) {
-    this.halted = false
     this.queue.unshift({ task, attempts: 0, executeAt: Date.now() })
     setTimeout(() => this.execute())
   }
 
   addToBack(task: T) {
-    this.halted = false
     this.queue.push({ task, attempts: 0, executeAt: Date.now() })
     setTimeout(() => this.execute())
   }
