@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { join } from 'path'
 
+import { assertUnreachable } from '../utils/assertUnreachable'
 import { formatLevelPretty } from './formatLevelPretty'
 import { formatParametersPretty } from './formatParametersPretty'
 import { formatServicePretty } from './formatServicePretty'
@@ -27,6 +28,7 @@ export interface LoggerOptions {
   cwd: string
   getTime: () => Date
   reportError: (error: unknown) => void
+  reportCriticalError: (error: unknown) => void
   backend: LoggerBackend
 }
 
@@ -47,6 +49,8 @@ export class Logger {
       cwd: options.cwd ?? process.cwd(),
       getTime: options.getTime ?? (() => new Date()),
       reportError: options.reportError ?? (() => {}),
+      reportCriticalError:
+        options.reportCriticalError ?? options.reportError ?? (() => {}),
       backend: options.backend ?? console,
     }
     this.cwd = join(this.options.cwd, '/')
@@ -110,7 +114,7 @@ export class Logger {
       return
     }
     this.print('CRITICAL', resolveLog(message, parameters, this.cwd))
-    this.options.reportError(parameters ?? message)
+    this.options.reportCriticalError(parameters ?? message)
   }
 
   error(message: string, parameters?: unknown): void
@@ -185,14 +189,25 @@ export class Logger {
         ? this.formatJson(level, service, message, parameters)
         : this.formatPretty(level, service, message, parameters)
 
-    if (level === 'CRITICAL' || level === 'ERROR') {
-      this.options.backend.error(output)
-    } else if (level === 'WARN') {
-      this.options.backend.warn(output)
-    } else if (level === 'INFO') {
-      this.options.backend.log(output)
-    } else if (level === 'DEBUG' || level === 'TRACE') {
-      this.options.backend.debug(output)
+    switch (level) {
+      case 'CRITICAL':
+      case 'ERROR':
+        this.options.backend.error(output)
+        break
+      case 'WARN':
+        this.options.backend.warn(output)
+        break
+      case 'INFO':
+        this.options.backend.log(output)
+        break
+      case 'DEBUG':
+      case 'TRACE':
+        this.options.backend.debug(output)
+        break
+      case 'NONE':
+        break
+      default:
+        assertUnreachable(level)
     }
   }
 

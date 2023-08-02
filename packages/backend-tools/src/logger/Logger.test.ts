@@ -144,6 +144,38 @@ describe(Logger.name, () => {
       )
     })
   })
+
+  describe('error reporting', () => {
+    it('reports error and critical error using reportError if reportCriticalError was not specified', () => {
+      const mockReportError = mockFn((_: unknown) => {})
+      const logger = new Logger({
+        reportError: mockReportError,
+      })
+
+      logger.error('foo')
+      logger.critical('bar')
+
+      expect(mockReportError).toHaveBeenCalledTimes(2)
+      expect(mockReportError).toHaveBeenNthCalledWith(1, 'foo')
+      expect(mockReportError).toHaveBeenNthCalledWith(2, 'bar')
+      expect(mockReportError).toHaveBeenExhausted()
+    })
+
+    it('reports error and critical error', () => {
+      const mockReportError = mockFn((_: unknown) => {})
+      const mockReportCriticalError = mockFn((_: unknown) => {})
+      const logger = new Logger({
+        reportError: mockReportError,
+        reportCriticalError: mockReportCriticalError,
+      })
+
+      logger.error('foo')
+      logger.critical('bar')
+
+      expect(mockReportError).toHaveBeenOnlyCalledWith('foo')
+      expect(mockReportCriticalError).toHaveBeenOnlyCalledWith('bar')
+    })
+  })
 })
 
 function createTestBackend() {
