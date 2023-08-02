@@ -214,7 +214,7 @@ export class TaskQueue<T> {
   // or rewrite the logic of your updater
   unhaltIfNeeded() {
     if (this.halted) {
-      this.queue = []
+      this.queue.splice(0, this.queue.length)
       this.halted = false
     }
   }
