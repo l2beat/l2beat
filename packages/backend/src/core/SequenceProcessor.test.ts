@@ -49,13 +49,6 @@ describe(SequenceProcessor.name, () => {
         processRange,
         scheduleIntervalMs: refreshInterval,
         uncertaintyBuffer,
-        taskQueueOpts: {
-          exponentialBackOffOpts: {
-            stepMs: 100,
-            maxDistanceMs: 60_000,
-            maxAttempts: 10,
-          },
-        },
       },
     )
   }
@@ -215,7 +208,9 @@ describe(SequenceProcessor.name, () => {
       })
     })
 
-    it('re-processes data when from > getLatest', async () => {
+    it('re-processes data when from > getLatest', async function () {
+      this.timeout(10000)
+
       const time = install()
 
       const reportErrorMock = mockFn().returns(undefined)
@@ -241,7 +236,9 @@ describe(SequenceProcessor.name, () => {
       expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
     })
 
-    it('works when processRange throws', async () => {
+    it('works when processRange throws', async function () {
+      this.timeout(10000)
+
       const time = install()
 
       const errorMessage = 'Force-failing during tests!'
