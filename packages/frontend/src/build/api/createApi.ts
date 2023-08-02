@@ -31,17 +31,23 @@ export function createApi(
   >()
 
   urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
-  urlCharts.set('scaling-detailed-tvl', tvlApiResponse.layers2s)
   urlCharts.set('bridges-tvl', tvlApiResponse.bridges)
   urlCharts.set('combined-tvl', tvlApiResponse.combined)
+
+  if (config.features.detailedTvl) {
+    urlCharts.set('scaling-detailed-tvl', tvlApiResponse.layers2s)
+  }
+
   for (const project of [...config.layer2s, ...config.bridges]) {
     const projectTvlData = tvlApiResponse.projects[project.id.toString()]
     if (projectTvlData) {
       urlCharts.set(`${project.display.slug}-tvl`, projectTvlData.charts)
-      urlCharts.set(
-        `${project.display.slug}-detailed-tvl`,
-        projectTvlData.charts,
-      )
+      if (config.features.detailedTvl) {
+        urlCharts.set(
+          `${project.display.slug}-detailed-tvl`,
+          projectTvlData.charts,
+        )
+      }
     }
   }
   urlCharts.set(`placeholder-tvl`, PLACEHOLDER_API_DATA)
@@ -79,6 +85,8 @@ export function outputCharts(
   >,
 ) {
   for (const [url, charts] of urlCharts) {
+    // TODO(radomski): This check is be removed when we retire the /api/tvl
+    // endpoint and use only the /api/detailed-tvl
     const json =
       'hourly' in charts &&
       charts.hourly.types.length === 9 &&
