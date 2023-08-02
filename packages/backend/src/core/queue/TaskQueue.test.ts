@@ -233,6 +233,78 @@ describe(TaskQueue.name, () => {
 
     expect(queue.length).toEqual(0)
   })
+
+  describe(TaskQueue.prototype.unhaltIfNeeded.name, () => {
+    it('can clear and unhalt queue', async () => {
+      const eventTracker = mockObject<EventTracker<string>>({
+        record: mockFn().returns(undefined),
+      })
+
+      const completed: number[] = []
+
+      async function execute(i: number) {
+        await wait(1)
+        if (i === 1) {
+          throw new Error('oops')
+        }
+
+        completed.push(i)
+      }
+
+      const queue = new TaskQueue(execute, Logger.SILENT, {
+        shouldRetry: Retries.maxAttempts(1),
+        metricsId: 'test',
+        eventTracker,
+        shouldHaltAfterFailedRetries: true,
+      })
+
+      for (let i = 0; i < 3; i++) {
+        queue.addToBack(i)
+      }
+
+      await time.runAllAsync()
+
+      expect(queue.isHalted()).toEqual(true)
+
+      queue.unhaltIfNeeded()
+
+      expect(queue.isHalted()).toEqual(false)
+      expect(queue.length).toEqual(0)
+    })
+
+    it('will not clear unhalted queue', async () => {
+      const eventTracker = mockObject<EventTracker<string>>({
+        record: mockFn().returns(undefined),
+      })
+
+      const completed: number[] = []
+
+      async function execute(i: number) {
+        await wait(1)
+        if (i === 1) {
+          throw new Error('oops')
+        }
+
+        completed.push(i)
+      }
+
+      const queue = new TaskQueue(execute, Logger.SILENT, {
+        shouldRetry: Retries.maxAttempts(1),
+        metricsId: 'test',
+        eventTracker,
+        shouldHaltAfterFailedRetries: true,
+      })
+
+      queue.addToBack(0)
+
+      expect(queue.isHalted()).toEqual(false)
+
+      queue.unhaltIfNeeded()
+
+      expect(queue.isHalted()).toEqual(false)
+      expect(queue.length).toEqual(1)
+    })
+  })
 })
 
 // Unfortunately fake-timers do not work well with timers/promises
