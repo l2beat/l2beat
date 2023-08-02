@@ -1,7 +1,7 @@
 {
-  "chain": "ethereum",
   "name": "polygon-plasma",
-  "blockNumber": 17776044,
+  "chain": "ethereum",
+  "blockNumber": 17813920,
   "configHash": "0x477e099e8ea3af784240e53f62de9cd67f2cadd7ded7f3e499f74945ecd1cc06",
   "version": 1,
   "contracts": [
@@ -35,7 +35,7 @@
         "type": "immutable"
       },
       "values": {
-        "counter": 2731007,
+        "counter": 2736715,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -143,18 +143,18 @@
         "extension": "0xef49Ea6996073752b6840CDA34773FFA78F78166"
       },
       "values": {
-        "accountStateRoot": "0xd44de474d0fcfc0a7323be0302e8df89d37aeb422c734033ab394bbc22768734",
+        "accountStateRoot": "0x85d7a8f1697e2a84910d571af5875abfdb954c6050766f6866a6bb9fc7c660ca",
         "auctionPeriod": 20,
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 48779,
+        "currentEpoch": 48984,
         "currentValidatorSetSize": 101,
-        "currentValidatorSetTotalStake": "3614380103023444951991064185",
+        "currentValidatorSetTotalStake": "3604009776227684753795940518",
         "delegationEnabled": true,
         "delegatorsReward": [],
         "dynasty": 80,
-        "epoch": 48779,
+        "epoch": 48984,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -179,13 +179,13 @@
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "6845939209428901681108",
+        "totalHeimdallFee": "7604509209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "78572012045757161771309691",
-        "totalStaked": "19946454750568655166643872",
+        "totalRewardsLiquidated": "78736461906660958651003473",
+        "totalStaked": "19150836589257838463585799",
         "validatorReward": [],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
-        "validatorState": ["3614380103023444951991064185", 101],
+        "validatorState": ["3604009776227684753795940518", 101],
         "validatorThreshold": 101,
         "WITHDRAWAL_DELAY": 80,
         "withdrawalDelay": 80
@@ -249,10 +249,10 @@
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
       },
       "values": {
-        "_nextHeaderBlock": 487790000,
+        "_nextHeaderBlock": 489840000,
         "CHAINID": 137,
-        "currentHeaderBlock": 487780000,
-        "getLastChildBlock": 45532325,
+        "currentHeaderBlock": 489830000,
+        "getLastChildBlock": 45744037,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -286,7 +286,7 @@
         "type": "immutable"
       },
       "values": {
-        "getAccountStateRoot": "0xd44de474d0fcfc0a7323be0302e8df89d37aeb422c734033ab394bbc22768734",
+        "getAccountStateRoot": "0x85d7a8f1697e2a84910d571af5875abfdb954c6050766f6866a6bb9fc7c660ca",
         "getStakerDetails": [
           [0, 0, 0, 0, "0x0000000000000000000000000000000000000000", 0]
         ],
