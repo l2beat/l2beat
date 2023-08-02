@@ -104,7 +104,7 @@ export function getTopProjectTokens(
   return topTokens
     .sort(
       (primaryReport, secondaryReport) =>
-        primaryReport.value - secondaryReport.value,
+        secondaryReport.value - primaryReport.value,
     )
     .slice(0, amountOfTopTokens)
     .map(({ value: _value, ...rest }) => rest)

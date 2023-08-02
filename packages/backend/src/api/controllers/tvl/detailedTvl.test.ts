@@ -12,6 +12,7 @@ import { AggregatedReportRecord } from '../../../peripherals/database/Aggregated
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import {
   getProjectTokensCharts,
+  getTopProjectTokens,
   groupByProjectIdAndAsset,
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
@@ -373,7 +374,7 @@ describe('detailedTvl', () => {
         },
       ])
     })
-    it('return empty array if no project assets were found', () => {
+    it('returns empty array if no project`s assets were found', () => {
       const groupedReports = groupByProjectIdAndAsset(mockReports)
 
       const optimismResult = getProjectTokensCharts(
@@ -382,6 +383,135 @@ describe('detailedTvl', () => {
       )
 
       expect(optimismResult).toEqual([])
+    })
+  })
+
+  describe(getTopProjectTokens.name, () => {
+    const mockReports: ReportRecord[] = [
+      {
+        timestamp: UnixTime.now(),
+        type: ValueType.EBV,
+        chainId: ChainId.ARBITRUM,
+        projectId: ProjectId.ARBITRUM,
+        amount: 2_000_000n,
+        usdValue: 2_000_000n,
+        ethValue: 2_000_000n,
+        asset: AssetId.USDC,
+      },
+      {
+        timestamp: UnixTime.now(),
+        type: ValueType.CBV,
+        chainId: ChainId.ARBITRUM,
+        projectId: ProjectId.ARBITRUM,
+        amount: 1_000_000n,
+        usdValue: 1_000_000n,
+        ethValue: 1_000_000n,
+        asset: AssetId.USDC,
+      },
+
+      {
+        timestamp: UnixTime.now(),
+        type: ValueType.NMV,
+        chainId: ChainId.ARBITRUM,
+        projectId: ProjectId.ARBITRUM,
+        amount: 4_000_000n,
+        usdValue: 4_000_000n,
+        ethValue: 4_000_000n,
+        asset: AssetId.ARB,
+      },
+      {
+        timestamp: UnixTime.now(),
+        type: ValueType.EBV,
+        chainId: ChainId.ARBITRUM,
+        projectId: ProjectId.ARBITRUM,
+        amount: 3_000_000n,
+        usdValue: 3_000_000n,
+        ethValue: 3_000_000n,
+        asset: AssetId.ARB,
+      },
+
+      {
+        timestamp: UnixTime.now(),
+        type: ValueType.CBV,
+        chainId: ChainId.ARBITRUM,
+        projectId: ProjectId.ARBITRUM,
+        amount: 5_000_000n,
+        usdValue: 5_000_000n,
+        ethValue: 5_000_000n,
+        asset: AssetId.ETH,
+      },
+    ]
+
+    it('return empty array if no project assets were provided within the grouping', () => {
+      const groupedReports = groupByProjectIdAndAsset(mockReports)
+      const result = getTopProjectTokens(groupedReports, ProjectId.OPTIMISM) // since all are for Arbitrum
+
+      expect(result).toEqual([])
+      expect(result.length).toEqual(0)
+    })
+
+    it('returns top of default amount', () => {
+      const groupedReports = groupByProjectIdAndAsset(mockReports)
+      const result = getTopProjectTokens(groupedReports, ProjectId.ARBITRUM)
+
+      expect(result).toEqual([
+        {
+          // 5_000_000n
+          valueType: ValueType.CBV,
+          assetId: AssetId.ETH,
+          chainId: ChainId.ARBITRUM,
+        },
+        {
+          // 4_000_000n
+          valueType: ValueType.NMV,
+          assetId: AssetId.ARB,
+          chainId: ChainId.ARBITRUM,
+        },
+        {
+          // 3_000_000n
+          valueType: ValueType.EBV,
+          assetId: AssetId.ARB,
+          chainId: ChainId.ARBITRUM,
+        },
+        {
+          // 2_000_000n
+          valueType: ValueType.EBV,
+          assetId: AssetId.USDC,
+          chainId: ChainId.ARBITRUM,
+        },
+        {
+          // 1_000_000n
+          valueType: ValueType.CBV,
+          assetId: AssetId.USDC,
+          chainId: ChainId.ARBITRUM,
+        },
+      ])
+    })
+
+    it('returns top 3 as given amount', () => {
+      const groupedReports = groupByProjectIdAndAsset(mockReports)
+      const result = getTopProjectTokens(groupedReports, ProjectId.ARBITRUM, 3)
+
+      expect(result).toEqual([
+        {
+          // 5_000_000n
+          valueType: ValueType.CBV,
+          assetId: AssetId.ETH,
+          chainId: ChainId.ARBITRUM,
+        },
+        {
+          // 4_000_000n
+          valueType: ValueType.NMV,
+          assetId: AssetId.ARB,
+          chainId: ChainId.ARBITRUM,
+        },
+        {
+          // 3_000_000n
+          valueType: ValueType.EBV,
+          assetId: AssetId.ARB,
+          chainId: ChainId.ARBITRUM,
+        },
+      ])
     })
   })
 })
