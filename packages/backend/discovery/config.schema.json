@@ -16,7 +16,7 @@
     "chain": {
       "description": "Chain on which to run the discovery on",
       "type": "string",
-      "enum": ["ethereum", "arbitrum"]
+      "enum": ["ethereum", "arbitrum", "optimism"]
     },
     "initialAddresses": {
       "description": "A list of addresses that discovery starts from",

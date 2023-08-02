@@ -34,6 +34,13 @@ const CHAIN_IDS: ChainMetadata[] = [
     minTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
   },
   {
+    id: 10,
+    name: 'optimism',
+    dethDomain: 'optimistic.etherscan.deth.net',
+    // ~ Timestamp of block number 0 on Optimism
+    minTimestamp: UnixTime.fromDate(new Date('2021-11-11T09:30:00Z')),
+  },
+  {
     id: -1,
     name: 'native',
   },
@@ -41,6 +48,7 @@ const CHAIN_IDS: ChainMetadata[] = [
 
 ChainId.ETHEREUM = ChainId(CHAIN_IDS[0].id)
 ChainId.ARBITRUM = ChainId(CHAIN_IDS[1].id)
+ChainId.OPTIMISM = ChainId(CHAIN_IDS[2].id)
 ChainId.NMV = ChainId(CHAIN_IDS[2].id)
 
 ChainId.getName = function (chainId: ChainId): string {

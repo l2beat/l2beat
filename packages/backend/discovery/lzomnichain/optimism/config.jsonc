@@ -1,6 +1,6 @@
 {
   "$schema": "../../config.schema.json",
-  "chain": "arbitrum",
+  "chain": "optimism",
   "name": "lzomnichain",
   "initialAddresses": ["0x4D73AdB72bC3DD368966edD0f0b2148401A178E2"],
   "names": {
@@ -10,9 +10,6 @@
   "overrides": {
     "Endpoint": {
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
-    },
-    "UltraLightNodeV2": {
-      "ignoreInWatchMode": ["treasuryZROFees"]
     }
   }
 }

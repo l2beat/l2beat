@@ -26,28 +26,46 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       dev: cli.dev,
       blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
     },
-    chains: [
-      {
+    chain: getChainConfig(cli.chain),
+  }
+}
+
+function getChainConfig(chainId: ChainId) {
+  switch (chainId) {
+    case ChainId.ETHEREUM:
+      return {
         chainId: ChainId.ETHEREUM,
         rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
         etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
         etherscanUrl: EtherscanClient.API_URL,
         minTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
-      },
-      {
+      }
+    case ChainId.ARBITRUM:
+      return {
         chainId: ChainId.ARBITRUM,
         rpcUrl: getEnv('DISCOVERY_ARBITRUM_RPC_URL'),
-        etherscanApiKey: getEnv('DISCOVERY_ARBISCAN_API_KEY'),
+        etherscanApiKey: getEnv('DISCOVERY_ARBITRUM_ETHERSCAN_API_KEY'),
         etherscanUrl: ArbiscanClient.API_URL,
         minTimestamp: ChainId.getMinTimestamp(ChainId.ARBITRUM),
-      },
-    ],
+      }
+    case ChainId.OPTIMISM:
+      return {
+        chainId: ChainId.OPTIMISM,
+        rpcUrl: getEnv('DISCOVERY_OPTIMISM_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_OPTIMISM_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api-optimistic.etherscan.io/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.OPTIMISM),
+      }
+    case ChainId.NMV:
+      throw new Error('NMV is not supported')
+    default:
+      throw new Error(`No config for chain: ${ChainId.getName(chainId)}`)
   }
 }
 
 export interface DiscoveryCliConfig {
   discovery: DiscoveryModuleConfig | false
-  chains: DiscoveryChainConfig[]
+  chain: DiscoveryChainConfig
   invert: InversionConfig | false
 }
 

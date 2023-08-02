@@ -78,6 +78,15 @@ environment variables. One variable per line `KEY=value`.
 - `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
 - `DISCORD_TOKEN` - Bot account authentication token, for more details go to `DiscordClient.ts`
 
+##### Multichain discovery CLI
+
+If you want to use multichain discovery cli, make sure you include the `RPC_URL` and `ETHERSCAN_API_KEY` for desired chains.
+
+- `DISCOVERY_ARBITRUM_RPC_URL` (Optional)
+- `DISCOVERY_ARBITRUM_ETHERSCAN_API_KEY` (Optional)
+- `DISCOVERY_OPTIMISM_RPC_URL` (Optional)
+- `DISCOVERY_OPTIMISM_ETHERSCAN_API_KEY` (Optional)
+
 #### .env boilerplate
 
 ```bash
@@ -99,7 +108,7 @@ ETHEREUM_ALCHEMY_API_KEY=
 # ETHEREUM_TVL_ENABLED=
 # ARBITRUM_TVL_ENABLED=
 # ARBISCAN_API_KEY=
-# ARBITRUM_PROVIDER_URL
+# ARBITRUM_PROVIDER_URL=
 
 # UPDATE_MONITOR_RUN_ON_START=
 # ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
@@ -112,6 +121,12 @@ ETHEREUM_ALCHEMY_API_KEY=
 # DISCOVERY_BLOCK_NUMBER=
 # DISCOVERY_ETHEREUM_RPC_URL=
 # DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY=
+
+#-----DISCOVERY CLI (MULTICHAIN, OPTIONAL)-----
+# DISCOVERY_ARBITRUM_RPC_URL=
+# DISCOVERY_ARBITRUM_ETHERSCAN_API_KEY=
+# DISCOVERY_OPTIMISM_RPC_URL=
+# DISCOVERY_OPTIMISM_ETHERSCAN_API_KEY=
 
 
 ```

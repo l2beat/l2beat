@@ -30,13 +30,8 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
     return
   }
   const discoverConfig = config.discovery
-  const chainConfig = config.chains.find(
-    (chain) => chain.chainId === discoverConfig.chainId,
-  )
-  assert(
-    chainConfig !== undefined,
-    'Chain config not found! Update "discovery.config" file',
-  )
+  const chainConfig = config.chain
+
   assert(
     chainConfig.chainId === discoverConfig.chainId,
     'Chain config does not match discovery config! Update "discovery.config" file or config.json of your project',
