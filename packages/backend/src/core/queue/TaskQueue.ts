@@ -1,10 +1,10 @@
 import { EventTracker, Logger } from '@l2beat/shared'
 import {
-  Retries,
-  ShouldRetry,
   getErrorMessage,
   getErrorStackTrace,
   json,
+  Retries,
+  ShouldRetry,
   wrapAndMeasure,
 } from '@l2beat/shared-pure'
 import assert from 'assert'
