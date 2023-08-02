@@ -61,9 +61,6 @@ describe(generateDetailedTvlApiResponse.name, () => {
       },
     }
 
-    writeFileSync('result.json', JSON.stringify(result, null, 2))
-    writeFileSync('expected.json', JSON.stringify(expected, null, 2))
-
     expect(result).toEqual(expected)
   })
 
