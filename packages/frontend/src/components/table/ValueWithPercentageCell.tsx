@@ -3,7 +3,7 @@ import React from 'react'
 import { isZeroUSD } from '../../utils/utils'
 import { NumberCell } from './NumberCell'
 
-export interface NonZeroDiffedNumberCellProps {
+export interface ValueWithPercentageCellProps {
   value?: string
   percentChange?: string
 }
@@ -12,7 +12,7 @@ export interface NonZeroDiffedNumberCellProps {
 // Look here for more: https://www.compart.com/en/unicode/U+2014
 const LONG_HYPHEN = '—'
 
-export function NonZeroDiffedNumberCell(props: NonZeroDiffedNumberCellProps) {
+export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
   return (
     <>
       {props.value && !isZeroUSD(props.value) ? (

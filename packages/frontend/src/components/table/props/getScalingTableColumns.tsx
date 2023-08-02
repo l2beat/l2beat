@@ -5,13 +5,13 @@ import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
 import { StageCell } from '../../stages/StageCell'
 import { IndexCell } from '../IndexCell'
-import { NonZeroDiffedNumberCell } from '../NonZeroDiffedNumberCell'
 import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
 import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
+import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
 export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
@@ -126,7 +126,7 @@ export function getScalingDetailedTvlColumns() {
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <NonZeroDiffedNumberCell
+        <ValueWithPercentageCell
           value={project.tvl}
           percentChange={project.tvlChange}
         />
@@ -140,7 +140,7 @@ export function getScalingDetailedTvlColumns() {
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <NonZeroDiffedNumberCell
+        <ValueWithPercentageCell
           value={project.cbv}
           percentChange={project.cbvChange}
         />
@@ -154,7 +154,7 @@ export function getScalingDetailedTvlColumns() {
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <NonZeroDiffedNumberCell
+        <ValueWithPercentageCell
           value={project.ebv}
           percentChange={project.ebvChange}
         />
@@ -168,7 +168,7 @@ export function getScalingDetailedTvlColumns() {
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <NonZeroDiffedNumberCell
+        <ValueWithPercentageCell
           value={project.nmv}
           percentChange={project.nmvChange}
         />
