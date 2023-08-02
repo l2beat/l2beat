@@ -1,10 +1,10 @@
 import { EventTracker, Logger } from '@l2beat/shared'
 import {
+  Retries,
+  ShouldRetry,
   getErrorMessage,
   getErrorStackTrace,
   json,
-  Retries,
-  ShouldRetry,
   wrapAndMeasure,
 } from '@l2beat/shared-pure'
 import assert from 'assert'
@@ -12,8 +12,8 @@ import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff({
-  stepMs: 100,
-  maxDistanceMs: 3_000,
+  stepMs: 1000,
+  maxDistanceMs: 60_000,
   maxAttempts: 10,
 })
 
@@ -93,11 +93,13 @@ export class TaskQueue<T> {
   }
 
   addToFront(task: T) {
+    this.halted = false
     this.queue.unshift({ task, attempts: 0, executeAt: Date.now() })
     setTimeout(() => this.execute())
   }
 
   addToBack(task: T) {
+    this.halted = false
     this.queue.push({ task, attempts: 0, executeAt: Date.now() })
     setTimeout(() => this.execute())
   }
