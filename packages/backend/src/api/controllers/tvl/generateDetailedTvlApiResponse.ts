@@ -12,6 +12,7 @@ import { AggregatedReportRecord } from '../../../peripherals/database/Aggregated
 import { covertBalancesToChartPoints } from './charts'
 import {
   getProjectTokensCharts,
+  getTopProjectTokens,
   ReportsPerProjectIdAndAsset,
   ReportsPerProjectIdAndTimestamp,
 } from './detailedTvl'
@@ -50,6 +51,7 @@ export function generateDetailedTvlApiResponse(
       acc[projectId.toString()] = {
         charts: getProjectCharts(reports, projectId),
         tokens: getProjectTokensCharts(latestReports, projectId),
+        topTokens: getTopProjectTokens(latestReports, projectId),
       }
       return acc
     },

@@ -1,4 +1,4 @@
-import { AssetId, ProjectId } from '@l2beat/shared-pure'
+import { AssetId, DetailedTvlApiTopToken, ProjectId } from '@l2beat/shared-pure'
 import { groupBy, mapValues } from 'lodash'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
@@ -73,4 +73,39 @@ export function getProjectTokensCharts(
   )
 
   return tokens
+}
+
+export function getTopProjectTokens(
+  groupedReports: ReportsPerProjectIdAndAsset,
+  projectId: ProjectId,
+  amountOfTopTokens = 15,
+): DetailedTvlApiTopToken[] {
+  const projectTokensByAsset = groupedReports[projectId.toString()]
+
+  // Project may be missing reports
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!projectTokensByAsset) {
+    return []
+  }
+
+  const topTokens = []
+
+  for (const [, reports] of Object.entries(projectTokensByAsset)) {
+    for (const latestReport of reports) {
+      topTokens.push({
+        assetId: latestReport.asset,
+        chainId: latestReport.chainId,
+        valueType: latestReport.type,
+        value: asNumber(latestReport.usdValue, 2),
+      })
+    }
+  }
+
+  return topTokens
+    .sort(
+      (primaryReport, secondaryReport) =>
+        primaryReport.value - secondaryReport.value,
+    )
+    .slice(0, amountOfTopTokens)
+    .map(({ value: _value, ...rest }) => rest)
 }
