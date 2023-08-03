@@ -12,7 +12,7 @@ import { AggregatedReportRecord } from '../../../peripherals/database/Aggregated
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import {
   getProjectTokensCharts,
-  groupByProjectIdAndAsset,
+  groupByProjectIdAndAssetType,
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 
@@ -128,8 +128,8 @@ describe('detailedTvl', () => {
     })
   })
 
-  describe(groupByProjectIdAndAsset.name, () => {
-    it('groups reports by project id and asset', () => {
+  describe(groupByProjectIdAndAssetType.name, () => {
+    it('groups reports by project id and asset type', () => {
       const timestamp = UnixTime.now()
       const mockReports: ReportRecord[] = [
         {
@@ -194,11 +194,11 @@ describe('detailedTvl', () => {
         },
       ]
 
-      const result = groupByProjectIdAndAsset(mockReports)
+      const result = groupByProjectIdAndAssetType(mockReports)
 
       expect(result).toEqual({
         [ProjectId.ARBITRUM.toString()]: {
-          [AssetId.USDC.toString()]: [
+          [ValueType.CBV.toString()]: [
             {
               timestamp,
               type: ValueType.CBV,
@@ -209,18 +209,8 @@ describe('detailedTvl', () => {
               ethValue: 1n,
               asset: AssetId.USDC,
             },
-            {
-              timestamp,
-              type: ValueType.NMV,
-              chainId: ChainId.ARBITRUM,
-              projectId: ProjectId.ARBITRUM,
-              amount: 2n,
-              usdValue: 2n,
-              ethValue: 2n,
-              asset: AssetId.USDC,
-            },
           ],
-          [AssetId.ETH.toString()]: [
+          [ValueType.EBV.toString()]: [
             {
               timestamp,
               type: ValueType.EBV,
@@ -232,9 +222,21 @@ describe('detailedTvl', () => {
               asset: AssetId.ETH,
             },
           ],
+          [ValueType.NMV.toString()]: [
+            {
+              timestamp,
+              type: ValueType.NMV,
+              chainId: ChainId.ARBITRUM,
+              projectId: ProjectId.ARBITRUM,
+              amount: 2n,
+              usdValue: 2n,
+              ethValue: 2n,
+              asset: AssetId.USDC,
+            },
+          ],
         },
         [ProjectId.ETHEREUM.toString()]: {
-          [AssetId.USDC.toString()]: [
+          [ValueType.EBV.toString()]: [
             {
               timestamp,
               type: ValueType.EBV,
@@ -245,6 +247,8 @@ describe('detailedTvl', () => {
               ethValue: 1n,
               asset: AssetId.USDC,
             },
+          ],
+          [ValueType.CBV.toString()]: [
             {
               timestamp,
               type: ValueType.CBV,
@@ -256,7 +260,7 @@ describe('detailedTvl', () => {
               asset: AssetId.USDC,
             },
           ],
-          [AssetId.ETH.toString()]: [
+          [ValueType.NMV.toString()]: [
             {
               timestamp,
               type: ValueType.NMV,
@@ -339,7 +343,7 @@ describe('detailedTvl', () => {
       },
     ]
     it('returns project tokens grouped by asset type and sorted in descending order', () => {
-      const groupedReports = groupByProjectIdAndAsset(mockReports)
+      const groupedReports = groupByProjectIdAndAssetType(mockReports)
 
       const arbitrumResult = getProjectTokensCharts(
         groupedReports,
@@ -406,7 +410,7 @@ describe('detailedTvl', () => {
     })
 
     it('returns empty array if no project`s assets were found', () => {
-      const groupedReports = groupByProjectIdAndAsset(mockReports)
+      const groupedReports = groupByProjectIdAndAssetType(mockReports)
 
       const optimismResult = getProjectTokensCharts(
         groupedReports,

@@ -3,13 +3,14 @@ import { groupBy, mapValues } from 'lodash'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
+import { asNumber } from './asNumber'
 
 export type ReportsPerProjectIdAndTimestamp = ReturnType<
   typeof groupByProjectIdAndTimestamp
 >
 
 export type ReportsPerProjectIdAndAsset = ReturnType<
-  typeof groupByProjectIdAndAsset
+  typeof groupByProjectIdAndAssetType
 >
 
 export function groupByProjectIdAndTimestamp(
@@ -22,7 +23,7 @@ export function groupByProjectIdAndTimestamp(
   )
 }
 
-export function groupByProjectIdAndAsset(reports: ReportRecord[]) {
+export function groupByProjectIdAndAssetType(reports: ReportRecord[]) {
   return nestedGroupBy(
     reports,
     (report) => report.projectId,
@@ -74,7 +75,7 @@ export function getProjectTokensCharts(
             assetId: report.asset,
             chainId: report.chainId,
             valueType: report.type,
-            tvl: Number(report.usdValue),
+            tvl: asNumber(report.usdValue, 2),
           }))
           .sort((a, b) => b.tvl - a.tvl),
       }
