@@ -4,7 +4,6 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
-import { VerticalSeparator } from '../VerticalSeparator'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
