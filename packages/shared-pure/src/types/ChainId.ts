@@ -86,6 +86,14 @@ const CHAIN_IDS: ChainMetadata[] = [
     minTimestamp: UnixTime.fromDate(new Date('2023-06-15T02:30:00Z')),
   },
   {
+    id: 1101,
+    name: 'polygon-zkevm',
+    // TODO: This will not work, need to update on deth.net
+    dethDomain: 'polygonzkevm.deth.net',
+    // ~ Timestamp of block number 1 on Polygon ZK-EVM
+    minTimestamp: UnixTime.fromDate(new Date('2023-03-24T17:30:00Z')),
+  },
+  {
     id: -1,
     name: 'native',
   },
@@ -100,7 +108,8 @@ ChainId.AVALANCHE = ChainId(CHAIN_IDS[5].id)
 ChainId.CELO = ChainId(CHAIN_IDS[6].id)
 ChainId.LINEA = ChainId(CHAIN_IDS[7].id)
 ChainId.BASE = ChainId(CHAIN_IDS[8].id)
-ChainId.NMV = ChainId(CHAIN_IDS[9].id)
+ChainId.POLYGON_ZKEVM = ChainId(CHAIN_IDS[9].id)
+ChainId.NMV = ChainId(CHAIN_IDS[10].id)
 
 ChainId.getName = function (chainId: ChainId): string {
   const chain = CHAIN_IDS.find((c) => c.id === +chainId)

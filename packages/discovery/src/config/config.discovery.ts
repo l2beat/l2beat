@@ -104,6 +104,14 @@ function getChainConfig(chainId: ChainId) {
         etherscanUrl: 'https://api.basescan.io/api',
         minTimestamp: ChainId.getMinTimestamp(ChainId.BASE),
       }
+    case ChainId.POLYGON_ZKEVM:
+      return {
+        chainId: ChainId.POLYGON_ZKEVM,
+        rpcUrl: getEnv('DISCOVERY_POLYGON_ZKEVM_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_POLYGON_ZKEVM_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api-zkevm.polygonscan.com/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.POLYGON_ZKEVM),
+      }
     case ChainId.NMV:
       throw new Error('NMV is not supported')
     default:

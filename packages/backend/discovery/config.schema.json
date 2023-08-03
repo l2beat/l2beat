@@ -25,7 +25,8 @@
         "avalanche",
         "celo",
         "linea",
-        "base"
+        "base",
+        "polygon-zkevm"
       ]
     },
     "initialAddresses": {
