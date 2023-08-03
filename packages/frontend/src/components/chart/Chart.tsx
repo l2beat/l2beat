@@ -122,9 +122,8 @@ export function Chart({
               />
             )}
             {hasTvl && (
-              <div className="flex h-[2rem] items-end gap-6">
+              <div className="flex h-[2rem] items-end">
                 <CurrencyControls />
-                <VerticalSeparator />
                 <TokenControls tokens={tokens} />
               </div>
             )}

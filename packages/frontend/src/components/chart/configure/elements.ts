@@ -59,7 +59,6 @@ export function getChartElements(chart: HTMLElement) {
       tokenControlsWrapper: chart.querySelector<HTMLElement>(
         '[data-role="chart-token-controls"]',
       ),
-
       showTokenModalWrapper: chart.querySelector<HTMLElement>(
         '[data-role="chart-token-toggle"]',
       ),

@@ -3,6 +3,7 @@ import React from 'react'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ChevronDownIcon } from '../icons'
 import { CloseIcon } from '../icons/CloseIcon'
+import { VerticalSeparator } from '../VerticalSeparator'
 
 export interface TokenControl {
   address: string
@@ -20,15 +21,18 @@ export function TokenControls({ tokens }: TokenControlsProps) {
   }
 
   return (
-    <div className="col-span-4 flex flex-wrap items-baseline justify-start gap-x-4">
-      <HorizontalSeparator className="mb-4 md:hidden" />
-      <span>View another token</span>
-      <div className="Dropdown">
-        <div className="rounded-lg bg-gray-100 px-1 py-1 dark:bg-gray-750">
-          <SelectButton />
-          <SelectedTokenButton />
+    <div className="flex h-full gap-6">
+      <div />
+      <VerticalSeparator />
+      <div className="flex flex-wrap items-baseline justify-start gap-x-4">
+        <span>View another token</span>
+        <div className="Dropdown">
+          <div className="rounded-lg bg-gray-100 px-1 py-1 dark:bg-gray-750">
+            <SelectButton />
+            <SelectedTokenButton />
+          </div>
+          <TokenModal tokens={tokens} />
         </div>
-        <TokenModal tokens={tokens} />
       </div>
     </div>
   )
