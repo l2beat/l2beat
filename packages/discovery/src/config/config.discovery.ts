@@ -72,6 +72,14 @@ function getChainConfig(chainId: ChainId) {
         etherscanUrl: 'https://api.bscscan.com/api',
         minTimestamp: ChainId.getMinTimestamp(ChainId.BSC),
       }
+    case ChainId.AVALANCHE:
+      return {
+        chainId: ChainId.AVALANCHE,
+        rpcUrl: getEnv('DISCOVERY_AVALANCHE_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_AVALANCHE_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.snowtrace.io/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.AVALANCHE),
+      }
     case ChainId.NMV:
       throw new Error('NMV is not supported')
     default:

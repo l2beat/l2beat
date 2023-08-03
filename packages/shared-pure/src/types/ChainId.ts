@@ -55,6 +55,13 @@ const CHAIN_IDS: ChainMetadata[] = [
     minTimestamp: UnixTime.fromDate(new Date('2020-08-29T03:20:00Z')),
   },
   {
+    id: 43114,
+    name: 'avalanche',
+    dethDomain: 'snowtrace.deth.net',
+    // ~ Timestamp of block number 1 on Avalanche C-Chain
+    minTimestamp: UnixTime.fromDate(new Date('2021-09-23T11:00:00Z')),
+  },
+  {
     id: -1,
     name: 'native',
   },
@@ -65,7 +72,8 @@ ChainId.ARBITRUM = ChainId(CHAIN_IDS[1].id)
 ChainId.OPTIMISM = ChainId(CHAIN_IDS[2].id)
 ChainId.POLYGON_POS = ChainId(CHAIN_IDS[3].id)
 ChainId.BSC = ChainId(CHAIN_IDS[4].id)
-ChainId.NMV = ChainId(CHAIN_IDS[5].id)
+ChainId.AVALANCHE = ChainId(CHAIN_IDS[5].id)
+ChainId.NMV = ChainId(CHAIN_IDS[6].id)
 
 ChainId.getName = function (chainId: ChainId): string {
   const chain = CHAIN_IDS.find((c) => c.id === +chainId)
