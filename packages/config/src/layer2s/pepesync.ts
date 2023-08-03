@@ -12,7 +12,7 @@ export const pepesync: Layer2 = {
     slug: 'pepesync',
     description:
       'PepeSync is a decentralized, EVM Rollup built for the World of Meme Coins. PepeSync is a Layer 2 Launchpad Scaled on Ethureum!',
-    purpose: 'Universal',
+    purpose: 'Launchpad,AMM',
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://pepesync.xyz'],
