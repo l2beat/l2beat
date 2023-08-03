@@ -1,5 +1,5 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { EtherscanClient, LogLevel, getEnv } from '@l2beat/shared'
+import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
