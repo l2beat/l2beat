@@ -64,9 +64,18 @@ const CHAIN_IDS: ChainMetadata[] = [
   {
     id: 42220,
     name: 'celo',
+    // TODO: This will not work, need to update on deth.net
     dethDomain: 'celoscan.deth.net',
     // ~ Timestamp of block number 0 on Celo
     minTimestamp: UnixTime.fromDate(new Date('2020-04-22T16:00:00Z')),
+  },
+  {
+    id: 59144,
+    name: 'linea',
+    // TODO: This will not work, need to update on deth.net
+    dethDomain: 'lineascan.deth.net',
+    // ~ Timestamp of block number 0 on Linea
+    minTimestamp: UnixTime.fromDate(new Date('2023-07-06T11:00:00Z')),
   },
   {
     id: -1,
@@ -81,7 +90,8 @@ ChainId.POLYGON_POS = ChainId(CHAIN_IDS[3].id)
 ChainId.BSC = ChainId(CHAIN_IDS[4].id)
 ChainId.AVALANCHE = ChainId(CHAIN_IDS[5].id)
 ChainId.CELO = ChainId(CHAIN_IDS[6].id)
-ChainId.NMV = ChainId(CHAIN_IDS[7].id)
+ChainId.LINEA = ChainId(CHAIN_IDS[7].id)
+ChainId.NMV = ChainId(CHAIN_IDS[8].id)
 
 ChainId.getName = function (chainId: ChainId): string {
   const chain = CHAIN_IDS.find((c) => c.id === +chainId)

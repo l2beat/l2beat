@@ -23,7 +23,8 @@
         "polygon-pos",
         "bsc",
         "avalanche",
-        "celo"
+        "celo",
+        "linea"
       ]
     },
     "initialAddresses": {

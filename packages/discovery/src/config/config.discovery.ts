@@ -88,6 +88,14 @@ function getChainConfig(chainId: ChainId) {
         etherscanUrl: 'https://api.celoscan.io/api',
         minTimestamp: ChainId.getMinTimestamp(ChainId.CELO),
       }
+    case ChainId.LINEA:
+      return {
+        chainId: ChainId.LINEA,
+        rpcUrl: getEnv('DISCOVERY_LINEA_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_LINEA_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.lineascan.build/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.LINEA),
+      }
     case ChainId.NMV:
       throw new Error('NMV is not supported')
     default:
