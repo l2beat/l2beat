@@ -42,8 +42,8 @@ export async function promiseAllPlus<T>(
     // this is quite ugly but we do exponential retries and finally propagate error
     shouldRetry: (job, error) => {
       const shouldRetry = Retries.exponentialBackOff({
-        stepMs: 100,
-        maxDistanceMs: 3_000,
+        stepMs: 1000,
+        maxDistanceMs: 60_000,
         maxAttempts: maxAttempts,
       })(job)
 
