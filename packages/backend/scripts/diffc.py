@@ -5,10 +5,10 @@ import pty
 RED = "\033[31m"
 GREEN = "\033[32m"
 YELLOW = "\033[33m"
+WHITE = "\033[37m"
 BOLD = "\033[1m"
 RESET = "\033[0m"
 
-# get terminal column size
 terminal_size = os.get_terminal_size()
 terminal_width = terminal_size.columns
 
@@ -191,6 +191,15 @@ def diff_implementations(folder1, folder2, common_directories):
             print("No changes in implementations.")
 
 
+def print_directories(directories, message, color):
+    print("\n" + message)
+    if directories:
+        for directory in directories:
+            print(color + directory + RESET)
+    else:
+        print("NONE")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="List directories within a specified directory and compare proxies.")
@@ -210,27 +219,14 @@ def main():
     unique_to_folder2 = directories2 - directories1
     ignored_directories = ignored1 | ignored2
 
-    if common_directories:
-        print(BOLD + "Common Directories:" + RESET)
-        for directory in common_directories:
-            print(directory)
-
-    if unique_to_folder1:
-        print(BOLD + "\nDirectories unique to " +
-              args.Folder_Name1 + ":" + RESET)
-        for directory in unique_to_folder1:
-            print(RED + directory + RESET)
-
-    if unique_to_folder2:
-        print(BOLD + "\nDirectories unique to " +
-              args.Folder_Name2 + ":" + RESET)
-        for directory in unique_to_folder2:
-            print(GREEN + directory + RESET)
-
-    if ignored_directories:
-        print(BOLD + "\nIgnored Directories:" + RESET)
-        for directory in ignored_directories:
-            print(YELLOW + directory + RESET)
+    print_directories(common_directories,
+                      "Common Directories:", WHITE)
+    print_directories(unique_to_folder1,
+                      "Directories unique to " + args.Folder_Name1 + ":", RED)
+    print_directories(unique_to_folder2,
+                      "Directories unique to " + args.Folder_Name2 + ":", GREEN)
+    print_directories(ignored_directories,
+                      "Ignored Directories:", YELLOW)
 
     diff_proxies(args.Folder_Name1, args.Folder_Name2, common_directories)
     diff_implementations(
