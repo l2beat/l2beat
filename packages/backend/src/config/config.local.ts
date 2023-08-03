@@ -110,6 +110,11 @@ export function getLocalConfig(): Config {
             'https://linea-mainnet.infura.io/v3',
           ),
         },
+        polygonzkevm: {
+          type: 'rpc',
+          callsPerMinute: 500,
+          url: 'https://polygon-rpc.com/zkevm',
+        },
       },
     },
     statusEnabled: getEnv.boolean('STATUS_ENABLED', true),

@@ -4,6 +4,7 @@ import { z } from 'zod'
 export interface State {
   endpoints: {
     aggregateTvl: string | undefined
+    aggregateDetailedTvl: string | undefined
     alternativeTvl: string | undefined
     activity: string | undefined
   }

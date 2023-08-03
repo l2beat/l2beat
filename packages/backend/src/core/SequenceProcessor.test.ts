@@ -496,7 +496,7 @@ async function waitForErrorReport(
   let errorReported = false
 
   while (!errorReported) {
-    await time.tickAsync(1)
+    await time.tickAsync(100)
     errorReported = reportErrorMock.calls.length > currentCalls
   }
 }

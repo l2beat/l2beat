@@ -1,17 +1,24 @@
 import { Logger } from '@l2beat/shared'
 import {
+  AssetId,
+  ChainId,
   DetailedTvlApiResponse,
+  ProjectId,
+  TvlApiChart,
+  TvlApiCharts,
   UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
+import { Token } from '../../../model'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
+import { getProjectAssetChartData } from './charts'
 import {
   groupByProjectIdAndAsset,
   groupByProjectIdAndTimestamp,
@@ -25,6 +32,7 @@ export class DetailedTvlController {
     private readonly reportRepository: ReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
     private readonly projects: ReportProject[],
+    private readonly tokens: Token[],
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -88,7 +96,69 @@ export class DetailedTvlController {
     return tvlApiResponse
   }
 
-  async getMinimumTimestamp(): Promise<UnixTime | undefined> {
+  async getDetailedAssetTvlApiResponse(
+    projectId: ProjectId,
+    chainId: ChainId,
+    assetId: AssetId,
+    assetType: ValueType,
+  ): Promise<TvlApiCharts | undefined> {
+    const asset = this.tokens.find((t) => t.id === assetId)
+    const project = this.projects.find((p) => p.projectId === projectId)
+
+    if (!asset || !project) {
+      return
+    }
+
+    const timestampCandidate =
+      await this.reportStatusRepository.findLatestTimestamp(chainId, assetType)
+
+    if (!timestampCandidate) {
+      return
+    }
+
+    const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
+      this.reportRepository.getHourlyForDetailed(
+        projectId,
+        chainId,
+        assetId,
+        assetType,
+        getHourlyMinTimestamp(timestampCandidate),
+      ),
+      this.reportRepository.getSixHourlyForDetailed(
+        projectId,
+        chainId,
+        assetId,
+        assetType,
+        getSixHourlyMinTimestamp(timestampCandidate),
+      ),
+      this.reportRepository.getDailyForDetailed(
+        projectId,
+        chainId,
+        assetId,
+        assetType,
+      ),
+    ])
+    const assetSymbol = asset.symbol.toLowerCase()
+
+    const types: TvlApiChart['types'] = ['timestamp', assetSymbol, 'usd']
+
+    return {
+      hourly: {
+        types,
+        data: getProjectAssetChartData(hourlyReports, asset.decimals, 1),
+      },
+      sixHourly: {
+        types,
+        data: getProjectAssetChartData(sixHourlyReports, asset.decimals, 6),
+      },
+      daily: {
+        types,
+        data: getProjectAssetChartData(dailyReports, asset.decimals, 24),
+      },
+    }
+  }
+
+  private async getMinimumTimestamp(): Promise<UnixTime | undefined> {
     const valueTypes = [ValueType.CBV, ValueType.EBV, ValueType.NMV]
 
     const reportsTimestampsPromises = valueTypes.map((valueType) =>

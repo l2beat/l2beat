@@ -1,12 +1,12 @@
 {
-  "chain": "ethereum",
   "name": "brine",
-  "blockNumber": 17791101,
-  "configHash": "0xe3152001f25c615c07530304f3f14928e2f121d33a79328c333f797d5d9565ca",
+  "chain": "ethereum",
+  "blockNumber": 17821210,
+  "configHash": "0xb03efc49cd04c082e7001d53a82ab71dc71138acc2d59a1754f4120db954c9ac",
   "version": 1,
   "contracts": [
     {
-      "name": "Brine",
+      "name": "StarkExchange",
       "address": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
       "code": "https://etherscan.deth.net/address/0x1390f521A79BaBE99b69B37154D63D431da27A07,0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583,0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12,0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb,0x67e198743BC19fa4757720eDd0e769f8291e1F1D,0x613ee54C54D5548627064B4D648942bF3648f376,0xb2ED005D0278179001a49a9969BB22BA8e98f31F,0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db",
       "upgradeability": {
@@ -31,8 +31,8 @@
         "getActionCount": 6,
         "getAssetInfo": [],
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 561,
-        "getOrderRoot": "3315377037829754839065961712748118736218947164167569322410551092371952477634",
+        "getLastBatchId": 592,
+        "getOrderRoot": "3103179674992922993439527510248015639936771986973756428522979547627339793491",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446"
@@ -42,10 +42,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 472,
+        "getSequenceNumber": 503,
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "2530607565618314679726645422899670883912497452391767086237879926918738854623",
+        "getValidiumVaultRoot": "1323402870001233018771058622228235388735777414000016042499237477142057705321",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "initializerSize": 0,
         "isFrozen": false,
@@ -54,6 +54,7 @@
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
+        "OPERATORS": ["0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25"],
         "orderRegistryAddress": "0x806d435a82B0381bD884540c2235147c13B97fe6",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
@@ -66,7 +67,7 @@
       "derivedName": "Proxy"
     },
     {
-      "name": "BrineMultisig",
+      "name": "SHARPVerifierGovernorMultisig",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
       "code": "https://etherscan.deth.net/address/0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -88,7 +89,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "CallProxy",
+      "name": "SHARPVerifierProxy",
       "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
       "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
       "upgradeability": {
@@ -112,21 +113,32 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
-      }
+      },
+      "derivedName": "CallProxy"
     },
     {
-      "name": "FinalizableCommittee",
+      "name": "Committee",
       "address": "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446",
       "code": "https://etherscan.deth.net/address/0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446",
       "upgradeability": {
         "type": "immutable"
       },
       "values": {
+        "constructorArgs": [
+          [
+            "0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1",
+            "0xC37a598468A59D5d6DCeb889847B5824aD61697e",
+            "0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9",
+            "0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00"
+          ],
+          "2"
+        ],
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableCommittee_2022_1",
         "isFinalized": false,
         "signaturesRequired": 2
-      }
+      },
+      "derivedName": "FinalizableCommittee"
     },
     {
       "name": "GpsFactRegistryAdapter",
@@ -143,7 +155,7 @@
       }
     },
     {
-      "name": "GpsStatementVerifier",
+      "name": "SHARPVerifier",
       "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
       "code": "https://etherscan.deth.net/address/0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
       "upgradeability": {
@@ -161,7 +173,8 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "GpsStatementVerifier"
     },
     {
       "name": "OrderRegistry",
@@ -179,9 +192,14 @@
   "eoas": [
     "0x303775491494a08b07365938787274F742a81F63",
     "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
+    "0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1",
     "0x59232aC80E6d403b6381393e52f4665ECA328558",
     "0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
-    "0xebc8416179fE90854fe8B3f774801165572cfD7F"
+    "0xC37a598468A59D5d6DCeb889847B5824aD61697e",
+    "0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25",
+    "0xebc8416179fE90854fe8B3f774801165572cfD7F",
+    "0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9",
+    "0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00"
   ],
   "abis": {
     "0x1390f521A79BaBE99b69B37154D63D431da27A07": [

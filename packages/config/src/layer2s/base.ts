@@ -19,7 +19,7 @@ const discovery = new ProjectDiscovery('base')
 
 const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No Delay',
+  upgradeDelay: 'No delay',
 }
 
 export const base: Layer2 = {
@@ -149,7 +149,7 @@ export const base: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-        'Ultimately, Base will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
+        'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -226,7 +226,7 @@ export const base: Layer2 = {
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
       description:
-        'Base is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Base.',
+        'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
       risks: [],
       references: [
         {

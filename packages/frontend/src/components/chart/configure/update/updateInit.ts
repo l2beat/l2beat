@@ -41,6 +41,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
     {
       endpoints: {
         aggregateTvl: message.aggregateTvlEndpoint,
+        aggregateDetailedTvl: message.aggregateDetailedTvlEndpoint,
         alternativeTvl: message.alternativeTvlEndpoint,
         activity: message.activityEndpoint,
       },
