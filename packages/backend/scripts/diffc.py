@@ -94,10 +94,6 @@ def diff_proxies(folder1, folder2, common_directories):
             file1 = sol_file.replace(folder1, folder1)
             file2 = sol_file.replace(folder1, folder2)
 
-            # Run "forge fmt" on each file before diffing
-            # subprocess.run(["forge", "fmt", file1])
-            # subprocess.run(["forge", "fmt", file2])
-
             pid, fd = pty.fork()
             if pid == 0:  # child process
                 os.execvp("difft", ["difft", file1, file2])
@@ -164,10 +160,6 @@ def diff_implementations(folder1, folder2, common_directories):
                 "<placeholder>", dir_path1).replace(folder1, folder1)
             file2 = sol_file.replace(
                 "<placeholder>", dir_path2).replace(folder1, folder2)
-
-            # Run "forge fmt" on each file before diffing
-            # subprocess.run(["forge", "fmt", file1])
-            # subprocess.run(["forge", "fmt", file2])
 
             pid, fd = pty.fork()
             if pid == 0:  # child process
