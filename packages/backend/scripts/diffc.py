@@ -65,6 +65,22 @@ def list_directories(folder_name):
         return set(), set()
 
 
+PLACEHOLDER = "<placeholder>"
+
+
+def fetch_sol_files(base_path, folder, directory, subpath):
+    dir_path = os.path.join(
+        base_path, "discovery", folder, "ethereum", ".code", directory, subpath)
+    sol_files = [os.path.join(root, f) for root, _, files in os.walk(
+        dir_path) for f in files if f.endswith('.sol')]
+    return {
+        "original": sol_files,
+        "dir_path": dir_path,
+        "common_format": {f.replace(dir_path, PLACEHOLDER)
+                          for f in sol_files}
+    }
+
+
 def diff_proxies(folder1, folder2, common_directories):
     base_path = ".."
     print(BOLD + "\nComparing proxies..." + RESET)
@@ -112,54 +128,35 @@ def diff_implementations(folder1, folder2, common_directories):
     base_path = ".."
     print(BOLD + "\nComparing implementations..." + RESET)
 
-    # Determine the project structure
-    # use the first directory to determine the project structure
+    # Use the first directory to determine the project structure
     dummy_directory = next(iter(common_directories))
     subpath1, logical_name1 = get_project_subpath(
         base_path, folder1, dummy_directory)
     subpath2, logical_name2 = get_project_subpath(
         base_path, folder2, dummy_directory)
 
-    # Iterate over directories
     for directory in common_directories:
         no_changes = True
+
+        # Print the directory name
         directory_title = " {0} ".format(directory)
         num_dashes = (terminal_width - len(directory_title)) // 2
         print(f"\n{'-' * num_dashes}{directory_title}{'-' * num_dashes}\n")
 
         # Construct the directory paths for the current directory
-        dir_path1 = os.path.join(
-            base_path, "discovery", folder1, "ethereum", ".code", directory, subpath1)
-        dir_path2 = os.path.join(
-            base_path, "discovery", folder2, "ethereum", ".code", directory, subpath2)
+        sol_files1 = fetch_sol_files(
+            base_path, folder1, directory, subpath1)
 
-        if not os.path.exists(dir_path1):
-            print(
-                f"{folder1} does not contain {directory} with project structure {logical_name1}.")
-            continue
-        if not os.path.exists(dir_path2):
-            print(
-                f"{folder2} does not contain {directory} with project structure {logical_name2}.")
-            continue
+        sol_files2 = fetch_sol_files(
+            base_path, folder2, directory, subpath2)
 
-        sol_files1 = [os.path.join(root, f) for root, dirs, files in os.walk(
-            dir_path1) for f in files if f.endswith('.sol')]
-        sol_files2 = [os.path.join(root, f) for root, dirs, files in os.walk(
-            dir_path2) for f in files if f.endswith('.sol')]
-
-        # Map to common format
-        sol_files1 = {f.replace(dir_path1, "<placeholder>")
-                      for f in sol_files1}
-        sol_files2 = {f.replace(dir_path2, "<placeholder>")
-                      for f in sol_files2}
-
-        common_sol_files = sol_files1 & sol_files2
+        common_sol_files = sol_files1['common_format'] & sol_files2['common_format']
 
         for sol_file in common_sol_files:
             file1 = sol_file.replace(
-                "<placeholder>", dir_path1).replace(folder1, folder1)
+                PLACEHOLDER, sol_files1['dir_path']).replace(folder1, folder1)
             file2 = sol_file.replace(
-                "<placeholder>", dir_path2).replace(folder1, folder2)
+                PLACEHOLDER, sol_files2['dir_path']).replace(folder1, folder2)
 
             pid, fd = pty.fork()
             if pid == 0:  # child process
