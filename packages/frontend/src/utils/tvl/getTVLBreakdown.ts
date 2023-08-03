@@ -1,5 +1,5 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
-import { TvlApiToken } from '@l2beat/shared-pure'
+import { DetailedTvlApiToken, TvlApiToken } from '@l2beat/shared-pure'
 
 import { TVLBreakdownProps } from '../../components/TVLBreakdown'
 import { formatPercent } from '../utils'
@@ -8,9 +8,10 @@ export function getTvlBreakdown(
   name: string,
   associatedTokens: string[],
   total: number,
-  tokens: TvlApiToken[],
+  tokens: (TvlApiToken | DetailedTvlApiToken)[],
 ): TVLBreakdownProps {
   const partial = getPartialTVLBreakdown(associatedTokens, total, tokens)
+
   return {
     ...partial,
     label: getTVLBreakdownLabel(partial, associatedTokens),
