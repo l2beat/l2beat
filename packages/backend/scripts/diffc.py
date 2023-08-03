@@ -1,6 +1,12 @@
 import os
 import argparse
 import pty
+import shutil
+
+if shutil.which("difft") is None:
+    print("Error: 'difft' command is not found. Please install it and make sure it's in your PATH.")
+    exit(1)
+
 
 RED = "\033[31m"
 GREEN = "\033[32m"
@@ -16,7 +22,7 @@ terminal_width = terminal_size.columns
 IGNORE_KEYWORDS = ["Multisig", "AddressManager", "ProxyAdmin", "Gnosis"]
 
 
-def get_project_subpath(base_path: str, folder_name: str, directory: str) -> (str, str) or (None, None):
+def get_project_subpath(base_path: str, folder_name: str, directory: str) -> tuple[str, str]:
     possible_directories = {
         "main_contracts": "implementation/contracts",
         "bedrock_contracts": "implementation/optimism/packages/contracts-bedrock/contracts",
@@ -29,7 +35,8 @@ def get_project_subpath(base_path: str, folder_name: str, directory: str) -> (st
         if os.path.exists(full_path):
             return subpath, logical_name
 
-    return None, None
+    print(f"Error: Could not determine project structure for {folder_name}.")
+    exit(1)
 
 
 def list_directories(folder_name):
@@ -178,9 +185,11 @@ def diff_implementations(folder1, folder2, common_directories):
                         break
                 result = result.decode()
                 if "No changes." not in result:
+                    # Split result into lines
                     lines = result.split('\n')
+                    # Only print lines that are not empty
                     for line in lines:
-                        if line.strip():
+                        if line.strip():  # This checks if line is not empty when whitespace is removed
                             print(line)
                     if (line not in [""]):
                         no_changes = False
@@ -190,10 +199,10 @@ def diff_implementations(folder1, folder2, common_directories):
 
 
 def print_directories(directories, message, color):
-    print("\n" + message)
+    print("\n" + color + message + RESET)
     if directories:
         for directory in directories:
-            print(color + directory + RESET)
+            print(directory)
     else:
         print("NONE")
 
