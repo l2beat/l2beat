@@ -33,7 +33,8 @@ def get_project_subpath(base_path: str, folder_name: str, directory: str) -> tup
         full_path: str = os.path.join(
             base_path, "discovery", folder_name, "ethereum", ".code", directory, subpath)
         if os.path.exists(full_path):
-            return subpath, logical_name
+            print(f"Found {logical_name} at {full_path}")
+            return subpath
 
     print(f"Error: Could not determine project structure for {folder_name}.")
     exit(1)
@@ -130,9 +131,9 @@ def diff_implementations(folder1, folder2, common_directories):
 
     # Use the first directory to determine the project structure
     dummy_directory = next(iter(common_directories))
-    subpath1, logical_name1 = get_project_subpath(
+    subpath1 = get_project_subpath(
         base_path, folder1, dummy_directory)
-    subpath2, logical_name2 = get_project_subpath(
+    subpath2 = get_project_subpath(
         base_path, folder2, dummy_directory)
 
     for directory in common_directories:
