@@ -1,5 +1,5 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
-import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
+import { EtherscanClient, LogLevel, getEnv } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
@@ -107,6 +107,11 @@ export function getProductionConfig(): Config {
           type: 'rpc',
           callsPerMinute: getEnv.integer('ACTIVITY_LINEA_CALLS'),
           url: getEnv('ACTIVITY_LINEA_URL'),
+        },
+        polygonzkevm: {
+          type: 'rpc',
+          callsPerMinute: getEnv.integer('ACTIVITY_POLYGONZKEVM_CALLS'),
+          url: getEnv('ACTIVITY_POLYGONZKEVM_URL'),
         },
       },
     },
