@@ -27,8 +27,8 @@ export function TokenControls({ tokens }: TokenControlsProps) {
         <div className="rounded-lg bg-gray-100 px-1 py-1 dark:bg-gray-750">
           <SelectButton />
           <SelectedTokenButton />
-          <TokenModal tokens={tokens} />
         </div>
+        <TokenModal tokens={tokens} />
       </div>
     </div>
   )

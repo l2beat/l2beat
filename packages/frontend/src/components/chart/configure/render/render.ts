@@ -95,26 +95,22 @@ export function render(
   }
 
   if (state.controls.token !== previousState.controls.token) {
-    if (
-      elements.view.showTokenModalWrapper &&
-      elements.view.tokenChosenWrapper
-    ) {
-      if (state.controls.token) {
-        if (elements.view.tokenModal && elements.controls.showTokenModal) {
-          elements.view.tokenModal.classList.toggle('opacity-0')
-          elements.view.tokenModal.classList.toggle('pointer-events-none')
-          elements.controls.showTokenModal.checked = false
-          elements.view.showTokenModalWrapper.classList.toggle('hidden')
-          elements.view.tokenChosenWrapper.classList.toggle('hidden')
-          const p = elements.view.tokenChosenWrapper.querySelector('p')
-          if (p) {
-            p.innerText = state.controls.token
-          }
-        }
-      } else {
-        elements.view.showTokenModalWrapper.classList.toggle('hidden')
-        elements.view.tokenChosenWrapper.classList.toggle('hidden')
+    if (state.controls.token) {
+      if (elements.controls.showTokenModal) {
+        elements.controls.showTokenModal.checked = false
       }
+
+      elements.view.tokenModal?.classList.toggle('opacity-0')
+      elements.view.tokenModal?.classList.toggle('pointer-events-none')
+      elements.view.showTokenModalWrapper?.classList.toggle('hidden')
+      elements.view.tokenChosenWrapper?.classList.toggle('hidden')
+      const paragraph = elements.view.tokenChosenWrapper?.querySelector('p')
+      if (paragraph) {
+        paragraph.innerText = state.controls.token
+      }
+    } else {
+      elements.view.showTokenModalWrapper?.classList.toggle('hidden')
+      elements.view.tokenChosenWrapper?.classList.toggle('hidden')
     }
   }
 
