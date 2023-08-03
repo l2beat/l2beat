@@ -86,7 +86,11 @@ export function Chart({
             </div>
           )}
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between">
+          <div
+            className={`flex justify-between ${
+              metaChart ? 'absolute left-0 bottom-0 w-full' : ''
+            }`}
+          >
             <TimeRange />
             <RangeControls days={days} type={type} />
           </div>
@@ -98,7 +102,7 @@ export function Chart({
           >
             <ChartLoader />
             <ChartHover />
-            <Logo className="absolute bottom-2 right-2 z-10 h-[25px] w-[60px] opacity-40" />
+            <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
             <canvas
               data-role="chart-canvas"
               data-is-meta={metaChart}

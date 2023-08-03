@@ -1,10 +1,15 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  DetailedTvlApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { getTpsDaily } from '../../utils/activity/getTpsDaily'
 import { formatUSD, getPercentageChange } from '../../utils/utils'
 import { Wrapped } from '../Page'
 import { ActivityMetaImageProps } from './ActivityMetaImage'
+import { DetailedTvlMetaImageProps } from './DetailedTvlMetaImage'
 import { TvlMetaImageProps } from './TvlMetaImage'
 
 // where should this be placed? we already have it in backend code
@@ -18,7 +23,7 @@ export function assert(
 }
 
 export function getProps(
-  tvlApiResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   project: Layer2 | Bridge | undefined,
   type: 'layers2s' | 'bridges',
 ): Wrapped<TvlMetaImageProps> {
@@ -73,6 +78,42 @@ export function getPropsActivity(
       htmlClassName: 'light meta',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: activityEndpoint,
+    },
+  }
+}
+
+export function getPropsDetailed(
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  project: Layer2 | Bridge | undefined,
+  type: 'layers2s' | 'bridges',
+): Wrapped<DetailedTvlMetaImageProps> {
+  const daily = project
+    ? tvlApiResponse.projects[project.id.toString()]?.charts.daily.data ?? []
+    : tvlApiResponse[type].daily.data
+  assert(daily[0].length === 9)
+  const tvl = daily.at(-1)?.[1] ?? 0
+  const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
+  const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
+
+  const apiPath = project
+    ? `${project.display.slug}-detailed-tvl`
+    : type === 'layers2s'
+    ? 'scaling-detailed-tvl'
+    : 'bridges-detailed-tvl'
+
+  const detailedTvlEndpoint = `/api/${apiPath}.json`
+  return {
+    props: {
+      tvl: formatUSD(tvl),
+      sevenDayChange,
+      name: project?.display.name,
+      icon: project && `/icons/${project.display.slug}.png`,
+      detailedTvlEndpoint,
+    },
+    wrapper: {
+      htmlClassName: 'light meta',
+      metadata: { title: 'Meta Image', description: '', image: '', url: '' },
+      preloadApi: detailedTvlEndpoint,
     },
   }
 }

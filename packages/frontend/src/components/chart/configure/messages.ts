@@ -14,6 +14,7 @@ export interface InitMessage {
   days: number
   currency: 'usd' | 'eth'
   aggregateTvlEndpoint?: string
+  aggregateDetailedTvlEndpoint?: string
   alternativeTvlEndpoint?: string
   detailedAggregateTvlEndpoint?: string
   activityEndpoint?: string

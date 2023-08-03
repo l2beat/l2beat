@@ -39,22 +39,6 @@ html.meta,
     position: relative;
     height: 262px;
 
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 60px;
-      width: 100%;
-      background: linear-gradient(
-        to right,
-        var(--gradient-1),
-        var(--gradient-2),
-        var(--gradient-3)
-      );
-      opacity: 0.376;
-    }
-
     .Logo {
       display: none;
     }
@@ -69,7 +53,7 @@ html.meta,
   }
 
   [data-role='chart-canvas'] {
-    height: 202px;
+    height: 242px;
     bottom: unset;
     top: 0;
   }

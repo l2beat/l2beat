@@ -17,6 +17,7 @@ import { DetailedTvlView, DetailedTvlViewProps } from './DetailedTvlView'
 export interface DetailedTvlPageProps {
   tvl: string
   tvlWeeklyChange: string
+  detailedTvlEndpoint: string
   navbar: NavbarProps
   footer: FooterProps
   showDetailedTvl: boolean
@@ -36,7 +37,10 @@ export function DetailedTvlPage(props: DetailedTvlPageProps) {
         />
         <main>
           <TvlHeader tvl={props.tvl} tvlWeeklyChange={props.tvlWeeklyChange} />
-          <Chart detailedTvlEndpoint={'halucinate_data'} type={'detailedTvl'} />
+          <Chart
+            detailedTvlEndpoint={props.detailedTvlEndpoint}
+            type={'detailedTvl'}
+          />
           <DetailedTvlView {...props.detailedTvlView} />
           <OtherSites />
           <About />

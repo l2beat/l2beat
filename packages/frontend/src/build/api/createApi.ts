@@ -1,11 +1,14 @@
 import {
   ActivityApiChart,
   ActivityApiResponse,
+  DetailedTvlApiCharts,
+  DetailedTvlApiResponse,
   TvlApiCharts,
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
 import fsx from 'fs-extra'
+import { at } from 'lodash'
 import path from 'path'
 
 import { Config } from '../config'
@@ -19,18 +22,32 @@ export interface FrontendActivityChart {
 
 export function createApi(
   config: Config,
-  tvlApiResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   activityApiResponse: ActivityApiResponse | undefined,
 ) {
-  const urlCharts = new Map<string, TvlApiCharts | FrontendActivityChart>()
+  const urlCharts = new Map<
+    string,
+    TvlApiCharts | DetailedTvlApiCharts | FrontendActivityChart
+  >()
 
   urlCharts.set('scaling-tvl', tvlApiResponse.layers2s)
   urlCharts.set('bridges-tvl', tvlApiResponse.bridges)
   urlCharts.set('combined-tvl', tvlApiResponse.combined)
+
+  if (config.features.detailedTvl) {
+    urlCharts.set('scaling-detailed-tvl', tvlApiResponse.layers2s)
+  }
+
   for (const project of [...config.layer2s, ...config.bridges]) {
     const projectTvlData = tvlApiResponse.projects[project.id.toString()]
     if (projectTvlData) {
       urlCharts.set(`${project.display.slug}-tvl`, projectTvlData.charts)
+      if (config.features.detailedTvl) {
+        urlCharts.set(
+          `${project.display.slug}-detailed-tvl`,
+          projectTvlData.charts,
+        )
+      }
     }
   }
   urlCharts.set(`placeholder-tvl`, PLACEHOLDER_API_DATA)
@@ -62,14 +79,36 @@ export function createApi(
 }
 
 export function outputCharts(
-  urlCharts: Map<string, TvlApiCharts | FrontendActivityChart>,
+  urlCharts: Map<
+    string,
+    TvlApiCharts | DetailedTvlApiCharts | FrontendActivityChart
+  >,
 ) {
   for (const [url, charts] of urlCharts) {
+    // TODO(radomski): This check is be removed when we retire the /api/tvl
+    // endpoint and use only the /api/detailed-tvl
+    const json =
+      'hourly' in charts &&
+      charts.hourly.types.length === 9 &&
+      !url.includes('-detailed-tvl')
+        ? JSON.stringify({
+            hourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: charts.hourly.data.map((e) => at(e, [0, 1, 5])),
+            },
+            sixHourly: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: charts.sixHourly.data.map((e) => at(e, [0, 1, 5])),
+            },
+            daily: {
+              types: ['timestamp', 'usd', 'eth'],
+              data: charts.daily.data.map((e) => at(e, [0, 1, 5])),
+            },
+          })
+        : JSON.stringify(charts)
+
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))
-    fsx.writeFileSync(
-      path.join('build/api', `${url}.json`),
-      JSON.stringify(charts),
-    )
+    fsx.writeFileSync(path.join('build/api', `${url}.json`), json)
   }
 }
 

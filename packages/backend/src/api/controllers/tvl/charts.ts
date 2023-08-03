@@ -4,6 +4,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
 
 interface DetailedBalanceInTime {
@@ -77,6 +78,20 @@ export function addDetailedMissingTimestamps(
     ])
   }
   return allPoints
+}
+
+export function getProjectAssetChartData(
+  projectAssetReports: ReportRecord[],
+  decimals: number,
+  hours: number,
+) {
+  const balancesInTime = projectAssetReports.map((report) => ({
+    timestamp: report.timestamp,
+    usd: report.usdValue,
+    asset: report.amount,
+  }))
+
+  return getChartPoints(balancesInTime, hours, decimals)
 }
 
 export function getChartPoints(

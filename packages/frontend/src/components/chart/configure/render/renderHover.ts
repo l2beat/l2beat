@@ -1,6 +1,7 @@
 import { renderToString } from 'react-dom/server'
 
 import { formatTps } from '../../../../utils/formatTps'
+import { formatUSD } from '../../../../utils/utils'
 import { Link } from '../../../Link'
 import { ChartElements } from '../elements'
 import { State } from '../state/State'
@@ -116,7 +117,7 @@ export function renderHover(
         'usdParts' in point
       ) {
         rows.push(renderHorizontalSeparator())
-        rows.push(renderTVLRow(point.usd))
+        rows.push(renderTVLRow(formatUSD(point.usd)))
         rows.push(renderHorizontalSeparator())
         rows.push(renderCBVRow(point.usdParts.cbv))
         rows.push(renderEBVRow(point.usdParts.ebv))
@@ -171,10 +172,8 @@ function renderHorizontalSeparator() {
   return `<hr class="w-full border-gray-200 dark:border-gray-650 md:border-t-1 my-1"/>`
 }
 
-function renderTVLRow(tvl: number) {
-  return `<div class="flex w-full justify-between"><div><span class="text-gray-50">Total TVL</span></div><div><span class="font-bold">$${tvl.toFixed(
-    2,
-  )}</span></div></div>`
+function renderTVLRow(tvl: string) {
+  return `<div class="flex w-full justify-between"><div><span class="text-gray-50">Total TVL</span></div><div><span class="font-bold">${tvl}</span></div></div>`
 }
 
 const CBVIcon =
