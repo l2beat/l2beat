@@ -48,6 +48,13 @@ const CHAIN_IDS: ChainMetadata[] = [
     minTimestamp: UnixTime.fromDate(new Date('2020-05-30T07:40:00Z')),
   },
   {
+    id: 56,
+    name: 'bsc',
+    dethDomain: 'bscscan.deth.net',
+    // ~ Timestamp of block number 0 on Binance Smart Chain
+    minTimestamp: UnixTime.fromDate(new Date('2020-08-29T03:20:00Z')),
+  },
+  {
     id: -1,
     name: 'native',
   },
@@ -57,7 +64,8 @@ ChainId.ETHEREUM = ChainId(CHAIN_IDS[0].id)
 ChainId.ARBITRUM = ChainId(CHAIN_IDS[1].id)
 ChainId.OPTIMISM = ChainId(CHAIN_IDS[2].id)
 ChainId.POLYGON_POS = ChainId(CHAIN_IDS[3].id)
-ChainId.NMV = ChainId(CHAIN_IDS[4].id)
+ChainId.BSC = ChainId(CHAIN_IDS[4].id)
+ChainId.NMV = ChainId(CHAIN_IDS[5].id)
 
 ChainId.getName = function (chainId: ChainId): string {
   const chain = CHAIN_IDS.find((c) => c.id === +chainId)

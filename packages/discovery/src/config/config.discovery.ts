@@ -64,6 +64,14 @@ function getChainConfig(chainId: ChainId) {
         etherscanUrl: 'https://api.polygonscan.com/api',
         minTimestamp: ChainId.getMinTimestamp(ChainId.POLYGON_POS),
       }
+    case ChainId.BSC:
+      return {
+        chainId: ChainId.BSC,
+        rpcUrl: getEnv('DISCOVERY_BSC_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_BSC_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.bscscan.com/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.BSC),
+      }
     case ChainId.NMV:
       throw new Error('NMV is not supported')
     default:
