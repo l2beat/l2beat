@@ -101,7 +101,7 @@ function getChainConfig(chainId: ChainId) {
         chainId: ChainId.BASE,
         rpcUrl: getEnv('DISCOVERY_BASE_RPC_URL'),
         etherscanApiKey: getEnv('DISCOVERY_BASE_ETHERSCAN_API_KEY'),
-        etherscanUrl: 'https://api.basescan.io/api',
+        etherscanUrl: 'https://api.basescan.org/api',
         minTimestamp: ChainId.getMinTimestamp(ChainId.BASE),
       }
     case ChainId.POLYGON_ZKEVM:

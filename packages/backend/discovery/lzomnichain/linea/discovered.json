@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "linea",
-  "blockNumber": 116237,
-  "configHash": "0x632f6824773b8e0d666dc8b0f980f61f221fa6fb5f8d6faad7dc4c7f19fb02a5",
+  "blockNumber": 117054,
+  "configHash": "0xbc631a85a4e2acf49cf1ef508e5c34609a1ec9361bc7a9d8324e64a7d1479719",
   "version": 1,
   "contracts": [
     {
@@ -28,6 +28,17 @@
         "treasuryZROFees": 0
       },
       "derivedName": "UltraLightNodeV2"
+    },
+    {
+      "name": "NonceContract",
+      "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "code": "https://lineascan.deth.net/address/0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "endpoint": "0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7"
+      }
     },
     {
       "name": "TreasuryV2",
@@ -134,6 +145,12 @@
       "function validateTransactionProof(uint16 _srcChainId, address _dstAddress, uint256 _gasLimit, bytes32 _lookupHash, bytes32 _blockData, bytes _transactionProof)",
       "function withdrawNative(address _to, uint256 _amount)",
       "function withdrawZRO(address _to, uint256 _amount)"
+    ],
+    "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": [
+      "constructor(address _endpoint)",
+      "function endpoint() view returns (address)",
+      "function increment(uint16 _chainId, address _ua, bytes _path) returns (uint64)",
+      "function outboundNonce(uint16, bytes) view returns (uint64)"
     ],
     "0x980205D352F198748B626f6f7C38A8a5663Ec981": [
       "constructor(address _ulnv2)",
