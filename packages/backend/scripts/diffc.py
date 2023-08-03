@@ -178,11 +178,9 @@ def diff_implementations(folder1, folder2, common_directories):
                         break
                 result = result.decode()
                 if "No changes." not in result:
-                    # Split result into lines
                     lines = result.split('\n')
-                    # Only print lines that are not empty
                     for line in lines:
-                        if line.strip():  # This checks if line is not empty when whitespace is removed
+                        if line.strip():
                             print(line)
                     if (line not in [""]):
                         no_changes = False
