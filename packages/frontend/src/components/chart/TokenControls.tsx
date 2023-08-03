@@ -2,6 +2,7 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ChevronDownIcon } from '../icons'
+import { CloseIcon } from '../icons/CloseIcon'
 
 export interface TokenControl {
   address: string
@@ -23,8 +24,11 @@ export function TokenControls({ tokens }: TokenControlsProps) {
       <HorizontalSeparator className="mb-4 md:hidden" />
       <span>View another token</span>
       <div className="Dropdown">
-        <SelectButton />
-        <TokenModal tokens={tokens} />
+        <div className="rounded-lg bg-gray-100 px-1 py-1 dark:bg-gray-750">
+          <SelectButton />
+          <SelectedTokenButton />
+          <TokenModal tokens={tokens} />
+        </div>
       </div>
     </div>
   )
@@ -32,18 +36,35 @@ export function TokenControls({ tokens }: TokenControlsProps) {
 
 function SelectButton() {
   return (
-    <div className="rounded-lg bg-gray-100 px-3 py-1 dark:bg-gray-750">
-      <label className="flex cursor-pointer items-center justify-between gap-1.5 text-base">
-        <input
-          type="checkbox"
-          autoComplete="off"
-          data-role="chart-token-toggle"
-          className="Dropdown-Button peer hidden"
-        />
-        Select
-        <ChevronDownIcon className="h-3 w-3 transition-transform duration-300 peer-checked:-rotate-180" />
-      </label>
-    </div>
+    <label
+      className="flex cursor-pointer items-center justify-between gap-1.5 px-2 text-base transition-all"
+      data-role="chart-token-toggle"
+    >
+      <input
+        type="checkbox"
+        autoComplete="off"
+        className="Dropdown-Button peer hidden"
+      />
+      Select
+      <ChevronDownIcon className="h-3 w-3 transition-transform duration-300 peer-checked:-rotate-180" />
+    </label>
+  )
+}
+
+function SelectedTokenButton() {
+  return (
+    <label
+      className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md px-2 text-base transition-all dark:bg-black"
+      data-role="chart-token-chosen"
+    >
+      <input
+        type="checkbox"
+        autoComplete="off"
+        className="Dropdown-Button peer hidden"
+      />
+      <p>ARTH</p>
+      <CloseIcon className="h-3 w-3 fill-gray-550 dark:fill-gray-50" />
+    </label>
   )
 }
 
@@ -61,7 +82,7 @@ function TokenCell({ token }: { token: TokenControl }) {
       />
       <img
         src={`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${token.address}/logo.png`}
-        className="h-4 w-4"
+        className="h-4 w-4 rounded-full"
       />
       <p className="text-sm" key={token.symbol}>
         <span className={'font-bold'}>{token.name}</span> ({token.symbol})

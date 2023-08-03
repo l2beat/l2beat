@@ -32,7 +32,10 @@ export function getChartElements(chart: HTMLElement) {
         ),
       ),
       showTokenModal: chart.querySelector<HTMLInputElement>(
-        '[data-role="chart-token-toggle"]',
+        '[data-role="chart-token-toggle"] input',
+      ),
+      tokenChosen: chart.querySelector<HTMLInputElement>(
+        '[data-role="chart-token-chosen"] input',
       ),
       scale: Array.from(
         chart.querySelectorAll<HTMLInputElement>(
@@ -55,6 +58,13 @@ export function getChartElements(chart: HTMLElement) {
       ),
       tokenControlsWrapper: chart.querySelector<HTMLElement>(
         '[data-role="chart-token-controls"]',
+      ),
+
+      showTokenModalWrapper: chart.querySelector<HTMLElement>(
+        '[data-role="chart-token-toggle"]',
+      ),
+      tokenChosenWrapper: chart.querySelector<HTMLElement>(
+        '[data-role="chart-token-chosen"]',
       ),
       tokenModal: chart.querySelector<HTMLElement>(
         '[data-role="chart-token-modal"]',
