@@ -96,6 +96,14 @@ function getChainConfig(chainId: ChainId) {
         etherscanUrl: 'https://api.lineascan.build/api',
         minTimestamp: ChainId.getMinTimestamp(ChainId.LINEA),
       }
+    case ChainId.BASE:
+      return {
+        chainId: ChainId.BASE,
+        rpcUrl: getEnv('DISCOVERY_BASE_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_BASE_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.basescan.io/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.BASE),
+      }
     case ChainId.NMV:
       throw new Error('NMV is not supported')
     default:

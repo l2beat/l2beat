@@ -24,7 +24,8 @@
         "bsc",
         "avalanche",
         "celo",
-        "linea"
+        "linea",
+        "base"
       ]
     },
     "initialAddresses": {
