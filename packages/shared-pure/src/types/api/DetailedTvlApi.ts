@@ -44,22 +44,19 @@ export type DetailedTvlApiCharts = z.infer<typeof DetailedTvlApiCharts>
 
 export const DetailedTvlApiToken = z.object({
   assetId: branded(z.string(), AssetId),
-  tvl: z.number(),
-})
-
-export const DetailedTvlApiTopToken = z.object({
-  assetId: branded(z.string(), AssetId),
   chainId: branded(z.number(), ChainId),
   valueType: branded(z.string(), ValueType),
+  tvl: z.number(),
 })
-
-export type DetailedTvlApiTopToken = z.infer<typeof DetailedTvlApiTopToken>
 
 export type DetailedTvlApiToken = z.infer<typeof DetailedTvlApiToken>
 
 export const DetailedTvlApiProject = z.object({
-  topTokens: z.array(DetailedTvlApiTopToken),
-  tokens: z.array(DetailedTvlApiToken),
+  tokens: z.object({
+    CBV: z.array(DetailedTvlApiToken),
+    EBV: z.array(DetailedTvlApiToken),
+    NMV: z.array(DetailedTvlApiToken),
+  }),
   charts: DetailedTvlApiCharts,
 })
 export type DetailedTvlApiProject = z.infer<typeof DetailedTvlApiProject>

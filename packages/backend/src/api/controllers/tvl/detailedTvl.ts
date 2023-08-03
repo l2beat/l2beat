@@ -1,9 +1,8 @@
-import { AssetId, DetailedTvlApiTopToken, ProjectId } from '@l2beat/shared-pure'
+import { DetailedTvlApiProject, ProjectId } from '@l2beat/shared-pure'
 import { groupBy, mapValues } from 'lodash'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
-import { asNumber } from './asNumber'
 
 export type ReportsPerProjectIdAndTimestamp = ReturnType<
   typeof groupByProjectIdAndTimestamp
@@ -27,7 +26,7 @@ export function groupByProjectIdAndAsset(reports: ReportRecord[]) {
   return nestedGroupBy(
     reports,
     (report) => report.projectId,
-    (report) => report.asset,
+    (report) => report.type,
   )
 }
 
@@ -49,63 +48,39 @@ export function nestedGroupBy<T extends ReportRecord | AggregatedReportRecord>(
 export function getProjectTokensCharts(
   reports: ReportsPerProjectIdAndAsset,
   projectId: ProjectId,
-): { assetId: AssetId; tvl: number }[] {
+): DetailedTvlApiProject['tokens'] {
+  // type => ReportRecord[]
   const assetValuesPerProject = reports[projectId.toString()]
+
+  const baseResult: DetailedTvlApiProject['tokens'] = {
+    CBV: [],
+    EBV: [],
+    NMV: [],
+  }
 
   // Project may be missing reports
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!assetValuesPerProject) {
-    return []
+    return baseResult
   }
 
-  const tokens = Object.entries(assetValuesPerProject).map(
-    ([asset, reports]) => {
-      const tokenUsdTvl = reports.reduce(
-        (acc, report) => acc + report.usdValue,
-        0n,
-      )
-
+  // Sort assets per type by USD value
+  const tokens = Object.entries(assetValuesPerProject).reduce(
+    (prev, [valueType, reports]) => {
       return {
-        assetId: AssetId(asset),
-        tvl: asNumber(tokenUsdTvl, 2),
+        ...prev,
+        [valueType]: reports
+          .map((report) => ({
+            assetId: report.asset,
+            chainId: report.chainId,
+            valueType: report.type,
+            tvl: Number(report.usdValue),
+          }))
+          .sort((a, b) => b.tvl - a.tvl),
       }
     },
+    baseResult,
   )
 
   return tokens
-}
-
-export function getTopProjectTokens(
-  groupedReports: ReportsPerProjectIdAndAsset,
-  projectId: ProjectId,
-  amountOfTopTokens = 15,
-): DetailedTvlApiTopToken[] {
-  const projectTokensByAsset = groupedReports[projectId.toString()]
-
-  // Project may be missing reports
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!projectTokensByAsset) {
-    return []
-  }
-
-  const topTokens = []
-
-  for (const [, reports] of Object.entries(projectTokensByAsset)) {
-    for (const latestReport of reports) {
-      topTokens.push({
-        assetId: latestReport.asset,
-        chainId: latestReport.chainId,
-        valueType: latestReport.type,
-        value: asNumber(latestReport.usdValue, 2),
-      })
-    }
-  }
-
-  return topTokens
-    .sort(
-      (primaryReport, secondaryReport) =>
-        secondaryReport.value - primaryReport.value,
-    )
-    .slice(0, amountOfTopTokens)
-    .map(({ value: _value, ...rest }) => rest)
 }
