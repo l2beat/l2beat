@@ -23,7 +23,12 @@ export function setupControls(
 
   onRadioChange(elements.controls.tokens, (control) => {
     if (control.dataset.tvlEndpoint) {
-      console.log('Token', control.dataset.tvlEndpoint, control.value)
+      if (elements.view.tokenModal && elements.controls.showTokenModal) {
+        elements.view.tokenModal.classList.toggle('opacity-0')
+        elements.view.tokenModal.classList.toggle('pointer-events-none')
+        elements.controls.showTokenModal.checked = false;
+      }
+
       dispatch({
         type: 'TokenChanged',
         token: control.value,

@@ -19,10 +19,7 @@ export function TokenControls({ tokens }: TokenControlsProps) {
   }
 
   return (
-    <div
-      data-role="chart-token-controls"
-      className="col-span-4 flex flex-wrap items-baseline justify-start gap-x-4"
-    >
+    <div className="col-span-4 flex flex-wrap items-baseline justify-start gap-x-4">
       <HorizontalSeparator className="mb-4 md:hidden" />
       <span>View another token</span>
       <div className="Dropdown">
@@ -40,6 +37,7 @@ function SelectButton() {
         <input
           type="checkbox"
           autoComplete="off"
+          data-role="chart-token-toggle"
           className="Dropdown-Button peer hidden"
         />
         Select
@@ -58,6 +56,7 @@ function TokenCell({ token }: { token: TokenControl }) {
         type={'radio'}
         autoComplete="off"
         value={token.symbol}
+        data-role="chart-token-controls"
         data-tvl-endpoint={token.tvlEndpoint}
       />
       <img
@@ -91,7 +90,10 @@ function TokenModal({ tokens }: { tokens: TokenControl[] }) {
   ]
 
   return (
-    <div className="Dropdown-Transparent-Item pointer-events-none absolute z-60 opacity-0 transition-opacity duration-300">
+    <div
+      className="Dropdown-Transparent-Item pointer-events-none absolute z-60 opacity-0 transition-opacity duration-300"
+      data-role="chart-token-modal"
+    >
       <hr className="h-1.5 border-t-0" />
       <div className="rounded-lg bg-gray-100 p-6 dark:bg-gray-750">
         <div className="flex flex-col gap-3">

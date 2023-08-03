@@ -28,8 +28,11 @@ export function getChartElements(chart: HTMLElement) {
       ),
       tokens: Array.from(
         chart.querySelectorAll<HTMLInputElement>(
-          '[data-role="chart-token-controls"] input',
+          '[data-role="chart-token-controls"]',
         ),
+      ),
+      showTokenModal: chart.querySelector<HTMLInputElement>(
+        '[data-role="chart-token-toggle"]',
       ),
       scale: Array.from(
         chart.querySelectorAll<HTMLInputElement>(
@@ -52,6 +55,9 @@ export function getChartElements(chart: HTMLElement) {
       ),
       tokenControlsWrapper: chart.querySelector<HTMLElement>(
         '[data-role="chart-token-controls"]',
+      ),
+      tokenModal: chart.querySelector<HTMLElement>(
+        '[data-role="chart-token-modal"]',
       ),
       milestones: chart.querySelector<HTMLElement>(
         '[data-role="chart-milestones"]',
