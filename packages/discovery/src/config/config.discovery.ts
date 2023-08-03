@@ -80,6 +80,14 @@ function getChainConfig(chainId: ChainId) {
         etherscanUrl: 'https://api.snowtrace.io/api',
         minTimestamp: ChainId.getMinTimestamp(ChainId.AVALANCHE),
       }
+    case ChainId.CELO:
+      return {
+        chainId: ChainId.CELO,
+        rpcUrl: getEnv('DISCOVERY_CELO_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_CELO_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.celoscan.io/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.CELO),
+      }
     case ChainId.NMV:
       throw new Error('NMV is not supported')
     default:

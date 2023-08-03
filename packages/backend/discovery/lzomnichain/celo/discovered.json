@@ -1,0 +1,20 @@
+{
+  "name": "lzomnichain",
+  "chain": "celo",
+  "blockNumber": 20678993,
+  "configHash": "0x5ea493a0760f44a15fbc22cd403bb0db730bb4ecc0f97f4193d48068e8f47be1",
+  "version": 1,
+  "contracts": [
+    {
+      "name": "",
+      "address": "0x3A73033C0b1407574C76BdBAc67f126f6b4a9AA9",
+      "unverified": true,
+      "code": "https://celoscan.deth.net/address/0x3A73033C0b1407574C76BdBAc67f126f6b4a9AA9",
+      "upgradeability": {
+        "type": "immutable"
+      }
+    }
+  ],
+  "eoas": [],
+  "abis": {}
+}

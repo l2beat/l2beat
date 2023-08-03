@@ -22,7 +22,8 @@
         "optimism",
         "polygon-pos",
         "bsc",
-        "avalanche"
+        "avalanche",
+        "celo"
       ]
     },
     "initialAddresses": {
