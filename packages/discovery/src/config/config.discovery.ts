@@ -56,6 +56,14 @@ function getChainConfig(chainId: ChainId) {
         etherscanUrl: 'https://api-optimistic.etherscan.io/api',
         minTimestamp: ChainId.getMinTimestamp(ChainId.OPTIMISM),
       }
+    case ChainId.POLYGON_POS:
+      return {
+        chainId: ChainId.POLYGON_POS,
+        rpcUrl: getEnv('DISCOVERY_POLYGON_POS_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_POLYGON_POS_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.polygonscan.com/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.POLYGON_POS),
+      }
     case ChainId.NMV:
       throw new Error('NMV is not supported')
     default:
