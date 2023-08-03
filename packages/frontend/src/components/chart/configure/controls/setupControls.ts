@@ -32,10 +32,6 @@ export function setupControls(
     }
   })
 
-  elements.controls.showMoreTokens?.addEventListener('click', () => {
-    dispatch({ type: 'MoreTokensClicked' })
-  })
-
   onRadioChange(elements.controls.scale, (control) => {
     dispatch({ type: 'ScaleChanged', isLogScale: control.value === 'LOG' })
   })

@@ -32,7 +32,6 @@ export interface State {
     showEthereum: boolean
     showAlternativeTvl: boolean
     mouseX: number | undefined
-    showMoreTokens: boolean
     labelCount: number
   }
   view: {

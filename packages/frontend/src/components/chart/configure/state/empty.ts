@@ -32,7 +32,6 @@ export const EMPTY_STATE: State = {
     showEthereum: false,
     showAlternativeTvl: false,
     mouseX: undefined,
-    showMoreTokens: false,
     labelCount: 0,
   },
   view: {

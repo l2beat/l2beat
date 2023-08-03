@@ -70,10 +70,6 @@ export interface MouseExitedMessage {
   type: 'MouseExited'
 }
 
-export interface MoreTokensClickedMessage {
-  type: 'MoreTokensClicked'
-}
-
 export interface AggregateTvlLoadedMessage {
   type: 'AggregateTvlLoaded'
   requestId: number
@@ -151,7 +147,6 @@ export type Message =
   | ShowAlternativeTvlChangedMessage
   | MouseMovedMessage
   | MouseExitedMessage
-  | MoreTokensClickedMessage
   | AggregateDetailedTvlLoadedMessage
   | AggregateDetailedTvlFailedMessage
   | AggregateTvlLoadedMessage

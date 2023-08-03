@@ -69,7 +69,6 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         showEthereum: !!message.showEthereum,
         showAlternativeTvl: false,
         mouseX: undefined,
-        showMoreTokens: false,
         labelCount: message.labelCount,
       },
       view: {
