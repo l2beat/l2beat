@@ -1,5 +1,5 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
 
@@ -135,14 +135,14 @@ describe('discovery config.jsonc', () => {
         const discovery = await configReader.readDiscovery(c.name, c.chainId)
 
         if (discovery.configHash !== c.hash) {
-          outdatedHashes.push(c.name)
+          outdatedHashes.push(`${ChainId.getName(c.chainId)}-${c.name}`)
         }
       }
       assert(
         outdatedHashes.length === 0,
-        `Following projects have outdated hashes: ${outdatedHashes.join(
+        `Following projects have outdated hashes (chain-project): ${outdatedHashes.join(
           ', ',
-        )}. Run yarn discover <outdatedProjectName>`,
+        )}. Run yarn discover <chain> <project>`,
       )
     }
   })

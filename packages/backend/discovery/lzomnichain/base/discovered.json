@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "base",
-  "blockNumber": 2142274,
-  "configHash": "0x684c8c0904fd8cf4d9b64b66d38b9951433de25d27c7f342657a72b359759b3e",
+  "blockNumber": 2177243,
+  "configHash": "0xcbfa37f6b248eac91e630b3c2fae1982fe158ade8c350416c32dd441309538ae",
   "version": 1,
   "contracts": [
     {
@@ -38,8 +38,7 @@
       },
       "values": {
         "endpoint": "0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7"
-      },
-      "derivedName": "NonceContract"
+      }
     },
     {
       "name": "TreasuryV2",
