@@ -100,10 +100,10 @@ export function render(
         elements.controls.showTokenModal.checked = false
       }
 
-      elements.view.tokenModal?.classList.toggle('opacity-0')
-      elements.view.tokenModal?.classList.toggle('pointer-events-none')
-      elements.view.showTokenModalWrapper?.classList.toggle('hidden')
-      elements.view.tokenChosenWrapper?.classList.toggle('hidden')
+      elements.view.tokenModal?.classList.toggle('opacity-0', true)
+      elements.view.tokenModal?.classList.toggle('pointer-events-none', true)
+      elements.view.showTokenModalWrapper?.classList.toggle('hidden', true)
+      elements.view.tokenChosenWrapper?.classList.toggle('hidden', false)
       const paragraph = elements.view.tokenChosenWrapper?.querySelector('p')
       if (paragraph) {
         paragraph.innerText = state.controls.token
