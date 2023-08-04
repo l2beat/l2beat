@@ -110,10 +110,10 @@ export class SequenceProcessor extends EventEmitter {
     this.logger.info('Started')
     await this.loadState()
     this.processQueue.addIfEmpty()
-    this.refreshId = setInterval(
-      () => this.processQueue.addIfEmpty(),
-      this.scheduleInterval,
-    )
+    this.refreshId = setInterval(() => {
+      this.processQueue.unhaltIfNeeded()
+      this.processQueue.addIfEmpty()
+    }, this.scheduleInterval)
   }
 
   async stop(): Promise<void> {
