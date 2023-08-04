@@ -42,12 +42,12 @@ export function DetailsHeader(props: HeaderProps) {
 
   return (
     <>
-      <header className="md:mt-15 mt-6 flex flex-row justify-end px-4 md:px-0">
-        <div className="w-full">
+      <header className="md:mt-15 mt-6 flex flex-row justify-end gap-3 md:gap-0">
+        <div className="w-full flex flex-wrap gap-6 md:gap-4">
           <h1
             className={cx(
-              'relative mb-4 flex items-center justify-start gap-3',
-              'whitespace-pre text-3xl font-bold md:text-4xl',
+              'relative mb-0 flex items-center justify-start gap-3',
+              'whitespace-pre text-3xl font-bold md:text-4xl px-4 md:px-0',
               props.titleLength,
               props.titleClassName,
             )}

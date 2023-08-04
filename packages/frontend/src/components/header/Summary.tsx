@@ -38,49 +38,47 @@ export function Summary(props: SummaryProps) {
   const groupedStats = chunk(props.stats.summary, cols)
 
   return (
-    <div className="w-full min-w-0">
-      <div className="my-6 hidden md:block">
+    <>
+      <div className="my-2 hidden md:block">
         <DesktopProjectLinks projectLinks={props.links} />
       </div>
-      <div className="flex gap-4">
-        <TvlSummary
-          stats={props.stats.l2Tvl}
-          detailedTvlEnabled={props.detailedTvlEnabled}
-        />
-        <div
-          className={classNames(
-            'row grid h-fit grow grid-cols-1 gap-3 md:gap-0 md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800',
-            cols === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3',
-          )}
-        >
-          {groupedStats.map((group, groupIndex) => {
-            return (
-              <React.Fragment key={`summary-group${groupIndex}`}>
-                {groupIndex !== 0 && (
-                  <HorizontalSeparator
-                    key={`horizontal-separator${groupIndex}`}
-                    className="col-span-full mt-2 hidden md:my-4 md:block"
+      <TvlSummary
+        stats={props.stats.l2Tvl}
+        detailedTvlEnabled={props.detailedTvlEnabled}
+      />
+      <div
+        className={classNames(
+          'row grid h-fit grow grid-cols-1 gap-3 px-4 md:gap-0 md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800',
+          cols === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3',
+        )}
+      >
+        {groupedStats.map((group, groupIndex) => {
+          return (
+            <React.Fragment key={`summary-group${groupIndex}`}>
+              {groupIndex !== 0 && (
+                <HorizontalSeparator
+                  key={`horizontal-separator${groupIndex}`}
+                  className="col-span-full mt-2 hidden md:my-4 md:block"
+                />
+              )}
+              {group.map((stat) => {
+                return (
+                  <DetailsHeaderStat
+                    key={stat.title}
+                    title={stat.title}
+                    value={stat.value}
+                    tooltip={stat.tooltip}
                   />
-                )}
-                {group.map((stat) => {
-                  return (
-                    <DetailsHeaderStat
-                      key={stat.title}
-                      title={stat.title}
-                      value={stat.value}
-                      tooltip={stat.tooltip}
-                    />
-                  )
-                })}
-              </React.Fragment>
-            )
-          })}
-        </div>
+                )
+              })}
+            </React.Fragment>
+          )
+        })}
       </div>
-      <div className="md:hidden">
+      <div className="px-4 md:hidden md:px-0">
         <MobileProjectLinks projectLinks={props.links} />
       </div>
-    </div>
+    </>
   )
 }
 
