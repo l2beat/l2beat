@@ -157,12 +157,13 @@ export class SequenceProcessor extends EventEmitter {
       let from = lastProcessed ? lastProcessed + 1 : startFrom
 
       const previousLatest = this.state?.latest ?? startFrom
-      this.logger.debug('Calling getLatest', {
+      const latest = await this.opts.getLatest(previousLatest)
+      this.logger.info('Fetched latest block', {
+        latest,
         previousLatest,
         startFrom,
         from,
       })
-      const latest = await this.opts.getLatest(previousLatest)
 
       if (from === latest + 1) {
         break processing
