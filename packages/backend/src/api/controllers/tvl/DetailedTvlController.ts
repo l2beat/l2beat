@@ -4,6 +4,7 @@ import {
   ChainId,
   DetailedTvlApiResponse,
   ProjectId,
+  Token,
   TvlApiChart,
   TvlApiCharts,
   UnixTime,
@@ -11,7 +12,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
-import { Token } from '../../../model'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'

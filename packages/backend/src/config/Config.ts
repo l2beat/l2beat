@@ -1,9 +1,9 @@
 import { Layer2TransactionApi } from '@l2beat/config'
 import { LogLevel } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { Project, Token } from '../model'
+import { Project } from '../model'
 
 export interface Config {
   readonly name: string

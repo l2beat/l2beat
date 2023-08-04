@@ -5,6 +5,7 @@ import {
   getTimestamps,
   Hash256,
   ProjectId,
+  Token,
   UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
@@ -16,7 +17,6 @@ import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
 import { TotalSupplyTokensConfig } from '../../../core/totalSupply/TotalSupplyTokensConfig'
 import { Project } from '../../../model'
-import { Token } from '../../../model/Token'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import {
   BalanceStatusRecord,
