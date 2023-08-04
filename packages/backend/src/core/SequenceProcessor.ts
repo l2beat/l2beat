@@ -143,7 +143,7 @@ export class SequenceProcessor extends EventEmitter {
   }
 
   private async process(): Promise<void> {
-    this.logger.debug('Processing started')
+    this.logger.info('Processing started')
 
     let firstRun = true
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -180,12 +180,12 @@ export class SequenceProcessor extends EventEmitter {
       firstRun = false
     }
 
-    this.logger.debug('Processing finished')
+    this.logger.info('Processing finished')
     this.emit(ALL_PROCESSED_EVENT)
   }
 
   private async processRange(from: number, to: number, latest: number) {
-    this.logger.debug('Processing range started', { from, to })
+    this.logger.info('Processing range started', { from, to })
     try {
       this.eventTracker.record('range started')
       await this.repository.runInTransaction(async (trx) => {
@@ -197,7 +197,7 @@ export class SequenceProcessor extends EventEmitter {
       this.eventTracker.record('range failed')
       throw error
     }
-    this.logger.debug('Processing range finished', { from, to })
+    this.logger.info('Processing range finished', { from, to })
   }
 
   private async loadState(): Promise<void> {
