@@ -1,9 +1,12 @@
 import {
   AssetId,
   ChainId,
+  CoingeckoId,
   EthereumAddress,
   ProjectId,
+  Token,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -76,6 +79,32 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 )
 const selfSequencingDelay = maxTimeVariation[2]
 
+const TOKENS: Omit<Token, 'chainId'>[] = [
+  {
+    id: AssetId('arb-arbitrum'),
+    name: 'Arbitrum',
+    coingeckoId: CoingeckoId('arbitrum'),
+    address: EthereumAddress('0xb50721bcf8d664c30412cfbc6cf7a15145234ad1'),
+    symbol: 'ARB',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1630233600),
+    category: 'other',
+    type: ValueType.NMV,
+  },
+  {
+    id: AssetId('arb:usdc-usd-coin'),
+    name: 'Arbitrum',
+    coingeckoId: CoingeckoId('arbitrum'),
+    symbol: 'USDC',
+    address: EthereumAddress('0xaf88d065e77c8cC2239327C5EDb3A432268e5831'),
+    sinceTimestamp: new UnixTime(1667250000),
+    decimals: 6,
+    category: 'stablecoin',
+    premintHolderAddresses: [],
+    type: ValueType.EBV,
+  },
+]
+
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
@@ -117,6 +146,8 @@ export const arbitrum: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
+    chainId: ChainId.ARBITRUM,
+    tokenList: TOKENS,
     associatedTokens: ['ARB'],
     nativeL2TokensIncludedInTVL: ['ARB'],
     externalAssets: {
