@@ -149,7 +149,7 @@ export function getScalingDetailedTvlColumns() {
     {
       name: 'EBV',
       tooltip:
-        'Externally Bridged Value refers to assets obtained on L2 via bridges outside of the L2\'s security, displayed together with a percentage change compared to 7D ago.',
+        "Externally Bridged Value refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
