@@ -1,6 +1,6 @@
 import { ChainId } from '@l2beat/shared-pure'
 import fs from 'fs'
-import { debounce, get } from 'lodash'
+import { debounce } from 'lodash'
 import { mkdirpSync } from 'mkdirp'
 import path from 'path'
 

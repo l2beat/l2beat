@@ -2,7 +2,6 @@ import { EtherscanLikeClient } from '@l2beat/shared'
 import { Bytes, ChainId, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
-import { chain } from 'lodash'
 import { isRevert } from '../utils/isRevert'
 import { ContractMetadata, DiscoveryProvider } from './DiscoveryProvider'
 import { ProviderCache } from './ProviderCache'

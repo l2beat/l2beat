@@ -1,5 +1,5 @@
 import { bridges, layer2s } from '@l2beat/config'
-import { ChainId, EthereumAddress, assert } from '@l2beat/shared-pure'
+import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
 
