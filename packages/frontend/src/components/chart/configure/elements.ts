@@ -28,7 +28,7 @@ export function getChartElements(chart: HTMLElement) {
       ),
       tokens: Array.from(
         chart.querySelectorAll<HTMLInputElement>(
-          '[data-role="chart-token-controls"]',
+          '[data-role="chart-token-controls"] input',
         ),
       ),
       showTokenModal: chart.querySelector<HTMLInputElement>(
@@ -36,6 +36,9 @@ export function getChartElements(chart: HTMLElement) {
       ),
       tokenChosen: chart.querySelector<HTMLInputElement>(
         '[data-role="chart-token-chosen"] input',
+      ),
+      showMoreTokensToBeRemoved: chart.querySelector<HTMLButtonElement>(
+        '[data-role="chart-more-tokens"]',
       ),
       scale: Array.from(
         chart.querySelectorAll<HTMLInputElement>(

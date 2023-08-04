@@ -114,5 +114,15 @@ export function render(
     }
   }
 
+  if (state.controls.showMoreTokens !== previousState.controls.showMoreTokens) {
+    if (state.controls.showMoreTokens) {
+      console.log(elements.controls.tokens)
+      elements.controls.tokens.forEach((x) =>
+        x.parentElement?.classList.remove('hidden'),
+      )
+      elements.controls.showMoreTokensToBeRemoved?.classList.add('hidden')
+    }
+  }
+
   renderHover(elements, previousState, state)
 }

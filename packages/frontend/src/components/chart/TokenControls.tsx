@@ -81,7 +81,6 @@ function TokenCell({ token }: { token: TokenControl }) {
         type={'radio'}
         autoComplete="off"
         value={token.symbol}
-        data-role="chart-token-controls"
         data-tvl-endpoint={token.tvlEndpoint}
       />
       <img
@@ -128,7 +127,10 @@ function TokenModal({ tokens }: { tokens: TokenControl[] }) {
                 {p.title}
               </div>
               <HorizontalSeparator className="mb-4 dark:border-gray-650" />
-              <div className="grid grid-cols-3 gap-y-3 gap-x-6">
+              <div
+                className="grid grid-cols-3 gap-y-3 gap-x-6"
+                data-role="chart-token-controls"
+              >
                 {p.tokens.map((token, j) => (
                   <TokenCell token={token} key={j} />
                 ))}

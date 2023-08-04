@@ -5,6 +5,7 @@ import { updateControlsChanged } from './updateControlsChanged'
 import { updateInit } from './updateInit'
 import { updateLoadedOrFailed } from './updateLoadedOrFailed'
 import { updateLoaderTimedOut } from './updateLoaderTimedOut'
+import { updateMoreTokensClicked } from './updateMoreTokensClicked'
 import { updateMouseExited } from './updateMouseExited'
 import { updateMouseMoved } from './updateMouseMoved'
 import { updateShowAlternativeTvlChanged } from './updateShowAlternativeTvlChanged'
@@ -27,6 +28,8 @@ export function update(state: State, message: Message): [State, Effect[]] {
     case 'ShowEthereumChanged':
     case 'ScaleChanged':
       return updateControlsChanged(state, message)
+    case 'MoreTokensClicked':
+      return updateMoreTokensClicked(state)
     case 'MouseMoved':
       return updateMouseMoved(state, message)
     case 'MouseExited':
