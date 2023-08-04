@@ -27,11 +27,16 @@ const CHAIN_IDS: ChainMetadata[] = [
     id: -1,
     name: 'native',
   },
+  {
+    id: 10,
+    name: 'optimism',
+  },
 ]
 
 ChainId.ETHEREUM = ChainId(CHAIN_IDS[0].id)
 ChainId.ARBITRUM = ChainId(CHAIN_IDS[1].id)
 ChainId.NMV = ChainId(CHAIN_IDS[2].id)
+ChainId.OPTIMISM = ChainId(CHAIN_IDS[3].id)
 
 ChainId.getName = function (chainId: ChainId): string {
   const chain = CHAIN_IDS.find((c) => c.id === +chainId)

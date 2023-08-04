@@ -1312,17 +1312,6 @@
       "category": "other"
     },
     {
-      "id": "op-optimism",
-      "name": "Optimism",
-      "coingeckoId": "optimism",
-      "address": "0x4200000000000000000000000000000000000042",
-      "symbol": "OP",
-      "decimals": 18,
-      "sinceTimestamp": 1654039974,
-      "category": "other",
-      "type": "CBV"
-    },
-    {
       "id": "orbs-orbs",
       "name": "Orbs",
       "coingeckoId": "orbs",
