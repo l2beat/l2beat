@@ -13,7 +13,7 @@ export interface RpcTransactionApi {
 
 export interface StarknetTransactionApi {
   type: 'starknet'
-  url: string
+  url?: string
   callsPerMinute?: number
 }
 
