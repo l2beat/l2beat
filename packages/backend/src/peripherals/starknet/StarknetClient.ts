@@ -24,8 +24,8 @@ export class StarknetClient {
   }
 
   async getBlockNumber() {
-    const response = await this.getBlock('latest')
-    return response.number
+    const block = await this.getBlock('latest')
+    return block.number
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
