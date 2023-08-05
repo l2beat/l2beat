@@ -117,10 +117,10 @@ export function getLocalConfig(): Config {
         },
         starknet: {
           type: 'starknet',
-          callsPerMinute: 40,
+          callsPerMinute: 120,
           url: getEnv(
             'ACTIVITY_STARKNET_URL',
-            'https://starknet-mainnet.g.alchemy.com/v2/demo',
+            'https://starknet-mainnet.public.blastapi.io',
           ),
         },
       },

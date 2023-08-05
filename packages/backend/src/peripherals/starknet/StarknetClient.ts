@@ -45,6 +45,9 @@ export class StarknetClient {
 
     const response = await this.httpClient.fetch(this.url, {
       method: 'POST',
+      headers: {
+        ['Content-Type']: 'application/json',
+      },
       body: JSON.stringify({
         jsonrpc: '2.0',
         method: 'starknet_getBlockWithTxHashes',
@@ -52,6 +55,7 @@ export class StarknetClient {
         id: Math.floor(Math.random() * 1000),
       }),
     })
+
     assert(
       response.ok,
       `Starknet getBlock request failed with status: ${response.status}`,
