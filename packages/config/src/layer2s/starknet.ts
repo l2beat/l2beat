@@ -166,8 +166,6 @@ export const starknet: Layer2 = {
     ],
     transactionApi: {
       type: 'starknet',
-      url: 'https://starknet-mainnet.g.alchemy.com/v2/demo',
-      callsPerMinute: 60,
     },
   },
   riskView: makeBridgeCompatible({

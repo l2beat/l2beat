@@ -115,6 +115,14 @@ export function getLocalConfig(): Config {
           callsPerMinute: 500,
           url: 'https://polygon-rpc.com/zkevm',
         },
+        starknet: {
+          type: 'starknet',
+          callsPerMinute: 40,
+          url: getEnv(
+            'ACTIVITY_STARKNET_URL',
+            'https://starknet-mainnet.g.alchemy.com/v2/demo',
+          ),
+        },
       },
     },
     statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
