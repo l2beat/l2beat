@@ -108,6 +108,16 @@ export function getProductionConfig(): Config {
           callsPerMinute: getEnv.integer('ACTIVITY_LINEA_CALLS'),
           url: getEnv('ACTIVITY_LINEA_URL'),
         },
+        polygonzkevm: {
+          type: 'rpc',
+          callsPerMinute: getEnv.integer('ACTIVITY_POLYGONZKEVM_CALLS'),
+          url: getEnv('ACTIVITY_POLYGONZKEVM_URL'),
+        },
+        starknet: {
+          type: 'starknet',
+          callsPerMinute: getEnv.integer('ACTIVITY_STARKNET_CALLS'),
+          url: getEnv('ACTIVITY_STARKNET_URL'),
+        },
       },
     },
     statusEnabled: getEnv.boolean('STATUS_ENABLED', true),

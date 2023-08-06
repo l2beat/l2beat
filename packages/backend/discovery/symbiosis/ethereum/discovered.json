@@ -1,8 +1,8 @@
 {
   "name": "symbiosis",
   "chain": "ethereum",
-  "blockNumber": 17825558,
-  "configHash": "0x76ac800bea8c8e3ad26c2f2f0f0be1944a388c050021f68d01c117b9313373f9",
+  "blockNumber": 17832758,
+  "configHash": "0x9ddde12e67a419065628db5c77334f495163405dad96129c109785be8463e2c6",
   "version": 1,
   "contracts": [
     {
@@ -59,7 +59,7 @@
           "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971"
         ],
         "getThreshold": 3,
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -96,7 +96,7 @@
         "metaRouter": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
         "owner": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
         "paused": false,
-        "requestCount": 2676,
+        "requestCount": 2698,
         "versionRecipient": "2.0.1",
         "wrapper": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },

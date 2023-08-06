@@ -106,7 +106,7 @@ export const starknet: Layer2 = {
         'https://starkware.co/',
       ],
     },
-    activityDataSource: 'Explorer API',
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
@@ -166,8 +166,6 @@ export const starknet: Layer2 = {
     ],
     transactionApi: {
       type: 'starknet',
-      callsPerMinute: 60 * 5,
-      url: 'https://alpha-mainnet.starknet.io',
     },
   },
   riskView: makeBridgeCompatible({
