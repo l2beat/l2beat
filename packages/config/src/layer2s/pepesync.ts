@@ -19,7 +19,7 @@ export const pepesync: Layer2 = {
       apps: ['https://bridge.test.pepesync.xyz'],
       documentation: ['https://docs.pepesync.xyz'],
       explorers: [
-        'https://explorer.test.pepesync.xyz',
+        'https://goerli-test.pepescan.xyz',
         'https://pepesync.instatus.com',
       ],
       repositories: ['https://github.com/pepesync'],
