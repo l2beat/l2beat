@@ -80,7 +80,7 @@ environment variables. One variable per line `KEY=value`.
 
 ##### Multichain discovery CLI
 
-If you want to use multichain discovery cli, make sure you include the `RPC_URL` and `ETHERSCAN_API_KEY` for desired chains.
+If you want to use multichain discovery cli, make sure you include the `RPC_URL` and `ETHERSCAN_API_KEY` for desired chains. If you want to use one RPC provider, all of them (unless stated in brackets) are supported by https://www.quicknode.com/ and https://www.ankr.com/. Etherscan API key should be created by creating an account on Etherscan instance for every chain separately (check config.discovery.ts for etherscan links).
 
 - `DISCOVERY_ARBITRUM_RPC_URL` (Optional)
 - `DISCOVERY_ARBITRUM_ETHERSCAN_API_KEY` (Optional)
@@ -94,7 +94,7 @@ If you want to use multichain discovery cli, make sure you include the `RPC_URL`
 - `DISCOVERY_AVALANCHE_ETHERSCAN_API_KEY` (Optional)
 - `DISCOVERY_CELO_RPC_URL` (Optional)
 - `DISCOVERY_CELO_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_LINEA_RPC_URL` (Optional)
+- `DISCOVERY_LINEA_RPC_URL` (Optional) (Infura)
 - `DISCOVERY_LINEA_ETHERSCAN_API_KEY` (Optional)
 - `DISCOVERY_BASE_RPC_URL` (Optional)
 - `DISCOVERY_BASE_ETHERSCAN_API_KEY` (Optional)
