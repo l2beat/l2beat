@@ -139,7 +139,7 @@ export function getLocalConfig(): Config {
           rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
           etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+          minTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
         },
       ],
     },

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "celo",
+  "name": "lzomnichain",
+  "initialAddresses": ["0x3A73033C0b1407574C76BdBAc67f126f6b4a9AA9"]
+}
