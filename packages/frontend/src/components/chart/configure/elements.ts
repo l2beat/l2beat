@@ -75,6 +75,15 @@ export function getChartElements(chart: HTMLElement) {
       greenSquare: chart.querySelector<HTMLElement>(
         '[data-role="chart-hover-square-green"]',
       ),
+      purpleCircle: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-circle-purple"]',
+      ),
+      yellowTriangle: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-triangle-yellow"]',
+      ),
+      pinkSquare: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-square-pink"]',
+      ),
       contents: chart.querySelector<HTMLElement>(
         '[data-role="chart-hover-contents"]',
       ),

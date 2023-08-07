@@ -28,7 +28,7 @@ export function TvlSummary(props: TvlSummaryProps) {
           value: props.stats.ebv,
         },
         {
-          label: 'Native Tokens Minted',
+          label: 'Natively Minted',
           value: props.stats.nmv,
         },
       ]
