@@ -12,10 +12,17 @@ export function configureDropdowns() {
   for (const dropdown of dropdowns) {
     const button = dropdown.querySelector('.Dropdown-Button')
     if (!button) continue
-    const items = dropdown.querySelectorAll('.Dropdown-Item')
+    const hiddenItems = dropdown.querySelectorAll('.Dropdown-Item')
+    const transparentItems = dropdown.querySelectorAll(
+      '.Dropdown-Transparent-Item',
+    )
 
     button.addEventListener('click', () => {
-      items.forEach((item) => item.classList.toggle('hidden'))
+      hiddenItems.forEach((item) => item.classList.toggle('hidden'))
+      transparentItems.forEach((item) => item.classList.toggle('opacity-0'))
+      transparentItems.forEach((item) =>
+        item.classList.toggle('pointer-events-none'),
+      )
     })
   }
 }

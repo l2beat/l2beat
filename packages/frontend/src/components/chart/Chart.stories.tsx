@@ -32,7 +32,7 @@ function Template({
     'AAVE',
     'YFI',
     'UNI',
-  ].map((x) => ({ symbol: x, tvlEndpoint: '/' }))
+  ].map((x) => ({ address: '0xabac', name: x, symbol: x, tvlEndpoint: '/' }))
 
   useEffect(() => {
     configureCharts()

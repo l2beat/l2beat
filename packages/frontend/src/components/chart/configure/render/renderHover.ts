@@ -30,8 +30,13 @@ export function renderHover(
   }
 
   const isActivity = state.view.chart.type === 'ActivityChart'
+  const isDetailedTvl = state.view.chart.type === 'AggregateDetailedTvlChart'
   const showEthereum = state.controls.showEthereum
-  elements.hover.circle?.classList.toggle('hidden', isActivity)
+  elements.hover.purpleCircle?.classList.toggle('hidden', !isDetailedTvl)
+  elements.hover.yellowTriangle?.classList.toggle('hidden', !isDetailedTvl)
+  elements.hover.pinkSquare?.classList.toggle('hidden', !isDetailedTvl)
+
+  elements.hover.circle?.classList.toggle('hidden', isActivity || isDetailedTvl)
   elements.hover.redCircle?.classList.toggle('hidden', !isActivity)
   elements.hover.blueSquare?.classList.toggle(
     'hidden',
@@ -53,6 +58,19 @@ export function renderHover(
       ? Math.max(0, point.y2 * (rect.height - 20))
       : bottom1
 
+  const cbvBottom =
+    'parts' in point
+      ? Math.max(0, point.parts.cbv * (rect.height - 20))
+      : bottom1
+  const ebvBottom =
+    'parts' in point
+      ? Math.max(0, point.parts.ebv * (rect.height - 20))
+      : bottom1
+  const nmvBottom =
+    'parts' in point
+      ? Math.max(0, point.parts.nmv * (rect.height - 20))
+      : bottom1
+
   if (elements.hover.line) {
     elements.hover.line.style.left = `${left - 1}px`
     elements.hover.line.classList.remove('dark:bg-green-500', 'bg-green-600')
@@ -64,7 +82,6 @@ export function renderHover(
   if (elements.hover.circle) {
     elements.hover.circle.style.left = `${left - 4}px`
     elements.hover.circle.style.bottom = `${bottom1 - 4}px`
-    elements.hover.circle.classList.remove('hidden')
     if (elements.hover.greenSquare) {
       elements.hover.greenSquare.classList.add('hidden')
       if (state.view.showMilestoneHover) {
@@ -87,6 +104,21 @@ export function renderHover(
   if (elements.hover.greenSquare) {
     elements.hover.greenSquare.style.left = `${left - 4}px`
     elements.hover.greenSquare.style.bottom = `${bottom1 - 4}px`
+  }
+
+  if (
+    elements.hover.purpleCircle &&
+    elements.hover.yellowTriangle &&
+    elements.hover.pinkSquare
+  ) {
+    elements.hover.purpleCircle.style.left = `${left - 4}px`
+    elements.hover.purpleCircle.style.bottom = `${cbvBottom - 4}px`
+
+    elements.hover.yellowTriangle.style.left = `${left - 6}px`
+    elements.hover.yellowTriangle.style.bottom = `${ebvBottom - 4}px`
+
+    elements.hover.pinkSquare.style.left = `${left - 4}px`
+    elements.hover.pinkSquare.style.bottom = `${nmvBottom - 4}px`
   }
 
   if (elements.hover.contents) {
@@ -180,28 +212,31 @@ const CBVIcon =
   '<svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF" stroke="white"/></svg>'
 
 const EBVIcon =
-  '<svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1.16987 8.5L5.5 1L9.83013 8.5H1.16987Z" fill="#EF8F00" stroke="white"/></svg>'
+  '<svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1.16987 8.5L5.5 1L9.83013 8.5H1.16987Z" fill="#EF8F00" stroke="white"/></svg>'
 
 const NMVIcon =
-  '<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"> <g filter="url(#filter0_d_106_14454)"> <rect x="3.5" y="2.5" width="8" height="8" fill="#FF46C0"/> <rect x="4" y="3" width="7" height="7" stroke="white"/> </g> <defs> <filter id="filter0_d_106_14454" x="0.5" y="0.5" width="14" height="14" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"> <feFlood flood-opacity="0" result="BackgroundImageFix"/> <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/> <feOffset dy="1"/> <feGaussianBlur stdDeviation="1.5"/> <feComposite in2="hardAlpha" operator="out"/> <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0"/> <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_106_14454"/> <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_106_14454" result="shape"/> </filter> </defs> </svg>'
+  '<svg class="w-2 h-2" width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="9" height="9" fill="#FF46C0" stroke="white" stroke-width="2" /></svg>'
 
 function renderCBVRow(ebv: number) {
-  return renderDetailedRow(ebv, 'Canonically Bridged Value', CBVIcon)
+  return renderDetailedRow(ebv, 'Canonically Bridged', CBVIcon)
 }
 
 function renderEBVRow(cbv: number) {
-  return renderDetailedRow(cbv, 'Externally Bridged Value', EBVIcon)
+  return renderDetailedRow(cbv, 'Externally Bridged', EBVIcon)
 }
 
 function renderNMVRow(nmv: number) {
-  return renderDetailedRow(nmv, 'Natively Minted Value', NMVIcon)
+  return renderDetailedRow(nmv, 'Natively Minted', NMVIcon)
 }
 
 function renderDetailedRow(value: number, caption: string, iconSvg: string) {
-  return `<div class="text-left"><div><span class="text-gray-50 text-sm">${caption}</span></div><div class="inline-flex items-center gap-1.5"><div>${iconSvg}</div>${renderCurrencyRow(
-    value,
-    'USD',
-  )}</div></div>`
+  return `<div class="flex w-full justify-between items-center gap-2">
+    <div class="inline-flex items-center gap-1">
+      <div class="flex items-center justify-center w-3 h-3">${iconSvg}</div>
+      <span class="text-gray-50 text-sm">${caption}</span>
+    </div>
+      <div><span class="font-bold">${formatUSD(value)}</span></div>
+  </div>`
 }
 
 function renderCurrencyRow(value: number, ticker: string) {

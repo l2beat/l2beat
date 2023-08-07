@@ -21,18 +21,21 @@ export function setupControls(
     })
   })
 
-  onRadioChange(elements.controls.tokens, (control) => {
-    if (!control.dataset.tvlEndpoint) {
-      throw new Error('Missing tvl endpoint')
-    }
-    dispatch({
-      type: 'TokenChanged',
-      token: control.value,
-      tokenEndpoint: control.dataset.tvlEndpoint,
-    })
+  onCheckboxChange(elements.controls.tokenChosen, () => {
+    dispatch({ type: 'CurrencyChanged', currency: 'usd' })
   })
 
-  elements.controls.showMoreTokens?.addEventListener('click', () => {
+  onRadioChange(elements.controls.tokens, (control) => {
+    if (control.dataset.tvlEndpoint) {
+      dispatch({
+        type: 'TokenChanged',
+        token: control.value,
+        tokenEndpoint: control.dataset.tvlEndpoint,
+      })
+    }
+  })
+
+  elements.controls.showMoreTokensToBeRemoved?.addEventListener('click', () => {
     dispatch({ type: 'MoreTokensClicked' })
   })
 

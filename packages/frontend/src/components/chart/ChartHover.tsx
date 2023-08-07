@@ -22,8 +22,60 @@ export function ChartHover() {
       />
       <div
         data-role="chart-hover-square-green"
-        className="absolute z-40 block h-2 w-2 rotate-45 border-2  border-green-200 bg-green-600 dark:border-current dark:bg-green-500"
+        className="absolute z-40 block h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500"
       />
+      <svg
+        data-role="chart-hover-circle-purple"
+        className="absolute z-40 h-2 w-2"
+        xmlns="http://www.w3.org/2000/svg"
+        width="9"
+        height="9"
+        viewBox="0 0 9 9"
+      >
+        <circle
+          cx="4.5"
+          cy="4.5"
+          r="3.5"
+          fill="#A64EFF"
+          stroke="white"
+          strokeWidth="1.5"
+        />
+      </svg>
+      <svg
+        data-role="chart-hover-triangle-yellow"
+        className="absolute z-40 h-3 w-3"
+        xmlns="http://www.w3.org/2000/svg"
+        width="11"
+        height="9"
+        viewBox="0 0 11 9"
+      >
+        <path
+          d="M1.16987 8.5L5.5 1L9.83013 8.5H1.16987Z"
+          fill="#EF8F00"
+          stroke="white"
+          strokeWidth="1.5"
+        />
+      </svg>
+
+      <svg
+        data-role="chart-hover-square-pink"
+        className="absolute z-40 h-2 w-2"
+        width="9"
+        height="9"
+        viewBox="0 0 9 9"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          x="0"
+          y="0"
+          width="9"
+          height="9"
+          fill="#FF46C0"
+          stroke="white"
+          strokeWidth="3"
+        />
+      </svg>
 
       <div
         data-role="chart-hover-contents"

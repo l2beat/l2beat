@@ -66,12 +66,13 @@ export interface MouseMovedMessage {
   mouseY: number
 }
 
-export interface MouseExitedMessage {
-  type: 'MouseExited'
-}
-
+// TODO(radomski): To be removed when L2 Assets are ready
 export interface MoreTokensClickedMessage {
   type: 'MoreTokensClicked'
+}
+
+export interface MouseExitedMessage {
+  type: 'MouseExited'
 }
 
 export interface AggregateTvlLoadedMessage {
@@ -150,8 +151,8 @@ export type Message =
   | ScaleChangedMessage
   | ShowAlternativeTvlChangedMessage
   | MouseMovedMessage
-  | MouseExitedMessage
   | MoreTokensClickedMessage
+  | MouseExitedMessage
   | AggregateDetailedTvlLoadedMessage
   | AggregateDetailedTvlFailedMessage
   | AggregateTvlLoadedMessage
