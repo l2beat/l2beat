@@ -14,6 +14,7 @@ import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
 import { TokenControl, TokenControls } from './TokenControls'
+import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
 
 export interface ChartProps {
   type?: 'tvl' | 'detailedTvl' | 'activity'
@@ -120,10 +121,17 @@ export function Chart({
                 className="max-w-[135px] xs:max-w-none"
               />
             )}
-            {hasTvl && <CurrencyControls />}
+            {hasTvl && (
+              <div className="flex h-[2rem] items-end">
+                <CurrencyControls />
+                {hasDetailedTvl && <TokenControls tokens={tokens} />}
+              </div>
+            )}
             <ScaleControls />
           </div>
-          {hasTvl && <TokenControls tokens={tokens} />}
+          {hasTvl && !hasDetailedTvl && (
+            <TokenControlsToBeRemoved tokens={tokens} />
+          )}
         </div>
       </section>
       <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />

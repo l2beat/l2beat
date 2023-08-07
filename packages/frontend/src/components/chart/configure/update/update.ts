@@ -28,12 +28,12 @@ export function update(state: State, message: Message): [State, Effect[]] {
     case 'ShowEthereumChanged':
     case 'ScaleChanged':
       return updateControlsChanged(state, message)
+    case 'MoreTokensClicked':
+      return updateMoreTokensClicked(state)
     case 'MouseMoved':
       return updateMouseMoved(state, message)
     case 'MouseExited':
       return updateMouseExited(state)
-    case 'MoreTokensClicked':
-      return updateMoreTokensClicked(state)
     case 'AggregateTvlLoaded':
     case 'AggregateTvlFailed':
     case 'AggregateDetailedTvlLoaded':
