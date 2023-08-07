@@ -39,16 +39,31 @@ export class StarknetClient {
     )
   }
 
-  async getBlock(blockNumber: number | string) {
-    const response = await this.httpClient.fetch(
-      `${this.url}/feeder_gateway/get_block?blockNumber=${blockNumber}`,
-    )
+  async getBlock(blockNumber: number | 'latest') {
+    const params =
+      blockNumber === 'latest' ? ['latest'] : [{ block_number: blockNumber }]
+
+    const response = await this.httpClient.fetch(this.url, {
+      method: 'POST',
+      headers: {
+        ['Content-Type']: 'application/json',
+      },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        method: 'starknet_getBlockWithTxHashes',
+        params,
+        id: Math.floor(Math.random() * 1000),
+      }),
+    })
+
     assert(
       response.ok,
       `Starknet getBlock request failed with status: ${response.status}`,
     )
-    const data: unknown = await response.json()
-    const block = StarknetGetBlockResponseBodySchema.parse(data)
+    const text = await response.text()
+    const json: unknown = JSON.parse(text)
+
+    const { result: block } = StarknetGetBlockResponseBodySchema.parse(json)
     return {
       number: block.block_number,
       timestamp: block.timestamp,

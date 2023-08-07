@@ -121,7 +121,7 @@ export function getScalingDetailedTvlColumns() {
     {
       name: 'TVL',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        'Total Value Locked is the sum of values from canonically bridged, externally bridged, and natively minted assets, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
@@ -135,7 +135,7 @@ export function getScalingDetailedTvlColumns() {
     {
       name: 'CBV',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        'Canonically Bridged Value refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
@@ -149,7 +149,7 @@ export function getScalingDetailedTvlColumns() {
     {
       name: 'EBV',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        "Externally Bridged Value refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
@@ -163,7 +163,7 @@ export function getScalingDetailedTvlColumns() {
     {
       name: 'NMV',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        'Natively Minted Value refers to non-bridged assets minted directly on the given L2, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
