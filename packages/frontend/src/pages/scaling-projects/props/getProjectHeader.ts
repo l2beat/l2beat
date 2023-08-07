@@ -14,6 +14,7 @@ import { getTransactionCount } from '../../../utils/activity/getTransactionCount
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
+import { unifyTokensResponse } from '../../../utils/tvl/getTvlStats'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
@@ -38,7 +39,7 @@ export function getProjectHeader(
     project.display.name,
     project.config.associatedTokens ?? [],
     tvl,
-    apiProject?.tokens ?? [],
+    unifyTokensResponse(apiProject?.tokens),
   )
 
   return {

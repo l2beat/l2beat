@@ -13,7 +13,7 @@ import { AggregatedReportRecord } from '../../../peripherals/database/Aggregated
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import {
   getProjectTokensCharts,
-  groupByProjectIdAndAsset,
+  groupByProjectIdAndAssetType,
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import {
@@ -115,7 +115,7 @@ describe(generateDetailedTvlApiResponse.name, () => {
       daily: groupByProjectIdAndTimestamp(
         fakeTimePeriodReports(now, 24, 1, projectIds),
       ),
-      latest: groupByProjectIdAndAsset(fakeLatestReports(now, projectIds)),
+      latest: groupByProjectIdAndAssetType(fakeLatestReports(now, projectIds)),
     }
   }
 

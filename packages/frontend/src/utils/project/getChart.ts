@@ -8,6 +8,7 @@ import {
 
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
+import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
   project: Layer2 | Bridge,
@@ -33,7 +34,11 @@ function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
 ) {
-  return tvlApiResponse.projects[projectId.toString()]?.tokens
+  const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens
+
+  const compatibleTokenList = unifyTokensResponse(tokens)
+
+  return compatibleTokenList
     .map(({ assetId, tvl }) => {
       const token = safeGetTokenByAssetId(assetId)
       const symbol = token?.symbol

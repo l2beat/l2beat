@@ -1,4 +1,8 @@
-import { DetailedTvlApiProject, TvlApiProject } from '@l2beat/shared-pure'
+import {
+  DetailedTvlApiProject,
+  TvlApiProject,
+  TvlApiToken,
+} from '@l2beat/shared-pure'
 
 import { getPercentageChange } from '../utils'
 import { getTvlBreakdown } from './getTVLBreakdown'
@@ -22,9 +26,32 @@ export function getTvlStats(
       name,
       associatedTokens,
       tvl,
-      tvlProject.tokens,
+      unifyTokensResponse(tvlProject.tokens),
     ),
     oneDayChange: getPercentageChange(tvl, tvlOneDayAgo),
     sevenDayChange: getPercentageChange(tvl, tvlSevenDaysAgo),
   }
+}
+
+/**
+ * Backwards compatibility for classic TVL API response
+ * @notice Remove once classic TVL API is deprecated
+ */
+export function unifyTokensResponse(
+  tokens?: TvlApiToken[] | DetailedTvlApiProject['tokens'],
+): TvlApiToken[] {
+  if (!tokens) {
+    return []
+  }
+
+  if (Array.isArray(tokens)) {
+    return tokens
+  }
+
+  return Object.values(tokens)
+    .flat()
+    .map((token) => ({
+      assetId: token.assetId,
+      tvl: token.usdValue,
+    }))
 }
