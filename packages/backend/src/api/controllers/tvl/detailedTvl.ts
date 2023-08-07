@@ -75,9 +75,9 @@ export function getProjectTokensCharts(
             assetId: report.asset,
             chainId: report.chainId,
             valueType: report.type,
-            tvl: asNumber(report.usdValue, 2),
+            usdValue: asNumber(report.usdValue, 2),
           }))
-          .sort((a, b) => b.tvl - a.tvl),
+          .sort((a, b) => b.usdValue - a.usdValue),
       }
     },
     baseResult,

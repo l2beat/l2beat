@@ -361,13 +361,13 @@ describe('detailedTvl', () => {
             valueType: ValueType.CBV,
             assetId: AssetId.USDC,
             chainId: ChainId.ARBITRUM,
-            tvl: 2,
+            usdValue: 2,
           },
           {
             valueType: ValueType.CBV,
             assetId: AssetId.ETH,
             chainId: ChainId.ARBITRUM,
-            tvl: 1,
+            usdValue: 1,
           },
         ],
         EBV: [
@@ -375,7 +375,7 @@ describe('detailedTvl', () => {
             valueType: ValueType.EBV,
             assetId: AssetId.ETH,
             chainId: ChainId.ARBITRUM,
-            tvl: 3,
+            usdValue: 3,
           },
         ],
         NMV: [],
@@ -387,7 +387,7 @@ describe('detailedTvl', () => {
             valueType: ValueType.CBV,
             assetId: AssetId.OP,
             chainId: ChainId.ETHEREUM,
-            tvl: 20,
+            usdValue: 20,
           },
         ],
         EBV: [
@@ -395,7 +395,7 @@ describe('detailedTvl', () => {
             valueType: ValueType.EBV,
             assetId: AssetId.USDC,
             chainId: ChainId.ETHEREUM,
-            tvl: 10,
+            usdValue: 10,
           },
         ],
         NMV: [
@@ -403,7 +403,7 @@ describe('detailedTvl', () => {
             valueType: ValueType.NMV,
             assetId: AssetId.ETH,
             chainId: ChainId.ETHEREUM,
-            tvl: 30,
+            usdValue: 30,
           },
         ],
       })

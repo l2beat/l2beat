@@ -35,6 +35,7 @@ export function getTvlStats(
 
 /**
  * Backwards compatibility for classic TVL API response
+ * @notice Remove once classic TVL API is deprecated
  */
 export function unifyTokensResponse(
   tokens?: TvlApiToken[] | DetailedTvlApiProject['tokens'],
@@ -46,5 +47,11 @@ export function unifyTokensResponse(
   if (Array.isArray(tokens)) {
     return tokens
   }
-  return Object.values(tokens).reduce((acc, curr) => [...acc, ...curr], [])
+
+  return Object.values(tokens)
+    .flat()
+    .map((token) => ({
+      assetId: token.assetId,
+      tvl: token.usdValue,
+    }))
 }
