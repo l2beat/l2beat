@@ -14,8 +14,9 @@ import { getConfig } from './config'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new detailed TVL API and flaky connection times
+ * 10s is high-top limit for response time so 30s is more than safe bet here
  */
-const TEMP_HTTP_CALL_TIMEOUT_TIME_MS = 15_000
+const TEMP_HTTP_CALL_TIMEOUT_TIME_MS = 30_000
 
 main().catch((e) => {
   console.error(e)
