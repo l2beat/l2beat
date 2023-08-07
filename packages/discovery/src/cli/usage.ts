@@ -9,8 +9,7 @@ const usage = `Usage:
     yarn invert [chain] [project] --mermaid .................... print mermaid graph markup
     yarn <start|discover> --help .......................... display this message
 
-    supported chains:
-      - ethereum
+    supported chains: checkout config.discovery.ts
 `
 const colorUsage = usage
   .replace(/ \.+ /g, (x) => chalk.dim(x))
