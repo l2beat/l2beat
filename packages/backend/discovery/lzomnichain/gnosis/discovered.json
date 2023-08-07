@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "gnosis",
   "blockNumber": 29341610,
-  "configHash": "0x399e641e7fa18e45204be3a990002bbbc5d95dd1d703c39cda516dbe70c73b14",
+  "configHash": "0xc4698613713f0c133af4ce8b437622ee18782803887c64855c045badaf633f2f",
   "version": 1,
   "contracts": [
     {
@@ -26,7 +26,8 @@
         "owner": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
         "treasuryContract": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
         "treasuryZROFees": 0
-      }
+      },
+      "derivedName": "UltraLightNodeV2"
     },
     {
       "name": "",
