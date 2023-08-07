@@ -115,6 +115,14 @@ export function getLocalConfig(): Config {
           callsPerMinute: 500,
           url: 'https://polygon-rpc.com/zkevm',
         },
+        starknet: {
+          type: 'starknet',
+          callsPerMinute: 120,
+          url: getEnv(
+            'ACTIVITY_STARKNET_URL',
+            'https://starknet-mainnet.public.blastapi.io',
+          ),
+        },
       },
     },
     statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
