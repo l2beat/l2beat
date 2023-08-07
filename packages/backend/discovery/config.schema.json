@@ -16,7 +16,19 @@
     "chain": {
       "description": "Chain on which to run the discovery on",
       "type": "string",
-      "enum": ["ethereum"]
+      "enum": [
+        "ethereum",
+        "arbitrum",
+        "optimism",
+        "polygon-pos",
+        "bsc",
+        "avalanche",
+        "celo",
+        "linea",
+        "base",
+        "polygon-zkevm",
+        "gnosis"
+      ]
     },
     "initialAddresses": {
       "description": "A list of addresses that discovery starts from",

@@ -1,0 +1,18 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "base",
+  "name": "lzomnichain",
+  "initialAddresses": ["0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7"],
+  "names": {
+    "0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7": "Endpoint",
+    "0x38dE71124f7a447a01D67945a51eDcE9FF491251": "UltraLightNodeV2"
+  },
+  "overrides": {
+    "Endpoint": {
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
+    },
+    "UltraLightNodeV2": {
+      "ignoreInWatchMode": ["treasuryZROFees"]
+    }
+  }
+}

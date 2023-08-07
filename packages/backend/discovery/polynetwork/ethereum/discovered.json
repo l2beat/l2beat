@@ -1,7 +1,7 @@
 {
-  "chain": "ethereum",
   "name": "polynetwork",
-  "blockNumber": 17619885,
+  "chain": "ethereum",
+  "blockNumber": 17832733,
   "configHash": "0x9a24509b0bfd617c801acfa277ac1765bcf2d9f6bbfe8b37d4202cde63e83a91",
   "version": 1,
   "contracts": [
@@ -17,7 +17,7 @@
         "EthCrossChainDataAddress": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
         "isOwner": false,
         "owner": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "paused": true,
+        "paused": false,
         "whiteLister": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
       }
     },
@@ -74,7 +74,7 @@
         "getEthCrossChainManager": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "isOwner": false,
         "owner": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
-        "paused": true
+        "paused": false
       },
       "derivedName": "EthCrossChainManagerProxy"
     },
@@ -129,7 +129,7 @@
         "getEthTxHashIndex": 70198,
         "isOwner": false,
         "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
-        "paused": true
+        "paused": false
       },
       "derivedName": "EthCrossChainData"
     },

@@ -1,11 +1,13 @@
 # How to run discovery?
 
-- `yarn discover [project]` run discovery for the project
-- `DISCOVERY_BLOCK_NUMBER=<block_number> yarn discover [project]` run discovery on a specific block number
-- `yarn discover [project] --dry-run` check simulated update-monitor output
-- `yarn discover [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
-- `yarn invert [project]` print addresses and their functions
-- `yarn invert [project] --mermaid` builds a mermaid graph of the project
+- `yarn discover [chain] [project]` run discovery for the project
+- `DISCOVERY_BLOCK_NUMBER=<block_number> yarn discover [chain] [project]` run discovery on a specific block number
+- `yarn discover [chain] [project] --dry-run` check simulated update-monitor output
+- `yarn discover [chain] [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
+- `yarn invert [chain] [project]` print addresses and their functions
+- `yarn invert [chain] [project] --mermaid` builds a mermaid graph of the project
+
+supported chains: checkout config.discovery.ts
 
 # Discovery documentation
 

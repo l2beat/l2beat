@@ -115,6 +115,14 @@ export function getLocalConfig(): Config {
           callsPerMinute: 500,
           url: 'https://polygon-rpc.com/zkevm',
         },
+        starknet: {
+          type: 'starknet',
+          callsPerMinute: 120,
+          url: getEnv(
+            'ACTIVITY_STARKNET_URL',
+            'https://starknet-mainnet.public.blastapi.io',
+          ),
+        },
       },
     },
     statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
@@ -131,7 +139,7 @@ export function getLocalConfig(): Config {
           rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
           etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+          minTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
         },
       ],
     },

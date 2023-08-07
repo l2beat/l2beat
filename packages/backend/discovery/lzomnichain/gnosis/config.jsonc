@@ -1,0 +1,18 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "gnosis",
+  "name": "lzomnichain",
+  "initialAddresses": ["0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4"],
+  "names": {
+    "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4": "Endpoint",
+    "0x38dE71124f7a447a01D67945a51eDcE9FF491251": "UltraLightNodeV2"
+  },
+  "overrides": {
+    "Endpoint": {
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
+    },
+    "UltraLightNodeV2": {
+      "ignoreInWatchMode": ["treasuryZROFees"]
+    }
+  }
+}

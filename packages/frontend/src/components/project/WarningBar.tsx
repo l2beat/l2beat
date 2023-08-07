@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
+import { renderInlineMarkdown } from '../../utils/utils'
 import { OutLinkIcon, ShieldIcon } from '../icons'
 import { OutLink } from '../OutLink'
 import { Callout } from './Callout'
@@ -22,13 +23,16 @@ export function WarningBar({
 }: WarningBarProps) {
   const iconFill =
     color === 'red' ? 'fill-red-300' : 'fill-yellow-700 dark:fill-yellow-300'
+
+  const renderedText = renderInlineMarkdown(text)
+
   const textElement = isCritical ? (
     <>
-      {text.slice(0, -1)} <span className="text-red-300">(CRITICAL)</span>
-      {text.slice(-1)}
+      <span dangerouslySetInnerHTML={{ __html: renderedText }} />
+      <span className="text-red-300">(CRITICAL)</span>
     </>
   ) : (
-    text
+    <span dangerouslySetInnerHTML={{ __html: renderedText }} />
   )
 
   if (href) {
