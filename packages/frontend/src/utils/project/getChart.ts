@@ -35,10 +35,15 @@ function getTokens(
 ) {
   return tvlApiResponse.projects[projectId.toString()]?.tokens
     .map(({ assetId, tvl }) => {
-      const symbol = safeGetTokenByAssetId(assetId)?.symbol
-      if (symbol) {
+      const token = safeGetTokenByAssetId(assetId)
+      const symbol = token?.symbol
+      const name = token?.name
+      const address = token?.address
+      if (symbol && name && address) {
         return {
+          address: address.toString(),
           symbol,
+          name,
           tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`,
           tvl,
         }
