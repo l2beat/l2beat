@@ -94,6 +94,14 @@ const CHAIN_IDS: ChainMetadata[] = [
     minTimestamp: UnixTime.fromDate(new Date('2023-03-24T17:30:00Z')),
   },
   {
+    id: 100,
+    name: 'gnosis',
+    // TODO: This will not work, need to update on deth.net
+    dethDomain: 'gnosisscan.deth.net',
+    // ~ Timestamp of block number 0 on Gnosis
+    minTimestamp: UnixTime.fromDate(new Date('2018-10-08T18:40:00Z')),
+  },
+  {
     id: -1,
     name: 'native',
   },
@@ -109,7 +117,8 @@ ChainId.CELO = ChainId(CHAIN_IDS[6].id)
 ChainId.LINEA = ChainId(CHAIN_IDS[7].id)
 ChainId.BASE = ChainId(CHAIN_IDS[8].id)
 ChainId.POLYGON_ZKEVM = ChainId(CHAIN_IDS[9].id)
-ChainId.NMV = ChainId(CHAIN_IDS[10].id)
+ChainId.GNOSIS = ChainId(CHAIN_IDS[10].id)
+ChainId.NMV = ChainId(CHAIN_IDS[11].id)
 
 ChainId.getName = function (chainId: ChainId): string {
   const chain = CHAIN_IDS.find((c) => c.id === +chainId)

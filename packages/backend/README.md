@@ -100,6 +100,8 @@ If you want to use multichain discovery cli, make sure you include the `RPC_URL`
 - `DISCOVERY_BASE_ETHERSCAN_API_KEY` (Optional)
 - `DISCOVERY_POLYGON_ZKEVM_RPC_URL` (Optional)
 - `DISCOVERY_POLYGON_ZKEVM_ETHERSCAN_API_KEY` (Optional)
+- `DISCOVERY_GNOSIS_RPC_URL` (Optional)
+- `DISCOVERY_GNOSIS_ETHERSCAN_API_KEY` (Optional)
 
 #### .env boilerplate
 

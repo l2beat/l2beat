@@ -26,7 +26,8 @@
         "celo",
         "linea",
         "base",
-        "polygon-zkevm"
+        "polygon-zkevm",
+        "gnosis"
       ]
     },
     "initialAddresses": {
