@@ -12,6 +12,11 @@ import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
 
+/**
+ * Temporary timeout for HTTP calls due to increased size of new detailed TVL API and flaky connection times
+ */
+const TEMP_HTTP_CALL_TIMEOUT_TIME_MS = 15_000
+
 main().catch((e) => {
   console.error(e)
   process.exit(1)
@@ -22,7 +27,9 @@ async function main() {
   console.log(`Using config for ${env}`)
   const config = getConfig(env)
 
-  const http = new JsonHttpClient(new HttpClient(), config.backend.skipCache)
+  const httpClient = new HttpClient(TEMP_HTTP_CALL_TIMEOUT_TIME_MS)
+
+  const http = new JsonHttpClient(httpClient, config.backend.skipCache)
 
   const tvlApiResponse = config.features.detailedTvl
     ? await fetchDetailedTvlApi(config.backend.apiUrl, http)
