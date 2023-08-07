@@ -13,7 +13,7 @@ import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
-import { TokenControl, TokenControls } from './TokenControls'
+import { DesktopTokenControl, DesktopTokenControls } from './DesktopTokenControls'
 import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
 
 export interface ChartProps {
@@ -23,7 +23,7 @@ export interface ChartProps {
   tvlEndpoint?: string
   detailedTvlEndpoint?: string
   activityEndpoint?: string
-  tokens?: TokenControl[]
+  tokens?: DesktopTokenControl[]
   hasActivity?: boolean
   hasTvl?: boolean
   hasDetailedTvl?: boolean
@@ -124,7 +124,7 @@ export function Chart({
             {hasTvl && (
               <div className="flex h-[2rem] items-end">
                 <CurrencyControls />
-                {hasDetailedTvl && <TokenControls tokens={tokens} />}
+                {hasDetailedTvl && <DesktopTokenControls tokens={tokens} />}
               </div>
             )}
             <ScaleControls />
