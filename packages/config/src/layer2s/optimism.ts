@@ -78,7 +78,7 @@ export const optimism: Layer2 = {
   },
   config: {
     chainId: ChainId.OPTIMISM,
-    tokenList: TOKENS,
+    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
     associatedTokens: ['OP'],
     nativeL2TokensIncludedInTVL: ['OP'],
     tvlTooltip: 'TVL includes canonically bridged assets and native OP',

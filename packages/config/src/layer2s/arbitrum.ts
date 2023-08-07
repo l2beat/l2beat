@@ -147,7 +147,7 @@ export const arbitrum: Layer2 = {
   },
   config: {
     chainId: ChainId.ARBITRUM,
-    tokenList: TOKENS,
+    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.ARBITRUM })),
     associatedTokens: ['ARB'],
     nativeL2TokensIncludedInTVL: ['ARB'],
     externalAssets: {
