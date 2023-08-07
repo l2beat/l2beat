@@ -7,7 +7,12 @@ import {
   TokenInfo,
   tokenList,
 } from '@l2beat/config'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 
 export interface Project {
   projectId: ProjectId
@@ -32,7 +37,9 @@ export function layer2ToProject(layer2: Layer2): Project {
       address: escrow.address,
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
-        escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
+        escrow.tokens === '*'
+          ? tokenList.filter((t) => t.type === ValueType.CBV)
+          : escrow.tokens.map(getTokenBySymbol),
     })),
     transactionApi: layer2.config.transactionApi,
   }
@@ -47,7 +54,9 @@ export function bridgeToProject(bridge: Bridge): Project {
       address: escrow.address,
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
-        escrow.tokens === '*' ? tokenList : escrow.tokens.map(getTokenBySymbol),
+        escrow.tokens === '*'
+          ? tokenList.filter((t) => t.type === ValueType.CBV)
+          : escrow.tokens.map(getTokenBySymbol),
     })),
   }
 }
