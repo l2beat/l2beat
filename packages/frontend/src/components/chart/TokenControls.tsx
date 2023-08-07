@@ -9,6 +9,7 @@ export interface TokenControl {
   address: string
   symbol: string
   name: string
+  assetType: 'EBV' | 'CBV' | 'NMV'
   tvlEndpoint: string
 }
 export interface TokenControlsProps {
@@ -82,6 +83,7 @@ function TokenCell({ token }: { token: TokenControl }) {
         autoComplete="off"
         value={token.symbol}
         data-tvl-endpoint={token.tvlEndpoint}
+        data-asset-type={token.assetType}
       />
       <img
         src={`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${token.address}/logo.png`}

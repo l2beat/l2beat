@@ -8,6 +8,7 @@ import {
 
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
+import { TokenControl } from '../../components/chart/TokenControls'
 import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
@@ -33,11 +34,12 @@ export function getChart(
 function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
-) {
+): TokenControl[] {
   const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens
 
   const compatibleTokenList = unifyTokensResponse(tokens)
 
+  const assetType: TokenControl['assetType'] = "NMV"
   return compatibleTokenList
     .map(({ assetId, tvl }) => {
       const token = safeGetTokenByAssetId(assetId)
@@ -49,6 +51,7 @@ function getTokens(
           address: address.toString(),
           symbol,
           name,
+          assetType,
           tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`,
           tvl,
         }

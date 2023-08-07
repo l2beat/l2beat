@@ -10,11 +10,13 @@ export function updateTokenChanged(
   const controls: State['controls'] = {
     ...state.controls,
     token: message.token,
+    assetType: message.assetType,
   }
 
   const request: State['request'] = { ...state.request }
   const effects: Effect[] = []
 
+  console.log('Chose token of type: ' + message.assetType)
   if (state.data.tokenTvl[message.token] === undefined) {
     request.isFetching = true
     request.lastId++

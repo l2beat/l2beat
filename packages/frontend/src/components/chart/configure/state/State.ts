@@ -29,6 +29,8 @@ export interface State {
     isLogScale: boolean
     currency: 'usd' | 'eth'
     token: string | undefined
+    // TODO(radomski): I don't like this, but I have no other idea
+    assetType: 'EBV' | 'CBV' | 'NMV' | undefined
     showEthereum: boolean
     showAlternativeTvl: boolean
     mouseX: number | undefined

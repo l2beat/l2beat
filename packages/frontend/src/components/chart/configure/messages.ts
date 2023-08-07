@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { TokenControl } from '../TokenControls'
 
 import {
   ActivityResponse,
@@ -43,6 +44,7 @@ export interface TokenChangedMessage {
   type: 'TokenChanged'
   token: string
   tokenEndpoint: string
+  assetType: TokenControl['assetType']
 }
 
 export interface ShowEthereumChangedMessage {

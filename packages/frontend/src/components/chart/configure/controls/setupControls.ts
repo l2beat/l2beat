@@ -31,6 +31,12 @@ export function setupControls(
         type: 'TokenChanged',
         token: control.value,
         tokenEndpoint: control.dataset.tvlEndpoint,
+        assetType:
+          control.dataset.assetType === 'EBV'
+            ? 'EBV'
+            : control.dataset.assetType === 'EBV'
+            ? 'EBV'
+            : 'NMV',
       })
     }
   })

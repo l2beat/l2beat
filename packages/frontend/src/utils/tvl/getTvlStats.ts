@@ -45,7 +45,11 @@ export function unifyTokensResponse(
   }
 
   if (Array.isArray(tokens)) {
-    return tokens
+    return tokens.map((token) => ({
+      assetId: token.assetId,
+      tvl: token.tvl,
+      assetType: "EBV"
+    }))
   }
 
   return Object.values(tokens)
