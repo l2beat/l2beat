@@ -13,8 +13,12 @@ import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
-import { DesktopTokenControl, DesktopTokenControls } from './DesktopTokenControls'
+import {
+  DesktopTokenControl,
+  DesktopTokenControls,
+} from './DesktopTokenControls'
 import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
+import { MobileTokenControls } from './MobileTokenControls'
 
 export interface ChartProps {
   type?: 'tvl' | 'detailedTvl' | 'activity'
@@ -129,8 +133,10 @@ export function Chart({
             )}
             <ScaleControls />
           </div>
-          {hasTvl && !hasDetailedTvl && (
+          {hasTvl && !hasDetailedTvl ? (
             <TokenControlsToBeRemoved tokens={tokens} />
+          ) : (
+            <MobileTokenControls />
           )}
         </div>
       </section>
