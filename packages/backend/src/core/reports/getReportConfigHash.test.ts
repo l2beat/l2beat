@@ -1,10 +1,12 @@
-import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
+  ChainId,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
+  Token,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -199,7 +201,7 @@ function project(
 function fakeEscrow(
   address: string,
   timestamp: number,
-  tokens: TokenInfo[],
+  tokens: Token[],
 ): ProjectEscrow {
   return {
     address: EthereumAddress('0x' + address + '0'.repeat(40 - address.length)),
@@ -208,7 +210,7 @@ function fakeEscrow(
   }
 }
 
-function fakeToken(id: string, timestamp: number): TokenInfo {
+function fakeToken(id: string, timestamp: number): Token {
   return {
     name: 'irrelevant',
     symbol: 'irrelevant',
@@ -217,5 +219,7 @@ function fakeToken(id: string, timestamp: number): TokenInfo {
     decimals: 18,
     sinceTimestamp: new UnixTime(timestamp),
     category: 'ether', // irrelevant
+    chainId: ChainId.ETHEREUM, // irrelevant
+    type: ValueType.CBV, // irrelevant
   }
 }

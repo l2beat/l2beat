@@ -1,10 +1,10 @@
-import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
   ChainId,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
+  Token,
   UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
@@ -134,7 +134,7 @@ const FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP = aggregateReports(
   NOW.add(1, 'hours'),
 )
 
-function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
+function fakeTokenInfo(token: Partial<Token>): Token {
   return {
     name: 'Fake',
     id: AssetId('fake-token'),
@@ -144,6 +144,8 @@ function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
     address: EthereumAddress.random(),
     sinceTimestamp: new UnixTime(0),
     category: 'other',
+    chainId: ChainId.ETHEREUM,
+    type: ValueType.CBV,
     ...token,
   }
 }

@@ -4,7 +4,9 @@ import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
 import { config } from '../test/config'
-import { tokenList } from './tokens'
+import { getCanonicalTokens } from './types'
+
+const tokenList = getCanonicalTokens()
 
 describe('tokens', () => {
   const addresses = tokenList.map((x) => x.address)

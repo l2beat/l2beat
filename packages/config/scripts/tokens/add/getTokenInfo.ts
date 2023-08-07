@@ -1,16 +1,21 @@
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
-import { AssetId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  EthereumAddress,
+  Token,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
-import { z } from 'zod'
 
-import { TokenInfo } from '../../../src/tokens/types'
 import { getEnv } from '../../checkVerifiedContracts/utils'
 
 export async function getTokenInfo(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
-  category: z.infer<typeof TokenInfo.shape.category>,
-): Promise<TokenInfo> {
+  category: 'ether' | 'stablecoin' | 'other',
+): Promise<Token> {
   const [name, coingeckoId, symbol, decimals, sinceTimestamp] =
     await Promise.all([
       getName(provider, address),
@@ -20,7 +25,7 @@ export async function getTokenInfo(
       getSinceTimestamp(provider, address),
     ])
 
-  const tokenInfo: TokenInfo = {
+  const tokenInfo: Token = {
     id: AssetId(`${symbol.toLowerCase()}-${name.toLowerCase()}`),
     name,
     coingeckoId,
@@ -29,6 +34,9 @@ export async function getTokenInfo(
     decimals,
     sinceTimestamp,
     category,
+    // TODO: make it configurable
+    chainId: ChainId.ETHEREUM,
+    type: ValueType.CBV,
   }
 
   return tokenInfo

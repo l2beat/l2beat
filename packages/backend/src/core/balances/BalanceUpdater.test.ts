@@ -1,4 +1,3 @@
-import { TokenInfo } from '@l2beat/config'
 import { Logger } from '@l2beat/shared'
 import {
   AssetId,
@@ -6,7 +5,9 @@ import {
   CoingeckoId,
   EthereumAddress,
   ProjectId,
+  Token,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
@@ -300,7 +301,7 @@ describe(BalanceUpdater.name, () => {
     })
   })
 
-  function fakeTokenInfo(id: AssetId, sinceTimestamp: UnixTime): TokenInfo {
+  function fakeTokenInfo(id: AssetId, sinceTimestamp: UnixTime): Token {
     return {
       id,
       sinceTimestamp,
@@ -310,6 +311,8 @@ describe(BalanceUpdater.name, () => {
       decimals: 18,
       address: EthereumAddress.random(),
       category: 'other',
+      chainId: ChainId.ETHEREUM,
+      type: ValueType.CBV,
     }
   }
 })

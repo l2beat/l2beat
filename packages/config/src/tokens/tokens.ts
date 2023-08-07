@@ -36,15 +36,12 @@ you are out of luck. We will fix this in the future.
 
 */
 
-import { AssetId, ChainId, Token, ValueType } from '@l2beat/shared-pure'
+import { AssetId, Token } from '@l2beat/shared-pure'
 
-import { tokens } from './tokenList.json'
-import { TokenInfo } from './types'
 import { layer2s } from '../layer2s'
+import { getCanonicalTokens } from './types'
 
-const canonicalTokenList: Token[] = tokens
-  .map((t) => TokenInfo.parse(t))
-  .map((t) => ({ ...t, chainId: ChainId.ETHEREUM, type: ValueType.CBV }))
+const canonicalTokenList: Token[] = getCanonicalTokens()
 
 export const tokenList: Token[] = canonicalTokenList.concat(
   layer2s.map((l2) => l2.config.tokenList ?? []).flat(),

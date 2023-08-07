@@ -1,15 +1,18 @@
 import {
   AssetId,
+  ChainId,
   CoingeckoId,
   EthereumAddress,
   numberAs,
   stringAs,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-export type TokenInfo = z.infer<typeof TokenInfo>
-export const TokenInfo = z.object({
+import { tokens } from './tokenList.json'
+
+const TokenInfo = z.object({
   /** Internal token id. Usually ticker-name */
   id: stringAs((s) => AssetId(s)),
   /** Token name as dictated by the token contract */
@@ -31,3 +34,9 @@ export const TokenInfo = z.object({
     z.literal('other'),
   ]),
 })
+
+export const getCanonicalTokens = () => {
+  return tokens
+    .map((t) => TokenInfo.parse(t))
+    .map((t) => ({ ...t, chainId: ChainId.ETHEREUM, type: ValueType.CBV }))
+}
