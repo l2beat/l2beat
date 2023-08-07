@@ -2,7 +2,7 @@
   "name": "mantle",
   "chain": "ethereum",
   "blockNumber": 17861906,
-  "configHash": "0x91de7852606fae22ce7443241f11a7ad60d3cb79d1adbb5fe83e4f7ed1ee3982",
+  "configHash": "0x4c744122b7570555a99223855f92941d97712a643f1232a1aa33b5f8456fabc5",
   "version": 1,
   "contracts": [
     {
@@ -304,7 +304,7 @@
       }
     },
     {
-      "name": "PauserRegistry",
+      "name": "PauserRegistry2",
       "address": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
       "code": "https://etherscan.deth.net/address/0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
       "upgradeability": {
@@ -313,7 +313,8 @@
       "values": {
         "pauser": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "unpauser": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      }
+      },
+      "derivedName": "PauserRegistry"
     },
     {
       "name": "OwnerMultisig",
