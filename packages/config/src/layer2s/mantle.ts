@@ -325,8 +325,8 @@ export const mantle: Layer2 = {
         description:
           'Main contract related to data availability. The proof of custody mechanism is not live.',
       }),
-      discovery.getContractDetails('dlReg'),
-      discovery.getContractDetails('dlsm'),
+      discovery.getContractDetails('BLSRegistry'),
+      discovery.getContractDetails('DataLayrServiceManager'),
       discovery.getContractDetails('PubkeyCompendium'),
       discovery.getContractDetails('InvestmentManager'),
       discovery.getContractDetails('MantleFirstStrat'),
