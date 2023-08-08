@@ -60,7 +60,7 @@ function SelectButton() {
 function SelectedTokenButton() {
   return (
     <label
-      className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md px-2 text-base transition-all bg-white dark:bg-black"
+      className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md bg-white px-2 text-base transition-all dark:bg-black"
       data-role="chart-token-chosen"
     >
       <input

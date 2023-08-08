@@ -32,13 +32,7 @@ export function ChartHover() {
         height="9"
         viewBox="0 0 9 9"
       >
-        <circle
-          cx="4.5"
-          cy="4.5"
-          r="3.5"
-          fill="#A64EFF"
-          strokeWidth="1.5"
-        />
+        <circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF" strokeWidth="1.5" />
       </svg>
       <svg
         data-role="chart-hover-triangle-yellow"
@@ -64,14 +58,7 @@ export function ChartHover() {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect
-          x="0"
-          y="0"
-          width="9"
-          height="9"
-          fill="#FF46C0"
-          strokeWidth="3"
-        />
+        <rect x="0" y="0" width="9" height="9" fill="#FF46C0" strokeWidth="3" />
       </svg>
 
       <div
