@@ -4,6 +4,7 @@ import {
   AssetId,
   ChainId,
   EthereumAddress,
+  Hash256,
   ProjectId,
   UnixTime,
   ValueType,
@@ -41,6 +42,8 @@ describe(DetailedTvlController.name, () => {
     DetailedTvlController.prototype.getDetailedTvlApiResponse.name,
     () => {
       it('selects minimum viable timestamp for the aggregation', async () => {
+        const latestConfigHash = Hash256.random()
+
         const baseReport = {
           timestamp: MINIMUM_TIMESTAMP,
           usdValue: 1234_56n,
@@ -96,6 +99,12 @@ describe(DetailedTvlController.name, () => {
         const aggregatedReportStatusRepository =
           mockObject<AggregatedReportStatusRepository>({
             findLatestTimestamp: async () => MINIMUM_TIMESTAMP,
+            findCountsForHash: async () => ({
+              isSynced: true,
+              latestTimestamp: MINIMUM_TIMESTAMP,
+              matching: 100, // doesn't matter
+              different: 0,
+            }),
           })
 
         const reportRepository = mockObject<ReportRepository>({
@@ -116,6 +125,7 @@ describe(DetailedTvlController.name, () => {
           [ARBITRUM],
           [USDC],
           Logger.SILENT,
+          latestConfigHash,
         )
 
         await controller.getDetailedTvlApiResponse()
@@ -146,6 +156,8 @@ describe(DetailedTvlController.name, () => {
     DetailedTvlController.prototype.getDetailedAssetTvlApiResponse.name,
     () => {
       it('produces detailed asset`s balances in time for charts', async () => {
+        const latestConfigHash = Hash256.random()
+
         const projectId = ProjectId('arbitrum')
         const chainId = ChainId.ARBITRUM
         const asset = AssetId.USDC
@@ -163,14 +175,25 @@ describe(DetailedTvlController.name, () => {
           getDailyForDetailed: async () => fakeReports.dailyReports,
         })
 
+        const aggregatedReportStatusRepository =
+          mockObject<AggregatedReportStatusRepository>({
+            findCountsForHash: async () => ({
+              isSynced: true,
+              latestTimestamp: fakeReports.to,
+              matching: 100, // doesn't matter
+              different: 0,
+            }),
+          })
+
         const controller = new DetailedTvlController(
           reportStatusRepository,
           mockObject<AggregatedReportRepository>(),
           reportRepository,
-          mockObject<AggregatedReportStatusRepository>(),
+          aggregatedReportStatusRepository,
           [ARBITRUM],
           [USDC],
           Logger.SILENT,
+          latestConfigHash,
         )
 
         const result = await controller.getDetailedAssetTvlApiResponse(
