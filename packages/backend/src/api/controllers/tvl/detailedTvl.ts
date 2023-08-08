@@ -1,4 +1,4 @@
-import { AssetId, ProjectId } from '@l2beat/shared-pure'
+import { DetailedTvlApiProject, ProjectId } from '@l2beat/shared-pure'
 import { groupBy, mapValues } from 'lodash'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
@@ -10,7 +10,7 @@ export type ReportsPerProjectIdAndTimestamp = ReturnType<
 >
 
 export type ReportsPerProjectIdAndAsset = ReturnType<
-  typeof groupByProjectIdAndAsset
+  typeof groupByProjectIdAndAssetType
 >
 
 export function groupByProjectIdAndTimestamp(
@@ -23,11 +23,11 @@ export function groupByProjectIdAndTimestamp(
   )
 }
 
-export function groupByProjectIdAndAsset(reports: ReportRecord[]) {
+export function groupByProjectIdAndAssetType(reports: ReportRecord[]) {
   return nestedGroupBy(
     reports,
     (report) => report.projectId,
-    (report) => report.asset,
+    (report) => report.type,
   )
 }
 
@@ -49,27 +49,38 @@ export function nestedGroupBy<T extends ReportRecord | AggregatedReportRecord>(
 export function getProjectTokensCharts(
   reports: ReportsPerProjectIdAndAsset,
   projectId: ProjectId,
-): { assetId: AssetId; tvl: number }[] {
+): DetailedTvlApiProject['tokens'] {
+  // type => ReportRecord[]
   const assetValuesPerProject = reports[projectId.toString()]
+
+  const baseResult: DetailedTvlApiProject['tokens'] = {
+    CBV: [],
+    EBV: [],
+    NMV: [],
+  }
 
   // Project may be missing reports
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!assetValuesPerProject) {
-    return []
+    return baseResult
   }
 
-  const tokens = Object.entries(assetValuesPerProject).map(
-    ([asset, reports]) => {
-      const tokenUsdTvl = reports.reduce(
-        (acc, report) => acc + report.usdValue,
-        0n,
-      )
-
+  // Sort assets per type by USD value
+  const tokens = Object.entries(assetValuesPerProject).reduce(
+    (prev, [valueType, reports]) => {
       return {
-        assetId: AssetId(asset),
-        tvl: asNumber(tokenUsdTvl, 2),
+        ...prev,
+        [valueType]: reports
+          .map((report) => ({
+            assetId: report.asset,
+            chainId: report.chainId,
+            valueType: report.type,
+            usdValue: asNumber(report.usdValue, 2),
+          }))
+          .sort((a, b) => b.usdValue - a.usdValue),
       }
     },
+    baseResult,
   )
 
   return tokens

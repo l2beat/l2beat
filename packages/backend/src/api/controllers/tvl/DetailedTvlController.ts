@@ -20,7 +20,7 @@ import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
 import {
-  groupByProjectIdAndAsset,
+  groupByProjectIdAndAssetType,
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
@@ -83,7 +83,7 @@ export class DetailedTvlController {
      * Reduce (dedupe) occurs later in the call chain
      * @see getProjectTokensCharts
      */
-    const groupedLatestReports = groupByProjectIdAndAsset(latestReports)
+    const groupedLatestReports = groupByProjectIdAndAssetType(latestReports)
 
     const tvlApiResponse = generateDetailedTvlApiResponse(
       groupedHourlyReports,
