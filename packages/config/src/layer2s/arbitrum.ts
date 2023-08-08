@@ -150,18 +150,6 @@ export const arbitrum: Layer2 = {
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.ARBITRUM })),
     associatedTokens: ['ARB'],
     nativeL2TokensIncludedInTVL: ['ARB'],
-    externalAssets: {
-      chainId: ChainId.ARBITRUM,
-      assets: [
-        {
-          assetId: AssetId.USDC,
-          tokenAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
-          sinceTimestamp: new UnixTime(1667250000),
-          decimals: 6,
-          premintHolderAddresses: [],
-        },
-      ],
-    },
     tvlTooltip:
       'TVL includes canonically bridged assets, native ARB and USDC directly minted on Arbitrum',
     escrows: [
