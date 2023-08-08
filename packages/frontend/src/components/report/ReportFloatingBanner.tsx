@@ -4,23 +4,26 @@ import { CloseIcon } from '../icons/CloseIcon'
 
 export function ReportFloatingBanner() {
   return (
-    <div className="ReportFloatingBanner fixed bottom-0 left-0 z-110 m-4 flex max-w-[435px] overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800">
+    <div className="ReportFloatingBanner fixed bottom-0 left-0 z-110 m-4 flex overflow-hidden rounded-md bg-gray-100 dark:bg-zinc-800">
       <Close />
-      <div className="flex max-w-[182px] bg-purple-50 py-2 px-3 md:px-5 md:py-4">
-        <img src={'/images/announcements/multisig-cover.png'} />
+      <div className="flex max-w-[182px] bg-[#2C7265] py-2 px-3 md:px-5 md:py-4">
+        <img src={'/images/announcements/l2-warsaw-floating.png'} />
       </div>
-      <div className="flex flex-col justify-center px-4 pl-5">
+      <div className="flex max-w-[300px] flex-col justify-center px-4 pl-5">
         <div className="mb-2 text-xs font-medium uppercase text-gray-550 dark:text-gray-50 md:text-sm">
-          Just Released
+          Upcoming event
         </div>
-        <div className="mb-5 text-xl font-semibold leading-tight tracking-normal text-black dark:text-white md:text-2xl">
-          Upgradeability of Ethereum L2s
+        <div className="mb-1 text-xl font-semibold leading-tight tracking-normal text-black dark:text-white md:text-2xl">
+          L2Warsaw
+        </div>
+        <div className="mb-4 text-xs md:text-base">
+          Technical conference dedicated to Ethereum L2 scaling
         </div>
         <a
           className="w-full max-w-[135px] rounded-md bg-pink-900 py-[8px] text-center text-base font-medium text-white transition-colors hover:bg-pink-800 md:w-40"
-          href="/multisig-report"
+          href="https://warsaw.l2beat.com"
         >
-          Read now
+          Get tickets
         </a>
       </div>
     </div>

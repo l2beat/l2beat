@@ -6,14 +6,14 @@ export function ReportBar() {
   return (
     <a
       className="flex flex-col items-center justify-center space-x-5 bg-indigo-500 p-2 text-center text-xs font-bold text-white dark:bg-indigo-500 md:flex-row md:text-sm"
-      href="/multisig-report"
+      href="https://warsaw.l2beat.com"
     >
-      <p>Just released ⸱ Upgradeability of Ethereum L2s</p>
+      <p>Join us at L2Warsaw</p>
+      <ArrowRightIcon className="ml-1 inline-block fill-current" />
       <span>
         <span className="underline decoration-solid underline-offset-2">
-          Download now
+          warsaw.l2beat.com
         </span>
-        <ArrowRightIcon className="ml-1 inline-block fill-current" />
       </span>
     </a>
   )

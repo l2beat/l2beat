@@ -1,5 +1,5 @@
 export function configureReport() {
-  const CLOSED_KEY = 'reportFloatingBannerClosed'
+  const CLOSED_KEY = 'L2WarsawFloatingBannerClosed'
 
   const hasClosedBanner = localStorage.getItem(CLOSED_KEY) === 'true'
 
