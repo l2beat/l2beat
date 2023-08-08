@@ -102,17 +102,23 @@ function TokenModal({ tokens }: { tokens: TokenControl[] }) {
     {
       title: 'Natively Minted Tokens',
       titleColor: 'text-[#FF6DCD]',
-      tokens: tokens.slice(0, 5),
+      tokens: tokens
+        .filter((t) => t.assetType.toString() === 'NMV')
+        .slice(0, 15),
     },
     {
       title: 'Externally Bridged Tokens',
       titleColor: 'text-yellow-200',
-      tokens: tokens.slice(15, 25),
+      tokens: tokens
+        .filter((t) => t.assetType.toString() === 'EBV')
+        .slice(0, 15),
     },
     {
       title: 'Canonically Bridged Tokens',
       titleColor: 'text-[#D98EFF]',
-      tokens: tokens.slice(30, 45),
+      tokens: tokens
+        .filter((t) => t.assetType.toString() === 'CBV')
+        .slice(0, 15),
     },
   ]
 
