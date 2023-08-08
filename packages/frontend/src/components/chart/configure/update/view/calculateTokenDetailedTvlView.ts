@@ -28,9 +28,7 @@ export function calculateTokenDetailedTvlView(
   const entries = getAppropriateEntries(controls.days, response)
   const dateRange = formatRange(entries[0][0], entries[entries.length - 1][0])
   const { labels, getY } = getYAxis(
-    entries.flatMap((x) =>
-      controls.currency === 'usd' ? x.slice(1, 5) : x.slice(5, 9),
-    ),
+    entries.map((x) => x[1]),
     controls.isLogScale,
     (x) => formatCurrency(x, controls.currency),
   )
