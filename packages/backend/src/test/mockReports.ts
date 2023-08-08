@@ -1,7 +1,6 @@
 import {
   AssetId,
   ChainId,
-  CoingeckoId,
   EthereumAddress,
   ProjectId,
   Token,
