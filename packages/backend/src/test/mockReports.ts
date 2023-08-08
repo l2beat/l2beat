@@ -15,6 +15,7 @@ import { OP_TOKEN_ID } from '../core/reports/custom/optimism'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
+import { getMockToken } from './token'
 
 const NOW = UnixTime.now().toStartOf('hour')
 const APEX_ESCROW_ONE = EthereumAddress.random()
@@ -29,14 +30,14 @@ const PROJECTS: ReportProject[] = [
       {
         address: APEX_ESCROW_ONE,
         sinceTimestamp: new UnixTime(0),
-        tokens: [fakeTokenInfo({ id: AssetId.DAI, decimals: 18 })],
+        tokens: [fakeToken({ id: AssetId.DAI, decimals: 18 })],
       },
       {
         address: APEX_ESCROW_TWO,
         sinceTimestamp: new UnixTime(0),
         tokens: [
-          fakeTokenInfo({ id: AssetId.DAI, decimals: 18 }),
-          fakeTokenInfo({ id: AssetId.ETH, decimals: 18 }),
+          fakeToken({ id: AssetId.DAI, decimals: 18 }),
+          fakeToken({ id: AssetId.ETH, decimals: 18 }),
         ],
       },
     ],
@@ -48,7 +49,7 @@ const PROJECTS: ReportProject[] = [
       {
         address: DYDX_ESCROW,
         sinceTimestamp: new UnixTime(0),
-        tokens: [fakeTokenInfo({ id: AssetId.ETH, decimals: 18 })],
+        tokens: [fakeToken({ id: AssetId.ETH, decimals: 18 })],
       },
     ],
   },
@@ -134,18 +135,9 @@ const FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP = aggregateReports(
   NOW.add(1, 'hours'),
 )
 
-function fakeTokenInfo(token: Partial<Token>): Token {
+export function fakeToken(token: Partial<Token>): Token {
   return {
-    name: 'Fake',
-    id: AssetId('fake-token'),
-    coingeckoId: CoingeckoId('fake-token'),
-    symbol: 'FKT',
-    decimals: 18,
-    address: EthereumAddress.random(),
-    sinceTimestamp: new UnixTime(0),
-    category: 'other',
-    chainId: ChainId.ETHEREUM,
-    type: ValueType.CBV,
+    ...getMockToken(),
     ...token,
   }
 }
