@@ -3,8 +3,8 @@ import {
   DetailedTvlApiProject,
   DetailedTvlApiToken,
   TvlApiProject,
-  ValueType,
   TvlApiToken,
+  ValueType,
 } from '@l2beat/shared-pure'
 
 import { getPercentageChange } from '../utils'

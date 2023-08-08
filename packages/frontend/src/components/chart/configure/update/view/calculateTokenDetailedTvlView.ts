@@ -42,7 +42,7 @@ export function calculateTokenDetailedTvlView(
   return {
     chart: {
       type: 'TokenDetailedTvlChart',
-      assetType: controls.assetType ?? 'EBV',
+      assetType: controls.assetType,
       points,
     },
     dateRange,

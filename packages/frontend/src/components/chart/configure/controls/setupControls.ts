@@ -31,7 +31,7 @@ export function setupControls(
         type: 'TokenChanged',
         token: control.value,
         tokenEndpoint: control.dataset.tvlEndpoint,
-        assetType: control.dataset.assetType as "CBV" | "EBV" | "NMV",
+        assetType: control.dataset.assetType as 'CBV' | 'EBV' | 'NMV',
       })
     }
   })

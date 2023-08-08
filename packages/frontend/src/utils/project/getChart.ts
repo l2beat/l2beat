@@ -51,7 +51,7 @@ function getTokens(
           symbol,
           name,
           assetType: valueType,
-          tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${valueType}`,
+          tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${valueType.toString()}`,
           tvl: usdValue,
         }
       }
