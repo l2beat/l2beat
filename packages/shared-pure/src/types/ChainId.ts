@@ -105,10 +105,6 @@ const CHAIN_IDS: ChainMetadata[] = [
     id: -1,
     name: 'native',
   },
-  {
-    id: 10,
-    name: 'optimism',
-  },
 ]
 
 ChainId.ETHEREUM = ChainId(CHAIN_IDS[0].id)
