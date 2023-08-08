@@ -33,7 +33,13 @@ function Template({
     'AAVE',
     'YFI',
     'UNI',
-  ].map((x) => ({ address: '0xabac', name: x, symbol: x, tvlEndpoint: '/', assetType: ValueType.EBV }))
+  ].map((x) => ({
+    address: '0xabac',
+    name: x,
+    symbol: x,
+    tvlEndpoint: '/',
+    assetType: ValueType.EBV,
+  }))
 
   useEffect(() => {
     configureCharts()
