@@ -2,7 +2,7 @@
   "name": "across-v2",
   "chain": "ethereum",
   "blockNumber": 17870180,
-  "configHash": "0xfd5180e4f582cb9924d6e707375538729236329877591261fba46a305b7c1469",
+  "configHash": "0xea79fcfee4ae247945d41627e51ff1ff8d766f48a230bfc5546c66feb3e6f26d",
   "version": 1,
   "contracts": [
     {
