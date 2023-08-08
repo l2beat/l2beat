@@ -22,6 +22,7 @@ export function ReportFloatingBanner() {
         <a
           className="w-full max-w-[135px] rounded-md bg-pink-900 py-[8px] text-center text-base font-medium text-white transition-colors hover:bg-pink-800 md:w-40"
           href="https://warsaw.l2beat.com"
+          target="_blank"
         >
           Get tickets
         </a>
