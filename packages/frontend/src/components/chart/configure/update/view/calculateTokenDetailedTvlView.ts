@@ -10,9 +10,6 @@ export function calculateTokenDetailedTvlView(
   controls: State['controls'],
 ): State['view'] | undefined {
   if (!controls.token || !controls.assetType) {
-    console.log(
-      `hello from calculateTokenDetailedTvlView, no token or assetType = [${controls.token}, ${controls.assetType}]`,
-    )
     return undefined
   }
 
@@ -21,7 +18,6 @@ export function calculateTokenDetailedTvlView(
   const key = getTokenTvlKey(token, controls.assetType)
   const response = controls.token && data.tokenTvl[key]
   if (!response) {
-    console.log('hello from calculateTokenDetailedTvlView, no response')
     return undefined
   }
 
