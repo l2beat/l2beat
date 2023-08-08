@@ -24,6 +24,8 @@ import { getEBVConfigHash } from '../reports/getEBVConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
 
+// TODO: Make this class more generic
+// ProjectId, ChainId should be passed in the constructor
 export class ArbitrumEBVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
