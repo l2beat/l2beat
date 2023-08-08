@@ -11,7 +11,8 @@
     "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": "EmergencyProposalExecutor",
     "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
     "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": "Ethereum_SpokePool",
-    "0xB524735356985D2f267FA010D681f061DfF03715": "HubPool Multisig"
+    "0xB524735356985D2f267FA010D681f061DfF03715": "HubPool Multisig",
+    "0x32400084C286CF3E17e7B677ea9583e60a000324": "DiamondProxy"
   },
   "overrides": {
     "HubPool": {
@@ -57,6 +58,18 @@
     },
     "VotingToken": {
       "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"]
+    },
+    "DiamondProxy": {
+      "ignoreInWatchMode": [
+        "getTotalPriorityTxs",
+        "getPriorityQueueSize",
+        "getTotalBlocksExecuted",
+        "getTotalBlocksVerified",
+        "getTotalBlocksCommitted",
+        "priorityQueueFrontOperation",
+        "getFirstUnprocessedPriorityTx"
+      ],
+      "ignoreMethods": ["l2LogsRootHash", "storedBlockHash"]
     },
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
       // Maker: Dai Stablecoin
