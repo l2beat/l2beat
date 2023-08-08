@@ -29,7 +29,7 @@ export function TokenControls({ tokens }: TokenControlsProps) {
       <div className="flex flex-wrap items-baseline justify-start gap-x-4">
         <span>View another token</span>
         <div className="Dropdown">
-          <div className="rounded-lg bg-gray-100 px-1 py-1 dark:bg-gray-750">
+          <div className="rounded-lg bg-gray-200 px-1 py-1 dark:bg-gray-750">
             <SelectButton />
             <SelectedTokenButton />
           </div>
@@ -60,7 +60,7 @@ function SelectButton() {
 function SelectedTokenButton() {
   return (
     <label
-      className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md px-2 text-base transition-all dark:bg-black"
+      className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md px-2 text-base transition-all bg-white dark:bg-black"
       data-role="chart-token-chosen"
     >
       <input
@@ -128,14 +128,14 @@ function TokenModal({ tokens }: { tokens: TokenControl[] }) {
       data-role="chart-token-modal"
     >
       <hr className="h-1.5 border-t-0" />
-      <div className="rounded-lg bg-gray-100 p-6 dark:bg-gray-750">
+      <div className="rounded-lg bg-gray-200 p-6 dark:bg-gray-750">
         <div className="flex flex-col gap-3">
           {parts.map((p, i) => (
             <div key={i}>
               <div className={`text-sm font-bold ${p.titleColor}`}>
                 {p.title}
               </div>
-              <HorizontalSeparator className="mb-4 dark:border-gray-650" />
+              <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
               <div
                 className="grid grid-cols-3 gap-y-3 gap-x-6"
                 data-role="chart-token-controls"
