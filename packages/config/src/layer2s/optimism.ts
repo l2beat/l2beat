@@ -77,7 +77,6 @@ export const optimism: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
-    chainId: ChainId.OPTIMISM,
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
     associatedTokens: ['OP'],
     nativeL2TokensIncludedInTVL: ['OP'],

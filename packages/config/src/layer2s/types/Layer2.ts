@@ -80,8 +80,6 @@ export interface Layer2Display {
 }
 
 export interface Layer2Config {
-  /** ChainId of this Layer2 */
-  chainId?: ChainId
   /** List of native and external tokens */
   tokenList?: Token[]
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */

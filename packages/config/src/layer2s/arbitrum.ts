@@ -146,7 +146,6 @@ export const arbitrum: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
-    chainId: ChainId.ARBITRUM,
     tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.ARBITRUM })),
     associatedTokens: ['ARB'],
     nativeL2TokensIncludedInTVL: ['ARB'],
