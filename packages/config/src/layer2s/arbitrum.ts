@@ -92,7 +92,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     type: ValueType.NMV,
   },
   {
-    id: AssetId('arb:usdc-usd-coin'),
+    id: AssetId('arbitrum:usdc-usd-coin'),
     name: 'Arbitrum',
     coingeckoId: CoingeckoId('arbitrum'),
     symbol: 'USDC',
