@@ -2,8 +2,6 @@ import { Logger } from '@l2beat/shared'
 import {
   AssetId,
   ChainId,
-  CoingeckoId,
-  EthereumAddress,
   Token,
   UnixTime,
   ValueType,
@@ -16,6 +14,7 @@ import {
   TotalSupplyRepository,
 } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
+import { getMockToken } from '../../test/token'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
@@ -24,7 +23,6 @@ import {
   getMissingTotalSupplies,
   TotalSupplyUpdater,
 } from './TotalSupplyUpdater'
-import { getMockToken } from '../../test/token'
 
 describe(TotalSupplyUpdater.name, () => {
   const chainId = ChainId.ARBITRUM

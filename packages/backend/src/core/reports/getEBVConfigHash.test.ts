@@ -8,8 +8,8 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { getEBVConfigHash } from './getEBVConfigHash'
 import { getMockToken } from '../../test/token'
+import { getEBVConfigHash } from './getEBVConfigHash'
 
 describe(getEBVConfigHash.name, () => {
   it('hash changes if tokens added', () => {

@@ -1,16 +1,8 @@
-import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
-  EthereumAddress,
-  Token,
-  UnixTime,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { AssetId, Token, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { getMockToken } from '../../test/token'
+import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 
 describe(getTotalSupplyConfigHash.name, () => {
   it('produces different hash if token is added', () => {

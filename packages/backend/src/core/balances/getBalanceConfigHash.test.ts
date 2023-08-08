@@ -1,7 +1,6 @@
 import {
   AssetId,
   ChainId,
-  CoingeckoId,
   EthereumAddress,
   ProjectId,
   Token,
@@ -11,9 +10,9 @@ import {
 import { expect } from 'earl'
 
 import { ProjectEscrow } from '../../model'
+import { getMockToken } from '../../test/token'
 import { BalanceProject } from './BalanceProject'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
-import { getMockToken } from '../../test/token'
 
 describe(getBalanceConfigHash.name, () => {
   it('hash changes if project added', () => {

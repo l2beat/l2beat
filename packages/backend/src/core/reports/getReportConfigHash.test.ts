@@ -1,7 +1,6 @@
 import {
   AssetId,
   ChainId,
-  CoingeckoId,
   EthereumAddress,
   ProjectId,
   Token,
@@ -11,9 +10,9 @@ import {
 import { expect } from 'earl'
 
 import { ProjectEscrow } from '../../model'
+import { getMockToken } from '../../test/token'
 import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
-import { getMockToken } from '../../test/token'
 
 describe(getReportConfigHash.name, () => {
   it('hash changes if project added', () => {
