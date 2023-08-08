@@ -9,14 +9,14 @@ export function FloatingBanner() {
       <div className="flex max-w-[182px] bg-[#2C7265] py-2 px-3 md:px-5 md:py-4">
         <img src={'/images/announcements/l2-warsaw-floating.png'} />
       </div>
-      <div className="flex max-w-[300px] flex-col justify-center px-4 pl-5">
+      <div className="flex max-w-[300px] flex-col justify-center px-3 sm:pr-5">
         <div className="mb-2 text-xs font-medium uppercase text-gray-550 dark:text-gray-50 md:text-sm">
           Upcoming event
         </div>
         <div className="text-xl font-semibold leading-tight tracking-normal text-black dark:text-white md:text-2xl">
           L2Warsaw
         </div>
-        <div className="mb-4 text-xs md:text-base">
+        <div className="mb-4 text-xs sm:text-base">
           Technical conference dedicated to Ethereum L2 scaling
         </div>
         <a
