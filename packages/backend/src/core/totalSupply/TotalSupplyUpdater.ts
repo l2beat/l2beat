@@ -6,6 +6,7 @@ import {
   Hash256,
   Token,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
@@ -36,6 +37,14 @@ export class TotalSupplyUpdater {
     private readonly chainId: ChainId,
     private readonly minTimestamp: UnixTime,
   ) {
+    assert(
+      tokens.every(
+        (token) =>
+          token.chainId === this.getChainId() &&
+          token.type === this.getValueType(),
+      ),
+      'Programmer error: tokens must be of type EBV and on the same chain as the totalSupplyUpdater',
+    )
     this.logger = this.logger.for(this)
     this.configHash = getTotalSupplyConfigHash(tokens)
     this.taskQueue = new TaskQueue(
@@ -54,6 +63,14 @@ export class TotalSupplyUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getChainId() {
+    return this.chainId
+  }
+
+  getValueType() {
+    return ValueType.EBV
   }
 
   async getTotalSuppliesWhenReady(

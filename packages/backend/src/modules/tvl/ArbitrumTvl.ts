@@ -30,7 +30,6 @@ export function createArbitrumTvlSubmodule(
   }
 
   // #region peripherals
-
   const arbitrumEBVTokens = config.tokens.filter(
     (t) => t.chainId === ChainId.ARBITRUM && t.type === ValueType.EBV,
   )

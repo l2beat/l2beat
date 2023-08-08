@@ -42,6 +42,14 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     private readonly logger: Logger,
     private readonly minTimestamp: UnixTime,
   ) {
+    assert(
+      tokens.every(
+        (token) =>
+          token.chainId === this.getChainId() &&
+          token.type === this.getValueType(),
+      ),
+      'Programmer error: tokens must be of type EBV and on the same chain as the arbitrumEBVUpdater',
+    )
     this.logger = this.logger.for(this)
     this.configHash = getEBVConfigHash(this.tokens)
 
