@@ -174,7 +174,7 @@ export class DetailedTvlController {
       syncedReportsAmount,
       unsyncedReportsAmount,
       isSynced,
-      latestTimestamp: latestTimestamp,
+      latestTimestamp,
     }
 
     return result
