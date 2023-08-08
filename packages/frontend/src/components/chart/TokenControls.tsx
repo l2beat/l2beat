@@ -1,3 +1,4 @@
+import { ValueType } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
@@ -9,7 +10,7 @@ export interface TokenControl {
   address: string
   symbol: string
   name: string
-  assetType: 'EBV' | 'CBV' | 'NMV'
+  assetType: ValueType
   tvlEndpoint: string
 }
 export interface TokenControlsProps {

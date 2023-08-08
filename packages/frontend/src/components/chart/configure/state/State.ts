@@ -30,7 +30,7 @@ export interface State {
     currency: 'usd' | 'eth'
     token: string | undefined
     // TODO(radomski): I don't like this, but I have no other idea
-    assetType: 'EBV' | 'CBV' | 'NMV' | undefined
+    assetType: 'CBV' | 'EBV' | 'NMV' | undefined
     showEthereum: boolean
     showAlternativeTvl: boolean
     mouseX: number | undefined
@@ -46,6 +46,7 @@ export interface State {
       | AggregateTvlChart
       | AggregateDetailedTvlChart
       | TokenTvlChart
+      | TokenDetailedTvlChart
       | ActivityChart
       | undefined
   }
@@ -86,6 +87,20 @@ export interface AggregateDetailedTvlChart {
       cbv: number
       nmv: number
     }
+    milestone?: Milestone
+  }[]
+}
+
+export interface TokenDetailedTvlChart {
+  type: 'TokenDetailedTvlChart'
+  assetType: 'CBV' | 'EBV' | 'NMV'
+  points: {
+    x: number
+    y: number
+    date: string
+    balance: number
+    symbol: string
+    usd: number
     milestone?: Milestone
   }[]
 }

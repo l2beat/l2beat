@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { ValueType } from '@l2beat/shared-pure'
 import { TokenControl } from '../TokenControls'
 
 import {
@@ -44,7 +45,7 @@ export interface TokenChangedMessage {
   type: 'TokenChanged'
   token: string
   tokenEndpoint: string
-  assetType: TokenControl['assetType']
+  assetType: "CBV" | "EBV" | "NMV"
 }
 
 export interface ShowEthereumChangedMessage {

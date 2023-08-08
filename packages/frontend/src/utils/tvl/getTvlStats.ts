@@ -1,6 +1,9 @@
 import {
+  ChainId,
   DetailedTvlApiProject,
+  DetailedTvlApiToken,
   TvlApiProject,
+  ValueType,
   TvlApiToken,
 } from '@l2beat/shared-pure'
 
@@ -39,7 +42,7 @@ export function getTvlStats(
  */
 export function unifyTokensResponse(
   tokens?: TvlApiToken[] | DetailedTvlApiProject['tokens'],
-): TvlApiToken[] {
+): DetailedTvlApiToken[] {
   if (!tokens) {
     return []
   }
@@ -47,8 +50,9 @@ export function unifyTokensResponse(
   if (Array.isArray(tokens)) {
     return tokens.map((token) => ({
       assetId: token.assetId,
-      tvl: token.tvl,
-      assetType: "EBV"
+      chainId: ChainId.ETHEREUM,
+      usdValue: token.tvl,
+      valueType: ValueType.CBV,
     }))
   }
 
@@ -56,6 +60,8 @@ export function unifyTokensResponse(
     .flat()
     .map((token) => ({
       assetId: token.assetId,
-      tvl: token.usdValue,
+      chainId: token.chainId,
+      valueType: token.valueType,
+      usdValue: token.usdValue,
     }))
 }

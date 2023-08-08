@@ -155,6 +155,16 @@ export function renderHover(
         rows.push(renderEBVRow(point.usdParts.ebv))
         rows.push(renderNMVRow(point.usdParts.nmv))
       } else if (
+        state.view.chart.type === 'TokenDetailedTvlChart' &&
+        'balance' in point
+      ) {
+        const type = state.view.chart.assetType
+        rows.push(renderHorizontalSeparator())
+        rows.push(
+          renderCurrencyRowWithMarker(point.balance, point.symbol, type),
+        )
+        rows.push(renderCurrencyRowWithMarkerGap(point.usd, 'USD'))
+      } else if (
         state.view.chart.type === 'TokenTvlChart' &&
         'balance' in point
       ) {
@@ -237,6 +247,26 @@ function renderDetailedRow(value: number, caption: string, iconSvg: string) {
     </div>
       <div><span class="font-bold">${formatUSD(value)}</span></div>
   </div>`
+}
+
+function renderCurrencyRowWithMarker(
+  value: number,
+  ticker: string,
+  assetType: 'EBV' | 'CBV' | 'NMV',
+) {
+  const iconSvg =
+    assetType === 'EBV' ? EBVIcon : assetType === 'CBV' ? CBVIcon : NMVIcon
+  return `<div class="inline-flex items-center gap-1"> ${iconSvg} ${renderCurrencyRow(
+    value,
+    ticker,
+  )} </div>`
+}
+
+function renderCurrencyRowWithMarkerGap(value: number, ticker: string) {
+  return `<div class="inline-flex items-center pl-3"> ${renderCurrencyRow(
+    value,
+    ticker,
+  )} </div>`
 }
 
 function renderCurrencyRow(value: number, ticker: string) {

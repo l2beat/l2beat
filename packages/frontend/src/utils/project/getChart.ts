@@ -39,9 +39,8 @@ function getTokens(
 
   const compatibleTokenList = unifyTokensResponse(tokens)
 
-  const assetType: TokenControl['assetType'] = "NMV"
   return compatibleTokenList
-    .map(({ assetId, tvl }) => {
+    .map(({ assetId, usdValue, valueType }) => {
       const token = safeGetTokenByAssetId(assetId)
       const symbol = token?.symbol
       const name = token?.name
@@ -51,9 +50,9 @@ function getTokens(
           address: address.toString(),
           symbol,
           name,
-          assetType,
+          assetType: valueType,
           tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`,
-          tvl,
+          tvl: usdValue,
         }
       }
     })
