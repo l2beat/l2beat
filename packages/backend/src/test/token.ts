@@ -19,7 +19,7 @@ export const getMockToken = (): MockToken => {
     coingeckoId: CoingeckoId('mock-token'),
     symbol: 'MOCK',
     decimals: 18,
-    address: EthereumAddress.random(),
+    address: EthereumAddress.ZERO,
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ETHEREUM,

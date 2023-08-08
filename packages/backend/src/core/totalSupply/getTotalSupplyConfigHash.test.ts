@@ -10,6 +10,7 @@ import {
 import { expect } from 'earl'
 
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
+import { getMockToken } from '../../test/token'
 
 describe(getTotalSupplyConfigHash.name, () => {
   it('produces different hash if token is added', () => {
@@ -80,15 +81,8 @@ describe(getTotalSupplyConfigHash.name, () => {
 
 function fakeToken(assetId: AssetId, sinceTimestamp: UnixTime): Token {
   return {
+    ...getMockToken(),
     id: assetId,
-    name: 'Fake',
-    coingeckoId: CoingeckoId('fake-token'),
-    symbol: 'FKT',
     sinceTimestamp,
-    decimals: 18,
-    address: EthereumAddress.ZERO,
-    category: 'other',
-    chainId: ChainId.ETHEREUM,
-    type: ValueType.CBV,
   }
 }

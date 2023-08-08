@@ -1,7 +1,6 @@
 import {
   AssetId,
   ChainId,
-  CoingeckoId,
   EthereumAddress,
   Token,
   UnixTime,
@@ -10,6 +9,7 @@ import {
 import { expect } from 'earl'
 
 import { getEBVConfigHash } from './getEBVConfigHash'
+import { getMockToken } from '../../test/token'
 
 describe(getEBVConfigHash.name, () => {
   it('hash changes if tokens added', () => {
@@ -84,15 +84,10 @@ describe(getEBVConfigHash.name, () => {
 
 function fakeExternalToken(assetId: AssetId, sinceTimestamp: UnixTime): Token {
   return {
+    ...getMockToken(),
     id: assetId,
-    name: 'Fake',
-    symbol: 'FAKE',
-    coingeckoId: CoingeckoId('fake'),
     sinceTimestamp,
-    decimals: 18,
-    address: EthereumAddress('0x0000000000000000000000000000000000000000'),
     premintHolderAddresses: [],
-    category: 'other',
     chainId: ChainId.ARBITRUM,
     type: ValueType.EBV,
   }

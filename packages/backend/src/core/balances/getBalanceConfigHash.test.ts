@@ -13,6 +13,7 @@ import { expect } from 'earl'
 import { ProjectEscrow } from '../../model'
 import { BalanceProject } from './BalanceProject'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
+import { getMockToken } from '../../test/token'
 
 describe(getBalanceConfigHash.name, () => {
   it('hash changes if project added', () => {
@@ -177,13 +178,9 @@ function fakeEscrow(
 
 function fakeToken(id: string, timestamp: number): Token {
   return {
-    name: 'irrelevant',
-    symbol: 'irrelevant',
+    ...getMockToken(),
     id: AssetId(id),
-    coingeckoId: CoingeckoId('irrelevant'),
-    decimals: 18,
     sinceTimestamp: new UnixTime(timestamp),
-    category: 'ether', // irrelevant
     chainId: ChainId.ETHEREUM,
     type: ValueType.CBV,
   }
