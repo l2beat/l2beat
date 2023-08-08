@@ -3,11 +3,11 @@ import {
   AssetId,
   ChainId,
   DetailedTvlApiResponse,
+  Hash256,
   ProjectId,
   Token,
   TvlApiChart,
   TvlApiCharts,
-  UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
 
@@ -34,6 +34,7 @@ export class DetailedTvlController {
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
     private readonly logger: Logger,
+    private readonly aggregatedConfigHash: Hash256,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -44,25 +45,25 @@ export class DetailedTvlController {
   async getDetailedTvlApiResponse(): Promise<
     DetailedTvlApiResponse | undefined
   > {
-    const minimumTimestamp = await this.getMinimumTimestamp()
+    const dataTimings = await this.getDataTimings()
 
-    if (!minimumTimestamp) {
+    if (!dataTimings.latestTimestamp) {
       return
     }
 
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
         this.aggregatedReportRepository.getHourlyWithAnyType(
-          getHourlyMinTimestamp(minimumTimestamp),
+          getHourlyMinTimestamp(dataTimings.latestTimestamp),
         ),
 
         this.aggregatedReportRepository.getSixHourlyWithAnyType(
-          getSixHourlyMinTimestamp(minimumTimestamp),
+          getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
         ),
 
         this.aggregatedReportRepository.getDailyWithAnyType(),
 
-        this.reportRepository.getByTimestamp(minimumTimestamp),
+        this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
       ])
 
     /**
@@ -158,34 +159,24 @@ export class DetailedTvlController {
     }
   }
 
-  private async getMinimumTimestamp(): Promise<UnixTime | undefined> {
-    const valueTypes = [ValueType.CBV, ValueType.EBV, ValueType.NMV]
+  private async getDataTimings() {
+    const { matching: syncedReportsAmount, different: unsyncedReportsAmount } =
+      await this.aggregatedReportStatusRepository.findCountsForHash(
+        this.aggregatedConfigHash,
+      )
 
-    const reportsTimestampsPromises = valueTypes.map((valueType) =>
-      this.reportStatusRepository.findLatestTimestampOfType(valueType),
-    )
+    const latestTimestamp =
+      await this.aggregatedReportStatusRepository.findLatestTimestamp()
 
-    const aggregatedReportsTimestampsPromises = [
-      this.aggregatedReportStatusRepository.findLatestTimestamp(),
-    ]
+    const isSynced = unsyncedReportsAmount === 0
 
-    const timestampCandidates = await Promise.all([
-      ...reportsTimestampsPromises,
-      ...aggregatedReportsTimestampsPromises,
-    ])
-
-    if (!timestampCandidates.every(Boolean)) {
-      return
+    const result = {
+      syncedReportsAmount,
+      unsyncedReportsAmount,
+      isSynced,
+      latestTimestamp: latestTimestamp,
     }
 
-    const minimumTimestamp = Math.min(
-      ...timestampCandidates.filter(notUndefined).map((x) => Number(x)),
-    )
-
-    return new UnixTime(minimumTimestamp)
+    return result
   }
-}
-
-function notUndefined<T>(x: T | undefined): x is T {
-  return x !== undefined
 }
