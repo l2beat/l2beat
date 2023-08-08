@@ -80,6 +80,15 @@
     {
       "source": "/api/projects/:project/tvl/assets/:asset",
       "destination": "https://api.l2beat.com/api/projects/:project/tvl/assets/:asset"
+    },
+    {
+      "source": "/api/projects/:project/tvl/chains/:chain/assets/:asset/types/:type",
+      "has": [{ "type": "host", "value": ".*l2beat-staging.*" }],
+      "destination": "https://staging.l2beat.com/api/projects/:project/tvl/chains/:chain/assets/:asset/types/:type"
+    },
+    {
+      "source": "/api/projects/:project/tvl/chains/:chain/assets/:asset/types/:type",
+      "destination": "https://api.l2beat.com/api/projects/:project/tvl/chains/:chain/assets/:asset/types/:type"
     }
   ],
   "trailingSlash": false
