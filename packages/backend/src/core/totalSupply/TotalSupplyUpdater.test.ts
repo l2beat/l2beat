@@ -24,9 +24,10 @@ import {
   getMissingTotalSupplies,
   TotalSupplyUpdater,
 } from './TotalSupplyUpdater'
+import { getMockToken } from '../../test/token'
 
 describe(TotalSupplyUpdater.name, () => {
-  const chainId = ChainId.ETHEREUM
+  const chainId = ChainId.ARBITRUM
 
   describe(TotalSupplyUpdater.prototype.start.name, () => {
     const NOW = UnixTime.now().toStartOf('hour')
@@ -94,11 +95,11 @@ describe(TotalSupplyUpdater.name, () => {
       const reachableTimestamp = queryTimestamp.add(-1, 'hours')
       const unreachableTimestamp = queryTimestamp.add(1, 'hours')
 
-      const fakeEth = fakeTokenInfo(AssetId.ETH, reachableTimestamp) // known
-      const fakeUsdc = fakeTokenInfo(AssetId.USDC, reachableTimestamp) // known
-      const fakeDai = fakeTokenInfo(AssetId.DAI, reachableTimestamp) // queryable
-      const fakeArb = fakeTokenInfo(AssetId.ARB, unreachableTimestamp) // unreachable
-      const fakeOp = fakeTokenInfo(AssetId.OP, unreachableTimestamp) // unreachable
+      const fakeEth = fakeToken(AssetId.ETH, reachableTimestamp) // known
+      const fakeUsdc = fakeToken(AssetId.USDC, reachableTimestamp) // known
+      const fakeDai = fakeToken(AssetId.DAI, reachableTimestamp) // queryable
+      const fakeArb = fakeToken(AssetId.ARB, unreachableTimestamp) // unreachable
+      const fakeOp = fakeToken(AssetId.OP, unreachableTimestamp) // unreachable
 
       const tokensConfig = [
         fakeEth,
@@ -180,9 +181,9 @@ describe(TotalSupplyUpdater.name, () => {
       const queryTimestamp = new UnixTime(1000)
       const reachableTimestamp = queryTimestamp.add(-1, 'hours')
 
-      const fakeEth = fakeTokenInfo(AssetId.ETH, reachableTimestamp)
-      const fakeDai = fakeTokenInfo(AssetId.DAI, reachableTimestamp)
-      const fakeArb = fakeTokenInfo(AssetId.ARB, reachableTimestamp)
+      const fakeEth = fakeToken(AssetId.ETH, reachableTimestamp)
+      const fakeDai = fakeToken(AssetId.DAI, reachableTimestamp)
+      const fakeArb = fakeToken(AssetId.ARB, reachableTimestamp)
 
       const tokensConfig = [fakeEth, fakeDai, fakeArb] as Token[]
 
@@ -254,11 +255,11 @@ describe(TotalSupplyUpdater.name, () => {
     it('returns missing tokens that requires update, skipping known ones and unreachable due to timestamp  ', () => {
       const timestamp = new UnixTime(2500)
 
-      const fakeEth = fakeTokenInfo(AssetId.ETH, new UnixTime(1000))
-      const fakeUsdc = fakeTokenInfo(AssetId.USDC, new UnixTime(1000))
-      const fakeDai = fakeTokenInfo(AssetId.DAI, new UnixTime(1000))
-      const fakeArb = fakeTokenInfo(AssetId.ARB, new UnixTime(1000))
-      const fakeOp = fakeTokenInfo(AssetId.OP, new UnixTime(3000)) // Outside timestamp query range
+      const fakeEth = fakeToken(AssetId.ETH, new UnixTime(1000))
+      const fakeUsdc = fakeToken(AssetId.USDC, new UnixTime(1000))
+      const fakeDai = fakeToken(AssetId.DAI, new UnixTime(1000))
+      const fakeArb = fakeToken(AssetId.ARB, new UnixTime(1000))
+      const fakeOp = fakeToken(AssetId.OP, new UnixTime(3000)) // Outside timestamp query range
 
       const tokensConfig = [
         fakeEth,
@@ -302,18 +303,13 @@ describe(TotalSupplyUpdater.name, () => {
     })
   })
 
-  function fakeTokenInfo(assetId: AssetId, sinceTimestamp: UnixTime) {
+  function fakeToken(assetId: AssetId, sinceTimestamp: UnixTime) {
     return {
+      ...getMockToken(),
       id: assetId,
-      coingeckoId: CoingeckoId('fake-token'),
-      symbol: 'FKT',
       sinceTimestamp,
-      decimals: 18,
-      address: EthereumAddress.random(),
-      category: 'ether', // irrelevant
-      chainId: ChainId.ETHEREUM, // irrelevant
-      type: ValueType.CBV, // irrelevant
-      name: 'Fake', // irrelevant
+      chainId: ChainId.ARBITRUM,
+      type: ValueType.EBV,
     }
   }
 })

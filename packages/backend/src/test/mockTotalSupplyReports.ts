@@ -83,7 +83,7 @@ const TOKENS: Token[] = [
     decimals: 6,
     premintHolderAddresses: [],
     category: 'other',
-    chainId: ChainId.ETHEREUM,
+    chainId: ChainId.ARBITRUM,
     type: ValueType.EBV,
   },
 ]
