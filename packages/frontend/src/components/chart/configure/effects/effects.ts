@@ -20,6 +20,7 @@ export interface FetchTokenTvlEffect {
   type: 'FetchTokenTvl'
   requestId: number
   token: string
+  assetType: 'CBV' | 'EBV' | 'NMV'
   url: string
 }
 

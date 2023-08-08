@@ -115,6 +115,7 @@ export interface TokenTvlLoadedMessage {
   type: 'TokenTvlLoaded'
   requestId: number
   token: string
+  assetType: "CBV" | "EBV" | "NMV"
   data: TokenTvlResponse
 }
 

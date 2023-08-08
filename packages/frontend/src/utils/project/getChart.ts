@@ -40,7 +40,7 @@ function getTokens(
   const compatibleTokenList = unifyTokensResponse(tokens)
 
   return compatibleTokenList
-    .map(({ assetId, usdValue, valueType }) => {
+    .map(({ assetId, usdValue, valueType, chainId }) => {
       const token = safeGetTokenByAssetId(assetId)
       const symbol = token?.symbol
       const name = token?.name
@@ -51,7 +51,7 @@ function getTokens(
           symbol,
           name,
           assetType: valueType,
-          tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`,
+          tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${valueType}`,
           tvl: usdValue,
         }
       }

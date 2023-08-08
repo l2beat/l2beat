@@ -1,5 +1,6 @@
 import { Effect } from '../effects/effects'
 import { TokenChangedMessage } from '../messages'
+import { getTokenTvlKey } from '../state/getTokenTvlKey'
 import { State } from '../state/State'
 import { calculateView } from './view/calculateView'
 
@@ -16,14 +17,15 @@ export function updateTokenChanged(
   const request: State['request'] = { ...state.request }
   const effects: Effect[] = []
 
-  console.log('Chose token of type: ' + message.assetType)
-  if (state.data.tokenTvl[message.token] === undefined) {
+  const key = getTokenTvlKey(message.token, message.assetType)
+  if (state.data.tokenTvl[key] === undefined) {
     request.isFetching = true
     request.lastId++
     effects.push({
       type: 'FetchTokenTvl',
       requestId: request.lastId,
       token: message.token,
+      assetType: message.assetType,
       url: message.tokenEndpoint,
     })
   }

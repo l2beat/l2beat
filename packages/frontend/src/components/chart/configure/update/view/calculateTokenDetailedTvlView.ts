@@ -1,4 +1,5 @@
 import { formatRange, formatTimestamp } from '../../../../../utils'
+import { getTokenTvlKey } from '../../state/getTokenTvlKey'
 import { State } from '../../state/State'
 import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
@@ -8,7 +9,6 @@ export function calculateTokenDetailedTvlView(
   data: State['data'],
   controls: State['controls'],
 ): State['view'] | undefined {
-  console.log('hello from calculateTokenDetailedTvlView')
   if (!controls.token || !controls.assetType) {
     console.log(
       `hello from calculateTokenDetailedTvlView, no token or assetType = [${controls.token}, ${controls.assetType}]`,
@@ -18,7 +18,8 @@ export function calculateTokenDetailedTvlView(
 
   const token = controls.token
 
-  const response = controls.token && data.tokenTvl[controls.token]
+  const key = getTokenTvlKey(token, controls.assetType)
+  const response = controls.token && data.tokenTvl[key]
   if (!response) {
     console.log('hello from calculateTokenDetailedTvlView, no response')
     return undefined
