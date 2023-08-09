@@ -93,8 +93,7 @@
           "valueKey": "lib",
           "ignoreRelative": true
         }
-      },
-      "ignoreInWatchMode": ["CHAIN_IDS"]
+      }
     }
   }
 }

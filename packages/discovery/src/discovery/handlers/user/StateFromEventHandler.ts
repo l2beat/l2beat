@@ -71,7 +71,7 @@ export class StateFromEventHandler implements Handler {
       const groupBy = this.definition.groupBy
       const result = reduce(
         [...values],
-        (grouping: Record<string, ContractValue>, item) => {
+        (grouping: Partial<Record<string, ContractValue>>, item) => {
           assert(typeof item === 'object', 'Invalid item type')
 
           const key: unknown = Reflect.get(item, groupBy)
@@ -84,18 +84,18 @@ export class StateFromEventHandler implements Handler {
           }
 
           const value =
-            Reflect.ownKeys(item).length === 1
-              ? Reflect.get(item, Reflect.ownKeys(item)[0])
-              : item
+            Object.keys(item).length === 1 ? Object.values(item)[0] : item
+          assert(value !== undefined, 'Value is undefined')
 
-          if (grouping[key] === undefined || !this.definition.multipleInGroup) {
+          const group = grouping[key]
+          if (group === undefined || !this.definition.multipleInGroup) {
             grouping[key] = value
           } else {
-            const group = grouping[key]
+            grouping[key] = group
             if (Array.isArray(group)) {
               group.push(value)
             } else {
-              grouping[key] = [grouping[key], value]
+              grouping[key] = [group, value]
             }
           }
 
