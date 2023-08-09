@@ -1,4 +1,4 @@
-import { ContractValue, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ContractValue, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { pick, reduce } from 'lodash'
 import * as z from 'zod'
@@ -15,6 +15,7 @@ export const StateFromEventDefinition = z.strictObject({
   event: z.string(),
   returnParams: z.array(z.string()),
   groupBy: z.optional(z.string()),
+  onlyValue: z.optional(z.boolean()),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -66,17 +67,28 @@ export class StateFromEventHandler implements Handler {
     }
 
     if (this.definition.groupBy !== undefined) {
+      const groupBy = this.definition.groupBy
       const result = reduce(
         [...values],
         (grouping: Record<string, ContractValue>, item) => {
-          if (typeof item === 'object' && this.definition.groupBy) {
-            const key: unknown = Reflect.get(item, this.definition.groupBy)
-            if (typeof key === 'string' || typeof key === 'number') {
-              grouping[key] = item
-              return grouping
-            }
+          assert(typeof item === 'object', 'Invalid item type')
+
+          const key: unknown = Reflect.get(item, groupBy)
+          assert(
+            typeof key === 'string' || typeof key === 'number',
+            'Invalid key type',
+          )
+          if (this.definition.onlyValue) {
+            Reflect.deleteProperty(item, groupBy)
           }
-          throw new Error('Cannot group')
+
+          if (Reflect.ownKeys(item).length === 1) {
+            grouping[key] = Reflect.get(item, Reflect.ownKeys(item)[0])
+          } else {
+            grouping[key] = item
+          }
+
+          return grouping
         },
         {},
       )

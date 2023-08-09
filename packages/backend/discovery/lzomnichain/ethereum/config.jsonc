@@ -35,6 +35,13 @@
     },
     "UltraLightNodeV2": {
       "fields": {
+        "chainAddressSizeMap": {
+          "type": "stateFromEvent",
+          "event": "SetChainAddressSize",
+          "returnParams": ["chainId", "size"],
+          "groupBy": "chainId",
+          "onlyValue": true
+        },
         "CHAIN_IDS": {
           "type": "arrayFromOneEvent",
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
