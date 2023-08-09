@@ -49,6 +49,20 @@
           "groupBy": "chainId",
           "onlyValue": true
         },
+        "defaultAppConfig": {
+          "type": "stateFromEvent",
+          "event": "SetDefaultConfigForChainId",
+          "returnParams": [
+            "chainId",
+            "inboundProofLib",
+            "inboundBlockConfirm",
+            "outboundProofType",
+            "outboundBlockConfirm",
+            "oracle"
+          ],
+          "groupBy": "chainId",
+          "onlyValue": true
+        },
         "CHAIN_IDS": {
           "type": "arrayFromOneEvent",
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",

@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "ethereum",
   "blockNumber": 17876391,
-  "configHash": "0xde1c7df105c9d74774ebe8faa735394cec9ef1a55b1074783802f9370c7969c4",
+  "configHash": "0x37b7cfd61397d1c59b72afdb540ef3c8800964cb6103d532c294fa9cf071792c",
   "version": 1,
   "contracts": [
     {
@@ -19,6 +19,17 @@
         "uln": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
         "zroEnabled": false,
         "zroFee": 0
+      }
+    },
+    {
+      "name": "",
+      "address": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
+      "unverified": true,
+      "code": "https://etherscan.deth.net/address/0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034,0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
+        "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
       }
     },
     {
@@ -109,6 +120,267 @@
         "CONFIG_TYPE_OUTBOUND_BLOCK_CONFIRMATIONS": 5,
         "CONFIG_TYPE_OUTBOUND_PROOF_TYPE": 4,
         "CONFIG_TYPE_RELAYER": 3,
+        "defaultAppConfig": {
+          "2": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034"
+          },
+          "12": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034"
+          },
+          "101": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 15,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "102": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "106": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 12,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "108": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 500000,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "109": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 512,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "110": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "111": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "112": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "114": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "115": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "116": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "125": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "126": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 1,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "138": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "145": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "149": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "150": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "151": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "153": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 21,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "154": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "155": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "156": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "158": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "159": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "161": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "165": {
+            "inboundProofLib": 1,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "166": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "167": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "173": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "175": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "176": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "177": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "181": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "183": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          },
+          "184": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2"
+          }
+        },
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "ETHEREUM_DEFAULT_CONFIG": [
           1,
@@ -384,6 +656,14 @@
       "function withdrawZROFromULN(address _to, uint256 _amount)",
       "function zroEnabled() view returns (bool)",
       "function zroFee() view returns (uint256)"
+    ],
+    "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034": [
+      "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": [
       "constructor(address _endpoint, address _nonceContract, uint16 _localChainId)",
