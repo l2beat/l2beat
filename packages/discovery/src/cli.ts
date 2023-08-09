@@ -1,6 +1,8 @@
 import { EtherscanLikeClient, HttpClient, Logger } from '@l2beat/shared'
 import { assert, ChainId } from '@l2beat/shared-pure'
+import { execSync } from 'child_process'
 import { providers } from 'ethers'
+import { writeFile } from 'fs/promises'
 
 import { handleCli } from './cli/handleCli'
 import {
@@ -8,15 +10,13 @@ import {
   getDiscoveryCliConfig,
 } from './config/config.discovery'
 import { ConfigReader } from './discovery/config/ConfigReader'
+import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 import {
   dryRunDiscovery,
   justDiscover,
   runDiscovery,
 } from './discovery/runDiscovery'
 import { runInversion } from './inversion/runInversion'
-import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
-import { writeFile } from 'fs/promises'
-import { execSync } from 'child_process'
 
 main().catch((e) => {
   console.error(e)
