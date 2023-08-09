@@ -20,14 +20,11 @@ export async function singleDiscovery(
     return
   }
 
-  const { address } = config.singleDiscovery
-
   const projectConfig = new DiscoveryConfig({
     name: 'Single Discovery',
     chain: config.chain.chainId,
-    initialAddresses: [address],
+    initialAddresses: [config.singleDiscovery.address],
   })
-
   const chainConfig = config.chain
 
   const http = new HttpClient()
@@ -51,19 +48,18 @@ export async function singleDiscovery(
     blockNumber,
   )
   const discoveryOutput = toDiscoveryOutput(
-    address.toString(),
-    config.singleDiscovery.chainId,
+    projectConfig.name,
+    projectConfig.chainId,
     projectConfig.hash,
     blockNumber,
     results,
   )
-  const discoveryOutput2 = JSON.stringify(discoveryOutput, null, 2)
 
   const root = `./cache/single-discovery`
   await mkdirp(root)
 
   const jsonFilePath = `${root}/discovered.json`
-  await writeFile(jsonFilePath, discoveryOutput2)
+  await writeFile(jsonFilePath, JSON.stringify(discoveryOutput, null, 2))
 
   await rimraf(`${root}/code`)
   for (const result of results) {
@@ -86,5 +82,6 @@ export async function singleDiscovery(
   logger.info(
     'The discovered.json & code can be found in "packages/backend/cache/single-discovery"',
   )
+
   execSync(`open ${jsonFilePath}`)
 }
