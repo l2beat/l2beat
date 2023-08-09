@@ -117,11 +117,7 @@ export function renderChart(
         ? getCBVStyle(canvas, ctx)
         : getNMVStyle(canvas, ctx)
 
-    const points = state.view.chart.points.map((p) => ({
-      x: p.x,
-      y: p.y,
-    }))
-
+    const points = state.view.chart.points
     fillBelowChart(ctx, points, canvas, usableHeight, style)
     if (drawYAxis) {
       drawYAxisLabels(
