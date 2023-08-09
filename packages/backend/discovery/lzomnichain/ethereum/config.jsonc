@@ -18,7 +18,17 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "Endpoint": {
-      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
+      "fields": {
+        "libraryLookup": {
+          "type": "array",
+          "method": "libraryLookup",
+          "startIndex": 1,
+          "length": "{{ latestVersion }}",
+          // ignoring because discovered.json gets clattered with ULNv1 and ULNv2RADAR.
+          "ignoreRelative": true
+        }
+      }
     },
     "LayerZero Multisig": {
       "ignoreInWatchMode": ["nonce"]
