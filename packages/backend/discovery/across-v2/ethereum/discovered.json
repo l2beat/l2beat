@@ -1,8 +1,8 @@
 {
-  "chain": "ethereum",
   "name": "across-v2",
-  "blockNumber": 17813159,
-  "configHash": "0xcb59c3b84210bb0169461c8730dc1615c59ab20789594eca701e4ccd032ebd89",
+  "chain": "ethereum",
+  "blockNumber": 17870180,
+  "configHash": "0xea79fcfee4ae247945d41627e51ff1ff8d766f48a230bfc5546c66feb3e6f26d",
   "version": 1,
   "contracts": [
     {
@@ -17,7 +17,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "114790790035722144510785416",
+        "totalSupply": "114868363646056604033943928",
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
@@ -109,7 +109,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1690808531,
+        "getCurrentTime": 1691497427,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -137,10 +137,10 @@
         "chainId": 1,
         "crossDomainAdmin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1690808531,
+        "getCurrentTime": 1691497427,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1013886,
+        "numberOfDeposits": 1015588,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -160,7 +160,7 @@
       },
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1690808531,
+        "getCurrentTime": 1691497427,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -195,7 +195,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 437,
+        "nonce": 444,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -210,7 +210,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1690808531,
+        "getCurrentTime": 1691497427,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -238,7 +238,7 @@
           "0x1f11D8B72fc1B534448436BA60B4B371276DAb33"
         ],
         "getThreshold": 3,
-        "nonce": 142,
+        "nonce": 147,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -282,6 +282,11 @@
             "adapter": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
             "spokePool": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"
           },
+          "324": {
+            "l2ChainId": 324,
+            "adapter": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
+            "spokePool": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"
+          },
           "42161": {
             "l2ChainId": 42161,
             "adapter": "0x29528780E29abb8Af95a5e5a125b94766987543F",
@@ -298,18 +303,36 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0x398563178038d7dab4a6ff95b55795b9c82ca6ecf60d656b1c2df0fbd260c0e1",
-          "0x561c5fe211332d540f3d5b886d37b3fcdf85590c53c9417fa5078b0e16d413bc",
+          "0x356a3ef748cb5ad1c09ac014bd65a523334fa37bf75985911f596921d0677e1e",
+          "0x050a1325c8b43baf4380f62c433e559e24008cc1728662d6f25075e4d8e42a25",
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           0,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           4,
-          1690812143
+          1691503403
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "derivedName": "HubPool"
+    },
+    {
+      "name": "ZkSync_Adapter",
+      "address": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
+      "code": "https://etherscan.deth.net/address/0xE233009838CB898b50e0012a6E783FC9FeE447FB",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "getL1CallValue": 1000000000000000,
+        "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
+        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 2000000,
+        "l2RefundAddress": "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
+        "zkErc20Bridge": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+        "zkSyncEthBridge": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+        "zkSyncMessageBridge": "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      }
     }
   ],
   "eoas": [
@@ -322,6 +345,7 @@
     "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
     "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
     "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
+    "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
     "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
     "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"
   ],
@@ -699,6 +723,22 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xE233009838CB898b50e0012a6E783FC9FeE447FB": [
+      "constructor(address _l1Weth, address _l2RefundAddress)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "event ZkSyncMessageRelayed(bytes32 canonicalTxHash)",
+      "function L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT() view returns (uint256)",
+      "function L2_GAS_LIMIT() view returns (uint256)",
+      "function getL1CallValue() view returns (uint256)",
+      "function l1Weth() view returns (address)",
+      "function l2RefundAddress() view returns (address)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function zkErc20Bridge() view returns (address)",
+      "function zkSyncEthBridge() view returns (address)",
+      "function zkSyncMessageBridge() view returns (address)"
     ]
   }
 }

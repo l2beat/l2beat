@@ -62,7 +62,7 @@ export const acrossV2: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
-    destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum'],
+    destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum', 'ZkSync Era'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
@@ -128,6 +128,7 @@ export const acrossV2: Bridge = {
       discovery.getContractDetails('Optimism_Adapter'),
       discovery.getContractDetails('Boba_Adapter'),
       discovery.getContractDetails('Arbitrum_Adapter'),
+      discovery.getContractDetails('ZkSync_Adapter'),
       discovery.getContractDetails('Ethereum_Adapter'),
       discovery.getContractDetails('Ethereum_SpokePool'),
       {
