@@ -1,9 +1,9 @@
-export function configureReport() {
-  const CLOSED_KEY = 'reportFloatingBannerClosed'
+export function configureFloatingBanner() {
+  const CLOSED_KEY = 'L2WarsawFloatingBannerClosed'
 
   const hasClosedBanner = localStorage.getItem(CLOSED_KEY) === 'true'
 
-  const banner = document.querySelector('.ReportFloatingBanner')
+  const banner = document.querySelector('.FloatingBanner')
   if (!banner) {
     return
   }
@@ -13,7 +13,7 @@ export function configureReport() {
     return
   }
 
-  const cross = banner.querySelector('.ReportFloatingBanner-Close')
+  const cross = banner.querySelector('.FloatingBanner-Close')
   if (cross) {
     cross.addEventListener('click', () => {
       banner.classList.add('hidden')
