@@ -8,8 +8,15 @@ import {
   getDiscoveryCliConfig,
 } from './config/config.discovery'
 import { ConfigReader } from './discovery/config/ConfigReader'
-import { dryRunDiscovery, runDiscovery } from './discovery/runDiscovery'
+import {
+  dryRunDiscovery,
+  justDiscover,
+  runDiscovery,
+} from './discovery/runDiscovery'
 import { runInversion } from './inversion/runInversion'
+import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
+import { writeFile } from 'fs/promises'
+import { execSync } from 'child_process'
 
 main().catch((e) => {
   console.error(e)
@@ -23,6 +30,7 @@ async function main() {
 
   await discover(config, logger)
   await invert(config, logger)
+  await singleDiscovery(config, logger)
 }
 
 async function discover(config: DiscoveryCliConfig, logger: Logger) {
@@ -80,4 +88,53 @@ async function invert(config: DiscoveryCliConfig, logger: Logger) {
   logger.info('Starting')
 
   await runInversion(project, configReader, useMermaidMarkup, chainId)
+}
+
+async function singleDiscovery(config: DiscoveryCliConfig, logger: Logger) {
+  if (!config.singleDiscovery) {
+    return
+  }
+
+  const { address } = config.singleDiscovery
+
+  const projectConfig = new DiscoveryConfig({
+    name: 'Single Discovery',
+    chain: config.chain.chainId,
+    initialAddresses: [address],
+  })
+
+  const chainConfig = config.chain
+
+  const http = new HttpClient()
+  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
+  const etherscanClient = new EtherscanLikeClient(
+    http,
+    chainConfig.etherscanUrl,
+    chainConfig.etherscanApiKey,
+    chainConfig.minTimestamp,
+  )
+  const blockNumber = await provider.getBlockNumber()
+
+  logger = logger.for('SingleDiscovery')
+  logger.info('Starting')
+
+  const discovered = await justDiscover(
+    provider,
+    etherscanClient,
+    projectConfig,
+    blockNumber,
+  )
+
+  const discoveryOutput = JSON.stringify(discovered, null, 2)
+
+  const jsonFilePath = `./cache/single-discovery.json`
+  await writeFile(jsonFilePath, discoveryOutput)
+
+  logger.info(
+    'Opening discovered.json in the browser, please use firefox or other browser with JSON viewer extension',
+  )
+  logger.info(
+    'The discovered.json file can be found in "packages/backend/cache/single-discovery.json"',
+  )
+  execSync(`open ${jsonFilePath}`)
 }
