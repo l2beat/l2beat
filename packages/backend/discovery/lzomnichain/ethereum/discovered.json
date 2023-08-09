@@ -1,8 +1,8 @@
 {
-  "chain": "ethereum",
   "name": "lzomnichain",
-  "blockNumber": 17619693,
-  "configHash": "0x8262bb717c3a2adac3b38643a154f31124b913ace36a3569e9b85102cf5f3af9",
+  "chain": "ethereum",
+  "blockNumber": 17876391,
+  "configHash": "0xa961f7f964fbd9351dcd46d802d75f545418946c9c1055b26e97498c9a03a7a1",
   "version": 1,
   "contracts": [
     {
@@ -64,7 +64,7 @@
         "CHAIN_IDS": [
           102, 109, 114, 126, 110, 111, 106, 116, 101, 115, 112, 108, 125, 145,
           151, 150, 138, 12, 2, 153, 155, 156, 154, 149, 166, 158, 165, 167,
-          176, 175, 159, 173, 161, 177
+          176, 175, 159, 173, 161, 177, 184, 183, 181
         ],
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -142,7 +142,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Stargate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "code": "https://etherscan.deth.net/address/0x65bb797c2B9830d891D87288F029ed8dACc19705,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -161,9 +161,10 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
-        "nonce": 509,
+        "nonce": 546,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Endpoint",
@@ -185,7 +186,8 @@
         "isSendingPayload": false,
         "latestVersion": 3,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
-      }
+      },
+      "derivedName": "Endpoint"
     },
     {
       "name": "LayerZero_Relayer",
@@ -259,7 +261,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 38,
+        "nonce": 40,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
