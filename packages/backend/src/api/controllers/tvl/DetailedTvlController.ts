@@ -25,6 +25,30 @@ import {
 } from './detailedTvl'
 import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
 
+interface DetailedControllerBehaviorFlags {
+  skipUnsyncedDetailedTvl: boolean
+}
+
+type DetailedTvlResult =
+  | {
+      result: 'success'
+      data: DetailedTvlApiResponse
+    }
+  | {
+      result: 'error'
+      error: 'UNSYNCED_DATA_SKIPPED' | 'NO_DATA'
+    }
+
+type DetailedAssetTvlResult =
+  | {
+      result: 'success'
+      data: TvlApiCharts
+    }
+  | {
+      result: 'error'
+      error: 'INVALID_PROJECT_OR_ASSET' | 'NO_DATA'
+    }
+
 export class DetailedTvlController {
   constructor(
     private readonly reportStatusRepository: ReportStatusRepository,
@@ -35,6 +59,7 @@ export class DetailedTvlController {
     private readonly tokens: Token[],
     private readonly logger: Logger,
     private readonly aggregatedConfigHash: Hash256,
+    private readonly flags: DetailedControllerBehaviorFlags,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -42,13 +67,21 @@ export class DetailedTvlController {
   /**
    * TODO: Add project exclusion?
    */
-  async getDetailedTvlApiResponse(): Promise<
-    DetailedTvlApiResponse | undefined
-  > {
+  async getDetailedTvlApiResponse(): Promise<DetailedTvlResult> {
     const dataTimings = await this.getDataTimings()
 
     if (!dataTimings.latestTimestamp) {
-      return
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
+    }
+
+    if (!dataTimings.isSynced && this.flags.skipUnsyncedDetailedTvl) {
+      return {
+        result: 'error',
+        error: 'UNSYNCED_DATA_SKIPPED',
+      }
     }
 
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
@@ -94,7 +127,10 @@ export class DetailedTvlController {
       this.projects.map((x) => x.projectId),
     )
 
-    return tvlApiResponse
+    return {
+      result: 'success',
+      data: tvlApiResponse,
+    }
   }
 
   async getDetailedAssetTvlApiResponse(
@@ -102,19 +138,25 @@ export class DetailedTvlController {
     chainId: ChainId,
     assetId: AssetId,
     assetType: ValueType,
-  ): Promise<TvlApiCharts | undefined> {
+  ): Promise<DetailedAssetTvlResult> {
     const asset = this.tokens.find((t) => t.id === assetId)
     const project = this.projects.find((p) => p.projectId === projectId)
 
     if (!asset || !project) {
-      return
+      return {
+        result: 'error',
+        error: 'INVALID_PROJECT_OR_ASSET',
+      }
     }
 
     const timestampCandidate =
       await this.reportStatusRepository.findLatestTimestamp(chainId, assetType)
 
     if (!timestampCandidate) {
-      return
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
     }
 
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
@@ -144,17 +186,20 @@ export class DetailedTvlController {
     const types: TvlApiChart['types'] = ['timestamp', assetSymbol, 'usd']
 
     return {
-      hourly: {
-        types,
-        data: getProjectAssetChartData(hourlyReports, asset.decimals, 1),
-      },
-      sixHourly: {
-        types,
-        data: getProjectAssetChartData(sixHourlyReports, asset.decimals, 6),
-      },
-      daily: {
-        types,
-        data: getProjectAssetChartData(dailyReports, asset.decimals, 24),
+      result: 'success',
+      data: {
+        hourly: {
+          types,
+          data: getProjectAssetChartData(hourlyReports, asset.decimals, 1),
+        },
+        sixHourly: {
+          types,
+          data: getProjectAssetChartData(sixHourlyReports, asset.decimals, 6),
+        },
+        daily: {
+          types,
+          data: getProjectAssetChartData(dailyReports, asset.decimals, 24),
+        },
       },
     }
   }

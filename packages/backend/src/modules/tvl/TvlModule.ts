@@ -121,6 +121,7 @@ export function createTvlModule(
     config.tokens,
     logger,
     aggregatedReportUpdater.getConfigHash(),
+    { skipUnsyncedDetailedTvl: config.tvl.skipUnsyncedDetailedTvl },
   )
 
   const dydxController = new DydxController(db.aggregatedReportRepository)
