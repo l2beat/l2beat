@@ -42,6 +42,13 @@
           "groupBy": "chainId",
           "onlyValue": true
         },
+        "ulnLookup": {
+          "type": "stateFromEvent",
+          "event": "SetRemoteUln",
+          "returnParams": ["chainId", "uln"],
+          "groupBy": "chainId",
+          "onlyValue": true
+        },
         "CHAIN_IDS": {
           "type": "arrayFromOneEvent",
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
