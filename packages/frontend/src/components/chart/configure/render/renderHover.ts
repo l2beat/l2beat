@@ -1,3 +1,4 @@
+import { AssetType } from '@l2beat/shared-pure'
 import { renderToString } from 'react-dom/server'
 
 import { formatTps } from '../../../../utils/formatTps'
@@ -252,7 +253,7 @@ function renderDetailedRow(value: number, caption: string, iconSvg: string) {
 function renderCurrencyRowWithMarker(
   value: number,
   ticker: string,
-  assetType: 'EBV' | 'CBV' | 'NMV',
+  assetType: AssetType,
 ) {
   const iconSvg =
     assetType === 'EBV' ? EBVIcon : assetType === 'CBV' ? CBVIcon : NMVIcon
