@@ -8,17 +8,14 @@ import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
 import { CurrencyControls } from './CurrencyControls'
+import { DesktopTokenControls, TokenControl } from './DesktopTokenControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
+import { MobileTokenControls } from './MobileTokenControls'
 import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
-import {
-  DesktopTokenControl,
-  DesktopTokenControls,
-} from './DesktopTokenControls'
 import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
-import { MobileTokenControls } from './MobileTokenControls'
 
 export interface ChartProps {
   type?: 'tvl' | 'detailedTvl' | 'activity'
@@ -27,7 +24,7 @@ export interface ChartProps {
   tvlEndpoint?: string
   detailedTvlEndpoint?: string
   activityEndpoint?: string
-  tokens?: DesktopTokenControl[]
+  tokens?: TokenControl[]
   hasActivity?: boolean
   hasTvl?: boolean
   hasDetailedTvl?: boolean

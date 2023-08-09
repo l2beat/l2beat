@@ -36,13 +36,15 @@ export function TvlSummary(props: TvlSummaryProps) {
 
   return props.detailedTvlEnabled ? (
     <div className="w-full bg-zinc-800 p-4 md:w-[30%] md:rounded-lg md:bg-gray-100 md:px-6 md:py-5 md:dark:bg-zinc-800">
-      <div className="flex w-full justify-between md:justify-normal mb-0 md:mb-4 md:flex-col md:gap-2">
-          <span className="text-lg font-bold text-white md:text-gray-500 md:dark:text-gray-600 md:text-xs md:font-normal">
-            Total Value Locked
-          </span>
+      <div className="md:justify-normal mb-0 flex w-full justify-between md:mb-4 md:flex-col md:gap-2">
+        <span className="text-lg font-bold text-white md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
+          Total Value Locked
+        </span>
         {props.stats ? (
           <div className="flex items-center gap-2 md:gap-1">
-            <p className="text-lg font-bold md:text-2xl md:leading-none">{props.stats.tvl}</p>
+            <p className="text-lg font-bold md:text-2xl md:leading-none">
+              {props.stats.tvl}
+            </p>
             <p className="text-xs font-bold md:text-base">
               <PercentChange value={props.stats.tvlChange} />
             </p>

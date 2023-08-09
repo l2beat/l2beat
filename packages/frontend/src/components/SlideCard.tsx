@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { forwardRef, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 interface SlideCardProps {
   className?: string
@@ -54,9 +54,7 @@ function SlideCardContent(props: SlideCardContentProps) {
     <div className="SlideCardContent fixed left-0 bottom-0 z-60 w-full whitespace-normal rounded-t-2xl bg-zinc-800">
       <div className="m-4 flex flex-wrap gap-4">
         <h2 className="text-3xl font-bold">{props.title}</h2>
-        <div className="overflow-y-scroll max-h-[35rem]">
-        {props.children}
-        </div>
+        <div className="max-h-[35rem] overflow-y-scroll">{props.children}</div>
       </div>
       <div className="flex h-[6rem] w-full items-center justify-center bg-[#373B41]">
         <div className="flex h-[3rem] items-center justify-center rounded-md border border-pink-900 p-6 px-4">

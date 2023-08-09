@@ -6,15 +6,16 @@ import { ChevronDownIcon } from '../icons'
 import { CloseIcon } from '../icons/CloseIcon'
 import { VerticalSeparator } from '../VerticalSeparator'
 
-export interface DesktopTokenControl {
+export interface TokenControl {
   address: string
   symbol: string
   name: string
   assetType: ValueType
   tvlEndpoint: string
 }
+
 export interface DesktopTokenControlsProps {
-  tokens?: DesktopTokenControl[]
+  tokens?: TokenControl[]
 }
 
 export function DesktopTokenControls({ tokens }: DesktopTokenControlsProps) {
@@ -23,7 +24,7 @@ export function DesktopTokenControls({ tokens }: DesktopTokenControlsProps) {
   }
 
   return (
-    <div className="hidden md:flex h-full gap-6">
+    <div className="hidden h-full gap-6 md:flex">
       <div />
       <VerticalSeparator />
       <div className="flex flex-wrap items-baseline justify-start gap-x-4">
@@ -74,7 +75,7 @@ function SelectedTokenButton() {
   )
 }
 
-function TokenCell({ token }: { token: DesktopTokenControl }) {
+function TokenCell({ token }: { token: TokenControl }) {
   return (
     <label className="flex cursor-pointer select-none items-center gap-1.5">
       <input
@@ -97,7 +98,7 @@ function TokenCell({ token }: { token: DesktopTokenControl }) {
   )
 }
 
-function TokenModal({ tokens }: { tokens: DesktopTokenControl[] }) {
+function TokenModal({ tokens }: { tokens: TokenControl[] }) {
   const parts = [
     {
       title: 'Natively Minted Tokens',

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { ExpandIcon } from '../icons/Expand'
 import { SlideCard } from '../SlideCard'
 
@@ -13,7 +14,7 @@ export function MobileTokenControls() {
             <ExpandIcon />
           </>
         }
-        title={"Chose a token"}
+        title={'Chose a token'}
       >
         <div className="w-full">
           <p>
