@@ -1,1 +1,1 @@
-export type AssetType = "CBV" | "EBV" | "NMV"
+export type AssetType = 'CBV' | 'EBV' | 'NMV'
