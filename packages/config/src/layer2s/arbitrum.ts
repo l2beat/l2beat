@@ -93,7 +93,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
   },
   {
     id: AssetId('arbitrum:usdc-usd-coin'),
-    name: 'Arbitrum',
+    name: 'USD Coin',
     coingeckoId: CoingeckoId('usd-coin'),
     symbol: 'USDC',
     address: EthereumAddress('0xaf88d065e77c8cC2239327C5EDb3A432268e5831'),
