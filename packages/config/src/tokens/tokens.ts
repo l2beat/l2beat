@@ -36,7 +36,7 @@ you are out of luck. We will fix this in the future.
 
 */
 
-import { AssetId, Token, ValueType } from '@l2beat/shared-pure'
+import { AssetId, Token } from '@l2beat/shared-pure'
 
 import { layer2s } from '../layer2s'
 import { getCanonicalTokens } from './types'
