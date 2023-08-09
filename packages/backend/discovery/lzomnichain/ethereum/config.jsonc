@@ -68,6 +68,13 @@
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
           "valueKey": "chainId"
         },
+        "defaultAdapterParams": {
+          "type": "stateFromEvent",
+          "event": "SetDefaultAdapterParamsForChainId",
+          "returnParams": ["chainId", "proofType", "adapterParams"],
+          "groupBy": "chainId",
+          "onlyValue": true
+        },
         "INBOUND_LIBRARIES": {
           "type": "arrayFromOneEvent",
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
