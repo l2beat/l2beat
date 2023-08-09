@@ -63,11 +63,6 @@
           "groupBy": "chainId",
           "onlyValue": true
         },
-        "CHAIN_IDS": {
-          "type": "arrayFromOneEvent",
-          "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
-          "valueKey": "chainId"
-        },
         "defaultAdapterParams": {
           "type": "stateFromEvent",
           "event": "SetDefaultAdapterParamsForChainId",
@@ -80,46 +75,6 @@
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
           "valueKey": "lib",
           "ignoreRelative": true
-        },
-        "ETHEREUM_DEFAULT_CONFIG": {
-          "type": "call",
-          "method": "defaultAppConfig",
-          "args": [101]
-        },
-        "BNB_DEFAULT_CONFIG": {
-          "type": "call",
-          "method": "defaultAppConfig",
-          "args": [102]
-        },
-        "AVALANCHE_DEFAULT_CONFIG": {
-          "type": "call",
-          "method": "defaultAppConfig",
-          "args": [106]
-        },
-        "APTOS_DEFAULT_CONFIG": {
-          "type": "call",
-          "method": "defaultAppConfig",
-          "args": [108]
-        },
-        "POLYGON_DEFAULT_CONFIG": {
-          "type": "call",
-          "method": "defaultAppConfig",
-          "args": [109]
-        },
-        "ARBITRUM_DEFAULT_CONFIG": {
-          "type": "call",
-          "method": "defaultAppConfig",
-          "args": [110]
-        },
-        "OPTIMISM_DEFAULT_CONFIG": {
-          "type": "call",
-          "method": "defaultAppConfig",
-          "args": [111]
-        },
-        "FANTOM_DEFAULT_CONFIG": {
-          "type": "call",
-          "method": "defaultAppConfig",
-          "args": [112]
         }
       },
       "ignoreInWatchMode": ["CHAIN_IDS"]

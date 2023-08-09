@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "ethereum",
   "blockNumber": 17876391,
-  "configHash": "0xf5cd5b67efa4487876d1a1e10b137eebc30b212376b7a9b054f1042a5ff5f6cc",
+  "configHash": "0xa8a91f98534b5ed8dd0253b7cd79d5ea34369f6dd98b59575e0d5de9ec52f10d",
   "version": 1,
   "contracts": [
     {
@@ -40,43 +40,6 @@
         "type": "immutable"
       },
       "values": {
-        "APTOS_DEFAULT_CONFIG": [
-          1,
-          500000,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          2,
-          15,
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ],
-        "ARBITRUM_DEFAULT_CONFIG": [
-          1,
-          20,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          1,
-          15,
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ],
-        "AVALANCHE_DEFAULT_CONFIG": [
-          1,
-          12,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          1,
-          15,
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ],
-        "BNB_DEFAULT_CONFIG": [
-          1,
-          20,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          1,
-          15,
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ],
-        "CHAIN_IDS": [
-          102, 109, 114, 126, 110, 111, 106, 116, 101, 115, 112, 108, 125, 145,
-          151, 150, 138, 12, 2, 153, 155, 156, 154, 149, 166, 158, 165, 167,
-          176, 175, 159, 173, 161, 177, 184, 183, 181
-        ],
         "chainAddressSizeMap": {
           "101": 20,
           "102": 20,
@@ -524,22 +487,6 @@
           }
         },
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-        "ETHEREUM_DEFAULT_CONFIG": [
-          1,
-          15,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          1,
-          15,
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ],
-        "FANTOM_DEFAULT_CONFIG": [
-          1,
-          5,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          1,
-          15,
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ],
         "INBOUND_LIBRARIES": [
           "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
           "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
@@ -547,23 +494,7 @@
         "layerZeroToken": "0x0000000000000000000000000000000000000000",
         "localChainId": 101,
         "nonceContract": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-        "OPTIMISM_DEFAULT_CONFIG": [
-          1,
-          20,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          1,
-          15,
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ],
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
-        "POLYGON_DEFAULT_CONFIG": [
-          1,
-          512,
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          1,
-          15,
-          "0x5a54fe5234E811466D5366846283323c954310B2"
-        ],
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
         "ulnLookup": {
@@ -683,18 +614,6 @@
       "derivedName": "Endpoint"
     },
     {
-      "name": "LayerZero_Relayer",
-      "address": "0x902F09715B6303d4173037652FA7377e5b98089E",
-      "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x902F09715B6303d4173037652FA7377e5b98089E,0xaF34771b16960ea77484A866a34CCDAFDc913D9C",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xaF34771b16960ea77484A866a34CCDAFDc913D9C",
-        "admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
-      },
-      "derivedName": ""
-    },
-    {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
       "code": "https://etherscan.deth.net/address/0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
@@ -703,17 +622,6 @@
       },
       "values": {
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-      "code": "https://etherscan.deth.net/address/0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
     },
     {
@@ -766,7 +674,6 @@
     "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
     "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
     "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
-    "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
     "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
     "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
     "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
@@ -938,27 +845,7 @@
       "function transferOwnership(address newOwner)",
       "function uaConfigLookup(address) view returns (uint16 sendVersion, uint16 receiveVersion, address receiveLibraryAddress, address sendLibrary)"
     ],
-    "0x902F09715B6303d4173037652FA7377e5b98089E": [
-      "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8": [
-      "constructor(address owner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9": [
       "constructor(address owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
