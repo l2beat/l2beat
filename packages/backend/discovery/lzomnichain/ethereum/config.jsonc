@@ -79,6 +79,14 @@
           "multipleInGroup": true,
           "ignoreRelative": true
         },
+        "supportedOutboundProof": {
+          "type": "stateFromEvent",
+          "event": "EnableSupportedOutboundProof",
+          "returnParams": ["chainId", "proofType"],
+          "groupBy": "chainId",
+          "onlyValue": true,
+          "multipleInGroup": true
+        },
         "INBOUND_LIBRARIES": {
           "type": "arrayFromOneEvent",
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
