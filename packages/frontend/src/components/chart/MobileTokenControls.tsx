@@ -10,8 +10,10 @@ export function MobileTokenControls() {
       <SlideCard
         button={
           <>
-            Select
-            <ExpandIcon />
+            <div className="flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-1 text-base dark:bg-gray-750">
+              Select
+              <ExpandIcon />
+            </div>
           </>
         }
         title={'Chose a token'}

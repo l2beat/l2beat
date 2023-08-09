@@ -7,6 +7,7 @@ import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
+import { configureSlideCards } from './configureSlideCard'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
@@ -18,6 +19,7 @@ configureSidebarMenu()
 configureTooltips()
 configureCharts()
 configureDropdowns()
+configureSlideCards()
 configureRosetteOverlay()
 configureFloatingBanner()
 configureHoverableDropdown()
