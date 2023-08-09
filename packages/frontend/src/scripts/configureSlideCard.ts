@@ -18,10 +18,12 @@ export function configureSlideCards() {
 
     closeButton.addEventListener('click', () => {
       content.classList.add('translate-y-full')
+      document.body.classList.remove('w-screen', 'h-screen', 'overflow-hidden')
     })
 
     openButton.addEventListener('click', () => {
       content.classList.remove('translate-y-full')
+      document.body.classList.add('w-screen', 'h-screen', 'overflow-hidden')
     })
   }
 }

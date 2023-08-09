@@ -51,24 +51,23 @@ interface SlideCardContentProps {
 
 function SlideCardContent(props: SlideCardContentProps) {
   return (
-    <div className="SlideCard-Content transition-300 fixed left-0 bottom-0 z-60 w-full translate-y-full whitespace-normal rounded-t-2xl bg-zinc-800 transition-transform ease-out">
-      <div className="m-4 flex flex-wrap gap-4">
-        <h2 className="text-3xl font-bold">{props.title}</h2>
-        <div>
-          <div className="max-h-[35rem] overflow-y-scroll scroll-smooth">
+    <div className="SlideCard-Content transition-300 fixed left-0 top-0 bottom-0 z-999 flex h-[100vh] w-full translate-y-full flex-col whitespace-normal bg-black/50 transition-transform ease-out">
+      <div className="h-[10%]" />
+      <div className="flex h-[90%] flex-col rounded-t-2xl bg-zinc-800">
+        <h2 className="m-4 mb-0 text-3xl font-bold">{props.title}</h2>
+        <div className="relative m-4 flex grow flex-wrap">
+          <div className="absolute inset-0 overflow-auto scroll-smooth">
             <div className="sticky inset-x-0 top-0 h-4 bg-gradient-to-b from-zinc-800 via-zinc-800/60 to-transparent" />
             {props.children}
             <div className="sticky inset-x-0 bottom-0 h-8 bg-gradient-to-t from-zinc-800 via-zinc-800/60 to-transparent" />
           </div>
         </div>
       </div>
-      <div className="flex h-[6rem] w-full items-center justify-center bg-[#373B41]">
-        <div className="flex h-[3rem] items-center justify-center rounded-md border border-pink-900 p-6 px-4">
+      <div className="flex h-[12%] w-full items-center justify-center bg-[#373B41]">
+        <div className="flex h-[6%] items-center justify-center rounded-md border border-pink-900 p-[6%] px-4">
           <SlideCardToggle type="close"> Close the overlay </SlideCardToggle>
         </div>
       </div>
     </div>
   )
 }
-
-//background: linear-gradient(180deg, rgba(39, 42, 47, 0.00) 0%, rgba(39, 42, 47, 0.60) 51.04%, #272A2F 100%);
