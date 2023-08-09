@@ -21,7 +21,7 @@ export async function singleDiscovery(
   }
 
   const projectConfig = new DiscoveryConfig({
-    name: 'Single Discovery',
+    name: config.singleDiscovery.address.toString(),
     chain: config.chain.chainId,
     initialAddresses: [config.singleDiscovery.address],
   })
