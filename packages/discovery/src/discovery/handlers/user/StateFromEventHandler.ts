@@ -16,6 +16,7 @@ export const StateFromEventDefinition = z.strictObject({
   returnParams: z.array(z.string()),
   groupBy: z.optional(z.string()),
   onlyValue: z.optional(z.boolean()),
+  multipleInGroup: z.optional(z.boolean()),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -82,10 +83,20 @@ export class StateFromEventHandler implements Handler {
             Reflect.deleteProperty(item, groupBy)
           }
 
-          if (Reflect.ownKeys(item).length === 1) {
-            grouping[key] = Reflect.get(item, Reflect.ownKeys(item)[0])
+          const value =
+            Reflect.ownKeys(item).length === 1
+              ? Reflect.get(item, Reflect.ownKeys(item)[0])
+              : item
+
+          if (grouping[key] === undefined || !this.definition.multipleInGroup) {
+            grouping[key] = value
           } else {
-            grouping[key] = item
+            const group = grouping[key]
+            if (Array.isArray(group)) {
+              group.push(value)
+            } else {
+              grouping[key] = [grouping[key], value]
+            }
           }
 
           return grouping

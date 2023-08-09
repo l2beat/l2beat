@@ -70,6 +70,15 @@
           "groupBy": "chainId",
           "onlyValue": true
         },
+        "inboundProofLibrary": {
+          "type": "stateFromEvent",
+          "event": "AddInboundProofLibraryForChain",
+          "returnParams": ["chainId", "lib"],
+          "groupBy": "chainId",
+          "onlyValue": true,
+          "multipleInGroup": true,
+          "ignoreRelative": true
+        },
         "INBOUND_LIBRARIES": {
           "type": "arrayFromOneEvent",
           "event": "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
