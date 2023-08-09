@@ -1,0 +1,90 @@
+import { EtherscanLikeClient, HttpClient, Logger } from '@l2beat/shared'
+import { execSync } from 'child_process'
+import { providers } from 'ethers'
+import { writeFile } from 'fs/promises'
+import { DiscoveryCliConfig } from './config/config.discovery'
+import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
+import { discover as discovery } from './discovery/runDiscovery'
+import { rimraf } from 'rimraf'
+import { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
+import { DiscoveryLogger } from './discovery/DiscoveryLogger'
+import { mkdirp } from 'mkdirp'
+import { dirname } from 'path'
+import { getSourceName } from './discovery/output/saveDiscoveryResult'
+
+export async function singleDiscovery(
+  config: DiscoveryCliConfig,
+  logger: Logger,
+) {
+  if (!config.singleDiscovery) {
+    return
+  }
+
+  const { address } = config.singleDiscovery
+
+  const projectConfig = new DiscoveryConfig({
+    name: 'Single Discovery',
+    chain: config.chain.chainId,
+    initialAddresses: [address],
+  })
+
+  const chainConfig = config.chain
+
+  const http = new HttpClient()
+  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
+  const etherscanClient = new EtherscanLikeClient(
+    http,
+    chainConfig.etherscanUrl,
+    chainConfig.etherscanApiKey,
+    chainConfig.minTimestamp,
+  )
+  const blockNumber = await provider.getBlockNumber()
+
+  logger = logger.for('SingleDiscovery')
+  logger.info('Starting')
+
+  const results = await discovery(
+    provider,
+    etherscanClient,
+    projectConfig,
+    DiscoveryLogger.CLI,
+    blockNumber,
+  )
+  const discoveryOutput = toDiscoveryOutput(
+    address.toString(),
+    config.singleDiscovery.chainId,
+    projectConfig.hash,
+    blockNumber,
+    results,
+  )
+  const discoveryOutput2 = JSON.stringify(discoveryOutput, null, 2)
+
+  const root = `./cache/single-discovery`
+  await mkdirp(root)
+
+  const jsonFilePath = `${root}/discovered.json`
+  await writeFile(jsonFilePath, discoveryOutput2)
+
+  await rimraf(`${root}/code`)
+  for (const result of results) {
+    if (result.type === 'EOA') {
+      continue
+    }
+    for (const [i, files] of result.sources.entries()) {
+      for (const [file, content] of Object.entries(files)) {
+        const codebase = getSourceName(i, result.sources.length)
+        const path = `${root}/code/${result.name}${codebase}/${file}`
+        await mkdirp(dirname(path))
+        await writeFile(path, content)
+      }
+    }
+  }
+
+  logger.info(
+    'Opening discovered.json in the browser, please use firefox or other browser with JSON viewer extension',
+  )
+  logger.info(
+    'The discovered.json & code can be found in "packages/backend/cache/single-discovery"',
+  )
+  execSync(`open ${jsonFilePath}`)
+}
