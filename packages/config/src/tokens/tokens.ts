@@ -43,9 +43,9 @@ import { getCanonicalTokens } from './types'
 
 const canonicalTokenList: Token[] = getCanonicalTokens()
 
-export const tokenList: Token[] = canonicalTokenList.concat(
-  layer2s.map((l2) => l2.config.tokenList ?? []).flat(),
-)
+export const tokenList: Token[] = canonicalTokenList
+  .concat(layer2s.map((l2) => l2.config.tokenList ?? []).flat())
+  .sort((a, b) => a.name.localeCompare(b.name))
 
 const tokenMap = new Map(tokenList.map((t) => [t.symbol, t] as const))
 
