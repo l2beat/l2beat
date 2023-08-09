@@ -36,7 +36,7 @@ you are out of luck. We will fix this in the future.
 
 */
 
-import { AssetId, Token } from '@l2beat/shared-pure'
+import { AssetId, Token, ValueType } from '@l2beat/shared-pure'
 
 import { layer2s } from '../layer2s'
 import { getCanonicalTokens } from './types'
@@ -47,7 +47,12 @@ export const tokenList: Token[] = canonicalTokenList
   .concat(layer2s.map((l2) => l2.config.tokenList ?? []).flat())
   .sort((a, b) => a.name.localeCompare(b.name))
 
-const tokenMap = new Map(tokenList.map((t) => [t.symbol, t] as const))
+const tokenMap = new Map(
+  tokenList
+    //TODO: remove this filter once the new modal is introduced
+    .filter((t) => t.type !== ValueType.EBV)
+    .map((t) => [t.symbol, t] as const),
+)
 
 export function getTokenBySymbol(symbol: string) {
   const token = tokenMap.get(symbol)
@@ -57,7 +62,12 @@ export function getTokenBySymbol(symbol: string) {
   return token
 }
 
-const tokenMapByAssetId = new Map(tokenList.map((t) => [t.id, t] as const))
+const tokenMapByAssetId = new Map(
+  tokenList
+    //TODO: remove this filter once the new modal is introduced
+    .filter((t) => t.type !== ValueType.EBV)
+    .map((t) => [t.id, t] as const),
+)
 
 export function safeGetTokenByAssetId(assetId: AssetId) {
   return tokenMapByAssetId.get(assetId)
