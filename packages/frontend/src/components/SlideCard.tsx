@@ -51,7 +51,7 @@ interface SlideCardContentProps {
 
 function SlideCardContent(props: SlideCardContentProps) {
   return (
-    <div className="SlideCard-Content transition-300 fixed left-0 top-0 bottom-0 z-999 flex h-[100vh] w-full translate-y-full flex-col whitespace-normal bg-black/50 transition-transform ease-out">
+    <div className="SlideCard-Content transition-300 fixed left-0 top-0 bottom-0 z-999 flex h-[100dvh] w-full translate-y-full flex-col whitespace-normal bg-black/50 transition-transform ease-out">
       <div className="h-[10%]" />
       <div className="flex h-[90%] flex-col rounded-t-2xl bg-zinc-800">
         <h2 className="m-4 mb-0 text-3xl font-bold">{props.title}</h2>

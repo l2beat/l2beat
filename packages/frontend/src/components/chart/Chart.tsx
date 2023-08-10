@@ -133,7 +133,7 @@ export function Chart({
           {hasTvl && !hasDetailedTvl ? (
             <TokenControlsToBeRemoved tokens={tokens} />
           ) : (
-            <MobileTokenControls />
+            <MobileTokenControls tokens={tokens}/>
           )}
         </div>
       </section>
