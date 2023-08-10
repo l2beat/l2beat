@@ -2,10 +2,10 @@ import React from 'react'
 
 import { Config } from '../../build/config'
 import { MenuOpenIcon } from '../icons'
+import { FloatingBanner } from '../l2warsaw/FloatingBanner'
+import { TopBar } from '../l2warsaw/TopBar'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
-import { ReportBar } from '../report/ReportBar'
-import { ReportFloatingBanner } from '../report/ReportFloatingBanner'
 import { Banner } from './Banner'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
@@ -60,8 +60,8 @@ export function Navbar(props: NavbarProps) {
       {props.showBanner && <Banner />}
       {props.showMultisigReport && (
         <>
-          <ReportBar />
-          <ReportFloatingBanner />
+          <TopBar />
+          <FloatingBanner />
         </>
       )}
       <div className="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16">
