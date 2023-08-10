@@ -1,0 +1,15 @@
+{
+  "name": "@l2beat/experiment",
+  "version": "0.1.0",
+  "private": true,
+  "main": "script.js",
+  "sideEffects": false,
+  "scripts": {
+    "start": "node -r esbuild-register script.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "papaparse": "^5.4.1"
+  },
+  "devDependencies": {}
+}
