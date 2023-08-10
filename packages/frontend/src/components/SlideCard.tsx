@@ -53,17 +53,17 @@ function SlideCardContent(props: SlideCardContentProps) {
   return (
     <div className="SlideCard-Content transition-300 fixed left-0 top-0 bottom-0 z-999 flex h-[100dvh] w-full translate-y-full flex-col whitespace-normal bg-black/50 transition-transform ease-out">
       <div className="h-[10%]" />
-      <div className="flex h-[90%] flex-col rounded-t-2xl bg-zinc-800">
+      <div className="flex h-[90%] flex-col rounded-t-2xl bg-gray-100 dark:bg-zinc-800">
         <h2 className="m-4 mb-0 text-3xl font-bold">{props.title}</h2>
         <div className="relative m-4 flex grow flex-wrap">
           <div className="absolute inset-0 overflow-auto scroll-smooth">
-            <div className="sticky inset-x-0 top-0 h-4 bg-gradient-to-b from-zinc-800 via-zinc-800/60 to-transparent" />
+            <div className="sticky inset-x-0 top-0 h-4 bg-gradient-to-b from from-gray-100 via-gray-100/60 dark:from-zinc-800 dark:via-zinc-800/60 to-transparent" />
             {props.children}
-            <div className="sticky inset-x-0 bottom-0 h-8 bg-gradient-to-t from-zinc-800 via-zinc-800/60 to-transparent" />
+            <div className="sticky inset-x-0 bottom-0 h-8 bg-gradient-to-t from-gray-100 via-gray-100/60 dark:from-zinc-800 dark:via-zinc-800/60 to-transparent" />
           </div>
         </div>
       </div>
-      <div className="flex h-[12%] w-full items-center justify-center bg-[#373B41]">
+      <div className="flex h-[12%] w-full items-center justify-center bg-gray-200 dark:bg-[#373B41] ">
         <div className="flex h-[6%] items-center justify-center rounded-md border border-pink-900 p-[6%] px-4">
           <SlideCardToggle type="close"> Close the overlay </SlideCardToggle>
         </div>
