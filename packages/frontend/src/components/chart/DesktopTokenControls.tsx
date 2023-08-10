@@ -58,7 +58,7 @@ function SelectButton() {
   )
 }
 
-function SelectedTokenButton() {
+export function SelectedTokenButton() {
   return (
     <label
       className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md bg-white px-2 text-base transition-all dark:bg-black"
