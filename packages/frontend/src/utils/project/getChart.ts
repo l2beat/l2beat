@@ -21,7 +21,7 @@ export function getChart(
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
     detailedTvlEndpoint: `/api/${project.display.slug}-detailed-tvl.json`,
     activityEndpoint: `/api/activity/${project.display.slug}.json`,
-    tokens: getTokens(project.id, tvlApiResponse),
+    tokens: getTokens(project.id, tvlApiResponse, config?.features.detailedTvl),
     hasActivity:
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],
@@ -34,6 +34,7 @@ export function getChart(
 function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  hasDetailedTVL: boolean,
 ): TokenControl[] {
   const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens
 
@@ -46,12 +47,16 @@ function getTokens(
       const name = token?.name
       const address = token?.address
       if (symbol && name && address) {
+        const tvlEndpoint = hasDetailedTVL
+          ? `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${valueType.toString()}`
+          : `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`
+
         return {
           address: address.toString(),
           symbol,
           name,
           assetType: valueType,
-          tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${valueType.toString()}`,
+          tvlEndpoint,
           tvl: usdValue,
         }
       }

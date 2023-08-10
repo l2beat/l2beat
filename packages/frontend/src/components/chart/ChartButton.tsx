@@ -1,3 +1,4 @@
+import { ValueType } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
@@ -6,6 +7,7 @@ interface Props {
   name: string
   value: string
   tvlEndpoint?: string
+  assetType?: ValueType
   children?: ReactNode
   className?: string
 }
@@ -26,6 +28,7 @@ export function ChartButton(props: Props) {
         name={props.name}
         value={props.value}
         data-tvl-endpoint={props.tvlEndpoint}
+        data-asset-type={props.assetType}
         autoComplete="off"
       />
       <span className="relative block pb-1 outline-current after:absolute after:left-0 after:bottom-0.5 after:h-0.5 after:w-full peer-checked:font-bold peer-checked:after:bg-current peer-focus-visible:outline-dotted peer-focus-visible:outline-1">
