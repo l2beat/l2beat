@@ -68,7 +68,7 @@ function SelectedTokenButton() {
         autoComplete="off"
         className="Dropdown-Button peer hidden"
       />
-      <p>ARTH</p>
+      <p>NO TOKEN</p>
       <CloseIcon className="h-3 w-3 fill-gray-550 dark:fill-gray-50" />
     </label>
   )
