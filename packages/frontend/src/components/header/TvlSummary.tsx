@@ -37,7 +37,7 @@ export function TvlSummary(props: TvlSummaryProps) {
   return props.detailedTvlEnabled ? (
     <div className="w-full bg-gray-100 p-4 md:w-[30%] md:rounded-lg md:px-6 md:py-5 md:dark:bg-zinc-800">
       <div className="md:justify-normal mb-0 flex w-full justify-between md:mb-4 md:flex-col md:gap-2">
-        <span className="text-lg font-bold text-white md:text-xs md:font-normal text-gray-500 dark:text-gray-600">
+        <span className="text-lg font-bold text-white text-gray-500 dark:text-gray-600 md:text-xs md:font-normal">
           Total Value Locked
         </span>
         {props.stats ? (

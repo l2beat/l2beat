@@ -57,9 +57,9 @@ function SlideCardContent(props: SlideCardContentProps) {
         <h2 className="m-4 mb-0 text-3xl font-bold">{props.title}</h2>
         <div className="relative m-4 flex grow flex-wrap">
           <div className="absolute inset-0 overflow-auto scroll-smooth">
-            <div className="sticky inset-x-0 top-0 h-4 bg-gradient-to-b from from-gray-100 via-gray-100/60 dark:from-zinc-800 dark:via-zinc-800/60 to-transparent" />
+            <div className="from sticky inset-x-0 top-0 h-4 bg-gradient-to-b from-gray-100 via-gray-100/60 to-transparent dark:from-zinc-800 dark:via-zinc-800/60" />
             {props.children}
-            <div className="sticky inset-x-0 bottom-0 h-8 bg-gradient-to-t from-gray-100 via-gray-100/60 dark:from-zinc-800 dark:via-zinc-800/60 to-transparent" />
+            <div className="sticky inset-x-0 bottom-0 h-8 bg-gradient-to-t from-gray-100 via-gray-100/60 to-transparent dark:from-zinc-800 dark:via-zinc-800/60" />
           </div>
         </div>
       </div>
