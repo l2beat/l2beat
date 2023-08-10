@@ -61,9 +61,11 @@ export function DetailsHeader(props: HeaderProps) {
             )}
             {props.title}
           </h1>
-          {props.isArchived && <ArchivedBar className='w-full mx-4 md:mx-0'/>}
-          {props.isUpcoming && <UpcomingBar className='w-full mx-4 md:mx-0'/>}
-          {props.showProjectUnderReview && <UnderReviewBar className='w-full mx-4 md:mx-0'/>}
+          {props.isArchived && <ArchivedBar className="mx-4 w-full md:mx-0" />}
+          {props.isUpcoming && <UpcomingBar className="mx-4 w-full md:mx-0" />}
+          {props.showProjectUnderReview && (
+            <UnderReviewBar className="mx-4 w-full md:mx-0" />
+          )}
           {props.warning && (
             <WarningBar
               text={
@@ -78,7 +80,7 @@ export function DetailsHeader(props: HeaderProps) {
               }
               color="yellow"
               isCritical={false}
-              className="items-center justify-center py-2.5 px-2.5 text-xs md:px-4 md:text-base w-full mx-4 md:mx-0"
+              className="mx-4 w-full items-center justify-center py-2.5 px-2.5 text-xs md:mx-0 md:px-4 md:text-base"
             />
           )}
           <Summary

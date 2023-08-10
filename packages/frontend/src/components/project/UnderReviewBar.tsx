@@ -9,7 +9,7 @@ export function UnderReviewBar({ className }: { className?: string }) {
       className={cx(
         'flex justify-center py-2.5 md:px-0',
         'rounded-lg bg-yellow-700/20',
-        className
+        className,
       )}
     >
       <span className="flex flex-row">
