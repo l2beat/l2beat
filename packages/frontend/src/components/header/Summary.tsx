@@ -75,7 +75,7 @@ export function Summary(props: SummaryProps) {
           )
         })}
       </div>
-      <div className="px-4 md:hidden md:px-0">
+      <div className="px-4 md:hidden md:px-0 w-full">
         <MobileProjectLinks projectLinks={props.links} />
       </div>
     </>
