@@ -21,7 +21,7 @@ export function getChart(
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
     detailedTvlEndpoint: `/api/${project.display.slug}-detailed-tvl.json`,
     activityEndpoint: `/api/activity/${project.display.slug}.json`,
-    tokens: getTokens(project.id, tvlApiResponse, config?.features.detailedTvl),
+    tokens: getTokens(project.id, tvlApiResponse, config?.features.detailedTvl ?? false),
     hasActivity:
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],
