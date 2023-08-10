@@ -1,3 +1,4 @@
+import { ValueType } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
@@ -9,6 +10,7 @@ export interface TokenControl {
   address: string
   symbol: string
   name: string
+  assetType: ValueType
   tvlEndpoint: string
 }
 export interface TokenControlsProps {
@@ -27,7 +29,7 @@ export function TokenControls({ tokens }: TokenControlsProps) {
       <div className="flex flex-wrap items-baseline justify-start gap-x-4">
         <span>View another token</span>
         <div className="Dropdown">
-          <div className="rounded-lg bg-gray-100 px-1 py-1 dark:bg-gray-750">
+          <div className="rounded-lg bg-gray-200 px-1 py-1 dark:bg-gray-750">
             <SelectButton />
             <SelectedTokenButton />
           </div>
@@ -58,7 +60,7 @@ function SelectButton() {
 function SelectedTokenButton() {
   return (
     <label
-      className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md px-2 text-base transition-all dark:bg-black"
+      className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md bg-white px-2 text-base transition-all dark:bg-black"
       data-role="chart-token-chosen"
     >
       <input
@@ -66,7 +68,7 @@ function SelectedTokenButton() {
         autoComplete="off"
         className="Dropdown-Button peer hidden"
       />
-      <p>ARTH</p>
+      <p>NO TOKEN</p>
       <CloseIcon className="h-3 w-3 fill-gray-550 dark:fill-gray-50" />
     </label>
   )
@@ -82,6 +84,7 @@ function TokenCell({ token }: { token: TokenControl }) {
         autoComplete="off"
         value={token.symbol}
         data-tvl-endpoint={token.tvlEndpoint}
+        data-asset-type={token.assetType}
       />
       <img
         src={`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${token.address}/logo.png`}
@@ -99,17 +102,23 @@ function TokenModal({ tokens }: { tokens: TokenControl[] }) {
     {
       title: 'Natively Minted Tokens',
       titleColor: 'text-[#FF6DCD]',
-      tokens: tokens.slice(0, 5),
+      tokens: tokens
+        .filter((t) => t.assetType.toString() === 'NMV')
+        .slice(0, 15),
     },
     {
       title: 'Externally Bridged Tokens',
       titleColor: 'text-yellow-200',
-      tokens: tokens.slice(15, 25),
+      tokens: tokens
+        .filter((t) => t.assetType.toString() === 'EBV')
+        .slice(0, 15),
     },
     {
       title: 'Canonically Bridged Tokens',
       titleColor: 'text-[#D98EFF]',
-      tokens: tokens.slice(30, 45),
+      tokens: tokens
+        .filter((t) => t.assetType.toString() === 'CBV')
+        .slice(0, 15),
     },
   ]
 
@@ -119,14 +128,14 @@ function TokenModal({ tokens }: { tokens: TokenControl[] }) {
       data-role="chart-token-modal"
     >
       <hr className="h-1.5 border-t-0" />
-      <div className="rounded-lg bg-gray-100 p-6 dark:bg-gray-750">
+      <div className="rounded-lg bg-gray-200 p-6 dark:bg-gray-750">
         <div className="flex flex-col gap-3">
           {parts.map((p, i) => (
             <div key={i}>
               <div className={`text-sm font-bold ${p.titleColor}`}>
                 {p.title}
               </div>
-              <HorizontalSeparator className="mb-4 dark:border-gray-650" />
+              <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
               <div
                 className="grid grid-cols-3 gap-y-3 gap-x-6"
                 data-role="chart-token-controls"

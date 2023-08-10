@@ -4,7 +4,7 @@ import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
 import { getYAxis } from './getYAxis'
 
-export function calculateDetailedTvlView(
+export function calculateRegularDetailedTvlView(
   data: State['data'],
   controls: State['controls'],
 ): State['view'] | undefined {

@@ -1,3 +1,5 @@
+import { AssetType } from '@l2beat/shared-pure'
+
 import { ChartElements } from '../elements'
 import { Message, ViewChangedMessage } from '../messages'
 import { onCheckboxChange } from './onCheckboxChange'
@@ -26,11 +28,22 @@ export function setupControls(
   })
 
   onRadioChange(elements.controls.tokens, (control) => {
-    if (control.dataset.tvlEndpoint) {
+    let assetType: AssetType = 'CBV'
+    switch (control.dataset.assetType) {
+      case 'EBV':
+        assetType = 'EBV'
+        break
+      case 'NMV':
+        assetType = 'NMV'
+        break
+    }
+
+    if (control.dataset.tvlEndpoint && control.dataset.assetType) {
       dispatch({
         type: 'TokenChanged',
         token: control.value,
         tokenEndpoint: control.dataset.tvlEndpoint,
+        assetType,
       })
     }
   })

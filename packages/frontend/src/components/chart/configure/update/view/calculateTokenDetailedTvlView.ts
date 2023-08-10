@@ -5,14 +5,14 @@ import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
 import { getYAxis } from './getYAxis'
 
-export function calculateTokenTvlView(
+export function calculateTokenDetailedTvlView(
   data: State['data'],
   controls: State['controls'],
 ): State['view'] | undefined {
   if (!controls.token || !controls.assetType) {
     return undefined
   }
-  // reassigned for callbacks. Thanks typescript :(
+
   const token = controls.token
 
   const key = getTokenTvlKey(token, controls.assetType)
@@ -26,21 +26,25 @@ export function calculateTokenTvlView(
   const { labels, getY } = getYAxis(
     entries.map((x) => x[1]),
     controls.isLogScale,
-    (x) => formatCurrency(x, token),
+    (x) => formatCurrency(x, controls.currency),
   )
 
-  const points = entries.map(([timestamp, balance, usd], i) => ({
+  const points = entries.map(([timestamp, balance, valueUsd], i) => ({
     x: i / (entries.length - 1),
     y: getY(balance),
     date: formatTimestamp(timestamp, true),
     balance,
     symbol: token,
-    usd,
+    usd: valueUsd,
     milestone: data.milestones[timestamp],
   }))
 
   return {
-    chart: { type: 'TokenTvlChart', points },
+    chart: {
+      type: 'TokenDetailedTvlChart',
+      assetType: controls.assetType,
+      points,
+    },
     dateRange,
     labels,
     showHoverAtIndex: undefined,
