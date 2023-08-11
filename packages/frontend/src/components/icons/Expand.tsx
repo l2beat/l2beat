@@ -11,7 +11,7 @@ export function ExpandIcon(props: SVGAttributes<SVGElement>) {
       height="12"
       viewBox="0 0 12 12"
       className={classNames(
-        'my-auto stroke-black dark:stroke-white',
+        'my-auto fill-black dark:fill-white',
         className,
       )}
       {...rest}
