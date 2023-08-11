@@ -5,7 +5,7 @@
   "main": "script.js",
   "sideEffects": false,
   "scripts": {
-    "start": "node -r esbuild-register script.js"
+    "start": "node -r esbuild-register src/index.js"
   },
   "dependencies": {
     "node-fetch": "^2.6.7",
