@@ -13,22 +13,30 @@ async function main() {
   const tokens = await getAllTokens();
   const topTokens = await getTopTokens(8);
 
-  const platforms = new Set();
-  for (const entry of tokens) {
-    for (const platform of Object.keys(entry.platforms)) {
-      platforms.add(platform);
-    }
+  // const platforms = new Set();
+  // for (const entry of tokens) {
+  //   for (const platform of Object.keys(entry.platforms)) {
+  //     platforms.add(platform);
+  //   }
+  // }
+  // console.log([...platforms].filter((x) => x.includes("p")).sort());
+
+  const toCheck = [
+    { name: "polygon-zkevm", key: "polygon-zkevm" },
+    { name: "arbitrum", key: "arbitrum-one" },
+    { name: "optimism", key: "optimistic-ethereum" },
+    { name: "zksync-era", key: "zksync" },
+    { name: "base", key: "base" },
+    { name: "mantle", key: "mantle" },
+    { name: "metis", key: "metis-andromeda" },
+    { name: "linea", key: "linea" },
+    { name: "boba", key: "boba" },
+  ];
+
+  for (const { name, key } of toCheck) {
+    const externalTokens = getExternalTokens(tokens, topTokens, key);
+    await fs.writeFile(`out/${name}.csv`, Papa.unparse(externalTokens));
   }
-
-  const arbitrumTokens = getExternalTokens(tokens, topTokens, "arbitrum-one");
-  const optimismTokens = getExternalTokens(
-    tokens,
-    topTokens,
-    "optimistic-ethereum"
-  );
-
-  await fs.writeFile("out/arbitrum.csv", Papa.unparse(arbitrumTokens));
-  await fs.writeFile("out/optimism.csv", Papa.unparse(optimismTokens));
 }
 
 function getExternalTokens(tokens, topTokens, platform) {
