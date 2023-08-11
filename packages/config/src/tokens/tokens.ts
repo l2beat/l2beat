@@ -47,10 +47,12 @@ export const tokenList: Token[] = canonicalTokenList
   .concat(layer2s.map((l2) => l2.config.tokenList ?? []).flat())
   .sort((a, b) => a.name.localeCompare(b.name))
 
-const tokenMap = new Map(tokenList.map((t) => [t.symbol, t] as const))
+const canonicalTokenMap = new Map(
+  canonicalTokenList.map((t) => [t.symbol, t] as const),
+)
 
-export function getTokenBySymbol(symbol: string) {
-  const token = tokenMap.get(symbol)
+export function getCanonicalTokenBySymbol(symbol: string) {
+  const token = canonicalTokenMap.get(symbol)
   if (!token) {
     throw new TypeError(`Unknown token ${symbol}`)
   }
