@@ -125,10 +125,10 @@ ETHEREUM_ALCHEMY_API_KEY=
 # ARBITRUM_TVL_ENABLED=
 # ARBISCAN_API_KEY=
 # ARBITRUM_PROVIDER_URL=
-## Enable/disable detailed-tvl endpoint exposure - defaults to true
-# DETAILED_TVL_ENABLED=
-## Should detailed-tvl endpoint return 404 if data is not synced yet - defaults to false
-# SKIP_UNSYNCED_DETAILED_TVL=
+## Enable/disable detailed-tvl endpoint exposure - defaults to false
+# DETAILED_TVL_ENABLED=true
+## Should detailed-tvl endpoint return 404 if data is not synced yet? - defaults to false
+# SKIP_UNSYNCED_DETAILED_TVL=true
 # UPDATE_MONITOR_RUN_ON_START=
 # ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
 

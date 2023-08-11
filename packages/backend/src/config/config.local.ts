@@ -11,7 +11,7 @@ export function getLocalConfig(): Config {
   dotenv()
 
   const tvlEnabled = getEnv.boolean('TVL_ENABLED', true)
-  const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', true)
+  const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
   const skipUnsyncedDetailedTvl = getEnv.boolean(
     'SKIP_UNSYNCED_DETAILED_TVL',
     false,
