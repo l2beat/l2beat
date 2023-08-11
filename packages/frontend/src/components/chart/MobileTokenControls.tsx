@@ -37,7 +37,7 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
                   </div>
                 </>
               }
-              title={'Chose a token'}
+              title="Chose a token"
             >
               <div className="flex w-full flex-col gap-6">
                 {parts.map((p, i) => (
