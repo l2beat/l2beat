@@ -10,10 +10,7 @@ export function ExpandIcon(props: SVGAttributes<SVGElement>) {
       width="12"
       height="12"
       viewBox="0 0 12 12"
-      className={classNames(
-        'my-auto fill-black dark:fill-white',
-        className,
-      )}
+      className={classNames('my-auto fill-black dark:fill-white', className)}
       {...rest}
     >
       <path
