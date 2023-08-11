@@ -10,7 +10,7 @@ export function ChartLoader() {
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
     >
-      <circle cx="30" cy="50" fill="var(--gradient-1)" r="20">
+      <circle cx="30" cy="50" fill="var(--second-gradient-1)" r="20">
         <animate
           attributeName="cx"
           repeatCount="indefinite"
@@ -30,7 +30,7 @@ export function ChartLoader() {
           begin="0s"
         />
       </circle>
-      <circle cx="30" cy="50" fill="var(--gradient-1)" r="20">
+      <circle cx="30" cy="50" fill="var(--second-gradient-1)" r="20">
         <animate
           attributeName="cx"
           repeatCount="indefinite"
