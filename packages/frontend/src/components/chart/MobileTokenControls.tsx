@@ -30,12 +30,10 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
           <div data-role="chart-token-toggle">
             <SlideCard
               button={
-                <>
-                  <div className="flex items-center gap-1.5 rounded-lg bg-gray-100 px-2 text-base dark:bg-gray-750">
-                    Select
-                    <ExpandIcon />
-                  </div>
-                </>
+                <div className="flex items-center gap-1.5 rounded-lg bg-gray-100 px-2 text-base dark:bg-gray-750">
+                  Select
+                  <ExpandIcon />
+                </div>
               }
               title="Chose a token"
             >
