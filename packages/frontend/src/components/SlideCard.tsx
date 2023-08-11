@@ -5,6 +5,7 @@ interface SlideCardProps {
   className?: string
   title: string
   button: ReactNode
+  closeButtonText?: string
   children: ReactNode
 }
 
@@ -17,7 +18,12 @@ export function SlideCard(props: SlideCardProps) {
       )}
     >
       <SlideCardToggle type="open">{props.button}</SlideCardToggle>
-      <SlideCardContent title={props.title}>{props.children}</SlideCardContent>
+      <SlideCardContent
+        title={props.title}
+        closeButtonText={props.closeButtonText}
+      >
+        {props.children}
+      </SlideCardContent>
     </div>
   )
 }
@@ -46,6 +52,7 @@ function SlideCardToggle(props: SlideCardToggleProps) {
 
 interface SlideCardContentProps {
   title: string
+  closeButtonText?: string
   children: ReactNode
 }
 
@@ -65,7 +72,7 @@ function SlideCardContent(props: SlideCardContentProps) {
       </div>
       <div className="flex h-[12%] w-full items-center justify-center bg-gray-200 dark:bg-[#373B41] ">
         <div className="flex h-[6%] items-center justify-center rounded-md border border-pink-900 p-[6%] px-4">
-          <SlideCardToggle type="close"> Close the overlay </SlideCardToggle>
+          <SlideCardToggle type="close"> { props.closeButtonText ?? "Close the overlay" }</SlideCardToggle>
         </div>
       </div>
     </div>
