@@ -42,12 +42,12 @@ export function DetailsHeader(props: HeaderProps) {
 
   return (
     <>
-      <header className="md:mt-15 mt-6 flex flex-row justify-end px-4 md:px-0">
-        <div className="w-full">
+      <header className="md:mt-15 mt-6 flex flex-row justify-end gap-3 md:gap-0">
+        <div className="flex w-full flex-wrap gap-6 md:gap-4">
           <h1
             className={cx(
-              'relative mb-4 flex items-center justify-start gap-3',
-              'whitespace-pre text-3xl font-bold md:text-4xl',
+              'relative mb-0 flex items-center justify-start gap-3',
+              'whitespace-pre px-4 text-3xl font-bold md:px-0 md:text-4xl',
               props.titleLength,
               props.titleClassName,
             )}
@@ -61,9 +61,11 @@ export function DetailsHeader(props: HeaderProps) {
             )}
             {props.title}
           </h1>
-          {props.isArchived && <ArchivedBar />}
-          {props.isUpcoming && <UpcomingBar />}
-          {props.showProjectUnderReview && <UnderReviewBar />}
+          {props.isArchived && <ArchivedBar className="mx-4 w-full md:mx-0" />}
+          {props.isUpcoming && <UpcomingBar className="mx-4 w-full md:mx-0" />}
+          {props.showProjectUnderReview && (
+            <UnderReviewBar className="mx-4 w-full md:mx-0" />
+          )}
           {props.warning && (
             <WarningBar
               text={
@@ -78,7 +80,7 @@ export function DetailsHeader(props: HeaderProps) {
               }
               color="yellow"
               isCritical={false}
-              className="mb-4 items-center justify-center py-2.5 px-2.5 text-xs md:px-4 md:text-base"
+              className="mx-4 w-full items-center justify-center py-2.5 px-2.5 text-xs md:mx-0 md:px-4 md:text-base"
             />
           )}
           <Summary

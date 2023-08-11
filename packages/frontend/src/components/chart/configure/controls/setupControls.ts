@@ -23,9 +23,11 @@ export function setupControls(
     })
   })
 
-  onCheckboxChange(elements.controls.tokenChosen, () => {
-    dispatch({ type: 'CurrencyChanged', currency: 'usd' })
-  })
+  elements.controls.tokenChosen.forEach((e) =>
+    onCheckboxChange(e, () => {
+      dispatch({ type: 'CurrencyChanged', currency: 'usd' })
+    }),
+  )
 
   onRadioChange(elements.controls.tokens, (control) => {
     let assetType: AssetType = 'CBV'
@@ -39,6 +41,7 @@ export function setupControls(
     }
 
     if (control.dataset.tvlEndpoint && control.dataset.assetType) {
+      control.dispatchEvent(new Event('close-slidecard', { bubbles: true }))
       dispatch({
         type: 'TokenChanged',
         token: control.value,

@@ -8,7 +8,7 @@ import {
 
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
-import { TokenControl } from '../../components/chart/TokenControls'
+import { TokenControl } from '../../components/chart/CommonTokenControls'
 import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(

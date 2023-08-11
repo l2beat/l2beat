@@ -2,7 +2,7 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ChartButton } from './ChartButton'
-import { TokenControl } from './TokenControls'
+import { TokenControl } from './CommonTokenControls'
 
 export interface TokenControlsToBeRemovedProps {
   tokens?: TokenControl[]
