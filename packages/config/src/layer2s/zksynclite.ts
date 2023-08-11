@@ -63,7 +63,8 @@ export const zksynclite: Layer2 = {
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
         'https://blog.matter-labs.io/',
-        'https://discord.gg/px2aR7w',
+        'https://zksync.mirror.xyz/',
+        'https://join.zksync.dev/',
         'https://t.me/zksync',
         'https://twitter.com/zksync',
       ],
