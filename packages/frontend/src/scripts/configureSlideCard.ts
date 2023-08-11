@@ -22,7 +22,7 @@ export function configureSlideCards() {
     })
 
     closeButton.addEventListener('click', () => {
-      openButton.dispatchEvent(new Event('close-slidecard', { bubbles: true }))
+      slideCard.dispatchEvent(new Event('close-slidecard'))
     })
 
     slideCard.addEventListener('close-slidecard', () => {
