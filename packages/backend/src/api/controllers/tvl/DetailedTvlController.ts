@@ -25,7 +25,7 @@ import {
 } from './detailedTvl'
 import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
 
-interface DetailedControllerOptions {
+interface DetailedTvlControllerOptions {
   errorOnUnsyncedDetailedTvl: boolean
 }
 
@@ -59,7 +59,7 @@ export class DetailedTvlController {
     private readonly tokens: Token[],
     private readonly logger: Logger,
     private readonly aggregatedConfigHash: Hash256,
-    private readonly options: DetailedControllerOptions,
+    private readonly options: DetailedTvlControllerOptions,
   ) {
     this.logger = this.logger.for(this)
   }
