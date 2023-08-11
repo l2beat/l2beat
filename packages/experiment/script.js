@@ -22,30 +22,65 @@ async function main() {
   // console.log([...platforms].filter((x) => x.includes("p")).sort());
 
   const toCheck = [
-    { name: "polygon-zkevm", key: "polygon-zkevm" },
-    { name: "arbitrum", key: "arbitrum-one" },
-    { name: "optimism", key: "optimistic-ethereum" },
-    { name: "zksync-era", key: "zksync" },
-    { name: "base", key: "base" },
-    { name: "mantle", key: "mantle" },
-    { name: "metis", key: "metis-andromeda" },
-    { name: "linea", key: "linea" },
-    { name: "boba", key: "boba" },
+    {
+      name: "polygon-zkevm",
+      key: "polygon-zkevm",
+      explorer: "https://zkevm.polygonscan.com/address/",
+    },
+    {
+      name: "arbitrum",
+      key: "arbitrum-one",
+      explorer: "https://arbiscan.io/address/",
+    },
+    {
+      name: "optimism",
+      key: "optimistic-ethereum",
+      explorer: "https://optimistic.etherscan.io/address/",
+    },
+    {
+      name: "zksync-era",
+      key: "zksync",
+      explorer: "https://explorer.zksync.io/address/",
+    },
+    { name: "base", key: "base", explorer: "https://basescan.org/address/" },
+    {
+      name: "mantle",
+      key: "mantle",
+      explorer: "https://explorer.mantle.xyz/address/",
+    },
+    {
+      name: "metis",
+      key: "metis-andromeda",
+      explorer: "https://andromeda-explorer.metis.io/address/",
+    },
+    {
+      name: "linea",
+      key: "linea",
+      explorer: "https://explorer.linea.build/address/",
+    },
+    { name: "boba", key: "boba", explorer: "https://bobascan.com/address/" },
   ];
 
-  for (const { name, key } of toCheck) {
-    const externalTokens = getExternalTokens(tokens, topTokens, key);
-    await fs.writeFile(`out/${name}.csv`, Papa.unparse(externalTokens));
+  for (const platform of toCheck) {
+    const externalTokens = getExternalTokens(
+      tokens,
+      topTokens,
+      platform
+    ).filter((x) => x.rank !== undefined);
+    await fs.writeFile(
+      `out/${platform.name}.csv`,
+      Papa.unparse(externalTokens)
+    );
   }
 }
 
 function getExternalTokens(tokens, topTokens, platform) {
   const platformTokens = [];
   for (const entry of tokens) {
-    if (entry.platforms[platform]) {
+    if (entry.platforms[platform.key]) {
       platformTokens.push({
         id: entry.id,
-        address: entry.platforms[platform],
+        address: entry.platforms[platform.key],
         ethAddress: entry.platforms.ethereum,
         rank: topTokens.find((coin) => coin.id === entry.id)?.market_cap_rank,
       });
@@ -55,7 +90,12 @@ function getExternalTokens(tokens, topTokens, platform) {
   return platformTokens
     .filter((x) => x.ethAddress === undefined)
     .sort((a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity))
-    .map((x) => ({ id: x.id, rank: x.rank, address: x.address }));
+    .map((x) => ({
+      id: x.id,
+      link: "https://www.coingecko.com/en/coins/" + x.id,
+      rank: x.rank,
+      address: platform.explorer + x.address,
+    }));
 }
 
 async function getAllTokens() {
