@@ -25,7 +25,7 @@ import {
 } from './detailedTvl'
 import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
 
-interface DetailedControllerBehaviorFlags {
+interface DetailedControllerBehaviorOptions {
   skipUnsyncedDetailedTvl: boolean
 }
 
@@ -59,7 +59,7 @@ export class DetailedTvlController {
     private readonly tokens: Token[],
     private readonly logger: Logger,
     private readonly aggregatedConfigHash: Hash256,
-    private readonly flags: DetailedControllerBehaviorFlags,
+    private readonly options: DetailedControllerBehaviorOptions,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -77,7 +77,7 @@ export class DetailedTvlController {
       }
     }
 
-    if (!dataTimings.isSynced && this.flags.skipUnsyncedDetailedTvl) {
+    if (!dataTimings.isSynced && this.options.skipUnsyncedDetailedTvl) {
       return {
         result: 'error',
         error: 'UNSYNCED_DATA_SKIPPED',
