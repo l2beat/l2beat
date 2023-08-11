@@ -61,17 +61,39 @@ async function main() {
     { name: "boba", key: "boba", explorer: "https://bobascan.com/address/" },
   ];
 
+  const relevantTokens = [];
+
   for (const platform of toCheck) {
     const externalTokens = getExternalTokens(
       tokens,
       topTokens,
       platform
     ).filter((x) => x.rank !== undefined);
+
+    relevantTokens.push(
+      ...externalTokens
+        .filter((x) => x.rank < 1000)
+        .map((x) => {
+          const ogPlatform =
+            Object.entries(
+              tokens.find((y) => y.id === x.id)?.platforms ?? {}
+            )[0] ?? [];
+          return {
+            ...x,
+            platform: platform.key,
+            ogPlatform: ogPlatform[0],
+            ogAddress: ogPlatform[1],
+          };
+        })
+    );
+
     await fs.writeFile(
-      `out/${platform.name}.csv`,
+      `out/chains/${platform.name}.csv`,
       Papa.unparse(externalTokens)
     );
   }
+
+  await fs.writeFile(`out/version-2.csv`, Papa.unparse(relevantTokens));
 }
 
 function getExternalTokens(tokens, topTokens, platform) {
