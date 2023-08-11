@@ -61,7 +61,7 @@ export function createTvlRouter(
         await detailedTvlController.getDetailedTvlApiResponse()
 
       if (detailedTvlResult.result === 'error') {
-        if (detailedTvlResult.error === 'UNSYNCED_DATA_SKIPPED') {
+        if (detailedTvlResult.error === 'DATA_NOT_FULLY_SYNCED') {
           ctx.status = 422
         }
 

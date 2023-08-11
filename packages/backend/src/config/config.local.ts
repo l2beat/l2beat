@@ -12,8 +12,8 @@ export function getLocalConfig(): Config {
 
   const tvlEnabled = getEnv.boolean('TVL_ENABLED', true)
   const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
-  const skipUnsyncedDetailedTvl = getEnv.boolean(
-    'SKIP_UNSYNCED_DETAILED_TVL',
+  const errorOnUnsyncedDetailedTvl = getEnv.boolean(
+    'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,
   )
   const ethereumTvlEnabled = getEnv.boolean('ETHEREUM_TVL_ENABLED', true)
@@ -58,7 +58,7 @@ export function getLocalConfig(): Config {
     tvl: {
       enabled: tvlEnabled,
       detailedTvlEnabled,
-      skipUnsyncedDetailedTvl,
+      errorOnUnsyncedDetailedTvl,
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
       ethereum: ethereumTvlEnabled && {
         alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),

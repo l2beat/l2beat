@@ -9,8 +9,8 @@ import { getGitCommitHash } from './getGitCommitHash'
 export function getProductionConfig(): Config {
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
   const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
-  const skipUnsyncedDetailedTvl = getEnv.boolean(
-    'SKIP_UNSYNCED_DETAILED_TVL',
+  const errorOnUnsyncedDetailedTvl = getEnv.boolean(
+    'ERROR_ON_UNSYNCED_DETAILED_TVL',
     false,
   )
 
@@ -63,7 +63,7 @@ export function getProductionConfig(): Config {
     },
     tvl: {
       detailedTvlEnabled,
-      skipUnsyncedDetailedTvl,
+      errorOnUnsyncedDetailedTvl,
       enabled: true,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {

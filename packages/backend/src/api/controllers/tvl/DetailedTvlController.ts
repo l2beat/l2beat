@@ -26,7 +26,7 @@ import {
 import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
 
 interface DetailedControllerBehaviorOptions {
-  skipUnsyncedDetailedTvl: boolean
+  errorOnUnsyncedDetailedTvl: boolean
 }
 
 type DetailedTvlResult =
@@ -36,7 +36,7 @@ type DetailedTvlResult =
     }
   | {
       result: 'error'
-      error: 'UNSYNCED_DATA_SKIPPED' | 'NO_DATA'
+      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
     }
 
 type DetailedAssetTvlResult =
@@ -77,10 +77,10 @@ export class DetailedTvlController {
       }
     }
 
-    if (!dataTimings.isSynced && this.options.skipUnsyncedDetailedTvl) {
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
       return {
         result: 'error',
-        error: 'UNSYNCED_DATA_SKIPPED',
+        error: 'DATA_NOT_FULLY_SYNCED',
       }
     }
 
