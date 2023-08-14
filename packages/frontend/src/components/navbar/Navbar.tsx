@@ -4,7 +4,7 @@ import { Config } from '../../build/config'
 import { GitcoinTopBar } from '../gitcoin/TopBar'
 import { MenuOpenIcon } from '../icons'
 import { FloatingBanner } from '../l2warsaw/FloatingBanner'
-import { TopBar } from '../l2warsaw/TopBar'
+import { L2WarsawTopBar } from '../l2warsaw/TopBar'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
 import { Banner } from './Banner'
@@ -62,7 +62,7 @@ export function Navbar(props: NavbarProps) {
       {props.showMultisigReport && (
         <>
           <GitcoinTopBar />
-          <TopBar />
+          <L2WarsawTopBar />
           <FloatingBanner />
         </>
       )}

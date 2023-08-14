@@ -11,7 +11,7 @@ export function GitcoinTopBar() {
     >
       <p>We are taking part in Gitcoin Grants 18!</p>
       <span>
-        <span className="underline decoration-solid underline-offset-2 hover:text-[#16ebb4]">
+        <span className="underline decoration-solid underline-offset-2 transition-colors ease-in-out hover:text-[#16ebb4]">
           Donate here
         </span>
         <ArrowRightIcon className="ml-1 inline-block fill-current" />
