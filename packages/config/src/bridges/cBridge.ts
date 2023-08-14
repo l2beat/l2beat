@@ -190,6 +190,10 @@ export const cBridge: Bridge = {
         'TransferAgent',
         'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',
       ),
+      discovery.getContractDetails(
+        'Sentinel',
+        'Contract storing additional governors and pausers.',
+      ),
     ],
     references: [],
     risks: [],
@@ -213,10 +217,10 @@ export const cBridge: Bridge = {
       name: 'Governors',
       description:
         'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
-      accounts: discovery.getPermissionedAccounts(
+      accounts: [...new Set([...discovery.getPermissionedAccounts(
         'Liquidity Network',
         'governors',
-      ),
+      ), ...discovery.getPermissionedAccounts('Sentinel', 'governors')])], // FIXME: remove duplicates
     },
     {
       name: 'Pausers',
@@ -226,6 +230,12 @@ export const cBridge: Bridge = {
         'pausers',
       ),
     },
+    {
+      name: 'Sentinel Admin',
+      description:
+        'Can add and remove governors and pausers from the system.',
+      accounts: [discovery.getPermissionedAccount('SentinelProxyAdmin', 'owner')],
+    }
   ],
   knowledgeNuggets: [
     {
