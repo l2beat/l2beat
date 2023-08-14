@@ -1,25 +1,12 @@
-const gitcoinStartDate = new Date('2023-08-15T12:00:00.000Z')
-const gitcoinEndDate = new Date('2023-08-29T12:00:00.000Z')
-
-const localStorageKey = 'topBarVariantData'
-
 interface TopBarVariantData {
   variant: 'gitcoin' | 'l2warsaw'
   lastBannerChangeTime: number
 }
 
-function writeStorage(data: TopBarVariantData) {
-  localStorage.setItem(localStorageKey, JSON.stringify(data))
-}
+const localStorageKey = 'topBarVariantData'
 
-function readStorage(): TopBarVariantData | null {
-  const data = localStorage.getItem(localStorageKey)
-  if (!data) {
-    return null
-  }
-
-  return JSON.parse(data) as TopBarVariantData
-}
+const gitcoinStartDate = new Date('2023-08-15T12:00:00.000Z')
+const gitcoinEndDate = new Date('2023-08-29T12:00:00.000Z')
 
 export function configureTopBars() {
   const variant = getBannerVariant()
@@ -39,38 +26,36 @@ export function configureTopBars() {
 }
 
 function getBannerVariant(): 'gitcoin' | 'l2warsaw' {
-  const isGitcoin =
+  const gitcoinBarOverride =
     isWithinDayAfter(gitcoinStartDate) ||
     isWithinThreeDaysBefore(gitcoinEndDate)
 
-  if (isGitcoin) {
+  if (gitcoinBarOverride) {
     return 'gitcoin'
   }
 
-  const topBarData = readStorage()
+  const presentTopBarData = readStorage()
 
-  const variantToSet = Math.random() < 0.5 ? 'gitcoin' : 'l2warsaw'
-
-  const dataToWrite: TopBarVariantData = {
-    variant: variantToSet,
+  const topBarDataToWrite: TopBarVariantData = {
+    variant: Math.random() < 0.5 ? 'gitcoin' : 'l2warsaw',
     lastBannerChangeTime: Date.now(),
   }
 
-  if (!topBarData) {
-    writeStorage(dataToWrite)
+  if (!presentTopBarData) {
+    writeStorage(topBarDataToWrite)
 
-    return variantToSet
+    return topBarDataToWrite.variant
   }
 
-  const lastSwapDate = new Date(topBarData.lastBannerChangeTime)
+  const lastSwapDate = new Date(presentTopBarData.lastBannerChangeTime)
 
   if (hasDayPassedSince(lastSwapDate)) {
-    writeStorage(dataToWrite)
+    writeStorage(topBarDataToWrite)
 
-    return variantToSet
+    return topBarDataToWrite.variant
   }
 
-  return topBarData.variant
+  return presentTopBarData.variant
 }
 
 function isWithinDayAfter(targetDate: Date) {
@@ -95,4 +80,17 @@ function hasDayPassedSince(sinceDate: Date) {
   const now = new Date()
 
   return now.getTime() >= sinceDate.getTime() + onyDayMs
+}
+
+function writeStorage(data: TopBarVariantData) {
+  localStorage.setItem(localStorageKey, JSON.stringify(data))
+}
+
+function readStorage(): TopBarVariantData | null {
+  const data = localStorage.getItem(localStorageKey)
+  if (!data) {
+    return null
+  }
+
+  return JSON.parse(data) as TopBarVariantData
 }
