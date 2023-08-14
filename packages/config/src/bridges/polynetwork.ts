@@ -164,6 +164,10 @@ export const polynetwork: Bridge = {
         'Lock Proxy 5',
         'Escrow and proxy contract for the Bridge.',
       ),
+      discovery.getContractDetails(
+        'Lock Proxy 6',
+        'Escrow and proxy contract for the Bridge.',
+      ),
       discovery.getContractDetails('EthCrossChainManager', {
         description:
           'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
