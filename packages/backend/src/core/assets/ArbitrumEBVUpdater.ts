@@ -3,6 +3,8 @@ import {
   assert,
   ChainId,
   Hash256,
+  ProjectId,
+  Token,
   UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
@@ -19,11 +21,11 @@ import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createEBVReports } from '../reports/createEBVReports'
 import { getEBVConfigHash } from '../reports/getEBVConfigHash'
-import { ReportProject } from '../reports/ReportProject'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
-import { EBVToken } from './EBVToken'
 
+// TODO: Make this class more generic
+// ProjectId, ChainId should be passed in the constructor
 export class ArbitrumEBVUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -36,17 +38,20 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
     private readonly clock: Clock,
-    private readonly arbitrumProject: ReportProject[],
-    private readonly tokens: EBVToken[],
+    private readonly tokens: Token[],
     private readonly logger: Logger,
     private readonly minTimestamp: UnixTime,
   ) {
-    this.logger = this.logger.for(this)
     assert(
-      arbitrumProject.length === 1,
-      'Expected there to be a single project when filtered',
+      tokens.every(
+        (token) =>
+          token.chainId === this.getChainId() &&
+          token.type === this.getValueType(),
+      ),
+      'Programmer error: tokens must be of type EBV and on the same chain as the arbitrumEBVUpdater',
     )
-    this.configHash = getEBVConfigHash(this.arbitrumProject[0], this.tokens)
+    this.logger = this.logger.for(this)
+    this.configHash = getEBVConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
@@ -55,6 +60,10 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
         metricsId: ArbitrumEBVUpdater.name,
       },
     )
+  }
+
+  getProjectId() {
+    return ProjectId.ARBITRUM
   }
 
   getChainId() {
@@ -114,7 +123,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
       balances,
       totalSupplies,
       this.tokens,
-      this.arbitrumProject[0],
+      this.getProjectId(),
       this.getChainId(),
     )
     await this.reportRepository.addOrUpdateMany(reports)

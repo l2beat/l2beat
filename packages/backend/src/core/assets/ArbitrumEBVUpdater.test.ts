@@ -48,7 +48,6 @@ describe(ArbitrumEBVUpdater.name, () => {
         reportRepository,
         reportStatusRepository,
         mockObject<Clock>(),
-        [MOCK.PROJECT],
         MOCK.TOKENS,
         Logger.SILENT,
         new UnixTime(0),
@@ -57,7 +56,7 @@ describe(ArbitrumEBVUpdater.name, () => {
       await ebvUpdater.update(MOCK.NOW.add(1, 'hours'))
       await ebvUpdater.update(MOCK.NOW)
 
-      const configHash = getEBVConfigHash(MOCK.PROJECT, MOCK.TOKENS)
+      const configHash = getEBVConfigHash(MOCK.TOKENS)
 
       expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
@@ -110,7 +109,6 @@ describe(ArbitrumEBVUpdater.name, () => {
         mockObject<ReportRepository>(),
         status,
         mockObject<Clock>(),
-        [MOCK.PROJECT],
         MOCK.TOKENS,
         Logger.SILENT,
         new UnixTime(1000),
@@ -172,7 +170,6 @@ describe(ArbitrumEBVUpdater.name, () => {
         reportRepository,
         reportStatusRepository,
         clock,
-        [MOCK.PROJECT],
         MOCK.TOKENS,
         Logger.SILENT,
         new UnixTime(0),
@@ -181,7 +178,7 @@ describe(ArbitrumEBVUpdater.name, () => {
       await ebvUpdater.start()
 
       await waitForExpect(() => {
-        const configHash = getEBVConfigHash(MOCK.PROJECT, MOCK.TOKENS)
+        const configHash = getEBVConfigHash(MOCK.TOKENS)
 
         expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
@@ -257,7 +254,6 @@ describe(ArbitrumEBVUpdater.name, () => {
         reportRepository,
         reportStatusRepository,
         clock,
-        [MOCK.PROJECT],
         MOCK.TOKENS,
         Logger.SILENT,
         new UnixTime(0),

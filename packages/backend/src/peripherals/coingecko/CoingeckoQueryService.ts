@@ -18,6 +18,8 @@ export interface PriceHistoryPoint {
   deltaMs: number
 }
 
+// TODO: add cache to avoid querying the same data multiple times
+// because right now some tokens will have the same CoingeckoId
 export class CoingeckoQueryService {
   constructor(private readonly coingeckoClient: CoingeckoClient) {}
 

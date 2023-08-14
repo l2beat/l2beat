@@ -81,8 +81,26 @@ export function createTvlModule(
   )
 
   // #endregion
-  // #region api
+  // #region submodules
 
+  const submodules: (TvlSubmodule | undefined)[] = [
+    createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
+    createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
+    createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
+  ]
+
+  // #endregion
+
+  const aggregatedReportUpdater = new AggregatedReportUpdater(
+    submodules.flatMap((x) => x?.updaters ?? []),
+    db.aggregatedReportRepository,
+    db.aggregatedReportStatusRepository,
+    clock,
+    config.projects,
+    logger,
+  )
+
+  // #region api
   const blocksController = new BlocksController(db.blockNumberRepository)
   const tvlController = new TvlController(
     db.reportStatusRepository,
@@ -102,6 +120,8 @@ export function createTvlModule(
     config.projects,
     config.tokens,
     logger,
+    aggregatedReportUpdater.getConfigHash(),
+    { errorOnUnsyncedDetailedTvl: config.tvl.errorOnUnsyncedDetailedTvl },
   )
 
   const dydxController = new DydxController(db.aggregatedReportRepository)
@@ -113,21 +133,6 @@ export function createTvlModule(
   const dydxRouter = createDydxRouter(dydxController)
 
   // #endregion
-
-  const submodules: (TvlSubmodule | undefined)[] = [
-    createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
-    createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-  ]
-
-  const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x?.updaters ?? []),
-    db.aggregatedReportRepository,
-    db.aggregatedReportStatusRepository,
-    clock,
-    config.projects,
-    logger,
-  )
 
   const start = async () => {
     logger = logger.for('TvlModule')

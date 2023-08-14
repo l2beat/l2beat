@@ -3,12 +3,13 @@ import React from 'react'
 
 import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 
-export function ArchivedBar() {
+export function ArchivedBar({ className }: { className?: string }) {
   return (
     <div
       className={cx(
-        'mb-6 flex justify-center py-2.5',
+        'flex justify-center py-2.5',
         'rounded-lg bg-gray-200 dark:bg-gray-800',
+        className,
       )}
     >
       <span className="flex flex-row">

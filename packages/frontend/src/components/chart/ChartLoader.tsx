@@ -4,13 +4,13 @@ export function ChartLoader() {
   return (
     <svg
       data-role="chart-loader"
-      className="pointer-events-none relative z-20 mx-auto mt-[62px] hidden select-none opacity-40 sm:mt-[85px]"
+      className="pointer-events-none relative z-40 mx-auto mt-[62px] hidden select-none opacity-40 sm:mt-[85px]"
       width="50px"
       height="50px"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
     >
-      <circle cx="30" cy="50" fill="var(--gradient-1)" r="20">
+      <circle cx="30" cy="50" fill="var(--second-gradient-1)" r="20">
         <animate
           attributeName="cx"
           repeatCount="indefinite"
@@ -30,7 +30,7 @@ export function ChartLoader() {
           begin="0s"
         />
       </circle>
-      <circle cx="30" cy="50" fill="var(--gradient-1)" r="20">
+      <circle cx="30" cy="50" fill="var(--second-gradient-1)" r="20">
         <animate
           attributeName="cx"
           repeatCount="indefinite"

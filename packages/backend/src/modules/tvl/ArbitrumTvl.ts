@@ -1,5 +1,5 @@
 import { ArbiscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { assert, ChainId, ProjectId } from '@l2beat/shared-pure'
+import { ChainId, ValueType } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
@@ -11,7 +11,6 @@ import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { ArbitrumTotalSupplyProvider } from '../../core/totalSupply/providers/ArbitrumTotalSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
-import { Project } from '../../model'
 import { ArbitrumMulticallClient } from '../../peripherals/arbitrum/multicall/ArbitrumMulticall'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
 import { TvlSubmodule } from '../ApplicationModule'
@@ -31,9 +30,9 @@ export function createArbitrumTvlSubmodule(
   }
 
   // #region peripherals
-
-  const arbitrumProject = filterArbitrumProject(config.projects)
-  const arbitrumTokens = getExternalTokens(arbitrumProject)
+  const arbitrumEBVTokens = config.tokens.filter(
+    (t) => t.chainId === ChainId.ARBITRUM && t.type === ValueType.EBV,
+  )
 
   const arbitrumProvider = new providers.JsonRpcProvider(
     config.tvl.arbitrum.providerUrl,
@@ -91,7 +90,7 @@ export function createArbitrumTvlSubmodule(
     db.totalSupplyRepository,
     db.totalSupplyStatusRepository,
     clock,
-    arbitrumTokens,
+    arbitrumEBVTokens,
     logger,
     ChainId.ARBITRUM,
     config.tvl.arbitrum.minBlockTimestamp,
@@ -104,8 +103,7 @@ export function createArbitrumTvlSubmodule(
     db.reportRepository,
     db.reportStatusRepository,
     clock,
-    arbitrumProject,
-    arbitrumTokens,
+    arbitrumEBVTokens,
     logger,
     config.tvl.arbitrum.minBlockTimestamp,
   )
@@ -128,22 +126,4 @@ export function createArbitrumTvlSubmodule(
     updaters: [ebvUpdater],
     start,
   }
-}
-
-function filterArbitrumProject(projects: Project[]) {
-  const result = projects.filter((x) => x.projectId === ProjectId.ARBITRUM)
-  assert(
-    result.length === 1,
-    'Expected there only to be a single matching project',
-  )
-  return result
-}
-
-function getExternalTokens(project: Project[]) {
-  assert(
-    project.length === 1,
-    'Expected there only to be a single matching project',
-  )
-  assert(project[0].externalTokens, 'No external tokens configured')
-  return project[0].externalTokens.assets
 }

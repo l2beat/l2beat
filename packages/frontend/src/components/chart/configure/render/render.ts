@@ -96,27 +96,36 @@ export function render(
 
   if (state.controls.token !== previousState.controls.token) {
     if (state.controls.token) {
-      if (elements.controls.showTokenModal) {
-        elements.controls.showTokenModal.checked = false
-      }
-
+      elements.controls.showTokenModal.forEach((e) => (e.checked = false))
       elements.view.tokenModal?.classList.toggle('opacity-0', true)
       elements.view.tokenModal?.classList.toggle('pointer-events-none', true)
-      elements.view.showTokenModalWrapper?.classList.toggle('hidden', true)
-      elements.view.tokenChosenWrapper?.classList.toggle('hidden', false)
-      const paragraph = elements.view.tokenChosenWrapper?.querySelector('p')
-      if (paragraph) {
-        paragraph.innerText = state.controls.token
-      }
+
+      elements.view.showTokenModalWrapper.forEach((e) =>
+        e.classList.toggle('hidden', true),
+      )
+      elements.view.tokenChosenWrapper.forEach((e) =>
+        e.classList.toggle('hidden', false),
+      )
+
+      const token = state.controls.token
+      elements.view.tokenChosenWrapper.forEach((e) => {
+        const paragraph = e.querySelector('p')
+        if (paragraph) {
+          paragraph.innerText = token
+        }
+      })
     } else {
-      elements.view.showTokenModalWrapper?.classList.toggle('hidden')
-      elements.view.tokenChosenWrapper?.classList.toggle('hidden')
+      elements.view.showTokenModalWrapper.forEach((e) =>
+        e.classList.toggle('hidden'),
+      )
+      elements.view.tokenChosenWrapper.forEach((e) =>
+        e.classList.toggle('hidden'),
+      )
     }
   }
 
   if (state.controls.showMoreTokens !== previousState.controls.showMoreTokens) {
     if (state.controls.showMoreTokens) {
-      console.log(elements.controls.tokens)
       elements.controls.tokens.forEach((x) =>
         x.parentElement?.classList.remove('hidden'),
       )

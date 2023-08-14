@@ -11,6 +11,7 @@ import {
   TokenTvlFailedMessage,
   TokenTvlLoadedMessage,
 } from '../messages'
+import { getTokenTvlKey } from '../state/getTokenTvlKey'
 import { State } from '../state/State'
 import { calculateView } from './view/calculateView'
 
@@ -55,7 +56,7 @@ export function updateLoadedOrFailed(
   if (message.type === 'TokenTvlLoaded') {
     data.tokenTvl = {
       ...state.data.tokenTvl,
-      [message.token]: message.data,
+      [getTokenTvlKey(message.token, message.assetType)]: message.data,
     }
   }
   if (message.type === 'ActivityLoaded') {

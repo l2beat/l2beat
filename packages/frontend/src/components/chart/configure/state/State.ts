@@ -1,4 +1,5 @@
 import { Milestone } from '@l2beat/config'
+import { AssetType } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export interface State {
@@ -29,6 +30,8 @@ export interface State {
     isLogScale: boolean
     currency: 'usd' | 'eth'
     token: string | undefined
+    // TODO(radomski): I don't like this, but I have no other idea
+    assetType: AssetType | undefined
     showEthereum: boolean
     showAlternativeTvl: boolean
     mouseX: number | undefined
@@ -44,6 +47,7 @@ export interface State {
       | AggregateTvlChart
       | AggregateDetailedTvlChart
       | TokenTvlChart
+      | TokenDetailedTvlChart
       | ActivityChart
       | undefined
   }
@@ -84,6 +88,20 @@ export interface AggregateDetailedTvlChart {
       cbv: number
       nmv: number
     }
+    milestone?: Milestone
+  }[]
+}
+
+export interface TokenDetailedTvlChart {
+  type: 'TokenDetailedTvlChart'
+  assetType: AssetType
+  points: {
+    x: number
+    y: number
+    date: string
+    balance: number
+    symbol: string
+    usd: number
     milestone?: Milestone
   }[]
 }

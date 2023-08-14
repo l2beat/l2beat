@@ -1,3 +1,4 @@
+import { AssetType } from '@l2beat/shared-pure'
 import { renderToString } from 'react-dom/server'
 
 import { formatTps } from '../../../../utils/formatTps'
@@ -155,6 +156,16 @@ export function renderHover(
         rows.push(renderEBVRow(point.usdParts.ebv))
         rows.push(renderNMVRow(point.usdParts.nmv))
       } else if (
+        state.view.chart.type === 'TokenDetailedTvlChart' &&
+        'balance' in point
+      ) {
+        const type = state.view.chart.assetType
+        rows.push(renderHorizontalSeparator())
+        rows.push(
+          renderCurrencyRowWithMarker(point.balance, point.symbol, type),
+        )
+        rows.push(renderCurrencyRowWithMarkerGap(point.usd, 'USD'))
+      } else if (
         state.view.chart.type === 'TokenTvlChart' &&
         'balance' in point
       ) {
@@ -209,13 +220,13 @@ function renderTVLRow(tvl: string) {
 }
 
 const CBVIcon =
-  '<svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF" stroke="white"/></svg>'
+  '<svg class="w-2 h-2 stroke-black dark:stroke-white" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF"/></svg>'
 
 const EBVIcon =
-  '<svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1.16987 8.5L5.5 1L9.83013 8.5H1.16987Z" fill="#EF8F00" stroke="white"/></svg>'
+  '<svg class="w-2 h-2 stroke-black dark:stroke-white" xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1.16987 8.5L5.5 1L9.83013 8.5H1.16987Z" fill="#EF8F00"/></svg>'
 
 const NMVIcon =
-  '<svg class="w-2 h-2" width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="9" height="9" fill="#FF46C0" stroke="white" stroke-width="2" /></svg>'
+  '<svg class="w-2 h-2 stroke-black dark:stroke-white" width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="9" height="9" fill="#FF46C0" stroke-width="2" /></svg>'
 
 function renderCBVRow(ebv: number) {
   return renderDetailedRow(ebv, 'Canonically Bridged', CBVIcon)
@@ -237,6 +248,26 @@ function renderDetailedRow(value: number, caption: string, iconSvg: string) {
     </div>
       <div><span class="font-bold">${formatUSD(value)}</span></div>
   </div>`
+}
+
+function renderCurrencyRowWithMarker(
+  value: number,
+  ticker: string,
+  assetType: AssetType,
+) {
+  const iconSvg =
+    assetType === 'EBV' ? EBVIcon : assetType === 'CBV' ? CBVIcon : NMVIcon
+  return `<div class="inline-flex items-center gap-1"> ${iconSvg} ${renderCurrencyRow(
+    value,
+    ticker,
+  )} </div>`
+}
+
+function renderCurrencyRowWithMarkerGap(value: number, ticker: string) {
+  return `<div class="inline-flex items-center pl-3"> ${renderCurrencyRow(
+    value,
+    ticker,
+  )} </div>`
 }
 
 function renderCurrencyRow(value: number, ticker: string) {
