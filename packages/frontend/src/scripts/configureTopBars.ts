@@ -1,5 +1,5 @@
 const gitcoinStartDate = new Date('2023-08-15T12:00:00.000Z')
-const gitcoinEndDate = new Date('2023-08-16T12:00:00.000Z')
+const gitcoinEndDate = new Date('2023-08-29T12:00:00.000Z')
 
 const localStorageKey = 'topBarVariantData'
 
