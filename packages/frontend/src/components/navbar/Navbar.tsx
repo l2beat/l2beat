@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Config } from '../../build/config'
+import { GitcoinTopBar } from '../gitcoin/TopBar'
 import { MenuOpenIcon } from '../icons'
 import { FloatingBanner } from '../l2warsaw/FloatingBanner'
 import { TopBar } from '../l2warsaw/TopBar'
@@ -60,6 +61,7 @@ export function Navbar(props: NavbarProps) {
       {props.showBanner && <Banner />}
       {props.showMultisigReport && (
         <>
+          <GitcoinTopBar />
           <TopBar />
           <FloatingBanner />
         </>
