@@ -93,7 +93,7 @@ export const rhinofi: Layer2 = {
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC,
       sources: [
-        // TODO: add reference to new StarkExchange implementation! 
+        // TODO: add reference to new StarkExchange implementation!
         {
           contract: 'Committee',
           references: [
