@@ -1,8 +1,8 @@
 {
   "name": "polynetwork",
   "chain": "ethereum",
-  "blockNumber": 17913561,
-  "configHash": "0x9a24509b0bfd617c801acfa277ac1765bcf2d9f6bbfe8b37d4202cde63e83a91",
+  "blockNumber": 17913697,
+  "configHash": "0x6054c524ccccad7afaf57d6f0bb19e8a3784f0813f0d685eb0632ae1fff4d803",
   "version": 1,
   "contracts": [
     {
@@ -79,13 +79,14 @@
       "derivedName": "EthCrossChainManagerProxy"
     },
     {
-      "name": "",
+      "name": "Lock Proxy 6",
       "address": "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
       "unverified": true,
       "code": "https://etherscan.deth.net/address/0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "Lock Proxy 2",

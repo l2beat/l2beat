@@ -33,7 +33,6 @@
         "getOrderRoot",
         "getOrderTreeHeight",
         "getSequenceNumber",
-        "getVaultRoot",
         "getValidiumVaultRoot"
       ],
       "fields": {

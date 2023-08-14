@@ -217,10 +217,15 @@ export const cBridge: Bridge = {
       name: 'Governors',
       description:
         'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
-      accounts: [...new Set([...discovery.getPermissionedAccounts(
-        'Liquidity Network',
-        'governors',
-      ), ...discovery.getPermissionedAccounts('Sentinel', 'governors')])], // FIXME: remove duplicates
+      accounts: [
+        ...new Set([
+          ...discovery.getPermissionedAccounts(
+            'Liquidity Network',
+            'governors',
+          ),
+          ...discovery.getPermissionedAccounts('Sentinel', 'governors'),
+        ]),
+      ], // FIXME: remove duplicates
     },
     {
       name: 'Pausers',
@@ -232,10 +237,11 @@ export const cBridge: Bridge = {
     },
     {
       name: 'Sentinel Admin',
-      description:
-        'Can add and remove governors and pausers from the system.',
-      accounts: [discovery.getPermissionedAccount('SentinelProxyAdmin', 'owner')],
-    }
+      description: 'Can add and remove governors and pausers from the system.',
+      accounts: [
+        discovery.getPermissionedAccount('SentinelProxyAdmin', 'owner'),
+      ],
+    },
   ],
   knowledgeNuggets: [
     {
