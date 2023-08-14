@@ -3,9 +3,10 @@ import {
   assert,
   AssetId,
   ChainId,
-  EthereumAddress,
   Hash256,
+  Token,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
@@ -19,7 +20,6 @@ import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider, TotalSupplyQuery } from './TotalSupplyProvider'
-import { TotalSupplyTokensConfig } from './TotalSupplyTokensConfig'
 
 export class TotalSupplyUpdater {
   private readonly configHash: Hash256
@@ -32,11 +32,19 @@ export class TotalSupplyUpdater {
     private readonly totalSupplyRepository: TotalSupplyRepository,
     private readonly totalSupplyStatusRepository: TotalSupplyStatusRepository,
     private readonly clock: Clock,
-    private readonly tokens: TotalSupplyTokensConfig[],
+    private readonly tokens: Token[],
     private readonly logger: Logger,
     private readonly chainId: ChainId,
     private readonly minTimestamp: UnixTime,
   ) {
+    assert(
+      tokens.every(
+        (token) =>
+          token.chainId === this.getChainId() &&
+          token.type === this.getValueType(),
+      ),
+      'Programmer error: tokens must be of type EBV and on the same chain as the totalSupplyUpdater',
+    )
     this.logger = this.logger.for(this)
     this.configHash = getTotalSupplyConfigHash(tokens)
     this.taskQueue = new TaskQueue(
@@ -55,6 +63,14 @@ export class TotalSupplyUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getChainId() {
+    return this.chainId
+  }
+
+  getValueType() {
+    return ValueType.EBV
   }
 
   async getTotalSuppliesWhenReady(
@@ -154,7 +170,7 @@ export class TotalSupplyUpdater {
 export function getMissingTotalSupplies(
   timestamp: UnixTime,
   known: TotalSupplyRecord[],
-  tokens: TotalSupplyTokensConfig[],
+  tokens: Token[],
 ): TotalSupplyQuery[] {
   function makeKey(assetId: AssetId) {
     return `${assetId.toString()}`
@@ -171,9 +187,14 @@ export function getMissingTotalSupplies(
       continue
     }
 
+    assert(
+      token.address !== undefined,
+      'Token address should not be undefined there',
+    )
+
     const queryCandidate: TotalSupplyQuery = {
-      tokenAddress: EthereumAddress(token.tokenAddress),
-      assetId: token.assetId,
+      tokenAddress: token.address,
+      assetId: token.id,
     }
 
     if (!knownTotalSupplies.has(makeKey(queryCandidate.assetId))) {

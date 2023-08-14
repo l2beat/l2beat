@@ -151,16 +151,7 @@
       "sinceTimestamp": 1602761920,
       "category": "other"
     },
-    {
-      "id": "arb-arbitrum",
-      "name": "Arbitrum",
-      "coingeckoId": "arbitrum",
-      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
-      "symbol": "ARB",
-      "decimals": 18,
-      "sinceTimestamp": 1679572871,
-      "category": "other"
-    },
+
     {
       "id": "audio-audius",
       "name": "Audius",
@@ -1318,16 +1309,6 @@
       "symbol": "OMI",
       "decimals": 18,
       "sinceTimestamp": 1632037514,
-      "category": "other"
-    },
-    {
-      "id": "op-optimism",
-      "name": "Optimism",
-      "coingeckoId": "optimism",
-      "address": "0x4200000000000000000000000000000000000042",
-      "symbol": "OP",
-      "decimals": 18,
-      "sinceTimestamp": 1654039974,
       "category": "other"
     },
     {
