@@ -60,8 +60,9 @@ export class ArrayHandler implements Handler {
     const resolved = resolveDependencies(this.definition, previousResults)
 
     const value: ContractValue[] = []
+    const startIndex = resolved.startIndex
     const maxLength = Math.min(resolved.maxLength, resolved.length ?? Infinity)
-    for (let i = resolved.startIndex; i < maxLength; i++) {
+    for (let i = startIndex; i < maxLength + startIndex; i++) {
       const current = await callMethod(
         provider,
         address,
@@ -119,6 +120,7 @@ function isArrayFragment(fragment: utils.FunctionFragment) {
     (fragment.stateMutability === 'view' ||
       fragment.stateMutability === 'pure') &&
     fragment.inputs.length === 1 &&
-    fragment.inputs[0].type === 'uint256'
+    (fragment.inputs[0].type === 'uint256' ||
+      fragment.inputs[0].type === 'uint16')
   )
 }
