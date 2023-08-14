@@ -1,5 +1,6 @@
 export * from './api'
 export * from './AssetId'
+export * from './AssetType'
 export * from './branded'
 export * from './Bytes'
 export * from './ChainId'

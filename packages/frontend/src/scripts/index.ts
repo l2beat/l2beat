@@ -4,9 +4,10 @@ import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureCanonicalBridgesFilter } from './configureCanonicalBridgesFilter'
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
+import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
-import { configureReport } from './configureReport'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
+import { configureSlideCards } from './configureSlideCard'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
@@ -18,8 +19,9 @@ configureSidebarMenu()
 configureTooltips()
 configureCharts()
 configureDropdowns()
+configureSlideCards()
 configureRosetteOverlay()
-configureReport()
+configureFloatingBanner()
 configureHoverableDropdown()
 configureProjectNavigation()
 configureExpandableContainer()

@@ -1,3 +1,4 @@
+import { ValueType } from '@l2beat/shared-pure'
 import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
@@ -32,7 +33,13 @@ function Template({
     'AAVE',
     'YFI',
     'UNI',
-  ].map((x) => ({ address: '0xabac', name: x, symbol: x, tvlEndpoint: '/' }))
+  ].map((x) => ({
+    address: '0xabac',
+    name: x,
+    symbol: x,
+    tvlEndpoint: '/',
+    assetType: ValueType.EBV,
+  }))
 
   useEffect(() => {
     configureCharts()

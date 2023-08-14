@@ -31,10 +31,10 @@ export function getChartElements(chart: HTMLElement) {
           '[data-role="chart-token-controls"] input',
         ),
       ),
-      showTokenModal: chart.querySelector<HTMLInputElement>(
+      showTokenModal: chart.querySelectorAll<HTMLInputElement>(
         '[data-role="chart-token-toggle"] input',
       ),
-      tokenChosen: chart.querySelector<HTMLInputElement>(
+      tokenChosen: chart.querySelectorAll<HTMLInputElement>(
         '[data-role="chart-token-chosen"] input',
       ),
       showMoreTokensToBeRemoved: chart.querySelector<HTMLButtonElement>(
@@ -62,10 +62,10 @@ export function getChartElements(chart: HTMLElement) {
       tokenControlsWrapper: chart.querySelector<HTMLElement>(
         '[data-role="chart-token-controls"]',
       ),
-      showTokenModalWrapper: chart.querySelector<HTMLElement>(
+      showTokenModalWrapper: chart.querySelectorAll<HTMLElement>(
         '[data-role="chart-token-toggle"]',
       ),
-      tokenChosenWrapper: chart.querySelector<HTMLElement>(
+      tokenChosenWrapper: chart.querySelectorAll<HTMLElement>(
         '[data-role="chart-token-chosen"]',
       ),
       tokenModal: chart.querySelector<HTMLElement>(
