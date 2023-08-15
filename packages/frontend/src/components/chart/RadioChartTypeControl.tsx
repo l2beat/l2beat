@@ -26,8 +26,8 @@ export function RadioChartTypeControl({
 
   if (hasDetailedTvl) {
     tabs.push({
-      fullName: 'Detailed TVL',
-      shortName: 'Detailed',
+      fullName: 'Value Locked',
+      shortName: 'Value',
       value: 'detailedTvl',
       checked: false,
     })
