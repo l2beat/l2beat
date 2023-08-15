@@ -35,7 +35,7 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
                   <ExpandIcon />
                 </div>
               }
-              title="Chose a token"
+              title="Choose a token"
               closeButtonText="Close tokens"
             >
               <div className="flex w-full flex-col gap-6">
