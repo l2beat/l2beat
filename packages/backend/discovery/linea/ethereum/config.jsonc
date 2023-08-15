@@ -75,12 +75,8 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "USDCBridge": {
-      "ignoreMethods": [
-        "usdc"
-      ],
-      "ignoreInWatchMode": [
-        "balance"
-      ]
+      "ignoreMethods": ["usdc"],
+      "ignoreInWatchMode": ["balance"]
     }
   }
 }

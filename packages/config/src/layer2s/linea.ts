@@ -270,15 +270,13 @@ export const linea: Layer2 = {
         'Plonk verifier contract used by the Linea zkEVM rollup.',
       ),
       discovery.getContractDetails('ERC20Bridge', {
-          description: 'Contract used to bridge ERC20 tokens.',
-          ...upgrades
-        }
-      ),
+        description: 'Contract used to bridge ERC20 tokens.',
+        ...upgrades,
+      }),
       discovery.getContractDetails('USDCBridge', {
-          description: 'Contract used to bridge USDC tokens.',
-          ...upgrades
-        }
-      ),
+        description: 'Contract used to bridge USDC tokens.',
+        ...upgrades,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
   },
