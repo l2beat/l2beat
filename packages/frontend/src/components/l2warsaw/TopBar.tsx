@@ -2,10 +2,10 @@ import React from 'react'
 
 import { ArrowRightIcon } from '../icons'
 
-export function TopBar() {
+export function L2WarsawTopBar() {
   return (
     <a
-      className="flex flex-col items-center justify-center bg-[#2C7265] p-2 text-center text-xs font-bold text-white md:flex-row md:space-x-5 md:text-sm"
+      className="TopBar-L2Warsaw flex hidden flex-col items-center justify-center bg-[#2C7265] p-2 text-center text-xs font-bold text-white md:flex-row md:space-x-5 md:text-sm"
       href="https://warsaw.l2beat.com"
       target="_blank"
     >
