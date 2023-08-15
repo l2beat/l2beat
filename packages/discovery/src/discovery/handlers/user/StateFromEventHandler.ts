@@ -1,4 +1,4 @@
-import { ContractValue, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ContractValue, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { pick, reduce } from 'lodash'
 import * as z from 'zod'
@@ -15,6 +15,8 @@ export const StateFromEventDefinition = z.strictObject({
   event: z.string(),
   returnParams: z.array(z.string()),
   groupBy: z.optional(z.string()),
+  onlyValue: z.optional(z.boolean()),
+  multipleInGroup: z.optional(z.boolean()),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -66,17 +68,38 @@ export class StateFromEventHandler implements Handler {
     }
 
     if (this.definition.groupBy !== undefined) {
+      const groupBy = this.definition.groupBy
       const result = reduce(
         [...values],
-        (grouping: Record<string, ContractValue>, item) => {
-          if (typeof item === 'object' && this.definition.groupBy) {
-            const key: unknown = Reflect.get(item, this.definition.groupBy)
-            if (typeof key === 'string' || typeof key === 'number') {
-              grouping[key] = item
-              return grouping
+        (grouping: Partial<Record<string, ContractValue>>, item) => {
+          assert(typeof item === 'object', 'Invalid item type')
+
+          const key: unknown = Reflect.get(item, groupBy)
+          assert(
+            typeof key === 'string' || typeof key === 'number',
+            'Invalid key type',
+          )
+          if (this.definition.onlyValue) {
+            Reflect.deleteProperty(item, groupBy)
+          }
+
+          const value =
+            Object.keys(item).length === 1 ? Object.values(item)[0] : item
+          assert(value !== undefined, 'Value is undefined')
+
+          const group = grouping[key]
+          if (group === undefined || !this.definition.multipleInGroup) {
+            grouping[key] = value
+          } else {
+            grouping[key] = group
+            if (Array.isArray(group)) {
+              group.push(value)
+            } else {
+              grouping[key] = [group, value]
             }
           }
-          throw new Error('Cannot group')
+
+          return grouping
         },
         {},
       )
