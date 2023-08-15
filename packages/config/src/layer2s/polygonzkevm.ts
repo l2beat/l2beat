@@ -78,7 +78,10 @@ export const polygonzkevm: Layer2 = {
       documentation: [
         'https://wiki.polygon.technology/docs/zkEVM/introduction',
       ],
-      explorers: ['https://zkevm.polygonscan.com/'],
+      explorers: [
+        'https://zkevm.polygonscan.com/',
+        'https://explorer.mainnet.zkevm-test.net/',
+      ],
       repositories: ['https://github.com/0xPolygonHermez'],
       socialMedia: [
         'https://twitter.com/0xPolygon',
