@@ -5,7 +5,7 @@ import { ArrowRightIcon } from '../icons'
 export function L2WarsawTopBar() {
   return (
     <a
-      className="TopBar-L2Warsaw flex flex-col items-center justify-center bg-[#2C7265] p-2 text-center text-xs font-bold text-white md:flex-row md:space-x-5 md:text-sm hidden"
+      className="TopBar-L2Warsaw flex hidden flex-col items-center justify-center bg-[#2C7265] p-2 text-center text-xs font-bold text-white md:flex-row md:space-x-5 md:text-sm"
       href="https://warsaw.l2beat.com"
       target="_blank"
     >
