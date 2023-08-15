@@ -119,9 +119,8 @@ export function getScalingDetailedTvlColumns() {
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
-      name: 'TVL',
-      tooltip:
-        'Total Value Locked is the sum of values from canonically bridged, externally bridged, and natively minted assets, displayed together with a percentage change compared to 7D ago.',
+      name: 'Total',
+      tooltip: 'Total = Bridged + External + Native',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
@@ -133,9 +132,9 @@ export function getScalingDetailedTvlColumns() {
       ),
     },
     {
-      name: 'CBV',
+      name: 'Bridged',
       tooltip:
-        'Canonically Bridged Value refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
+        'Bridged refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
@@ -147,9 +146,9 @@ export function getScalingDetailedTvlColumns() {
       ),
     },
     {
-      name: 'EBV',
+      name: 'External',
       tooltip:
-        "Externally Bridged Value refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
+        "External refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
@@ -161,9 +160,9 @@ export function getScalingDetailedTvlColumns() {
       ),
     },
     {
-      name: 'NMV',
+      name: 'Native',
       tooltip:
-        'Natively Minted Value refers to non-bridged assets minted directly on the given L2, displayed together with a percentage change compared to 7D ago.',
+        'Native refers to non-bridged assets minted directly on the given L2, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
