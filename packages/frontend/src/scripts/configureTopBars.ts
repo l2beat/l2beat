@@ -37,13 +37,13 @@ export function configureTopBars() {
 // NOTE(radomski): Gitcoin round starts on the 15th and ends on the 29th. On
 // 15th, 27th, 28th, and 29th no matter what the local storage says, display
 // the gitcoin banner. On those days we do not need to write anything into the
-// local storage since it's always going to be gitcoin. On the first occurance
+// local storage since it's always going to be gitcoin. On the first occurrence
 // that the date does not fall into gitcoin start or end (so 16th-26th) and we
 // do not have anything in the local storage, write the L2Warsaw banner. And
 // cycle which banner to show every 24h. For time before and after the entire
 // Gitcoin round always display the L2Warsaw banner.
 function getBannerVariant(): 'gitcoin' | 'l2warsaw' {
-  const now = new Date(Date.now())
+  const now = new Date()
 
   const gitcoinIsLive = now <= gitcoinEndDate && now >= gitcoinStartDate
   if (!gitcoinIsLive) {
