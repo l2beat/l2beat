@@ -30,7 +30,7 @@ export const metis: Layer2 = {
       uses "optimistic data availability" scheme in which transaction data is kept off-chain in MEMO while Validators can \
       request tx data from Sequencer via L1 challenge mechanism if it does not make it available for validation off-chain.',
     purpose: 'Universal',
-    provider: 'Optimism',
+    provider: 'OVM',
     category: 'Optimistic Chain',
     links: {
       websites: ['https://www.metis.io'],
