@@ -20,7 +20,7 @@ export function ScalingLegend() {
         <p className="flex gap-1">
           <OptimismIcon className="relative -top-0.5 min-w-[24px]" />
           <span>&ndash;</span>
-          <span>This project is based on OP Stack&apos;s base.</span>
+          <span>This project is based on OP Stack&apos;s code base.</span>
         </p>
         <p className="flex gap-1">
           <OVMIcon className="relative -top-0.5 min-w-[24px]" />
