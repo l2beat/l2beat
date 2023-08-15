@@ -64,7 +64,10 @@ export const optimism: Layer2 = {
       websites: ['https://optimism.io/'],
       apps: [],
       documentation: ['https://community.optimism.io'],
-      explorers: ['https://optimistic.etherscan.io'],
+      explorers: [
+        'https://optimistic.etherscan.io',
+        'https://optimism.blockscout.com/',
+      ],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
         'https://optimism.mirror.xyz/',
