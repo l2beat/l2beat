@@ -31,13 +31,9 @@ export function renderHover(
   }
 
   const isActivity = state.view.chart.type === 'ActivityChart'
-  const isDetailedTvl = state.view.chart.type === 'AggregateDetailedTvlChart'
   const showEthereum = state.controls.showEthereum
-  elements.hover.purpleCircle?.classList.toggle('hidden', !isDetailedTvl)
-  elements.hover.yellowTriangle?.classList.toggle('hidden', !isDetailedTvl)
-  elements.hover.pinkSquare?.classList.toggle('hidden', !isDetailedTvl)
 
-  elements.hover.circle?.classList.toggle('hidden', isActivity || isDetailedTvl)
+  elements.hover.circle?.classList.toggle('hidden', isActivity)
   elements.hover.redCircle?.classList.toggle('hidden', !isActivity)
   elements.hover.blueSquare?.classList.toggle(
     'hidden',
@@ -57,19 +53,6 @@ export function renderHover(
   const bottom2 =
     'y2' in point && state.controls.showEthereum
       ? Math.max(0, point.y2 * (rect.height - 20))
-      : bottom1
-
-  const cbvBottom =
-    'parts' in point
-      ? Math.max(0, point.parts.cbv * (rect.height - 20))
-      : bottom1
-  const ebvBottom =
-    'parts' in point
-      ? Math.max(0, point.parts.ebv * (rect.height - 20))
-      : bottom1
-  const nmvBottom =
-    'parts' in point
-      ? Math.max(0, point.parts.nmv * (rect.height - 20))
       : bottom1
 
   if (elements.hover.line) {
@@ -105,21 +88,6 @@ export function renderHover(
   if (elements.hover.greenSquare) {
     elements.hover.greenSquare.style.left = `${left - 4}px`
     elements.hover.greenSquare.style.bottom = `${bottom1 - 4}px`
-  }
-
-  if (
-    elements.hover.purpleCircle &&
-    elements.hover.yellowTriangle &&
-    elements.hover.pinkSquare
-  ) {
-    elements.hover.purpleCircle.style.left = `${left - 4}px`
-    elements.hover.purpleCircle.style.bottom = `${cbvBottom - 4}px`
-
-    elements.hover.yellowTriangle.style.left = `${left - 6}px`
-    elements.hover.yellowTriangle.style.bottom = `${ebvBottom - 4}px`
-
-    elements.hover.pinkSquare.style.left = `${left - 4}px`
-    elements.hover.pinkSquare.style.bottom = `${nmvBottom - 4}px`
   }
 
   if (elements.hover.contents) {
