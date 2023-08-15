@@ -25,7 +25,31 @@ export function configureTopBars() {
   }
 }
 
+//
+//     August 2023
+// Mo Tu We Th Fr Sa Su
+//     1  2  3  4  5  6
+//  7  8  9 10 11 12 13
+// 14 15 16 17 18 19 20
+// 21 22 23 24 25 26 27
+// 28 29 30 31
+//
+// NOTE(radomski): Gitcoin round starts on the 15th and ends on the 29th. On
+// 15th, 27th, 28th, and 29th no matter what the local storage says, display
+// the gitcoin banner. On those days we do not need to write anything into the
+// local storage since it's always going to be gitcoin. On the first occurance
+// that the date does not fall into gitcoin start or end (so 16th-26th) and we
+// do not have anything in the local storage, write the L2Warsaw banner. And
+// cycle which banner to show every 24h. For time before and after the entire
+// Gitcoin round always display the L2Warsaw banner.
 function getBannerVariant(): 'gitcoin' | 'l2warsaw' {
+  const now = new Date(Date.now())
+
+  const gitcoinIsLive = now <= gitcoinEndDate && now >= gitcoinStartDate
+  if (!gitcoinIsLive) {
+    return 'l2warsaw'
+  }
+
   const gitcoinBarOverride =
     isWithinDayAfter(gitcoinStartDate) ||
     isWithinThreeDaysBefore(gitcoinEndDate)
@@ -36,23 +60,23 @@ function getBannerVariant(): 'gitcoin' | 'l2warsaw' {
 
   const presentTopBarData = readStorage()
 
-  const topBarDataToWrite: TopBarVariantData = {
-    variant: Math.random() < 0.5 ? 'gitcoin' : 'l2warsaw',
-    lastBannerChangeTime: Date.now(),
+  const newTopBarData: TopBarVariantData = {
+    variant: 'l2warsaw',
+    lastBannerChangeTime: now.getTime(),
   }
 
   if (!presentTopBarData) {
-    writeStorage(topBarDataToWrite)
-
-    return topBarDataToWrite.variant
+    writeStorage(newTopBarData)
+    return newTopBarData.variant
   }
 
   const lastSwapDate = new Date(presentTopBarData.lastBannerChangeTime)
-
   if (hasDayPassedSince(lastSwapDate)) {
-    writeStorage(topBarDataToWrite)
+    newTopBarData.variant =
+      presentTopBarData.variant === 'l2warsaw' ? 'gitcoin' : 'l2warsaw'
+    writeStorage(newTopBarData)
 
-    return topBarDataToWrite.variant
+    return newTopBarData.variant
   }
 
   return presentTopBarData.variant
