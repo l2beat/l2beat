@@ -33,6 +33,10 @@ export class AggregatedReportUpdater {
     )
   }
 
+  getConfigHash() {
+    return this.configHash
+  }
+
   async start() {
     const known = await this.aggregatedReportStatusRepository.getByConfigHash(
       this.configHash,

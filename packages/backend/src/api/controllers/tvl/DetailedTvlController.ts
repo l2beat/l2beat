@@ -3,11 +3,11 @@ import {
   AssetId,
   ChainId,
   DetailedTvlApiResponse,
+  Hash256,
   ProjectId,
   Token,
   TvlApiChart,
   TvlApiCharts,
-  UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
 
@@ -25,6 +25,30 @@ import {
 } from './detailedTvl'
 import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
 
+interface DetailedTvlControllerOptions {
+  errorOnUnsyncedDetailedTvl: boolean
+}
+
+type DetailedTvlResult =
+  | {
+      result: 'success'
+      data: DetailedTvlApiResponse
+    }
+  | {
+      result: 'error'
+      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+    }
+
+type DetailedAssetTvlResult =
+  | {
+      result: 'success'
+      data: TvlApiCharts
+    }
+  | {
+      result: 'error'
+      error: 'INVALID_PROJECT_OR_ASSET' | 'NO_DATA'
+    }
+
 export class DetailedTvlController {
   constructor(
     private readonly reportStatusRepository: ReportStatusRepository,
@@ -34,6 +58,8 @@ export class DetailedTvlController {
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
     private readonly logger: Logger,
+    private readonly aggregatedConfigHash: Hash256,
+    private readonly options: DetailedTvlControllerOptions,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -41,28 +67,36 @@ export class DetailedTvlController {
   /**
    * TODO: Add project exclusion?
    */
-  async getDetailedTvlApiResponse(): Promise<
-    DetailedTvlApiResponse | undefined
-  > {
-    const minimumTimestamp = await this.getMinimumTimestamp()
+  async getDetailedTvlApiResponse(): Promise<DetailedTvlResult> {
+    const dataTimings = await this.getDataTimings()
 
-    if (!minimumTimestamp) {
-      return
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
+    }
+
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
     }
 
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
         this.aggregatedReportRepository.getHourlyWithAnyType(
-          getHourlyMinTimestamp(minimumTimestamp),
+          getHourlyMinTimestamp(dataTimings.latestTimestamp),
         ),
 
         this.aggregatedReportRepository.getSixHourlyWithAnyType(
-          getSixHourlyMinTimestamp(minimumTimestamp),
+          getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
         ),
 
         this.aggregatedReportRepository.getDailyWithAnyType(),
 
-        this.reportRepository.getByTimestamp(minimumTimestamp),
+        this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
       ])
 
     /**
@@ -93,7 +127,10 @@ export class DetailedTvlController {
       this.projects.map((x) => x.projectId),
     )
 
-    return tvlApiResponse
+    return {
+      result: 'success',
+      data: tvlApiResponse,
+    }
   }
 
   async getDetailedAssetTvlApiResponse(
@@ -101,19 +138,25 @@ export class DetailedTvlController {
     chainId: ChainId,
     assetId: AssetId,
     assetType: ValueType,
-  ): Promise<TvlApiCharts | undefined> {
+  ): Promise<DetailedAssetTvlResult> {
     const asset = this.tokens.find((t) => t.id === assetId)
     const project = this.projects.find((p) => p.projectId === projectId)
 
     if (!asset || !project) {
-      return
+      return {
+        result: 'error',
+        error: 'INVALID_PROJECT_OR_ASSET',
+      }
     }
 
     const timestampCandidate =
       await this.reportStatusRepository.findLatestTimestamp(chainId, assetType)
 
     if (!timestampCandidate) {
-      return
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
     }
 
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
@@ -143,49 +186,42 @@ export class DetailedTvlController {
     const types: TvlApiChart['types'] = ['timestamp', assetSymbol, 'usd']
 
     return {
-      hourly: {
-        types,
-        data: getProjectAssetChartData(hourlyReports, asset.decimals, 1),
-      },
-      sixHourly: {
-        types,
-        data: getProjectAssetChartData(sixHourlyReports, asset.decimals, 6),
-      },
-      daily: {
-        types,
-        data: getProjectAssetChartData(dailyReports, asset.decimals, 24),
+      result: 'success',
+      data: {
+        hourly: {
+          types,
+          data: getProjectAssetChartData(hourlyReports, asset.decimals, 1),
+        },
+        sixHourly: {
+          types,
+          data: getProjectAssetChartData(sixHourlyReports, asset.decimals, 6),
+        },
+        daily: {
+          types,
+          data: getProjectAssetChartData(dailyReports, asset.decimals, 24),
+        },
       },
     }
   }
 
-  private async getMinimumTimestamp(): Promise<UnixTime | undefined> {
-    const valueTypes = [ValueType.CBV, ValueType.EBV, ValueType.NMV]
+  private async getDataTimings() {
+    const { matching: syncedReportsAmount, different: unsyncedReportsAmount } =
+      await this.aggregatedReportStatusRepository.findCountsForHash(
+        this.aggregatedConfigHash,
+      )
 
-    const reportsTimestampsPromises = valueTypes.map((valueType) =>
-      this.reportStatusRepository.findLatestTimestampOfType(valueType),
-    )
+    const latestTimestamp =
+      await this.aggregatedReportStatusRepository.findLatestTimestamp()
 
-    const aggregatedReportsTimestampsPromises = [
-      this.aggregatedReportStatusRepository.findLatestTimestamp(),
-    ]
+    const isSynced = unsyncedReportsAmount === 0
 
-    const timestampCandidates = await Promise.all([
-      ...reportsTimestampsPromises,
-      ...aggregatedReportsTimestampsPromises,
-    ])
-
-    if (!timestampCandidates.every(Boolean)) {
-      return
+    const result = {
+      syncedReportsAmount,
+      unsyncedReportsAmount,
+      isSynced,
+      latestTimestamp,
     }
 
-    const minimumTimestamp = Math.min(
-      ...timestampCandidates.filter(notUndefined).map((x) => Number(x)),
-    )
-
-    return new UnixTime(minimumTimestamp)
+    return result
   }
-}
-
-function notUndefined<T>(x: T | undefined): x is T {
-  return x !== undefined
 }
