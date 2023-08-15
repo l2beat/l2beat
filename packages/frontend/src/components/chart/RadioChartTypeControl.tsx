@@ -18,8 +18,8 @@ export function RadioChartTypeControl({
 }) {
   const tabs: Tab[] = compact([
     !hasDetailedTvl && {
-      fullName: 'Total Value Locked',
-      shortName: 'TVL',
+      fullName: 'Value Locked',
+      shortName: 'Value',
       value: 'tvl',
       checked: true,
     },

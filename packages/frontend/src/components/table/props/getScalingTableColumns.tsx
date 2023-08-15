@@ -71,7 +71,7 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
       getValue: (project) => project.purpose,
     },
     {
-      name: 'TVL',
+      name: 'Total',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',
       alignRight: true,
@@ -252,7 +252,7 @@ export function getArchivedScalingTvlColumns() {
       getValue: (project) => project.purpose,
     },
     {
-      name: 'TVL',
+      name: 'Total',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',
       alignRight: true,
