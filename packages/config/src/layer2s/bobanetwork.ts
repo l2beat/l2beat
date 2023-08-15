@@ -42,7 +42,7 @@ export const bobanetwork: Layer2 = {
     This facility is using funds from liquidity providers. The second is Hybrid Compute technology that enables Ethereum developers to build dApps that trigger code executed on web-scale infrastructure. \
     Boba Network operates on multiple Layer 1 blockchains.',
     purpose: 'Universal',
-    provider: 'Optimism',
+    provider: 'OVM',
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://boba.network'],
