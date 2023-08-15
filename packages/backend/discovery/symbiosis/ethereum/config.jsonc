@@ -17,6 +17,9 @@
     "Portal": {
       "ignoreInWatchMode": ["requestCount"],
       "ignoreRelatives": ["wrapper"]
+    },
+    "Multisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

@@ -80,7 +80,7 @@ export function renderChart(
       mainStyle.strokeGradient,
     )
   } else if (state.view.chart.type === 'AggregateDetailedTvlChart') {
-    const cbvFillSTyle = getCBVStyle(canvas, ctx)
+    const cbvFillStyle = getCBVStyle(canvas, ctx)
     const ebvFillStyle = getEBVStyle(canvas, ctx)
     const nmvFillStyle = getNMVStyle(canvas, ctx)
     const cbvPoints = state.view.chart.points.map((p) => ({
@@ -96,9 +96,29 @@ export function renderChart(
       y: p.parts.nmv,
     }))
 
-    fillBelowChart(ctx, cbvPoints, canvas, usableHeight, cbvFillSTyle)
+    fillBelowChart(ctx, cbvPoints, canvas, usableHeight, cbvFillStyle)
     fillBelowChart(ctx, ebvPoints, canvas, usableHeight, ebvFillStyle)
     fillBelowChart(ctx, nmvPoints, canvas, usableHeight, nmvFillStyle)
+    if (drawYAxis) {
+      drawYAxisLabels(
+        ctx,
+        state.view.labels,
+        canvas,
+        usableHeight,
+        yAxisStyle.lineStroke,
+        yAxisStyle.labelFill,
+      )
+    }
+  } else if (state.view.chart.type === 'TokenDetailedTvlChart') {
+    const style =
+      state.view.chart.assetType === 'EBV'
+        ? getEBVStyle(canvas, ctx)
+        : state.view.chart.assetType === 'CBV'
+        ? getCBVStyle(canvas, ctx)
+        : getNMVStyle(canvas, ctx)
+
+    const points = state.view.chart.points
+    fillBelowChart(ctx, points, canvas, usableHeight, style)
     if (drawYAxis) {
       drawYAxisLabels(
         ctx,

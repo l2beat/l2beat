@@ -36,17 +36,23 @@ you are out of luck. We will fix this in the future.
 
 */
 
-import { AssetId } from '@l2beat/shared-pure'
+import { AssetId, Token } from '@l2beat/shared-pure'
 
-import { tokens } from './tokenList.json'
-import { TokenInfo } from './types'
+import { layer2s } from '../layer2s'
+import { getCanonicalTokens } from './types'
 
-export const tokenList: TokenInfo[] = tokens.map((t) => TokenInfo.parse(t))
+const canonicalTokenList: Token[] = getCanonicalTokens()
 
-const tokenMap = new Map(tokenList.map((t) => [t.symbol, t] as const))
+export const tokenList: Token[] = canonicalTokenList
+  .concat(layer2s.map((l2) => l2.config.tokenList ?? []).flat())
+  .sort((a, b) => a.name.localeCompare(b.name))
 
-export function getTokenBySymbol(symbol: string) {
-  const token = tokenMap.get(symbol)
+const canonicalTokenMap = new Map(
+  canonicalTokenList.map((t) => [t.symbol, t] as const),
+)
+
+export function getCanonicalTokenBySymbol(symbol: string) {
+  const token = canonicalTokenMap.get(symbol)
   if (!token) {
     throw new TypeError(`Unknown token ${symbol}`)
   }

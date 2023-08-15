@@ -145,6 +145,67 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  // Detailed asset TVL
+  async getHourlyForDetailed(
+    projectId: ProjectId,
+    chainId: ChainId,
+    assetId: AssetId,
+    assetType: ValueType,
+    from: UnixTime,
+  ): Promise<ReportRecord[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('reports')
+      .where('asset_id', assetId.toString())
+      .andWhere('chain_id', chainId.valueOf())
+      .andWhere('project_id', projectId.valueOf())
+      .andWhere('asset_type', assetType.toString())
+      .andWhere('unix_timestamp', '>=', from.toDate())
+      .orderBy('unix_timestamp')
+
+    return rows.map(toRecord)
+  }
+
+  async getSixHourlyForDetailed(
+    projectId: ProjectId,
+    chainId: ChainId,
+    assetId: AssetId,
+    assetType: ValueType,
+    from: UnixTime,
+  ): Promise<ReportRecord[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('reports')
+      .where('asset_id', assetId.toString())
+      .andWhere('project_id', projectId.valueOf())
+      .andWhere('chain_id', chainId.valueOf())
+      .andWhere('asset_type', assetType.toString())
+      .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
+      .andWhere('unix_timestamp', '>=', from.toDate())
+      .orderBy('unix_timestamp')
+
+    return rows.map(toRecord)
+  }
+
+  async getDailyForDetailed(
+    projectId: ProjectId,
+    chainId: ChainId,
+    assetId: AssetId,
+    assetType: ValueType,
+  ): Promise<ReportRecord[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('reports')
+      .where('asset_id', assetId.toString())
+      .andWhere('chain_id', chainId.valueOf())
+      .andWhere('project_id', projectId.valueOf())
+      .andWhere('asset_type', assetType.toString())
+      .andWhereRaw(`extract(hour from "unix_timestamp") = 0`)
+      .orderBy('unix_timestamp')
+
+    return rows.map(toRecord)
+  }
+
   private _getByProjectAndAssetQuery(
     knex: Knex,
     projectId: ProjectId,

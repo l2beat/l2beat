@@ -133,7 +133,7 @@ export const symbiosis: Bridge = {
         address: discovery.getContract('Bridge').address,
         name: 'Bridge',
         description:
-          'A contract that generates Orcle requests for the Symbiosis relayers network.',
+          'A contract that generates Oracle requests for the Symbiosis relayers network.',
       },
       {
         address: discovery.getContract('Portal').address,

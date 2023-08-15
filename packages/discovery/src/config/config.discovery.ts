@@ -1,4 +1,4 @@
-import { EtherscanClient, getEnv } from '@l2beat/shared'
+import { ArbiscanClient, EtherscanClient, getEnv } from '@l2beat/shared'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
@@ -26,21 +26,110 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       dev: cli.dev,
       blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
     },
-    chains: [
-      {
+    chain: getChainConfig(cli.chain),
+  }
+}
+
+function getChainConfig(chainId: ChainId) {
+  switch (chainId) {
+    case ChainId.ETHEREUM:
+      return {
         chainId: ChainId.ETHEREUM,
         rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
         etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
         etherscanUrl: EtherscanClient.API_URL,
-        minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
-      },
-    ],
+        minTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
+      }
+    case ChainId.ARBITRUM:
+      return {
+        chainId: ChainId.ARBITRUM,
+        rpcUrl: getEnv('DISCOVERY_ARBITRUM_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_ARBITRUM_ETHERSCAN_API_KEY'),
+        etherscanUrl: ArbiscanClient.API_URL,
+        minTimestamp: ChainId.getMinTimestamp(ChainId.ARBITRUM),
+      }
+    case ChainId.OPTIMISM:
+      return {
+        chainId: ChainId.OPTIMISM,
+        rpcUrl: getEnv('DISCOVERY_OPTIMISM_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_OPTIMISM_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api-optimistic.etherscan.io/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.OPTIMISM),
+      }
+    case ChainId.POLYGON_POS:
+      return {
+        chainId: ChainId.POLYGON_POS,
+        rpcUrl: getEnv('DISCOVERY_POLYGON_POS_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_POLYGON_POS_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.polygonscan.com/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.POLYGON_POS),
+      }
+    case ChainId.BSC:
+      return {
+        chainId: ChainId.BSC,
+        rpcUrl: getEnv('DISCOVERY_BSC_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_BSC_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.bscscan.com/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.BSC),
+      }
+    case ChainId.AVALANCHE:
+      return {
+        chainId: ChainId.AVALANCHE,
+        rpcUrl: getEnv('DISCOVERY_AVALANCHE_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_AVALANCHE_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.snowtrace.io/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.AVALANCHE),
+      }
+    case ChainId.CELO:
+      return {
+        chainId: ChainId.CELO,
+        rpcUrl: getEnv('DISCOVERY_CELO_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_CELO_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.celoscan.io/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.CELO),
+      }
+    case ChainId.LINEA:
+      return {
+        chainId: ChainId.LINEA,
+        rpcUrl: getEnv('DISCOVERY_LINEA_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_LINEA_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.lineascan.build/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.LINEA),
+      }
+    case ChainId.BASE:
+      return {
+        chainId: ChainId.BASE,
+        rpcUrl: getEnv('DISCOVERY_BASE_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_BASE_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.basescan.org/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.BASE),
+      }
+    case ChainId.POLYGON_ZKEVM:
+      return {
+        chainId: ChainId.POLYGON_ZKEVM,
+        rpcUrl: getEnv('DISCOVERY_POLYGON_ZKEVM_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_POLYGON_ZKEVM_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api-zkevm.polygonscan.com/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.POLYGON_ZKEVM),
+      }
+    case ChainId.GNOSIS:
+      return {
+        chainId: ChainId.GNOSIS,
+        rpcUrl: getEnv('DISCOVERY_GNOSIS_RPC_URL'),
+        etherscanApiKey: getEnv('DISCOVERY_GNOSIS_ETHERSCAN_API_KEY'),
+        etherscanUrl: 'https://api.gnosisscan.io/api',
+        minTimestamp: ChainId.getMinTimestamp(ChainId.GNOSIS),
+      }
+    case ChainId.NMV:
+      throw new Error('NMV is not supported')
+    default:
+      throw new Error(`No config for chain: ${ChainId.getName(chainId)}`)
   }
 }
 
 export interface DiscoveryCliConfig {
   discovery: DiscoveryModuleConfig | false
-  chains: [DiscoveryChainConfig]
+  chain: DiscoveryChainConfig
   invert: InversionConfig | false
 }
 

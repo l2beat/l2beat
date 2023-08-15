@@ -78,7 +78,10 @@ export const polygonzkevm: Layer2 = {
       documentation: [
         'https://wiki.polygon.technology/docs/zkEVM/introduction',
       ],
-      explorers: ['https://zkevm.polygonscan.com/'],
+      explorers: [
+        'https://zkevm.polygonscan.com/',
+        'https://explorer.mainnet.zkevm-test.net/',
+      ],
       repositories: ['https://github.com/0xPolygonHermez'],
       socialMedia: [
         'https://twitter.com/0xPolygon',
@@ -99,8 +102,6 @@ export const polygonzkevm: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
-      url: 'https://polygon-rpc.com/zkevm',
-      callsPerMinute: 500,
     },
   },
   riskView: makeBridgeCompatible({

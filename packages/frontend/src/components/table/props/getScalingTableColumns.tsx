@@ -11,6 +11,7 @@ import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
 import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
+import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
 export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
@@ -120,65 +121,57 @@ export function getScalingDetailedTvlColumns() {
     {
       name: 'TVL',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        'Total Value Locked is the sum of values from canonically bridged, externally bridged, and natively minted assets, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <>
-          <NumberCell className="font-bold">{project.tvl}</NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
+        <ValueWithPercentageCell
+          value={project.tvl}
+          percentChange={project.tvlChange}
+        />
       ),
     },
     {
       name: 'CBV',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        'Canonically Bridged Value refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <>
-          <NumberCell className="font-bold">{project.cbv}</NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
+        <ValueWithPercentageCell
+          value={project.cbv}
+          percentChange={project.cbvChange}
+        />
       ),
     },
     {
       name: 'EBV',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        "Externally Bridged Value refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <>
-          <NumberCell className="font-bold">{project.ebv}</NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
+        <ValueWithPercentageCell
+          value={project.ebv}
+          percentChange={project.ebvChange}
+        />
       ),
     },
     {
       name: 'NMV',
       tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
+        'Natively Minted Value refers to non-bridged assets minted directly on the given L2, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => (
-        <>
-          <NumberCell className="font-bold">{project.nmv}</NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
+        <ValueWithPercentageCell
+          value={project.nmv}
+          percentChange={project.nmvChange}
+        />
       ),
     },
   ]

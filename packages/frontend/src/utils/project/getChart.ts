@@ -1,23 +1,31 @@
 import { Bridge, Layer2, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   ActivityApiResponse,
+  DetailedTvlApiResponse,
   ProjectId,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
+import { TokenControl } from '../../components/chart/CommonTokenControls'
+import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
   project: Layer2 | Bridge,
-  tvlApiResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   config?: Config,
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
   return {
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
+    detailedTvlEndpoint: `/api/${project.display.slug}-detailed-tvl.json`,
     activityEndpoint: `/api/activity/${project.display.slug}.json`,
-    tokens: getTokens(project.id, tvlApiResponse),
+    tokens: getTokens(
+      project.id,
+      tvlApiResponse,
+      config?.features.detailedTvl ?? false,
+    ),
     hasActivity:
       config?.features.activity &&
       !!activityApiResponse?.projects[project.id.toString()],
@@ -27,15 +35,33 @@ export function getChart(
   }
 }
 
-function getTokens(projectId: ProjectId, tvlApiResponse: TvlApiResponse) {
-  return tvlApiResponse.projects[projectId.toString()]?.tokens
-    .map(({ assetId, tvl }) => {
-      const symbol = safeGetTokenByAssetId(assetId)?.symbol
-      if (symbol) {
+function getTokens(
+  projectId: ProjectId,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  hasDetailedTVL: boolean,
+): TokenControl[] {
+  const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens
+
+  const compatibleTokenList = unifyTokensResponse(tokens)
+
+  return compatibleTokenList
+    .map(({ assetId, usdValue, valueType, chainId }) => {
+      const token = safeGetTokenByAssetId(assetId)
+      const symbol = token?.symbol
+      const name = token?.name
+      const address = token?.address
+      if (symbol && name && address) {
+        const tvlEndpoint = hasDetailedTVL
+          ? `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${valueType.toString()}`
+          : `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`
+
         return {
+          address: address.toString(),
           symbol,
-          tvlEndpoint: `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`,
-          tvl,
+          name,
+          assetType: valueType,
+          tvlEndpoint,
+          tvl: usdValue,
         }
       }
     })

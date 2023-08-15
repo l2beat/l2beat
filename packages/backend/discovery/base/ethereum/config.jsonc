@@ -16,7 +16,8 @@
     "0x56315b90c40730925ec5485cf004d835058518A0": "L2OutputOracle",
     "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa": "L1CrossDomainMessenger",
     "0x73a79Fab69143498Ed3712e519A88a918e1f4072": "SystemConfig",
-    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig"
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig",
+    "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": "GnosisSafe" // member of OptimismMultisig
   },
   "overrides": {
     "OptimismPortal": {
@@ -58,6 +59,9 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "GuardianMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "GnosisSafe": {
       "ignoreInWatchMode": ["nonce"]
     }
   }

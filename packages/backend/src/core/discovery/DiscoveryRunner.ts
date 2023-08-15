@@ -18,6 +18,9 @@ export interface DiscoveryRunnerOptions {
   retryDelayMs?: number
 }
 
+const MAX_RETRIES = 6
+const RETRY_DELAY_MS = 10_000
+
 export class DiscoveryRunner {
   constructor(
     private readonly discoveryProvider: DiscoveryProvider,
@@ -80,8 +83,8 @@ export class DiscoveryRunner {
   async discoverWithRetry(
     config: DiscoveryConfig,
     blockNumber: number,
-    maxRetries = 2,
-    delayMs = 1000,
+    maxRetries = MAX_RETRIES,
+    delayMs = RETRY_DELAY_MS,
   ): Promise<DiscoveryOutput> {
     let discovery: DiscoveryOutput | undefined = undefined
     let err: Error | undefined = undefined
@@ -94,6 +97,11 @@ export class DiscoveryRunner {
         err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
       }
 
+      console.log(
+        `DiscoveryRunner: Retrying ${config.name} (chain: ${ChainId.getName(
+          config.chainId,
+        )}) | attempt:${i}`,
+      )
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
 

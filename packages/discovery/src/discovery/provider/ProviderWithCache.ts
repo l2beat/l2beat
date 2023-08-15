@@ -1,5 +1,5 @@
 import { EtherscanLikeClient } from '@l2beat/shared'
-import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { Bytes, ChainId, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { isRevert } from '../utils/isRevert'
@@ -14,9 +14,10 @@ export class ProviderWithCache extends DiscoveryProvider {
   constructor(
     provider: providers.Provider,
     etherscanClient: EtherscanLikeClient,
+    chainId: ChainId,
   ) {
     super(provider, etherscanClient)
-    this.cache = new ProviderCache()
+    this.cache = new ProviderCache(chainId)
   }
 
   private async cacheOrFetch<R, S>(

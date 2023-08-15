@@ -1,5 +1,11 @@
 import Router from '@koa/router'
-import { AssetId, branded, ProjectId } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  branded,
+  ChainId,
+  ProjectId,
+  ValueType,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { DetailedTvlController } from '../controllers/tvl/DetailedTvlController'
@@ -51,15 +57,63 @@ export function createTvlRouter(
 
   if (features.detailedTvlEnabled) {
     router.get('/api/detailed-tvl', async (ctx) => {
-      const data = await detailedTvlController.getDetailedTvlApiResponse()
+      const detailedTvlResult =
+        await detailedTvlController.getDetailedTvlApiResponse()
 
-      if (!data) {
-        ctx.status = 404
+      if (detailedTvlResult.result === 'error') {
+        if (detailedTvlResult.error === 'DATA_NOT_FULLY_SYNCED') {
+          ctx.status = 422
+        }
+
+        if (detailedTvlResult.error === 'NO_DATA') {
+          ctx.status = 404
+        }
+
         return
       }
 
-      ctx.body = data
+      ctx.body = detailedTvlResult.data
     })
+
+    router.get(
+      '/api/projects/:projectId/tvl/chains/:chainId/assets/:assetId/types/:assetType',
+
+      withTypedContext(
+        z.object({
+          params: z.object({
+            chainId: z.string(),
+            projectId: branded(z.string(), ProjectId),
+            assetId: branded(z.string(), AssetId),
+            assetType: branded(z.string(), ValueType),
+          }),
+        }),
+        async (ctx) => {
+          const { assetId, chainId, assetType, projectId } = ctx.params
+
+          const detailedAssetData =
+            await detailedTvlController.getDetailedAssetTvlApiResponse(
+              projectId,
+              ChainId(+chainId),
+              assetId,
+              assetType,
+            )
+
+          if (detailedAssetData.result === 'error') {
+            if (detailedAssetData.error === 'NO_DATA') {
+              ctx.status = 404
+            }
+
+            if (detailedAssetData.error === 'INVALID_PROJECT_OR_ASSET') {
+              ctx.status = 400
+            }
+
+            return
+          }
+
+          ctx.body = detailedAssetData.data
+        },
+      ),
+    )
   }
 
   return router

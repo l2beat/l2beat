@@ -2,16 +2,15 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ChartButton } from './ChartButton'
+import { TokenControl } from './CommonTokenControls'
 
-export interface TokenControl {
-  symbol: string
-  tvlEndpoint: string
-}
-export interface TokenControlsProps {
+export interface TokenControlsToBeRemovedProps {
   tokens?: TokenControl[]
 }
 
-export function TokenControls({ tokens }: TokenControlsProps) {
+export function TokenControlsToBeRemoved({
+  tokens,
+}: TokenControlsToBeRemovedProps) {
   if (!tokens || tokens.length === 0) {
     return null
   }
@@ -28,6 +27,7 @@ export function TokenControls({ tokens }: TokenControlsProps) {
           name="token"
           value={x.symbol}
           tvlEndpoint={x.tvlEndpoint}
+          assetType={x.assetType}
           className={i >= 3 ? 'hidden' : undefined}
         />
       ))}

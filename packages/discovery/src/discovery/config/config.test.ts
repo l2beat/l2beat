@@ -57,7 +57,7 @@ describe('discovery config.jsonc', () => {
     )
   })
 
-  it('fields inside ignoreInWatchMode exists in discovery', async function () {
+  it('fields inside ignoreInWatchMode exist in discovery', async function () {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
         const discovery = await configReader.readDiscovery(c.name, c.chainId)
@@ -75,7 +75,9 @@ describe('discovery config.jsonc', () => {
             (c) => c.address === override.address,
           )
 
-          const errorPrefix = `${c.name} - ${override.address.toString()}`
+          const errorPrefix = `${c.name} (chain: ${ChainId.getName(
+            c.chainId,
+          )}) - ${override.address.toString()}`
 
           assert(
             contract,
@@ -135,14 +137,14 @@ describe('discovery config.jsonc', () => {
         const discovery = await configReader.readDiscovery(c.name, c.chainId)
 
         if (discovery.configHash !== c.hash) {
-          outdatedHashes.push(c.name)
+          outdatedHashes.push(`${ChainId.getName(c.chainId)}-${c.name}`)
         }
       }
       assert(
         outdatedHashes.length === 0,
-        `Following projects have outdated hashes: ${outdatedHashes.join(
+        `Following projects have outdated hashes (chain-project): ${outdatedHashes.join(
           ', ',
-        )}. Run yarn discover <outdatedProjectName>`,
+        )}. Run yarn discover <chain> <project>`,
       )
     }
   })

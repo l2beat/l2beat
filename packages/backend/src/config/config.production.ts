@@ -1,6 +1,6 @@
 import { bridges, layer2s, tokenList } from '@l2beat/config'
 import { EtherscanClient, getEnv, LogLevel } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model'
 import { Config } from './Config'
@@ -9,6 +9,10 @@ import { getGitCommitHash } from './getGitCommitHash'
 export function getProductionConfig(): Config {
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
   const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
+  const errorOnUnsyncedDetailedTvl = getEnv.boolean(
+    'ERROR_ON_UNSYNCED_DETAILED_TVL',
+    false,
+  )
 
   const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
@@ -30,7 +34,7 @@ export function getProductionConfig(): Config {
       throttleTimeInMs: 20000,
     },
     clock: {
-      minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+      minBlockTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: {
@@ -59,19 +63,18 @@ export function getProductionConfig(): Config {
     },
     tvl: {
       detailedTvlEnabled,
+      errorOnUnsyncedDetailedTvl,
       enabled: true,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {
         alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
-        // Deployment of the first L2
-        minBlockTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+        minBlockTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
       },
       arbitrum: arbitrumTvlEnabled && {
         arbiscanApiKey: getEnv('ARBISCAN_API_KEY'),
         providerUrl: getEnv('ARBITRUM_PROVIDER_URL'),
-        // ~ Timestamp of block number 0 on Arbitrum
-        minBlockTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+        minBlockTimestamp: ChainId.getMinTimestamp(ChainId.ARBITRUM),
       },
     },
     activity: {
@@ -108,6 +111,16 @@ export function getProductionConfig(): Config {
           callsPerMinute: getEnv.integer('ACTIVITY_LINEA_CALLS'),
           url: getEnv('ACTIVITY_LINEA_URL'),
         },
+        polygonzkevm: {
+          type: 'rpc',
+          callsPerMinute: getEnv.integer('ACTIVITY_POLYGONZKEVM_CALLS'),
+          url: getEnv('ACTIVITY_POLYGONZKEVM_URL'),
+        },
+        starknet: {
+          type: 'starknet',
+          callsPerMinute: getEnv.integer('ACTIVITY_STARKNET_CALLS'),
+          url: getEnv('ACTIVITY_STARKNET_URL'),
+        },
       },
     },
     statusEnabled: getEnv.boolean('STATUS_ENABLED', true),
@@ -123,7 +136,7 @@ export function getProductionConfig(): Config {
           rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
           etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+          minTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
         },
       ],
     },

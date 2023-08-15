@@ -16,12 +16,13 @@ export function toDiscoveryOutput(
     blockNumber,
     configHash,
     version: DISCOVERY_LOGIC_VERSION,
-    ...processAnalysis(results),
+    ...processAnalysis(results, chainId),
   }
 }
 
 export function processAnalysis(
   results: Analysis[],
+  chainId: ChainId,
 ): Omit<
   DiscoveryOutput,
   'name' | 'blockNumber' | 'configHash' | 'version' | 'chain'
@@ -38,7 +39,7 @@ export function processAnalysis(
           name: x.name,
           address: x.address,
           unverified: x.isVerified ? undefined : (true as const),
-          code: x.codeLink,
+          code: getCodeLink(x, chainId),
           upgradeability: x.upgradeability,
           values: Object.keys(x.values).length === 0 ? undefined : x.values,
           errors: Object.keys(x.errors).length === 0 ? undefined : x.errors,
@@ -66,6 +67,16 @@ function getContracts(results: Analysis[]) {
     Object.entries(abis).sort(([a], [b]) => a.localeCompare(b)),
   )
   return { contracts, abis }
+}
+
+function getCodeLink(analysis: Analysis, chainId: ChainId) {
+  if (analysis.type === 'EOA') {
+    return undefined
+  }
+  const addresses = [analysis.address]
+  addresses.push(...analysis.implementations)
+  const dethDomain = ChainId.getDethDomain(chainId)
+  return `https://${dethDomain}/address/${addresses.join(',')}`
 }
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {

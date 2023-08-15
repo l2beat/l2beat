@@ -12,7 +12,7 @@ interface MobileProjectLinksProps {
 export function MobileProjectLinks(props: MobileProjectLinksProps) {
   return (
     <div className="Dropdown">
-      <HorizontalSeparator className="-mx-4 mt-4 w-[calc(100%+2rem)]" />
+      <HorizontalSeparator className="-mx-4 w-[calc(100%+2rem)]" />
       <label className="flex items-center justify-between py-4">
         <input
           type="checkbox"

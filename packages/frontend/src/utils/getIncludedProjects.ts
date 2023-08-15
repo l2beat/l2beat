@@ -1,8 +1,16 @@
-import { ProjectId, TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  DetailedTvlApiResponse,
+  ProjectId,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 export function getIncludedProjects<
   T extends { id: ProjectId; isUpcoming?: boolean; type: 'bridge' | 'layer2' },
->(projects: T[], tvlApiResponse: TvlApiResponse, buildAllProjectPages = false) {
+>(
+  projects: T[],
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  buildAllProjectPages = false,
+) {
   if (buildAllProjectPages) {
     return projects
   }

@@ -117,7 +117,11 @@ export async function discover(
   logger: DiscoveryLogger,
   blockNumber: number,
 ) {
-  const discoveryProvider = new ProviderWithCache(provider, etherscanClient)
+  const discoveryProvider = new ProviderWithCache(
+    provider,
+    etherscanClient,
+    config.chainId,
+  )
   const proxyDetector = new ProxyDetector(discoveryProvider, logger)
   const sourceCodeService = new SourceCodeService(discoveryProvider)
   const handlerExecutor = new HandlerExecutor(discoveryProvider, logger)

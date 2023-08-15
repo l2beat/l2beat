@@ -12,8 +12,7 @@
     "0xA937660031787C4408587D2c6A67Ec4B260630F5",
     "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
     "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
-    "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-    "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
+    "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
   ],
   "names": {
     "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93": "CanonicalTransactionChain",
@@ -33,15 +32,17 @@
     "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1": "MantleFirstStrat",
     "0xA937660031787C4408587D2c6A67Ec4B260630F5": "MantleSecondStrat",
     "0x1e70dc4B6f41c16B23cF0EE674B4d5471C63F2e7": "SlashRecorder",
-    "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67": "dlReg",
-    "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1": "dlsm",
+    "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67": "BLSRegistry",
+    "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1": "DataLayrServiceManager",
     "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a": "PubkeyCompendium",
     "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01": "RegistryPermission",
     "0x075a48633dc6845f92339741E9c96b88f1b2A86f": "PauserRegistry",
+    "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0": "PauserRegistry2",
     "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashing",
     "0xD1328C9167e0693B689b5aa5a024379d4e437858": "Rollup",
     "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317": "AssertionMap",
-    "0x3F77D44E1789D47e076a4d5f2779a1fCAb821C2a": "VerifierEntry"
+    "0x3F77D44E1789D47e076a4d5f2779a1fCAb821C2a": "VerifierEntry",
+    "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D": "DataLayrChallengeUtils"
   },
   "overrides": {
     "AddressManager": {
@@ -176,6 +177,35 @@
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"]
     },
+    "DataLayrServiceManager": {
+      "ignoreMethods": [
+        "zeroPolynomialCommitmentMerkleRoots",
+        "taskNumber",
+        "latestTime"
+      ],
+      "ignoreInWatchMode": ["dataStoresForDuration"]
+    },
+    "BLSRegistry": {
+      "ignoreMethods": [
+        "apk",
+        "apkHashes",
+        "apkUpdateBlockNumbers",
+        "apkUpdates",
+        "getTotalStakeFromIndex",
+        "totalOperatorsHistory",
+        "totalStake",
+        "quorumBips",
+        "getLengthOfTotalOperatorsHistory",
+        "getLengthOfTotalStakeHistory"
+      ],
+      "fields": {
+        "operatorList": {
+          "type": "array",
+          "method": "operatorList",
+          "length": "{{ numOperators }}"
+        }
+      }
+    },
     "TssStakingSlashing": {
       "ignoreMethods": [
         "sharesToUnderlying",
@@ -213,6 +243,25 @@
         "lastCreatedAssertionID",
         "lastResolvedAssertionID"
       ]
+    },
+    "MantleSecondStrat": {
+      "ignoreMethods": [
+        "sharesToUnderlying",
+        "sharesToUnderlyingView",
+        "underlyingToShares",
+        "underlyingToSharesView"
+      ]
+    },
+    "MantleFirstStrat": {
+      "ignoreMethods": [
+        "sharesToUnderlying",
+        "sharesToUnderlyingView",
+        "underlyingToShares",
+        "underlyingToSharesView"
+      ]
+    },
+    "DataLayrChallengeUtils": {
+      "ignoreMethods": ["nextPowerOf2"]
     },
     "Owner2Multisig": {
       "ignoreInWatchMode": ["nonce"]

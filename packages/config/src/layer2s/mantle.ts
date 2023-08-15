@@ -37,6 +37,8 @@ export const mantle: Layer2 = {
   display: {
     name: 'Mantle',
     slug: 'mantle',
+    warning:
+      'Fraud proof system is currently disabled. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
       'Mantle is an EVM compatible optimistic chain that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.\
       It has a modular architecture trying to leverage EigenDA as Data Availability layer and Specular Network fraud proof system for fraud proofs.\
@@ -83,7 +85,7 @@ export const mantle: Layer2 = {
       ...RISK_VIEW.DATA_EXTERNAL,
       description:
         RISK_VIEW.DATA_EXTERNAL.description +
-        ' Some of the contracts supposed to perform DA signature checks are not verified. Moreover, the DA fraud proof mechanism is not live yet.',
+        ' MantleDA contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions. DA fraud proof mechanism is not live yet.',
       sources: [
         {
           contract: 'EigenDataLayerChain',
@@ -325,15 +327,23 @@ export const mantle: Layer2 = {
         description:
           'Main contract related to data availability. The proof of custody mechanism is not live.',
       }),
-      discovery.getContractDetails('dlReg'),
-      discovery.getContractDetails('dlsm'),
+      discovery.getContractDetails('BLSRegistry'),
+      discovery.getContractDetails('DataLayrServiceManager'),
       discovery.getContractDetails('PubkeyCompendium'),
-      discovery.getContractDetails('InvestmentManager'),
-      discovery.getContractDetails('MantleFirstStrat'),
-      discovery.getContractDetails('MantleSecondStrat'),
+      discovery.getContractDetails('InvestmentManager', {
+        description:
+          'Contract managing different investment strategies, forked from EigenLayer StrategyManager.',
+      }),
+      discovery.getContractDetails('MantleFirstStrat', {
+        description: 'Basic do-nothing investment strategy.',
+      }),
+      discovery.getContractDetails('MantleSecondStrat', {
+        description: 'Basic do-nothing investment strategy.',
+      }),
       discovery.getContractDetails('RegistryPermission'),
       discovery.getContractDetails('Delegation'),
       discovery.getContractDetails('PauserRegistry'),
+      discovery.getContractDetails('PauserRegistry2'),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

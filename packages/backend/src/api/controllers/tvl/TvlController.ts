@@ -3,6 +3,7 @@ import {
   AssetId,
   ChainId,
   ProjectId,
+  Token,
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
@@ -11,7 +12,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
-import { Token } from '../../../model'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import {
   ReportRecord,
@@ -20,7 +20,7 @@ import {
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
-import { getChartPoints } from './charts'
+import { getProjectAssetChartData } from './charts'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
 
 export class TvlController {
@@ -87,19 +87,6 @@ export class TvlController {
     return tvlApiResponse
   }
 
-  private getChartData(
-    reports: ReportRecord[],
-    decimals: number,
-    hours: number,
-  ) {
-    const balances = reports.map((r) => ({
-      timestamp: r.timestamp,
-      usd: r.usdValue,
-      asset: r.amount,
-    }))
-    return getChartPoints(balances, hours, decimals)
-  }
-
   async getProjectAssetChart(
     projectId: ProjectId,
     assetId: AssetId,
@@ -161,7 +148,7 @@ export class TvlController {
     return {
       hourly: {
         types,
-        data: this.getChartData(
+        data: getProjectAssetChartData(
           reduceDuplicatedReports(hourlyReports),
           asset.decimals,
           1,
@@ -169,7 +156,7 @@ export class TvlController {
       },
       sixHourly: {
         types,
-        data: this.getChartData(
+        data: getProjectAssetChartData(
           reduceDuplicatedReports(sixHourlyReports),
           asset.decimals,
           6,
@@ -177,7 +164,7 @@ export class TvlController {
       },
       daily: {
         types,
-        data: this.getChartData(
+        data: getProjectAssetChartData(
           reduceDuplicatedReports(dailyReports),
           asset.decimals,
           24,

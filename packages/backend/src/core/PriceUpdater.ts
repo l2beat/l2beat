@@ -1,8 +1,13 @@
 import { Logger } from '@l2beat/shared'
-import { assert, AssetId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  AssetId,
+  EthereumAddress,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { Token } from '../model'
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   DataBoundary,

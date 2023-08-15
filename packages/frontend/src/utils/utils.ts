@@ -1,3 +1,5 @@
+import MarkdownIt from 'markdown-it'
+
 import { formatLargeNumber } from './formatLargeNumber'
 
 export function getPercentageChange(now: number, then: number) {
@@ -17,4 +19,14 @@ export function formatPercent(value: number, addPlus = false) {
 
 export function formatUSD(value: number) {
   return `$${formatLargeNumber(value)}`
+}
+
+export function isZeroUSD(value: string) {
+  return value === '$0.00'
+}
+
+export function renderInlineMarkdown(markdown: string) {
+  const markdownProcessor = new MarkdownIt({ html: true })
+
+  return markdownProcessor.renderInline(markdown)
 }

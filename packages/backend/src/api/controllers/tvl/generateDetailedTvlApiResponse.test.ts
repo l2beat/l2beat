@@ -8,13 +8,12 @@ import {
   ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { writeFileSync } from 'fs'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import {
   getProjectTokensCharts,
-  groupByProjectIdAndAsset,
+  groupByProjectIdAndAssetType,
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import {
@@ -60,9 +59,6 @@ describe(generateDetailedTvlApiResponse.name, () => {
         },
       },
     }
-
-    writeFileSync('result.json', JSON.stringify(result, null, 2))
-    writeFileSync('expected.json', JSON.stringify(expected, null, 2))
 
     expect(result).toEqual(expected)
   })
@@ -119,7 +115,7 @@ describe(generateDetailedTvlApiResponse.name, () => {
       daily: groupByProjectIdAndTimestamp(
         fakeTimePeriodReports(now, 24, 1, projectIds),
       ),
-      latest: groupByProjectIdAndAsset(fakeLatestReports(now, projectIds)),
+      latest: groupByProjectIdAndAssetType(fakeLatestReports(now, projectIds)),
     }
   }
 

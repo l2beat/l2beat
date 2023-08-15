@@ -12,8 +12,8 @@ import { Histogram } from 'prom-client'
 import { setTimeout as wait } from 'timers/promises'
 
 const DEFAULT_RETRY = Retries.exponentialBackOff({
-  stepMs: 100,
-  maxDistanceMs: 3_000,
+  stepMs: 1000,
+  maxDistanceMs: 60_000,
   maxAttempts: 10,
 })
 
@@ -204,6 +204,18 @@ export class TaskQueue<T> {
     } finally {
       this.busyWorkers--
       setTimeout(() => this.execute())
+    }
+  }
+
+  // WARNING: this method clears the queue, be cautious when using it
+  // some Updaters will not function properly after you unhalt them using this method
+  // because they rely on the start() function which is called only once
+  // so use it only in Updaters with generic (updating all the missing data) update() function
+  // or rewrite the logic of your updater
+  unhaltIfNeeded() {
+    if (this.halted) {
+      this.queue.splice(0, this.queue.length)
+      this.halted = false
     }
   }
 }

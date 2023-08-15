@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { AssetType } from '@l2beat/shared-pure'
 
 import {
   ActivityResponse,
@@ -14,6 +15,7 @@ export interface InitMessage {
   days: number
   currency: 'usd' | 'eth'
   aggregateTvlEndpoint?: string
+  aggregateDetailedTvlEndpoint?: string
   alternativeTvlEndpoint?: string
   detailedAggregateTvlEndpoint?: string
   activityEndpoint?: string
@@ -42,6 +44,7 @@ export interface TokenChangedMessage {
   type: 'TokenChanged'
   token: string
   tokenEndpoint: string
+  assetType: AssetType
 }
 
 export interface ShowEthereumChangedMessage {
@@ -65,12 +68,13 @@ export interface MouseMovedMessage {
   mouseY: number
 }
 
-export interface MouseExitedMessage {
-  type: 'MouseExited'
-}
-
+// TODO(radomski): To be removed when L2 Assets are ready
 export interface MoreTokensClickedMessage {
   type: 'MoreTokensClicked'
+}
+
+export interface MouseExitedMessage {
+  type: 'MouseExited'
 }
 
 export interface AggregateTvlLoadedMessage {
@@ -110,6 +114,7 @@ export interface TokenTvlLoadedMessage {
   type: 'TokenTvlLoaded'
   requestId: number
   token: string
+  assetType: AssetType
   data: TokenTvlResponse
 }
 
@@ -149,8 +154,8 @@ export type Message =
   | ScaleChangedMessage
   | ShowAlternativeTvlChangedMessage
   | MouseMovedMessage
-  | MouseExitedMessage
   | MoreTokensClickedMessage
+  | MouseExitedMessage
   | AggregateDetailedTvlLoadedMessage
   | AggregateDetailedTvlFailedMessage
   | AggregateTvlLoadedMessage

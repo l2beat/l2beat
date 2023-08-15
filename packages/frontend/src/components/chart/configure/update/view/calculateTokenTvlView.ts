@@ -1,4 +1,5 @@
 import { formatRange, formatTimestamp } from '../../../../../utils'
+import { getTokenTvlKey } from '../../state/getTokenTvlKey'
 import { State } from '../../state/State'
 import { formatCurrency } from './format'
 import { getAppropriateEntries } from './getAppropriateEntries'
@@ -8,13 +9,14 @@ export function calculateTokenTvlView(
   data: State['data'],
   controls: State['controls'],
 ): State['view'] | undefined {
-  if (!controls.token) {
+  if (!controls.token || !controls.assetType) {
     return undefined
   }
   // reassigned for callbacks. Thanks typescript :(
   const token = controls.token
 
-  const response = controls.token && data.tokenTvl[controls.token]
+  const key = getTokenTvlKey(token, controls.assetType)
+  const response = controls.token && data.tokenTvl[key]
   if (!response) {
     return undefined
   }

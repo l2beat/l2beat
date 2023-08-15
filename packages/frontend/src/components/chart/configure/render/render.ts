@@ -94,12 +94,42 @@ export function render(
     }
   }
 
+  if (state.controls.token !== previousState.controls.token) {
+    if (state.controls.token) {
+      elements.controls.showTokenModal.forEach((e) => (e.checked = false))
+      elements.view.tokenModal?.classList.toggle('opacity-0', true)
+      elements.view.tokenModal?.classList.toggle('pointer-events-none', true)
+
+      elements.view.showTokenModalWrapper.forEach((e) =>
+        e.classList.toggle('hidden', true),
+      )
+      elements.view.tokenChosenWrapper.forEach((e) =>
+        e.classList.toggle('hidden', false),
+      )
+
+      const token = state.controls.token
+      elements.view.tokenChosenWrapper.forEach((e) => {
+        const paragraph = e.querySelector('p')
+        if (paragraph) {
+          paragraph.innerText = token
+        }
+      })
+    } else {
+      elements.view.showTokenModalWrapper.forEach((e) =>
+        e.classList.toggle('hidden'),
+      )
+      elements.view.tokenChosenWrapper.forEach((e) =>
+        e.classList.toggle('hidden'),
+      )
+    }
+  }
+
   if (state.controls.showMoreTokens !== previousState.controls.showMoreTokens) {
     if (state.controls.showMoreTokens) {
       elements.controls.tokens.forEach((x) =>
         x.parentElement?.classList.remove('hidden'),
       )
-      elements.controls.showMoreTokens?.classList.add('hidden')
+      elements.controls.showMoreTokensToBeRemoved?.classList.add('hidden')
     }
   }
 

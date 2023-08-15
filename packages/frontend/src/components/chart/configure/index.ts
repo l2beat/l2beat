@@ -69,6 +69,7 @@ function getInitMessage(elements: ChartElements): InitMessage {
     initialView,
     pagePathname,
     aggregateTvlEndpoint: elements.chart.dataset.tvlEndpoint,
+    aggregateDetailedTvlEndpoint: elements.chart.dataset.detailedTvlEndpoint,
     alternativeTvlEndpoint: '/api/combined-tvl.json', // TODO: pass this through props
     detailedAggregateTvlEndpoint: elements.chart.dataset.detailedTvlEndpoint,
     activityEndpoint: elements.chart.dataset.activityEndpoint,

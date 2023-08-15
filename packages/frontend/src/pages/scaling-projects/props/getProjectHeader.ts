@@ -1,5 +1,9 @@
 import { Layer2, ProjectLinks } from '@l2beat/config'
-import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  DetailedTvlApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
 import { TvlStats } from '../../../components/header/TvlSummary'
@@ -10,6 +14,7 @@ import { getTransactionCount } from '../../../utils/activity/getTransactionCount
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
+import { unifyTokensResponse } from '../../../utils/tvl/getTvlStats'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
@@ -17,7 +22,7 @@ import { ProjectHeaderProps } from '../view/ProjectHeader'
 export function getProjectHeader(
   project: Layer2,
   config: Config,
-  tvlApiResponse: TvlApiResponse,
+  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   activityApiResponse?: ActivityApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
@@ -34,7 +39,7 @@ export function getProjectHeader(
     project.display.name,
     project.config.associatedTokens ?? [],
     tvl,
-    apiProject?.tokens ?? [],
+    unifyTokensResponse(apiProject?.tokens),
   )
 
   return {
