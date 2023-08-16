@@ -46,7 +46,7 @@ export function DetailsHeader(props: HeaderProps) {
         <div className="flex w-full flex-wrap gap-6 md:gap-4">
           <h1
             className={cx(
-              'relative mb-0 flex items-center justify-start gap-3',
+              'relative mb-0 flex w-full items-center justify-start gap-3',
               'whitespace-pre px-4 text-3xl font-bold md:px-0 md:text-4xl',
               props.titleLength,
               props.titleClassName,
