@@ -3,9 +3,11 @@ import cx from 'classnames'
 import React from 'react'
 
 import {
+  ArbitrumIcon,
   LoopringIcon,
   OptimismIcon,
   OVMIcon,
+  PolygonIcon,
   StarkWareIcon,
   ZkSyncIcon,
 } from '../icons'
@@ -19,6 +21,7 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
   const isRollup = children.includes('Rollup')
   const providerClassName = 'Tooltip relative inline-block h-4 w-4 ml-1'
   const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4'
+
   return (
     <span className={cx(isRollup && 'text-green-300 dark:text-green-450')}>
       {children}
@@ -41,7 +44,7 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
       {provider === 'OVM' && (
         <span
           className={providerClassName}
-          title="This project is based on Optimism's code base."
+          title="This project is based on old OVM's code base."
         >
           <OVMIcon className={providerIconClassName} />
         </span>
@@ -60,6 +63,22 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           title="This project is based on loopring's code base."
         >
           <LoopringIcon className={providerIconClassName} />
+        </span>
+      )}
+      {provider === 'Arbitrum' && (
+        <span
+          className={providerClassName}
+          title="This project is based on Arbitrum's code base."
+        >
+          <ArbitrumIcon className={providerIconClassName} />
+        </span>
+      )}
+      {provider === 'Polygon' && (
+        <span
+          className={providerClassName}
+          title="This project is based on Polygon's code base."
+        >
+          <PolygonIcon className={providerIconClassName} />
         </span>
       )}
     </span>
