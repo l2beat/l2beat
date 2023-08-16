@@ -123,9 +123,8 @@ export function getScalingDetailedTvlColumns() {
     {
       name: 'Total',
       tooltip: 'Total = Bridged + External + Native',
-      alignRight: true,
+      alignCenter: true,
       noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
       highlight: true,
       getValue: (project) => (
         <ValueWithPercentageCell
@@ -143,9 +142,8 @@ export function getScalingDetailedTvlColumns() {
       ),
       tooltip:
         'Bridged refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
-      alignRight: true,
+      alignCenter: true,
       noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.cbv}
@@ -163,9 +161,8 @@ export function getScalingDetailedTvlColumns() {
       ),
       tooltip:
         "External refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
-      alignRight: true,
+      alignCenter: true,
       noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.ebv}
@@ -183,9 +180,8 @@ export function getScalingDetailedTvlColumns() {
       ),
       tooltip:
         'Native refers to non-bridged assets minted directly on the given L2, displayed together with a percentage change compared to 7D ago.',
-      alignRight: true,
+      alignCenter: true,
       noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.nmv}
