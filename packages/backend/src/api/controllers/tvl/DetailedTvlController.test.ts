@@ -31,7 +31,7 @@ import { ReportStatusRepository } from '../../../peripherals/database/ReportStat
 import { getProjectAssetChartData } from './charts'
 import { DetailedTvlController } from './DetailedTvlController'
 
-describe.only(DetailedTvlController.name, () => {
+describe(DetailedTvlController.name, () => {
   const START = UnixTime.fromDate(new Date('2022-05-31'))
   const MINIMUM_TIMESTAMP = START.add(-1, 'hours')
 
