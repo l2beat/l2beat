@@ -48,7 +48,6 @@ export class BalanceRepository extends BaseRepository {
 
     const rows = await knex('balances').where(
       'unix_timestamp',
-      '=',
       timestamp.toDate(),
     )
 

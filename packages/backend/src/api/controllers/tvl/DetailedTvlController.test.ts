@@ -15,6 +15,8 @@ import { expect, mockObject } from 'earl'
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
+import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
+import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getProjectAssetChartData } from './charts'
@@ -123,6 +125,8 @@ describe(DetailedTvlController.name, () => {
           aggregatedReportRepository,
           reportRepository,
           aggregatedReportStatusRepository,
+          mockObject<BalanceRepository>({}),
+          mockObject<PriceRepository>({}),
           [ARBITRUM],
           [USDC],
           Logger.SILENT,
@@ -194,6 +198,8 @@ describe(DetailedTvlController.name, () => {
           mockObject<AggregatedReportRepository>(),
           reportRepository,
           aggregatedReportStatusRepository,
+          mockObject<BalanceRepository>({}),
+          mockObject<PriceRepository>({}),
           [ARBITRUM],
           [USDC],
           Logger.SILENT,
