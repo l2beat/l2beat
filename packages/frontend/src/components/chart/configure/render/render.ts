@@ -23,6 +23,10 @@ export function render(
     state.controls.currency !== previousState.controls.currency ||
     state.controls.token !== previousState.controls.token
   ) {
+    if (elements.view.tvlHeader) {
+      elements.view.tvlHeader.innerText = state.controls.currency.toUpperCase()
+    }
+
     for (const input of elements.controls.currency) {
       input.checked =
         !state.controls.token &&
