@@ -72,7 +72,13 @@ export interface Layer2Display {
   /** Name of the category the layer2 belongs to */
   category: Layer2Category
   /** Technology provider */
-  provider?: 'StarkEx' | 'Optimism' | 'zkSync' | 'loopring'
+  provider?:
+    | 'StarkEx'
+    | 'Optimism'
+    | 'zkSync'
+    | 'loopring'
+    | 'Arbitrum'
+    | 'Polygon'
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */

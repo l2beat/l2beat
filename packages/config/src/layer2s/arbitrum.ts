@@ -125,6 +125,7 @@ export const arbitrum: Layer2 = {
     )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],

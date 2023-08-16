@@ -14,6 +14,7 @@ export const polygonpos2: Layer2 = {
       'Polygon PoS 2.0 leverages bleeding edge ZK technology and fit into the Polygon 2.0 vision, ideally without changing anything for users or developers. All applications should continue working and fees should stay just as low. The only difference should be higher security for users and seamless interoperability with every other chain in the Polygon 2.0 ecosystem.',
     purpose: 'Universal',
     category: 'Validium',
+    provider: 'Polygon',
     links: {
       websites: ['https://polygon.technology'],
       apps: ['https://wallet.polygon.technology/'],

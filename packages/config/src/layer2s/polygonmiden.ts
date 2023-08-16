@@ -14,6 +14,7 @@ export const polygonmiden: Layer2 = {
       "Polygon Miden is a zero-knowledge rollup built on top of Ethereum running on the Miden VM. With Polygon Miden, you will be able to build high-throughput & private applications using modern smart contract languages like Rust that offer greater safety and also aim for very low fees while still benefiting from Ethereum's security.",
     purpose: 'Universal',
     category: 'ZK Rollup',
+    provider: 'Polygon',
     links: {
       websites: ['https://polygon.technology/polygon-miden'],
       apps: [],
