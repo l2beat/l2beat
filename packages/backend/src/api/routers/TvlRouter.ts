@@ -124,6 +124,10 @@ export function createTvlRouter(
           ctx.status = 404
         }
 
+        if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
+          ctx.status = 422
+        }
+
         return
       }
 

@@ -9,7 +9,6 @@ import {
   Token,
   TvlApiChart,
   TvlApiCharts,
-  UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
 
@@ -233,7 +232,12 @@ export class DetailedTvlController {
       }
     }
 
-    dataTimings.latestTimestamp = new UnixTime(1691744400)
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
+    }
 
     const [latestReports, balances, prices] = await Promise.all([
       this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
