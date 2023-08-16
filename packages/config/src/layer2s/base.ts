@@ -39,7 +39,7 @@ export const base: Layer2 = {
       websites: ['https://base.org/'],
       apps: ['https://bridge.base.org/'],
       documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
-      explorers: ['https://basescan.org/'],
+      explorers: ['https://basescan.org/', 'https://base.blockscout.com/'],
       repositories: ['https://github.com/base-org'],
       socialMedia: [
         'https://twitter.com/BuildOnBase',

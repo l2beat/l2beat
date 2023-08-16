@@ -11,6 +11,7 @@ import { configureSlideCards } from './configureSlideCard'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
+import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
 
@@ -29,3 +30,4 @@ configureTabs()
 configureCanonicalBridgesFilter()
 configureTableIndexRerender()
 configureUpgradeDescriptions()
+configureTopBars()
