@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { unionBy } from 'lodash'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { NUGGETS } from '../layer2s'
@@ -217,15 +218,11 @@ export const cBridge: Bridge = {
       name: 'Governors',
       description:
         'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
-      accounts: [
-        ...new Set([
-          ...discovery.getPermissionedAccounts(
-            'Liquidity Network',
-            'governors',
-          ),
-          ...discovery.getPermissionedAccounts('Sentinel', 'governors'),
-        ]),
-      ], // FIXME: remove duplicates
+      accounts: unionBy(
+        discovery.getPermissionedAccounts('Liquidity Network', 'governors'),
+        discovery.getPermissionedAccounts('Sentinel', 'governors'),
+        JSON.stringify,
+      ),
     },
     {
       name: 'Pausers',
