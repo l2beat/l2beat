@@ -79,6 +79,7 @@ export interface Layer2Display {
     | 'loopring'
     | 'Arbitrum'
     | 'Polygon'
+    | 'OVM'
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */
