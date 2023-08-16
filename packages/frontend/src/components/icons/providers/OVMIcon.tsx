@@ -3,15 +3,18 @@ import React, { SVGAttributes } from 'react'
 
 import { Icon } from '../Icon'
 
+let i = 0
+
 export function OVMIcon(props: SVGAttributes<SVGElement>) {
+  const current = i++
+  const gradientId = `ovm-icon-gradient-${current}`
+
   return (
     <Icon
       aria-label="OVM badge icon"
       {...props}
-      className={cx(
-        props.className,
-        'fill-[url(#ovm-icon-linear-gradient)] dark:fill-current',
-      )}
+      style={{ fill: `url(#${gradientId})` }}
+      className={cx(props.className, 'dark:fill-current')}
     >
       <path
         fillRule="evenodd"
@@ -20,7 +23,7 @@ export function OVMIcon(props: SVGAttributes<SVGElement>) {
       />
       <defs>
         <linearGradient
-          id="ovm-icon-linear-gradient"
+          id={gradientId}
           x1="24"
           y1="3"
           x2="1.16229e-06"
