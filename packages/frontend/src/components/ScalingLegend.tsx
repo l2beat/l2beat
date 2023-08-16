@@ -1,13 +1,13 @@
 import React from 'react'
 
 import {
+  ArbitrumIcon,
   LoopringIcon,
   OptimismIcon,
   OVMIcon,
+  PolygonIcon,
   StarkWareIcon,
   ZkSyncIcon,
-  ArbitrumIcon,
-  PolygonIcon,
 } from './icons'
 
 export function ScalingLegend() {

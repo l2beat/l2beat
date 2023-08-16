@@ -1,5 +1,5 @@
-import React, { SVGAttributes } from 'react'
 import cx from 'classnames'
+import React, { SVGAttributes } from 'react'
 
 import { Icon } from '../Icon'
 
