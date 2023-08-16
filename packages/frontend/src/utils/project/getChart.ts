@@ -36,7 +36,7 @@ export function getChart(
   }
 }
 
-function getTokens(
+export function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   hasDetailedTVL: boolean,

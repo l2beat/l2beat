@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
+import { getTokens } from '../../../utils/project/getChart'
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getDetailedTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
@@ -34,12 +35,9 @@ function getDetailedTvlViewEntry(
   project: Layer2,
   isVerified?: boolean,
 ): DetailedTvlViewEntry {
-  assert(
-    tvlApiResponse.projects[project.id.toString()]?.charts.hourly.types
-      .length === 9,
-  )
-  const charts =
-    tvlApiResponse.projects[project.id.toString()]?.charts ?? undefined
+  const projectData = tvlApiResponse.projects[project.id.toString()]
+  assert(projectData?.charts.hourly.types.length === 9)
+  const charts = projectData.charts
   const { parts, partsWeeklyChange } = getDetailedTvlWithChange(charts)
 
   return {
@@ -60,5 +58,6 @@ function getDetailedTvlViewEntry(
     ebvChange: partsWeeklyChange.ebv,
     cbvChange: partsWeeklyChange.cbv,
     nmvChange: partsWeeklyChange.nmv,
+    tokens: getTokens(project.id, tvlApiResponse, true),
   }
 }

@@ -16,7 +16,6 @@ export interface ColumnConfig<T> {
   shortName?: ReactNode
   alignRight?: true
   alignCenter?: true
-  backgroundClass?: string
   minimalWidth?: true
   headClassName?: string
   noPaddingRight?: true
@@ -24,6 +23,7 @@ export interface ColumnConfig<T> {
   idHref?: SectionId
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
+  highlight?: boolean
 }
 
 export interface RowConfig<T> {
@@ -40,6 +40,9 @@ export function TableView<T>({
   rows,
   rerenderIndexesOn,
 }: Props<T>) {
+  const highlightedColumnClassNames =
+    'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-[#24202C]'
+
   return (
     <div
       className={cx(
@@ -65,6 +68,7 @@ export function TableView<T>({
                     column.minimalWidth && 'w-0',
                     hasPaddingRight && 'pr-3 md:pr-4',
                     column.headClassName,
+                    column.highlight && highlightedColumnClassNames,
                   )}
                 >
                   <div
@@ -107,7 +111,7 @@ export function TableView<T>({
                 {...rest}
                 className={cx(
                   'group cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
-                  'hover:bg-gray-100 hover:shadow-sm dark:hover:bg-gray-900',
+                  'hover:bg-gray-100 hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
                 )}
               >
@@ -124,13 +128,14 @@ export function TableView<T>({
                     column.alignCenter && 'justify-center',
                     hasPaddingRight && 'pr-3 md:pr-4',
                   )
+
                   return (
                     <td
                       key={j}
                       className={cx(
                         'h-9 md:h-14',
                         column.minimalWidth && 'w-0',
-                        column.backgroundClass ?? '',
+                        column.highlight && highlightedColumnClassNames,
                       )}
                     >
                       {column.noHrefMobile ? (
