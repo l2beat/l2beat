@@ -117,6 +117,7 @@ export function createTvlModule(
     db.aggregatedReportRepository,
     db.reportRepository,
     db.aggregatedReportStatusRepository,
+    db.balanceRepository,
     config.projects,
     config.tokens,
     logger,

@@ -3,7 +3,9 @@ import {
   AssetId,
   ChainId,
   DetailedTvlApiResponse,
+  EthereumAddress,
   Hash256,
+  ProjectAssetsBreakdownApiResponse,
   ProjectId,
   Token,
   TvlApiChart,
@@ -14,10 +16,12 @@ import {
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
+import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
+import { asNumber } from './asNumber'
 import { getProjectAssetChartData } from './charts'
 import {
   groupByProjectIdAndAssetType,
@@ -28,6 +32,16 @@ import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse
 interface DetailedTvlControllerOptions {
   errorOnUnsyncedDetailedTvl: boolean
 }
+
+type ProjectAssetBreakdownResult =
+  | {
+      result: 'success'
+      data: ProjectAssetsBreakdownApiResponse
+    }
+  | {
+      result: 'error'
+      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+    }
 
 type DetailedTvlResult =
   | {
@@ -55,6 +69,7 @@ export class DetailedTvlController {
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
+    private readonly balanceRepository: BalanceRepository,
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
     private readonly logger: Logger,
@@ -202,6 +217,127 @@ export class DetailedTvlController {
         },
       },
     }
+  }
+
+  async getProjectTokenBreakdownApiResponse(): Promise<ProjectAssetBreakdownResult> {
+    const dataTimings = await this.getDataTimings()
+
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
+    }
+
+    const latestReports = await this.reportRepository.getByTimestamp(
+      dataTimings.latestTimestamp,
+    )
+
+    console.dir({ time: dataTimings.latestTimestamp.toDate() })
+
+    const balances = await this.balanceRepository.getByTimestampWithAnyChain(
+      dataTimings.latestTimestamp,
+    )
+
+    const nonZeroBalances = balances.filter((balance) => balance.balance > 0n)
+
+    const externalReports = latestReports.filter(
+      (report) => report.type === ValueType.EBV,
+    )
+
+    const nativeReports = latestReports.filter(
+      (report) => report.type === ValueType.NMV,
+    )
+
+    const canonicalReports = latestReports.filter(
+      (report) => report.type === ValueType.CBV && report.amount > 0,
+    )
+
+    const external = externalReports.map((report) => {
+      const assetId = report.asset
+      const chainId = report.chainId
+      const amount = String(report.amount)
+      const usdValue = String(report.usdValue)
+      const usdPrice = String(
+        asNumber(BigInt(report.amount / report.usdValue), 2),
+      )
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const token = this.tokens.find(
+        (token) => token.id.toString() === assetId.toString(),
+      )
+
+      const tokenAddress = token?.address ?? EthereumAddress.ZERO
+
+      return {
+        assetId,
+        chainId,
+        amount,
+        usdValue,
+        usdPrice,
+        tokenAddress,
+      }
+    })
+
+    const native = nativeReports.map((report) => {
+      const assetId = report.asset
+      const chainId = report.chainId
+      const amount = String(report.amount)
+      const usdValue = String(report.usdValue)
+      const usdPrice = String(
+        asNumber(BigInt(report.amount / report.usdValue), 2),
+      )
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const token = this.tokens.find(
+        (token) => token.id.toString() === assetId.toString(),
+      )
+
+      const tokenAddress = token?.address ?? EthereumAddress.ZERO
+
+      return {
+        assetId,
+        chainId,
+        amount,
+        usdValue,
+        usdPrice,
+        tokenAddress,
+      }
+    })
+
+    const canonical = this.projects.flatMap((project) => {
+      return project.escrows.flatMap((escrow) => {
+        return escrow.tokens.map((token) => {
+          const escrowTokenBalance = nonZeroBalances.find(
+            (balance) =>
+              balance.holderAddress === escrow.address &&
+              balance.assetId === token.id,
+          )
+
+          const escrowAddress = escrow.address
+          const assetId = token.id
+          const chainId = token.chainId
+          const amount = escrowTokenBalance?.balance ?? 0n
+
+          return {
+            assetId,
+            chainId,
+            amount: String(amount),
+            usdValue: '123',
+            usdPrice: '123',
+            escrowAddress,
+          }
+        })
+      })
+    })
+
+    return Promise.resolve({
+      result: 'success',
+      data: {
+        dataTimestamp: dataTimings.latestTimestamp,
+        canonical,
+        external,
+        native,
+      },
+    })
   }
 
   private async getDataTimings() {

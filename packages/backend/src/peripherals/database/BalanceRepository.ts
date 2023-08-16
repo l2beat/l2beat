@@ -41,6 +41,20 @@ export class BalanceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByTimestampWithAnyChain(
+    timestamp: UnixTime,
+  ): Promise<BalanceRecord[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('balances').where(
+      'unix_timestamp',
+      '=',
+      timestamp.toDate(),
+    )
+
+    return rows.map(toRecord)
+  }
+
   async addOrUpdateMany(balances: BalanceRecord[]) {
     this.logger.info('addOrUpdateMany', {
       chainId: balances[0].chainId.toString(),
