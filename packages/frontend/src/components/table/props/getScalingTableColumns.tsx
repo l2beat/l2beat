@@ -3,6 +3,7 @@ import React from 'react'
 import { DetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
 import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
+import { BridgedIcon, ExternalIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
@@ -132,7 +133,12 @@ export function getScalingDetailedTvlColumns() {
       ),
     },
     {
-      name: 'Bridged',
+      name: (
+        <div className="flex items-center gap-1">
+          <BridgedIcon />
+          <span>Bridged</span>
+        </div>
+      ),
       tooltip:
         'Bridged refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,
@@ -146,7 +152,12 @@ export function getScalingDetailedTvlColumns() {
       ),
     },
     {
-      name: 'External',
+      name: (
+        <div className="flex items-center gap-1">
+          <ExternalIcon />
+          <span>External</span>
+        </div>
+      ),
       tooltip:
         "External refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
       alignRight: true,
@@ -160,7 +171,12 @@ export function getScalingDetailedTvlColumns() {
       ),
     },
     {
-      name: 'Native',
+      name: (
+        <div className="flex items-center gap-1">
+          <NativeIcon />
+          <span>Native</span>
+        </div>
+      ),
       tooltip:
         'Native refers to non-bridged assets minted directly on the given L2, displayed together with a percentage change compared to 7D ago.',
       alignRight: true,

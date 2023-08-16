@@ -16,6 +16,7 @@ export interface ColumnConfig<T> {
   shortName?: ReactNode
   alignRight?: true
   alignCenter?: true
+  backgroundClass?: string
   minimalWidth?: true
   headClassName?: string
   noPaddingRight?: true
@@ -129,6 +130,7 @@ export function TableView<T>({
                       className={cx(
                         'h-9 md:h-14',
                         column.minimalWidth && 'w-0',
+                        column.backgroundClass ?? '',
                       )}
                     >
                       {column.noHrefMobile ? (
