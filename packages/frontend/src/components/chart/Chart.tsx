@@ -8,6 +8,7 @@ import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
 import { TokenControl } from './CommonTokenControls'
+import { ChartType } from './configure/state/State'
 import { CurrencyControls } from './CurrencyControls'
 import { DesktopTokenControls } from './DesktopTokenControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
@@ -17,14 +18,6 @@ import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
 import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
-import { z } from 'zod'
-
-export type ChartType = z.infer<typeof ChartType>
-export const ChartType = z.union([
-  z.literal('tvl'),
-  z.literal('detailedTvl'),
-  z.literal('activity'),
-])
 
 export interface ChartProps {
   type?: ChartType

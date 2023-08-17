@@ -1,7 +1,7 @@
 import React from 'react'
 
+import { ChartType } from './configure/state/State'
 import { RadioGroup } from './RadioGroup'
-import { ChartType } from './Chart'
 
 export function RangeControls({ type }: { days: number; type: ChartType }) {
   return (

@@ -1,12 +1,11 @@
 import { useThemeToggle } from '../../navbar/configureDarkThemeToggle'
-import { ChartType } from '../Chart'
 import { setupControls } from './controls/setupControls'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
 import { InitMessage, Message } from './messages'
 import { render } from './render/render'
 import { EMPTY_STATE } from './state/empty'
-import { Milestones, State } from './state/State'
+import { ChartType, Milestones, State } from './state/State'
 import { update } from './update/update'
 import { getUserChartSettings } from './userChartSettings'
 

@@ -1,7 +1,6 @@
 import { Milestone } from '@l2beat/config'
 import { AssetType } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { ChartType } from '../../Chart'
 
 export interface State {
   endpoints: {
@@ -219,3 +218,10 @@ export const Milestones = z.array(
     description: z.optional(z.string()),
   }),
 )
+
+export type ChartType = z.infer<typeof ChartType>
+export const ChartType = z.union([
+  z.literal('tvl'),
+  z.literal('detailedTvl'),
+  z.literal('activity'),
+])

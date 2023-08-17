@@ -5,9 +5,9 @@ import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
   AggregateTvlResponse,
+  ChartType,
   TokenTvlResponse,
 } from './state/State'
-import { ChartType } from '../Chart'
 
 export interface InitMessage {
   type: 'Init'

@@ -1,7 +1,7 @@
+import { assertUnreachable } from '@l2beat/shared-pure'
 import cx from 'classnames'
 
 import { getRowVerificationClassNames } from './getRowVerificationClassNames'
-import { assertUnreachable } from '@l2beat/shared-pure'
 
 interface ScalingTableEntry {
   slug: string
