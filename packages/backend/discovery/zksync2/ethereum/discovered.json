@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 17933450,
-  "configHash": "0xc8ba3ed7ea70afef403aaa6d18d9dcc108a63337f27dba1333e60918af99fc62",
+  "blockNumber": 17934179,
+  "configHash": "0x627a0258043ca5b596fa864a6d69bdf9d0aa5e4517f11743cfaa5ea98d9e9b64",
   "version": 1,
   "contracts": [
     {
@@ -111,20 +111,20 @@
         ],
         "getAllowList": "0x8ffd57A9B2dcc10327768b601468FA192adC5C86",
         "getCurrentProposalId": 5,
-        "getFirstUnprocessedPriorityTx": 1881252,
+        "getFirstUnprocessedPriorityTx": 1881808,
         "getGovernor": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "getL2BootloaderBytecodeHash": "0x010007793c87889d295d21b454db454bc39fa21a1762714bcf643a95ce3594e6",
         "getL2DefaultAccountBytecodeHash": "0x0100067d1460ef6781360f14fe3ed8ddadb80d3be6ea33cb241afe5a07ab815b",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 5232,
+        "getPriorityQueueSize": 6413,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProposedUpgradeHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getProposedUpgradeTimestamp": 0,
         "getSecurityCouncil": "0x0000000000000000000000000000000000000000",
-        "getTotalBlocksCommitted": 163421,
-        "getTotalBlocksExecuted": 162017,
-        "getTotalBlocksVerified": 162894,
-        "getTotalPriorityTxs": 1886484,
+        "getTotalBlocksCommitted": 163740,
+        "getTotalBlocksExecuted": 162152,
+        "getTotalBlocksVerified": 162959,
+        "getTotalPriorityTxs": 1888221,
         "getUpgradeProposalState": 0,
         "getVerifier": "0x3F04F86f14aB74953fDAEde8175e0714eB8e798e",
         "getVerifierParams": [
@@ -135,14 +135,11 @@
         "isApprovedBySecurityCouncil": false,
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x0205be9eb80479f07c74868dc9504b62d2616d2cdc488144be6e276e0a6da671",
-          1692182699,
+          "0xe1739ba572edfa005f36c424186fc817425389f0d14831e40595cdefc67f0727",
+          1692190799,
           0
         ],
         "validators": ["0x3dB52cE065f728011Ac6732222270b3F2360d919"]
-      },
-      "errors": {
-        "getName": "Execution reverted"
       },
       "derivedName": "DiamondProxy"
     },

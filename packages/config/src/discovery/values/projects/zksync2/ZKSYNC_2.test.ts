@@ -11,7 +11,7 @@ describe('HARDCODED: zksync2', () => {
   const discovery = new ProjectDiscovery('zksync2')
 
   // currently UPGRADE_NOTICE_PERIOD is set as a constant inside Config.sol
-  // https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F6#L51
+  // https://etherscan.io/address/0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D#code#F7#L51
   // if this asset is throwing it means that the zkSync zkSync facets changed
   // read the source code and figure out whether the upgradeability risk is different
   it('upgradeability + proposer failure', () => {
