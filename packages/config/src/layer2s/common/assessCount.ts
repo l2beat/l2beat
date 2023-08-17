@@ -2,5 +2,9 @@ import { AssessCount } from '../types'
 
 export const subtractOne: AssessCount = (count) => count - 1
 
-export const subtractOneAfterBlock: (blockNumber: number) => AssessCount = () =>
-  subtractOne
+export function subtractOneAfterBlockInclusive(
+  blockNumber: number,
+): AssessCount {
+  return (count: number, block: number) =>
+    block >= blockNumber ? count - 1 : count
+}

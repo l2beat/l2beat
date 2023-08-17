@@ -22,7 +22,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  subtractOneAfterBlock,
+  subtractOneAfterBlockInclusive,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
@@ -198,7 +198,7 @@ export const arbitrum: Layer2 = {
       type: 'rpc',
       // We need to subtract the Nitro system transactions
       // after the block of the update
-      assessCount: subtractOneAfterBlock(22207818),
+      assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
   },
