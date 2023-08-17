@@ -4,7 +4,7 @@ import React from 'react'
 import { CloseIcon } from '../icons/CloseIcon'
 
 export interface TokenControl {
-  address: string
+  address?: string
   symbol: string
   name: string
   assetType: ValueType
@@ -23,10 +23,17 @@ export function TokenCell({ token }: { token: TokenControl }) {
         data-tvl-endpoint={token.tvlEndpoint}
         data-asset-type={token.assetType}
       />
-      <img
-        src={`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${token.address}/logo.png`}
-        className="h-4 w-4 rounded-full"
-      />
+      {token.address ? (
+        <img
+          src={`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${token.address}/logo.png`}
+          className="h-4 w-4 rounded-full"
+        />
+      ) : (
+        <img
+          src="https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/eth.png"
+          className="h-4 w-4 rounded-full"
+        />
+      )}
       <p className="text-sm" key={token.symbol}>
         <span className={'font-bold'}>{token.name}</span> ({token.symbol})
       </p>
