@@ -12,16 +12,10 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
     "noImplicitOverride": true,
-    "noImplicitThis": true,
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
     "target": "es2020",
     "useUnknownInCatchVariables": true
   }
