@@ -1,6 +1,7 @@
 import cx from 'classnames'
 
 import { getRowVerificationClassNames } from './getRowVerificationClassNames'
+import { assertUnreachable } from '@l2beat/shared-pure'
 
 interface ScalingTableEntry {
   slug: string
@@ -10,9 +11,14 @@ interface ScalingTableEntry {
   showProjectUnderReview?: boolean
 }
 
-export function getScalingRowProps(entry: ScalingTableEntry) {
+type ScalingRowType = 'summary' | 'detailedTvl' | 'risks' | 'activity'
+
+export function getScalingRowProps(
+  entry: ScalingTableEntry,
+  type: ScalingRowType,
+) {
   const isEthereum = entry.slug === 'ethereum'
-  const href = isEthereum ? undefined : `/scaling/projects/${entry.slug}`
+  const href = getHref(entry.slug, type)
 
   if (isEthereum) {
     return {
@@ -29,5 +35,24 @@ export function getScalingRowProps(entry: ScalingTableEntry) {
     className: getRowVerificationClassNames(entry),
     href,
     'data-role': 'row',
+  }
+}
+
+function getHref(slug: ScalingTableEntry['slug'], type: ScalingRowType) {
+  if (slug === 'ethereum') {
+    return undefined
+  }
+
+  const base = `/scaling/projects/${slug}`
+  switch (type) {
+    case 'summary':
+      return base
+    case 'detailedTvl':
+    case 'activity':
+      return base + `?selectedChart=${type}`
+    case 'risks':
+      return base + '#risk-analysis'
+    default:
+      assertUnreachable(type)
   }
 }

@@ -1,4 +1,5 @@
 import { useThemeToggle } from '../../navbar/configureDarkThemeToggle'
+import { ChartType } from '../Chart'
 import { setupControls } from './controls/setupControls'
 import { handleEffect } from './effects/handleEffect'
 import { ChartElements, getChartElements } from './elements'
@@ -53,12 +54,14 @@ function getInitMessage(elements: ChartElements): InitMessage {
   const pagePathname = new URL(elements.chart.baseURI).pathname
   const chartSettings = getUserChartSettings(pagePathname)
 
-  const initialView: InitMessage['initialView'] =
-    elements.chart.dataset.type === 'tvl'
-      ? 'tvl'
-      : elements.chart.dataset.type === 'detailedTvl'
-      ? 'detailedTvl'
-      : 'activity'
+  const urlParams = new URLSearchParams(window.location.search)
+  const preselectedChartType = ChartType.safeParse(
+    urlParams.get('selectedChart'),
+  )
+
+  const initialView: InitMessage['initialView'] = preselectedChartType.success
+    ? preselectedChartType.data
+    : ChartType.parse(elements.chart.dataset.type)
 
   const milestones = elements.chart.dataset.milestones
     ? Milestones.parse(JSON.parse(elements.chart.dataset.milestones))

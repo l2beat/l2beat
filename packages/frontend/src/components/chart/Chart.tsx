@@ -17,9 +17,17 @@ import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
 import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
+import { z } from 'zod'
+
+export type ChartType = z.infer<typeof ChartType>
+export const ChartType = z.union([
+  z.literal('tvl'),
+  z.literal('detailedTvl'),
+  z.literal('activity'),
+])
 
 export interface ChartProps {
-  type?: 'tvl' | 'detailedTvl' | 'activity'
+  type?: ChartType
   title?: string
   id?: string
   tvlEndpoint?: string

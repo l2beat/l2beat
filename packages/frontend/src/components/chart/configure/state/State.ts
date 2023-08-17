@@ -1,6 +1,7 @@
 import { Milestone } from '@l2beat/config'
 import { AssetType } from '@l2beat/shared-pure'
 import { z } from 'zod'
+import { ChartType } from '../../Chart'
 
 export interface State {
   endpoints: {
@@ -25,7 +26,7 @@ export interface State {
   controls: {
     pagePathname: string
     theme: 'dark' | 'light'
-    view: 'tvl' | 'detailedTvl' | 'activity'
+    view: ChartType
     days: number
     isLogScale: boolean
     currency: 'usd' | 'eth'

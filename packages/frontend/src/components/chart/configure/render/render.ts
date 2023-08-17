@@ -64,6 +64,12 @@ export function render(
     )?.parentElement
     const toggle = !isTvl && !isDetailedTvl
 
+    elements.controls.chartType.forEach((input) => {
+      const isChecked =
+        input.id === `radio-chart-type-controls-${state.controls.view}`
+      input.checked = isChecked
+    })
+
     sevenDayRadio?.classList.toggle('hidden', toggle)
     elements.view.currencyControlsWrapper?.classList.toggle('hidden', toggle)
     elements.view.tokenControlsWrapper?.classList.toggle('hidden', toggle)
