@@ -95,7 +95,12 @@ export function configureTooltips() {
 
     element.addEventListener('click', (e) => {
       e.stopPropagation()
-      isMobile() && e.preventDefault()
+      const isDisabledOnMobile = element.getAttribute(
+        'data-tooltip-mobile-disabled',
+      )
+      if (isMobile() && !isDisabledOnMobile) {
+        e.preventDefault()
+      }
       if (activeElement === element) {
         // only hide if immediately preceded by mouse enter
         if (Date.now() - mouseEnteredAt > 50) {
