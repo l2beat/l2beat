@@ -11,6 +11,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOne,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -71,6 +72,7 @@ export const publicgoodsnetwork: Layer2 = {
       startBlock: 1,
       url: 'https://rpc.publicgoods.network',
       callsPerMinute: 1500,
+      assessCount: subtractOne,
     },
   },
   riskView: makeBridgeCompatible({
