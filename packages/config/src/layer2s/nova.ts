@@ -11,6 +11,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOne,
 } from './common'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
@@ -96,9 +97,7 @@ export const nova: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      // We need to subtract the Nitro system transaction in every block except for genesis
-      assessCount: (count: number, blockNumber: number) =>
-        blockNumber !== 0 ? count - 1 : count,
+      assessCount: subtractOne,
       startBlock: 1,
     },
   },

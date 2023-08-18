@@ -14,7 +14,7 @@
   },
   "overrides": {
     "zkSync": {
-      "ignoreMethods": ["l2LogsRootHash", "storedBlockHash"],
+      "ignoreMethods": ["l2LogsRootHash", "storedBlockHash", "getName"],
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",

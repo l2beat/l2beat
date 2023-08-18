@@ -21,6 +21,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOneAfterBlockInclusive,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -131,6 +132,7 @@ export const optimism: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
+      assessCount: subtractOneAfterBlockInclusive(105235064),
     },
   },
   riskView: makeBridgeCompatible({
