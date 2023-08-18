@@ -17,8 +17,12 @@ export function configureTooltips() {
   let activeElement: HTMLElement | undefined
   let visible = false
 
-  function show(element: HTMLElement, title: string) {
-    if (element.dataset.tooltipMobileDisabled && isMobile()) return
+  function show(
+    element: HTMLElement,
+    title: string,
+    isDisabledOnMobile: boolean,
+  ) {
+    if (isDisabledOnMobile && isMobile()) return
     visible = true
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
@@ -82,22 +86,24 @@ export function configureTooltips() {
     const title = element.getAttribute('title') ?? ''
     element.removeAttribute('title')
     element.setAttribute('tabindex', '0')
+    const isDisabledOnMobile = Boolean(
+      element.getAttribute('data-tooltip-mobile-disabled'),
+    )
 
     let mouseEnteredAt = Date.now()
 
     element.addEventListener('mouseenter', () => {
       mouseEnteredAt = Date.now()
-      show(element, title)
+      show(element, title, isDisabledOnMobile)
     })
     element.addEventListener('mouseleave', hide)
-    element.addEventListener('focus', () => show(element, title))
+    element.addEventListener('focus', () =>
+      show(element, title, isDisabledOnMobile),
+    )
     element.addEventListener('blur', hide)
 
     element.addEventListener('click', (e) => {
       e.stopPropagation()
-      const isDisabledOnMobile = element.getAttribute(
-        'data-tooltip-mobile-disabled',
-      )
       if (isMobile() && !isDisabledOnMobile) {
         e.preventDefault()
       }
@@ -107,7 +113,7 @@ export function configureTooltips() {
           hide()
         }
       } else {
-        show(element, title)
+        show(element, title, isDisabledOnMobile)
       }
     })
   }
