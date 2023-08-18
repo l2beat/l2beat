@@ -95,6 +95,7 @@ export function configureTooltips() {
 
     element.addEventListener('click', (e) => {
       e.stopPropagation()
+      isMobile() && e.preventDefault()
       if (activeElement === element) {
         // only hide if immediately preceded by mouse enter
         if (Date.now() - mouseEnteredAt > 50) {
