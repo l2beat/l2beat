@@ -16,7 +16,6 @@ export function ExternalIcon(props: SVGAttributes<SVGElement>) {
       <path
         d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z"
         fill="#ef8f00"
-        stroke="#fff"
         strokeWidth="1.0585"
       />
     </Icon>
