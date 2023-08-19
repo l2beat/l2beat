@@ -72,7 +72,7 @@ export function TvlSummary(props: TvlSummaryProps) {
 
       {usage && (
         <div
-          className="Tooltip flex h-1 w-full flex-wrap"
+          className="Tooltip flex h-1 w-full flex-wrap my-3 md:my-0"
           title={renderToStaticMarkup(<BreakdownTooltip usage={usage} />)}
         >
           <div
