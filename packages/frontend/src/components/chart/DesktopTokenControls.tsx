@@ -61,6 +61,7 @@ function TokenModal({ tokens }: { tokens: TokenControl[] }) {
     <div
       className="Dropdown-Transparent-Item pointer-events-none absolute z-60 opacity-0 transition-opacity duration-300"
       data-role="chart-token-modal"
+      data-centered="true"
     >
       <hr className="h-1.5 border-t-0" />
       <div className="rounded-lg bg-gray-200 p-6 dark:bg-gray-750">
