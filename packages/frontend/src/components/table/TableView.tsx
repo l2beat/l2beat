@@ -41,7 +41,7 @@ export function TableView<T>({
   rerenderIndexesOn,
 }: Props<T>) {
   const highlightedColumnClassNames =
-    'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-[#24202C]'
+    'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-purple-300 after:dark:bg-[#24202C]'
 
   return (
     <div
@@ -111,7 +111,7 @@ export function TableView<T>({
                 {...rest}
                 className={cx(
                   'group cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
-                  'hover:bg-gray-100 hover:shadow-sm dark:hover:bg-white/[0.1]',
+                  'hover:bg-black/[0.1] hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
                 )}
               >
