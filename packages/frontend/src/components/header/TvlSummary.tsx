@@ -22,9 +22,18 @@ export interface TvlSummaryProps {
 export function TvlSummary(props: TvlSummaryProps) {
   const usage = props.stats
     ? {
-        cbv: ((props.stats.cbv / props.stats.tvl) * 100).toFixed(),
-        ebv: ((props.stats.ebv / props.stats.tvl) * 100).toFixed(),
-        nmv: ((props.stats.nmv / props.stats.tvl) * 100).toFixed(),
+        cbv:
+          props.stats.tvl === 0
+            ? '33'
+            : ((props.stats.cbv / props.stats.tvl) * 100).toFixed(),
+        ebv:
+          props.stats.tvl === 0
+            ? '33'
+            : ((props.stats.ebv / props.stats.tvl) * 100).toFixed(),
+        nmv:
+          props.stats.tvl === 0
+            ? '33'
+            : ((props.stats.nmv / props.stats.tvl) * 100).toFixed(),
       }
     : undefined
 
@@ -33,19 +42,19 @@ export function TvlSummary(props: TvlSummaryProps) {
         {
           label: 'Canonically Bridged',
           value: formatUSD(props.stats.cbv),
-          usage: usage?.cbv,
+          usage: usage?.cbv ?? 1,
           icon: <BridgedIcon className="h-[8px] w-[8px]" />,
         },
         {
           label: 'Externally Bridged',
           value: formatUSD(props.stats.ebv),
-          usage: usage?.ebv,
+          usage: usage?.ebv ?? 1,
           icon: <ExternalIcon className="h-[10px] w-[10px]" />,
         },
         {
           label: 'Natively Minted',
           value: formatUSD(props.stats.nmv),
-          usage: usage?.nmv,
+          usage: usage?.nmv ?? 1,
           icon: <NativeIcon className="h-[8px] w-[8px]" />,
         },
       ]
