@@ -24,7 +24,7 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
   return (
     <div className="md:hidden">
       <div className="flex items-center gap-x-4">
-        <span>View other tokens</span>
+        <span>View tokens</span>
 
         <div className="rounded-lg bg-gray-100 px-1 py-1 dark:bg-gray-750">
           <div data-role="chart-token-toggle">

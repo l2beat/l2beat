@@ -24,7 +24,7 @@ export function DesktopTokenControls({ tokens }: DesktopTokenControlsProps) {
       <div />
       <VerticalSeparator />
       <div className="flex flex-wrap items-baseline justify-start gap-x-4">
-        <span>View another token</span>
+        <span>View tokens</span>
         <div className="Dropdown">
           <div className="rounded-lg bg-gray-200 px-1 py-1 dark:bg-gray-750">
             <SelectButton />
