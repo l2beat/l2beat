@@ -69,7 +69,7 @@ interface SlideCardContentProps {
 // even on non-integer scaling/sizes.
 function SlideCardContent(props: SlideCardContentProps) {
   return (
-    <div className="SlideCard-Content transition-300 fixed left-0 top-0 bottom-0 z-999 flex h-[100dvh] w-full translate-y-full flex-col whitespace-normal bg-black/50 transition-transform ease-out">
+    <div className="SlideCard-Content fixed left-0 top-0 bottom-0 z-999 flex h-[100dvh] w-full translate-y-full flex-col whitespace-normal bg-black/50 transition-transform duration-300 ease-out">
       <div className="h-[10%]" />
       <div className="flex h-full flex-col gap-4 rounded-t-2xl bg-gray-100 p-4 dark:bg-zinc-800">
         <h2 className="text-3xl font-bold">{props.title}</h2>
