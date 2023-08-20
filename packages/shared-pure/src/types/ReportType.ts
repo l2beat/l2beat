@@ -1,10 +1,8 @@
-import { AssetType, isAssetType } from './AssetType'
-
-export type ReportType = AssetType
+export type ReportType = 'CBV' | 'EBV' | 'NMV'
 export type AggregatedReportType = ReportType | 'TVL'
 
 export function isReportType(value: string): value is ReportType {
-  return isAssetType(value)
+  return value === 'CBV' || value === 'EBV' || value === 'NMV'
 }
 
 export function isAggregatedReportType(value: string): value is ReportType {

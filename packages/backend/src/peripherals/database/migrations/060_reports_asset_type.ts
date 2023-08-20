@@ -24,9 +24,14 @@ export async function up(knex: Knex) {
     table.string('asset_type').notNullable().defaultTo('CBV')
   })
 
-  await knex('reports')
-    .whereIn('asset_id', [AssetId.ARB, AssetId.OP])
-    .update({ asset_type: 'NMV' })
+  await knex.raw(`
+    UPDATE reports
+    SET asset_type = 'TVL'
+    WHERE asset_id IN (
+      ${AssetId.ARB.toString()},
+      ${AssetId.OP.toString()},
+    )
+  `)
 }
 
 export async function down(knex: Knex) {

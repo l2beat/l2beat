@@ -29,7 +29,7 @@ export class AggregatedReportRepository extends BaseRepository {
   ): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
-      .where({ value_type: reportType })
+      .andWhere({ report_type: reportType })
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) = 0`)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
@@ -50,7 +50,7 @@ export class AggregatedReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
-      .andWhere({ value_type: reportType })
+      .andWhere({ report_type: reportType })
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) % 6 = 0`)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
@@ -74,7 +74,7 @@ export class AggregatedReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
-      .andWhere({ value_type: reportType })
+      .andWhere({ report_type: reportType })
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -104,7 +104,7 @@ export class AggregatedReportRepository extends BaseRepository {
       .select()
       .where({
         project_id: projectId.toString(),
-        value_type: reportType,
+        report_type: reportType,
       })
       .orderBy('unix_timestamp', 'desc')
       .first()
@@ -144,8 +144,7 @@ function toRow(record: AggregatedReportRecord): AggregatedReportRow {
     project_id: record.projectId.toString(),
     usd_value: record.usdValue.toString(),
     eth_value: record.ethValue.toString(),
-    // TODO: rename this
-    value_type: record.reportType,
+    report_type: record.reportType,
   }
 }
 
@@ -156,6 +155,6 @@ function toRecord(row: AggregatedReportRow): AggregatedReportRecord {
     usdValue: BigInt(row.usd_value),
     ethValue: BigInt(row.eth_value),
     // TODO: rename this
-    reportType: AggregatedReportType(row.value_type),
+    reportType: AggregatedReportType(row.report_type),
   }
 }

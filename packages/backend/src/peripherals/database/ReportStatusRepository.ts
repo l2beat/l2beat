@@ -28,7 +28,7 @@ export class ReportStatusRepository extends BaseRepository {
       .where({
         config_hash: configHash.toString(),
         chain_id: chainId.valueOf(),
-        asset_type: reportType,
+        report_type: reportType,
       })
       .select('unix_timestamp')
 
@@ -47,14 +47,14 @@ export class ReportStatusRepository extends BaseRepository {
         .where({
           unix_timestamp: record.timestamp.toDate(),
           chain_id: record.chainId.valueOf(),
-          asset_type: record.reportType,
+          report_type: record.reportType,
         })
         .delete()
       await trx('reports_status').insert({
         config_hash: record.configHash.toString(),
         unix_timestamp: record.timestamp.toDate(),
         chain_id: record.chainId.valueOf(),
-        asset_type: record.reportType,
+        report_type: record.reportType,
       })
     })
     return record.configHash
@@ -78,7 +78,7 @@ export class ReportStatusRepository extends BaseRepository {
       .andWhere('unix_timestamp', '<=', to.toDate())
       .andWhere({
         chain_id: chainId.valueOf(),
-        asset_type: reportType,
+        report_type: reportType,
       })
 
     return rows.map((r) => ({
@@ -94,7 +94,7 @@ export class ReportStatusRepository extends BaseRepository {
     const knex = await this.knex()
     // note: we need to provide better types manually here
     const row = (await knex('reports_status')
-      .where({ chain_id: chainId.valueOf(), asset_type: reportType.toString() })
+      .where({ chain_id: chainId.valueOf(), report_type: reportType })
       .max('unix_timestamp')
       .first()) as NullableDict<Date> | undefined
     if (!row || row.max === null) {
@@ -105,12 +105,12 @@ export class ReportStatusRepository extends BaseRepository {
   }
 
   async findLatestTimestampOfType(
-    assetType: ReportType,
+    reportType: ReportType,
   ): Promise<UnixTime | undefined> {
     const knex = await this.knex()
     const row = (await knex('reports_status')
       .where({
-        asset_type: assetType.toString(),
+        report_type: reportType,
       })
       .max('unix_timestamp')
       .first()) as NullableDict<Date> | undefined

@@ -52,7 +52,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('reports')
       .where('unix_timestamp', timestamp.toDate())
-      .andWhere('asset_type', assetType.toString())
+      .andWhere('report_type', assetType.toString())
       .andWhere('chain_id', chainId.valueOf())
     return rows.map(toRecord)
   }
@@ -78,7 +78,7 @@ export class ReportRepository extends BaseRepository {
     await knex.transaction(async (trx) => {
       await trx('reports')
         .where('unix_timestamp', rows[0].unix_timestamp)
-        .andWhere('asset_type', rows[0].asset_type)
+        .andWhere('report_type', rows[0].report_type)
         .andWhere('chain_id', rows[0].chain_id)
         .delete()
       await trx('reports')
@@ -88,7 +88,7 @@ export class ReportRepository extends BaseRepository {
           'project_id',
           'asset_id',
           'chain_id',
-          'asset_type',
+          'report_type',
         ])
         .merge()
     })
@@ -109,7 +109,7 @@ export class ReportRepository extends BaseRepository {
       .andWhereRaw(`extract(hour from unix_timestamp) = 0`)
       // TODO refactor once we split this response by value_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
-      .whereIn('asset_type', ['EBV', 'CBV', 'NMV'])
+      .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
   }
@@ -124,7 +124,7 @@ export class ReportRepository extends BaseRepository {
       .andWhere('unix_timestamp', '>=', from.toDate())
       // TODO refactor once we split this response by value_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
-      .whereIn('asset_type', ['EBV', 'CBV', 'NMV'])
+      .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
   }
@@ -141,7 +141,7 @@ export class ReportRepository extends BaseRepository {
       .andWhere('unix_timestamp', '>=', from.toDate())
       // TODO refactor once we split this response by value_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
-      .whereIn('asset_type', ['EBV', 'CBV', 'NMV'])
+      .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
   }
@@ -160,7 +160,7 @@ export class ReportRepository extends BaseRepository {
       .where('asset_id', assetId.toString())
       .andWhere('chain_id', chainId.valueOf())
       .andWhere('project_id', projectId.valueOf())
-      .andWhere('asset_type', assetType.toString())
+      .andWhere('report_type', assetType.toString())
       .andWhere('unix_timestamp', '>=', from.toDate())
       .orderBy('unix_timestamp')
 
@@ -180,7 +180,7 @@ export class ReportRepository extends BaseRepository {
       .where('asset_id', assetId.toString())
       .andWhere('project_id', projectId.valueOf())
       .andWhere('chain_id', chainId.valueOf())
-      .andWhere('asset_type', assetType.toString())
+      .andWhere('report_type', assetType.toString())
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
       .andWhere('unix_timestamp', '>=', from.toDate())
       .orderBy('unix_timestamp')
@@ -200,7 +200,7 @@ export class ReportRepository extends BaseRepository {
       .where('asset_id', assetId.toString())
       .andWhere('chain_id', chainId.valueOf())
       .andWhere('project_id', projectId.valueOf())
-      .andWhere('asset_type', assetType.toString())
+      .andWhere('report_type', assetType.toString())
       .andWhereRaw(`extract(hour from "unix_timestamp") = 0`)
       .orderBy('unix_timestamp')
 
@@ -224,7 +224,7 @@ function toRow(record: ReportRecord): ReportRow {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
     asset_id: record.asset.toString(),
-    asset_type: record.type.toString(),
+    report_type: record.type.toString(),
     chain_id: record.chainId.valueOf(),
     asset_amount: record.amount.toString(),
     usd_value: record.usdValue.toString(),
@@ -237,7 +237,7 @@ function toRecord(row: ReportRow): ReportRecord {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),
     asset: AssetId(row.asset_id),
-    type: ReportType(row.asset_type),
+    type: ReportType(row.report_type),
     chainId: ChainId(row.chain_id),
     amount: BigInt(row.asset_amount),
     usdValue: BigInt(row.usd_value),
