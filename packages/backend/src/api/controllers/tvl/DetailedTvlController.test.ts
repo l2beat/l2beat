@@ -7,13 +7,17 @@ import {
   EthereumAddress,
   Hash256,
   ProjectId,
+  ReportType,
+  Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
-import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
+import {
+  AggregatedReportRecord,
+  AggregatedReportRepository,
+} from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import {
   BalanceRecord,
@@ -35,9 +39,7 @@ describe(DetailedTvlController.name, () => {
   const START = UnixTime.fromDate(new Date('2022-05-31'))
   const MINIMUM_TIMESTAMP = START.add(-1, 'hours')
 
-  const USDC = tokenList.find(
-    (x) => x.symbol === 'USDC' && x.type === ValueType.CBV,
-  )!
+  const USDC = tokenList.find((x) => x.symbol === 'USDC' && x.type === 'CBV')!
 
   const ARBITRUM: ReportProject = {
     projectId: ProjectId('arbitrum'),
@@ -57,7 +59,7 @@ describe(DetailedTvlController.name, () => {
       it('selects minimum viable timestamp for the aggregation', async () => {
         const latestConfigHash = Hash256.random()
 
-        const baseReport = {
+        const baseReport: ReportRecord = {
           timestamp: MINIMUM_TIMESTAMP,
           usdValue: 1234_56n,
           ethValue: 1_111111n,
@@ -65,47 +67,47 @@ describe(DetailedTvlController.name, () => {
           asset: AssetId.USDC,
           chainId: ChainId.ETHEREUM,
           projectId: ARBITRUM.projectId,
-          type: ValueType.CBV,
+          type: 'CBV',
         }
 
-        const baseAggregatedReport = [
+        const baseAggregatedReport: AggregatedReportRecord[] = [
           {
             timestamp: MINIMUM_TIMESTAMP,
             usdValue: 1234_56n,
             ethValue: 1_111111n,
-            valueType: ValueType.CBV,
+            reportType: 'CBV',
             projectId: ARBITRUM.projectId,
           },
           {
             timestamp: MINIMUM_TIMESTAMP,
             usdValue: 1234_56n,
             ethValue: 1_111111n,
-            valueType: ValueType.CBV,
+            reportType: 'CBV',
             projectId: ProjectId.ALL,
           },
           {
             timestamp: MINIMUM_TIMESTAMP,
             usdValue: 1234_56n,
             ethValue: 1_111111n,
-            valueType: ValueType.CBV,
+            reportType: 'CBV',
             projectId: ProjectId.BRIDGES,
           },
           {
             timestamp: MINIMUM_TIMESTAMP,
             usdValue: 1234_56n,
             ethValue: 1_111111n,
-            valueType: ValueType.CBV,
+            reportType: 'CBV',
             projectId: ProjectId.LAYER2S,
           },
         ]
 
         const reportStatusRepository = mockObject<ReportStatusRepository>({
           findLatestTimestampOfType: async (type) =>
-            type === ValueType.CBV
+            type === 'CBV'
               ? START
-              : type === ValueType.EBV
+              : type === 'EBV'
               ? START.add(-15, 'minutes')
-              : type === ValueType.NMV
+              : type === 'NMV'
               ? START.add(-30, 'minutes')
               : undefined,
         })
@@ -179,7 +181,7 @@ describe(DetailedTvlController.name, () => {
         const projectId = ProjectId('arbitrum')
         const chainId = ChainId.ARBITRUM
         const asset = AssetId.USDC
-        const type = ValueType.EBV
+        const type = 'EBV'
 
         const fakeReports = fakeReportSeries(projectId, chainId, asset, type)
 
@@ -291,19 +293,17 @@ describe(DetailedTvlController.name, () => {
     () => {
       it('produces assets breakdown per project', async () => {
         const USDC = tokenList.find(
-          (x) => x.symbol === 'USDC' && x.type === ValueType.CBV,
+          (x) => x.symbol === 'USDC' && x.type === 'CBV',
         )!
 
-        const OP = tokenList.find(
-          (x) => x.symbol === 'OP' && x.type === ValueType.NMV,
-        )!
+        const OP = tokenList.find((x) => x.symbol === 'OP' && x.type === 'NMV')!
 
         const DAI = tokenList.find(
-          (x) => x.symbol === 'DAI' && x.type === ValueType.CBV,
+          (x) => x.symbol === 'DAI' && x.type === 'CBV',
         )!
 
         const ETH = tokenList.find(
-          (x) => x.symbol === 'ETH' && x.type === ValueType.CBV,
+          (x) => x.symbol === 'ETH' && x.type === 'CBV',
         )!
 
         const latestConfigHash = Hash256.random()
@@ -312,10 +312,10 @@ describe(DetailedTvlController.name, () => {
         const firstEscrow = EthereumAddress.random()
         const secondEscrow = EthereumAddress.random()
 
-        const eth = { ...ETH, type: ValueType.CBV, chainId: ChainId.ETHEREUM }
-        const usdc = { ...USDC, type: ValueType.CBV, chainId: ChainId.ETHEREUM }
-        const dai = { ...DAI, type: ValueType.EBV, chainId: ChainId.ARBITRUM }
-        const op = { ...OP, type: ValueType.NMV, chainId: ChainId.ARBITRUM }
+        const eth: Token = { ...ETH, type: 'CBV', chainId: ChainId.ETHEREUM }
+        const usdc: Token = { ...USDC, type: 'CBV', chainId: ChainId.ETHEREUM }
+        const dai: Token = { ...DAI, type: 'EBV', chainId: ChainId.ARBITRUM }
+        const op: Token = { ...OP, type: 'NMV', chainId: ChainId.ARBITRUM }
 
         const projects: ReportProject[] = [
           {
@@ -523,7 +523,7 @@ function fakeAssetReport(
   projectId: ProjectId,
   chainId: ChainId,
   asset: AssetId,
-  type: ValueType,
+  type: ReportType,
   timestamp: UnixTime,
 ) {
   return {
@@ -542,7 +542,7 @@ function fakeReportSeries(
   projectId: ProjectId,
   chainId: ChainId,
   asset: AssetId,
-  type: ValueType,
+  type: ReportType,
 ) {
   const to = UnixTime.now()
   const from = to.add(-90, 'days')

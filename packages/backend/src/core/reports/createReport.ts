@@ -2,8 +2,8 @@ import {
   AssetId,
   ChainId,
   ProjectId,
+  ReportType,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
@@ -11,7 +11,7 @@ import { ReportRecord } from '../../peripherals/database/ReportRepository'
 export interface BalancePerProject {
   assetId: AssetId
   chainId: ChainId
-  type: ValueType
+  type: ReportType
   balance: bigint
   decimals: number
   projectId: ProjectId

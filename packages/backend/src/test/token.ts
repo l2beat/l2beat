@@ -5,7 +5,6 @@ import {
   EthereumAddress,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 interface MockToken extends Token {
@@ -23,6 +22,6 @@ export const getMockToken = (): MockToken => {
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ETHEREUM,
-    type: ValueType.CBV,
+    type: 'CBV',
   }
 }

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -21,14 +21,14 @@ describe(ReportStatusRepository.name, () => {
   const TIME_THREE = TIME_ONE.add(-2, 'hours')
 
   const ETH_ID = ChainId.ETHEREUM
-  const VALUE_TYPE = ValueType.CBV
+  const VALUE_TYPE = 'CBV'
 
   it('stores a single timestamp', async () => {
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
 
     const timestamps = await repository.getByConfigHash(
@@ -44,31 +44,31 @@ describe(ReportStatusRepository.name, () => {
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_TWO,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_THREE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_TWO,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_TWO,
       timestamp: TIME_TWO,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
 
     const timestampsOne = await repository.getByConfigHash(
@@ -91,19 +91,19 @@ describe(ReportStatusRepository.name, () => {
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_ONE,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
 
     const timestamps = await repository.getByConfigHash(
@@ -119,13 +119,13 @@ describe(ReportStatusRepository.name, () => {
       configHash: HASH_TWO,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_TWO,
       timestamp: TIME_TWO,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
 
     const result = await repository.getBetween(
@@ -142,13 +142,13 @@ describe(ReportStatusRepository.name, () => {
       configHash: HASH_TWO,
       timestamp: TIME_ONE,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
     await repository.add({
       configHash: HASH_TWO,
       timestamp: TIME_TWO,
       chainId: ETH_ID,
-      valueType: VALUE_TYPE,
+      reportType: VALUE_TYPE,
     })
 
     const result = await repository.findLatestTimestamp(ETH_ID, VALUE_TYPE)

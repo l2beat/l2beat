@@ -4,8 +4,8 @@ import {
   AssetId,
   ChainId,
   ProjectId,
+  ReportType,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { ReportRow } from 'knex/types/tables'
@@ -19,7 +19,8 @@ export interface ReportRecord {
   asset: AssetId
   chainId: ChainId
   // TODO: Index this column when we start querying by it.
-  type: ValueType
+  // TODO: Rename
+  type: ReportType
   amount: bigint
   usdValue: bigint
   ethValue: bigint
@@ -46,7 +47,7 @@ export class ReportRepository extends BaseRepository {
   async getByTimestampAndPreciseAsset(
     timestamp: UnixTime,
     chainId: ChainId,
-    assetType: ValueType,
+    assetType: ReportType,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('reports')
@@ -68,10 +69,10 @@ export class ReportRepository extends BaseRepository {
     const timestampsMatch = reports.every((r) =>
       r.timestamp.equals(reports[0].timestamp),
     )
-    const valueTypeMatch = reports.every((r) => r.type === reports[0].type)
+    const ReportTypeMatch = reports.every((r) => r.type === reports[0].type)
     const chainIdsMatch = reports.every((r) => r.chainId === reports[0].chainId)
     assert(timestampsMatch, 'Timestamps must match')
-    assert(valueTypeMatch, 'Value types must match')
+    assert(ReportTypeMatch, 'Value types must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
     await knex.transaction(async (trx) => {
@@ -108,7 +109,7 @@ export class ReportRepository extends BaseRepository {
       .andWhereRaw(`extract(hour from unix_timestamp) = 0`)
       // TODO refactor once we split this response by value_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
-      .whereIn('asset_type', [ValueType.EBV, ValueType.CBV, ValueType.NMV])
+      .whereIn('asset_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
   }
@@ -123,12 +124,12 @@ export class ReportRepository extends BaseRepository {
       .andWhere('unix_timestamp', '>=', from.toDate())
       // TODO refactor once we split this response by value_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
-      .whereIn('asset_type', [ValueType.EBV, ValueType.CBV, ValueType.NMV])
+      .whereIn('asset_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
   }
 
-  // TODO: filter by ChainId and ValueType
+  // TODO: filter by ChainId and ReportType
   async getSixHourlyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
@@ -140,7 +141,7 @@ export class ReportRepository extends BaseRepository {
       .andWhere('unix_timestamp', '>=', from.toDate())
       // TODO refactor once we split this response by value_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
-      .whereIn('asset_type', [ValueType.EBV, ValueType.CBV, ValueType.NMV])
+      .whereIn('asset_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
   }
@@ -150,7 +151,7 @@ export class ReportRepository extends BaseRepository {
     projectId: ProjectId,
     chainId: ChainId,
     assetId: AssetId,
-    assetType: ValueType,
+    assetType: ReportType,
     from: UnixTime,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
@@ -170,7 +171,7 @@ export class ReportRepository extends BaseRepository {
     projectId: ProjectId,
     chainId: ChainId,
     assetId: AssetId,
-    assetType: ValueType,
+    assetType: ReportType,
     from: UnixTime,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
@@ -191,7 +192,7 @@ export class ReportRepository extends BaseRepository {
     projectId: ProjectId,
     chainId: ChainId,
     assetId: AssetId,
-    assetType: ValueType,
+    assetType: ReportType,
   ): Promise<ReportRecord[]> {
     const knex = await this.knex()
 
@@ -236,7 +237,7 @@ function toRecord(row: ReportRow): ReportRecord {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),
     asset: AssetId(row.asset_id),
-    type: ValueType(row.asset_type),
+    type: ReportType(row.asset_type),
     chainId: ChainId(row.chain_id),
     amount: BigInt(row.asset_amount),
     usdValue: BigInt(row.usd_value),

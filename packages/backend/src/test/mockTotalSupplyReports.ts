@@ -6,7 +6,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { createEBVReports } from '../core/reports/createEBVReports'
@@ -84,7 +83,7 @@ const TOKENS: Token[] = [
     premintHolderAddresses: [],
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    type: ValueType.EBV,
+    type: 'EBV',
   },
 ]
 
@@ -136,7 +135,7 @@ function fakeTokenInfo(token: Partial<Token>): Token {
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    type: ValueType.EBV,
+    type: 'EBV',
     ...token,
   }
 }
