@@ -107,9 +107,7 @@ describe(DetailedTvlController.name, () => {
               ? START
               : type === 'EBV'
               ? START.add(-15, 'minutes')
-              : type === 'NMV'
-              ? START.add(-30, 'minutes')
-              : undefined,
+              : START.add(-30, 'minutes'), // NMV
         })
         const aggregatedReportStatusRepository =
           mockObject<AggregatedReportStatusRepository>({

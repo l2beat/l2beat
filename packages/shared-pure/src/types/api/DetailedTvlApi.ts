@@ -46,7 +46,7 @@ export type DetailedTvlApiCharts = z.infer<typeof DetailedTvlApiCharts>
 export const DetailedTvlApiToken = z.object({
   assetId: branded(z.string(), AssetId),
   chainId: branded(z.number(), ChainId),
-  valueType: branded(z.string(), AssetType),
+  assetType: branded(z.string(), AssetType),
   usdValue: z.number(),
 })
 

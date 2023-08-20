@@ -352,13 +352,13 @@ describe('detailedTvl', () => {
       expect(arbitrumResult).toEqual({
         CBV: [
           {
-            valueType: 'CBV',
+            assetType: 'CBV',
             assetId: AssetId.USDC,
             chainId: ChainId.ARBITRUM,
             usdValue: 2,
           },
           {
-            valueType: 'CBV',
+            assetType: 'CBV',
             assetId: AssetId.ETH,
             chainId: ChainId.ARBITRUM,
             usdValue: 1,
@@ -366,7 +366,7 @@ describe('detailedTvl', () => {
         ],
         EBV: [
           {
-            valueType: 'EBV',
+            assetType: 'EBV',
             assetId: AssetId.ETH,
             chainId: ChainId.ARBITRUM,
             usdValue: 3,
@@ -378,7 +378,7 @@ describe('detailedTvl', () => {
       expect(ethereumResult).toEqual({
         CBV: [
           {
-            valueType: 'CBV',
+            assetType: 'CBV',
             assetId: AssetId.OP,
             chainId: ChainId.ETHEREUM,
             usdValue: 20,
@@ -386,7 +386,7 @@ describe('detailedTvl', () => {
         ],
         EBV: [
           {
-            valueType: 'EBV',
+            assetType: 'EBV',
             assetId: AssetId.USDC,
             chainId: ChainId.ETHEREUM,
             usdValue: 10,
@@ -394,7 +394,7 @@ describe('detailedTvl', () => {
         ],
         NMV: [
           {
-            valueType: 'NMV',
+            assetType: 'NMV',
             assetId: AssetId.ETH,
             chainId: ChainId.ETHEREUM,
             usdValue: 30,

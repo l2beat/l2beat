@@ -63,14 +63,14 @@ export function getProjectTokensCharts(
 
   // Sort assets per type by USD value
   const tokens = Object.entries(assetValuesPerProject).reduce(
-    (prev, [valueType, reports]) => {
+    (prev, [reportType, reports]) => {
       return {
         ...prev,
-        [valueType]: reports
+        [reportType]: reports
           .map((report) => ({
             assetId: report.asset,
             chainId: report.chainId,
-            valueType: report.type,
+            assetType: report.type,
             usdValue: asNumber(report.usdValue, 2),
           }))
           .sort((a, b) => b.usdValue - a.usdValue),
