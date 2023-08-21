@@ -1,8 +1,8 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 17913441,
-  "configHash": "0x1a91bf2dcf88b53fe258ce9f501426579f206d16e5a223c371311227747be925",
+  "blockNumber": 17961455,
+  "configHash": "0x771af4c7ed8b3227454b5b1217d23ab69c7c47272386bc5b5ad8ebf5af3046d1",
   "version": 1,
   "contracts": [
     {
@@ -76,7 +76,7 @@
         "type": "immutable"
       },
       "values": {
-        "addseq": 5078,
+        "addseq": 5079,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -101,8 +101,8 @@
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0x74a0ae63b8893acd96f9a9f9b6aeae05f7556d751ea1bfd4e468457ea9f068c9",
-        "triggerTime": 1691938859
+        "ssHash": "0xb4a163d6a807a61c6f9179af88b0cecc49ac1cf971eeb599c8ee054d25ed4649",
+        "triggerTime": 1692534462
       },
       "derivedName": "Bridge"
     },
@@ -226,7 +226,15 @@
         "numPausers": 6,
         "numRelaxedGuards": 0,
         "owner": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
-        "pausers": [],
+        "pausersFull": [],
+        "pausersPauseOnly": [
+          "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
+          "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
+          "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
+          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
+        ],
         "relaxed": false,
         "relaxThreshold": 2
       },

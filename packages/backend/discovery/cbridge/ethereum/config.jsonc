@@ -72,12 +72,21 @@
           "valueKey": "account",
           "flagKey": "added"
         },
-        "pausers": {
-          "type": "arrayFromOneEventWithArg",
+        "pausersPauseOnly": {
+          "type": "arrayFromOneEventReinterpreted",
           "event": "event PauserUpdated(address account, uint8 role)",
           "valueKey": "account",
           "arg": "role",
-          "argValue": "1"
+          "argsTrue": ["1"],
+          "argsFalse": ["0",  "2"]
+        },
+        "pausersFull": {
+          "type": "arrayFromOneEventReinterpreted",
+          "event": "event PauserUpdated(address account, uint8 role)",
+          "valueKey": "account",
+          "arg": "role",
+          "argsTrue": ["2"],
+          "argsFalse": ["0",  "1"]
         }
       }
     }
