@@ -29,6 +29,8 @@ export interface ProjectHeaderProps {
   purpose: string
   technology: string
   tvlBreakdown: TVLBreakdownProps | undefined
+  showTvlBreakdown: boolean
+  tvlBreakdownHref: string
   risks: RiskValues
   links: ProjectLink[]
   stagesEnabled?: boolean
@@ -134,6 +136,8 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       isArchived={props.isArchived}
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
+      tvlBreakdownHref={props.tvlBreakdownHref}
+      showTvlBreakdown={props.showTvlBreakdown}
     />
   )
 }

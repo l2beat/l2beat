@@ -11,6 +11,7 @@ import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling-activity'
 import { getDetailedTvlPage } from './scaling-detailedTvl'
 import { getProjectPages } from './scaling-projects'
+import { getProjectTvlBreakdownPages } from './scaling-projects-tvl-breakdown'
 import { getRiskPage } from './scaling-risk'
 import { getTvlPage } from './scaling-tvl'
 
@@ -45,6 +46,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
 
   if (config.features.detailedTvl) {
     pages.push(getDetailedTvlPage(config, pagesData))
+  }
+
+  if (config.features.tvlBreakdown) {
+    pages.push(...getProjectTvlBreakdownPages(config, pagesData))
   }
 
   outputPages(pages)
