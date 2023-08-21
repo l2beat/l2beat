@@ -51,7 +51,8 @@ export async function getProps(
           },
           {
             name: 'Gitcoin',
-            linkURL: 'https://gitcoin.co/grants/3857/l2beat',
+            linkURL:
+              'https://explorer.gitcoin.co/#/round/424/0x222ea76664ed77d18d4416d2b2e77937b76f0a35/0x222ea76664ed77d18d4416d2b2e77937b76f0a35-27',
           },
         ],
       },

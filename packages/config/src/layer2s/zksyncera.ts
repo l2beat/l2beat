@@ -73,17 +73,7 @@ export const zksyncera: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
         sinceTimestamp: new UnixTime(1676367083),
-        tokens: [
-          'USDC',
-          'PERP',
-          'MUTE',
-          'USDT',
-          'WBTC',
-          'LUSD',
-          'rETH',
-          'RPL',
-          '1INCH',
-        ],
+        tokens: '*',
         description:
           'Standard bridge for depositing ERC20 tokens to zkSync Era.',
         ...upgrades,
@@ -112,14 +102,14 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F1#L254',
-            'https://etherscan.io/address/0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc#code#F1#L24',
+            'https://etherscan.io/address/0x9B1A10bDC4A40219544C835263b2cA3f3e689693#code#F1#L256',
+            'https://etherscan.io/address/0x8c0f38F13526fCB379a80B87F4DEbdBCC9CAEcbD#code#F1#L24',
           ],
         },
         {
           contract: 'Verifier',
           references: [
-            'https://etherscan.io/address/0x020b26826C23142f2582733b2E6428EE31eAaB49#code#F1#L227',
+            'https://etherscan.io/address/0x3F04F86f14aB74953fDAEde8175e0714eB8e798e#code#F1#L227',
           ],
         },
       ],
@@ -141,8 +131,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F1#L149',
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F11#L41',
+            'https://etherscan.io/address/0x9B1A10bDC4A40219544C835263b2cA3f3e689693#code#F1#L149',
+            'https://etherscan.io/address/0x9B1A10bDC4A40219544C835263b2cA3f3e689693#code#F11#L41',
           ],
         },
       ],
@@ -156,8 +146,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F1#L121',
-            'https://etherscan.io/address/0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE#code#F7#L51',
+            'https://etherscan.io/address/0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D#code#F1#L121',
+            'https://etherscan.io/address/0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D#code#F7#L51',
           ],
         },
       ],
@@ -168,8 +158,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L56',
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F13#L73',
+            'https://etherscan.io/address/0x9B1A10bDC4A40219544C835263b2cA3f3e689693#code#F14#L56',
+            'https://etherscan.io/address/0x9B1A10bDC4A40219544C835263b2cA3f3e689693#code#F14#L73',
           ],
         },
       ],
@@ -184,7 +174,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x389a081BCf20e5803288183b929F08458F1d863D#code#F1#L149',
+            'https://etherscan.io/address/0x9B1A10bDC4A40219544C835263b2cA3f3e689693#code#F1#L153',
           ],
         },
       ],
