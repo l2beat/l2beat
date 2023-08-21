@@ -15,7 +15,6 @@ export const ArrayFromOneEventReinterpretedHandlerDefinition = z.strictObject({
   type: z.literal('arrayFromOneEventReinterpreted'),
   event: z.string(),
   valueKey: z.string(),
-  flagKey: z.optional(z.string()),
   invert: z.optional(z.boolean()),
   ignoreRelative: z.optional(z.boolean()),
   arg: z.string(),
@@ -38,10 +37,6 @@ export class ArrayFromOneEventReinterpretedHandler implements Handler {
       definition.event,
       abi,
       (fragment) =>
-        (!definition.flagKey ||
-          fragment.inputs.some(
-            (x) => x.type === 'bool' && x.name === definition.flagKey,
-          )) &&
         fragment.inputs.some((x) => x.name === definition.valueKey) &&
         fragment.inputs.some((x) => x.name === definition.arg),
     )
