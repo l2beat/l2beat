@@ -225,11 +225,20 @@ export const cBridge: Bridge = {
       ),
     },
     {
-      name: 'Pausers',
+      name: 'Full pausers',
       description: 'Can pause and unpause the system.',
+      accounts: unionBy(
+        discovery.getPermissionedAccounts('Liquidity Network', 'pausers'),
+        discovery.getPermissionedAccounts('Sentinel', 'pausersFull'),
+        JSON.stringify,
+      ),
+    },
+    {
+      name: 'Partial pausers',
+      description: 'Can pause the system.',
       accounts: discovery.getPermissionedAccounts(
-        'Liquidity Network',
-        'pausers',
+        'Sentinel',
+        'pausersPauseOnly',
       ),
     },
     {
