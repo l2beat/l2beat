@@ -281,5 +281,54 @@ describe(ArrayFromOneEventHandler.name, () => {
         ignoreRelative: true,
       })
     })
+
+    it('works with different false and true values', async () => {
+      const event = 'event Abracadabra(uint a, uint b)'
+      const abi = new utils.Interface([event])
+
+      function Abracadabra(a: number, b: number): providers.Log {
+        return abi.encodeEventLog(abi.getEvent('Abracadabra'), [
+          a,
+          b,
+        ]) as providers.Log
+      }
+
+      const provider = mockObject<DiscoveryProvider>({
+        async getLogs() {
+          return [
+            Abracadabra(100, 1),
+            Abracadabra(200, 1),
+            Abracadabra(300, 0),
+            Abracadabra(100, 2),
+            Abracadabra(200, 1),
+            Abracadabra(300, 1),
+          ]
+        },
+      })
+
+      const handler = new ArrayFromOneEventHandler(
+        'someName',
+        {
+          type: 'arrayFromOneEvent',
+          event,
+          valueKey: 'a',
+          flagKey: 'b',
+          flagTrueValues: [1],
+          flagFalseValues: [0, 2],
+        },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const value = await handler.execute(
+        provider,
+        EthereumAddress.random(),
+        BLOCK_NUMBER,
+      )
+      expect(value).toEqual({
+        field: 'someName',
+        value: [200, 300],
+        ignoreRelative: undefined,
+      })
+    })
   })
 })

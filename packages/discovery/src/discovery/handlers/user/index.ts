@@ -11,10 +11,6 @@ import {
   ArrayFromOneEventHandlerDefinition,
 } from './ArrayFromOneEventHandler'
 import {
-  ArrayFromOneEventReinterpretedHandler,
-  ArrayFromOneEventReinterpretedHandlerDefinition,
-} from './ArrayFromOneEventReinterpretedHandler'
-import {
   ArrayFromOneEventWithArgHandler,
   ArrayFromOneEventWithArgHandlerDefinition,
 } from './ArrayFromOneEventWithArgHandler'
@@ -56,7 +52,6 @@ export const UserHandlerDefinition = z.union([
   AccessControlHandlerDefinition,
   ArrayFromOneEventHandlerDefinition,
   ArrayFromOneEventWithArgHandlerDefinition,
-  ArrayFromOneEventReinterpretedHandlerDefinition,
   ArrayFromTwoEventsHandlerDefinition,
   ConstructorArgsDefinition,
   EventCountHandlerDefinition,
@@ -86,13 +81,6 @@ export function getUserHandler(
       return new ArrayFromOneEventHandler(field, definition, abi, logger)
     case 'arrayFromOneEventWithArg':
       return new ArrayFromOneEventWithArgHandler(field, definition, abi, logger)
-    case 'arrayFromOneEventReinterpreted':
-      return new ArrayFromOneEventReinterpretedHandler(
-        field,
-        definition,
-        abi,
-        logger,
-      )
     case 'arrayFromTwoEvents':
       return new ArrayFromTwoEventsHandler(field, definition, abi, logger)
     case 'constructorArgs':
