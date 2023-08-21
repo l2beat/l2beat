@@ -1,9 +1,10 @@
-import { ArrayFromOneEventReinterpretedHandler } from './ArrayFromOneEventReinterpretedHandler'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
+
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { ArrayFromOneEventReinterpretedHandler } from './ArrayFromOneEventReinterpretedHandler'
 
 describe(ArrayFromOneEventReinterpretedHandler.name, () => {
   const BLOCK_NUMBER = 1234
