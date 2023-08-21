@@ -62,7 +62,6 @@ export function render(
     const sevenDayRadio = elements.controls.days.find(
       (x) => toDays(x.value) === 7,
     )?.parentElement
-    const toggle = !isTvl && !isDetailedTvl
 
     elements.controls.chartType.forEach((input) => {
       const isChecked =
@@ -70,6 +69,7 @@ export function render(
       input.checked = isChecked
     })
 
+    const toggle = !isTvl && !isDetailedTvl
     sevenDayRadio?.classList.toggle('hidden', toggle)
     elements.view.currencyControlsWrapper?.classList.toggle('hidden', toggle)
     elements.view.tokenControlsWrapper?.classList.toggle('hidden', toggle)
