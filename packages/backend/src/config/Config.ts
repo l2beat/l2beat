@@ -54,6 +54,7 @@ export interface ClockConfig {
 export interface TvlConfig {
   readonly enabled: boolean
   readonly detailedTvlEnabled: boolean
+  readonly errorOnUnsyncedDetailedTvl: boolean
   readonly coingeckoApiKey: string | undefined
   readonly ethereum: EthereumTvlConfig | false
   readonly arbitrum: ArbitrumTvlConfig | false

@@ -11,6 +11,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOne,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -39,7 +40,7 @@ export const base: Layer2 = {
       websites: ['https://base.org/'],
       apps: ['https://bridge.base.org/'],
       documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
-      explorers: ['https://basescan.org/'],
+      explorers: ['https://basescan.org/', 'https://base.blockscout.com/'],
       repositories: ['https://github.com/base-org'],
       socialMedia: [
         'https://twitter.com/BuildOnBase',
@@ -72,6 +73,7 @@ export const base: Layer2 = {
       startBlock: 1,
       url: 'https://developer-access-mainnet.base.org',
       callsPerMinute: 1500,
+      assessCount: subtractOne,
     },
   },
   riskView: makeBridgeCompatible({

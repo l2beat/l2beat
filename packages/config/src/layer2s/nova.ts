@@ -11,6 +11,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOne,
 } from './common'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
 import { Layer2 } from './types'
@@ -47,6 +48,7 @@ export const nova: Layer2 = {
       'Arbitrum Nova is an AnyTrust chain that aims for ultra low transaction fees. Nova differs from Arbitrum One by not posting transaction data on chain, but to Data Availability Committee.',
     purpose: 'Universal',
     category: 'Optimistic Chain',
+    provider: 'Arbitrum',
     links: {
       websites: [
         'https://nova.arbitrum.io/',
@@ -95,9 +97,7 @@ export const nova: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      // We need to subtract the Nitro system transaction in every block except for genesis
-      assessCount: (count: number, blockNumber: number) =>
-        blockNumber !== 0 ? count - 1 : count,
+      assessCount: subtractOne,
       startBlock: 1,
     },
   },

@@ -22,6 +22,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOneAfterBlockInclusive,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
@@ -125,6 +126,7 @@ export const arbitrum: Layer2 = {
     )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
@@ -196,8 +198,7 @@ export const arbitrum: Layer2 = {
       type: 'rpc',
       // We need to subtract the Nitro system transactions
       // after the block of the update
-      assessCount: (count: number, blockNumber: number) =>
-        blockNumber >= 22207818 ? count - 1 : count,
+      assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
   },

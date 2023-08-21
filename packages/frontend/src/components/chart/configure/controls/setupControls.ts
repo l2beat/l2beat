@@ -76,7 +76,7 @@ export function setupControls(
 
     dispatch({
       type: 'ViewChanged',
-      view: view,
+      view,
     })
   })
 

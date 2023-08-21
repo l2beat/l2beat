@@ -2,11 +2,21 @@
   "$schema": "../../config.schema.json",
   "chain": "ethereum",
   "name": "linea",
-  "initialAddresses": ["0xd19d4B5d358258f05D7B411E21A1460D11B0876F"],
+  "initialAddresses": [
+    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+    "0x504A330327A089d8364C4ab3811Ee26976d388ce",
+    "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+  ],
   "names": {
     "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "zkEVM",
     "0x892bb7EeD71efB060ab90140e7825d8127991DD3": "AdminMultisig",
-    "0xd6B95c960779c72B8C6752119849318E5d550574": "Timelock"
+    "0xd6B95c960779c72B8C6752119849318E5d550574": "Timelock",
+    "0x504A330327A089d8364C4ab3811Ee26976d388ce": "USDCBridge",
+    "0x41fAD3Df1B07B647D120D055259E474fE8046eb5": "USDCBridgeProxyAdmin",
+    "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": "ERC20Bridge",
+    "0x5B0bb17755FBa06028530682E2FD5bc373931768": "ERC20BridgeProxyAdmin",
+    "0xC84832f69bFFbC1A94E44a157A342766E959ED27": "PlonkVerifierFull2",
+    "0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "ERC20UpgradableBeacon"
   },
   "overrides": {
     "zkEVM": {
@@ -63,6 +73,10 @@
     },
     "AdminMultisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "USDCBridge": {
+      "ignoreMethods": ["usdc"],
+      "ignoreInWatchMode": ["balance"]
     }
   }
 }
