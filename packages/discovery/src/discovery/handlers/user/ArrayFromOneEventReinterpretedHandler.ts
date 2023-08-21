@@ -67,11 +67,13 @@ export class ArrayFromOneEventReinterpretedHandler implements Handler {
     const values = new Set<ContractValue>()
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)
-      const argValue = parsed.args[this.definition.arg].toString()
+      const argValue = String(parsed.args[this.definition.arg])
 
       const inTrue = this.definition.argsTrue.includes(argValue)
       const inFalse = this.definition.argsFalse.includes(argValue)
-      if(!(inTrue || inFalse)) { continue; }
+      if (!(inTrue || inFalse)) {
+        continue
+      }
 
       const value = toContractValue(parsed.args[this.definition.valueKey])
       let flag = inTrue ? true : false

@@ -11,13 +11,13 @@ import {
   ArrayFromOneEventHandlerDefinition,
 } from './ArrayFromOneEventHandler'
 import {
-  ArrayFromOneEventWithArgHandler,
-  ArrayFromOneEventWithArgHandlerDefinition,
-} from './ArrayFromOneEventWithArgHandler'
-import {
   ArrayFromOneEventReinterpretedHandler,
   ArrayFromOneEventReinterpretedHandlerDefinition,
 } from './ArrayFromOneEventReinterpretedHandler'
+import {
+  ArrayFromOneEventWithArgHandler,
+  ArrayFromOneEventWithArgHandlerDefinition,
+} from './ArrayFromOneEventWithArgHandler'
 import {
   ArrayFromTwoEventsHandler,
   ArrayFromTwoEventsHandlerDefinition,
@@ -87,7 +87,12 @@ export function getUserHandler(
     case 'arrayFromOneEventWithArg':
       return new ArrayFromOneEventWithArgHandler(field, definition, abi, logger)
     case 'arrayFromOneEventReinterpreted':
-      return new ArrayFromOneEventReinterpretedHandler(field, definition, abi, logger)
+      return new ArrayFromOneEventReinterpretedHandler(
+        field,
+        definition,
+        abi,
+        logger,
+      )
     case 'arrayFromTwoEvents':
       return new ArrayFromTwoEventsHandler(field, definition, abi, logger)
     case 'constructorArgs':

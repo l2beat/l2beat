@@ -78,7 +78,7 @@
           "valueKey": "account",
           "arg": "role",
           "argsTrue": ["1"],
-          "argsFalse": ["0",  "2"]
+          "argsFalse": ["0", "2"]
         },
         "pausersFull": {
           "type": "arrayFromOneEventReinterpreted",
@@ -86,7 +86,7 @@
           "valueKey": "account",
           "arg": "role",
           "argsTrue": ["2"],
-          "argsFalse": ["0",  "1"]
+          "argsFalse": ["0", "1"]
         }
       }
     }
