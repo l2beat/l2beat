@@ -1,8 +1,8 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 17961455,
-  "configHash": "0x771af4c7ed8b3227454b5b1217d23ab69c7c47272386bc5b5ad8ebf5af3046d1",
+  "blockNumber": 17962390,
+  "configHash": "0x1b184212aa0d5c3fd99aa51935f3e128390b685777201707fc6dec79b09acafa",
   "version": 1,
   "contracts": [
     {
