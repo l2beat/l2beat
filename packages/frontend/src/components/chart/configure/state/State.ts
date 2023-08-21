@@ -25,7 +25,7 @@ export interface State {
   controls: {
     pagePathname: string
     theme: 'dark' | 'light'
-    view: 'tvl' | 'detailedTvl' | 'activity'
+    view: ChartType
     days: number
     isLogScale: boolean
     currency: 'usd' | 'eth'
@@ -218,3 +218,10 @@ export const Milestones = z.array(
     description: z.optional(z.string()),
   }),
 )
+
+export type ChartType = z.infer<typeof ChartType>
+export const ChartType = z.union([
+  z.literal('tvl'),
+  z.literal('detailedTvl'),
+  z.literal('activity'),
+])

@@ -117,7 +117,7 @@ export function ActivityView({ items }: ActivityViewProps) {
   ]
 
   const rows: RowConfig<ActivityViewEntry> = {
-    getProps: getScalingRowProps,
+    getProps: (entry) => getScalingRowProps(entry, 'activity'),
   }
 
   return (
