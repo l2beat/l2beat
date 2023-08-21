@@ -1,13 +1,9 @@
 import React from 'react'
 
+import { ChartType } from './configure/state/State'
 import { RadioGroup } from './RadioGroup'
 
-export function RangeControls({
-  type,
-}: {
-  days: number
-  type: 'tvl' | 'detailedTvl' | 'activity'
-}) {
+export function RangeControls({ type }: { days: number; type: ChartType }) {
   return (
     <RadioGroup
       role="chart-range-controls"
