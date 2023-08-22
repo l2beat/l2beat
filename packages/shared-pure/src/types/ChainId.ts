@@ -35,7 +35,11 @@ ChainId.getAll = function (): ChainId[] {
 
 type ChainIds = typeof CHAIN_IDS
 
-ChainId.fromNameTypesafe = function (name: ChainIds[keyof ChainIds]): ChainId {
+/**
+ * Only to use when defining ChainId.ETHEREUM etc. constants.
+ * Will save you from typos, but is annoying to work with strings.
+ */
+function chainIdFromName(name: ChainIds[keyof ChainIds]): ChainId {
   const entry = Object.entries(CHAIN_IDS).find(([_, v]) => v === name)
   if (!entry) {
     throw new TypeError('Programmer error: Invalid chain name: ' + name)
@@ -58,15 +62,15 @@ const CHAIN_IDS = {
   '-1': 'native',
 } as const
 
-ChainId.ETHEREUM = ChainId.fromNameTypesafe('ethereum')
-ChainId.ARBITRUM = ChainId.fromNameTypesafe('arbitrum')
-ChainId.OPTIMISM = ChainId.fromNameTypesafe('optimism')
-ChainId.POLYGON_POS = ChainId.fromNameTypesafe('polygon-pos')
-ChainId.BSC = ChainId.fromNameTypesafe('bsc')
-ChainId.AVALANCHE = ChainId.fromNameTypesafe('avalanche')
-ChainId.CELO = ChainId.fromNameTypesafe('celo')
-ChainId.LINEA = ChainId.fromNameTypesafe('linea')
-ChainId.BASE = ChainId.fromNameTypesafe('base')
-ChainId.POLYGON_ZKEVM = ChainId.fromNameTypesafe('polygon-zkevm')
-ChainId.GNOSIS = ChainId.fromNameTypesafe('gnosis')
-ChainId.NMV = ChainId.fromNameTypesafe('native')
+ChainId.ETHEREUM = chainIdFromName('ethereum')
+ChainId.ARBITRUM = chainIdFromName('arbitrum')
+ChainId.OPTIMISM = chainIdFromName('optimism')
+ChainId.POLYGON_POS = chainIdFromName('polygon-pos')
+ChainId.BSC = chainIdFromName('bsc')
+ChainId.AVALANCHE = chainIdFromName('avalanche')
+ChainId.CELO = chainIdFromName('celo')
+ChainId.LINEA = chainIdFromName('linea')
+ChainId.BASE = chainIdFromName('base')
+ChainId.POLYGON_ZKEVM = chainIdFromName('polygon-zkevm')
+ChainId.GNOSIS = chainIdFromName('gnosis')
+ChainId.NMV = chainIdFromName('native')
