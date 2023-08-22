@@ -16,7 +16,7 @@ export class ReportStatusRepository extends BaseRepository {
     this.autoWrap<CheckConvention<ReportStatusRepository>>(this)
   }
 
-  // TODO(radomski): Add different config hashes for value_type and chain_id
+  // TODO(radomski): Add different config hashes for report_type and chain_id
   // after the config the updated
   async getByConfigHash(
     configHash: Hash256,

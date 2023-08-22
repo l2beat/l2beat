@@ -126,7 +126,7 @@ export class AggregatedReportRepository extends BaseRepository {
         .delete()
       await trx('aggregated_reports')
         .insert(rows)
-        .onConflict(['unix_timestamp', 'project_id', 'value_type'])
+        .onConflict(['unix_timestamp', 'project_id', 'report_type'])
         .merge()
     })
     return rows.length

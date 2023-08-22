@@ -28,8 +28,8 @@ export async function up(knex: Knex) {
     UPDATE reports
     SET asset_type = 'TVL'
     WHERE asset_id IN (
-      ${AssetId.ARB.toString()},
-      ${AssetId.OP.toString()},
+      '${AssetId.ARB.toString()}',
+      '${AssetId.OP.toString()}'
     )
   `)
 }

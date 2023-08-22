@@ -107,7 +107,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from unix_timestamp) = 0`)
-      // TODO refactor once we split this response by value_type
+      // TODO refactor once we split this response by report_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
@@ -122,7 +122,7 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      // TODO refactor once we split this response by value_type
+      // TODO refactor once we split this response by report_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
@@ -139,7 +139,7 @@ export class ReportRepository extends BaseRepository {
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      // TODO refactor once we split this response by value_type
+      // TODO refactor once we split this response by report_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
