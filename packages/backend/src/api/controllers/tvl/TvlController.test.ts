@@ -57,7 +57,7 @@ describe(TvlController.name, () => {
         asset: AssetId.USDC,
         chainId: ChainId.ETHEREUM,
         projectId: ARBITRUM.projectId,
-        type: 'CBV',
+        reportType: 'CBV',
       }
 
       // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
@@ -152,7 +152,7 @@ describe(TvlController.name, () => {
         asset: AssetId.DAI,
         chainId: ChainId.ETHEREUM,
         projectId: OPTIMISM.projectId,
-        type: 'CBV',
+        reportType: 'CBV',
       }
 
       const controller = new TvlController(
@@ -218,7 +218,7 @@ describe(TvlController.name, () => {
         asset: AssetId.USDC,
         chainId: ChainId.ETHEREUM,
         projectId: ARBITRUM.projectId,
-        type: 'CBV',
+        reportType: 'CBV',
       }
 
       // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
@@ -338,7 +338,7 @@ describe(reduceDuplicatedReports.name, () => {
     amount: 111_1111n * 10n ** (6n - 4n),
     chainId: ChainId.ETHEREUM,
     projectId: ARBITRUM.projectId,
-    type: 'CBV',
+    reportType: 'CBV',
   }
 
   it('works for different timestamps', () => {

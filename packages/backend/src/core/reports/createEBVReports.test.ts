@@ -21,7 +21,7 @@ describe(createEBVReports.name, () => {
         projectId: ProjectId.ARBITRUM,
         asset: AssetId.USDC,
         chainId: ChainId.ARBITRUM,
-        type: 'EBV',
+        reportType: 'EBV',
         amount: 900n * 10n ** 6n,
         usdValue: 900_00n,
         ethValue: 900_000n,

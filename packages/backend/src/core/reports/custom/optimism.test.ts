@@ -57,7 +57,7 @@ describe('genOpTokenReport', () => {
       {
         asset: OP_TOKEN_ID,
         chainId: ChainId.NMV,
-        type: 'NMV',
+        reportType: 'NMV',
         projectId: ProjectId.OPTIMISM,
         timestamp,
         amount: 214748364000000000000000000n,
@@ -78,7 +78,7 @@ describe('genOpTokenReport', () => {
       {
         asset: OP_TOKEN_ID,
         chainId: ChainId.NMV,
-        type: 'NMV',
+        reportType: 'NMV',
         projectId: ProjectId.OPTIMISM,
         timestamp,
         amount: 644594782000000000000000000n,
@@ -101,7 +101,7 @@ describe('genOpTokenReport', () => {
       {
         asset: OP_TOKEN_ID,
         chainId: ChainId.NMV,
-        type: 'NMV',
+        reportType: 'NMV',
         projectId: ProjectId.OPTIMISM,
         timestamp,
         amount: 716708907000000000000000000n,

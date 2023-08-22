@@ -116,7 +116,7 @@ const FUTURE_REPORTS = createReports(
 const FUTURE_OP_REPORT: ReportRecord[] = [
   {
     asset: OP_TOKEN_ID,
-    type: 'NMV',
+    reportType: 'NMV',
     chainId: ChainId.NMV,
     amount: 716708907000000000000000000n,
     ethValue: 716708907000000n,

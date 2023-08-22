@@ -67,7 +67,7 @@ describe(DetailedTvlController.name, () => {
           asset: AssetId.USDC,
           chainId: ChainId.ETHEREUM,
           projectId: ARBITRUM.projectId,
-          type: 'CBV',
+          reportType: 'CBV',
         }
 
         const baseAggregatedReport: AggregatedReportRecord[] = [
@@ -521,7 +521,7 @@ function fakeAssetReport(
   projectId: ProjectId,
   chainId: ChainId,
   asset: AssetId,
-  type: ReportType,
+  reportType: ReportType,
   timestamp: UnixTime,
 ) {
   return {
@@ -532,7 +532,7 @@ function fakeAssetReport(
     asset,
     chainId,
     projectId,
-    type,
+    reportType,
   }
 }
 

@@ -146,12 +146,12 @@ describe(aggregateReports.name, () => {
     projectId: ProjectId,
     asset: 'eth' | 'dai',
     balance: bigint,
-    type: ReportType = 'CBV',
+    reportType: ReportType = 'CBV',
   ): ReportRecord {
     return {
       timestamp: NOW,
       projectId,
-      type,
+      reportType,
       asset: asset === 'eth' ? AssetId.ETH : AssetId.DAI,
       chainId: ChainId.ETHEREUM,
       amount: balance * 10n ** 18n,

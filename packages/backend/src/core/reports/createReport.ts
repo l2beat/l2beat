@@ -42,7 +42,7 @@ export function createReport(
     projectId: balance.projectId,
     chainId: balance.chainId,
     asset: balance.assetId,
-    type: balance.type,
+    reportType: balance.type,
     amount: balance.balance,
     usdValue,
     ethValue,

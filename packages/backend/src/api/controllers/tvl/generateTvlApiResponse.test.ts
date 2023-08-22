@@ -138,7 +138,7 @@ describe(generateTvlApiResponse.name, () => {
         result.all.push({
           asset: assetId,
           chainId: ChainId.ETHEREUM,
-          type: 'CBV',
+          reportType: 'CBV',
           amount: 0n, // ignored
           ethValue: 0n, // ignored
           usdValue: balanceUsd,

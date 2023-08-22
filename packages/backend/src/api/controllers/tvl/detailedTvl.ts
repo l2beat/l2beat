@@ -38,7 +38,7 @@ export function groupByProjectIdAndAssetType(reports: ReportRecord[]) {
   return nestedGroupBy(
     reports,
     (report) => report.projectId,
-    (report) => report.type,
+    (report) => report.reportType,
   )
 }
 
@@ -70,7 +70,7 @@ export function getProjectTokensCharts(
           .map((report) => ({
             assetId: report.asset,
             chainId: report.chainId,
-            assetType: report.type,
+            assetType: report.reportType,
             usdValue: asNumber(report.usdValue, 2),
           }))
           .sort((a, b) => b.usdValue - a.usdValue),

@@ -20,7 +20,7 @@ export interface ReportRecord {
   chainId: ChainId
   // TODO: Index this column when we start querying by it.
   // TODO: Rename
-  type: ReportType
+  reportType: ReportType
   amount: bigint
   usdValue: bigint
   ethValue: bigint
@@ -69,10 +69,12 @@ export class ReportRepository extends BaseRepository {
     const timestampsMatch = reports.every((r) =>
       r.timestamp.equals(reports[0].timestamp),
     )
-    const ReportTypeMatch = reports.every((r) => r.type === reports[0].type)
+    const reportTypeMatch = reports.every(
+      (r) => r.reportType === reports[0].reportType,
+    )
     const chainIdsMatch = reports.every((r) => r.chainId === reports[0].chainId)
     assert(timestampsMatch, 'Timestamps must match')
-    assert(ReportTypeMatch, 'Value types must match')
+    assert(reportTypeMatch, 'Report types must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
     await knex.transaction(async (trx) => {
@@ -100,6 +102,10 @@ export class ReportRepository extends BaseRepository {
     return await knex('reports').delete()
   }
 
+  /**
+   * To be removed along old TVL api
+   * @deprecated
+   */
   async getDailyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
@@ -107,13 +113,16 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from unix_timestamp) = 0`)
-      // TODO refactor once we split this response by report_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
   }
 
+  /**
+   * To be removed along old TVL api
+   * @deprecated
+   */
   async getHourlyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
@@ -122,14 +131,16 @@ export class ReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      // TODO refactor once we split this response by report_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
     return rows.map(toRecord)
   }
 
-  // TODO: filter by ChainId and ReportType
+  /**
+   * To be removed along old TVL api
+   * @deprecated
+   */
   async getSixHourlyByProjectAndAsset(
     projectId: ProjectId,
     assetId: AssetId,
@@ -139,7 +150,6 @@ export class ReportRepository extends BaseRepository {
     const rows = await this._getByProjectAndAssetQuery(knex, projectId, assetId)
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
       .andWhere('unix_timestamp', '>=', from.toDate())
-      // TODO refactor once we split this response by report_type
       .whereIn('chain_id', [ChainId.ETHEREUM, ChainId.ARBITRUM, ChainId.NMV])
       .whereIn('report_type', ['EBV', 'CBV', 'NMV'])
 
@@ -224,7 +234,7 @@ function toRow(record: ReportRecord): ReportRow {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
     asset_id: record.asset.toString(),
-    report_type: record.type.toString(),
+    report_type: record.reportType.toString(),
     chain_id: record.chainId.valueOf(),
     asset_amount: record.amount.toString(),
     usd_value: record.usdValue.toString(),
@@ -237,7 +247,7 @@ function toRecord(row: ReportRow): ReportRecord {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),
     asset: AssetId(row.asset_id),
-    type: ReportType(row.report_type),
+    reportType: ReportType(row.report_type),
     chainId: ChainId(row.chain_id),
     amount: BigInt(row.asset_amount),
     usdValue: BigInt(row.usd_value),

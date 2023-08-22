@@ -69,7 +69,7 @@ function buildReportTree(
     )
 
     for (const report of filteredReports) {
-      reportTree.get(project, report.type).push(report)
+      reportTree.get(project, report.reportType).push(report)
     }
   }
 

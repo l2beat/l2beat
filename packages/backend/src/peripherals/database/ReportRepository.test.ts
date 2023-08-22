@@ -194,7 +194,7 @@ function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
     timestamp: UnixTime.now(),
     projectId: ProjectId('fake-project'),
     asset: AssetId('fake-asset'),
-    type: 'CBV',
+    reportType: 'CBV',
     chainId: ChainId.ETHEREUM,
     amount: 1234n,
     usdValue: 1234n,

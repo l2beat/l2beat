@@ -186,7 +186,7 @@ describe(generateDetailedTvlApiResponse.name, () => {
         result.push({
           asset: assetId,
           chainId: ChainId.ARBITRUM, // ignored - not grouped
-          type: 'CBV',
+          reportType: 'CBV',
           amount: 0n, // ignored
           ethValue: 0n, // ignored
           usdValue: balanceUsd,
