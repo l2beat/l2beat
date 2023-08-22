@@ -16,7 +16,7 @@ export const layer2aWithDups: Layer2 = {
     slug: 'layer2a',
     description: '',
     purpose: 'Universal',
-    provider: 'Optimism',
+    provider: 'OP Stack',
     category: 'Optimistic Rollup',
     links: {
       websites: [],

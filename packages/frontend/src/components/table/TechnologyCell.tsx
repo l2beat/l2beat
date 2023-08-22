@@ -33,7 +33,7 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           <StarkWareIcon className={providerIconClassName} />
         </span>
       )}
-      {provider === 'Optimism' && (
+      {provider === 'OP Stack' && (
         <span
           className={providerClassName}
           title="This project is based on OP Stack's code base."
