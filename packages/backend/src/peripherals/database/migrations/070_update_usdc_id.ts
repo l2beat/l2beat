@@ -29,7 +29,7 @@ export async function up(knex: Knex) {
       asset_id: OLD_ASSET_ID,
       project_id: ProjectId.ARBITRUM.toString(),
     })
-    .andWhereRaw(`"asset_type" = 'EBV'`)
+    .andWhereRaw(`asset_type = 'EBV'`)
 }
 
 export async function down(knex: Knex) {
