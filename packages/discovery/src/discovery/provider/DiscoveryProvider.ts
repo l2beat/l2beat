@@ -1,7 +1,7 @@
+import { EtherscanLikeClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
-import { DiscoveryEtherscanLikeClient } from './DiscoveryEtherscanLikeClient'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 export interface ContractMetadata {
@@ -24,7 +24,7 @@ export interface ContractMetadata {
 export class DiscoveryProvider {
   constructor(
     private readonly provider: providers.Provider,
-    private readonly etherscanLikeClient: DiscoveryEtherscanLikeClient,
+    private readonly etherscanLikeClient: EtherscanLikeClient,
   ) {}
 
   async call(

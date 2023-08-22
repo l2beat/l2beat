@@ -1,4 +1,4 @@
-import { HttpClient, Logger } from '@l2beat/shared'
+import { EtherscanLikeClient, HttpClient, Logger } from '@l2beat/shared'
 import { assert, ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
@@ -8,7 +8,6 @@ import {
   getDiscoveryCliConfig,
 } from './config/config.discovery'
 import { ConfigReader } from './discovery/config/ConfigReader'
-import { DiscoveryEtherscanLikeClient } from './discovery/provider/DiscoveryEtherscanLikeClient'
 import { dryRunDiscovery, runDiscovery } from './discovery/runDiscovery'
 import { runInversion } from './inversion/runInversion'
 
@@ -40,7 +39,7 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
 
   const http = new HttpClient()
   const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
-  const etherscanClient = new DiscoveryEtherscanLikeClient(
+  const etherscanClient = EtherscanLikeClient.createForDiscovery(
     http,
     chainConfig.etherscanUrl,
     chainConfig.etherscanApiKey,
