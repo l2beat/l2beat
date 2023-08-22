@@ -17,5 +17,5 @@ export interface Token {
   chainId: ChainId
   type: ValueType
   premintHolderAddresses?: EthereumAddress[]
-  iconUrl?: string,
+  iconUrl?: string
 }

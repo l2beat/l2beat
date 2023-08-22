@@ -20,11 +20,11 @@ export const CoinListResult = z.array(CoinListEntry)
 export const CoinListPlatformResult = z.array(CoinListPlatformEntry)
 
 export const CoinMetadata = z.object({
-    image: z.object({
-        thumb: z.string(),
-        small: z.string(),
-        large: z.string(),
-    })
+  image: z.object({
+    thumb: z.string(),
+    small: z.string(),
+    large: z.string(),
+  }),
 })
 
 export type CoinMarketChartRangeResult = z.infer<

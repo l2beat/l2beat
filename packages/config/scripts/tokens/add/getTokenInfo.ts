@@ -2,7 +2,6 @@ import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   AssetId,
   ChainId,
-  CoingeckoId,
   EthereumAddress,
   Token,
   UnixTime,
@@ -18,17 +17,15 @@ export async function getTokenInfo(
   address: EthereumAddress,
   category: 'ether' | 'stablecoin' | 'other',
 ): Promise<Token> {
-
   const coingeckoId = await getCoingeckoId(coingeckoClient, address)
 
-  const [name, symbol, decimals, iconUrl, sinceTimestamp] =
-    await Promise.all([
-      getName(provider, address),
-      getSymbol(provider, address),
-      getDecimals(provider, address),
-      coingeckoClient.getImageUrl(coingeckoId),
-      getSinceTimestamp(provider, address),
-    ])
+  const [name, symbol, decimals, iconUrl, sinceTimestamp] = await Promise.all([
+    getName(provider, address),
+    getSymbol(provider, address),
+    getDecimals(provider, address),
+    coingeckoClient.getImageUrl(coingeckoId),
+    getSinceTimestamp(provider, address),
+  ])
 
   const tokenInfo: Token = {
     id: AssetId(`${symbol.toLowerCase()}-${name.toLowerCase()}`),
@@ -42,7 +39,7 @@ export async function getTokenInfo(
     // TODO: make it configurable
     chainId: ChainId.ETHEREUM,
     type: ValueType.CBV,
-    iconUrl
+    iconUrl,
   }
 
   return tokenInfo
@@ -100,7 +97,10 @@ async function getDecimals(
   )
 }
 
-async function getCoingeckoId(coingeckoClient: CoingeckoClient, address: EthereumAddress) {
+async function getCoingeckoId(
+  coingeckoClient: CoingeckoClient,
+  address: EthereumAddress,
+) {
   const coinList = await coingeckoClient.getCoinList({
     includePlatform: true,
   })

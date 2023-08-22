@@ -23,7 +23,12 @@ async function main() {
     getEnv('CONFIG_ALCHEMY_API_KEY'),
   )
 
-  const token: Token = await getTokenInfo(provider, coingeckoClient, address, category)
+  const token: Token = await getTokenInfo(
+    provider,
+    coingeckoClient,
+    address,
+    category,
+  )
 
   const tokens = getCanonicalTokens()
   const newList = [...tokens, token].sort((a, b) =>
