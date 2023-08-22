@@ -50,13 +50,14 @@ function getTokens(
       const symbol = token?.symbol
       const name = token?.name
       const address = token?.address
-      if (symbol && name && address) {
+
+      if (symbol && name) {
         const tvlEndpoint = hasDetailedTVL
           ? `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${valueType.toString()}`
           : `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`
 
         return {
-          address: address.toString(),
+          address: address?.toString(),
           symbol,
           name,
           assetType: valueType,

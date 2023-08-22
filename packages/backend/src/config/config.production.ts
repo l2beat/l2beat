@@ -68,7 +68,7 @@ export function getProductionConfig(): Config {
       enabled: true,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {
-        alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
+        providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
         minBlockTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
       },
