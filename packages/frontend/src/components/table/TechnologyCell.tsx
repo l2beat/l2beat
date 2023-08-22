@@ -36,7 +36,7 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
       {provider === 'Optimism' && (
         <span
           className={providerClassName}
-          title="This project is based on Optimism's code base."
+          title="This project is based on OP Stack's code base."
         >
           <OptimismIcon className={providerIconClassName} />
         </span>
