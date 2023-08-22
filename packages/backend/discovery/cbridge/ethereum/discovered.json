@@ -1,8 +1,8 @@
 {
-  "chain": "ethereum",
   "name": "cbridge",
-  "blockNumber": 17434738,
-  "configHash": "0xe70c32243578622d14dbf6a3064bc9aa087219bf3c025055cfb73414705d183d",
+  "chain": "ethereum",
+  "blockNumber": 17962954,
+  "configHash": "0x1b184212aa0d5c3fd99aa51935f3e128390b685777201707fc6dec79b09acafa",
   "version": 1,
   "contracts": [
     {
@@ -76,14 +76,15 @@
         "type": "immutable"
       },
       "values": {
-        "addseq": 4931,
+        "addseq": 5079,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
           "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
-          "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
+          "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0",
+          "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "minimalMaxSlippage": 500,
         "nativeWrap": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -96,11 +97,12 @@
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
-          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
+          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3",
+          "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xea8b8437560cf561f40815fc1be1af5e4a966dc84560f4c231e9f0b9a2c4afc5",
-        "triggerTime": 1685968236
+        "ssHash": "0xb4a163d6a807a61c6f9179af88b0cecc49ac1cf971eeb599c8ee054d25ed4649",
+        "triggerTime": 1692534462
       },
       "derivedName": "Bridge"
     },
@@ -145,6 +147,18 @@
       }
     },
     {
+      "name": "SentinelProxyAdmin",
+      "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
+      "code": "https://etherscan.deth.net/address/0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "owner": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+      },
+      "derivedName": "ProxyAdmin"
+    },
+    {
       "name": "TransferAgent",
       "address": "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
       "code": "https://etherscan.deth.net/address/0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
@@ -169,7 +183,8 @@
           "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
-          "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
+          "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0",
+          "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
         "paused": false,
@@ -179,11 +194,51 @@
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
-          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
+          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3",
+          "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
       },
       "derivedName": "OriginalTokenVault"
+    },
+    {
+      "name": "Sentinel",
+      "address": "0xF140024969F6c76494a78518D9a99c8776B55f70",
+      "code": "https://etherscan.deth.net/address/0xF140024969F6c76494a78518D9a99c8776B55f70,0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",
+        "admin": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+      },
+      "values": {
+        "governors": [
+          "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
+          "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
+        ],
+        "guards": [
+          "0x83039377ddD862821d92d416b2DDB9EFb5BA9000",
+          "0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1"
+        ],
+        "numGovernors": 4,
+        "numGuards": 2,
+        "numPausers": 6,
+        "numRelaxedGuards": 0,
+        "owner": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
+        "pausersFull": [],
+        "pausersPauseOnly": [
+          "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
+          "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
+          "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+          "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
+          "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
+          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
+        ],
+        "relaxed": false,
+        "relaxThreshold": 2
+      },
+      "derivedName": "Sentinel"
     },
     {
       "name": "SimpleGovernance",
@@ -206,7 +261,7 @@
         ],
         "MAX_ACTIVE_PERIOD": 2419200,
         "MIN_ACTIVE_PERIOD": 3600,
-        "nextProposalId": 75,
+        "nextProposalId": 86,
         "THRESHOLD_DECIMAL": 100
       },
       "derivedName": "SimpleGovernance"
@@ -217,6 +272,8 @@
     "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
     "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
     "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0",
+    "0x83039377ddD862821d92d416b2DDB9EFb5BA9000",
+    "0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1",
     "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
     "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
     "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
@@ -579,6 +636,18 @@
       "function unpause()",
       "function withdraw(bytes _request, bytes[] _sigs, address[] _signers, uint256[] _powers) returns (bytes32)"
     ],
+    "0x8E339115b295DeD49880eA62C1F06d1dbec3496b": [
+      "constructor(address initialOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b": [
       "event BridgeUpdated(uint8 bridgeSendType, address bridgeAddr)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -589,6 +658,57 @@
       "function transfer(bytes _receiver, address _token, uint256 _amount, uint64 _dstChainId, uint64 _nonce, uint32 _maxSlippage, uint8 _bridgeSendType, tuple(uint8 Type, bytes Value)[] _extensions) returns (bytes32)",
       "function transferNative(bytes _receiver, uint256 _amount, uint64 _dstChainId, uint64 _nonce, uint32 _maxSlippage, uint8 _bridgeSendType, tuple(uint8 Type, bytes Value)[] _extensions) payable returns (bytes32)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896": [
+      "constructor(address[] _guards, address[] _pausers, address[] _governors)",
+      "event Failed(address target, string reason)",
+      "event GovernorUpdated(address account, bool added)",
+      "event GuardUpdated(address account, uint8 state)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PauserUpdated(address account, uint8 role)",
+      "event RelaxStatusUpdated(bool relaxed)",
+      "event RelaxThresholdUpdated(uint256 threshold, uint256 total)",
+      "function addGovernors(address[] _accounts)",
+      "function addPausers(address[] _accounts, uint8[] _roles)",
+      "function governors(address) view returns (bool)",
+      "function guard()",
+      "function guardStates(address) view returns (uint8)",
+      "function guards(uint256) view returns (address)",
+      "function init(address[] _guards, address[] _pausers, address[] _governors)",
+      "function isGovernor(address _account) view returns (bool)",
+      "function numGovernors() view returns (uint64)",
+      "function numGuards() view returns (uint256)",
+      "function numPausers() view returns (uint64)",
+      "function numRelaxedGuards() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause(address _target)",
+      "function pause(address[] _targets)",
+      "function pausers(address) view returns (uint8)",
+      "function relax()",
+      "function relaxThreshold() view returns (uint256)",
+      "function relaxed() view returns (bool)",
+      "function removeGovernors(address[] _accounts)",
+      "function removePausers(address[] _accounts)",
+      "function renounceGovernor()",
+      "function setDelayPeriod(address _target, uint256 _period)",
+      "function setDelayThresholds(address _target, address[] _tokens, uint256[] _thresholds)",
+      "function setEpochLength(address _target, uint256 _length)",
+      "function setEpochVolumeCaps(address _target, address[] _tokens, uint256[] _caps)",
+      "function setMaxBurn(address _target, address[] _tokens, uint256[] _amounts)",
+      "function setMaxDeposit(address _target, address[] _tokens, uint256[] _amounts)",
+      "function setMaxSend(address _target, address[] _tokens, uint256[] _amounts)",
+      "function setMinAdd(address _target, address[] _tokens, uint256[] _amounts)",
+      "function setMinBurn(address _target, address[] _tokens, uint256[] _amounts)",
+      "function setMinDeposit(address _target, address[] _tokens, uint256[] _amounts)",
+      "function setMinSend(address _target, address[] _tokens, uint256[] _amounts)",
+      "function setMinimalMaxSlippage(address _target, uint32 _minimalMaxSlippage)",
+      "function setNativeTokenTransferGas(address _target, uint256 _gasUsed)",
+      "function setPausers(address[] _accounts, uint8[] _roles)",
+      "function setRelaxThreshold(uint256 _threshold)",
+      "function transferOwnership(address newOwner)",
+      "function unpause(address[] _targets)",
+      "function unpause(address _target)",
+      "function updateGuards(address[] _add, address[] _remove, uint256 _newRelaxThreshold)"
     ],
     "0xB37D31b2A74029B5951a2778F959282E2D518595": [
       "constructor(address _sigsVerifier)",
@@ -645,6 +765,16 @@
       "function transferOwnership(address newOwner)",
       "function unpause()",
       "function withdraw(bytes _request, bytes[] _sigs, address[] _signers, uint256[] _powers)"
+    ],
+    "0xF140024969F6c76494a78518D9a99c8776B55f70": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": [
       "constructor(address[] _voters, uint256[] _powers, address[] _proxies, uint256 _activePeriod, uint256 _quorumThreshold, uint256 _fastPassThreshold)",

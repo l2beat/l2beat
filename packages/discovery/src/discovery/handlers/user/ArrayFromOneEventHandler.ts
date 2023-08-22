@@ -16,6 +16,12 @@ export const ArrayFromOneEventHandlerDefinition = z.strictObject({
   event: z.string(),
   valueKey: z.string(),
   flagKey: z.optional(z.string()),
+  flagTrueValues: z.optional(
+    z.array(z.union([z.string(), z.number(), z.boolean()])),
+  ),
+  flagFalseValues: z.optional(
+    z.array(z.union([z.string(), z.number(), z.boolean()])),
+  ),
   invert: z.optional(z.boolean()),
   ignoreRelative: z.optional(z.boolean()),
 })
@@ -24,6 +30,7 @@ export class ArrayFromOneEventHandler implements Handler {
   readonly dependencies: string[] = []
   private readonly fragment: utils.EventFragment
   private readonly abi: utils.Interface
+  private readonly isFlagTrue: (value: ContractValue) => boolean
 
   constructor(
     readonly field: string,
@@ -36,12 +43,25 @@ export class ArrayFromOneEventHandler implements Handler {
       abi,
       (fragment) =>
         (!definition.flagKey ||
-          fragment.inputs.some(
-            (x) => x.type === 'bool' && x.name === definition.flagKey,
-          )) &&
+          fragment.inputs.some((x) => x.name === definition.flagKey)) &&
         fragment.inputs.some((x) => x.name === definition.valueKey),
     )
     this.abi = new utils.Interface([this.fragment])
+
+    const trueValues = (this.definition.flagTrueValues ?? ['true']).map(String)
+    const falseValues = (this.definition.flagFalseValues ?? ['false']).map(
+      String,
+    )
+
+    this.isFlagTrue = (value: ContractValue): boolean => {
+      if (trueValues.includes(String(value))) {
+        return true
+      }
+      if (falseValues.includes(String(value))) {
+        return false
+      }
+      throw new Error('Unexpected flag value')
+    }
   }
 
   getEvent() {
@@ -66,7 +86,7 @@ export class ArrayFromOneEventHandler implements Handler {
       const value = toContractValue(parsed.args[this.definition.valueKey])
       let flag =
         !this.definition.flagKey ||
-        Boolean(parsed.args[this.definition.flagKey])
+        this.isFlagTrue(parsed.args[this.definition.flagKey] as ContractValue)
       if (this.definition.invert) {
         flag = !flag
       }

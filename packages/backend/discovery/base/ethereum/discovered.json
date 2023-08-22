@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 17825543,
-  "configHash": "0x721101dfd6a15da1159a21cf60832806311ec5205a1022e6bdee8c01487edb53",
+  "blockNumber": 17911543,
+  "configHash": "0x281b594149a3b7150f0a2e96a0a76048b155b8c385eac85c873952a23ea07c9f",
   "version": 1,
   "contracts": [
     {
@@ -15,7 +15,7 @@
       "values": {
         "addressManager": "0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
         "isUpgrading": false,
-        "owner": "0x9855054731540A48b28990B63DcF4f33d8AE46A1"
+        "owner": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
       }
     },
     {
@@ -78,27 +78,6 @@
       "derivedName": "L1StandardBridge"
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
-      "code": "https://etherscan.deth.net/address/0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xc7edf91fb84ec337ffa25b6f502a8c52c3dd4ea86d452728767d2836fa3819e3",
-        "getChainId": 1,
-        "getOwners": [
-          "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
-          "0x4665374939642965EfD8357D4568D2A77f677429"
-        ],
-        "getThreshold": 2,
-        "nonce": 25,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
       "name": "OptimismPortal",
       "address": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
       "code": "https://etherscan.deth.net/address/0x49048044D57e1C92A77f79988d21Fa8fAF74E97e,0x5FB30336A8d0841cf15d452afA297cB6D10877D7",
@@ -111,7 +90,7 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 17825540],
+        "params": [1000000000, 300000, 17911543],
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
@@ -131,10 +110,10 @@
         "CHALLENGER": "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 2082600,
-        "latestOutputIndex": 1156,
-        "nextBlockNumber": 2084400,
-        "nextOutputIndex": 1157,
+        "latestBlockNumber": 2602800,
+        "latestOutputIndex": 1445,
+        "nextBlockNumber": 2604600,
+        "nextOutputIndex": 1446,
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686789348,
@@ -206,6 +185,27 @@
       "derivedName": "SystemConfig"
     },
     {
+      "name": "AdminMultisig",
+      "address": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+      "code": "https://etherscan.deth.net/address/0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0xe84c799b3c2ca46c34ff8fa9bfdb5533a5e36e90aadfb803c75e31eac995151d",
+        "getChainId": 1,
+        "getOwners": [
+          "0x9855054731540A48b28990B63DcF4f33d8AE46A1",
+          "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+        ],
+        "getThreshold": 2,
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "name": "L1CrossDomainMessenger",
       "address": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
       "code": "https://etherscan.deth.net/address/0x866E82a600A1414e583f7F13623F1aC5d58b0Afa,0x81C4Bd600793EBd1C0323604E1F455fE50A951F8",
@@ -217,7 +217,7 @@
       },
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619878",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292645745",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -243,7 +243,7 @@
       }
     },
     {
-      "name": "AdminMultisig",
+      "name": "BaseMultisig",
       "address": "0x9855054731540A48b28990B63DcF4f33d8AE46A1",
       "code": "https://etherscan.deth.net/address/0x9855054731540A48b28990B63DcF4f33d8AE46A1,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
@@ -262,7 +262,7 @@
           "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c"
         ],
         "getThreshold": 3,
-        "nonce": 9,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -289,7 +289,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 84,
+        "nonce": 86,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -463,9 +463,6 @@
       "function messenger() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": [
-      "constructor(address _singleton)"
-    ],
     "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -565,6 +562,9 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": [
+      "constructor(address _singleton)"
     ],
     "0x81C4Bd600793EBd1C0323604E1F455fE50A951F8": [
       "constructor(address _portal)",

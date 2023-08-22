@@ -93,12 +93,7 @@ export const rhinofi: Layer2 = {
     dataAvailability: {
       ...RISK_VIEW.DATA_EXTERNAL_DAC,
       sources: [
-        {
-          contract: 'StarkExchange',
-          references: [
-            'https://etherscan.io/address/0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2#code#F34#L183',
-          ],
-        },
+        // TODO: add reference to new StarkExchange implementation!
         {
           contract: 'Committee',
           references: [

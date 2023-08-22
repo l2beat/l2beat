@@ -248,8 +248,12 @@ export const base: Layer2 = {
       "Address designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It's the owner of SystemConfig, which allows to update the sequencer address. Moreover, it can challenge state roots without going through the fault proof process.",
     ),
     ...discovery.getMultisigPermission(
+      'BaseMultisig',
+      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
+    ),
+    ...discovery.getMultisigPermission(
       'OptimismMultisig',
-      'Core multisig of the Optimism team, it can challenge state roots without going through the fault proof process.',
+      "Core multisig of the Optimism team, it can challenge state roots without going through the fault proof process. It's also a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
     ),
     {
       name: 'ProxyAdmin',

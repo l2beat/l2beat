@@ -143,5 +143,13 @@ export const beamerbridgev2: Bridge = {
         discovery.getPermissionedAccount('EthereumRequestManager', 'owner'),
       ],
     },
+    {
+      name: 'Liquidity Providers',
+      description: 'Addresses allowed to fill requests.',
+      accounts: discovery.getPermissionedAccounts(
+        'EthereumFillManager',
+        'liquidityProviders',
+      ),
+    },
   ],
 }
