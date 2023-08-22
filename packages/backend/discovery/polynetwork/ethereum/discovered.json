@@ -8,7 +8,6 @@
     {
       "name": "EthCrossChainManager",
       "address": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
-      "code": "https://etherscan.deth.net/address/0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
       "upgradeability": {
         "type": "immutable"
       },
@@ -24,7 +23,6 @@
     {
       "name": "Lock Proxy 1",
       "address": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
-      "code": "https://etherscan.deth.net/address/0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
       "upgradeability": {
         "type": "immutable"
       },
@@ -39,7 +37,6 @@
       "name": "Lock Proxy 3",
       "address": "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
       "upgradeability": {
         "type": "immutable"
       },
@@ -52,7 +49,6 @@
     {
       "name": "Lock Proxy 4",
       "address": "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
-      "code": "https://etherscan.deth.net/address/0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
       "upgradeability": {
         "type": "immutable"
       },
@@ -66,7 +62,6 @@
     {
       "name": "EthCrossChainManagerProxy",
       "address": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-      "code": "https://etherscan.deth.net/address/0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
       "upgradeability": {
         "type": "immutable"
       },
@@ -82,7 +77,6 @@
       "name": "Lock Proxy 6",
       "address": "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
       "upgradeability": {
         "type": "immutable"
       },
@@ -91,7 +85,6 @@
     {
       "name": "Lock Proxy 2",
       "address": "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
-      "code": "https://etherscan.deth.net/address/0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
       "upgradeability": {
         "type": "immutable"
       },
@@ -106,7 +99,6 @@
     {
       "name": "PolyWrapper",
       "address": "0x81910675DbaF69deE0fD77570BFD07f8E436386A",
-      "code": "https://etherscan.deth.net/address/0x81910675DbaF69deE0fD77570BFD07f8E436386A",
       "upgradeability": {
         "type": "immutable"
       },
@@ -131,7 +123,6 @@
     {
       "name": "EthCrossChainData",
       "address": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
-      "code": "https://etherscan.deth.net/address/0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -147,7 +138,6 @@
     {
       "name": "Lock Proxy 5",
       "address": "0xf6378141BC900020a438F3914e4C3ceA29907b27",
-      "code": "https://etherscan.deth.net/address/0xf6378141BC900020a438F3914e4C3ceA29907b27",
       "upgradeability": {
         "type": "immutable"
       },

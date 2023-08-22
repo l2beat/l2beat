@@ -8,7 +8,6 @@
     {
       "name": "PeggedTokenBridge",
       "address": "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
-      "code": "https://etherscan.deth.net/address/0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB",
       "upgradeability": {
         "type": "immutable"
       },
@@ -23,7 +22,6 @@
     {
       "name": "MessageBus",
       "address": "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
-      "code": "https://etherscan.deth.net/address/0x4066D196A423b2b3B8B054f4F40efB47a74E200C,0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8",
@@ -45,7 +43,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
-      "code": "https://etherscan.deth.net/address/0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
       "upgradeability": {
         "type": "immutable"
       },
@@ -56,7 +53,6 @@
     {
       "name": "PeggedTokenBridgeV2",
       "address": "0x52E4f244f380f8fA51816c8a10A63105dd4De084",
-      "code": "https://etherscan.deth.net/address/0x52E4f244f380f8fA51816c8a10A63105dd4De084",
       "upgradeability": {
         "type": "immutable"
       },
@@ -71,7 +67,6 @@
     {
       "name": "Liquidity Network",
       "address": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
-      "code": "https://etherscan.deth.net/address/0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
       "upgradeability": {
         "type": "immutable"
       },
@@ -109,7 +104,6 @@
     {
       "name": "MessageBusOwner",
       "address": "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
-      "code": "https://etherscan.deth.net/address/0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175",
       "upgradeability": {
         "type": "immutable"
       },
@@ -133,7 +127,6 @@
     {
       "name": "OriginalTokenVaultV2",
       "address": "0x7510792A3B1969F9307F3845CE88e39578f2bAE1",
-      "code": "https://etherscan.deth.net/address/0x7510792A3B1969F9307F3845CE88e39578f2bAE1",
       "upgradeability": {
         "type": "immutable"
       },
@@ -149,7 +142,6 @@
     {
       "name": "SentinelProxyAdmin",
       "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
-      "code": "https://etherscan.deth.net/address/0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
       "upgradeability": {
         "type": "immutable"
       },
@@ -161,7 +153,6 @@
     {
       "name": "TransferAgent",
       "address": "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
-      "code": "https://etherscan.deth.net/address/0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b",
       "upgradeability": {
         "type": "immutable"
       },
@@ -172,7 +163,6 @@
     {
       "name": "OriginalTokenVault",
       "address": "0xB37D31b2A74029B5951a2778F959282E2D518595",
-      "code": "https://etherscan.deth.net/address/0xB37D31b2A74029B5951a2778F959282E2D518595",
       "upgradeability": {
         "type": "immutable"
       },
@@ -204,7 +194,6 @@
     {
       "name": "Sentinel",
       "address": "0xF140024969F6c76494a78518D9a99c8776B55f70",
-      "code": "https://etherscan.deth.net/address/0xF140024969F6c76494a78518D9a99c8776B55f70,0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",
@@ -243,7 +232,6 @@
     {
       "name": "SimpleGovernance",
       "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-      "code": "https://etherscan.deth.net/address/0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
       "upgradeability": {
         "type": "immutable"
       },

@@ -16,13 +16,12 @@ export function toDiscoveryOutput(
     blockNumber,
     configHash,
     version: DISCOVERY_LOGIC_VERSION,
-    ...processAnalysis(results, chainId),
+    ...processAnalysis(results),
   }
 }
 
 export function processAnalysis(
   results: Analysis[],
-  chainId: ChainId,
 ): Omit<
   DiscoveryOutput,
   'name' | 'blockNumber' | 'configHash' | 'version' | 'chain'
@@ -39,7 +38,6 @@ export function processAnalysis(
           name: x.name,
           address: x.address,
           unverified: x.isVerified ? undefined : (true as const),
-          code: getCodeLink(x, chainId),
           upgradeability: x.upgradeability,
           values: Object.keys(x.values).length === 0 ? undefined : x.values,
           errors: Object.keys(x.errors).length === 0 ? undefined : x.errors,
@@ -69,38 +67,6 @@ function getContracts(results: Analysis[]) {
   return { contracts, abis }
 }
 
-function getCodeLink(analysis: Analysis, chainId: ChainId) {
-  if (analysis.type === 'EOA') {
-    return undefined
-  }
-  const addresses = [analysis.address]
-  addresses.push(...analysis.implementations)
-  const dethDomain = getDethDomain(chainId)
-  if (!dethDomain) {
-    return undefined
-  }
-  return `https://${dethDomain}/address/${addresses.join(',')}`
-}
-
 function withoutUndefinedKeys<T extends object>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T
-}
-
-function getDethDomain(chainId: ChainId): string | undefined {
-  switch (chainId) {
-    case ChainId.ETHEREUM:
-      return 'etherscan.deth.net'
-    case ChainId.ARBITRUM:
-      return 'arbiscan.deth.net'
-    case ChainId.OPTIMISM:
-      return 'optimistic.etherscan.deth.net'
-    case ChainId.POLYGON_POS:
-      return 'polygonscan.deth.net'
-    case ChainId.BSC:
-      return 'bscscan.deth.net'
-    case ChainId.AVALANCHE:
-      return 'snowtrace.deth.net'
-    default:
-      return undefined
-  }
 }

@@ -9,7 +9,6 @@
       "name": "SlashingManager",
       "address": "0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A",
       "upgradeability": {
         "type": "immutable"
       },
@@ -18,7 +17,6 @@
     {
       "name": "ERC20PredicateBurnOnly",
       "address": "0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95",
-      "code": "https://etherscan.deth.net/address/0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95",
       "upgradeability": {
         "type": "immutable"
       },
@@ -30,7 +28,6 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
-      "code": "https://etherscan.deth.net/address/0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -55,7 +52,6 @@
     {
       "name": "WithdrawManager",
       "address": "0x2A88696e0fFA76bAA1338F2C74497cC013495922",
-      "code": "https://etherscan.deth.net/address/0x2A88696e0fFA76bAA1338F2C74497cC013495922,0x4ef5123a30e4CFeC02B3E2F5Ce97F1328B29f7de",
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
@@ -76,7 +72,6 @@
     {
       "name": "Registry",
       "address": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
-      "code": "https://etherscan.deth.net/address/0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
       "upgradeability": {
         "type": "immutable"
       },
@@ -99,7 +94,6 @@
     {
       "name": "DepositManager",
       "address": "0x401F6c983eA34274ec46f84D70b31C151321188b",
-      "code": "https://etherscan.deth.net/address/0x401F6c983eA34274ec46f84D70b31C151321188b,0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf",
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
@@ -123,7 +117,6 @@
     {
       "name": "ERC721PredicateBurnOnly",
       "address": "0x54150f44c785D412Ec262fe895Cc3B689c72F49B",
-      "code": "https://etherscan.deth.net/address/0x54150f44c785D412Ec262fe895Cc3B689c72F49B",
       "upgradeability": {
         "type": "immutable"
       },
@@ -135,7 +128,6 @@
     {
       "name": "StakeManager",
       "address": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
-      "code": "https://etherscan.deth.net/address/0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908,0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963,0xef49Ea6996073752b6840CDA34773FFA78F78166",
       "upgradeability": {
         "type": "Polygon Extension proxy",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
@@ -195,7 +187,6 @@
     {
       "name": "EventsHub",
       "address": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
-      "code": "https://etherscan.deth.net/address/0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b,0x0672777617CAA1E778083a4f74eBC997262C9EdD",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0x0672777617CAA1E778083a4f74eBC997262C9EdD",
@@ -211,7 +202,6 @@
     {
       "name": "Governance",
       "address": "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48",
-      "code": "https://etherscan.deth.net/address/0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48,0x98165b71cdDea047C0A49413350C40571195fd07",
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
@@ -227,7 +217,6 @@
     {
       "name": "MaticToken",
       "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-      "code": "https://etherscan.deth.net/address/0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
       "upgradeability": {
         "type": "immutable"
       },
@@ -242,7 +231,6 @@
     {
       "name": "RootChain",
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-      "code": "https://etherscan.deth.net/address/0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287,0x536c55cFe4892E581806e10b38dFE8083551bd03",
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
@@ -266,7 +254,6 @@
     {
       "name": "MaticWETH",
       "address": "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8",
-      "code": "https://etherscan.deth.net/address/0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8",
       "upgradeability": {
         "type": "immutable"
       },
@@ -281,7 +268,6 @@
     {
       "name": "StakingInfo",
       "address": "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B",
-      "code": "https://etherscan.deth.net/address/0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B",
       "upgradeability": {
         "type": "immutable"
       },
@@ -299,7 +285,6 @@
     {
       "name": "ValidatorShareFactory",
       "address": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
-      "code": "https://etherscan.deth.net/address/0xc4FA447A0e77Eff9717b09C057B40570813bb642",
       "upgradeability": {
         "type": "immutable"
       }
@@ -307,7 +292,6 @@
     {
       "name": "Timelock",
       "address": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-      "code": "https://etherscan.deth.net/address/0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
       "upgradeability": {
         "type": "immutable"
       },
@@ -342,7 +326,6 @@
       "name": "ChildChain",
       "address": "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
       "upgradeability": {
         "type": "immutable"
       },
@@ -351,7 +334,6 @@
     {
       "name": "ExitNFT",
       "address": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
-      "code": "https://etherscan.deth.net/address/0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
       "upgradeability": {
         "type": "immutable"
       },
@@ -364,7 +346,6 @@
     {
       "name": "ValidatorShare",
       "address": "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31",
-      "code": "https://etherscan.deth.net/address/0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31",
       "upgradeability": {
         "type": "immutable"
       },
@@ -395,7 +376,6 @@
     {
       "name": "PolygonMultisig",
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-      "code": "https://etherscan.deth.net/address/0xFa7D2a996aC6350f4b56C043112Da0366a59b74c,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"

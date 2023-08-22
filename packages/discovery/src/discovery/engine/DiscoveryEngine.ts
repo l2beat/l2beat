@@ -6,6 +6,8 @@ import { shouldSkip } from './shouldSkip'
 
 // Bump this value when the logic of discovery changes,
 // causing a difference in discovery output
+
+// Last change: removed `code` key from the output
 export const DISCOVERY_LOGIC_VERSION = 1
 export class DiscoveryEngine {
   constructor(

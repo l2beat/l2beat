@@ -8,7 +8,6 @@
     {
       "name": "ProxyAdminOwner",
       "address": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0",
-      "code": "https://etherscan.deth.net/address/0x13fD1622F0E7e50A87B79cb296cbAf18362631C0,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -32,7 +31,6 @@
     {
       "name": "DepositBoxERC1155",
       "address": "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
-      "code": "https://etherscan.deth.net/address/0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a,0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304",
@@ -51,7 +49,6 @@
     {
       "name": "DepositBoxEth",
       "address": "0x49F583d263e4Ef938b9E09772D3394c71605Df94",
-      "code": "https://etherscan.deth.net/address/0x49F583d263e4Ef938b9E09772D3394c71605Df94,0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a",
@@ -70,7 +67,6 @@
     {
       "name": "CommunityPool",
       "address": "0x588801cA36558310D91234aFC2511502282b1621",
-      "code": "https://etherscan.deth.net/address/0x588801cA36558310D91234aFC2511502282b1621,0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A",
@@ -91,7 +87,6 @@
     {
       "name": "Linker",
       "address": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
-      "code": "https://etherscan.deth.net/address/0x6ef406953bac772C2146389ED37846BA3b6086D1,0x676FAFCE73F5a304988C519407AAc06bD117CdD0",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x676FAFCE73F5a304988C519407AAc06bD117CdD0",
@@ -108,7 +103,6 @@
     {
       "name": "DepositBoxERC721",
       "address": "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
-      "code": "https://etherscan.deth.net/address/0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d,0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5",
@@ -127,7 +121,6 @@
     {
       "name": "MessageProxyForMainnet",
       "address": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
-      "code": "https://etherscan.deth.net/address/0x8629703a9903515818C2FeB45a6f6fA5df8Da404,0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190",
@@ -155,7 +148,6 @@
     {
       "name": "DepositBoxERC20",
       "address": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
-      "code": "https://etherscan.deth.net/address/0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669,0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788",
@@ -175,7 +167,6 @@
     {
       "name": "DepositBoxERC721WithMetadata",
       "address": "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
-      "code": "https://etherscan.deth.net/address/0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986,0xF99F446340483C5d9D63697a60232ECb9274E1e7",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xF99F446340483C5d9D63697a60232ECb9274E1e7",
@@ -194,7 +185,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-      "code": "https://etherscan.deth.net/address/0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
       "upgradeability": {
         "type": "immutable"
       },

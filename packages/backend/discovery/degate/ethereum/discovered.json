@@ -8,7 +8,6 @@
     {
       "name": "BlockVerifier",
       "address": "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
-      "code": "https://etherscan.deth.net/address/0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
       "upgradeability": {
         "type": "immutable"
       },
@@ -20,7 +19,6 @@
     {
       "name": "LoopringOwner",
       "address": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
-      "code": "https://etherscan.deth.net/address/0x2028834B2c0A36A918c10937EeA71BE4f932da52",
       "upgradeability": {
         "type": "immutable"
       },
@@ -42,7 +40,6 @@
     {
       "name": "LoopringV3",
       "address": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
-      "code": "https://etherscan.deth.net/address/0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
       "upgradeability": {
         "type": "immutable"
       },
@@ -61,7 +58,6 @@
     {
       "name": "LoopringIOExchangeOwner",
       "address": "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
-      "code": "https://etherscan.deth.net/address/0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
       "upgradeability": {
         "type": "immutable"
       },
@@ -80,7 +76,6 @@
     {
       "name": "FeeVault",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
-      "code": "https://etherscan.deth.net/address/0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
       "upgradeability": {
         "type": "immutable"
       },
@@ -102,7 +97,6 @@
     {
       "name": "DefaultDepositContract",
       "address": "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
-      "code": "https://etherscan.deth.net/address/0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
       "upgradeability": {
         "type": "immutable"
       },
@@ -115,7 +109,6 @@
     {
       "name": "ExchangeV3",
       "address": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
-      "code": "https://etherscan.deth.net/address/0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
       "upgradeability": {
         "type": "immutable"
       },
