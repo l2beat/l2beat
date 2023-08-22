@@ -4,7 +4,7 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
 import { bridgeToProject, layer2ToProject } from '../model'
-import { getMinTimestamp } from './chains'
+import { getChainMinTimestamp } from './chains'
 import { Config } from './Config'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -145,7 +145,7 @@ export function getLocalConfig(): Config {
           rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
           etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: getMinTimestamp(ChainId.ETHEREUM),
+          minTimestamp: getChainMinTimestamp(ChainId.ETHEREUM),
         },
       ],
     },

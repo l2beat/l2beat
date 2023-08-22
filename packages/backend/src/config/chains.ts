@@ -13,7 +13,7 @@ const chainConfig = [
   },
 ]
 
-export function getMinTimestamp(chainId: ChainId): UnixTime {
+export function getChainMinTimestamp(chainId: ChainId): UnixTime {
   const config = chainConfig.find((c) => c.chainId === chainId)
   if (!config) {
     throw new Error('Invalid chainId')
