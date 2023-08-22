@@ -120,9 +120,9 @@ export function getNonCanonicalAssetsBreakdown(
       projectId: report.projectId,
       assetId: token.id,
       chainId: report.chainId,
-      amount: String(amount),
-      usdValue: String(usdValue),
-      usdPrice: String(usdPrice),
+      amount: amount.toString(),
+      usdValue: usdValue.toString(),
+      usdPrice: usdPrice.toString(),
       // Should be zero?
       tokenAddress: token.address ?? EthereumAddress.ZERO,
     }
@@ -169,9 +169,9 @@ export function getCanonicalAssetsBreakdown(
           projectId: project.projectId,
           assetId: token.id,
           chainId: token.chainId,
-          amount: String(amount),
-          usdValue: String(usdValue),
-          usdPrice: String(price.priceUsd),
+          amount: amount.toString(),
+          usdValue: usdValue.toString(),
+          usdPrice: price.priceUsd.toString(),
           escrowAddress: escrow.address,
         }
       })
