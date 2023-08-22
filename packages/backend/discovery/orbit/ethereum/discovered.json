@@ -1,7 +1,7 @@
 {
-  "chain": "ethereum",
   "name": "orbit",
-  "blockNumber": 17761255,
+  "chain": "ethereum",
+  "blockNumber": 17913544,
   "configHash": "0x98346feb853bf4d73e55ef73d1ee2696d7405012638b5b207c0ee6d84fe2c6f7",
   "version": 1,
   "contracts": [
@@ -18,7 +18,7 @@
         "chain": "ETH",
         "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "daiFarm": "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
-        "depositCount": 114596,
+        "depositCount": 114930,
         "edai": "0xC355fe6E4e99C0B93577F08c4e9a599714435912",
         "feeGovernance": "0x0000000000000000000000000000000000000000",
         "gasLimitForBridgeReceiver": 300000,
@@ -31,18 +31,19 @@
           "0x595f1a527527Fa28A8C5f294c49E51B9799fdAF0",
           "0x1c0Cd56F1c3E2cF13B9B44dBE5529104bade543E",
           "0x6013f0B3ffE1fFdcA3Fc6A8cd705b1Af048F7437",
-          "0xa6dc28CbcB2f8060a00b4FA67F9b67775AC5a3a1"
+          "0xa6dc28CbcB2f8060a00b4FA67F9b67775AC5a3a1",
+          "0x7F4b332611818aE13c76f9222e2229f274Ded9BD"
         ],
         "getVersion": "EthVault20230511A",
         "implementation": "0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454",
         "isActivated": true,
         "MAX_OWNER_COUNT": 50,
         "policyAdmin": "0x4C35e473D57cF4daA90BB9FE341CeDEc81124d05",
-        "required": 6,
+        "required": 7,
         "taxRate": 10,
         "taxReceiver": "0xE9f3604B85c9672728eEecf689cf1F0cF7Dd03F2",
         "tetherAddress": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "transactionCount": 63,
+        "transactionCount": 65,
         "usdcFarm": "0x830433dE03ABedE062660CC629e1A2c714272474",
         "usdtFarm": "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
         "wbtcFarm": "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
@@ -134,6 +135,7 @@
     "0x595f1a527527Fa28A8C5f294c49E51B9799fdAF0",
     "0x6013f0B3ffE1fFdcA3Fc6A8cd705b1Af048F7437",
     "0x67C3c784C49d9ab8757ADb71491df1A1B38FbFA8",
+    "0x7F4b332611818aE13c76f9222e2229f274Ded9BD",
     "0x8a3F117Ef3b40f1661Dedf7f28fC33E7b6fae4F8",
     "0xa6dc28CbcB2f8060a00b4FA67F9b67775AC5a3a1",
     "0xE9f3604B85c9672728eEecf689cf1F0cF7Dd03F2"
