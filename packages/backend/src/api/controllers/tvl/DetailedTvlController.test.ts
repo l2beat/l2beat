@@ -426,7 +426,7 @@ describe(DetailedTvlController.name, () => {
         })
 
         const balanceRepository = mockObject<BalanceRepository>({
-          getByTimestampWithAnyChain: async () => balances,
+          getByTimestamp: async () => balances,
         })
 
         const priceRepository = mockObject<PriceRepository>({

@@ -29,7 +29,7 @@ export class BalanceRepository extends BaseRepository {
     this.autoWrap<CheckConvention<BalanceRepository>>(this)
   }
 
-  async getByTimestamp(
+  async getByChainAndTimestamp(
     chainId: ChainId,
     timestamp: UnixTime,
   ): Promise<BalanceRecord[]> {
@@ -41,9 +41,7 @@ export class BalanceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByTimestampWithAnyChain(
-    timestamp: UnixTime,
-  ): Promise<BalanceRecord[]> {
+  async getByTimestamp(timestamp: UnixTime): Promise<BalanceRecord[]> {
     const knex = await this.knex()
 
     const rows = await knex('balances').where(

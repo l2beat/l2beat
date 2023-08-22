@@ -241,9 +241,7 @@ export class DetailedTvlController {
 
     const [latestReports, balances, prices] = await Promise.all([
       this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
-      this.balanceRepository.getByTimestampWithAnyChain(
-        dataTimings.latestTimestamp,
-      ),
+      this.balanceRepository.getByTimestamp(dataTimings.latestTimestamp),
       this.priceRepository.getByTimestamp(dataTimings.latestTimestamp),
     ])
 
