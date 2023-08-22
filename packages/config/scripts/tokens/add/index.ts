@@ -1,3 +1,4 @@
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { EthereumAddress, Token } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { assert } from 'console'
@@ -15,12 +16,14 @@ async function main() {
     return
   }
 
+  const http = new HttpClient()
+  const coingeckoClient = new CoingeckoClient(http, getEnv('COINGECKO_API_KEY'))
   const provider = new providers.AlchemyProvider(
     'homestead',
     getEnv('CONFIG_ALCHEMY_API_KEY'),
   )
 
-  const token: Token = await getTokenInfo(provider, address, category)
+  const token: Token = await getTokenInfo(provider, coingeckoClient, address, category)
 
   const newList = [...tokenList, token].sort((a, b) =>
     a.name.localeCompare(b.name),

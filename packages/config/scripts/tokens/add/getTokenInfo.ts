@@ -14,18 +14,19 @@ import { getEnv } from '../../checkVerifiedContracts/utils'
 
 export async function getTokenInfo(
   provider: providers.JsonRpcProvider,
+  coingeckoClient: CoingeckoClient,
   address: EthereumAddress,
   category: 'ether' | 'stablecoin' | 'other',
 ): Promise<Token> {
 
-  const coingeckoId = await getCoingeckoId(address)
+  const coingeckoId = await getCoingeckoId(coingeckoClient, address)
 
   const [name, symbol, decimals, iconUrl, sinceTimestamp] =
     await Promise.all([
       getName(provider, address),
       getSymbol(provider, address),
       getDecimals(provider, address),
-      getIconUrl(coingeckoId),
+      coingeckoClient.getImageUrl(coingeckoId),
       getSinceTimestamp(provider, address),
     ])
 
@@ -99,10 +100,7 @@ async function getDecimals(
   )
 }
 
-async function getCoingeckoId(address: EthereumAddress) {
-  const http = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(http, undefined)
-
+async function getCoingeckoId(coingeckoClient: CoingeckoClient, address: EthereumAddress) {
   const coinList = await coingeckoClient.getCoinList({
     includePlatform: true,
   })
@@ -119,13 +117,6 @@ async function getCoingeckoId(address: EthereumAddress) {
   }
 
   return coin.id
-}
-
-async function getIconUrl(coingeckoId: CoingeckoId) {
-  const http = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(http, undefined)
-
-  return coingeckoClient.getImageUrl(coingeckoId)
 }
 
 async function getSinceTimestamp(
