@@ -931,7 +931,7 @@
       "symbol": "ETH",
       "decimals": 18,
       "sinceTimestamp": 0,
-      "category": "ether"
+      "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 1,
       "type": "CBV"
@@ -2374,7 +2374,7 @@
       "symbol": "RUNE",
       "decimals": 18,
       "sinceTimestamp": 1610511447,
-      "category": "other"
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/6595/large/Rune200x200.png?1671179394",
       "chainId": 1,
       "type": "CBV"
