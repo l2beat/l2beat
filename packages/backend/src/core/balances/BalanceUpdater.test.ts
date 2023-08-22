@@ -47,7 +47,7 @@ describe(BalanceUpdater.name, () => {
           `[chainId | ${x.chainId.toString()}]: ${x.configHash.toString()}`,
       })
       const balanceRepository = mockObject<BalanceRepository>({
-        getByTimestamp: async () => [],
+        getByChainAndTimestamp: async () => [],
       })
       const ethereumBalanceProvider = mockObject<EthereumBalanceProvider>({
         getChainId: () => chainId,
