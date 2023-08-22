@@ -154,7 +154,6 @@ function toRecord(row: AggregatedReportRow): AggregatedReportRecord {
     projectId: ProjectId(row.project_id),
     usdValue: BigInt(row.usd_value),
     ethValue: BigInt(row.eth_value),
-    // TODO: rename this
     reportType: AggregatedReportType(row.report_type),
   }
 }
