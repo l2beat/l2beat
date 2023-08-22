@@ -101,7 +101,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     decimals: 6,
     category: 'stablecoin',
     premintHolderAddresses: [],
-    type: 'NMV',
+    type: 'EBV',
   },
 ]
 
