@@ -738,9 +738,9 @@
       "decimals": 18,
       "sinceTimestamp": 1573672677,
       "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1687143508",
       "chainId": 1,
-      "type": "CBV",
-      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1687143508"
+      "type": "CBV"
     },
     {
       "id": "dao-dao maker",

@@ -6,7 +6,7 @@ import { config as dotenv } from 'dotenv'
 import { providers } from 'ethers'
 import { writeFileSync } from 'fs'
 
-import { tokenList } from '../../../src'
+import { getCanonicalTokens } from '../../../src'
 import { getEnv } from '../../checkVerifiedContracts/utils'
 import { getTokenInfo } from './getTokenInfo'
 
@@ -25,7 +25,8 @@ async function main() {
 
   const token: Token = await getTokenInfo(provider, coingeckoClient, address, category)
 
-  const newList = [...tokenList, token].sort((a, b) =>
+  const tokens = getCanonicalTokens()
+  const newList = [...tokens, token].sort((a, b) =>
     a.name.localeCompare(b.name),
   )
 
