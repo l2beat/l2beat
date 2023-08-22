@@ -2,6 +2,7 @@ import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   AssetId,
   ChainId,
+  CoingeckoId,
   EthereumAddress,
   Token,
   UnixTime,
@@ -16,12 +17,15 @@ export async function getTokenInfo(
   address: EthereumAddress,
   category: 'ether' | 'stablecoin' | 'other',
 ): Promise<Token> {
-  const [name, coingeckoId, symbol, decimals, sinceTimestamp] =
+
+  const coingeckoId = await getCoingeckoId(address)
+
+  const [name, symbol, decimals, iconUrl, sinceTimestamp] =
     await Promise.all([
       getName(provider, address),
-      getCoingeckoId(address),
       getSymbol(provider, address),
       getDecimals(provider, address),
+      getIconUrl(coingeckoId),
       getSinceTimestamp(provider, address),
     ])
 
@@ -37,6 +41,7 @@ export async function getTokenInfo(
     // TODO: make it configurable
     chainId: ChainId.ETHEREUM,
     type: ValueType.CBV,
+    iconUrl
   }
 
   return tokenInfo
@@ -114,6 +119,13 @@ async function getCoingeckoId(address: EthereumAddress) {
   }
 
   return coin.id
+}
+
+async function getIconUrl(coingeckoId: CoingeckoId) {
+  const http = new HttpClient()
+  const coingeckoClient = new CoingeckoClient(http, undefined)
+
+  return coingeckoClient.getImageUrl(coingeckoId)
 }
 
 async function getSinceTimestamp(
