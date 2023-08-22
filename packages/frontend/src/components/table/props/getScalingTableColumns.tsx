@@ -4,7 +4,7 @@ import React from 'react'
 import { DetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
 import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
-import { BridgedIcon, ExternalIcon, NativeIcon } from '../../icons'
+import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
@@ -122,7 +122,7 @@ export function getScalingDetailedTvlColumns() {
     },
     {
       name: 'Total',
-      tooltip: 'Total = Bridged + External + Native',
+      tooltip: 'Total = Canonical + External + Native',
       alignCenter: true,
       noPaddingRight: true,
       highlight: true,
@@ -136,12 +136,12 @@ export function getScalingDetailedTvlColumns() {
     {
       name: (
         <div className="flex items-center gap-1">
-          <BridgedIcon />
-          <span>Bridged</span>
+          <CanonicalIcon />
+          <span>Canonical</span>
         </div>
       ),
       tooltip:
-        'Bridged refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
+        'Canonical refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
       alignCenter: true,
       noPaddingRight: true,
       getValue: (project) => (

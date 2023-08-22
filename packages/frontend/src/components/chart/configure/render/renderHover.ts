@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server'
 
 import { formatTps } from '../../../../utils/formatTps'
 import { formatUSD } from '../../../../utils/utils'
-import { BridgedIcon, ExternalIcon, NativeIcon } from '../../../icons'
+import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../../icons'
 import { Link } from '../../../Link'
 import { ChartElements } from '../elements'
 import { State } from '../state/State'
@@ -192,7 +192,7 @@ function renderCBVRow(ebv: number) {
   return renderDetailedRow(
     ebv,
     'Canonically Bridged',
-    renderToString(BridgedIcon({})),
+    renderToString(CanonicalIcon({})),
   )
 }
 
@@ -231,7 +231,7 @@ function renderCurrencyRowWithMarker(
     assetType === 'EBV'
       ? ExternalIcon
       : assetType === 'CBV'
-      ? BridgedIcon
+      ? CanonicalIcon
       : NativeIcon
 
   return `<div class="inline-flex items-center gap-1"> ${renderToString(

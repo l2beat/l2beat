@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import { formatUSD } from '../../utils/utils'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
-import { BridgedIcon, ExternalIcon, NativeIcon } from '../icons'
+import { CanonicalIcon, ExternalIcon, NativeIcon } from '../icons'
 import { PercentChange } from '../PercentChange'
 
 export interface TvlStats {
@@ -43,7 +43,7 @@ export function TvlSummary(props: TvlSummaryProps) {
           label: 'Canonically Bridged',
           value: formatUSD(props.stats.cbv),
           usage: usage?.cbv ?? 1,
-          icon: <BridgedIcon className="h-[8px] w-[8px]" />,
+          icon: <CanonicalIcon className="h-[8px] w-[8px]" />,
         },
         {
           label: 'Externally Bridged',

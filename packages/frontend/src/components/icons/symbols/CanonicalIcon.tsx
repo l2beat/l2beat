@@ -3,7 +3,7 @@ import React, { SVGAttributes } from 'react'
 
 import { Icon } from '../Icon'
 
-export function BridgedIcon(props: SVGAttributes<SVGElement>) {
+export function CanonicalIcon(props: SVGAttributes<SVGElement>) {
   return (
     <Icon
       aria-label="Bridged asset icon"
