@@ -20,7 +20,8 @@ export function DesktopTokenControls({ tokens }: DesktopTokenControlsProps) {
   }
 
   return (
-    <div className="hidden h-full gap-6 md:flex">
+    <div className="hidden h-full gap-6 md:flex"
+      data-role="chart-token-desktop-element">
       <div />
       <VerticalSeparator />
       <div className="flex flex-wrap items-baseline justify-start gap-x-4">

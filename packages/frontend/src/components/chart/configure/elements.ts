@@ -65,6 +65,12 @@ export function getChartElements(chart: HTMLElement) {
       showTokenModalWrapper: chart.querySelectorAll<HTMLElement>(
         '[data-role="chart-token-toggle"]',
       ),
+      chartTokenDesktopElement: chart.querySelector<HTMLElement>(
+        '[data-role="chart-token-desktop-element"]',
+      ),
+      chartTokenMobileElement: chart.querySelector<HTMLElement>(
+        '[data-role="chart-token-mobile-element"]',
+      ),
       tokenChosenWrapper: chart.querySelectorAll<HTMLElement>(
         '[data-role="chart-token-chosen"]',
       ),
