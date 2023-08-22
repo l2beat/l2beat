@@ -22,7 +22,7 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
   const parts = getParts(tokens)
 
   return (
-    <div className="md:hidden" data-role="chart-token-mobile-element" >
+    <div className="md:hidden" data-role="chart-token-mobile-element">
       <div className="flex items-center gap-x-4">
         <span>View tokens</span>
 

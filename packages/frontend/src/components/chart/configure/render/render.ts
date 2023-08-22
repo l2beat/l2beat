@@ -63,7 +63,10 @@ export function render(
     sevenDayRadio?.classList.toggle('hidden', toggle)
     elements.view.currencyControlsWrapper?.classList.toggle('hidden', toggle)
     elements.view.tokenControlsWrapper?.classList.toggle('hidden', toggle)
-    elements.view.chartTokenDesktopElement?.classList.toggle('md:hidden', toggle)
+    elements.view.chartTokenDesktopElement?.classList.toggle(
+      'md:hidden',
+      toggle,
+    )
     elements.view.chartTokenMobileElement?.classList.toggle('hidden', toggle)
     elements.controls.showEthereum?.parentElement?.classList.toggle(
       'hidden',
