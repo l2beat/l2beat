@@ -30,8 +30,8 @@ export function createEthereumTvlSubmodule(
   // #region peripherals
 
   const ethereumProvider = new providers.JsonRpcProvider(
-    'mainnet',
     config.tvl.ethereum.providerUrl,
+    'mainnet',
   )
   const ethereumClient = new EthereumClient(ethereumProvider, logger, 25)
   const multicall = new MulticallClient(ethereumClient)
