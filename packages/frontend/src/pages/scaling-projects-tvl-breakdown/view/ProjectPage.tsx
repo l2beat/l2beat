@@ -9,6 +9,7 @@ import {
 } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
+import { ProjectDetails } from './ProjectDetails'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
@@ -21,8 +22,9 @@ export function ProjectPage(props: ProjectPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent mobileFull>
+      <PageContent>
         <ProjectHeader {...props.projectHeader} />
+        <ProjectDetails />
       </PageContent>
       <Footer narrow {...props.footer} />
     </>

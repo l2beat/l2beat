@@ -10,6 +10,7 @@ export function getProjectHeader(project: Layer2): ProjectHeaderProps {
 
   return {
     icon: `/icons/${project.display.slug}.png`,
+    slug: project.display.slug,
     title: project.display.name,
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     tvlBreakdownDate,

@@ -3,6 +3,7 @@ import React from 'react'
 export interface ProjectHeaderProps {
   title: string
   icon?: string
+  slug: string
   tvlBreakdownHref: string
   tvlBreakdownDate: string
 }
@@ -19,11 +20,11 @@ export function ProjectHeader(props: ProjectHeaderProps) {
           />
         )}
         <h1 className="text-base font-medium">
-          {props.title}
+          <a href={`/scaling/projects/${props.slug}`}>{props.title}</a>
           <span className="mx-1 text-gray-550">/</span>TVL Breakdown
         </h1>
       </div>
-      <div className="mt-[38px] text-3xl font-bold">
+      <div className="mt-[38px] mb-8 text-3xl font-bold">
         {props.title} breakdown for {props.tvlBreakdownDate}
       </div>
     </div>
