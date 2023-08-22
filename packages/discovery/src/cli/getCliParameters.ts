@@ -69,7 +69,7 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
     } else {
       const result: DiscoverCliParameters = {
         mode: 'discover',
-        chain: ChainId.getId(remaining[0]),
+        chain: ChainId.fromName(remaining[0]),
         project: remaining[1],
         dryRun,
         dev,
@@ -95,7 +95,7 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
     } else {
       const result: InvertCliParameters = {
         mode: 'invert',
-        chain: ChainId.getId(remaining[0]),
+        chain: ChainId.fromName(remaining[0]),
         project: remaining[1],
         useMermaidMarkup,
       }

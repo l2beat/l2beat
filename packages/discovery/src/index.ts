@@ -13,6 +13,7 @@ export {
   diffDiscovery,
 } from './discovery/output/diffDiscovery'
 export { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
+export { DiscoveryEtherscanLikeClient } from './discovery/provider/DiscoveryEtherscanLikeClient'
 export { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'

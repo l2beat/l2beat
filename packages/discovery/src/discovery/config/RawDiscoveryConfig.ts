@@ -26,7 +26,7 @@ export const DiscoveryContract = z.object({
 export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
 export const RawDiscoveryConfig = z.object({
   name: z.string().min(1),
-  chain: stringAs((s) => ChainId.getId(s)),
+  chain: stringAs((s) => ChainId.fromName(s)),
   initialAddresses: z.array(stringAs(EthereumAddress)),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number().positive()),

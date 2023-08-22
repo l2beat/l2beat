@@ -41,7 +41,7 @@ export class ConfigReader {
     const discovery = parsed as DiscoveryOutput
 
     assert(
-      ChainId.getId(discovery.chain) === chain,
+      ChainId.fromName(discovery.chain) === chain,
       'Chain ID mismatch in discovered.json',
     )
 

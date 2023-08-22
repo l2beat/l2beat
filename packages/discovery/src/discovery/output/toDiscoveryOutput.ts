@@ -75,10 +75,32 @@ function getCodeLink(analysis: Analysis, chainId: ChainId) {
   }
   const addresses = [analysis.address]
   addresses.push(...analysis.implementations)
-  const dethDomain = ChainId.getDethDomain(chainId)
+  const dethDomain = getDethDomain(chainId)
+  if (!dethDomain) {
+    return undefined
+  }
   return `https://${dethDomain}/address/${addresses.join(',')}`
 }
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T
+}
+
+function getDethDomain(chainId: ChainId): string | undefined {
+  switch (chainId) {
+    case ChainId.ETHEREUM:
+      return 'etherscan.deth.net'
+    case ChainId.ARBITRUM:
+      return 'arbiscan.deth.net'
+    case ChainId.OPTIMISM:
+      return 'optimistic.etherscan.deth.net'
+    case ChainId.POLYGON_POS:
+      return 'polygonscan.deth.net'
+    case ChainId.BSC:
+      return 'bscscan.deth.net'
+    case ChainId.AVALANCHE:
+      return 'snowtrace.deth.net'
+    default:
+      return undefined
+  }
 }

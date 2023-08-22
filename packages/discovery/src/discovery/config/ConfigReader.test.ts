@@ -72,7 +72,7 @@ describe(ConfigReader.name, () => {
               project,
               chainId,
             )
-            expect(ChainId.getId(discovered.chain)).toEqual(chainId)
+            expect(ChainId.fromName(discovered.chain)).toEqual(chainId)
           })
         }
       })

@@ -2,13 +2,14 @@ import {
   AddressAnalyzer,
   ConfigReader,
   DiscoveryEngine,
+  DiscoveryEtherscanLikeClient,
   DiscoveryLogger,
   DiscoveryProvider,
   HandlerExecutor,
   ProxyDetector,
   SourceCodeService,
 } from '@l2beat/discovery'
-import { EtherscanLikeClient, HttpClient } from '@l2beat/shared'
+import { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 
 import { UpdateMonitorChainConfig } from '../../config/Config'
@@ -21,11 +22,10 @@ export function createDiscoveryRunner(
   chainConfig: UpdateMonitorChainConfig,
 ) {
   const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
-  const etherscanLikeClient = new EtherscanLikeClient(
+  const etherscanLikeClient = new DiscoveryEtherscanLikeClient(
     http,
     chainConfig.etherscanUrl,
     chainConfig.etherscanApiKey,
-    chainConfig.minTimestamp,
   )
 
   const discoveryProvider = new DiscoveryProvider(provider, etherscanLikeClient)
