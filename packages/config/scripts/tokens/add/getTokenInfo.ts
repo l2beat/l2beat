@@ -65,7 +65,7 @@ async function getName(
     throw new Error('Could not find name for token')
   }
   const name = CODER.decodeFunctionResult('name', nameResult)[0] as string
-  return name.replaceAll(" ", "-")
+  return name.replaceAll(' ', '-')
 }
 
 async function getSymbol(
@@ -80,7 +80,7 @@ async function getSymbol(
     throw new Error('Could not find symbol for token')
   }
   const symbol = CODER.decodeFunctionResult('symbol', symbolResult)[0] as string
-  return symbol.replaceAll(" ", "-")
+  return symbol.replaceAll(' ', '-')
 }
 
 async function getDecimals(
