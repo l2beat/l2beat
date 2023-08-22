@@ -61,7 +61,7 @@ export interface TvlConfig {
 }
 
 export interface EthereumTvlConfig {
-  readonly alchemyApiKey: string
+  readonly providerUrl: string
   readonly etherscanApiKey: string
   readonly minBlockTimestamp: UnixTime
 }
