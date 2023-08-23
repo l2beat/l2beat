@@ -5,7 +5,7 @@ import { ChartElements, getChartElements } from './elements'
 import { InitMessage, Message } from './messages'
 import { render } from './render/render'
 import { EMPTY_STATE } from './state/empty'
-import { Milestones, State } from './state/State'
+import { ChartType, Milestones, State } from './state/State'
 import { update } from './update/update'
 import { getUserChartSettings } from './userChartSettings'
 
@@ -53,12 +53,14 @@ function getInitMessage(elements: ChartElements): InitMessage {
   const pagePathname = new URL(elements.chart.baseURI).pathname
   const chartSettings = getUserChartSettings(pagePathname)
 
-  const initialView: InitMessage['initialView'] =
-    elements.chart.dataset.type === 'tvl'
-      ? 'tvl'
-      : elements.chart.dataset.type === 'detailedTvl'
-      ? 'detailedTvl'
-      : 'activity'
+  const urlParams = new URLSearchParams(window.location.search)
+  const preselectedChartType = ChartType.safeParse(
+    urlParams.get('selectedChart'),
+  )
+
+  const initialView: InitMessage['initialView'] = preselectedChartType.success
+    ? preselectedChartType.data
+    : ChartType.parse(elements.chart.dataset.type)
 
   const milestones = elements.chart.dataset.milestones
     ? Milestones.parse(JSON.parse(elements.chart.dataset.milestones))

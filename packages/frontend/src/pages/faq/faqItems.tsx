@@ -133,8 +133,17 @@ export const faqItems: FaqItem[] = [
   },
   {
     question: 'What if L2 validators submit a fraudulent state commit to L1?',
-    answer:
-      'A state root from L2 is typically used to check coin ownership on L2 that user wants to withdraw to L1. If the fraudulent state root is submitted, it may attest that all coins belong to a dishonest L2 validator rather than legitimate users. These coins can be then withdrawn to L1 from L2&mdash;effectively stealing them. This is why it is not enough to simply commit state roots of L2 to L1, we need to be sure that this state root is valid.',
+    answer: (
+      <>
+        A state root from L2 is typically used to check coin ownership on L2
+        that user wants to withdraw to L1. If the fraudulent state root is
+        submitted, it may attest that all coins belong to a dishonest L2
+        validator rather than legitimate users. These coins can be then
+        withdrawn to L1 from L2&mdash;effectively stealing them. This is why it
+        is not enough to simply commit state roots of L2 to L1, we need to be
+        sure that this state root is valid.
+      </>
+    ),
   },
   {
     question: "Are there any other ways L2 validators can steal user's coins?",
