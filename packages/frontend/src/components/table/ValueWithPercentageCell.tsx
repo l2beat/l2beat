@@ -78,8 +78,8 @@ function TokenGridTooltip({ tokens }: TokenGridTooltipProps) {
 
   return (
     <div className={styling}>
-      {top15.map((t) => (
-        <div className="flex items-center gap-1.5">
+      {top15.map((t, i) => (
+        <div className="flex items-center gap-1.5" key={i}>
           <img
             src={`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${t.address}/logo.png`}
             className="h-4 w-4 rounded-full"
