@@ -2,15 +2,16 @@ import { EtherscanLikeClient, HttpClient, Logger } from '@l2beat/shared'
 import { execSync } from 'child_process'
 import { providers } from 'ethers'
 import { writeFile } from 'fs/promises'
-import { DiscoveryCliConfig } from './config/config.discovery'
-import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
-import { discover as discovery } from './discovery/runDiscovery'
-import { rimraf } from 'rimraf'
-import { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
-import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { mkdirp } from 'mkdirp'
 import { dirname } from 'path'
+import { rimraf } from 'rimraf'
+
+import { DiscoveryCliConfig } from './config/config.discovery'
+import { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
+import { DiscoveryLogger } from './discovery/DiscoveryLogger'
 import { getSourceName } from './discovery/output/saveDiscoveryResult'
+import { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
+import { discover as discovery } from './discovery/runDiscovery'
 
 export async function singleDiscovery(
   config: DiscoveryCliConfig,
