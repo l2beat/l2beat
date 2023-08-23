@@ -29,17 +29,22 @@ export async function getTokenInfo(
 
   const tokenInfo: Token = {
     id: AssetId(`${symbol.toLowerCase()}-${name.toLowerCase()}`),
+
     name,
-    coingeckoId,
-    address,
     symbol,
     decimals,
-    sinceTimestamp,
+    iconUrl,
+
     category,
+    address,
+    coingeckoId,
+
+    sinceTimestamp,
+
     // TODO: make it configurable
     chainId: ChainId.ETHEREUM,
-    type: ValueType.CBV,
-    iconUrl,
+    bucket: ValueType.CBV,
+    formula: 'locked'
   }
 
   return tokenInfo

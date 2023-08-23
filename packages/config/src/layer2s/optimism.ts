@@ -35,14 +35,17 @@ const upgradesProxy = {
 const TOKENS: Omit<Token, 'chainId'>[] = [
   {
     id: AssetId('op-optimism'),
+
     name: 'Optimism',
-    coingeckoId: CoingeckoId('optimism'),
-    address: EthereumAddress('0x4200000000000000000000000000000000000042'),
     symbol: 'OP',
     decimals: 18,
+    iconUrl: "https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1660904599",
+    address: EthereumAddress('0x4200000000000000000000000000000000000042'),
+    coingeckoId: CoingeckoId('optimism'),
     sinceTimestamp: new UnixTime(1654039974),
     category: 'other',
-    type: ValueType.NMV,
+    bucket: ValueType.NMV,
+    formula: 'circulatingSupply'
   },
 ]
 
