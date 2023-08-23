@@ -74,7 +74,7 @@ export interface Layer2Display {
   /** Technology provider */
   provider?:
     | 'StarkEx'
-    | 'Optimism'
+    | 'OP Stack'
     | 'zkSync'
     | 'loopring'
     | 'Arbitrum'

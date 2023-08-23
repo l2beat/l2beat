@@ -77,7 +77,7 @@ describe('layer2s', () => {
       const opAndArbL2sWithActivity = layer2s
         .filter((layer2) => {
           const { provider } = layer2.display
-          return provider === 'Arbitrum' || provider === 'Optimism'
+          return provider === 'Arbitrum' || provider === 'OP Stack'
         })
         .flatMap((layer2) => {
           const { transactionApi } = layer2.config
