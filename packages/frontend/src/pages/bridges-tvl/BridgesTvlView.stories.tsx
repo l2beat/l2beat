@@ -110,7 +110,7 @@ const meta = {
             'Smart contracts on Ethereum validate all bridge transfers.',
           sentiment: 'good',
         },
-        category: 'Optimistic Chain',
+        category: 'Optimium',
       },
 
       {
