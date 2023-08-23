@@ -1,6 +1,6 @@
 import {
+  assert,
   DetailedTvlApiProject,
-  EthereumAddress,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
   Token,
@@ -96,37 +96,34 @@ type NonCanonicalAssetsBreakdown = ReturnType<
 export function getNonCanonicalAssetsBreakdown(
   reports: ReportRecord[],
   tokens: Token[],
-  type: ValueType,
+  reportType: ValueType,
 ) {
-  const reportsOfType = reports.filter((report) => report.type === type)
+  return tokens
+    .filter((token) => token.type === reportType)
+    .map((token) => {
+      const assetId = token.id
 
-  return reportsOfType.flatMap((report) => {
-    const assetId = report.asset
+      const report = reports.find((rp) => rp.asset === assetId)
 
-    const token = tokens.find(
-      (token) => token.id.toString() === assetId.toString(),
-    )
+      assert(
+        report,
+        'Report should not be undefined within the response preparation',
+      )
 
-    // Flat map
-    if (!token) {
-      return []
-    }
+      const amount = asNumber(report.amount, token.decimals)
+      const usdValue = asNumber(report.usdValue, 2)
+      const usdPrice = usdValue / amount
 
-    const amount = asNumber(report.amount, token.decimals)
-    const usdValue = asNumber(report.usdValue, 2)
-    const usdPrice = usdValue / amount
-
-    return {
-      projectId: report.projectId,
-      assetId: token.id,
-      chainId: report.chainId,
-      amount: amount.toString(),
-      usdValue: usdValue.toString(),
-      usdPrice: usdPrice.toString(),
-      // Should be zero?
-      tokenAddress: token.address ?? EthereumAddress.ZERO,
-    }
-  })
+      return {
+        projectId: report.projectId,
+        assetId: token.id,
+        chainId: report.chainId,
+        amount: amount.toString(),
+        usdValue: usdValue.toString(),
+        usdPrice: usdPrice.toString(),
+        tokenAddress: token.address,
+      }
+    })
 }
 
 /**
@@ -152,15 +149,17 @@ export function getCanonicalAssetsBreakdown(
             balance.chainId === token.chainId,
         )
 
-        if (!escrowTokenBalance) {
-          return []
-        }
+        assert(
+          escrowTokenBalance,
+          'Balance should not be undefined within the response preparation',
+        )
 
         const price = prices.find((price) => price.assetId === token.id)
 
-        if (!price) {
-          return []
-        }
+        assert(
+          price,
+          'Price should not be undefined within the response preparation',
+        )
 
         const amount = asNumber(escrowTokenBalance.balance, token.decimals)
         const usdValue = amount * price.priceUsd
