@@ -15,30 +15,42 @@ import { expect, mockObject } from 'earl'
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
-import { ReportRepository } from '../../../peripherals/database/ReportRepository'
+import {
+  BalanceRecord,
+  BalanceRepository,
+} from '../../../peripherals/database/BalanceRepository'
+import {
+  PriceRecord,
+  PriceRepository,
+} from '../../../peripherals/database/PriceRepository'
+import {
+  ReportRecord,
+  ReportRepository,
+} from '../../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getProjectAssetChartData } from './charts'
 import { DetailedTvlController } from './DetailedTvlController'
 
-const START = UnixTime.fromDate(new Date('2022-05-31'))
-const MINIMUM_TIMESTAMP = START.add(-1, 'hours')
-const USDC = tokenList.find(
-  (x) => x.symbol === 'USDC' && x.type === ValueType.CBV,
-)!
-
-const ARBITRUM: ReportProject = {
-  projectId: ProjectId('arbitrum'),
-  type: 'layer2',
-  escrows: [
-    {
-      address: EthereumAddress.random(),
-      sinceTimestamp: new UnixTime(0),
-      tokens: [USDC],
-    },
-  ],
-}
-
 describe(DetailedTvlController.name, () => {
+  const START = UnixTime.fromDate(new Date('2022-05-31'))
+  const MINIMUM_TIMESTAMP = START.add(-1, 'hours')
+
+  const USDC = tokenList.find(
+    (x) => x.symbol === 'USDC' && x.type === ValueType.CBV,
+  )!
+
+  const ARBITRUM: ReportProject = {
+    projectId: ProjectId('arbitrum'),
+    type: 'layer2',
+    escrows: [
+      {
+        address: EthereumAddress.random(),
+        sinceTimestamp: new UnixTime(0),
+        tokens: [USDC],
+      },
+    ],
+  }
+
   describe(
     DetailedTvlController.prototype.getDetailedTvlApiResponse.name,
     () => {
@@ -123,6 +135,8 @@ describe(DetailedTvlController.name, () => {
           aggregatedReportRepository,
           reportRepository,
           aggregatedReportStatusRepository,
+          mockObject<BalanceRepository>({}),
+          mockObject<PriceRepository>({}),
           [ARBITRUM],
           [USDC],
           Logger.SILENT,
@@ -194,6 +208,8 @@ describe(DetailedTvlController.name, () => {
           mockObject<AggregatedReportRepository>(),
           reportRepository,
           aggregatedReportStatusRepository,
+          mockObject<BalanceRepository>({}),
+          mockObject<PriceRepository>({}),
           [ARBITRUM],
           [USDC],
           Logger.SILENT,
@@ -266,6 +282,238 @@ describe(DetailedTvlController.name, () => {
           asset,
           type,
         )
+      })
+    },
+  )
+
+  describe(
+    DetailedTvlController.prototype.getProjectTokenBreakdownApiResponse.name,
+    () => {
+      it('produces assets breakdown per project', async () => {
+        const USDC = tokenList.find(
+          (x) => x.symbol === 'USDC' && x.type === ValueType.CBV,
+        )!
+
+        const OP = tokenList.find(
+          (x) => x.symbol === 'OP' && x.type === ValueType.NMV,
+        )!
+
+        const DAI = tokenList.find(
+          (x) => x.symbol === 'DAI' && x.type === ValueType.CBV,
+        )!
+
+        const ETH = tokenList.find(
+          (x) => x.symbol === 'ETH' && x.type === ValueType.CBV,
+        )!
+
+        const latestConfigHash = Hash256.random()
+        const timestamp = UnixTime.now()
+
+        const firstEscrow = EthereumAddress.random()
+        const secondEscrow = EthereumAddress.random()
+
+        const eth = { ...ETH, type: ValueType.CBV, chainId: ChainId.ETHEREUM }
+        const usdc = { ...USDC, type: ValueType.CBV, chainId: ChainId.ETHEREUM }
+        const dai = { ...DAI, type: ValueType.EBV, chainId: ChainId.ARBITRUM }
+        const op = { ...OP, type: ValueType.NMV, chainId: ChainId.ARBITRUM }
+
+        const projects: ReportProject[] = [
+          {
+            projectId: ProjectId('arbitrum'),
+            type: 'layer2',
+            escrows: [
+              {
+                address: firstEscrow,
+                sinceTimestamp: new UnixTime(0),
+                tokens: [eth, usdc],
+              },
+
+              {
+                address: secondEscrow,
+                sinceTimestamp: new UnixTime(0),
+                tokens: [usdc],
+              },
+            ],
+          },
+          {
+            projectId: ProjectId('optimism'),
+            type: 'layer2',
+            escrows: [],
+          },
+        ]
+
+        const reports: ReportRecord[] = [
+          {
+            timestamp,
+            projectId: ProjectId('arbitrum'),
+            asset: dai.id,
+            chainId: dai.chainId,
+            type: dai.type,
+            amount: 10_000_000_000_000n,
+            usdValue: 10_000_000_000_000n,
+            ethValue: 10_000n,
+          },
+          {
+            timestamp,
+            projectId: ProjectId('arbitrum'),
+            asset: usdc.id,
+            chainId: usdc.chainId,
+            type: usdc.type,
+            amount: 20_000_000_000_000n,
+            usdValue: 20_000_000_000_000n,
+            ethValue: 20_000n,
+          },
+          {
+            timestamp,
+            projectId: ProjectId('arbitrum'),
+            asset: op.id,
+            chainId: op.chainId,
+            type: op.type,
+            amount: 30_000_000_000_000n,
+            usdValue: 45_000_000_000_000n,
+            ethValue: 45_000n,
+          },
+        ]
+
+        const balances: BalanceRecord[] = projects.flatMap(({ escrows }) =>
+          escrows.flatMap(({ tokens, address }) =>
+            tokens.flatMap((token) => ({
+              timestamp,
+              holderAddress: address,
+              assetId: token.id,
+              balance: 10_000_000_000_000n,
+              chainId: token.chainId,
+            })),
+          ),
+        )
+
+        const prices: PriceRecord[] = [
+          {
+            assetId: ETH.id,
+            timestamp,
+            priceUsd: 1000,
+          },
+          {
+            assetId: DAI.id,
+            timestamp,
+            priceUsd: 1,
+          },
+          {
+            assetId: OP.id,
+            timestamp,
+            priceUsd: 1.5,
+          },
+          {
+            assetId: USDC.id,
+            timestamp,
+            priceUsd: 1,
+          },
+        ]
+
+        const aggregatedReportStatusRepository =
+          mockObject<AggregatedReportStatusRepository>({
+            findCountsForHash: async () => ({
+              isSynced: true,
+              latestTimestamp: timestamp,
+              matching: 100, // doesn't matter
+              different: 0,
+            }),
+            findLatestTimestamp: async () => timestamp,
+          })
+
+        const reportRepository = mockObject<ReportRepository>({
+          getByTimestamp: async () => reports,
+        })
+
+        const balanceRepository = mockObject<BalanceRepository>({
+          getByTimestamp: async () => balances,
+        })
+
+        const priceRepository = mockObject<PriceRepository>({
+          getByTimestamp: async () => prices,
+        })
+
+        const controller = new DetailedTvlController(
+          mockObject<ReportStatusRepository>(),
+          mockObject<AggregatedReportRepository>(),
+          reportRepository,
+          aggregatedReportStatusRepository,
+          balanceRepository,
+          priceRepository,
+          projects,
+          [dai, op, usdc],
+          Logger.SILENT,
+          latestConfigHash,
+          {
+            errorOnUnsyncedDetailedTvl: false,
+          },
+        )
+
+        const result = await controller.getProjectTokenBreakdownApiResponse()
+
+        assert(result.result === 'success')
+
+        expect(result.data.dataTimestamp).toEqual(timestamp)
+        expect(result.data.breakdowns).toEqual({
+          arbitrum: {
+            external: [
+              {
+                assetId: dai.id,
+                chainId: dai.chainId,
+                amount: '0.00001',
+                usdValue: '100000000000',
+                usdPrice: '10000000000000000',
+                tokenAddress: EthereumAddress(
+                  '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+                ),
+              },
+            ],
+            native: [
+              {
+                assetId: op.id,
+                chainId: op.chainId,
+                amount: '0.00003',
+                usdValue: '450000000000',
+                usdPrice: '15000000000000000',
+                tokenAddress: EthereumAddress(
+                  '0x4200000000000000000000000000000000000042',
+                ),
+              },
+            ],
+            canonical: {
+              [firstEscrow.toString()]: [
+                {
+                  assetId: eth.id,
+                  chainId: eth.chainId,
+                  amount: '0.00001',
+                  usdValue: '0.01',
+                  usdPrice: '1000',
+                },
+                {
+                  assetId: usdc.id,
+                  chainId: usdc.chainId,
+                  amount: '10000000',
+                  usdValue: '10000000',
+                  usdPrice: '1',
+                },
+              ],
+              [secondEscrow.toString()]: [
+                {
+                  assetId: usdc.id,
+                  chainId: usdc.chainId,
+                  amount: '10000000',
+                  usdValue: '10000000',
+                  usdPrice: '1',
+                },
+              ],
+            },
+          },
+          optimism: {
+            external: [],
+            native: [],
+            canonical: {},
+          },
+        })
       })
     },
   )

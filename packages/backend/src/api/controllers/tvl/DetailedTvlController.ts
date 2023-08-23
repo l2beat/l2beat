@@ -4,6 +4,7 @@ import {
   ChainId,
   DetailedTvlApiResponse,
   Hash256,
+  ProjectAssetsBreakdownApiResponse,
   ProjectId,
   Token,
   TvlApiChart,
@@ -14,12 +15,17 @@ import {
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
+import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
+import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
 import {
+  getCanonicalAssetsBreakdown,
+  getNonCanonicalAssetsBreakdown,
+  groupAndMergeBreakdowns,
   groupByProjectIdAndAssetType,
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
@@ -28,6 +34,16 @@ import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse
 interface DetailedTvlControllerOptions {
   errorOnUnsyncedDetailedTvl: boolean
 }
+
+type ProjectAssetBreakdownResult =
+  | {
+      result: 'success'
+      data: ProjectAssetsBreakdownApiResponse
+    }
+  | {
+      result: 'error'
+      error: 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+    }
 
 type DetailedTvlResult =
   | {
@@ -55,6 +71,8 @@ export class DetailedTvlController {
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
     private readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository,
+    private readonly balanceRepository: BalanceRepository,
+    private readonly priceRepository: PriceRepository,
     private readonly projects: ReportProject[],
     private readonly tokens: Token[],
     private readonly logger: Logger,
@@ -200,6 +218,64 @@ export class DetailedTvlController {
           types,
           data: getProjectAssetChartData(dailyReports, asset.decimals, 24),
         },
+      },
+    }
+  }
+
+  async getProjectTokenBreakdownApiResponse(): Promise<ProjectAssetBreakdownResult> {
+    const dataTimings = await this.getDataTimings()
+
+    if (!dataTimings.latestTimestamp) {
+      return {
+        result: 'error',
+        error: 'NO_DATA',
+      }
+    }
+
+    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
+      return {
+        result: 'error',
+        error: 'DATA_NOT_FULLY_SYNCED',
+      }
+    }
+
+    const [latestReports, balances, prices] = await Promise.all([
+      this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
+      this.balanceRepository.getByTimestamp(dataTimings.latestTimestamp),
+      this.priceRepository.getByTimestamp(dataTimings.latestTimestamp),
+    ])
+
+    const nonZeroBalances = balances.filter((balance) => balance.balance > 0n)
+
+    const externalAssetsBreakdown = getNonCanonicalAssetsBreakdown(
+      latestReports,
+      this.tokens,
+      ValueType.EBV,
+    )
+
+    const nativeAssetsBreakdown = getNonCanonicalAssetsBreakdown(
+      latestReports,
+      this.tokens,
+      ValueType.NMV,
+    )
+
+    const canonicalAssetsBreakdown = getCanonicalAssetsBreakdown(
+      nonZeroBalances,
+      prices,
+      this.projects,
+    )
+
+    const breakdowns = groupAndMergeBreakdowns(this.projects, {
+      external: externalAssetsBreakdown,
+      native: nativeAssetsBreakdown,
+      canonical: canonicalAssetsBreakdown,
+    })
+
+    return {
+      result: 'success',
+      data: {
+        dataTimestamp: dataTimings.latestTimestamp,
+        breakdowns,
       },
     }
   }

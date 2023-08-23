@@ -1,9 +1,20 @@
-import { DetailedTvlApiProject, ProjectId } from '@l2beat/shared-pure'
-import { groupBy, mapValues } from 'lodash'
+import {
+  assert,
+  DetailedTvlApiProject,
+  ProjectAssetsBreakdownApiResponse,
+  ProjectId,
+  Token,
+  ValueType,
+} from '@l2beat/shared-pure'
+import { mapValues } from 'lodash'
 
+import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
+import { BalanceRecord } from '../../../peripherals/database/BalanceRepository'
+import { PriceRecord } from '../../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
+import { groupByAndOmit, nestedGroupBy } from './grouping'
 
 export type ReportsPerProjectIdAndTimestamp = ReturnType<
   typeof groupByProjectIdAndTimestamp
@@ -28,21 +39,6 @@ export function groupByProjectIdAndAssetType(reports: ReportRecord[]) {
     reports,
     (report) => report.projectId,
     (report) => report.type,
-  )
-}
-
-type ObjectValues<T> = T[keyof T]
-type GroupingFunction<T> = (item: T) => ObjectValues<T>
-
-export function nestedGroupBy<T extends ReportRecord | AggregatedReportRecord>(
-  items: T[],
-  firstLevel: GroupingFunction<T>,
-  secondLevel: GroupingFunction<T>,
-) {
-  return mapValues(
-    mapValues(groupBy(items, firstLevel), (firstGroupingResult) =>
-      groupBy(firstGroupingResult, secondLevel),
-    ),
   )
 }
 
@@ -84,4 +80,152 @@ export function getProjectTokensCharts(
   )
 
   return tokens
+}
+
+type CanonicalAssetsBreakdown = ReturnType<typeof getCanonicalAssetsBreakdown>
+type NonCanonicalAssetsBreakdown = ReturnType<
+  typeof getNonCanonicalAssetsBreakdown
+>
+
+/**
+ * Merge data from reports with data from tokens
+ * @param reports Report for latest timestamp
+ * @param tokens Tokens data to search within and merge with
+ * @param type Type of the asset to search & merge for
+ */
+export function getNonCanonicalAssetsBreakdown(
+  reports: ReportRecord[],
+  tokens: Token[],
+  reportType: ValueType,
+) {
+  return tokens
+    .filter((token) => token.type === reportType)
+    .map((token) => {
+      const assetId = token.id
+
+      const report = reports.find((rp) => rp.asset === assetId)
+
+      assert(
+        report,
+        'Report should not be undefined within the response preparation',
+      )
+
+      const amount = asNumber(report.amount, token.decimals)
+      const usdValue = asNumber(report.usdValue, 2)
+      const usdPrice = usdValue / amount
+
+      return {
+        projectId: report.projectId,
+        assetId: token.id,
+        chainId: report.chainId,
+        amount: amount.toString(),
+        usdValue: usdValue.toString(),
+        usdPrice: usdPrice.toString(),
+        tokenAddress: token.address,
+      }
+    })
+}
+
+/**
+ * Merge data from reports with data from balances
+ * @notice Reports cannot be used as base data because they do not contain
+ *         information about the escrow address and actual escrow token balance
+ * @param balances Balances for latest timestamp
+ * @param prices Prices for latest timestamp
+ * @param projects Projects to search within
+ */
+export function getCanonicalAssetsBreakdown(
+  balances: BalanceRecord[],
+  prices: PriceRecord[],
+  projects: ReportProject[],
+) {
+  return projects.flatMap((project) => {
+    return project.escrows.flatMap((escrow) => {
+      return escrow.tokens.flatMap((token) => {
+        const escrowTokenBalance = balances.find(
+          (balance) =>
+            balance.holderAddress === escrow.address &&
+            balance.assetId === token.id &&
+            balance.chainId === token.chainId,
+        )
+
+        assert(
+          escrowTokenBalance,
+          'Balance should not be undefined within the response preparation',
+        )
+
+        const price = prices.find((price) => price.assetId === token.id)
+
+        assert(
+          price,
+          'Price should not be undefined within the response preparation',
+        )
+
+        const amount = asNumber(escrowTokenBalance.balance, token.decimals)
+        const usdValue = amount * price.priceUsd
+
+        return {
+          projectId: project.projectId,
+          assetId: token.id,
+          chainId: token.chainId,
+          amount: amount.toString(),
+          usdValue: usdValue.toString(),
+          usdPrice: price.priceUsd.toString(),
+          escrowAddress: escrow.address,
+        }
+      })
+    })
+  })
+}
+
+/**
+ * Group assets' breakdowns by projects' IDs, at the same time matching target api response shape
+ * omitting duplicated data & filling the missing gaps to match primitive zod shape
+ * @see ProjectAssetsBreakdownApiResponse
+ */
+export function groupAndMergeBreakdowns(
+  projects: ReportProject[],
+  breakdowns: {
+    canonical: CanonicalAssetsBreakdown
+    external: NonCanonicalAssetsBreakdown
+    native: NonCanonicalAssetsBreakdown
+  },
+): ProjectAssetsBreakdownApiResponse['breakdowns'] {
+  const groupedExternalBreakdownEntries = groupByAndOmit(
+    breakdowns.external,
+    'projectId',
+  )
+
+  const groupedNativeBreakdownEntries = groupByAndOmit(
+    breakdowns.native,
+    'projectId',
+  )
+
+  const groupedCanonicalBreakdownEntries = mapValues(
+    groupByAndOmit(breakdowns.canonical, 'projectId'),
+    (breakdowns) => groupByAndOmit(breakdowns, 'escrowAddress'),
+  )
+
+  const base: ProjectAssetsBreakdownApiResponse['breakdowns'] = {}
+
+  return projects.reduce((prev, curr) => {
+    const projectId = curr.projectId.toString()
+
+    // Grouped entires may be missing, fill the gaps with empty primitives
+    // i.e no native assets
+    /* eslint-disable @typescript-eslint/no-unnecessary-condition */
+    const external = groupedExternalBreakdownEntries[projectId] ?? []
+    const native = groupedNativeBreakdownEntries[projectId] ?? []
+    const canonical = groupedCanonicalBreakdownEntries[projectId] ?? {}
+    /* eslint-enable @typescript-eslint/no-unnecessary-condition */
+
+    return {
+      ...prev,
+      [projectId]: {
+        external,
+        native,
+        canonical,
+      },
+    }
+  }, base)
 }
