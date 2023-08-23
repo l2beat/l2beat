@@ -29,20 +29,14 @@ export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
               data-tooltip-big
             >
               <NumberCell className="font-bold">{props.value}</NumberCell>
-              <NumberCell
-                signed
-                className="ml-1 w-[72px] !text-base font-medium "
-              >
+              <NumberCell signed className="w-18 ml-1 !text-base font-medium ">
                 {props.percentChange}
               </NumberCell>
             </div>
           ) : (
             <div>
               <NumberCell className="font-bold">{props.value}</NumberCell>
-              <NumberCell
-                signed
-                className="ml-1 w-[72px] !text-base font-medium "
-              >
+              <NumberCell signed className="w-18 ml-1 !text-base font-medium ">
                 {props.percentChange}
               </NumberCell>
             </div>
@@ -62,11 +56,11 @@ interface TokenGridTooltipProps {
 }
 
 function TokenGridTooltip({ tokens }: TokenGridTooltipProps) {
-  const top15 = tokens.slice(0, 15)
   if (tokens.length === 0) {
     return <span>No tokens</span>
   }
 
+  const top15 = tokens.slice(0, 15)
   // NOTE(radomski): Explanation of the
   // `grid-cols-[repeat(3,minmax(0,_1fr))_auto]`. I want a four columned grid
   // where the first three cells are of equal size and the fourth is free to
