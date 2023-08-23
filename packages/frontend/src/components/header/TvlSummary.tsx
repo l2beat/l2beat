@@ -43,7 +43,7 @@ export function TvlSummary(props: TvlSummaryProps) {
           label: 'Canonically Bridged',
           value: formatUSD(props.stats.cbv),
           usage: usage?.cbv ?? 1,
-          icon: <CanonicalIcon className="h-[8px] w-[8px]" />,
+          icon: <CanonicalIcon className="h-[9px] w-[9px]" />,
         },
         {
           label: 'Externally Bridged',
