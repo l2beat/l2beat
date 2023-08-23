@@ -80,7 +80,7 @@ export async function singleDiscovery(
     'Opening discovered.json in the browser, please use firefox or other browser with JSON viewer extension',
   )
   logger.info(
-    'The discovered.json & code can be found in "packages/backend/cache/single-discovery"',
+    'The discovered.json & code can be found in "./cache/single-discovery"',
   )
 
   execSync(`open ${jsonFilePath}`)
