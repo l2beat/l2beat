@@ -155,7 +155,7 @@ export class StatusController {
     )
     const config: Token[] = []
     const tokens = tokenList.filter(
-      (t) => t.type === ValueType.EBV && t.chainId === chainId,
+      (t) => t.bucket === ValueType.EBV && t.chainId === chainId,
     )
     config.push(...tokens)
     const configHash = getTotalSupplyConfigHash(config)
@@ -263,7 +263,7 @@ function getConfigHashForReports(chainId: ChainId, projects: Project[]) {
     case ChainId.ARBITRUM:
       return getEBVConfigHash(
         tokenList.filter(
-          (t) => t.chainId === ChainId.ARBITRUM && t.type === ValueType.EBV,
+          (t) => t.chainId === ChainId.ARBITRUM && t.bucket === ValueType.EBV,
         ),
       )
     default:

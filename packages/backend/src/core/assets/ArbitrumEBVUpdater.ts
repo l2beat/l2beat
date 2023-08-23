@@ -46,7 +46,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
       tokens.every(
         (token) =>
           token.chainId === this.getChainId() &&
-          token.type === this.getValueType(),
+          token.bucket === this.getValueType(),
       ),
       'Programmer error: tokens must be of type EBV and on the same chain as the arbitrumEBVUpdater',
     )

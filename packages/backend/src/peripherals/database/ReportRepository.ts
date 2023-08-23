@@ -17,8 +17,8 @@ export interface ReportRecord {
   timestamp: UnixTime
   projectId: ProjectId
   asset: AssetId
+  // TODO: Remove chainId and type as fields
   chainId: ChainId
-  // TODO: Index this column when we start querying by it.
   type: ValueType
   amount: bigint
   usdValue: bigint

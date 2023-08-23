@@ -13,7 +13,6 @@ function extractEBVTokens(tokens: Token[]) {
       tokenAddress: t.address?.toString() ?? '',
       sinceTimestamp: t.sinceTimestamp.toNumber(),
       decimals: t.decimals,
-      premintHolderAddresses: t.premintHolderAddresses?.map(String) ?? [],
     }
   })
 }
