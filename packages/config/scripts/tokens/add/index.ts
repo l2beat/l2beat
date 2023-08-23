@@ -10,6 +10,8 @@ import { getCanonicalTokens } from '../../../src'
 import { getEnv } from '../../checkVerifiedContracts/utils'
 import { getTokenInfo } from './getTokenInfo'
 
+const API_KEY_ENV_FALLBACK = '_FALLBACK'
+
 async function main() {
   const [address, category] = handleCLIParameters()
   if (!address) {
@@ -17,7 +19,9 @@ async function main() {
   }
 
   const http = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(http, getEnv('COINGECKO_API_KEY'))
+  const apiKeyEnv = getEnv('COINGECKO_API_KEY', API_KEY_ENV_FALLBACK)
+  const apiKey = apiKeyEnv === API_KEY_ENV_FALLBACK ? undefined : apiKeyEnv
+  const coingeckoClient = new CoingeckoClient(http, apiKey)
   const provider = new providers.AlchemyProvider(
     'homestead',
     getEnv('CONFIG_ALCHEMY_API_KEY'),
