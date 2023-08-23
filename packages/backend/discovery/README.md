@@ -6,6 +6,7 @@
 - `yarn discover [chain] [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
 - `yarn invert [chain] [project]` print addresses and their functions
 - `yarn invert [chain] [project] --mermaid` builds a mermaid graph of the project
+- `yarn discover:single [chain] [address]` run a discovery on the address (no config needed, useful for experimenting)
 
 supported chains: checkout config.discovery.ts
 
