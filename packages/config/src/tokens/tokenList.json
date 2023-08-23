@@ -9,7 +9,10 @@
       "symbol": "ZRX",
       "decimals": 18,
       "sinceTimestamp": 1502476756,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/863/large/0x.png?1547034672",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "10set-10-set-token",
@@ -19,17 +22,23 @@
       "symbol": "10SET",
       "decimals": 18,
       "sinceTimestamp": 1613912075,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14629/large/PNG_Tenset_Sign-back_RGB.png?1674442519",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "1inch-1-inch-token",
+      "id": "1inch-1inch-token",
       "name": "1INCH Token",
       "coingeckoId": "1inch",
       "address": "0x111111111117dC0aa78b770fA6A738034120C302",
       "symbol": "1INCH",
       "decimals": 18,
       "sinceTimestamp": 1608747211,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13469/large/1inch-token.png?1608803028",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "aave-aave-token",
@@ -39,7 +48,10 @@
       "symbol": "AAVE",
       "decimals": 18,
       "sinceTimestamp": 1600970788,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1601374110",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ageur-ageur",
@@ -49,7 +61,10 @@
       "symbol": "agEUR",
       "decimals": 18,
       "sinceTimestamp": 1634982805,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19479/large/agEUR.png?1635283566",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "alusd-alchemix-usd",
@@ -59,7 +74,10 @@
       "symbol": "alUSD",
       "decimals": 18,
       "sinceTimestamp": 1614400291,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14114/large/Alchemix_USD.png?1614410406",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ach-alchemy",
@@ -69,17 +87,23 @@
       "symbol": "ACH",
       "decimals": 8,
       "sinceTimestamp": 1567580452,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12390/large/ACH_%281%29.png?1599691266",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "aleph-aleph-im-v2",
+      "id": "aleph-aleph.im-v2",
       "name": "aleph.im v2",
       "coingeckoId": "aleph",
       "address": "0x27702a26126e0B3702af63Ee09aC4d1A084EF628",
       "symbol": "ALEPH",
       "decimals": 18,
       "sinceTimestamp": 1601134720,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11676/large/Aleph-Logo-BW.png?1683257123",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "amp-amp",
@@ -89,7 +113,10 @@
       "symbol": "AMP",
       "decimals": 18,
       "sinceTimestamp": 1597105639,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12409/large/amp-200x200.png?1599625397",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ankr-ankr-network",
@@ -99,7 +126,10 @@
       "symbol": "ANKR",
       "decimals": 18,
       "sinceTimestamp": 1550710665,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4324/large/U85xTl2.png?1608111978",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "any-anyswap",
@@ -109,7 +139,10 @@
       "symbol": "ANY",
       "decimals": 18,
       "sinceTimestamp": 1605514726,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12242/large/anyswap.jpg?1598443880",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ape-apecoin",
@@ -119,7 +152,10 @@
       "symbol": "APE",
       "decimals": 18,
       "sinceTimestamp": 1644845135,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24383/large/apecoin.jpg?1647476455",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "nft-apenft",
@@ -129,7 +165,10 @@
       "symbol": "NFT",
       "decimals": 6,
       "sinceTimestamp": 1621001241,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15687/large/apenft.jpg?1621562368",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "api3-api3",
@@ -139,7 +178,10 @@
       "symbol": "API3",
       "decimals": 18,
       "sinceTimestamp": 1604665283,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13256/large/api3.jpg?1606751424",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ant-aragon-network-token",
@@ -149,9 +191,11 @@
       "symbol": "ANT",
       "decimals": 18,
       "sinceTimestamp": 1602761920,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/681/large/Avatar_Circle_x6.png?1685684270",
+      "chainId": 1,
+      "type": "CBV"
     },
-
     {
       "id": "audio-audius",
       "name": "Audius",
@@ -160,7 +204,10 @@
       "symbol": "AUDIO",
       "decimals": 18,
       "sinceTimestamp": 1603333709,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12913/large/AudiusCoinLogo_2x.png?1603425727",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "aurora-aurora",
@@ -170,7 +217,10 @@
       "symbol": "AURORA",
       "decimals": 18,
       "sinceTimestamp": 1633603227,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20582/large/aurora.jpeg?1637250883",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "axs-axie-infinity-shard",
@@ -180,7 +230,10 @@
       "symbol": "AXS",
       "decimals": 18,
       "sinceTimestamp": 1619421369,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1604471082",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "babydoge-baby-doge-coin",
@@ -190,17 +243,23 @@
       "symbol": "BabyDoge",
       "decimals": 9,
       "sinceTimestamp": 1636297637,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16125/large/babydoge.jpg?1676303229",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "balancer-token",
+      "id": "bal-balancer",
       "name": "Balancer",
       "coingeckoId": "balancer",
       "address": "0xba100000625a3754423978a60c9317c58a424e3D",
       "symbol": "BAL",
       "decimals": 18,
       "sinceTimestamp": 1592616779,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11683/large/Balancer.png?1592792958",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "bnt-bancor-network-token",
@@ -210,17 +269,23 @@
       "symbol": "BNT",
       "decimals": 18,
       "sinceTimestamp": 1497110560,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/736/large/bancor-bnt.png?1628822309",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "band-band-token",
+      "id": "band-bandtoken",
       "name": "BandToken",
       "coingeckoId": "band-protocol",
       "address": "0xBA11D00c5f74255f56a5E366F4F77f5A186d7f55",
       "symbol": "BAND",
       "decimals": 18,
       "sinceTimestamp": 1568013787,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9545/large/Band_token_blue_violet_token.png?1625881431",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "bat-basic-attention-token",
@@ -230,7 +295,10 @@
       "symbol": "BAT",
       "decimals": 18,
       "sinceTimestamp": 1496083510,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/677/large/basic-attention-token.png?1547034427",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "bezoge-bezoge-earth",
@@ -240,17 +308,23 @@
       "symbol": "BEZOGE",
       "decimals": 9,
       "sinceTimestamp": 1620993315,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15639/large/token-logo.png?1621408212",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "biconomy",
+      "id": "bico-biconomy-token",
       "name": "Biconomy Token",
       "coingeckoId": "biconomy",
       "address": "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2",
       "symbol": "BICO",
       "decimals": 18,
       "sinceTimestamp": 1633376291,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21061/large/biconomy_logo.jpg?1638269749",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "bfc-bifrost",
@@ -260,7 +334,10 @@
       "symbol": "BFC",
       "decimals": 18,
       "sinceTimestamp": 1590651480,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4639/large/BFC_Symbol.png?1688375417",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "busd-binance-usd",
@@ -270,7 +347,10 @@
       "symbol": "BUSD",
       "decimals": 18,
       "sinceTimestamp": 1567727777,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9576/large/BUSD.png?1568947766",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "bit-bitdao",
@@ -280,7 +360,10 @@
       "symbol": "BIT",
       "decimals": 18,
       "sinceTimestamp": 1623314035,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17627/large/rI_YptK8.png?1653983088",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "leo-bitfinex-leo-token",
@@ -290,17 +373,23 @@
       "symbol": "LEO",
       "decimals": 18,
       "sinceTimestamp": 1558444909,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8418/large/leo-token.png?1558326215",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "btt-bit-torrent",
+      "id": "btt-bittorrent",
       "name": "BitTorrent",
       "coingeckoId": "bittorrent",
       "address": "0xC669928185DbCE49d2230CC9B0979BE6DC797957",
       "symbol": "BTT",
       "decimals": 18,
       "sinceTimestamp": 1639124481,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/22457/large/btt_logo.png?1643857231",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "blur-blur",
@@ -310,7 +399,10 @@
       "symbol": "BLUR",
       "decimals": 18,
       "sinceTimestamp": 1675191035,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28453/large/blur.png?1670745921",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "boba-boba-token",
@@ -320,7 +412,10 @@
       "symbol": "BOBA",
       "decimals": 18,
       "sinceTimestamp": 1631641934,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20285/large/BOBA.png?1636811576",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ctsi-cartesi-token",
@@ -330,17 +425,23 @@
       "symbol": "CTSI",
       "decimals": 18,
       "sinceTimestamp": 1587355556,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11038/large/Cartesi_Logo.png?1689603517",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "celr-celer-token",
+      "id": "celr-celertoken",
       "name": "CelerToken",
       "coingeckoId": "celer-network",
       "address": "0x4F9254C83EB525f9FCf346490bbb3ed28a81C667",
       "symbol": "CELR",
       "decimals": 18,
       "sinceTimestamp": 1548134340,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4379/large/Celr.png?1554705437",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "cel-celsius",
@@ -350,7 +451,10 @@
       "symbol": "CEL",
       "decimals": 4,
       "sinceTimestamp": 1523274016,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3263/large/CEL_logo.png?1609598753",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "xcn-chain",
@@ -360,27 +464,36 @@
       "symbol": "XCN",
       "decimals": 18,
       "sinceTimestamp": 1646687021,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24210/large/onyxlogo.jpg?1675049876",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "link-chain-link-token",
+      "id": "link-chainlink-token",
       "name": "ChainLink Token",
       "coingeckoId": "chainlink",
       "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
       "symbol": "LINK",
       "decimals": 18,
       "sinceTimestamp": 1505597189,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1547034700",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "chz-chili-z",
+      "id": "chz-chiliz",
       "name": "chiliZ",
       "coingeckoId": "chiliz",
       "address": "0x3506424F91fD33084466F402d5D97f05F8e3b4AF",
       "symbol": "CHZ",
       "decimals": 18,
       "sinceTimestamp": 1540537245,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8834/large/CHZ_Token_updated.png?1675848257",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "chr-chroma",
@@ -390,7 +503,10 @@
       "symbol": "CHR",
       "decimals": 6,
       "sinceTimestamp": 1601800062,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/5000/large/Chromia.png?1559038018",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "cvc-civic",
@@ -400,7 +516,10 @@
       "symbol": "CVC",
       "decimals": 8,
       "sinceTimestamp": 1499817451,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/788/large/civic-orange.png?1657246016",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "c98-coin98",
@@ -410,27 +529,36 @@
       "symbol": "C98",
       "decimals": 18,
       "sinceTimestamp": 1626322460,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17117/large/logo.png?1626412904",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "cet-coin-ex-token",
+      "id": "cet-coinex-token",
       "name": "CoinEx Token",
       "coingeckoId": "coinex-token",
       "address": "0x081F67aFA0cCF8c7B17540767BBe95DF2bA8D97F",
       "symbol": "CET",
       "decimals": 18,
       "sinceTimestamp": 1521628040,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4817/large/coinex-token.png?1547040183",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "xcm-coin-metro-token",
+      "id": "xcm-coinmetro-token",
       "name": "CoinMetro Token",
       "coingeckoId": "coinmetro",
       "address": "0x36ac219f90f5A6A3C77f2a7B660E3cC701f68e25",
       "symbol": "XCM",
       "decimals": 18,
       "sinceTimestamp": 1606218049,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3125/large/XCM_Token_Logo_.png?1646280053",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "comp-compound",
@@ -440,7 +568,10 @@
       "symbol": "COMP",
       "decimals": 18,
       "sinceTimestamp": 1583280535,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10775/large/COMP.png?1592625425",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "cdai-compound-dai",
@@ -450,7 +581,10 @@
       "symbol": "cDAI",
       "decimals": 8,
       "sinceTimestamp": 1574471013,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9281/large/cDAI.png?1576467585",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ceth-compound-ether",
@@ -460,7 +594,10 @@
       "symbol": "cETH",
       "decimals": 8,
       "sinceTimestamp": 1557192318,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10643/large/ceth.png?1687143191",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "cusdc-compound-usd-coin",
@@ -470,7 +607,10 @@
       "symbol": "cUSDC",
       "decimals": 8,
       "sinceTimestamp": 1557192331,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9442/large/Compound_USDC.png?1567581577",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "cusdt-compound-usdt",
@@ -480,27 +620,36 @@
       "symbol": "cUSDT",
       "decimals": 8,
       "sinceTimestamp": 1586985186,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11621/large/cUSDT.png?1592113270",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "cwbtc-compound-wbtc",
+      "id": "cwbtc-compound-wrapped-btc",
       "name": "Compound Wrapped BTC",
       "coingeckoId": "compound-wrapped-btc",
       "address": "0xccF4429DB6322D5C611ee964527D42E5d685DD6a",
       "symbol": "cWBTC",
       "decimals": 8,
       "sinceTimestamp": 1615751087,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10823/large/cwbtc.png?1584331700",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "people-constitution-dao",
+      "id": "people-constitutiondao",
       "name": "ConstitutionDAO",
       "coingeckoId": "constitutiondao",
       "address": "0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71",
       "symbol": "PEOPLE",
       "decimals": 18,
-      "sinceTimestamp": 1637077921,
-      "category": "other"
+      "sinceTimestamp": 1636941545,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20612/large/GN_UVm3d_400x400.jpg?1637294355",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "cvxcrv-convex-crv",
@@ -510,7 +659,10 @@
       "symbol": "cvxCRV",
       "decimals": 18,
       "sinceTimestamp": 1621242935,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15586/large/convex-crv.png?1621255952",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "cvx-convex-token",
@@ -520,7 +672,10 @@
       "symbol": "CVX",
       "decimals": 18,
       "sinceTimestamp": 1621242525,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15585/large/convex.png?1621256328",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "coti-coti-token",
@@ -530,7 +685,10 @@
       "symbol": "COTI",
       "decimals": 18,
       "sinceTimestamp": 1561649739,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2962/large/Coti.png?1559653863",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "crts-cratos",
@@ -540,7 +698,10 @@
       "symbol": "CRTS",
       "decimals": 18,
       "sinceTimestamp": 1624495330,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17322/large/cratos.png?1627301460",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "cro-cro",
@@ -550,7 +711,10 @@
       "symbol": "CRO",
       "decimals": 8,
       "sinceTimestamp": 1542186708,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7310/large/cro_token_logo.png?1669699773",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "crv-curve-dao-token",
@@ -560,7 +724,10 @@
       "symbol": "CRV",
       "decimals": 18,
       "sinceTimestamp": 1597270648,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1597369484",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "dai-dai-stablecoin",
@@ -569,8 +736,11 @@
       "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
       "symbol": "DAI",
       "decimals": 18,
-      "sinceTimestamp": 1573993299,
-      "category": "stablecoin"
+      "sinceTimestamp": 1573672677,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1687143508",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "dao-dao-maker",
@@ -580,7 +750,10 @@
       "symbol": "DAO",
       "decimals": 18,
       "sinceTimestamp": 1610021949,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13915/large/4.png?1612838831",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "mana-decentraland-mana",
@@ -589,28 +762,37 @@
       "address": "0x0F5D2fB29fb7d3CFeE444a200298f468908cC942",
       "symbol": "MANA",
       "decimals": 18,
-      "sinceTimestamp": 1503006656,
-      "category": "other"
+      "sinceTimestamp": 1502824689,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/878/large/decentraland-mana.png?1550108745",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "usd-decentralized-usd",
+      "id": "usdd-decentralized-usd",
       "name": "Decentralized USD",
       "coingeckoId": "usdd",
       "address": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
       "symbol": "USDD",
       "decimals": 18,
-      "sinceTimestamp": 1533324504,
-      "category": "stablecoin"
+      "sinceTimestamp": 1651325080,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25380/large/UUSD.jpg?1651823371",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "dg-degate token",
+      "id": "dg-degate-token",
       "name": "DeGate Token",
       "coingeckoId": "degate",
       "address": "0x53C8395465A84955c95159814461466053DedEDE",
       "symbol": "DG",
       "decimals": 18,
       "sinceTimestamp": 1614755463,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14415/large/DG_token_brand_web_rgb_blue.png?1669460087",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "dent-dent",
@@ -620,17 +802,23 @@
       "symbol": "DENT",
       "decimals": 8,
       "sinceTimestamp": 1499841781,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1152/large/gLCEA2G.png?1604543239",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "dvf-deversi-fi-token",
+      "id": "dvf-deversifi-token",
       "name": "DeversiFi Token",
       "coingeckoId": "rhinofi",
       "address": "0xDDdddd4301A082e62E84e43F474f044423921918",
       "symbol": "DVF",
       "decimals": 18,
       "sinceTimestamp": 1615354524,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16414/large/rhinofii.jpg?1657812510",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "xdb-digitalbits",
@@ -640,7 +828,10 @@
       "symbol": "XDB",
       "decimals": 7,
       "sinceTimestamp": 1565102047,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8089/large/digitalbits-logo.jpg?1554454902",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "elon-dogelon",
@@ -650,7 +841,10 @@
       "symbol": "ELON",
       "decimals": 18,
       "sinceTimestamp": 1619140030,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14962/large/6GxcPRo3_400x400.jpg?1619157413",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "dpx-dopex-governance-token",
@@ -660,7 +854,10 @@
       "symbol": "DPX",
       "decimals": 18,
       "sinceTimestamp": 1624230467,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16652/large/DPX_%281%29.png?1624598630",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "rdpx-dopex-rebate-token",
@@ -670,17 +867,23 @@
       "symbol": "rDPX",
       "decimals": 18,
       "sinceTimestamp": 1624230521,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16659/large/rDPX_200x200_Coingecko.png?1624614475",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "dydx-d-yd-x",
+      "id": "dydx-dydx",
       "name": "dYdX",
       "coingeckoId": "dydx",
       "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
       "symbol": "DYDX",
       "decimals": 18,
       "sinceTimestamp": 1626053832,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17500/large/hjnIm9bV.jpg?1628009360",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "exrd-e-radix",
@@ -690,7 +893,10 @@
       "symbol": "eXRD",
       "decimals": 18,
       "sinceTimestamp": 1603805479,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13145/large/exrd_logo.png?1605662677",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "enj-enjin-coin",
@@ -700,17 +906,23 @@
       "symbol": "ENJ",
       "decimals": 18,
       "sinceTimestamp": 1506906127,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1102/large/enjin-coin-logo.png?1547035078",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "elg-escoin-token",
+      "id": "elg-escointoken",
       "name": "EscoinToken",
       "coingeckoId": "escoin-token",
       "address": "0xA2085073878152aC3090eA13D1e41bD69e60Dc99",
       "symbol": "ELG",
       "decimals": 18,
       "sinceTimestamp": 1590261525,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13566/large/escoin-200.png?1609833886",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "eth-ether",
@@ -719,7 +931,10 @@
       "symbol": "ETH",
       "decimals": 18,
       "sinceTimestamp": 0,
-      "category": "ether"
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ens-ethereum-name-service",
@@ -729,7 +944,10 @@
       "symbol": "ENS",
       "decimals": 18,
       "sinceTimestamp": 1635800117,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19785/large/acatxTm8_400x400.jpg?1635850140",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "eurt-euro-tether",
@@ -739,7 +957,10 @@
       "symbol": "EURT",
       "decimals": 6,
       "sinceTimestamp": 1602176748,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17385/large/Tether_new.png?1683650223",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ftm-fantom-token",
@@ -749,17 +970,23 @@
       "symbol": "FTM",
       "decimals": 18,
       "sinceTimestamp": 1528979942,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16036/large/Fantom.png?1622679930",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "feg-fe-gtoken",
+      "id": "feg-fegtoken",
       "name": "FEGtoken",
       "coingeckoId": "feg-token",
       "address": "0x389999216860AB8E0175387A0c90E5c52522C945",
       "symbol": "FEG",
       "decimals": 9,
       "sinceTimestamp": 1612075738,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13878/large/F-Icon-FEG-200x200-288dpi-01_%281%29.png?1665641152",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "fei-fei-usd",
@@ -768,8 +995,11 @@
       "address": "0x956F47F50A910163D8BF957Cf5846D573E7f87CA",
       "symbol": "FEI",
       "decimals": 18,
-      "sinceTimestamp": 1617364200,
-      "category": "stablecoin"
+      "sinceTimestamp": 1616909037,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14570/large/ZqsF51Re_400x400.png?1617082206",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "fet-fetch",
@@ -779,7 +1009,10 @@
       "symbol": "FET",
       "decimals": 18,
       "sinceTimestamp": 1601931978,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/5681/large/Fetch.jpg?1572098136",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "flex-flex-coin",
@@ -789,7 +1022,10 @@
       "symbol": "FLEX",
       "decimals": 18,
       "sinceTimestamp": 1610646626,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9108/large/coinflex_logo.png?1628750583",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "frax-frax",
@@ -799,7 +1035,10 @@
       "symbol": "FRAX",
       "decimals": 18,
       "sinceTimestamp": 1608140520,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1679886922",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "fxs-frax-share",
@@ -809,17 +1048,23 @@
       "symbol": "FXS",
       "decimals": 18,
       "sinceTimestamp": 1608140560,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1679886947",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "ftx-ftt",
+      "id": "ftx-token-ftt",
       "name": "FTT",
       "coingeckoId": "ftx-token",
       "address": "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9",
       "symbol": "FTX Token",
       "decimals": 18,
       "sinceTimestamp": 1555852887,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9026/large/F.png?1609051564",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "fx-function-x",
@@ -829,7 +1074,10 @@
       "symbol": "FX",
       "decimals": 18,
       "sinceTimestamp": 1545963928,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8186/large/47271330_590071468072434_707260356350705664_n.jpg?1556096683",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "gala-gala",
@@ -839,17 +1087,23 @@
       "symbol": "GALA",
       "decimals": 8,
       "sinceTimestamp": 1599673371,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12493/large/GALA-COINGECKO.png?1600233435",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "gt-gate-chain-token",
+      "id": "gt-gatechaintoken",
       "name": "GateChainToken",
       "coingeckoId": "gatechain-token",
       "address": "0xE66747a101bFF2dBA3697199DCcE5b743b454759",
       "symbol": "GT",
       "decimals": 18,
       "sinceTimestamp": 1557411619,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8183/large/gate.png?1687143308",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "gusd-gemini-dollar",
@@ -859,7 +1113,10 @@
       "symbol": "GUSD",
       "decimals": 2,
       "sinceTimestamp": 1536521774,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/5992/large/gemini-dollar-gusd.png?1536745278",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "gno-gnosis-token",
@@ -869,7 +1126,10 @@
       "symbol": "GNO",
       "decimals": 18,
       "sinceTimestamp": 1492523116,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/662/large/logo_square_simple_300px.png?1609402668",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "glm-golem-network-token",
@@ -879,7 +1139,10 @@
       "symbol": "GLM",
       "decimals": 18,
       "sinceTimestamp": 1605690833,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/542/large/Golem_Submark_Positive_RGB.png?1606392013",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "gohm-governance-ohm",
@@ -889,7 +1152,10 @@
       "symbol": "gOHM",
       "decimals": 18,
       "sinceTimestamp": 1637726104,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21129/large/token_wsOHM_logo.png?1638764900",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "grt-graph-token",
@@ -899,7 +1165,10 @@
       "symbol": "GRT",
       "decimals": 18,
       "sinceTimestamp": 1607890633,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1608145566",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "hez-hermez-network-token",
@@ -909,27 +1178,36 @@
       "symbol": "HEZ",
       "decimals": 18,
       "sinceTimestamp": 1602717322,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12826/large/hermez_logo.png?1602826556",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "hot-holo-token",
+      "id": "hot-holotoken",
       "name": "HoloToken",
       "coingeckoId": "holotoken",
       "address": "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2",
       "symbol": "HOT",
       "decimals": 18,
       "sinceTimestamp": 1517448069,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3348/large/Holologo_Profile.png?1547037966",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "hop-hop-protocol",
+      "id": "hop-hop",
       "name": "Hop",
       "coingeckoId": "hop-protocol",
       "address": "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC",
       "symbol": "HOP",
       "decimals": 18,
-      "sinceTimestamp": 1663897247,
-      "category": "other"
+      "sinceTimestamp": 1654646411,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25445/large/hop.png?1665541677",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "heart-humans",
@@ -939,7 +1217,10 @@
       "symbol": "HEART",
       "decimals": 18,
       "sinceTimestamp": 1639053378,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21273/large/h_logo_1x.png?1638858402",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "hbtc-huobi-btc",
@@ -949,17 +1230,23 @@
       "symbol": "HBTC",
       "decimals": 18,
       "sinceTimestamp": 1575874126,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12407/large/hbtc.png?1687143034",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "ht-huobi-token",
+      "id": "ht-huobitoken",
       "name": "HuobiToken",
       "coingeckoId": "huobi-token",
       "address": "0x6f259637dcD74C767781E37Bc6133cd6A68aa161",
       "symbol": "HT",
       "decimals": 18,
       "sinceTimestamp": 1517395802,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2822/large/huobi-token-logo.png?1547036992",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "husd-husd",
@@ -969,7 +1256,10 @@
       "symbol": "HUSD",
       "decimals": 8,
       "sinceTimestamp": 1563449444,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9567/large/HUSD.jpg?1568889385",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ilv-illuvium",
@@ -979,7 +1269,10 @@
       "symbol": "ILV",
       "decimals": 18,
       "sinceTimestamp": 1616355826,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14468/large/logo-200x200.png?1682415398",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "imx-immutable-x",
@@ -989,7 +1282,10 @@
       "symbol": "IMX",
       "decimals": 18,
       "sinceTimestamp": 1634198360,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17233/large/immutableX-symbol-BLK-RGB.png?1665110648",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "inj-injective-token",
@@ -999,7 +1295,10 @@
       "symbol": "INJ",
       "decimals": 18,
       "sinceTimestamp": 1602922956,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12882/large/Secondary_Symbol.png?1628233237",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "keep-keep-token",
@@ -1009,17 +1308,23 @@
       "symbol": "KEEP",
       "decimals": 18,
       "sinceTimestamp": 1588042366,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3373/large/IuNzUb5b_400x400.jpg?1589526336",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "kp3r-keep3r-v1",
+      "id": "kp3r-keep3rv1",
       "name": "Keep3rV1",
       "coingeckoId": "keep3rv1",
       "address": "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44",
       "symbol": "KP3R",
       "decimals": 18,
       "sinceTimestamp": 1603871844,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12966/large/kp3r_logo.jpg?1607057458",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "kcs-ku-coin-token",
@@ -1029,7 +1334,10 @@
       "symbol": "KCS",
       "decimals": 6,
       "sinceTimestamp": 1610436587,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1047/large/sa9z79.png?1610678720",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "knc-kyber-network-crystal-v2",
@@ -1039,7 +1347,10 @@
       "symbol": "KNC",
       "decimals": 18,
       "sinceTimestamp": 1618218294,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14899/large/RwdVsGcw_400x400.jpg?1618923851",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "l2-leverj-gluon",
@@ -1049,7 +1360,10 @@
       "symbol": "L2",
       "decimals": 18,
       "sinceTimestamp": 1603238349,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12950/large/Gluon256x256.png?1604048379",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ldo-lido-dao-token",
@@ -1059,17 +1373,23 @@
       "symbol": "LDO",
       "decimals": 18,
       "sinceTimestamp": 1608242396,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13573/large/Lido_DAO.png?1609873644",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "steth-liquid-staked-ether-2-0",
+      "id": "steth-liquid-staked-ether-2.0",
       "name": "Liquid staked Ether 2.0",
       "coingeckoId": "staked-ether",
       "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
       "symbol": "stETH",
       "decimals": 18,
-      "sinceTimestamp": 1608334322,
-      "category": "other"
+      "sinceTimestamp": 1608242396,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13442/large/steth_logo.png?1608607546",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "lpt-livepeer-token",
@@ -1079,27 +1399,36 @@
       "symbol": "LPT",
       "decimals": 18,
       "sinceTimestamp": 1525118631,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7137/large/logo-circle-green.png?1619593365",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "looks-looks-rare-token",
+      "id": "looks-looksrare-token",
       "name": "LooksRare Token",
       "coingeckoId": "looksrare",
       "address": "0xf4d2888d29D722226FafA5d9B24F9164c092421E",
       "symbol": "LOOKS",
       "decimals": 18,
       "sinceTimestamp": 1640077252,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/22173/large/circle-black-256.png?1641173160",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "lrc-loopring-coin-v2",
+      "id": "lrc-loopringcoin-v2",
       "name": "LoopringCoin V2",
       "coingeckoId": "loopring",
       "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
       "symbol": "LRC",
       "decimals": 18,
       "sinceTimestamp": 1554948637,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/913/large/LRC.png?1572852344",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "lyxe-lukso-token",
@@ -1109,7 +1438,10 @@
       "symbol": "LYXe",
       "decimals": 18,
       "sinceTimestamp": 1589371378,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11423/large/LYX.png?1689818779",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "lusd-lusd-stablecoin",
@@ -1119,7 +1451,10 @@
       "symbol": "LUSD",
       "decimals": 18,
       "sinceTimestamp": 1617611299,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14666/large/Group_3.png?1617631327",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "lyra-lyra-token",
@@ -1128,8 +1463,11 @@
       "address": "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf",
       "symbol": "LYRA",
       "decimals": 18,
-      "sinceTimestamp": 1617611299,
-      "category": "stablecoin"
+      "sinceTimestamp": 1625191817,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21490/large/Add-a-heading-26.png?1639364177",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "mim-magic-internet-money",
@@ -1139,7 +1477,10 @@
       "symbol": "MIM",
       "decimals": 18,
       "sinceTimestamp": 1621978961,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16786/large/mimlogopng.png?1624979612",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "mkr-maker",
@@ -1149,7 +1490,10 @@
       "symbol": "MKR",
       "decimals": 18,
       "sinceTimestamp": 1511637118,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png?1585191826",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "mnt-mantle",
@@ -1159,7 +1503,10 @@
       "symbol": "MNT",
       "decimals": 18,
       "sinceTimestamp": 1687241795,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30980/large/token-logo.png?1689320029",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "mask-mask-network",
@@ -1169,7 +1516,10 @@
       "symbol": "MASK",
       "decimals": 18,
       "sinceTimestamp": 1613723201,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14051/large/Mask_Network.jpg?1614050316",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "matic-matic-token",
@@ -1179,7 +1529,10 @@
       "symbol": "MATIC",
       "decimals": 18,
       "sinceTimestamp": 1555778052,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/matic-token-icon.png?1624446912",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "mc-merit-circle",
@@ -1189,7 +1542,10 @@
       "symbol": "MC",
       "decimals": 18,
       "sinceTimestamp": 1634918516,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19304/large/Db4XqML.png?1634972154",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "metis-metis-token",
@@ -1199,7 +1555,10 @@
       "symbol": "Metis",
       "decimals": 18,
       "sinceTimestamp": 1607734167,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15595/large/metis.jpeg?1660285312",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "mute-mute.io",
@@ -1209,17 +1568,23 @@
       "symbol": "MUTE",
       "decimals": 18,
       "sinceTimestamp": 1611946164,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14331/large/MUTE.png?1617618967",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "mxc-mxc-token",
+      "id": "mxc-mxctoken",
       "name": "MXCToken",
       "coingeckoId": "mxc",
       "address": "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e",
       "symbol": "MXC",
       "decimals": 18,
       "sinceTimestamp": 1533749838,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4604/large/mxc.png?1655534336",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "usdn-neutrino-usd",
@@ -1229,7 +1594,10 @@
       "symbol": "USDN",
       "decimals": 18,
       "sinceTimestamp": 1601563115,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10117/large/USDN_Logo.jpg?1675223697",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "nexo-nexo",
@@ -1239,17 +1607,23 @@
       "symbol": "NEXO",
       "decimals": 18,
       "sinceTimestamp": 1524250249,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3695/large/nexo.png?1548086057",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "nu-nu-cypher",
+      "id": "nu-nucypher",
       "name": "NuCypher",
       "coingeckoId": "nucypher",
       "address": "0x4fE83213D56308330EC302a8BD641f1d0113A4Cc",
       "symbol": "NU",
       "decimals": 18,
       "sinceTimestamp": 1598807335,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3318/large/photo1198982838879365035.jpg?1547037916",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "nxm-nxm",
@@ -1259,7 +1633,10 @@
       "symbol": "NXM",
       "decimals": 18,
       "sinceTimestamp": 1558611941,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11810/large/NXMmain.png?1674799570",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ocean-ocean-token",
@@ -1269,7 +1646,10 @@
       "symbol": "OCEAN",
       "decimals": 18,
       "sinceTimestamp": 1601222047,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3687/large/ocean-protocol-logo.jpg?1547038686",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "okb-okb",
@@ -1279,7 +1659,10 @@
       "symbol": "OKB",
       "decimals": 18,
       "sinceTimestamp": 1556264879,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4463/large/WeChat_Image_20220118095654.png?1642471050",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ohm-olympus",
@@ -1289,17 +1672,23 @@
       "symbol": "OHM",
       "decimals": 9,
       "sinceTimestamp": 1639209014,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14483/large/token_OHM_%281%29.png?1628311611",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "omg-omg-token",
+      "id": "omg-omgtoken",
       "name": "OMGToken",
       "coingeckoId": "omisego",
       "address": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
       "symbol": "OMG",
       "decimals": 18,
       "sinceTimestamp": 1499264338,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/776/large/OMG_Network.jpg?1591167168",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "omi-omi-token",
@@ -1309,7 +1698,10 @@
       "symbol": "OMI",
       "decimals": 18,
       "sinceTimestamp": 1632037514,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4428/large/ECOMI.png?1557928886",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "orbs-orbs",
@@ -1319,7 +1711,10 @@
       "symbol": "ORBS",
       "decimals": 18,
       "sinceTimestamp": 1527798219,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4630/large/Orbs.jpg?1547039896",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ousd-origin-dollar",
@@ -1329,7 +1724,10 @@
       "symbol": "OUSD",
       "decimals": 18,
       "sinceTimestamp": 1600410737,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12589/large/ousd-logo-200x200.png?1600943287",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "usdp-pax-dollar",
@@ -1339,7 +1737,10 @@
       "symbol": "USDP",
       "decimals": 18,
       "sinceTimestamp": 1536420623,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6013/large/Pax_Dollar.png?1629877204",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "paxg-paxos-gold",
@@ -1349,7 +1750,10 @@
       "symbol": "PAXG",
       "decimals": 18,
       "sinceTimestamp": 1566830180,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9519/large/paxgold.png?1687143101",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "perp-perpetual",
@@ -1359,7 +1763,10 @@
       "symbol": "PERP",
       "decimals": 18,
       "sinceTimestamp": 1599343689,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12381/large/60d18e06844a844ad75901a9_mark_only_03.png?1628674771",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "soul-phantasma-stake",
@@ -1369,27 +1776,36 @@
       "symbol": "SOUL",
       "decimals": 8,
       "sinceTimestamp": 1601056863,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4130/large/phantasma.png?1548331035",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "pla-play-dapp-token",
+      "id": "pla-playdapp-token",
       "name": "PlayDapp Token",
       "coingeckoId": "playdapp",
       "address": "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430",
       "symbol": "PLA",
       "decimals": 18,
       "sinceTimestamp": 1587548415,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14316/large/54023228.png?1615366911",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "pnt-pnetwork",
+      "id": "pnt-pnetwork-token",
       "name": "pNetwork Token",
       "coingeckoId": "pnetwork",
       "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
       "symbol": "PNT",
       "decimals": 18,
       "sinceTimestamp": 1592411070,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11659/large/pNetwork.png?1592411134",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "poly-polymath",
@@ -1398,18 +1814,24 @@
       "address": "0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC",
       "symbol": "POLY",
       "decimals": 18,
-      "sinceTimestamp": 1517376819,
-      "category": "other"
+      "sinceTimestamp": 1517243661,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2784/large/inKkF01.png?1605007034",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "powr-power-ledger",
+      "id": "powr-powerledger",
       "name": "PowerLedger",
       "coingeckoId": "power-ledger",
       "address": "0x595832F8FC6BF59c85C527fEC3740A1b7a361269",
       "symbol": "POWR",
       "decimals": 6,
       "sinceTimestamp": 1496460359,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1104/large/power-ledger.png?1547035082",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "pstake-pstake-finance",
@@ -1419,17 +1841,23 @@
       "symbol": "PSTAKE",
       "decimals": 18,
       "sinceTimestamp": 1641937945,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/23931/large/PSTAKE_Dark.png?1645709930",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "tlos-p-tokens-tlos",
+      "id": "tlos-ptokens-tlos",
       "name": "pTokens TLOS",
       "coingeckoId": "wrapped-telos",
       "address": "0x7825e833D495F3d1c28872415a4aee339D26AC88",
       "symbol": "TLOS",
       "decimals": 18,
       "sinceTimestamp": 1613670383,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/23952/large/tL4cEmvt_400x400.png?1645772510",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "pundix-pundi-x-token",
@@ -1439,7 +1867,10 @@
       "symbol": "PUNDIX",
       "decimals": 18,
       "sinceTimestamp": 1615175880,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14571/large/vDyefsXq_400x400.jpg?1617085003",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "pyr-pyr-token",
@@ -1449,7 +1880,10 @@
       "symbol": "PYR",
       "decimals": 18,
       "sinceTimestamp": 1640098645,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14770/large/1617088937196.png?1619414736",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "qnt-quant",
@@ -1459,7 +1893,10 @@
       "symbol": "QNT",
       "decimals": 18,
       "sinceTimestamp": 1523044361,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3370/large/5ZOu7brX_400x400.jpg?1612437252",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "rad-radicle",
@@ -1468,8 +1905,11 @@
       "address": "0x31c8EAcBFFdD875c74b94b077895Bd78CF1E64A3",
       "symbol": "RAD",
       "decimals": 18,
-      "sinceTimestamp": 1613471654,
-      "category": "other"
+      "sinceTimestamp": 1613423971,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14013/large/radicle.png?1614402918",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "raca-radio-caca-v2",
@@ -1478,8 +1918,11 @@
       "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
       "symbol": "RACA",
       "decimals": 18,
-      "sinceTimestamp": 1629616433,
-      "category": "other"
+      "sinceTimestamp": 1633573008,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17841/large/ez44_BSs_400x400.jpg?1629464170",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "rai-rai-reflex-index",
@@ -1489,7 +1932,10 @@
       "symbol": "RAI",
       "decimals": 18,
       "sinceTimestamp": 1613221351,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14004/large/RAI-logo-coin.png?1613592334",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "rly-rally",
@@ -1499,7 +1945,10 @@
       "symbol": "RLY",
       "decimals": 18,
       "sinceTimestamp": 1601929393,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12843/large/image.png?1611212077",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "rgt-rari-governance-token",
@@ -1509,7 +1958,10 @@
       "symbol": "RGT",
       "decimals": 18,
       "sinceTimestamp": 1603212673,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12900/large/Rari_Logo_Transparent.png?1613978014",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "razor-razor",
@@ -1519,27 +1971,36 @@
       "symbol": "RAZOR",
       "decimals": 18,
       "sinceTimestamp": 1611070839,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13797/large/icon.png?1611919354",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "reef-reef",
+      "id": "reef-reef.finance",
       "name": "Reef.finance",
       "coingeckoId": "reef",
       "address": "0xFE3E6a25e6b192A42a44ecDDCd13796471735ACf",
       "symbol": "REEF",
       "decimals": 18,
       "sinceTimestamp": 1607628365,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13504/large/Group_10572.png?1610534130",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "renbtc-ren-btc",
+      "id": "renbtc-renbtc",
       "name": "renBTC",
       "coingeckoId": "renbtc",
       "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
       "symbol": "renBTC",
       "decimals": 8,
       "sinceTimestamp": 1585090944,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11370/large/Bitcoin.jpg?1628072791",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "rndr-render-token",
@@ -1549,7 +2010,10 @@
       "symbol": "RNDR",
       "decimals": 18,
       "sinceTimestamp": 1549934999,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11636/large/rndr.png?1638840934",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ren-republic-token",
@@ -1559,7 +2023,10 @@
       "symbol": "REN",
       "decimals": 18,
       "sinceTimestamp": 1514688568,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3139/large/REN.png?1589985807",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "req-request-token",
@@ -1568,8 +2035,11 @@
       "address": "0x8f8221aFbB33998d8584A2B05749bA73c37a938a",
       "symbol": "REQ",
       "decimals": 18,
-      "sinceTimestamp": 1507735071,
-      "category": "other"
+      "sinceTimestamp": 1507391257,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1031/large/Request_icon_green.png?1643250951",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "rsr-reserve-rights",
@@ -1579,17 +2049,23 @@
       "symbol": "RSR",
       "decimals": 18,
       "sinceTimestamp": 1641407258,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8365/large/rsr.png?1637983320",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "reth-rocket pool eth",
+      "id": "reth-rocket-pool-eth",
       "name": "Rocket Pool ETH",
       "coingeckoId": "rocket-pool-eth",
       "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
       "symbol": "rETH",
       "decimals": 18,
       "sinceTimestamp": 1632980684,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1637652366",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "rpl-rocket-pool-protocol",
@@ -1599,7 +2075,10 @@
       "symbol": "RPL",
       "decimals": 18,
       "sinceTimestamp": 1632980703,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2090/large/rocket_pool_%28RPL%29.png?1637662441",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "sand-sand",
@@ -1609,7 +2088,10 @@
       "symbol": "SAND",
       "decimals": 18,
       "sinceTimestamp": 1572367723,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1597397942",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "srm-serum",
@@ -1619,7 +2101,10 @@
       "symbol": "SRM",
       "decimals": 6,
       "sinceTimestamp": 1596238023,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11970/large/serum-logo.png?1597121577",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "shib-shiba-inu",
@@ -1629,17 +2114,23 @@
       "symbol": "SHIB",
       "decimals": 18,
       "sinceTimestamp": 1596220363,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1622619446",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "agix-singularitynet token",
+      "id": "agix-singularitynet-token",
       "name": "SingularityNET Token",
       "coingeckoId": "singularitynet",
       "address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542",
       "symbol": "AGIX",
       "decimals": 8,
       "sinceTimestamp": 1619584798,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2138/large/singularitynet.png?1548609559",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "skl-skale",
@@ -1649,7 +2140,10 @@
       "symbol": "SKL",
       "decimals": 18,
       "sinceTimestamp": 1593467066,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13245/large/SKALE_token_300x300.png?1606789574",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "slp-smooth-love-potion",
@@ -1659,7 +2153,10 @@
       "symbol": "SLP",
       "decimals": 0,
       "sinceTimestamp": 1619421512,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10366/large/SLP.png?1578640057",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "spell-spell-token",
@@ -1669,27 +2166,36 @@
       "symbol": "SPELL",
       "decimals": 18,
       "sinceTimestamp": 1621289435,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15861/large/abracadabra-3.png?1622544862",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "stg-stargate-finance",
+      "id": "stg-stargatetoken",
       "name": "StargateToken",
       "coingeckoId": "stargate-finance",
       "address": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
       "symbol": "STG",
       "decimals": 18,
       "sinceTimestamp": 1647504559,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1647654518",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "starl-star-link",
+      "id": "starl-starlink",
       "name": "StarLink",
       "coingeckoId": "starlink",
       "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24",
       "symbol": "STARL",
       "decimals": 18,
       "sinceTimestamp": 1625105851,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16824/large/ZxJbRWJ.png?1625177900",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "snt-status-network-token",
@@ -1699,37 +2205,49 @@
       "symbol": "SNT",
       "decimals": 18,
       "sinceTimestamp": 1497889273,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/779/large/status.png?1548610778",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "super-super-farm",
+      "id": "super-superfarm",
       "name": "SuperFarm",
       "coingeckoId": "superfarm",
       "address": "0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55",
       "symbol": "SUPER",
       "decimals": 18,
       "sinceTimestamp": 1613866257,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14040/large/SuperVerse_Logo_200x200.png?1669963064",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "xsushi-sushi-bar",
+      "id": "xsushi-sushibar",
       "name": "SushiBar",
       "coingeckoId": "xsushi",
       "address": "0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272",
       "symbol": "xSUSHI",
       "decimals": 18,
       "sinceTimestamp": 1599311156,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13725/large/xsushi.png?1612538526",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "sushi-sushi-token",
+      "id": "sushi-sushitoken",
       "name": "SushiToken",
       "coingeckoId": "sushi",
       "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
       "symbol": "SUSHI",
       "decimals": 18,
       "sinceTimestamp": 1598444887,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1606986688",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "sxp-swipe",
@@ -1739,17 +2257,23 @@
       "symbol": "SXP",
       "decimals": 18,
       "sinceTimestamp": 1565978672,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9368/large/swipe.png?1566792311",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "chsb-swiss-borg-token",
+      "id": "chsb-swissborg-token",
       "name": "SwissBorg Token",
       "coingeckoId": "swissborg",
       "address": "0xba9d4199faB4f26eFE3551D490E3821486f135Ba",
       "symbol": "CHSB",
       "decimals": 8,
       "sinceTimestamp": 1509542207,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2117/large/YJUrRy7r_400x400.png?1589794215",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "sis-symbiosis",
@@ -1759,7 +2283,10 @@
       "symbol": "SIS",
       "decimals": 18,
       "sinceTimestamp": 1637265271,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20805/large/SymbiosisFinance_logo-150x150.jpeg?1637707064",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "syn-synapse",
@@ -1768,8 +2295,11 @@
       "address": "0x0f2D719407FdBeFF09D87557AbB7232601FD9F29",
       "symbol": "SYN",
       "decimals": 18,
-      "sinceTimestamp": 1630182084,
-      "category": "other"
+      "sinceTimestamp": 1628972639,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18024/large/synapse_social_icon.png?1663921797",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "snx-synthetix-network-token",
@@ -1779,7 +2309,10 @@
       "symbol": "SNX",
       "decimals": 18,
       "sinceTimestamp": 1565329008,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3406/large/SNX.png?1598631139",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "tel-telcoin",
@@ -1789,7 +2322,10 @@
       "symbol": "TEL",
       "decimals": 2,
       "sinceTimestamp": 1580196479,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1899/large/tel.png?1547036203",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "xaut-tether-gold",
@@ -1799,7 +2335,10 @@
       "symbol": "XAUt",
       "decimals": 6,
       "sinceTimestamp": 1635679310,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1668148656",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "usdt-tether-usd",
@@ -1809,7 +2348,10 @@
       "symbol": "USDT",
       "decimals": 6,
       "sinceTimestamp": 1511829681,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ufo-the-truth",
@@ -1819,7 +2361,10 @@
       "symbol": "UFO",
       "decimals": 18,
       "sinceTimestamp": 1621608122,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16801/large/ufo.png?1644048038",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "rune-thorchain-eth.rune",
@@ -1829,7 +2374,10 @@
       "symbol": "RUNE",
       "decimals": 18,
       "sinceTimestamp": 1610511447,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6595/large/Rune200x200.png?1671179394",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "toke-tokemak",
@@ -1839,7 +2387,10 @@
       "symbol": "TOKE",
       "decimals": 18,
       "sinceTimestamp": 1628120225,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17495/large/tokemak-avatar-200px-black.png?1628131614",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "trac-trace-token",
@@ -1849,7 +2400,10 @@
       "symbol": "TRAC",
       "decimals": 18,
       "sinceTimestamp": 1516760378,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1877/large/TRAC.jpg?1635134367",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "tribe-tribe",
@@ -1858,18 +2412,24 @@
       "address": "0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B",
       "symbol": "TRIBE",
       "decimals": 18,
-      "sinceTimestamp": 1617205273,
-      "category": "other"
+      "sinceTimestamp": 1616909037,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14575/large/tribe.PNG?1617487954",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "tusd-true-usd",
+      "id": "tusd-trueusd",
       "name": "TrueUSD",
       "coingeckoId": "true-usd",
       "address": "0x0000000000085d4780B73119b644AE5ecd22b376",
       "symbol": "TUSD",
       "decimals": 18,
       "sinceTimestamp": 1546294558,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3449/large/tusd.png?1618395665",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "uos-ultra-token",
@@ -1879,7 +2439,10 @@
       "symbol": "UOS",
       "decimals": 4,
       "sinceTimestamp": 1563321887,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4480/large/Ultra.png?1563356418",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "uma-uma-voting-token-v1",
@@ -1889,7 +2452,10 @@
       "symbol": "UMA",
       "decimals": 18,
       "sinceTimestamp": 1578581061,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10951/large/UMA.png?1586307916",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "uni-uniswap",
@@ -1899,7 +2465,10 @@
       "symbol": "UNI",
       "decimals": 18,
       "sinceTimestamp": 1600107086,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1687143398",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "usdc-usd-coin",
@@ -1909,7 +2478,10 @@
       "symbol": "USDC",
       "decimals": 6,
       "sinceTimestamp": 1533324504,
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "vr-victoria-vr",
@@ -1919,7 +2491,10 @@
       "symbol": "VR",
       "decimals": 18,
       "sinceTimestamp": 1603226675,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21178/large/vr.png?1638496975",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "vlx-vlx",
@@ -1929,7 +2504,10 @@
       "symbol": "VLX",
       "decimals": 18,
       "sinceTimestamp": 1615467640,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9651/large/logo_blue.png?1663764088",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "waves-waves",
@@ -1939,7 +2517,10 @@
       "symbol": "WAVES",
       "decimals": 18,
       "sinceTimestamp": 1603204574,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/425/large/waves.png?1548386117",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "wxt-wirex-token",
@@ -1949,7 +2530,10 @@
       "symbol": "WXT",
       "decimals": 18,
       "sinceTimestamp": 1619284830,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8835/large/Wirex.jpg?1561970529",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "woo-wootrade-network",
@@ -1959,7 +2543,10 @@
       "symbol": "WOO",
       "decimals": 18,
       "sinceTimestamp": 1602855151,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12921/large/w2UiemF__400x400.jpg?1603670367",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "wld-worldcoin",
@@ -1969,7 +2556,10 @@
       "symbol": "WLD",
       "decimals": 18,
       "sinceTimestamp": 1689617807,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31069/large/worldcoin.jpeg?1690182386",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "anc-wrapped-anc-token",
@@ -1979,7 +2569,10 @@
       "symbol": "ANC",
       "decimals": 18,
       "sinceTimestamp": 1615280900,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14420/large/anchor_protocol_logo.jpg?1615965420",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "wbtc-wrapped-btc",
@@ -1989,7 +2582,10 @@
       "symbol": "WBTC",
       "decimals": 8,
       "sinceTimestamp": 1543095952,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1548822744",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "weth-wrapped-ether",
@@ -1999,17 +2595,23 @@
       "symbol": "WETH",
       "decimals": 18,
       "sinceTimestamp": 1513077455,
-      "category": "ether"
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1628852295",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "wstETH-wrapped-steth",
+      "id": "wsteth-wrapped-liquid-staked-ether-2.0",
       "name": "Wrapped liquid staked Ether 2.0",
       "coingeckoId": "wrapped-steth",
       "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
       "symbol": "wstETH",
       "decimals": 18,
-      "sinceTimestamp": 1613749071,
-      "category": "ether"
+      "sinceTimestamp": 1613752640,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1633565443",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "mir-wrapped-mir-token",
@@ -2019,17 +2621,23 @@
       "symbol": "MIR",
       "decimals": 18,
       "sinceTimestamp": 1606542899,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13295/large/mirror_logo_transparent.png?1611554658",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "toncoin-wrapped ton coin",
+      "id": "toncoin-wrapped-ton-coin",
       "name": "Wrapped TON Coin",
       "coingeckoId": "the-open-network",
       "address": "0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1",
       "symbol": "TONCOIN",
       "decimals": 9,
       "sinceTimestamp": 1629199867,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17980/large/ton_symbol.png?1670498136",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "xyo-xy-oracle",
@@ -2039,17 +2647,23 @@
       "symbol": "XYO",
       "decimals": 18,
       "sinceTimestamp": 1515221841,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4519/large/XYO_Network-logo.png?1547039819",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
-      "id": "yfi-yearn-finance",
+      "id": "yfi-yearn.finance",
       "name": "yearn.finance",
       "coingeckoId": "yearn-finance",
       "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
       "symbol": "YFI",
       "decimals": 18,
       "sinceTimestamp": 1594972885,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11849/large/yearn.jpg?1687142705",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "ygg-yield-guild-games-token",
@@ -2059,7 +2673,10 @@
       "symbol": "YGG",
       "decimals": 18,
       "sinceTimestamp": 1627299017,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1686132424",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "zmt-zipmex-token",
@@ -2069,7 +2686,10 @@
       "symbol": "ZMT",
       "decimals": 18,
       "sinceTimestamp": 1576744001,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13866/large/ZMT_Token.png?1637241562",
+      "chainId": 1,
+      "type": "CBV"
     },
     {
       "id": "zks-zks",
@@ -2079,7 +2699,10 @@
       "symbol": "ZKS",
       "decimals": 18,
       "sinceTimestamp": 1606014225,
-      "category": "other"
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13585/large/zkslogo640.png?1691386411",
+      "chainId": 1,
+      "type": "CBV"
     }
   ]
 }
