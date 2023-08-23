@@ -896,7 +896,7 @@ const meta = {
       {
         name: 'Metis Andromeda',
         slug: 'metis',
-        provider: 'OP Stack',
+        provider: 'OVM',
         riskValues: {
           dataAvailability: {
             value: 'Optimistic (MEMO)',
