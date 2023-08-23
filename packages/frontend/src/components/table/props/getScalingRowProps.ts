@@ -9,6 +9,7 @@ interface ScalingTableEntry {
   isVerified?: boolean
   isUpcoming?: boolean
   showProjectUnderReview?: boolean
+  technology?: string
 }
 
 type ScalingRowType = 'summary' | 'detailedTvl' | 'risks' | 'activity'
@@ -19,7 +20,6 @@ export function getScalingRowProps(
 ) {
   const isEthereum = entry.slug === 'ethereum'
   const href = getHref(entry.slug, type)
-
   if (isEthereum) {
     return {
       className: cx(
@@ -35,6 +35,7 @@ export function getScalingRowProps(
     className: getRowVerificationClassNames(entry),
     href,
     'data-role': 'row',
+    'data-rollup': entry.technology?.endsWith('Rollup'),
   }
 }
 
