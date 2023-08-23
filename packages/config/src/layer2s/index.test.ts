@@ -72,6 +72,32 @@ describe('layer2s', () => {
         })
       }
     })
+
+    describe('all arbitrum and op stack chains have the assessCount defined', () => {
+      const opAndArbL2sWithActivity = layer2s
+        .filter((layer2) => {
+          const { provider } = layer2.display
+          return provider === 'Arbitrum' || provider === 'Optimism'
+        })
+        .flatMap((layer2) => {
+          const { transactionApi } = layer2.config
+
+          if (transactionApi && transactionApi.type === 'rpc') {
+            return {
+              id: layer2.id,
+              assessCount: transactionApi.assessCount,
+            }
+          }
+
+          return []
+        })
+
+      for (const { id, assessCount } of opAndArbL2sWithActivity) {
+        it(`${id.toString()}`, () => {
+          expect(assessCount).not.toBeNullish()
+        })
+      }
+    })
   })
 
   describe('references', () => {

@@ -1,3 +1,5 @@
+import { AssetType } from '@l2beat/shared-pure'
+
 import { ChartElements } from '../elements'
 import { Message, ViewChangedMessage } from '../messages'
 import { onCheckboxChange } from './onCheckboxChange'
@@ -21,18 +23,35 @@ export function setupControls(
     })
   })
 
+  elements.controls.tokenChosen.forEach((e) =>
+    onCheckboxChange(e, () => {
+      dispatch({ type: 'CurrencyChanged', currency: 'usd' })
+    }),
+  )
+
   onRadioChange(elements.controls.tokens, (control) => {
-    if (!control.dataset.tvlEndpoint) {
-      throw new Error('Missing tvl endpoint')
+    let assetType: AssetType = 'CBV'
+    switch (control.dataset.assetType) {
+      case 'EBV':
+        assetType = 'EBV'
+        break
+      case 'NMV':
+        assetType = 'NMV'
+        break
     }
-    dispatch({
-      type: 'TokenChanged',
-      token: control.value,
-      tokenEndpoint: control.dataset.tvlEndpoint,
-    })
+
+    if (control.dataset.tvlEndpoint && control.dataset.assetType) {
+      control.dispatchEvent(new Event('close-slidecard', { bubbles: true }))
+      dispatch({
+        type: 'TokenChanged',
+        token: control.value,
+        tokenEndpoint: control.dataset.tvlEndpoint,
+        assetType,
+      })
+    }
   })
 
-  elements.controls.showMoreTokens?.addEventListener('click', () => {
+  elements.controls.showMoreTokensToBeRemoved?.addEventListener('click', () => {
     dispatch({ type: 'MoreTokensClicked' })
   })
 
@@ -57,7 +76,7 @@ export function setupControls(
 
     dispatch({
       type: 'ViewChanged',
-      view: view,
+      view,
     })
   })
 

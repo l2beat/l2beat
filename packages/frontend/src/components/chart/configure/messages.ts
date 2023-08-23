@@ -1,15 +1,17 @@
 import type { Milestone } from '@l2beat/config'
+import { AssetType } from '@l2beat/shared-pure'
 
 import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
   AggregateTvlResponse,
+  ChartType,
   TokenTvlResponse,
 } from './state/State'
 
 export interface InitMessage {
   type: 'Init'
-  initialView: 'tvl' | 'detailedTvl' | 'activity'
+  initialView: ChartType
   pagePathname: string
   days: number
   currency: 'usd' | 'eth'
@@ -26,7 +28,7 @@ export interface InitMessage {
 
 export interface ViewChangedMessage {
   type: 'ViewChanged'
-  view: 'tvl' | 'detailedTvl' | 'activity'
+  view: ChartType
 }
 
 export interface DaysChangedMessage {
@@ -43,6 +45,7 @@ export interface TokenChangedMessage {
   type: 'TokenChanged'
   token: string
   tokenEndpoint: string
+  assetType: AssetType
 }
 
 export interface ShowEthereumChangedMessage {
@@ -66,12 +69,13 @@ export interface MouseMovedMessage {
   mouseY: number
 }
 
-export interface MouseExitedMessage {
-  type: 'MouseExited'
-}
-
+// TODO(radomski): To be removed when L2 Assets are ready
 export interface MoreTokensClickedMessage {
   type: 'MoreTokensClicked'
+}
+
+export interface MouseExitedMessage {
+  type: 'MouseExited'
 }
 
 export interface AggregateTvlLoadedMessage {
@@ -111,6 +115,7 @@ export interface TokenTvlLoadedMessage {
   type: 'TokenTvlLoaded'
   requestId: number
   token: string
+  assetType: AssetType
   data: TokenTvlResponse
 }
 
@@ -150,8 +155,8 @@ export type Message =
   | ScaleChangedMessage
   | ShowAlternativeTvlChangedMessage
   | MouseMovedMessage
-  | MouseExitedMessage
   | MoreTokensClickedMessage
+  | MouseExitedMessage
   | AggregateDetailedTvlLoadedMessage
   | AggregateDetailedTvlFailedMessage
   | AggregateTvlLoadedMessage

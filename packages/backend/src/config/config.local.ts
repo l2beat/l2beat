@@ -11,7 +11,11 @@ export function getLocalConfig(): Config {
   dotenv()
 
   const tvlEnabled = getEnv.boolean('TVL_ENABLED', true)
-  const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', true)
+  const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
+  const errorOnUnsyncedDetailedTvl = getEnv.boolean(
+    'ERROR_ON_UNSYNCED_DETAILED_TVL',
+    false,
+  )
   const ethereumTvlEnabled = getEnv.boolean('ETHEREUM_TVL_ENABLED', true)
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
   const activityEnabled = getEnv.boolean('ACTIVITY_ENABLED', false)
@@ -53,10 +57,11 @@ export function getLocalConfig(): Config {
 
     tvl: {
       enabled: tvlEnabled,
-      detailedTvlEnabled: detailedTvlEnabled,
+      detailedTvlEnabled,
+      errorOnUnsyncedDetailedTvl,
       coingeckoApiKey: process.env.COINGECKO_API_KEY, // this is optional
       ethereum: ethereumTvlEnabled && {
-        alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
+        providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
@@ -139,7 +144,7 @@ export function getLocalConfig(): Config {
           rpcUrl: getEnv('DISCOVERY_ETHEREUM_RPC_URL'),
           etherscanApiKey: getEnv('DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY'),
           etherscanUrl: EtherscanClient.API_URL,
-          minTimestamp: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+          minTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
         },
       ],
     },

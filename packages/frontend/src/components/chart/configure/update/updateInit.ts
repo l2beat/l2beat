@@ -66,6 +66,7 @@ export function updateInit(message: InitMessage): [State, Effect[]] {
         isLogScale: message.isLogScale,
         currency: message.currency,
         token: undefined,
+        assetType: undefined,
         showEthereum: !!message.showEthereum,
         showAlternativeTvl: false,
         mouseX: undefined,

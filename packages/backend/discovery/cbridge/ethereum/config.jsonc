@@ -10,7 +10,10 @@
     "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175": "MessageBusOwner",
     "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": "SimpleGovernance",
     "0xB37D31b2A74029B5951a2778F959282E2D518595": "OriginalTokenVault",
-    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": "Liquidity Network"
+    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": "Liquidity Network",
+    "0x8E339115b295DeD49880eA62C1F06d1dbec3496b": "SentinelProxyAdmin",
+    "0x1b9dFC56e38b0F92448659C114e2347Bd803911c": "SentinelAdmin",
+    "0xF140024969F6c76494a78518D9a99c8776B55f70": "Sentinel"
   },
   "overrides": {
     "MessageBusOwner": {
@@ -60,6 +63,32 @@
     "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       // WETH9
       "ignoreDiscovery": true
+    },
+    "Sentinel": {
+      "fields": {
+        "governors": {
+          "type": "arrayFromOneEvent",
+          "event": "event GovernorUpdated(address account, bool added)",
+          "valueKey": "account",
+          "flagKey": "added"
+        },
+        "pausersPauseOnly": {
+          "type": "arrayFromOneEvent",
+          "event": "event PauserUpdated(address account, uint8 role)",
+          "valueKey": "account",
+          "flagKey": "role",
+          "flagTrueValues": ["1"],
+          "flagFalseValues": ["0", "2"]
+        },
+        "pausersFull": {
+          "type": "arrayFromOneEvent",
+          "event": "event PauserUpdated(address account, uint8 role)",
+          "valueKey": "account",
+          "flagKey": "role",
+          "flagTrueValues": ["2"],
+          "flagFalseValues": ["0", "1"]
+        }
+      }
     }
   }
 }

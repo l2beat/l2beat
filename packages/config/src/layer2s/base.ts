@@ -11,6 +11,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOne,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -39,7 +40,7 @@ export const base: Layer2 = {
       websites: ['https://base.org/'],
       apps: ['https://bridge.base.org/'],
       documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
-      explorers: ['https://basescan.org/'],
+      explorers: ['https://basescan.org/', 'https://base.blockscout.com/'],
       repositories: ['https://github.com/base-org'],
       socialMedia: [
         'https://twitter.com/BuildOnBase',
@@ -72,6 +73,7 @@ export const base: Layer2 = {
       startBlock: 1,
       url: 'https://developer-access-mainnet.base.org',
       callsPerMinute: 1500,
+      assessCount: subtractOne,
     },
   },
   riskView: makeBridgeCompatible({
@@ -246,8 +248,12 @@ export const base: Layer2 = {
       "Address designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It's the owner of SystemConfig, which allows to update the sequencer address. Moreover, it can challenge state roots without going through the fault proof process.",
     ),
     ...discovery.getMultisigPermission(
+      'BaseMultisig',
+      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
+    ),
+    ...discovery.getMultisigPermission(
       'OptimismMultisig',
-      'Core multisig of the Optimism team, it can challenge state roots without going through the fault proof process.',
+      "Core multisig of the Optimism team, it can challenge state roots without going through the fault proof process. It's also a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
     ),
     {
       name: 'ProxyAdmin',

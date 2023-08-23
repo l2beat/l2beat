@@ -1,14 +1,14 @@
-import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
   ChainId,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
+  Token,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 
-import { EBVToken } from '../core/assets'
 import { createEBVReports } from '../core/reports/createEBVReports'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
@@ -72,13 +72,19 @@ const PROJECT: ReportProject = {
   ],
 }
 
-const TOKENS: EBVToken[] = [
+const TOKENS: Token[] = [
   {
-    assetId: AssetId.USDC,
-    tokenAddress: EthereumAddress.random().toString(),
+    id: AssetId.USDC,
+    name: 'TOKEN',
+    symbol: 'TOK',
+    coingeckoId: CoingeckoId('token'),
+    address: EthereumAddress.random(),
     sinceTimestamp: BASE_MOCK.NOW,
     decimals: 6,
     premintHolderAddresses: [],
+    category: 'other',
+    chainId: ChainId.ARBITRUM,
+    type: ValueType.EBV,
   },
 ]
 
@@ -87,7 +93,7 @@ const REPORTS = createEBVReports(
   BALANCES,
   TOTAL_SUPPLIES,
   TOKENS,
-  PROJECT,
+  ProjectId.ARBITRUM,
   ChainId.ARBITRUM,
 )
 const FUTURE_REPORTS = createEBVReports(
@@ -95,7 +101,7 @@ const FUTURE_REPORTS = createEBVReports(
   FUTURE_BALANCES,
   TOTAL_SUPPLIES,
   TOKENS,
-  PROJECT,
+  ProjectId.ARBITRUM,
   ChainId.ARBITRUM,
 )
 
@@ -119,7 +125,7 @@ export const REPORTS_MOCK = {
   FUTURE_REPORTS,
 }
 
-function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
+function fakeTokenInfo(token: Partial<Token>): Token {
   return {
     name: 'Fake',
     id: AssetId('fake-token'),
@@ -129,6 +135,8 @@ function fakeTokenInfo(token: Partial<TokenInfo>): TokenInfo {
     address: EthereumAddress.random(),
     sinceTimestamp: new UnixTime(0),
     category: 'other',
+    chainId: ChainId.ARBITRUM,
+    type: ValueType.EBV,
     ...token,
   }
 }

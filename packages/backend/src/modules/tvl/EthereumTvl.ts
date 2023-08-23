@@ -29,11 +29,11 @@ export function createEthereumTvlSubmodule(
 
   // #region peripherals
 
-  const ethereumProvider = new providers.AlchemyProvider(
+  const ethereumProvider = new providers.JsonRpcProvider(
+    config.tvl.ethereum.providerUrl,
     'mainnet',
-    config.tvl.ethereum.alchemyApiKey,
   )
-  const ethereumClient = new EthereumClient(ethereumProvider, logger)
+  const ethereumClient = new EthereumClient(ethereumProvider, logger, 25)
   const multicall = new MulticallClient(ethereumClient)
 
   const etherscanClient = new EtherscanClient(

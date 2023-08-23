@@ -31,7 +31,13 @@ export function getChartElements(chart: HTMLElement) {
           '[data-role="chart-token-controls"] input',
         ),
       ),
-      showMoreTokens: chart.querySelector<HTMLButtonElement>(
+      showTokenModal: chart.querySelectorAll<HTMLInputElement>(
+        '[data-role="chart-token-toggle"] input',
+      ),
+      tokenChosen: chart.querySelectorAll<HTMLInputElement>(
+        '[data-role="chart-token-chosen"] input',
+      ),
+      showMoreTokensToBeRemoved: chart.querySelector<HTMLButtonElement>(
         '[data-role="chart-more-tokens"]',
       ),
       scale: Array.from(
@@ -45,6 +51,9 @@ export function getChartElements(chart: HTMLElement) {
       labels: Array.from(
         chart.querySelectorAll<HTMLElement>('[data-role="chart-label"]'),
       ),
+      tvlHeader: chart.parentNode?.querySelector<HTMLElement>(
+        '[data-role="chart-header-currency"]',
+      ),
       canvas: chart.querySelector<HTMLCanvasElement>(
         '[data-role="chart-canvas"]',
       ),
@@ -55,6 +64,15 @@ export function getChartElements(chart: HTMLElement) {
       ),
       tokenControlsWrapper: chart.querySelector<HTMLElement>(
         '[data-role="chart-token-controls"]',
+      ),
+      showTokenModalWrapper: chart.querySelectorAll<HTMLElement>(
+        '[data-role="chart-token-toggle"]',
+      ),
+      tokenChosenWrapper: chart.querySelectorAll<HTMLElement>(
+        '[data-role="chart-token-chosen"]',
+      ),
+      tokenModal: chart.querySelector<HTMLElement>(
+        '[data-role="chart-token-modal"]',
       ),
       milestones: chart.querySelector<HTMLElement>(
         '[data-role="chart-milestones"]',
@@ -74,6 +92,15 @@ export function getChartElements(chart: HTMLElement) {
       ),
       greenSquare: chart.querySelector<HTMLElement>(
         '[data-role="chart-hover-square-green"]',
+      ),
+      purpleCircle: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-circle-purple"]',
+      ),
+      yellowTriangle: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-triangle-yellow"]',
+      ),
+      pinkSquare: chart.querySelector<HTMLElement>(
+        '[data-role="chart-hover-square-pink"]',
       ),
       contents: chart.querySelector<HTMLElement>(
         '[data-role="chart-hover-contents"]',

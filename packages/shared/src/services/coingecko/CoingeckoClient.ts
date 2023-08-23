@@ -13,6 +13,7 @@ import {
   CoinListResult,
   CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
+  CoinMetadata,
 } from './model'
 
 const API_URL = 'https://api.coingecko.com/api/v3'
@@ -47,6 +48,20 @@ export class CoingeckoClient {
     } else {
       return CoinListPlatformResult.parse(data)
     }
+  }
+
+  async getImageUrl(id: CoingeckoId): Promise<string> {
+    const data = await this.query(`/coins/${id.toString()}`, {
+      localization: 'false',
+      tickers: 'false',
+      market_data: 'false',
+      community_data: 'false',
+      developer_data: 'false',
+      sparkline: 'false',
+    })
+
+    const parsed = CoinMetadata.parse(data)
+    return parsed.image.large
   }
 
   async getCoinMarketChartRange(

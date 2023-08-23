@@ -1,29 +1,37 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
+import { EthereumAddress, Token } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { assert } from 'console'
 import { config as dotenv } from 'dotenv'
 import { providers } from 'ethers'
 import { writeFileSync } from 'fs'
-import { z } from 'zod'
 
-import { tokenList } from '../../../src'
-import { TokenInfo } from '../../../src/tokens/types'
+import { getCanonicalTokens } from '../../../src'
 import { getEnv } from '../../checkVerifiedContracts/utils'
 import { getTokenInfo } from './getTokenInfo'
 
 async function main() {
   const [address, category] = handleCLIParameters()
-  if (!address || !category) {
+  if (!address) {
     return
   }
 
+  const http = new HttpClient()
+  const coingeckoClient = new CoingeckoClient(http, getEnv('COINGECKO_API_KEY'))
   const provider = new providers.AlchemyProvider(
     'homestead',
     getEnv('CONFIG_ALCHEMY_API_KEY'),
   )
 
-  const token: TokenInfo = await getTokenInfo(provider, address, category)
+  const token: Token = await getTokenInfo(
+    provider,
+    coingeckoClient,
+    address,
+    category,
+  )
 
-  const newList = [...tokenList, token].sort((a, b) =>
+  const tokens = getCanonicalTokens()
+  const newList = [...tokens, token].sort((a, b) =>
     a.name.localeCompare(b.name),
   )
 
@@ -42,7 +50,7 @@ main().catch((e) => {
 
 function handleCLIParameters(): [
   EthereumAddress | undefined,
-  z.infer<typeof TokenInfo.shape.category> | undefined,
+  'ether' | 'stablecoin' | 'other',
 ] {
   if (process.argv.length < 4) {
     console.log(chalk.red('!!! Missing arguments !!!'))
@@ -60,19 +68,19 @@ function handleCLIParameters(): [
     )
   }
 
-  let category: z.infer<typeof TokenInfo.shape.category> | undefined
+  const categoryTypes = ['ether', 'stablecoin', 'other']
 
-  try {
-    category = TokenInfo.shape.category.parse(process.argv[3])
-  } catch {
+  if (!categoryTypes.includes(process.argv[3])) {
     console.log(chalk.red('!!! Invalid token category !!!'))
     console.log(
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      `category must be one of: [${TokenInfo.shape.category.options
-        .map((o) => o._def.value)
-        .join(', ')}]`,
+      `category must be one of: ${categoryTypes}`,
     )
   }
+
+  const category = process.argv[3] as 'ether' | 'stablecoin' | 'other'
+
+  assert(categoryTypes.includes(category), 'Invalid token category')
 
   return [address, category]
 }

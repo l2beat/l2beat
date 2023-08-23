@@ -1,0 +1,18 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "avalanche",
+  "name": "lzomnichain",
+  "initialAddresses": ["0x4D73AdB72bC3DD368966edD0f0b2148401A178E2"],
+  "names": {
+    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
+    "0x3c2269811836af69497E5F486A85D7316753cf62": "Endpoint"
+  },
+  "overrides": {
+    "Endpoint": {
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
+    },
+    "UltraLightNodeV2": {
+      "ignoreInWatchMode": ["treasuryZROFees"]
+    }
+  }
+}

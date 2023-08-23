@@ -1,11 +1,13 @@
 # How to run discovery?
 
-- `yarn discover [project]` run discovery for the project
-- `DISCOVERY_BLOCK_NUMBER=<block_number> yarn discover [project]` run discovery on a specific block number
-- `yarn discover [project] --dry-run` check simulated update-monitor output
-- `yarn discover [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
-- `yarn invert [project]` print addresses and their functions
-- `yarn invert [project] --mermaid` builds a mermaid graph of the project
+- `yarn discover [chain] [project]` run discovery for the project
+- `DISCOVERY_BLOCK_NUMBER=<block_number> yarn discover [chain] [project]` run discovery on a specific block number
+- `yarn discover [chain] [project] --dry-run` check simulated update-monitor output
+- `yarn discover [chain] [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
+- `yarn invert [chain] [project]` print addresses and their functions
+- `yarn invert [chain] [project] --mermaid` builds a mermaid graph of the project
+
+supported chains: checkout config.discovery.ts
 
 # Discovery documentation
 
@@ -461,6 +463,36 @@ Same example, but the abis are explicit:
   "removeEvent": "event MinterRemoved(address minter)",
   "removeKey": "minter"
 }
+```
+
+### State from event handler
+
+This handler allows you to collect values emitted by a smart contract through a single event type in a highly structured way, supporting multiple values per event and grouping by parameter values.
+
+**Parameters:**
+
+- `type` - the literal: `"stateFromEvent"`
+- `event` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
+- `returnParams` - array of strings that represent event keys that we want to save
+- `groupBy` - (optional) when specified, must be a `returnParam`, the output will be grouped by the values of this param
+- `onlyValue` - (optional, default: `false`) when `true`, the `groupBy` key is removed from the output record.
+- `multipleInGroup` - (optional, default: `false`) when `true`, each grouping key will point to an array of values if more than one value exist.
+- `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+
+**Examples:**
+
+Assumes there is `event AddInboundProofLibraryForChain(uint16 chainId, address lig)` in the abi. Collects the list of all `inboundProofLibraries` ever added for every `chainId`:
+
+```json
+{
+  "type": "stateFromEvent",
+  "event": "AddInboundProofLibraryForChain",
+  "returnParams": ["chainId", "lib"],
+  "groupBy": "chainId",
+  "onlyValue": true,
+  "multipleInGroup": true,
+  "ignoreRelative": true
+},
 ```
 
 ## Cache

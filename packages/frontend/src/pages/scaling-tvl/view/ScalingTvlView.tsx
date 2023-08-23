@@ -22,7 +22,7 @@ export interface ScalingTvlViewProps {
 
 export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
   const rows: RowConfig<ScalingTvlViewEntry> = {
-    getProps: getScalingRowProps,
+    getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
 
   return (

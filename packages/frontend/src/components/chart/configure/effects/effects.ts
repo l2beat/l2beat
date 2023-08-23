@@ -1,3 +1,5 @@
+import { AssetType } from '@l2beat/shared-pure'
+
 export interface FetchAggregateTvlEffect {
   type: 'FetchAggregateTvl'
   requestId: number
@@ -20,6 +22,7 @@ export interface FetchTokenTvlEffect {
   type: 'FetchTokenTvl'
   requestId: number
   token: string
+  assetType: AssetType
   url: string
 }
 

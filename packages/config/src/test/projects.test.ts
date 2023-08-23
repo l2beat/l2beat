@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { bridges, getTokenBySymbol, layer2s } from '../'
+import { bridges, getCanonicalTokenBySymbol, layer2s } from '../'
 import { checkRisk } from './helpers'
 
 describe('projects', () => {
@@ -15,7 +15,7 @@ describe('projects', () => {
       .filter((x, i, a) => a.indexOf(x) === i)
     for (const symbol of symbols) {
       it(symbol, () => {
-        expect(() => getTokenBySymbol(symbol)).not.toThrow()
+        expect(() => getCanonicalTokenBySymbol(symbol)).not.toThrow()
       })
     }
   })

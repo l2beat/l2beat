@@ -15,7 +15,7 @@ export interface DetailedTvlViewProps {
 
 export function DetailedTvlView({ items }: DetailedTvlViewProps) {
   const rows: RowConfig<DetailedTvlViewEntry> = {
-    getProps: getScalingRowProps,
+    getProps: (entry) => getScalingRowProps(entry, 'detailedTvl'),
   }
 
   return (

@@ -72,13 +72,17 @@ export const polygonzkevm: Layer2 = {
       'Polygon zkEVM is aiming to become a decentralized Ethereum Layer 2 scalability solution that uses cryptographic zero-knowledge proofs to offer validity and finality of off-chain transactions. Polygon zkEVM wants to be equivalent with the Ethereum Virtual Machine.',
     purpose: 'Universal',
     category: 'ZK Rollup',
+    provider: 'Polygon',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
       apps: ['https://bridge.zkevm-rpc.com'],
       documentation: [
         'https://wiki.polygon.technology/docs/zkEVM/introduction',
       ],
-      explorers: ['https://zkevm.polygonscan.com/'],
+      explorers: [
+        'https://zkevm.polygonscan.com/',
+        'https://explorer.mainnet.zkevm-test.net/',
+      ],
       repositories: ['https://github.com/0xPolygonHermez'],
       socialMedia: [
         'https://twitter.com/0xPolygon',

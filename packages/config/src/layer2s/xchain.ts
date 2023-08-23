@@ -14,6 +14,7 @@ export const xchain: Layer2 = {
       'XCHAIN is an upcoming validium leveraging Polygon zkEVM Supernets.',
     purpose: 'DEX Chain',
     category: 'Validium',
+    provider: 'Polygon',
     links: {
       websites: ['https://idex.io/'],
       apps: ['https://exchange.idex.io/polygon/trading/IDEX-USDC/'],

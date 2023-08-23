@@ -1,38 +1,19 @@
-import { hashJson } from '@l2beat/shared-pure'
-
-import { EBVToken } from '../assets'
-import { ReportProject } from './ReportProject'
+import { hashJson, Token } from '@l2beat/shared-pure'
 
 const EBV_LOGIC_VERSION = 0
 
-export function getEBVConfigHash(project: ReportProject, tokens: EBVToken[]) {
-  return hashJson([
-    extractProjectSkeleton(project),
-    extractEBVTokens(tokens),
-    EBV_LOGIC_VERSION,
-  ])
+export function getEBVConfigHash(tokens: Token[]) {
+  return hashJson([extractEBVTokens(tokens), EBV_LOGIC_VERSION])
 }
 
-function extractProjectSkeleton(project: ReportProject) {
-  const projectSkeleton: ReportProject = {
-    ...project,
-    escrows: [],
-  }
-
-  return {
-    projectId: projectSkeleton.projectId.toString(),
-    type: projectSkeleton.type,
-  }
-}
-
-function extractEBVTokens(tokens: EBVToken[]) {
+function extractEBVTokens(tokens: Token[]) {
   return tokens.map((t) => {
     return {
-      assetId: t.assetId.toString(),
-      tokenAddress: t.tokenAddress,
+      assetId: t.id.toString(),
+      tokenAddress: t.address?.toString() ?? '',
       sinceTimestamp: t.sinceTimestamp.toNumber(),
       decimals: t.decimals,
-      premintHolderAddresses: t.premintHolderAddresses,
+      premintHolderAddresses: t.premintHolderAddresses?.map(String) ?? [],
     }
   })
 }

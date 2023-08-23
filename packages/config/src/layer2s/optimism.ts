@@ -1,4 +1,13 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  Token,
+  UnixTime,
+  ValueType,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -12,6 +21,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOneAfterBlockInclusive,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -21,6 +31,20 @@ const upgradesProxy = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const TOKENS: Omit<Token, 'chainId'>[] = [
+  {
+    id: AssetId('op-optimism'),
+    name: 'Optimism',
+    coingeckoId: CoingeckoId('optimism'),
+    address: EthereumAddress('0x4200000000000000000000000000000000000042'),
+    symbol: 'OP',
+    decimals: 18,
+    sinceTimestamp: new UnixTime(1654039974),
+    category: 'other',
+    type: ValueType.NMV,
+  },
+]
 
 export const optimism: Layer2 = {
   type: 'layer2',
@@ -41,7 +65,10 @@ export const optimism: Layer2 = {
       websites: ['https://optimism.io/'],
       apps: [],
       documentation: ['https://community.optimism.io'],
-      explorers: ['https://optimistic.etherscan.io'],
+      explorers: [
+        'https://optimistic.etherscan.io',
+        'https://optimism.blockscout.com/',
+      ],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
         'https://optimism.mirror.xyz/',
@@ -54,6 +81,7 @@ export const optimism: Layer2 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
+    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
     associatedTokens: ['OP'],
     nativeL2TokensIncludedInTVL: ['OP'],
     tvlTooltip: 'TVL includes canonically bridged assets and native OP',
@@ -104,6 +132,7 @@ export const optimism: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
+      assessCount: subtractOneAfterBlockInclusive(105235064),
     },
   },
   riskView: makeBridgeCompatible({

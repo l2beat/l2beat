@@ -3,6 +3,7 @@ import {
   AssetId,
   ChainId,
   ProjectId,
+  Token,
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
@@ -11,7 +12,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
-import { Token } from '../../../model'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import {
   ReportRecord,

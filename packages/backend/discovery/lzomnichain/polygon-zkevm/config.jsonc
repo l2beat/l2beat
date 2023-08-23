@@ -1,0 +1,18 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "polygon-zkevm",
+  "name": "lzomnichain",
+  "initialAddresses": ["0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4"],
+  "names": {
+    "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4": "Endpoint",
+    "0xFe7C30860D01e28371D40434806F4A8fcDD3A098": "UltraLightNodeV2"
+  },
+  "overrides": {
+    "Endpoint": {
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"]
+    },
+    "UltraLightNodeV2": {
+      "ignoreInWatchMode": ["treasuryZROFees"]
+    }
+  }
+}

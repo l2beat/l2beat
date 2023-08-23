@@ -1,17 +1,17 @@
-import { AssetId, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, Token, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { getMockToken } from '../../test/token'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
-import { TotalSupplyTokensConfig } from './TotalSupplyTokensConfig'
 
 describe(getTotalSupplyConfigHash.name, () => {
   it('produces different hash if token is added', () => {
-    const tokenConfigBefore: TotalSupplyTokensConfig[] = [
+    const tokenConfigBefore: Token[] = [
       fakeToken(AssetId.ETH, new UnixTime(1000)),
       fakeToken(AssetId.ARB, new UnixTime(2000)),
     ]
 
-    const tokenConfigAfter: TotalSupplyTokensConfig[] = [
+    const tokenConfigAfter: Token[] = [
       ...tokenConfigBefore,
       fakeToken(AssetId.USDC, new UnixTime(2000)),
     ]
@@ -23,7 +23,7 @@ describe(getTotalSupplyConfigHash.name, () => {
   })
 
   it('produces different hash if token is removed', () => {
-    const tokenConfigBefore: TotalSupplyTokensConfig[] = [
+    const tokenConfigBefore: Token[] = [
       fakeToken(AssetId.ETH, new UnixTime(1000)),
       fakeToken(AssetId.ARB, new UnixTime(2000)),
     ]
@@ -37,12 +37,12 @@ describe(getTotalSupplyConfigHash.name, () => {
   })
 
   it('produces different hash if token timestamp changes', () => {
-    const tokenConfigBefore: TotalSupplyTokensConfig[] = [
+    const tokenConfigBefore: Token[] = [
       fakeToken(AssetId.ETH, new UnixTime(1000)),
       fakeToken(AssetId.ARB, new UnixTime(2000)),
     ]
 
-    const tokenConfigAfter: TotalSupplyTokensConfig[] = [
+    const tokenConfigAfter: Token[] = [
       fakeToken(AssetId.ETH, new UnixTime(2000)),
       fakeToken(AssetId.ARB, new UnixTime(2000)),
     ]
@@ -54,12 +54,12 @@ describe(getTotalSupplyConfigHash.name, () => {
   })
 
   it('produces same hash in case of different token order', () => {
-    const tokenConfigBefore: TotalSupplyTokensConfig[] = [
+    const tokenConfigBefore: Token[] = [
       fakeToken(AssetId.ETH, new UnixTime(1000)),
       fakeToken(AssetId.ARB, new UnixTime(2000)),
     ]
 
-    const tokenConfigAfter: TotalSupplyTokensConfig[] = [
+    const tokenConfigAfter: Token[] = [
       fakeToken(AssetId.ARB, new UnixTime(2000)),
       fakeToken(AssetId.ETH, new UnixTime(1000)),
     ]
@@ -71,14 +71,10 @@ describe(getTotalSupplyConfigHash.name, () => {
   })
 })
 
-function fakeToken(
-  assetId: AssetId,
-  sinceTimestamp: UnixTime,
-): TotalSupplyTokensConfig {
+function fakeToken(assetId: AssetId, sinceTimestamp: UnixTime): Token {
   return {
-    assetId,
+    ...getMockToken(),
+    id: assetId,
     sinceTimestamp,
-    decimals: 18,
-    tokenAddress: '0x0000000000000000000000000000000000000000',
   }
 }

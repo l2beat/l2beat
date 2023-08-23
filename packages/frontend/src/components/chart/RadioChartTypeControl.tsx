@@ -5,7 +5,6 @@ interface Tab {
   fullName: string
   shortName: string
   value: string
-  checked: boolean
 }
 
 export function RadioChartTypeControl({
@@ -20,7 +19,6 @@ export function RadioChartTypeControl({
       fullName: 'Total Value Locked',
       shortName: 'TVL',
       value: 'tvl',
-      checked: true,
     },
   ]
 
@@ -29,7 +27,6 @@ export function RadioChartTypeControl({
       fullName: 'Detailed TVL',
       shortName: 'Detailed',
       value: 'detailedTvl',
-      checked: false,
     })
   }
 
@@ -38,7 +35,6 @@ export function RadioChartTypeControl({
       fullName: 'Activity',
       shortName: 'Activity',
       value: 'activity',
-      checked: false,
     })
   }
 
@@ -72,7 +68,7 @@ export function RadioChartTypeControl({
             )}
           >
             <input
-              defaultChecked={tab.checked}
+              defaultChecked={i === 0}
               id={`radio-chart-type-controls-${tab.value}`}
               name="radio-chart-type-controls"
               type="radio"

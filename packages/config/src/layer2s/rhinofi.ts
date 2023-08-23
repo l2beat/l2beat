@@ -96,7 +96,7 @@ export const rhinofi: Layer2 = {
         {
           contract: 'StarkExchange',
           references: [
-            'https://etherscan.io/address/0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2#code#F34#L183',
+            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F34#L183',
           ],
         },
         {
