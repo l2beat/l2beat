@@ -1,9 +1,9 @@
 import { ArbiscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId, ValueType } from '@l2beat/shared-pure'
+import { ChainId, ProjectId, ValueType } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
-import { ArbitrumEBVUpdater } from '../../core/assets/ArbitrumEBVUpdater'
+import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { ArbitrumBalanceProvider } from '../../core/balances/providers/ArbitrumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
@@ -80,7 +80,7 @@ export function createArbitrumTvlSubmodule(
     config.tvl.arbitrum.minBlockTimestamp,
   )
 
-  const arbitrumTotalSupplyTokens = config.tokens.filter(
+  const totalSupplyTokens = config.tokens.filter(
     (t) => t.chainId === ChainId.ARBITRUM && t.formula === 'totalSupply',
   )
   const totalSupplyUpdater = new TotalSupplyUpdater(
@@ -89,23 +89,21 @@ export function createArbitrumTvlSubmodule(
     db.totalSupplyRepository,
     db.totalSupplyStatusRepository,
     clock,
-    arbitrumTotalSupplyTokens,
+    totalSupplyTokens,
     logger,
     ChainId.ARBITRUM,
     config.tvl.arbitrum.minBlockTimestamp,
   )
 
-  const arbitrumEBVTokens = config.tokens.filter(
-    (t) => t.chainId === ChainId.ARBITRUM && t.bucket === ValueType.EBV,
-  )
-  const totalSupplyFormulaUpdater = new ArbitrumEBVUpdater(
+  const totalSupplyFormulaUpdater = new TotalSupplyFormulaUpdater(
     priceUpdater,
-    arbitrumBalanceUpdater,
     totalSupplyUpdater,
     db.reportRepository,
     db.reportStatusRepository,
+    ProjectId.ARBITRUM,
+    ChainId.ARBITRUM,
     clock,
-    arbitrumEBVTokens,
+    totalSupplyTokens,
     logger,
     config.tvl.arbitrum.minBlockTimestamp,
   )

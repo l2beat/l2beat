@@ -16,19 +16,15 @@ export class ReportStatusRepository extends BaseRepository {
     this.autoWrap<CheckConvention<ReportStatusRepository>>(this)
   }
 
-  // TODO(radomski): Add different config hashes for value_type and chain_id
-  // after the config the updated
   async getByConfigHash(
     configHash: Hash256,
     chainId: ChainId,
-    valueType: ValueType,
   ): Promise<UnixTime[]> {
     const knex = await this.knex()
     const rows = await knex('reports_status')
       .where({
         config_hash: configHash.toString(),
         chain_id: chainId.valueOf(),
-        asset_type: valueType.toString(),
       })
       .select('unix_timestamp')
 
@@ -39,7 +35,6 @@ export class ReportStatusRepository extends BaseRepository {
     configHash: Hash256
     timestamp: UnixTime
     chainId: ChainId
-    valueType: ValueType
   }): Promise<Hash256> {
     const knex = await this.knex()
     await knex.transaction(async (trx) => {
@@ -47,14 +42,13 @@ export class ReportStatusRepository extends BaseRepository {
         .where({
           unix_timestamp: record.timestamp.toDate(),
           chain_id: record.chainId.valueOf(),
-          asset_type: record.valueType.toString(),
         })
         .delete()
       await trx('reports_status').insert({
         config_hash: record.configHash.toString(),
         unix_timestamp: record.timestamp.toDate(),
         chain_id: record.chainId.valueOf(),
-        asset_type: record.valueType.toString(),
+        asset_type: ValueType.TVL.toString(), // TODO(radomski): Remove asset_type from reportStatusTable
       })
     })
     return record.configHash

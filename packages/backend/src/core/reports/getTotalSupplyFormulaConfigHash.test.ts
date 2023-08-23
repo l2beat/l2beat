@@ -9,9 +9,9 @@ import {
 import { expect } from 'earl'
 
 import { getMockToken } from '../../test/token'
-import { getEBVConfigHash } from './getEBVConfigHash'
+import { getTotalSupplyFormulaConfigHash } from './getTotalSupplyFormulaConfigHash'
 
-describe(getEBVConfigHash.name, () => {
+describe(getTotalSupplyFormulaConfigHash.name, () => {
   it('hash changes if tokens added', () => {
     const tokenConfigBefore: Token[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
@@ -22,8 +22,8 @@ describe(getEBVConfigHash.name, () => {
       fakeExternalToken(AssetId.USDC, new UnixTime(2000)),
     ]
 
-    const hashBefore = getEBVConfigHash(tokenConfigBefore)
-    const hashAfter = getEBVConfigHash(tokenConfigAfter)
+    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
+    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -34,8 +34,8 @@ describe(getEBVConfigHash.name, () => {
     ]
     const tokenConfigAfter: Token[] = [tokenConfigBefore[0]]
 
-    const hashBefore = getEBVConfigHash(tokenConfigBefore)
-    const hashAfter = getEBVConfigHash(tokenConfigAfter)
+    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
+    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -49,8 +49,8 @@ describe(getEBVConfigHash.name, () => {
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
 
-    const hashBefore = getEBVConfigHash(tokenConfigBefore)
-    const hashAfter = getEBVConfigHash(tokenConfigAfter)
+    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
+    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
     expect(hashBefore).toEqual(hashAfter)
   })
 
@@ -65,8 +65,8 @@ describe(getEBVConfigHash.name, () => {
       },
     ]
 
-    const hashBefore = getEBVConfigHash(tokenConfigBefore)
-    const hashAfter = getEBVConfigHash(tokenConfigAfter)
+    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
+    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
     expect(hashBefore).not.toEqual(hashAfter)
   })
 
@@ -76,8 +76,8 @@ describe(getEBVConfigHash.name, () => {
       fakeExternalToken(AssetId.ARB, new UnixTime(2000)),
     ]
 
-    const hashBefore = getEBVConfigHash(tokenConfig)
-    const hashAfter = getEBVConfigHash(tokenConfig)
+    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfig)
+    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfig)
     expect(hashBefore).toEqual(hashAfter)
   })
 })

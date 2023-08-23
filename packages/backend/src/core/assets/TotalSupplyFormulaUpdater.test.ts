@@ -9,12 +9,12 @@ import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import { getEBVConfigHash } from '../reports/getEBVConfigHash'
+import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
-import { ArbitrumEBVUpdater } from './ArbitrumEBVUpdater'
+import { TotalSupplyFormulaUpdater } from './TotalSupplyFormulaUpdater'
 
-describe(ArbitrumEBVUpdater.name, () => {
-  describe(ArbitrumEBVUpdater.prototype.update.name, () => {
+describe(TotalSupplyFormulaUpdater.name, () => {
+  describe(TotalSupplyFormulaUpdater.prototype.update.name, () => {
     it('calculates and saves reports', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -41,7 +41,7 @@ describe(ArbitrumEBVUpdater.name, () => {
         add: async ({ configHash }) => configHash,
       })
 
-      const ebvUpdater = new ArbitrumEBVUpdater(
+      const ebvUpdater = new TotalSupplyFormulaUpdater(
         priceUpdater,
         balanceUpdater,
         totalSupplyUpdater,
@@ -56,7 +56,7 @@ describe(ArbitrumEBVUpdater.name, () => {
       await ebvUpdater.update(MOCK.NOW.add(1, 'hours'))
       await ebvUpdater.update(MOCK.NOW)
 
-      const configHash = getEBVConfigHash(MOCK.TOKENS)
+      const configHash = getTotalSupplyFormulaConfigHash(MOCK.TOKENS)
 
       expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
@@ -102,7 +102,7 @@ describe(ArbitrumEBVUpdater.name, () => {
       const status = mockObject<ReportStatusRepository>({
         add: async () => Hash256.random(),
       })
-      const updater = new ArbitrumEBVUpdater(
+      const updater = new TotalSupplyFormulaUpdater(
         priceUpdater,
         balanceUpdater,
         suppliesUpdater,
@@ -124,7 +124,7 @@ describe(ArbitrumEBVUpdater.name, () => {
     })
   })
 
-  describe(ArbitrumEBVUpdater.prototype.start.name, () => {
+  describe(TotalSupplyFormulaUpdater.prototype.start.name, () => {
     it('skips known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -163,7 +163,7 @@ describe(ArbitrumEBVUpdater.name, () => {
         },
       })
 
-      const ebvUpdater = new ArbitrumEBVUpdater(
+      const ebvUpdater = new TotalSupplyFormulaUpdater(
         priceUpdater,
         balanceUpdater,
         totalSupplyUpdater,
@@ -178,7 +178,7 @@ describe(ArbitrumEBVUpdater.name, () => {
       await ebvUpdater.start()
 
       await waitForExpect(() => {
-        const configHash = getEBVConfigHash(MOCK.TOKENS)
+        const configHash = getTotalSupplyFormulaConfigHash(MOCK.TOKENS)
 
         expect(reportStatusRepository.add).toHaveBeenCalledTimes(2)
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(1, {
@@ -207,7 +207,7 @@ describe(ArbitrumEBVUpdater.name, () => {
     })
   })
 
-  describe(ArbitrumEBVUpdater.prototype.getReportsWhenReady.name, () => {
+  describe(TotalSupplyFormulaUpdater.prototype.getReportsWhenReady.name, () => {
     it('returns known timestamps', async () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn()
@@ -247,7 +247,7 @@ describe(ArbitrumEBVUpdater.name, () => {
         },
       })
 
-      const ebvUpdater = new ArbitrumEBVUpdater(
+      const ebvUpdater = new TotalSupplyFormulaUpdater(
         priceUpdater,
         balanceUpdater,
         totalSupplyUpdater,

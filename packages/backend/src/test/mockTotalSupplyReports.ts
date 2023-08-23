@@ -9,7 +9,7 @@ import {
   ValueType,
 } from '@l2beat/shared-pure'
 
-import { createEBVReports } from '../core/reports/createEBVReports'
+import { createTotalSupplyFormulaReports } from '../core/reports/createTotalSupplyFormulaReports'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
@@ -88,7 +88,7 @@ const TOKENS: Token[] = [
   },
 ]
 
-const REPORTS = createEBVReports(
+const REPORTS = createTotalSupplyFormulaReports(
   PRICES,
   BALANCES,
   TOTAL_SUPPLIES,
@@ -96,7 +96,7 @@ const REPORTS = createEBVReports(
   ProjectId.ARBITRUM,
   ChainId.ARBITRUM,
 )
-const FUTURE_REPORTS = createEBVReports(
+const FUTURE_REPORTS = createTotalSupplyFormulaReports(
   FUTURE_PRICES,
   FUTURE_BALANCES,
   TOTAL_SUPPLIES,

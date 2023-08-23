@@ -11,7 +11,7 @@ import {
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
-import { getEBVConfigHash } from '../../../core/reports/getEBVConfigHash'
+import { getTotalSupplyFormulaConfigHash } from '../../../core/reports/getTotalSupplyFormulaConfigHash'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
 import { Project } from '../../../model'
@@ -261,7 +261,7 @@ function getConfigHashForReports(chainId: ChainId, projects: Project[]) {
     case ChainId.ETHEREUM:
       return getReportConfigHash(projects)
     case ChainId.ARBITRUM:
-      return getEBVConfigHash(
+      return getTotalSupplyFormulaConfigHash(
         tokenList.filter(
           (t) => t.chainId === ChainId.ARBITRUM && t.bucket === ValueType.EBV,
         ),

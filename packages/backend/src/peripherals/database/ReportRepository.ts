@@ -15,9 +15,9 @@ import { Database } from './shared/Database'
 
 export interface ReportRecord {
   timestamp: UnixTime
-  projectId: ProjectId
   asset: AssetId
-  // TODO: Remove chainId and type as fields
+  // TODO: Remove projectId, chainId, and type as columns from the database
+  projectId: ProjectId
   chainId: ChainId
   type: ValueType
   amount: bigint

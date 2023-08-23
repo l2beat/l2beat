@@ -1,13 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import {
-  assert,
-  ChainId,
-  Hash256,
-  ProjectId,
-  Token,
-  UnixTime,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { assert, ChainId, Hash256, Token, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -15,28 +7,29 @@ import {
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { createEBVReports } from '../reports/createEBVReports'
-import { getEBVConfigHash } from '../reports/getEBVConfigHash'
+import { createTotalSupplyFormulaReports } from '../reports/createTotalSupplyFormulaReports'
+import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
+import { ProjectId } from '@l2beat/shared-pure'
 
 // TODO: Make this class more generic
 // ProjectId, ChainId should be passed in the constructor
-export class ArbitrumEBVUpdater implements AssetUpdater {
+export class TotalSupplyFormulaUpdater implements AssetUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
 
   constructor(
     private readonly priceUpdater: PriceUpdater,
-    private readonly balanceUpdater: BalanceUpdater,
     private readonly totalSupplyUpdater: TotalSupplyUpdater,
     private readonly reportRepository: ReportRepository,
     private readonly reportStatusRepository: ReportStatusRepository,
+    private readonly projectId: ProjectId,
+    private readonly chainId: ChainId,
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly logger: Logger,
@@ -45,29 +38,24 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     assert(
       tokens.every(
         (token) =>
-          token.chainId === this.getChainId() &&
-          token.bucket === this.getValueType(),
+          token.chainId === this.chainId && token.formula === 'totalSupply',
       ),
-      'Programmer error: tokens must be of type EBV and on the same chain as the arbitrumEBVUpdater',
+      'Programmer error: all tokens must be using totalSupply formula have the same chainId',
     )
     this.logger = this.logger.for(this)
-    this.configHash = getEBVConfigHash(this.tokens)
+    this.configHash = getTotalSupplyFormulaConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: ArbitrumEBVUpdater.name,
+        metricsId: TotalSupplyFormulaUpdater.name,
       },
     )
   }
 
-  getProjectId() {
-    return ProjectId.ARBITRUM
-  }
-
   getChainId() {
-    return ChainId.ARBITRUM
+    return this.chainId
   }
 
   getConfigHash() {
@@ -78,15 +66,10 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     return this.minTimestamp
   }
 
-  getValueType() {
-    return ValueType.EBV
-  }
-
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.getConfigHash(),
-      this.getChainId(),
-      this.getValueType(),
+      this.chainId,
     )
 
     for (const timestamp of known) {
@@ -112,28 +95,25 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
 
-    const [prices, balances, totalSupplies] = await Promise.all([
+    const [prices, totalSupplies] = await Promise.all([
       this.priceUpdater.getPricesWhenReady(timestamp),
-      this.balanceUpdater.getBalancesWhenReady(timestamp),
       this.totalSupplyUpdater.getTotalSuppliesWhenReady(timestamp),
     ])
     this.logger.debug('Prices, balances and supplies ready')
 
-    const reports = createEBVReports(
+    const reports = createTotalSupplyFormulaReports(
       prices,
-      balances,
       totalSupplies,
       this.tokens,
-      this.getProjectId(),
-      this.getChainId(),
+      this.projectId,
+      this.chainId,
     )
     await this.reportRepository.addOrUpdateMany(reports)
 
     await this.reportStatusRepository.add({
       configHash: this.getConfigHash(),
       timestamp,
-      chainId: this.getChainId(),
-      valueType: this.getValueType(),
+      chainId: this.chainId,
     })
 
     this.knownSet.add(timestamp.toNumber())
