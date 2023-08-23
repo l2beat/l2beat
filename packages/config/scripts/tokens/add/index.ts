@@ -17,7 +17,10 @@ async function main() {
   }
 
   const http = new HttpClient()
-  const coingeckoClient = new CoingeckoClient(http, getEnv('COINGECKO_API_KEY'))
+  const coingeckoClient = new CoingeckoClient(
+    http,
+    process.env.COINGECKO_API_KEY,
+  )
   const provider = new providers.AlchemyProvider(
     'homestead',
     getEnv('CONFIG_ALCHEMY_API_KEY'),
