@@ -74,14 +74,14 @@ function SlideCardContent(props: SlideCardContentProps) {
       <div className="flex h-full flex-col gap-4 rounded-t-2xl bg-gray-100 p-4 dark:bg-zinc-800">
         <h2 className="text-3xl font-bold">{props.title}</h2>
         <div className="relative flex grow flex-wrap">
-          <div className="absolute inset-x-0 top-[-2px] z-10 h-[4px] bg-gray-100 dark:bg-zinc-800" />
-          <div className="absolute inset-x-0 top-0 z-20 h-4 bg-gradient-to-b from-gray-100 via-gray-100/60 to-transparent dark:from-zinc-800 dark:via-zinc-800/60" />
+          <div className="absolute pointer-events-none inset-x-0 top-[-2px] z-10 h-[4px] bg-gray-100 dark:bg-zinc-800" />
+          <div className="absolute pointer-events-none inset-x-0 top-0 z-20 h-4 bg-gradient-to-b from-gray-100 via-gray-100/60 to-transparent dark:from-zinc-800 dark:via-zinc-800/60" />
           <div className="absolute inset-0 overflow-auto scroll-smooth">
             <div className="pointer-events-none h-4" />
             {props.children}
           </div>
-          <div className="absolute inset-x-0 bottom-0 z-20 h-8 bg-gradient-to-t from-gray-100 via-gray-100/60 to-transparent dark:from-zinc-800 dark:via-zinc-800/60" />
-          <div className="absolute inset-x-0 bottom-[-2px] z-10 h-[4px] bg-gray-100 dark:bg-zinc-800" />
+          <div className="absolute pointer-events-none inset-x-0 bottom-0 z-20 h-8 bg-gradient-to-t from-gray-100 via-gray-100/60 to-transparent dark:from-zinc-800 dark:via-zinc-800/60" />
+          <div className="absolute pointer-events-none inset-x-0 bottom-[-2px] z-10 h-[4px] bg-gray-100 dark:bg-zinc-800" />
         </div>
       </div>
       <div className="flex w-full items-center justify-center bg-gray-200 py-6 dark:bg-[#373B41] ">
