@@ -114,6 +114,25 @@ export function createTvlRouter(
         },
       ),
     )
+
+    router.get('/api/project-assets-breakdown', async (ctx) => {
+      const projectAssetsBreakdown =
+        await detailedTvlController.getProjectTokenBreakdownApiResponse()
+
+      if (projectAssetsBreakdown.result === 'error') {
+        if (projectAssetsBreakdown.error === 'NO_DATA') {
+          ctx.status = 404
+        }
+
+        if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
+          ctx.status = 422
+        }
+
+        return
+      }
+
+      ctx.body = projectAssetsBreakdown.data
+    })
   }
 
   return router
