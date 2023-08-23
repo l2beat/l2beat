@@ -30,10 +30,6 @@ export function createArbitrumTvlSubmodule(
   }
 
   // #region peripherals
-  const arbitrumEBVTokens = config.tokens.filter(
-    (t) => t.chainId === ChainId.ARBITRUM && t.type === ValueType.EBV,
-  )
-
   const arbitrumProvider = new providers.JsonRpcProvider(
     config.tvl.arbitrum.providerUrl,
     'arbitrum',
@@ -84,19 +80,25 @@ export function createArbitrumTvlSubmodule(
     config.tvl.arbitrum.minBlockTimestamp,
   )
 
+  const arbitrumTotalSupplyTokens = config.tokens.filter(
+    (t) => t.chainId === ChainId.ARBITRUM && t.formula === 'totalSupply',
+  )
   const totalSupplyUpdater = new TotalSupplyUpdater(
     totalSupplyProvider,
     arbiscanBlockNumberUpdater,
     db.totalSupplyRepository,
     db.totalSupplyStatusRepository,
     clock,
-    arbitrumEBVTokens,
+    arbitrumTotalSupplyTokens,
     logger,
     ChainId.ARBITRUM,
     config.tvl.arbitrum.minBlockTimestamp,
   )
 
-  const ebvUpdater = new ArbitrumEBVUpdater(
+  const arbitrumEBVTokens = config.tokens.filter(
+    (t) => t.chainId === ChainId.ARBITRUM && t.bucket === ValueType.EBV,
+  )
+  const totalSupplyFormulaUpdater = new ArbitrumEBVUpdater(
     priceUpdater,
     arbitrumBalanceUpdater,
     totalSupplyUpdater,
@@ -117,13 +119,13 @@ export function createArbitrumTvlSubmodule(
     await arbiscanBlockNumberUpdater.start()
     await arbitrumBalanceUpdater.start()
     await totalSupplyUpdater.start()
-    await ebvUpdater.start()
+    await totalSupplyFormulaUpdater.start()
 
     logger.info('Started')
   }
 
   return {
-    updaters: [ebvUpdater],
+    updaters: [totalSupplyFormulaUpdater],
     start,
   }
 }

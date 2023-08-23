@@ -6,16 +6,23 @@ import { UnixTime } from './UnixTime'
 import { ValueType } from './ValueType'
 
 export interface Token {
-  name: string
   id: AssetId
-  coingeckoId: CoingeckoId
-  address?: EthereumAddress
+
+  name: string
   symbol: string
   decimals: number
-  sinceTimestamp: UnixTime
-  category: 'ether' | 'stablecoin' | 'other'
-  chainId: ChainId
-  type: ValueType
-  premintHolderAddresses?: EthereumAddress[]
   iconUrl?: string
+
+  chainId: ChainId
+  address?: EthereumAddress
+  coingeckoId: CoingeckoId
+
+  sinceTimestamp: UnixTime
+
+  /** @deprecated */
+  category: 'ether' | 'stablecoin' | 'other'
+  bucket: ValueType
+  formula: 'totalSupply' | 'locked' | 'circulatingSupply'
+
+  // premintHolderAddresses?: EthereumAddress[]
 }

@@ -111,6 +111,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     )
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
+
     const [prices, balances, totalSupplies] = await Promise.all([
       this.priceUpdater.getPricesWhenReady(timestamp),
       this.balanceUpdater.getBalancesWhenReady(timestamp),
