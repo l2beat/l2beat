@@ -6,13 +6,13 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
+import { getProjectTvlTooltipText } from '../../../utils/project/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../utils/utils'
 import { ScalingTvlViewEntry } from '../types'
 import { ScalingTvlViewProps } from '../view/ScalingTvlView'
-import { getProjectTvlTooltipText } from '../../../utils/project/getProjectTvlTooltipText'
 
 export function getScalingTvlView(
   config: Config,
