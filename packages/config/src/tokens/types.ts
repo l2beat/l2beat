@@ -5,8 +5,8 @@ import {
   EthereumAddress,
   numberAs,
   stringAs,
+  Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
@@ -37,8 +37,8 @@ const TokenInfo = z.object({
   iconUrl: z.optional(z.string()),
 })
 
-export const getCanonicalTokens = () => {
+export function getCanonicalTokens(): Token[] {
   return tokens
     .map((t) => TokenInfo.parse(t))
-    .map((t) => ({ ...t, chainId: ChainId.ETHEREUM, type: ValueType.CBV }))
+    .map((t) => ({ ...t, chainId: ChainId.ETHEREUM, type: 'CBV' }))
 }

@@ -1,4 +1,4 @@
-import { AssetId, ChainId, ProjectId, ValueType } from '@l2beat/shared-pure'
+import { AssetId, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
@@ -21,7 +21,7 @@ describe(createEBVReports.name, () => {
         projectId: ProjectId.ARBITRUM,
         asset: AssetId.USDC,
         chainId: ChainId.ARBITRUM,
-        type: ValueType.EBV,
+        reportType: 'EBV',
         amount: 900n * 10n ** 6n,
         usdValue: 900_00n,
         ethValue: 900_000n,

@@ -1,10 +1,10 @@
 import Router from '@koa/router'
 import {
   AssetId,
+  AssetType,
   branded,
   ChainId,
   ProjectId,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
@@ -84,7 +84,7 @@ export function createTvlRouter(
             chainId: z.string(),
             projectId: branded(z.string(), ProjectId),
             assetId: branded(z.string(), AssetId),
-            assetType: branded(z.string(), ValueType),
+            assetType: branded(z.string(), AssetType),
           }),
         }),
         async (ctx) => {

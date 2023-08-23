@@ -25,7 +25,7 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
     project_id: string
     asset_id: string
-    asset_type: string
+    report_type: string
     chain_id: number
     asset_amount: string
     usd_value: string
@@ -37,14 +37,14 @@ declare module 'knex/types/tables' {
     project_id: string
     usd_value: string
     eth_value: string
-    value_type: string
+    report_type: string
   }
 
   interface ReportStatusRow {
     config_hash: string
     unix_timestamp: Date
     chain_id: number
-    asset_type: string
+    report_type: string
   }
 
   interface BalanceStatusRow {
