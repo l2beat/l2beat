@@ -31,6 +31,7 @@ export function getScalingTvlView(
     ),
     stagesEnabled: config.features.stages,
     upcomingEnabled: config.features.upcomingRollups,
+    detailedTvlEnabled: config.features.detailedTvl,
   }
 }
 
