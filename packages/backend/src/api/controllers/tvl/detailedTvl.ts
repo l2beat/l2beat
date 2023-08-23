@@ -3,8 +3,8 @@ import {
   DetailedTvlApiProject,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
+  ReportType,
   Token,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { mapValues } from 'lodash'
 
@@ -96,7 +96,7 @@ type NonCanonicalAssetsBreakdown = ReturnType<
 export function getNonCanonicalAssetsBreakdown(
   reports: ReportRecord[],
   tokens: Token[],
-  reportType: ValueType,
+  reportType: ReportType,
 ) {
   return tokens
     .filter((token) => token.type === reportType)

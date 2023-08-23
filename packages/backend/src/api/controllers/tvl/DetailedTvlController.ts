@@ -250,13 +250,13 @@ export class DetailedTvlController {
     const externalAssetsBreakdown = getNonCanonicalAssetsBreakdown(
       latestReports,
       this.tokens,
-      ValueType.EBV,
+      'EBV',
     )
 
     const nativeAssetsBreakdown = getNonCanonicalAssetsBreakdown(
       latestReports,
       this.tokens,
-      ValueType.NMV,
+      'NMV',
     )
 
     const canonicalAssetsBreakdown = getCanonicalAssetsBreakdown(
