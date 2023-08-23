@@ -1,4 +1,4 @@
-import { AssetId, ChainId, ProjectId, ValueType } from '@l2beat/shared-pure'
+import { AssetId, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { REPORTS_MOCK as MOCK } from '../../test/mockReports'
@@ -18,7 +18,7 @@ describe(createReports.name, () => {
         projectId: ProjectId('apex'),
         asset: AssetId.DAI,
         chainId: ChainId.ETHEREUM,
-        type: ValueType.CBV,
+        reportType: 'CBV',
         amount: 5_000n * 10n ** 18n,
         usdValue: 5_000_00n,
         ethValue: 5_000000n,
@@ -28,7 +28,7 @@ describe(createReports.name, () => {
         projectId: ProjectId('apex'),
         asset: AssetId.ETH,
         chainId: ChainId.ETHEREUM,
-        type: ValueType.CBV,
+        reportType: 'CBV',
         amount: 30n * 10n ** 18n,
         usdValue: 30_000_00n,
         ethValue: 30_000000n,
@@ -38,7 +38,7 @@ describe(createReports.name, () => {
         projectId: ProjectId('dydx'),
         asset: AssetId.ETH,
         chainId: ChainId.ETHEREUM,
-        type: ValueType.CBV,
+        reportType: 'CBV',
         amount: 20n * 10n ** 18n,
         usdValue: 20_000_00n,
         ethValue: 20_000000n,
@@ -76,7 +76,7 @@ describe(aggregateBalancesPerProject.name, () => {
       {
         assetId: AssetId.DAI,
         chainId: ChainId.ETHEREUM,
-        type: ValueType.CBV,
+        type: 'CBV',
         balance: 200n * 10n ** 18n,
         decimals: 18,
         projectId: ProjectId('apex'),
@@ -84,7 +84,7 @@ describe(aggregateBalancesPerProject.name, () => {
       {
         assetId: AssetId.ETH,
         chainId: ChainId.ETHEREUM,
-        type: ValueType.CBV,
+        type: 'CBV',
         balance: 0n,
         decimals: 18,
         projectId: ProjectId('apex'),
@@ -92,7 +92,7 @@ describe(aggregateBalancesPerProject.name, () => {
       {
         assetId: AssetId.ETH,
         chainId: ChainId.ETHEREUM,
-        type: ValueType.CBV,
+        type: 'CBV',
         balance: 0n,
         decimals: 18,
         projectId: ProjectId('dydx'),
@@ -129,7 +129,7 @@ describe(aggregateBalancesPerProject.name, () => {
     expect(result).toEqual([
       {
         assetId: AssetId.DAI,
-        type: ValueType.CBV,
+        type: 'CBV',
         chainId: ChainId.ETHEREUM,
         balance: 200n * 10n ** 18n,
         decimals: 18,
@@ -137,7 +137,7 @@ describe(aggregateBalancesPerProject.name, () => {
       },
       {
         assetId: AssetId.ETH,
-        type: ValueType.CBV,
+        type: 'CBV',
         chainId: ChainId.ETHEREUM,
         balance: 0n,
         decimals: 18,
@@ -145,7 +145,7 @@ describe(aggregateBalancesPerProject.name, () => {
       },
       {
         assetId: AssetId.ETH,
-        type: ValueType.CBV,
+        type: 'CBV',
         chainId: ChainId.ETHEREUM,
         balance: 0n,
         decimals: 18,

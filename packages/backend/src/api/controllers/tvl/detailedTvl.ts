@@ -3,8 +3,8 @@ import {
   DetailedTvlApiProject,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
+  ReportType,
   Token,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { mapValues } from 'lodash'
 
@@ -38,7 +38,7 @@ export function groupByProjectIdAndAssetType(reports: ReportRecord[]) {
   return nestedGroupBy(
     reports,
     (report) => report.projectId,
-    (report) => report.type,
+    (report) => report.reportType,
   )
 }
 
@@ -63,14 +63,14 @@ export function getProjectTokensCharts(
 
   // Sort assets per type by USD value
   const tokens = Object.entries(assetValuesPerProject).reduce(
-    (prev, [valueType, reports]) => {
+    (prev, [reportType, reports]) => {
       return {
         ...prev,
-        [valueType]: reports
+        [reportType]: reports
           .map((report) => ({
             assetId: report.asset,
             chainId: report.chainId,
-            valueType: report.type,
+            assetType: report.reportType,
             usdValue: asNumber(report.usdValue, 2),
           }))
           .sort((a, b) => b.usdValue - a.usdValue),
@@ -96,7 +96,7 @@ type NonCanonicalAssetsBreakdown = ReturnType<
 export function getNonCanonicalAssetsBreakdown(
   reports: ReportRecord[],
   tokens: Token[],
-  reportType: ValueType,
+  reportType: ReportType,
 ) {
   return tokens
     .filter((token) => token.type === reportType)

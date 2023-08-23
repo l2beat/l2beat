@@ -6,10 +6,10 @@ import {
   Hash256,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
+  ReportType,
   Token,
   TvlApiChart,
   TvlApiCharts,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
@@ -155,7 +155,7 @@ export class DetailedTvlController {
     projectId: ProjectId,
     chainId: ChainId,
     assetId: AssetId,
-    assetType: ValueType,
+    assetType: ReportType,
   ): Promise<DetailedAssetTvlResult> {
     const asset = this.tokens.find((t) => t.id === assetId)
     const project = this.projects.find((p) => p.projectId === projectId)
@@ -250,13 +250,13 @@ export class DetailedTvlController {
     const externalAssetsBreakdown = getNonCanonicalAssetsBreakdown(
       latestReports,
       this.tokens,
-      ValueType.EBV,
+      'EBV',
     )
 
     const nativeAssetsBreakdown = getNonCanonicalAssetsBreakdown(
       latestReports,
       this.tokens,
-      ValueType.NMV,
+      'NMV',
     )
 
     const canonicalAssetsBreakdown = getCanonicalAssetsBreakdown(

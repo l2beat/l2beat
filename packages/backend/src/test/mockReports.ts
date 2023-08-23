@@ -5,7 +5,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { aggregateReports } from '../core/reports/aggregateReports'
@@ -14,6 +13,7 @@ import { OP_TOKEN_ID } from '../core/reports/custom/optimism'
 import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
+import { ReportRecord } from '../peripherals/database/ReportRepository'
 import { getMockToken } from './token'
 
 const NOW = UnixTime.now().toStartOf('hour')
@@ -113,10 +113,10 @@ const FUTURE_REPORTS = createReports(
   ChainId.ETHEREUM,
 )
 
-const FUTURE_OP_REPORT = [
+const FUTURE_OP_REPORT: ReportRecord[] = [
   {
     asset: OP_TOKEN_ID,
-    type: ValueType.NMV,
+    reportType: 'NMV',
     chainId: ChainId.NMV,
     amount: 716708907000000000000000000n,
     ethValue: 716708907000000n,

@@ -7,7 +7,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
@@ -312,7 +311,7 @@ describe(BalanceUpdater.name, () => {
       address: EthereumAddress.random(),
       category: 'other',
       chainId: ChainId.ETHEREUM,
-      type: ValueType.CBV,
+      type: 'CBV',
     }
   }
 })

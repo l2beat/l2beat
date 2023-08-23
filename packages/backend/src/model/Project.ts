@@ -10,7 +10,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 export interface Project {
@@ -35,7 +34,7 @@ export function layer2ToProject(layer2: Layer2): Project {
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
         escrow.tokens === '*'
-          ? tokenList.filter((t) => t.type === ValueType.CBV)
+          ? tokenList.filter((t) => t.type === 'CBV')
           : escrow.tokens.map(getCanonicalTokenBySymbol),
     })),
     transactionApi: layer2.config.transactionApi,
@@ -51,7 +50,7 @@ export function bridgeToProject(bridge: Bridge): Project {
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
         escrow.tokens === '*'
-          ? tokenList.filter((t) => t.type === ValueType.CBV)
+          ? tokenList.filter((t) => t.type === 'CBV')
           : escrow.tokens.map(getCanonicalTokenBySymbol),
     })),
   }

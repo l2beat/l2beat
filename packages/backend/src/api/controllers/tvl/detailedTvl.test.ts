@@ -1,10 +1,4 @@
-import {
-  AssetId,
-  ChainId,
-  ProjectId,
-  UnixTime,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { AssetId, ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 
@@ -27,42 +21,42 @@ describe('detailedTvl', () => {
           timestamp: firstUnixTimestamp,
           usdValue: 1n,
           ethValue: 1n,
-          valueType: ValueType.CBV,
+          reportType: 'CBV',
           projectId: ProjectId.ARBITRUM,
         },
         {
           timestamp: firstUnixTimestamp,
           usdValue: 2n,
           ethValue: 2n,
-          valueType: ValueType.EBV,
+          reportType: 'EBV',
           projectId: ProjectId.ARBITRUM,
         },
         {
           timestamp: secondUnixTimestamp,
           usdValue: 3n,
           ethValue: 3n,
-          valueType: ValueType.TVL,
+          reportType: 'TVL',
           projectId: ProjectId.ARBITRUM,
         },
         {
           timestamp: firstUnixTimestamp,
           usdValue: 1n,
           ethValue: 1n,
-          valueType: ValueType.CBV,
+          reportType: 'CBV',
           projectId: ProjectId.ETHEREUM,
         },
         {
           timestamp: firstUnixTimestamp,
           usdValue: 2n,
           ethValue: 2n,
-          valueType: ValueType.EBV,
+          reportType: 'EBV',
           projectId: ProjectId.ETHEREUM,
         },
         {
           timestamp: secondUnixTimestamp,
           usdValue: 3n,
           ethValue: 3n,
-          valueType: ValueType.TVL,
+          reportType: 'TVL',
           projectId: ProjectId.ETHEREUM,
         },
       ]
@@ -76,14 +70,14 @@ describe('detailedTvl', () => {
               timestamp: firstUnixTimestamp,
               usdValue: 1n,
               ethValue: 1n,
-              valueType: ValueType.CBV,
+              reportType: 'CBV',
               projectId: ProjectId.ARBITRUM,
             },
             {
               timestamp: firstUnixTimestamp,
               usdValue: 2n,
               ethValue: 2n,
-              valueType: ValueType.EBV,
+              reportType: 'EBV',
               projectId: ProjectId.ARBITRUM,
             },
           ],
@@ -92,7 +86,7 @@ describe('detailedTvl', () => {
               timestamp: secondUnixTimestamp,
               usdValue: 3n,
               ethValue: 3n,
-              valueType: ValueType.TVL,
+              reportType: 'TVL',
               projectId: ProjectId.ARBITRUM,
             },
           ],
@@ -103,14 +97,14 @@ describe('detailedTvl', () => {
               timestamp: firstUnixTimestamp,
               usdValue: 1n,
               ethValue: 1n,
-              valueType: ValueType.CBV,
+              reportType: 'CBV',
               projectId: ProjectId.ETHEREUM,
             },
             {
               timestamp: firstUnixTimestamp,
               usdValue: 2n,
               ethValue: 2n,
-              valueType: ValueType.EBV,
+              reportType: 'EBV',
               projectId: ProjectId.ETHEREUM,
             },
           ],
@@ -119,7 +113,7 @@ describe('detailedTvl', () => {
               timestamp: secondUnixTimestamp,
               usdValue: 3n,
               ethValue: 3n,
-              valueType: ValueType.TVL,
+              reportType: 'TVL',
               projectId: ProjectId.ETHEREUM,
             },
           ],
@@ -134,7 +128,7 @@ describe('detailedTvl', () => {
       const mockReports: ReportRecord[] = [
         {
           timestamp,
-          type: ValueType.CBV,
+          reportType: 'CBV',
           chainId: ChainId.ARBITRUM,
           projectId: ProjectId.ARBITRUM,
           amount: 1n,
@@ -144,7 +138,7 @@ describe('detailedTvl', () => {
         },
         {
           timestamp,
-          type: ValueType.NMV,
+          reportType: 'NMV',
           chainId: ChainId.ARBITRUM,
           projectId: ProjectId.ARBITRUM,
           amount: 2n,
@@ -154,7 +148,7 @@ describe('detailedTvl', () => {
         },
         {
           timestamp,
-          type: ValueType.EBV,
+          reportType: 'EBV',
           chainId: ChainId.ARBITRUM,
           projectId: ProjectId.ARBITRUM,
           amount: 3n,
@@ -164,7 +158,7 @@ describe('detailedTvl', () => {
         },
         {
           timestamp,
-          type: ValueType.EBV,
+          reportType: 'EBV',
           chainId: ChainId.ETHEREUM,
           projectId: ProjectId.ETHEREUM,
           amount: 1n,
@@ -174,7 +168,7 @@ describe('detailedTvl', () => {
         },
         {
           timestamp,
-          type: ValueType.CBV,
+          reportType: 'CBV',
           chainId: ChainId.ETHEREUM,
           projectId: ProjectId.ETHEREUM,
           amount: 2n,
@@ -184,7 +178,7 @@ describe('detailedTvl', () => {
         },
         {
           timestamp,
-          type: ValueType.NMV,
+          reportType: 'NMV',
           chainId: ChainId.ETHEREUM,
           projectId: ProjectId.ETHEREUM,
           amount: 3n,
@@ -198,10 +192,10 @@ describe('detailedTvl', () => {
 
       expect(result).toEqual({
         [ProjectId.ARBITRUM.toString()]: {
-          [ValueType.CBV.toString()]: [
+          CBV: [
             {
               timestamp,
-              type: ValueType.CBV,
+              reportType: 'CBV',
               chainId: ChainId.ARBITRUM,
               projectId: ProjectId.ARBITRUM,
               amount: 1n,
@@ -210,10 +204,10 @@ describe('detailedTvl', () => {
               asset: AssetId.USDC,
             },
           ],
-          [ValueType.EBV.toString()]: [
+          EBV: [
             {
               timestamp,
-              type: ValueType.EBV,
+              reportType: 'EBV',
               chainId: ChainId.ARBITRUM,
               projectId: ProjectId.ARBITRUM,
               amount: 3n,
@@ -222,10 +216,10 @@ describe('detailedTvl', () => {
               asset: AssetId.ETH,
             },
           ],
-          [ValueType.NMV.toString()]: [
+          NMV: [
             {
               timestamp,
-              type: ValueType.NMV,
+              reportType: 'NMV',
               chainId: ChainId.ARBITRUM,
               projectId: ProjectId.ARBITRUM,
               amount: 2n,
@@ -236,10 +230,10 @@ describe('detailedTvl', () => {
           ],
         },
         [ProjectId.ETHEREUM.toString()]: {
-          [ValueType.EBV.toString()]: [
+          EBV: [
             {
               timestamp,
-              type: ValueType.EBV,
+              reportType: 'EBV',
               chainId: ChainId.ETHEREUM,
               projectId: ProjectId.ETHEREUM,
               amount: 1n,
@@ -248,10 +242,10 @@ describe('detailedTvl', () => {
               asset: AssetId.USDC,
             },
           ],
-          [ValueType.CBV.toString()]: [
+          CBV: [
             {
               timestamp,
-              type: ValueType.CBV,
+              reportType: 'CBV',
               chainId: ChainId.ETHEREUM,
               projectId: ProjectId.ETHEREUM,
               amount: 2n,
@@ -260,10 +254,10 @@ describe('detailedTvl', () => {
               asset: AssetId.USDC,
             },
           ],
-          [ValueType.NMV.toString()]: [
+          NMV: [
             {
               timestamp,
-              type: ValueType.NMV,
+              reportType: 'NMV',
               chainId: ChainId.ETHEREUM,
               projectId: ProjectId.ETHEREUM,
               amount: 3n,
@@ -283,7 +277,7 @@ describe('detailedTvl', () => {
     const mockReports: ReportRecord[] = [
       {
         timestamp,
-        type: ValueType.CBV,
+        reportType: 'CBV',
         chainId: ChainId.ARBITRUM,
         projectId: ProjectId.ARBITRUM,
         amount: 100n,
@@ -293,7 +287,7 @@ describe('detailedTvl', () => {
       },
       {
         timestamp,
-        type: ValueType.CBV,
+        reportType: 'CBV',
         chainId: ChainId.ARBITRUM,
         projectId: ProjectId.ARBITRUM,
         amount: 200n,
@@ -303,7 +297,7 @@ describe('detailedTvl', () => {
       },
       {
         timestamp,
-        type: ValueType.EBV,
+        reportType: 'EBV',
         chainId: ChainId.ARBITRUM,
         projectId: ProjectId.ARBITRUM,
         amount: 300n,
@@ -313,7 +307,7 @@ describe('detailedTvl', () => {
       },
       {
         timestamp,
-        type: ValueType.EBV,
+        reportType: 'EBV',
         chainId: ChainId.ETHEREUM,
         projectId: ProjectId.ETHEREUM,
         amount: 1000n,
@@ -323,7 +317,7 @@ describe('detailedTvl', () => {
       },
       {
         timestamp,
-        type: ValueType.CBV,
+        reportType: 'CBV',
         chainId: ChainId.ETHEREUM,
         projectId: ProjectId.ETHEREUM,
         amount: 2000n,
@@ -333,7 +327,7 @@ describe('detailedTvl', () => {
       },
       {
         timestamp,
-        type: ValueType.NMV,
+        reportType: 'NMV',
         chainId: ChainId.ETHEREUM,
         projectId: ProjectId.ETHEREUM,
         amount: 3000n,
@@ -358,13 +352,13 @@ describe('detailedTvl', () => {
       expect(arbitrumResult).toEqual({
         CBV: [
           {
-            valueType: ValueType.CBV,
+            assetType: 'CBV',
             assetId: AssetId.USDC,
             chainId: ChainId.ARBITRUM,
             usdValue: 2,
           },
           {
-            valueType: ValueType.CBV,
+            assetType: 'CBV',
             assetId: AssetId.ETH,
             chainId: ChainId.ARBITRUM,
             usdValue: 1,
@@ -372,7 +366,7 @@ describe('detailedTvl', () => {
         ],
         EBV: [
           {
-            valueType: ValueType.EBV,
+            assetType: 'EBV',
             assetId: AssetId.ETH,
             chainId: ChainId.ARBITRUM,
             usdValue: 3,
@@ -384,7 +378,7 @@ describe('detailedTvl', () => {
       expect(ethereumResult).toEqual({
         CBV: [
           {
-            valueType: ValueType.CBV,
+            assetType: 'CBV',
             assetId: AssetId.OP,
             chainId: ChainId.ETHEREUM,
             usdValue: 20,
@@ -392,7 +386,7 @@ describe('detailedTvl', () => {
         ],
         EBV: [
           {
-            valueType: ValueType.EBV,
+            assetType: 'EBV',
             assetId: AssetId.USDC,
             chainId: ChainId.ETHEREUM,
             usdValue: 10,
@@ -400,7 +394,7 @@ describe('detailedTvl', () => {
         ],
         NMV: [
           {
-            valueType: ValueType.NMV,
+            assetType: 'NMV',
             assetId: AssetId.ETH,
             chainId: ChainId.ETHEREUM,
             usdValue: 30,
