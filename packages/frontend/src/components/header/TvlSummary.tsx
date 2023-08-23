@@ -114,20 +114,20 @@ export function TvlSummary(props: TvlSummaryProps) {
 
       {props.stats ? (
         <>
-          <div className="h-1/2">
+          <div className="flex h-1/2 flex-wrap gap-3 md:gap-0">
             {tvlStats.map((s, i) => (
               <div key={i} className="flex w-full items-end justify-between">
                 <div className="flex items-center gap-1">
                   <div className="flex h-[10px] w-[10px] items-center justify-center md:hidden">
                     {s.icon}
                   </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-600">
+                  <span className="text-xs leading-none text-gray-500 dark:text-gray-600">
                     {s.label}
                   </span>
                 </div>
-                <span className="text-base font-semibold">
+                <span className="text-base font-semibold leading-none">
                   {s.value}
-                  <span className="text-base font-normal text-gray-500 md:hidden">
+                  <span className="text-base font-normal leading-none text-gray-500 md:hidden">
                     {` (${s.usage}%)`}
                   </span>
                 </span>
