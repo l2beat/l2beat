@@ -1,7 +1,8 @@
 import { State } from '../../state/State'
 import { calculateActivityView } from './calculateActivityView'
-import { calculateDetailedTvlView } from './calculateDetailedTvlView'
+import { calculateRegularDetailedTvlView } from './calculateDetailedTvlView'
 import { calculateRegularTvlView } from './calculateRegularTvlView'
+import { calculateTokenDetailedTvlView } from './calculateTokenDetailedTvlView'
 import { calculateTokenTvlView } from './calculateTokenTvlView'
 
 export function calculateView(
@@ -15,7 +16,11 @@ export function calculateView(
       return calculateRegularTvlView(data, controls)
     }
   } else if (controls.view === 'detailedTvl') {
-    return calculateDetailedTvlView(data, controls)
+    if (controls.token) {
+      return calculateTokenDetailedTvlView(data, controls)
+    } else {
+      return calculateRegularDetailedTvlView(data, controls)
+    }
   } else {
     return calculateActivityView(data, controls)
   }

@@ -11,6 +11,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOne,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -33,7 +34,7 @@ export const zora: Layer2 = {
     description:
       'The Zora Network is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
     purpose: 'Universal, NFTs',
-    provider: 'Optimism',
+    provider: 'OP Stack',
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
@@ -68,6 +69,7 @@ export const zora: Layer2 = {
       startBlock: 1,
       url: 'https://rpc.zora.co',
       callsPerMinute: 1500,
+      assessCount: subtractOne,
     },
   },
   riskView: makeBridgeCompatible({

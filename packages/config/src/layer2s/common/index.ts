@@ -1,4 +1,5 @@
 export * from '../../common/nuggets'
+export * from './assessCount'
 export * from './contracts'
 export * from './dataAvailability'
 export * from './exits'

@@ -1,4 +1,4 @@
-import { AssetId, ChainId, ValueType } from '@l2beat/shared-pure'
+import { AssetId, ChainId, ProjectId, ValueType } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
@@ -11,14 +11,14 @@ describe(createEBVReports.name, () => {
       MOCK.BALANCES,
       MOCK.TOTAL_SUPPLIES,
       MOCK.TOKENS,
-      MOCK.PROJECT,
+      ProjectId.ARBITRUM,
       ChainId.ARBITRUM,
     )
 
     expect(result).toEqual([
       {
         timestamp: MOCK.NOW,
-        projectId: MOCK.PROJECT.projectId,
+        projectId: ProjectId.ARBITRUM,
         asset: AssetId.USDC,
         chainId: ChainId.ARBITRUM,
         type: ValueType.EBV,
@@ -36,7 +36,7 @@ describe(createEBVReports.name, () => {
         [{ ...MOCK.BALANCES[0], balance: 10000n * 10n ** 6n }],
         MOCK.TOTAL_SUPPLIES,
         MOCK.TOKENS,
-        MOCK.PROJECT,
+        ProjectId.ARBITRUM,
         ChainId.ARBITRUM,
       ),
     ).toThrow('Total supply has to be bigger than premint balance')
@@ -49,7 +49,7 @@ describe(createEBVReports.name, () => {
         [{ ...MOCK.BALANCES[0], chainId: ChainId.ETHEREUM }],
         MOCK.TOTAL_SUPPLIES,
         MOCK.TOKENS,
-        MOCK.PROJECT,
+        ProjectId.ARBITRUM,
         ChainId.ARBITRUM,
       ),
     ).toThrow('ChainIds do not match')
@@ -62,7 +62,7 @@ describe(createEBVReports.name, () => {
         MOCK.BALANCES,
         [{ ...MOCK.TOTAL_SUPPLIES[0], chainId: ChainId.ETHEREUM }],
         MOCK.TOKENS,
-        MOCK.PROJECT,
+        ProjectId.ARBITRUM,
         ChainId.ARBITRUM,
       ),
     ).toThrow('ChainIds do not match')

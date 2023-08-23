@@ -1,7 +1,10 @@
 import {
+  ChainId,
   DetailedTvlApiProject,
+  DetailedTvlApiToken,
   TvlApiProject,
   TvlApiToken,
+  ValueType,
 } from '@l2beat/shared-pure'
 
 import { getPercentageChange } from '../utils'
@@ -39,19 +42,26 @@ export function getTvlStats(
  */
 export function unifyTokensResponse(
   tokens?: TvlApiToken[] | DetailedTvlApiProject['tokens'],
-): TvlApiToken[] {
+): DetailedTvlApiToken[] {
   if (!tokens) {
     return []
   }
 
   if (Array.isArray(tokens)) {
-    return tokens
+    return tokens.map((token) => ({
+      assetId: token.assetId,
+      chainId: ChainId.ETHEREUM,
+      usdValue: token.tvl,
+      valueType: ValueType.CBV,
+    }))
   }
 
   return Object.values(tokens)
     .flat()
     .map((token) => ({
       assetId: token.assetId,
-      tvl: token.usdValue,
+      chainId: token.chainId,
+      valueType: token.valueType,
+      usdValue: token.usdValue,
     }))
 }

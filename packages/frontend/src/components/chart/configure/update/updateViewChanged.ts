@@ -79,6 +79,15 @@ export function updateViewChanged(
   // we do not check token tvl because it is impossible for it to be selected
   // without making an appropriate request first
 
+  const searchParams = new URLSearchParams(window.location.search)
+  searchParams.set('selectedChart', message.view)
+
+  window.history.replaceState(
+    null,
+    '',
+    `${window.location.pathname}?${searchParams.toString()}`,
+  )
+
   const newState: State = {
     ...state,
     request,

@@ -1,10 +1,10 @@
+import { tokenList } from '@l2beat/config'
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import {
-  assert,
   ChainId,
   getTimestamps,
   Hash256,
-  ProjectId,
+  Token,
   UnixTime,
   ValueType,
 } from '@l2beat/shared-pure'
@@ -14,9 +14,7 @@ import { Clock } from '../../../core/Clock'
 import { getEBVConfigHash } from '../../../core/reports/getEBVConfigHash'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
-import { TotalSupplyTokensConfig } from '../../../core/totalSupply/TotalSupplyTokensConfig'
 import { Project } from '../../../model'
-import { Token } from '../../../model/Token'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import {
   BalanceStatusRecord,
@@ -155,13 +153,11 @@ export class StatusController {
       firstHour,
       lastHour,
     )
-    const config: TotalSupplyTokensConfig[] = []
-    const tokens = this.projects.find(
-      (p) => p.externalTokens?.chainId === chainId,
-    )?.externalTokens?.assets
-    if (tokens) {
-      config.push(...tokens)
-    }
+    const config: Token[] = []
+    const tokens = tokenList.filter(
+      (t) => t.type === ValueType.EBV && t.chainId === chainId,
+    )
+    config.push(...tokens)
     const configHash = getTotalSupplyConfigHash(config)
 
     const totalSupplies = timestamps.map((timestamp) => ({
@@ -266,24 +262,11 @@ function getConfigHashForReports(chainId: ChainId, projects: Project[]) {
       return getReportConfigHash(projects)
     case ChainId.ARBITRUM:
       return getEBVConfigHash(
-        filterArbitrumProject(projects),
-        getExternalTokens(filterArbitrumProject(projects)),
+        tokenList.filter(
+          (t) => t.chainId === ChainId.ARBITRUM && t.type === ValueType.EBV,
+        ),
       )
     default:
       throw new Error(`Unknown chainId: ${chainId.toString()}`)
   }
-}
-
-function filterArbitrumProject(projects: Project[]) {
-  const result = projects.filter((x) => x.projectId === ProjectId.ARBITRUM)
-  assert(
-    result.length === 1,
-    'Expected there only to be a single matching project',
-  )
-  return result[0]
-}
-
-function getExternalTokens(project: Project) {
-  assert(project.externalTokens, 'No external tokens configured')
-  return project.externalTokens.assets
 }

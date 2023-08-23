@@ -1,14 +1,16 @@
-import { TokenInfo } from '@l2beat/config'
 import {
   AssetId,
-  CoingeckoId,
+  ChainId,
   EthereumAddress,
   ProjectId,
+  Token,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { ProjectEscrow } from '../../model'
+import { getMockToken } from '../../test/token'
 import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
 
@@ -199,7 +201,7 @@ function project(
 function fakeEscrow(
   address: string,
   timestamp: number,
-  tokens: TokenInfo[],
+  tokens: Token[],
 ): ProjectEscrow {
   return {
     address: EthereumAddress('0x' + address + '0'.repeat(40 - address.length)),
@@ -208,14 +210,12 @@ function fakeEscrow(
   }
 }
 
-function fakeToken(id: string, timestamp: number): TokenInfo {
+function fakeToken(id: string, timestamp: number): Token {
   return {
-    name: 'irrelevant',
-    symbol: 'irrelevant',
+    ...getMockToken(),
     id: AssetId(id),
-    coingeckoId: CoingeckoId('irrelevant'),
-    decimals: 18,
     sinceTimestamp: new UnixTime(timestamp),
-    category: 'ether', // irrelevant
+    chainId: ChainId.ETHEREUM,
+    type: ValueType.CBV,
   }
 }

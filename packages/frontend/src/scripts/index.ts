@@ -4,12 +4,14 @@ import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
 import { configureCanonicalBridgesFilter } from './configureCanonicalBridgesFilter'
 import { configureDropdowns } from './configureDropdowns'
 import { configureExpandableContainer } from './configureExpandableContainer'
+import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
-import { configureReport } from './configureReport'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
+import { configureSlideCards } from './configureSlideCard'
 import { configureTableIndexRerender } from './configureTableIndexRerender'
 import { configureTabs } from './configureTabs'
 import { configureTooltips } from './configureTooltips'
+import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
 
@@ -18,8 +20,9 @@ configureSidebarMenu()
 configureTooltips()
 configureCharts()
 configureDropdowns()
+configureSlideCards()
 configureRosetteOverlay()
-configureReport()
+configureFloatingBanner()
 configureHoverableDropdown()
 configureProjectNavigation()
 configureExpandableContainer()
@@ -27,3 +30,4 @@ configureTabs()
 configureCanonicalBridgesFilter()
 configureTableIndexRerender()
 configureUpgradeDescriptions()
+configureTopBars()

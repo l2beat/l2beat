@@ -1,19 +1,24 @@
-import { assert, AssetId, ChainId, ValueType } from '@l2beat/shared-pure'
+import {
+  assert,
+  AssetId,
+  ChainId,
+  ProjectId,
+  Token,
+  ValueType,
+} from '@l2beat/shared-pure'
 
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { TotalSupplyRecord } from '../../peripherals/database/TotalSupplyRepository'
-import { TotalSupplyTokensConfig } from '../totalSupply/TotalSupplyTokensConfig'
 import { BalancePerProject, createReport } from './createReport'
-import { ReportProject } from './ReportProject'
 
 export function createEBVReports(
   prices: PriceRecord[],
   balances: BalanceRecord[],
   totalSupplies: TotalSupplyRecord[],
-  tokens: TotalSupplyTokensConfig[],
-  project: ReportProject,
+  tokens: Token[],
+  projectId: ProjectId,
   chainId: ChainId,
 ): ReportRecord[] {
   const priceMap = new Map(prices.map((p) => [p.assetId, p]))
@@ -24,7 +29,7 @@ export function createEBVReports(
   }
 
   const balancesPerProject = transformBalances(
-    project,
+    projectId,
     balances,
     totalSupplies,
     tokens,
@@ -44,20 +49,20 @@ export function createEBVReports(
 }
 
 function transformBalances(
-  project: ReportProject,
+  projectId: ProjectId,
   balances: BalanceRecord[],
   totalSupplies: TotalSupplyRecord[],
-  tokens: TotalSupplyTokensConfig[],
+  tokens: Token[],
   chainId: ChainId,
 ): BalancePerProject[] {
   const result: BalancePerProject[] = []
 
-  for (const { assetId, sinceTimestamp, decimals } of tokens) {
+  for (const { id, sinceTimestamp, decimals } of tokens) {
     const assetBalances = balances.filter(
-      (b) => b.assetId === assetId && b.timestamp.gte(sinceTimestamp),
+      (b) => b.assetId === id && b.timestamp.gte(sinceTimestamp),
     )
     const assetSupplies = totalSupplies.filter(
-      (s) => s.assetId === assetId && s.timestamp.gte(sinceTimestamp),
+      (s) => s.assetId === id && s.timestamp.gte(sinceTimestamp),
     )
 
     assert(
@@ -85,10 +90,10 @@ function transformBalances(
     )
 
     result.push({
-      projectId: project.projectId,
+      projectId,
       chainId,
       balance: totalBalance - premintBalance,
-      assetId: assetId,
+      assetId: id,
       type: ValueType.EBV,
       decimals: decimals,
     })

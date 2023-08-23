@@ -19,7 +19,6 @@ export interface ColumnConfig<T> {
   minimalWidth?: true
   headClassName?: string
   noPaddingRight?: true
-  noHrefMobile?: true
   idHref?: SectionId
   getValue: (value: T, index: number) => ReactNode
   tooltip?: string
@@ -131,25 +130,9 @@ export function TableView<T>({
                         column.minimalWidth && 'w-0',
                       )}
                     >
-                      {column.noHrefMobile ? (
-                        <>
-                          <span
-                            className={cx(childClassName, 'flex md:hidden')}
-                          >
-                            {column.getValue(item, i)}
-                          </span>
-                          <a
-                            href={idHref}
-                            className={cx(childClassName, 'hidden md:flex')}
-                          >
-                            {column.getValue(item, i)}
-                          </a>
-                        </>
-                      ) : (
-                        <a href={idHref} className={cx(childClassName, 'flex')}>
-                          {column.getValue(item, i)}
-                        </a>
-                      )}
+                      <a href={idHref} className={cx(childClassName, 'flex')}>
+                        {column.getValue(item, i)}
+                      </a>
                     </td>
                   )
                 })}

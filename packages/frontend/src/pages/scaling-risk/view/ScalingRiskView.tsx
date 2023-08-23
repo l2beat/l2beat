@@ -17,7 +17,7 @@ export interface ScalingRiskViewProps {
 export function ScalingRiskView({ items }: ScalingRiskViewProps) {
   const columns = getScalingRiskColumns()
   const rows: RowConfig<ScalingRiskViewEntry> = {
-    getProps: getScalingRowProps,
+    getProps: (entry) => getScalingRowProps(entry, 'risks'),
   }
 
   return (

@@ -2,7 +2,15 @@ import { Layer2 } from '@l2beat/config'
 import cx from 'classnames'
 import React from 'react'
 
-import { LoopringIcon, OptimismIcon, StarkWareIcon, ZkSyncIcon } from '../icons'
+import {
+  ArbitrumIcon,
+  LoopringIcon,
+  OptimismIcon,
+  OVMIcon,
+  PolygonIcon,
+  StarkWareIcon,
+  ZkSyncIcon,
+} from '../icons'
 
 export interface TechnologyCellProps {
   children: string
@@ -12,7 +20,8 @@ export interface TechnologyCellProps {
 export function TechnologyCell({ provider, children }: TechnologyCellProps) {
   const isRollup = children.includes('Rollup')
   const providerClassName = 'Tooltip relative inline-block h-4 w-4 ml-1'
-  const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4 fill-current'
+  const providerIconClassName = 'absolute -top-0.5 left-0 w-4 h-4'
+
   return (
     <span className={cx(isRollup && 'text-green-300 dark:text-green-450')}>
       {children}
@@ -24,12 +33,20 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           <StarkWareIcon className={providerIconClassName} />
         </span>
       )}
-      {provider === 'Optimism' && (
+      {provider === 'OP Stack' && (
         <span
           className={providerClassName}
-          title="This project is based on Optimism's code base."
+          title="This project is based on OP Stack's code base."
         >
           <OptimismIcon className={providerIconClassName} />
+        </span>
+      )}
+      {provider === 'OVM' && (
+        <span
+          className={providerClassName}
+          title="This project is based on old OVM's code base."
+        >
+          <OVMIcon className={providerIconClassName} />
         </span>
       )}
       {provider === 'zkSync' && (
@@ -46,6 +63,22 @@ export function TechnologyCell({ provider, children }: TechnologyCellProps) {
           title="This project is based on loopring's code base."
         >
           <LoopringIcon className={providerIconClassName} />
+        </span>
+      )}
+      {provider === 'Arbitrum' && (
+        <span
+          className={providerClassName}
+          title="This project is based on Arbitrum's code base."
+        >
+          <ArbitrumIcon className={providerIconClassName} />
+        </span>
+      )}
+      {provider === 'Polygon' && (
+        <span
+          className={providerClassName}
+          title="This project is based on Polygon's code base."
+        >
+          <PolygonIcon className={providerIconClassName} />
         </span>
       )}
     </span>

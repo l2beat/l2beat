@@ -49,7 +49,7 @@ environment variables. One variable per line `KEY=value`.
 - `TEST_DB_URL` - Database url used in `yarn test`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_test`
 - `DATABASE_URL` - Database url used in production deployment
 - `ETHERSCAN_API_KEY` - API key for Etherscan
-- `ETHEREUM_ALCHEMY_API_KEY` - API key for Alchemy Ethereum App
+- `ETHEREUM_PROVIDER_URL` - API Url for Ethereum QuickNode provider
 - `ARBITRUM_PROVIDER_URL` - API Url for Arbitrum QuickNode provider
 
 #### Optional
@@ -80,7 +80,7 @@ environment variables. One variable per line `KEY=value`.
 
 ##### Multichain discovery CLI
 
-If you want to use multichain discovery cli, make sure you include the `RPC_URL` and `ETHERSCAN_API_KEY` for desired chains. If you want to use one RPC provider, all of them (unless stated in brackets) are supported by https://www.quicknode.com/ and https://www.ankr.com/. Etherscan API key should be created by creating an account on Etherscan instance for every chain separately (check config.discovery.ts for etherscan links).
+If you want to use multichain discovery cli, make sure you include the `RPC_URL` and `ETHERSCAN_API_KEY` for desired chains. If you want to use one RPC provider, all of them (unless stated in brackets) are supported by <https://www.quicknode.com/> and <https://www.ankr.com/>. Etherscan API key should be created by creating an account on Etherscan instance for every chain separately (check config.discovery.ts for etherscan links).
 
 - `DISCOVERY_ARBITRUM_RPC_URL` (Optional)
 - `DISCOVERY_ARBITRUM_ETHERSCAN_API_KEY` (Optional)
@@ -111,6 +111,8 @@ TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 DATABASE_URL=
 
 ETHERSCAN_API_KEY=
+ETHEREUM_PROVIDER_URL=
+
 ETHEREUM_ALCHEMY_API_KEY=
 
 #-----OPTIONAL-----
@@ -125,11 +127,15 @@ ETHEREUM_ALCHEMY_API_KEY=
 # ARBITRUM_TVL_ENABLED=
 # ARBISCAN_API_KEY=
 # ARBITRUM_PROVIDER_URL=
-
+## Enable/disable detailed-tvl endpoint exposure - defaults to false
+# DETAILED_TVL_ENABLED=true
+## Should detailed-tvl endpoint return 404 if data is not synced yet? - defaults to false
+# ERROR_ON_UNSYNCED_DETAILED_TVL=true
 # UPDATE_MONITOR_RUN_ON_START=
 # ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
 
 #-----DISCOVERY-----
+# DISCOVERY_BLOCK_NUMBER=
 # WATCHMODE_ENABLED=
 # PUBLIC_DISCORD_CHANNEL_ID=
 # INTERNAL_DISCORD_CHANNEL_ID=

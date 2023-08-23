@@ -1,4 +1,10 @@
-import { AssetId, ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   KnowledgeNugget,
@@ -66,7 +72,14 @@ export interface Layer2Display {
   /** Name of the category the layer2 belongs to */
   category: Layer2Category
   /** Technology provider */
-  provider?: 'StarkEx' | 'Optimism' | 'zkSync' | 'loopring'
+  provider?:
+    | 'StarkEx'
+    | 'OP Stack'
+    | 'zkSync'
+    | 'loopring'
+    | 'Arbitrum'
+    | 'Polygon'
+    | 'OVM'
   /** List of links */
   links: ProjectLinks
   /** Where does the activity data come from? */
@@ -74,6 +87,8 @@ export interface Layer2Display {
 }
 
 export interface Layer2Config {
+  /** List of native and external tokens */
+  tokenList?: Token[]
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */
   associatedTokens?: string[]
   /** Native L2 tokens should be also marked as associated tokens, however often associated tokens are not native L2 tokens. This has to be kept manually in sync with code executed in CBVUpdater.update.  */

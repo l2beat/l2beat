@@ -80,7 +80,7 @@ function handleFetchAlternativeTvl(
 }
 
 function handleFetchTokenTvl(
-  { url, requestId, token }: FetchTokenTvlEffect,
+  { url, requestId, token, assetType }: FetchTokenTvlEffect,
   dispatch: (message: Message) => void,
 ) {
   timeoutLoader(requestId, dispatch)
@@ -88,7 +88,7 @@ function handleFetchTokenTvl(
     url,
     dispatch,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    (data) => ({ type: 'TokenTvlLoaded', requestId, token, data }),
+    (data) => ({ type: 'TokenTvlLoaded', requestId, token, assetType, data }),
     () => ({ type: 'TokenTvlFailed', requestId }),
     TokenTvlResponse,
   )

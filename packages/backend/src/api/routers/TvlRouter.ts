@@ -57,14 +57,22 @@ export function createTvlRouter(
 
   if (features.detailedTvlEnabled) {
     router.get('/api/detailed-tvl', async (ctx) => {
-      const data = await detailedTvlController.getDetailedTvlApiResponse()
+      const detailedTvlResult =
+        await detailedTvlController.getDetailedTvlApiResponse()
 
-      if (!data) {
-        ctx.status = 404
+      if (detailedTvlResult.result === 'error') {
+        if (detailedTvlResult.error === 'DATA_NOT_FULLY_SYNCED') {
+          ctx.status = 422
+        }
+
+        if (detailedTvlResult.error === 'NO_DATA') {
+          ctx.status = 404
+        }
+
         return
       }
 
-      ctx.body = data
+      ctx.body = detailedTvlResult.data
     })
 
     router.get(
@@ -82,7 +90,7 @@ export function createTvlRouter(
         async (ctx) => {
           const { assetId, chainId, assetType, projectId } = ctx.params
 
-          const chart =
+          const detailedAssetData =
             await detailedTvlController.getDetailedAssetTvlApiResponse(
               projectId,
               ChainId(+chainId),
@@ -90,12 +98,19 @@ export function createTvlRouter(
               assetType,
             )
 
-          if (!chart) {
-            ctx.status = 404
+          if (detailedAssetData.result === 'error') {
+            if (detailedAssetData.error === 'NO_DATA') {
+              ctx.status = 404
+            }
+
+            if (detailedAssetData.error === 'INVALID_PROJECT_OR_ASSET') {
+              ctx.status = 400
+            }
+
             return
           }
 
-          ctx.body = chart
+          ctx.body = detailedAssetData.data
         },
       ),
     )

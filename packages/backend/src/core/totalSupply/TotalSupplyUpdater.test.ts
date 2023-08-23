@@ -2,8 +2,9 @@ import { Logger } from '@l2beat/shared'
 import {
   AssetId,
   ChainId,
-  EthereumAddress,
+  Token,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
@@ -13,18 +14,18 @@ import {
   TotalSupplyRepository,
 } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
+import { getMockToken } from '../../test/token'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider } from './TotalSupplyProvider'
-import { TotalSupplyTokensConfig } from './TotalSupplyTokensConfig'
 import {
   getMissingTotalSupplies,
   TotalSupplyUpdater,
 } from './TotalSupplyUpdater'
 
 describe(TotalSupplyUpdater.name, () => {
-  const chainId = ChainId.ETHEREUM
+  const chainId = ChainId.ARBITRUM
 
   describe(TotalSupplyUpdater.prototype.start.name, () => {
     const NOW = UnixTime.now().toStartOf('hour')
@@ -92,25 +93,25 @@ describe(TotalSupplyUpdater.name, () => {
       const reachableTimestamp = queryTimestamp.add(-1, 'hours')
       const unreachableTimestamp = queryTimestamp.add(1, 'hours')
 
-      const fakeEth = fakeTokenInfo(AssetId.ETH, reachableTimestamp) // known
-      const fakeUsdc = fakeTokenInfo(AssetId.USDC, reachableTimestamp) // known
-      const fakeDai = fakeTokenInfo(AssetId.DAI, reachableTimestamp) // queryable
-      const fakeArb = fakeTokenInfo(AssetId.ARB, unreachableTimestamp) // unreachable
-      const fakeOp = fakeTokenInfo(AssetId.OP, unreachableTimestamp) // unreachable
+      const fakeEth = fakeToken(AssetId.ETH, reachableTimestamp) // known
+      const fakeUsdc = fakeToken(AssetId.USDC, reachableTimestamp) // known
+      const fakeDai = fakeToken(AssetId.DAI, reachableTimestamp) // queryable
+      const fakeArb = fakeToken(AssetId.ARB, unreachableTimestamp) // unreachable
+      const fakeOp = fakeToken(AssetId.OP, unreachableTimestamp) // unreachable
 
-      const tokensConfig: TotalSupplyTokensConfig[] = [
+      const tokensConfig = [
         fakeEth,
         fakeUsdc,
         fakeDai,
         fakeArb,
         fakeOp,
-      ]
+      ] as Token[]
 
       const totalSupplyRepository = mockObject<TotalSupplyRepository>({
         getByTimestamp: async (chainId, timestamp) => [
           // Dai and Eth are known
-          mockTotalSupply(fakeEth.assetId, timestamp, chainId),
-          mockTotalSupply(fakeDai.assetId, timestamp, chainId),
+          mockTotalSupply(fakeEth.id, timestamp, chainId),
+          mockTotalSupply(fakeDai.id, timestamp, chainId),
         ],
         addOrUpdateMany: async () => 0,
       })
@@ -141,8 +142,8 @@ describe(TotalSupplyUpdater.name, () => {
       )
 
       const totalSupplies: TotalSupplyRecord[] = [
-        mockTotalSupply(fakeEth.assetId, queryTimestamp, chainId),
-        mockTotalSupply(fakeDai.assetId, queryTimestamp, chainId),
+        mockTotalSupply(fakeEth.id, queryTimestamp, chainId),
+        mockTotalSupply(fakeDai.id, queryTimestamp, chainId),
       ]
       const getTotalSupplies =
         mockFn<typeof totalSupplyProvider.getTotalSupplies>().resolvesTo(
@@ -156,8 +157,8 @@ describe(TotalSupplyUpdater.name, () => {
       expect(getTotalSupplies).toHaveBeenOnlyCalledWith(
         [
           {
-            assetId: fakeUsdc.assetId,
-            tokenAddress: EthereumAddress(fakeUsdc.tokenAddress),
+            assetId: fakeUsdc.id,
+            tokenAddress: fakeUsdc.address,
           },
         ],
         queryTimestamp,
@@ -178,21 +179,17 @@ describe(TotalSupplyUpdater.name, () => {
       const queryTimestamp = new UnixTime(1000)
       const reachableTimestamp = queryTimestamp.add(-1, 'hours')
 
-      const fakeEth = fakeTokenInfo(AssetId.ETH, reachableTimestamp)
-      const fakeDai = fakeTokenInfo(AssetId.DAI, reachableTimestamp)
-      const fakeArb = fakeTokenInfo(AssetId.ARB, reachableTimestamp)
+      const fakeEth = fakeToken(AssetId.ETH, reachableTimestamp)
+      const fakeDai = fakeToken(AssetId.DAI, reachableTimestamp)
+      const fakeArb = fakeToken(AssetId.ARB, reachableTimestamp)
 
-      const tokensConfig: TotalSupplyTokensConfig[] = [
-        fakeEth,
-        fakeDai,
-        fakeArb,
-      ]
+      const tokensConfig = [fakeEth, fakeDai, fakeArb] as Token[]
 
       const totalSupplyRepository = mockObject<TotalSupplyRepository>({
         getByTimestamp: async (chainId, timestamp) => [
-          mockTotalSupply(fakeEth.assetId, timestamp, chainId),
-          mockTotalSupply(fakeArb.assetId, timestamp, chainId),
-          mockTotalSupply(fakeDai.assetId, timestamp, chainId),
+          mockTotalSupply(fakeEth.id, timestamp, chainId),
+          mockTotalSupply(fakeArb.id, timestamp, chainId),
+          mockTotalSupply(fakeDai.id, timestamp, chainId),
         ],
       })
       const totalSupplyStatusRepository =
@@ -256,19 +253,19 @@ describe(TotalSupplyUpdater.name, () => {
     it('returns missing tokens that requires update, skipping known ones and unreachable due to timestamp  ', () => {
       const timestamp = new UnixTime(2500)
 
-      const fakeEth = fakeTokenInfo(AssetId.ETH, new UnixTime(1000))
-      const fakeUsdc = fakeTokenInfo(AssetId.USDC, new UnixTime(1000))
-      const fakeDai = fakeTokenInfo(AssetId.DAI, new UnixTime(1000))
-      const fakeArb = fakeTokenInfo(AssetId.ARB, new UnixTime(1000))
-      const fakeOp = fakeTokenInfo(AssetId.OP, new UnixTime(3000)) // Outside timestamp query range
+      const fakeEth = fakeToken(AssetId.ETH, new UnixTime(1000))
+      const fakeUsdc = fakeToken(AssetId.USDC, new UnixTime(1000))
+      const fakeDai = fakeToken(AssetId.DAI, new UnixTime(1000))
+      const fakeArb = fakeToken(AssetId.ARB, new UnixTime(1000))
+      const fakeOp = fakeToken(AssetId.OP, new UnixTime(3000)) // Outside timestamp query range
 
-      const tokensConfig: TotalSupplyTokensConfig[] = [
+      const tokensConfig = [
         fakeEth,
         fakeUsdc,
         fakeDai,
         fakeArb,
         fakeOp,
-      ]
+      ] as Token[]
 
       const knownTokenSupplies: TotalSupplyRecord[] = [
         {
@@ -294,25 +291,23 @@ describe(TotalSupplyUpdater.name, () => {
       expect(result).toEqual([
         {
           assetId: AssetId.ETH,
-          tokenAddress: EthereumAddress(fakeEth.tokenAddress),
+          tokenAddress: fakeEth.address,
         },
         {
           assetId: AssetId.DAI,
-          tokenAddress: EthereumAddress(fakeDai.tokenAddress),
+          tokenAddress: fakeDai.address,
         },
       ])
     })
   })
 
-  function fakeTokenInfo(
-    assetId: AssetId,
-    sinceTimestamp: UnixTime,
-  ): TotalSupplyTokensConfig {
+  function fakeToken(assetId: AssetId, sinceTimestamp: UnixTime) {
     return {
-      assetId,
+      ...getMockToken(),
+      id: assetId,
       sinceTimestamp,
-      decimals: 18,
-      tokenAddress: EthereumAddress.random().toString(),
+      chainId: ChainId.ARBITRUM,
+      type: ValueType.EBV,
     }
   }
 })

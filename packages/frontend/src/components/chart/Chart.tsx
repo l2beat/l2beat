@@ -7,17 +7,20 @@ import { Logo } from '../Logo'
 import { ChartHover } from './ChartHover'
 import { ChartLoader } from './ChartLoader'
 import { ChartUpcoming } from './ChartUpcoming'
+import { TokenControl } from './CommonTokenControls'
+import { ChartType } from './configure/state/State'
 import { CurrencyControls } from './CurrencyControls'
+import { DesktopTokenControls } from './DesktopTokenControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
+import { MobileTokenControls } from './MobileTokenControls'
 import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
-import { TokenControl, TokenControls } from './TokenControls'
 import { TokenControlsToBeRemoved } from './TokenControlsToBeRemoved'
 
 export interface ChartProps {
-  type?: 'tvl' | 'detailedTvl' | 'activity'
+  type?: ChartType
   title?: string
   id?: string
   tvlEndpoint?: string
@@ -124,13 +127,15 @@ export function Chart({
             {hasTvl && (
               <div className="flex h-[2rem] items-end">
                 <CurrencyControls />
-                {hasDetailedTvl && <TokenControls tokens={tokens} />}
+                {hasDetailedTvl && <DesktopTokenControls tokens={tokens} />}
               </div>
             )}
             <ScaleControls />
           </div>
-          {hasTvl && !hasDetailedTvl && (
+          {hasTvl && !hasDetailedTvl ? (
             <TokenControlsToBeRemoved tokens={tokens} />
+          ) : (
+            <MobileTokenControls tokens={tokens} />
           )}
         </div>
       </section>

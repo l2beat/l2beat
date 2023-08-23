@@ -1,15 +1,17 @@
 import { Logger } from '@l2beat/shared'
 import {
   AssetId,
+  ChainId,
   CoingeckoId,
   EthereumAddress,
+  Token,
   UnixTime,
+  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import { Token } from '../model'
 import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   PriceRecord,
@@ -373,6 +375,11 @@ describe(PriceUpdater.name, () => {
       symbol: 'FKT',
       decimals: 18,
       address: EthereumAddress.random(),
+      category: 'ether', // irrelevant
+      chainId: ChainId.ETHEREUM, // irrelevant
+      type: ValueType.CBV, // irrelevant
+      name: 'Fake', // irrelevant
+      sinceTimestamp: new UnixTime(0), // irrelevant
     }
   }
 })

@@ -9,6 +9,10 @@ import { getGitCommitHash } from './getGitCommitHash'
 export function getProductionConfig(): Config {
   const arbitrumTvlEnabled = getEnv.boolean('ARBITRUM_TVL_ENABLED', false)
   const detailedTvlEnabled = getEnv.boolean('DETAILED_TVL_ENABLED', false)
+  const errorOnUnsyncedDetailedTvl = getEnv.boolean(
+    'ERROR_ON_UNSYNCED_DETAILED_TVL',
+    false,
+  )
 
   const updateMonitorEnabled = getEnv.boolean('WATCHMODE_ENABLED', false)
   const discordEnabled =
@@ -59,10 +63,11 @@ export function getProductionConfig(): Config {
     },
     tvl: {
       detailedTvlEnabled,
+      errorOnUnsyncedDetailedTvl,
       enabled: true,
       coingeckoApiKey: getEnv('COINGECKO_API_KEY'),
       ethereum: {
-        alchemyApiKey: getEnv('ETHEREUM_ALCHEMY_API_KEY'),
+        providerUrl: getEnv('ETHEREUM_PROVIDER_URL'),
         etherscanApiKey: getEnv('ETHERSCAN_API_KEY'),
         minBlockTimestamp: ChainId.getMinTimestamp(ChainId.ETHEREUM),
       },

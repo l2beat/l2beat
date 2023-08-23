@@ -297,7 +297,7 @@ const meta = {
       {
         name: 'Optimism',
         slug: 'optimism',
-        provider: 'Optimism',
+        provider: 'OP Stack',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
         isArchived: undefined,
@@ -418,7 +418,7 @@ const meta = {
       {
         name: 'Metis Andromeda',
         slug: 'metis',
-        provider: 'Optimism',
+        provider: 'OVM',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system.       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
         isArchived: undefined,
