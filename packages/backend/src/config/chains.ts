@@ -1,4 +1,5 @@
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { assert } from 'console'
 
 const chainConfig = [
   {
@@ -15,8 +16,12 @@ const chainConfig = [
 
 export function getChainMinTimestamp(chainId: ChainId): UnixTime {
   const config = chainConfig.find((c) => c.chainId === chainId)
+  assert(
+    config,
+    'Could not find minimum timestamp for chain: ' + ChainId.getName(chainId),
+  )
   if (!config) {
-    throw new Error('Invalid chainId')
+    throw new Error('could not find minimum timestamp for given chain')
   }
   return config.minTimestamp
 }
