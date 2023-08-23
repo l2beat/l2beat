@@ -135,8 +135,9 @@ export function getLocalConfig(): Config {
       runOnStart: getEnv.boolean('UPDATE_MONITOR_RUN_ON_START', true),
       discord: discordEnabled && {
         token: getEnv('DISCORD_TOKEN'),
-        publicChannelId: process.env.PUBLIC_DISCORD_CHANNEL_ID,
+        publicChannelId: getEnv('PUBLIC_DISCORD_CHANNEL_ID'),
         internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
+        callsPerMinute: 3000,
       },
       chains: [
         {
