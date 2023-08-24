@@ -240,6 +240,10 @@ export const faqItems: FaqItem[] = [
     ),
   },
   {
+    question: 'What happened to Optmisitic Chains?',
+    answer: 'They got renamed to Optimiums for clarity.',
+  },
+  {
     question: 'How exactly do you calculate metrics like TVL?',
     answer: (
       <div>
