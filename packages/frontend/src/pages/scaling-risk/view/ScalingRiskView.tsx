@@ -37,6 +37,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
                 )}
                 columns={columns}
                 rows={rows}
+                rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),
             icon: <ActiveIcon />,
@@ -50,6 +51,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
                 items={items.filter((item) => item.isArchived)}
                 columns={columns}
                 rows={rows}
+                rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),
             icon: <ArchivedIcon />,
