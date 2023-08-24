@@ -129,6 +129,7 @@ export const acrossV2: Bridge = {
       discovery.getContractDetails('Boba_Adapter'),
       discovery.getContractDetails('Arbitrum_Adapter'),
       discovery.getContractDetails('ZkSync_Adapter'),
+      discovery.getContractDetails('Base_Adapter'),
       discovery.getContractDetails('Ethereum_Adapter'),
       discovery.getContractDetails('Ethereum_SpokePool'),
       {

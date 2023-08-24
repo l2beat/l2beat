@@ -1,10 +1,4 @@
-import {
-  assert,
-  AssetId,
-  ChainId,
-  UnixTime,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { assert, AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
@@ -53,7 +47,7 @@ export function aggregateBalancesPerProject(
   balances: BalanceRecord[],
   chainId: ChainId,
 ): BalancePerProject[] {
-  const balancesPerProject = []
+  const balancesPerProject: BalancePerProject[] = []
 
   for (const { projectId, escrows } of projects) {
     const projectBalances = balances.filter((balance) =>
@@ -88,7 +82,7 @@ export function aggregateBalancesPerProject(
         chainId: chainId,
         balance: assetBalances.reduce((acc, { balance }) => acc + balance, 0n),
         assetId: assetId,
-        type: ValueType.CBV,
+        type: 'CBV',
         decimals,
       })
     }

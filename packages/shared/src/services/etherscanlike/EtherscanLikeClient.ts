@@ -33,6 +33,17 @@ export class EtherscanLikeClient {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
 
+  /**
+   * Creates a client that can be used for discovery so does not need a minTimestamp.
+   */
+  static createForDiscovery(
+    httpClient: HttpClient,
+    url: string,
+    apiKey: string,
+  ) {
+    return new EtherscanLikeClient(httpClient, url, apiKey, new UnixTime(0))
+  }
+
   // Etherscan API is not stable enough to trust it to return "closest" block.
   // There is a case when there is not enough activity on a given chain
   // so that blocks come in a greater than 10 minutes intervals,

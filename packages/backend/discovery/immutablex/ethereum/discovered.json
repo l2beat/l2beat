@@ -7,7 +7,6 @@
     {
       "name": "Committee",
       "address": "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295",
-      "code": "https://etherscan.deth.net/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295",
       "upgradeability": {
         "type": "immutable"
       },
@@ -33,7 +32,6 @@
     {
       "name": "OrderRegistry",
       "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
-      "code": "https://etherscan.deth.net/address/0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
       "upgradeability": {
         "type": "immutable"
       },
@@ -45,7 +43,6 @@
     {
       "name": "StarkExchange",
       "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-      "code": "https://etherscan.deth.net/address/0x5FDCCA53617f4d2b9134B29090C87D01058e27e9,0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC,0xF65C115efd24102315Af53f84aD65aD240bc9D57,0x97AA9658cfE27D6382b71FF9E72d773615Bd529E,0x86d8f977C9cEC503ad4E6805802cEf62Cde13773,0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A,0x2D542881E93491e765E5110c1e373FC2968E720A,0x970d1Fa79c64b256ef68bBFEab34137786811C7F",
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
@@ -98,7 +95,6 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
-      "code": "https://etherscan.deth.net/address/0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -112,7 +108,6 @@
     {
       "name": "GnosisSafe",
       "address": "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91",
-      "code": "https://etherscan.deth.net/address/0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"

@@ -8,7 +8,6 @@
     {
       "name": "DeBridgeGate",
       "address": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-      "code": "https://etherscan.deth.net/address/0x43dE2d77BF8027e25dBD179B491e8d64f38398aA,0x797161BCC625155D2302251404ccB93c2632658e",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x797161BCC625155D2302251404ccB93c2632658e",
@@ -43,7 +42,6 @@
     {
       "name": "Admin Multisig",
       "address": "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5",
-      "code": "https://etherscan.deth.net/address/0x6bec1faF33183e1Bc316984202eCc09d46AC92D5,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -70,7 +68,6 @@
     {
       "name": "DeBridgeTokenDeployer",
       "address": "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-      "code": "https://etherscan.deth.net/address/0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464,0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491",
@@ -88,7 +85,6 @@
     {
       "name": "CallProxy",
       "address": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
-      "code": "https://etherscan.deth.net/address/0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824,0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8",
@@ -105,7 +101,6 @@
     {
       "name": "SignatureVerifier",
       "address": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-      "code": "https://etherscan.deth.net/address/0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c,0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4",
@@ -141,7 +136,6 @@
     {
       "name": "GnosisSafe",
       "address": "0xa0D6062Be29710c666aE850395Ac1A2AeCd14885",
-      "code": "https://etherscan.deth.net/address/0xa0D6062Be29710c666aE850395Ac1A2AeCd14885,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -162,7 +156,6 @@
     {
       "name": "SimpleFeeProxy",
       "address": "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-      "code": "https://etherscan.deth.net/address/0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636,0x37a52ddb753c924f8C914de65ef00b5210Caa83C",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x37a52ddb753c924f8C914de65ef00b5210Caa83C",
@@ -180,7 +173,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-      "code": "https://etherscan.deth.net/address/0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
       "upgradeability": {
         "type": "immutable"
       },
@@ -191,7 +183,6 @@
     {
       "name": "DeBridgeToken",
       "address": "0xf8A2902c0a5f817F5e22C82f453538d3f0734C2b",
-      "code": "https://etherscan.deth.net/address/0xf8A2902c0a5f817F5e22C82f453538d3f0734C2b",
       "upgradeability": {
         "type": "immutable"
       },
