@@ -30,10 +30,10 @@ export function About() {
         <div className="flex flex-col gap-4">
           <p>
             Because of our commitment to education we present various
-            non-trivial metrics aside from Total Value Locked (TVL). We have
-            carefully examined each L2 project to determine the inner workings
-            of their technology as well as the associated risks. To learn about
-            any of our listed projects visit their respective page on L2BEAT.
+            non-trivial metrics aside from Value Locked. We have carefully
+            examined each L2 project to determine the inner workings of their
+            technology as well as the associated risks. To learn about any of
+            our listed projects visit their respective page on L2BEAT.
           </p>
           <p>
             We have also compiled a list of{' '}

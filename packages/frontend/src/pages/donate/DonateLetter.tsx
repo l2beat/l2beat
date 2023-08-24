@@ -12,9 +12,9 @@ export function DonateLetter() {
         L2BEAT is an analytics and research website about Ethereum layer two
         (L2) scaling. We provide a comparison of the various Ethereum L2 systems
         available today. Because of our commitment to education we present
-        various non-trivial metrics aside from Total Value Locked (TVL). We have
-        carefully examined each L2 project to determine the inner workings of
-        their technology as well as the associated risks.
+        various non-trivial metrics aside from Value Locked. We have carefully
+        examined each L2 project to determine the inner workings of their
+        technology as well as the associated risks.
       </p>
       <p>
         In the future we plan to introduce more metrics as well as build special

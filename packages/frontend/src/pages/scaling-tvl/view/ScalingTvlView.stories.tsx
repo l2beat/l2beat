@@ -450,7 +450,7 @@ const meta = {
           label:
             'ZKS – 44.65%<br>Ether – 24.77%<br>Stablecoins – 30.06%<br>Other – 0.52%',
           warning:
-            'The ZKS token associated with ZKSwap 2.0 accounts for 44.65% of the TVL!',
+            'The ZKS token associated with ZKSwap 2.0 accounts for 44.65% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-2.67%',
@@ -510,7 +510,7 @@ const meta = {
           other: 0,
           label: 'L2 – 50.28%<br>Ether – 15.79%<br>Stablecoins – 33.92%',
           warning:
-            'The L2 token associated with Gluon accounts for 50.28% of the TVL!',
+            'The L2 token associated with Gluon accounts for 50.28% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '+27.17%',
@@ -689,7 +689,7 @@ const meta = {
           label:
             'ARB – 25.00%<br>Ether – 33.75%<br>Stablecoins – 34.18%<br>Other – 7.06%',
           warning:
-            'The ARB token associated with Arbitrum One accounts for 25.00% of the TVL!',
+            'The ARB token associated with Arbitrum One accounts for 25.00% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-2.44%',
@@ -768,7 +768,7 @@ const meta = {
           label:
             'OP – 20.06%<br>Ether – 31.00%<br>Stablecoins – 31.27%<br>Other – 17.67%',
           warning:
-            'The OP token associated with Optimism accounts for 20.06% of the TVL!',
+            'The OP token associated with Optimism accounts for 20.06% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-3.42%',
@@ -946,7 +946,7 @@ const meta = {
           label:
             'Metis – 53.97%<br>Ether – 5.18%<br>Stablecoins – 40.45%<br>Other – 0.40%',
           warning:
-            'The Metis token associated with Metis Andromeda accounts for 53.97% of the TVL!',
+            'The Metis token associated with Metis Andromeda accounts for 53.97% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-3.15%',
@@ -1006,7 +1006,7 @@ const meta = {
           label:
             'LRC – 54.95%<br>Ether – 26.99%<br>Stablecoins – 13.78%<br>Other – 4.27%',
           warning:
-            'The LRC token associated with Loopring accounts for 54.95% of the TVL!',
+            'The LRC token associated with Loopring accounts for 54.95% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-2.30%',
@@ -1066,7 +1066,7 @@ const meta = {
           label:
             'IMX – 69.97%<br>Ether – 14.10%<br>Stablecoins – 1.18%<br>Other – 14.75%',
           warning:
-            'The IMX token associated with Immutable X accounts for 69.97% of the TVL!',
+            'The IMX token associated with Immutable X accounts for 69.97% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-0.37%',

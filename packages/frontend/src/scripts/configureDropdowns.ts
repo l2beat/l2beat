@@ -1,3 +1,4 @@
+import { clamp } from '../utils'
 import { makeQuery } from './query'
 
 export function configureDropdowns() {
@@ -12,17 +13,61 @@ export function configureDropdowns() {
   for (const dropdown of dropdowns) {
     const button = dropdown.querySelector('.Dropdown-Button')
     if (!button) continue
-    const hiddenItems = dropdown.querySelectorAll('.Dropdown-Item')
-    const transparentItems = dropdown.querySelectorAll(
+    const hiddenItems = dropdown.querySelectorAll<HTMLElement>('.Dropdown-Item')
+    const transparentItems = dropdown.querySelectorAll<HTMLElement>(
       '.Dropdown-Transparent-Item',
     )
 
     button.addEventListener('click', () => {
-      hiddenItems.forEach((item) => item.classList.toggle('hidden'))
-      transparentItems.forEach((item) => item.classList.toggle('opacity-0'))
-      transparentItems.forEach((item) =>
-        item.classList.toggle('pointer-events-none'),
-      )
+      hiddenItems.forEach((item) => {
+        item.classList.toggle('hidden')
+      })
+      transparentItems.forEach((item) => {
+        item.classList.toggle('opacity-0')
+        item.classList.toggle('pointer-events-none')
+      })
+
+      onResize(dropdown, hiddenItems, transparentItems)
+    })
+    window.addEventListener('resize', () => {
+      onResize(dropdown, hiddenItems, transparentItems)
     })
   }
+}
+
+function onResize(
+  dropdown: HTMLElement,
+  hiddenItems: NodeListOf<HTMLElement>,
+  transparentItems: NodeListOf<HTMLElement>,
+) {
+  hiddenItems.forEach((item) => {
+    if (isCentered(item)) {
+      recenter(dropdown, item)
+    }
+  })
+  transparentItems.forEach((item) => {
+    if (isCentered(item)) {
+      recenter(dropdown, item)
+    }
+  })
+}
+
+function recenter(dropdown: HTMLElement, item: HTMLElement) {
+  const togglerRect = dropdown.getBoundingClientRect()
+  const contentRect = item.getBoundingClientRect()
+
+  const left = clamp(
+    togglerRect.left + togglerRect.width / 2 - contentRect.width / 2,
+    24,
+    window.innerWidth - 24 - contentRect.width,
+  )
+
+  item.style.left = `${left}px`
+}
+
+function isCentered(element: HTMLElement): boolean {
+  return (
+    element.dataset.centered !== undefined &&
+    element.dataset.centered === 'true'
+  )
 }

@@ -1,5 +1,6 @@
 import { Layer2 } from '@l2beat/config'
 
+import { TokenControl } from '../../components/chart/CommonTokenControls'
 import { RiskValues } from '../../utils/risks/types'
 
 export interface ScalingDetailedTvlViewEntry {
@@ -21,4 +22,5 @@ export interface ScalingDetailedTvlViewEntry {
   ebvChange?: string
   cbvChange?: string
   nmvChange?: string
+  tokens: TokenControl[]
 }
