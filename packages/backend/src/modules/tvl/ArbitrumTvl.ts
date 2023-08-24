@@ -35,6 +35,8 @@ export function createArbitrumTvlSubmodule(
     'arbitrum',
   )
 
+  console.log(config.tvl.arbitrum.providerUrl)
+
   const arbiscanClient = new ArbiscanClient(
     http,
     config.tvl.arbitrum.arbiscanApiKey,

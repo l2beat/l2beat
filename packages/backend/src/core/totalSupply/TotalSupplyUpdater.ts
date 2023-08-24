@@ -41,9 +41,9 @@ export class TotalSupplyUpdater {
       tokens.every(
         (token) =>
           token.chainId === this.getChainId() &&
-          token.bucket === this.getValueType(),
+          token.formula == 'totalSupply'
       ),
-      'Programmer error: tokens must be of type EBV and on the same chain as the totalSupplyUpdater',
+      'Programmer error: tokens must be of totalSupply formula and on the same chain as the totalSupplyUpdater',
     )
     this.logger = this.logger.for(this)
     this.configHash = getTotalSupplyConfigHash(tokens)

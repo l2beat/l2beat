@@ -70,6 +70,7 @@ export class ArbitrumMulticallClient {
 
       return batchedResults.flat()
     } catch (e) {
+        console.log(e)
       throw new Error(
         `Arbitrum multicall failed for block number ${blockNumber}}. Call size was ${requests.length} in ${batches.length} batches.`,
       )

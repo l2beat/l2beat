@@ -68,10 +68,8 @@ export class ReportRepository extends BaseRepository {
     const timestampsMatch = reports.every((r) =>
       r.timestamp.equals(reports[0].timestamp),
     )
-    const valueTypeMatch = reports.every((r) => r.type === reports[0].type)
     const chainIdsMatch = reports.every((r) => r.chainId === reports[0].chainId)
     assert(timestampsMatch, 'Timestamps must match')
-    assert(valueTypeMatch, 'Value types must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
     await knex.transaction(async (trx) => {

@@ -53,7 +53,7 @@ function transformBalances(
 ): BalancePerProject[] {
   const result: BalancePerProject[] = []
 
-  for (const { id, sinceTimestamp, decimals } of tokens) {
+  for (const { id, sinceTimestamp, decimals, bucket } of tokens) {
     const assetSupplies = totalSupplies.filter(
       (s) => s.assetId === id && s.timestamp.gte(sinceTimestamp),
     )
@@ -76,7 +76,7 @@ function transformBalances(
       chainId,
       balance: totalBalance,
       assetId: id,
-      type: ValueType.EBV,
+      type: bucket,
       decimals: decimals,
     })
   }
