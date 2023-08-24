@@ -10,17 +10,17 @@ import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnde
 import { getRiskValues } from '../../../utils/risks/values'
 import { getDetailedTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
-import { DetailedTvlViewEntry } from '../types'
-import { DetailedTvlViewProps } from '../view/DetailedTvlView'
+import { ScalingDetailedTvlViewEntry } from '../types'
+import { ScalingDetailedTvlViewProps } from '../view/ScalingDetailedTvlView'
 
-export function getDetailedTvlView(
+export function getScalingDetailedTvlView(
   tvlApiResponse: DetailedTvlApiResponse | TvlApiResponse,
   config: Config,
   projects: Layer2[],
-): DetailedTvlViewProps {
+): ScalingDetailedTvlViewProps {
   return {
     items: projects.map((project) =>
-      getDetailedTvlViewEntry(
+      getScalingDetailedTvlViewEntry(
         tvlApiResponse as DetailedTvlApiResponse,
         project,
       ),
@@ -29,11 +29,11 @@ export function getDetailedTvlView(
   }
 }
 
-function getDetailedTvlViewEntry(
+function getScalingDetailedTvlViewEntry(
   tvlApiResponse: DetailedTvlApiResponse,
   project: Layer2,
   isVerified?: boolean,
-): DetailedTvlViewEntry {
+): ScalingDetailedTvlViewEntry {
   assert(
     tvlApiResponse.projects[project.id.toString()]?.charts.hourly.types
       .length === 9,
@@ -45,6 +45,7 @@ function getDetailedTvlViewEntry(
   return {
     name: project.display.name,
     slug: project.display.slug,
+    category: project.display.category,
     provider: project.display.provider,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,

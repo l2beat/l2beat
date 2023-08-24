@@ -1,9 +1,15 @@
+import cx from 'classnames'
 import React from 'react'
 
-import { DetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
+import { ActivityViewEntry } from '../../../pages/scaling-activity/view/types'
+import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
 import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
+import { formatLargeNumber } from '../../../utils'
+import { formatTps } from '../../../utils/formatTps'
 import { StageCell } from '../../stages/StageCell'
+import { ComingSoonCell } from '../ComingSoonCell'
+import { EthereumCell } from '../EthereumCell'
 import { IndexCell } from '../IndexCell'
 import { NumberCell } from '../NumberCell'
 import { ProjectCell } from '../ProjectCell'
@@ -50,7 +56,7 @@ export function getActiveScalingTvlColumns(
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
-          {project.technology}
+          {project.category}
         </TechnologyCell>
       ),
     },
@@ -108,7 +114,7 @@ export function getActiveScalingTvlColumns(
 }
 
 export function getScalingDetailedTvlColumns() {
-  const columns: ColumnConfig<DetailedTvlViewEntry>[] = [
+  const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
@@ -203,7 +209,7 @@ export function getUpcomingScalingTvlColumns() {
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
-          {project.technology}
+          {project.category}
         </TechnologyCell>
       ),
     },
@@ -245,7 +251,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
-          {project.technology}
+          {project.category}
         </TechnologyCell>
       ),
     },
@@ -324,6 +330,86 @@ export function getScalingRiskColumns() {
       tooltip:
         'Proposer is an entity responsible for submitting L2 state to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
       getValue: (project) => <RiskCell item={project.proposerFailure} />,
+    },
+  ]
+  return columns
+}
+
+export function getScalingActivityColumns() {
+  const columns: ColumnConfig<ActivityViewEntry>[] = [
+    {
+      name: '#',
+      alignCenter: true,
+      minimalWidth: true,
+      headClassName: 'pl-4',
+      getValue: (_, index) => <IndexCell index={index} className="md:pl-4" />,
+    },
+    {
+      name: 'Name',
+      headClassName: 'pl-8',
+      minimalWidth: true,
+      getValue: (project) =>
+        project.slug !== 'ethereum' ? (
+          <ProjectCell type="layer2" project={project} />
+        ) : (
+          <EthereumCell project={project} />
+        ),
+    },
+    {
+      name: 'Past day TPS',
+      tooltip: 'Transactions per second averaged over the past day.',
+      alignRight: true,
+      getValue: (project) =>
+        project.tpsDaily !== undefined ? (
+          <NumberCell>{formatTps(project.tpsDaily)}</NumberCell>
+        ) : (
+          <ComingSoonCell />
+        ),
+    },
+    {
+      name: '7d Change',
+      tooltip:
+        'Observed change in average daily transactions per second as compared to a week ago.',
+      alignRight: true,
+      getValue: (project) => (
+        <NumberCell signed>{project.tpsWeeklyChange}</NumberCell>
+      ),
+    },
+    {
+      name: 'Max daily TPS',
+      tooltip:
+        'Highest observed transactions per second averaged over a single day.',
+      alignRight: true,
+      getValue: (project) =>
+        project.maxTps !== undefined && (
+          <span className="flex items-baseline justify-end gap-1.5">
+            <NumberCell>{formatTps(project.maxTps)}</NumberCell>
+            <span
+              className={cx(
+                'text-gray-700 dark:text-gray-300',
+                'block min-w-[115px] text-left',
+              )}
+            >
+              on {project.maxTpsDate}
+            </span>
+          </span>
+        ),
+    },
+    {
+      name: '30D Count',
+      tooltip: 'Total number of transactions over the past month.',
+      alignRight: true,
+      getValue: (project) =>
+        project.transactionsMonthlyCount ? (
+          <NumberCell>
+            {formatLargeNumber(project.transactionsMonthlyCount)}
+          </NumberCell>
+        ) : undefined,
+    },
+    {
+      name: 'Data source',
+      tooltip: 'Where is the transaction data coming from.',
+      getValue: (project) => project.dataSource,
     },
   ]
   return columns
