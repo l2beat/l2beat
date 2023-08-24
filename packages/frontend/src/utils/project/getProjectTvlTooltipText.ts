@@ -1,48 +1,42 @@
 import { Layer2 } from '@l2beat/config'
-import { ValueType } from '@l2beat/shared-pure'
+import { AssetType } from '@l2beat/shared-pure'
+
+import { languageJoin } from '../utils'
 
 export function getProjectTvlTooltipText(config: Layer2['config']) {
   const hasCanonical = config.escrows.length > 0
   const hasExternal = config.tokenList?.some(
-    (token) => token.type === ValueType.EBV,
+    (token) => token.type === AssetType('EBV'),
   )
   const hasNative = config.tokenList?.some(
-    (token) => token.type === ValueType.NMV,
+    (token) => token.type === AssetType('NMV'),
   )
-  if (
-    (!hasCanonical && !hasExternal && !hasNative) ||
-    (hasCanonical && !hasExternal && !hasNative)
-  ) {
+
+  if (!hasExternal && !hasNative) {
     return undefined
   }
 
-  let sentence = 'TVL includes '
+  const types = []
 
   if (hasCanonical) {
-    sentence += 'canonically bridged'
-    if (hasExternal && hasNative) {
-      sentence += ', '
-    } else if (!hasExternal && !hasNative) {
-      sentence += ' '
-    } else {
-      sentence += ' and '
-    }
+    types.push('canonically bridged')
   }
 
   if (hasExternal) {
-    sentence += 'externally bridged'
-    if (hasNative) {
-      sentence += ' and '
-    } else if (hasCanonical) {
-      sentence += ' '
-    }
+    types.push('externally bridged')
   }
 
   if (hasNative) {
-    sentence += 'natively minted '
+    types.push('natively minted')
   }
 
-  sentence += 'assets. Check "Value Locked" for more information.'
+  const joinedTypes = languageJoin(types)
+
+  if (!joinedTypes) {
+    return undefined
+  }
+
+  const sentence = `TVL includes ${joinedTypes} assets. Check "Value Locked" for more information.`
 
   return sentence
 }
