@@ -1,10 +1,11 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 
 export type CliParameters =
   | ServerCliParameters
   | DiscoverCliParameters
   | InvertCliParameters
   | HelpCliParameters
+  | SingleDiscoveryCliParameters
 
 export interface ServerCliParameters {
   mode: 'server'
@@ -23,6 +24,11 @@ export interface InvertCliParameters {
   project: string
   chain: ChainId
   useMermaidMarkup: boolean
+}
+export interface SingleDiscoveryCliParameters {
+  mode: 'single-discovery'
+  address: EthereumAddress
+  chain: ChainId
 }
 
 export interface HelpCliParameters {
@@ -98,6 +104,23 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
         chain: ChainId.getId(remaining[0]),
         project: remaining[1],
         useMermaidMarkup,
+      }
+      return result
+    }
+  }
+
+  if (args[0] === 'single-discovery') {
+    const remaining = args.slice(1)
+
+    if (remaining.length === 0) {
+      return { mode: 'help', error: 'Not enough arguments' }
+    } else if (remaining.length > 2) {
+      return { mode: 'help', error: 'Too many arguments' }
+    } else {
+      const result: SingleDiscoveryCliParameters = {
+        mode: 'single-discovery',
+        chain: ChainId.getId(remaining[0]),
+        address: EthereumAddress(remaining[1]),
       }
       return result
     }

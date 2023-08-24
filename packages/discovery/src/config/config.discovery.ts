@@ -1,16 +1,21 @@
 import { ArbiscanClient, EtherscanClient, getEnv } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { config as dotenv } from 'dotenv'
 
 import { CliParameters } from '../cli/getCliParameters'
 
 export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   dotenv()
-  if (cli.mode !== 'invert' && cli.mode !== 'discover') {
+  if (
+    cli.mode !== 'invert' &&
+    cli.mode !== 'discover' &&
+    cli.mode !== 'single-discovery'
+  ) {
     throw new Error(`No local config for mode: ${cli.mode}`)
   }
 
   const discoveryEnabled = cli.mode === 'discover'
+  const singleDiscoveryEnabled = cli.mode === 'single-discovery'
   const invertEnabled = cli.mode === 'invert'
 
   return {
@@ -25,6 +30,10 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       dryRun: cli.dryRun,
       dev: cli.dev,
       blockNumber: getEnv.optionalInteger('DISCOVERY_BLOCK_NUMBER'),
+    },
+    singleDiscovery: singleDiscoveryEnabled && {
+      address: cli.address,
+      chainId: cli.chain,
     },
     chain: getChainConfig(cli.chain),
   }
@@ -129,6 +138,7 @@ function getChainConfig(chainId: ChainId) {
 
 export interface DiscoveryCliConfig {
   discovery: DiscoveryModuleConfig | false
+  singleDiscovery: SingleDiscoveryModuleConfig | false
   chain: DiscoveryChainConfig
   invert: InversionConfig | false
 }
@@ -139,6 +149,11 @@ export interface DiscoveryModuleConfig {
   readonly dryRun?: boolean
   readonly dev?: boolean
   readonly blockNumber?: number
+}
+
+export interface SingleDiscoveryModuleConfig {
+  readonly address: EthereumAddress
+  readonly chainId: ChainId
 }
 
 export interface DiscoveryChainConfig {
