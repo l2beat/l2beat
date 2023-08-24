@@ -9,13 +9,13 @@ import { assert } from '@l2beat/shared-pure'
  * @example
  *    const tree = ReportTree.from(
  *      [ARBITRUM, OPTIMISM],
- *      [ValueType.CBV, ValueType.EBV, ValueType.NMV, ValueType.TVL],
+ *      [CBV, EBV, NMV, TVL],
  *      () => ({ valueUsd: 0n, valueEth: 0n }),
  *    )
  *
- *    tree.set(ARBITRUM, ValueType.CBV, () => ({ valueUsd: 1n, valueEth: 2n }))
- *    tree.set(ARBITRUM, ValueType.NMV, () => ({ valueUsd: 10n, valueEth: 20n }))
- *    tree.set(ARBITRUM, ValueType.TVL, () => ({ valueUsd: 11n, valueEth: 22n }))
+ *    tree.set(ARBITRUM, CBV, () => ({ valueUsd: 1n, valueEth: 2n }))
+ *    tree.set(ARBITRUM, NMV, () => ({ valueUsd: 10n, valueEth: 20n }))
+ *    tree.set(ARBITRUM, TVL, () => ({ valueUsd: 11n, valueEth: 22n }))
  *
  *    console.dir({ tree }, { depth: null })
  *

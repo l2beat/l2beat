@@ -4,9 +4,9 @@ import {
   ChainId,
   getTimestamps,
   Hash256,
+  ReportType,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
@@ -155,7 +155,7 @@ export class StatusController {
     )
     const config: Token[] = []
     const tokens = tokenList.filter(
-      (t) => t.type === ValueType.EBV && t.chainId === chainId,
+      (t) => t.type === 'EBV' && t.chainId === chainId,
     )
     config.push(...tokens)
     const configHash = getTotalSupplyConfigHash(config)
@@ -172,7 +172,7 @@ export class StatusController {
 
   async getReportsStatus(
     chainId: ChainId = ChainId.ETHEREUM,
-    valueType: ValueType = ValueType.CBV,
+    reportType: ReportType = 'CBV',
     from: UnixTime | undefined,
     to: UnixTime | undefined,
   ) {
@@ -185,7 +185,7 @@ export class StatusController {
       firstHour,
       lastHour,
       chainId,
-      valueType,
+      reportType,
     )
     const configHash = getConfigHashForReports(chainId, this.projects)
 
@@ -194,7 +194,7 @@ export class StatusController {
       isSynced: isSynced(statuses, timestamp, configHash),
     }))
 
-    const title = `Reports [chainId: ${chainId.toString()}] [type: ${valueType.toString()}]`
+    const title = `Reports [chainId: ${chainId.toString()}] [type: ${reportType}]`
 
     return renderStatusPage({ statuses: reports, title })
   }
@@ -263,7 +263,7 @@ function getConfigHashForReports(chainId: ChainId, projects: Project[]) {
     case ChainId.ARBITRUM:
       return getEBVConfigHash(
         tokenList.filter(
-          (t) => t.chainId === ChainId.ARBITRUM && t.type === ValueType.EBV,
+          (t) => t.chainId === ChainId.ARBITRUM && t.type === 'EBV',
         ),
       )
     default:
