@@ -11,17 +11,17 @@ import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
-import { ActivityViewProps } from '../view/ActivityView'
+import { ScalingActivityViewProps } from '../view/ScalingActivityView'
 import { ActivityViewEntry } from '../view/types'
 
-export function getActivityView(
+export function getScalingActivityView(
   projects: Layer2[],
   activityApiResponse: ActivityApiResponse,
   verificationStatus: VerificationStatus,
-): ActivityViewProps {
+): ScalingActivityViewProps {
   const included = getIncludedProjects(projects, activityApiResponse, [])
   const items = included.map((x) =>
-    getActivityViewEntry(x, activityApiResponse, verificationStatus),
+    getScalingActivityViewEntry(x, activityApiResponse, verificationStatus),
   )
   items.push(getEthereumActivityViewEntry(activityApiResponse))
 
@@ -30,7 +30,7 @@ export function getActivityView(
   }
 }
 
-export function getActivityViewEntry(
+export function getScalingActivityViewEntry(
   project: Layer2,
   activityApiResponse: ActivityApiResponse,
   verificationStatus: VerificationStatus,

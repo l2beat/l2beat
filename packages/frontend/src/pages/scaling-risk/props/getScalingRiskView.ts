@@ -5,20 +5,20 @@ import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnde
 import { ScalingRiskViewProps } from '../view/ScalingRiskView'
 import { ScalingRiskViewEntry } from '../view/types'
 
-export function getRiskView(
+export function getScalingRiskView(
   projects: Layer2[],
   verificationStatus: VerificationStatus,
   upcomingEnabled: boolean,
 ): ScalingRiskViewProps {
   return {
     items: projects.map((p) =>
-      getRiskViewEntry(p, verificationStatus.projects[p.id.toString()]),
+      getScalingRiskViewEntry(p, verificationStatus.projects[p.id.toString()]),
     ),
     upcomingEnabled,
   }
 }
 
-export function getRiskViewEntry(
+export function getScalingRiskViewEntry(
   project: Layer2,
   isVerified?: boolean,
 ): ScalingRiskViewEntry {

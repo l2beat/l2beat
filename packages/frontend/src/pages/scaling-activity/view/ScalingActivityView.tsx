@@ -6,11 +6,11 @@ import { getScalingRowProps } from '../../../components/table/props/getScalingRo
 import { getScalingActivityColumns } from '../../../components/table/props/getScalingTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
 import { ActivityViewEntry } from './types'
-export interface ActivityViewProps {
+export interface ScalingActivityViewProps {
   items: ActivityViewEntry[]
 }
 
-export function ActivityView({ items }: ActivityViewProps) {
+export function ScalingActivityView({ items }: ScalingActivityViewProps) {
   const columns = getScalingActivityColumns()
   const rows: RowConfig<ActivityViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'activity'),

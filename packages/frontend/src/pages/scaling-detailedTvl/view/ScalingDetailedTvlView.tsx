@@ -6,15 +6,15 @@ import { getScalingRowProps } from '../../../components/table/props/getScalingRo
 import { getScalingDetailedTvlColumns } from '../../../components/table/props/getScalingTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
 import { Tabs } from '../../../components/Tabs'
-import { DetailedTvlViewEntry } from '../types'
+import { ScalingDetailedTvlViewEntry } from '../types'
 
-export interface DetailedTvlViewProps {
-  items: DetailedTvlViewEntry[]
+export interface ScalingDetailedTvlViewProps {
+  items: ScalingDetailedTvlViewEntry[]
   upcomingEnabled?: boolean
 }
 
-export function DetailedTvlView({ items }: DetailedTvlViewProps) {
-  const rows: RowConfig<DetailedTvlViewEntry> = {
+export function ScalingDetailedTvlView({ items }: ScalingDetailedTvlViewProps) {
+  const rows: RowConfig<ScalingDetailedTvlViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'detailedTvl'),
   }
 

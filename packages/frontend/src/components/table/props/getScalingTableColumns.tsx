@@ -2,7 +2,7 @@ import cx from 'classnames'
 import React from 'react'
 
 import { ActivityViewEntry } from '../../../pages/scaling-activity/view/types'
-import { DetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
+import { ScalingDetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
 import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
 import { formatLargeNumber } from '../../../utils'
@@ -110,7 +110,7 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
 }
 
 export function getScalingDetailedTvlColumns() {
-  const columns: ColumnConfig<DetailedTvlViewEntry>[] = [
+  const columns: ColumnConfig<ScalingDetailedTvlViewEntry>[] = [
     {
       name: '#',
       alignCenter: true,
