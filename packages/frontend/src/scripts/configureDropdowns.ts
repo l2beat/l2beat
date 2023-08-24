@@ -1,3 +1,4 @@
+import { clamp } from '../utils'
 import { makeQuery } from './query'
 
 export function configureDropdowns() {
@@ -65,8 +66,4 @@ function isCentered(element: HTMLElement): boolean {
     element.dataset.centered !== undefined &&
     element.dataset.centered === 'true'
   )
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value))
 }
