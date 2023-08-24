@@ -41,12 +41,12 @@ export function getScalingActivityViewEntry(
   return {
     name: project.display.name,
     slug: project.display.slug,
+    category: project.display.category,
     provider: project.display.provider,
     warning: project.display.warning,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     dataSource: project.display.activityDataSource,
-    technology: project.display.category,
     ...getActivityViewEntryDetails(data),
   }
 }

@@ -3,6 +3,7 @@ import { Layer2 } from '@l2beat/config'
 export interface ActivityViewEntry {
   name: string
   slug: string
+  category?: Layer2['display']['category']
   provider?: Layer2['display']['provider']
   warning?: string
   isVerified?: boolean
@@ -15,5 +16,4 @@ export interface ActivityViewEntry {
   transactionsMonthlyCount: number | undefined
   maxTps?: number
   maxTpsDate?: string
-  technology?: Layer2['display']['category']
 }
