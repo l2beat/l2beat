@@ -51,6 +51,7 @@ export function getTokens(
       const symbol = token?.symbol
       const name = token?.name
       const address = token?.address
+      const iconUrl = token?.iconUrl ?? ''
 
       if (symbol && name) {
         const tvlEndpoint = hasDetailedTVL
@@ -59,6 +60,7 @@ export function getTokens(
 
         return {
           address: address?.toString(),
+          iconUrl,
           symbol,
           name,
           assetType,

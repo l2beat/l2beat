@@ -1,11 +1,10 @@
 import { AssetType } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { EthereumRoundIcon } from '../icons/chart/EthereumRoundIcon'
 import { CloseIcon } from '../icons/CloseIcon'
 
 export interface TokenControl {
-  address?: string
+  iconUrl: string
   symbol: string
   name: string
   assetType: AssetType
@@ -13,8 +12,6 @@ export interface TokenControl {
 }
 
 export function TokenCell({ token }: { token: TokenControl }) {
-  const isNativeEth = !token.address && token.symbol === 'ETH'
-
   return (
     <label className="flex cursor-pointer select-none items-center gap-1.5">
       <input
@@ -26,17 +23,7 @@ export function TokenCell({ token }: { token: TokenControl }) {
         data-tvl-endpoint={token.tvlEndpoint}
         data-asset-type={token.assetType}
       />
-      {isNativeEth ? (
-        <EthereumRoundIcon className="h-4 w-4 rounded-full" />
-      ) : token.address ? (
-        <img
-          src={`https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${token.address}/logo.png`}
-          className="h-4 w-4 rounded-full"
-        />
-      ) : (
-        // Refactor way of displaying unknown tokens - refine icons' sources
-        <span className="font-bold text-yellow-300">?</span>
-      )}
+      <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
       <p className="text-sm" key={token.symbol}>
         <span className={'font-bold'}>{token.name}</span> ({token.symbol})
       </p>
