@@ -245,8 +245,6 @@ export class DetailedTvlController {
       this.priceRepository.getByTimestamp(dataTimings.latestTimestamp),
     ])
 
-    const nonZeroBalances = balances.filter((balance) => balance.balance > 0n)
-
     const externalAssetsBreakdown = getNonCanonicalAssetsBreakdown(
       latestReports,
       this.tokens,
@@ -259,8 +257,8 @@ export class DetailedTvlController {
       'NMV',
     )
 
-    const canonicalAssetsBreakdown = getCanonicalAssetsBreakdown(
-      nonZeroBalances,
+    const canonicalAssetsBreakdown = getCanonicalAssetsBreakdown(this.logger)(
+      balances,
       prices,
       this.projects,
     )

@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/shared'
 import {
   assert,
   DetailedTvlApiProject,
@@ -82,7 +83,9 @@ export function getProjectTokensCharts(
   return tokens
 }
 
-type CanonicalAssetsBreakdown = ReturnType<typeof getCanonicalAssetsBreakdown>
+type CanonicalAssetsBreakdown = ReturnType<
+  ReturnType<typeof getCanonicalAssetsBreakdown>
+>
 type NonCanonicalAssetsBreakdown = ReturnType<
   typeof getNonCanonicalAssetsBreakdown
 >
@@ -134,48 +137,66 @@ export function getNonCanonicalAssetsBreakdown(
  * @param prices Prices for latest timestamp
  * @param projects Projects to search within
  */
-export function getCanonicalAssetsBreakdown(
-  balances: BalanceRecord[],
-  prices: PriceRecord[],
-  projects: ReportProject[],
-) {
-  return projects.flatMap((project) => {
-    return project.escrows.flatMap((escrow) => {
-      return escrow.tokens.flatMap((token) => {
-        const escrowTokenBalance = balances.find(
-          (balance) =>
-            balance.holderAddress === escrow.address &&
-            balance.assetId === token.id &&
-            balance.chainId === token.chainId,
-        )
+export function getCanonicalAssetsBreakdown(logger: Logger) {
+  return function (
+    balances: BalanceRecord[],
+    prices: PriceRecord[],
+    projects: ReportProject[],
+  ) {
+    return projects.flatMap((project) => {
+      return project.escrows.flatMap((escrow) => {
+        return escrow.tokens.flatMap((token) => {
+          const escrowTokenBalance = balances.find(
+            (balance) =>
+              balance.holderAddress === escrow.address &&
+              balance.assetId === token.id &&
+              balance.chainId === token.chainId,
+          )
 
-        assert(
-          escrowTokenBalance,
-          'Balance should not be undefined within the response preparation',
-        )
+          assert(
+            escrowTokenBalance,
+            'Balance should not be undefined within the response preparation',
+          )
 
-        const price = prices.find((price) => price.assetId === token.id)
+          // Ignore assets with 0 balance
+          if (escrowTokenBalance.balance <= 0) {
+            // Flat map
+            return []
+          }
 
-        assert(
-          price,
-          'Price should not be undefined within the response preparation',
-        )
+          const price = prices.find((price) => price.assetId === token.id)
 
-        const amount = asNumber(escrowTokenBalance.balance, token.decimals)
-        const usdValue = amount * price.priceUsd
+          if (!price) {
+            logger.debug(
+              'Missing price entry while preparing breakdown response',
+              {
+                projectId: project.projectId.toString(),
+                assetId: token.id.toString(),
+                chainId: token.chainId.toString(),
+                escrowAddress: escrow.address.toString(),
+              },
+            )
 
-        return {
-          projectId: project.projectId,
-          assetId: token.id,
-          chainId: token.chainId,
-          amount: amount.toString(),
-          usdValue: usdValue.toString(),
-          usdPrice: price.priceUsd.toString(),
-          escrowAddress: escrow.address,
-        }
+            // Flat map
+            return []
+          }
+
+          const amount = asNumber(escrowTokenBalance.balance, token.decimals)
+          const usdValue = amount * price.priceUsd
+
+          return {
+            projectId: project.projectId,
+            assetId: token.id,
+            chainId: token.chainId,
+            amount: amount.toString(),
+            usdValue: usdValue.toString(),
+            usdPrice: price.priceUsd.toString(),
+            escrowAddress: escrow.address,
+          }
+        })
       })
     })
-  })
+  }
 }
 
 /**
