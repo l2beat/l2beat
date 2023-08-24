@@ -1,5 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
-import { assert } from 'console'
+import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 
 const chainConfig = [
   {
