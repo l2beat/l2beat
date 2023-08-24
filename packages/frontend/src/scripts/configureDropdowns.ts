@@ -21,31 +21,35 @@ export function configureDropdowns() {
     button.addEventListener('click', () => {
       hiddenItems.forEach((item) => {
         item.classList.toggle('hidden')
-        if (isCentered(item)) {
-          recenter(dropdown, item)
-        }
       })
       transparentItems.forEach((item) => {
         item.classList.toggle('opacity-0')
         item.classList.toggle('pointer-events-none')
-        if (isCentered(item)) {
-          recenter(dropdown, item)
-        }
       })
+
+      onResize(dropdown, hiddenItems, transparentItems)
     })
     window.addEventListener('resize', () => {
-      hiddenItems.forEach((item) => {
-        if (isCentered(item)) {
-          recenter(dropdown, item)
-        }
-      })
-      transparentItems.forEach((item) => {
-        if (isCentered(item)) {
-          recenter(dropdown, item)
-        }
-      })
+      onResize(dropdown, hiddenItems, transparentItems)
     })
   }
+}
+
+function onResize(
+  dropdown: HTMLElement,
+  hiddenItems: NodeListOf<HTMLElement>,
+  transparentItems: NodeListOf<HTMLElement>,
+) {
+  hiddenItems.forEach((item) => {
+    if (isCentered(item)) {
+      recenter(dropdown, item)
+    }
+  })
+  transparentItems.forEach((item) => {
+    if (isCentered(item)) {
+      recenter(dropdown, item)
+    }
+  })
 }
 
 function recenter(dropdown: HTMLElement, item: HTMLElement) {
