@@ -37,7 +37,7 @@ export function DesktopTokenControls({ tokens }: DesktopTokenControlsProps) {
               <SelectedTokenButton />
             </>
           }
-          contentDataRole="chart-token-modal"
+          role="chart-token-modal"
         >
           <TokenList tokens={tokens} />
         </TogglableDropdown>

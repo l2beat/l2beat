@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react'
 interface TogglableDropdownProps {
   className?: string
   button: ReactNode
-  contentDataRole: string
+  role: string
   children: ReactNode
 }
 
@@ -19,7 +19,7 @@ export function TogglableDropdown(props: TogglableDropdownProps) {
       >
         {props.button}
       </div>
-      <TogglableDropdownContent dataRole={props.contentDataRole}>
+      <TogglableDropdownContent dataRole={props.role}>
         {props.children}
       </TogglableDropdownContent>
     </div>
