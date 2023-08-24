@@ -1,8 +1,4 @@
-import {
-  ChainId,
-  EthereumAddress,
-  UpgradeabilityParameters,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UpgradeabilityParameters } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
@@ -83,14 +79,11 @@ describe(processAnalysis.name, () => {
   }
 
   it('sorts EOAs', () => {
-    const result = processAnalysis(
-      [
-        { type: 'EOA', address: ADDRESS_B },
-        { type: 'EOA', address: ADDRESS_A },
-        { type: 'EOA', address: ADDRESS_C },
-      ],
-      ChainId.ETHEREUM,
-    )
+    const result = processAnalysis([
+      { type: 'EOA', address: ADDRESS_B },
+      { type: 'EOA', address: ADDRESS_A },
+      { type: 'EOA', address: ADDRESS_C },
+    ])
 
     expect(result).toEqual({
       contracts: [],
@@ -100,14 +93,13 @@ describe(processAnalysis.name, () => {
   })
 
   it('processes an unverified contract', () => {
-    const result = processAnalysis([CONTRACT_A], ChainId.ETHEREUM)
+    const result = processAnalysis([CONTRACT_A])
 
     expect(result).toEqual({
       contracts: [
         {
           address: ADDRESS_A,
           name: 'A',
-          code: 'https://etherscan.deth.net/address/0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
           unverified: true,
           upgradeability: CONTRACT_A.upgradeability,
         },
@@ -118,7 +110,7 @@ describe(processAnalysis.name, () => {
   })
 
   it('processes a verified contract with values and errors', () => {
-    const result = processAnalysis([CONTRACT_B], ChainId.ETHEREUM)
+    const result = processAnalysis([CONTRACT_B])
 
     expect(result).toEqual({
       contracts: [
@@ -126,7 +118,6 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_B,
           name: 'B',
           derivedName: 'Something not B',
-          code: 'https://etherscan.deth.net/address/0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
           upgradeability: CONTRACT_B.upgradeability,
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
@@ -138,23 +129,19 @@ describe(processAnalysis.name, () => {
   })
 
   it('processes a proxy', () => {
-    const result = processAnalysis(
-      [
-        CONTRACT_C,
-        {
-          type: 'EOA',
-          address: ADDRESS_D,
-        },
-      ],
-      ChainId.ETHEREUM,
-    )
+    const result = processAnalysis([
+      CONTRACT_C,
+      {
+        type: 'EOA',
+        address: ADDRESS_D,
+      },
+    ])
 
     expect(result).toEqual({
       contracts: [
         {
           address: ADDRESS_C,
           name: 'C',
-          code: 'https://etherscan.deth.net/address/0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
           upgradeability: CONTRACT_C.upgradeability,
           values: CONTRACT_C.values,
         },
@@ -165,25 +152,21 @@ describe(processAnalysis.name, () => {
   })
 
   it('processes multiple contracts', function () {
-    const result = processAnalysis(
-      [
-        CONTRACT_A,
-        CONTRACT_B,
-        CONTRACT_C,
-        {
-          type: 'EOA',
-          address: ADDRESS_D,
-        },
-      ],
-      ChainId.ETHEREUM,
-    )
+    const result = processAnalysis([
+      CONTRACT_A,
+      CONTRACT_B,
+      CONTRACT_C,
+      {
+        type: 'EOA',
+        address: ADDRESS_D,
+      },
+    ])
 
     expect(result).toEqual({
       contracts: [
         {
           address: ADDRESS_A,
           name: 'A',
-          code: 'https://etherscan.deth.net/address/0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
           unverified: true,
           upgradeability: CONTRACT_A.upgradeability,
         },
@@ -191,7 +174,6 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_B,
           name: 'B',
           derivedName: 'Something not B',
-          code: 'https://etherscan.deth.net/address/0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
           upgradeability: CONTRACT_B.upgradeability,
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
@@ -199,7 +181,6 @@ describe(processAnalysis.name, () => {
         {
           address: ADDRESS_C,
           name: 'C',
-          code: 'https://etherscan.deth.net/address/0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
           upgradeability: CONTRACT_C.upgradeability,
           values: CONTRACT_C.values,
         },
@@ -217,43 +198,34 @@ describe(processAnalysis.name, () => {
 
   it('field order matters', () => {
     // TODO: in the future it shouldn't
-    const result1 = processAnalysis(
-      [
-        {
-          ...CONTRACT_B,
-          values: { a: 1, b: 2, c: 3 },
-          errors: { x: 'error', y: 'error', z: 'error' },
-        },
-      ],
-      ChainId.ETHEREUM,
-    )
-    const result2 = processAnalysis(
-      [
-        {
-          ...CONTRACT_B,
-          values: { c: 3, b: 2, a: 1 },
-          errors: { z: 'error', y: 'error', x: 'error' },
-        },
-      ],
-      ChainId.ETHEREUM,
-    )
+    const result1 = processAnalysis([
+      {
+        ...CONTRACT_B,
+        values: { a: 1, b: 2, c: 3 },
+        errors: { x: 'error', y: 'error', z: 'error' },
+      },
+    ])
+    const result2 = processAnalysis([
+      {
+        ...CONTRACT_B,
+        values: { c: 3, b: 2, a: 1 },
+        errors: { z: 'error', y: 'error', x: 'error' },
+      },
+    ])
 
     expect(JSON.stringify(result1)).not.toEqual(JSON.stringify(result2))
   }),
     it('undefined keys in upgradeability are skipped', () => {
-      const resultUndefined = processAnalysis(
-        [
-          {
-            ...CONTRACT_A,
-            upgradeability: {
-              type: 'immutable',
-              key: undefined,
-            } as UpgradeabilityParameters,
-          },
-        ],
-        ChainId.ETHEREUM,
-      )
-      const result = processAnalysis([CONTRACT_A], ChainId.ETHEREUM)
+      const resultUndefined = processAnalysis([
+        {
+          ...CONTRACT_A,
+          upgradeability: {
+            type: 'immutable',
+            key: undefined,
+          } as UpgradeabilityParameters,
+        },
+      ])
+      const result = processAnalysis([CONTRACT_A])
 
       expect(resultUndefined).toEqual(result)
     })

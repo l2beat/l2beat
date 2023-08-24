@@ -8,7 +8,6 @@
     {
       "name": "SynapseBridge",
       "address": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
-      "code": "https://etherscan.deth.net/address/0x2796317b0fF8538F253012862c06787Adfb8cEb6,0x31fe393815822edacBd81C2262467402199EFD0D",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x31fe393815822edacBd81C2262467402199EFD0D",
@@ -39,7 +38,6 @@
     {
       "name": "TimelockController",
       "address": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70",
-      "code": "https://etherscan.deth.net/address/0x647489df0673E17dB3163c47d5233EBB6F5cAc70",
       "upgradeability": {
         "type": "immutable"
       },
@@ -71,7 +69,6 @@
     {
       "name": "Bridge Multisig",
       "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
-      "code": "https://etherscan.deth.net/address/0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -93,7 +90,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
-      "code": "https://etherscan.deth.net/address/0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
       "upgradeability": {
         "type": "immutable"
       },

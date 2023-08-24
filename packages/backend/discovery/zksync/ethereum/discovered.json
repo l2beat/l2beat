@@ -8,7 +8,6 @@
     {
       "name": "Multisig 1",
       "address": "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346",
-      "code": "https://etherscan.deth.net/address/0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
@@ -32,7 +31,6 @@
     {
       "name": "Multisig 2",
       "address": "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567",
-      "code": "https://etherscan.deth.net/address/0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
@@ -58,7 +56,6 @@
     {
       "name": "Multisig 3",
       "address": "0x225d3822De44E58eE935440E0c0B829C4232086e",
-      "code": "https://etherscan.deth.net/address/0x225d3822De44E58eE935440E0c0B829C4232086e,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -80,7 +77,6 @@
     {
       "name": "Governance",
       "address": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
-      "code": "https://etherscan.deth.net/address/0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01,0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8",
@@ -98,7 +94,6 @@
     {
       "name": "TokenGovernance",
       "address": "0x35cc31f63deef017c38d51B038891bAE7d614e86",
-      "code": "https://etherscan.deth.net/address/0x35cc31f63deef017c38d51B038891bAE7d614e86",
       "upgradeability": {
         "type": "immutable"
       },
@@ -115,7 +110,6 @@
     {
       "name": "UpgradeGatekeeper",
       "address": "0x38A43F4330f24fe920F943409709fc9A6084C939",
-      "code": "https://etherscan.deth.net/address/0x38A43F4330f24fe920F943409709fc9A6084C939",
       "upgradeability": {
         "type": "immutable"
       },
@@ -137,7 +131,6 @@
     {
       "name": "Verifier",
       "address": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
-      "code": "https://etherscan.deth.net/address/0x5290E9582B4FB706EaDf87BB1c129e897e04d06D,0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xf7Bd436a05678B647D74a88ffcf4445Efc43BDfC",
@@ -148,7 +141,6 @@
     {
       "name": "NftFactory",
       "address": "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
-      "code": "https://etherscan.deth.net/address/0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D",
       "upgradeability": {
         "type": "immutable"
       },
@@ -163,7 +155,6 @@
     {
       "name": "ZkSync",
       "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
-      "code": "https://etherscan.deth.net/address/0xaBEA9132b05A70803a4E85094fD0e1800777fBEF,0x8e972b354E6933275513C355Ee14D44A832aD2d9,0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD",
       "upgradeability": {
         "type": "zkSync Lite proxy",
         "admin": "0x38A43F4330f24fe920F943409709fc9A6084C939",
@@ -205,7 +196,6 @@
     {
       "name": "Proxy",
       "address": "0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6",
-      "code": "https://etherscan.deth.net/address/0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6",
       "upgradeability": {
         "type": "immutable"
       }
@@ -213,7 +203,6 @@
     {
       "name": "ZkSync Multisig",
       "address": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
-      "code": "https://etherscan.deth.net/address/0xE24f4870Ab85DE8E356C5fC56138587206c70d99,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"

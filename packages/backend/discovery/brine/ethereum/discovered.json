@@ -8,7 +8,6 @@
     {
       "name": "StarkExchange",
       "address": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
-      "code": "https://etherscan.deth.net/address/0x1390f521A79BaBE99b69B37154D63D431da27A07,0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583,0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12,0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb,0x67e198743BC19fa4757720eDd0e769f8291e1F1D,0x613ee54C54D5548627064B4D648942bF3648f376,0xb2ED005D0278179001a49a9969BB22BA8e98f31F,0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db",
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
@@ -69,7 +68,6 @@
     {
       "name": "SHARPVerifierGovernorMultisig",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
-      "code": "https://etherscan.deth.net/address/0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -91,7 +89,6 @@
     {
       "name": "SHARPVerifierProxy",
       "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-      "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
@@ -119,7 +116,6 @@
     {
       "name": "Committee",
       "address": "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446",
-      "code": "https://etherscan.deth.net/address/0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446",
       "upgradeability": {
         "type": "immutable"
       },
@@ -143,7 +139,6 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
-      "code": "https://etherscan.deth.net/address/0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
       "upgradeability": {
         "type": "immutable"
       },
@@ -157,7 +152,6 @@
     {
       "name": "SHARPVerifier",
       "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "code": "https://etherscan.deth.net/address/0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
       "upgradeability": {
         "type": "immutable"
       },
@@ -179,7 +173,6 @@
     {
       "name": "OrderRegistry",
       "address": "0x806d435a82B0381bD884540c2235147c13B97fe6",
-      "code": "https://etherscan.deth.net/address/0x806d435a82B0381bD884540c2235147c13B97fe6",
       "upgradeability": {
         "type": "immutable"
       },

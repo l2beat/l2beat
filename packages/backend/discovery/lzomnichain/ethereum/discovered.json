@@ -8,7 +8,6 @@
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
-      "code": "https://etherscan.deth.net/address/0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
       "upgradeability": {
         "type": "immutable"
       },
@@ -25,7 +24,6 @@
       "name": "",
       "address": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034,0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
@@ -35,7 +33,6 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-      "code": "https://etherscan.deth.net/address/0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -808,7 +805,6 @@
       "name": "LayerZero_Oracle",
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x5a54fe5234E811466D5366846283323c954310B2,0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
@@ -819,7 +815,6 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-      "code": "https://etherscan.deth.net/address/0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
       "upgradeability": {
         "type": "immutable"
       },
@@ -830,7 +825,6 @@
     {
       "name": "Stargate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-      "code": "https://etherscan.deth.net/address/0x65bb797c2B9830d891D87288F029ed8dACc19705,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -855,7 +849,6 @@
     {
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-      "code": "https://etherscan.deth.net/address/0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
       "upgradeability": {
         "type": "immutable"
       },
@@ -883,7 +876,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-      "code": "https://etherscan.deth.net/address/0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
       "upgradeability": {
         "type": "immutable"
       },
@@ -894,7 +886,6 @@
     {
       "name": "StargateToken",
       "address": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
-      "code": "https://etherscan.deth.net/address/0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
       "upgradeability": {
         "type": "immutable"
       },
@@ -913,7 +904,6 @@
     {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
-      "code": "https://etherscan.deth.net/address/0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"

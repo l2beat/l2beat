@@ -7,7 +7,6 @@
     {
       "name": "TransactionManager",
       "address": "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09",
-      "code": "https://etherscan.deth.net/address/0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09",
       "upgradeability": {
         "type": "immutable"
       },
@@ -31,7 +30,6 @@
     {
       "name": "FulfillInterpreter",
       "address": "0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a",
-      "code": "https://etherscan.deth.net/address/0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a",
       "upgradeability": {
         "type": "immutable"
       },

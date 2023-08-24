@@ -8,7 +8,6 @@
     {
       "name": "ERC20Bridge",
       "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-      "code": "https://etherscan.deth.net/address/0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319,0x6ccfD65b0b14F67259C77Ca6267104e058dDB292",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x6ccfD65b0b14F67259C77Ca6267104e058dDB292",
@@ -29,7 +28,6 @@
     {
       "name": "BridgedToken",
       "address": "0x36f274C1C197F277EA3C57859729398FCc8a3763",
-      "code": "https://etherscan.deth.net/address/0x36f274C1C197F277EA3C57859729398FCc8a3763",
       "upgradeability": {
         "type": "immutable"
       },
@@ -55,7 +53,6 @@
     {
       "name": "USDCBridgeProxyAdmin",
       "address": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
-      "code": "https://etherscan.deth.net/address/0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
       "upgradeability": {
         "type": "immutable"
       },
@@ -67,7 +64,6 @@
     {
       "name": "USDCBridge",
       "address": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
-      "code": "https://etherscan.deth.net/address/0x504A330327A089d8364C4ab3811Ee26976d388ce,0x16Db542C30fB3519D11CF8F632077c62c1a944fd",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x16Db542C30fB3519D11CF8F632077c62c1a944fd",
@@ -86,7 +82,6 @@
     {
       "name": "ERC20BridgeProxyAdmin",
       "address": "0x5B0bb17755FBa06028530682E2FD5bc373931768",
-      "code": "https://etherscan.deth.net/address/0x5B0bb17755FBa06028530682E2FD5bc373931768",
       "upgradeability": {
         "type": "immutable"
       },
@@ -98,7 +93,6 @@
     {
       "name": "AdminMultisig",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-      "code": "https://etherscan.deth.net/address/0x892bb7EeD71efB060ab90140e7825d8127991DD3,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -125,7 +119,6 @@
     {
       "name": "ERC20UpgradableBeacon",
       "address": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
-      "code": "https://etherscan.deth.net/address/0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
       "upgradeability": {
         "type": "immutable"
       },
@@ -138,7 +131,6 @@
     {
       "name": "PlonkVerifierFullLarge",
       "address": "0xa4F1155202D36348097b7488b0D2365fA91f8CaC",
-      "code": "https://etherscan.deth.net/address/0xa4F1155202D36348097b7488b0D2365fA91f8CaC",
       "upgradeability": {
         "type": "immutable"
       }
@@ -146,7 +138,6 @@
     {
       "name": "PlonkVerifierFull",
       "address": "0xc01E6807DB9Fb9cC75E9Fe622ba8e7f3eB9f2B32",
-      "code": "https://etherscan.deth.net/address/0xc01E6807DB9Fb9cC75E9Fe622ba8e7f3eB9f2B32",
       "upgradeability": {
         "type": "immutable"
       }
@@ -154,7 +145,6 @@
     {
       "name": "PlonkVerifierFull2",
       "address": "0xC84832f69bFFbC1A94E44a157A342766E959ED27",
-      "code": "https://etherscan.deth.net/address/0xC84832f69bFFbC1A94E44a157A342766E959ED27",
       "upgradeability": {
         "type": "immutable"
       },
@@ -163,7 +153,6 @@
     {
       "name": "zkEVM",
       "address": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-      "code": "https://etherscan.deth.net/address/0xd19d4B5d358258f05D7B411E21A1460D11B0876F,0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3",
@@ -220,7 +209,6 @@
     {
       "name": "Timelock",
       "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
-      "code": "https://etherscan.deth.net/address/0xd6B95c960779c72B8C6752119849318E5d550574",
       "upgradeability": {
         "type": "immutable"
       },
@@ -259,7 +247,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-      "code": "https://etherscan.deth.net/address/0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
       "upgradeability": {
         "type": "immutable"
       },
