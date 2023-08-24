@@ -7,7 +7,6 @@ import {
   TvlApiCharts,
   TvlApiToken,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -105,8 +104,14 @@ describe(generateTvlApiResponse.name, () => {
       for (const projectId of projectIds) {
         const usdValue = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
         const ethValue = usdValue * 1000n
-        const valueType = ValueType.TVL
-        result.all.push({ timestamp, projectId, usdValue, ethValue, valueType })
+        const reportType = 'TVL'
+        result.all.push({
+          timestamp,
+          projectId,
+          usdValue,
+          ethValue,
+          reportType,
+        })
         result[projectId.toString()].push([
           timestamp,
           asNumber(usdValue, 2),
@@ -133,7 +138,7 @@ describe(generateTvlApiResponse.name, () => {
         result.all.push({
           asset: assetId,
           chainId: ChainId.ETHEREUM,
-          type: ValueType.CBV,
+          reportType: 'CBV',
           amount: 0n, // ignored
           ethValue: 0n, // ignored
           usdValue: balanceUsd,

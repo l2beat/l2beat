@@ -1,4 +1,4 @@
-import { ValueType } from '@l2beat/shared-pure'
+import { AssetType } from '@l2beat/shared-pure'
 import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
@@ -7,7 +7,7 @@ interface Props {
   name: string
   value: string
   tvlEndpoint?: string
-  assetType?: ValueType
+  assetType?: AssetType
   children?: ReactNode
   className?: string
 }

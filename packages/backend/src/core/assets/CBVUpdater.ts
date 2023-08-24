@@ -5,7 +5,6 @@ import {
   Hash256,
   ProjectId,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
@@ -67,7 +66,7 @@ export class CBVUpdater implements AssetUpdater {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
       this.getChainId(),
-      ValueType.CBV,
+      'CBV',
     )
     for (const timestamp of known) {
       this.knownSet.add(timestamp.toNumber())
@@ -112,7 +111,7 @@ export class CBVUpdater implements AssetUpdater {
       configHash: this.configHash,
       timestamp,
       chainId: this.getChainId(),
-      valueType: ValueType.CBV,
+      reportType: 'CBV',
     })
 
     this.knownSet.add(timestamp.toNumber())
@@ -137,7 +136,7 @@ export class CBVUpdater implements AssetUpdater {
     return this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      ValueType.CBV,
+      'CBV',
     )
   }
 }
