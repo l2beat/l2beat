@@ -10,6 +10,7 @@
     "clean": "rm -rf build",
     "discover": "discovery discover",
     "discover:dev": "cd ../discovery && yarn build && cd - && discovery discover --dev",
+    "discover:single": "discovery single-discovery",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "invert": "discovery invert",

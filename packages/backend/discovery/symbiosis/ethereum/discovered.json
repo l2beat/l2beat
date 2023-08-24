@@ -8,7 +8,6 @@
     {
       "name": "ProxyAdminBridgeV2",
       "address": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
-      "code": "https://etherscan.deth.net/address/0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
       "upgradeability": {
         "type": "immutable"
       },
@@ -20,7 +19,6 @@
     {
       "name": "MetaRouterGateway",
       "address": "0x25bEE8C21D1d0ec2852302fd7E674196EA298eC6",
-      "code": "https://etherscan.deth.net/address/0x25bEE8C21D1d0ec2852302fd7E674196EA298eC6",
       "upgradeability": {
         "type": "immutable"
       },
@@ -31,7 +29,6 @@
     {
       "name": "ProxyAdminBridge",
       "address": "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
-      "code": "https://etherscan.deth.net/address/0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
       "upgradeability": {
         "type": "immutable"
       },
@@ -43,7 +40,6 @@
     {
       "name": "Multisig",
       "address": "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a",
-      "code": "https://etherscan.deth.net/address/0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -67,7 +63,6 @@
     {
       "name": "BridgeV2",
       "address": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
-      "code": "https://etherscan.deth.net/address/0x5523985926Aa12BA58DC5Ad00DDca99678D7227E,0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365",
@@ -85,7 +80,6 @@
     {
       "name": "Portal",
       "address": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
-      "code": "https://etherscan.deth.net/address/0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8,0x8a7F930003BedD63A1ebD99C5917FD6aE7E3dedf",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x8a7F930003BedD63A1ebD99C5917FD6aE7E3dedf",
@@ -106,7 +100,6 @@
       "name": "Bridge",
       "address": "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0,0x61608F9520C311052D88Bc7d0c2c4Cba1c964662",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x61608F9520C311052D88Bc7d0c2c4Cba1c964662",
@@ -117,7 +110,6 @@
     {
       "name": "MetaRouter",
       "address": "0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
-      "code": "https://etherscan.deth.net/address/0xE75C7E85FE6ADd07077467064aD15847E6ba9877",
       "upgradeability": {
         "type": "immutable"
       },

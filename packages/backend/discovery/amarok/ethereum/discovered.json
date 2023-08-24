@@ -8,7 +8,6 @@
     {
       "name": "GnosisHubConnector",
       "address": "0x245F757d660C3ec65416168690431076d58d6413",
-      "code": "https://etherscan.deth.net/address/0x245F757d660C3ec65416168690431076d58d6413",
       "upgradeability": {
         "type": "immutable"
       },
@@ -30,7 +29,6 @@
     {
       "name": "UpgradeBeaconProxy",
       "address": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
-      "code": "https://etherscan.deth.net/address/0x28A9e7bbed277092E2431F186E1aF898962d4E92",
       "upgradeability": {
         "type": "immutable"
       }
@@ -38,7 +36,6 @@
     {
       "name": "Connext Multisig",
       "address": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
-      "code": "https://etherscan.deth.net/address/0x4d50a469fc788a3c0CdC8Fd67868877dCb246625,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -60,7 +57,6 @@
     {
       "name": "OptimismHubConnector",
       "address": "0x66a425f09cfd613d40A986B3ef800AA7604C8eeE",
-      "code": "https://etherscan.deth.net/address/0x66a425f09cfd613d40A986B3ef800AA7604C8eeE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -82,7 +78,6 @@
     {
       "name": "WormholeHubConnector",
       "address": "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45",
-      "code": "https://etherscan.deth.net/address/0x69009c6f567590d8B469dbF4C8808e8ee32b8a45",
       "upgradeability": {
         "type": "immutable"
       },
@@ -105,7 +100,6 @@
     {
       "name": "WatcherManager",
       "address": "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6",
-      "code": "https://etherscan.deth.net/address/0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6",
       "upgradeability": {
         "type": "immutable"
       },
@@ -126,7 +120,6 @@
     {
       "name": "UpgradeBeaconProxy",
       "address": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
-      "code": "https://etherscan.deth.net/address/0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
       "upgradeability": {
         "type": "immutable"
       }
@@ -134,7 +127,6 @@
     {
       "name": "ConnextBridge",
       "address": "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6",
-      "code": "https://etherscan.deth.net/address/0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6,0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81,0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2,0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295,0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d,0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352,0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769,0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D,0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686,0x6369F971fd1f1f230B8584151Ed7747FF710Cc68,0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b,0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4,0x3Bcf4185443A339517aD4e580067f178d1B68E1D",
       "upgradeability": {
         "type": "EIP2535 diamond proxy",
         "facets": [
@@ -413,7 +405,6 @@
     {
       "name": "PolygonHubConnector",
       "address": "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
-      "code": "https://etherscan.deth.net/address/0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -438,7 +429,6 @@
     {
       "name": "ArbitrumHubConnector",
       "address": "0xd151C9ef49cE2d30B829a98A07767E3280F70961",
-      "code": "https://etherscan.deth.net/address/0xd151C9ef49cE2d30B829a98A07767E3280F70961",
       "upgradeability": {
         "type": "immutable"
       },
@@ -464,7 +454,6 @@
     {
       "name": "RootManager",
       "address": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
-      "code": "https://etherscan.deth.net/address/0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
       "upgradeability": {
         "type": "immutable"
       },
@@ -502,7 +491,6 @@
     {
       "name": "MainnetSpokeConnector",
       "address": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-      "code": "https://etherscan.deth.net/address/0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
       "upgradeability": {
         "type": "immutable"
       },

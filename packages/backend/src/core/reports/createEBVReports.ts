@@ -1,11 +1,4 @@
-import {
-  assert,
-  AssetId,
-  ChainId,
-  ProjectId,
-  Token,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { assert, AssetId, ChainId, ProjectId, Token } from '@l2beat/shared-pure'
 
 import { BalanceRecord } from '../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
@@ -94,7 +87,7 @@ function transformBalances(
       chainId,
       balance: totalBalance - premintBalance,
       assetId: id,
-      type: ValueType.EBV,
+      type: 'EBV',
       decimals: decimals,
     })
   }

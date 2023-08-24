@@ -45,7 +45,7 @@ function getTokens(
   const compatibleTokenList = unifyTokensResponse(tokens)
 
   return compatibleTokenList
-    .map(({ assetId, usdValue, valueType, chainId }) => {
+    .map(({ assetId, usdValue, assetType, chainId }) => {
       const token = safeGetTokenByAssetId(assetId)
       const symbol = token?.symbol
       const name = token?.name
@@ -53,14 +53,14 @@ function getTokens(
 
       if (symbol && name) {
         const tvlEndpoint = hasDetailedTVL
-          ? `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${valueType.toString()}`
+          ? `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${assetType}`
           : `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`
 
         return {
           address: address?.toString(),
           symbol,
           name,
-          assetType: valueType,
+          assetType,
           tvlEndpoint,
           tvl: usdValue,
         }
