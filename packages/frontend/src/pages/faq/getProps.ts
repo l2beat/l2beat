@@ -1,7 +1,7 @@
 import { Config } from '../../build/config'
 import { getFooterProps, getNavbarProps } from '../../components'
 import { Wrapped } from '../Page'
-import { faqItems } from './faqItems'
+import { getFaqItems } from './getFaqItems'
 import { FaqPageProps } from './FaqPage'
 
 export function getProps(config: Config): Wrapped<FaqPageProps> {
@@ -9,7 +9,7 @@ export function getProps(config: Config): Wrapped<FaqPageProps> {
     props: {
       navbar: getNavbarProps(config, 'faq'),
       title: 'Frequently Asked Questions',
-      items: faqItems,
+      items: getFaqItems(config.features.detailedTvl),
       footer: getFooterProps(config),
     },
     wrapper: {
