@@ -85,7 +85,7 @@ function SlideCardContent(props: SlideCardContentProps) {
         </div>
       </div>
       <div className="flex w-full items-center justify-center bg-gray-200 py-6 dark:bg-[#373B41] ">
-        <div className="flex items-center justify-center rounded-md bg-pink-900 py-3 px-4">
+        <div className="flex items-center justify-center rounded-md bg-pink-900 py-3 px-4 text-white">
           <SlideCardToggle type="close">
             {props.closeButtonText ?? 'Close the overlay'}
           </SlideCardToggle>
