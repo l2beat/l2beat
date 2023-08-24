@@ -10,6 +10,7 @@ import {
 import { ConfigReader } from './discovery/config/ConfigReader'
 import { dryRunDiscovery, runDiscovery } from './discovery/runDiscovery'
 import { runInversion } from './inversion/runInversion'
+import { singleDiscovery } from './singleDiscovery'
 
 main().catch((e) => {
   console.error(e)
@@ -23,6 +24,7 @@ async function main() {
 
   await discover(config, logger)
   await invert(config, logger)
+  await singleDiscovery(config, logger)
 }
 
 async function discover(config: DiscoveryCliConfig, logger: Logger) {
