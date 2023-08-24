@@ -7,7 +7,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
-      "code": "https://etherscan.deth.net/address/0x13a4cC0750296bB72Eb0006febec306551A4f472",
       "upgradeability": {
         "type": "immutable"
       },
@@ -18,7 +17,6 @@
     {
       "name": "LiquidityPool",
       "address": "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
-      "code": "https://etherscan.deth.net/address/0x2A5c2568b10A0E826BfA892Cf21BA7218310180b,0x256415A1f9468E5405abdAfD9B76c4f24451d7E7",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x256415A1f9468E5405abdAfD9B76c4f24451d7E7",
@@ -36,7 +34,6 @@
     {
       "name": "ExecutorManager",
       "address": "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
-      "code": "https://etherscan.deth.net/address/0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
       "upgradeability": {
         "type": "immutable"
       },
@@ -53,7 +50,6 @@
     {
       "name": "TokenManager",
       "address": "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
-      "code": "https://etherscan.deth.net/address/0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168,0x79E559AC5b499A5676e28f0074e29763F6c2A27e",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x79E559AC5b499A5676e28f0074e29763F6c2A27e",
@@ -67,7 +63,6 @@
     {
       "name": "LiquidityProviders",
       "address": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
-      "code": "https://etherscan.deth.net/address/0xebaB24F13de55789eC1F3fFe99A285754e15F7b9,0x52a592fFE0377b351c8FD99189e5333ec362d66A",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x52a592fFE0377b351c8FD99189e5333ec362d66A",

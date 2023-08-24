@@ -6,7 +6,6 @@ import {
   EthereumAddress,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
@@ -377,7 +376,7 @@ describe(PriceUpdater.name, () => {
       address: EthereumAddress.random(),
       category: 'ether', // irrelevant
       chainId: ChainId.ETHEREUM, // irrelevant
-      type: ValueType.CBV, // irrelevant
+      type: 'CBV', // irrelevant
       name: 'Fake', // irrelevant
       sinceTimestamp: new UnixTime(0), // irrelevant
     }

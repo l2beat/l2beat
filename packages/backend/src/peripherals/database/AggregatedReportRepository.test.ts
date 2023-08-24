@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { setupDatabaseTestSuite } from '../../test/database'
@@ -30,7 +30,7 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([
         fakeAggregateReport({ timestamp: TIME_1 }),
       ])
-      const result = await repository.getDaily(ValueType.TVL)
+      const result = await repository.getDaily('TVL')
       expect(result).toEqual([REPORT])
     })
 
@@ -43,7 +43,7 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[0]])
       await repository.addOrUpdateMany([REPORTS[1]])
       await repository.addOrUpdateMany([REPORTS[2]])
-      const result = await repository.getDaily(ValueType.TVL)
+      const result = await repository.getDaily('TVL')
       expect(result).toEqual(REPORTS)
     })
   })
@@ -62,7 +62,7 @@ describe(AggregatedReportRepository.name, () => {
       ])
       const result = await repository.getSixHourly(
         TIME_0.add(-1, 'days'),
-        ValueType.TVL,
+        'TVL',
       )
       expect(result).toEqual([REPORT])
     })
@@ -78,7 +78,7 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[2]])
       const result = await repository.getSixHourly(
         TIME_0.add(-1, 'days'),
-        ValueType.TVL,
+        'TVL',
       )
       expect(result).toEqual(REPORTS)
     })
@@ -93,10 +93,7 @@ describe(AggregatedReportRepository.name, () => {
           timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes'),
         }),
       ])
-      const result = await repository.getHourly(
-        TIME_0.add(-1, 'days'),
-        ValueType.TVL,
-      )
+      const result = await repository.getHourly(TIME_0.add(-1, 'days'), 'TVL')
       expect(result).toEqual([REPORT])
     })
 
@@ -109,10 +106,7 @@ describe(AggregatedReportRepository.name, () => {
       await repository.addOrUpdateMany([REPORTS[0]])
       await repository.addOrUpdateMany([REPORTS[1]])
       await repository.addOrUpdateMany([REPORTS[2]])
-      const result = await repository.getHourly(
-        TIME_0.add(-7, 'days'),
-        ValueType.TVL,
-      )
+      const result = await repository.getHourly(TIME_0.add(-7, 'days'), 'TVL')
       expect(result).toEqual(REPORTS)
     })
   })
@@ -173,7 +167,7 @@ describe(AggregatedReportRepository.name, () => {
       })
       await repository.addOrUpdateMany(reports)
       await repository.addOrUpdateMany([expected])
-      const result = await repository.findLatest(PROJECT_A, ValueType.TVL)
+      const result = await repository.findLatest(PROJECT_A, 'TVL')
       expect(result).toEqual(expected)
     })
   })
@@ -212,7 +206,7 @@ function fakeAggregateReport(
     projectId: ProjectId('fake-project'),
     usdValue: 1234n,
     ethValue: 1234n,
-    valueType: ValueType.TVL,
+    reportType: 'TVL',
     ...report,
   }
 }

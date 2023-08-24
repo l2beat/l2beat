@@ -8,7 +8,6 @@ import {
   TvlApiCharts,
   TvlApiResponse,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
@@ -42,14 +41,14 @@ export class TvlController {
     timestamps.push(
       await this.reportStatusRepository.findLatestTimestamp(
         ChainId.ETHEREUM,
-        ValueType.CBV,
+        'CBV',
       ),
     )
     if (this.isArbitrumEnabled) {
       timestamps.push(
         await this.reportStatusRepository.findLatestTimestamp(
           ChainId.ARBITRUM,
-          ValueType.EBV,
+          'EBV',
         ),
       )
     }
@@ -67,13 +66,13 @@ export class TvlController {
       await Promise.all([
         this.aggregatedReportRepository.getHourly(
           getHourlyMinTimestamp(timestamp),
-          ValueType.TVL,
+          'TVL',
         ),
         this.aggregatedReportRepository.getSixHourly(
           getSixHourlyMinTimestamp(timestamp),
-          ValueType.TVL,
+          'TVL',
         ),
-        this.aggregatedReportRepository.getDaily(ValueType.TVL),
+        this.aggregatedReportRepository.getDaily('TVL'),
         this.reportRepository.getByTimestamp(timestamp),
       ])
 
@@ -102,7 +101,7 @@ export class TvlController {
     timestamps.push(
       await this.reportStatusRepository.findLatestTimestamp(
         ChainId.ETHEREUM,
-        ValueType.CBV,
+        'CBV',
       ),
     )
     if (
@@ -113,7 +112,7 @@ export class TvlController {
       timestamps.push(
         await this.reportStatusRepository.findLatestTimestamp(
           ChainId.ARBITRUM,
-          ValueType.EBV,
+          'EBV',
         ),
       )
     }

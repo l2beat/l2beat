@@ -281,5 +281,61 @@ describe(ArrayFromOneEventHandler.name, () => {
         ignoreRelative: true,
       })
     })
+
+    it('works with different false and true values', async () => {
+      const Alice = EthereumAddress.random()
+      const Bob = EthereumAddress.random()
+      const Charlie = EthereumAddress.random()
+
+      const event = 'event OwnerUpdated(address account, uint8 role)'
+      const abi = new utils.Interface([event])
+
+      function OwnerUpdated(
+        address: EthereumAddress,
+        role: number,
+      ): providers.Log {
+        return abi.encodeEventLog(abi.getEvent('OwnerUpdated'), [
+          address,
+          role,
+        ]) as providers.Log
+      }
+
+      const provider = mockObject<DiscoveryProvider>({
+        async getLogs() {
+          return [
+            OwnerUpdated(Alice, 1),
+            OwnerUpdated(Bob, 1),
+            OwnerUpdated(Bob, 0),
+            OwnerUpdated(Bob, 2),
+            OwnerUpdated(Charlie, 1),
+            OwnerUpdated(Alice, 1),
+          ]
+        },
+      })
+
+      const handler = new ArrayFromOneEventHandler(
+        'someName',
+        {
+          type: 'arrayFromOneEvent',
+          event,
+          valueKey: 'account',
+          flagKey: 'role',
+          flagTrueValues: [1],
+          flagFalseValues: [0, 2],
+        },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const value = await handler.execute(
+        provider,
+        EthereumAddress.random(),
+        BLOCK_NUMBER,
+      )
+      expect(value).toEqual({
+        field: 'someName',
+        value: [Alice.toString(), Charlie.toString()],
+        ignoreRelative: undefined,
+      })
+    })
   })
 })

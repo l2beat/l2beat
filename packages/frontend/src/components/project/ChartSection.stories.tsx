@@ -1,7 +1,7 @@
-import { ValueType } from '@l2beat/shared-pure'
 import { Story } from '@storybook/react'
 import React, { useEffect } from 'react'
 
+import { TokenControl } from '../chart/CommonTokenControls'
 import { configureCharts } from '../chart/configure'
 import { PageContent } from '../PageContent'
 import { ChartSection as ChartSectionComponent } from './ChartSection'
@@ -23,7 +23,7 @@ function Template({
   type,
   isUpcoming,
 }: TemplateProps) {
-  const tokens = [
+  const tokens: TokenControl[] = [
     'DAI',
     'ETH',
     'COMP',
@@ -38,7 +38,7 @@ function Template({
     name: x,
     symbol: x,
     tvlEndpoint: '/',
-    assetType: ValueType.EBV,
+    assetType: 'EBV',
   }))
 
   useEffect(() => {

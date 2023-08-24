@@ -6,7 +6,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -90,7 +89,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     decimals: 18,
     sinceTimestamp: new UnixTime(1630233600),
     category: 'other',
-    type: ValueType.NMV,
+    type: 'NMV',
   },
   {
     id: AssetId('arbitrum:usdc-usd-coin'),
@@ -102,7 +101,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     decimals: 6,
     category: 'stablecoin',
     premintHolderAddresses: [],
-    type: ValueType.EBV,
+    type: 'EBV',
   },
 ]
 

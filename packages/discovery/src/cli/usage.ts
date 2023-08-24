@@ -7,6 +7,7 @@ const usage = `Usage:
     yarn discover [chain] [project] --dev ..... run on the same block number as in .json
     yarn invert [chain] [project] ..................... print addresses and their functions
     yarn invert [chain] [project] --mermaid .................... print mermaid graph markup
+    yarn discover:single [chain] [address]........ run a discovery on the address (no config needed, useful for experimenting)
     yarn <start|discover> --help .......................... display this message
 
     supported chains: checkout config.discovery.ts

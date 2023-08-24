@@ -1,14 +1,13 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 17813803,
+  "blockNumber": 17969096,
   "configHash": "0x3c04da87132c5e7178027b81628427ec0795b136a75a997e5586ea0522a5eb07",
   "version": 1,
   "contracts": [
     {
       "name": "GnosisHubConnector",
       "address": "0x245F757d660C3ec65416168690431076d58d6413",
-      "code": "https://etherscan.deth.net/address/0x245F757d660C3ec65416168690431076d58d6413",
       "upgradeability": {
         "type": "immutable"
       },
@@ -30,7 +29,6 @@
     {
       "name": "UpgradeBeaconProxy",
       "address": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
-      "code": "https://etherscan.deth.net/address/0x28A9e7bbed277092E2431F186E1aF898962d4E92",
       "upgradeability": {
         "type": "immutable"
       }
@@ -38,7 +36,6 @@
     {
       "name": "Connext Multisig",
       "address": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
-      "code": "https://etherscan.deth.net/address/0x4d50a469fc788a3c0CdC8Fd67868877dCb246625,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -52,7 +49,7 @@
           "0xA08f80dc1759b12fdC40A4dc64562b322C418E1f"
         ],
         "getThreshold": 3,
-        "nonce": 22,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -60,7 +57,6 @@
     {
       "name": "OptimismHubConnector",
       "address": "0x66a425f09cfd613d40A986B3ef800AA7604C8eeE",
-      "code": "https://etherscan.deth.net/address/0x66a425f09cfd613d40A986B3ef800AA7604C8eeE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -82,7 +78,6 @@
     {
       "name": "WormholeHubConnector",
       "address": "0x69009c6f567590d8B469dbF4C8808e8ee32b8a45",
-      "code": "https://etherscan.deth.net/address/0x69009c6f567590d8B469dbF4C8808e8ee32b8a45",
       "upgradeability": {
         "type": "immutable"
       },
@@ -105,7 +100,6 @@
     {
       "name": "WatcherManager",
       "address": "0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6",
-      "code": "https://etherscan.deth.net/address/0x6a595E41893a5ACBA9dBf8288B92eb71106Ba7A6",
       "upgradeability": {
         "type": "immutable"
       },
@@ -126,7 +120,6 @@
     {
       "name": "UpgradeBeaconProxy",
       "address": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
-      "code": "https://etherscan.deth.net/address/0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
       "upgradeability": {
         "type": "immutable"
       }
@@ -134,7 +127,6 @@
     {
       "name": "ConnextBridge",
       "address": "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6",
-      "code": "https://etherscan.deth.net/address/0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6,0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81,0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2,0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295,0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d,0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352,0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769,0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D,0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686,0x6369F971fd1f1f230B8584151Ed7747FF710Cc68,0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b,0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4,0x3Bcf4185443A339517aD4e580067f178d1B68E1D",
       "upgradeability": {
         "type": "EIP2535 diamond proxy",
         "facets": [
@@ -359,7 +351,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 6895,
+        "nonce": 7935,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -402,7 +394,8 @@
           "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
           "0x9584Eb0356a380b25D7ED2C14c54De58a25f2581",
           "0x6273c0965A1dB4F8A6277d490B4fD48715a42b96",
-          "0x49a9E7ec76Bc8fDF658d09557305170d9F01D2fA"
+          "0x49a9E7ec76Bc8fDF658d09557305170d9F01D2fA",
+          "0x5d527765252003AceE6545416F6a9C8D15ae8402"
         ],
         "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c"
@@ -412,7 +405,6 @@
     {
       "name": "PolygonHubConnector",
       "address": "0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
-      "code": "https://etherscan.deth.net/address/0xB01BC38909413f5dbb8F18a9b5787A62ce1282aE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -437,7 +429,6 @@
     {
       "name": "ArbitrumHubConnector",
       "address": "0xd151C9ef49cE2d30B829a98A07767E3280F70961",
-      "code": "https://etherscan.deth.net/address/0xd151C9ef49cE2d30B829a98A07767E3280F70961",
       "upgradeability": {
         "type": "immutable"
       },
@@ -463,7 +454,6 @@
     {
       "name": "RootManager",
       "address": "0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
-      "code": "https://etherscan.deth.net/address/0xd5d61E9dfb6680Cba8353988Ba0337802811C2e1",
       "upgradeability": {
         "type": "immutable"
       },
@@ -485,12 +475,12 @@
         ],
         "domainsHash": "0x678c65c2f3bd9522214f90322ceebb12cfa8f0ac9f0437dbf31a0939b2dc5a10",
         "getPendingInboundRootsCount": 0,
-        "lastPropagatedRoot": "0x01b2fde2c28d372a453015bc87798c4035e1a3c5686a99bc216e4ec79f9b7c59",
+        "lastPropagatedRoot": "0x0f762705ae813b85ef48bdd5b47c0cb9bab7d19ab77dbf0e1fbd55ff29037e1a",
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [32401, 32400],
+        "pendingInboundRoots": [34109, 34108],
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
@@ -501,7 +491,6 @@
     {
       "name": "MainnetSpokeConnector",
       "address": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-      "code": "https://etherscan.deth.net/address/0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
       "upgradeability": {
         "type": "immutable"
       },
@@ -511,12 +500,12 @@
         "delayBlocks": 0,
         "DOMAIN": 6648936,
         "home": "0xF7c4d7dcEc2c09A15f2Db5831d6d25eAEf0a296c",
-        "lastSentBlock": 17813291,
+        "lastSentBlock": 17968770,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "outboundRoot": "0x5b39ce8ee9c3f05bfe9c51174bddb231eb707842c92f9ea07854265353ca0ac8",
+        "outboundRoot": "0x193ce1e6e8c324909c0bb1adada60792442354e965c47a42d892a472ccf1f94b",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -542,6 +531,7 @@
     "0x49a9E7ec76Bc8fDF658d09557305170d9F01D2fA",
     "0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7",
     "0x58507fed0Cb11723dFb6848c92C59Cf0BBEB9927",
+    "0x5d527765252003AceE6545416F6a9C8D15ae8402",
     "0x6273c0965A1dB4F8A6277d490B4fD48715a42b96",
     "0x63Cda9C42db542bb91a7175E38673cFb00D402b0",
     "0x6892d4D1f73A65B03063B7d78174dC6350Fcc406",

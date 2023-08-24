@@ -7,7 +7,6 @@
     {
       "name": "ERC20 Vault V1",
       "address": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
-      "code": "https://etherscan.deth.net/address/0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
       "upgradeability": {
         "type": "immutable"
       },
@@ -19,7 +18,6 @@
     {
       "name": "PNT",
       "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
-      "code": "https://etherscan.deth.net/address/0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
       "upgradeability": {
         "type": "immutable"
       },
@@ -52,7 +50,6 @@
     {
       "name": "UOS Vault",
       "address": "0x9f8622b11984AfC8f0a42A394928702017c5968D",
-      "code": "https://etherscan.deth.net/address/0x9f8622b11984AfC8f0a42A394928702017c5968D",
       "upgradeability": {
         "type": "immutable"
       },
@@ -64,7 +61,6 @@
     {
       "name": "pNetwork Multisig",
       "address": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB",
-      "code": "https://etherscan.deth.net/address/0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -87,7 +83,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
-      "code": "https://etherscan.deth.net/address/0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
       "upgradeability": {
         "type": "immutable"
       },
@@ -98,7 +93,6 @@
     {
       "name": "RelayHub",
       "address": "0xD216153c06E857cD7f72665E0aF1d7D82172F494",
-      "code": "https://etherscan.deth.net/address/0xD216153c06E857cD7f72665E0aF1d7D82172F494",
       "upgradeability": {
         "type": "immutable"
       },
@@ -109,7 +103,6 @@
     {
       "name": "PProxyAdmin",
       "address": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
-      "code": "https://etherscan.deth.net/address/0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
       "upgradeability": {
         "type": "immutable"
       },
@@ -120,7 +113,6 @@
     {
       "name": "ERC20 Vault V2",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
-      "code": "https://etherscan.deth.net/address/0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8,0x34D085516f9D7794192aDB10C995d9c532E335aF",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x34D085516f9D7794192aDB10C995d9c532E335aF",
@@ -137,7 +129,6 @@
     {
       "name": "EthPnt",
       "address": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
-      "code": "https://etherscan.deth.net/address/0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2,0x8474a898677C3bc97f35A86c387aE34Bf272C860",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x8474a898677C3bc97f35A86c387aE34Bf272C860",
