@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
+import { configureRollupsOnlyFilter } from '../../../scripts/configureRollupsOnlyFilter'
+import { configureTableIndexRerender } from '../../../scripts/configureTableIndexRerender'
 import { configureTabs } from '../../../scripts/configureTabs'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { click } from '../../../utils/storybook/click'
@@ -1098,7 +1100,25 @@ export const Active: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
         click('.TabsItem#active')
+      }, [])
+      return <Story />
+    },
+  ],
+}
+
+export const ActiveWithRollupsOnly: Story = {
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
+        click('.TabsItem#active')
+        click('#rollups-only-checkbox')
       }, [])
       return <Story />
     },
@@ -1111,7 +1131,25 @@ export const Upcoming: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
         click('.TabsItem#upcoming')
+      }, [])
+      return <Story />
+    },
+  ],
+}
+
+export const UpcomingWithRollupsOnly: Story = {
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
+        click('.TabsItem#upcoming')
+        click('#rollups-only-checkbox')
       }, [])
       return <Story />
     },
@@ -1124,7 +1162,25 @@ export const Archived: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
         click('.TabsItem#archived')
+      }, [])
+      return <Story />
+    },
+  ],
+}
+
+export const ArchivedWithRollupsOnly: Story = {
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
+        click('.TabsItem#archived')
+        click('#rollups-only-checkbox')
       }, [])
       return <Story />
     },
