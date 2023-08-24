@@ -2,6 +2,7 @@ import React from 'react'
 
 import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { RollupsOnlyCheckbox } from '../../../components/table/filters/checkboxes/RollupsOnlyCheckbox'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import { getScalingDetailedTvlColumns } from '../../../components/table/props/getScalingTableColumns'
 import { RowConfig, TableView } from '../../../components/table/TableView'
@@ -20,6 +21,7 @@ export function ScalingDetailedTvlView({ items }: ScalingDetailedTvlViewProps) {
 
   return (
     <section className="mt-4 sm:mt-8">
+      <RollupsOnlyCheckbox className="mb-4" />
       <Tabs
         items={[
           {
@@ -33,6 +35,7 @@ export function ScalingDetailedTvlView({ items }: ScalingDetailedTvlViewProps) {
                 )}
                 rows={rows}
                 columns={getScalingDetailedTvlColumns()}
+                rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),
             icon: <ActiveIcon />,
