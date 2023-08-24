@@ -1,5 +1,5 @@
 {
-  "name": "l2beat-uif",
+  "name": "@l2beat/tools",
   "license": "MIT",
   "private": true,
   "scripts": {
