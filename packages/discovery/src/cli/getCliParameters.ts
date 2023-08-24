@@ -119,7 +119,7 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
     } else {
       const result: SingleDiscoveryCliParameters = {
         mode: 'single-discovery',
-        chain: ChainId.getId(remaining[0]),
+        chain: ChainId.fromName(remaining[0]),
         address: EthereumAddress(remaining[1]),
       }
       return result

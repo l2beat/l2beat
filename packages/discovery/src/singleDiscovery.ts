@@ -30,11 +30,10 @@ export async function singleDiscovery(
 
   const http = new HttpClient()
   const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
-  const etherscanClient = new EtherscanLikeClient(
+  const etherscanClient = EtherscanLikeClient.createForDiscovery(
     http,
     chainConfig.etherscanUrl,
     chainConfig.etherscanApiKey,
-    chainConfig.minTimestamp,
   )
   const blockNumber = await provider.getBlockNumber()
 

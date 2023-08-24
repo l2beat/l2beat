@@ -19,8 +19,5 @@ export function getChainMinTimestamp(chainId: ChainId): UnixTime {
     config,
     'Could not find minimum timestamp for chain: ' + ChainId.getName(chainId),
   )
-  if (!config) {
-    throw new Error('could not find minimum timestamp for given chain')
-  }
   return config.minTimestamp
 }
