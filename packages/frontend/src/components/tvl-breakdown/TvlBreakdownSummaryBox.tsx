@@ -1,27 +1,11 @@
 import React from 'react'
 
 import { PercentChange } from '../PercentChange'
+import { TvlBreakdownViewProps } from '../../pages/scaling-projects-tvl-breakdown/view/TvlBreakdownView'
 
-export interface SummaryBoxProps {
-  tvl: {
-    value: string
-    change: string
-  }
-  cb: {
-    value: string
-    change: string
-  }
-  eb: {
-    value: string
-    change: string
-  }
-  ntm: {
-    value: string
-    change: string
-  }
-}
-
-export function SummaryBox(props: SummaryBoxProps) {
+export function TvlBreakdownSummaryBox(
+  props: TvlBreakdownViewProps['tvlBreakdownSummary'],
+) {
   return (
     <div className="flex justify-between rounded-lg border border-pink-900 bg-purple-700 p-6">
       <StatsItem
@@ -31,18 +15,18 @@ export function SummaryBox(props: SummaryBoxProps) {
       />
       <StatsItem
         title="Canonically Bridged"
-        value={props.cb.value}
-        change={props.cb.change}
+        value={props.cbv.value}
+        change={props.cbv.change}
       />
       <StatsItem
         title="Externally Bridged"
-        value={props.eb.value}
-        change={props.eb.change}
+        value={props.ebv.value}
+        change={props.ebv.change}
       />
       <StatsItem
         title="Native Tokens Minted"
-        value={props.ntm.value}
-        change={props.ntm.change}
+        value={props.nmv.value}
+        change={props.nmv.change}
       />
     </div>
   )

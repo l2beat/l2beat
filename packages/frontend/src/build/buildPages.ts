@@ -1,4 +1,7 @@
-import { ActivityApiResponse } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  ProjectAssetsBreakdownApiResponse,
+} from '@l2beat/shared-pure'
 
 import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages'
@@ -11,6 +14,7 @@ import { printActivityInfo, printApiInfo } from './api/printApiInfo'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
+import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new detailed TVL API and flaky connection times
@@ -45,6 +49,16 @@ async function main() {
     activitySanityCheck(activityApiResponse)
   }
 
+  let tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined =
+    undefined
+  if (config.features.tvlBreakdown) {
+    tvlBreakdownApiResponse = await fetchTvlBreakdownApi(
+      config.backend.apiUrl,
+      http,
+    )
+    // TODO: (maciekzygmunt) print info & Sanity check?
+  }
+
   createApi(config, tvlApiResponse, activityApiResponse)
 
   const verificationStatus = getVerificationStatus()
@@ -53,6 +67,7 @@ async function main() {
     tvlApiResponse,
     activityApiResponse,
     verificationStatus,
+    tvlBreakdownApiResponse,
   }
 
   await renderPages(config, pagesData)

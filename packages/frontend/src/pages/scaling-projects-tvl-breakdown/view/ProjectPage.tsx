@@ -8,23 +8,27 @@ import {
   NavbarProps,
 } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
-import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
-import { ProjectDetails } from './ProjectDetails'
+import {
+  TvlBreakdownHeader,
+  TvlBreakdownHeaderProps,
+} from './TvlBreakdownHeader'
+import { TvlBreakdownView, TvlBreakdownViewProps } from './TvlBreakdownView'
 
-export interface ProjectPageProps {
+export interface TvlBreakdownPageProps {
   navbar: NavbarProps
   header: HeaderProps
-  projectHeader: ProjectHeaderProps
+  tvlBreakdownHeader: TvlBreakdownHeaderProps
+  tvlBreakdownView: TvlBreakdownViewProps
   footer: FooterProps
 }
 
-export function ProjectPage(props: ProjectPageProps) {
+export function ProjectPage(props: TvlBreakdownPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
       <PageContent>
-        <ProjectHeader {...props.projectHeader} />
-        <ProjectDetails />
+        <TvlBreakdownHeader {...props.tvlBreakdownHeader} />
+        <TvlBreakdownView {...props.tvlBreakdownView} />
       </PageContent>
       <Footer narrow {...props.footer} />
     </>

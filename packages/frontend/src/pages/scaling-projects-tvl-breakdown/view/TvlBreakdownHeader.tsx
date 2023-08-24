@@ -1,14 +1,13 @@
 import React from 'react'
 
-export interface ProjectHeaderProps {
+export interface TvlBreakdownHeaderProps {
   title: string
   icon?: string
   slug: string
-  tvlBreakdownHref: string
   tvlBreakdownDate: string
 }
 
-export function ProjectHeader(props: ProjectHeaderProps) {
+export function TvlBreakdownHeader(props: TvlBreakdownHeaderProps) {
   return (
     <div className="mt-11 flex flex-col">
       <div className="flex items-center gap-[6px]">
