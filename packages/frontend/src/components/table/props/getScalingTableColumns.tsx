@@ -1,4 +1,3 @@
-import { ValueType } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { DetailedTvlViewEntry } from '../../../pages/scaling-detailedTvl/types'
@@ -147,7 +146,7 @@ export function getScalingDetailedTvlColumns() {
         <ValueWithPercentageCell
           value={project.cbv}
           percentChange={project.cbvChange}
-          tokens={project.tokens.filter((t) => t.assetType === ValueType.CBV)}
+          tokens={project.tokens.filter((t) => t.assetType === 'CBV')}
         />
       ),
     },
@@ -166,7 +165,7 @@ export function getScalingDetailedTvlColumns() {
         <ValueWithPercentageCell
           value={project.ebv}
           percentChange={project.ebvChange}
-          tokens={project.tokens.filter((t) => t.assetType === ValueType.EBV)}
+          tokens={project.tokens.filter((t) => t.assetType === 'EBV')}
         />
       ),
     },
@@ -185,7 +184,7 @@ export function getScalingDetailedTvlColumns() {
         <ValueWithPercentageCell
           value={project.nmv}
           percentChange={project.nmvChange}
-          tokens={project.tokens.filter((t) => t.assetType === ValueType.NMV)}
+          tokens={project.tokens.filter((t) => t.assetType === 'NMV')}
         />
       ),
     },
