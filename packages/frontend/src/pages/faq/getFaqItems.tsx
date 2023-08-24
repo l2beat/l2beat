@@ -265,10 +265,15 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
                 price
               </li>
               <li>
-                <Strong>PlasmaRegular native tokens:</Strong> circulating_supply
-                * price
+                <Strong>Regular native tokens:</Strong> circulating_supply *
+                price
               </li>
             </UnorderedList>
+          </p>
+          <p className="mt-4">
+            Please note that in some cases formula might actually be different
+            (for example we may use circulating supply instead of total supply
+            for some tokens)
           </p>
         </div>
       ) : (
