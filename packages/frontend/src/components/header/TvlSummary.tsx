@@ -1,5 +1,6 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { unifyPercentagesAsIntegers } from '../../utils'
 
 import { formatUSD } from '../../utils/utils'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
@@ -20,20 +21,25 @@ export interface TvlSummaryProps {
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
-  const usage = props.stats
+  const parts = props.stats
+    ? unifyPercentagesAsIntegers([
+        props.stats.tvl === 0
+          ? 100 / 3
+          : (props.stats.canonical / props.stats.tvl) * 100,
+        props.stats.tvl === 0
+          ? 100 / 3
+          : (props.stats.external / props.stats.tvl) * 100,
+        props.stats.tvl === 0
+          ? 100 / 3
+          : (props.stats.native / props.stats.tvl) * 100,
+      ])
+    : undefined
+
+  const usage = parts
     ? {
-        canonical:
-          props.stats.tvl === 0
-            ? '33'
-            : ((props.stats.canonical / props.stats.tvl) * 100).toFixed(),
-        external:
-          props.stats.tvl === 0
-            ? '33'
-            : ((props.stats.external / props.stats.tvl) * 100).toFixed(),
-        native:
-          props.stats.tvl === 0
-            ? '33'
-            : ((props.stats.native / props.stats.tvl) * 100).toFixed(),
+        canonical: parts[0],
+        external: parts[1],
+        native: parts[2],
       }
     : undefined
 
