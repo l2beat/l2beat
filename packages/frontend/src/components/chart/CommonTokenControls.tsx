@@ -37,11 +37,7 @@ export function SelectedTokenButton() {
       className="flex hidden cursor-pointer items-center justify-between gap-1.5 rounded-md bg-white px-2 text-base transition-all dark:bg-black"
       data-role="chart-token-chosen"
     >
-      <input
-        type="checkbox"
-        autoComplete="off"
-        className="Dropdown-Button peer hidden"
-      />
+      <input type="checkbox" autoComplete="off" className="peer hidden" />
       <p>NO TOKEN</p>
       <CloseIcon className="h-3 w-3 fill-gray-550 dark:fill-gray-50" />
     </label>
