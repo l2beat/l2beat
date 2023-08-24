@@ -1,11 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import {
-  AssetId,
-  ChainId,
-  Token,
-  UnixTime,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -307,7 +301,7 @@ describe(TotalSupplyUpdater.name, () => {
       id: assetId,
       sinceTimestamp,
       chainId: ChainId.ARBITRUM,
-      type: ValueType.EBV,
+      type: 'EBV',
     }
   }
 })

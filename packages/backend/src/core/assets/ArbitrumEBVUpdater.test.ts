@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -63,13 +63,13 @@ describe(ArbitrumEBVUpdater.name, () => {
         configHash,
         timestamp: MOCK.NOW.add(1, 'hours'),
         chainId: ChainId.ARBITRUM,
-        valueType: ValueType.EBV,
+        reportType: 'EBV',
       })
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
         configHash,
         timestamp: MOCK.NOW,
         chainId: ChainId.ARBITRUM,
-        valueType: ValueType.EBV,
+        reportType: 'EBV',
       })
 
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
@@ -185,13 +185,13 @@ describe(ArbitrumEBVUpdater.name, () => {
           configHash,
           timestamp: MOCK.NOW.add(1, 'hours'),
           chainId: ChainId.ARBITRUM,
-          valueType: ValueType.EBV,
+          reportType: 'EBV',
         })
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
           configHash,
           timestamp: MOCK.NOW,
           chainId: ChainId.ARBITRUM,
-          valueType: ValueType.EBV,
+          reportType: 'EBV',
         })
 
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)

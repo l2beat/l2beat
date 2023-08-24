@@ -1,8 +1,8 @@
 {
   "name": "across-v2",
   "chain": "ethereum",
-  "blockNumber": 17870180,
-  "configHash": "0xea79fcfee4ae247945d41627e51ff1ff8d766f48a230bfc5546c66feb3e6f26d",
+  "blockNumber": 17975843,
+  "configHash": "0x9040ca6f07db0de5456cb6af23949d3ba0df1ef997ea4427d832c4513dbdedc5",
   "version": 1,
   "contracts": [
     {
@@ -17,28 +17,10 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "114868363646056604033943928",
+        "totalSupply": "115080499011178895231196353",
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
-    },
-    {
-      "name": "Optimism_Adapter",
-      "address": "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
-      "code": "https://etherscan.deth.net/address/0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "values": {
-        "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "daiOptimismBridge": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
-        "l1StandardBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "l2GasLimit": 2000000,
-        "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "snx": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
-        "snxOptimismBridge": "0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068"
-      }
     },
     {
       "name": "Arbitrum_Adapter",
@@ -55,6 +37,20 @@
         "l2RefundL2Address": "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
         "RELAY_MESSAGE_L2_GAS_LIMIT": 2000000,
         "RELAY_TOKENS_L2_GAS_LIMIT": 300000
+      }
+    },
+    {
+      "name": "Base_Adapter",
+      "address": "0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E",
+      "code": "https://etherscan.deth.net/address/0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "l1StandardBridge": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2GasLimit": 200000,
+        "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
       }
     },
     {
@@ -109,7 +105,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1691497427,
+        "getCurrentTime": 1692774791,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -127,20 +123,20 @@
     {
       "name": "Ethereum_SpokePool",
       "address": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-      "code": "https://etherscan.deth.net/address/0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5,0xA667498F46457548f1D3ad557340b95Fdb290148",
+      "code": "https://etherscan.deth.net/address/0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5,0x326510c1bf9d85Fb73d0AB8d20Aa5BbE9c7561e9",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0xA667498F46457548f1D3ad557340b95Fdb290148",
+        "implementation": "0x326510c1bf9d85Fb73d0AB8d20Aa5BbE9c7561e9",
         "admin": "0x0000000000000000000000000000000000000000"
       },
       "values": {
         "chainId": 1,
         "crossDomainAdmin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "depositQuoteTimeBuffer": 3600,
-        "getCurrentTime": 1691497427,
+        "getCurrentTime": 1692774791,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1015588,
+        "numberOfDeposits": 1019214,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -160,7 +156,7 @@
       },
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1691497427,
+        "getCurrentTime": 1692774791,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -195,7 +191,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 444,
+        "nonce": 452,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -210,7 +206,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1691497427,
+        "getCurrentTime": 1692774791,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -218,6 +214,24 @@
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
       },
       "derivedName": "EmergencyProposer"
+    },
+    {
+      "name": "Optimism_Adapter",
+      "address": "0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F",
+      "code": "https://etherscan.deth.net/address/0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "values": {
+        "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "daiOptimismBridge": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+        "l1StandardBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2GasLimit": 200000,
+        "messenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "snx": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+        "snxOptimismBridge": "0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F"
+      }
     },
     {
       "name": "HubPool Multisig",
@@ -238,7 +252,7 @@
           "0x1f11D8B72fc1B534448436BA60B4B371276DAb33"
         ],
         "getThreshold": 3,
-        "nonce": 147,
+        "nonce": 160,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -269,7 +283,7 @@
           },
           "10": {
             "l2ChainId": 10,
-            "adapter": "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF",
+            "adapter": "0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F",
             "spokePool": "0x6f26Bf09B1C792e3228e5467807a900A503c0281"
           },
           "137": {
@@ -287,6 +301,11 @@
             "adapter": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
             "spokePool": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"
           },
+          "8453": {
+            "l2ChainId": 8453,
+            "adapter": "0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E",
+            "spokePool": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+          },
           "42161": {
             "l2ChainId": 42161,
             "adapter": "0x29528780E29abb8Af95a5e5a125b94766987543F",
@@ -303,13 +322,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0x356a3ef748cb5ad1c09ac014bd65a523334fa37bf75985911f596921d0677e1e",
-          "0x050a1325c8b43baf4380f62c433e559e24008cc1728662d6f25075e4d8e42a25",
+          "0x669e20a7c6824c7695def285c4db75b7d5add12624956171b16236afce10bda5",
+          "0x5bd0b8264d3ac748af635d4be58c21c50d92ad873d39bf8643e04e730c4f24ad",
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          0,
+          31,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          4,
-          1691503403
+          0,
+          1692774203
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -336,6 +355,7 @@
     }
   ],
   "eoas": [
+    "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
     "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
     "0x1f11D8B72fc1B534448436BA60B4B371276DAb33",
     "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
@@ -377,21 +397,6 @@
       "function transfer(address recipient, uint256 amount) returns (bool)",
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ],
-    "0x22eD83A9eE26236486F57cE8385A247E5bFB71fF": [
-      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
-      "function dai() view returns (address)",
-      "function daiOptimismBridge() view returns (address)",
-      "function l1StandardBridge() view returns (address)",
-      "function l1Weth() view returns (address)",
-      "function l2GasLimit() view returns (uint32)",
-      "function messenger() view returns (address)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
-      "function snx() view returns (address)",
-      "function snxOptimismBridge() view returns (address)"
-    ],
     "0x29528780E29abb8Af95a5e5a125b94766987543F": [
       "constructor(address _l1ArbitrumInbox, address _l1ERC20GatewayRouter)",
       "event MessageRelayed(address target, bytes message)",
@@ -406,6 +411,80 @@
       "function l2RefundL2Address() view returns (address)",
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
+    ],
+    "0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function l1StandardBridge() view returns (address)",
+      "function l1Weth() view returns (address)",
+      "function l2GasLimit() view returns (uint32)",
+      "function messenger() view returns (address)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
+    ],
+    "0x326510c1bf9d85Fb73d0AB8d20Aa5BbE9c7561e9": [
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event EmergencyDeleteRootBundle(uint256 indexed rootBundleId)",
+      "event EnabledDepositRoute(address indexed originToken, uint256 indexed destinationChainId, bool enabled)",
+      "event ExecutedRelayerRefundRoot(uint256 amountToReturn, uint256 indexed chainId, uint256[] refundAmounts, uint32 indexed rootBundleId, uint32 indexed leafId, address l2TokenAddress, address[] refundAddresses, address caller)",
+      "event FilledRelay(uint256 amount, uint256 totalFilledAmount, uint256 fillAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 destinationChainId, int64 relayerFeePct, int64 realizedLpFeePct, uint32 indexed depositId, address destinationToken, address relayer, address indexed depositor, address recipient, bytes message, tuple(address recipient, bytes message, int64 relayerFeePct, bool isSlowRelay, int256 payoutAdjustmentPct) updatableRelayData)",
+      "event FundsDeposited(uint256 amount, uint256 originChainId, uint256 indexed destinationChainId, int64 relayerFeePct, uint32 indexed depositId, uint32 quoteTimestamp, address originToken, address recipient, address indexed depositor, bytes message)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PausedDeposits(bool isPaused)",
+      "event PausedFills(bool isPaused)",
+      "event RefundRequested(address indexed relayer, address refundToken, uint256 amount, uint256 indexed originChainId, uint256 destinationChainId, int64 realizedLpFeePct, uint32 indexed depositId, uint256 fillBlock, uint256 previousIdenticalRequests)",
+      "event RelayedRootBundle(uint32 indexed rootBundleId, bytes32 indexed relayerRefundRoot, bytes32 indexed slowRelayRoot)",
+      "event RequestedSpeedUpDeposit(int64 newRelayerFeePct, uint32 indexed depositId, address indexed depositor, address updatedRecipient, bytes updatedMessage, bytes depositorSignature)",
+      "event SetDepositQuoteTimeBuffer(uint32 newBuffer)",
+      "event SetHubPool(address indexed newHubPool)",
+      "event SetXDomainAdmin(address indexed newAdmin)",
+      "event TokensBridged(uint256 amountToReturn, uint256 indexed chainId, uint32 indexed leafId, address indexed l2TokenAddress, address caller)",
+      "event Upgraded(address indexed implementation)",
+      "function MAX_TRANSFER_SIZE() view returns (uint256)",
+      "function SLOW_FILL_MAX_TOKENS_TO_SEND() view returns (uint256)",
+      "function UPDATE_DEPOSIT_DETAILS_HASH() view returns (bytes32)",
+      "function __SpokePool_init(uint32 _initialDepositId, address _crossDomainAdmin, address _hubPool, address _wrappedNativeTokenAddress)",
+      "function chainId() view returns (uint256)",
+      "function crossDomainAdmin() view returns (address)",
+      "function deposit(address recipient, address originToken, uint256 amount, uint256 destinationChainId, int64 relayerFeePct, uint32 quoteTimestamp, bytes message, uint256 maxCount) payable",
+      "function depositCounter(address) view returns (uint256)",
+      "function depositQuoteTimeBuffer() view returns (uint32)",
+      "function emergencyDeleteRootBundle(uint256 rootBundleId)",
+      "function enabledDepositRoutes(address, uint256) view returns (bool)",
+      "function executeRelayerRefundLeaf(uint32 rootBundleId, tuple(uint256 amountToReturn, uint256 chainId, uint256[] refundAmounts, uint32 leafId, address l2TokenAddress, address[] refundAddresses) relayerRefundLeaf, bytes32[] proof)",
+      "function executeSlowRelayLeaf(address depositor, address recipient, address destinationToken, uint256 amount, uint256 originChainId, int64 realizedLpFeePct, int64 relayerFeePct, uint32 depositId, uint32 rootBundleId, bytes message, int256 payoutAdjustment, bytes32[] proof)",
+      "function fillCounter(address) view returns (uint256)",
+      "function fillRelay(address depositor, address recipient, address destinationToken, uint256 amount, uint256 maxTokensToSend, uint256 repaymentChainId, uint256 originChainId, int64 realizedLpFeePct, int64 relayerFeePct, uint32 depositId, bytes message, uint256 maxCount)",
+      "function fillRelayWithUpdatedDeposit(address depositor, address recipient, address updatedRecipient, address destinationToken, uint256 amount, uint256 maxTokensToSend, uint256 repaymentChainId, uint256 originChainId, int64 realizedLpFeePct, int64 relayerFeePct, int64 updatedRelayerFeePct, uint32 depositId, bytes message, bytes updatedMessage, bytes depositorSignature, uint256 maxCount)",
+      "function getCurrentTime() view returns (uint256)",
+      "function hubPool() view returns (address)",
+      "function initialize(uint32 _initialDepositId, address _hubPool, address _wethAddress)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function numberOfDeposits() view returns (uint32)",
+      "function owner() view returns (address)",
+      "function pauseDeposits(bool pause)",
+      "function pauseFills(bool pause)",
+      "function pausedDeposits() view returns (bool)",
+      "function pausedFills() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function refundsRequested(bytes32) view returns (uint256)",
+      "function relayFills(bytes32) view returns (uint256)",
+      "function relayRootBundle(bytes32 relayerRefundRoot, bytes32 slowRelayRoot)",
+      "function renounceOwnership()",
+      "function requestRefund(address refundToken, uint256 amount, uint256 originChainId, uint256 destinationChainId, int64 realizedLpFeePct, uint32 depositId, uint256 fillBlock, uint256 maxCount)",
+      "function rootBundles(uint256) view returns (bytes32 slowRelayRoot, bytes32 relayerRefundRoot)",
+      "function setCrossDomainAdmin(address newCrossDomainAdmin)",
+      "function setDepositQuoteTimeBuffer(uint32 newDepositQuoteTimeBuffer)",
+      "function setEnableRoute(address originToken, uint256 destinationChainId, bool enabled)",
+      "function setHubPool(address newHubPool)",
+      "function speedUpDeposit(address depositor, int64 updatedRelayerFeePct, uint32 depositId, address updatedRecipient, bytes updatedMessage, bytes depositorSignature)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function wrappedNativeToken() view returns (address)"
     ],
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
@@ -532,68 +611,20 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xA667498F46457548f1D3ad557340b95Fdb290148": [
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event EmergencyDeleteRootBundle(uint256 indexed rootBundleId)",
-      "event EnabledDepositRoute(address indexed originToken, uint256 indexed destinationChainId, bool enabled)",
-      "event ExecutedRelayerRefundRoot(uint256 amountToReturn, uint256 indexed chainId, uint256[] refundAmounts, uint32 indexed rootBundleId, uint32 indexed leafId, address l2TokenAddress, address[] refundAddresses, address caller)",
-      "event FilledRelay(uint256 amount, uint256 totalFilledAmount, uint256 fillAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 destinationChainId, int64 relayerFeePct, int64 realizedLpFeePct, uint32 indexed depositId, address destinationToken, address relayer, address indexed depositor, address recipient, bytes message, tuple(address recipient, bytes message, int64 relayerFeePct, bool isSlowRelay, int256 payoutAdjustmentPct) updatableRelayData)",
-      "event FundsDeposited(uint256 amount, uint256 originChainId, uint256 indexed destinationChainId, int64 relayerFeePct, uint32 indexed depositId, uint32 quoteTimestamp, address originToken, address recipient, address indexed depositor, bytes message)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PausedDeposits(bool isPaused)",
-      "event PausedFills(bool isPaused)",
-      "event RefundRequested(address indexed relayer, address refundToken, uint256 amount, uint256 indexed originChainId, uint256 destinationChainId, int64 realizedLpFeePct, uint32 indexed depositId, uint256 fillBlock, uint256 previousIdenticalRequests)",
-      "event RelayedRootBundle(uint32 indexed rootBundleId, bytes32 indexed relayerRefundRoot, bytes32 indexed slowRelayRoot)",
-      "event RequestedSpeedUpDeposit(int64 newRelayerFeePct, uint32 indexed depositId, address indexed depositor, address updatedRecipient, bytes updatedMessage, bytes depositorSignature)",
-      "event SetDepositQuoteTimeBuffer(uint32 newBuffer)",
-      "event SetHubPool(address indexed newHubPool)",
-      "event SetXDomainAdmin(address indexed newAdmin)",
-      "event TokensBridged(uint256 amountToReturn, uint256 indexed chainId, uint32 indexed leafId, address indexed l2TokenAddress, address caller)",
-      "event Upgraded(address indexed implementation)",
-      "function MAX_TRANSFER_SIZE() view returns (uint256)",
-      "function SLOW_FILL_MAX_TOKENS_TO_SEND() view returns (uint256)",
-      "function UPDATE_DEPOSIT_DETAILS_HASH() view returns (bytes32)",
-      "function __SpokePool_init(uint32 _initialDepositId, address _crossDomainAdmin, address _hubPool, address _wrappedNativeTokenAddress)",
-      "function chainId() view returns (uint256)",
-      "function crossDomainAdmin() view returns (address)",
-      "function deposit(address recipient, address originToken, uint256 amount, uint256 destinationChainId, int64 relayerFeePct, uint32 quoteTimestamp, bytes message, uint256 maxCount) payable",
-      "function depositCounter(address) view returns (uint256)",
-      "function depositQuoteTimeBuffer() view returns (uint32)",
-      "function emergencyDeleteRootBundle(uint256 rootBundleId)",
-      "function enabledDepositRoutes(address, uint256) view returns (bool)",
-      "function executeRelayerRefundLeaf(uint32 rootBundleId, tuple(uint256 amountToReturn, uint256 chainId, uint256[] refundAmounts, uint32 leafId, address l2TokenAddress, address[] refundAddresses) relayerRefundLeaf, bytes32[] proof)",
-      "function executeSlowRelayLeaf(address depositor, address recipient, address destinationToken, uint256 amount, uint256 originChainId, int64 realizedLpFeePct, int64 relayerFeePct, uint32 depositId, uint32 rootBundleId, bytes message, int256 payoutAdjustment, bytes32[] proof)",
-      "function fillCounter(address) view returns (uint256)",
-      "function fillRelay(address depositor, address recipient, address destinationToken, uint256 amount, uint256 maxTokensToSend, uint256 repaymentChainId, uint256 originChainId, int64 realizedLpFeePct, int64 relayerFeePct, uint32 depositId, bytes message, uint256 maxCount)",
-      "function fillRelayWithUpdatedDeposit(address depositor, address recipient, address updatedRecipient, address destinationToken, uint256 amount, uint256 maxTokensToSend, uint256 repaymentChainId, uint256 originChainId, int64 realizedLpFeePct, int64 relayerFeePct, int64 updatedRelayerFeePct, uint32 depositId, bytes message, bytes updatedMessage, bytes depositorSignature, uint256 maxCount)",
-      "function getCurrentTime() view returns (uint256)",
-      "function hubPool() view returns (address)",
-      "function initialize(uint32 _initialDepositId, address _hubPool, address _wethAddress)",
-      "function multicall(bytes[] data) returns (bytes[] results)",
-      "function numberOfDeposits() view returns (uint32)",
-      "function owner() view returns (address)",
-      "function pauseDeposits(bool pause)",
-      "function pauseFills(bool pause)",
-      "function pausedDeposits() view returns (bool)",
-      "function pausedFills() view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function refundsRequested(bytes32) view returns (uint256)",
-      "function relayFills(bytes32) view returns (uint256)",
-      "function relayRootBundle(bytes32 relayerRefundRoot, bytes32 slowRelayRoot)",
-      "function renounceOwnership()",
-      "function requestRefund(address refundToken, uint256 amount, uint256 originChainId, uint256 destinationChainId, int64 realizedLpFeePct, uint32 depositId, uint256 fillBlock, uint256 maxCount)",
-      "function rootBundles(uint256) view returns (bytes32 slowRelayRoot, bytes32 relayerRefundRoot)",
-      "function setCrossDomainAdmin(address newCrossDomainAdmin)",
-      "function setDepositQuoteTimeBuffer(uint32 newDepositQuoteTimeBuffer)",
-      "function setEnableRoute(address originToken, uint256 destinationChainId, bool enabled)",
-      "function setHubPool(address newHubPool)",
-      "function speedUpDeposit(address depositor, int64 updatedRelayerFeePct, uint32 depositId, address updatedRecipient, bytes updatedMessage, bytes depositorSignature)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function wrappedNativeToken() view returns (address)"
+    "0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function dai() view returns (address)",
+      "function daiOptimismBridge() view returns (address)",
+      "function l1StandardBridge() view returns (address)",
+      "function l1Weth() view returns (address)",
+      "function l2GasLimit() view returns (uint32)",
+      "function messenger() view returns (address)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function snx() view returns (address)",
+      "function snxOptimismBridge() view returns (address)"
     ],
     "0xB524735356985D2f267FA010D681f061DfF03715": [
       "constructor(address _singleton)"

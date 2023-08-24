@@ -62,7 +62,10 @@ export class BalanceUpdater {
       })
       await setTimeout(refreshIntervalMs)
     }
-    return this.balanceRepository.getByTimestamp(this.chainId, timestamp)
+    return this.balanceRepository.getByChainAndTimestamp(
+      this.chainId,
+      timestamp,
+    )
   }
 
   async start() {
@@ -97,7 +100,7 @@ export class BalanceUpdater {
       timestamp: timestamp.toNumber(),
       chainId: this.chainId.toString(),
     })
-    const known = await this.balanceRepository.getByTimestamp(
+    const known = await this.balanceRepository.getByChainAndTimestamp(
       this.chainId,
       timestamp,
     )

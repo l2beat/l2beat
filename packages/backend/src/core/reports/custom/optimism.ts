@@ -4,7 +4,6 @@ import {
   ChainId,
   ProjectId,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { createGenCustomTokenReport } from './report'
@@ -57,7 +56,7 @@ function opTokenBalance(timestamp: UnixTime): bigint {
 export const genOpTokenReport = createGenCustomTokenReport(
   OP_TOKEN_ID,
   ChainId.NMV,
-  ValueType.NMV,
+  'NMV',
   OP_TOKEN_SINCE_TIMESTAMP,
   ProjectId.OPTIMISM,
   opTokenBalance,

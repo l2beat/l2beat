@@ -1,4 +1,9 @@
-import { ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  AggregatedReportType,
+  ProjectId,
+  ReportType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { AggregatedReportRecord } from '../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
@@ -12,17 +17,21 @@ interface AggregatedValues {
 
 type AggregatedReportTree = ReportTree<
   ReportProject,
-  ValueType,
+  AggregatedReportType,
   AggregatedValues
 >
 
 type NotAggregatedReportTree = ReportTree<
   ReportProject,
-  ValueType,
+  ReportType,
   ReportRecord[]
 >
 
-type SerializableReportTree = ReportTree<ProjectId, ValueType, AggregatedValues>
+type SerializableReportTree = ReportTree<
+  ProjectId,
+  AggregatedReportType,
+  AggregatedValues
+>
 
 export function aggregateReports(
   reports: ReportRecord[],
@@ -50,7 +59,7 @@ function buildReportTree(
 
   const reportTree = ReportTree.from(
     uniqueProjects,
-    [ValueType.CBV, ValueType.EBV, ValueType.NMV],
+    ['CBV', 'EBV', 'NMV'] as ReportType[],
     () => [] as ReportRecord[],
   )
 
@@ -60,7 +69,7 @@ function buildReportTree(
     )
 
     for (const report of filteredReports) {
-      reportTree.get(project, report.type).push(report)
+      reportTree.get(project, report.reportType).push(report)
     }
   }
 
@@ -75,7 +84,7 @@ function aggregateReportTree(
 
   const reportTree = ReportTree.from(
     projects,
-    [ValueType.CBV, ValueType.EBV, ValueType.NMV, ValueType.TVL],
+    ['CBV', 'EBV', 'NMV', 'TVL'] as AggregatedReportType[],
     () => ({
       usdValue: 0n,
       ethValue: 0n,
@@ -86,11 +95,11 @@ function aggregateReportTree(
     let projectEthValue = 0n
     let projectUsdValue = 0n
 
-    for (const [valueType, reports] of valueMap) {
+    for (const [reportType, reports] of valueMap) {
       const usdValue = reports.reduce((acc, next) => acc + next.usdValue, 0n)
       const ethValue = reports.reduce((acc, next) => acc + next.ethValue, 0n)
 
-      reportTree.set(project, valueType, () => ({
+      reportTree.set(project, reportType, () => ({
         usdValue,
         ethValue,
       }))
@@ -99,7 +108,7 @@ function aggregateReportTree(
       projectUsdValue += usdValue
     }
 
-    reportTree.set(project, ValueType.TVL, () => ({
+    reportTree.set(project, 'TVL', () => ({
       usdValue: projectUsdValue,
       ethValue: projectEthValue,
     }))
@@ -119,7 +128,7 @@ function deriveCategoryTree(
 ): SerializableReportTree {
   const categoriesTree = ReportTree.from(
     [ProjectId.ALL, ProjectId.BRIDGES, ProjectId.LAYER2S],
-    [ValueType.CBV, ValueType.EBV, ValueType.NMV, ValueType.TVL],
+    ['CBV', 'EBV', 'NMV', 'TVL'] as AggregatedReportType[],
     () => ({
       usdValue: 0n,
       ethValue: 0n,
@@ -129,20 +138,24 @@ function deriveCategoryTree(
   for (const [project, valueMap] of tree) {
     const targetType =
       project.type === 'bridge' ? ProjectId.BRIDGES : ProjectId.LAYER2S
-    for (const [valueType, values] of valueMap) {
-      categoriesTree.set(targetType, valueType, ({ usdValue, ethValue }) => {
+    for (const [reportType, values] of valueMap) {
+      categoriesTree.set(targetType, reportType, ({ usdValue, ethValue }) => {
         return {
           usdValue: usdValue + values.usdValue,
           ethValue: ethValue + values.ethValue,
         }
       })
 
-      categoriesTree.set(ProjectId.ALL, valueType, ({ usdValue, ethValue }) => {
-        return {
-          usdValue: usdValue + values.usdValue,
-          ethValue: ethValue + values.ethValue,
-        }
-      })
+      categoriesTree.set(
+        ProjectId.ALL,
+        reportType,
+        ({ usdValue, ethValue }) => {
+          return {
+            usdValue: usdValue + values.usdValue,
+            ethValue: ethValue + values.ethValue,
+          }
+        },
+      )
     }
   }
 
@@ -160,7 +173,7 @@ function serializeReportTree(
       records.push({
         projectId,
         timestamp,
-        valueType: type,
+        reportType: type,
         ethValue,
         usdValue,
       })
