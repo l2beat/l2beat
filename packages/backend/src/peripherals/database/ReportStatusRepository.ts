@@ -63,7 +63,6 @@ export class ReportStatusRepository extends BaseRepository {
     from: UnixTime,
     to: UnixTime,
     chainId: ChainId,
-    valueType: ValueType,
   ): Promise<ReportStatusRecord[]> {
     const knex = await this.knex()
 
@@ -72,7 +71,6 @@ export class ReportStatusRepository extends BaseRepository {
       .andWhere('unix_timestamp', '<=', to.toDate())
       .andWhere({
         chain_id: chainId.valueOf(),
-        asset_type: valueType.toString(),
       })
 
     return rows.map((r) => ({
@@ -83,12 +81,11 @@ export class ReportStatusRepository extends BaseRepository {
 
   async findLatestTimestamp(
     chainId: ChainId,
-    valueType: ValueType,
   ): Promise<UnixTime | undefined> {
     const knex = await this.knex()
     // note: we need to provide better types manually here
     const row = (await knex('reports_status')
-      .where({ chain_id: chainId.valueOf(), asset_type: valueType.toString() })
+      .where({ chain_id: chainId.valueOf() })
       .max('unix_timestamp')
       .first()) as NullableDict<Date> | undefined
     if (!row || row.max === null) {

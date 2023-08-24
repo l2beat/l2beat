@@ -23,7 +23,7 @@ import { DetailedTvlController } from './DetailedTvlController'
 const START = UnixTime.fromDate(new Date('2022-05-31'))
 const MINIMUM_TIMESTAMP = START.add(-1, 'hours')
 const USDC = tokenList.find(
-  (x) => x.symbol === 'USDC' && x.type === ValueType.CBV,
+  (x) => x.symbol === 'USDC' && x.bucket === ValueType.CBV,
 )!
 
 const ARBITRUM: ReportProject = {
@@ -241,7 +241,6 @@ describe(DetailedTvlController.name, () => {
 
         expect(reportStatusRepository.findLatestTimestamp).toHaveBeenCalledWith(
           chainId,
-          type,
         )
 
         expect(reportRepository.getHourlyForDetailed).toHaveBeenCalledWith(

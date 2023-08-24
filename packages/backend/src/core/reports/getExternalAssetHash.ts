@@ -15,7 +15,6 @@ export function getExternalAssetsHash(asset: Layer2ExternalAssets): Hash256 {
             tokenAddress: x.tokenAddress,
             sinceTimestamp: x.sinceTimestamp.toNumber(),
             decimals: x.decimals,
-            premintHolderAddresses: x.premintHolderAddresses,
           }
         }),
         ['assetId', 'tokenAddress'],

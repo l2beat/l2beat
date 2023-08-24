@@ -23,6 +23,7 @@ export const getMockToken = (): MockToken => {
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ETHEREUM,
-    type: ValueType.CBV,
+    bucket: ValueType.CBV,
+    formula: 'locked'
   }
 }

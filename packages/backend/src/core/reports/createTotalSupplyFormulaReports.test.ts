@@ -8,7 +8,6 @@ describe(createTotalSupplyFormulaReports.name, () => {
   it('valid data', () => {
     const result = createTotalSupplyFormulaReports(
       MOCK.PRICES,
-      MOCK.BALANCES,
       MOCK.TOTAL_SUPPLIES,
       MOCK.TOKENS,
       ProjectId.ARBITRUM,
@@ -33,7 +32,6 @@ describe(createTotalSupplyFormulaReports.name, () => {
     expect(() =>
       createTotalSupplyFormulaReports(
         MOCK.PRICES,
-        [{ ...MOCK.BALANCES[0], balance: 10000n * 10n ** 6n }],
         MOCK.TOTAL_SUPPLIES,
         MOCK.TOKENS,
         ProjectId.ARBITRUM,
@@ -46,7 +44,6 @@ describe(createTotalSupplyFormulaReports.name, () => {
     expect(() =>
       createTotalSupplyFormulaReports(
         MOCK.PRICES,
-        [{ ...MOCK.BALANCES[0], chainId: ChainId.ETHEREUM }],
         MOCK.TOTAL_SUPPLIES,
         MOCK.TOKENS,
         ProjectId.ARBITRUM,
@@ -59,7 +56,6 @@ describe(createTotalSupplyFormulaReports.name, () => {
     expect(() =>
       createTotalSupplyFormulaReports(
         MOCK.PRICES,
-        MOCK.BALANCES,
         [{ ...MOCK.TOTAL_SUPPLIES[0], chainId: ChainId.ETHEREUM }],
         MOCK.TOKENS,
         ProjectId.ARBITRUM,

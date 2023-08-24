@@ -61,7 +61,6 @@ describe(getTotalSupplyFormulaConfigHash.name, () => {
     const tokenConfigAfter: Token[] = [
       {
         ...tokenConfigBefore[0],
-        premintHolderAddresses: [EthereumAddress.random()],
       },
     ]
 
@@ -87,8 +86,7 @@ function fakeExternalToken(assetId: AssetId, sinceTimestamp: UnixTime): Token {
     ...getMockToken(),
     id: assetId,
     sinceTimestamp,
-    premintHolderAddresses: [],
     chainId: ChainId.ARBITRUM,
-    type: ValueType.EBV,
+    bucket: ValueType.EBV,
   }
 }

@@ -81,16 +81,15 @@ const TOKENS: Token[] = [
     address: EthereumAddress.random(),
     sinceTimestamp: BASE_MOCK.NOW,
     decimals: 6,
-    premintHolderAddresses: [],
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    type: ValueType.EBV,
+    bucket: ValueType.EBV,
+    formula: 'totalSupply'
   },
 ]
 
 const REPORTS = createTotalSupplyFormulaReports(
   PRICES,
-  BALANCES,
   TOTAL_SUPPLIES,
   TOKENS,
   ProjectId.ARBITRUM,
@@ -98,7 +97,6 @@ const REPORTS = createTotalSupplyFormulaReports(
 )
 const FUTURE_REPORTS = createTotalSupplyFormulaReports(
   FUTURE_PRICES,
-  FUTURE_BALANCES,
   TOTAL_SUPPLIES,
   TOKENS,
   ProjectId.ARBITRUM,
@@ -136,7 +134,8 @@ function fakeTokenInfo(token: Partial<Token>): Token {
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    type: ValueType.EBV,
+    bucket: ValueType.EBV,
+    formula: 'totalSupply',
     ...token,
   }
 }

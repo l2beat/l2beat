@@ -150,7 +150,7 @@ export class DetailedTvlController {
     }
 
     const timestampCandidate =
-      await this.reportStatusRepository.findLatestTimestamp(chainId, assetType)
+      await this.reportStatusRepository.findLatestTimestamp(chainId)
 
     if (!timestampCandidate) {
       return {

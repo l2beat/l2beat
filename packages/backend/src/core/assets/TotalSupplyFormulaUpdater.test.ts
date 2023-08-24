@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { ChainId, Hash256, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
@@ -21,11 +21,6 @@ describe(TotalSupplyFormulaUpdater.name, () => {
           .returnsOnce(MOCK.FUTURE_PRICES)
           .returnsOnce(MOCK.PRICES),
       })
-      const balanceUpdater = mockObject<BalanceUpdater>({
-        getBalancesWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_BALANCES)
-          .returnsOnce(MOCK.BALANCES),
-      })
       const totalSupplyUpdater = mockObject<TotalSupplyUpdater>({
         getTotalSuppliesWhenReady: mockFn()
           .returnsOnce(MOCK.TOTAL_SUPPLIES)
@@ -43,10 +38,11 @@ describe(TotalSupplyFormulaUpdater.name, () => {
 
       const ebvUpdater = new TotalSupplyFormulaUpdater(
         priceUpdater,
-        balanceUpdater,
         totalSupplyUpdater,
         reportRepository,
         reportStatusRepository,
+        ProjectId.ETHEREUM,
+        ChainId.ETHEREUM,
         mockObject<Clock>(),
         MOCK.TOKENS,
         Logger.SILENT,
@@ -63,13 +59,11 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         configHash,
         timestamp: MOCK.NOW.add(1, 'hours'),
         chainId: ChainId.ARBITRUM,
-        valueType: ValueType.EBV,
       })
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
         configHash,
         timestamp: MOCK.NOW,
         chainId: ChainId.ARBITRUM,
-        valueType: ValueType.EBV,
       })
 
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
@@ -93,9 +87,6 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       const priceUpdater = mockObject<PriceUpdater>({
         getPricesWhenReady: mockFn(),
       })
-      const balanceUpdater = mockObject<BalanceUpdater>({
-        getBalancesWhenReady: mockFn(),
-      })
       const suppliesUpdater = mockObject<TotalSupplyUpdater>({
         getTotalSuppliesWhenReady: mockFn(),
       })
@@ -104,10 +95,11 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       })
       const updater = new TotalSupplyFormulaUpdater(
         priceUpdater,
-        balanceUpdater,
         suppliesUpdater,
         mockObject<ReportRepository>(),
         status,
+        ProjectId.ETHEREUM,
+        ChainId.ETHEREUM,
         mockObject<Clock>(),
         MOCK.TOKENS,
         Logger.SILENT,
@@ -119,7 +111,6 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       ).toBeRejectedWith('Timestamp cannot be smaller than minTimestamp')
 
       expect(priceUpdater.getPricesWhenReady).not.toHaveBeenCalled()
-      expect(balanceUpdater.getBalancesWhenReady).not.toHaveBeenCalled()
       expect(suppliesUpdater.getTotalSuppliesWhenReady).not.toHaveBeenCalled()
     })
   })
@@ -130,11 +121,6 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         getPricesWhenReady: mockFn()
           .returnsOnce(MOCK.FUTURE_PRICES)
           .returnsOnce(MOCK.PRICES),
-      })
-      const balanceUpdater = mockObject<BalanceUpdater>({
-        getBalancesWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_BALANCES)
-          .returnsOnce(MOCK.BALANCES),
       })
       const totalSupplyUpdater = mockObject<TotalSupplyUpdater>({
         getTotalSuppliesWhenReady: mockFn()
@@ -165,10 +151,11 @@ describe(TotalSupplyFormulaUpdater.name, () => {
 
       const ebvUpdater = new TotalSupplyFormulaUpdater(
         priceUpdater,
-        balanceUpdater,
         totalSupplyUpdater,
         reportRepository,
         reportStatusRepository,
+        ProjectId.ETHEREUM,
+        ChainId.ETHEREUM,
         clock,
         MOCK.TOKENS,
         Logger.SILENT,
@@ -185,13 +172,11 @@ describe(TotalSupplyFormulaUpdater.name, () => {
           configHash,
           timestamp: MOCK.NOW.add(1, 'hours'),
           chainId: ChainId.ARBITRUM,
-          valueType: ValueType.EBV,
         })
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
           configHash,
           timestamp: MOCK.NOW,
           chainId: ChainId.ARBITRUM,
-          valueType: ValueType.EBV,
         })
 
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
@@ -213,11 +198,6 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         getPricesWhenReady: mockFn()
           .returnsOnce(MOCK.FUTURE_PRICES)
           .returnsOnce(MOCK.PRICES),
-      })
-      const balanceUpdater = mockObject<BalanceUpdater>({
-        getBalancesWhenReady: mockFn()
-          .returnsOnce(MOCK.FUTURE_BALANCES)
-          .returnsOnce(MOCK.BALANCES),
       })
       const totalSupplyUpdater = mockObject<TotalSupplyUpdater>({
         getTotalSuppliesWhenReady: mockFn()
@@ -249,10 +229,11 @@ describe(TotalSupplyFormulaUpdater.name, () => {
 
       const ebvUpdater = new TotalSupplyFormulaUpdater(
         priceUpdater,
-        balanceUpdater,
         totalSupplyUpdater,
         reportRepository,
         reportStatusRepository,
+        ProjectId.ETHEREUM,
+        ChainId.ETHEREUM,
         clock,
         MOCK.TOKENS,
         Logger.SILENT,

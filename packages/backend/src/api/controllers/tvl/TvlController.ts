@@ -42,14 +42,12 @@ export class TvlController {
     timestamps.push(
       await this.reportStatusRepository.findLatestTimestamp(
         ChainId.ETHEREUM,
-        ValueType.CBV,
       ),
     )
     if (this.isArbitrumEnabled) {
       timestamps.push(
         await this.reportStatusRepository.findLatestTimestamp(
           ChainId.ARBITRUM,
-          ValueType.EBV,
         ),
       )
     }
@@ -102,7 +100,6 @@ export class TvlController {
     timestamps.push(
       await this.reportStatusRepository.findLatestTimestamp(
         ChainId.ETHEREUM,
-        ValueType.CBV,
       ),
     )
     if (
@@ -113,7 +110,6 @@ export class TvlController {
       timestamps.push(
         await this.reportStatusRepository.findLatestTimestamp(
           ChainId.ARBITRUM,
-          ValueType.EBV,
         ),
       )
     }

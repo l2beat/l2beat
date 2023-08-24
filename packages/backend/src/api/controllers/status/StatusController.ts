@@ -185,7 +185,6 @@ export class StatusController {
       firstHour,
       lastHour,
       chainId,
-      valueType,
     )
     const configHash = getConfigHashForReports(chainId, this.projects)
 
