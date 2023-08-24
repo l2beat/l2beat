@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
+import { getProjectTvlTooltipText } from '../../../utils/project/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlStats, TvlStats } from '../../../utils/tvl/getTvlStats'
@@ -26,11 +27,13 @@ export function getScalingTvlView(
         project,
         tvlApiResponse,
         tvl,
+        config.features.detailedTvl,
         verificationStatus.projects[project.id.toString()],
       ),
     ),
     stagesEnabled: config.features.stages,
     upcomingEnabled: config.features.upcomingRollups,
+    detailedTvlEnabled: config.features.detailedTvl,
   }
 }
 
@@ -38,6 +41,7 @@ function getScalingTvlViewEntry(
   project: Layer2,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   aggregateTvl: number,
+  detailedTvlEnabled: boolean,
   isVerified?: boolean,
 ): ScalingTvlViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
@@ -64,7 +68,9 @@ function getScalingTvlViewEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     tvl: stats && escrowsConfigured(project) ? formatUSD(stats.tvl) : undefined,
-    tvlTooltip: project.config.tvlTooltip,
+    tvlTooltip: detailedTvlEnabled
+      ? getProjectTvlTooltipText(project.config)
+      : project.config.tvlTooltip,
     tvlBreakdown:
       stats && escrowsConfigured(project) ? stats.tvlBreakdown : undefined,
     oneDayChange:

@@ -18,9 +18,14 @@ export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
   stagesEnabled: boolean
   upcomingEnabled?: boolean
+  detailedTvlEnabled: boolean
 }
 
-export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
+export function ScalingTvlView({
+  items,
+  stagesEnabled,
+  detailedTvlEnabled,
+}: ScalingTvlViewProps) {
   const rows: RowConfig<ScalingTvlViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
@@ -39,7 +44,10 @@ export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
                   (item) => !item.isArchived && !item.isUpcoming,
                 )}
                 rows={rows}
-                columns={getActiveScalingTvlColumns(stagesEnabled)}
+                columns={getActiveScalingTvlColumns(
+                  stagesEnabled,
+                  detailedTvlEnabled,
+                )}
               />
             ),
             icon: <ActiveIcon />,
@@ -65,7 +73,7 @@ export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
               <TableView
                 items={items.filter((item) => item.isArchived)}
                 rows={rows}
-                columns={getArchivedScalingTvlColumns()}
+                columns={getArchivedScalingTvlColumns(detailedTvlEnabled)}
               />
             ),
             icon: <ArchivedIcon />,

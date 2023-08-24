@@ -13,7 +13,10 @@ import { ColumnConfig } from '../TableView'
 import { TechnologyCell } from '../TechnologyCell'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 
-export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
+export function getActiveScalingTvlColumns(
+  stagesEnabled: boolean,
+  detailedTvlEnabled: boolean,
+) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -71,8 +74,9 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
     },
     {
       name: 'TVL',
-      tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',
+      tooltip: detailedTvlEnabled
+        ? 'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.'
+        : 'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
@@ -213,7 +217,7 @@ export function getUpcomingScalingTvlColumns() {
   return columns
 }
 
-export function getArchivedScalingTvlColumns() {
+export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
     {
       name: '#',
@@ -252,8 +256,9 @@ export function getArchivedScalingTvlColumns() {
     },
     {
       name: 'TVL',
-      tooltip:
-        'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',
+      tooltip: detailedTvlEnabled
+        ? 'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.'
+        : 'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',
       alignRight: true,
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
