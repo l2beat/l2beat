@@ -34,9 +34,6 @@ export function RadioChartTypeControl({
       checked: false,
     },
   ])
-    })
-  }
-
 
   return (
     <div
