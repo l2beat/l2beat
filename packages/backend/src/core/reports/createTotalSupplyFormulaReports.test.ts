@@ -21,35 +21,11 @@ describe(createTotalSupplyFormulaReports.name, () => {
         asset: AssetId.USDC,
         chainId: ChainId.ARBITRUM,
         type: ValueType.EBV,
-        amount: 900n * 10n ** 6n,
-        usdValue: 900_00n,
-        ethValue: 900_000n,
+        amount: 10n ** 9n,
+        usdValue: 100_000n,
+        ethValue: 1_000_000n,
       },
     ])
-  })
-
-  it('fails if premint is bigger than total supply', () => {
-    expect(() =>
-      createTotalSupplyFormulaReports(
-        MOCK.PRICES,
-        MOCK.TOTAL_SUPPLIES,
-        MOCK.TOKENS,
-        ProjectId.ARBITRUM,
-        ChainId.ARBITRUM,
-      ),
-    ).toThrow('Total supply has to be bigger than premint balance')
-  })
-
-  it('chainId mismatch in balances', () => {
-    expect(() =>
-      createTotalSupplyFormulaReports(
-        MOCK.PRICES,
-        MOCK.TOTAL_SUPPLIES,
-        MOCK.TOKENS,
-        ProjectId.ARBITRUM,
-        ChainId.ARBITRUM,
-      ),
-    ).toThrow('ChainIds do not match')
   })
 
   it('chainId mismatch in total supplies', () => {

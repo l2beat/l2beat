@@ -54,21 +54,6 @@ describe(getTotalSupplyFormulaConfigHash.name, () => {
     expect(hashBefore).toEqual(hashAfter)
   })
 
-  it('hash changes if premint addresses changes', () => {
-    const tokenConfigBefore: Token[] = [
-      fakeExternalToken(AssetId.ETH, new UnixTime(1000)),
-    ]
-    const tokenConfigAfter: Token[] = [
-      {
-        ...tokenConfigBefore[0],
-      },
-    ]
-
-    const hashBefore = getTotalSupplyFormulaConfigHash(tokenConfigBefore)
-    const hashAfter = getTotalSupplyFormulaConfigHash(tokenConfigAfter)
-    expect(hashBefore).not.toEqual(hashAfter)
-  })
-
   it('hash stays the same if only escrow changes', () => {
     const tokenConfig: Token[] = [
       fakeExternalToken(AssetId.ETH, new UnixTime(1000)),

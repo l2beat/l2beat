@@ -6,7 +6,6 @@ import waitForExpect from 'wait-for-expect'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { REPORTS_MOCK as MOCK } from '../../test/mockTotalSupplyReports'
-import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
@@ -28,7 +27,10 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestampAndPreciseAsset: async () => MOCK.FUTURE_REPORTS,
+        getByTimestampAndPreciseAsset: mockFn()
+        .returnsOnce([])
+        .returnsOnce(MOCK.FUTURE_REPORTS)
+        .returnsOnce([])
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -41,8 +43,8 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         totalSupplyUpdater,
         reportRepository,
         reportStatusRepository,
-        ProjectId.ETHEREUM,
-        ChainId.ETHEREUM,
+        ProjectId.ARBITRUM,
+        ChainId.ARBITRUM,
         mockObject<Clock>(),
         MOCK.TOKENS,
         Logger.SILENT,
@@ -79,7 +81,7 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       const reports = await ebvUpdater.getReportsWhenReady(
         MOCK.NOW.add(1, 'hours'),
       )
-      // ensure that the updater updated internal knownSet
+
       expect(reports).toEqual(MOCK.FUTURE_REPORTS)
     })
 
@@ -98,8 +100,8 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         suppliesUpdater,
         mockObject<ReportRepository>(),
         status,
-        ProjectId.ETHEREUM,
-        ChainId.ETHEREUM,
+        ProjectId.ARBITRUM,
+        ChainId.ARBITRUM,
         mockObject<Clock>(),
         MOCK.TOKENS,
         Logger.SILENT,
@@ -154,8 +156,8 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         totalSupplyUpdater,
         reportRepository,
         reportStatusRepository,
-        ProjectId.ETHEREUM,
-        ChainId.ETHEREUM,
+        ProjectId.ARBITRUM,
+        ChainId.ARBITRUM,
         clock,
         MOCK.TOKENS,
         Logger.SILENT,
@@ -206,7 +208,10 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       })
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
-        getByTimestampAndPreciseAsset: async () => MOCK.REPORTS,
+        getByTimestampAndPreciseAsset: mockFn()
+        .returnsOnce([])
+        .returnsOnce(MOCK.REPORTS)
+        .returnsOnce([])
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -232,8 +237,8 @@ describe(TotalSupplyFormulaUpdater.name, () => {
         totalSupplyUpdater,
         reportRepository,
         reportStatusRepository,
-        ProjectId.ETHEREUM,
-        ChainId.ETHEREUM,
+        ProjectId.ARBITRUM,
+        ChainId.ARBITRUM,
         clock,
         MOCK.TOKENS,
         Logger.SILENT,

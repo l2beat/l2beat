@@ -103,13 +103,6 @@ const FUTURE_REPORTS = createTotalSupplyFormulaReports(
   ChainId.ARBITRUM,
 )
 
-// const AGGREGATED_REPORTS = aggregateReports(REPORTS, PROJECTS, NOW)
-// const FUTURE_AGGREGATE_REPORTS_WITH_NATIVE_OP = aggregateReports(
-//   FUTURE_REPORTS_WITH_OP,
-//   PROJECTS,
-//   NOW.add(1, 'hours'),
-// )
-
 export const REPORTS_MOCK = {
   ...BASE_MOCK,
   PRICES,

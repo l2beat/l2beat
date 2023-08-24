@@ -307,7 +307,8 @@ describe(TotalSupplyUpdater.name, () => {
       id: assetId,
       sinceTimestamp,
       chainId: ChainId.ARBITRUM,
-      type: ValueType.EBV,
+      bucket: ValueType.EBV,
+      formula: 'totalSupply'
     }
   }
 })
