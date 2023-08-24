@@ -1,11 +1,11 @@
 import {
+  AggregatedReportType,
   DetailedTvlApiChart,
   DetailedTvlApiChartPoint,
   DetailedTvlApiCharts,
   DetailedTvlApiResponse,
   ProjectId,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
@@ -104,7 +104,7 @@ export function getProjectChartData(
   const balancesInTime = Object.entries(projectReportsByTimestamp).map(
     ([timestamp, valueReports]) => {
       const { tvlReport, cbvReport, ebvReport, nmvReport } =
-        extractValueTypeSet(valueReports)
+        extractReportTypeSet(valueReports)
 
       return {
         timestamp: new UnixTime(Number(timestamp)),
@@ -123,13 +123,8 @@ export function getProjectChartData(
   return covertBalancesToChartPoints(balancesInTime, resolutionInHours, 6, true)
 }
 
-export function extractValueTypeSet(reports: AggregatedReportRecord[]) {
-  const typesToSeek = [
-    ValueType.TVL,
-    ValueType.CBV,
-    ValueType.EBV,
-    ValueType.NMV,
-  ]
+export function extractReportTypeSet(reports: AggregatedReportRecord[]) {
+  const typesToSeek: AggregatedReportType[] = ['TVL', 'CBV', 'EBV', 'NMV']
 
   const defaultValue = {
     usdValue: 0n,
@@ -139,8 +134,8 @@ export function extractValueTypeSet(reports: AggregatedReportRecord[]) {
   const fillMissingReportValues = getReportValuesOr(defaultValue)
 
   const [tvlReport, cbvReport, ebvReport, nmvReport] = typesToSeek
-    .map((requestedValueType) =>
-      reports.find(({ valueType }) => valueType === requestedValueType),
+    .map((requestedReportType) =>
+      reports.find(({ reportType }) => reportType === requestedReportType),
     )
     .map(fillMissingReportValues)
 

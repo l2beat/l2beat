@@ -55,13 +55,16 @@ describe(BalanceRepository.name, () => {
       ]
       await repository.addOrUpdateMany(additionalData)
 
-      const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
+      const result = await repository.getByChainAndTimestamp(
+        ChainId.ETHEREUM,
+        START,
+      )
 
       expect(result).toEqualUnsorted([DATA[0], ...additionalData])
     })
 
     it('unknown timestamp', async () => {
-      const result = await repository.getByTimestamp(
+      const result = await repository.getByChainAndTimestamp(
         ChainId.ETHEREUM,
         START.add(1, 'days'),
       )
@@ -78,7 +81,10 @@ describe(BalanceRepository.name, () => {
 
       await repository.addOrUpdateMany(data)
 
-      const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
+      const result = await repository.getByChainAndTimestamp(
+        ChainId.ETHEREUM,
+        START,
+      )
       expect(result).toEqual([
         {
           holderAddress: HOLDER_A,
@@ -107,7 +113,10 @@ describe(BalanceRepository.name, () => {
 
       await repository.addOrUpdateMany(data)
 
-      const result = await repository.getByTimestamp(ChainId.ETHEREUM, START)
+      const result = await repository.getByChainAndTimestamp(
+        ChainId.ETHEREUM,
+        START,
+      )
       expect(result).toEqualUnsorted([
         {
           holderAddress: HOLDER_A,
@@ -134,10 +143,16 @@ describe(BalanceRepository.name, () => {
     })
 
     it('take chainId into consideration', async () => {
-      const resultEth = await repository.getByTimestamp(ChainId.ETHEREUM, START)
+      const resultEth = await repository.getByChainAndTimestamp(
+        ChainId.ETHEREUM,
+        START,
+      )
       expect(resultEth).toEqual([DATA[0]])
 
-      const resultArb = await repository.getByTimestamp(ChainId.ARBITRUM, START)
+      const resultArb = await repository.getByChainAndTimestamp(
+        ChainId.ARBITRUM,
+        START,
+      )
       expect(resultArb).toEqual([])
     })
   })

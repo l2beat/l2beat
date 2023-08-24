@@ -1,4 +1,4 @@
-import { ValueType } from '@l2beat/shared-pure'
+import { AssetType } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { EthereumRoundIcon } from '../icons/chart/EthereumRoundIcon'
@@ -8,7 +8,7 @@ export interface TokenControl {
   address?: string
   symbol: string
   name: string
-  assetType: ValueType
+  assetType: AssetType
   tvlEndpoint: string
 }
 
