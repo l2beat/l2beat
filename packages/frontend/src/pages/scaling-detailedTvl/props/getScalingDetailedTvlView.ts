@@ -45,7 +45,7 @@ function getScalingDetailedTvlViewEntry(
   return {
     name: project.display.name,
     slug: project.display.slug,
-    technology: project.display.category,
+    category: project.display.category,
     provider: project.display.provider,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,

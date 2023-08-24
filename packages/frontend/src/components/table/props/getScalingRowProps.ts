@@ -6,11 +6,11 @@ import { getRowVerificationClassNames } from './getRowVerificationClassNames'
 
 interface ScalingTableEntry {
   slug: string
+  category?: Layer2Category
   isArchived?: boolean
   isVerified?: boolean
   isUpcoming?: boolean
   showProjectUnderReview?: boolean
-  technology?: Layer2Category
 }
 
 type ScalingRowType = 'summary' | 'detailedTvl' | 'risks' | 'activity'
@@ -20,7 +20,7 @@ export function getScalingRowProps(
   type: ScalingRowType,
 ) {
   const isRollup =
-    entry.technology === 'Optimistic Rollup' || entry.technology === 'ZK Rollup'
+    entry.category === 'Optimistic Rollup' || entry.category === 'ZK Rollup'
   const href = getHref(entry.slug, type)
 
   const isEthereum = entry.slug === 'ethereum'

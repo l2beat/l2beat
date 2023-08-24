@@ -17,6 +17,7 @@ const meta = {
         name: 'ZKSwap 1.0',
         slug: 'zkswap',
         provider: 'zkSync',
+        category: 'ZK Rollup',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
         isArchived: true,
@@ -57,6 +58,7 @@ const meta = {
         name: 'Polygon Hermez',
         slug: 'hermez',
         provider: undefined,
+        category: 'ZK Rollup',
         warning:
           'Hermez and Polygon have recently merged. Hermez and Polygon Hermez are two names for the same rollup.',
         isArchived: true,
@@ -97,6 +99,7 @@ const meta = {
         name: 'ZKSwap 2.0',
         slug: 'zkswap2',
         provider: 'zkSync',
+        category: 'ZK Rollup',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
         isArchived: true,
@@ -136,6 +139,7 @@ const meta = {
       {
         name: 'Gluon',
         slug: 'gluon',
+        category: 'Optimistic Chain',
         provider: undefined,
         warning:
           'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
@@ -176,6 +180,7 @@ const meta = {
       {
         name: 'OMG Network',
         slug: 'omgnetwork',
+        category: 'Plasma',
         provider: undefined,
         warning: undefined,
         isArchived: true,
@@ -215,6 +220,7 @@ const meta = {
       {
         name: 'L2.Finance-zk',
         slug: 'layer2financezk',
+        category: 'Validium',
         provider: 'StarkEx',
         warning:
           'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',
@@ -255,6 +261,7 @@ const meta = {
       {
         name: 'Arbitrum One',
         slug: 'arbitrum',
+        category: 'Optimistic Rollup',
         provider: undefined,
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -297,6 +304,7 @@ const meta = {
       {
         name: 'Optimism',
         slug: 'optimism',
+        category: 'Optimistic Rollup',
         provider: 'OP Stack',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
@@ -339,6 +347,7 @@ const meta = {
       {
         name: 'dYdX',
         slug: 'dydx',
+        category: 'ZK Rollup',
         provider: 'StarkEx',
         warning: undefined,
         isArchived: undefined,
@@ -378,6 +387,7 @@ const meta = {
       {
         name: 'zkSync Era',
         slug: 'zksync-era',
+        category: 'ZK Rollup',
         provider: 'zkSync',
         warning:
           'Withdrawals are delayed by 1d. The length of the delay can be arbitrarily set by a MultiSig.',
@@ -418,6 +428,7 @@ const meta = {
       {
         name: 'Metis Andromeda',
         slug: 'metis',
+        category: 'Optimistic Chain',
         provider: 'OVM',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system.       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
@@ -460,6 +471,7 @@ const meta = {
       {
         name: 'Loopring',
         slug: 'loopring',
+        category: 'ZK Rollup',
         provider: undefined,
         warning: undefined,
         isArchived: undefined,
@@ -502,6 +514,7 @@ const meta = {
       {
         name: 'Immutable X',
         slug: 'immutablex',
+        category: 'Validium',
         provider: 'StarkEx',
         warning: undefined,
         isArchived: undefined,

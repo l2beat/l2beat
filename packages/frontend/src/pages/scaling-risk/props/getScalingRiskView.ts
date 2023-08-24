@@ -31,7 +31,7 @@ export function getScalingRiskViewEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isVerified,
     isUpcoming: project.isUpcoming,
-    technology: project.display.category,
+    category: project.display.category,
     ...project.riskView,
   }
 }

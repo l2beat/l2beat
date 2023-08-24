@@ -3,6 +3,7 @@ import { Layer2, ProjectRiskViewEntry } from '@l2beat/config'
 export interface ScalingRiskViewEntry {
   name: string
   slug: string
+  category: Layer2['display']['category']
   provider?: Layer2['display']['provider']
   warning?: string
   isArchived?: boolean
@@ -14,5 +15,4 @@ export interface ScalingRiskViewEntry {
   upgradeability: ProjectRiskViewEntry
   sequencerFailure: ProjectRiskViewEntry
   proposerFailure: ProjectRiskViewEntry
-  technology: Layer2['display']['category']
 }

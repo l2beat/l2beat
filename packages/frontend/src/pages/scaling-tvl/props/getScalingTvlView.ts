@@ -57,6 +57,7 @@ function getScalingTvlViewEntry(
     name: project.display.name,
     slug: project.display.slug,
     provider: project.display.provider,
+    category: project.display.category,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
     isVerified,
@@ -76,7 +77,6 @@ function getScalingTvlViewEntry(
         ? formatPercent(stats.tvl / aggregateTvl)
         : undefined,
     purpose: project.display.purpose,
-    technology: project.display.category,
     stage: project.stage,
   }
 }

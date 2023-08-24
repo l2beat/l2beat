@@ -6,7 +6,7 @@ export interface ScalingDetailedTvlViewEntry {
   name: string
   slug: string
   riskValues: RiskValues
-  technology: Layer2['display']['category']
+  category: Layer2['display']['category']
   provider?: Layer2['display']['provider']
   warning?: string
   isArchived?: boolean

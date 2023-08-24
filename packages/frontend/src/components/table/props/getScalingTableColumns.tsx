@@ -53,7 +53,7 @@ export function getActiveScalingTvlColumns(stagesEnabled: boolean) {
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
-          {project.technology}
+          {project.category}
         </TechnologyCell>
       ),
     },
@@ -205,7 +205,7 @@ export function getUpcomingScalingTvlColumns() {
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
-          {project.technology}
+          {project.category}
         </TechnologyCell>
       ),
     },
@@ -247,7 +247,7 @@ export function getArchivedScalingTvlColumns() {
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
-          {project.technology}
+          {project.category}
         </TechnologyCell>
       ),
     },
