@@ -22,7 +22,7 @@ export interface TvlSummaryProps {
 
 export function TvlSummary(props: TvlSummaryProps) {
   if (!props.detailedTvlEnabled) {
-    return
+    return null
   }
 
   const parts = props.stats
@@ -153,7 +153,7 @@ export function TvlSummary(props: TvlSummaryProps) {
 function BreakdownTooltip({
   usage,
 }: {
-  usage: { canonical: string; external: string; native: string }
+  usage: { canonical: number; external: number; native: number }
 }) {
   // NOTE(radomski): Explanation of the
   // `grid-cols-[repeat(3,minmax(0,_1fr))_auto]`. I want a two columned grid
