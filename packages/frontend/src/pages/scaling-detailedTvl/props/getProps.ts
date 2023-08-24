@@ -5,14 +5,14 @@ import { orderByTvl } from '../../../utils/orderByTvl'
 import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
 import { PagesData, Wrapped } from '../../Page'
-import { DetailedTvlPageProps } from '../view/DetailedTvlPage'
-import { getDetailedTvlView } from './getDetailedTvlView'
+import { ScalingDetailedTvlPageProps } from '../view/ScalingDetailedTvlPage'
 import { getPageMetadata } from './getPageMetadata'
+import { getScalingDetailedTvlView } from './getScalingDetailedTvlView'
 
 export function getProps(
   config: Config,
   pagesData: PagesData,
-): Wrapped<DetailedTvlPageProps> {
+): Wrapped<ScalingDetailedTvlPageProps> {
   const { tvlApiResponse } = pagesData
 
   const charts = tvlApiResponse.layers2s
@@ -31,7 +31,11 @@ export function getProps(
       footer: getFooterProps(config),
       tvl: formatUSD(tvl),
       tvlWeeklyChange,
-      detailedTvlView: getDetailedTvlView(tvlApiResponse, config, ordering),
+      detailedTvlView: getScalingDetailedTvlView(
+        tvlApiResponse,
+        config,
+        ordering,
+      ),
     },
     wrapper: {
       metadata: getPageMetadata(),

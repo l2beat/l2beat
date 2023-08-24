@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 
 import { PageContent } from '../../../components/PageContent'
 import { Tooltip } from '../../../components/Tooltip'
+import { configureRollupsOnlyFilter } from '../../../scripts/configureRollupsOnlyFilter'
+import { configureTableIndexRerender } from '../../../scripts/configureTableIndexRerender'
 import { configureTabs } from '../../../scripts/configureTabs'
 import { configureTooltips } from '../../../scripts/configureTooltips'
 import { click } from '../../../utils/storybook/click'
@@ -63,7 +65,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'Optimistic Rollup',
+        category: 'Optimistic Rollup',
         stage: undefined,
       },
       {
@@ -116,7 +118,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -169,7 +171,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'Optimistic Chain',
+        category: 'Optimistic Chain',
         stage: undefined,
       },
       {
@@ -222,7 +224,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -275,7 +277,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -335,7 +337,7 @@ const meta = {
         sevenDayChange: '-6.69%',
         marketShare: '0.02%',
         purpose: 'Payments, AMM',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -394,7 +396,7 @@ const meta = {
         sevenDayChange: '-2.40%',
         marketShare: '0.00%',
         purpose: 'Payments',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -455,7 +457,7 @@ const meta = {
         sevenDayChange: '-4.12%',
         marketShare: '0.00%',
         purpose: 'Payments, AMM',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -515,7 +517,7 @@ const meta = {
         sevenDayChange: '-32.13%',
         marketShare: '0.00%',
         purpose: 'Exchange',
-        technology: 'Plasma',
+        category: 'Plasma',
         stage: undefined,
       },
       {
@@ -574,7 +576,7 @@ const meta = {
         sevenDayChange: '-7.42%',
         marketShare: '0.00%',
         purpose: 'Payments',
-        technology: 'Plasma',
+        category: 'Plasma',
         stage: undefined,
       },
       {
@@ -633,7 +635,7 @@ const meta = {
         sevenDayChange: '-2.76%',
         marketShare: '0.00%',
         purpose: 'DeFi protocols',
-        technology: 'Validium',
+        category: 'Validium',
         stage: undefined,
       },
       {
@@ -694,7 +696,7 @@ const meta = {
         sevenDayChange: '-7.73%',
         marketShare: '66.75%',
         purpose: 'Universal',
-        technology: 'Optimistic Rollup',
+        category: 'Optimistic Rollup',
         stage: {
           stage: 'Stage 0',
           missing: {
@@ -773,7 +775,7 @@ const meta = {
         sevenDayChange: '-10.76%',
         marketShare: '19.46%',
         purpose: 'Universal',
-        technology: 'Optimistic Rollup',
+        category: 'Optimistic Rollup',
         stage: undefined,
       },
       {
@@ -831,7 +833,7 @@ const meta = {
         sevenDayChange: '+3.96%',
         marketShare: '4.08%',
         purpose: 'Exchange',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -890,7 +892,7 @@ const meta = {
         sevenDayChange: '-8.56%',
         marketShare: '2.77%',
         purpose: 'Universal',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -951,7 +953,7 @@ const meta = {
         sevenDayChange: '-10.62%',
         marketShare: '1.27%',
         purpose: 'Universal',
-        technology: 'Optimistic Chain',
+        category: 'Optimistic Chain',
         stage: undefined,
       },
       {
@@ -1011,7 +1013,7 @@ const meta = {
         sevenDayChange: '-10.45%',
         marketShare: '1.25%',
         purpose: 'Tokens, NFTs, AMM',
-        technology: 'ZK Rollup',
+        category: 'ZK Rollup',
         stage: undefined,
       },
       {
@@ -1071,7 +1073,7 @@ const meta = {
         sevenDayChange: '-13.36%',
         marketShare: '1.12%',
         purpose: 'NFT, Exchange',
-        technology: 'Validium',
+        category: 'Validium',
         stage: undefined,
       },
     ],
@@ -1098,7 +1100,25 @@ export const Active: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
         click('.TabsItem#active')
+      }, [])
+      return <Story />
+    },
+  ],
+}
+
+export const ActiveWithRollupsOnly: Story = {
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
+        click('.TabsItem#active')
+        click('#rollups-only-checkbox')
       }, [])
       return <Story />
     },
@@ -1111,7 +1131,25 @@ export const Upcoming: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
         click('.TabsItem#upcoming')
+      }, [])
+      return <Story />
+    },
+  ],
+}
+
+export const UpcomingWithRollupsOnly: Story = {
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
+        click('.TabsItem#upcoming')
+        click('#rollups-only-checkbox')
       }, [])
       return <Story />
     },
@@ -1124,7 +1162,25 @@ export const Archived: Story = {
       useEffect(() => {
         configureTooltips()
         configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
         click('.TabsItem#archived')
+      }, [])
+      return <Story />
+    },
+  ],
+}
+
+export const ArchivedWithRollupsOnly: Story = {
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureTooltips()
+        configureTabs()
+        configureRollupsOnlyFilter()
+        configureTableIndexRerender()
+        click('.TabsItem#archived')
+        click('#rollups-only-checkbox')
       }, [])
       return <Story />
     },

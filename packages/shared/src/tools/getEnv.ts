@@ -9,6 +9,10 @@ export function getEnv(name: string, fallback?: string): string {
   throw new Error(`Missing environment variable ${name}!`)
 }
 
+getEnv.optional = function optional(name: string): string | undefined {
+  return process.env[name]
+}
+
 getEnv.optionalInteger = function optionalInteger(
   name: string,
 ): number | undefined {
