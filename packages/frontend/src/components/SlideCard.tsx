@@ -79,6 +79,7 @@ function SlideCardContent(props: SlideCardContentProps) {
           <div className="absolute inset-0 overflow-auto scroll-smooth">
             <div className="pointer-events-none h-4" />
             {props.children}
+            <div className="pointer-events-none h-8" />
           </div>
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-8 bg-gradient-to-t from-gray-100 via-gray-100/60 to-transparent dark:from-zinc-800 dark:via-zinc-800/60" />
           <div className="pointer-events-none absolute inset-x-0 bottom-[-2px] z-10 h-[4px] bg-gray-100 dark:bg-zinc-800" />
