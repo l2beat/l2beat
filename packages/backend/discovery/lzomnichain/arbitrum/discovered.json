@@ -8,7 +8,6 @@
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
-      "code": "https://arbiscan.deth.net/address/0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
       "upgradeability": {
         "type": "immutable"
       },
@@ -24,7 +23,6 @@
     {
       "name": "Endpoint",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
-      "code": "https://arbiscan.deth.net/address/0x3c2269811836af69497E5F486A85D7316753cf62",
       "upgradeability": {
         "type": "immutable"
       },
@@ -47,7 +45,6 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-      "code": "https://arbiscan.deth.net/address/0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -71,7 +68,6 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-      "code": "https://arbiscan.deth.net/address/0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
       "upgradeability": {
         "type": "immutable"
       },
@@ -82,7 +78,6 @@
     {
       "name": "GnosisSafeL2",
       "address": "0xFE22f5D2755b06b9149656C5793Cb15A08d09847",
-      "code": "https://arbiscan.deth.net/address/0xFE22f5D2755b06b9149656C5793Cb15A08d09847,0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"

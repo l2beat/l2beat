@@ -88,7 +88,7 @@ export async function dryRunDiscovery(
   }
 }
 
-async function justDiscover(
+export async function justDiscover(
   provider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
   config: DiscoveryConfig,

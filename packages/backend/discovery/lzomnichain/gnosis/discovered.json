@@ -8,7 +8,6 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-      "code": "https://gnosisscan.deth.net/address/0x38dE71124f7a447a01D67945a51eDcE9FF491251",
       "upgradeability": {
         "type": "immutable"
       },
@@ -33,7 +32,6 @@
       "name": "",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
       "unverified": true,
-      "code": "https://gnosisscan.deth.net/address/0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
       "upgradeability": {
         "type": "immutable"
       }
@@ -41,7 +39,6 @@
     {
       "name": "Endpoint",
       "address": "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4",
-      "code": "https://gnosisscan.deth.net/address/0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4",
       "upgradeability": {
         "type": "immutable"
       },
@@ -65,7 +62,6 @@
       "name": "",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
       "unverified": true,
-      "code": "https://gnosisscan.deth.net/address/0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
       "upgradeability": {
         "type": "immutable"
       }

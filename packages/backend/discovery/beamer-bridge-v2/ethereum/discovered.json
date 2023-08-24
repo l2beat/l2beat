@@ -8,7 +8,6 @@
     {
       "name": "EthereumL1Messenger",
       "address": "0x12B8489913E2afBCed131d52c345C380BBB65baf",
-      "code": "https://etherscan.deth.net/address/0x12B8489913E2afBCed131d52c345C380BBB65baf",
       "upgradeability": {
         "type": "immutable"
       },
@@ -20,7 +19,6 @@
     {
       "name": "EthereumL2Messenger",
       "address": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
-      "code": "https://etherscan.deth.net/address/0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
       "upgradeability": {
         "type": "immutable"
       },
@@ -33,7 +31,6 @@
     {
       "name": "OptimismL1Messenger",
       "address": "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
-      "code": "https://etherscan.deth.net/address/0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
       "upgradeability": {
         "type": "immutable"
       },
@@ -46,7 +43,6 @@
     {
       "name": "ArbitrumL1Messenger",
       "address": "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3",
-      "code": "https://etherscan.deth.net/address/0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3",
       "upgradeability": {
         "type": "immutable"
       },
@@ -60,7 +56,6 @@
     {
       "name": "EthereumRequestManager",
       "address": "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
-      "code": "https://etherscan.deth.net/address/0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
       "upgradeability": {
         "type": "immutable"
       },
@@ -116,7 +111,6 @@
     {
       "name": "Resolver",
       "address": "0xCb60516819a28431233195A8b7E0227C288B61AD",
-      "code": "https://etherscan.deth.net/address/0xCb60516819a28431233195A8b7E0227C288B61AD",
       "upgradeability": {
         "type": "immutable"
       },
@@ -128,7 +122,6 @@
     {
       "name": "EthereumFillManager",
       "address": "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
-      "code": "https://etherscan.deth.net/address/0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
       "upgradeability": {
         "type": "immutable"
       },

@@ -8,7 +8,6 @@
     {
       "name": "Committee",
       "address": "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4",
-      "code": "https://etherscan.deth.net/address/0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4",
       "upgradeability": {
         "type": "immutable"
       },
@@ -33,7 +32,6 @@
     {
       "name": "StarkExchange",
       "address": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-      "code": "https://etherscan.deth.net/address/0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb,0xdD813397b79f8df581eEb0c4B8aB72304c528396,0x533a7f4bE5453513049EB94A2b115F2CcE161dce,0x564EA75a26Dc0Bb5c5033B4752f88953A25AD058,0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859,0x34E7cfedF99995A47B3e3D0AB88ba67072B55035",
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
@@ -96,7 +94,6 @@
     {
       "name": "PerpetualEscapeVerifier",
       "address": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
-      "code": "https://etherscan.deth.net/address/0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
       "upgradeability": {
         "type": "immutable"
       },
@@ -108,7 +105,6 @@
     {
       "name": "PerpetualGovernanceMultisig",
       "address": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
-      "code": "https://etherscan.deth.net/address/0xC532d2976209A56DdF4a99B844130f7c0daCa7B6,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -129,7 +125,6 @@
     {
       "name": "FinalizableGpsFactAdapter",
       "address": "0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953",
-      "code": "https://etherscan.deth.net/address/0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953",
       "upgradeability": {
         "type": "immutable"
       },

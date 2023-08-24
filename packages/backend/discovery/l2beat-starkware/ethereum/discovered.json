@@ -7,7 +7,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0x03Fa911dfCa026D9C8Edb508851b390accF912e8",
-      "code": "https://etherscan.deth.net/address/0x03Fa911dfCa026D9C8Edb508851b390accF912e8",
       "upgradeability": {
         "type": "immutable"
       },
@@ -36,7 +35,6 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0x0C099caf7a87e4eB28bcd8D0608063f8a69bb434",
-      "code": "https://etherscan.deth.net/address/0x0C099caf7a87e4eB28bcd8D0608063f8a69bb434",
       "upgradeability": {
         "type": "immutable"
       }
@@ -44,7 +42,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0x217750c27bE9147f9e358D9FF26a8224F8aCC214",
-      "code": "https://etherscan.deth.net/address/0x217750c27bE9147f9e358D9FF26a8224F8aCC214",
       "upgradeability": {
         "type": "immutable"
       },
@@ -75,7 +72,6 @@
     {
       "name": "SHARPVerifierGovernorMultisig",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
-      "code": "https://etherscan.deth.net/address/0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -97,7 +93,6 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0x297951a67D1BF7795500C3802d21a8C846D9C962",
-      "code": "https://etherscan.deth.net/address/0x297951a67D1BF7795500C3802d21a8C846D9C962",
       "upgradeability": {
         "type": "immutable"
       }
@@ -105,7 +100,6 @@
     {
       "name": "CpuOods",
       "address": "0x3405F644F9390C3478f42Fd205CE6920CcAF3280",
-      "code": "https://etherscan.deth.net/address/0x3405F644F9390C3478f42Fd205CE6920CcAF3280",
       "upgradeability": {
         "type": "immutable"
       }
@@ -113,7 +107,6 @@
     {
       "name": "PoseidonPoseidonFullRoundKey0Column",
       "address": "0x37070Fd8051f63E5A6D7E87026e086Cc19db1aBe",
-      "code": "https://etherscan.deth.net/address/0x37070Fd8051f63E5A6D7E87026e086Cc19db1aBe",
       "upgradeability": {
         "type": "immutable"
       }
@@ -121,7 +114,6 @@
     {
       "name": "FriStatementContract",
       "address": "0x3E6118DA317f7A433031F03bB71ab870d87dd2DD",
-      "code": "https://etherscan.deth.net/address/0x3E6118DA317f7A433031F03bB71ab870d87dd2DD",
       "upgradeability": {
         "type": "immutable"
       },
@@ -132,7 +124,6 @@
     {
       "name": "CpuOods",
       "address": "0x43A1C0bBa540e1C98d4b413F876250bdCFd0b9e0",
-      "code": "https://etherscan.deth.net/address/0x43A1C0bBa540e1C98d4b413F876250bdCFd0b9e0",
       "upgradeability": {
         "type": "immutable"
       }
@@ -140,7 +131,6 @@
     {
       "name": "SHARPVerifierProxy",
       "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-      "code": "https://etherscan.deth.net/address/0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60,0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
@@ -168,7 +158,6 @@
     {
       "name": "CpuOods",
       "address": "0x4bf82e627D57cB3F455E740bcDA25848cDbd2FF7",
-      "code": "https://etherscan.deth.net/address/0x4bf82e627D57cB3F455E740bcDA25848cDbd2FF7",
       "upgradeability": {
         "type": "immutable"
       }
@@ -176,7 +165,6 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0x4CF5c11321d54b83bDAE84bBbd018c26621d2950",
-      "code": "https://etherscan.deth.net/address/0x4CF5c11321d54b83bDAE84bBbd018c26621d2950",
       "upgradeability": {
         "type": "immutable"
       }
@@ -184,7 +172,6 @@
     {
       "name": "PoseidonPoseidonPartialRoundKey1Column",
       "address": "0x4d0E80AB34ee2B19295F2CaC3101d03452D874b8",
-      "code": "https://etherscan.deth.net/address/0x4d0E80AB34ee2B19295F2CaC3101d03452D874b8",
       "upgradeability": {
         "type": "immutable"
       }
@@ -192,7 +179,6 @@
     {
       "name": "PoseidonPoseidonFullRoundKey2Column",
       "address": "0x4FB05b7CC348C5a72C59a3f307baf66e3CA1F835",
-      "code": "https://etherscan.deth.net/address/0x4FB05b7CC348C5a72C59a3f307baf66e3CA1F835",
       "upgradeability": {
         "type": "immutable"
       }
@@ -200,7 +186,6 @@
     {
       "name": "PedersenHashPointsYColumn",
       "address": "0x519DA5F74503dA351EbBED889111377d33096002",
-      "code": "https://etherscan.deth.net/address/0x519DA5F74503dA351EbBED889111377d33096002",
       "upgradeability": {
         "type": "immutable"
       }
@@ -208,7 +193,6 @@
     {
       "name": "CpuOods",
       "address": "0x52314e0b25b024c34480Ac3c75cfE98c2Ed6aa4a",
-      "code": "https://etherscan.deth.net/address/0x52314e0b25b024c34480Ac3c75cfE98c2Ed6aa4a",
       "upgradeability": {
         "type": "immutable"
       }
@@ -216,7 +200,6 @@
     {
       "name": "MerkleStatementContract",
       "address": "0x5899Efea757E0Dbd6d114b3375C23D7540f65fa4",
-      "code": "https://etherscan.deth.net/address/0x5899Efea757E0Dbd6d114b3375C23D7540f65fa4",
       "upgradeability": {
         "type": "immutable"
       },
@@ -227,7 +210,6 @@
     {
       "name": "EcdsaPointsXColumn",
       "address": "0x593a71DC43e9B67FE009d7C76B6EfA925FB329B1",
-      "code": "https://etherscan.deth.net/address/0x593a71DC43e9B67FE009d7C76B6EfA925FB329B1",
       "upgradeability": {
         "type": "immutable"
       }
@@ -235,7 +217,6 @@
     {
       "name": "CairoBootloaderProgram",
       "address": "0x5d07afFAfc8721Ef3dEe4D11A2D1484CBf6A9dDf",
-      "code": "https://etherscan.deth.net/address/0x5d07afFAfc8721Ef3dEe4D11A2D1484CBf6A9dDf",
       "upgradeability": {
         "type": "immutable"
       },
@@ -809,7 +790,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0x630A97901Ac29590DF83f4A64B8D490D54caf239",
-      "code": "https://etherscan.deth.net/address/0x630A97901Ac29590DF83f4A64B8D490D54caf239",
       "upgradeability": {
         "type": "immutable"
       },
@@ -840,7 +820,6 @@
     {
       "name": "CpuOods",
       "address": "0x68293272FEA2D6e74572BC18ffaD11F21344e090",
-      "code": "https://etherscan.deth.net/address/0x68293272FEA2D6e74572BC18ffaD11F21344e090",
       "upgradeability": {
         "type": "immutable"
       }
@@ -848,7 +827,6 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0x691ca565B7416B681e4f9Fb56A1283Ae8b34E55e",
-      "code": "https://etherscan.deth.net/address/0x691ca565B7416B681e4f9Fb56A1283Ae8b34E55e",
       "upgradeability": {
         "type": "immutable"
       }
@@ -856,7 +834,6 @@
     {
       "name": "SHARPVerifier",
       "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "code": "https://etherscan.deth.net/address/0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
       "upgradeability": {
         "type": "immutable"
       },
@@ -894,7 +871,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0x78Af2BFB12Db15d35f7dE8DD77f29C299C78c590",
-      "code": "https://etherscan.deth.net/address/0x78Af2BFB12Db15d35f7dE8DD77f29C299C78c590",
       "upgradeability": {
         "type": "immutable"
       },
@@ -925,7 +901,6 @@
     {
       "name": "PoseidonPoseidonPartialRoundKey0Column",
       "address": "0x812c2AD2161D099724A99C8114c539b9e5b449cd",
-      "code": "https://etherscan.deth.net/address/0x812c2AD2161D099724A99C8114c539b9e5b449cd",
       "upgradeability": {
         "type": "immutable"
       }
@@ -933,7 +908,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0x8488e8f4e26eBa40faE229AB653d98E341cbE57B",
-      "code": "https://etherscan.deth.net/address/0x8488e8f4e26eBa40faE229AB653d98E341cbE57B",
       "upgradeability": {
         "type": "immutable"
       },
@@ -964,7 +938,6 @@
     {
       "name": "CpuOods",
       "address": "0x8518F459A698038B4CCED66C042c48C6bB5B17fe",
-      "code": "https://etherscan.deth.net/address/0x8518F459A698038B4CCED66C042c48C6bB5B17fe",
       "upgradeability": {
         "type": "immutable"
       }
@@ -972,7 +945,6 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0x89B7a7276cBc8Cb35Ec11fAE9da83b20Db3edf20",
-      "code": "https://etherscan.deth.net/address/0x89B7a7276cBc8Cb35Ec11fAE9da83b20Db3edf20",
       "upgradeability": {
         "type": "immutable"
       }
@@ -980,7 +952,6 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0x943248dA0FFd5834Da56c5AD5308E2E2991378EB",
-      "code": "https://etherscan.deth.net/address/0x943248dA0FFd5834Da56c5AD5308E2E2991378EB",
       "upgradeability": {
         "type": "immutable"
       }
@@ -988,7 +959,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0x9E614a417f8309575fC11b175A51599661f2Bd21",
-      "code": "https://etherscan.deth.net/address/0x9E614a417f8309575fC11b175A51599661f2Bd21",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1019,7 +989,6 @@
     {
       "name": "PoseidonPoseidonFullRoundKey1Column",
       "address": "0xb4711a4614368516529d6118C97905aB4B28e267",
-      "code": "https://etherscan.deth.net/address/0xb4711a4614368516529d6118C97905aB4B28e267",
       "upgradeability": {
         "type": "immutable"
       }
@@ -1027,7 +996,6 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0xBE8bd7a41ba7DC7b995a53368e7fFE30Fd2BC447",
-      "code": "https://etherscan.deth.net/address/0xBE8bd7a41ba7DC7b995a53368e7fFE30Fd2BC447",
       "upgradeability": {
         "type": "immutable"
       }
@@ -1035,7 +1003,6 @@
     {
       "name": "PedersenHashPointsXColumn",
       "address": "0xc4f21318937017B8aBe5fDc0D48f58dBc1d18940",
-      "code": "https://etherscan.deth.net/address/0xc4f21318937017B8aBe5fDc0D48f58dBc1d18940",
       "upgradeability": {
         "type": "immutable"
       }
@@ -1043,7 +1010,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0xC879aF7D5eD80e4676C203FD300E640C297F31e3",
-      "code": "https://etherscan.deth.net/address/0xC879aF7D5eD80e4676C203FD300E640C297F31e3",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1072,7 +1038,6 @@
     {
       "name": "CpuOods",
       "address": "0xc9E067AF5d00eb4aA2E73843ac36AfF83C5CeeD3",
-      "code": "https://etherscan.deth.net/address/0xc9E067AF5d00eb4aA2E73843ac36AfF83C5CeeD3",
       "upgradeability": {
         "type": "immutable"
       }
@@ -1080,7 +1045,6 @@
     {
       "name": "EcdsaPointsYColumn",
       "address": "0xcA59f6FD499ffF50c78Ffb420a9bcd0d273abf29",
-      "code": "https://etherscan.deth.net/address/0xcA59f6FD499ffF50c78Ffb420a9bcd0d273abf29",
       "upgradeability": {
         "type": "immutable"
       }
@@ -1088,7 +1052,6 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0xd0aAdECA2d25AEFde0da214d27b04b6ea20D7418",
-      "code": "https://etherscan.deth.net/address/0xd0aAdECA2d25AEFde0da214d27b04b6ea20D7418",
       "upgradeability": {
         "type": "immutable"
       }
@@ -1096,7 +1059,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0xe9664D230490d5A515ef7Ef30033d8075a8D0E24",
-      "code": "https://etherscan.deth.net/address/0xe9664D230490d5A515ef7Ef30033d8075a8D0E24",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1132,7 +1094,6 @@
     {
       "name": "CpuOods",
       "address": "0xED219933b58e9c00E66682356588d42C7932EE8E",
-      "code": "https://etherscan.deth.net/address/0xED219933b58e9c00E66682356588d42C7932EE8E",
       "upgradeability": {
         "type": "immutable"
       }
@@ -1140,7 +1101,6 @@
     {
       "name": "MemoryPageFactRegistry",
       "address": "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4",
-      "code": "https://etherscan.deth.net/address/0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4",
       "upgradeability": {
         "type": "immutable"
       },
