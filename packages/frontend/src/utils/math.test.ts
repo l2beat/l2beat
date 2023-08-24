@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+
 import { unifyPercentagesAsIntegers } from './math'
 
 describe('math', () => {

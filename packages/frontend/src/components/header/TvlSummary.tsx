@@ -1,7 +1,7 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { unifyPercentagesAsIntegers } from '../../utils'
 
+import { unifyPercentagesAsIntegers } from '../../utils'
 import { formatUSD } from '../../utils/utils'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { CanonicalIcon, ExternalIcon, NativeIcon } from '../icons'
@@ -21,6 +21,10 @@ export interface TvlSummaryProps {
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
+  if (!props.detailedTvlEnabled) {
+    return
+  }
+
   const parts = props.stats
     ? unifyPercentagesAsIntegers([
         props.stats.tvl === 0
@@ -66,7 +70,7 @@ export function TvlSummary(props: TvlSummaryProps) {
       ]
     : []
 
-  return props.detailedTvlEnabled ? (
+  return (
     <div className="w-full bg-gray-100 p-4 dark:bg-zinc-800 md:flex md:w-[30%] md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-5">
       <div className="flex w-full items-baseline justify-between md:gap-2">
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
@@ -143,7 +147,7 @@ export function TvlSummary(props: TvlSummaryProps) {
         </>
       ) : null}
     </div>
-  ) : null
+  )
 }
 
 function BreakdownTooltip({
