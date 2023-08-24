@@ -40,9 +40,9 @@ export function getProjectHeader(
     return {
       tvl: parts.tvl,
       tvlWeeklyChange: partsWeeklyChange.tvl,
-      cbv: parts.cbv,
-      ebv: parts.ebv,
-      nmv: parts.nmv,
+      canonical: parts.canonical,
+      external: parts.external,
+      native: parts.native,
     }
   }
 
@@ -52,13 +52,13 @@ export function getProjectHeader(
     return {
       tvl,
       tvlWeeklyChange,
-      cbv: undefined,
-      ebv: undefined,
-      nmv: undefined,
+      canonical: undefined,
+      external: undefined,
+      native: undefined,
     }
   }
 
-  const { tvl, tvlWeeklyChange, cbv, ebv, nmv } =
+  const { tvl, tvlWeeklyChange, canonical, external, native } =
     apiProject?.charts.hourly.types.length === 9
       ? getDetailed(apiProject.charts)
       : getBasic(apiProject?.charts)
@@ -80,7 +80,14 @@ export function getProjectHeader(
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
     titleLength: getTitleLength(project.display.name),
-    tvlStats: getTvlStats(project, tvl, tvlWeeklyChange, cbv, ebv, nmv),
+    tvlStats: getTvlStats(
+      project,
+      tvl,
+      tvlWeeklyChange,
+      canonical,
+      external,
+      native,
+    ),
     tpsDaily: tpsDaily?.toFixed(2) ?? '',
     tpsWeeklyChange,
     transactionMonthlyCount:
@@ -154,17 +161,17 @@ function getTvlStats(
   project: Layer2,
   tvl: number,
   tvlWeeklyChange: string,
-  cbv: number | undefined,
-  ebv: number | undefined,
-  nmv: number | undefined,
+  canonical: number | undefined,
+  external: number | undefined,
+  native: number | undefined,
 ): TvlStats | undefined {
   // TODO(radomski): This is solution is really janky and can be improved once
   // we deprecate the usage of the original endpoint to fetch data for the frontend.
   const parts = [
     project.config.escrows.length > 0 ? tvl : 0,
-    cbv ?? 0,
-    ebv ?? 0,
-    nmv ?? 0,
+    canonical ?? 0,
+    external ?? 0,
+    native ?? 0,
   ]
 
   if (parts.every((x) => notUndefined(x))) {
@@ -172,9 +179,9 @@ function getTvlStats(
     return {
       tvlChange: tvlWeeklyChange,
       tvl: ps[0],
-      cbv: ps[1],
-      ebv: ps[2],
-      nmv: ps[3],
+      canonical: ps[1],
+      external: ps[2],
+      native: ps[3],
     }
   }
 

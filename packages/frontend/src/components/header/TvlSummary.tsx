@@ -9,9 +9,9 @@ import { PercentChange } from '../PercentChange'
 export interface TvlStats {
   tvlChange: string
   tvl: number
-  ebv: number
-  cbv: number
-  nmv: number
+  canonical: number
+  external: number
+  native: number
 }
 
 export interface TvlSummaryProps {
@@ -22,18 +22,18 @@ export interface TvlSummaryProps {
 export function TvlSummary(props: TvlSummaryProps) {
   const usage = props.stats
     ? {
-        cbv:
+        canonical:
           props.stats.tvl === 0
             ? '33'
-            : ((props.stats.cbv / props.stats.tvl) * 100).toFixed(),
-        ebv:
+            : ((props.stats.canonical / props.stats.tvl) * 100).toFixed(),
+        external:
           props.stats.tvl === 0
             ? '33'
-            : ((props.stats.ebv / props.stats.tvl) * 100).toFixed(),
-        nmv:
+            : ((props.stats.external / props.stats.tvl) * 100).toFixed(),
+        native:
           props.stats.tvl === 0
             ? '33'
-            : ((props.stats.nmv / props.stats.tvl) * 100).toFixed(),
+            : ((props.stats.native / props.stats.tvl) * 100).toFixed(),
       }
     : undefined
 
@@ -41,20 +41,20 @@ export function TvlSummary(props: TvlSummaryProps) {
     ? [
         {
           label: 'Canonically Bridged',
-          value: formatUSD(props.stats.cbv),
-          usage: usage?.cbv ?? 1,
+          value: formatUSD(props.stats.canonical),
+          usage: usage?.canonical ?? 1,
           icon: <CanonicalIcon className="h-[9px] w-[9px]" />,
         },
         {
           label: 'Externally Bridged',
-          value: formatUSD(props.stats.ebv),
-          usage: usage?.ebv ?? 1,
+          value: formatUSD(props.stats.external),
+          usage: usage?.external ?? 1,
           icon: <ExternalIcon className="h-[10px] w-[10px]" />,
         },
         {
           label: 'Natively Minted',
-          value: formatUSD(props.stats.nmv),
-          usage: usage?.nmv ?? 1,
+          value: formatUSD(props.stats.native),
+          usage: usage?.native ?? 1,
           icon: <NativeIcon className="h-[8px] w-[8px]" />,
         },
       ]
@@ -94,19 +94,19 @@ export function TvlSummary(props: TvlSummaryProps) {
           <div
             className="h-full rounded-l-full bg-purple-100"
             style={{
-              width: `${usage.cbv}%`,
+              width: `${usage.canonical}%`,
             }}
           />
           <div
             className="h-full bg-yellow-200"
             style={{
-              width: `${usage.ebv}%`,
+              width: `${usage.external}%`,
             }}
           />
           <div
             className="h-full rounded-r-full bg-pink-100"
             style={{
-              width: `${usage.nmv}%`,
+              width: `${usage.native}%`,
             }}
           />
         </div>
@@ -143,16 +143,16 @@ export function TvlSummary(props: TvlSummaryProps) {
 function BreakdownTooltip({
   usage,
 }: {
-  usage: { cbv: string; ebv: string; nmv: string }
+  usage: { canonical: string; external: string; native: string }
 }) {
   // NOTE(radomski): Explanation of the
   // `grid-cols-[repeat(3,minmax(0,_1fr))_auto]`. I want a two columned grid
   // where the first cell of equal size and the second is free to grow.
   return (
     <div className="grid grid-cols-[minmax(0,_1fr)_auto] gap-x-3">
-      <div>Canoncially Bridged</div> <div>{usage.cbv}%</div>
-      <div>Externally Bridged</div> <div>{usage.ebv}%</div>
-      <div>Native Tokens Minted</div> <div>{usage.nmv}%</div>
+      <div>Canoncially Bridged</div> <div>{usage.canonical}%</div>
+      <div>Externally Bridged</div> <div>{usage.external}%</div>
+      <div>Native Tokens Minted</div> <div>{usage.native}%</div>
     </div>
   )
 }
