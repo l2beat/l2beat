@@ -6,7 +6,9 @@ import { shouldSkip } from './shouldSkip'
 
 // Bump this value when the logic of discovery changes,
 // causing a difference in discovery output
-export const DISCOVERY_LOGIC_VERSION = 1
+
+// Last change: removed `code` key from the output
+export const DISCOVERY_LOGIC_VERSION = 2
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,

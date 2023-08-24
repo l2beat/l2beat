@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime, ValueType } from '@l2beat/shared-pure'
+import {
+  AggregatedReportType,
+  assert,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { AggregatedReportRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
@@ -10,7 +15,7 @@ export interface AggregatedReportRecord {
   projectId: ProjectId
   usdValue: bigint
   ethValue: bigint
-  valueType: ValueType
+  reportType: AggregatedReportType
 }
 
 export class AggregatedReportRepository extends BaseRepository {
@@ -19,10 +24,12 @@ export class AggregatedReportRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AggregatedReportRepository>>(this)
   }
 
-  async getDaily(valueType: ValueType): Promise<AggregatedReportRecord[]> {
+  async getDaily(
+    reportType: AggregatedReportType,
+  ): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
-      .where({ value_type: valueType.toString() })
+      .andWhere({ report_type: reportType })
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) = 0`)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
@@ -38,12 +45,12 @@ export class AggregatedReportRepository extends BaseRepository {
 
   async getSixHourly(
     from: UnixTime,
-    valueType: ValueType,
+    reportType: AggregatedReportType,
   ): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
-      .andWhere({ value_type: valueType.toString() })
+      .andWhere({ report_type: reportType })
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) % 6 = 0`)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
@@ -62,12 +69,12 @@ export class AggregatedReportRepository extends BaseRepository {
 
   async getHourly(
     from: UnixTime,
-    valueType: ValueType,
+    reportType: AggregatedReportType,
   ): Promise<AggregatedReportRecord[]> {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
-      .andWhere({ value_type: valueType.toString() })
+      .andWhere({ report_type: reportType })
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -90,14 +97,14 @@ export class AggregatedReportRepository extends BaseRepository {
 
   async findLatest(
     projectId: ProjectId,
-    valueType: ValueType,
+    reportType: AggregatedReportType,
   ): Promise<AggregatedReportRecord | undefined> {
     const knex = await this.knex()
     const row = await knex('aggregated_reports')
       .select()
       .where({
         project_id: projectId.toString(),
-        value_type: valueType.toString(),
+        report_type: reportType,
       })
       .orderBy('unix_timestamp', 'desc')
       .first()
@@ -119,7 +126,7 @@ export class AggregatedReportRepository extends BaseRepository {
         .delete()
       await trx('aggregated_reports')
         .insert(rows)
-        .onConflict(['unix_timestamp', 'project_id', 'value_type'])
+        .onConflict(['unix_timestamp', 'project_id', 'report_type'])
         .merge()
     })
     return rows.length
@@ -137,7 +144,7 @@ function toRow(record: AggregatedReportRecord): AggregatedReportRow {
     project_id: record.projectId.toString(),
     usd_value: record.usdValue.toString(),
     eth_value: record.ethValue.toString(),
-    value_type: record.valueType.toString(),
+    report_type: record.reportType,
   }
 }
 
@@ -147,6 +154,6 @@ function toRecord(row: AggregatedReportRow): AggregatedReportRecord {
     projectId: ProjectId(row.project_id),
     usdValue: BigInt(row.usd_value),
     ethValue: BigInt(row.eth_value),
-    valueType: ValueType(row.value_type),
+    reportType: AggregatedReportType(row.report_type),
   }
 }

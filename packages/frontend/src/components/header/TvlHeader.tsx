@@ -14,7 +14,8 @@ export function TvlHeader(props: TvlHeaderProps) {
       <div>
         <h1 className="mb-1 text-3xl font-bold">Value Locked</h1>
         <p className="hidden text-gray-500 dark:text-gray-600 md:block">
-          Sum of all tokens expressed in USD
+          Sum of all funds locked on Ethereum converted to{' '}
+          <span data-role="chart-header-currency">USD</span>
         </p>
       </div>
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">

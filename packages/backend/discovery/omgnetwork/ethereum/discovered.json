@@ -7,7 +7,6 @@
     {
       "name": "Erc20Vault",
       "address": "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
-      "code": "https://etherscan.deth.net/address/0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
       "upgradeability": {
         "type": "immutable"
       },
@@ -23,7 +22,6 @@
     {
       "name": "PlasmaFramework",
       "address": "0x0D4C1222f5e839a911e2053860e45F18921D72ac",
-      "code": "https://etherscan.deth.net/address/0x0D4C1222f5e839a911e2053860e45F18921D72ac",
       "upgradeability": {
         "type": "immutable"
       },
@@ -45,7 +43,6 @@
     {
       "name": "EthVault",
       "address": "0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0",
-      "code": "https://etherscan.deth.net/address/0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0",
       "upgradeability": {
         "type": "immutable"
       },
@@ -62,7 +59,6 @@
     {
       "name": "PaymentExitGame",
       "address": "0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3",
-      "code": "https://etherscan.deth.net/address/0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3",
       "upgradeability": {
         "type": "immutable"
       },
@@ -81,7 +77,6 @@
       "name": "ETHDepositVerifier",
       "address": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
       "upgradeability": {
         "type": "immutable"
       },
@@ -91,7 +86,6 @@
       "name": "ERC20DepositVerifier",
       "address": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
       "upgradeability": {
         "type": "immutable"
       },

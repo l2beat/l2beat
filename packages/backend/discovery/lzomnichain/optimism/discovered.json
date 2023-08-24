@@ -8,7 +8,6 @@
     {
       "name": "GnosisSafeL2",
       "address": "0x2458BAAbfb21aE1da11D9dD6AD4E48aB2fBF9959",
-      "code": "https://optimistic.etherscan.deth.net/address/0x2458BAAbfb21aE1da11D9dD6AD4E48aB2fBF9959,0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
@@ -32,7 +31,6 @@
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
-      "code": "https://optimistic.etherscan.deth.net/address/0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
       "upgradeability": {
         "type": "immutable"
       },
@@ -48,7 +46,6 @@
     {
       "name": "Endpoint",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
-      "code": "https://optimistic.etherscan.deth.net/address/0x3c2269811836af69497E5F486A85D7316753cf62",
       "upgradeability": {
         "type": "immutable"
       },
@@ -71,7 +68,6 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-      "code": "https://optimistic.etherscan.deth.net/address/0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -95,7 +91,6 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-      "code": "https://optimistic.etherscan.deth.net/address/0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
       "upgradeability": {
         "type": "immutable"
       },

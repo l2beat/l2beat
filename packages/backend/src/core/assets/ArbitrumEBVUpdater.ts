@@ -4,9 +4,9 @@ import {
   ChainId,
   Hash256,
   ProjectId,
+  ReportType,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
@@ -46,7 +46,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
       tokens.every(
         (token) =>
           token.chainId === this.getChainId() &&
-          token.type === this.getValueType(),
+          token.type === this.getReportType(),
       ),
       'Programmer error: tokens must be of type EBV and on the same chain as the arbitrumEBVUpdater',
     )
@@ -78,15 +78,15 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     return this.minTimestamp
   }
 
-  getValueType() {
-    return ValueType.EBV
+  getReportType(): ReportType {
+    return 'EBV'
   }
 
   async start() {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.getConfigHash(),
       this.getChainId(),
-      this.getValueType(),
+      this.getReportType(),
     )
 
     for (const timestamp of known) {
@@ -132,7 +132,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
       configHash: this.getConfigHash(),
       timestamp,
       chainId: this.getChainId(),
-      valueType: this.getValueType(),
+      reportType: this.getReportType(),
     })
 
     this.knownSet.add(timestamp.toNumber())
@@ -157,7 +157,7 @@ export class ArbitrumEBVUpdater implements AssetUpdater {
     return this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      this.getValueType(),
+      this.getReportType(),
     )
   }
 }

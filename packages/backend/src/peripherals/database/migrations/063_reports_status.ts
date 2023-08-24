@@ -11,13 +11,13 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { ChainId, ValueType } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.alterTable('reports_status', function (table) {
     table.integer('chain_id').notNullable().defaultTo(ChainId.ETHEREUM)
-    table.string('asset_type').notNullable().defaultTo(ValueType.CBV)
+    table.string('asset_type').notNullable().defaultTo('CBV')
 
     table.dropPrimary()
     table.dropIndex('config_hash')

@@ -49,7 +49,7 @@ environment variables. One variable per line `KEY=value`.
 - `TEST_DB_URL` - Database url used in `yarn test`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_test`
 - `DATABASE_URL` - Database url used in production deployment
 - `ETHERSCAN_API_KEY` - API key for Etherscan
-- `ETHEREUM_ALCHEMY_API_KEY` - API key for Alchemy Ethereum App
+- `ETHEREUM_PROVIDER_URL` - API Url for Ethereum QuickNode provider
 - `ARBITRUM_PROVIDER_URL` - API Url for Arbitrum QuickNode provider
 
 #### Optional
@@ -111,6 +111,8 @@ TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
 DATABASE_URL=
 
 ETHERSCAN_API_KEY=
+ETHEREUM_PROVIDER_URL=
+
 ETHEREUM_ALCHEMY_API_KEY=
 
 #-----OPTIONAL-----
@@ -133,6 +135,7 @@ ETHEREUM_ALCHEMY_API_KEY=
 # ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
 
 #-----DISCOVERY-----
+# DISCOVERY_BLOCK_NUMBER=
 # WATCHMODE_ENABLED=
 # PUBLIC_DISCORD_CHANNEL_ID=
 # INTERNAL_DISCORD_CHANNEL_ID=

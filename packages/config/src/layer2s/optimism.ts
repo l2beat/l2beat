@@ -6,7 +6,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -21,6 +20,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOneAfterBlockInclusive,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -41,7 +41,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     decimals: 18,
     sinceTimestamp: new UnixTime(1654039974),
     category: 'other',
-    type: ValueType.NMV,
+    type: 'NMV',
   },
 ]
 
@@ -58,7 +58,7 @@ export const optimism: Layer2 = {
     With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
     new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
     purpose: 'Universal',
-    provider: 'Optimism',
+    provider: 'OP Stack',
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://optimism.io/'],
@@ -131,6 +131,7 @@ export const optimism: Layer2 = {
     transactionApi: {
       type: 'rpc',
       startBlock: 1,
+      assessCount: subtractOneAfterBlockInclusive(105235064),
     },
   },
   riskView: makeBridgeCompatible({

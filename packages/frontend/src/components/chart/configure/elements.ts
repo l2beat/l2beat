@@ -51,6 +51,9 @@ export function getChartElements(chart: HTMLElement) {
       labels: Array.from(
         chart.querySelectorAll<HTMLElement>('[data-role="chart-label"]'),
       ),
+      tvlHeader: chart.parentNode?.querySelector<HTMLElement>(
+        '[data-role="chart-header-currency"]',
+      ),
       canvas: chart.querySelector<HTMLCanvasElement>(
         '[data-role="chart-canvas"]',
       ),

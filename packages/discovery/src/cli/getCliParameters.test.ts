@@ -33,7 +33,7 @@ describe(getCliParameters.name, () => {
     const cli = getCliParameters(['discover', 'ethereum', 'foo'])
     expect(cli).toEqual({
       mode: 'discover',
-      chain: ChainId.getId('ethereum'),
+      chain: ChainId.fromName('ethereum'),
       project: 'foo',
       dryRun: false,
       dev: false,
@@ -44,7 +44,7 @@ describe(getCliParameters.name, () => {
     const cli = getCliParameters(['discover', 'ethereum', 'foo', '--dry-run'])
     expect(cli).toEqual({
       mode: 'discover',
-      chain: ChainId.getId('ethereum'),
+      chain: ChainId.fromName('ethereum'),
       project: 'foo',
       dryRun: true,
       dev: false,
@@ -55,7 +55,7 @@ describe(getCliParameters.name, () => {
     const cli = getCliParameters(['discover', '--dev', 'ethereum', 'foo'])
     expect(cli).toEqual({
       mode: 'discover',
-      chain: ChainId.getId('ethereum'),
+      chain: ChainId.fromName('ethereum'),
       project: 'foo',
       dryRun: false,
       dev: true,

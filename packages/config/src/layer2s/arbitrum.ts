@@ -6,7 +6,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -22,6 +21,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  subtractOneAfterBlockInclusive,
 } from './common'
 import { getStage } from './common/stages/getStage'
 import { UPGRADE_MECHANISM } from './common/upgradeMechanism'
@@ -89,7 +89,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     decimals: 18,
     sinceTimestamp: new UnixTime(1630233600),
     category: 'other',
-    type: ValueType.NMV,
+    type: 'NMV',
   },
   {
     id: AssetId('arbitrum:usdc-usd-coin'),
@@ -101,7 +101,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     decimals: 6,
     category: 'stablecoin',
     premintHolderAddresses: [],
-    type: ValueType.EBV,
+    type: 'EBV',
   },
 ]
 
@@ -125,6 +125,7 @@ export const arbitrum: Layer2 = {
     )} (${validatorAfkBlocks} blocks), the whitelist is dropped and anyone can take over as a new Proposer or Validator.`,
     purpose: 'Universal',
     category: 'Optimistic Rollup',
+    provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
@@ -196,8 +197,7 @@ export const arbitrum: Layer2 = {
       type: 'rpc',
       // We need to subtract the Nitro system transactions
       // after the block of the update
-      assessCount: (count: number, blockNumber: number) =>
-        blockNumber >= 22207818 ? count - 1 : count,
+      assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
   },

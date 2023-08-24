@@ -1,5 +1,5 @@
 import { ArbiscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId, ValueType } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
@@ -31,7 +31,7 @@ export function createArbitrumTvlSubmodule(
 
   // #region peripherals
   const arbitrumEBVTokens = config.tokens.filter(
-    (t) => t.chainId === ChainId.ARBITRUM && t.type === ValueType.EBV,
+    (t) => t.chainId === ChainId.ARBITRUM && t.type === 'EBV',
   )
 
   const arbitrumProvider = new providers.JsonRpcProvider(

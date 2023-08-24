@@ -11,12 +11,11 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { ValueType } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.alterTable('aggregated_reports', function (table) {
-    table.string('value_type').notNullable().defaultTo(ValueType.TVL)
+    table.string('value_type').notNullable().defaultTo('TVL')
 
     table.dropPrimary()
 

@@ -25,9 +25,14 @@ const timelockDelay = discovery.getContractValue<number>(
 )
 const timelockDelayString = formatSeconds(timelockDelay)
 
+const upgradesTimelock = {
+  upgradableBy: ['AdminMultisig'],
+  upgradeDelay: timelockDelay === 0 ? 'No delay' : timelockDelayString,
+}
+
 const upgrades = {
   upgradableBy: ['AdminMultisig'],
-  upgradableDelay: timelockDelay === 0 ? 'No delay' : timelockDelayString,
+  upgradeDelay: 'No delay',
 }
 
 const roles = discovery.getContractValue<{
@@ -70,7 +75,7 @@ export const linea: Layer2 = {
   display: {
     name: 'Linea',
     slug: 'linea',
-    headerWarning: 'The circuit of the program being proven is not public.',
+    warning: 'The circuit of the program being proven is not public.',
     description:
       'Linea is a zkRollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
     purpose: 'Universal',
@@ -96,6 +101,16 @@ export const linea: Layer2 = {
         sinceTimestamp: new UnixTime(1689159923),
         tokens: ['ETH'],
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x504A330327A089d8364C4ab3811Ee26976d388ce'),
+        sinceTimestamp: new UnixTime(1691079071),
+        tokens: ['USDC'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319'),
+        sinceTimestamp: new UnixTime(1691060675),
+        tokens: '*',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -109,7 +124,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L116',
+            'https://etherscan.io/address/0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3#code#F1#L116',
           ],
         },
       ],
@@ -123,7 +138,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L221',
+            'https://etherscan.io/address/0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3#code#F1#L221',
           ],
         },
       ],
@@ -163,7 +178,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'ZkEvmV2.sol#L275 - Etherscan source code, _verifyProof() function',
-          href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L275',
+          href: 'https://etherscan.io/address/0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3#code#F1#L297',
         },
       ],
     },
@@ -172,7 +187,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'ZkEvmV2.sol#L221 - Etherscan source code, _processBlockTransactions() function',
-          href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L221',
+          href: 'https://etherscan.io/address/0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3#code#F1#L221',
         },
       ],
     },
@@ -191,7 +206,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'ZkEvmV2.sol#L125 - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L125',
+          href: 'https://etherscan.io/address/0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3#code#F1#L125',
         },
       ],
     },
@@ -207,7 +222,7 @@ export const linea: Layer2 = {
         references: [
           {
             text: 'L1MessageService.sol#L115 - Etherscan source code, claimMessage() function',
-            href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F20#L115',
+            href: 'https://etherscan.io/address/0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3#code#F21#L118',
           },
         ],
       },
@@ -216,7 +231,7 @@ export const linea: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',
-      'Admin of the Linea rollup. It can upgrade the contracts, change the verifier address, and publish blocks by effectively overriding the proof system.',
+      'Admin of the Linea rollup. It can upgrade core contracts, bridges, change the verifier address, and publish blocks by effectively overriding the proof system.',
     ),
     {
       accounts: operators,
@@ -230,7 +245,7 @@ export const linea: Layer2 = {
       discovery.getContractDetails('zkEVM', {
         description:
           'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
-        ...upgrades,
+        ...upgradesTimelock,
         pausable: {
           pausableBy: pausers,
           paused: isPaused,
@@ -238,7 +253,7 @@ export const linea: Layer2 = {
         references: [
           {
             text: 'ZkEvmV2.sol#L275 - Etherscan source code, state injections: stateRoot and exitRoot are part of the validity proof input.',
-            href: 'https://etherscan.io/address/0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3#code#F1#L275',
+            href: 'https://etherscan.io/address/0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3#code#F1#L297',
           },
         ],
       }),
@@ -247,9 +262,21 @@ export const linea: Layer2 = {
         'Plonk verifier contract used by the Linea zkEVM rollup.',
       ),
       discovery.getContractDetails(
+        'PlonkVerifierFull2',
+        'Plonk verifier contract used by the Linea zkEVM rollup.',
+      ),
+      discovery.getContractDetails(
         'PlonkVerifierFullLarge',
         'Plonk verifier contract used by the Linea zkEVM rollup.',
       ),
+      discovery.getContractDetails('ERC20Bridge', {
+        description: 'Contract used to bridge ERC20 tokens.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('USDCBridge', {
+        description: 'Contract used to bridge USDC tokens.',
+        ...upgrades,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
   },

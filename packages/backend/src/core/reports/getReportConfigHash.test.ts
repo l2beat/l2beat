@@ -5,7 +5,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -216,6 +215,6 @@ function fakeToken(id: string, timestamp: number): Token {
     id: AssetId(id),
     sinceTimestamp: new UnixTime(timestamp),
     chainId: ChainId.ETHEREUM,
-    type: ValueType.CBV,
+    type: 'CBV',
   }
 }

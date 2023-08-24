@@ -8,7 +8,6 @@
     {
       "name": "L1DAITokenBridge",
       "address": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
-      "code": "https://etherscan.deth.net/address/0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
       "upgradeability": {
         "type": "immutable"
       },
@@ -25,7 +24,6 @@
     {
       "name": "SystemConfig",
       "address": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-      "code": "https://etherscan.deth.net/address/0x229047fed2591dbec1eF1118d64F7aF3dB9EB290,0x5efa852e92800D1C982711761e45c3FE39a2b6D8",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x5efa852e92800D1C982711761e45c3FE39a2b6D8",
@@ -56,7 +54,6 @@
     {
       "name": "L1CrossDomainMessengerProxy",
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-      "code": "https://etherscan.deth.net/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1,0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43",
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -82,7 +79,6 @@
     {
       "name": "GnosisSafe",
       "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
-      "code": "https://etherscan.deth.net/address/0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -102,7 +98,6 @@
     {
       "name": "L1Escrow",
       "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
-      "code": "https://etherscan.deth.net/address/0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
       "upgradeability": {
         "type": "immutable"
       }
@@ -110,7 +105,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-      "code": "https://etherscan.deth.net/address/0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "upgradeability": {
         "type": "immutable"
       },
@@ -123,7 +117,6 @@
     {
       "name": "CanonicalTransactionChain",
       "address": "0x5E4e65926BA27467555EB562121fac00D24E9dD2",
-      "code": "https://etherscan.deth.net/address/0x5E4e65926BA27467555EB562121fac00D24E9dD2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -149,7 +142,6 @@
     {
       "name": "SynthetixBridgeEscrow",
       "address": "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
-      "code": "https://etherscan.deth.net/address/0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
       "upgradeability": {
         "type": "immutable"
       },
@@ -161,7 +153,6 @@
     {
       "name": "SCCStorageContainerBatches_OLD",
       "address": "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
-      "code": "https://etherscan.deth.net/address/0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572",
       "upgradeability": {
         "type": "immutable"
       },
@@ -176,7 +167,6 @@
     {
       "name": "L1StandardBridge",
       "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-      "code": "https://etherscan.deth.net/address/0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1,0xBFB731Cd36D26c2a7287716DE857E4380C73A64a",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xBFB731Cd36D26c2a7287716DE857E4380C73A64a",
@@ -193,7 +183,6 @@
     {
       "name": "OptimismMultisig",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-      "code": "https://etherscan.deth.net/address/0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
@@ -220,7 +209,6 @@
     {
       "name": "SCCStorageContainerBatches",
       "address": "0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
-      "code": "https://etherscan.deth.net/address/0xb0ddFf09c4019e31960de11bD845E836078E8EbE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -235,7 +223,6 @@
     {
       "name": "StateCommitmentChain",
       "address": "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
-      "code": "https://etherscan.deth.net/address/0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
       "upgradeability": {
         "type": "immutable"
       },
@@ -253,7 +240,6 @@
     {
       "name": "OptimismPortal",
       "address": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
-      "code": "https://etherscan.deth.net/address/0xbEb5Fc579115071764c7423A4f12eDde41f106Ed,0x28a55488fef40005309e2DA0040DbE9D300a64AB",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x28a55488fef40005309e2DA0040DbE9D300a64AB",
@@ -273,7 +259,6 @@
     {
       "name": "CTCStorageContainerBatches",
       "address": "0xD16463EF9b0338CE3D73309028ef1714D220c024",
-      "code": "https://etherscan.deth.net/address/0xD16463EF9b0338CE3D73309028ef1714D220c024",
       "upgradeability": {
         "type": "immutable"
       },
@@ -288,7 +273,6 @@
     {
       "name": "AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-      "code": "https://etherscan.deth.net/address/0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
       "upgradeability": {
         "type": "immutable"
       },
@@ -319,7 +303,6 @@
     {
       "name": "L2OutputOracle",
       "address": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
-      "code": "https://etherscan.deth.net/address/0xdfe97868233d1aa22e815a266982f2cf17685a27,0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xd2E67B6a032F0A9B1f569E63ad6C38f7342c2e00",
@@ -345,7 +328,6 @@
     {
       "name": "SynthetixMultisig",
       "address": "0xEb3107117FEAd7de89Cd14D463D340A2E6917769",
-      "code": "https://etherscan.deth.net/address/0xEb3107117FEAd7de89Cd14D463D340A2E6917769,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"

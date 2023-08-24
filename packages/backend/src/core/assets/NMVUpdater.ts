@@ -5,7 +5,6 @@ import {
   Hash256,
   hashJson,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
@@ -67,7 +66,7 @@ export class NMVUpdater implements AssetUpdater {
     const known = await this.reportStatusRepository.getByConfigHash(
       this.configHash,
       this.getChainId(),
-      ValueType.NMV,
+      'NMV',
     )
 
     for (const timestamp of known) {
@@ -106,7 +105,7 @@ export class NMVUpdater implements AssetUpdater {
       configHash: this.configHash,
       timestamp,
       chainId: this.getChainId(),
-      valueType: ValueType.NMV,
+      reportType: 'NMV',
     })
 
     this.knownSet.add(timestamp.toNumber())
@@ -131,7 +130,7 @@ export class NMVUpdater implements AssetUpdater {
     return this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      ValueType.NMV,
+      'NMV',
     )
   }
 }

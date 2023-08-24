@@ -16,7 +16,7 @@ const meta = {
       {
         name: 'Base',
         slug: 'base',
-        provider: 'Optimism',
+        provider: 'OP Stack',
         riskValues: {
           dataAvailability: {
             value: '',
@@ -718,7 +718,7 @@ const meta = {
       {
         name: 'Optimism',
         slug: 'optimism',
-        provider: 'Optimism',
+        provider: 'OP Stack',
         riskValues: {
           dataAvailability: {
             value: 'On chain',
@@ -896,7 +896,7 @@ const meta = {
       {
         name: 'Metis Andromeda',
         slug: 'metis',
-        provider: 'Optimism',
+        provider: 'OVM',
         riskValues: {
           dataAvailability: {
             value: 'Optimistic (MEMO)',

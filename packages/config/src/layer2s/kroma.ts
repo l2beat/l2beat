@@ -17,7 +17,7 @@ export const kroma: Layer2 = {
             Kroma is deployed on the Sepolia testnet for further testing and optimization.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
-    provider: 'Optimism',
+    provider: 'OP Stack',
     links: {
       websites: ['https://kroma.network/'],
       apps: [

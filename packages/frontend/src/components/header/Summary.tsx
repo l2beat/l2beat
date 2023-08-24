@@ -39,7 +39,7 @@ export function Summary(props: SummaryProps) {
 
   return (
     <>
-      <div className="my-2 hidden md:block">
+      <div className="my-2 hidden w-full md:block">
         <DesktopProjectLinks projectLinks={props.links} />
       </div>
       <TvlSummary
