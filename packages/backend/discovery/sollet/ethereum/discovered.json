@@ -7,7 +7,6 @@
     {
       "name": "SplTokenSwap",
       "address": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
-      "code": "https://etherscan.deth.net/address/0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
       "upgradeability": {
         "type": "immutable"
       },

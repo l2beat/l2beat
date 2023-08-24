@@ -7,7 +7,6 @@
     {
       "name": "Gravity",
       "address": "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
-      "code": "https://etherscan.deth.net/address/0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
       "upgradeability": {
         "type": "immutable"
       },

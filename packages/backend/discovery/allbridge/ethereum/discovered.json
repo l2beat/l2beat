@@ -1,14 +1,12 @@
 {
   "chain": "ethereum",
   "name": "allbridge",
-  "chain": "ethereum",
   "blockNumber": 17321271,
   "configHash": "0x93d4ddbdf45c48e50296f6ea9e52c0c535908ed407738973689e4d9f45a7b2ad",
   "contracts": [
     {
       "name": "USDC_POOL",
       "address": "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
-      "code": "https://etherscan.deth.net/address/0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
       "upgradeability": {
         "type": "immutable"
       },
@@ -35,7 +33,6 @@
       "name": "Allbridge Messenger",
       "address": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
       "upgradeability": {
         "type": "immutable"
       },
@@ -48,7 +45,6 @@
       "name": "Validator",
       "address": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
       "upgradeability": {
         "type": "immutable"
       },
@@ -60,7 +56,6 @@
     {
       "name": "LPBridge",
       "address": "0xA314330482f325D38A83B492EF6B006224a3bea9",
-      "code": "https://etherscan.deth.net/address/0xA314330482f325D38A83B492EF6B006224a3bea9",
       "upgradeability": {
         "type": "immutable"
       },
@@ -78,7 +73,6 @@
     {
       "name": "USDT_POOL",
       "address": "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
-      "code": "https://etherscan.deth.net/address/0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
       "upgradeability": {
         "type": "immutable"
       },
@@ -105,7 +99,6 @@
       "name": "Fee Oracle",
       "address": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
       "upgradeability": {
         "type": "immutable"
       },
@@ -117,7 +110,6 @@
     {
       "name": "TokenBridge",
       "address": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
-      "code": "https://etherscan.deth.net/address/0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
       "upgradeability": {
         "type": "immutable"
       },
@@ -150,7 +142,6 @@
     {
       "name": "DAI_POOL",
       "address": "0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
-      "code": "https://etherscan.deth.net/address/0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
       "upgradeability": {
         "type": "immutable"
       },
@@ -177,7 +168,6 @@
       "name": "Wormhole Messenger",
       "address": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
       "upgradeability": {
         "type": "immutable"
       },

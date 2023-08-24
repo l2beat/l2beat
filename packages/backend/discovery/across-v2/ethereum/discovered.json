@@ -8,7 +8,6 @@
     {
       "name": "VotingToken",
       "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
-      "code": "https://etherscan.deth.net/address/0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
       "upgradeability": {
         "type": "immutable"
       },
@@ -25,7 +24,6 @@
     {
       "name": "Arbitrum_Adapter",
       "address": "0x29528780E29abb8Af95a5e5a125b94766987543F",
-      "code": "https://etherscan.deth.net/address/0x29528780E29abb8Af95a5e5a125b94766987543F",
       "upgradeability": {
         "type": "immutable"
       },
@@ -42,7 +40,6 @@
     {
       "name": "Base_Adapter",
       "address": "0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E",
-      "code": "https://etherscan.deth.net/address/0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E",
       "upgradeability": {
         "type": "immutable"
       },
@@ -56,7 +53,6 @@
     {
       "name": "Boba_Adapter",
       "address": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
-      "code": "https://etherscan.deth.net/address/0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
       "upgradeability": {
         "type": "immutable"
       },
@@ -70,7 +66,6 @@
     {
       "name": "Polygon_Adapter",
       "address": "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A",
-      "code": "https://etherscan.deth.net/address/0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A",
       "upgradeability": {
         "type": "immutable"
       },
@@ -86,7 +81,6 @@
     {
       "name": "Finder",
       "address": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-      "code": "https://etherscan.deth.net/address/0x40f941E48A552bF496B154Af6bf55725f18D77c3",
       "upgradeability": {
         "type": "immutable"
       },
@@ -98,7 +92,6 @@
     {
       "name": "ProposerV2",
       "address": "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
-      "code": "https://etherscan.deth.net/address/0x50efaC9619225d7fB4703C5872da978849B6E7cC",
       "upgradeability": {
         "type": "immutable"
       },
@@ -115,7 +108,6 @@
     {
       "name": "Ethereum_Adapter",
       "address": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
-      "code": "https://etherscan.deth.net/address/0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
       "upgradeability": {
         "type": "immutable"
       }
@@ -123,7 +115,6 @@
     {
       "name": "Ethereum_SpokePool",
       "address": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-      "code": "https://etherscan.deth.net/address/0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5,0x326510c1bf9d85Fb73d0AB8d20Aa5BbE9c7561e9",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x326510c1bf9d85Fb73d0AB8d20Aa5BbE9c7561e9",
@@ -150,7 +141,6 @@
     {
       "name": "GovernorV2",
       "address": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-      "code": "https://etherscan.deth.net/address/0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
       "upgradeability": {
         "type": "immutable"
       },
@@ -169,7 +159,6 @@
     {
       "name": "LpTokenFactory",
       "address": "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
-      "code": "https://etherscan.deth.net/address/0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
       "upgradeability": {
         "type": "immutable"
       }
@@ -177,7 +166,6 @@
     {
       "name": "EmergencyProposalExecutor",
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-      "code": "https://etherscan.deth.net/address/0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -199,7 +187,6 @@
     {
       "name": "EmergencyProposer",
       "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
-      "code": "https://etherscan.deth.net/address/0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
       "upgradeability": {
         "type": "immutable"
       },
@@ -218,7 +205,6 @@
     {
       "name": "Optimism_Adapter",
       "address": "0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F",
-      "code": "https://etherscan.deth.net/address/0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F",
       "upgradeability": {
         "type": "immutable"
       },
@@ -236,7 +222,6 @@
     {
       "name": "HubPool Multisig",
       "address": "0xB524735356985D2f267FA010D681f061DfF03715",
-      "code": "https://etherscan.deth.net/address/0xB524735356985D2f267FA010D681f061DfF03715,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -260,7 +245,6 @@
     {
       "name": "CoveredCallFinancialProductLibrary",
       "address": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
-      "code": "https://etherscan.deth.net/address/0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
       "upgradeability": {
         "type": "immutable"
       }
@@ -268,7 +252,6 @@
     {
       "name": "HubPool",
       "address": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-      "code": "https://etherscan.deth.net/address/0xc186fA914353c44b2E33eBE05f21846F1048bEda",
       "upgradeability": {
         "type": "immutable"
       },
@@ -338,7 +321,6 @@
     {
       "name": "ZkSync_Adapter",
       "address": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
-      "code": "https://etherscan.deth.net/address/0xE233009838CB898b50e0012a6E783FC9FeE447FB",
       "upgradeability": {
         "type": "immutable"
       },
