@@ -12,7 +12,7 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { AssetId, ValueType } from '@l2beat/shared-pure'
+import { AssetId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
@@ -21,12 +21,17 @@ export async function up(knex: Knex) {
     table.renameColumn('balance_usd', 'usd_value')
     table.renameColumn('balance_eth', 'eth_value')
 
-    table.string('asset_type').notNullable().defaultTo(ValueType.CBV)
+    table.string('asset_type').notNullable().defaultTo('CBV')
   })
 
-  await knex('reports')
-    .whereIn('asset_id', [AssetId.ARB, AssetId.OP])
-    .update({ asset_type: ValueType.NMV.toString() })
+  await knex.raw(`
+    UPDATE reports
+    SET asset_type = 'TVL'
+    WHERE asset_id IN (
+      '${AssetId.ARB.toString()}',
+      '${AssetId.OP.toString()}'
+    )
+  `)
 }
 
 export async function down(knex: Knex) {

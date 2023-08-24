@@ -7,7 +7,6 @@ import {
   ProjectId,
   TvlApiChart,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
@@ -22,9 +21,7 @@ import { reduceDuplicatedReports, TvlController } from './TvlController'
 
 const START = UnixTime.fromDate(new Date('2022-05-31'))
 const DAI = tokenList.find((x) => x.symbol === 'DAI')!
-const USDC = tokenList.find(
-  (x) => x.symbol === 'USDC' && x.type === ValueType.CBV,
-)!
+const USDC = tokenList.find((x) => x.symbol === 'USDC' && x.type === 'CBV')!
 
 const OPTIMISM: ReportProject = {
   projectId: ProjectId('optimism'),
@@ -60,7 +57,7 @@ describe(TvlController.name, () => {
         asset: AssetId.USDC,
         chainId: ChainId.ETHEREUM,
         projectId: ARBITRUM.projectId,
-        type: ValueType.CBV,
+        reportType: 'CBV',
       }
 
       // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
@@ -155,7 +152,7 @@ describe(TvlController.name, () => {
         asset: AssetId.DAI,
         chainId: ChainId.ETHEREUM,
         projectId: OPTIMISM.projectId,
-        type: ValueType.CBV,
+        reportType: 'CBV',
       }
 
       const controller = new TvlController(
@@ -221,7 +218,7 @@ describe(TvlController.name, () => {
         asset: AssetId.USDC,
         chainId: ChainId.ETHEREUM,
         projectId: ARBITRUM.projectId,
-        type: ValueType.CBV,
+        reportType: 'CBV',
       }
 
       // The USDC Reports for Arbitrum will be duplicated (EBV + CBV)
@@ -341,7 +338,7 @@ describe(reduceDuplicatedReports.name, () => {
     amount: 111_1111n * 10n ** (6n - 4n),
     chainId: ChainId.ETHEREUM,
     projectId: ARBITRUM.projectId,
-    type: ValueType.CBV,
+    reportType: 'CBV',
   }
 
   it('works for different timestamps', () => {

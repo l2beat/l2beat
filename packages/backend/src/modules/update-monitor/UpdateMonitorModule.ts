@@ -33,12 +33,7 @@ export function createUpdateMonitorModule(
   const discoveryLogger = DiscoveryLogger.SERVER
 
   const discordClient = config.updateMonitor.discord
-    ? new DiscordClient(
-        http,
-        config.updateMonitor.discord.token,
-        config.updateMonitor.discord.publicChannelId,
-        config.updateMonitor.discord.internalChannelId,
-      )
+    ? new DiscordClient(http, config.updateMonitor.discord)
     : undefined
 
   const updateNotifierRepository = new UpdateNotifierRepository(

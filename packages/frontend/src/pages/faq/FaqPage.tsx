@@ -3,7 +3,7 @@ import React from 'react'
 import { Footer, FooterProps, Navbar, NavbarProps } from '../../components'
 import { HorizontalSeparator } from '../../components/HorizontalSeparator'
 import { PageContent } from '../../components/PageContent'
-import { FaqItem } from './faqItems'
+import { FaqItem } from './getFaqItems'
 
 export interface FaqPageProps {
   title: string

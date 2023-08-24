@@ -12,9 +12,12 @@ import { TvlHeader } from '../../../components/header/TvlHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../components/PageContent'
-import { DetailedTvlView, DetailedTvlViewProps } from './DetailedTvlView'
+import {
+  ScalingDetailedTvlView,
+  ScalingDetailedTvlViewProps,
+} from './ScalingDetailedTvlView'
 
-export interface DetailedTvlPageProps {
+export interface ScalingDetailedTvlPageProps {
   tvl: string
   tvlWeeklyChange: string
   detailedTvlEndpoint: string
@@ -22,10 +25,10 @@ export interface DetailedTvlPageProps {
   footer: FooterProps
   showDetailedTvl: boolean
   showActivity: boolean
-  detailedTvlView: DetailedTvlViewProps
+  detailedTvlView: ScalingDetailedTvlViewProps
 }
 
-export function DetailedTvlPage(props: DetailedTvlPageProps) {
+export function ScalingDetailedTvlPage(props: ScalingDetailedTvlPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -41,7 +44,7 @@ export function DetailedTvlPage(props: DetailedTvlPageProps) {
             detailedTvlEndpoint={props.detailedTvlEndpoint}
             type={'detailedTvl'}
           />
-          <DetailedTvlView {...props.detailedTvlView} />
+          <ScalingDetailedTvlView {...props.detailedTvlView} />
           <OtherSites />
           <About />
         </main>

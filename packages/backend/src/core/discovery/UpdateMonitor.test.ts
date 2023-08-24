@@ -617,7 +617,6 @@ function mockContract(
   return {
     name,
     address,
-    code: '',
     upgradeability: {
       type: 'immutable',
     },

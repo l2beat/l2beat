@@ -4,28 +4,25 @@ import { Response } from 'node-fetch'
 
 import { DiscordClient } from './DiscordClient'
 
-const DISCORD_TOKEN = '<discord-token>'
-const PUBLIC_CHANNEL = '<channel-id>'
-const INTERNAL_CHANNEL = '<channel-id-2>'
-
 describe(DiscordClient.name, () => {
+  const config = {
+    token: '<discord-token>',
+    publicChannelId: '<channel-id>',
+    internalChannelId: '<channel-id-2>',
+    callsPerMinute: 3000,
+  }
   describe(DiscordClient.prototype.sendMessage.name, () => {
     it('sends to public channel', async () => {
       const httpClient = mockObject<HttpClient>({
         fetch: async (url) => {
           expect(url).toEqual(
-            `https://discord.com/api/v10/channels/${PUBLIC_CHANNEL}/messages`,
+            `https://discord.com/api/v10/channels/${config.publicChannelId}/messages`,
           )
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
       })
 
-      const discord = new DiscordClient(
-        httpClient,
-        DISCORD_TOKEN,
-        PUBLIC_CHANNEL,
-        INTERNAL_CHANNEL,
-      )
+      const discord = new DiscordClient(httpClient, config)
 
       await discord.sendMessage('', 'PUBLIC')
     })
@@ -34,18 +31,13 @@ describe(DiscordClient.name, () => {
       const httpClient = mockObject<HttpClient>({
         fetch: async (url) => {
           expect(url).toEqual(
-            `https://discord.com/api/v10/channels/${INTERNAL_CHANNEL}/messages`,
+            `https://discord.com/api/v10/channels/${config.internalChannelId}/messages`,
           )
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
       })
 
-      const discord = new DiscordClient(
-        httpClient,
-        DISCORD_TOKEN,
-        PUBLIC_CHANNEL,
-        INTERNAL_CHANNEL,
-      )
+      const discord = new DiscordClient(httpClient, config)
 
       await discord.sendMessage('', 'INTERNAL')
     })
@@ -54,18 +46,13 @@ describe(DiscordClient.name, () => {
       const httpClient = mockObject<HttpClient>({
         fetch: async (url) => {
           expect(url).toEqual(
-            `https://discord.com/api/v10/channels/${PUBLIC_CHANNEL}/messages`,
+            `https://discord.com/api/v10/channels/${config.publicChannelId}/messages`,
           )
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
       })
 
-      const discord = new DiscordClient(
-        httpClient,
-        DISCORD_TOKEN,
-        PUBLIC_CHANNEL,
-        INTERNAL_CHANNEL,
-      )
+      const discord = new DiscordClient(httpClient, config)
 
       await discord.sendMessage('', 'PUBLIC')
     })
@@ -78,12 +65,7 @@ describe(DiscordClient.name, () => {
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(
-        httpClient,
-        DISCORD_TOKEN,
-        PUBLIC_CHANNEL,
-        PUBLIC_CHANNEL,
-      )
+      const discord = new DiscordClient(httpClient, config)
 
       await discord.sendMessage(message, 'PUBLIC')
     })
@@ -92,30 +74,20 @@ describe(DiscordClient.name, () => {
       const httpClient = mockObject<HttpClient>({
         async fetch(_, init) {
           expect(init?.headers).toEqual({
-            Authorization: `Bot ${DISCORD_TOKEN}`,
+            Authorization: `Bot ${config.token}`,
             'Content-Type': 'application/json; charset=UTF-8',
           })
           return new Response('{}', { status: 200 })
         },
       })
-      const discord = new DiscordClient(
-        httpClient,
-        DISCORD_TOKEN,
-        PUBLIC_CHANNEL,
-        PUBLIC_CHANNEL,
-      )
+      const discord = new DiscordClient(httpClient, config)
 
       await discord.sendMessage('', 'PUBLIC')
     })
 
     it('throws when message is too long', async () => {
       const httpClient = mockObject<HttpClient>({})
-      const discord = new DiscordClient(
-        httpClient,
-        DISCORD_TOKEN,
-        PUBLIC_CHANNEL,
-        PUBLIC_CHANNEL,
-      )
+      const discord = new DiscordClient(httpClient, config)
 
       const message = 'a'.repeat(2001)
       await expect(discord.sendMessage(message, 'PUBLIC')).toBeRejectedWith(
@@ -129,12 +101,7 @@ describe(DiscordClient.name, () => {
       const httpClient = mockObject<HttpClient>({
         fetch: async () => new Response(error, { status: 400 }),
       })
-      const discord = new DiscordClient(
-        httpClient,
-        DISCORD_TOKEN,
-        PUBLIC_CHANNEL,
-        INTERNAL_CHANNEL,
-      )
+      const discord = new DiscordClient(httpClient, config)
 
       await expect(discord.sendMessage('', 'PUBLIC')).toBeRejectedWith(
         `Discord error: ${error}`,
