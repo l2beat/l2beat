@@ -14,4 +14,5 @@ export interface ScalingRiskViewEntry {
   upgradeability: ProjectRiskViewEntry
   sequencerFailure: ProjectRiskViewEntry
   proposerFailure: ProjectRiskViewEntry
+  technology: Layer2['display']['category']
 }

@@ -11,7 +11,8 @@ import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
-import { ActivityViewEntry, ActivityViewProps } from '../view/ActivityView'
+import { ActivityViewProps } from '../view/ActivityView'
+import { ActivityViewEntry } from '../view/types'
 
 export function getActivityView(
   projects: Layer2[],
@@ -45,6 +46,7 @@ export function getActivityViewEntry(
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     dataSource: project.display.activityDataSource,
+    technology: project.display.category,
     ...getActivityViewEntryDetails(data),
   }
 }

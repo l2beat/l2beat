@@ -20,6 +20,6 @@ export interface ScalingTvlViewEntry {
   sevenDayChange?: string
   marketShare?: string
   purpose: string
-  technology: string
+  technology: Layer2['display']['category']
   stage?: StageConfig
 }

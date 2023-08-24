@@ -25,6 +25,7 @@ export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
   const rows: RowConfig<ScalingTvlViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
+
   return (
     <section className="mt-4 sm:mt-8">
       <RollupsOnlyCheckbox className="mb-4" />
