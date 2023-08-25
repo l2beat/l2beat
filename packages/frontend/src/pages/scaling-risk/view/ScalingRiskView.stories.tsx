@@ -141,7 +141,7 @@ const meta = {
       {
         name: 'Gluon',
         slug: 'gluon',
-        category: 'Optimistic Chain',
+        category: 'Optimium',
         provider: undefined,
         warning:
           'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
@@ -430,7 +430,7 @@ const meta = {
       {
         name: 'Metis Andromeda',
         slug: 'metis',
-        category: 'Optimistic Chain',
+        category: 'Optimium',
         provider: 'OVM',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.       Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system.       The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',

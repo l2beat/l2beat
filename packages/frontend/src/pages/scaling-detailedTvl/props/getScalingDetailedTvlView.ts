@@ -1,9 +1,5 @@
 import { Layer2 } from '@l2beat/config'
-import {
-  assert,
-  DetailedTvlApiResponse,
-  TvlApiResponse,
-} from '@l2beat/shared-pure'
+import { DetailedTvlApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
 import { getTokens } from '../../../utils/project/getChart'
@@ -36,8 +32,7 @@ function getScalingDetailedTvlViewEntry(
   isVerified?: boolean,
 ): ScalingDetailedTvlViewEntry {
   const projectData = tvlApiResponse.projects[project.id.toString()]
-  assert(projectData?.charts.hourly.types.length === 9)
-  const charts = projectData.charts
+  const charts = projectData?.charts
   const { parts, partsWeeklyChange } = getDetailedTvlWithChange(charts)
 
   return {

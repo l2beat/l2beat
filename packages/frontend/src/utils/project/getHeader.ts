@@ -18,7 +18,7 @@ export function getHeader(
   const hourly =
     tvlApiResponse.projects[project.id.toString()]?.charts.hourly.data ?? []
   const tvl = hourly.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = hourly[0][1]
+  const tvlSevenDaysAgo = hourly.at(0)?.[1] ?? 0
   const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
   const activityData =
