@@ -149,7 +149,7 @@ export function getScalingDetailedTvlColumns() {
         </div>
       ),
       tooltip:
-        'Canonical refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
+        'These tokens use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
       alignCenter: true,
       noPaddingRight: true,
       getValue: (project) => (
@@ -168,7 +168,7 @@ export function getScalingDetailedTvlColumns() {
         </div>
       ),
       tooltip:
-        "External refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
+        'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
       alignCenter: true,
       noPaddingRight: true,
       getValue: (project) => (
@@ -187,7 +187,7 @@ export function getScalingDetailedTvlColumns() {
         </div>
       ),
       tooltip:
-        'Native refers to non-bridged assets minted directly on the given L2, displayed together with a percentage change compared to 7D ago.',
+        'These tokens are using L2 as their ledger and are minted directly on L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge. The value is displayed together with a percentage change compared to 7D ago.',
       alignCenter: true,
       noPaddingRight: true,
       getValue: (project) => (
