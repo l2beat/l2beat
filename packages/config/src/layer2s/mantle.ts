@@ -40,13 +40,13 @@ export const mantle: Layer2 = {
     warning:
       'Fraud proof system is currently disabled. Slashing conditions for MantleDA are currently disabled. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Mantle is an EVM compatible optimistic chain that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.\
+      'Mantle is an EVM compatible Optimium that has been designed for use on the Ethereum network, based on the Optimism OVM architecture.\
       It has a modular architecture trying to leverage EigenDA as Data Availability layer and Specular Network fraud proof system for fraud proofs.\
       Note that as currently both of these technologies are yet to be fully launched on mainnet, Mantle needs to be considered "under development".\
       Additionally Mantle uses a set of nodes that are required to co-sign L2 state roots via TSS (Threshold Signature Scheme). This component is\
       intended to be eventually run by third parties, and act as an independent check on state validity prior to batch submission.',
     purpose: 'Universal',
-    category: 'Optimistic Chain',
+    category: 'Optimium',
     provider: 'OVM',
     links: {
       websites: ['https://www.mantle.xyz/'],

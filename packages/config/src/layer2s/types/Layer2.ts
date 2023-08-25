@@ -123,7 +123,7 @@ export interface Layer2ExternalAssets {
 
 export type Layer2Category =
   | 'Optimistic Rollup'
-  | 'Optimistic Chain'
+  | 'Optimium'
   | 'Plasma'
   | 'State Pools'
   | 'Validium'
