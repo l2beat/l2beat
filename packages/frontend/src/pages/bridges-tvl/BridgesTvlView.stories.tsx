@@ -33,7 +33,7 @@ const meta = {
           label:
             'ARB – 25.00%<br>Ether – 33.75%<br>Stablecoins – 34.18%<br>Other – 7.06%',
           warning:
-            'The ARB token associated with Arbitrum One accounts for 25.00% of the TVL!',
+            'The ARB token associated with Arbitrum One accounts for 25.00% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-2.44%',
@@ -97,7 +97,7 @@ const meta = {
           label:
             'Metis – 53.97%<br>Ether – 5.18%<br>Stablecoins – 40.45%<br>Other – 0.40%',
           warning:
-            'The Metis token associated with Metis Andromeda accounts for 53.97% of the TVL!',
+            'The Metis token associated with Metis Andromeda accounts for 53.97% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-3.15%',
@@ -250,7 +250,7 @@ const meta = {
           label:
             'ZKS – 20.68%<br>Ether – 35.35%<br>Stablecoins – 5.45%<br>Other – 38.53%',
           warning:
-            'The ZKS token associated with ZKSpace accounts for 20.68% of the TVL!',
+            'The ZKS token associated with ZKSpace accounts for 20.68% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-3.81%',
@@ -281,7 +281,7 @@ const meta = {
           other: 0.011899439914528189,
           label: 'GNO – 98.81%<br>Other – 1.19%',
           warning:
-            'The GNO token associated with Omnibridge accounts for 98.81% of the TVL!',
+            'The GNO token associated with Omnibridge accounts for 98.81% of the Value Locked!',
           warningSeverity: 'bad',
         },
         oneDayChange: '-4.68%',
@@ -466,7 +466,7 @@ const meta = {
           label:
             'ZKS – 44.65%<br>Ether – 24.77%<br>Stablecoins – 30.06%<br>Other – 0.52%',
           warning:
-            'The ZKS token associated with ZKSwap 2.0 accounts for 44.65% of the TVL!',
+            'The ZKS token associated with ZKSwap 2.0 accounts for 44.65% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '-2.67%',
@@ -498,7 +498,7 @@ const meta = {
           other: 0,
           label: 'L2 – 50.28%<br>Ether – 15.79%<br>Stablecoins – 33.92%',
           warning:
-            'The L2 token associated with Gluon accounts for 50.28% of the TVL!',
+            'The L2 token associated with Gluon accounts for 50.28% of the Value Locked!',
           warningSeverity: 'warning',
         },
         oneDayChange: '+27.17%',

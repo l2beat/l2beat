@@ -1,7 +1,10 @@
 import { Layer2, ProjectLinks } from '@l2beat/config'
 import {
   ActivityApiResponse,
+  assert,
+  DetailedTvlApiCharts,
   DetailedTvlApiResponse,
+  TvlApiCharts,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
@@ -15,8 +18,10 @@ import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnde
 import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
 import { unifyTokensResponse } from '../../../utils/tvl/getTvlStats'
-import { getTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
-import { formatUSD } from '../../../utils/utils'
+import {
+  getDetailedTvlWithChange,
+  getTvlWithChange,
+} from '../../../utils/tvl/getTvlWitchChange'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(
@@ -26,8 +31,37 @@ export function getProjectHeader(
   activityApiResponse?: ActivityApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
-  const charts = apiProject?.charts
-  const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
+
+  const getDetailed = (
+    chart: TvlApiCharts | DetailedTvlApiCharts | undefined,
+  ) => {
+    assert(chart?.hourly.types.length === 9)
+    const { parts, partsWeeklyChange } = getDetailedTvlWithChange(chart)
+    return {
+      tvl: parts.tvl,
+      tvlWeeklyChange: partsWeeklyChange.tvl,
+      canonical: parts.canonical,
+      external: parts.external,
+      native: parts.native,
+    }
+  }
+
+  const getBasic = (chart: TvlApiCharts | DetailedTvlApiCharts | undefined) => {
+    assert(chart?.hourly.types.length === 3)
+    const { tvl, tvlWeeklyChange } = getTvlWithChange(chart)
+    return {
+      tvl,
+      tvlWeeklyChange,
+      canonical: undefined,
+      external: undefined,
+      native: undefined,
+    }
+  }
+
+  const { tvl, tvlWeeklyChange, canonical, external, native } =
+    apiProject?.charts.hourly.types.length === 9
+      ? getDetailed(apiProject.charts)
+      : getBasic(apiProject?.charts)
 
   const activityData =
     activityApiResponse?.projects[project.id.toString()]?.data
@@ -46,7 +80,14 @@ export function getProjectHeader(
     icon: `/icons/${project.display.slug}.png`,
     title: project.display.name,
     titleLength: getTitleLength(project.display.name),
-    tvlStats: getTvlStats(project, tvl, tvlWeeklyChange),
+    tvlStats: getTvlStats(
+      project,
+      tvl,
+      tvlWeeklyChange,
+      canonical,
+      external,
+      native,
+    ),
     tpsDaily: tpsDaily?.toFixed(2) ?? '',
     tpsWeeklyChange,
     transactionMonthlyCount:
@@ -120,25 +161,27 @@ function getTvlStats(
   project: Layer2,
   tvl: number,
   tvlWeeklyChange: string,
+  canonical: number | undefined,
+  external: number | undefined,
+  native: number | undefined,
 ): TvlStats | undefined {
-  // TODO(radomski): When L2 Assets backend gets connected to the frontend,
-  // instead of hardcoding random things change this to actual values
+  // TODO(radomski): This is solution is really janky and can be improved once
+  // we deprecate the usage of the original endpoint to fetch data for the frontend.
   const parts = [
-    project.config.escrows.length > 0 ? formatUSD(tvl) : undefined,
-    project.config.escrows.length > 0 ? tvlWeeklyChange : undefined,
-    '$2.99 B',
-    '$2.2 B',
-    '$280 M',
+    project.config.escrows.length > 0 ? tvl : 0,
+    canonical ?? 0,
+    external ?? 0,
+    native ?? 0,
   ]
 
   if (parts.every((x) => notUndefined(x))) {
     const ps = parts.filter(notUndefined)
     return {
+      tvlChange: tvlWeeklyChange,
       tvl: ps[0],
-      tvlChange: ps[1],
-      ebv: ps[2],
-      cbv: ps[3],
-      nmv: ps[4],
+      canonical: ps[1],
+      external: ps[2],
+      native: ps[3],
     }
   }
 

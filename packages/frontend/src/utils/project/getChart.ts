@@ -18,6 +18,7 @@ export function getChart(
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
   return {
+    type: config?.features.detailedTvl ? 'detailedTvl' : 'tvl',
     tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
     detailedTvlEndpoint: `/api/${project.display.slug}-detailed-tvl.json`,
     activityEndpoint: `/api/activity/${project.display.slug}.json`,
@@ -35,7 +36,7 @@ export function getChart(
   }
 }
 
-function getTokens(
+export function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
   hasDetailedTVL: boolean,
@@ -50,6 +51,7 @@ function getTokens(
       const symbol = token?.symbol
       const name = token?.name
       const address = token?.address
+      const iconUrl = token?.iconUrl ?? ''
 
       if (symbol && name) {
         const tvlEndpoint = hasDetailedTVL
@@ -58,6 +60,7 @@ function getTokens(
 
         return {
           address: address?.toString(),
+          iconUrl,
           symbol,
           name,
           assetType,

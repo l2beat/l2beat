@@ -7,6 +7,7 @@ import { ScalingRiskViewEntry } from '../../../pages/scaling-risk/view/types'
 import { ScalingTvlViewEntry } from '../../../pages/scaling-tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { formatTps } from '../../../utils/formatTps'
+import { CanonicalIcon, ExternalIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { ComingSoonCell } from '../ComingSoonCell'
 import { EthereumCell } from '../EthereumCell'
@@ -79,7 +80,7 @@ export function getActiveScalingTvlColumns(
       getValue: (project) => project.purpose,
     },
     {
-      name: 'TVL',
+      name: 'Total',
       tooltip: detailedTvlEnabled
         ? 'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.'
         : 'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',
@@ -128,12 +129,11 @@ export function getScalingDetailedTvlColumns() {
       getValue: (project) => <ProjectCell type="layer2" project={project} />,
     },
     {
-      name: 'TVL',
-      tooltip:
-        'Total Value Locked is the sum of values from canonically bridged, externally bridged, and natively minted assets, displayed together with a percentage change compared to 7D ago.',
-      alignRight: true,
+      name: 'Total',
+      tooltip: 'Total = Canonical + External + Native',
+      alignCenter: true,
       noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
+      highlight: true,
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.tvl}
@@ -142,44 +142,59 @@ export function getScalingDetailedTvlColumns() {
       ),
     },
     {
-      name: 'CBV',
+      name: (
+        <div className="flex items-center gap-1">
+          <CanonicalIcon />
+          <span>Canonical</span>
+        </div>
+      ),
       tooltip:
-        'Canonically Bridged Value refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
-      alignRight: true,
+        'Canonical refers to assets locked in the L2-secured bridge on Ethereum, displayed together with a percentage change compared to 7D ago.',
+      alignCenter: true,
       noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.cbv}
           percentChange={project.cbvChange}
+          tokens={project.tokens.filter((t) => t.assetType === 'CBV')}
         />
       ),
     },
     {
-      name: 'EBV',
+      name: (
+        <div className="flex items-center gap-1">
+          <ExternalIcon />
+          <span>External</span>
+        </div>
+      ),
       tooltip:
-        "Externally Bridged Value refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
-      alignRight: true,
+        "External refers to assets obtained on L2 via bridges outside of the L2's security, displayed together with a percentage change compared to 7D ago.",
+      alignCenter: true,
       noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.ebv}
           percentChange={project.ebvChange}
+          tokens={project.tokens.filter((t) => t.assetType === 'EBV')}
         />
       ),
     },
     {
-      name: 'NMV',
+      name: (
+        <div className="flex items-center gap-1">
+          <NativeIcon />
+          <span>Native</span>
+        </div>
+      ),
       tooltip:
-        'Natively Minted Value refers to non-bridged assets minted directly on the given L2, displayed together with a percentage change compared to 7D ago.',
-      alignRight: true,
+        'Native refers to non-bridged assets minted directly on the given L2, displayed together with a percentage change compared to 7D ago.',
+      alignCenter: true,
       noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.nmv}
           percentChange={project.nmvChange}
+          tokens={project.tokens.filter((t) => t.assetType === 'NMV')}
         />
       ),
     },
@@ -261,7 +276,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
       getValue: (project) => project.purpose,
     },
     {
-      name: 'TVL',
+      name: 'Total',
       tooltip: detailedTvlEnabled
         ? 'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.'
         : 'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago. Some project may include natively minted assets.',

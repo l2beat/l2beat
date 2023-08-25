@@ -44,22 +44,16 @@ export function configureExpandableContainer() {
       return
     }
 
-    /* 
-      For expanding we are adding max-h-[1000px] because we don't know the exact height of the content.
-      We could use max-h-auto but then the transitions wouldn't apply, it only works if you specify
-      to arbitrary values.
-      This may need some adjustment if we want to hide content with height > 1000px.
-    */
     const expand = () => {
       expandableContainerContent.classList.remove(maxHeightClassName)
-      expandableContainerContent.classList.add('max-h-[1000px]')
+      expandableContainerContent.classList.add('max-h-screen')
       expandableContainerButtonArrow.classList.add('-rotate-180')
       expandableContainerContentGradient.classList.add('hidden')
       expandableContainerButtonText.innerText = 'Show less'
     }
 
     const collapse = () => {
-      expandableContainerContent.classList.remove('max-h-[1000px]')
+      expandableContainerContent.classList.remove('max-h-screen')
       expandableContainerContent.classList.add(maxHeightClassName)
       expandableContainerButtonArrow.classList.remove('-rotate-180')
       expandableContainerContentGradient.classList.remove('hidden')
