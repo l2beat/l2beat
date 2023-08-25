@@ -1,8 +1,8 @@
 {
   "name": "polynetwork",
   "chain": "ethereum",
-  "blockNumber": 17990771,
-  "configHash": "0x6054c524ccccad7afaf57d6f0bb19e8a3784f0813f0d685eb0632ae1fff4d803",
+  "blockNumber": 17990915,
+  "configHash": "0xb4ebc7a036e1e73ccda66a209d0cd9ed093e26866e1fd84957422a1674e6cb24",
   "version": 2,
   "contracts": [
     {
@@ -47,7 +47,7 @@
       "derivedName": ""
     },
     {
-      "name": "LockProxy",
+      "name": "Lock Proxy 7",
       "address": "0x51ba447DaD1de30b91286471BcB570F69ECE968D",
       "upgradeability": {
         "type": "immutable"
@@ -56,7 +56,8 @@
         "isOwner": false,
         "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "owner": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
-      }
+      },
+      "derivedName": "LockProxy"
     },
     {
       "name": "Lock Proxy 4",
