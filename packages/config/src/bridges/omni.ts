@@ -23,7 +23,7 @@ const upgrades = {
 
 const paused =
   discovery.getContractValue<number>('ForeignAMB', 'maxGasPerTx') < 21000
-const warningString = paused ? 'The bridge is currently paused.' : undefined
+const warningText = paused ? 'The bridge is currently paused.' : undefined
 
 const pausable = {
   paused,
@@ -36,7 +36,7 @@ export const omni: Bridge = {
   display: {
     name: 'Omnibridge',
     slug: 'omni',
-    warning: warningString,
+    warning: warningText,
     category: 'Token Bridge',
     links: {
       websites: ['https://omni.gnosischain.com/'],

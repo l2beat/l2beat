@@ -6,6 +6,12 @@ import { Bridge } from './types'
 
 const PROJECT_ID = ProjectId('beamer-bridge-v2')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
+const isPaused = discovery.getContractValue<boolean>(
+  'EthereumRequestManager',
+  'paused',
+)
+
+const warningText = isPaused ? 'The bridge is currently paused.' : undefined
 
 export const beamerbridgev2: Bridge = {
   type: 'bridge',
@@ -14,6 +20,7 @@ export const beamerbridgev2: Bridge = {
     name: 'Beamer Bridge V2',
     slug: 'beamerbridgev2',
     category: 'Liquidity Network',
+    warning: warningText,
     links: {
       websites: ['https://beamerbridge.com'],
       apps: ['https://app.beamerbridge.com'],
@@ -99,10 +106,7 @@ export const beamerbridgev2: Bridge = {
         description:
           'When a user wants to perform a transfer from Ethereum to a rollup they deposit their funds in the request manager. An agent fills the request on the target chain and can later claim the funds locked in the RequestManager.',
         pausable: {
-          paused: discovery.getContractValue<boolean>(
-            'EthereumRequestManager',
-            'paused',
-          ),
+          paused: isPaused,
           pausableBy: ['Owner'],
         },
       }),
