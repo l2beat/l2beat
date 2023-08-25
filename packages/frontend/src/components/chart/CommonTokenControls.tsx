@@ -23,9 +23,8 @@ export function TokenCell({ token }: { token: TokenControl }) {
         data-tvl-endpoint={token.tvlEndpoint}
         data-asset-type={token.assetType}
       />
-      <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
       <p className="text-sm" key={token.symbol}>
-        <span className={'font-bold'}>{token.name}</span> ({token.symbol})
+        {token.symbol}
       </p>
     </label>
   )
@@ -49,23 +48,17 @@ export function getParts(tokens: TokenControl[]) {
     {
       title: 'Natively Minted Tokens',
       titleColor: 'text-[#FF6DCD]',
-      tokens: tokens
-        .filter((t) => t.assetType.toString() === 'NMV')
-        .slice(0, 15),
+      tokens: tokens.filter((t) => t.assetType.toString() === 'NMV'),
     },
     {
       title: 'Externally Bridged Tokens',
       titleColor: 'text-yellow-200',
-      tokens: tokens
-        .filter((t) => t.assetType.toString() === 'EBV')
-        .slice(0, 15),
+      tokens: tokens.filter((t) => t.assetType.toString() === 'EBV'),
     },
     {
       title: 'Canonically Bridged Tokens',
       titleColor: 'text-[#D98EFF]',
-      tokens: tokens
-        .filter((t) => t.assetType.toString() === 'CBV')
-        .slice(0, 15),
+      tokens: tokens.filter((t) => t.assetType.toString() === 'CBV'),
     },
   ]
 }
