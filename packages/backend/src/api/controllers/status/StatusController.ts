@@ -11,8 +11,8 @@ import {
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
 import { Clock } from '../../../core/Clock'
-import { getTotalSupplyFormulaConfigHash } from '../../../core/reports/getTotalSupplyFormulaConfigHash'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
+import { getTotalSupplyFormulaConfigHash } from '../../../core/reports/getTotalSupplyFormulaConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
 import { Project } from '../../../model'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'

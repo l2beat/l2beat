@@ -83,7 +83,7 @@ const TOKENS: Token[] = [
     category: 'other',
     chainId: ChainId.ARBITRUM,
     bucket: 'EBV',
-    formula: 'totalSupply'
+    formula: 'totalSupply',
   },
 ]
 

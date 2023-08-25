@@ -29,10 +29,7 @@ describe(ReportStatusRepository.name, () => {
       chainId: ETH_ID,
     })
 
-    const timestamps = await repository.getByConfigHash(
-      HASH_ONE,
-      ETH_ID,
-    )
+    const timestamps = await repository.getByConfigHash(HASH_ONE, ETH_ID)
     expect(timestamps).toEqual([TIME_ONE])
   })
 
@@ -63,16 +60,10 @@ describe(ReportStatusRepository.name, () => {
       chainId: ETH_ID,
     })
 
-    const timestampsOne = await repository.getByConfigHash(
-      HASH_ONE,
-      ETH_ID,
-    )
+    const timestampsOne = await repository.getByConfigHash(HASH_ONE, ETH_ID)
     expect(timestampsOne).toEqual([TIME_THREE])
 
-    const timestampsTwo = await repository.getByConfigHash(
-      HASH_TWO,
-      ETH_ID,
-    )
+    const timestampsTwo = await repository.getByConfigHash(HASH_TWO, ETH_ID)
     expect(timestampsTwo).toEqualUnsorted([TIME_ONE, TIME_TWO])
   })
 
@@ -93,10 +84,7 @@ describe(ReportStatusRepository.name, () => {
       chainId: ETH_ID,
     })
 
-    const timestamps = await repository.getByConfigHash(
-      HASH_ONE,
-      ETH_ID,
-    )
+    const timestamps = await repository.getByConfigHash(HASH_ONE, ETH_ID)
     expect(timestamps).toEqual([TIME_ONE])
   })
 
@@ -112,11 +100,7 @@ describe(ReportStatusRepository.name, () => {
       chainId: ETH_ID,
     })
 
-    const result = await repository.getBetween(
-      TIME_THREE,
-      TIME_TWO,
-      ETH_ID,
-    )
+    const result = await repository.getBetween(TIME_THREE, TIME_TWO, ETH_ID)
     expect(result).toEqual([{ configHash: HASH_TWO, timestamp: TIME_TWO }])
   })
 

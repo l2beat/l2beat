@@ -1,10 +1,4 @@
-import {
-  AssetId,
-  ChainId,
-  EthereumAddress,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { getMockToken } from '../../test/token'

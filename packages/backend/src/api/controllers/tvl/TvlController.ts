@@ -39,15 +39,11 @@ export class TvlController {
     const timestamps: (UnixTime | undefined)[] = []
 
     timestamps.push(
-      await this.reportStatusRepository.findLatestTimestamp(
-        ChainId.ETHEREUM,
-      ),
+      await this.reportStatusRepository.findLatestTimestamp(ChainId.ETHEREUM),
     )
     if (this.isArbitrumEnabled) {
       timestamps.push(
-        await this.reportStatusRepository.findLatestTimestamp(
-          ChainId.ARBITRUM,
-        ),
+        await this.reportStatusRepository.findLatestTimestamp(ChainId.ARBITRUM),
       )
     }
 
@@ -97,9 +93,7 @@ export class TvlController {
     const timestamps: (UnixTime | undefined)[] = []
 
     timestamps.push(
-      await this.reportStatusRepository.findLatestTimestamp(
-        ChainId.ETHEREUM,
-      ),
+      await this.reportStatusRepository.findLatestTimestamp(ChainId.ETHEREUM),
     )
     if (
       this.isArbitrumEnabled &&
@@ -107,9 +101,7 @@ export class TvlController {
       assetId === AssetId.USDC
     ) {
       timestamps.push(
-        await this.reportStatusRepository.findLatestTimestamp(
-          ChainId.ARBITRUM,
-        ),
+        await this.reportStatusRepository.findLatestTimestamp(ChainId.ARBITRUM),
       )
     }
 

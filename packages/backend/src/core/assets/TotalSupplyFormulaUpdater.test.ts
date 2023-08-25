@@ -28,9 +28,9 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
         getByTimestampAndPreciseAsset: mockFn()
-        .returnsOnce([])
-        .returnsOnce(MOCK.FUTURE_REPORTS)
-        .returnsOnce([])
+          .returnsOnce([])
+          .returnsOnce(MOCK.FUTURE_REPORTS)
+          .returnsOnce([]),
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({
@@ -209,9 +209,9 @@ describe(TotalSupplyFormulaUpdater.name, () => {
       const reportRepository = mockObject<ReportRepository>({
         addOrUpdateMany: async () => 0,
         getByTimestampAndPreciseAsset: mockFn()
-        .returnsOnce([])
-        .returnsOnce(MOCK.REPORTS)
-        .returnsOnce([])
+          .returnsOnce([])
+          .returnsOnce(MOCK.REPORTS)
+          .returnsOnce([]),
       })
 
       const reportStatusRepository = mockObject<ReportStatusRepository>({

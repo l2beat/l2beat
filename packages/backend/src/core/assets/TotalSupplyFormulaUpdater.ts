@@ -1,5 +1,12 @@
 import { Logger } from '@l2beat/shared'
-import { assert, ChainId, Hash256, Token, UnixTime, ReportType, AssetType } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainId,
+  Hash256,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -14,7 +21,6 @@ import { createTotalSupplyFormulaReports } from '../reports/createTotalSupplyFor
 import { getTotalSupplyFormulaConfigHash } from '../reports/getTotalSupplyFormulaConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
 import { AssetUpdater } from './AssetUpdater'
-import { ProjectId } from '@l2beat/shared-pure'
 
 // TODO: Make this class more generic
 // ProjectId, ChainId should be passed in the constructor
@@ -155,6 +161,6 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
     )
 
     const all = canonical.concat(external).concat(native)
-    return all.filter((t) => this.tokens.some(m => m.id === t.asset))
+    return all.filter((t) => this.tokens.some((m) => m.id === t.asset))
   }
 }

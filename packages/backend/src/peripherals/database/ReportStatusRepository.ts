@@ -79,9 +79,7 @@ export class ReportStatusRepository extends BaseRepository {
     }))
   }
 
-  async findLatestTimestamp(
-    chainId: ChainId,
-  ): Promise<UnixTime | undefined> {
+  async findLatestTimestamp(chainId: ChainId): Promise<UnixTime | undefined> {
     const knex = await this.knex()
     // note: we need to provide better types manually here
     const row = (await knex('reports_status')

@@ -302,7 +302,7 @@ describe(TotalSupplyUpdater.name, () => {
       sinceTimestamp,
       chainId: ChainId.ARBITRUM,
       bucket: 'EBV',
-      formula: 'totalSupply'
+      formula: 'totalSupply',
     }
   }
 })

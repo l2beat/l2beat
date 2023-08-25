@@ -99,6 +99,6 @@ function fakeAsset(id: string, address: string, timestamp: number) {
     tokenAddress: '0x' + address + '0'.repeat(40 - address.length),
     sinceTimestamp: new UnixTime(timestamp),
     decimals: 18,
-    formula: 'locked'
+    formula: 'locked',
   }
 }

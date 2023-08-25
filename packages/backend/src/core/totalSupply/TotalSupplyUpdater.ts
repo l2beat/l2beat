@@ -41,7 +41,7 @@ export class TotalSupplyUpdater {
       tokens.every(
         (token) =>
           token.chainId === this.getChainId() &&
-          token.formula == 'totalSupply'
+          token.formula === 'totalSupply',
       ),
       'Programmer error: tokens must be of totalSupply formula and on the same chain as the totalSupplyUpdater',
     )

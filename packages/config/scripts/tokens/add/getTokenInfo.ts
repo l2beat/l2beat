@@ -42,9 +42,8 @@ export async function getTokenInfo(
 
     // TODO: make it configurable
     chainId: ChainId.ETHEREUM,
-    iconUrl,
     bucket: 'CBV',
-    formula: 'locked'
+    formula: 'locked',
   }
 
   return tokenInfo

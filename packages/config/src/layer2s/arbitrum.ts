@@ -85,65 +85,70 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     name: 'Arbitrum',
     symbol: 'ARB',
     decimals: 18,
-    iconUrl: "https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1680097630",
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1680097630',
     address: EthereumAddress('0xb50721bcf8d664c30412cfbc6cf7a15145234ad1'),
     coingeckoId: CoingeckoId('arbitrum'),
     sinceTimestamp: new UnixTime(1630233600),
     category: 'other',
     bucket: 'NMV',
-    formula: "circulatingSupply"
+    formula: 'circulatingSupply',
   },
   {
     id: AssetId('arbitrum:usdc-usd-coin'),
     name: 'USD Coin',
     symbol: 'USDC',
     decimals: 6,
-    iconUrl: "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389",
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
     address: EthereumAddress('0xaf88d065e77c8cC2239327C5EDb3A432268e5831'),
     coingeckoId: CoingeckoId('usd-coin'),
     sinceTimestamp: new UnixTime(1667250000),
     category: 'stablecoin',
-    bucket: ValueType.NMV,
-    formula: "totalSupply"
+    bucket: 'NMV',
+    formula: 'totalSupply',
   },
   {
     id: AssetId('arbitrum:gmx-gmx'),
     name: 'GMX',
     symbol: 'GMX',
     decimals: 18,
-    iconUrl: "https://assets.coingecko.com/coins/images/18323/large/arbit.png?1631532468",
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/18323/large/arbit.png?1631532468',
     address: EthereumAddress('0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a'),
     coingeckoId: CoingeckoId('gmx'),
     sinceTimestamp: new UnixTime(1626958493),
     category: 'stablecoin',
-    bucket: ValueType.NMV,
-    formula: "totalSupply"
+    bucket: 'NMV',
+    formula: 'totalSupply',
   },
   {
     id: AssetId('arbitrum:gains-gains-network'),
     name: 'Gains Network',
     symbol: 'GNS',
     decimals: 18,
-    iconUrl: "https://assets.coingecko.com/coins/images/19737/large/logo.png?1635909203",
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/19737/large/logo.png?1635909203',
     address: EthereumAddress('0x18c11fd286c5ec11c3b683caa813b77f5163a122'),
     coingeckoId: CoingeckoId('gains-network'),
     sinceTimestamp: new UnixTime(1672175006),
     category: 'stablecoin',
-    bucket: ValueType.NMV,
-    formula: "totalSupply"
+    bucket: 'NMV',
+    formula: 'totalSupply',
   },
   {
     id: AssetId('arbitrum:joe-joe'),
     name: 'JOE',
     symbol: 'joe',
     decimals: 18,
-    iconUrl: 'https://assets.coingecko.com/coins/images/17569/large/traderjoe.png?1685690062',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/17569/large/traderjoe.png?1685690062',
     address: EthereumAddress('0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07'),
     coingeckoId: CoingeckoId('joe'),
     sinceTimestamp: new UnixTime(1674495392),
     category: 'stablecoin',
-    bucket: ValueType.EBV,
-    formula: "totalSupply"
+    bucket: 'EBV',
+    formula: 'totalSupply',
   },
 ]
 

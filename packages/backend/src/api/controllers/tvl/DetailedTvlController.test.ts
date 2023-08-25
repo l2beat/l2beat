@@ -179,9 +179,9 @@ describe(DetailedTvlController.name, () => {
         const projectId = ProjectId('arbitrum')
         const chainId = ChainId.ARBITRUM
         const asset = AssetId.USDC
-        const type = 'EBV'
+        const bucket = 'EBV'
 
-        const fakeReports = fakeReportSeries(projectId, chainId, asset, type)
+        const fakeReports = fakeReportSeries(projectId, chainId, asset, bucket)
 
         const reportStatusRepository = mockObject<ReportStatusRepository>({
           findLatestTimestamp: async () => fakeReports.to,
@@ -223,7 +223,7 @@ describe(DetailedTvlController.name, () => {
           projectId,
           chainId,
           asset,
-          type,
+          bucket,
         )
 
         assert(result.result === 'success')
@@ -263,7 +263,7 @@ describe(DetailedTvlController.name, () => {
           projectId,
           chainId,
           asset,
-          type,
+          bucket,
           fakeReports.to.add(-7, 'days'),
         )
 
@@ -271,7 +271,7 @@ describe(DetailedTvlController.name, () => {
           projectId,
           chainId,
           asset,
-          type,
+          bucket,
           fakeReports.to.add(-90, 'days'),
         )
 
@@ -279,7 +279,7 @@ describe(DetailedTvlController.name, () => {
           projectId,
           chainId,
           asset,
-          type,
+          bucket,
         )
       })
     },
@@ -290,17 +290,19 @@ describe(DetailedTvlController.name, () => {
     () => {
       it('produces assets breakdown per project', async () => {
         const USDC = tokenList.find(
-          (x) => x.symbol === 'USDC' && x.type === 'CBV',
+          (x) => x.symbol === 'USDC' && x.bucket === 'CBV',
         )!
 
-        const OP = tokenList.find((x) => x.symbol === 'OP' && x.type === 'NMV')!
+        const OP = tokenList.find(
+          (x) => x.symbol === 'OP' && x.bucket === 'NMV',
+        )!
 
         const DAI = tokenList.find(
-          (x) => x.symbol === 'DAI' && x.type === 'CBV',
+          (x) => x.symbol === 'DAI' && x.bucket === 'CBV',
         )!
 
         const ETH = tokenList.find(
-          (x) => x.symbol === 'ETH' && x.type === 'CBV',
+          (x) => x.symbol === 'ETH' && x.bucket === 'CBV',
         )!
 
         const latestConfigHash = Hash256.random()
@@ -309,10 +311,14 @@ describe(DetailedTvlController.name, () => {
         const firstEscrow = EthereumAddress.random()
         const secondEscrow = EthereumAddress.random()
 
-        const eth: Token = { ...ETH, type: 'CBV', chainId: ChainId.ETHEREUM }
-        const usdc: Token = { ...USDC, type: 'CBV', chainId: ChainId.ETHEREUM }
-        const dai: Token = { ...DAI, type: 'EBV', chainId: ChainId.ARBITRUM }
-        const op: Token = { ...OP, type: 'NMV', chainId: ChainId.ARBITRUM }
+        const eth: Token = { ...ETH, bucket: 'CBV', chainId: ChainId.ETHEREUM }
+        const usdc: Token = {
+          ...USDC,
+          bucket: 'CBV',
+          chainId: ChainId.ETHEREUM,
+        }
+        const dai: Token = { ...DAI, bucket: 'EBV', chainId: ChainId.ARBITRUM }
+        const op: Token = { ...OP, bucket: 'NMV', chainId: ChainId.ARBITRUM }
 
         const projects: ReportProject[] = [
           {
@@ -345,7 +351,7 @@ describe(DetailedTvlController.name, () => {
             projectId: ProjectId('arbitrum'),
             asset: dai.id,
             chainId: dai.chainId,
-            reportType: dai.type,
+            reportType: dai.bucket,
             amount: 10_000_000_000_000n,
             usdValue: 10_000_000_000_000n,
             ethValue: 10_000n,
@@ -355,7 +361,7 @@ describe(DetailedTvlController.name, () => {
             projectId: ProjectId('arbitrum'),
             asset: usdc.id,
             chainId: usdc.chainId,
-            reportType: usdc.type,
+            reportType: usdc.bucket,
             amount: 20_000_000_000_000n,
             usdValue: 20_000_000_000_000n,
             ethValue: 20_000n,
@@ -365,7 +371,7 @@ describe(DetailedTvlController.name, () => {
             projectId: ProjectId('arbitrum'),
             asset: op.id,
             chainId: op.chainId,
-            reportType: op.type,
+            reportType: op.bucket,
             amount: 30_000_000_000_000n,
             usdValue: 45_000_000_000_000n,
             ethValue: 45_000n,

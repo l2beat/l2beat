@@ -40,5 +40,10 @@ const TokenInfo = z.object({
 export function getCanonicalTokens(): Token[] {
   return tokens
     .map((t) => TokenInfo.parse(t))
-    .map((t) => ({ ...t, chainId: ChainId.ETHEREUM, bucket: 'CBV', formula: "locked" as const }))
+    .map((t) => ({
+      ...t,
+      chainId: ChainId.ETHEREUM,
+      bucket: 'CBV',
+      formula: 'locked' as const,
+    }))
 }
