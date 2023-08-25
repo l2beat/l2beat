@@ -220,7 +220,7 @@ export function getUpcomingScalingTvlColumns() {
     {
       name: 'Technology',
       tooltip:
-        'Type of this Layer 2. Determines data availability and proof system used.',
+        'Type of this Layer 2. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
@@ -262,7 +262,7 @@ export function getArchivedScalingTvlColumns(detailedTvlEnabled: boolean) {
     {
       name: 'Technology',
       tooltip:
-        'Type of this Layer 2. Determines data availability and proof system used.',
+        'Type of this Layer 2. Determines data availability and proof system used.<br>ZK Rollups = Validity Proofs + onchain data<br>Optimistic Rollups = Fraud Proofs + onchain data<br>Validiums = Validity Proofs + offchain data<br>Optimiums = Fraud Proofs + offchain data',
       shortName: 'Tech',
       getValue: (project) => (
         <TechnologyCell provider={project.provider}>
