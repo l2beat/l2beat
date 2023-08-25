@@ -105,7 +105,9 @@ export function getChartPoints(
     const asset = asNumber(b.asset, decimals)
     return usdFirst ? [b.timestamp, usd, asset] : [b.timestamp, asset, usd]
   })
-  return addMissingTimestamps(existing, hours)
+
+  return existing
+  // return addMissingTimestamps(existing, hours)
 }
 
 export function covertBalancesToChartPoints(

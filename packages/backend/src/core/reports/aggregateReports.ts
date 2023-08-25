@@ -180,5 +180,5 @@ function serializeReportTree(
     }
   }
 
-  return records
+  return records.filter(record => record.usdValue > 0n)
 }

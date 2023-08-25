@@ -64,7 +64,7 @@ export class ReportRepository extends BaseRepository {
   }
 
   async addOrUpdateMany(reports: ReportRecord[]) {
-    const rows = reports.map(toRow)
+    const rows = reports.filter((r) => r.amount > 0).map(toRow)
     const knex = await this.knex()
     const timestampsMatch = reports.every((r) =>
       r.timestamp.equals(reports[0].timestamp),

@@ -3,13 +3,8 @@ import { HttpClient, Logger, LogThrottler } from '@l2beat/shared'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { Clock } from './core/Clock'
-import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
-import { createHealthModule } from './modules/health/HealthModule'
-import { createMetricsModule } from './modules/metrics/MetricsModule'
-import { createStatusModule } from './modules/status/StatusModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
-import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { Database } from './peripherals/database/shared/Database'
 import { handleServerError, reportError } from './tools/ErrorReporter'
 
@@ -40,12 +35,12 @@ export class Application {
     )
 
     const modules: (ApplicationModule | undefined)[] = [
-      createHealthModule(config),
-      createMetricsModule(config),
+      // createHealthModule(config),
+      // createMetricsModule(config),
       createTvlModule(config, logger, http, database, clock),
-      createActivityModule(config, logger, http, database, clock),
-      createUpdateMonitorModule(config, logger, http, database, clock),
-      createStatusModule(config, logger, database, clock),
+      // createActivityModule(config, logger, http, database, clock),
+      // createUpdateMonitorModule(config, logger, http, database, clock),
+      // createStatusModule(config, logger, database, clock),
     ]
 
     const apiServer = new ApiServer(

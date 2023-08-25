@@ -112,7 +112,11 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
       this.projectId,
       this.chainId,
     )
-    await this.reportRepository.addOrUpdateMany(reports)
+
+    //! REFPOINT
+    await this.reportRepository.addOrUpdateMany(
+      reports.filter((r) => r.amount > 0),
+    )
 
     await this.reportStatusRepository.add({
       configHash: this.getConfigHash(),

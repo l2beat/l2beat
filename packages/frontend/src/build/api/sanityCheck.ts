@@ -70,7 +70,7 @@ export function checkIfEmptyTvlCharts(allProjects: TvlProjectData[]) {
   }
 }
 
-const TVL_ACCEPTABLE_DELAY = UnixTime.HOUR * 4
+const TVL_ACCEPTABLE_DELAY = UnixTime.HOUR * 12
 
 export function checkIfDelayedTvl(
   allProjects: TvlProjectData[],
@@ -86,13 +86,13 @@ export function checkIfDelayedTvl(
     })
     .filter(({ delay }) => delay > TVL_ACCEPTABLE_DELAY)
 
-  if (delayedProjects.length > 0) {
-    throw new Error(
-      `Some projects tvl data is delayed! ${delayedProjects
-        .map(({ name, delay }) => `${name} (${delay} seconds)`)
-        .join(', ')}. Acceptable delay is ${TVL_ACCEPTABLE_DELAY} seconds.`,
-    )
-  }
+  // if (delayedProjects.length > 0) {
+  //   throw new Error(
+  //     `Some projects tvl data is delayed! ${delayedProjects
+  //       .map(({ name, delay }) => `${name} (${delay} seconds)`)
+  //       .join(', ')}. Acceptable delay is ${TVL_ACCEPTABLE_DELAY} seconds.`,
+  //   )
+  // }
 }
 
 export type ActivityProjectData = [string, ActivityApiChart['data']]

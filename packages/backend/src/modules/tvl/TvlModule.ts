@@ -1,17 +1,11 @@
-import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
+import { HttpClient, Logger } from '@l2beat/shared'
 
-import { BlocksController } from '../../api/controllers/BlocksController'
-import { DydxController } from '../../api/controllers/DydxController'
 import { DetailedTvlController } from '../../api/controllers/tvl/DetailedTvlController'
 import { TvlController } from '../../api/controllers/tvl/TvlController'
-import { createBlocksRouter } from '../../api/routers/BlocksRouter'
-import { createDydxRouter } from '../../api/routers/DydxRouter'
 import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
-import { PriceUpdater } from '../../core/PriceUpdater'
 import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
-import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
@@ -24,9 +18,6 @@ import { Database } from '../../peripherals/database/shared/Database'
 import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
 import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
-import { createArbitrumTvlSubmodule } from './ArbitrumTvl'
-import { createEthereumTvlSubmodule } from './EthereumTvl'
-import { createNativeTvlSubmodule } from './NativeTvl'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -66,27 +57,27 @@ export function createTvlModule(
   // #endregion
   // #region peripherals
 
-  const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+  // const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
+  // const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   // #endregion
   // #region updaters
 
-  const priceUpdater = new PriceUpdater(
-    coingeckoQueryService,
-    db.priceRepository,
-    clock,
-    config.tokens,
-    logger,
-  )
+  // // const priceUpdater = new PriceUpdater(
+  //   coingeckoQueryService,
+  //   db.priceRepository,
+  //   clock,
+  //   config.tokens,
+  //   logger,
+  // )
 
   // #endregion
   // #region submodules
 
   const submodules: (TvlSubmodule | undefined)[] = [
-    createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
-    createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
+    // createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
+    // createNativeTvlSubmodule(db, priceUpdater, config, logger, clock),
+    // createArbitrumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
   ]
 
   // #endregion
@@ -101,7 +92,7 @@ export function createTvlModule(
   )
 
   // #region api
-  const blocksController = new BlocksController(db.blockNumberRepository)
+  // const blocksController = new BlocksController(db.blockNumberRepository)
   const tvlController = new TvlController(
     db.reportRepository,
     db.aggregatedReportRepository,
@@ -126,35 +117,35 @@ export function createTvlModule(
     { errorOnUnsyncedDetailedTvl: config.tvl.errorOnUnsyncedDetailedTvl },
   )
 
-  const dydxController = new DydxController(db.aggregatedReportRepository)
+  // const dydxController = new DydxController(db.aggregatedReportRepository)
 
-  const blocksRouter = createBlocksRouter(blocksController)
+  // const blocksRouter = createBlocksRouter(blocksController)
   const tvlRouter = createTvlRouter(tvlController, detailedTvlController, {
     detailedTvlEnabled: config.tvl.detailedTvlEnabled,
   })
-  const dydxRouter = createDydxRouter(dydxController)
+  // const dydxRouter = createDydxRouter(dydxController)
 
   // #endregion
 
-  const start = async () => {
+  const start = () => {
     logger = logger.for('TvlModule')
     logger.info('Starting')
 
-    priceUpdater.start()
+    // priceUpdater.start()
 
     logger.info('Starting submodules...')
 
-    for (const submodule of submodules) {
-      await submodule?.start?.()
-    }
+    // for (const submodule of submodules) {
+    //   await submodule?.start?.()
+    // }
 
-    await aggregatedReportUpdater.start()
+    // await aggregatedReportUpdater.start()
 
     logger.info('Started')
   }
 
   return {
-    routers: [blocksRouter, tvlRouter, dydxRouter],
+    routers: [tvlRouter],
     start,
   }
 }

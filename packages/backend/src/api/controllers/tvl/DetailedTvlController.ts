@@ -10,6 +10,7 @@ import {
   Token,
   TvlApiChart,
   TvlApiCharts,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
@@ -29,6 +30,7 @@ import {
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import { generateDetailedTvlApiResponse } from './generateDetailedTvlApiResponse'
+import { fillAllMissingAggregatedReports } from './timerange'
 
 interface DetailedTvlControllerOptions {
   errorOnUnsyncedDetailedTvl: boolean
@@ -86,14 +88,16 @@ export class DetailedTvlController {
   async getDetailedTvlApiResponse(): Promise<DetailedTvlResult> {
     const dataTimings = await this.getDataTimings()
 
-    if (!dataTimings.latestTimestamp) {
+    const { latestTimestamp, isSynced } = dataTimings
+
+    if (!latestTimestamp) {
       return {
         result: 'error',
         error: 'NO_DATA',
       }
     }
 
-    if (!dataTimings.isSynced && this.options.errorOnUnsyncedDetailedTvl) {
+    if (!isSynced && this.options.errorOnUnsyncedDetailedTvl) {
       return {
         result: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
@@ -112,19 +116,75 @@ export class DetailedTvlController {
 
         this.aggregatedReportRepository.getDailyWithAnyType(),
 
-        this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
+        this.reportRepository.getByTimestamp(latestTimestamp),
       ])
+
+    const pids = [
+      ...this.projects.map((x) => x.projectId),
+      ProjectId.ALL,
+      ProjectId.BRIDGES,
+      ProjectId.LAYER2S,
+    ]
+
+    const filledHourlyReports = pids.flatMap((pid) =>
+      fillAllMissingAggregatedReports(
+        pid,
+        hourlyReports.filter((r) => r.projectId === pid),
+        getHourlyMinTimestamp(latestTimestamp),
+        latestTimestamp,
+        'hourly',
+      ),
+    )
+
+    const filledSixHourlyReports = pids.flatMap((pid) =>
+      fillAllMissingAggregatedReports(
+        pid,
+        sixHourlyReports.filter((r) => r.projectId === pid),
+        getSixHourlyMinTimestamp(latestTimestamp),
+        latestTimestamp,
+        'sixHourly',
+      ),
+    )
+
+    const filledDailyReports = pids.flatMap((pid) =>
+      fillAllMissingAggregatedReports(
+        pid,
+        dailyReports.filter((r) => r.projectId === pid),
+        UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
+        latestTimestamp,
+        'daily',
+      ),
+    )
+
+    console.dir({
+      hourly: {
+        pre: hourlyReports.length,
+        post: filledHourlyReports.length,
+      },
+
+      sixHourly: {
+        pre: sixHourlyReports.length,
+        post: filledSixHourlyReports.length,
+      },
+
+      daily: {
+        pre: dailyReports.length,
+        post: filledDailyReports.length,
+      },
+    })
 
     /**
      * ProjectID => Timestamp => [Report, Report, Report, Report]
      * Ideally 4 reports per project per timestamp corresponding to 4 Value Types
      */
-    const groupedHourlyReports = groupByProjectIdAndTimestamp(hourlyReports)
+    const groupedHourlyReports =
+      groupByProjectIdAndTimestamp(filledHourlyReports)
 
-    const groupedSixHourlyReportsTree =
-      groupByProjectIdAndTimestamp(sixHourlyReports)
+    const groupedSixHourlyReportsTree = groupByProjectIdAndTimestamp(
+      filledSixHourlyReports,
+    )
 
-    const groupedDailyReports = groupByProjectIdAndTimestamp(dailyReports)
+    const groupedDailyReports = groupByProjectIdAndTimestamp(filledDailyReports)
 
     /**
      * ProjectID => Asset => Report[]
