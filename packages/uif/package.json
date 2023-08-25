@@ -33,7 +33,7 @@
     "@l2beat/backend-tools": "*"
   },
   "devDependencies": {
-    "@sinonjs/fake-timers": "^10.2.0",
+    "@sinonjs/fake-timers": "^11.1.0",
     "@types/sinonjs__fake-timers": "^8.1.2",
     "wait-for-expect": "^3.0.2"
   }

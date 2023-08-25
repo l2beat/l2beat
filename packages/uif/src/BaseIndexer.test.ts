@@ -1,8 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect } from 'earl'
+import { install } from '@sinonjs/fake-timers'
+import { expect, mockFn } from 'earl'
 
 import { BaseIndexer, ChildIndexer, RootIndexer } from './BaseIndexer'
 import { IndexerAction } from './reducer/types/IndexerAction'
+import { RetryStrategy } from './Retries'
 
 describe(BaseIndexer.name, () => {
   describe('correctly informs about updates', () => {
@@ -15,6 +17,7 @@ describe(BaseIndexer.name, () => {
 
       await child.finishInvalidate()
       await parent.doTick(1)
+      await parent.finishTick(1)
 
       await child.finishUpdate(1)
 
@@ -29,6 +32,7 @@ describe(BaseIndexer.name, () => {
       await child.start()
 
       await parent.doTick(1)
+      await parent.finishTick(1)
       await child.finishInvalidate()
 
       await child.finishUpdate(1)
@@ -42,7 +46,7 @@ describe(BaseIndexer.name, () => {
     // Pi - parent indexer
     // Mi - middle indexer
     // Ci - child indexer
-    it('When Mi updating, passes correcty safeHeight', async () => {
+    it('When Mi updating, passes correctly safeHeight', async () => {
       const parent = new TestRootIndexer(0)
       const middle = new TestChildIndexer([parent], 0, 'Middle')
       const child = new TestChildIndexer([middle], 0, 'Child')
@@ -55,13 +59,157 @@ describe(BaseIndexer.name, () => {
       await child.finishInvalidate()
 
       await parent.doTick(10)
+      await parent.finishTick(10)
       await middle.finishUpdate(10)
 
       expect(child.getState().status).toEqual('updating')
 
       await parent.doTick(5)
+      await parent.finishTick(5)
 
       expect(middle.getState().waiting).toEqual(true)
+    })
+  })
+
+  describe('retries on error', () => {
+    it('invalidates and retries update', async () => {
+      const clock = install({ shouldAdvanceTime: true, advanceTimeDelta: 1 })
+
+      const parent = new TestRootIndexer(0)
+
+      const shouldRetry = mockFn(() => true)
+      const markAttempt = mockFn(() => {})
+      const clear = mockFn(() => {})
+
+      const child = new TestChildIndexer([parent], 0, '', {
+        updateRetryStrategy: {
+          shouldRetry,
+          markAttempt,
+          timeoutMs: () => 1000,
+          clear,
+        },
+      })
+
+      await parent.start()
+      await child.start()
+
+      await child.finishInvalidate()
+
+      await parent.doTick(1)
+      await parent.finishTick(1)
+
+      await child.finishUpdate(new Error('test error'))
+      expect(child.updating).toBeFalsy()
+      expect(child.invalidating).toBeTruthy()
+      expect(shouldRetry).toHaveBeenCalledTimes(1)
+      expect(markAttempt).toHaveBeenCalledTimes(1)
+
+      await child.finishInvalidate()
+      expect(child.getState().status).toEqual('idle')
+
+      await clock.tickAsync(1000)
+
+      expect(child.getState().status).toEqual('updating')
+      await child.finishUpdate(1)
+
+      expect(clear).toHaveBeenCalledTimes(1)
+      expect(child.getState().status).toEqual('idle')
+
+      clock.uninstall()
+    })
+
+    it('retries invalidate', async () => {
+      const clock = install({ shouldAdvanceTime: true, advanceTimeDelta: 1 })
+      const parent = new TestRootIndexer(0)
+      const invalidateShouldRetry = mockFn(() => true)
+      const invalidateMarkAttempt = mockFn(() => {})
+      const invalidateClear = mockFn(() => {})
+
+      const updateShouldRetry = mockFn(() => true)
+      const updateMarkAttempt = mockFn(() => {})
+      const updateClear = mockFn(() => {})
+
+      const child = new TestChildIndexer([parent], 0, '', {
+        invalidateRetryStrategy: {
+          shouldRetry: invalidateShouldRetry,
+          markAttempt: invalidateMarkAttempt,
+          timeoutMs: () => 1000,
+          clear: invalidateClear,
+        },
+        updateRetryStrategy: {
+          shouldRetry: updateShouldRetry,
+          markAttempt: updateMarkAttempt,
+          timeoutMs: () => 1000,
+          clear: updateClear,
+        },
+      })
+
+      await parent.start()
+      await child.start()
+
+      await child.finishInvalidate()
+      expect(invalidateClear).toHaveBeenCalledTimes(1)
+
+      await parent.doTick(1)
+      await parent.finishTick(1)
+
+      await child.finishUpdate(new Error('test error'))
+      expect(updateShouldRetry).toHaveBeenCalledTimes(1)
+      expect(updateMarkAttempt).toHaveBeenCalledTimes(1)
+
+      await child.finishInvalidate(new Error('test error'))
+      expect(invalidateMarkAttempt).toHaveBeenCalledTimes(1)
+      expect(invalidateShouldRetry).toHaveBeenCalledTimes(1)
+      expect(child.getState().status).toEqual('idle')
+
+      await clock.tickAsync(1000)
+
+      expect(child.getState().status).toEqual('invalidating')
+      expect(child.invalidating).toBeTruthy()
+
+      await child.finishInvalidate()
+      expect(invalidateClear).toHaveBeenCalledTimes(2)
+      expect(child.getState().status).toEqual('updating')
+      expect(child.updating).toBeTruthy()
+
+      await child.finishUpdate(1)
+      expect(updateClear).toHaveBeenCalledTimes(1)
+      expect(child.getState().status).toEqual('idle')
+      clock.uninstall()
+    })
+
+    it('invalidates and retries tick', async () => {
+      const clock = install({ shouldAdvanceTime: true, advanceTimeDelta: 1 })
+      const shouldRetry = mockFn(() => true)
+      const markAttempt = mockFn(() => {})
+      const clear = mockFn(() => {})
+
+      const root = new TestRootIndexer(0, '', {
+        tickRetryStrategy: {
+          shouldRetry,
+          markAttempt,
+          timeoutMs: () => 1000,
+          clear,
+        },
+      })
+
+      await root.start()
+
+      await root.doTick(1)
+      await root.finishTick(new Error('test error'))
+      expect(markAttempt).toHaveBeenCalledTimes(1)
+      expect(shouldRetry).toHaveBeenCalledTimes(1)
+      expect(root.getState().status).toEqual('idle')
+
+      await clock.tickAsync(1000)
+
+      expect(root.getState().status).toEqual('ticking')
+
+      await root.finishTick(1)
+      expect(clear).toHaveBeenCalledTimes(1)
+      expect(root.getState().status).toEqual('idle')
+
+      clock.uninstall()
     })
   })
 })
@@ -78,10 +226,18 @@ async function waitUntil(predicate: () => boolean): Promise<void> {
 }
 
 class TestRootIndexer extends RootIndexer {
-  dispatchCounter = 0
+  public resolveTick: (height: number) => void = () => {}
+  public rejectTick: (error: unknown) => void = () => {}
 
-  constructor(private safeHeight: number, name?: string) {
-    super(Logger.SILENT.tag(name))
+  dispatchCounter = 0
+  ticking = false
+
+  constructor(
+    private safeHeight: number,
+    name?: string,
+    retryStrategy?: { tickRetryStrategy?: RetryStrategy },
+  ) {
+    super(Logger.SILENT.tag(name), retryStrategy ?? {})
 
     const oldDispatch = Reflect.get(this, 'dispatch')
     Reflect.set(this, 'dispatch', (action: IndexerAction) => {
@@ -98,8 +254,33 @@ class TestRootIndexer extends RootIndexer {
     await waitUntil(() => this.dispatchCounter > counter)
   }
 
+  async finishTick(result: number | Error): Promise<void> {
+    await waitUntil(() => this.ticking)
+    const counter = this.dispatchCounter
+    if (typeof result === 'number') {
+      this.resolveTick(result)
+    } else {
+      this.rejectTick(result)
+    }
+    await waitUntil(() => this.dispatchCounter > counter)
+  }
+
   override tick(): Promise<number> {
-    return Promise.resolve(this.safeHeight)
+    this.ticking = true
+
+    return new Promise<number>((resolve, reject) => {
+      this.resolveTick = resolve
+      this.rejectTick = reject
+    }).finally(() => {
+      this.ticking = false
+    })
+  }
+
+  override async getSafeHeight(): Promise<number> {
+    const promise = this.tick()
+    this.resolveTick(this.safeHeight)
+    await promise
+    return this.safeHeight
   }
 }
 
@@ -144,8 +325,12 @@ class TestChildIndexer extends ChildIndexer {
     parents: BaseIndexer[],
     private safeHeight: number,
     name?: string,
+    retryStrategy?: {
+      invalidateRetryStrategy?: RetryStrategy
+      updateRetryStrategy?: RetryStrategy
+    },
   ) {
-    super(Logger.SILENT.tag(name), parents)
+    super(Logger.SILENT.tag(name), parents, retryStrategy ?? {})
 
     const oldDispatch = Reflect.get(this, 'dispatch')
     Reflect.set(this, 'dispatch', (action: IndexerAction) => {

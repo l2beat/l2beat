@@ -1,13 +1,14 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { BaseIndexer, Retries } from '@l2beat/uif'
 import { Config } from './Config'
 import { BalanceIndexer } from './indexers/BalanceIndexer'
 import { BlockNumberIndexer } from './indexers/BlockNumberIndexer'
 import { FakeClockIndexer } from './indexers/FakeClockIndexer'
+import { TvlIndexer } from './indexers/TvlIndexer'
 import { BalanceRepository } from './repositories/BalanceRepository'
 import { BlockNumberRepository } from './repositories/BlockNumberRepository'
 import { TvlRepository } from './repositories/TvlRepository'
-import { TvlIndexer } from './indexers/TvlIndexer'
 
 export class Application {
   start: () => Promise<void>
@@ -23,6 +24,12 @@ export class Application {
     const blockNumberRepository = new BlockNumberRepository()
     const balanceRepository = new BalanceRepository()
     const tvlRepository = new TvlRepository()
+
+    BaseIndexer.DEFAULT_RETRY_STRATEGY = Retries.exponentialBackOff({
+      initialTimeoutMs: 100,
+      maxAttempts: 10,
+      maxTimeoutMs: 60 * 1000,
+    })
 
     const fakeClockIndexer = new FakeClockIndexer(logger)
     const blockNumberIndexer = new BlockNumberIndexer(
