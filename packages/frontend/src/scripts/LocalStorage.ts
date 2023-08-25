@@ -16,6 +16,8 @@ const LocalStorageKeySchemas = {
   theme: z.enum(['light', 'dark']),
   'canonical-bridges-checked': strictBoolean,
   'l2-warsaw-floating-banner': strictBoolean,
+  'combined-bridges-checked': strictBoolean,
+  'rollups-only-checked': strictBoolean,
   'top-bar-variant-data': stringAsObject(TopBarVariantData),
 } as const
 
