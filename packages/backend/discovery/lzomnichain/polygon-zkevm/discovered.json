@@ -9,7 +9,6 @@
       "name": "",
       "address": "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
       "unverified": true,
-      "code": "https://polygonzkevm.deth.net/address/0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
       "upgradeability": {
         "type": "immutable"
       }
@@ -18,7 +17,6 @@
       "name": "",
       "address": "0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
       "unverified": true,
-      "code": "https://polygonzkevm.deth.net/address/0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
       "upgradeability": {
         "type": "immutable"
       }
@@ -26,7 +24,6 @@
     {
       "name": "Endpoint",
       "address": "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4",
-      "code": "https://polygonzkevm.deth.net/address/0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4",
       "upgradeability": {
         "type": "immutable"
       },
@@ -49,7 +46,6 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
-      "code": "https://polygonzkevm.deth.net/address/0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
       "upgradeability": {
         "type": "immutable"
       },

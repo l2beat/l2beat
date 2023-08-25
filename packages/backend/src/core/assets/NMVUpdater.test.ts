@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { describe } from 'mocha'
 import waitForExpect from 'wait-for-expect'
@@ -46,13 +46,13 @@ describe(NMVUpdater.name, () => {
         configHash: NATIVE_ASSET_CONFIG_HASH,
         timestamp: MOCK.NOW.add(1, 'hours'),
         chainId: ChainId.NMV,
-        valueType: ValueType.NMV,
+        reportType: 'NMV',
       })
       expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
         configHash: NATIVE_ASSET_CONFIG_HASH,
         timestamp: MOCK.NOW,
         chainId: ChainId.NMV,
-        valueType: ValueType.NMV,
+        reportType: 'NMV',
       })
 
       expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)
@@ -138,13 +138,13 @@ describe(NMVUpdater.name, () => {
           configHash: NATIVE_ASSET_CONFIG_HASH,
           timestamp: MOCK.NOW.add(1, 'hours'),
           chainId: ChainId.NMV,
-          valueType: ValueType.NMV,
+          reportType: 'NMV',
         })
         expect(reportStatusRepository.add).toHaveBeenNthCalledWith(2, {
           configHash: NATIVE_ASSET_CONFIG_HASH,
           timestamp: MOCK.NOW,
           chainId: ChainId.NMV,
-          valueType: ValueType.NMV,
+          reportType: 'NMV',
         })
 
         expect(reportRepository.addOrUpdateMany).toHaveBeenCalledTimes(2)

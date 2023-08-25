@@ -8,7 +8,6 @@
     {
       "name": "PauserRegistry",
       "address": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
-      "code": "https://etherscan.deth.net/address/0x075a48633dc6845f92339741E9c96b88f1b2A86f",
       "upgradeability": {
         "type": "immutable"
       },
@@ -21,7 +20,6 @@
     {
       "name": "MantleTokenProxyAdmin",
       "address": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
-      "code": "https://etherscan.deth.net/address/0x0cac2B1a172ac24012621101634DD5ABD6399ADd",
       "upgradeability": {
         "type": "immutable"
       },
@@ -33,7 +31,6 @@
     {
       "name": "BLSRegistry",
       "address": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-      "code": "https://etherscan.deth.net/address/0x1eD35B793d887e028493dAC4a11AA5Feb811dd67,0x64F4244eEA17a361bb919A28F614C3ad1aC565ad",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x64F4244eEA17a361bb919A28F614C3ad1aC565ad",
@@ -71,7 +68,6 @@
     {
       "name": "InvestmentManager",
       "address": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-      "code": "https://etherscan.deth.net/address/0x23754725a49c0f003C349A6C7869fF8609a7CEfd,0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E",
@@ -92,7 +88,6 @@
     {
       "name": "CanonicalTransactionChain",
       "address": "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93",
-      "code": "https://etherscan.deth.net/address/0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93",
       "upgradeability": {
         "type": "immutable"
       },
@@ -118,7 +113,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-      "code": "https://etherscan.deth.net/address/0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
       "upgradeability": {
         "type": "immutable"
       },
@@ -129,7 +123,6 @@
     {
       "name": "Owner2Multisig",
       "address": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-      "code": "https://etherscan.deth.net/address/0x2F44BD2a54aC3fB20cd7783cF94334069641daC9,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -155,7 +148,6 @@
     {
       "name": "BondManager",
       "address": "0x31aBe1c466C2A8b95fd84258dD1471472979B650",
-      "code": "https://etherscan.deth.net/address/0x31aBe1c466C2A8b95fd84258dD1471472979B650",
       "upgradeability": {
         "type": "immutable"
       },
@@ -166,7 +158,6 @@
     {
       "name": "TssGroupManager",
       "address": "0x399ca67660B79F7aA8A7Efd5BEF9836A4c19CACF",
-      "code": "https://etherscan.deth.net/address/0x399ca67660B79F7aA8A7Efd5BEF9836A4c19CACF,0xF7576237087F808eB39531cA490b4F8eFd4a0c69",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xF7576237087F808eB39531cA490b4F8eFd4a0c69",
@@ -223,7 +214,6 @@
     {
       "name": "L1MantleToken",
       "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-      "code": "https://etherscan.deth.net/address/0x3c3a81e81dc49A522A592e7622A7E711c06bf354,0xCd368c1d80120b0Dd92447c87eB570154f8e685c",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xCd368c1d80120b0Dd92447c87eB570154f8e685c",
@@ -247,7 +237,6 @@
     {
       "name": "VerifierEntry",
       "address": "0x3F77D44E1789D47e076a4d5f2779a1fCAb821C2a",
-      "code": "https://etherscan.deth.net/address/0x3F77D44E1789D47e076a4d5f2779a1fCAb821C2a,0xA1C7B28B4743248584725fEf31516fD4Ea72aEA8",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xA1C7B28B4743248584725fEf31516fD4Ea72aEA8",
@@ -270,7 +259,6 @@
     {
       "name": "GnosisSafe",
       "address": "0x47336ae44F573a7C3C41a9ae04A9D48E5dFD8f8E",
-      "code": "https://etherscan.deth.net/address/0x47336ae44F573a7C3C41a9ae04A9D48E5dFD8f8E,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -295,7 +283,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-      "code": "https://etherscan.deth.net/address/0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
       "upgradeability": {
         "type": "immutable"
       },
@@ -306,7 +293,6 @@
     {
       "name": "PauserRegistry2",
       "address": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
-      "code": "https://etherscan.deth.net/address/0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
       "upgradeability": {
         "type": "immutable"
       },
@@ -319,7 +305,6 @@
     {
       "name": "OwnerMultisig",
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-      "code": "https://etherscan.deth.net/address/0x4e59e778a0fb77fBb305637435C62FaeD9aED40f,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -351,7 +336,6 @@
     {
       "name": "EigenDataLayerChain",
       "address": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
-      "code": "https://etherscan.deth.net/address/0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A,0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a",
@@ -377,7 +361,6 @@
     {
       "name": "DataLayrServiceManager",
       "address": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
-      "code": "https://etherscan.deth.net/address/0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1,0xAB42127980a3bff124E6465e097a5fC97228827e",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xAB42127980a3bff124E6465e097a5fC97228827e",
@@ -414,7 +397,6 @@
     {
       "name": "ChainStorageContainerCTC",
       "address": "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
-      "code": "https://etherscan.deth.net/address/0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
       "upgradeability": {
         "type": "immutable"
       },
@@ -429,7 +411,6 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
-      "code": "https://etherscan.deth.net/address/0x676A795fe6E43C17c668de16730c3F690FEB7120,0x4692363048d0F32a2dE7816860D48fff0c61B24B",
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
@@ -447,7 +428,6 @@
     {
       "name": "AddressManager",
       "address": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
-      "code": "https://etherscan.deth.net/address/0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
       "upgradeability": {
         "type": "immutable"
       },
@@ -476,7 +456,6 @@
     {
       "name": "GnosisSafe",
       "address": "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
-      "code": "https://etherscan.deth.net/address/0x7735cDcc85E63A7684C29652DbE8B845e0b4635A,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -496,7 +475,6 @@
     {
       "name": "TssStakingSlashing",
       "address": "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81",
-      "code": "https://etherscan.deth.net/address/0x78CF48880E9e1b3ab209779c0D8A76f611e53e81,0x09b276F9EcB83Fb6a37970e655863B04143Dc431",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x09b276F9EcB83Fb6a37970e655863B04143Dc431",
@@ -530,7 +508,6 @@
     {
       "name": "GnosisSafe",
       "address": "0x84A628347537d4900a0b720Ee294445F90c3887a",
-      "code": "https://etherscan.deth.net/address/0x84A628347537d4900a0b720Ee294445F90c3887a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -555,7 +532,6 @@
     {
       "name": "StateCommitmentChain",
       "address": "0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa",
-      "code": "https://etherscan.deth.net/address/0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa",
       "upgradeability": {
         "type": "immutable"
       },
@@ -575,7 +551,6 @@
     {
       "name": "TssDelegationSlasher",
       "address": "0x910265C29c099eAc87EF6d374b6f3bE45B516EB7",
-      "code": "https://etherscan.deth.net/address/0x910265C29c099eAc87EF6d374b6f3bE45B516EB7,0xC159F0B28a7bd4b4924e762207275a4475C09fd5",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xC159F0B28a7bd4b4924e762207275a4475C09fd5",
@@ -591,7 +566,6 @@
     {
       "name": "PubkeyCompendium",
       "address": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
-      "code": "https://etherscan.deth.net/address/0x92986cd63C3409b7dA2882624B6d6E7Cf660707a,0x18Dd3cBE484f955217165FEaC6fe928D04a56a72",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x18Dd3cBE484f955217165FEaC6fe928D04a56a72",
@@ -606,7 +580,6 @@
     {
       "name": "L1StandardBridge",
       "address": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
-      "code": "https://etherscan.deth.net/address/0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012,0x6B6e0dC564d4603452E40752ecDAa0e9630B38A2",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x6B6e0dC564d4603452E40752ecDAa0e9630B38A2",
@@ -622,7 +595,6 @@
     {
       "name": "AssertionMap",
       "address": "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317",
-      "code": "https://etherscan.deth.net/address/0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317,0x1872Ce78A362c58D093EE107cAdeE2667b7Bd993",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1872Ce78A362c58D093EE107cAdeE2667b7Bd993",
@@ -636,7 +608,6 @@
     {
       "name": "TssDelegationManager",
       "address": "0xA90FCe37D274e673f3850b835F18790542b1755d",
-      "code": "https://etherscan.deth.net/address/0xA90FCe37D274e673f3850b835F18790542b1755d,0x988DdC2b0ad9Ba5Ade892E1BF848308e8c7A9187",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x988DdC2b0ad9Ba5Ade892E1BF848308e8c7A9187",
@@ -660,7 +631,6 @@
     {
       "name": "MantleSecondStrat",
       "address": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
-      "code": "https://etherscan.deth.net/address/0xA937660031787C4408587D2c6A67Ec4B260630F5,0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
@@ -681,7 +651,6 @@
     {
       "name": "RegistryPermission",
       "address": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-      "code": "https://etherscan.deth.net/address/0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01,0xAb00B934DE01c1b4931047125C2ba5B3d6186b85",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xAb00B934DE01c1b4931047125C2ba5B3d6186b85",
@@ -696,7 +665,6 @@
     {
       "name": "DataLayrChallenge",
       "address": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
-      "code": "https://etherscan.deth.net/address/0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94,0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066",
@@ -712,7 +680,6 @@
     {
       "name": "MantleFirstStrat",
       "address": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
-      "code": "https://etherscan.deth.net/address/0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1,0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
@@ -733,7 +700,6 @@
     {
       "name": "DataLayrChallengeUtils",
       "address": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
-      "code": "https://etherscan.deth.net/address/0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D,0xd8d731624d97a66e012E62208cFc921d7033c564",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xd8d731624d97a66e012E62208cFc921d7033c564",
@@ -747,7 +713,6 @@
     {
       "name": "Rollup",
       "address": "0xD1328C9167e0693B689b5aa5a024379d4e437858",
-      "code": "https://etherscan.deth.net/address/0xD1328C9167e0693B689b5aa5a024379d4e437858,0x242a33ca49C564caFC9C83C700b79f1074c42A0D",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x242a33ca49C564caFC9C83C700b79f1074c42A0D",
@@ -790,7 +755,6 @@
     {
       "name": "ChainStorageContainerSCC",
       "address": "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
-      "code": "https://etherscan.deth.net/address/0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
       "upgradeability": {
         "type": "immutable"
       },
@@ -805,7 +769,6 @@
     {
       "name": "TssDelegation",
       "address": "0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A",
-      "code": "https://etherscan.deth.net/address/0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A,0x7126F676ac359eCE8D5244120FF9E78eD3222246",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7126F676ac359eCE8D5244120FF9E78eD3222246",
@@ -824,7 +787,6 @@
     {
       "name": "Delegation",
       "address": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
-      "code": "https://etherscan.deth.net/address/0xeA4F1fE4928f1f83a450899C068bcd455BaF4798,0xAdA69A18B30B3B9235AB2748116bB9195e16aDba",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xAdA69A18B30B3B9235AB2748116bB9195e16aDba",

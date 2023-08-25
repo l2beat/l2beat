@@ -8,7 +8,6 @@
     {
       "name": "Emergency Multisig",
       "address": "0x23f8008159C0427458b948c3DD7795c6DBE8236F",
-      "code": "https://etherscan.deth.net/address/0x23f8008159C0427458b948c3DD7795c6DBE8236F,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -42,7 +41,6 @@
     {
       "name": "Resume Multisig",
       "address": "0x62415C92528C7d86Fd3f82D3fc75c2F66Bb9389a",
-      "code": "https://etherscan.deth.net/address/0x62415C92528C7d86Fd3f82D3fc75c2F66Bb9389a,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -76,7 +74,6 @@
     {
       "name": "Lister Multisig",
       "address": "0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e",
-      "code": "https://etherscan.deth.net/address/0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -98,7 +95,6 @@
     {
       "name": "DefiBridgeProxy",
       "address": "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487",
-      "code": "https://etherscan.deth.net/address/0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487",
       "upgradeability": {
         "type": "immutable"
       }
@@ -106,7 +102,6 @@
     {
       "name": "Verifier28x32",
       "address": "0xB656f4219f565b93DF57D531B574E17FE0F25939",
-      "code": "https://etherscan.deth.net/address/0xB656f4219f565b93DF57D531B574E17FE0F25939",
       "upgradeability": {
         "type": "immutable"
       },
@@ -117,7 +112,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
-      "code": "https://etherscan.deth.net/address/0xC5b735d05c26579B701Be9bED253Bb588503B26B",
       "upgradeability": {
         "type": "immutable"
       },
@@ -128,7 +122,6 @@
     {
       "name": "Aztec Multisig",
       "address": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
-      "code": "https://etherscan.deth.net/address/0xE298a76986336686CC3566469e3520d23D1a8aaD,0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
@@ -149,7 +142,6 @@
     {
       "name": "RollupProcessorV2",
       "address": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455",
-      "code": "https://etherscan.deth.net/address/0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455,0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09",

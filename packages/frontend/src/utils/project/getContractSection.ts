@@ -18,6 +18,7 @@ import {
   TechnologyContractLinks,
 } from '../../components/project/ContractEntry'
 import { ContractsSectionProps } from '../../components/project/ContractsSection'
+import { languageJoin } from '../utils'
 import { hasArchitectureImage } from './hasArchitectureImage'
 
 export function getContractSection(
@@ -307,19 +308,6 @@ function makeTechnologyContract(
   }
 
   return result
-}
-
-function languageJoin(items?: string[]) {
-  if (!items || items.length === 0) {
-    return undefined
-  }
-  if (items.length === 1) {
-    return items[0]
-  }
-  items = [...items]
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const last = items.pop()!
-  return `${items.join(', ')} and ${last}`
 }
 
 function isContractUnverified(

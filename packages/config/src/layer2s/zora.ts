@@ -34,7 +34,7 @@ export const zora: Layer2 = {
     description:
       'The Zora Network is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
     purpose: 'Universal, NFTs',
-    provider: 'Optimism',
+    provider: 'OP Stack',
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],

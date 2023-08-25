@@ -1,10 +1,10 @@
 import Router from '@koa/router'
 import {
   AssetId,
+  AssetType,
   branded,
   ChainId,
   ProjectId,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
@@ -84,7 +84,7 @@ export function createTvlRouter(
             chainId: z.string(),
             projectId: branded(z.string(), ProjectId),
             assetId: branded(z.string(), AssetId),
-            assetType: branded(z.string(), ValueType),
+            assetType: branded(z.string(), AssetType),
           }),
         }),
         async (ctx) => {
@@ -114,6 +114,25 @@ export function createTvlRouter(
         },
       ),
     )
+
+    router.get('/api/project-assets-breakdown', async (ctx) => {
+      const projectAssetsBreakdown =
+        await detailedTvlController.getProjectTokenBreakdownApiResponse()
+
+      if (projectAssetsBreakdown.result === 'error') {
+        if (projectAssetsBreakdown.error === 'NO_DATA') {
+          ctx.status = 404
+        }
+
+        if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
+          ctx.status = 422
+        }
+
+        return
+      }
+
+      ctx.body = projectAssetsBreakdown.data
+    })
   }
 
   return router

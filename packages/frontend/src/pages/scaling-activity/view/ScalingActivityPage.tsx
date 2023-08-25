@@ -12,12 +12,15 @@ import { About } from '../../../components/About'
 import { ActivityHeader } from '../../../components/header/ActivityHeader'
 import { ScalingNavigationTabs } from '../../../components/navigation-tabs/ScalingNavigationTabs'
 import { PageContent } from '../../../components/PageContent'
-import { ActivityView, ActivityViewProps } from './ActivityView'
+import {
+  ScalingActivityView,
+  ScalingActivityViewProps,
+} from './ScalingActivityView'
 
 export interface ActivityPageProps {
   scalingFactor: string
   apiEndpoint: string
-  activityView: ActivityViewProps
+  activityView: ScalingActivityViewProps
   footer: FooterProps
   navbar: NavbarProps
   showActivity: boolean
@@ -44,7 +47,7 @@ export function ActivityPage(props: ActivityPageProps) {
             hasActivity
             milestones={props.milestones}
           />
-          <ActivityView {...props.activityView} />
+          <ScalingActivityView {...props.activityView} />
           <About />
         </main>
       </PageContent>

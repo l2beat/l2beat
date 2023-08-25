@@ -4,7 +4,6 @@ import {
   EthereumAddress,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -89,6 +88,6 @@ function fakeExternalToken(assetId: AssetId, sinceTimestamp: UnixTime): Token {
     sinceTimestamp,
     premintHolderAddresses: [],
     chainId: ChainId.ARBITRUM,
-    type: ValueType.EBV,
+    type: 'EBV',
   }
 }

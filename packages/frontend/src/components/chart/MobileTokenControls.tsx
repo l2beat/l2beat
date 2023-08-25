@@ -22,9 +22,9 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
   const parts = getParts(tokens)
 
   return (
-    <div className="md:hidden">
+    <div className="md:hidden" data-role="chart-token-mobile-element">
       <div className="flex items-center gap-x-4">
-        <span>View other tokens</span>
+        <span>View tokens</span>
 
         <div className="rounded-lg bg-gray-100 px-1 py-1 dark:bg-gray-750">
           <div data-role="chart-token-toggle">
@@ -35,7 +35,7 @@ export function MobileTokenControls({ tokens }: MobileTokenControlsProps) {
                   <ExpandIcon />
                 </div>
               }
-              title="Chose a token"
+              title="Choose a token"
               closeButtonText="Close tokens"
             >
               <div className="flex w-full flex-col gap-6">

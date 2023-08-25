@@ -16,6 +16,7 @@ import {
   TVLBreakdownProps,
 } from '../../../components/TVLBreakdown'
 import { RiskValues } from '../../../utils/risks/types'
+import { formatUSD } from '../../../utils/utils'
 
 export interface ProjectHeaderProps {
   title: string
@@ -110,7 +111,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       value: !props.isUpcoming ? (
         <StatWithChange
           className="font-bold"
-          stat={props.tvlStats.tvl}
+          stat={formatUSD(props.tvlStats.tvl)}
           change={props.tvlStats.tvlChange}
         />
       ) : (

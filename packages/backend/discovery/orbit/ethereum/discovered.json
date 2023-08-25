@@ -8,7 +8,6 @@
     {
       "name": "ETH Vault",
       "address": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
-      "code": "https://etherscan.deth.net/address/0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a,0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454",
       "upgradeability": {
         "type": "call implementation proxy",
         "implementation": "0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454"
@@ -54,7 +53,6 @@
       "name": "USDT Farm",
       "address": "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9,0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
@@ -70,7 +68,6 @@
       "name": "USDC Farm",
       "address": "0x830433dE03ABedE062660CC629e1A2c714272474",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0x830433dE03ABedE062660CC629e1A2c714272474,0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
@@ -86,7 +83,6 @@
       "name": "DAI Farm",
       "address": "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0,0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
@@ -102,7 +98,6 @@
       "name": "WBTC Farm",
       "address": "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
       "unverified": true,
-      "code": "https://etherscan.deth.net/address/0xd910f6F23889919fAd9C8cE3171dd557cE0308Da,0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdbF3C7e0a1493B81B295547ae3D0711417481A55",
@@ -117,7 +112,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xFb504CD4eD46024B83c4337044995CF112205f18",
-      "code": "https://etherscan.deth.net/address/0xFb504CD4eD46024B83c4337044995CF112205f18",
       "upgradeability": {
         "type": "immutable"
       },
