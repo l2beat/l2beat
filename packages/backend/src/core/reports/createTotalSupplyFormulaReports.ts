@@ -1,5 +1,6 @@
 import { assert, AssetId, ChainId, ProjectId, Token } from '@l2beat/shared-pure'
 
+import { CirculatingSupplyRecord } from '../../peripherals/database/CirculatingSupplyRepository'
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'
 import { TotalSupplyRecord } from '../../peripherals/database/TotalSupplyRepository'
@@ -7,7 +8,7 @@ import { BalancePerProject, createReport } from './createReport'
 
 export function createTotalSupplyFormulaReports(
   prices: PriceRecord[],
-  totalSupplies: TotalSupplyRecord[],
+  totalSupplies: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],
   projectId: ProjectId,
   chainId: ChainId,
@@ -40,7 +41,7 @@ export function createTotalSupplyFormulaReports(
 
 function transformBalances(
   projectId: ProjectId,
-  totalSupplies: TotalSupplyRecord[],
+  totalSupplies: (TotalSupplyRecord | CirculatingSupplyRecord)[],
   tokens: Token[],
   chainId: ChainId,
 ): BalancePerProject[] {
@@ -59,10 +60,15 @@ function transformBalances(
     const chainIdsMatch = assetSupplies.every((b) => b.chainId === chainId)
     assert(chainIdsMatch, 'ChainIds do not match for a given asset balance')
 
-    const totalBalance = assetSupplies.reduce(
-      (acc, { totalSupply }) => acc + totalSupply,
-      0n,
-    )
+    const totalBalance = assetSupplies
+      .map((s) =>
+        'totalSupply' in s
+          ? s.totalSupply
+          : 'circulatingSupply' in s
+          ? s.circulatingSupply
+          : 0n,
+      )
+      .reduce((acc, totalSupply) => acc + totalSupply, 0n)
 
     result.push({
       projectId,

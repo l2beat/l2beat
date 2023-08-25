@@ -120,7 +120,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     sinceTimestamp: new UnixTime(1626958493),
     category: 'stablecoin',
     bucket: 'NMV',
-    formula: 'totalSupply',
+    formula: 'circulatingSupply',
   },
   {
     id: AssetId('arbitrum:gains-gains-network'),

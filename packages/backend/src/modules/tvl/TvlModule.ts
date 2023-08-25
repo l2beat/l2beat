@@ -17,6 +17,8 @@ import { AggregatedReportStatusRepository } from '../../peripherals/database/Agg
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
+import { CirculatingSupplyRepository } from '../../peripherals/database/CirculatingSupplyRepository'
+import { CirculatingSupplyStatusRepository } from '../../peripherals/database/CirculatingSupplyStatusRepository'
 import { PriceRepository } from '../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
@@ -59,6 +61,14 @@ export function createTvlModule(
     balanceStatusRepository: new BalanceStatusRepository(database, logger),
     totalSupplyRepository: new TotalSupplyRepository(database, logger),
     totalSupplyStatusRepository: new TotalSupplyStatusRepository(
+      database,
+      logger,
+    ),
+    circulatingSupplyRepository: new CirculatingSupplyRepository(
+      database,
+      logger,
+    ),
+    circulatingSupplyStatusRepository: new CirculatingSupplyStatusRepository(
       database,
       logger,
     ),

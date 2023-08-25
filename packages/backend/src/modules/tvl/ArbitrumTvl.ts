@@ -1,15 +1,23 @@
-import { ArbiscanClient, HttpClient, Logger } from '@l2beat/shared'
+import {
+  ArbiscanClient,
+  CoingeckoClient,
+  HttpClient,
+  Logger,
+} from '@l2beat/shared'
 import { ChainId, ProjectId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
+import { CirculatingSupplyFormulaUpdater } from '../../core/assets/CirculatingSupplyFormulaUpdater'
 import { TotalSupplyFormulaUpdater } from '../../core/assets/TotalSupplyFormulaUpdater'
 import { BalanceUpdater } from '../../core/balances/BalanceUpdater'
 import { ArbitrumBalanceProvider } from '../../core/balances/providers/ArbitrumBalanceProvider'
 import { BlockNumberUpdater } from '../../core/BlockNumberUpdater'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
+import { CirculatingSupplyUpdater } from '../../core/totalSupply/CirculatingSupplyUpdater'
 import { ArbitrumTotalSupplyProvider } from '../../core/totalSupply/providers/ArbitrumTotalSupplyProvider'
+import { CoingeckoCirculatingSupplyProvider } from '../../core/totalSupply/providers/CoingeckoCirculatingSupplyProvider'
 import { TotalSupplyUpdater } from '../../core/totalSupply/TotalSupplyUpdater'
 import { ArbitrumMulticallClient } from '../../peripherals/arbitrum/multicall/ArbitrumMulticall'
 import { EthereumClient } from '../../peripherals/ethereum/EthereumClient'
@@ -30,12 +38,11 @@ export function createArbitrumTvlSubmodule(
   }
 
   // #region peripherals
+  const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
   const arbitrumProvider = new providers.JsonRpcProvider(
     config.tvl.arbitrum.providerUrl,
     'arbitrum',
   )
-
-  console.log(config.tvl.arbitrum.providerUrl)
 
   const arbiscanClient = new ArbiscanClient(
     http,
@@ -110,6 +117,37 @@ export function createArbitrumTvlSubmodule(
     config.tvl.arbitrum.minBlockTimestamp,
   )
 
+  const circulatingSupplyTokens = config.tokens.filter(
+    (t) => t.chainId === ChainId.ARBITRUM && t.formula === 'circulatingSupply',
+  )
+
+  const coingeckoCirculatingSupplyProvider =
+    new CoingeckoCirculatingSupplyProvider(coingeckoClient, ChainId.ARBITRUM)
+
+  const circulatingSupplyUpdater = new CirculatingSupplyUpdater(
+    coingeckoCirculatingSupplyProvider,
+    db.circulatingSupplyRepository,
+    db.circulatingSupplyStatusRepository,
+    clock,
+    circulatingSupplyTokens,
+    logger,
+    ChainId.ARBITRUM,
+    config.tvl.arbitrum.minBlockTimestamp,
+  )
+
+  const circulatingSupplyFormulaUpdater = new CirculatingSupplyFormulaUpdater(
+    priceUpdater,
+    circulatingSupplyUpdater,
+    db.reportRepository,
+    db.reportStatusRepository,
+    ProjectId.ARBITRUM,
+    ChainId.ARBITRUM,
+    clock,
+    circulatingSupplyTokens,
+    logger,
+    config.tvl.arbitrum.minBlockTimestamp,
+  )
+
   // #endregion
 
   const start = async () => {
@@ -120,12 +158,13 @@ export function createArbitrumTvlSubmodule(
     await arbitrumBalanceUpdater.start()
     await totalSupplyUpdater.start()
     await totalSupplyFormulaUpdater.start()
+    await circulatingSupplyFormulaUpdater.start()
 
     logger.info('Started')
   }
 
   return {
-    updaters: [totalSupplyFormulaUpdater],
+    updaters: [totalSupplyFormulaUpdater, circulatingSupplyFormulaUpdater],
     start,
   }
 }
