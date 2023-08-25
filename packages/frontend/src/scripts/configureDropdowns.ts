@@ -18,7 +18,17 @@ export function configureDropdowns() {
       '.Dropdown-Transparent-Item',
     )
 
-    button.addEventListener('click', () => {
+    const closeDropdown = () => {
+      hiddenItems.forEach((item) => {
+        item.classList.add('hidden')
+      })
+      transparentItems.forEach((item) => {
+        item.classList.add('opacity-0')
+        item.classList.add('pointer-events-none')
+      })
+    }
+
+    const openDropdown = () => {
       hiddenItems.forEach((item) => {
         item.classList.toggle('hidden')
       })
@@ -26,9 +36,21 @@ export function configureDropdowns() {
         item.classList.toggle('opacity-0')
         item.classList.toggle('pointer-events-none')
       })
-
       onResize(dropdown, hiddenItems, transparentItems)
+    }
+
+    button.addEventListener('click', () => {
+      openDropdown()
     })
+
+    document.addEventListener('click', (event) => {
+      const isClickInsideDropdown = dropdown.contains(event.target as Node)
+
+      if (!isClickInsideDropdown) {
+        closeDropdown()
+      }
+    })
+
     window.addEventListener('resize', () => {
       onResize(dropdown, hiddenItems, transparentItems)
     })
