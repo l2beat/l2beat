@@ -243,7 +243,7 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
       ),
     },
     {
-      question: 'What happened to Optmisitic Chains?',
+      question: 'What happened to Optimistic Chains?',
       answer: 'They got renamed to Optimiums for clarity.',
     },
     {
