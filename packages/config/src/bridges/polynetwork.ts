@@ -11,7 +11,7 @@ const isPaused = discovery.getContractValue<boolean>(
   'EthCrossChainManager',
   'paused',
 )
-const warningText = isPaused ? 'The bridge is currently paused.' : ''
+const warningText = isPaused ? 'The bridge is currently paused.' : undefined
 
 export const polynetwork: Bridge = {
   type: 'bridge',
