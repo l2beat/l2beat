@@ -18,7 +18,17 @@ export function configureDropdowns() {
       '.Dropdown-Transparent-Item',
     )
 
-    const toggleDropdown = () => {
+    const closeDropdown = () => {
+      hiddenItems.forEach((item) => {
+        item.classList.add('hidden')
+      })
+      transparentItems.forEach((item) => {
+        item.classList.add('opacity-0')
+        item.classList.add('pointer-events-none')
+      })
+    }
+
+    const openDropdown = () => {
       hiddenItems.forEach((item) => {
         item.classList.toggle('hidden')
       })
@@ -30,15 +40,14 @@ export function configureDropdowns() {
     }
 
     button.addEventListener('click', () => {
-      toggleDropdown()
+      openDropdown()
     })
 
     document.addEventListener('click', (event) => {
       const isClickInsideDropdown = dropdown.contains(event.target as Node)
-      const isClickOnButton = button.contains(event.target as Node)
 
-      if (!isClickInsideDropdown && !isClickOnButton) {
-        toggleDropdown()
+      if (!isClickInsideDropdown) {
+        closeDropdown()
       }
     })
 
