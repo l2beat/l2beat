@@ -6,6 +6,7 @@ interface TogglableDropdownProps {
   button: ReactNode
   role: string
   children: ReactNode
+  centered?: boolean
 }
 
 export function TogglableDropdown(props: TogglableDropdownProps) {
@@ -19,7 +20,7 @@ export function TogglableDropdown(props: TogglableDropdownProps) {
       >
         {props.button}
       </div>
-      <TogglableDropdownContent dataRole={props.role}>
+      <TogglableDropdownContent dataRole={props.role} centered={props.centered}>
         {props.children}
       </TogglableDropdownContent>
     </div>
@@ -29,14 +30,15 @@ export function TogglableDropdown(props: TogglableDropdownProps) {
 interface TogglableDropdownContentProps {
   children: ReactNode
   dataRole: string
+  centered?: boolean
 }
 
 function TogglableDropdownContent(props: TogglableDropdownContentProps) {
   return (
     <div
-      className="Dropdown-Transparent-Item pointer-events-none absolute z-60 opacity-0 transition-opacity duration-300"
+      className="Dropdown-Transparent-Item pointer-events-none absolute z-60 mr-8 opacity-0 transition-opacity duration-300"
       data-role={props.dataRole}
-      data-centered="true"
+      data-centered={props.centered}
     >
       <hr className="h-1.5 border-t-0" />
       <div className="rounded-lg bg-gray-200 p-6 dark:bg-gray-750">

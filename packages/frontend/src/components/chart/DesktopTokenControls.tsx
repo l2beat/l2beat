@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ChevronDownIcon } from '../icons'
+import { ArrowRightIcon, ChevronDownIcon } from '../icons'
 import { TogglableDropdown } from '../TogglableDropdown'
 import { VerticalSeparator } from '../VerticalSeparator'
 import {
@@ -40,6 +40,19 @@ export function DesktopTokenControls({ tokens }: DesktopTokenControlsProps) {
           role="chart-token-modal"
         >
           <TokenList tokens={tokens} />
+          <div className="mt-6 flex items-center justify-center gap-1">
+            <p className="text-sm font-medium text-black dark:text-white/80">
+              Can't find a token?
+            </p>
+            <a
+              href="https://forms.gle/fQFsC5g1LgG5z12T7"
+              target="_blank"
+              className="flex flex-wrap items-center gap-1 text-sm font-bold text-blue-700 underline dark:text-blue-500"
+            >
+              Request it here
+              <ArrowRightIcon className="fill-current" />
+            </a>
+          </div>
         </TogglableDropdown>
       </div>
     </div>
@@ -68,20 +81,25 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
 
   return (
     <div className="flex flex-col gap-3">
-      {parts.map((p, i) => (
-        <div key={i}>
-          <div className={`text-sm font-bold ${p.titleColor}`}>{p.title}</div>
-          <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
-          <div
-            className="grid grid-cols-3 gap-y-3 gap-x-6"
-            data-role="chart-token-controls"
-          >
-            {p.tokens.map((token, j) => (
-              <TokenCell token={token} key={j} />
-            ))}
-          </div>
-        </div>
-      ))}
+      {parts.map(
+        (p, i) =>
+          p.tokens.length > 0 && (
+            <div key={i}>
+              <div className={`text-sm font-bold ${p.titleColor}`}>
+                {p.title}
+              </div>
+              <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
+              <div
+                className="flex w-full max-w-4xl flex-wrap gap-2"
+                data-role="chart-token-controls"
+              >
+                {p.tokens.map((token, j) => (
+                  <TokenCell token={token} key={j} />
+                ))}
+              </div>
+            </div>
+          ),
+      )}
     </div>
   )
 }
