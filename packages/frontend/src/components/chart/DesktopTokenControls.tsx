@@ -41,7 +41,7 @@ export function DesktopTokenControls({ tokens }: DesktopTokenControlsProps) {
         >
           <TokenList tokens={tokens} />
           <div className="mt-6 flex items-center justify-center gap-1">
-            <p className="text-sm font-medium text-white/80">
+            <p className="text-sm font-medium text-black dark:text-white/80">
               Can't find a token?
             </p>
             <a
