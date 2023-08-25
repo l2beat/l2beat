@@ -1,16 +1,10 @@
-interface TopBarVariantData {
-  variant: 'gitcoin' | 'l2warsaw'
-  lastBannerChangeTime: number
-}
-
-const localStorageKey = 'topBarVariantData'
+import { LocalStorage, TopBarVariantData } from './LocalStorage'
 
 const gitcoinStartDate = new Date('2023-08-15T12:00:00.000Z')
 const gitcoinEndDate = new Date('2023-08-29T12:00:00.000Z')
 
 export function configureTopBars() {
   const variant = getBannerVariant()
-
   const gitcoinBanner = document.querySelector('.TopBar-Gitcoin')
   const l2warsawBanner = document.querySelector('.TopBar-L2Warsaw')
 
@@ -59,7 +53,7 @@ function getBannerVariant(): 'gitcoin' | 'l2warsaw' {
   }
 
   const presentTopBarData = readStorage()
-
+  console.log('present', presentTopBarData)
   const newTopBarData: TopBarVariantData = {
     variant: 'l2warsaw',
     lastBannerChangeTime: now.getTime(),
@@ -107,14 +101,9 @@ function hasDayPassedSince(sinceDate: Date) {
 }
 
 function writeStorage(data: TopBarVariantData) {
-  localStorage.setItem(localStorageKey, JSON.stringify(data))
+  LocalStorage.setItem('top-bar-variant-data', data)
 }
 
-function readStorage(): TopBarVariantData | null {
-  const data = localStorage.getItem(localStorageKey)
-  if (!data) {
-    return null
-  }
-
-  return JSON.parse(data) as TopBarVariantData
+function readStorage(): TopBarVariantData | undefined {
+  return LocalStorage.getItem('top-bar-variant-data')
 }

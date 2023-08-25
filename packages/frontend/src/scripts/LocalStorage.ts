@@ -1,13 +1,22 @@
 import { z } from 'zod'
 
+export type TopBarVariantData = z.infer<typeof TopBarVariantData>
+export const TopBarVariantData = z.object({
+  variant: z.union([z.literal('gitcoin'), z.literal('l2warsaw')]),
+  lastBannerChangeTime: z.number(),
+})
+
 const LOCAL_STORAGE_PREFIX = 'l2beat'
 
+const strictBoolean = z.enum(['true', 'false']).transform((x) => x === 'true')
+const stringAsObject = <T extends z.AnyZodObject>(schema: T) =>
+  z.string().transform((x) => schema.parse(JSON.parse(x)) as z.infer<T>)
+
 const LocalStorageKeySchemas = {
-  'canonical-bridges-checked': z
-    .string()
-    .transform((x) => x === 'true')
-    .optional(),
-  'canonical-bridges-filter': z.string(),
+  theme: z.enum(['light', 'dark']),
+  'canonical-bridges-checked': strictBoolean,
+  'l2-warsaw-floating-banner': strictBoolean,
+  'top-bar-variant-data': stringAsObject(TopBarVariantData),
 } as const
 
 type LocalStorageKeys = keyof typeof LocalStorageKeySchemas
@@ -16,15 +25,24 @@ type LocalStorageKeyType<T extends LocalStorageKeys> = z.infer<
 >
 
 export const LocalStorage = {
-  setItem: (key: LocalStorageKeys, value: string) => {
-    localStorage.setItem(`${LOCAL_STORAGE_PREFIX}-${key}`, value)
+  setItem: <T extends LocalStorageKeys>(
+    key: T,
+    value: LocalStorageKeyType<T>,
+  ) => {
+    localStorage.setItem(
+      `${LOCAL_STORAGE_PREFIX}-${key}`,
+      JSON.stringify(value),
+    )
   },
 
-  getItem: <T extends LocalStorageKeys>(key: T): LocalStorageKeyType<T> => {
+  getItem: <T extends LocalStorageKeys>(
+    key: T,
+  ): LocalStorageKeyType<T> | undefined => {
     const keySchema = LocalStorageKeySchemas[key]
-    const result = keySchema.parse(
-      localStorage.getItem(`${LOCAL_STORAGE_PREFIX}-${key}`),
-    )
+    const value = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}-${key}`)
+    if (value === null) return undefined
+
+    const result = keySchema.parse(value)
     return result as unknown as LocalStorageKeyType<T>
   },
 }
