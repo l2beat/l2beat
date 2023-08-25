@@ -139,7 +139,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
   {
     id: AssetId('arbitrum:joe-joe'),
     name: 'JOE',
-    symbol: 'joe',
+    symbol: 'JOE',
     decimals: 18,
     iconUrl:
       'https://assets.coingecko.com/coins/images/17569/large/traderjoe.png?1685690062',
@@ -150,6 +150,33 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     bucket: 'EBV',
     formula: 'totalSupply',
   },
+  {
+      id: AssetId('arbitrum:btcb-bitcoin-avalanche-bridged-btc-b'),
+      name: 'Bitcoin Avalanche Bridged',
+      symbol: 'BTC.b',
+      decimals: 8,
+      iconUrl: 'https://assets.coingecko.com/coins/images/26115/large/btcb.png?1655921693',
+      address: EthereumAddress('0x2297aebd383787a160dd0d9f71508148769342e3'),
+      coingeckoId: CoingeckoId('bitcoin-avalanche-bridged-btc-b'),
+      sinceTimestamp: new UnixTime(1668644839),
+      category: 'other',
+      bucket: 'EBV',
+      formula: 'totalSupply',
+  },
+  {
+      id: AssetId('arbitrum:beefy-beefy-finance'),
+      name: 'Beefy',
+symbol: 'BIFI',
+decimals: 18,
+iconUrl: 'https://assets.coingecko.com/coins/images/12704/large/token.png?1601876182',
+address: EthereumAddress('0x99c409e5f62e4bd2ac142f17cafb6810b8f0baae'),
+coingeckoId: CoingeckoId('beefy-finance'),
+sinceTimestamp: new UnixTime(1632385561),
+      category: 'other',
+      bucket: 'EBV',
+      formula: 'totalSupply',
+  }
+
 ]
 
 export const arbitrum: Layer2 = {
