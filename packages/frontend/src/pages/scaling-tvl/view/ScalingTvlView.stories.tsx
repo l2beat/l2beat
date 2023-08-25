@@ -171,7 +171,7 @@ const meta = {
         sevenDayChange: '+0.00%',
         marketShare: '0.00%',
         purpose: 'Universal',
-        technology: 'Optimium',
+        category: 'Optimium',
         stage: undefined,
       },
       {
@@ -953,7 +953,7 @@ const meta = {
         sevenDayChange: '-10.62%',
         marketShare: '1.27%',
         purpose: 'Universal',
-        technology: 'Optimium',
+        category: 'Optimium',
         stage: undefined,
       },
       {
