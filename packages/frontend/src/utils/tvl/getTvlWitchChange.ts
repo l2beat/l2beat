@@ -7,7 +7,7 @@ export function getTvlWithChange(
 ) {
   const data = charts?.hourly.data ?? []
   const tvl = data.at(-1)?.[1] ?? 0
-  const tvlSevenDaysAgo = data[0][1]
+  const tvlSevenDaysAgo = data.at(0)?.[1] ?? 0
   const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
   return { tvl, tvlWeeklyChange }
 }
@@ -23,10 +23,10 @@ export function getDetailedTvlWithChange(
     native: data.at(-1)?.[4] ?? 0,
   }
   const partsSevenDaysAgo = {
-    tvl: data[0][1],
-    canonical: data[0][2],
-    external: data[0][3] ?? 0,
-    native: data[0][4] ?? 0,
+    tvl: data.at(0)?.[1] ?? 0,
+    canonical: data.at(0)?.[2] ?? 0,
+    external: data.at(0)?.[3] ?? 0,
+    native: data.at(0)?.[4] ?? 0,
   }
   const partsWeeklyChange = {
     tvl: getPercentageChange(parts.tvl, partsSevenDaysAgo.tvl),
