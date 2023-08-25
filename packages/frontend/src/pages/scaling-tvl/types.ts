@@ -7,6 +7,7 @@ export interface ScalingTvlViewEntry {
   name: string
   slug: string
   riskValues: RiskValues
+  category: Layer2['display']['category']
   provider?: Layer2['display']['provider']
   warning?: string
   isArchived?: boolean
@@ -20,6 +21,5 @@ export interface ScalingTvlViewEntry {
   sevenDayChange?: string
   marketShare?: string
   purpose: string
-  technology: string
   stage?: StageConfig
 }

@@ -8,7 +8,6 @@
     {
       "name": "MerkleDistributor",
       "address": "0x01d3348601968aB85b4bb028979006eac235a588",
-      "code": "https://etherscan.deth.net/address/0x01d3348601968aB85b4bb028979006eac235a588,0xFE1d5439625a9524a80F66670733129E80E0C112",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xFE1d5439625a9524a80F66670733129E80E0C112",
@@ -67,7 +66,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73",
-      "code": "https://etherscan.deth.net/address/0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73",
       "upgradeability": {
         "type": "immutable"
       }
@@ -75,7 +73,6 @@
     {
       "name": "CpuOods",
       "address": "0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5",
-      "code": "https://etherscan.deth.net/address/0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5",
       "upgradeability": {
         "type": "immutable"
       }
@@ -83,7 +80,6 @@
     {
       "name": "MerkleStatementContract",
       "address": "0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830",
-      "code": "https://etherscan.deth.net/address/0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830",
       "upgradeability": {
         "type": "immutable"
       },
@@ -94,7 +90,6 @@
     {
       "name": "ClaimsProxy",
       "address": "0x0fd829C3365A225FB9226e75c97c3A114bD3199e",
-      "code": "https://etherscan.deth.net/address/0x0fd829C3365A225FB9226e75c97c3A114bD3199e",
       "upgradeability": {
         "type": "immutable"
       },
@@ -108,7 +103,6 @@
     {
       "name": "PedersenHashPointsYColumn",
       "address": "0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92",
-      "code": "https://etherscan.deth.net/address/0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92",
       "upgradeability": {
         "type": "immutable"
       },
@@ -117,7 +111,6 @@
     {
       "name": "CairoBootloaderProgram",
       "address": "0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D",
-      "code": "https://etherscan.deth.net/address/0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D",
       "upgradeability": {
         "type": "immutable"
       },
@@ -353,7 +346,6 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0x1F5459AA7857291112A8172ae1328248948d9d13",
-      "code": "https://etherscan.deth.net/address/0x1F5459AA7857291112A8172ae1328248948d9d13",
       "upgradeability": {
         "type": "immutable"
       }
@@ -361,7 +353,6 @@
     {
       "name": "TreasuryProxyAdmin",
       "address": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
-      "code": "https://etherscan.deth.net/address/0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
       "upgradeability": {
         "type": "immutable"
       },
@@ -373,7 +364,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0x4922f8750DFd040954b44F23980160342e308863",
-      "code": "https://etherscan.deth.net/address/0x4922f8750DFd040954b44F23980160342e308863",
       "upgradeability": {
         "type": "immutable"
       },
@@ -399,7 +389,6 @@
     {
       "name": "EcdsaPointsXColumn",
       "address": "0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5",
-      "code": "https://etherscan.deth.net/address/0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5",
       "upgradeability": {
         "type": "immutable"
       },
@@ -408,7 +397,6 @@
     {
       "name": "LiquidityStaking",
       "address": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941",
-      "code": "https://etherscan.deth.net/address/0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941,0xBE607a58206180fef691bf1B5aE9670174284388",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xBE607a58206180fef691bf1B5aE9670174284388",
@@ -499,7 +487,6 @@
     {
       "name": "PerpetualEscapeVerifier",
       "address": "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD",
-      "code": "https://etherscan.deth.net/address/0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD",
       "upgradeability": {
         "type": "immutable"
       },
@@ -511,7 +498,6 @@
     {
       "name": "Treasury",
       "address": "0x639192D54431F8c816368D3FB4107Bc168d0E871",
-      "code": "https://etherscan.deth.net/address/0x639192D54431F8c816368D3FB4107Bc168d0E871,0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x0AdA60E07717Ab19E4A466f5f0ac68A66e3995Ce",
@@ -525,7 +511,6 @@
     {
       "name": "ShortTimelockExecutor",
       "address": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
-      "code": "https://etherscan.deth.net/address/0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc",
       "upgradeability": {
         "type": "immutable"
       },
@@ -547,7 +532,6 @@
     {
       "name": "SafetyModule",
       "address": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC",
-      "code": "https://etherscan.deth.net/address/0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC,0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A",
@@ -626,7 +610,6 @@
     {
       "name": "SafetyModuleProxyAdmin",
       "address": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
-      "code": "https://etherscan.deth.net/address/0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
       "upgradeability": {
         "type": "immutable"
       },
@@ -638,7 +621,6 @@
     {
       "name": "MerkleDistributorProxyAdmin",
       "address": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0",
-      "code": "https://etherscan.deth.net/address/0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0",
       "upgradeability": {
         "type": "immutable"
       },
@@ -650,7 +632,6 @@
     {
       "name": "DydxGovernor",
       "address": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
-      "code": "https://etherscan.deth.net/address/0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -690,7 +671,6 @@
     {
       "name": "GpsStatementVerifier",
       "address": "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
-      "code": "https://etherscan.deth.net/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3",
       "upgradeability": {
         "type": "immutable"
       },
@@ -712,7 +692,6 @@
     {
       "name": "Committee",
       "address": "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
-      "code": "https://etherscan.deth.net/address/0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1",
       "upgradeability": {
         "type": "immutable"
       },
@@ -733,7 +712,6 @@
     {
       "name": "GovernanceStrategy",
       "address": "0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
-      "code": "https://etherscan.deth.net/address/0x90Dfd35F4a0BB2d30CDf66508085e33C353475D9",
       "upgradeability": {
         "type": "immutable"
       },
@@ -746,7 +724,6 @@
     {
       "name": "DydxToken",
       "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
-      "code": "https://etherscan.deth.net/address/0x92D6C1e31e14520e676a687F0a93788B716BEff5",
       "upgradeability": {
         "type": "immutable"
       },
@@ -775,7 +752,6 @@
     {
       "name": "ChainlinkAdapter",
       "address": "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
-      "code": "https://etherscan.deth.net/address/0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
       "upgradeability": {
         "type": "immutable"
       },
@@ -791,7 +767,6 @@
     {
       "name": "PedersenHashPointsXColumn",
       "address": "0x9Bcf13C6b68450B427bfa86698D61901A8a3456D",
-      "code": "https://etherscan.deth.net/address/0x9Bcf13C6b68450B427bfa86698D61901A8a3456D",
       "upgradeability": {
         "type": "immutable"
       },
@@ -800,7 +775,6 @@
     {
       "name": "PriorityExecutor",
       "address": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
-      "code": "https://etherscan.deth.net/address/0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -824,7 +798,6 @@
     {
       "name": "LiquidityStakingProxyAdmin",
       "address": "0xAc5D8bCD13da463bea96c75f9085c4e40037F790",
-      "code": "https://etherscan.deth.net/address/0xAc5D8bCD13da463bea96c75f9085c4e40037F790",
       "upgradeability": {
         "type": "immutable"
       },
@@ -836,7 +809,6 @@
     {
       "name": "TreasuryVester",
       "address": "0xb9431E19B29B952d9358025f680077C3Fd37292f",
-      "code": "https://etherscan.deth.net/address/0xb9431E19B29B952d9358025f680077C3Fd37292f",
       "upgradeability": {
         "type": "immutable"
       },
@@ -854,7 +826,6 @@
     {
       "name": "EcdsaPointsYColumn",
       "address": "0xD14fd39630Ec941C3bA6C791E3af9E0027013A15",
-      "code": "https://etherscan.deth.net/address/0xD14fd39630Ec941C3bA6C791E3af9E0027013A15",
       "upgradeability": {
         "type": "immutable"
       },
@@ -863,7 +834,6 @@
     {
       "name": "StarkPerpetual",
       "address": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
-      "code": "https://etherscan.deth.net/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8,0x2C0df87E073755139101b35c0A51e065291cc2d3,0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5,0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545,0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0,0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3",
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
@@ -923,7 +893,6 @@
     {
       "name": "MerklePauserExecutor",
       "address": "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52",
-      "code": "https://etherscan.deth.net/address/0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52",
       "upgradeability": {
         "type": "immutable"
       },
@@ -945,7 +914,6 @@
     {
       "name": "CpuFrilessVerifier",
       "address": "0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3",
-      "code": "https://etherscan.deth.net/address/0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3",
       "upgradeability": {
         "type": "immutable"
       }
@@ -953,7 +921,6 @@
     {
       "name": "LongTimelockExecutor",
       "address": "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B",
-      "code": "https://etherscan.deth.net/address/0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B",
       "upgradeability": {
         "type": "immutable"
       },
@@ -975,7 +942,6 @@
     {
       "name": "MemoryPageFactRegistry",
       "address": "0xEfbCcE4659db72eC6897F46783303708cf9ACef8",
-      "code": "https://etherscan.deth.net/address/0xEfbCcE4659db72eC6897F46783303708cf9ACef8",
       "upgradeability": {
         "type": "immutable"
       },
@@ -986,7 +952,6 @@
     {
       "name": "FinalizableGpsFactAdapter",
       "address": "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
-      "code": "https://etherscan.deth.net/address/0xF23754231BC4cE8C8E92C3bADfB37d922d46053C",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1001,7 +966,6 @@
     {
       "name": "FriStatementContract",
       "address": "0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1",
-      "code": "https://etherscan.deth.net/address/0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1012,7 +976,6 @@
     {
       "name": "StarkExRemoverGovernorV2",
       "address": "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
-      "code": "https://etherscan.deth.net/address/0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
       "upgradeability": {
         "type": "immutable"
       },

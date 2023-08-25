@@ -10,6 +10,7 @@ import {
 import { ConfigReader } from './discovery/config/ConfigReader'
 import { dryRunDiscovery, runDiscovery } from './discovery/runDiscovery'
 import { runInversion } from './inversion/runInversion'
+import { singleDiscovery } from './singleDiscovery'
 
 main().catch((e) => {
   console.error(e)
@@ -23,6 +24,7 @@ async function main() {
 
   await discover(config, logger)
   await invert(config, logger)
+  await singleDiscovery(config, logger)
 }
 
 async function discover(config: DiscoveryCliConfig, logger: Logger) {
@@ -39,11 +41,10 @@ async function discover(config: DiscoveryCliConfig, logger: Logger) {
 
   const http = new HttpClient()
   const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
-  const etherscanClient = new EtherscanLikeClient(
+  const etherscanClient = EtherscanLikeClient.createForDiscovery(
     http,
     chainConfig.etherscanUrl,
     chainConfig.etherscanApiKey,
-    chainConfig.minTimestamp,
   )
   const configReader = new ConfigReader()
 

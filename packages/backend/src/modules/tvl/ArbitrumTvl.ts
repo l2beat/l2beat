@@ -1,5 +1,5 @@
 import { ArbiscanClient, HttpClient, Logger } from '@l2beat/shared'
-import { ChainId, ProjectId, ValueType } from '@l2beat/shared-pure'
+import { ChainId, ProjectId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { ChainId, Hash256, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { ChainId, Hash256, ReportType, UnixTime } from '@l2beat/shared-pure'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
@@ -48,7 +48,7 @@ export class ReportStatusRepository extends BaseRepository {
         config_hash: record.configHash.toString(),
         unix_timestamp: record.timestamp.toDate(),
         chain_id: record.chainId.valueOf(),
-        asset_type: ValueType.TVL.toString(), // TODO(radomski): Remove asset_type from reportStatusTable
+        report_type: 'TVL', // TODO(radomski): Remove report_type from reportStatusTable
       })
     })
     return record.configHash
@@ -96,12 +96,12 @@ export class ReportStatusRepository extends BaseRepository {
   }
 
   async findLatestTimestampOfType(
-    assetType: ValueType,
+    reportType: ReportType,
   ): Promise<UnixTime | undefined> {
     const knex = await this.knex()
     const row = (await knex('reports_status')
       .where({
-        asset_type: assetType.toString(),
+        report_type: reportType,
       })
       .max('unix_timestamp')
       .first()) as NullableDict<Date> | undefined

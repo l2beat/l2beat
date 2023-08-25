@@ -6,7 +6,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { createTotalSupplyFormulaReports } from '../core/reports/createTotalSupplyFormulaReports'
@@ -83,7 +82,7 @@ const TOKENS: Token[] = [
     decimals: 6,
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    bucket: ValueType.EBV,
+    bucket: 'EBV',
     formula: 'totalSupply'
   },
 ]
@@ -127,7 +126,7 @@ function fakeTokenInfo(token: Partial<Token>): Token {
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ARBITRUM,
-    bucket: ValueType.EBV,
+    bucket: 'EBV',
     formula: 'totalSupply',
     ...token,
   }

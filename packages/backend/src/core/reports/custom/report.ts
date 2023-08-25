@@ -2,8 +2,8 @@ import {
   AssetId,
   ChainId,
   ProjectId,
+  ReportType,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { PriceRecord } from '../../../peripherals/database/PriceRepository'
@@ -13,7 +13,7 @@ import { BalancePerProject, createReport } from '../createReport'
 export function createGenCustomTokenReport(
   tokenId: AssetId,
   chainId: ChainId,
-  assetType: ValueType,
+  reportType: ReportType,
   sinceTimestamp: UnixTime,
   projectId: ProjectId,
   tokenBalance: (t: UnixTime) => bigint,
@@ -29,7 +29,7 @@ export function createGenCustomTokenReport(
     const balance: BalancePerProject = {
       chainId: chainId,
       assetId: tokenId,
-      type: assetType,
+      type: reportType,
       balance: tokenBalance(timestamp),
       decimals: tokenDecimals,
       projectId: projectId,

@@ -5,7 +5,6 @@ import {
   DetailedTvlApiCharts,
   ProjectId,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -17,7 +16,7 @@ import {
   groupByProjectIdAndTimestamp,
 } from './detailedTvl'
 import {
-  extractValueTypeSet,
+  extractReportTypeSet,
   generateDetailedTvlApiResponse,
   getProjectChartData,
 } from './generateDetailedTvlApiResponse'
@@ -147,7 +146,7 @@ describe(generateDetailedTvlApiResponse.name, () => {
           projectId,
           usdValue: usdEbv,
           ethValue: ethEbv,
-          valueType: ValueType.EBV,
+          reportType: 'EBV',
         })
 
         result.push({
@@ -155,7 +154,7 @@ describe(generateDetailedTvlApiResponse.name, () => {
           projectId,
           usdValue: usdCbv,
           ethValue: ethCbv,
-          valueType: ValueType.CBV,
+          reportType: 'CBV',
         })
 
         result.push({
@@ -163,7 +162,7 @@ describe(generateDetailedTvlApiResponse.name, () => {
           projectId,
           usdValue: usdNmv,
           ethValue: ethNmv,
-          valueType: ValueType.NMV,
+          reportType: 'NMV',
         })
 
         result.push({
@@ -171,7 +170,7 @@ describe(generateDetailedTvlApiResponse.name, () => {
           projectId,
           usdValue: usdTvl,
           ethValue: ethTvl,
-          valueType: ValueType.TVL,
+          reportType: 'TVL',
         })
       }
     }
@@ -187,7 +186,7 @@ describe(generateDetailedTvlApiResponse.name, () => {
         result.push({
           asset: assetId,
           chainId: ChainId.ARBITRUM, // ignored - not grouped
-          type: ValueType.CBV,
+          reportType: 'CBV',
           amount: 0n, // ignored
           ethValue: 0n, // ignored
           usdValue: balanceUsd,
@@ -200,7 +199,7 @@ describe(generateDetailedTvlApiResponse.name, () => {
   }
 })
 
-describe(extractValueTypeSet.name, () => {
+describe(extractReportTypeSet.name, () => {
   it('fills in missing values', () => {
     const timestamp = UnixTime.now()
     const usdValue = 1_000n
@@ -216,25 +215,25 @@ describe(extractValueTypeSet.name, () => {
         projectId: ProjectId.ARBITRUM,
         usdValue,
         ethValue,
-        valueType: ValueType.TVL,
+        reportType: 'TVL',
       },
       {
         timestamp,
         projectId: ProjectId.ARBITRUM,
         usdValue,
         ethValue,
-        valueType: ValueType.CBV,
+        reportType: 'CBV',
       },
       {
         timestamp,
         projectId: ProjectId.ARBITRUM,
         usdValue,
         ethValue,
-        valueType: ValueType.EBV,
+        reportType: 'EBV',
       },
     ]
 
-    const result = extractValueTypeSet(mockReports)
+    const result = extractReportTypeSet(mockReports)
 
     expect(result).toEqual({
       ebvReport: {

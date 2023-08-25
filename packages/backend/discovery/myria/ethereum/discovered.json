@@ -7,7 +7,6 @@
     {
       "name": "Committee",
       "address": "0x1e601435E181423e7A8430813d7500012a6169cB",
-      "code": "https://etherscan.deth.net/address/0x1e601435E181423e7A8430813d7500012a6169cB",
       "upgradeability": {
         "type": "immutable"
       },
@@ -31,7 +30,6 @@
     {
       "name": "StarkExchange",
       "address": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
-      "code": "https://etherscan.deth.net/address/0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7,0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583,0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12,0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb,0x67e198743BC19fa4757720eDd0e769f8291e1F1D,0x613ee54C54D5548627064B4D648942bF3648f376,0xb2ED005D0278179001a49a9969BB22BA8e98f31F,0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db",
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
@@ -88,7 +86,6 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
-      "code": "https://etherscan.deth.net/address/0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
       "upgradeability": {
         "type": "immutable"
       },
@@ -102,7 +99,6 @@
     {
       "name": "OrderRegistry",
       "address": "0x806d435a82B0381bD884540c2235147c13B97fe6",
-      "code": "https://etherscan.deth.net/address/0x806d435a82B0381bD884540c2235147c13B97fe6",
       "upgradeability": {
         "type": "immutable"
       },

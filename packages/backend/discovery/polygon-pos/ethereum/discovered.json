@@ -8,7 +8,6 @@
     {
       "name": "ERC1155Predicate",
       "address": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
-      "code": "https://etherscan.deth.net/address/0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f,0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3",
@@ -29,7 +28,6 @@
     {
       "name": "CustomPredicate",
       "address": "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35",
-      "code": "https://etherscan.deth.net/address/0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35",
       "upgradeability": {
         "type": "immutable"
       },
@@ -43,7 +41,6 @@
     {
       "name": "ERC20EscrowPredicate",
       "address": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
-      "code": "https://etherscan.deth.net/address/0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
       "upgradeability": {
         "type": "immutable"
       },
@@ -56,7 +53,6 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
-      "code": "https://etherscan.deth.net/address/0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
       "upgradeability": {
         "type": "immutable"
       },
@@ -81,7 +77,6 @@
     {
       "name": "MintableERC1155Predicate",
       "address": "0x2d641867411650cd05dB93B59964536b1ED5b1B7",
-      "code": "https://etherscan.deth.net/address/0x2d641867411650cd05dB93B59964536b1ED5b1B7,0xDb161A896Be50a020B636D6B60DA7c59817412a5",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0xDb161A896Be50a020B636D6B60DA7c59817412a5",
@@ -102,7 +97,6 @@
     {
       "name": "ERC20Predicate",
       "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-      "code": "https://etherscan.deth.net/address/0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf,0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5",
@@ -132,7 +126,6 @@
     {
       "name": "ERC20MintBurnPredicate",
       "address": "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5",
-      "code": "https://etherscan.deth.net/address/0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5",
       "upgradeability": {
         "type": "immutable"
       },
@@ -145,7 +138,6 @@
     {
       "name": "EtherPredicate",
       "address": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
-      "code": "https://etherscan.deth.net/address/0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30,0x54006763154c764da4AF42a8c3cfc25Ea29765D5",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0x54006763154c764da4AF42a8c3cfc25Ea29765D5",
@@ -165,7 +157,6 @@
     {
       "name": "RootChain",
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-      "code": "https://etherscan.deth.net/address/0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287,0x536c55cFe4892E581806e10b38dFE8083551bd03",
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
@@ -189,7 +180,6 @@
     {
       "name": "UnstoppableDomainsPredicate",
       "address": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
-      "code": "https://etherscan.deth.net/address/0x932532aA4c0174b8453839A6E44eE09Cc615F2b7,0x7FBd00c577cAA70318BCF1c6c11e23732823b387",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0x7FBd00c577cAA70318BCF1c6c11e23732823b387",
@@ -210,7 +200,6 @@
     {
       "name": "MintableERC20Predicate",
       "address": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
-      "code": "https://etherscan.deth.net/address/0x9923263fA127b3d1484cFD649df8f1831c2A74e4,0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62",
@@ -230,7 +219,6 @@
     {
       "name": "RootChainManager",
       "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-      "code": "https://etherscan.deth.net/address/0xA0c68C638235ee32657e8f720a23ceC1bFc77C77,0x37D26DC2890b35924b40574BAc10552794771997",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0x37D26DC2890b35924b40574BAc10552794771997",
@@ -271,7 +259,6 @@
     {
       "name": "MerklePatriciaProof",
       "address": "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
-      "code": "https://etherscan.deth.net/address/0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
       "upgradeability": {
         "type": "immutable"
       }
@@ -279,7 +266,6 @@
     {
       "name": "Timelock",
       "address": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-      "code": "https://etherscan.deth.net/address/0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
       "upgradeability": {
         "type": "immutable"
       },
@@ -313,7 +299,6 @@
     {
       "name": "ChainExitERC1155Predicate",
       "address": "0xDB2382413bCb9c2F1B6b62B52238558266361D68",
-      "code": "https://etherscan.deth.net/address/0xDB2382413bCb9c2F1B6b62B52238558266361D68,0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f",
@@ -333,7 +318,6 @@
     {
       "name": "ERC721Predicate",
       "address": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
-      "code": "https://etherscan.deth.net/address/0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD,0xd515C8fF03eC79e7d5B3410c036f738e7f396C90",
       "upgradeability": {
         "type": "Polygon proxy",
         "implementation": "0xd515C8fF03eC79e7d5B3410c036f738e7f396C90",
@@ -354,7 +338,6 @@
     {
       "name": "PolygonMultisig",
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-      "code": "https://etherscan.deth.net/address/0xFa7D2a996aC6350f4b56C043112Da0366a59b74c,0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"

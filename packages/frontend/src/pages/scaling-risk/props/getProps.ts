@@ -5,7 +5,7 @@ import { orderByTvl } from '../../../utils/orderByTvl'
 import { PagesData, Wrapped } from '../../Page'
 import { ScalingRiskPageProps } from '../view/ScalingRiskPage'
 import { getPageMetadata } from './getPageMetadata'
-import { getRiskView } from './getRiskView'
+import { getScalingRiskView } from './getScalingRiskView'
 
 export function getProps(
   config: Config,
@@ -19,7 +19,7 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      riskView: getRiskView(
+      riskView: getScalingRiskView(
         ordering,
         verificationStatus,
         config.features.upcomingRollups,

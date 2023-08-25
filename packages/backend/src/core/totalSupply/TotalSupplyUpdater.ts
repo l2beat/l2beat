@@ -2,11 +2,11 @@ import { Logger } from '@l2beat/shared'
 import {
   assert,
   AssetId,
+  AssetType,
   ChainId,
   Hash256,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
@@ -69,8 +69,8 @@ export class TotalSupplyUpdater {
     return this.chainId
   }
 
-  getValueType() {
-    return ValueType.EBV
+  getAssetType(): AssetType {
+    return 'EBV'
   }
 
   async getTotalSuppliesWhenReady(

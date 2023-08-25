@@ -6,7 +6,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -91,7 +90,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     coingeckoId: CoingeckoId('arbitrum'),
     sinceTimestamp: new UnixTime(1630233600),
     category: 'other',
-    bucket: ValueType.NMV,
+    bucket: 'NMV',
     formula: "circulatingSupply"
   },
   {

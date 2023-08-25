@@ -4,6 +4,7 @@ import { ActiveIcon } from '../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../components/icons/symbols/ArchivedIcon'
 import { UpcomingIcon } from '../../../components/icons/symbols/UpcomingIcon'
 import { ScalingLegend } from '../../../components/ScalingLegend'
+import { RollupsOnlyCheckbox } from '../../../components/table/filters/checkboxes/RollupsOnlyCheckbox'
 import { getScalingRowProps } from '../../../components/table/props/getScalingRowProps'
 import {
   getActiveScalingTvlColumns,
@@ -18,15 +19,21 @@ export interface ScalingTvlViewProps {
   items: ScalingTvlViewEntry[]
   stagesEnabled: boolean
   upcomingEnabled?: boolean
+  detailedTvlEnabled: boolean
 }
 
-export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
+export function ScalingTvlView({
+  items,
+  stagesEnabled,
+  detailedTvlEnabled,
+}: ScalingTvlViewProps) {
   const rows: RowConfig<ScalingTvlViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
 
   return (
     <section className="mt-4 sm:mt-8">
+      <RollupsOnlyCheckbox className="mb-4" />
       <Tabs
         items={[
           {
@@ -39,7 +46,11 @@ export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
                   (item) => !item.isArchived && !item.isUpcoming,
                 )}
                 rows={rows}
-                columns={getActiveScalingTvlColumns(stagesEnabled)}
+                columns={getActiveScalingTvlColumns(
+                  stagesEnabled,
+                  detailedTvlEnabled,
+                )}
+                rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),
             icon: <ActiveIcon />,
@@ -53,6 +64,7 @@ export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
                 items={items.filter((item) => item.isUpcoming)}
                 rows={rows}
                 columns={getUpcomingScalingTvlColumns()}
+                rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),
             icon: <UpcomingIcon />,
@@ -65,7 +77,8 @@ export function ScalingTvlView({ items, stagesEnabled }: ScalingTvlViewProps) {
               <TableView
                 items={items.filter((item) => item.isArchived)}
                 rows={rows}
-                columns={getArchivedScalingTvlColumns()}
+                columns={getArchivedScalingTvlColumns(detailedTvlEnabled)}
+                rerenderIndexesOn="#rollups-only-checkbox"
               />
             ),
             icon: <ArchivedIcon />,

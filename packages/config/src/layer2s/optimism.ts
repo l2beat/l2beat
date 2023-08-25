@@ -6,7 +6,6 @@ import {
   ProjectId,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -44,7 +43,7 @@ const TOKENS: Omit<Token, 'chainId'>[] = [
     coingeckoId: CoingeckoId('optimism'),
     sinceTimestamp: new UnixTime(1654039974),
     category: 'other',
-    bucket: ValueType.NMV,
+    bucket: 'NMV',
     formula: 'circulatingSupply'
   },
 ]
@@ -62,7 +61,7 @@ export const optimism: Layer2 = {
     With the Nov 2021 upgrade to OVM 2.0 old fraud proof system has been disabled while the \
     new fraud-proof system is being built (https://github.com/ethereum-optimism/cannon).',
     purpose: 'Universal',
-    provider: 'Optimism',
+    provider: 'OP Stack',
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://optimism.io/'],

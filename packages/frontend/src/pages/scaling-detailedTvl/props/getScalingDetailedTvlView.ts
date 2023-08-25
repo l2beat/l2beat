@@ -6,21 +6,22 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../build/config'
+import { getTokens } from '../../../utils/project/getChart'
 import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getDetailedTvlWithChange } from '../../../utils/tvl/getTvlWitchChange'
 import { formatUSD } from '../../../utils/utils'
-import { DetailedTvlViewEntry } from '../types'
-import { DetailedTvlViewProps } from '../view/DetailedTvlView'
+import { ScalingDetailedTvlViewEntry } from '../types'
+import { ScalingDetailedTvlViewProps } from '../view/ScalingDetailedTvlView'
 
-export function getDetailedTvlView(
+export function getScalingDetailedTvlView(
   tvlApiResponse: DetailedTvlApiResponse | TvlApiResponse,
   config: Config,
   projects: Layer2[],
-): DetailedTvlViewProps {
+): ScalingDetailedTvlViewProps {
   return {
     items: projects.map((project) =>
-      getDetailedTvlViewEntry(
+      getScalingDetailedTvlViewEntry(
         tvlApiResponse as DetailedTvlApiResponse,
         project,
       ),
@@ -29,22 +30,20 @@ export function getDetailedTvlView(
   }
 }
 
-function getDetailedTvlViewEntry(
+function getScalingDetailedTvlViewEntry(
   tvlApiResponse: DetailedTvlApiResponse,
   project: Layer2,
   isVerified?: boolean,
-): DetailedTvlViewEntry {
-  assert(
-    tvlApiResponse.projects[project.id.toString()]?.charts.hourly.types
-      .length === 9,
-  )
-  const charts =
-    tvlApiResponse.projects[project.id.toString()]?.charts ?? undefined
+): ScalingDetailedTvlViewEntry {
+  const projectData = tvlApiResponse.projects[project.id.toString()]
+  assert(projectData?.charts.hourly.types.length === 9)
+  const charts = projectData.charts
   const { parts, partsWeeklyChange } = getDetailedTvlWithChange(charts)
 
   return {
     name: project.display.name,
     slug: project.display.slug,
+    category: project.display.category,
     provider: project.display.provider,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
@@ -53,12 +52,13 @@ function getDetailedTvlViewEntry(
     isUpcoming: project.isUpcoming,
     isVerified,
     tvl: formatUSD(parts.tvl),
-    cbv: formatUSD(parts.cbv),
-    ebv: formatUSD(parts.ebv),
-    nmv: formatUSD(parts.nmv),
+    cbv: formatUSD(parts.canonical),
+    ebv: formatUSD(parts.external),
+    nmv: formatUSD(parts.native),
     tvlChange: partsWeeklyChange.tvl,
-    ebvChange: partsWeeklyChange.ebv,
-    cbvChange: partsWeeklyChange.cbv,
-    nmvChange: partsWeeklyChange.nmv,
+    ebvChange: partsWeeklyChange.external,
+    cbvChange: partsWeeklyChange.canonical,
+    nmvChange: partsWeeklyChange.native,
+    tokens: getTokens(project.id, tvlApiResponse, true),
   }
 }

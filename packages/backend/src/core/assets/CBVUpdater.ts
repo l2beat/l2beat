@@ -5,7 +5,6 @@ import {
   Hash256,
   ProjectId,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
@@ -135,7 +134,7 @@ export class CBVUpdater implements AssetUpdater {
     return this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      ValueType.CBV,
+      'CBV',
     )
   }
 }

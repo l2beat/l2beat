@@ -1,11 +1,4 @@
-import {
-  assert,
-  AssetId,
-  ChainId,
-  ProjectId,
-  Token,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { assert, AssetId, ChainId, ProjectId, Token } from '@l2beat/shared-pure'
 
 import { PriceRecord } from '../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../peripherals/database/ReportRepository'

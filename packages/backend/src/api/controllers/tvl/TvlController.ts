@@ -8,7 +8,6 @@ import {
   TvlApiCharts,
   TvlApiResponse,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
@@ -65,13 +64,13 @@ export class TvlController {
       await Promise.all([
         this.aggregatedReportRepository.getHourly(
           getHourlyMinTimestamp(timestamp),
-          ValueType.TVL,
+          'TVL',
         ),
         this.aggregatedReportRepository.getSixHourly(
           getSixHourlyMinTimestamp(timestamp),
-          ValueType.TVL,
+          'TVL',
         ),
-        this.aggregatedReportRepository.getDaily(ValueType.TVL),
+        this.aggregatedReportRepository.getDaily('TVL'),
         this.reportRepository.getByTimestamp(timestamp),
       ])
 

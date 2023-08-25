@@ -5,7 +5,6 @@ import {
   EthereumAddress,
   Token,
   UnixTime,
-  ValueType,
 } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 
@@ -43,7 +42,8 @@ export async function getTokenInfo(
 
     // TODO: make it configurable
     chainId: ChainId.ETHEREUM,
-    bucket: ValueType.CBV,
+    iconUrl,
+    bucket: 'CBV',
     formula: 'locked'
   }
 

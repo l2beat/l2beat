@@ -35,7 +35,7 @@ export const base: Layer2 = {
       'Base is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology.',
     purpose: 'Universal',
     category: 'Optimistic Rollup',
-    provider: 'Optimism',
+    provider: 'OP Stack',
     links: {
       websites: ['https://base.org/'],
       apps: ['https://bridge.base.org/'],

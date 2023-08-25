@@ -35,7 +35,7 @@ export function Header(props: HeaderProps) {
       {props.tvl && props.tvlWeeklyChange && (
         <div className="Header-Right" id="header-tvl">
           <p className="Header-Tvl">
-            TVL: <span className="Header-TvlValue">{props.tvl}</span>
+            Value Locked: <span className="Header-TvlValue">{props.tvl}</span>
           </p>
           <p className="Header-Change">
             <PercentChange value={props.tvlWeeklyChange} /> / 7 days

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/shared'
-import { assert, ChainId, Hash256, Token, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { assert, ChainId, Hash256, Token, UnixTime, ReportType, AssetType } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import {
@@ -139,19 +139,19 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
     const canonical = await this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      ValueType.CBV,
+      'CBV',
     )
 
     const external = await this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      ValueType.EBV,
+      'EBV',
     )
 
     const native = await this.reportRepository.getByTimestampAndPreciseAsset(
       timestamp,
       this.getChainId(),
-      ValueType.NMV,
+      'NMV',
     )
 
     const all = canonical.concat(external).concat(native)

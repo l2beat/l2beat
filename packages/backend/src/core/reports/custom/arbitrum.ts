@@ -1,10 +1,4 @@
-import {
-  AssetId,
-  ChainId,
-  ProjectId,
-  UnixTime,
-  ValueType,
-} from '@l2beat/shared-pure'
+import { AssetId, ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { createGenCustomTokenReport as createGenCustomTokenReport } from './report'
 
@@ -25,7 +19,7 @@ export const ARB_TOKEN_BALANCE = () =>
 export const genArbTokenReport = createGenCustomTokenReport(
   ARB_TOKEN_ID,
   ChainId.NMV,
-  ValueType.NMV,
+  'NMV',
   ARB_TOKEN_SINCE_TIMESTAMP,
   ProjectId.ARBITRUM,
   ARB_TOKEN_BALANCE,

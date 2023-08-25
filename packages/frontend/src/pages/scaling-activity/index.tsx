@@ -4,7 +4,7 @@ import React from 'react'
 import { Config } from '../../build/config'
 import { PageWrapper } from '../../components'
 import { getProps } from './props'
-import { ActivityPage } from './view/ActivityPage'
+import { ActivityPage } from './view/ScalingActivityPage'
 
 export function getActivityPage(
   config: Config,

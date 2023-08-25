@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { ChainId, stringAs, UnixTime, ValueType } from '@l2beat/shared-pure'
+import { AssetType, ChainId, stringAs, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { StatusController } from '../controllers/status/StatusController'
@@ -10,7 +10,7 @@ const queryParser = z.object({
     from: stringAs((s) => new UnixTime(+s)).optional(),
     to: stringAs((s) => new UnixTime(+s)).optional(),
     chainId: stringAs((s) => ChainId(+s)).optional(),
-    type: stringAs((s) => ValueType(s)).optional(),
+    type: stringAs((s) => AssetType(s)).optional(),
   }),
 })
 
