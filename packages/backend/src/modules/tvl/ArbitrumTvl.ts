@@ -158,6 +158,7 @@ export function createArbitrumTvlSubmodule(
     await arbitrumBalanceUpdater.start()
     await totalSupplyUpdater.start()
     await totalSupplyFormulaUpdater.start()
+    await circulatingSupplyUpdater.start()
     await circulatingSupplyFormulaUpdater.start()
 
     logger.info('Started')

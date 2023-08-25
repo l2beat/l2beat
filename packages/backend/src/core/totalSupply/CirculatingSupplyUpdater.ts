@@ -30,8 +30,8 @@ export class CirculatingSupplyUpdater {
 
   constructor(
     private readonly circulatingSupplyProvider: CirculatingSupplyProvider,
-    private readonly totalSupplyRepository: CirculatingSupplyRepository,
-    private readonly totalSupplyStatusRepository: CirculatingSupplyStatusRepository,
+    private readonly circulatingSupplyRepository: CirculatingSupplyRepository,
+    private readonly circulatingSupplyStatusRepository: CirculatingSupplyStatusRepository,
     private readonly clock: Clock,
     private readonly tokens: Token[],
     private readonly logger: Logger,
@@ -42,9 +42,9 @@ export class CirculatingSupplyUpdater {
       tokens.every(
         (token) =>
           token.chainId === this.getChainId() &&
-          token.formula === 'totalSupply',
+          token.formula === 'circulatingSupply',
       ),
-      'Programmer error: tokens must be of totalSupply formula and on the same chain as the totalSupplyUpdater',
+      'Programmer error: tokens must be of circulatingSupply formula and on the same chain as the circulatingSupplyUpdater',
     )
     this.logger = this.logger.for(this)
     this.configHash = getCirculatingSupplyConfigHash(tokens)
@@ -58,7 +58,7 @@ export class CirculatingSupplyUpdater {
 
     assert(
       this.circulatingSupplyProvider.getChainId() === this.chainId,
-      'ChainId mismatch between totalSupplyProvider and totalSupplyUpdater',
+      'ChainId mismatch between circulatingSupplyProvider and circulatingSupplyUpdater',
     )
   }
 
@@ -92,11 +92,14 @@ export class CirculatingSupplyUpdater {
       )
       await setTimeout(refreshIntervalMs)
     }
-    return this.totalSupplyRepository.getByTimestamp(this.chainId, timestamp)
+    return this.circulatingSupplyRepository.getByTimestamp(
+      this.chainId,
+      timestamp,
+    )
   }
 
   async start() {
-    const known = await this.totalSupplyStatusRepository.getByConfigHash(
+    const known = await this.circulatingSupplyStatusRepository.getByConfigHash(
       this.chainId,
       this.configHash,
     )
@@ -126,7 +129,7 @@ export class CirculatingSupplyUpdater {
       timestamp: timestamp.toNumber(),
       chainId: this.chainId.toString(),
     })
-    const known = await this.totalSupplyRepository.getByTimestamp(
+    const known = await this.circulatingSupplyRepository.getByTimestamp(
       this.chainId,
       timestamp,
     )
@@ -138,25 +141,27 @@ export class CirculatingSupplyUpdater {
     )
 
     if (missingCirculatingSupplies.length > 0) {
-      const totalSupplies =
+      const circulatingSupplies =
         await this.circulatingSupplyProvider.getCirculatingSupplies(
           missingCirculatingSupplies,
           timestamp,
         )
 
-      await this.totalSupplyRepository.addOrUpdateMany(totalSupplies)
-      this.logger.debug('Updated total supplies', {
+      await this.circulatingSupplyRepository.addOrUpdateMany(
+        circulatingSupplies,
+      )
+      this.logger.debug('Updated circulating supplies', {
         timestamp: timestamp.toNumber(),
         chainId: this.chainId.toString(),
       })
     } else {
-      this.logger.debug('Skipped updating total supplies', {
+      this.logger.debug('Skipped updating circulating supplies', {
         timestamp: timestamp.toNumber(),
         chainId: this.chainId.toString(),
       })
     }
     this.knownSet.add(timestamp.toNumber())
-    await this.totalSupplyStatusRepository.add({
+    await this.circulatingSupplyStatusRepository.add({
       chainId: this.chainId,
       configHash: this.configHash,
       timestamp,
@@ -192,6 +197,7 @@ export function getMissingCirculatingSupplies(
 
     const queryCandidate: CirculatingSupplyQuery = {
       assetId: token.id,
+      decimals: token.decimals,
       address: token.address,
       coingeckoId: token.coingeckoId,
     }

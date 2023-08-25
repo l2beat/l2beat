@@ -1,7 +1,9 @@
-import { CoingeckoClient } from '@l2beat/shared'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { CoingeckoClient, Logger } from '@l2beat/shared'
+import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
+import { minBy } from 'lodash'
 
 import { CirculatingSupplyRecord } from '../../../peripherals/database/CirculatingSupplyRepository'
+import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import {
   CirculatingSupplyProvider,
   CirculatingSupplyQuery,
@@ -22,23 +24,53 @@ export class CoingeckoCirculatingSupplyProvider
     const from = timestamp.add(-1, 'days')
     const to = timestamp.add(1, 'days')
 
-    const marketChart = await Promise.all(
-      totalSupplyQueries.map((q) =>
-        this.coingeckoClient.getCoinMarketChartRange(
+    const responses = await promiseAllPlus(
+      totalSupplyQueries.map((q) => async () => {
+        const chart = await this.coingeckoClient.getCoinMarketChartRange(
           q.coingeckoId,
           'usd',
           from,
           to,
           q.address,
-        ),
-      ),
+        )
+
+        return {
+          assetId: q.assetId,
+          decimals: q.decimals,
+          chart,
+        }
+      }),
+      Logger.SILENT,
+      { metricsId: CoingeckoCirculatingSupplyProvider.name },
     )
 
-    console.log(marketChart)
+    const circulatingSupplies: CirculatingSupplyRecord[] = responses.map(
+      ({ decimals, assetId, chart }) => {
+        const marketCapDiffed = chart.marketCaps.map(({ marketCap, date }) => ({
+          marketCap,
+          dateDiff: Math.abs(date.getTime() / 1000 - timestamp.toNumber()),
+        }))
+        const pricesDiffed = chart.prices.map(({ price, date }) => ({
+          price,
+          dateDiff: Math.abs(date.getTime() / 1000 - timestamp.toNumber()),
+        }))
 
-    return new Promise<CirculatingSupplyRecord[]>(() => {
-      return []
-    })
+        const marketCap = minBy(marketCapDiffed, (e) => e.dateDiff)
+        const price = minBy(pricesDiffed, (e) => e.dateDiff)
+        assert(marketCap && price)
+
+        const circulatingSupply = Math.floor(marketCap.marketCap / price.price * Math.pow(10, decimals))
+
+        return {
+          timestamp,
+          circulatingSupply: BigInt(circulatingSupply),
+          assetId,
+          chainId: this.chainId,
+        }
+      },
+    )
+
+    return circulatingSupplies
   }
 
   public getChainId(): ChainId {

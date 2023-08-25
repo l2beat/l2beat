@@ -10,6 +10,7 @@ import { CirculatingSupplyRecord } from '../../peripherals/database/CirculatingS
 
 export interface CirculatingSupplyQuery {
   assetId: AssetId
+  decimals: number
   coingeckoId: CoingeckoId
   address: EthereumAddress
 }
