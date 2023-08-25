@@ -1,0 +1,37 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "satellite",
+  "initialAddresses": ["0x4F4495243837681061C4743b74B3eEdf548D56A5"],
+  "names": {
+    "0x4F4495243837681061C4743b74B3eEdf548D56A5": "SatelliteGateway",
+    "0x228b92510130ec2E09C6d5645039c8cB834aD42d": "AxelarAuthWeighted"
+  },
+  "overrides": {
+    "SatelliteGateway": {
+      "proxyType": "call implementation proxy",
+      "fields": {
+        "adminThreshold": {
+          "type": "array",
+          "method": "adminThreshold",
+          "length": "{{ adminEpoch }}",
+          "startIndex": 1
+        },
+        "admins": {
+          "type": "array",
+          "method": "admins",
+          "length": "{{ adminEpoch }}",
+          "startIndex": 1
+        },
+        "tokens": {
+          "type": "arrayFromOneEvent",
+          "event": "TokenDeployed",
+          "valueKey": "symbol"
+        }
+      }
+    },
+    "AxelarAuthWeighted": {
+      "ignoreMethods": ["hashForEpoch"]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "avalanche",
+  "name": "satellite",
+  "initialAddresses": ["0x5029C0EFf6C34351a0CEc334542cDb22c7928f78"],
+  "names": {
+    "0x5029C0EFf6C34351a0CEc334542cDb22c7928f78": "SatelliteGateway",
+    "0x2700D384c39BBF9565d813b472EE005b383aC1E2": "AxelarAuthWeighted"
+  },
+  "overrides": {
+    "SatelliteGateway": {
+      "proxyType": "call implementation proxy",
+      "fields": {
+        "adminThreshold": {
+          "type": "array",
+          "method": "adminThreshold",
+          "length": "{{ adminEpoch }}",
+          "startIndex": 1
+        },
+        "admins": {
+          "type": "array",
+          "method": "admins",
+          "length": "{{ adminEpoch }}",
+          "startIndex": 1
+        },
+        "tokens": {
+          "type": "arrayFromOneEvent",
+          "event": "TokenDeployed",
+          "valueKey": "symbol"
+        }
+      }
+    },
+    "AxelarAuthWeighted": {
+      "ignoreMethods": ["hashForEpoch"]
+    }
+  }
+}

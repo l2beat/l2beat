@@ -1,0 +1,37 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "optimism",
+  "name": "satellite",
+  "initialAddresses": ["0xe432150cce91c13a887f7D836923d5597adD8E31"],
+  "names": {
+    "0xe432150cce91c13a887f7D836923d5597adD8E31": "SatelliteGateway",
+    "0x1a920B29eBD437074225cAeE44f78FC700B27a5d": "AxelarAuthWeighted"
+  },
+  "overrides": {
+    "SatelliteGateway": {
+      "proxyType": "call implementation proxy",
+      "fields": {
+        "adminThreshold": {
+          "type": "array",
+          "method": "adminThreshold",
+          "length": "{{ adminEpoch }}",
+          "startIndex": 1
+        },
+        "admins": {
+          "type": "array",
+          "method": "admins",
+          "length": "{{ adminEpoch }}",
+          "startIndex": 1
+        },
+        "tokens": {
+          "type": "arrayFromOneEvent",
+          "event": "TokenDeployed",
+          "valueKey": "symbol"
+        }
+      }
+    },
+    "AxelarAuthWeighted": {
+      "ignoreMethods": ["hashForEpoch"]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "polygon-pos",
+  "name": "satellite",
+  "initialAddresses": ["0x6f015F16De9fC8791b234eF68D486d2bF203FBA8"],
+  "names": {
+    "0x6f015F16De9fC8791b234eF68D486d2bF203FBA8": "SatelliteGateway",
+    "0x7A811A7525928f22a2DA97e94750b94215C73E61": "AxelarAuthWeighted"
+  },
+  "overrides": {
+    "SatelliteGateway": {
+      "proxyType": "call implementation proxy",
+      "fields": {
+        "adminThreshold": {
+          "type": "array",
+          "method": "adminThreshold",
+          "length": "{{ adminEpoch }}",
+          "startIndex": 1
+        },
+        "admins": {
+          "type": "array",
+          "method": "admins",
+          "length": "{{ adminEpoch }}",
+          "startIndex": 1
+        },
+        "tokens": {
+          "type": "arrayFromOneEvent",
+          "event": "TokenDeployed",
+          "valueKey": "symbol"
+        }
+      }
+    },
+    "AxelarAuthWeighted": {
+      "ignoreMethods": ["hashForEpoch"]
+    }
+  }
+}
