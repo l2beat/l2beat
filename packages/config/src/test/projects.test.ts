@@ -125,7 +125,9 @@ describe('projects', () => {
       for (const link of links) {
         it(link, () => {
           if (link.includes('discord')) {
-            expect(link).toMatchRegex(/^https:\/\/discord\.gg\/[\w-]+$/)
+            expect(link).toMatchRegex(
+              /^https:\/\/discord\.(gg|com\/invite)\/[\w-]+$/,
+            )
           } else if (link.includes('t.me')) {
             expect(link).toMatchRegex(/^https:\/\/t\.me\/(joinchat\/)?\w+$/)
           } else if (link.includes('medium')) {
