@@ -1,9 +1,5 @@
-import {
-  ChainId,
-  EthereumAddress,
-  ManualProxyType,
-  stringAs,
-} from '@l2beat/shared-pure'
+import { ManualProxyType } from '@l2beat/discovery-types'
+import { ChainId, EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'
@@ -12,7 +8,7 @@ export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   ignoreDiscovery: z.optional(z.boolean()),
   proxyType: z.optional(ManualProxyType),
-  ignoreInWatchMode: z.optional(z.array(z.string())),
+  ignoreInWatchMode: z.z.optional(z.array(z.string())),
   ignoreMethods: z.optional(z.array(z.string())),
   ignoreRelatives: z.optional(z.array(z.string())),
   fields: z.optional(

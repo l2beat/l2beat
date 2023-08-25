@@ -48,9 +48,10 @@
     "rimraf": "^5.0.0",
     "source-map-support": "^0.5.21",
     "twitter-api-v2": "^1.14.0",
-    "zod": "^3.20.2"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@l2beat/discovery-types": "^0.1.0",
     "@types/basic-auth": "^1.1.3",
     "@types/deep-diff": "^1.0.2",
     "@types/koa": "^2.13.5",
