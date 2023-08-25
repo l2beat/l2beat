@@ -20,7 +20,7 @@ export function getTvlStats(
   const tvl = aggregate.at(-1)?.[1] ?? 0
   const tvlOneDayAgo = aggregate.at(-25)?.[1] ?? 0
   // This assumes that hourly data spans exactly 7 days
-  const tvlSevenDaysAgo = aggregate[0][1]
+  const tvlSevenDaysAgo = aggregate.at(0)?.[1] ?? 0
 
   return {
     tvl,
