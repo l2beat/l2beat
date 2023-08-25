@@ -1,3 +1,4 @@
+import { Layer2Category } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import cx from 'classnames'
 
@@ -5,6 +6,7 @@ import { getRowVerificationClassNames } from './getRowVerificationClassNames'
 
 interface ScalingTableEntry {
   slug: string
+  category?: Layer2Category
   isArchived?: boolean
   isVerified?: boolean
   isUpcoming?: boolean
@@ -17,9 +19,11 @@ export function getScalingRowProps(
   entry: ScalingTableEntry,
   type: ScalingRowType,
 ) {
-  const isEthereum = entry.slug === 'ethereum'
+  const isRollup =
+    entry.category === 'Optimistic Rollup' || entry.category === 'ZK Rollup'
   const href = getHref(entry.slug, type)
 
+  const isEthereum = entry.slug === 'ethereum'
   if (isEthereum) {
     return {
       className: cx(
@@ -35,6 +39,7 @@ export function getScalingRowProps(
     className: getRowVerificationClassNames(entry),
     href,
     'data-role': 'row',
+    'data-rollup': isRollup,
   }
 }
 

@@ -87,18 +87,18 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
       'Hybrid Compute is live on Boba Network, bringing off-chain computation to smart contracts.',
   },
   {
-    name: 'First Optimistic Chain (universal)',
+    name: 'First Optimium (universal)',
     link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
     date: '2022-04-12T00:00:00Z',
     description:
-      'Metis starts storing data off-chain, becoming first optimistic chain.',
+      'Metis starts storing data off-chain, becoming first Optimium.',
   },
   {
-    name: 'First Optimistic Chain with fallback (universal)',
+    name: 'First Optimium with fallback (universal)',
     link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
     date: '2022-08-09T00:00:00Z',
     description:
-      'Arbitrum Nova is live, becoming first Optimistic Chain with fallback to Rollup mode.',
+      'Arbitrum Nova is live, becoming first Optimium with fallback to Rollup mode.',
   },
   {
     name: 'First zkRollup with universal Solidity support',

@@ -65,7 +65,8 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.escrows.length > 0 && (
         <>
           <h3 className="md:text-md font-bold">
-            TVL is calculated based on these smart contracts and tokens:
+            Value Locked is calculated based on these smart contracts and
+            tokens:
           </h3>
           <div className="mt-4 mb-4">
             {props.escrows.map((contract, i) => (

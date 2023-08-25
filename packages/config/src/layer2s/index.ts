@@ -6,6 +6,7 @@ import { base } from './base'
 import { bobanetwork } from './bobanetwork'
 import { brine } from './brine'
 import { canvasconnect } from './canvasconnect'
+import { capx } from './capx'
 import { cartesiHoneypot } from './cartesiHoneypot'
 import { HOMEPAGE_MILESTONES } from './common'
 import { degate } from './degate'
@@ -27,6 +28,7 @@ import { nova } from './nova'
 import { obscuro } from './obscuro'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { palm } from './palm'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
@@ -55,6 +57,7 @@ export const layer2s: Layer2[] = [
   base,
   bobanetwork,
   brine,
+  capx,
   canvasconnect,
   cartesiHoneypot,
   degate,
@@ -76,6 +79,7 @@ export const layer2s: Layer2[] = [
   obscuro,
   omgnetwork,
   optimism,
+  palm,
   polygonmiden,
   polygonzkevm,
   polygonpos2,

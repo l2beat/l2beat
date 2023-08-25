@@ -130,6 +130,7 @@ export function getProductionConfig(): Config {
         token: getEnv('DISCORD_TOKEN'),
         publicChannelId: getEnv('PUBLIC_DISCORD_CHANNEL_ID'),
         internalChannelId: getEnv('INTERNAL_DISCORD_CHANNEL_ID'),
+        callsPerMinute: 3000,
       },
       chains: [
         {

@@ -4,8 +4,11 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 */
 
 import { HttpClient } from '@l2beat/shared'
+import { RateLimiter } from '@l2beat/shared-pure'
 import { RequestInit } from 'node-fetch'
 import { Counter } from 'prom-client'
+
+import { DiscordConfig } from '../../config/Config'
 
 export const MAX_MESSAGE_LENGTH = 2000
 
@@ -14,20 +17,25 @@ export type Channel = 'PUBLIC' | 'INTERNAL'
 export class DiscordClient {
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly discordToken: string,
-    private readonly publicChannelId: string | undefined,
-    private readonly internalChannelId: string,
-  ) {}
+    private readonly config: DiscordConfig,
+  ) {
+    if (config.callsPerMinute) {
+      const rateLimiter = new RateLimiter({
+        callsPerMinute: config.callsPerMinute,
+      })
+      this.sendMessage = rateLimiter.wrap(this.sendMessage.bind(this))
+    }
+  }
 
   async sendMessage(message: string, channel: Channel) {
     if (message.length > MAX_MESSAGE_LENGTH) {
       throw new Error(`Discord error: Message size exceeded (2000 characters)`)
     }
-    if (channel === 'PUBLIC' && this.publicChannelId) {
-      return this.send(message, this.publicChannelId)
+    if (channel === 'PUBLIC' && this.config.publicChannelId) {
+      return this.send(message, this.config.publicChannelId)
     }
     if (channel === 'INTERNAL') {
-      return this.send(message, this.internalChannelId)
+      return this.send(message, this.config.internalChannelId)
     }
   }
 
@@ -52,7 +60,7 @@ export class DiscordClient {
 
     const res = await this.httpClient.fetch(url, {
       headers: {
-        Authorization: `Bot ${this.discordToken}`,
+        Authorization: `Bot ${this.config.token}`,
         'Content-Type': 'application/json; charset=UTF-8',
       },
       ...options,
