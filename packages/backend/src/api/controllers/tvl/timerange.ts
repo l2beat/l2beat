@@ -1,4 +1,9 @@
-import { ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
+import {
+  AggregatedReportType,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
@@ -8,22 +13,19 @@ import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 export {
   fillAllMissingAggregatedReports,
   fillAllMissingAssetReports,
+  getMissingTimestamps,
+  resolutionToStep,
   timeRange,
 }
 
 type TimeResolution = 'hourly' | 'sixHourly' | 'daily'
 
 function resolutionToStep(resolution: TimeResolution) {
-  const step =
-    resolution === 'hourly'
-      ? UnixTime.HOUR
-      : resolution === 'sixHourly'
-      ? UnixTime.HOUR * 6
-      : UnixTime.DAY
-
-  return function (old: UnixTime) {
-    return old.add(step, 'seconds')
-  }
+  return resolution === 'hourly'
+    ? UnixTime.HOUR
+    : resolution === 'sixHourly'
+    ? UnixTime.HOUR * 6
+    : UnixTime.DAY
 }
 
 /**
@@ -33,10 +35,10 @@ function timeRange(from: UnixTime, to: UnixTime, resolution: TimeResolution) {
   const result: UnixTime[] = []
   let current = from
   const step = resolutionToStep(resolution)
-  while (current.lt(to)) {
+  while (current.lte(to.add(-step, 'seconds'))) {
     result.push(current)
 
-    current = step(current)
+    current = current.add(step, 'seconds')
   }
   return result
 }
@@ -93,9 +95,11 @@ function fillAllMissingAggregatedReports(
     daily: AggregatedReportRecord[]
   },
   latestTimestamp: UnixTime,
+  singleBucket = false,
 ) {
-  const buckets = ['TVL', 'CBV', 'EBV', 'NMV'] as const
-
+  const buckets: AggregatedReportType[] = singleBucket
+    ? ['TVL']
+    : ['TVL', 'EBV', 'CBV', 'NMV']
   // Helper to fill reports for bucket x project - narrowed data boundaries
   function fill(
     reports: AggregatedReportRecord[],

@@ -106,6 +106,7 @@ export class TvlController {
           daily: dailyReports,
         },
         latestTimestamp,
+        true,
       )
 
     const tvlApiResponse = generateTvlApiResponse(
