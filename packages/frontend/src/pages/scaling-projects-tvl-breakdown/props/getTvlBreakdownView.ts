@@ -27,17 +27,17 @@ export function getTvlBreakdownView(
         value: formatUSD(parts.tvl),
         change: partsWeeklyChange.tvl,
       },
-      cbv: {
-        value: formatUSD(parts.cbv),
-        change: partsWeeklyChange.cbv,
+      canonical: {
+        value: formatUSD(parts.canonical),
+        change: partsWeeklyChange.canonical,
       },
-      ebv: {
-        value: formatUSD(parts.ebv),
-        change: partsWeeklyChange.ebv,
+      external: {
+        value: formatUSD(parts.external),
+        change: partsWeeklyChange.external,
       },
-      nmv: {
-        value: formatUSD(parts.nmv),
-        change: partsWeeklyChange.nmv,
+      native: {
+        value: formatUSD(parts.native),
+        change: partsWeeklyChange.native,
       },
     },
   }

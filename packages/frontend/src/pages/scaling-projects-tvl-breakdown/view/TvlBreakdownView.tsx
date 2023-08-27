@@ -7,15 +7,15 @@ export interface TvlBreakdownViewProps {
       value: string
       change: string
     }
-    cbv: {
+    canonical: {
       value: string
       change: string
     }
-    ebv: {
+    external: {
       value: string
       change: string
     }
-    nmv: {
+    native: {
       value: string
       change: string
     }
