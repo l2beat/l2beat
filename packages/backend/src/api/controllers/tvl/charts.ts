@@ -109,7 +109,6 @@ export function getChartPoints(
 
 export function covertBalancesToChartPoints(
   balancesInTime: DetailedBalanceInTime[],
-  resolutionInHours: number,
   decimals: number,
   usdFirst = false,
 ): DetailedTvlApiChartPoint[] {
@@ -156,8 +155,5 @@ export function covertBalancesToChartPoints(
           ]
     })
 
-  return addDetailedMissingTimestamps(
-    existingBalanceChartPoints,
-    resolutionInHours,
-  )
+  return existingBalanceChartPoints
 }

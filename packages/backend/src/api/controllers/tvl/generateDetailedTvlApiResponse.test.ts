@@ -81,15 +81,15 @@ describe(generateDetailedTvlApiResponse.name, () => {
     return {
       hourly: {
         types,
-        data: getProjectChartData(reports.hourly, projectId, 1),
+        data: getProjectChartData(reports.hourly, projectId),
       },
       sixHourly: {
         types,
-        data: getProjectChartData(reports.sixHourly, projectId, 6),
+        data: getProjectChartData(reports.sixHourly, projectId),
       },
       daily: {
         types,
-        data: getProjectChartData(reports.daily, projectId, 24),
+        data: getProjectChartData(reports.daily, projectId),
       },
     }
   }

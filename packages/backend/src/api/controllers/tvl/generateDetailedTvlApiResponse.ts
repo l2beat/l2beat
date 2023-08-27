@@ -75,15 +75,15 @@ function getProjectCharts(
   return {
     hourly: {
       types: DETAILED_LABELS,
-      data: getProjectChartData(reports.hourly, projectId, 1),
+      data: getProjectChartData(reports.hourly, projectId),
     },
     sixHourly: {
       types: DETAILED_LABELS,
-      data: getProjectChartData(reports.sixHourly, projectId, 6),
+      data: getProjectChartData(reports.sixHourly, projectId),
     },
     daily: {
       types: DETAILED_LABELS,
-      data: getProjectChartData(reports.daily, projectId, 24),
+      data: getProjectChartData(reports.daily, projectId),
     },
   }
 }
@@ -91,7 +91,6 @@ function getProjectCharts(
 export function getProjectChartData(
   reportTree: ReportsPerProjectIdAndTimestamp,
   projectId: ProjectId,
-  resolutionInHours: number,
 ): DetailedTvlApiChartPoint[] {
   const projectReportsByTimestamp = reportTree[projectId.toString()]
 
@@ -120,7 +119,7 @@ export function getProjectChartData(
     },
   )
 
-  return covertBalancesToChartPoints(balancesInTime, resolutionInHours, 6, true)
+  return covertBalancesToChartPoints(balancesInTime, 6, true)
 }
 
 export function extractReportTypeSet(reports: AggregatedReportRecord[]) {
