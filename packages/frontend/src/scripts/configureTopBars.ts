@@ -1,4 +1,5 @@
-import { LocalStorage, TopBarVariantData } from './LocalStorage'
+import { LocalStorage } from './local-storage/LocalStorage'
+import { TopBarVariantData } from './local-storage/types'
 
 const gitcoinStartDate = new Date('2023-08-15T12:00:00.000Z')
 const gitcoinEndDate = new Date('2023-08-29T12:00:00.000Z')
@@ -51,9 +52,7 @@ function getBannerVariant(): 'gitcoin' | 'l2warsaw' {
   if (gitcoinBarOverride) {
     return 'gitcoin'
   }
-
   const presentTopBarData = readStorage()
-  console.log('present', presentTopBarData)
   const newTopBarData: TopBarVariantData = {
     variant: 'l2warsaw',
     lastBannerChangeTime: now.getTime(),

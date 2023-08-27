@@ -1,4 +1,4 @@
-import { LocalStorage } from '../../scripts/LocalStorage'
+import { LocalStorage } from '../../scripts/local-storage/LocalStorage'
 
 const callbacks: ((isDarkMode: boolean) => void)[] = []
 

@@ -1,4 +1,4 @@
-import { LocalStorage } from './LocalStorage'
+import { LocalStorage } from './local-storage/LocalStorage'
 
 export function configureCanonicalBridgesFilter() {
   const L2s = Array.from(

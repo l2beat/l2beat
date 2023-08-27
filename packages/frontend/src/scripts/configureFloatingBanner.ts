@@ -1,4 +1,4 @@
-import { LocalStorage } from './LocalStorage'
+import { LocalStorage } from './local-storage/LocalStorage'
 
 export function configureFloatingBanner() {
   const hasClosedBanner = LocalStorage.getItem('l2-warsaw-floating-banner')

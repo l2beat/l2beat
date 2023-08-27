@@ -1,4 +1,4 @@
-import { LocalStorage } from './LocalStorage'
+import { LocalStorage } from './local-storage/LocalStorage'
 import { makeQuery } from './query'
 
 export function configureRollupsOnlyFilter() {

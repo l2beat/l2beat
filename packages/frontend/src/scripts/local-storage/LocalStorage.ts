@@ -1,10 +1,6 @@
 import { z } from 'zod'
 
-export type TopBarVariantData = z.infer<typeof TopBarVariantData>
-export const TopBarVariantData = z.object({
-  variant: z.union([z.literal('gitcoin'), z.literal('l2warsaw')]),
-  lastBannerChangeTime: z.number(),
-})
+import { TopBarVariantData } from './types'
 
 const LOCAL_STORAGE_PREFIX = 'l2beat'
 
@@ -14,7 +10,6 @@ const stringAsObject = <T extends z.AnyZodObject>(schema: T) =>
 
 const LocalStorageKeySchemas = {
   theme: z.enum(['light', 'dark']),
-  'canonical-bridges-checked': strictBoolean,
   'l2-warsaw-floating-banner': strictBoolean,
   'combined-bridges-checked': strictBoolean,
   'rollups-only-checked': strictBoolean,
@@ -45,6 +40,6 @@ export const LocalStorage = {
     if (value === null) return undefined
 
     const result = keySchema.parse(value)
-    return result as unknown as LocalStorageKeyType<T>
+    return result
   },
 }
