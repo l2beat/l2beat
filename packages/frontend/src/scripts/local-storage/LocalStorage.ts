@@ -10,7 +10,7 @@ const stringAsObject = <T extends z.AnyZodObject>(schema: T) =>
 
 const LocalStorageKeySchemas = {
   theme: z.enum(['light', 'dark']),
-  'l2-warsaw-floating-banner': strictBoolean,
+  'l2-warsaw-floating-banner-closed': strictBoolean,
   'combined-bridges-checked': strictBoolean,
   'rollups-only-checked': strictBoolean,
   'top-bar-variant-data': stringAsObject(TopBarVariantData),
@@ -39,7 +39,10 @@ export const LocalStorage = {
     const value = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}-${key}`)
     if (value === null) return undefined
 
-    const result = keySchema.parse(value)
-    return result
+    const result = keySchema.safeParse(value)
+    if (!result.success) {
+      return undefined
+    }
+    return result.data
   },
 }

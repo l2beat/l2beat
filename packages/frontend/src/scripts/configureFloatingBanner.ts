@@ -1,7 +1,9 @@
 import { LocalStorage } from './local-storage/LocalStorage'
 
 export function configureFloatingBanner() {
-  const hasClosedBanner = LocalStorage.getItem('l2-warsaw-floating-banner')
+  const hasClosedBanner = LocalStorage.getItem(
+    'l2-warsaw-floating-banner-closed',
+  )
 
   const banner = document.querySelector('.FloatingBanner')
   if (!banner) {
@@ -17,7 +19,7 @@ export function configureFloatingBanner() {
   if (cross) {
     cross.addEventListener('click', () => {
       banner.classList.add('hidden')
-      LocalStorage.setItem('l2-warsaw-floating-banner', true)
+      LocalStorage.setItem('l2-warsaw-floating-banner-closed', true)
     })
   }
 }
