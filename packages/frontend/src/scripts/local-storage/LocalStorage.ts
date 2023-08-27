@@ -1,12 +1,9 @@
+import { strictBoolean, stringAsObject } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { TopBarVariantData } from './types'
 
 const LOCAL_STORAGE_PREFIX = 'l2beat'
-
-const strictBoolean = z.enum(['true', 'false']).transform((x) => x === 'true')
-const stringAsObject = <T extends z.AnyZodObject>(schema: T) =>
-  z.string().transform((x) => schema.parse(JSON.parse(x)) as z.infer<T>)
 
 const LocalStorageKeySchemas = {
   theme: z.enum(['light', 'dark']),
