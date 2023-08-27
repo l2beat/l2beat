@@ -104,7 +104,6 @@ export class CBVUpdater implements AssetUpdater {
     // TODO(radomski): This really needs to be refactored
     reports = filterOutNVMReports(reports)
 
-    // !REFPOINT
     await this.reportRepository.addOrUpdateMany(
       reports.filter((r) => r.amount > 0),
     )

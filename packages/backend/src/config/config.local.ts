@@ -39,9 +39,7 @@ export function getLocalConfig(): Config {
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: {
-      connection: {
-        connectionString: getEnv('LOCAL_DB_URL'),
-      },
+      connection: getEnv('LOCAL_DB_URL'),
       freshStart: getEnv.boolean('FRESH_START', false),
       connectionPoolSize: {
         // defaults used by knex
