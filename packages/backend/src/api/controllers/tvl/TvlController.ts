@@ -7,9 +7,7 @@ import {
   TvlApiChart,
   TvlApiCharts,
   TvlApiResponse,
-  UnixTime,
 } from '@l2beat/shared-pure'
-import { writeFileSync } from 'fs'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
@@ -19,7 +17,10 @@ import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { getProjectAssetChartData } from './charts'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
-import { fillMissingAggregatedReports } from './timerange'
+import {
+  fillAllMissingAggregatedReports,
+  fillAllMissingAssetReports,
+} from './timerange'
 
 interface TvlControllerOptions {
   errorOnUnsyncedTvl: boolean
@@ -59,7 +60,7 @@ export class TvlController {
   }
 
   async getTvlApiResponse(): Promise<TvlResult> {
-    const {latestTimestamp, isSynced} = await this.getDataTimings()
+    const { latestTimestamp, isSynced } = await this.getDataTimings()
 
     if (!latestTimestamp) {
       return {
@@ -89,66 +90,23 @@ export class TvlController {
         this.reportRepository.getByTimestamp(latestTimestamp),
       ])
 
-    const pids = [
+    const allProjectIdsToSeekFor = [
       ...this.projects.map((x) => x.projectId),
       ProjectId.ALL,
       ProjectId.BRIDGES,
       ProjectId.LAYER2S,
     ]
 
-    const filledHourlyReports = pids.flatMap((pid) =>
-      fillMissingAggregatedReports(
-        pid,
-        hourlyReports.filter((r) => r.projectId === pid),
-        getHourlyMinTimestamp(latestTimestamp),
+    const { filledHourlyReports, filledSixHourlyReports, filledDailyReports } =
+      fillAllMissingAggregatedReports(
+        allProjectIdsToSeekFor,
+        {
+          hourly: hourlyReports,
+          sixHourly: sixHourlyReports,
+          daily: dailyReports,
+        },
         latestTimestamp,
-        'hourly',
-      ),
-    )
-
-    const filledSixHourlyReports = pids.flatMap((pid) =>
-      fillMissingAggregatedReports(
-        pid,
-        sixHourlyReports.filter((r) => r.projectId === pid),
-        getSixHourlyMinTimestamp(latestTimestamp),
-        latestTimestamp,
-        'sixHourly',
-      ),
-    )
-
-    const filledDailyReports = pids.flatMap((pid) =>
-      fillMissingAggregatedReports(
-        pid,
-        dailyReports.filter((r) => r.projectId === pid),
-        UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
-        latestTimestamp,
-        'daily',
-      ),
-    )
-
-    console.dir({
-      hourly: {
-        pre: hourlyReports.length,
-        post: filledHourlyReports.length,
-      },
-      sixHourly: {
-        pre: sixHourlyReports.length,
-        post: filledSixHourlyReports.length,
-      },
-      daily: {
-        pre: dailyReports.length,
-        post: filledDailyReports.length,
-      },
-    })
-
-    writeFileSync(
-      'pids.json',
-      JSON.stringify(
-        this.projects.map((x) => x.projectId),
-        null,
-        2,
-      ),
-    )
+      )
 
     const tvlApiResponse = generateTvlApiResponse(
       filledHourlyReports,
@@ -212,20 +170,35 @@ export class TvlController {
       'usd',
     ]
 
+    const { filledHourlyReports, filledSixHourlyReports, filledDailyReports } =
+      fillAllMissingAssetReports(
+        asset,
+        project.projectId,
+        {
+          hourly: hourlyReports,
+          sixHourly: sixHourlyReports,
+          daily: dailyReports,
+        },
+        dataTimings.latestTimestamp,
+      )
+
     return {
       result: 'success',
       data: {
         hourly: {
           types,
-          data: getProjectAssetChartData(hourlyReports, asset.decimals, 1),
+          data: getProjectAssetChartData(filledHourlyReports, asset.decimals),
         },
         sixHourly: {
           types,
-          data: getProjectAssetChartData(sixHourlyReports, asset.decimals, 6),
+          data: getProjectAssetChartData(
+            filledSixHourlyReports,
+            asset.decimals,
+          ),
         },
         daily: {
           types,
-          data: getProjectAssetChartData(dailyReports, asset.decimals, 24),
+          data: getProjectAssetChartData(filledDailyReports, asset.decimals),
         },
       },
     }

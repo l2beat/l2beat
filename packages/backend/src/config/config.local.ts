@@ -41,9 +41,6 @@ export function getLocalConfig(): Config {
     database: {
       connection: {
         connectionString: getEnv('LOCAL_DB_URL'),
-        ssl: {
-          rejectUnauthorized: false,
-        },
       },
       freshStart: getEnv.boolean('FRESH_START', false),
       connectionPoolSize: {

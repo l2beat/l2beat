@@ -31,7 +31,6 @@ export class AggregatedReportRepository extends BaseRepository {
     const rows = await knex('aggregated_reports')
       .andWhere({ report_type: reportType })
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) = 0`)
-      .andWhereRaw('usd_value > 0')
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -40,7 +39,6 @@ export class AggregatedReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
       .whereRaw(`EXTRACT(hour FROM unix_timestamp) = 0`)
-      .andWhereRaw('usd_value > 0')
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -54,7 +52,6 @@ export class AggregatedReportRepository extends BaseRepository {
       .where('unix_timestamp', '>=', from.toDate())
       .andWhere({ report_type: reportType })
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) % 6 = 0`)
-      .andWhereRaw('usd_value > 0')
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -66,7 +63,6 @@ export class AggregatedReportRepository extends BaseRepository {
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) % 6 = 0`)
-      .andWhereRaw('usd_value > 0')
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -79,7 +75,6 @@ export class AggregatedReportRepository extends BaseRepository {
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
       .andWhere({ report_type: reportType })
-      .andWhereRaw('usd_value > 0')
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -90,7 +85,6 @@ export class AggregatedReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
-      .andWhereRaw('usd_value > 0')
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }

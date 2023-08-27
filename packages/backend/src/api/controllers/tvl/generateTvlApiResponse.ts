@@ -75,5 +75,5 @@ function getProjectChartData(
       usd: r.usdValue,
       asset: r.ethValue,
     }))
-  return getChartPoints(balances, hours, 6, true)
+  return getChartPoints(balances, hours, true)
 }

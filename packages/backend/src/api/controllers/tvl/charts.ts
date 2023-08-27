@@ -83,7 +83,6 @@ export function addDetailedMissingTimestamps(
 export function getProjectAssetChartData(
   projectAssetReports: ReportRecord[],
   decimals: number,
-  hours: number,
 ) {
   const balancesInTime = projectAssetReports.map((report) => ({
     timestamp: report.timestamp,
@@ -91,12 +90,11 @@ export function getProjectAssetChartData(
     asset: report.amount,
   }))
 
-  return getChartPoints(balancesInTime, hours, decimals)
+  return getChartPoints(balancesInTime, decimals)
 }
 
 export function getChartPoints(
   balances: { usd: bigint; asset: bigint; timestamp: UnixTime }[],
-  hours: number,
   decimals: number,
   usdFirst = false,
 ): TvlApiChartPoint[] {
@@ -107,7 +105,6 @@ export function getChartPoints(
   })
 
   return existing
-  // return addMissingTimestamps(existing, hours)
 }
 
 export function covertBalancesToChartPoints(

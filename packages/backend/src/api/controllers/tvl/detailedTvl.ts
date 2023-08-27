@@ -103,15 +103,15 @@ export function getNonCanonicalAssetsBreakdown(
 ) {
   return tokens
     .filter((token) => token.type === reportType)
-    .map((token) => {
+    .flatMap((token) => {
       const assetId = token.id
 
       const report = reports.find((rp) => rp.asset === assetId)
 
-      assert(
-        report,
-        'Report should not be undefined within the response preparation',
-      )
+      // Now missing report is equivalent to 0 USD value and we do not want to return it
+      if (!report) {
+        return []
+      }
 
       const amount = asNumber(report.amount, token.decimals)
       const usdValue = asNumber(report.usdValue, 2)
