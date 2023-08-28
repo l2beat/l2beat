@@ -13,7 +13,7 @@ const chainConfig = [
   },
   {
     chainId: ChainId.OPTIMISM,
-    // ~ Timestamp of block number 0 on Arbitrum
+    // ~ Timestamp of block number 0 on Optimism
     minTimestamp: UnixTime.fromDate(new Date('2021-01-14T15:51:40Z')),
   },
 ]
