@@ -1,10 +1,31 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 17968737,
-  "configHash": "0xeca029c883d3f62ceabae1cf9fd132a44b6781d20439ee04e12de6ac147a5990",
-  "version": 1,
+  "blockNumber": 18012148,
+  "configHash": "0xa02a89a2ccb87ec58298cdb9c61ed63ab6bc885c1783d886cfe3f4c4d74aa05d",
+  "version": 2,
   "contracts": [
+    {
+      "name": "BridgeMultisig",
+      "address": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      },
+      "values": {
+        "domainSeparator": "0x07112ea70e3b813e71d47e25500e17035517d3b51bd3c8d3500ccf54424e8f00",
+        "getChainId": 1,
+        "getOwners": [
+          "0x59232aC80E6d403b6381393e52f4665ECA328558",
+          "0xCe958D997F4a5824D4d503A128216322C6C223a0",
+          "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+        ],
+        "getThreshold": 1,
+        "nonce": 2,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
     {
       "name": "DAI Bridge",
       "address": "0x0437465dfb5B79726e35F08559B0cBea55bb585C",
@@ -21,11 +42,17 @@
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "upgradeDelay": 604800,
         "isFinal": false,
-        "proxyGovernance": ["0xdc29f0F7742ec462Af475AceeCECC57601991D23"]
+        "proxyGovernance": [
+          "0xdc29f0F7742ec462Af475AceeCECC57601991D23",
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+        ]
       },
       "values": {
         "getUpgradeActivationDelay": 604800,
-        "governors": ["0xfdF3E24BD26368512C5F65959BBB668d3338f994"],
+        "governors": [
+          "0xfdF3E24BD26368512C5F65959BBB668d3338f994",
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+        ],
         "identify": "StarkWare_StarknetERC20Bridge_2023_1",
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "isActive": true,
@@ -107,13 +134,19 @@
         "implementation": "0x455603AD9ae671F6c1f0f746F24d7904cA603581",
         "upgradeDelay": 604800,
         "isFinal": false,
-        "proxyGovernance": ["0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae"]
+        "proxyGovernance": [
+          "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+        ]
       },
       "values": {
         "bridgedToken": "0x0000000000000000000000000000000000000000",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
         "getUpgradeActivationDelay": 604800,
-        "governors": ["0x6A03F3F0943eb686a4EF94e7B6f6CA3332580b5C"],
+        "governors": [
+          "0x6A03F3F0943eb686a4EF94e7B6f6CA3332580b5C",
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+        ],
         "identify": "StarkWare_StarknetEthBridge_2023_1",
         "implementation": "0x455603AD9ae671F6c1f0f746F24d7904cA603581",
         "isActive": true,
@@ -137,11 +170,17 @@
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "upgradeDelay": 604800,
         "isFinal": false,
-        "proxyGovernance": ["0x8dB2469f3355d6769932B853F29e32df06122981"]
+        "proxyGovernance": [
+          "0x8dB2469f3355d6769932B853F29e32df06122981",
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+        ]
       },
       "values": {
         "getUpgradeActivationDelay": 604800,
-        "governors": ["0x3ADfc0aBd0eBD4e61281d991F87134eE3231dB13"],
+        "governors": [
+          "0x3ADfc0aBd0eBD4e61281d991F87134eE3231dB13",
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+        ],
         "identify": "StarkWare_StarknetERC20Bridge_2023_1",
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "isActive": true,
@@ -208,7 +247,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 940706,
+        "l1ToL2MessageNonce": 998070,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -217,9 +256,9 @@
         "programHash": "407700941260678649793204927710478760533239334662847444187959202896452163393",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockHash": "1782581852532357670751147622564063504457730525964182788858567944628812345971",
-        "stateBlockNumber": 165563,
-        "stateRoot": "914690158295997764632399962894462625439564440405571100813505040768782575401",
+        "stateBlockHash": "2724392883392655603522724977558523554020583305626640744541792894543174544624",
+        "stateBlockNumber": 176450,
+        "stateRoot": "161479700980308912256626237594052181597508401817159967740225276384834228690",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -260,11 +299,17 @@
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "upgradeDelay": 604800,
         "isFinal": false,
-        "proxyGovernance": ["0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4"]
+        "proxyGovernance": [
+          "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4",
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+        ]
       },
       "values": {
         "getUpgradeActivationDelay": 604800,
-        "governors": ["0xe8e9E69511BaaFC826953fC93cdf1ED6d3B63c53"],
+        "governors": [
+          "0xe8e9E69511BaaFC826953fC93cdf1ED6d3B63c53",
+          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+        ],
         "identify": "StarkWare_StarknetERC20Bridge_2023_1",
         "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
         "isActive": true,
@@ -299,6 +344,9 @@
     "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591"
   ],
   "abis": {
+    "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": [
+      "constructor(address _singleton)"
+    ],
     "0x0437465dfb5B79726e35F08559B0cBea55bb585C": [
       "constructor()",
       "event Approve(address indexed token, address indexed spender, uint256 value)",
