@@ -42,10 +42,6 @@ export class ReportRepository extends BaseRepository {
       'unix_timestamp',
       timestamp.toDate(),
     )
-
-    console.log(
-      knex('reports').where('unix_timestamp', timestamp.toDate()).toSQL(),
-    )
     return rows.map(toRecord)
   }
 
@@ -79,6 +75,17 @@ export class ReportRepository extends BaseRepository {
     assert(chainIdsMatch, 'Chain Ids must match')
 
     await knex.transaction(async (trx) => {
+      await Promise.all(
+        rows.map((r) =>
+          trx('reports')
+            .where('unix_timestamp', r.unix_timestamp)
+            .andWhere('report_type', r.report_type)
+            .andWhere('asset_id', r.asset_id)
+            .andWhere('chain_id', r.chain_id)
+            .delete(),
+        ),
+      )
+
       await trx('reports')
         .insert(rows)
         .onConflict([
