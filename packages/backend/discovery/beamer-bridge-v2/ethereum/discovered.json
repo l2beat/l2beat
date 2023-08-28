@@ -1,9 +1,9 @@
 {
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
-  "blockNumber": 17911566,
+  "blockNumber": 17991008,
   "configHash": "0x18d13869837793143c9fbab3364790146e0ecbc24282da9590daeb2c80ba5059",
-  "version": 1,
+  "version": 2,
   "contracts": [
     {
       "name": "EthereumL1Messenger",
@@ -97,13 +97,13 @@
         "claimPeriod": 86400,
         "claimRequestExtension": 86400,
         "claimStake": "10000000000000000",
-        "currentNonce": 258,
+        "currentNonce": 264,
         "lpFeePPM": 3000,
         "MAX_VALIDITY_PERIOD": 172800,
         "MIN_VALIDITY_PERIOD": 1800,
         "minFeePPM": 100000,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
-        "paused": false,
+        "paused": true,
         "protocolFeePPM": 0
       },
       "derivedName": "RequestManager"
