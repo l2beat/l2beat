@@ -73,7 +73,6 @@ export function getLocalConfig(): Config {
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
       optimism: optimismTvlEnabled && {
-        // This is a minBlockTimestamp for production 1636665399
         minBlockTimestamp: UnixTime.now().add(-7, 'days').toStartOf('hour'),
       },
     },
