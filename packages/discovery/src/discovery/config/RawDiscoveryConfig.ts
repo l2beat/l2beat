@@ -8,7 +8,7 @@ export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   ignoreDiscovery: z.optional(z.boolean()),
   proxyType: z.optional(ManualProxyType),
-  ignoreInWatchMode: z.z.optional(z.array(z.string())),
+  ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.optional(z.array(z.string())),
   ignoreRelatives: z.optional(z.array(z.string())),
   fields: z.optional(
