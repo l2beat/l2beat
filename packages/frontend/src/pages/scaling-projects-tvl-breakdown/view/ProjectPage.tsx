@@ -8,11 +8,12 @@ import {
   NavbarProps,
 } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
+import { TvlBreakdownViewProps } from '../props/getTvlBreakdownView'
 import {
   TvlBreakdownHeader,
   TvlBreakdownHeaderProps,
 } from './TvlBreakdownHeader'
-import { TvlBreakdownView, TvlBreakdownViewProps } from './TvlBreakdownView'
+import { TvlBreakdownView } from './TvlBreakdownView'
 
 export interface TvlBreakdownPageProps {
   navbar: NavbarProps
