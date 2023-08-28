@@ -60,7 +60,6 @@ function transformBalances(
     const chainIdsMatch = assetSupplies.every((b) => b.chainId === chainId)
     assert(chainIdsMatch, 'ChainIds do not match for a given asset balance')
 
-    console.log(totalSupplies)
     const totalBalance = assetSupplies
       .map((s) =>
         'totalSupply' in s
@@ -70,7 +69,6 @@ function transformBalances(
           : 0n,
       )
       .reduce((acc, totalSupply) => acc + totalSupply, 0n)
-    console.log("shrek", totalBalance)
 
     result.push({
       projectId,

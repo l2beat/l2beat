@@ -16,7 +16,6 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
-import { genArbTokenReport } from '../reports/custom/arbitrum'
 import { genOpTokenReport } from '../reports/custom/optimism'
 import { AssetUpdater } from './AssetUpdater'
 
@@ -95,7 +94,9 @@ export class NMVUpdater implements AssetUpdater {
 
     const reports: ReportRecord[] = []
     reports.push(...genOpTokenReport(prices, timestamp))
-    reports.push(...genArbTokenReport(prices, timestamp))
+
+    // TODO(radomski): Remove this whole module
+    // reports.push(...genArbTokenReport(prices, timestamp))
 
     await this.reportRepository.addOrUpdateMany(reports)
 

@@ -59,7 +59,9 @@ export class CoingeckoCirculatingSupplyProvider
         const price = minBy(pricesDiffed, (e) => e.dateDiff)
         assert(marketCap && price)
 
-        const circulatingSupply = Math.floor(marketCap.marketCap / price.price * Math.pow(10, decimals))
+        const circulatingSupply = Math.floor(
+          (marketCap.marketCap / price.price) * Math.pow(10, decimals),
+        )
 
         return {
           timestamp,
