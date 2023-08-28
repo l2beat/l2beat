@@ -21,8 +21,8 @@ export interface HeaderProps {
   isArchived?: boolean
   isUpcoming?: boolean
   isUnderReview?: boolean
-  tvlBreakdownHref: string
-  showTvlBreakdown: boolean
+  tvlBreakdownHref?: string
+  showTvlBreakdown?: boolean
   showProjectUnderReview?: boolean
   risks?: RiskValues
   links: ProjectLink[]

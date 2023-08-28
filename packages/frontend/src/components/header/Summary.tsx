@@ -15,8 +15,8 @@ interface SummaryProps {
   stagesEnabled?: boolean
   detailedTvlEnabled?: boolean
   isUpcoming?: boolean
-  tvlBreakdownHref: string
-  showTvlBreakdown: boolean
+  tvlBreakdownHref?: string
+  showTvlBreakdown?: boolean
 }
 
 export interface SummaryStat {
