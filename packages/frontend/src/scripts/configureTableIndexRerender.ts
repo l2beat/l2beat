@@ -29,12 +29,17 @@ export function configureTableIndexRerender() {
   const combinedCheckbox = document.querySelector<HTMLInputElement>(
     '#combined-bridges-checkbox',
   )
-  console.log(combinedCheckbox)
+  const rollupsOnlyCheckbox = document.querySelector<HTMLInputElement>(
+    '#rollups-only-checkbox',
+  )
 
   rerenderNumbers()
 
   combinedCheckbox?.addEventListener('change', () => {
-    rerenderNumbers('combined-bridges-checkbox')
+    rerenderNumbers('#combined-bridges-checkbox')
+  })
+  rollupsOnlyCheckbox?.addEventListener('change', () => {
+    rerenderNumbers('#rollups-only-checkbox')
   })
 }
 

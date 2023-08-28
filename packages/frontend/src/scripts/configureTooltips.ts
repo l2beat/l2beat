@@ -1,4 +1,5 @@
 import { isMobile } from '../components/chart/configure/render/isMobile'
+import { clamp } from '../utils'
 import { makeQuery } from './query'
 
 export function configureTooltips() {
@@ -158,8 +159,4 @@ export function testConfigureTooltipsAndShow() {
     element.setAttribute('tabindex', '0')
     show(element, title)
   }
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value))
 }
