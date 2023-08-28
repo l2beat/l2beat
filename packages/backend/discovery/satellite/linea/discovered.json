@@ -1,8 +1,8 @@
 {
   "name": "satellite",
   "chain": "linea",
-  "blockNumber": 274820,
-  "configHash": "0x58bc32beab58d9c3dbcd5f1704ae195b0ad0d248a2e8c9e846b191637c319258",
+  "blockNumber": 296577,
+  "configHash": "0x603b7483cbd5528a252978f87d7f0063f5c14d1761547034e87e31f436decd16",
   "version": 2,
   "contracts": [
     {
@@ -12,7 +12,7 @@
         "type": "immutable"
       },
       "values": {
-        "currentEpoch": 35,
+        "currentEpoch": 38,
         "owner": "0xe432150cce91c13a887f7D836923d5597adD8E31"
       },
       "derivedName": "AxelarAuthWeighted"
@@ -37,33 +37,33 @@
         "authModule": "0x1a920B29eBD437074225cAeE44f78FC700B27a5d",
         "implementation": "0x05823c334150a48ACD5D325fBA16147c21bA3653",
         "tokenDeployer": "0x8A156bCA562FB75385c4d41ea6903E270A34B727",
-        "tokens": [
-          "axlFTM",
-          "axlUSDC",
-          "axlFRAX",
-          "axlDAI",
-          "axlUSDT",
-          "STRD",
-          "stATOM",
-          "axlWMAI",
-          "ERN",
-          "axlETH",
-          "axlWBTC",
-          "AXL",
-          "axlATOM",
-          "axlFIL",
-          "axlAVAX",
-          "axlBNB",
-          "axlMATIC",
-          "axlBUSD",
-          "axlARB",
-          "HZN",
-          "MPX",
-          "OATH",
-          "axlKNC",
-          "GDX",
-          "stERN"
-        ],
+        "tokens": {
+          "axlFTM": "0x64C09d32E8452CC0453D2EfeED8c9a16421b1ec8",
+          "axlUSDC": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+          "axlFRAX": "0x406Cde76a3fD20e48bc1E0F60651e60Ae204B040",
+          "axlDAI": "0x5C7e299CF531eb66f2A1dF637d37AbB78e6200C7",
+          "axlUSDT": "0x7f5373AE26c3E8FfC4c77b7255DF7eC1A9aF52a6",
+          "STRD": "0x05931D5e2F7E1C1A710c9c1dCdD94e413652376F",
+          "stATOM": "0x7ba861c07d40e3341B901Fd6F418e96E0132E25b",
+          "axlWMAI": "0x88DfaAABaf06f3a41D2606EA98BC8edA109AbeBb",
+          "ERN": "0xa334884bF6b0A066d553D19e507315E839409e62",
+          "axlETH": "0xb829b68f57CC546dA7E5806A929e53bE32a4625D",
+          "axlWBTC": "0x1a35EE4640b0A3B87705B0A4B45D227Ba60Ca2ad",
+          "AXL": "0x23ee2343B892b1BB63503a4FAbc840E0e2C6810f",
+          "axlATOM": "0x06beE9E7238a331B68D83Df3B5B9B16d5DBa83ff",
+          "axlFIL": "0x5E2Cf56A562b1bDD32ec26315063074ADC420C73",
+          "axlAVAX": "0x6E76A241Ae6fcaD51C064Ac70fe6e676502b91c5",
+          "axlBNB": "0x23A6486099f740B7688A0bb7AED7C912015cA2F0",
+          "axlMATIC": "0xE3ce47AC96d8502824627d7cBCFDA49414beDa9C",
+          "axlBUSD": "0x4D84E25cEa9447581867fE9f2329B972f532Da2c",
+          "axlARB": "0x87b6c94c435F6e49789ad34FAf0d048F2D9043a2",
+          "HZN": "0x0B1A02A7309dFbfAD1Cd4adC096582C87e8A3Ac1",
+          "MPX": "0xa5325A8EBBbdb12CAF6b76218a7375a71f9f3b41",
+          "OATH": "0x00e1724885473B63bCE08a9f0a52F35b0979e35A",
+          "axlKNC": "0xB448eC505C924944ca8B2C55EF05c299eE0781df",
+          "GDX": "0x91c415FEcD651F11D24aC4b72Ed08dbEb9868D43",
+          "stERN": "0xf7A0dd3317535eC4f4d29ADF9d620B3d8D5D5069"
+        },
         "admins": [
           [
             "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4",

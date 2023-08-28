@@ -1,8 +1,8 @@
 {
   "name": "satellite",
   "chain": "optimism",
-  "blockNumber": 108684599,
-  "configHash": "0x529221ee2d98d29f657cb2d5b84597251507b5a5bf64ee1b343f4fdeb457f10e",
+  "blockNumber": 108816905,
+  "configHash": "0x82377813c17a6fa7400c12630c1212e13a9d0560a986010a4c9d8ae98c577ee4",
   "version": 2,
   "contracts": [
     {
@@ -12,7 +12,7 @@
         "type": "immutable"
       },
       "values": {
-        "currentEpoch": 79,
+        "currentEpoch": 82,
         "owner": "0xe432150cce91c13a887f7D836923d5597adD8E31"
       },
       "derivedName": "AxelarAuthWeighted"
@@ -37,31 +37,31 @@
         "authModule": "0x1a920B29eBD437074225cAeE44f78FC700B27a5d",
         "implementation": "0x05823c334150a48ACD5D325fBA16147c21bA3653",
         "tokenDeployer": "0x8A156bCA562FB75385c4d41ea6903E270A34B727",
-        "tokens": [
-          "axlATOM",
-          "axlUSDC",
-          "AXL",
-          "axlFRAX",
-          "axlDAI",
-          "axlUSDT",
-          "axlFIL",
-          "STRD",
-          "stATOM",
-          "KUJI",
-          "axlWMAI",
-          "ERN",
-          "axlETH",
-          "axlWBTC",
-          "axlLqdr",
-          "axl-wstETH",
-          "SONNE",
-          "OATH",
-          "RING",
-          "ZYB",
-          "GDX",
-          "axlKNC",
-          "stERN"
-        ],
+        "tokens": {
+          "axlATOM": "0x06beE9E7238a331B68D83Df3B5B9B16d5DBa83ff",
+          "axlUSDC": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+          "AXL": "0x23ee2343B892b1BB63503a4FAbc840E0e2C6810f",
+          "axlFRAX": "0x406Cde76a3fD20e48bc1E0F60651e60Ae204B040",
+          "axlDAI": "0x5C7e299CF531eb66f2A1dF637d37AbB78e6200C7",
+          "axlUSDT": "0x7f5373AE26c3E8FfC4c77b7255DF7eC1A9aF52a6",
+          "axlFIL": "0x5E2Cf56A562b1bDD32ec26315063074ADC420C73",
+          "STRD": "0x05931D5e2F7E1C1A710c9c1dCdD94e413652376F",
+          "stATOM": "0x7ba861c07d40e3341B901Fd6F418e96E0132E25b",
+          "KUJI": "0x3A18dcC9745eDcD1Ef33ecB93b0b6eBA5671e7Ca",
+          "axlWMAI": "0x88DfaAABaf06f3a41D2606EA98BC8edA109AbeBb",
+          "ERN": "0xc5b001DC33727F8F26880B184090D3E252470D45",
+          "axlETH": "0xb829b68f57CC546dA7E5806A929e53bE32a4625D",
+          "axlWBTC": "0x1a35EE4640b0A3B87705B0A4B45D227Ba60Ca2ad",
+          "axlLqdr": "0x332c72dd7E77070740F01d2d35851c461585D5d0",
+          "axl-wstETH": "0x9cfB13E6c11054ac9fcB92BA89644F30775436e4",
+          "SONNE": "0x1DB2466d9F5e10D7090E7152B68d62703a2245F0",
+          "OATH": "0x00e1724885473B63bCE08a9f0a52F35b0979e35A",
+          "RING": "0x259c1C2ED264402b5ed2f02bc7dC25A15C680c18",
+          "ZYB": "0xb4F2cF13b262C9f0ddB9B2A9143af753EF184E98",
+          "GDX": "0x91c415FEcD651F11D24aC4b72Ed08dbEb9868D43",
+          "axlKNC": "0xB448eC505C924944ca8B2C55EF05c299eE0781df",
+          "stERN": "0x3eE6107d9C93955acBb3f39871D32B02F82B78AB"
+        },
         "admins": [
           [
             "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4",

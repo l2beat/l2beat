@@ -24,9 +24,13 @@
           "startIndex": 1
         },
         "tokens": {
-          "type": "arrayFromOneEvent",
+          "type": "stateFromEvent",
           "event": "TokenDeployed",
-          "valueKey": "symbol"
+          "returnParams": ["symbol", "tokenAddresses"],
+          "groupBy": "symbol",
+          "onlyValue": true,
+          "multipleInGroup": true,
+          "ignoreRelative": true
         }
       }
     },

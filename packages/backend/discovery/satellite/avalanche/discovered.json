@@ -1,8 +1,8 @@
 {
   "name": "satellite",
   "chain": "avalanche",
-  "blockNumber": 34361412,
-  "configHash": "0xe5f99470da9072144f60404fd8a3a620cc035de4c16974aea9be4f3746ffb1bc",
+  "blockNumber": 34482445,
+  "configHash": "0xc4bab3790b150014c917b90a13c523c83c0969126844a123dfb28fa0ec36b88b",
   "version": 2,
   "contracts": [
     {
@@ -12,7 +12,7 @@
         "type": "immutable"
       },
       "values": {
-        "currentEpoch": 195,
+        "currentEpoch": 198,
         "owner": "0x5029C0EFf6C34351a0CEc334542cDb22c7928f78"
       },
       "derivedName": "AxelarAuthWeighted"
@@ -37,36 +37,39 @@
         "authModule": "0x2700D384c39BBF9565d813b472EE005b383aC1E2",
         "implementation": "0x47E1f636A2C374E8935106593b4Fbe0d244DF9B7",
         "tokenDeployer": "0x3fe06eC37EABC518f88c9C78729d1350e0f5F9cD",
-        "tokens": [
-          "AXL",
-          "UST",
-          "LUNA",
-          "axlATOM",
-          "axlJUNO",
-          "axlUSDC",
-          "axlFRAX",
-          "axlDAI",
-          "axlUSDT",
-          "NGM",
-          "EEUR",
-          "WAVAX",
-          "USDC",
-          "axlFTM",
-          "STRD",
-          "stATOM",
-          "axlFIL",
-          "axlSOMM",
-          "axlWMAI",
-          "ERN",
-          "axlETH",
-          "axlWBTC",
-          "axlLqdr",
-          "OATH",
-          "ORBS",
-          "axlKNC",
-          "axlDEUS",
-          "stERN"
-        ],
+        "tokens": {
+          "AXL": [
+            "0x1B7C03Bc2c25b8B5989F4Bc2872cF9342CEc80AE",
+            "0x44c784266cf024a60e8acF2427b9857Ace194C5d"
+          ],
+          "UST": "0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
+          "LUNA": "0x120AD3e5A7c796349e591F1570D9f7980F4eA9cb",
+          "axlATOM": "0x80D18b1c9Ab0c9B5D6A6d5173575417457d00a12",
+          "axlJUNO": "0x64b5A03db299F119889DEAC3211d80503E6cFfa2",
+          "axlUSDC": "0xfaB550568C688d5D8A52C7d794cb93Edc26eC0eC",
+          "axlFRAX": "0x4914886dBb8aAd7A7456D471EAab10b06d42348D",
+          "axlDAI": "0xC5Fa5669E326DA8B2C35540257cD48811F40a36B",
+          "axlUSDT": "0xF976ba91b6bb3468C91E4f02E68B37bc64a57e66",
+          "NGM": "0x5A44422beaAA38031f57720d88697105be6970BE",
+          "EEUR": "0xE1d70994Be12b73E76889412b284A8F19b0DE56d",
+          "WAVAX": "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+          "USDC": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+          "axlFTM": "0xbB72a453a9280864C330Fa23fFABff73991119A0",
+          "STRD": "0x24562dd9D02f7ECE43B947e61E313778273F140b",
+          "stATOM": "0x2fFFE7f113FDB41fc8Ffd3B67E7b7eFA2b3a030d",
+          "axlFIL": "0xF3bcB00146d1123dD19974De758F83D01E26D3F1",
+          "axlSOMM": "0x421CC964D5A3FEf29c6839c54C40E9d1D554aFA4",
+          "axlWMAI": "0xd889657E1570c5bedD3fa846aB7865a86aAa338a",
+          "ERN": "0x08d58F06DDfA9b99AE651f68232014BE3914C5cd",
+          "axlETH": "0x42A62eb3Fd2a05eD499117F128de8a3192B49EBB",
+          "axlWBTC": "0xa6220B4209353dFeF03B6cE410c8F01105515f94",
+          "axlLqdr": "0x873ebFf537F58e96899f6EbA33dC07151Bc5818b",
+          "OATH": "0xAD090976CE846935DCfF1dEd852668beeD912916",
+          "ORBS": "0x3Ab1C9aDb065F3FcA0059652Cd7A52B05C98f9a9",
+          "axlKNC": "0x22FA75d747320ae5D14cC625F696487C83243CD3",
+          "axlDEUS": "0xf9617c66cD8a4193A4DE0a101e16D73B71828810",
+          "stERN": "0x232Fe66f42ac4d0DF191Ec9f34e30224BBF15C3F"
+        },
         "admins": [
           [
             "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4",
