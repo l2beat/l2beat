@@ -26,7 +26,7 @@ export function calculateTokenDetailedTvlView(
   const { labels, getY } = getYAxis(
     entries.map((x) => x[1]),
     controls.isLogScale,
-    (x) => formatCurrency(x, controls.currency),
+    (x) => formatCurrency(x, token),
   )
 
   const points = entries.map(([timestamp, balance, valueUsd], i) => ({
